@@ -3511,6 +3511,8 @@ public enum Strings {
       public static let downloadToOffline = Strings.tr("Localizable", "general.downloadToOffline")
       /// Export
       public static let export = Strings.tr("Localizable", "general.export")
+      /// File is already being downloaded
+      public static let fileIsBeingDownloaded = Strings.tr("Localizable", "general.fileIsBeingDownloaded")
       /// Join meeting as guest
       public static let joinMeetingAsGuest = Strings.tr("Localizable", "general.joinMeetingAsGuest")
       /// Unable to connect to the Internet. Please check your connection and try again.

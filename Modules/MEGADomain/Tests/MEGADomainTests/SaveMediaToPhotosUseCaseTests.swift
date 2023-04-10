@@ -34,7 +34,7 @@ final class SaveMediaToPhotosUseCaseTests: XCTestCase {
         do {
             try await sut.saveToPhotos(nodes: [nodeEntity])
         } catch let errorEntity as SaveMediaToPhotosErrorEntity {
-            XCTAssertTrue(errorEntity == .downloadFailed)
+            XCTAssertTrue(errorEntity == .fileDownloadInProgress)
         }
     }
     
@@ -56,7 +56,7 @@ final class SaveMediaToPhotosUseCaseTests: XCTestCase {
         do {
             try await sut.saveToPhotos(nodes: [nodeEntity, nodeEntity2])
         } catch let errorEntity as SaveMediaToPhotosErrorEntity {
-            XCTAssertTrue(errorEntity == .downloadFailed)
+            XCTAssertTrue(errorEntity == .fileDownloadInProgress)
         }
     }
 }

@@ -45,7 +45,10 @@ extension MEGAPhotoBrowserViewController {
                 let completionBlock: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
                     if case let .failure(error) = result, error != .cancelled {
                         SVProgressHUD.dismiss()
-                        SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                        SVProgressHUD.show(
+                            Asset.Images.NodeActions.saveToPhotos.image,
+                            status: error.localizedDescription
+                        )
                     }
                 }
 
@@ -65,7 +68,10 @@ extension MEGAPhotoBrowserViewController {
                         } catch {
                             if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
                                 await SVProgressHUD.dismiss()
-                                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                                SVProgressHUD.show(
+                                    Asset.Images.NodeActions.saveToPhotos.image,
+                                    status: error.localizedDescription
+                                )
                             }
                         }
                     }

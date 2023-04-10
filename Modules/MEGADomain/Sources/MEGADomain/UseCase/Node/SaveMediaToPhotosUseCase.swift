@@ -34,7 +34,11 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
                 }
                 
                 if case let .failure(error) = result {
-                    continuation.resume(throwing: error == TransferErrorEntity.cancelled ? SaveMediaToPhotosErrorEntity.cancelled : SaveMediaToPhotosErrorEntity.downloadFailed)
+                    guard error == .download else {
+                        continuation.resume(throwing: error == TransferErrorEntity.cancelled ? SaveMediaToPhotosErrorEntity.cancelled : SaveMediaToPhotosErrorEntity.downloadFailed)
+                        return 
+                    }
+                    continuation.resume(throwing: SaveMediaToPhotosErrorEntity.fileDownloadInProgress)
                     return
                 }
                 

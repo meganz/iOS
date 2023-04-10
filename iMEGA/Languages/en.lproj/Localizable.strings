@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="Call will end in %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Make available offline";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="End call for all";
 /* Title of the popup that ends the meeting for all */

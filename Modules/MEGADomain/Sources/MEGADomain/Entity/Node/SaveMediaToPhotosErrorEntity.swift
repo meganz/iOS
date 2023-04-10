@@ -4,6 +4,7 @@ public enum SaveMediaToPhotosErrorEntity: Error {
     case videoNotSaved
     case wrongExtensionFormat
     case downloadFailed
+    case fileDownloadInProgress
     case nodeNotFound
     case cancelled
 }
