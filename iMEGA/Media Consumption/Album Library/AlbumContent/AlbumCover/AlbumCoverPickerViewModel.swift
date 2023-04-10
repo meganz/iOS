@@ -64,7 +64,7 @@ final class AlbumCoverPickerViewModel: ObservableObject {
     
     private func setupSubscriptions() {
         photoSelection.$selectedPhoto
-            .dropFirst()
+            .dropFirst(2)
             .sink { [weak self] selectedPhoto in
                 if self?.album.coverNode != selectedPhoto?.photo {
                     self?.isSaveButtonDisabled = false
