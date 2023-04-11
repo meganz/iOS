@@ -64,6 +64,17 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photoSelection.selectedPhoto, AlbumPhotoEntity(photo: node4.photo))
     }
     
+    func testSelectedCoverPicFromLoadedAlbumContents_whenOnTheSelectCoverPicScreen_shouldSameModificationTimeBasedNodesSortedByHandleInDescendingOrder() async {
+        let photo4 = AlbumPhotoEntity(photo: NodeEntity(handle: 4, modificationTime: Date.distantPast))
+        let photo5 = AlbumPhotoEntity(photo: NodeEntity(handle: 5, modificationTime: Date.distantPast))
+        
+        let sut = albumCoverPickerViewModel(photos: [photo4, photo5])
+        sut.loadAlbumContents()
+        await sut.loadingTask?.value
+        
+        XCTAssertEqual(sut.photos, [photo5, photo4])
+    }
+    
     func testIsSaveButtonDisabled_whenSelectedNodeChange_ignoreTheInitialSelectionAndEnableForTheNextOne(){
         let sut = albumCoverPickerViewModel()
         
