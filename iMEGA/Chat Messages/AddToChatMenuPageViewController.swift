@@ -20,11 +20,11 @@ class AddToChatMenuPageViewController: UIPageViewController {
     weak var menuDelegate: AddToChatMenuPageViewControllerDelegate?
     
     private var menuPages = [AddToChatMenuViewController]()
-
+    
     private var numberOfMenuPerPages: Int {
         return menuPerRow * numberOfRowsForMenu
     }
-
+    
     private var numberOfRowsForMenu = 2
     private var menuPerRow = 4
     private var currentPage = 0
@@ -38,7 +38,7 @@ class AddToChatMenuPageViewController: UIPageViewController {
         
         return Int(ceil(Double(menus.count) / Double(numberOfMenuPerPages)))
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,12 +60,12 @@ class AddToChatMenuPageViewController: UIPageViewController {
             return
         }
         
-        menuPages = (0..<numberOfPagesRequired).map { [weak self] pageIndex in
+        menuPages = (0..<numberOfPagesRequired).map { pageIndex in
             let menuViewController = AddToChatMenuViewController()
             menuViewController.delegate = self
             
-            let firstItemIndex = (numberOfMenuPerPages * pageIndex)
-            let possibleLastIndex = (firstItemIndex + numberOfMenuPerPages - 1)
+            let firstItemIndex = (self.numberOfMenuPerPages * pageIndex)
+            let possibleLastIndex = (firstItemIndex + self.numberOfMenuPerPages - 1)
             let lastItemIndex = possibleLastIndex < menus.count ? possibleLastIndex : menus.count - 1
             let menuList = (firstItemIndex...lastItemIndex).map { menus[$0] }
             
@@ -86,7 +86,7 @@ class AddToChatMenuPageViewController: UIPageViewController {
                            direction: direction,
                            animated: true,
                            completion: nil)
-
+        
     }
     
     func totalRequiredHeight(forWidth width: CGFloat,
@@ -108,9 +108,9 @@ extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPag
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let menuViewController = viewController as? AddToChatMenuViewController,
-            let index = menuPages.firstIndex(of: menuViewController),
-            index > 0,
-            menuPages.isNotEmpty else {
+              let index = menuPages.firstIndex(of: menuViewController),
+              index > 0,
+              menuPages.isNotEmpty else {
             return nil
         }
         
@@ -119,9 +119,9 @@ extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPag
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let menuViewController = viewController as? AddToChatMenuViewController,
-            let index = menuPages.firstIndex(of: menuViewController),
-            (index + 1) < menuPages.count else {
-                return nil
+              let index = menuPages.firstIndex(of: menuViewController),
+              (index + 1) < menuPages.count else {
+            return nil
         }
         
         return menuPages[index + 1]
