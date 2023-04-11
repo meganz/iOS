@@ -1499,7 +1499,6 @@
 		B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */; };
 		B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */; };
 		B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */; };
-		B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B58F7BFA298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */; };
@@ -3967,7 +3966,6 @@
 		B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerListSource.swift; sourceTree = "<group>"; };
 		B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Additions.swift"; sourceTree = "<group>"; };
-		B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAHandleRepository.swift; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSecureFingerprintManager.swift; sourceTree = "<group>"; };
@@ -9356,14 +9354,6 @@
 			path = FeatureFlag;
 			sourceTree = "<group>";
 		};
-		B57AD23928C1DBEB00FB173A /* MEGASdk */ = {
-			isa = PBXGroup;
-			children = (
-				B57AD23A28C1DC1000FB173A /* MEGAHandleRepository.swift */,
-			);
-			path = MEGASdk;
-			sourceTree = "<group>";
-		};
 		B582965627C5DF28004DD7A5 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
@@ -9752,7 +9742,6 @@
 				A861B58127BE7D52009C29C2 /* Help */,
 				838A84992631C94C004804A4 /* Karere */,
 				6D854F77290E012A006CEC20 /* MediaDiscovery */,
-				B57AD23928C1DBEB00FB173A /* MEGASdk */,
 				0D213E8C263A611500B43723 /* Node */,
 				32CB4912284EF55900697BA9 /* Photos */,
 				83C7C85027EDE80200CFB5E6 /* PhotosLibrary */,
@@ -13185,7 +13174,6 @@
 				A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				A81C659C254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift in Sources */,
 				A83BB99E28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift in Sources */,
-				B57AD23B28C1DC1000FB173A /* MEGAHandleRepository.swift in Sources */,
 				5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */,

@@ -1,4 +1,5 @@
 import UIKit
+import MEGAData
 import MessageKit
 import MEGADomain
 import MEGASwift

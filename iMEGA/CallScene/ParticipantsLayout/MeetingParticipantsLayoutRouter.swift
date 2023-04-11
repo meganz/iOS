@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 import MEGAPresentation
 
 protocol MeetingParticipantsLayoutRouting: Routing {

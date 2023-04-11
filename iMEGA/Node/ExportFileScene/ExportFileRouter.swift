@@ -1,4 +1,5 @@
 import Foundation
+import MEGAData
 import UIKit
 import MEGADomain
 
