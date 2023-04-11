@@ -1,23 +1,27 @@
-import Combine
 import MEGADomain
+import MEGASwift
 
 struct SupportRepository: SupportRepositoryProtocol {
+    static var newRepo: SupportRepository {
+        SupportRepository(sdk: MEGASdk.shared)
+    }
+    
     private let sdk: MEGASdk
     
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
     
-    func createSupportTicket(withMessage message: String) -> Future<Void, CreateSupportTicketErrorEntity> {
-        return Future() { promise in
+    func createSupportTicket(withMessage message: String) async throws {
+        try await withAsyncThrowingValue(in: { completion in
             sdk.createSupportTicket(withMessage: message, type: 9, delegate: RequestDelegate { result in
                 switch result {
                 case .success:
-                    promise(Result.success(()))
+                    completion(.success)
                 case .failure:
-                    promise(Result.failure(.generic))
+                    completion(.failure(GenericErrorEntity()))
                 }
             })
-        }
+        })
     }
 }

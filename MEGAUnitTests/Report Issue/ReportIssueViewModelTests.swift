@@ -15,7 +15,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.details = ""
-        sut.cancelReport()
+        sut.dismissReport()
         XCTAssertEqual(mockRouter.dismiss_calledTimes, 1)
     }
     
@@ -27,7 +27,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.details = "Describe the issue"
-        sut.cancelReport()
+        sut.dismissReport()
         XCTAssertEqual(mockRouter.dismiss_calledTimes, 1)
     }
     
@@ -62,17 +62,6 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        sourceUrl: nil)
         sut.isConnected = false
         XCTAssertTrue(sut.shouldDisableSendButton)
-    }
-    
-    func test_isNotShowingPlaceholder() {
-        let sut = ReportIssueViewModel(router: mockRouter,
-                                       uploadFileUseCase: MockUploadFileUseCase(),
-                                       supportUseCase: MockSupportUseCase(),
-                                       monitorUseCase: MockNetworkMonitorUseCase(),
-                                       areLogsEnabled: false,
-                                       sourceUrl: nil)
-        sut.details = "Describe for the issue"
-        XCTAssertFalse(sut.isShowingPlaceholder)
     }
     
     func test_shouldShowUploadLogFileView() {
