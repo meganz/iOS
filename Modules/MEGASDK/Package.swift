@@ -43,7 +43,6 @@ let package = Package(
                       "src/wincurl",
                       "src/mega_utf8proc_data.c",
                       "src/thread/libuvthread.cpp",
-                      "src/rotativeperformancelogger.cpp",
                       "src/osx/fs.cpp"],
             cxxSettings: [
                 .headerSearchPath("bindings/ios"),
