@@ -9,6 +9,11 @@ final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
     var uploadSupportFileResult: (Result<TransferEntity, TransferErrorEntity>)? = nil
     var cancelTransferResult: (Result<Void, TransferErrorEntity>) = .failure(.generic)
     var filename: String = ""
+    var nodeEntity: NodeEntity?
+    
+    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        nodeEntity
+    }
     
     func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool {
         newName = name

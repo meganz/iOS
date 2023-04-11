@@ -7,6 +7,7 @@ public protocol UploadFileUseCaseProtocol {
     func uploadSupportFile(_ url: URL, start: @escaping (TransferEntity) -> Void, progress: @escaping (TransferEntity) -> Void, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void)
     func cancel(transfer: TransferEntity, completion: @escaping (Result<Void, TransferErrorEntity>) -> Void)
     func tempURL(forFilename filename: String) -> URL
+    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func cancelUploadTransfers()
 }
 
@@ -22,6 +23,10 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
         self.fileSystemRepository = fileSystemRepository
         self.nodeRepository = nodeRepository
         self.fileCacheRepository = fileCacheRepository
+    }
+    
+    public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        nodeRepository.nodeForHandle(handle)
     }
     
     public func hasExistFile(name: String, parentHandle: HandleEntity) -> Bool {
