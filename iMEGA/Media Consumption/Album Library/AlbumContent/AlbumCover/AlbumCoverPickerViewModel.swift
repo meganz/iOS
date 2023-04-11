@@ -78,7 +78,11 @@ final class AlbumCoverPickerViewModel: ObservableObject {
         do {
             photos = try await albumContentsUseCase.photos(in: album)
             photos.sort {
-                $0.photo.modificationTime > $1.photo.modificationTime
+                if $0.photo.modificationTime == $1.photo.modificationTime {
+                    return $0.photo.handle > $1.photo.handle
+                } else {
+                    return $0.photo.modificationTime > $1.photo.modificationTime
+                }
             }
             selectCoverNode()
         } catch {
