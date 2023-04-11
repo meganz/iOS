@@ -84,12 +84,34 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     private func manageTransfersCompletion() {
         processingComplete = true
         if transferErrors.isEmpty {
-            router.transferSuccess(with: Strings.Localizable.sharedSuccessfully, dismiss: alertPresented)
+            router.transferSuccess(with: successShareMessage, dismiss: alertPresented)
         } else if transferErrors.count < transfers.count {
             router.transferCompletedWithError(error: Strings.Localizable.somethingWentWrong, dismiss: alertPresented)
         } else {
             router.transferFailed(error: String(format: "%@ %@", Strings.Localizable.transferFailed, Strings.Localizable.somethingWentWrong), dismiss: alertPresented)
         }
+    }
+    
+    private var successShareMessage: String {
+        guard let firstShare = transfers.first,
+              let parentNode = uploadFileUseCase.nodeForHandle(firstShare.parentHandle) else { return "" }
+        
+        let transferCount = transfers.count
+        let destinationFolderName = parentNode.name
+        var successMessage = ""
+        
+        if parentNode.nodeType == .root {
+            successMessage = Strings.Localizable.Share.Message.uploadedToCloudDrive(transferCount)
+        } else {
+            successMessage = Strings.Localizable.Share.Message.uploadedToDestinationFolder(transferCount)
+                .replacingOccurrences(of: "[B]", with: destinationFolderName)
+        }
+
+        if transferCount == 1 {
+            let shareName = firstShare.name ?? firstShare.localFileURL?.lastPathComponent ?? ""
+            successMessage = successMessage.replacingOccurrences(of: "[A]", with: shareName)
+        }
+        return successMessage
     }
     
     //MARK: - Share extension upload

@@ -2066,5 +2066,37 @@
         <string>You’re currently sharing the following folders: [A]</string>
       </dict>
     </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Uploaded “[A]“ to “[B]“</string>
+        <key>other</key>
+        <string>Uploaded %d items to “[B]“</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Uploaded “[A]“ to Cloud drive</string>
+        <key>other</key>
+        <string>Uploaded %d items to Cloud drive</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

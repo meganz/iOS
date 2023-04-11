@@ -5085,6 +5085,18 @@ public enum Strings {
         }
       }
     }
+    public enum Share {
+      public enum Message {
+        /// Plural format key: "%#@count@"
+        public static func uploadedToCloudDrive(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "share.message.uploadedToCloudDrive", p1)
+        }
+        /// Plural format key: "%#@count@"
+        public static func uploadedToDestinationFolder(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "share.message.uploadedToDestinationFolder", p1)
+        }
+      }
+    }
     public enum SharedItems {
       public enum ContactVerification {
         public enum Section {
