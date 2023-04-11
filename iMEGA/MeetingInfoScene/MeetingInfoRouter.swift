@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     private(set) var presenter: UINavigationController

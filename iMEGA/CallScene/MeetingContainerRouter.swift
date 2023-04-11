@@ -1,4 +1,5 @@
 import Combine
+import MEGAData
 import MEGADomain
 import MEGAPresentation
 
