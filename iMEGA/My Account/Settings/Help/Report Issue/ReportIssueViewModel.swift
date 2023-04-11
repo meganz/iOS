@@ -16,10 +16,6 @@ final class ReportIssueViewModel: ObservableObject {
         details.isEmpty || details == detailsPlaceholder || !isConnected
     }
     
-    var isShowingPlaceholder: Bool {
-        details == detailsPlaceholder
-    }
-    
     var shouldShowUploadLogFileView: Bool {
         isUploadingLog && areLogsEnabled && isSendLogFileToggleOn
     }
@@ -30,7 +26,7 @@ final class ReportIssueViewModel: ObservableObject {
     
     @Published var progress: Float = 0
     @Published var isUploadingLog = false
-    @Published var details = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
+    @Published var details = ""
     @Published var isConnected = true
     @Published var showingReportIssueActionSheet = false
     @Published var showingReportIssueAlert = false
@@ -84,21 +80,20 @@ final class ReportIssueViewModel: ObservableObject {
     }
     
     private func createTicketForSupport(filename: String? = nil) {
-        let message = """
-        \(details)
-        
-        Report filename: \(filename ?? "No log file")
-        """
-        subscriptions = supportUseCase.createSupportTicket(withMessage: message)
-            .sink(receiveCompletion: { [weak self] (completion) in
-                switch completion {
-                case .failure:
-                    self?.reportAlertType = .createSupportTicketFailure
-                case .finished:
-                    self?.reportAlertType = .createSupportTicketFinished
-                }
-                self?.showingReportIssueAlert = true
-            }, receiveValue: { _ in })
+        Task { @MainActor in
+            let message = """
+            \(details)
+            
+            Report filename: \(filename ?? "No log file")
+            """
+            do {
+                try await supportUseCase.createSupportTicket(withMessage: message)
+                reportAlertType = .createSupportTicketFinished
+            } catch {
+                reportAlertType = .createSupportTicketFailure
+            }
+            showingReportIssueAlert = true
+        }
     }
     
     func createTicket() {
@@ -109,7 +104,7 @@ final class ReportIssueViewModel: ObservableObject {
         }
     }
     
-    func cancelReport() {
+    func dismissReport() {
         router.dismiss()
     }
     
@@ -137,7 +132,7 @@ final class ReportIssueViewModel: ObservableObject {
     func showReportIssueActionSheetIfNeeded() {
         showingReportIssueActionSheet = isReportDiscardable
         if !showingReportIssueActionSheet {
-            cancelReport()
+            dismissReport()
         }
     }
     
@@ -150,11 +145,13 @@ final class ReportIssueViewModel: ObservableObject {
         case .createSupportTicketFinished:
             return ReportIssueAlertDataModel(title: Strings.Localizable.Help.ReportIssue.Success.title,
                                              message: Strings.Localizable.Help.ReportIssue.Success.message,
-                                             primaryButtonTitle: Strings.Localizable.ok)
+                                             primaryButtonTitle: Strings.Localizable.ok,
+                                             primaryButtonAction: dismissReport)
         case .cancelUploadReport:
             return ReportIssueAlertDataModel(title: Strings.Localizable.Help.ReportIssue.Creating.Cancel.title,
                                              message: Strings.Localizable.Help.ReportIssue.Creating.Cancel.message,
                                              primaryButtonTitle: Strings.Localizable.continue,
+                                             primaryButtonAction: dismissReport,
                                              secondaryButtoTitle: Strings.Localizable.yes,
                                              secondaryButtonAction: cancelUploadReport)
         case .none:

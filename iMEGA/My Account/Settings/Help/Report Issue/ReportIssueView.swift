@@ -19,8 +19,7 @@ struct ReportIssueView: View {
                     Spacer()
                     
                     TextEditorView(text: $viewModel.details,
-                                   placeholder: Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder,
-                                   isShowingPlaceholder: viewModel.isShowingPlaceholder)
+                                   placeholder: Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder)
                     
                     if viewModel.areLogsEnabled {
                         TextWithToggleView(text: Strings.Localizable.Help.ReportIssue.sendLogFile, toggle: $viewModel.isSendLogFileToggleOn)
@@ -47,7 +46,7 @@ struct ReportIssueView: View {
                     .actionSheet(isPresented: $viewModel.showingReportIssueActionSheet) {
                         ActionSheet(title: Text(""), buttons: [
                             .destructive(Text(Strings.Localizable.Help.ReportIssue.discardReport)) {
-                                viewModel.cancelReport()
+                                viewModel.dismissReport()
                             },
                             .cancel()
                         ])
@@ -66,14 +65,18 @@ struct ReportIssueView: View {
                 if let secondaryButtonAlert = alertData.secondaryButtoTitle {
                     return Alert(title: Text(alertData.title),
                                  message: Text(alertData.message),
-                                 primaryButton: .cancel(Text(alertData.primaryButtonTitle)),
-                                 secondaryButton: .destructive(Text(secondaryButtonAlert), action: {
-                        alertData.secondaryButtonAction?()
+                                 primaryButton: .cancel(Text(alertData.primaryButtonTitle), action: {
+                                    alertData.primaryButtonAction?()
+                                 })
+                                 , secondaryButton: .destructive(Text(secondaryButtonAlert), action: {
+                                    alertData.secondaryButtonAction?()
                     }))
                 } else {
                     return Alert(title: Text(alertData.title),
                                  message: Text(alertData.message),
-                                 dismissButton: .default(Text(alertData.primaryButtonTitle)))
+                                 dismissButton: .default(Text(alertData.primaryButtonTitle), action: {
+                                    alertData.primaryButtonAction?()
+                    }))
                 }
             }
         }

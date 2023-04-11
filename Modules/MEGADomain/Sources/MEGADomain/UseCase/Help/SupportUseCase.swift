@@ -1,7 +1,5 @@
-import Combine
-
 public protocol SupportUseCaseProtocol {
-    func createSupportTicket(withMessage message: String) -> Future<Void, CreateSupportTicketErrorEntity>
+    func createSupportTicket(withMessage message: String) async throws
 }
 
 public struct SupportUseCase: SupportUseCaseProtocol {
@@ -11,7 +9,7 @@ public struct SupportUseCase: SupportUseCaseProtocol {
         self.repo = repo
     }
     
-    public func createSupportTicket(withMessage message: String) -> Future<Void, CreateSupportTicketErrorEntity> {
-        repo.createSupportTicket(withMessage: message)
+    public func createSupportTicket(withMessage message: String) async throws {
+        try await repo.createSupportTicket(withMessage: message)
     }
 }

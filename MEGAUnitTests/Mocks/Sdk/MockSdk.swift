@@ -23,6 +23,7 @@ final class MockSdk: MEGASdk {
     private let incomingNodes: MEGANodeList
     private let outgoingNodes: MEGANodeList
     private let publicLinkNodes: MEGANodeList
+    private let createSupportTicketError: MEGAErrorType
     
     var hasGlobalDelegate = false
     var apiURL: String?
@@ -46,7 +47,8 @@ final class MockSdk: MEGASdk {
          nodeList: MEGANodeList = MEGANodeList(),
          shareList: MEGAShareList = MEGAShareList(),
          isSharedFolderOwnerVerified: Bool = false,
-         sharedFolderOwner: MEGAUser? = nil
+         sharedFolderOwner: MEGAUser? = nil,
+         createSupportTicketError: MEGAErrorType = .apiOk
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -66,6 +68,7 @@ final class MockSdk: MEGASdk {
         self.incomingNodes = incomingNodes
         self.outgoingNodes = outgoingNodes
         self.publicLinkNodes = publicLinkNodes
+        self.createSupportTicketError = createSupportTicketError
         super.init()
     }
     
@@ -283,5 +286,9 @@ final class MockSdk: MEGASdk {
     
     override func accessLevel(for node: MEGANode) -> MEGAShareType {
         shareAccessLevel
+    }
+    
+    override func createSupportTicket(withMessage message: String, type: Int, delegate: MEGARequestDelegate) {
+        delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: MockError(errorType: createSupportTicketError))
     }
 }

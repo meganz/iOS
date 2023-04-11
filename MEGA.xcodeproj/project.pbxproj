@@ -1204,6 +1204,8 @@
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
 		94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94B28C231F0E464C000331E6 /* libKarere.a */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
+		94C7373729D72FE30099E100 /* SupportRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7373629D72FE30099E100 /* SupportRepositoryTests.swift */; };
+		94C7373929D738490099E100 /* MockError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7373829D738490099E100 /* MockError.swift */; };
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
@@ -3691,6 +3693,8 @@
 		94B28C231F0E464C000331E6 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKarere.a; path = "iMEGA/Vendor/Karere/bindings/Objective-C/build/Release-iphoneos/libKarere.a"; sourceTree = "<group>"; };
 		94B28C241F0E464C000331E6 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEGASDK.a; path = "iMEGA/Vendor/SDK/bindings/ios/build/Release-iphoneos/libMEGASDK.a"; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
+		94C7373629D72FE30099E100 /* SupportRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportRepositoryTests.swift; sourceTree = "<group>"; };
+		94C7373829D738490099E100 /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
 		94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepositoryTests.swift; sourceTree = "<group>"; };
@@ -5104,6 +5108,7 @@
 				0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */,
 				94485B5529B9F8EC006B919E /* SearchNodeRepositoryTests.swift */,
 				B5CC2A632994A22800A966A0 /* ShareRepositoryTests.swift */,
+				94C7373629D72FE30099E100 /* SupportRepositoryTests.swift */,
 				3235F2C428C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift */,
 				A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */,
 				6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */,
@@ -9579,6 +9584,7 @@
 		B64A71CC287BA1D70085087D /* Sdk */ = {
 			isa = PBXGroup;
 			children = (
+				94C7373829D738490099E100 /* MockError.swift */,
 				9449939228BD41CC001AE14B /* MockFolderSdk.swift */,
 				6DD04A37292B07CF00B7E797 /* MockMEGASet.swift */,
 				6DD04A39292B28C000B7E797 /* MockMEGASetElement.swift */,
@@ -12770,6 +12776,7 @@
 				8320213622B78D530057D96F /* ContactsOnMegaViewController.swift in Sources */,
 				831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */,
 				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
+				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
 				8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */,
 				94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */,
@@ -14387,6 +14394,7 @@
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
 				B6A6E19D287BCE8300179806 /* MockChatSdk.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
+				94C7373929D738490099E100 /* MockError.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */,
@@ -14473,6 +14481,7 @@
 				C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */,
 				C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */,
 				C45A2E5425D2F82600915A83 /* StreamingInfoUseCaseTests.swift in Sources */,
+				94C7373729D72FE30099E100 /* SupportRepositoryTests.swift in Sources */,
 				BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */,
 				0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */,
 				3235F2C528C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift in Sources */,
