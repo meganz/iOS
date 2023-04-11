@@ -130,16 +130,13 @@ final class FileProviderExtension: NSFileProviderExtension {
                 }
             })
             
-            NSFileProviderManager.default.signalEnumerator(for: identifier) { error in
-                if let error {
-                    MEGALogError("Error signaling item: \(error)")
-                }
+            do {
+                try await NSFileProviderManager.default.signalEnumerator(for: identifier)
+                try await NSFileProviderManager.default.signalEnumerator(for: fileProviderItem.parentItemIdentifier)
+            } catch (let error) {
+                MEGALogError("Error signaling item: \(error)")
             }
-            NSFileProviderManager.default.signalEnumerator(for: fileProviderItem.parentItemIdentifier) { error in
-                if let error {
-                    MEGALogError("Error signaling item: \(error)")
-                }
-            }
+            
         }
     }
     
