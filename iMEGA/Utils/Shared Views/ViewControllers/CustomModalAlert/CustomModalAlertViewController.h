@@ -10,7 +10,7 @@
 @property (nonatomic) UIImage *image;
 @property (getter=shouldRoundImage) BOOL roundImage;
 @property (nonatomic) NSString *viewTitle;
-@property (getter=isCloseButtonHidden) BOOL closeButtonHidden;
+@property (getter=isShowCloseButton) BOOL showCloseButton;
 
 @property (nonatomic) NSString *detail;
 @property (nonatomic) NSString *boldInDetail;

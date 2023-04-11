@@ -20,7 +20,7 @@ extension CustomModalAlertViewController {
             })
         }
         
-        isCloseButtonHidden = false
+        isShowCloseButton = true
         dismissCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: nil)
         }
