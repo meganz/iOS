@@ -101,7 +101,7 @@
         self.linkView.hidden = YES;
     }
     
-    self.closeButton.hidden = self.isCloseButtonHidden;
+    self.closeButton.hidden = !self.isShowCloseButton;
     [self updateAppearance];
 }
 
