@@ -296,15 +296,17 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     
     private func loadChatRoomInfo() {
         loadingChatRoomInfoTask = Task { [weak self] in
+            guard let self else { return }
+            
             let chatId = chatListItem.chatId
             
             do {
-                try await self?.updateDescription()
+                try await self.updateDescription()
             } catch {
                 MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
             }
             
-            guard let self, self.isViewOnScreen else { return }
+            guard self.isViewOnScreen else { return }
             
             do {
                 try Task.checkCancellation()

@@ -157,9 +157,11 @@ final class AlbumContentViewModel: ViewModelType {
     
     func renameAlbum(with name: String) {
         renameAlbumTask = Task { [weak self] in
+            guard let self else { return }
+            
             do {
-                let newName = try await albumModificationUseCase.rename(album: album.id, with: name)
-                await self?.onAlbumRenameSuccess(with: newName)
+                let newName = try await self.albumModificationUseCase.rename(album: album.id, with: name)
+                await self.onAlbumRenameSuccess(with: newName)
             } catch {
                 MEGALogError("Error renaming user album: \(error.localizedDescription)")
             }
@@ -310,12 +312,14 @@ final class AlbumContentViewModel: ViewModelType {
     
     private func updateAlbumCover(albumPhoto: AlbumPhotoEntity) {
         selectAlbumCoverTask = Task { [weak self] in
+            guard let self else { return }
+            
             do {
-                let _ = try await albumModificationUseCase.updateAlbumCover(album: album.id, withAlbumPhoto: albumPhoto)
-                album.coverNode = albumPhoto.photo
+                let _ = try await self.albumModificationUseCase.updateAlbumCover(album: album.id, withAlbumPhoto: albumPhoto)
+                self.album.coverNode = albumPhoto.photo
                 
                 let message = Strings.Localizable.CameraUploads.Albums.albumCoverUpdated
-                self?.invokeCommand?(.showHud(.success(message)))
+                self.invokeCommand?(.showHud(.success(message)))
             } catch {
                 MEGALogError("Error updating user album cover: \(error.localizedDescription)")
             }

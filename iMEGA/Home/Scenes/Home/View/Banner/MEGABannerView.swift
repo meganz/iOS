@@ -141,10 +141,12 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
         bannerDataSourceWithoutDismissedBanner.remove(at: indexOfToBeRemovedBanner)
 
         carouselCollectionView.performBatchUpdates { [weak self] in
-            self?.bannerDataSource = bannerDataSourceWithoutDismissedBanner
-            carouselCollectionView.deleteItems(at: [IndexPath(row: indexOfToBeRemovedBanner, section: 0)])
+            guard let self else { return }
+            
+            self.bannerDataSource = bannerDataSourceWithoutDismissedBanner
+            self.carouselCollectionView.deleteItems(at: [IndexPath(row: indexOfToBeRemovedBanner, section: 0)])
         } completion: { [weak self] finish in
-            guard let self = self else { return }
+            guard let self else { return }
 
             self.carouselPageControl.numberOfPages = self.bannerDataSource.count
             if bannerDataSourceWithoutDismissedBanner.isEmpty {

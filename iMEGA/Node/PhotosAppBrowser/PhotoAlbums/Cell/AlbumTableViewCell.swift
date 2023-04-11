@@ -30,18 +30,18 @@ final class AlbumTableViewCell: UITableViewCell {
         cancelPendingRequests()
         let assets = album.assets(count: albumImageViews.count)
         
-        assets.enumerated().forEach { [weak self] index, asset in
+        assets.enumerated().forEach { index, asset in
             let imageView = albumImageViews[index]
             let assetDownloader = AssetDownloader(asset: asset,
                                                   imageView: imageView,
                                                   imageSize: imageView.frame.size)
             assetDownloader.download { _ in
                 if index == 0 {
-                    self?.hideImageDownloadInProgress()
+                    self.hideImageDownloadInProgress()
                 }
             }
             
-            assetDownloaders.append(assetDownloader)
+            self.assetDownloaders.append(assetDownloader)
         }
     }
     
