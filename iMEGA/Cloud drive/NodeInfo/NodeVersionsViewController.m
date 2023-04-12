@@ -21,15 +21,11 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *revertBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *removeBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *nodeVersionsMutableArray;
-@property (nonatomic, strong) NSMutableArray<MEGANode *> *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
 @end
@@ -45,9 +41,7 @@
     self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
     self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
 
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [self setToolbarItems:@[self.downloadBarButtonItem, flexibleItem, self.revertBarButtonItem, flexibleItem, self.removeBarButtonItem] animated:YES];
-    
+    [self configureToolbarItems];
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     
@@ -330,12 +324,6 @@
 
         [self setToolbarActionsEnabled:NO];
     }        
-}
-
-- (void)setToolbarActionsEnabled:(BOOL)boolValue {
-    self.downloadBarButtonItem.enabled = self.selectedNodesArray.count == 1 ? boolValue : NO;
-    self.revertBarButtonItem.enabled = (self.selectedNodesArray.count == 1 && self.selectedNodesArray.firstObject.handle != self.node.handle && [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] >= MEGAShareTypeAccessReadWrite) ? boolValue : NO;
-    self.removeBarButtonItem.enabled = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] < MEGAShareTypeAccessFull ? NO : boolValue;
 }
 
 - (MEGANode *)nodeForIndexPath:(NSIndexPath *)indexPath {
