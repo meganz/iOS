@@ -105,7 +105,7 @@
     NSRange firstPartRange;
     NSRange secondPartRange;
     
-    stringFromByteCount = [Helper memoryStyleStringFromByteCount:quota];
+    stringFromByteCount = [NSString memoryStyleStringFromByteCount:quota];
 
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
     
@@ -144,7 +144,7 @@
     }
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? NSLocalizedString(@"— GB", nil) : [Helper memoryStyleStringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? NSLocalizedString(@"— GB", nil) : [NSString memoryStyleStringFromByteCount:classStorageReward];
 }
 
 - (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath achievementClass:(MEGAAchievement)achievementClass {
@@ -221,7 +221,7 @@
             cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? NSLocalizedString(@"Expired", nil) : [NSString stringWithFormat:NSLocalizedString(@"account.achievement.complete.valid.cell.subtitle", nil), [NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
             cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         } else {
-            NSString *storageString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
+            NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
             
             cell.storageQuotaRewardLabel.text = storageString;
             cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
@@ -292,7 +292,7 @@
             [NSNumber numberWithInt:MEGAAchievementAddPhone]
         ]];
         
-        NSString *inviteStorageString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
+        NSString *inviteStorageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
         self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.referral.subtitle", nil), inviteStorageString];
         
         self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];

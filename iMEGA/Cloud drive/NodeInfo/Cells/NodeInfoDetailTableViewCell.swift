@@ -61,7 +61,7 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     
     private func configureAsFileSize(withNode node: MEGANode) {
         keyLabel.text = Strings.Localizable.totalSize
-        valueLabel.text = node.mnz_numberOfVersions() == 0 ? Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk()) : Helper.memoryStyleString(fromByteCount: node.mnz_versionsSize())
+        valueLabel.text = node.mnz_numberOfVersions() == 0 ? Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk()) : String.memoryStyleString(fromByteCount: node.mnz_versionsSize())
     }
     
     private func configureAsFileVersionSize(withNode node: MEGANode) {
@@ -79,17 +79,17 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
         let currentSize = folderInfo?.currentSize ?? 0
         let versionsSize = folderInfo?.versionsSize ?? 0
         let byteCount = currentSize + versionsSize
-        valueLabel.text = Helper.memoryStyleString(fromByteCount: byteCount)
+        valueLabel.text = String.memoryStyleString(fromByteCount: byteCount)
     }
     
     private func configureAsCurrentFolderVersionsSize(withFolderInfo folderInfo: MEGAFolderInfo?) {
         keyLabel.text = Strings.Localizable.currentVersion
-        valueLabel.text = Helper.memoryStyleString(fromByteCount: folderInfo?.currentSize ?? 0)
+        valueLabel.text = String.memoryStyleString(fromByteCount: folderInfo?.currentSize ?? 0)
     }
     
     private func configureAsPreviousFolderVersionsSize(withFolderInfo folderInfo: MEGAFolderInfo?) {
         keyLabel.text = Strings.Localizable.previousVersions
-        valueLabel.text = Helper.memoryStyleString(fromByteCount: folderInfo?.versionsSize ?? 0)
+        valueLabel.text = String.memoryStyleString(fromByteCount: folderInfo?.versionsSize ?? 0)
     }
     
     private func configureAsContains(withFolderInfo folderInfo: MEGAFolderInfo?) {

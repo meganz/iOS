@@ -263,7 +263,7 @@ final class AudioPlayerViewModel: ViewModelType {
         invokeCommand?(.reloadNodeInfo(name: currentItem.name,
                                        artist: currentItem.artist ?? "",
                                        thumbnail: currentItem.artwork,
-                                       size: Helper.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
+                                       size: String.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
         
         configEntity.playerHandler.refreshCurrentItemState()
         
@@ -388,9 +388,9 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     
     func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?, url: String) {
         if configEntity.fileLink != nil, !configEntity.isFolderLink {
-            invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
+            invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: String.memoryStyleString(fromByteCount: configEntity.node?.size?.int64Value ?? Int64(0))))
         } else {
-            self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: Helper.memoryStyleString(fromByteCount: Int64(0))))
+            self.invokeCommand?(.reloadNodeInfo(name: name, artist: artist, thumbnail: thumbnail, size: String.memoryStyleString(fromByteCount: Int64(0))))
         }
     }
     

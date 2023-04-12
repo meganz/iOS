@@ -924,6 +924,8 @@
 		8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */; };
 		8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */; };
 		83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */; };
+		83751C6729E5AE4E0030310B /* NSString+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83751C6629E5AE4D0030310B /* NSString+Additions.swift */; };
+		83751C6829E5B2040030310B /* NSString+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83751C6629E5AE4D0030310B /* NSString+Additions.swift */; };
 		8375B74325EFC77500B70F6B /* RecentsQuickAccessWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B73025EFC68000B70F6B /* RecentsQuickAccessWidgetViewModel.swift */; };
 		8375B75425EFC77D00B70F6B /* RecentsQuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B72F25EFC67F00B70F6B /* RecentsQuickAccessWidget.swift */; };
 		8375B76525EFC7FB00B70F6B /* FavouritesQuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B72325EFC65200B70F6B /* FavouritesQuickAccessWidget.swift */; };
@@ -3433,6 +3435,7 @@
 		8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Additions.swift"; sourceTree = "<group>"; };
 		83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
 		83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAQLPreviewController.h; sourceTree = "<group>"; };
+		83751C6629E5AE4D0030310B /* NSString+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+Additions.swift"; sourceTree = "<group>"; };
 		8375B72325EFC65200B70F6B /* FavouritesQuickAccessWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesQuickAccessWidget.swift; sourceTree = "<group>"; };
 		8375B72425EFC65200B70F6B /* FavouritesQuickAccessWidgetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesQuickAccessWidgetViewModel.swift; sourceTree = "<group>"; };
 		8375B72F25EFC67F00B70F6B /* RecentsQuickAccessWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentsQuickAccessWidget.swift; sourceTree = "<group>"; };
@@ -6243,6 +6246,7 @@
 				41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */,
 				2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */,
 				2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */,
+				83751C6629E5AE4D0030310B /* NSString+Additions.swift */,
 				41BADDAB1A8E1659008408B3 /* NSString+MNZCategory.h */,
 				41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */,
 				2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */,
@@ -13401,6 +13405,7 @@
 				B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */,
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */,
+				83751C6729E5AE4E0030310B /* NSString+Additions.swift in Sources */,
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */,
 				2F53F84F2612B8860027A5EF /* NSURL+Deeplinking.swift in Sources */,
@@ -14206,6 +14211,7 @@
 				C46517B2272C9FBD004F27A0 /* NodeTypeEntity+Mapper.swift in Sources */,
 				5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */,
 				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,
+				83751C6829E5B2040030310B /* NSString+Additions.swift in Sources */,
 				941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */,
 				5BE689B42419188A00462134 /* OfflineAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B22419187F00462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,

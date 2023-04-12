@@ -3,13 +3,14 @@ import XCTest
 import MEGADomainMock
 import MEGADomain
 import MEGAPresentation
+import MEGASwift
 
 final class AddPhoneNumberViewModelTests: XCTestCase {
     
     func testAction_onViewReady_achievementSuccess() {
         let hideDontShowAgains = [true, false]
         
-        let text = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(Helper.memoryStyleString(fromByteCount: 1000))
+        let text = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(String.memoryStyleString(fromByteCount: 1000))
 
         for flag in hideDontShowAgains {
             let sut = AddPhoneNumberViewModel(router: MockAddPhoneNumberRouter(),

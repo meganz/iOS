@@ -132,13 +132,13 @@
     if (firstNumber.boolValue == 0) {
         firstPartString = @"-";
     } else {
-        firstPartString = [Helper memoryStyleStringFromByteCount:firstNumber.longLongValue];
+        firstPartString = [NSString memoryStyleStringFromByteCount:firstNumber.longLongValue];
     }
     
     if (secondNumber.boolValue == 0) {
         secondPartString = @"-";
     } else {
-        secondPartString = [Helper memoryStyleStringFromByteCount:secondNumber.longLongValue];
+        secondPartString = [NSString memoryStyleStringFromByteCount:secondNumber.longLongValue];
     }
     
     self.pieChartSecondaryLabel.text = [NSString stringWithFormat:@"%@ / %@", firstPartString, secondPartString];
@@ -146,7 +146,7 @@
 }
 
 - (NSString * _Nonnull)textForSizeLabels:(NSNumber * _Nonnull)number {
-    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:number.longLongValue];
+    NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:number.longLongValue];
     
     return [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
 }

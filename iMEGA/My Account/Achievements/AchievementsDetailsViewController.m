@@ -92,7 +92,7 @@
 
 - (void)setupCompletedAchievementDetail {
     NSInteger awardId = [self.achievementsDetails awardIdAtIndex:[self.completedAchievementIndex unsignedIntegerValue]];
-    NSString *storageRewardString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails rewardStorageByAwardId:awardId]];
+    NSString *storageRewardString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails rewardStorageByAwardId:awardId]];
     NSString *howItWorksCompletedExplanation = @"";
     switch (self.achievementClass) {
         case MEGAAchievementWelcome: {
@@ -124,7 +124,7 @@
 
 - (void)setupIncompletedAchievementDetail {
     self.subtitleView.layer.borderWidth = 0;
-    NSString *storageString = [Helper memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:self.achievementClass]];
+    NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:self.achievementClass]];
     self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.incomplete.subtitle", nil), storageString];
     
     self.howItWorksLabel.text = NSLocalizedString(@"howItWorks", nil);

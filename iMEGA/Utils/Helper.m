@@ -466,17 +466,6 @@
     return MEGASortOrderTypeDefaultAsc;
 }
 
-+ (NSString *)memoryStyleStringFromByteCount:(long long)byteCount {
-    static NSByteCountFormatter *byteCountFormatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        byteCountFormatter = NSByteCountFormatter.alloc.init;
-        byteCountFormatter.countStyle = NSByteCountFormatterCountStyleMemory;
-    });
-    
-    return [byteCountFormatter stringFromByteCount:byteCount];
-}
-
 + (void)changeApiURL {
     NSString *alertTitle = NSLocalizedString(@"Change to a test server?", @"title of the alert dialog when the user is changing the API URL to staging");
     NSString *alertMessage = NSLocalizedString(@"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems", @"text of the alert dialog when the user is changing the API URL to staging");
@@ -618,9 +607,9 @@
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
     NSString *size;
     if ([node isFile]) {
-        size = [Helper memoryStyleStringFromByteCount:node.size.longLongValue];
+        size = [NSString memoryStyleStringFromByteCount:node.size.longLongValue];
     } else {
-        size = [Helper memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
+        size = [NSString memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
     }
     return size;
 }

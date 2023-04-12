@@ -1,5 +1,6 @@
 import UIKit
 import MEGAFoundation
+import MEGASwift
 
 class StorageFullModalAlertViewController: CustomModalAlertViewController {
     
@@ -27,7 +28,7 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
         viewTitle = Strings.Localizable.deviceStorageAlmostFull
         detail = Strings.Localizable.MEGANeedsAMinimumOf
             .FreeUpSomeSpaceByDeletingAppsYouNoLongerUseOrLargeVideoFilesInYourGallery
-            .youCanAlsoManageWhatMEGAStoresOnYourDevice(Helper.memoryStyleString(fromByteCount: requiredStorage))
+            .youCanAlsoManageWhatMEGAStoresOnYourDevice(String.memoryStyleString(fromByteCount: requiredStorage))
 
         firstButtonTitle = Strings.Localizable.manage
 

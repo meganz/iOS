@@ -137,7 +137,7 @@
     [self.clearRubbishBinAI stopAnimating];
     self.clearRubbishBinDetailLabel.hidden = NO;
     NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
+    NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
     self.clearRubbishBinDetailLabel.text = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
 }
 

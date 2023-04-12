@@ -263,12 +263,12 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
             switch (megaLink as NSURL).mnz_type() {
             case .fileLink:
                 return (chatMessage.message.node?.name ?? "",
-                        Helper.memoryStyleString(fromByteCount: Int64(truncating: chatMessage.message.node?.size ?? 0)),
+                        String.memoryStyleString(fromByteCount: Int64(truncating: chatMessage.message.node?.size ?? 0)),
                         "mega.nz")
                 
             case .folderLink:
                 return (chatMessage.message.richTitle ?? "",
-                        String(format: "%@\n%@", chatMessage.message.richString ?? "", Helper.memoryStyleString(fromByteCount: max(chatMessage.message.richNumber?.int64Value ?? 0, 0))),
+                        String(format: "%@\n%@", chatMessage.message.richString ?? "", String.memoryStyleString(fromByteCount: max(chatMessage.message.richNumber?.int64Value ?? 0, 0))),
                         "mega.nz")
                 
             case .publicChatLink:
