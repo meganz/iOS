@@ -21,7 +21,7 @@ import UIKit
         navigationItem.title = Strings.Localizable.onMEGA
         inviteContactLabel.text = Strings.Localizable.inviteContact
         
-        searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
+        searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)
         searchController.hidesNavigationBarDuringPresentation = false
         
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")

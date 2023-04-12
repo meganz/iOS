@@ -26,6 +26,7 @@
 #import "EmptyStateView.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
+@import MEGAUIKit;
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate> {
     BOOL allNodesSelected;
@@ -187,7 +188,7 @@
 }
 
 - (void)configSearchController {
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;

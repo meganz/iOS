@@ -68,8 +68,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 
 #pragma mark - Utils for UI
 
-+ (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
-
 + (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
 

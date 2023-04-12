@@ -1,5 +1,6 @@
 
 import UIKit
+import MEGAUIKit
 
 class ContactsGroupsViewController: UIViewController {
 
@@ -19,7 +20,7 @@ class ContactsGroupsViewController: UIViewController {
         title = Strings.Localizable.groups
         newGroupChatLabel.text = Strings.Localizable.newGroupChat
         
-        searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
+        searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)
         navigationItem.searchController = searchController
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
         

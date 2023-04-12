@@ -26,6 +26,7 @@
 #import "ItemListViewController.h"
 #import "NSString+MNZCategory.h"
 @import DZNEmptyDataSet;
+@import MEGAUIKit;
 
 @interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -92,7 +93,7 @@
     
     self.navigationItem.title = NSLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;

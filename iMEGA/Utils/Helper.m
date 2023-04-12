@@ -645,19 +645,6 @@
     }
 }
 
-#pragma mark - Utils for UI
-
-+ (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate {
-    UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    searchController.searchResultsUpdater = searchResultsUpdaterDelegate;
-    searchController.searchBar.delegate = searchBarDelegate;
-    searchController.obscuresBackgroundDuringPresentation = NO;
-    searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    searchController.searchBar.translucent = NO;
-    
-    return searchController;
-}
-
 #pragma mark - Manage session
 
 + (BOOL)hasSession_alertIfNot {

@@ -29,6 +29,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 #import "NSArray+MNZCategory.h"
+@import MEGAUIKit;
 
 @interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -127,7 +128,7 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.delegate = self;
     
     [self.createGroupBarButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:1 green:1 blue:1 alpha:.5]} forState:UIControlStateDisabled];
