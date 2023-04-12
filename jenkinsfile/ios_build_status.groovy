@@ -115,66 +115,6 @@ pipeline {
             }
         }
 
-        stage('MEGADomain - Run unit tests and generate code coverage') {
-            steps {
-                gitlabCommitStatus(name: 'MEGADomain - Run unit tests and generate code coverage') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane module_coverage module:MEGADomain"
-                    })
-                }
-            }
-        }
-
-        stage('MEGASwift - Run unit tests and generate code coverage') {
-            steps {
-                gitlabCommitStatus(name: 'MEGASwift - Run unit tests and generate code coverage') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane module_coverage module:MEGASwift"
-                    })
-                }
-            }
-        }
-
-        stage('MEGAFoundation - Run unit tests and generate code coverage') {
-            steps {
-                gitlabCommitStatus(name: 'MEGAFoundation - Run unit tests and generate code coverage') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane module_coverage module:MEGAFoundation"
-                    })
-                }
-            }
-        }
-
-        stage('MEGAUI - Run unit tests and generate code coverage') {
-            steps {
-                gitlabCommitStatus(name: 'MEGAUI - Run unit tests and generate code coverage') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane module_coverage module:MEGAUI"
-                    })
-                }
-            }
-        }
-
-        stage('MEGASwiftUI - Run unit tests and generate code coverage') {
-            steps {
-                gitlabCommitStatus(name: 'MEGASwiftUI - Run unit tests and generate code coverage') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane module_coverage module:MEGASwiftUI"
-                    })
-                }
-            }
-        }
-
-        stage('MEGAUIKit - Run unit tests and generate code coverage') {
-            steps {
-                gitlabCommitStatus(name: 'MEGAUIKit - Run unit tests and generate code coverage') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane module_coverage module:MEGAUIKit"
-                    })
-                }
-            }
-        }
-
         stage('main app - Run Unit test and generate code coverage') {
             steps {
                 gitlabCommitStatus(name: 'main app - Run unit tes and generate code coveraget') {
