@@ -288,8 +288,8 @@ platform :ios do
       json_report: true
     ) 
 
-    mainapp_report_json = read_json(json_path: "xcov_output/report.json") 
-    complete_report_json = read_json(json_path: "CodeCoverage/report.json")
+    mainapp_report_json = read_json(json_path: "xcov_output/report.json")
+    complete_report_json = {}
 
     targets = mainapp_report_json[:targets]
     targets.each do |target|
@@ -297,44 +297,6 @@ platform :ios do
     end
 
     write_json(file_path: "#{__dir__}/CodeCoverage/report.json", hash: complete_report_json)
-  end
-
-  lane :module_coverage do |options|
-    spm(
-      command: 'generate-xcodeproj',
-      enable_code_coverage: true,
-      package_path: "Modules/#{options[:module]}",
-      build_path: "Modules/#{options[:module]}/build"
-    )
-
-    scan(
-      project: "Modules/#{options[:module]}/#{options[:module]}.xcodeproj",
-      scheme: "#{options[:module]}-Package",
-      device: "iPhone 14 Pro Max",
-      output_directory: "Modules/#{options[:module]}/reports",
-      derived_data_path: "Modules/#{options[:module]}/derivedData",
-      clean: true
-    )
-
-    xcov(
-      project: "Modules/#{options[:module]}/#{options[:module]}.xcodeproj",
-      scheme: "#{options[:module]}-Package",
-      output_directory: "Modules/#{options[:module]}/CodeCoverage",
-      derived_data_path: "Modules/#{options[:module]}/derivedData",
-      include_targets: "#{options[:module]}.framework",
-      json_report: true
-    )
-
-    module_report_json = read_json(json_path: "Modules/#{options[:module]}/CodeCoverage/report.json")
-
-    if File.exist?(File.expand_path('../CodeCoverage/report.json'))
-      complete_report_json = read_json(json_path: "CodeCoverage/report.json")
-      complete_report_json[options[:module]] = module_report_json[:coverage]
-      write_json(file_path: "#{__dir__}/CodeCoverage/report.json", hash: complete_report_json)
-    else
-      json = { options[:module] => module_report_json[:coverage] }.to_json
-      write_json(file_path: "#{__dir__}/CodeCoverage/report.json", hash: json)
-    end
   end
 
   desc "Download metadata"
