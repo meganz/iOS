@@ -49,6 +49,7 @@
 #import "UIViewController+MNZCategory.h"
 
 @import Photos;
+@import MEGAUIKit;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;
@@ -157,8 +158,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
     [warningVC showStorageAlertIfNeeded];
-    
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     

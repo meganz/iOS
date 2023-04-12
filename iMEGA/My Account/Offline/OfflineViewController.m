@@ -23,6 +23,7 @@
 #import "OfflineTableViewCell.h"
 #import "UIViewController+MNZCategory.h"
 #import "NSArray+MNZCategory.h"
+@import MEGAUIKit;
 
 static NSString *kFileName = @"kFileName";
 static NSString *kIndex = @"kIndex";
@@ -80,7 +81,7 @@ static NSString *kisDirectory = @"kisDirectory";
         self.offlineTableView.tableView.allowsMultipleSelectionDuringEditing = YES;
     }
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
 }

@@ -1,5 +1,6 @@
 
 import UIKit
+import MEGAUIKit
 
 @objc protocol ContactsPickerViewControllerDelegate {
     func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String])
@@ -75,7 +76,7 @@ class ContactsPickerViewController: UIViewController {
     // MARK: - Private
     
     private func addSearchController() {
-        searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
+        searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)
         searchController.hidesNavigationBarDuringPresentation = false
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
