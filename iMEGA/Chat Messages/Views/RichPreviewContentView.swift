@@ -69,7 +69,7 @@ class RichPreviewContentView: UIView {
             case .fileLink:
                 let node = message.node
                 titleLabel.text = node?.name
-                descriptionLabel.text = Helper.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
+                descriptionLabel.text = String.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
                 linkLabel.text = "mega.nz"
                 iconImageView.image = Asset.Images.Logo.favicon.image
                 if let node = node {
@@ -77,7 +77,7 @@ class RichPreviewContentView: UIView {
                 }
             case .folderLink:
                 titleLabel.text = message.richTitle
-                descriptionLabel.text = String(format: "%@\n%@", message.richString ?? "", Helper.memoryStyleString(fromByteCount: max(message.richNumber?.int64Value ?? 0, 0)))
+                descriptionLabel.text = String(format: "%@\n%@", message.richString ?? "", String.memoryStyleString(fromByteCount: max(message.richNumber?.int64Value ?? 0, 0)))
                 linkLabel.text = "mega.nz"
                 iconImageView.image = Asset.Images.Logo.favicon.image
                 imageView.image = UIImage.mnz_folder()

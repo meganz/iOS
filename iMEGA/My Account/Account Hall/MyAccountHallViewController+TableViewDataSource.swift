@@ -25,16 +25,16 @@ extension MyAccountHallViewController: UITableViewDataSource {
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
                               storageText: Strings.Localizable.storage,
                               transferText: Strings.Localizable.transfer,
-                              storageUsedText: NSString.mnz_formatString(fromByteCountFormatter: Helper.memoryStyleString(fromByteCount: accountDetails?.storageUsed.int64Value ?? 0)),
-                              transferUsedText: NSString.mnz_formatString(fromByteCountFormatter: Helper.memoryStyleString(fromByteCount: accountDetails?.transferOwnUsed.int64Value ?? 0)))
+                              storageUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.storageUsed.int64Value ?? 0)),
+                              transferUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.transferOwnUsed.int64Value ?? 0)))
     }
     
     //MARK: - Storage row setup data
     private func storageSetupData() -> MyAccountHallCellData {
         let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails
         let detailText = String(format: "%@ / %@",
-                                NSString.mnz_formatString(fromByteCountFormatter: Helper.memoryStyleString(fromByteCount: accountDetails?.storageUsed.int64Value ?? 0)),
-                                NSString.mnz_formatString(fromByteCountFormatter: Helper.memoryStyleString(fromByteCount: accountDetails?.storageMax.int64Value ?? 0)))
+                                NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.storageUsed.int64Value ?? 0)),
+                                NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.storageMax.int64Value ?? 0)))
         
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
                                      detailText: detailText,

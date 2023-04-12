@@ -162,7 +162,7 @@ static NSString *kPath = @"kPath";
         
         unsigned long long size = [NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil].fileSize;
         
-        cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", [Helper memoryStyleStringFromByteCount:size], modificationDate.mnz_formattedDateMediumTimeShortStyle];
+        cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", [NSString memoryStyleStringFromByteCount:size], modificationDate.mnz_formattedDateMediumTimeShortStyle];
     }
     cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     

@@ -9,6 +9,7 @@
 #import "NSDate+MNZCategory.h"
 
 #import "AchievementsTableViewCell.h"
+#import "MEGA-Swift.h"
 
 @interface ReferralBonusesTableViewController () <UITableViewDataSource>
 
@@ -68,7 +69,7 @@
     long long classStorageReward = [self.achievementsDetails rewardStorageByAwardId:awardId];
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? NSLocalizedString(@"— GB", nil) : [Helper memoryStyleStringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? NSLocalizedString(@"— GB", nil) : [NSString memoryStyleStringFromByteCount:classStorageReward];
 }
 
 #pragma mark - UITableViewDataSource

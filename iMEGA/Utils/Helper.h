@@ -45,8 +45,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 + (MEGASortOrderType)sortTypeFor:(_Nullable id)object;
 + (MEGASortOrderType)defaultSortType;
 
-+ (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
-
 + (void)changeApiURL;
 + (void)restoreAPISetting;
 + (void)cannotPlayContentDuringACallAlert;

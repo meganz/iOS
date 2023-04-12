@@ -166,7 +166,7 @@ static NSString *kDuration = @"kDuration";
             });
         });
     } else {
-        self.infoLabel.text = [Helper memoryStyleStringFromByteCount:[item[kFileSize] longLongValue]];
+        self.infoLabel.text = [NSString memoryStyleStringFromByteCount:[item[kFileSize] longLongValue]];
         NSString *extension = nameString.pathExtension.lowercaseString;
         
         if (!handleString) {

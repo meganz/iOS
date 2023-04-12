@@ -131,7 +131,7 @@ extension UsageViewController {
                 usageSizeLabel?.text = "-"
                 return
             }
-            usageSizeLabel?.text = Helper.memoryStyleString(fromByteCount: usedStorage.int64Value)
+            usageSizeLabel?.text = String.memoryStyleString(fromByteCount: usedStorage.int64Value)
             
         case 1:
             usageTitleLabel?.text = Strings.Localizable.Account.Storage.TransferUsed.title
@@ -139,7 +139,7 @@ extension UsageViewController {
                 usageSizeLabel?.text = "-"
                 return
             }
-            usageSizeLabel?.text = Helper.memoryStyleString(fromByteCount: transferOwnUsed.int64Value)
+            usageSizeLabel?.text = String.memoryStyleString(fromByteCount: transferOwnUsed.int64Value)
             
         default: return
         }

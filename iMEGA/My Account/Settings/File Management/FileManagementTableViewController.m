@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 - (void)reloadUI {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         unsigned long long offlineSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
-        self.offlineSizeString = [Helper memoryStyleStringFromByteCount:offlineSize];
+        self.offlineSizeString = [NSString memoryStyleStringFromByteCount:offlineSize];
         self.offlineSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.offlineSizeString];
         self.isOfflineSizeEmpty = [NSString mnz_isByteCountEmpty:self.offlineSizeString];
         
@@ -119,7 +119,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         unsigned long long groupDirectory = [NSFileManager.defaultManager mnz_groupSharedDirectorySize];
         unsigned long long cacheSize = cachesFolderSize + temporaryDirectory + groupDirectory;
         
-        self.cacheSizeString = [Helper memoryStyleStringFromByteCount:cacheSize];
+        self.cacheSizeString = [NSString memoryStyleStringFromByteCount:cacheSize];
         self.cacheSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.cacheSizeString];
         self.isCacheSizeEmpty = [NSString mnz_isByteCountEmpty:self.cacheSizeString];
         
@@ -217,7 +217,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
             
         case FileManagementTableSectionOnMEGA: {
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
-            NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
+            NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
             stringFromByteCount = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
             NSString *currentlyUsingString = NSLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:stringFromByteCount];

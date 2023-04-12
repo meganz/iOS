@@ -65,12 +65,12 @@ class ChatViewAttachmentCellViewModel {
     private func subtitleForAttachment() -> String {
         if message.nodeList?.size.uintValue == 1 {
             let size = message.nodeList?.node(at: 0)?.size ?? 0
-            return Helper.memoryStyleString(fromByteCount: size.int64Value)
+            return String.memoryStyleString(fromByteCount: size.int64Value)
         } else {
             let totalSize = (0..<(message.nodeList?.size.intValue ?? 0))
                 .compactMap({ message.nodeList?.node(at: $0)?.size?.int64Value })
                 .reduce(0, +)
-            return Helper.memoryStyleString(fromByteCount: totalSize)
+            return String.memoryStyleString(fromByteCount: totalSize)
         }
     }
     

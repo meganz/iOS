@@ -13,4 +13,10 @@ final class MEGASwiftTests: XCTestCase {
         let string = try XCTUnwrap(base64Encoded.base64Decoded)
         XCTAssertEqual(string, "Hello, MEGA!")
     }
+    
+    func testMemoryStyleString() {
+        let oneMegaInBytes: Int64 = 1048576
+        let onMegaString = "1 MB"
+        XCTAssertEqual(onMegaString, String.memoryStyleString(fromByteCount: oneMegaInBytes))
+    }
 }

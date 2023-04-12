@@ -30,7 +30,7 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
             let folderSize = folderInfo?.currentSize ?? 0
             let versionSize = folderInfo?.versionsSize ?? 0
             let totalSize = folderSize + versionSize
-            sizeLabel.text = Helper.memoryStyleString(fromByteCount: totalSize)
+            sizeLabel.text = String.memoryStyleString(fromByteCount: totalSize)
         }
         
         shareButton.titleLabel?.font = UIFont.preferredFont(style: .caption1, weight: .bold)
