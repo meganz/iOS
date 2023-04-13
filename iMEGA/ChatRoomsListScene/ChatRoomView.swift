@@ -205,7 +205,7 @@ fileprivate struct ChatRoomContentDescriptionView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     
     var body: some View {
-        if viewModel.existsInProgressCallInChatRoom {
+        if viewModel.chatListItem.meeting, viewModel.existsInProgressCallInChatRoom {
             Text(
                 viewModel.totalCallDuration > 0
                 ? Strings.Localizable.Meetings.Scheduled.Listing.InProgress.descriptionWithDuration(viewModel.totalCallDuration.timeString)
