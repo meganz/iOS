@@ -10,10 +10,15 @@ extension MEGAPhotoBrowserViewController {
         DateFormatter.fromTemplate("MMMM dd • HH:mm").localisedString(from: date)
     }
     
-    @objc func freeUpSpace(onImageViewCache cache: NSCache<NSNumber, UIScrollView>, scrollView: UIScrollView) {
+    @objc func freeUpSpace(
+        onImageViewCache cache: NSCache<NSNumber, UIScrollView>,
+        imageViewsZoomCache: NSCache<NSNumber, NSNumber>,
+        scrollView: UIScrollView
+    ) {
         SVProgressHUD.show()
         scrollView.subviews.forEach({ $0.removeFromSuperview() })
         cache.removeAllObjects()
+        imageViewsZoomCache.removeAllObjects()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             SVProgressHUD.dismiss()

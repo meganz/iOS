@@ -54,6 +54,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *allMediaToolBarItem;
 
 @property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
+@property (nonatomic) NSCache<NSNumber *, NSNumber *> *imageViewsZoomCache;
 @property (nonatomic) UIImageView *targetImageView;
 
 @property (nonatomic) CGPoint panGestureInitialPoint;
@@ -97,7 +98,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    self.imageViewsZoomCache = [[NSCache<NSNumber *, NSNumber *> alloc] init];
+
     self.modalPresentationCapturesStatusBarAppearance = YES;
     self.panGestureInitialPoint = CGPointZero;
     [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)]];
@@ -256,7 +259,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)didReceiveMemoryWarning {
     [CrashlyticsLogger log:@"[Photo Browser] Did receive memory warning"];
-    [self freeUpSpaceOnImageViewCache:self.imageViewsCache scrollView:self.scrollView];
+    [self freeUpSpaceOnImageViewCache:self.imageViewsCache imageViewsZoomCache: self.imageViewsZoomCache scrollView:self.scrollView];
     [self reloadUI];
     [super didReceiveMemoryWarning];
 }
@@ -517,6 +520,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
+        [_imageViewsZoomCache setObject: @(scale) forKey:@(self.dataProvider.currentIndex)];
+
         [self resizeImageView:(UIImageView *)view];
         
         [self configLiveTextLayout];
@@ -594,15 +599,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             UIScrollView *zoomableView = [[UIScrollView alloc] initWithFrame:CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
             zoomableView.minimumZoomScale = 1.0f;
             zoomableView.maximumZoomScale = [self maximumZoomScaleWith:node zoomableView:zoomableView imageView:imageView];
-            zoomableView.zoomScale = 1.0f;
             zoomableView.contentSize = imageView.bounds.size;
             zoomableView.delegate = self;
             zoomableView.showsHorizontalScrollIndicator = NO;
             zoomableView.showsVerticalScrollIndicator = NO;
             zoomableView.tag = 2;
             [zoomableView addSubview:imageView];
-            [self resizeImageView:imageView];
-            
+            NSNumber* cachedZoomValue = [_imageViewsZoomCache objectForKey:@(i)];
+            [zoomableView setZoomScale: (cachedZoomValue != nil ? [cachedZoomValue floatValue] : 1.0f)];
+
             if (node.name.mnz_isVideoPathExtension) {
                 UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
                 if (node.mnz_isPlayable) {
