@@ -49,7 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
-- (void)updateNavigationBarTitle;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
 - (void)didSelectNode:(MEGANode *)node;
 - (void)moveNode:(MEGANode * _Nonnull)node;

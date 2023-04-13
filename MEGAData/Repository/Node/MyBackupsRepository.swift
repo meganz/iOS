@@ -30,6 +30,12 @@ struct MyBackupsRepository: MyBackupsRepositoryProtocol {
         return path.hasPrefix(Constants.myBackupsNodePath)
     }
     
+    func isMyBackupsRootNode(_ node: NodeEntity) -> Bool {
+        guard let megaNode = node.toMEGANode(in: sdk),
+              let path = sdk.nodePath(for: megaNode) else { return false }
+        return path == Constants.myBackupsNodePath
+    }
+    
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool {
         guard node.deviceId != nil, let parentNode = sdk.node(forHandle: node.parentHandle) else { return false }
         return BackupRootNodeAccess.shared.isTargetNode(for: parentNode)

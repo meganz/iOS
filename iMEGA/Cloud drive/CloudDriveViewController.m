@@ -629,53 +629,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }) animated:YES completion:nil];
 }
 
-- (void)updateNavigationBarTitle {
-    NSString *navigationTitle;
-    if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
-        if (self.selectedNodesArray.count == 0) {
-            navigationTitle = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
-        } else {
-            navigationTitle = (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
-        }
-    } else {
-        switch (self.displayMode) {
-            case DisplayModeCloudDrive: {
-                if (!self.parentNode || self.parentNode.type == MEGANodeTypeRoot) {
-                    navigationTitle = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-                } else {
-                    navigationTitle = [self.parentNode name];
-                }
-                break;
-            }
-                
-            case DisplayModeRubbishBin: {
-                if ([self.parentNode type] == MEGANodeTypeRubbish) {
-                    navigationTitle = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
-                } else {
-                    navigationTitle = [self.parentNode name];
-                }
-                break;
-            }
-                
-            case DisplayModeRecents: {
-                navigationTitle = [NSString stringWithFormat:NSLocalizedString(@"%1$d items", @"Plural of items which contains a folder. 2 items"), self.nodes.size.intValue];
-                break;
-            }
-                
-            case DisplayModeBackup: {
-                BOOL isMyBackupsRootNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.parentNode];
-                self.navigationItem.title = isMyBackupsRootNode ? NSLocalizedString(@"backups.title", @"Title of the backups section") :  [self.parentNode name];
-            }
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-    self.navigationItem.title = navigationTitle;
-}
-
 - (void)encourageToUpgrade {
     if (self.tabBarController == nil) { //Avoid presenting Upgrade view when peeking
         return;

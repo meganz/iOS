@@ -1,14 +1,14 @@
 import MEGADomain
 
 extension CloudDriveViewController {
-    private func contextMenuBackupConfiguration() async -> CMConfigEntity? {
+    private func contextMenuBackupConfiguration() -> CMConfigEntity? {
         guard let parentNode else { return nil }
         
         let parentNodeAccessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
         let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
         let parentNodeEntity = parentNode.toNodeEntity()
         let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isMyBackupsNode = await myBackupsUseCase.isMyBackupsRootNode(parentNodeEntity)
+        let isMyBackupsNode = myBackupsUseCase.isMyBackupsRootNode(parentNodeEntity)
         var isMyBackupsChild = false
         if !isMyBackupsNode {
             isMyBackupsChild = myBackupsUseCase.isBackupNode(parentNodeEntity)
@@ -30,23 +30,21 @@ extension CloudDriveViewController {
     }
     
     @objc func setBackupNavigationBarButtons() {
-        Task { @MainActor in
-            guard let menuConfig = await contextMenuBackupConfiguration() else { return }
-            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
-                                                   menu: contextMenuManager?.contextMenu(with: menuConfig))
-            
-            if displayMode != .rubbishBin,
-               displayMode != .backup,
-               !isFromViewInFolder,
-               let parentNode = parentNode,
-               MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
-                guard let menuConfig = uploadAddMenuConfiguration() else { return }
-                uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
-                                                         menu: contextMenuManager?.contextMenu(with: menuConfig))
-                navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
-            } else {
-                navigationItem.rightBarButtonItems = [contextBarButtonItem]
-            }
+        guard let menuConfig = contextMenuBackupConfiguration() else { return }
+        contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+                                               menu: contextMenuManager?.contextMenu(with: menuConfig))
+        
+        if displayMode != .rubbishBin,
+           displayMode != .backup,
+           !isFromViewInFolder,
+           let parentNode = parentNode,
+           MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
+            guard let menuConfig = uploadAddMenuConfiguration() else { return }
+            uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
+                                                     menu: contextMenuManager?.contextMenu(with: menuConfig))
+            navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
+        } else {
+            navigationItem.rightBarButtonItems = [contextBarButtonItem]
         }
 
         if presentingViewController != nil {
