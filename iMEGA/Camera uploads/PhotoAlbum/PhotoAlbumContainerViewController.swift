@@ -192,6 +192,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
             .store(in: &subscriptions)
         
         viewModel.$shouldShowSelectBarButton
+            .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateRightBarButton()

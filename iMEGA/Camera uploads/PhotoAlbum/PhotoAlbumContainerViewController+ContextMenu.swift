@@ -44,7 +44,10 @@ extension PhotoAlbumContainerViewController {
     
     func updateRightBarButton() {
         guard FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum) &&
-              pageTabViewModel.selectedTab == .album else { return }
+                pageTabViewModel.selectedTab == .album else {
+                    navigationItem.setRightBarButtonItems(nil, animated: false)
+                    return
+                }
         
         navigationItem.setRightBarButtonItems(viewModel.shouldShowSelectBarButton ? [selectBarButton] : nil, animated: false)
     }
