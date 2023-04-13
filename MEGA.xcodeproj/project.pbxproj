@@ -833,7 +833,6 @@
 		8348A8DA2901909400B66463 /* ChatRoomActiveCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348A8D92901909400B66463 /* ChatRoomActiveCallView.swift */; };
 		834AFD1D2492567A005DF37C /* MEGAChatPeerList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD1C2492567A005DF37C /* MEGAChatPeerList+Additions.swift */; };
 		834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD1C2492567A005DF37C /* MEGAChatPeerList+Additions.swift */; };
-		834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD202498E7E1005DF37C /* ContactsPickerViewController.swift */; };
 		834AFD232498E925005DF37C /* ContactsPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834AFD222498E925005DF37C /* ContactsPicker.storyboard */; };
 		834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD242498F637005DF37C /* DeviceContactTableViewCell.swift */; };
 		834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */; };
@@ -1506,6 +1505,7 @@
 		B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
+		B58E375129E808A000188287 /* ContactsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD202498E7E1005DF37C /* ContactsPickerViewController.swift */; };
 		B58F7BFA298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */; };
 		B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */; };
 		B58F7BFE298A8B670046F0FA /* SharedSecureFingerprintManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BF9298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift */; };
@@ -12783,8 +12783,7 @@
 				8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */,
 				8320213622B78D530057D96F /* ContactsOnMegaViewController.swift in Sources */,
 				831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */,
-				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
-				834AFD212498E7E1005DF37C /* ContactsPickerViewController.swift in Sources */,
+				B58E375129E808A000188287 /* ContactsPickerViewController.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
 				8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */,
 				94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */,
