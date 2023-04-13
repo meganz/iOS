@@ -17,7 +17,6 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     @Published private(set) var secondaryAvatar: UIImage?
     
     private var subscriptions = Set<AnyCancellable>()
-    private var updateAvatarTask: Task<Void, Never>?
     private var loadingChatRoomAvatarTask: Task<Void, Never>?
     private var loadingAvatarSubscription: AnyCancellable?
     
@@ -48,27 +47,40 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     func loadAvatar(isRightToLeftLanguage: Bool) {
         self.isRightToLeftLanguage = isRightToLeftLanguage
         
-        loadChatRoomAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
+        loadChatRoomAvatarIfNeeded(isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
     func cancelLoading() {
-        loadingChatRoomAvatarTask?.cancel()
-        loadingChatRoomAvatarTask = nil
+        cancelLoadingTask()
         
         subscriptions.removeAll()
     }
     
     //MARK: - Private methods
     
-    private func loadChatRoomAvatar(isRightToLeftLanguage: Bool) {
+    private func loadChatRoomAvatarIfNeeded(isRightToLeftLanguage: Bool) {
+        if chatRoomEntity.peers.count > 1 {
+            guard primaryAvatar == nil, secondaryAvatar == nil else { return }
+        } else {
+            guard primaryAvatar == nil else { return }
+        }
+        
         loadingChatRoomAvatarTask = Task { [weak self] in
+            guard let `self` = self else { return }
+            
+            defer { cancelLoadingTask() }
+            
             do {
-                try await self?.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
-                
+                try await fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
             } catch {
                 MEGALogDebug("Unable to fetch avatar for \(chatRoomEntity.chatId) - \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func cancelLoadingTask() {
+        loadingChatRoomAvatarTask?.cancel()
+        loadingChatRoomAvatarTask = nil
     }
     
     private func subscribeToAvatarUpdateNotification(forHandles handles: [HandleEntity]) {
@@ -79,7 +91,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             .sink { [weak self] _ in
                 guard let self, let isRightToLeftLanguage = self.isRightToLeftLanguage else { return }
                 
-                self.updateAvatarTask = Task {
+                Task {
                     do {
                         try await self.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
                     } catch {

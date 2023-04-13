@@ -13,34 +13,6 @@ enum ChatViewType {
     case archived
 }
 
-protocol ChatRoomsListRouting {
-    var navigationController: UINavigationController? { get }
-    func presentStartConversation()
-    func presentMeetingAlreayExists()
-    func presentCreateMeeting()
-    func presentEnterMeeting()
-    func presentScheduleMeeting()
-    func showInviteContactScreen()
-    func showContactsOnMegaScreen()
-    func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int)
-    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int)
-    func present(alert: UIAlertController, animated: Bool)
-    func presentMoreOptionsForChat(
-        withDNDEnabled dndEnabled: Bool,
-        dndAction: @escaping () -> Void,
-        markAsReadAction: (() -> Void)?,
-        infoAction: @escaping () -> Void,
-        archiveAction: @escaping () -> Void
-    )
-    func showGroupChatInfo(forChatRoom chatRoom: ChatRoomEntity)
-    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
-    func showMeetingOccurrences(for scheduledMeeting: ScheduledMeetingEntity)
-    func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
-    func showArchivedChatRooms()
-    func openCallView(for call: CallEntity, in chatRoom: ChatRoomEntity)
-    func showCallError(_ message: String)
-}
-
 final class ChatRoomsListViewModel: ObservableObject {
     let router: ChatRoomsListRouting
     private let chatUseCase: ChatUseCaseProtocol
@@ -72,7 +44,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     var shouldShowSearchBar: Bool {
         return isSearchActive || !isChatRoomEmpty
     }
-
+    
     @Published var chatViewMode: ChatViewMode
     @Published var chatStatus: ChatStatusEntity?
     @Published var title: String = Strings.Localizable.Chat.title
@@ -80,21 +52,27 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var isConnectedToNetwork: Bool
     @Published var isFirstMeetingsLoad: Bool
     @Published var bottomViewHeight: CGFloat = 0
-    @Published var displayChatRooms: [ChatRoomViewModel]?
     
+    @Published var displayChatRooms: [ChatRoomViewModel]?
     @Published var displayPastMeetings: [ChatRoomViewModel]?
     @Published var displayFutureMeetings: [FutureMeetingSection]?
-
+    
     @Published var activeCallViewModel: ActiveCallViewModel?
     @Published var searchText: String {
         didSet {
-            if chatViewMode == .meetings {
-                filterMeetings()
-            } else {
-                filterChats()
+            searchTask = Task { @MainActor in
+                if chatViewMode == .meetings {
+                    filterMeetings()
+                } else {
+                    filterChats()
+                }
             }
         }
     }
+    
+    private var loadingTask: Task<Void, Never>?
+    private var searchTask: Task<Void, Never>?
+    
     @Published var isSearchActive: Bool
     
     private var chatRooms: [ChatRoomViewModel]?
@@ -134,7 +112,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         configureTitle()
     }
     
-    func loadChatRooms() {
+    func loadChatRoomsIfNeeded() {
         isViewOnScreen = true
         chatUseCase.retryPendingConnections()
         
@@ -160,13 +138,20 @@ final class ChatRoomsListViewModel: ObservableObject {
         isViewOnScreen = false
         subscriptions.forEach { $0.cancel() }
         subscriptions = []
+        
+        cancelLoadingTask()
+        cancelSearchTask()
     }
     
     func fetchChats() {
-        if chatViewMode == .meetings {
-            fetchMeetings()
-        } else {
-            fetchNonMeetingChats()
+        loadingTask = Task {
+            defer { cancelLoadingTask() }
+            
+            if chatViewMode == .meetings {
+                await fetchMeetings()
+            } else {
+                await fetchNonMeetingChats()
+            }
         }
     }
     
@@ -180,6 +165,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     func selectChatMode(_ mode: ChatViewMode) {
         guard mode != chatViewMode else { return }
         chatViewMode = mode
+        
         fetchChats()
     }
     
@@ -197,9 +183,9 @@ final class ChatRoomsListViewModel: ObservableObject {
     func contactsOnMegaViewState() -> ChatRoomsTopRowViewState {
         ContactsOnMegaManager.shared.loadContactsOnMegaFromLocal()
         let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
-
+        
         let topRowDescription: String
-
+        
         if contactsUseCase.isAuthorizedToAccessPhoneContacts {
             if contactsOnMegaCount > 0 {
                 topRowDescription = contactsOnMegaCount == 1 ?  Strings.Localizable._1ContactFoundOnMEGA : Strings.Localizable.xContactsFoundOnMEGA.replacingOccurrences(of: "[X]", with: "\(contactsOnMegaCount)")
@@ -273,25 +259,37 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     //MARK: - Private
-    private func fetchNonMeetingChats() {
-        guard let chatListItems = chatUseCase.chatsList(ofType: .nonMeeting), isViewOnScreen else {
+    
+    private func cancelLoadingTask() {
+        loadingTask?.cancel()
+        loadingTask = nil
+    }
+    
+    private func cancelSearchTask() {
+        searchTask?.cancel()
+        searchTask = nil
+    }
+    
+    private func fetchNonMeetingChats() async {
+        guard isViewOnScreen else { return }
+        
+        let chatListItems = chatUseCase.chatsList(ofType: .nonMeeting) ?? []
+        chatRooms = chatListItems.map(constructChatRoomViewModel)
+        
+        await filterChats()
+    }
+    
+    private func fetchMeetings() async {
+        guard isViewOnScreen else {
             MEGALogDebug("Unable to fetch chat list items")
             return
         }
         
-        chatRooms = chatListItems.map(constructChatRoomViewModel)
-        filterChats()
-    }
-    
-    private func fetchMeetings() {
-        guard let chatListItems = chatUseCase.chatsList(ofType: .meeting), isViewOnScreen else {
-            MEGALogDebug("Unable to fetch chat list items")
-            return
-        }
+        let chatListItems =  chatUseCase.chatsList(ofType: .meeting) ?? []
         
         fetchFutureScheduledMeetings()
         
-        let futureScheduledMeetingsChatIds: [ChatIdEntity] = self.futureMeetings?.flatMap(\.allChatIds) ?? []
+        let futureScheduledMeetingsChatIds: [ChatIdEntity] = futureMeetings?.flatMap(\.allChatIds) ?? []
         pastMeetings = chatListItems.compactMap { chatListItem in
             guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
                 return nil
@@ -300,7 +298,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             return constructChatRoomViewModel(forChatListItem: chatListItem)
         }
         
-        filterMeetings()
+        await filterMeetings()
     }
     
     private func fetchFutureScheduledMeetings() {
@@ -326,7 +324,10 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     private func filterChats() {
+        guard !Task.isCancelled else { return }
+        
         if searchText.isNotEmpty {
             displayChatRooms = chatRooms?.filter { $0.contains(searchText: searchText)}
         } else {
@@ -334,7 +335,10 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     private func filterMeetings() {
+        guard !Task.isCancelled else { return }
+        
         if searchText.isNotEmpty {
             displayPastMeetings = pastMeetings?.filter { $0.contains(searchText: searchText)}
             displayFutureMeetings = futureMeetings?.compactMap { $0.filter(withSearchText: searchText) }
@@ -391,7 +395,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             return dateFormatter.string(from: date)
         }
     }
-
+    
     private func constructChatRoomViewModel(forChatListItem chatListItem: ChatListItemEntity) -> ChatRoomViewModel {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
@@ -561,7 +565,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     private func topRowViewTapped() {
         let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
-
+        
         if contactsUseCase.isAuthorizedToAccessPhoneContacts, contactsOnMegaCount == 0 {
             router.showInviteContactScreen()
         } else {
@@ -663,4 +667,4 @@ extension ChatRoomsListViewModel :PushNotificationControlProtocol {
         notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
     }
 }
-                       
+

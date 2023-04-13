@@ -1,8 +1,10 @@
 import SwiftUI
 
-struct FirstMeetingsLoadView: View {
-        
-    var body: some View {
+public struct LoadingSpinner: View {
+    
+    public init() {}
+    
+    public var body: some View {
         Spacer()
         ProgressView()
             .progressViewStyle(.circular)

@@ -3,7 +3,6 @@ import Combine
 import MEGAUIKit
 
 final class ChatRoomsListViewController: UIViewController {
-
     lazy var addBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: nil, action: nil)
     
     lazy var moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: nil, action: nil)
@@ -23,6 +22,7 @@ final class ChatRoomsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureListView()
         updateTitleView()
         initSubscriptions()
@@ -60,10 +60,12 @@ final class ChatRoomsListViewController: UIViewController {
         hostingView.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingView.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            hostingView.view.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            hostingView.view.topAnchor.constraint(equalTo: view.topAnchor),
             hostingView.view.widthAnchor.constraint(equalTo: view.widthAnchor),
             hostingView.view.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
+        
+        hostingView.didMove(toParent: self)
     }
     
     private func updateTitleView() {

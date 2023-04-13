@@ -49,7 +49,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     var shouldShowUnreadCount = false
     var unreadCountString = ""
     var isRecurring: Bool
-
+    
     var lastMessageTimestamp: String? {
         let chatListItem = chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)
         if let lastMessageDate = chatListItem?.lastMessageDate {
@@ -64,13 +64,13 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         
         return nil
     }
-
+    
     private let router: ChatRoomsListRouting
-
+    
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
     @Published var totalCallDuration: TimeInterval = 0
-
+    
     init(scheduledMeeting: ScheduledMeetingEntity,
          nextOccurrenceDate: Date,
          router: ChatRoomsListRouting,
@@ -170,14 +170,14 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     
     private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
         var options: [ChatRoomContextMenuOption] = []
-
+        
         options.append(ChatRoomContextMenuOption(
             title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
             imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting2.name,
             action: { [weak self] in
                 self?.startOrJoinMeetingTapped()
             }))
-
+        
         if scheduledMeeting.rules.frequency != .invalid {
             options.append(ChatRoomContextMenuOption(
                 title: Strings.Localizable.Meetings.Scheduled.ContextMenu.occurrences,
@@ -188,7 +188,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         }
         
         let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
-
+        
         options += [
             ChatRoomContextMenuOption(
                 title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,

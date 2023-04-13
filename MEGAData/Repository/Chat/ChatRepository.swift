@@ -9,7 +9,7 @@ public final class ChatRepository: ChatRepositoryProtocol {
     private lazy var chatCallUpdateListener = ChatCallUpdateListener(sdk: chatSDK)
     private var chatConnectionUpdateListener: ChatConnectionUpdateListener?
     private var chatPrivateModeUpdateListener: ChatRequestListener?
-
+    
     public init(sdk: MEGASdk, chatSDK: MEGAChatSdk) {
         self.sdk = sdk
         self.chatSDK = chatSDK
@@ -147,7 +147,7 @@ fileprivate final class ChatStatusUpdateListener: ChatListener {
 
 fileprivate final class ChatListItemUpdateListener: ChatListener {
     private let source = PassthroughSubject<ChatListItemEntity, Never>()
-
+    
     var monitor: AnyPublisher<ChatListItemEntity, Never> {
         source.eraseToAnyPublisher()
     }
@@ -160,7 +160,7 @@ fileprivate final class ChatListItemUpdateListener: ChatListener {
 fileprivate final class ChatConnectionUpdateListener: ChatListener {
     private let chatId: ChatIdEntity
     private let source = PassthroughSubject<ChatConnectionStatus, Never>()
-
+    
     var monitor: AnyPublisher<ChatConnectionStatus, Never> {
         source.eraseToAnyPublisher()
     }
@@ -181,7 +181,7 @@ fileprivate final class ChatConnectionUpdateListener: ChatListener {
 fileprivate final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
     private let sdk: MEGAChatSdk
     private let source = PassthroughSubject<CallEntity, Never>()
-
+    
     var monitor: AnyPublisher<CallEntity, Never> {
         source.eraseToAnyPublisher()
     }
@@ -207,13 +207,13 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
     private let sdk: MEGAChatSdk
     private let changeType: MEGAChatRequestType
     let chatId: HandleEntity
-
+    
     private let source = PassthroughSubject<ChatRoomEntity, Never>()
-
+    
     var monitor: AnyPublisher<ChatRoomEntity, Never> {
         source.eraseToAnyPublisher()
     }
-
+    
     init(sdk: MEGAChatSdk, chatId: HandleEntity, changeType: MEGAChatRequestType) {
         self.sdk = sdk
         self.changeType = changeType
@@ -221,11 +221,11 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
         super.init()
         sdk.add(self)
     }
-
+    
     deinit {
         sdk.remove(self)
     }
-
+    
     func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         if request.type == changeType,
            chatId == request.chatHandle,
