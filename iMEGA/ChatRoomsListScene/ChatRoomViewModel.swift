@@ -25,7 +25,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
     @Published var totalCallDuration: TimeInterval = 0
-
+    
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
     
@@ -120,7 +120,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     func cancelLoading() {
         isViewOnScreen = false
         
-        loadingChatRoomInfoTask?.cancel()
+        cancelChatRoomInfoTask()
     }
     
     func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
@@ -294,11 +294,20 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         return options
     }
     
+    private func cancelChatRoomInfoTask() {
+        loadingChatRoomInfoTask?.cancel()
+        loadingChatRoomInfoTask = nil
+    }
+    
     private func loadChatRoomInfo() {
         loadingChatRoomInfoTask = Task { [weak self] in
             guard let self else { return }
             
             let chatId = chatListItem.chatId
+            
+            defer {
+                cancelChatRoomInfoTask()
+            }
             
             do {
                 try await self.updateDescription()
@@ -310,7 +319,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             
             do {
                 try Task.checkCancellation()
-                await self.sendObjectChangeNotification()
+                await sendObjectChangeNotification()
             } catch {
                 MEGALogDebug("Task cancelled for \(chatId)")
             }

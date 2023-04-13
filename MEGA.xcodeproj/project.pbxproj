@@ -635,6 +635,7 @@
 		6DD04A38292B07CF00B7E797 /* MockMEGASet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A37292B07CF00B7E797 /* MockMEGASet.swift */; };
 		6DD04A3A292B28C000B7E797 /* MockMEGASetElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A39292B28C000B7E797 /* MockMEGASetElement.swift */; };
 		6DE346BF28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
+		6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */; };
 		7271895827FF030600B2DB08 /* FeedbackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895727FF030600B2DB08 /* FeedbackRepository.swift */; };
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
 		7288C2C927F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */; };
@@ -920,7 +921,6 @@
 		836BCF1A28EDC83D00515E18 /* ChatTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1928EDC83D00515E18 /* ChatTypeEntity+Mapper.swift */; };
 		836BCF1C28EDD12100515E18 /* ChatListItemEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1B28EDD12100515E18 /* ChatListItemEntity+Mapper.swift */; };
 		836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */; };
-		8371CD0C299F9431002B01EB /* FirstMeetingsLoadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371CD0B299F9431002B01EB /* FirstMeetingsLoadView.swift */; };
 		8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */; };
 		8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */; };
 		83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */; };
@@ -3140,6 +3140,7 @@
 		6DD04A37292B07CF00B7E797 /* MockMEGASet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGASet.swift; sourceTree = "<group>"; };
 		6DD04A39292B28C000B7E797 /* MockMEGASetElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGASetElement.swift; sourceTree = "<group>"; };
 		6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+NodesUpdate.swift"; sourceTree = "<group>"; };
+		6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListRouting.swift; sourceTree = "<group>"; };
 		7271895727FF030600B2DB08 /* FeedbackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackRepository.swift; sourceTree = "<group>"; };
 		7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAReachabilityManager+Additions.swift"; sourceTree = "<group>"; };
 		7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HelpTableViewController+Feedback.swift"; sourceTree = "<group>"; };
@@ -3430,7 +3431,6 @@
 		836BCF1B28EDD12100515E18 /* ChatListItemEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatListItemEntity+Mapper.swift"; sourceTree = "<group>"; };
 		836E74C22099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatChangeGroupNameRequestDelegate.h; sourceTree = "<group>"; };
 		836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatChangeGroupNameRequestDelegate.m; sourceTree = "<group>"; };
-		8371CD0B299F9431002B01EB /* FirstMeetingsLoadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMeetingsLoadView.swift; sourceTree = "<group>"; };
 		8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPresentationItemSource.swift; sourceTree = "<group>"; };
 		8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Additions.swift"; sourceTree = "<group>"; };
 		83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
@@ -8027,7 +8027,6 @@
 				BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */,
 				83B71A6128F03A2D00E006C6 /* ChatRoomsTopRowView.swift */,
 				8342CB0A28EB3DEC0078D35F /* ChatTabsSelectorView.swift */,
-				8371CD0B299F9431002B01EB /* FirstMeetingsLoadView.swift */,
 				BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */,
 			);
 			path = Views;
@@ -8523,6 +8522,7 @@
 				8342CB0928EB3DE00078D35F /* Views */,
 				BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */,
 				83DE9D0728EC376F00F24DF4 /* ChatRoomsListRouter.swift */,
+				6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */,
 				836A782F28E2F2B500B6849F /* ChatRoomsListView.swift */,
 				8342CAFF28EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift */,
 				8342CAFE28EB3B820078D35F /* ChatRoomsListViewController.swift */,
@@ -12816,6 +12816,7 @@
 				12466802275DB82000C94335 /* CustomModalAlertContactsRouter.swift in Sources */,
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
 				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
+				6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */,
 				124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */,
 				124667FF275DB82000C94335 /* CustomModalAlertViewController+Config.swift in Sources */,
 				124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */,
@@ -12956,7 +12957,6 @@
 				320262F9298CB0B40049688C /* FilterType+Mapper.swift in Sources */,
 				3258B90F298B787C0055E65C /* FilterType.swift in Sources */,
 				BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */,
-				8371CD0C299F9431002B01EB /* FirstMeetingsLoadView.swift in Sources */,
 				B6A01BA8289A5E9200B503FD /* FolderContentStat.swift in Sources */,
 				C46D2A7C270F0EC100DA26D0 /* FolderLinkCollectionViewController+DynamicType.swift in Sources */,
 				83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */,

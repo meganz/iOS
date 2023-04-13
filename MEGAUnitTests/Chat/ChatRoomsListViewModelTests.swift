@@ -13,7 +13,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         let userHandle: HandleEntity = 100
         let chatUseCase = MockChatUseCase(myUserHandle: userHandle)
         let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100)))
-        viewModel.loadChatRooms()
+        viewModel.loadChatRoomsIfNeeded()
         
         let expectation = expectation(description: "Awaiting publisher")
         
@@ -59,7 +59,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatViewMode: .meetings
         )
         
-        viewModel.loadChatRooms()
+        viewModel.loadChatRoomsIfNeeded()
         viewModel.selectChatMode(.chats)
         
         guard let chatRoomsCount  = viewModel.displayChatRooms?.count else {
@@ -79,7 +79,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatViewMode: .meetings
         )
         
-        viewModel.loadChatRooms()
+        viewModel.loadChatRoomsIfNeeded()
         viewModel.selectChatMode(.chats)
         
         guard let chatRoomsCount  = viewModel.displayChatRooms?.count else {

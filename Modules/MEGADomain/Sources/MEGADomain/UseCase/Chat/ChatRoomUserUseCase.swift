@@ -92,7 +92,7 @@ public struct ChatRoomUserUseCase<T: ChatRoomUserRepositoryProtocol, U: UserStor
                     return try await chatRoomRepo.userFullName(forPeerId: peerId, chatRoom: chatRoom)
                 }
             }
-                        
+            
             return try await group.reduce(into: [String]()) { result, name in
                 result.append(name)
             }
