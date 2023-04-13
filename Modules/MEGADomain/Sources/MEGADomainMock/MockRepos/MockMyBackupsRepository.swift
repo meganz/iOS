@@ -33,4 +33,8 @@ public struct MockMyBackupsRepository: MyBackupsRepositoryProtocol {
     public func isBackupNode(_ node: NodeEntity) -> Bool {
         isBackupNode
     }
+    
+    public func isMyBackupsRootNode(_ node: NodeEntity) -> Bool {
+        currentBackupNode.handle == node.handle
+    }
 }

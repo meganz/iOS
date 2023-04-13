@@ -134,4 +134,40 @@ extension CloudDriveViewController {
             showNodeActionsForNode(node, isIncoming: isIncomingShareChildView, isBackupNode: false, sender: sender)
         }
     }
+    
+    @objc func updateNavigationBarTitle() {
+        var selectedNodesArrayCount = 0
+        var navigationTitle = ""
+        
+        if let selectedNodesArray { selectedNodesArrayCount = selectedNodesArray.count }
+        
+        if let enableEditing = cdTableView?.tableView?.isEditing ?? cdCollectionView?.collectionView?.allowsMultipleSelection, enableEditing {
+            navigationTitle = selectedNodesArrayCount == 0 ? Strings.Localizable.selectTitle : selectedNodesArrayCount == 1 ? Strings.Localizable.oneItemSelected(1) : Strings.Localizable.itemsSelected(selectedNodesArrayCount)
+        } else {
+            switch displayMode {
+            case .cloudDrive:
+                navigationTitle = parentNode == nil || parentNode?.type == .root ? Strings.Localizable.cloudDrive : parentNode?.name ?? ""
+                
+            case .rubbishBin:
+                navigationTitle = parentNode?.type == .rubbish ? Strings.Localizable.rubbishBinLabel : parentNode?.name ?? ""
+                
+            case .backup:
+                var isMyBackupsRootNode = false
+                if let parentNode {
+                    isMyBackupsRootNode = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isMyBackupsRootNode(parentNode.toNodeEntity())
+                }
+                
+                navigationTitle = isMyBackupsRootNode ? Strings.Localizable.Backups.title : parentNode?.name ?? ""
+                
+            case .recents:
+                if let nodes {
+                    navigationTitle = Strings.Localizable._1DItems(nodes.size.intValue)
+                }
+                
+            default: break
+            }
+        }
+        
+        navigationItem.title = navigationTitle
+    }
 }

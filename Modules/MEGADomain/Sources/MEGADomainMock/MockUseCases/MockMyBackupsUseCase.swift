@@ -10,8 +10,9 @@ public struct MockMyBackupsUseCase: MyBackupsUseCaseProtocol {
     private var isMyBackupsRootNodeEmpty: Bool
     private var isInMyBackups: Bool
     
-    public init(isMyBackupsNode: Bool = false, containsABackupNode: Bool = false, isMyBackupsRootNode: Bool = false, nodeSize: UInt64 = 0, isMyBackupsDeviceFolder: Bool = false, isMyBackupsRootNodeEmpty: Bool = false, isInMyBackups: Bool = false) {
+    public init(isMyBackupsNode: Bool = false, isMyBackupsRootNode: Bool = false, containsABackupNode: Bool = false, nodeSize: UInt64 = 0, isMyBackupsDeviceFolder: Bool = false, isMyBackupsRootNodeEmpty: Bool = false, isInMyBackups: Bool = false) {
         self.isMyBackupsNode = isMyBackupsNode
+        self.isMyBackupsRootNode = isMyBackupsRootNode
         self.containsABackupNode = containsABackupNode
         self.isMyBackupsRootNode = isMyBackupsRootNode
         self.nodeSize = nodeSize
@@ -20,19 +21,23 @@ public struct MockMyBackupsUseCase: MyBackupsUseCaseProtocol {
         self.isInMyBackups = isInMyBackups
     }
     
-    public func hasBackupNode(in nodes: [MEGADomain.NodeEntity]) -> Bool {
+    public func hasBackupNode(in nodes: [NodeEntity]) -> Bool {
         containsABackupNode
     }
     
-    public func isBackupNode(_ node: MEGADomain.NodeEntity) -> Bool {
+    public func isBackupNode(_ node: NodeEntity) -> Bool {
         isMyBackupsNode
+    }
+    
+    public func isMyBackupsRootNode(_ node: NodeEntity) -> Bool {
+        isMyBackupsRootNode
     }
     
     public func isBackupNodeHandle(_ nodeHandle: HandleEntity) -> Bool {
         isMyBackupsNode
     }
     
-    public func isBackupDeviceFolder(_ node: MEGADomain.NodeEntity) -> Bool {
+    public func isBackupDeviceFolder(_ node: NodeEntity) -> Bool {
         isMyBackupsDeviceFolder
     }
     

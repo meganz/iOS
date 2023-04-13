@@ -11,14 +11,14 @@ final class MyBackupsUseCaseTests: XCTestCase {
          NodeEntity(name: "other4", handle: 4)]
     }()
     
-    func testMyBackups_IsMyBackupsNode() async {
+    func testMyBackups_IsMyBackupsNode() {
         let myBackupsRepo = MockMyBackupsRepository(currentBackupNode: backupNodeEntity)
         let sut = MyBackupsUseCase(myBackupsRepository: myBackupsRepo, nodeRepository: MockNodeRepository.newRepo)
         
-        let isMyBackupsRootNode = await sut.isMyBackupsRootNode(backupNodeEntity)
+        let isMyBackupsRootNode = sut.isMyBackupsRootNode(backupNodeEntity)
         XCTAssertTrue(isMyBackupsRootNode)
         
-        let isNotMyBackupsRootNode = await sut.isMyBackupsRootNode(NodeEntity(name: "other2"))
+        let isNotMyBackupsRootNode = sut.isMyBackupsRootNode(NodeEntity(name: "other2"))
         XCTAssertFalse(isNotMyBackupsRootNode)
     }
     

@@ -1,10 +1,10 @@
 public protocol MyBackupsUseCaseProtocol {
     func hasBackupNode(in nodes: [NodeEntity]) async -> Bool
     func isBackupNode(_ node: NodeEntity) -> Bool
+    func isMyBackupsRootNode(_ node: NodeEntity) -> Bool
     func isBackupNodeHandle(_ nodeHandle: HandleEntity) -> Bool
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool
     func isMyBackupsRootNodeEmpty() async -> Bool
-    func isMyBackupsRootNode(_ node: NodeEntity) async -> Bool
     func myBackupsRootNodeSize() async -> UInt64
     func myBackupsRootNode() async throws -> NodeEntity
 }
@@ -28,6 +28,10 @@ public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepository
         myBackupsRepository.isBackupNode(node)
     }
     
+    public func isMyBackupsRootNode(_ node: NodeEntity) -> Bool {
+        myBackupsRepository.isMyBackupsRootNode(node)
+    }
+    
     public func isBackupNodeHandle(_ nodeHandle: HandleEntity) -> Bool {
         guard let node = nodeRepository.nodeForHandle(nodeHandle) else { return false }
         return isBackupNode(node)
@@ -39,15 +43,6 @@ public struct MyBackupsUseCase<T: MyBackupsRepositoryProtocol, U: NodeRepository
     
     public func isMyBackupsRootNodeEmpty() async -> Bool {
         await myBackupsRepository.isBackupRootNodeEmpty()
-    }
-    
-    public func isMyBackupsRootNode(_ node: NodeEntity) async -> Bool {
-        do {
-            let myBackupsNode = try await myBackupsRootNode()
-            return myBackupsNode == node
-        } catch {
-            return false
-        }
     }
     
     public func myBackupsRootNodeSize() async -> UInt64 {
