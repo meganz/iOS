@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASwift
 
 struct BackupsRepository: BackupsRepositoryProtocol {
     private let sdk: MEGASdk
@@ -17,7 +18,7 @@ struct BackupsRepository: BackupsRepositoryProtocol {
     
     func isBackupRootNodeEmpty() async -> Bool {
         do {
-            guard let node = try await myBackupRootNode().toMEGANode(in: sdk) else { return false }
+            guard let node = try await backupRootNode().toMEGANode(in: sdk) else { return false }
             return sdk.children(forParent: node).size == 0
         } catch {
             return true
@@ -42,34 +43,34 @@ struct BackupsRepository: BackupsRepositoryProtocol {
     }
     
     func backupRootNodeSize() async throws -> UInt64 {
-        guard let node = try await myBackupRootNode().toMEGANode(in: sdk) else { return 0 }
+        guard let node = try await backupRootNode().toMEGANode(in: sdk) else { return 0 }
         let nodeInfo = try await folderInfo(node: node)
         return UInt64(nodeInfo.currentSize)
     }
     
-    func myBackupRootNode() async throws -> NodeEntity {
-        try await withCheckedThrowingContinuation { continuation in
+    func backupRootNode() async throws -> NodeEntity {
+        try await withAsyncThrowingValue(in: { completion in
             BackupRootNodeAccess.shared.loadNode { node, error in
                 guard let node = node else {
-                    continuation.resume(throwing: BackupNodeErrorEntity.notFound)
+                    completion(.failure(FolderInfoErrorEntity.notFound))
                     return
                 }
                 
-                continuation.resume(with: Result.success(node.toNodeEntity()))
+                completion(.success(node.toNodeEntity()))
             }
-        }
+        })
     }
     
     private func folderInfo(node: MEGANode) async throws -> MEGAFolderInfo {
-        try await withCheckedThrowingContinuation { continuation in
+        try await withAsyncThrowingValue(in: { completion in
             sdk.getFolderInfo(for: node, delegate: RequestDelegate() { result in
                 switch result {
                 case .failure:
-                    continuation.resume(throwing: FolderInfoErrorEntity.notFound)
+                    completion(.failure(FolderInfoErrorEntity.notFound))
                 case .success(let request):
-                    continuation.resume(with: .success(request.megaFolderInfo))
+                    completion(.success(request.megaFolderInfo))
                 }
             })
-        }
+        })
     }
 }
