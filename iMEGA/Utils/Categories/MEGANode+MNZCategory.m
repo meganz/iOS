@@ -86,6 +86,8 @@
             cloudDriveVC.parentNode = self;
             cloudDriveVC.displayMode = DisplayModeRubbishBin;
             [navigationController pushViewController:cloudDriveVC animated:NO];
+
+            [UIApplication.mnz_presentingViewController dismissView];
             break;
         }
             
