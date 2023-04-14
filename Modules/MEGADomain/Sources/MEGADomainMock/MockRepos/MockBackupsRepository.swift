@@ -26,7 +26,7 @@ public struct MockBackupsRepository: BackupsRepositoryProtocol {
         UInt64(currentBackupNode.size)
     }
     
-    public func myBackupRootNode() async throws -> NodeEntity {
+    public func backupRootNode() async throws -> NodeEntity {
         currentBackupNode
     }
     

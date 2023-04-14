@@ -6,5 +6,5 @@ public protocol BackupsRepositoryProtocol {
     func isBackupNode(_ node: NodeEntity) -> Bool
     func isBackupsRootNode(_ node: NodeEntity) -> Bool
     func backupRootNodeSize() async throws -> UInt64
-    func myBackupRootNode() async throws -> NodeEntity
+    func backupRootNode() async throws -> NodeEntity
 }

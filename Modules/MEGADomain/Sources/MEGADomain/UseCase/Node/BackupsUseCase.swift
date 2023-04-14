@@ -54,6 +54,6 @@ public struct BackupsUseCase<T: BackupsRepositoryProtocol, U: NodeRepositoryProt
     }
     
     public func backupsRootNode() async throws -> NodeEntity {
-        try await backupsRepository.myBackupRootNode()
+        try await backupsRepository.backupRootNode()
     }
 }
