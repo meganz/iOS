@@ -364,7 +364,7 @@
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
     if (self.node.name) {
-        BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.node];
+        BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:self.node];
         NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeFileLink isIncoming:NO isBackupNode:isBackupNode sender:sender];
         [self presentViewController:nodeActions animated:YES completion:nil];
     }

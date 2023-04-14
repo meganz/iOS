@@ -1,14 +1,14 @@
 import MEGADomain
 
-struct MyBackupsRepository: MyBackupsRepositoryProtocol {
+struct BackupsRepository: BackupsRepositoryProtocol {
     private let sdk: MEGASdk
     
-    static var newRepo: MyBackupsRepository {
-        MyBackupsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+    static var newRepo: BackupsRepository {
+        BackupsRepository(sdk: MEGASdkManager.sharedMEGASdk())
     }
     
     private enum Constants {
-        static let myBackupsNodePath = "//in/My backups"
+        static let backupsRootNodePath = "//in/My backups"
     }
     
     init(sdk: MEGASdk) {
@@ -27,13 +27,13 @@ struct MyBackupsRepository: MyBackupsRepositoryProtocol {
     func isBackupNode(_ node: NodeEntity) -> Bool {
         guard let megaNode = node.toMEGANode(in: sdk),
               let path = sdk.nodePath(for: megaNode) else { return false }
-        return path.hasPrefix(Constants.myBackupsNodePath)
+        return path.hasPrefix(Constants.backupsRootNodePath)
     }
     
-    func isMyBackupsRootNode(_ node: NodeEntity) -> Bool {
+    func isBackupsRootNode(_ node: NodeEntity) -> Bool {
         guard let megaNode = node.toMEGANode(in: sdk),
               let path = sdk.nodePath(for: megaNode) else { return false }
-        return path == Constants.myBackupsNodePath
+        return path == Constants.backupsRootNodePath
     }
     
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool {

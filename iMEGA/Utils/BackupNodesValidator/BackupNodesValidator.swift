@@ -2,15 +2,15 @@ import Combine
 import MEGADomain
 
 final class BackupNodesValidator {
-    private let myBackupsUseCase: MyBackupsUseCaseProtocol
+    private let backupsUseCase: BackupsUseCaseProtocol
     private let nodes: [NodeEntity]
     private let presenter: UIViewController
     private var inProgress = false
     private var inProgressSubscription: AnyCancellable?
     
-    init(presenter: UIViewController, myBackupsUseCase: MyBackupsUseCaseProtocol = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [NodeEntity]) {
+    init(presenter: UIViewController, backupsUseCase: BackupsUseCaseProtocol = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [NodeEntity]) {
         self.presenter = presenter
-        self.myBackupsUseCase = myBackupsUseCase
+        self.backupsUseCase = backupsUseCase
         self.nodes = nodes
     }
     
@@ -30,7 +30,7 @@ final class BackupNodesValidator {
     
     private func sharedBackupNodes() -> [NodeEntity] {
         nodes.filter {
-            myBackupsUseCase.isBackupNode($0)
+            backupsUseCase.isBackupNode($0)
         }
     }
 

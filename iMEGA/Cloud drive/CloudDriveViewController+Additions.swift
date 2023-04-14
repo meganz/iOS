@@ -152,12 +152,12 @@ extension CloudDriveViewController {
                 navigationTitle = parentNode?.type == .rubbish ? Strings.Localizable.rubbishBinLabel : parentNode?.name ?? ""
                 
             case .backup:
-                var isMyBackupsRootNode = false
+                var isBackupsRootNode = false
                 if let parentNode {
-                    isMyBackupsRootNode = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isMyBackupsRootNode(parentNode.toNodeEntity())
+                    isBackupsRootNode = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupsRootNode(parentNode.toNodeEntity())
                 }
                 
-                navigationTitle = isMyBackupsRootNode ? Strings.Localizable.Backups.title : parentNode?.name ?? ""
+                navigationTitle = isBackupsRootNode ? Strings.Localizable.Backups.title : parentNode?.name ?? ""
                 
             case .recents:
                 if let nodes {

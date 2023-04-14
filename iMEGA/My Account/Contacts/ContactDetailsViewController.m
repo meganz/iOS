@@ -1103,7 +1103,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
     
-    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeSharedItem isIncoming:YES isBackupNode:isBackupNode sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }

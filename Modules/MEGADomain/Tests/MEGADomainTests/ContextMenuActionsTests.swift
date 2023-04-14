@@ -207,12 +207,12 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                                                         .filter { !excludedSortOptions.contains($0) })
     }
     
-    func testDisplayMenuMyBackupsNode() throws {
+    func testDisplayMenuBackupsRootNode() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                 .setType(.menu(type: .display))
                                                 .setAccessLevel(.owner)
                                                 .setIsAFolder(true)
-                                                .setIsMyBackupsNode(true)
+                                                .setBackupsRootNode(true)
                                                 .build())
 
         let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort]
@@ -225,12 +225,12 @@ final class ContextMenuActionsTests: XCTestCase {
                                                                                                         .allValid)
     }
     
-    func testDisplayMenuMyBackupsChild() throws {
+    func testDisplayMenuBackupsChild() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                 .setType(.menu(type: .display))
                                                 .setAccessLevel(.owner)
                                                 .setIsAFolder(true)
-                                                .setIsMyBackupsChild(true)
+                                                .setIsBackupsChild(true)
                                                 .build())
 
         let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing]

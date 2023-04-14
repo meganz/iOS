@@ -55,7 +55,7 @@ extension UsageViewController {
         backupsActivityIndicator?.startAnimating()
         
         Task {
-            let backupSize = await MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).myBackupsRootNodeSize()
+            let backupSize = await BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).backupsRootNodeSize()
             backupsSizeLabel?.text = self.text(forSizeLabels: NSNumber(value: backupSize))
             backupsActivityIndicator?.stopAnimating()
             backupsActivityIndicator?.isHidden = true

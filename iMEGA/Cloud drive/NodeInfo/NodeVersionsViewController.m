@@ -410,7 +410,7 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     MEGANode *node = [self nodeForIndexPath:indexPath];
     
-    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO isBackupNode:isBackupNode sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }

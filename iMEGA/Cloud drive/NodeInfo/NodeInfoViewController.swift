@@ -223,7 +223,7 @@ class NodeInfoViewController: UIViewController {
         }
         
         var actions = [ActionSheetAction]()
-        let isBackupNode = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupNode(node.toNodeEntity())
+        let isBackupNode = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupNode(node.toNodeEntity())
         
         if !isBackupNode {
             actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: Asset.Images.SharedItems.fullAccessPermissions.image, style: .default) { [weak self] in

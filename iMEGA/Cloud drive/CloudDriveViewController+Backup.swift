@@ -7,11 +7,11 @@ extension CloudDriveViewController {
         let parentNodeAccessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
         let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
         let parentNodeEntity = parentNode.toNodeEntity()
-        let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isMyBackupsNode = myBackupsUseCase.isMyBackupsRootNode(parentNodeEntity)
-        var isMyBackupsChild = false
-        if !isMyBackupsNode {
-            isMyBackupsChild = myBackupsUseCase.isBackupNode(parentNodeEntity)
+        let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupsNode = backupsUseCase.isBackupsRootNode(parentNodeEntity)
+        var isBackupsChild = false
+        if !isBackupsNode {
+            isBackupsChild = backupsUseCase.isBackupNode(parentNodeEntity)
         }
        
         return CMConfigEntity(menuType: .menu(type: .display),
@@ -22,8 +22,8 @@ extension CloudDriveViewController {
                               isRubbishBinFolder: displayMode == .rubbishBin,
                               isViewInFolder: isFromViewInFolder,
                               isIncomingShareChild: isIncomingSharedRootChild,
-                              isMyBackupsNode: isMyBackupsNode,
-                              isMyBackupsChild: isMyBackupsChild,
+                              isBackupsRootNode: isBackupsNode,
+                              isBackupsChild: isBackupsChild,
                               isOutShare: parentNode.isOutShare(),
                               isExported: parentNode.isExported(),
                               showMediaDiscovery: shouldShowMediaDiscovery())
@@ -56,16 +56,16 @@ extension CloudDriveViewController {
     }
     
     @objc func showCustomActionsForBackupNode(_ node: MEGANode, sender: Any) {
-        let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isBackupNode = myBackupsUseCase.isBackupNode(node.toNodeEntity())
+        let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = backupsUseCase.isBackupNode(node.toNodeEntity())
         showNodeActionsForNode(node, isIncoming: false, isBackupNode: isBackupNode, sender: sender)
     }
     
     @objc func toolbarActionsForNode(_ node: MEGANode) {
         guard let parentNode else { return }
         
-        let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isBackupNode = myBackupsUseCase.isBackupNode(node.toNodeEntity())
+        let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = backupsUseCase.isBackupNode(node.toNodeEntity())
         let shareType: MEGAShareType = isBackupNode ? .accessRead : MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
         
         toolbarActions(for: shareType, isBackupNode: isBackupNode)

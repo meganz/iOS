@@ -578,7 +578,7 @@
     }
     
     if (self.parentNode.name) {
-        BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.parentNode];
+        BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:self.parentNode];
         NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference isBackupNode:isBackupNode sender:sender];
         [self presentViewController:nodeActions animated:YES completion:nil];
     }
@@ -719,7 +719,7 @@
 #pragma mark - Public
 
 - (void)showActionsForNode:(MEGANode *)node from:(UIButton *)sender {
-    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeInsideFolderLink isIncoming:NO isBackupNode:isBackupNode sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }

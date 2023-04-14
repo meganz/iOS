@@ -23,8 +23,8 @@ public final class ContextMenuBuilder {
     private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
-    private var isMyBackupsNode: Bool = false
-    private var isMyBackupsChild: Bool = false
+    private var isBackupsRootNode: Bool = false
+    private var isBackupsChild: Bool = false
     private var isSharedItemsChild: Bool = false
     private var isOutShare: Bool = false
     private var isExported: Bool = false
@@ -159,13 +159,13 @@ public final class ContextMenuBuilder {
         return self
     }
     
-    public func setIsMyBackupsNode(_ isMyBackupsNode: Bool) -> ContextMenuBuilder {
-        self.isMyBackupsNode = isMyBackupsNode
+    public func setBackupsRootNode(_ isBackupsNode: Bool) -> ContextMenuBuilder {
+        self.isBackupsRootNode = isBackupsNode
         return self
     }
     
-    public func setIsMyBackupsChild(_ isMyBackupsChild: Bool) -> ContextMenuBuilder {
-        self.isMyBackupsChild = isMyBackupsChild
+    public func setIsBackupsChild(_ isBackupsChild: Bool) -> ContextMenuBuilder {
+        self.isBackupsChild = isBackupsChild
         return self
     }
     
@@ -303,7 +303,7 @@ public final class ContextMenuBuilder {
     private func viewTypeMenu() -> CMEntity {
         var viewTypeMenuActions: [CMElement] = []
         
-        if showMediaDiscovery && !isRubbishBinFolder && !isMyBackupsChild {
+        if showMediaDiscovery && !isRubbishBinFolder && !isBackupsChild {
             viewTypeMenuActions.append(mediaDiscovery)
         }
         
@@ -360,7 +360,7 @@ public final class ContextMenuBuilder {
     private func displayMenu() -> CMEntity {
         var displayActionsMenuChildren: [CMElement] = []
         
-        if isAFolder && !isRubbishBinFolder && !isMyBackupsNode {
+        if isAFolder && !isRubbishBinFolder && !isBackupsRootNode {
             displayActionsMenuChildren.append(makeQuickActions())
         }
         
@@ -392,7 +392,7 @@ public final class ContextMenuBuilder {
         if accessLevel == .owner {
             quickActions.append(contentsOf: isExported ? [manageLink, removeLink] : [shareLink])
             quickActions.append(contentsOf: isOutShare ? [manageFolder] : [shareFolder])
-            if !isMyBackupsChild {
+            if !isBackupsChild {
                 quickActions.append(rename)
             }
         }

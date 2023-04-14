@@ -67,7 +67,7 @@ final class TextEditorViewModel: ViewModelType {
     private var uploadFileUseCase: UploadFileUseCaseProtocol
     private var downloadNodeUseCase: DownloadNodeUseCaseProtocol
     private var nodeUseCase: NodeUseCaseProtocol
-    private var myBackupsUseCase: MyBackupsUseCaseProtocol
+    private var backupsUseCase: BackupsUseCaseProtocol
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     private var isBackupNode: Bool = false
@@ -79,7 +79,7 @@ final class TextEditorViewModel: ViewModelType {
         uploadFileUseCase: UploadFileUseCaseProtocol,
         downloadNodeUseCase: DownloadNodeUseCaseProtocol,
         nodeUseCase: NodeUseCaseProtocol,
-        myBackupsUseCase: MyBackupsUseCaseProtocol,
+        backupsUseCase: BackupsUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil
     ) {
@@ -89,7 +89,7 @@ final class TextEditorViewModel: ViewModelType {
         self.uploadFileUseCase = uploadFileUseCase
         self.downloadNodeUseCase = downloadNodeUseCase
         self.nodeUseCase = nodeUseCase
-        self.myBackupsUseCase = myBackupsUseCase
+        self.backupsUseCase = backupsUseCase
         self.parentHandle = parentHandle
         self.nodeEntity = nodeEntity
     }
@@ -98,7 +98,7 @@ final class TextEditorViewModel: ViewModelType {
         switch action {
         case .setUpView:
             if let nodeEntity {
-                isBackupNode = myBackupsUseCase.isBackupNode(nodeEntity)
+                isBackupNode = backupsUseCase.isBackupNode(nodeEntity)
             }
             setupView(shallUpdateContent: true)
         case .saveText(let content):

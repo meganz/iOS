@@ -1718,7 +1718,7 @@
                     }
                     
                     self.userTapped = user;
-                    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:self.node];
+                    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:self.node];
                     if (!isBackupNode) {
                         [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
                     }

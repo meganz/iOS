@@ -197,8 +197,8 @@ class ExplorerBaseViewController: UIViewController {
             return
         }
         
-        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let containsABackupNode = myBackupsUC.hasBackupNode(in: selectedNodes.toNodeEntities())
+        let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let containsABackupNode = backupsUC.hasBackupNode(in: selectedNodes.toNodeEntities())
         let nodeActionsViewController = NodeActionViewController(nodes: selectedNodes, delegate: self, displayMode: isKind(of: MediaDiscoveryViewController.self) ? .mediaDiscovery : .unknown, containsABackupNode: containsABackupNode, sender: button)
         present(nodeActionsViewController, animated: true, completion: nil)
     }

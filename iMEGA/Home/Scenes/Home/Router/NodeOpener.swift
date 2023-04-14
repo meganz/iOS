@@ -27,8 +27,8 @@ final class NodeOpener {
         guard let navigationController = navigationController else { return }
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return }
         
-        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isBackupNode = myBackupsUC.isBackupNode(node.toNodeEntity())
+        let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
         let nodeActionVC = NodeActionViewController(node: node,
                                                     delegate: delegate,
