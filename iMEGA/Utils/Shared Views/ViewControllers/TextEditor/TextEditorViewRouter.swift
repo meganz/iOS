@@ -67,7 +67,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             preferenceRepository: PreferenceRepository.newRepo)
         let nodeDataUC = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
-        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let vm = TextEditorViewModel(
             router: self,
             textFile: textFile,
@@ -75,7 +75,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             uploadFileUseCase: uploadUC,
             downloadNodeUseCase: downloadUC,
             nodeUseCase: nodeDataUC,
-            myBackupsUseCase: myBackupsUC,
+            backupsUseCase: backupsUC,
             parentHandle: parentHandle,
             nodeEntity: nodeEntity
         )
@@ -130,8 +130,8 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             return
         }
         
-        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isBackupNode = myBackupsUC.isBackupNode(node.toNodeEntity())
+        let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .textEditor
         let nodeActionViewController = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isBackupNode: isBackupNode, sender: button)
         baseViewController?.present(nodeActionViewController, animated: true, completion: nil)

@@ -1,8 +1,8 @@
 import MEGADomain
 import Foundation
 
-public struct MockMyBackupsRepository: MyBackupsRepositoryProtocol {
-    public static let newRepo = MockMyBackupsRepository()
+public struct MockBackupsRepository: BackupsRepositoryProtocol {
+    public static let newRepo = MockBackupsRepository()
     private let currentBackupNode: NodeEntity
     private let isBackupRootNodeEmpty: Bool
     private let isBackupNode: Bool
@@ -34,7 +34,7 @@ public struct MockMyBackupsRepository: MyBackupsRepositoryProtocol {
         isBackupNode
     }
     
-    public func isMyBackupsRootNode(_ node: NodeEntity) -> Bool {
+    public func isBackupsRootNode(_ node: NodeEntity) -> Bool {
         currentBackupNode.handle == node.handle
     }
 }

@@ -4,7 +4,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *accountTypeLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
-@property (nonatomic, strong, nullable) MEGANode *myBackupsNode;
+@property (nonatomic, strong, nullable) MEGANode *backupsRootNode;
 @property (nonatomic, assign) BOOL isBackupSectionVisible;
 
 - (void)openOffline;

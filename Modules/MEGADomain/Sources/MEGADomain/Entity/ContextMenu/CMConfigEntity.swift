@@ -22,8 +22,8 @@ import Foundation
 ///     - albumType: Indicates whether or not it is the album and the type of album
 ///     - isFilterEnabled: Indicates whether or not if the filter is enabled
 ///     - isDoNotDisturbEnabled: Indicates wether or not the notifications are disabled
-///     - isMyBackupsNode: Indicates if the current node is the MyBackups root node
-///     - isMyBackupsChild: Indicates if the current node is a MyBackups node child
+///     - isBackupsRootNode: Indicates if the current node is the Backups root node
+///     - isBackupsChild: Indicates if the current node is a Backups node child
 ///     - isSelectHidden: Indicates if select is shown in menu
 ///     - isShareAvailable: Indicates if the share action is available
 ///     - isSharedItemsChild: Indicates if the current node is a shared items child
@@ -60,8 +60,8 @@ public struct CMConfigEntity {
     public var albumType: AlbumEntityType?
     public var isFilterEnabled: Bool
     public var isDoNotDisturbEnabled: Bool
-    public var isMyBackupsNode: Bool
-    public var isMyBackupsChild: Bool
+    public var isBackupsRootNode: Bool
+    public var isBackupsChild: Bool
     public var isSelectHidden: Bool
     public var isShareAvailable: Bool
     public var isSharedItemsChild: Bool
@@ -76,7 +76,7 @@ public struct CMConfigEntity {
     public var shouldJoiningMeeting: Bool
     public var shouldScheduleMeeting: Bool
     
-    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, filterType: FilterEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, albumType: AlbumEntityType? = nil, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isMyBackupsNode: Bool = false, isMyBackupsChild: Bool = false, isSelectHidden: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false) {
+    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, filterType: FilterEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, albumType: AlbumEntityType? = nil, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isBackupsRootNode: Bool = false, isBackupsChild: Bool = false, isSelectHidden: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false) {
         self.menuType = menuType
         self.viewMode = viewMode
         self.accessLevel = accessLevel
@@ -100,8 +100,8 @@ public struct CMConfigEntity {
         self.albumType = albumType
         self.isFilterEnabled = isFilterEnabled
         self.isDoNotDisturbEnabled = isDoNotDisturbEnabled
-        self.isMyBackupsNode = isMyBackupsNode
-        self.isMyBackupsChild = isMyBackupsChild
+        self.isBackupsRootNode = isBackupsRootNode
+        self.isBackupsChild = isBackupsChild
         self.isShareAvailable = isShareAvailable
         self.isSharedItemsChild = isSharedItemsChild
         self.isOutShare = isOutShare

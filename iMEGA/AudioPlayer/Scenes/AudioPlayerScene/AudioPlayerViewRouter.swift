@@ -80,8 +80,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     
     func showAction(for node: MEGANode, sender: Any) {
         let displayMode: DisplayMode = node.mnz_isInRubbishBin() ? .rubbishBin : .cloudDrive
-        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isBackupNode = myBackupsUC.isBackupNode(node.toNodeEntity())
+        let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         let nodeActionViewController = NodeActionViewController(
             node: node,
             delegate: self,

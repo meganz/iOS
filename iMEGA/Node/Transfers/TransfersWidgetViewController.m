@@ -207,7 +207,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)showCustomActionsForTransfer:(MEGATransfer *)transfer sender:(UIView *)sender {
     MEGANode *node = transfer.node;
-    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
     
     switch (transfer.state) {
         case MEGATransferStateComplete:

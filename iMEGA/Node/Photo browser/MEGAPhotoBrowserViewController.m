@@ -799,7 +799,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         return;
     }
     
-    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isInVersionsView:[self isPreviewingVersion] isBackupNode:isBackupNode sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }

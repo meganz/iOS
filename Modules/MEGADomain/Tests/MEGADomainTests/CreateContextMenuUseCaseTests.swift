@@ -116,7 +116,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         accessLevel: .owner,
                                                                         isAFolder: true,
-                                                                        isMyBackupsNode: true))
+                                                                        isBackupsRootNode: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         
@@ -136,11 +136,11 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
-    func testCreateContextMenuMyBackupsChild_Display() throws {
+    func testCreateContextMenuBackupsChild_Display() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
                                                                         accessLevel: .owner,
                                                                         isAFolder: true,
-                                                                        isMyBackupsChild: true))
+                                                                        isBackupsChild: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmEntity)
         

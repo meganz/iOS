@@ -9,9 +9,9 @@ extension ContactsViewController {
             searchController.isActive = false
         }
         
-        let myBackupsUseCase = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         
-        if myBackupsUseCase.hasBackupNode(in: nodes.toNodeEntities()) {
+        if backupsUseCase.hasBackupNode(in: nodes.toNodeEntities()) {
             shareNodes(withLevel: .accessRead)
         } else {
             selectPermissions(fromButton: shareFolderWithBarButtonItem)

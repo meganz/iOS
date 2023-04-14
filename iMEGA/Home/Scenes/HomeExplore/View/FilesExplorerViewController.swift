@@ -42,8 +42,8 @@ class FilesExplorerViewController: ExplorerBaseViewController {
     func showMoreOptions(forNode node: MEGANode, sender: UIView) {
         guard let navigationController = navigationController else { return }
         
-        let myBackupsUC = MyBackupsUseCase(myBackupsRepository: MyBackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let isBackupNode = myBackupsUC.isBackupNode(node.toNodeEntity())
+        let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         
         let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
         let vc = NodeActionViewController(node: node,

@@ -756,7 +756,7 @@
         return;
     }
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected isBackupNode:isBackupNode sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
@@ -1020,7 +1020,7 @@
             if ([self shouldShowContactVerificationOnTapForIndexPath:indexPath node:node]) {
                 [self showContactVerificationViewForIndexPath:indexPath];
             } else {
-                BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+                BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
                 CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
                 cloudDriveVC.isFromSharedItem = YES;
                 [cloudDriveVC setParentNode:node];
@@ -1302,7 +1302,7 @@
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     MEGAShare *share = [self shareAtIndexPath:indexPath];
     
-    BOOL isBackupNode = [[[MyBackupsOCWrapper alloc] init] isBackupNode:node];
+    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node
                                                                                 delegate:self
                                                                              displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem

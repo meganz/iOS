@@ -10,7 +10,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
@@ -55,7 +55,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 uploadFileUseCase: mockUploadFileUC,
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
-                myBackupsUseCase: mockMyBackupsUC
+                backupsUseCase: mockBackupsUC
             )
             test(viewModel: viewModel,
                  action: .setUpView,
@@ -76,7 +76,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let transferEntity = mockTransferEntity(transferTypeEntity: .download, path: testPath)
         let mockDownloadNodeUC = MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity))
         
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
@@ -115,7 +115,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
 
@@ -152,7 +152,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let transferEntity = mockTransferEntity(transferTypeEntity: .download, path: testPath)
         let mockDownloadNodeUC = MockDownloadNodeUseCase(transferEntity: transferEntity, result: .success(transferEntity))
         
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
@@ -179,7 +179,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
 
@@ -204,7 +204,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let transferEntity = mockTransferEntity(transferTypeEntity: .download)
         let mockDownloadNodeUC = MockDownloadNodeUseCase(transferEntity: transferEntity, result: .failure(TransferErrorEntity.download))
         
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
@@ -231,7 +231,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
 
@@ -261,7 +261,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.uploadFileResult = .success
         mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
@@ -275,7 +275,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             parentHandle: mockParentHandle,
             nodeEntity: mockNode
         )
@@ -318,7 +318,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         
         let mockParentHandle: HandleEntity = 123
 
@@ -329,7 +329,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             parentHandle: mockParentHandle
         )
 
@@ -351,7 +351,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.duplicate = true
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
         let mockParentHandle: HandleEntity = 123
         
@@ -370,7 +370,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             parentHandle: mockParentHandle
         )
         
@@ -392,7 +392,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
         let mockParentHandle: HandleEntity = 123
 
@@ -403,7 +403,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             parentHandle: mockParentHandle
         )
         
@@ -427,7 +427,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
         let mockParentHandle: HandleEntity = 123
 
@@ -438,7 +438,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             parentHandle: mockParentHandle
         )
         
@@ -460,7 +460,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.duplicate = true
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
         
         let duplicateNameAlertModel = TextEditorDuplicateNameAlertModel(
@@ -478,7 +478,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
         
         let createContent = "create content"
@@ -499,7 +499,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
 
         let viewModel = TextEditorViewModel(
@@ -509,7 +509,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
         
         let createContent = "create content"
@@ -532,7 +532,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.filename = textFile.fileName
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
 
         let viewModel = TextEditorViewModel(
@@ -542,7 +542,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
         
         let createContent = "create content"
@@ -563,7 +563,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.duplicate = true
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
         
         let renameAlertModel = TextEditorRenameAlertModel(
@@ -581,7 +581,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
 
         test(viewModel: viewModel,
@@ -597,7 +597,7 @@ final class TextEditorViewModelTests: XCTestCase {
         mockUploadFileUC.duplicate = false
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let textEditorMode: TextEditorMode = .create
         let mockParentHandle: HandleEntity = 123
         
@@ -610,7 +610,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             parentHandle: mockParentHandle
         )
 
@@ -628,7 +628,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
 
         for (index, textEditorMode) in TextEditorMode.allCases.enumerated() {
             let viewModel = TextEditorViewModel(
@@ -638,7 +638,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 uploadFileUseCase: mockUploadFileUC,
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
-                myBackupsUseCase: mockMyBackupsUC
+                backupsUseCase: mockBackupsUC
             )
 
             test(viewModel: viewModel,
@@ -661,7 +661,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -670,7 +670,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
         
         let textEditorModel = TextEditorModel(
@@ -705,7 +705,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -714,7 +714,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
 
         test(viewModel: viewModel,
@@ -735,7 +735,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -744,7 +744,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
         
         let textEditorModel = TextEditorModel(
@@ -779,7 +779,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -788,7 +788,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
 
         test(viewModel: viewModel,
@@ -808,7 +808,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -817,7 +817,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
 
         test(viewModel: viewModel,
@@ -832,7 +832,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let mockNode = NodeEntity(handle: 123, isFile: true)
 
         let viewModel = TextEditorViewModel(
@@ -842,7 +842,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
 
@@ -859,7 +859,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
     
         let newContent = "new content"
         
@@ -872,7 +872,7 @@ final class TextEditorViewModelTests: XCTestCase {
                 uploadFileUseCase: mockUploadFileUC,
                 downloadNodeUseCase: mockDownloadNodeUC,
                 nodeUseCase: mockNodeDataUC,
-                myBackupsUseCase: mockMyBackupsUC
+                backupsUseCase: mockBackupsUC
             )
 
             test(viewModel: viewModel,
@@ -888,7 +888,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -897,7 +897,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
 
         test(viewModel: viewModel,
@@ -912,7 +912,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
         
@@ -926,7 +926,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
 
@@ -957,7 +957,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let mockNode = NodeEntity(handle: 123, isFile: true)
 
         let viewModel = TextEditorViewModel(
@@ -967,7 +967,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
 
@@ -984,7 +984,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
 
         let viewModel = TextEditorViewModel(
             router: mockRouter,
@@ -993,7 +993,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC
+            backupsUseCase: mockBackupsUC
         )
 
         test(viewModel: viewModel,
@@ -1009,7 +1009,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockUploadFileUC = MockUploadFileUseCase()
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
-        let mockMyBackupsUC = MockMyBackupsUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
         let mockNode = NodeEntity(handle: 123, isFile: true)
 
         let viewModel = TextEditorViewModel(
@@ -1019,7 +1019,7 @@ final class TextEditorViewModelTests: XCTestCase {
             uploadFileUseCase: mockUploadFileUC,
             downloadNodeUseCase: mockDownloadNodeUC,
             nodeUseCase: mockNodeDataUC,
-            myBackupsUseCase: mockMyBackupsUC,
+            backupsUseCase: mockBackupsUC,
             nodeEntity: mockNode
         )
         
