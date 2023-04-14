@@ -36,5 +36,6 @@
 #import "MEGAOperation.h"
 #import "ShareViewController.h"
 #import "ShareDestinationTableViewController.h"
+#import "ShareAttachment.h"
 
 #endif /* MEGAShare_Bridging_Header_h */

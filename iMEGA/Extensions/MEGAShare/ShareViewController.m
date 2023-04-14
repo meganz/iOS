@@ -863,7 +863,11 @@
  
 - (void)processTransfers {
     if (self.users || self.chats) {
-        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Shared successfully", @"Success message shown when the user has successfully shared something")];
+        unsigned long receiverCount = self.users.count + self.chats.count;
+        NSArray<ShareAttachment *> *attachments = [[ShareAttachment attachmentsArray] copy];
+        NSString *successMessage = [self successSendToChatMessageWithAttachments:attachments receiverCount:receiverCount];
+        [SVProgressHUD showSuccessWithStatus: successMessage];
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self hideViewWithCompletion:^{
                 [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
