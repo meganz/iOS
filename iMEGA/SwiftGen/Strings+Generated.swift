@@ -5095,6 +5095,16 @@ public enum Strings {
         public static func uploadedToDestinationFolder(_ p1: Int) -> String {
           return Strings.tr("Localizable", "share.message.uploadedToDestinationFolder", p1)
         }
+        public enum SendToChat {
+          /// Plural format key: "%#@receiverCount@"
+          public static func withMultipleFiles(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "share.message.sendToChat.withMultipleFiles", p1)
+          }
+          /// Plural format key: "%#@receiverCount@"
+          public static func withOneFile(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "share.message.sendToChat.withOneFile", p1)
+          }
+        }
       }
     }
     public enum SharedItems {

@@ -1500,6 +1500,7 @@
 		B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */; };
 		B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */; };
 		B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */; };
+		B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */; };
 		B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */; };
 		B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */; };
 		B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */; };
@@ -3972,6 +3973,7 @@
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
 		B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Banner.swift"; sourceTree = "<group>"; };
 		B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+UpgradeSecurity.swift"; sourceTree = "<group>"; };
+		B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+Additions.swift"; sourceTree = "<group>"; };
 		B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerListSource.swift; sourceTree = "<group>"; };
 		B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -8810,6 +8812,7 @@
 				94598D741F0CD53A00B57144 /* Share.storyboard */,
 				77F95CED20E3B14D00F42D9C /* ShareDestinationTableViewController.h */,
 				77F95CEE20E3B14D00F42D9C /* ShareDestinationTableViewController.m */,
+				B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */,
 				A8F515B027F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift */,
 				B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */,
 				943F8B1E1EF2704900AFD89F /* ShareViewController.h */,
@@ -14233,6 +14236,7 @@
 				83A4E47727F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift in Sources */,
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
 				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
+				B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */,
 				A8F515B127F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift in Sources */,
 				B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */,
 				5B3B0D152684B24800479A68 /* ShareViewController.m in Sources */,
