@@ -5,7 +5,9 @@ struct MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     var scheduledMeetingsList: [ScheduledMeetingEntity] = []
     var scheduledMeetingsOccurrences: [ScheduledMeetingOccurrenceEntity] = []
     var recurringMeetingsNextDates: [ChatIdEntity:Date] = [:]
-
+    var createdScheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity()
+    var createdScheduledMeetingError: ScheduleMeetingErrorEntity?
+    
     func scheduledMeetings() -> [ScheduledMeetingEntity] {
         scheduledMeetingsList
     }
@@ -28,5 +30,13 @@ struct MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     
     func recurringMeetingsNextDates(_ meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity:Date] {
         recurringMeetingsNextDates
+    }
+    
+    func createScheduleMeeting(_ meeting: CreateScheduleMeetingEntity) async throws -> ScheduledMeetingEntity {
+        if let createdScheduledMeetingError {
+            throw createdScheduledMeetingError
+        } else {
+            return createdScheduledMeeting
+        }
     }
 }

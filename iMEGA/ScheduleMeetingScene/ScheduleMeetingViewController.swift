@@ -40,7 +40,7 @@ final class ScheduleMeetingViewController: UIViewController {
     }
     
     @objc func createButtonItemTapped() {
-        
+        viewModel.createDidTap()
     }
     
     @objc func cancelButtonItemTapped() {

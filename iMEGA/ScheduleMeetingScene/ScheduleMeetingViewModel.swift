@@ -1,13 +1,16 @@
 import MEGADomain
 
 protocol ScheduleMeetingRouting {
+    func showSpinner()
+    func hideSpinner()
+    func dismissView()
     func discardChanges()
     func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void))
 }
 
 final class ScheduleMeetingViewModel: ObservableObject {
     
-    private enum Constants {
+    enum Constants {
         static let meetingNameMaxLenght: Int = 30
         static let meetingDescriptionMaxLenght: Int = 4000
         static let minDurationFiveMinutes: TimeInterval = 300
@@ -15,6 +18,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     private let router: ScheduleMeetingRouting
+    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
+    private var chatLinkUseCase: ChatLinkUseCaseProtocol
+    private var chatRoomUseCase: ChatRoomUseCaseProtocol
 
     @Published var startDate = Date() {
         didSet {
@@ -65,13 +71,23 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     @Published var participantsCount = 0 
 
-    init(router: ScheduleMeetingRouting) {
+    init(router: ScheduleMeetingRouting,
+         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
+         chatLinkUseCase: ChatLinkUseCaseProtocol,
+         chatRoomUseCase: ChatRoomUseCaseProtocol) {
         self.router = router
+        self.scheduledMeetingUseCase = scheduledMeetingUseCase
+        self.chatLinkUseCase = chatLinkUseCase
+        self.chatRoomUseCase = chatRoomUseCase
         self.startDate = nextDateMinutesIsFiveMultiple(startDate)
         self.endDate = startDate.addingTimeInterval(Constants.defaultDurationHalfHour)
     }
     
     //MARK: - Public
+    func createDidTap() {
+        createScheduleMeeting()
+    }
+    
     func startsDidTap() {
         startDatePickerVisible.toggle()
     }
@@ -125,5 +141,36 @@ final class ScheduleMeetingViewModel: ObservableObject {
         minimunEndDate = startDate.addingTimeInterval(Constants.minDurationFiveMinutes)
         startDateFormatted = formatDate(startDate)
     }
+    
+    private func createScheduleMeeting() {
+        let createScheduleMeeting = CreateScheduleMeetingEntity(title: meetingName, description: meetingDescription, participants: participants, calendarInvite: calendarInviteEnabled, openInvite: allowNonHostsToAddParticipantsEnabled, startDate: startDate, endDate: endDate)
+        router.showSpinner()
+        Task { [weak self] in
+            do {
+                let scheduledMeeting = try await scheduledMeetingUseCase.createScheduleMeeting(createScheduleMeeting)
+                await self?.createLinkIfNeeded(chatId: scheduledMeeting.chatId)
+                await self?.scheduleMeetingCreationComplete()
+            } catch {
+                router.hideSpinner()
+                MEGALogDebug("Failed to create scheduled meeting with \(error)")
+            }
+         }
+    }
+    
+    private func createLinkIfNeeded(chatId: ChatIdEntity) async {
+        if meetingLinkEnabled {
+            do {
+                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
+                _ = try await chatLinkUseCase.createChatLink(for: chatRoom)
+            } catch {
+                router.hideSpinner()
+                MEGALogDebug("Failed to create link meeting with \(error)")
+            }
+        }
+    }
+    
+    @MainActor
+    private func scheduleMeetingCreationComplete() {
+        self.router.dismissView()
+    }
 }
-

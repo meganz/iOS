@@ -9,7 +9,12 @@ final class ScheduleMeetingRouter {
     }
     
     func build() -> UINavigationController {
-        let viewModel = ScheduleMeetingViewModel(router: self)
+        let viewModel = ScheduleMeetingViewModel(
+            router: self,
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)),
+            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        )
 
         let viewController = ScheduleMeetingViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)
@@ -25,7 +30,20 @@ final class ScheduleMeetingRouter {
 }
     
 extension ScheduleMeetingRouter: ScheduleMeetingRouting {
+    func showSpinner() {
+        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.show()
+    }
     
+    func hideSpinner() {
+        SVProgressHUD.dismiss()
+    }
+    
+    func dismissView() {
+        SVProgressHUD.dismiss()
+        presenter.dismissView()
+    }
+
     func discardChanges() {
         presenter.dismissView()
     }
