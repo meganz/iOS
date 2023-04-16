@@ -58,6 +58,8 @@
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGAChatScheduledFlags.h"
+#import "MEGAChatScheduledMeetingList.h"
 #import "MEGAChatScheduledMeetingOccurrence.h"
 #import "MEGAShareRequestDelegate.h"
 #import "FolderLinkViewController.h"

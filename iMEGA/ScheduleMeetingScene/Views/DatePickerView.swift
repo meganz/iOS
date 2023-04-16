@@ -25,6 +25,8 @@ struct DatePickerView: View {
         .padding(.horizontal)
         
         if datePickerVisible {
+            Divider()
+                .padding(.leading)
             DatePicker(
                 "",
                 selection: $date,

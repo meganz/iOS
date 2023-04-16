@@ -79,4 +79,51 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 })
         }
     }
+    
+    public func createScheduleMeeting(_ meeting: CreateScheduleMeetingEntity) async throws -> ScheduledMeetingEntity {
+        
+        let peerlist = MEGAChatPeerList()
+        meeting.participants.forEach { peerlist.addPeer(withHandle: $0.handle, privilege: 2)}
+
+        return try await withCheckedThrowingContinuation { continuation in
+            guard Task.isCancelled == false else {
+                continuation.resume(throwing: CancellationError())
+                return
+            }
+            chatSDK.createChatroomAndSchedMeeting(
+                withPeers: peerlist,
+                isMeeting: true,
+                isPublicChat: true,
+                title: meeting.title,
+                speakRequest: false,
+                waitingRoom: false,
+                openInvite: meeting.openInvite,
+                timezone: TimeZone.current.identifier,
+                startDate: Int(meeting.startDate.timeIntervalSince1970),
+                endDate: Int(meeting.endDate.timeIntervalSince1970),
+                description: meeting.description,
+                flags: MEGAChatScheduledFlags(emailsDisabled: !meeting.calendarInvite),
+                rules: MEGAChatScheduledRules(),
+                attributes: nil,
+                delegate: MEGAChatGenericRequestDelegate { request, error in
+                    guard Task.isCancelled == false else {
+                        continuation.resume(throwing: CancellationError())
+                        return
+                    }
+                    
+                    guard error.type == .MEGAChatErrorTypeOk else {
+                        continuation.resume(throwing: ScheduleMeetingErrorEntity.invalidArguments)
+                        return
+                    }
+                    
+                    guard let scheduledMeeting = request.scheduledMeetingList.first?.toScheduledMeetingEntity() else {
+                        continuation.resume(throwing: ScheduleMeetingErrorEntity.scheduledMeetingNotFound)
+                        return
+                    }
+                    
+                    continuation.resume(returning: scheduledMeeting)
+                }
+            )
+        }
+    }
 }
