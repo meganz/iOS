@@ -2,20 +2,35 @@ import XCTest
 @testable import MEGA
 
 final class PhotoCellVideoDurationViewModelTests: XCTestCase {
-    func testShouldShowDuration_video() {
+    func testShouldShowDurationView_video() {
         var sut = PhotoCellVideoDurationViewModel(isVideo: true, duration: "")
         for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
             sut.scaleFactor = scaleFactor
-            XCTAssertEqual(sut.shouldShowDuration, scaleFactor != .thirteen)
+            XCTAssertEqual(sut.shouldShowDurationView, scaleFactor != .thirteen)
         }
     }
 
-    func testShouldShowDuration_notVideo() {
+    func testShouldShowDurationView_notVideo() {
         var sut = PhotoCellVideoDurationViewModel(isVideo: false, duration: "")
         for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
             sut.scaleFactor = scaleFactor
-            XCTAssertFalse(sut.shouldShowDuration)
+            XCTAssertFalse(sut.shouldShowDurationView)
         }
+    }
+    
+    func testShouldShowDurationDetail_video_validDuration() {
+        var sut = PhotoCellVideoDurationViewModel(isVideo: true, duration: "01:00")
+        XCTAssertTrue(sut.shouldShowDurationDetail)
+    }
+    
+    func testShouldShowDurationDetail_video_invalidDuration() {
+        var sut = PhotoCellVideoDurationViewModel(isVideo: true, duration: "")
+        XCTAssertFalse(sut.shouldShowDurationDetail)
+    }
+    
+    func testShouldShowDurationDetail_notVideo_invalidDuration() {
+        var sut = PhotoCellVideoDurationViewModel(isVideo: false, duration: "")
+        XCTAssertFalse(sut.shouldShowDurationDetail)
     }
 
 }

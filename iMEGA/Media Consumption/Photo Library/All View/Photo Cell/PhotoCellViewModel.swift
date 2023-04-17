@@ -61,7 +61,7 @@ class PhotoCellViewModel: ObservableObject {
         
         isVideo = mediaUseCase.isVideo(for: URL(fileURLWithPath: photo.name))
         isFavorite = photo.isFavourite
-        duration = TimeInterval(photo.duration).timeString
+        duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
         
         let type: ThumbnailTypeEntity = viewModel.zoomState.scaleFactor == .one ? .preview : .thumbnail
         if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: type) {

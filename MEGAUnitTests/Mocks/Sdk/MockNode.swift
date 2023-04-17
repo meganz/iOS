@@ -12,6 +12,7 @@ final class MockNode: MEGANode {
     private let _hasThumbnail: Bool
     private let isNodeDecrypted: Bool
     private let isNodeExported: Bool
+    private let videoDuration: Int
     let nodePath: String?
     
     init(handle: HandleEntity,
@@ -23,7 +24,8 @@ final class MockNode: MEGANode {
          hasThumbnail: Bool = false,
          nodePath: String? = nil,
          isNodeDecrypted: Bool = false,
-         isNodeExported: Bool = false) {
+         isNodeExported: Bool = false,
+         duration: Int = 0) {
         nodeHandle = handle
         nodeName = name
         self.nodeType = nodeType
@@ -34,12 +36,15 @@ final class MockNode: MEGANode {
         self.nodePath = nodePath
         self.isNodeDecrypted = isNodeDecrypted
         self.isNodeExported = isNodeExported
+        self.videoDuration = duration
         super.init()
     }
     
     override var handle: HandleEntity { nodeHandle }
     
     override var type: MEGANodeType { nodeType }
+    
+    override var duration: Int { videoDuration }
     
     override func getChanges() -> MEGANodeChangeType { changeType }
     
@@ -60,4 +65,5 @@ final class MockNode: MEGANode {
     override func hasThumbnail() -> Bool { _hasThumbnail }
     
     override func isExported() -> Bool { isNodeExported }
+    
 }
