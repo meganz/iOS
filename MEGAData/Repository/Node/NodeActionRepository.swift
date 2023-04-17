@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 struct NodeActionRepository: NodeActionRepositoryProtocol {
     static var newRepo: NodeActionRepository {

@@ -612,7 +612,6 @@
 		6D0CA0EB2981CFD400CBE9E4 /* NodeFormatEntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CA0EA2981CFD400CBE9E4 /* NodeFormatEntityMappingTests.swift */; };
 		6D0CA0ED2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0CA0EC2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift */; };
 		6D4AF9AD2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AB2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift */; };
-		6D4AF9AE2934298A00A1C2D3 /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
 		6D58E9E7299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D58E9E6299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift */; };
 		6D60254E28F7B9C000FF9767 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
@@ -1310,9 +1309,6 @@
 		A8399F71296C53180062B6BC /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		A8399F72296C54A30062B6BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		A8399F93296D72A90062B6BC /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
-		A8399F9E296D7D720062B6BC /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
-		A8399F9F296D7D920062B6BC /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
-		A8399FA0296D81200062B6BC /* MEGAError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88024F8CB490089376A /* MEGAError+Mapper.swift */; };
 		A8399FB7296DD5550062B6BC /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
 		A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FB8296DD5A70062B6BC /* SAMKeychain */; };
 		A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FBA296DD5F10062B6BC /* MEGADomain */; };
@@ -1383,8 +1379,6 @@
 		A893322A24127B1B0088E588 /* MOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAD1DEC792400A193D5 /* MOUser.m */; };
 		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
-		A899466529715DAF008448C4 /* RequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */; };
-		A899466629715DF1008448C4 /* MEGAError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88024F8CB490089376A /* MEGAError+Mapper.swift */; };
 		A899466F29716A69008448C4 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADED4251896D1009A874C /* AuthRepository.swift */; };
 		A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		A8994679297182E7008448C4 /* CopyDataBasesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28EA25E69DFE00E9B56E /* CopyDataBasesRepository.swift */; };
@@ -1653,7 +1647,6 @@
 		B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B86A24F322F60089376A /* SMSVerificationViewRouter.swift */; };
 		B662B87124F332250089376A /* MEGAStringList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87024F332250089376A /* MEGAStringList+Mapper.swift */; };
 		B662B87F24F7D05B0089376A /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
-		B662B88124F8CB490089376A /* MEGAError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88024F8CB490089376A /* MEGAError+Mapper.swift */; };
 		B662B88324F8D8F60089376A /* RegionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88224F8D8F60089376A /* RegionListViewModel.swift */; };
 		B662B88524F8DA600089376A /* RegionListViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88424F8DA600089376A /* RegionListViewRouter.swift */; };
 		B662B88D24FC3F990089376A /* RegionListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88C24FC3F990089376A /* RegionListSource.swift */; };
@@ -2298,7 +2291,6 @@
 		C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF4925711A9200898D48 /* AudioPlaylistIndexedSource.swift */; };
 		C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF5725711BC100898D48 /* AudioPlaylistSource.swift */; };
 		C482B7D4271F360A0074CFC4 /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
-		C482B7D6271F360F0074CFC4 /* MEGAError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88024F8CB490089376A /* MEGAError+Mapper.swift */; };
 		C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */; };
 		C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */; };
 		C48AED3F27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */; };
@@ -3136,7 +3128,6 @@
 		6D0CA0EA2981CFD400CBE9E4 /* NodeFormatEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeFormatEntityMappingTests.swift; sourceTree = "<group>"; };
 		6D0CA0EC2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerTypeEntityMappingTests.swift; sourceTree = "<group>"; };
 		6D4AF9AB2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumElementRequestDelegate.swift; sourceTree = "<group>"; };
-		6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDelegate.swift; sourceTree = "<group>"; };
 		6D58E9E6299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContentsUpdateNotifierRepositoryTests.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
@@ -4148,7 +4139,6 @@
 		B662B86A24F322F60089376A /* SMSVerificationViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationViewRouter.swift; sourceTree = "<group>"; };
 		B662B87024F332250089376A /* MEGAStringList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStringList+Mapper.swift"; sourceTree = "<group>"; };
 		B662B87E24F7D05B0089376A /* CredentialRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialRepository.swift; sourceTree = "<group>"; };
-		B662B88024F8CB490089376A /* MEGAError+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAError+Mapper.swift"; sourceTree = "<group>"; };
 		B662B88224F8D8F60089376A /* RegionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewModel.swift; sourceTree = "<group>"; };
 		B662B88424F8DA600089376A /* RegionListViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewRouter.swift; sourceTree = "<group>"; };
 		B662B88C24FC3F990089376A /* RegionListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListSource.swift; sourceTree = "<group>"; };
@@ -7549,7 +7539,6 @@
 				BF66DF352612CE3100066F35 /* InviteRequestDelegate.swift */,
 				5DF0E3CF2563A8540052CC95 /* MEGAResultMappingRequestDelegate.swift */,
 				5DF0E3D02563A8540052CC95 /* MEGAResultRequestDelegate.swift */,
-				6D4AF9AC2934298A00A1C2D3 /* RequestDelegate.swift */,
 			);
 			path = RequestDelegate;
 			sourceTree = "<group>";
@@ -9852,7 +9841,6 @@
 				9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */,
 				6D6FCBF3297E2B360051EB4A /* ExplorerTypeEntity+Mapper.swift */,
 				943AFB58283E43DC00C1F1FD /* MEGAChatError+Mapper.swift */,
-				B662B88024F8CB490089376A /* MEGAError+Mapper.swift */,
 				A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */,
 				5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */,
 				A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */,
@@ -13227,7 +13215,6 @@
 				A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
 				BFB463EB2433FD6A00FB90B9 /* MegaDataFormatter.swift in Sources */,
-				B662B88124F8CB490089376A /* MEGAError+Mapper.swift in Sources */,
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
 				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
@@ -13693,7 +13680,6 @@
 				A89D72712795C5F500284BFC /* ReportIssueView.swift in Sources */,
 				A8EC8D7727A0258900A9ED13 /* ReportIssueViewModel.swift in Sources */,
 				A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */,
-				6D4AF9AE2934298A00A1C2D3 /* RequestDelegate.swift in Sources */,
 				2F9F11192508A3E800896DFF /* RequestModel.swift in Sources */,
 				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
 				2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */,
@@ -14052,7 +14038,6 @@
 				A84F4A9B298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
 				A899467B297189F5008448C4 /* MEGAConstants.m in Sources */,
 				83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */,
-				A899466629715DF1008448C4 /* MEGAError+Mapper.swift in Sources */,
 				B6B1A27B28A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
 				836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */,
 				836924D72582728100658F6C /* MEGAGenericRequestDelegate.m in Sources */,
@@ -14090,7 +14075,6 @@
 				B6FD64F02689E2C600988A17 /* RecentItemsRepository.swift in Sources */,
 				8375B75425EFC77D00B70F6B /* RecentsQuickAccessWidget.swift in Sources */,
 				8375B74325EFC77500B70F6B /* RecentsQuickAccessWidgetViewModel.swift in Sources */,
-				A899466529715DAF008448C4 /* RequestDelegate.swift in Sources */,
 				83C1B49225A8C14800814074 /* SectionDetail.swift in Sources */,
 				8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */,
 				83A3D5232594993D002AC6EB /* ShortcutIntents.intentdefinition in Sources */,
@@ -14198,7 +14182,6 @@
 				773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */,
 				B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
-				C482B7D6271F360F0074CFC4 /* MEGAError+Mapper.swift in Sources */,
 				C482B7D4271F360A0074CFC4 /* MEGAError+MNZCategory.m in Sources */,
 				94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */,
 				B6B1A27A28A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
@@ -14285,7 +14268,6 @@
 				B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
-				A8399F9E296D7D720062B6BC /* RequestDelegate.swift in Sources */,
 				5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
@@ -14347,7 +14329,6 @@
 				A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */,
 				A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */,
 				A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */,
-				A8399FA0296D81200062B6BC /* MEGAError+Mapper.swift in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
 				A85EB25D2975728800AEDA05 /* MEGANodeLabel+Mapper.swift in Sources */,
 				A89946812971A2CC008448C4 /* MEGANodeList+Mapper.swift in Sources */,
@@ -14359,7 +14340,6 @@
 				A85EB25C2975724300AEDA05 /* NodeEntity+Mapper.swift in Sources */,
 				A85EB25E297572BE00AEDA05 /* NodeTypeEntity+Mapper.swift in Sources */,
 				A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */,
-				A8399F9F296D7D920062B6BC /* RequestDelegate.swift in Sources */,
 				A868537929CA1674006C7A58 /* ThumbnailRepository.swift in Sources */,
 				A86FB61A297AF2EC00561DF8 /* TransferDelegate.swift in Sources */,
 				A86FB61B297AF30A00561DF8 /* TransferEntity+Mapper.swift in Sources */,

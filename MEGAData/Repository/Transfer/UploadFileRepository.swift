@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 struct UploadFileRepository: UploadFileRepositoryProtocol {
     private let sdk: MEGASdk

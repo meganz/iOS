@@ -1,3 +1,3 @@
-import Foundation
+import MEGASdk
 
 extension MEGAError: Error {}

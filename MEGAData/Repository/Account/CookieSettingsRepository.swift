@@ -2,6 +2,7 @@
 import Foundation
 import FirebaseCrashlytics
 import MEGADomain
+import MEGAData
 
 struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
     static var newRepo: CookieSettingsRepository {

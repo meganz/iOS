@@ -1,6 +1,7 @@
 import Foundation
 import SafariServices
 import MEGADomain
+import MEGAData
 
 extension AppDelegate {
     @objc func showAddPhoneNumberIfNeeded() {

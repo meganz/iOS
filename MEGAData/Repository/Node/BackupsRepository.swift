@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 import MEGASwift
 
 struct BackupsRepository: BackupsRepositoryProtocol {
@@ -63,7 +64,7 @@ struct BackupsRepository: BackupsRepositoryProtocol {
     
     private func folderInfo(node: MEGANode) async throws -> MEGAFolderInfo {
         try await withAsyncThrowingValue(in: { completion in
-            sdk.getFolderInfo(for: node, delegate: RequestDelegate() { result in
+            sdk.getFolderInfo(for: node, delegate: RequestDelegate { result in
                 switch result {
                 case .failure:
                     completion(.failure(FolderInfoErrorEntity.notFound))

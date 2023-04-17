@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAData
 
 struct AccountRepository: AccountRepositoryProtocol {
     static var newRepo: AccountRepository {
