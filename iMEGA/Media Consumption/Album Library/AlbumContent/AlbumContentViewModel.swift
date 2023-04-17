@@ -48,12 +48,14 @@ final class AlbumContentViewModel: ViewModelType {
     
     private(set) var alertViewModel: TextFieldAlertViewModel
     
-    var albumName: String
     var invokeCommand: ((Command) -> Void)?
     var isPhotoSelectionHidden = false
     
-    var renameAlbumTask: Task<Void, Never>?
     var selectAlbumCoverTask: Task<Void, Never>?
+    
+    var albumName: String {
+        album.name
+    }
     
     // MARK: - Init
     
@@ -72,7 +74,6 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumModificationUseCase = albumModificationUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
         self.router = router
-        self.albumName = album.name
         self.alertViewModel = alertViewModel
         
         setupSubscription()
@@ -156,7 +157,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     func renameAlbum(with name: String) {
-        renameAlbumTask = Task { [weak self] in
+        Task { [weak self] in
             guard let self else { return }
             
             do {
@@ -306,7 +307,7 @@ final class AlbumContentViewModel: ViewModelType {
     
     @MainActor
     private func onAlbumRenameSuccess(with newName: String) {
-        albumName = newName
+        album = album.update(name: newName)
         invokeCommand?(.updateNavigationTitle)
     }
     
