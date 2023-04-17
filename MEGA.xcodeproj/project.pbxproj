@@ -1555,6 +1555,9 @@
 		B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */; };
 		B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B5FC636229E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */; };
+		B5FC636429E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */; };
+		B5FC636929E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */; };
 		B5FE690F286984AC00A1725C /* FavouritesExplorerGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */; };
 		B5FE691328698C5C00A1725C /* FavouritesExplorerGridSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */; };
 		B5FE693B286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */; };
@@ -4037,6 +4040,9 @@
 		B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagView.swift; sourceTree = "<group>"; };
 		B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModel.swift; sourceTree = "<group>"; };
 		B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModelTests.swift; sourceTree = "<group>"; };
+		B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
+		B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Additions.swift"; sourceTree = "<group>"; };
+		B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCollectionViewCellViewModelTests.swift; sourceTree = "<group>"; };
 		B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerGridViewController.swift; sourceTree = "<group>"; };
 		B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerGridSource.swift; sourceTree = "<group>"; };
 		B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
@@ -5236,6 +5242,7 @@
 			isa = PBXGroup;
 			children = (
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
+				B5FC636529E92FE400EE4C8E /* Node */,
 				B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */,
 				B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */,
 			);
@@ -7909,9 +7916,11 @@
 				C4653A4C274BD09000BB14C2 /* BucketHeaderView.xib */,
 				C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */,
 				C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */,
+				B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */,
 				C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */,
 				83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */,
 				83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */,
+				B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */,
 				832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */,
 				832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */,
 				B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */,
@@ -9462,6 +9471,14 @@
 				B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */,
 			);
 			path = "Feature Flag";
+			sourceTree = "<group>";
+		};
+		B5FC636529E92FE400EE4C8E /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */,
+			);
+			path = Node;
 			sourceTree = "<group>";
 		};
 		B6061FE528978B040094087E /* Modules */ = {
@@ -13380,8 +13397,10 @@
 				A854C21E29AE27AD00CB37E7 /* NodeAttributeRepository.swift in Sources */,
 				5B947A9A267A20CD00715B0C /* NodeCellViewModel.swift in Sources */,
 				BFEAFF7C2565D57300646606 /* NodeClipboardOperationUseCase.swift in Sources */,
+				B5FC636429E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift in Sources */,
 				C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */,
 				83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */,
+				B5FC636229E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift in Sources */,
 				943092F7291438200092B99A /* NodeDataRepository.swift in Sources */,
 				5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */,
 				B64A71AB287943AF0085087D /* NodeEntity+Mapper.swift in Sources */,
@@ -14478,6 +14497,7 @@
 				9487BF3D29B6744000645D32 /* NodeActionRepositoryTests.swift in Sources */,
 				A8919424299F90A700B2A225 /* NodeAttributeRepositoryTests.swift in Sources */,
 				5BBC13E626CE64F50010115B /* NodeCellViewModelTests.swift in Sources */,
+				B5FC636929E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift in Sources */,
 				0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */,
 				6D0CA0EB2981CFD400CBE9E4 /* NodeFormatEntityMappingTests.swift in Sources */,
 				BFE556FD27E183B40028EF1F /* NodeHandle+Additions_Tests.swift in Sources */,

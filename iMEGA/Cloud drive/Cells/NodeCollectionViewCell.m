@@ -35,6 +35,7 @@ static NSString *kDuration = @"kDuration";
 @property (weak, nonatomic) IBOutlet UIImageView *versionedImageView;
 @property (weak, nonatomic) IBOutlet UIView *linkView;
 @property (weak, nonatomic) IBOutlet UIImageView *linkImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *videoIconView;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
 @property (weak, nonatomic) IBOutlet UIView *downloadedView;
@@ -45,6 +46,13 @@ static NSString *kDuration = @"kDuration";
 @end
 
 @implementation NodeCollectionViewCell
+
+- (NodeCollectionViewCellViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self createNodeCollectionCellViewModel];
+    }
+    return _viewModel;
+}
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
@@ -119,11 +127,12 @@ static NSString *kDuration = @"kDuration";
         });
     }];
     
-    self.durationLabel.hidden = !node.name.mnz_isVideoPathExtension;
+    self.durationLabel.hidden = ![self.viewModel isNodeVideoWithValidDurationWithNode:node];
+    self.videoIconView.hidden = ![self.viewModel isNodeVideoWithName:node.name];
     if (!self.durationLabel.hidden) {
         self.durationLabel.layer.cornerRadius = 4;
         self.durationLabel.layer.masksToBounds = true;
-        self.durationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
+        self.durationLabel.text = [NSString mnz_stringFromTimeInterval:node.duration];
     }
     
     if (self.downloadedView != nil) {
@@ -212,11 +221,12 @@ static NSString *kDuration = @"kDuration";
     
     self.selectImageView.hidden = !multipleSelection;
     self.moreButton.hidden = multipleSelection;
-    self.durationLabel.hidden = !nameString.mnz_isVideoPathExtension;
+    BOOL isNodeVideo = [self.viewModel isNodeVideoWithName:nameString];
+    self.durationLabel.hidden = self.videoIconView.hidden = !isNodeVideo;
     if (!self.durationLabel.hidden) {
         self.durationLabel.layer.cornerRadius = 4;
         self.durationLabel.layer.masksToBounds = YES;
-        self.durationLabel.text = nameString.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
+        self.durationLabel.text = isNodeVideo ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
     }
     
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;

@@ -3,11 +3,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NodeCollectionViewCellViewModel;
+
 @protocol NodeCollectionViewCellDelegate <NSObject>
 - (void)showMoreMenuForNode:(MEGANode *)node from:(UIButton *)sender;
 @end
 
 @interface NodeCollectionViewCell : UICollectionViewCell
+
+@property (strong, nonatomic) NodeCollectionViewCellViewModel *viewModel;
 
 - (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
 - (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
