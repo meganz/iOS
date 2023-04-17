@@ -2,6 +2,7 @@ import UserNotifications
 import Firebase
 import SAMKeychain
 import MEGADomain
+import MEGAData
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?
@@ -21,7 +22,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     private var waitingForUserAttributes = false
     
     private lazy var analyticsEventUseCase: AnalyticsEventUseCase = {
-        AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdk.sharedNSESdk))
     }()
     
     override init() {
@@ -149,7 +150,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             }
 
             
-            MEGASdkManager.sharedMEGASdk().getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
+            MEGASdk.sharedNSE.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
                 if let base64Handle = node.base64Handle,
                    let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier:base64Handle) {
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
@@ -270,7 +271,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private func restartExtensionProcess(with session: String) {
         NotificationService.session = nil
-        MEGASdkManager.sharedMEGASdk().localLogout(with: MEGAGenericRequestDelegate {
+        MEGASdk.sharedNSE.localLogout(with: MEGAGenericRequestDelegate {
             request, error in
             if error.type != .apiOk {
                 self.postNotification(withError: "SDK error in localLogout \(error)")
@@ -494,7 +495,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private static func loginToMEGA(with session: String) {
         MEGALogDebug("Login to MEGA")
-        MEGASdkManager.sharedMEGASdk().fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { request, error in
+        MEGASdk.sharedNSE.fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { request, error in
             if error.type != .apiOk {
                 MEGALogError("Login error \(error)")
                 return
