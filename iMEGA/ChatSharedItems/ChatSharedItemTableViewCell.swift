@@ -1,6 +1,7 @@
 
 import UIKit
 import MEGADomain
+import MEGAData
 
 class ChatSharedItemTableViewCell: UITableViewCell {
 

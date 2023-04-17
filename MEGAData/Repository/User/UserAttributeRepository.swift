@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 struct UserAttributeRepository: UserAttributeRepositoryProtocol {
     static var newRepo: UserAttributeRepository {

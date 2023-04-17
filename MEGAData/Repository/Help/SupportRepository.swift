@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASwift
+import MEGAData
 
 struct SupportRepository: SupportRepositoryProtocol {
     static var newRepo: SupportRepository {
