@@ -507,26 +507,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertNil(albumModificationUseCase.addedPhotosToAlbum)
     }
     
-    func testRenameAlbum_whenUserRenameAlbum_shouldUpdateAlbumName() async {
-        let photo = [NodeEntity(name: "a.jpg", handle: 1)]
-        let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
-        let albumContentRouter = MockAlbumContentRouting(album: album, photos: photo)
-        let albumModificationUseCase = MockAlbumModificationUseCase()
-        let sut = AlbumContentViewModel(album: album,
-                                        albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
-                                        albumModificationUseCase: albumModificationUseCase,
-                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
-                                        router: albumContentRouter, alertViewModel: alertViewModel())
-        
-        
-        let expectedName = "Hey there"
-        sut.renameAlbum(with: expectedName)
-        await sut.renameAlbumTask?.value
-        
-        XCTAssertEqual(sut.albumName, expectedName)
-    }
-    
-    func testUpdateNavigationTitle_whenUserRenameAlbum_shouldUpdateNavigationTitle() async {
+    func testRenameAlbum_whenUserRenameAlbum_shouldUpdateAlbumNameAndNavigationTitle() {
         let photo = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: photo)
@@ -550,12 +531,12 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         let expectedName = "Hey there"
         sut.renameAlbum(with: expectedName)
-        await sut.renameAlbumTask?.value
-
+        
         wait(for: [exp], timeout: 1)
+        XCTAssertEqual(sut.albumName, expectedName)
     }
     
-    func testUpdateAlertViewModel_whenUserRenamesStaysSamePageAndRenameAgain_shouldShowLatestRenamedAlbumName() async {
+    func testUpdateAlertViewModel_whenUserRenamesStaysSamePageAndRenameAgain_shouldShowLatestRenamedAlbumName() {
         let photo = [NodeEntity(name: "a.jpg", handle: 1)]
         let album = AlbumEntity(id: 1, name: "User Album", coverNode: NodeEntity(handle: 1), count: 2, type: .user)
         let albumContentRouter = MockAlbumContentRouting(album: album, photos: photo)
@@ -570,9 +551,20 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         router: albumContentRouter,
                                         alertViewModel: alertViewModel)
         
-        sut.albumName = "New Album"
-        sut.updateAlertViewModel()
+        let expectedName = "New Album"
+        let exp = expectation(description: "Should update navigation title")
+        sut.invokeCommand = {
+            switch $0 {
+            case .updateNavigationTitle:
+                sut.updateAlertViewModel()
+                exp.fulfill()
+            default:
+                XCTFail()
+            }
+        }
+        sut.renameAlbum(with: expectedName)
         
+        wait(for: [exp], timeout: 1)
         XCTAssertEqual(sut.alertViewModel.textString, "New Album")
     }
     

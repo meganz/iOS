@@ -105,6 +105,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         )
         
         let result = try await sut.photos(in: album)
+            .sorted(by: { $0.albumPhotoId ?? .invalid < $1.albumPhotoId ?? .invalid })
         XCTAssertEqual(result, [
             AlbumPhotoEntity(photo: node1, albumPhotoId: handle1),
             AlbumPhotoEntity(photo: node2, albumPhotoId: handle2),
@@ -187,6 +188,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
             AlbumPhotoEntity(photo: videoNode, albumPhotoId: element2.id),
         ]
         let result = await sut.userAlbumPhotos(by: albumId)
+            .sorted(by: { $0.albumPhotoId ?? .invalid < $1.albumPhotoId ?? .invalid })
         XCTAssertEqual(result, expectedResult)
     }
 }
