@@ -6,7 +6,7 @@ import MEGADomain
 // MARK: - Context Menu
 extension PhotoAlbumContainerViewController {
     func updateBarButtons() {
-        guard FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum) else {
+        guard isCreateAlbumEnabled else {
             navigationItem.setRightBarButton(nil, animated: false)
             navigationItem.setLeftBarButton(leftBarButton, animated: false)
             hideToolbar()
@@ -43,11 +43,10 @@ extension PhotoAlbumContainerViewController {
     }
     
     func updateRightBarButton() {
-        guard FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum) &&
-                pageTabViewModel.selectedTab == .album else {
-                    navigationItem.setRightBarButtonItems(nil, animated: false)
-                    return
-                }
+        guard isCreateAlbumEnabled && pageTabViewModel.selectedTab == .album else {
+            navigationItem.setRightBarButtonItems(nil, animated: false)
+            return
+        }
         
         navigationItem.setRightBarButtonItems(viewModel.shouldShowSelectBarButton ? [selectBarButton] : nil, animated: false)
     }

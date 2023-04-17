@@ -24,12 +24,14 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
     
     let pageTabViewModel = PagerTabViewModel()
     let viewModel = PhotoAlbumContainerViewModel()
+    let featureFlagProvider: FeatureFlagProviderProtocol = AlbumFeatureFlagProvider()
     
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?
     private var albumHostingController: UIViewController?
     
     var leftBarButton: UIBarButtonItem?
+    lazy var isCreateAlbumEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
