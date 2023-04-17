@@ -6,7 +6,9 @@ import MEGAPresentation
 
 final class AlbumContentViewController: UIViewController, ViewType, TraitEnviromentAware {
     let viewModel: AlbumContentViewModel
-    let shouldUseAlbumContextMenu = FeatureFlagProvider().isFeatureFlagEnabled(for: .albumContextMenu)
+    let featureFlagProvider: FeatureFlagProviderProtocol
+    lazy var shouldUseAlbumContextMenu = featureFlagProvider.isFeatureFlagEnabled(for: .albumContextMenu)
+    lazy var isCreateAlbumFeatureFlagEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
     
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
@@ -40,9 +42,10 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     
     // MARK: - Init
     
-    init(viewModel: AlbumContentViewModel) {
+    init(viewModel: AlbumContentViewModel,
+         featureFlagProvider: FeatureFlagProviderProtocol = AlbumFeatureFlagProvider()) {
         self.viewModel = viewModel
-        
+        self.featureFlagProvider = featureFlagProvider
         super.init(nibName: nil, bundle: nil)
     }
     

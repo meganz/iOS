@@ -62,7 +62,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                 sendToChatAction: didPressedSendToChat,
                 moreAction: moreButtonPressed,
                 albumType: albumType,
-                isCreateAlbumFeatureFlagEnabled: FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum)
+                isCreateAlbumFeatureFlagEnabled: isCreateAlbumFeatureFlagEnabled
             )
         }
         
@@ -111,7 +111,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
               !selectedNodes.isEmpty else {
             return
         }
-        if FeatureFlagProvider().isFeatureFlagEnabled(for: .createAlbum) {
+        if isCreateAlbumFeatureFlagEnabled {
             deleteAlbumPhotos(selectedNodes.toNodeEntities())
         } else {
             movePhotosToRubbishBin(photos: selectedNodes)

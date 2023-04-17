@@ -46,7 +46,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
          albumModificationUseCase: AlbumModificationUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
+         featureFlagProvider: FeatureFlagProviderProtocol = AlbumFeatureFlagProvider()) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
         self.alertViewModel = alertViewModel
