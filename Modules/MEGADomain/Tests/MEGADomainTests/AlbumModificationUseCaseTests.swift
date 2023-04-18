@@ -79,7 +79,7 @@ final class AlbumModificationUseCaseTests: XCTestCase {
 
         let deletedAlbumIds = [HandleEntity(1), HandleEntity(2)]
 
-        let ids = await sut.delete(albums: deletedAlbumIds)
+        let ids = await sut.delete(albums: deletedAlbumIds).sorted()
         XCTAssertEqual(ids, deletedAlbumIds)
     }
 }
