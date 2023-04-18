@@ -115,6 +115,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (self.traitCollection.preferredContentSizeCategory != previousTraitCollection.preferredContentSizeCategory) {
         [self setCreateAccountAttributedText];
     }
+    
+    [self updateLoginButtonTopConstraint];
 }
 
 #pragma mark - IBActions
@@ -268,7 +270,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.forgotPasswordImageView.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     [self.loginButton mnz_setupPrimary:self.traitCollection];
-    
+        
     [self setCreateAccountAttributedText];
 }
 
