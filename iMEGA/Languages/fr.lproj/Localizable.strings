@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Protection de vos renseignements personnels";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="Nous utilisons des témoins de connexion et des technologies semblables pour vous fournir les services que vous demandez à MEGA, ou à des fins d’analyse ou de collecte de données de performances. Nous n’utilisons pas de témoins pour le suivi publicitaire ni pour le partage avec des tiers de renseignements personnels à votre sujet.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Accepter les témoins";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Les témoins ne sont utilisés ni pour le suivi publicitaire ni pour le partage avec des tiers de renseignements personnels à votre sujet.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Témoins essentiels";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,11 +2553,11 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Ainsi, vous verrez instantanément les nouveaux messages sur votre appareil.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Ouvrez <b>Réglages</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Ouvrez <b>Réglages</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Touchez <b>Notifications</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Touchez <b>Notifications</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Activez <b>Autoriser les notifications</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Touchez <b>MEGA</b>";
 /* Fourth step to turn on notifications */
 "dialog.turnOnNotifications.label.stepFour"="3. Activez <b>Autoriser les notifications</b>";
 /* Title of the button to open Settings */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="L’appel se terminera dans %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Rendre accessible hors ligne";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Mettre fin à l’appel pour tous";
 /* Title of the popup that ends the meeting for all */
@@ -3327,7 +3329,7 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Réunion en cours";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Réunion en cours · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Planifier une réunion";
 /* Schedule meeting name field placeholder */

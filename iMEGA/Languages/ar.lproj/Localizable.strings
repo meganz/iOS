@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="خصوصيتك";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="نحن نستخدم ملفات تعريف الارتباط cookies والتقنيات المماثلة فقط لأغراض تزويدك بالخدمات التي تطلبها من ميغا MEGA أو للتحليلات وجمع بيانات الأداء. لا نستخدم ملفات تعريف الارتباط cookies لتتبع الإعلانات أو مشاركة أي معلومات شخصية عنك مع جهات خارجية.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="قبول ملفات تعريف الارتباط Cookies";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="لا تُستخدم ملفات تعريف الارتباط cookies لتتبع الإعلانات أو مشاركة أي معلومات شخصية مع جهات خارجية.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="ملفات تعريف الارتباط Cookies الأساسية";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,13 +2553,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="بهذه الطريقة ستتمكن من مشاهدة الرسائل الجديدة فورياً على جهازك فوراً.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> افتح <b>الإعدادت</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Open <b>Settings</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> انقر <b>الإشعارات</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Tap <b>Notifications</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> قم بتشغيل <b> السماح للإشعارات</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Tap <b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4.  قم بتشغيل <b>السماح للإشعارات</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="أفتح الإعدادات";
 /* Dialog title for the change launch tab screen */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="ستنتهي المكالمة في %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="اجعله متاح بدون اتصال";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="إنهاء المكالمة للجميع";
 /* Title of the popup that ends the meeting for all */
@@ -3327,9 +3329,9 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="الاجتماع جارٍ الآن";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="الاجتماع جارٍ الآن . %@";
 /* Schedule meeting view title */
-"meetings.scheduleMeeting.title"="جدول اجتماع";
+"meetings.scheduleMeeting.title"="الاجتماع المجدول";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="اسم الاجتماع";
 /* Schedule meeting start field */

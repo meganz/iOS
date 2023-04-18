@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="당신의 사생활";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="우리는 당신이 MEGA에 요청한 서비스를 제공하거나, 분석과 성능 데이터의 수집을 목적으로 쿠키 그리고 이와 유사한 기술을 사용합니다. 우리는 제3자와 어떠한 개인 정보를 공유하거나 광고 추적을 할 목적으로 쿠키를 사용하지 않습니다.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="쿠키 허용";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="쿠키는 제3자와 어떠한 개인 정보를 공유하거나 광고 추적을 할 목적으로 사용되지 않습니다.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="필수 쿠키";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,13 +2553,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="이 방법은, 새 메시지를 당신의 기기에서 즉시 볼 수 있습니다.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> <b>설정</b> 열기";
+"dialog.turnOnNotifications.label.stepOne"="1. <b>설정</b>을 여세요";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> <b>알림</b> 탭하기";
+"dialog.turnOnNotifications.label.stepTwo"="2. <b>알림</b>을 탭하세요";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> <b>알림 허용</b> 켜기";
+"dialog.turnOnNotifications.label.stepThree"="3. <b>MEGA</b>를 탭하세요";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. <b>알림 허용</b>을 켜세요";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="설정 열기";
 /* Dialog title for the change launch tab screen */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="%@ 내에 통화가 종료됩니다";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="오프라인에서 이용 가능하게 하기";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="모두 통화 종료";
 /* Title of the popup that ends the meeting for all */
@@ -3327,15 +3329,15 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="회의가 진행 중입니다";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="회의 진행 중 · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="회의 예약";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="회의 이름";
 /* Schedule meeting start field */
-"meetings.scheduleMeeting.start"="Starts";
+"meetings.scheduleMeeting.start"="시작";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.end"="Ends";
+"meetings.scheduleMeeting.end"="종료";
 /* Schedule meeting recurrence field */
 "meetings.scheduleMeeting.recurrence"="되풀이";
 /* Schedule meeting link field */
@@ -3359,7 +3361,7 @@
 /* Schedule meeting create button */
 "meetings.scheduleMeeting.create"="생성";
 /* Schedule meeting discard changes title */
-"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+"meetings.scheduleMeeting.discardChanges.title"="변경 사항을 취소하거나 계속 편집할까요?";
 /* Schedule meeting discard changes confirmation */
 "meetings.scheduleMeeting.discardChanges.confirm"="변경 취소";
 /* Schedule meeting discard changes cancellation */

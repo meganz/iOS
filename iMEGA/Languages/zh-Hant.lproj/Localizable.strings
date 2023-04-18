@@ -617,7 +617,7 @@
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="已與%d位聯絡人共享";
 /* Message shown when you have changed the permissions of a shared folder */
-"permissionsChanged"="權限已變更";
+"permissionsChanged"="權限已更改";
 /* Message shown when a share has been left */
 "shareLeft"="已離開共享";
 /* Message shown when some shares have been left */
@@ -2249,7 +2249,7 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "settings.section.userInterface"="使用者介面";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
-"Default Tab"="啟始標籤頁";
+"Default Tab"="預設分頁";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和檢視模式";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="您的隱私";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="我們使用cookies和類似技術的目的僅用於為您提供您從MEGA請求的服務，或用於分析和收集資料。我們不會將cookies用於廣告追踪或與第三方共享有關您的任何個人資訊。";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="接受Cookies";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Cookies不用於廣告追蹤或與第三方共享任何個人資訊。";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="必要的Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,21 +2553,21 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="這樣您將在您的裝置上立即看到新的訊息。";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> 開啟<b>設定</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Open <b>Settings</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> 點擊<b>通知</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Tap <b>Notifications</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> 啟用<b>允許通知</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Tap <b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. 打開<b>允許通知</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="開啟設定";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="變更載入標籤頁";
+"Change Launch Tab"="更改載入分頁";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="您現在可以選擇在啟動時打開應用程式的哪個部分功能。選擇最適合您需求的，例如對話、雲端硬碟、或首頁。";
 /* Dialog button text for the change launch tab screen */
-"Change Setting"="變更設定";
+"Change Setting"="更改設定";
 /* Offline log out warning message */
 "offline.logOut.warning.message"="登出會刪除您的離線內容。";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="通話將於%@後結束";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="離線存取";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="結束所有人的通話";
 /* Title of the popup that ends the meeting for all */
@@ -3327,17 +3329,17 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="會議進行中";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="會議進行中 · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="安排會議";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="會議名稱";
 /* Schedule meeting start field */
-"meetings.scheduleMeeting.start"="Starts";
+"meetings.scheduleMeeting.start"="開始";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.end"="Ends";
+"meetings.scheduleMeeting.end"="結束";
 /* Schedule meeting recurrence field */
-"meetings.scheduleMeeting.recurrence"="定期";
+"meetings.scheduleMeeting.recurrence"="重複";
 /* Schedule meeting link field */
 "meetings.scheduleMeeting.link"="會議連結";
 /* Schedule meeting end field */
@@ -3351,16 +3353,16 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="加入描述";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="輸入少於30個字元數";
+"meetings.scheduleMeeting.meetingName.lenghtError"="輸入少於30 個字元";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="輸入少於4000個字元數";
+"meetings.scheduleMeeting.description.lenghtError"="輸入少於4,000 個字元";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="取消";
 /* Schedule meeting create button */
 "meetings.scheduleMeeting.create"="建立";
 /* Schedule meeting discard changes title */
-"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+"meetings.scheduleMeeting.discardChanges.title"="捨棄更改或是繼續編輯？";
 /* Schedule meeting discard changes confirmation */
-"meetings.scheduleMeeting.discardChanges.confirm"="捨棄變更";
+"meetings.scheduleMeeting.discardChanges.confirm"="捨棄更改";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="繼續編輯";

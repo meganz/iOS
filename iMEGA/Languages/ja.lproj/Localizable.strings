@@ -2507,7 +2507,7 @@
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="クッキーを受け入れる";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookieは、広告追跡や第三者との個人情報の共有には使用されません";
+"settings.accept.cookies.footer"="Cookieは、広告追跡や第三者との個人情報の共有には使用されません。";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="必須クッキー";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,13 +2553,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="そうすると、お使いの端末に新しいメッセージがすぐに表示されます。";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1. </b><b>設定</b>を開く";
+"dialog.turnOnNotifications.label.stepOne"="1. <b>設定</b>を開く";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2. </b><b>通知</b>をタップ。";
+"dialog.turnOnNotifications.label.stepTwo"="2. <b>通知</b>をタップ。";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b><b>「通知を許可」</b>をオンにする";
+"dialog.turnOnNotifications.label.stepThree"="3. <b>MEGA</b>をタップ";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4.<b>「通知を許可」</b>をオンにする";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="設定を開く";
 /* Dialog title for the change launch tab screen */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="通話は%@後に終了します";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="オフラインで利用できるようにする";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="ファイルはすでにダウンロードされています";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="全員に対して通話を終了する";
 /* Title of the popup that ends the meeting for all */
@@ -3327,7 +3329,7 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="ミーティング中";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="ミーティング中・%@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="ミーティングをスケジュール";
 /* Schedule meeting name field placeholder */
