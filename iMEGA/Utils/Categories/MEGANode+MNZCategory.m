@@ -84,7 +84,7 @@
         case MEGANodeTypeRubbish: {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = self;
-            cloudDriveVC.displayMode = DisplayModeRubbishBin;
+            cloudDriveVC.displayMode = self.type == MEGANodeTypeRubbish ? DisplayModeRubbishBin : DisplayModeCloudDrive;
             [navigationController pushViewController:cloudDriveVC animated:NO];
 
             [UIApplication.mnz_presentingViewController dismissView];
