@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Ihre Privatsphäre";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="Wir verwenden Cookies und ähnliche Technologien ausschließlich für die Bereitstellung der von Ihnen angeforderten MEGA-Dienste sowie zu Analysezwecken und zur Erfassung von Leistungsdaten. Wir verwenden Cookies nicht für die Anzeigenverfolgung oder für die Weitergabe Ihrer personenbezogenen Daten an Dritte.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Cookies akzeptieren";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Cookies werden nicht für die Anzeigenverfolgung oder die Weitergabe personenbezogener Daten an Dritte verwendet.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookies für Grundfunktionalität";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,13 +2553,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Dadurch können Sie neue Nachrichten sofort auf Ihrem Gerät sehen.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> <b>Einstellungen</b> öffnen";
+"dialog.turnOnNotifications.label.stepOne"="1. <b>Einstellungen</b> öffnen";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> <b>Benachrichtigungen</b> antippen";
+"dialog.turnOnNotifications.label.stepTwo"="2. <b>Benachrichtigungen</b> antippen";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> <b>Benachrichtigungen erlauben</b> aktivieren";
+"dialog.turnOnNotifications.label.stepThree"="3. <b>MEGA</b> antippen";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. <b>Benachrichtigungen erlauben</b> aktivieren";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Einstellungen öffnen";
 /* Dialog title for the change launch tab screen */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="Die Konferenz wird in %@ beendet";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Offline bereitstellen";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Konferenz für alle beenden";
 /* Title of the popup that ends the meeting for all */
@@ -3327,15 +3329,15 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Meeting aktiv";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting aktiv · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Meeting planen";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="Name des Meetings";
 /* Schedule meeting start field */
-"meetings.scheduleMeeting.start"="Starts";
+"meetings.scheduleMeeting.start"="Beginn";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.end"="Ends";
+"meetings.scheduleMeeting.end"="Ende";
 /* Schedule meeting recurrence field */
 "meetings.scheduleMeeting.recurrence"="Wiederholungen";
 /* Schedule meeting link field */
@@ -3359,7 +3361,7 @@
 /* Schedule meeting create button */
 "meetings.scheduleMeeting.create"="Erstellen";
 /* Schedule meeting discard changes title */
-"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+"meetings.scheduleMeeting.discardChanges.title"="Änderungen verwerfen oder Bearbeitung fortsetzen?";
 /* Schedule meeting discard changes confirmation */
 "meetings.scheduleMeeting.discardChanges.confirm"="Änderungen verwerfen";
 /* Schedule meeting discard changes cancellation */

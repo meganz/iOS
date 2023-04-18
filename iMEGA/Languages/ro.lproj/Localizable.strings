@@ -2507,7 +2507,7 @@
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Acceptă cookie-urile";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookie-uri esențiale";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,11 +2553,11 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="This way, you will see new messages on your device instantly.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Deschide <b>Configurări</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Open <b>Settings</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Atinge <b>Notificări</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Tap <b>Notifications</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Pornește<b>Permiteți notificări</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Tap <b>MEGA</b>";
 /* Fourth step to turn on notifications */
 "dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
 /* Title of the button to open Settings */
@@ -2565,7 +2565,7 @@
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Modifică secțiunea Lansare";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud drive, or Home.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Modifică setarea";
 /* Offline log out warning message */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="Apelul se va încheia în %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Make available offline";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Încheie apelul pentru toți";
 /* Title of the popup that ends the meeting for all */

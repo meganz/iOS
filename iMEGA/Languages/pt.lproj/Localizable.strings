@@ -1175,7 +1175,7 @@
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Obrigado";
 /* Alert message shown when a purchase was restored succesfully */
-"purchaseRestore_message"="Sua compra foi restaurada";
+"purchaseRestore_message"="A sua compra foi restaurada";
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Compra interrompida";
 /* Alert message shown when a purchase has stopped because some error between the process */
@@ -1183,9 +1183,9 @@
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Erro na restauração";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="A compra anterior não pôde ser encontrado. Por favor, selecione o produto adquirido anteriormente para restaura-lo. Você não será cobrado novamente.";
+"incompleteRestore_message"="Não foi possível encontrar a compra anterior. Por favor, selecione o produto adquirido anteriormente para restaurá-lo. Você não será cobrado novamente.";
 /* Alert title shown when the restoring process has stopped for some reason */
-"failedRestore_title"="Restauração foi interrompida";
+"failedRestore_title"="A restauração foi interrompida";
 /* Alert message shown when the restoring process has stopped for some reason */
 "failedRestore_message"="A solicitação foi cancelada ou a compra principal não foi restaurada. Por favor, tente novamente ou envie uma mensagem para ios@mega.nz.";
 /* Title of a warning recommending upgrade to Pro */
@@ -2507,7 +2507,7 @@
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Aceitar cookies";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Não usamos cookies para rastrear anúncios ou compartilhar qualquer informação pessoal com terceiros";
+"settings.accept.cookies.footer"="Não usamos cookies para rastrear anúncios ou compartilhar qualquer informação pessoal com terceiros.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookies essenciais";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,13 +2553,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Dessa forma, você verá imediatamente as novas mensagens no seu dispositivo.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Acesse as <b>Configurações</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Acesse as <b>Configurações</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Toque em <b>Notificações</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Selecione<b>Notificações</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Ative a opção <b>Permitir notificações</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Selecione <b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. Ative a opção <b>Permitir notificações</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Acessar as configurações";
 /* Dialog title for the change launch tab screen */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="A chamada será finalizada em %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Tornar disponível offline";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="O download deste arquivo já está em andamento";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Finalizar a chamada para todos";
 /* Title of the popup that ends the meeting for all */

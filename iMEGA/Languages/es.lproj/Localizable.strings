@@ -31,11 +31,11 @@
 /* Alert title to attract attention */
 "attention"="Atención";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="Permite a MEGA que acceda a tu Cámara en Configuración";
+"cameraPermissions"="Otorga permisos a MEGA desde Configuración para que acceda a tu Cámara";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
-"microphonePermissions"="Permite a MEGA que acceda a tu Micrófono en Configuración";
+"microphonePermissions"="Otorga permisos a MEGA desde Configuración para que acceda a tu Micrófono";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
-"photoLibraryPermissions"="Permite a MEGA que acceda a tus Fotos en Configuración";
+"photoLibraryPermissions"="Otorga permisos a MEGA desde Configuración para que acceda a tus Fotos en Configuración";
 /* Message shown when the user clicks on a confirm account link that has already been used */
 "accountAlreadyConfirmed"="Tu cuenta está activa. Por favor, inicia sesión.";
 /*  */
@@ -1155,13 +1155,13 @@
 /* Error message shown when the purchase has failed */
 "wrongPurchase"="Compra incorrecta %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
-"appPurchaseDisabled"="Compras en la App Store desactivadas, por favor actívalas en la aplicación Configuración de iOS";
+"appPurchaseDisabled"="Compras en la App Store desactivadas, por favor actívalas desde Configuración ";
 /* Error message shown when the selected product doesn't exist */
 "productNotFound"="Producto %@ no encontrado, por favor contacta con ios@mega.nz";
 /* Alert title to remenber the user that needs to enable purchases */
 "allowPurchase_title"="Permitir compras";
 /* Alert message to remenber the user that needs to enable purchases before continue */
-"allowPurchase_message"="Debes activar las compras en la App Store en la Configuración de iOS antes de restaurar una compra.";
+"allowPurchase_message"="Debes activar las compras en la App Store desde Configuración antes de restaurar una compra.";
 /* Button title to restore failed purchases */
 "restore"="Restaurar";
 /* "Monthly" subscriptions */
@@ -2507,7 +2507,7 @@
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Aceptar Cookies";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Las cookies no se utilizan para el seguimiento de anuncios ni para compartir información personal con terceros";
+"settings.accept.cookies.footer"="Las cookies no se utilizan para el seguimiento de anuncios ni para compartir información personal con terceros.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookies esenciales";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,15 +2553,15 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="De esta manera, verás los nuevos mensajes al instante en tu dispositivo.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Abrir <b>Ajustes</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Abre <b>Configuración</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b>Pulsa en <b>Notificaciones</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Pulsa en <b>Notificaciones</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Activa <b>Permitir Notificaciones</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Pulsa en <b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. Activa <b>Permitir notificaciones</b>";
 /* Title of the button to open Settings */
-"dialog.turnOnNotifications.button.primary"="Abrir Configuración";
+"dialog.turnOnNotifications.button.primary"="Abre Configuración";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Cambiar la pestaña de inicio";
 /* Dialog description for the change launch tab screen */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="La llamada finalizará en %@ ";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Disponible sin conexión";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Finalizar llamada para todos";
 /* Title of the popup that ends the meeting for all */

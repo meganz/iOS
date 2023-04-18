@@ -1239,21 +1239,21 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
 "changedGroupChatNameTo"="[A] đã thay đổi tên nhóm chát thành “[B]”";
 /* Button label. Allows to add contacts in current chat conversation. */
-"addParticipant"="Mời Thêm Người…";
+"addParticipant"="Thêm thành viên…";
 /* Menu item to add participants to a chat */
-"addParticipants"="Thêm thành viên";
+"addParticipants"="Thêm thành viên";
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Trạng thái";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Xem Trước Nội Dung URL";
+"richUrlPreviews"="Xem trước nội dung URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Tăng cường trải nghiệm MEGA Chat. Nội dung gửi dưới dạng URL sẽ được truy vấn với giao thức thông thường và không theo quá trình mã hóa vô kiến thức.";
+"richPreviewsFooter"="Tăng cường trải nghiệm MEGA Chat. Nội dung dạng URL sẽ được truy vấn trực tiếp và không qua mã hóa vô kiến thức.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Gọi thoại và video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="Dùng Mạng Viễn Thông";
+"useMobileData"="Dùng mạng dữ liệu dI dộng";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
-"Use Mobile Data for Videos"="Sử dụng Mạng Viễn Thông để tải lên Videos";
+"Use Mobile Data for Videos"="Dùng mạng dữ liệu di động để tải lên videos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Tự động vắng mặt";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1917,7 +1917,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Tiền bạn gửi để chi trả cho gói %1 đã được nhận.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="We didn’t receive your payment for the %1 plan.";
+"Your payment for the %1 plan was unsuccessful."="Chúng tôi đã không có nhận được khoản thanh toán cho gói %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Gói thành viên hạng Pro sẽ hết hạn vào ngày mai.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Quản lý quyền riêng tư";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="Chúng tôi sử dụng cookies và các công nghệ tương tự chỉ nhằm mục đích cung cấp cho bạn các dịch vụ mà bạn yêu cầu từ MEGA hoặc để phân tích và thu thập dữ liệu hiệu suất. Chúng tôi không có sử dụng cookies để theo dõi quảng cáo hoặc chia sẻ bất kỳ thông tin cá nhân của bạn với bên thứ ba.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Chấp Nhận Cookies";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Cookies không có được sử dụng để theo dõi quảng cáo hoặc chia sẻ bấ  kỳ thông tin cá nhân nào với bên thứ ba.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookies Thiết Yếu";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,19 +2553,19 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Khi được bật, bạn sẽ thấy được tin nhắn trên thiết bị ngay tức thì.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Mở <b>Cài đặt</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Mở <b>Cài đặt</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Chạm vào <b>Thông báo</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Chạm vào <b>Thông báo</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Bật <b>Cho phép thông báo</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Chạm vào <b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. Bật <b>Cho phép thông báo</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Đi tới Cài đặt";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Đổi Tab Khởi Động";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Giờ bạn có thể chọn lựa phần trong app muốn được hiển thị mỗi khi khởi động. Chọn phần phù hợp với cách sử dụng cá nhân, như Chát, Ổ Mây, hoặc Trang Chủ.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Giờ bạn có thể chọn lựa phần trong app muốn được hiển thị mỗi khi khởi động. Chọn phần phù hợp với cách sử dụng cá nhân, như Chát, Ổ mây, hoặc Trang chủ.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Thay đổi Thiết Đặt";
 /* Offline log out warning message */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="Cuộc gọi sẽ kết thúc trong %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Lưu sử dụng ngoại tuyến";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="Tệp tin đang được tải xuống";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Gác cuộc gọi tất cả mọi người";
 /* Title of the popup that ends the meeting for all */
@@ -3277,7 +3279,7 @@
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Nâng cấp bảo mật tài khoản";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="We’re upgrading your account’s security. You should see this message only once. If you’ve seen it before, first make sure it has been for this account and not for another MEGA account you have.\n\nIf you’re sure and it’s the second time you’re seeing this message for this account, stop using this account.";
+"account.upgradeSecurity.message.upgrade"="Chúng tôi đang nâng cấp bảo mật cho tài khoản của bạn. Bạn sẽ thấy thông báo này chỉ một lần duy nhất. Nếu bạn đã nhìn thấy cái này trước đây, trước tiên hãy đảm bảo rằng thông báo đó là dành cho tài khoản này chứ không phải tài khoản MEGA khác mà bạn có.\n\nNếu bạn chắc rằng đây là lần thứ hai bạn nhìn thấy thông báo này cho tài khoản này, hãy ngưng sử dụng tài khoản này.";
 /* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.button.title"="OK, hiểu rồi";
 /* Label to introduce meeting info description field */
@@ -3325,31 +3327,31 @@
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="Để sử dụng MEGA trong ứng dụng Tệp, hãy tắt mật mã MEGA của bạn. Đi đến Thiết Đặt trong ứng dụng MEGA, chạm vào Bảo mật > Mật mã";
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.description"="Meeting in progress";
+"meetings.scheduled.listing.inProgress.description"="Cuộc họp đang diễn ra";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Cuộc họp đang diễn ra · %@";
 /* Schedule meeting view title */
-"meetings.scheduleMeeting.title"="Đặt hẹn cuộc họp";
+"meetings.scheduleMeeting.title"="Đặt lịch cuộc họp";
 /* Schedule meeting name field placeholder */
-"meetings.scheduleMeeting.meetingName.placeholder"="Meeting name";
+"meetings.scheduleMeeting.meetingName.placeholder"="Tên cuộc họp";
 /* Schedule meeting start field */
-"meetings.scheduleMeeting.start"="Starts";
+"meetings.scheduleMeeting.start"="Bắt đầu";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.end"="Ends";
+"meetings.scheduleMeeting.end"="Kết thúc";
 /* Schedule meeting recurrence field */
-"meetings.scheduleMeeting.recurrence"="Recurrence";
+"meetings.scheduleMeeting.recurrence"="Tái diễn";
 /* Schedule meeting link field */
-"meetings.scheduleMeeting.link"="Đường liên kết cuộc họp";
+"meetings.scheduleMeeting.link"="Đường liên kết cuộc họp";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.link.description"="Bất kỳ ai có đường liên kết này đều có thể tham gia cuộc họp và xem tin nhắn của cuộc họp.";
+"meetings.scheduleMeeting.link.description"="Bất kỳ ai có đường liên kết này đều có thể tham gia cuộc họp và xem tin nhắn của cuộc họp.";
 /* Schedule meeting add participants field */
-"meetings.scheduleMeeting.addParticipants"="Thêm thành viên";
+"meetings.scheduleMeeting.addParticipants"="Thêm thành viên";
 /* Schedule meeting send calendar invite field */
 "meetings.scheduleMeeting.sendCalendarInvite"="Gửi thư mời lịch";
 /* Schedule meeting open invite field */
-"meetings.scheduleMeeting.openInvite"="Cho phép các thành viên không chủ trì mời thêm người";
+"meetings.scheduleMeeting.openInvite"="Cho phép các thành viên không chủ trì mời thêm người";
 /* Schedule meeting description field placeholder */
-"meetings.scheduleMeeting.description"="Add description";
+"meetings.scheduleMeeting.description"="Thêm miêu tả";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Nhập ít hơn 30 ký tự";
 /* Schedule meeting description error */
@@ -3359,8 +3361,8 @@
 /* Schedule meeting create button */
 "meetings.scheduleMeeting.create"="Tạo";
 /* Schedule meeting discard changes title */
-"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+"meetings.scheduleMeeting.discardChanges.title"="Bỏ các thay đổi hay tiếp tục chỉnh sửa?";
 /* Schedule meeting discard changes confirmation */
-"meetings.scheduleMeeting.discardChanges.confirm"="Loại bỏ các thay đổi";
+"meetings.scheduleMeeting.discardChanges.confirm"="Loại bỏ các thay đổi";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Tiếp tục chỉnh sửa";

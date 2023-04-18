@@ -1049,11 +1049,11 @@
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Saat anda menginstal aplikasi desktop MEGA, anda mendapatkan %@ ruang penyimpanan gratis, berlaku selama 365 hari. Aplikasi desktop MEGA tersedia untuk Windows, macOS, dan sebagian besar distro Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Install Aplikasi Mobile MEGA";
+"account.achievement.mobileApp.title"="Install Aplikasi Seluler MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Anda telah menerima %@ruang penyimpanan untuk menginstal aplikasi seluler MEGA.";
+"account.achievement.mobileApp.complete.explaination.label"="Anda telah menerima %@ ruang penyimpanan untuk menginstal aplikasi seluler MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="Saat anda menginstal aplikasi seluler MEGA, anda mendapatkan %@ruang penyimpanan gratis, berlaku selama 365 hari. Aplikasi seluler MEGA tersedia untuk iOS dan Android.";
+"account.achievement.mobileApp.incomplete.explaination.label"="Saat anda menginstal Aplikasi Seluler MEGA, anda mendapatkan %@ ruang penyimpanan gratis, berlaku selama 365 hari. Aplikasi Seluler MEGA tersedia untuk iOS dan Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@penyimpanan. Berlaku selama 365 hari.";
 /* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
@@ -2465,7 +2465,7 @@
 /* Text title for shortcuts, ie in the widget */
 "Shortcuts"="Shortcut";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
-"Launch the MEGA app to perform an action"="Luncurkan aplikasi MEGA untuk melakukan tindakan";
+"Launch the MEGA app to perform an action"="Luncurkan Aplikasi MEGA untuk melakukan tindakan";
 /* Title for document explorer view */
 "Documents"="Document";
 /* Title for audio explorer view */
@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Privasi anda";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="Kami menggunakan cookie dan teknologi serupa semata-mata untuk tujuan menyediakan layanan yang anda minta dari MEGA, atau untuk analitik dan mengumpulkan data kinerja. Kami tidak menggunakan cookie untuk melacak iklan atau berbagi informasi pribadi apa pun tentang anda dengan pihak ketiga.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Terima Cookies";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Cookie tidak digunakan untuk pelacakan iklan atau berbagi informasi pribadi apa pun dengan pihak ketiga.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookie Penting";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,19 +2553,19 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Dengan demikian, anda akan melihat pesan baru di perangkat anda secara instan.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Buka <b>Pengaturan</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Open <b>Settings</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Ketuk <b>Notifikasi</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Tap <b>Notifications</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Nyalakan <b>Izinkan Notifikasi</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Tap <b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. Nyalakan <b>Izinkan notifikasi</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Buka Pengaturan";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Ubah Tab Peluncuran";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Sekarang anda dapat memilih bagian mana yang dibuka aplikasi saat diluncurkan. Pilih salah satu yang lebih sesuai dengan kebutuhan anda, apakah itu Obrolan, Penyimpanan Cloud, atau Rumah.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Sekarang anda dapat memilih bagian mana yang dibuka aplikasi saat diluncurkan. Pilih salah satu yang lebih sesuai dengan kebutuhan anda, apakah itu Obrolan, Penyimpanan cloud, atau Rumah.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Ubah Aturan";
 /* Offline log out warning message */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="Panggilan akan berakhir dalam %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Buat tersedia saat offline";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Akhiri panggilan untuk semua";
 /* Title of the popup that ends the meeting for all */
@@ -3327,15 +3329,15 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Rapat sedang berlangsung";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Rapat sedang berlangsung · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Jadwalkan pertemuan";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="Nama rapat";
 /* Schedule meeting start field */
-"meetings.scheduleMeeting.start"="Starts";
+"meetings.scheduleMeeting.start"="Mulai";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.end"="Ends";
+"meetings.scheduleMeeting.end"="Selesai";
 /* Schedule meeting recurrence field */
 "meetings.scheduleMeeting.recurrence"="Berulang";
 /* Schedule meeting link field */
@@ -3359,7 +3361,7 @@
 /* Schedule meeting create button */
 "meetings.scheduleMeeting.create"="Buat";
 /* Schedule meeting discard changes title */
-"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+"meetings.scheduleMeeting.discardChanges.title"="Hapus perubahan atau terus mengubah?";
 /* Schedule meeting discard changes confirmation */
 "meetings.scheduleMeeting.discardChanges.confirm"="Membuang perubahan";
 /* Schedule meeting discard changes cancellation */

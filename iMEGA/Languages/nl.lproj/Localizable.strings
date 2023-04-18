@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Uw privacy";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="We gebruiken Cookies en vergelijkbare technologieën uitsluitend om u de diensten te bieden die u van MEGA aanvraagt, of voor analyse en het verzamelen van prestatiegegevens. We gebruiken geen Cookies voor het volgen van advertenties of het delen van persoonlijke informatie over u met derden.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Cookies Accepteren";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Cookies worden niet gebruikt voor het volgen van advertenties of het delen van persoonlijke informatie met derden.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Essentiële Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,11 +2553,11 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Op deze manier, ziet u gelijk nieuwe berichten op uw apparaat.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> <b>Instellingen</b> openen";
+"dialog.turnOnNotifications.label.stepOne"="1.<b>Instellingen</b>openen";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tik <b>Meldingen</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Tik <b>Meldingen</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> <b>Meldingen Toestaan</b> inschakelen";
+"dialog.turnOnNotifications.label.stepThree"="3. Tik <b>MEGA</b>";
 /* Fourth step to turn on notifications */
 "dialog.turnOnNotifications.label.stepFour"="4. <b>Meldingen toestaan</b> Inschakelen";
 /* Title of the button to open Settings */
@@ -2565,7 +2565,7 @@
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Wijzig Lanceer Tab";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="U kunt nu selecteren welk gedeelte de applicatie opent bij het starten. Kies degene die het beste bij u past, of het nu Chat, Cloud Drive of Home is.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="U kunt nu selecteren welk gedeelte de applicatie opent bij het starten. Kies degene die het beste bij u past, of het nu Chat, Cloud drive of Home is.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Wijzig Omgeving";
 /* Offline log out warning message */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="Oproep wordt beëindigt in %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Maak beschikbaar offline";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Oproep voor iedereen beëindigen";
 /* Title of the popup that ends the meeting for all */
@@ -3327,7 +3329,7 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Vergadering bezig";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Vergadering in behandeling · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Plan vergadering";
 /* Schedule meeting name field placeholder */
@@ -3345,7 +3347,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="Deelnemers toevoegen";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="Verstuur kalender uitnodiging";
+"meetings.scheduleMeeting.sendCalendarInvite"="Kalender uitnodiging versturen";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="Toestaan ​​dat non-hosts deelnemers kan toevoegen";
 /* Schedule meeting description field placeholder */

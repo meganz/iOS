@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="La tua privacy";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="Utilizziamo i cookie e tecnologie simili per l'unico motivo di fornirti i servizi che utilizzi in MEGA, o per statistiche e raccolta di dati di utilizzo e performance. Non utilizziamo i cookie per pubblicità mirata o condividere qualsiasi informazione personale su di te con terze parti.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Accetta cookie";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="I cookie non vengono utilizzati per pubblicità mirata o condividere qualsiasi informazione personale con terze parti.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookie essenziali";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,19 +2553,19 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="In questo modo, vedrai istantaneamente i nuovi messaggi sul tuo dispositivo.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Apri le <b>Impostazioni</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Apri le <b>Impostazioni</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Tocca su <b>Notifiche</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Tocca su <b>Notifiche</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Attiva <b>Permetti notifiche</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Tocca su <b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. <b>Attiva le notifiche</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Apri Impostazioni";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Cambia finestra di avvio";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Adesso puoi selezionare la finestra che viene aperta dall'app all'avvio. Scegli quella che incontra meglio i tuoi bisogni, tra Chat, Cloud Drive, o Home.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Adesso puoi selezionare la finestra che viene aperta dall'app all'avvio. Scegli quella che incontra meglio i tuoi bisogni, tra Chat, Cloud drive, o Home.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Cambia impostazioni";
 /* Offline log out warning message */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="La chiamata terminerà tra %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Rendi disponibile offline";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="File is already being downloaded";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Termina la chiamata per tutti i partecipanti";
 /* Title of the popup that ends the meeting for all */
@@ -3327,15 +3329,15 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Meeting in corso";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in corso · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Programma meeting";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="Nome del meeting";
 /* Schedule meeting start field */
-"meetings.scheduleMeeting.start"="Starts";
+"meetings.scheduleMeeting.start"="Inizia";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.end"="Ends";
+"meetings.scheduleMeeting.end"="Termina";
 /* Schedule meeting recurrence field */
 "meetings.scheduleMeeting.recurrence"="Evento";
 /* Schedule meeting link field */

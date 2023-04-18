@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="您的隐私";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="我们使用cookies和类似技术仅用于为您提供您从 MEGA请求的服务，或用于分析和收集性能数据。我们不使用cookies进行广告跟踪或与第三方共享关于您的任何个人信息。";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="接受Cookie";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Cookies不用于广告跟踪或与第三方共享任何个人信息。";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="必要Cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,13 +2553,13 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="随后，您就会在此设备上收到新消息。";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b>打开<b>设置</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. 打开<b>设置</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b>点击<b>通知</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. 点击<b>通知</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b>打开<b>允许通知</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. 点击<b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. 打开<b>允许通知</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="打开设置";
 /* Dialog title for the change launch tab screen */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="通话将在%@后结束";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="设为离线可用";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="文件已在下载中";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="结束所有人的通话";
 /* Title of the popup that ends the meeting for all */

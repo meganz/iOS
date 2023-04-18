@@ -2503,11 +2503,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Ваша конфиденциальность";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="Мы используем куки-файлы и аналогичные технологии исключительно для предоставления услуг, которыми вы пользуетесь в MEGA, или для аналитики и сбора данных о производительности. Мы не используем куки-файлы для отслеживания рекламы или передачи какой-либо личной информации о вас третьим лицам.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Принять куки";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties";
+"settings.accept.cookies.footer"="Куки-файлы не используются для отслеживания рекламы или передачи какой-либо личной информации третьим лицам.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Основные куки-файлы";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2553,33 +2553,33 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Если включить, вы мгновенно будете видеть новые сообщения на своем устройстве.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="<b>1.</b> Откройте <b>настройки</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Откройте <b>«Настройки»</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="<b>2.</b> Выберите <b>уведомления</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Нажмите <b>«Уведомления»</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="<b>3.</b> Включите <b>«Разрешить уведомления»</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Нажмите <b>«MEGA»</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="4. Включите <b>«Разрешить уведомления»</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Открыть Настройки";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Изменить стартовый раздел";
+"Change Launch Tab"="Изменение стартового раздела";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Теперь вы можете выбрать, какой раздел приложение будет открывать при запуске. Выберите тот, который больше соответствует вашим потребностям, будь то чат, облачный диск или «домой».";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Теперь вы можете выбрать, какой раздел будет открываться при запуске приложения. Выберите тот, который больше соответствует вашим потребностям, будь то чат, облачный диск или «Домой».";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Изменить";
 /* Offline log out warning message */
 "offline.logOut.warning.message"="Выход из системы удалит локальный контент.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
-"transfer.cell.shareOwnerStorageQuota.infoLabel"="Владелец общего ресурса превысил квоту на хранение.";
+"transfer.cell.shareOwnerStorageQuota.infoLabel"="Владелец общего ресурса превысил лимит хранения данных.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
-"dialog.shareOwnerStorageQuota.message"="Файл не может быть отправлен, поскольку получатель превысил квоту на хранение.";
+"dialog.shareOwnerStorageQuota.message"="Файл не может быть отправлен, поскольку получатель превысил лимит хранения данных.";
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="Файл слишком большой, и его нельзя редактировать.";
 /* Hud info message when read unknown encode file. */
 "general.textEditor.hud.unknownEncode"="Файл не может быть отредактирован из-за неизвестной кодировки содержимого.";
 /* Show the node owner's name. The %@ is the owner's name */
-"cloudDrive.nodeInfo.owner"="%@ (Владелец)";
+"cloudDrive.nodeInfo.owner"="%@ (владелец)";
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-КЛЮЧ-ВОССТАНОВЛЕНИЯ";
 /* Hint text to display user's current email */
@@ -2589,7 +2589,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
 "dialog.storage.almostFull.detail"="Ваш облачный диск почти заполнен. Улучшите аккаунт до Pro сейчас и получите до %@ ТБ (%@ ГБ) в облаке.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Ваше облачное хранилище заполнено. Перейдите на подписку MEGA Pro, чтобы увеличить пространство для хранения и воспользоваться дополнительными преимуществами. Если вы превысите лимит хранилища и не улучшите аккаунт, или не удалите некоторые данные, ваш аккаунт может быть заблокирован. Пожалуйста, просмотрите электронные письма, которые мы вам отправили, для получения дополнительной информации.";
+"dialog.storage.odq.detail"="Ваше облачное хранилище заполнено. Перейдите на подписку MEGA Pro, чтобы увеличить объём и воспользоваться дополнительными преимуществами. Если вы превысите лимит хранилища и не улучшите аккаунт, или не удалите некоторые данные, ваш аккаунт может быть заблокирован. Пожалуйста, просмотрите электронные письма, которые мы вам отправили, для получения дополнительной информации.";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Аккаунт заблокирован";
 /* Over Disk Quota paywall final title. */
@@ -3070,6 +3070,8 @@
 "meetings.notification.EndCallTimerDuration"="Звонок завершится через %@";
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Сделать доступным офлайн";
+/* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
+"general.fileIsBeingDownloaded"="Файл уже скачивается";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Завершить звонок для всех";
 /* Title of the popup that ends the meeting for all */
@@ -3327,15 +3329,15 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Идёт встреча";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Идёт встреча · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Запланировать встречу";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="Название встречи";
 /* Schedule meeting start field */
-"meetings.scheduleMeeting.start"="Starts";
+"meetings.scheduleMeeting.start"="Начинается";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.end"="Ends";
+"meetings.scheduleMeeting.end"="Заканчивается";
 /* Schedule meeting recurrence field */
 "meetings.scheduleMeeting.recurrence"="Повторение";
 /* Schedule meeting link field */
@@ -3359,7 +3361,7 @@
 /* Schedule meeting create button */
 "meetings.scheduleMeeting.create"="Создать";
 /* Schedule meeting discard changes title */
-"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+"meetings.scheduleMeeting.discardChanges.title"="Отменить изменения или продолжить редактирование?";
 /* Schedule meeting discard changes confirmation */
 "meetings.scheduleMeeting.discardChanges.confirm"="Отменить изменения";
 /* Schedule meeting discard changes cancellation */
