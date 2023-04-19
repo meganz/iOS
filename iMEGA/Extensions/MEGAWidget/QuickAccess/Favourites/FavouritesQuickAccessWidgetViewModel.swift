@@ -10,15 +10,15 @@ final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     }
 
     // MARK: - Private properties
-    private let authUseCase: AuthUseCaseProtocol
+    private let credentialUseCase: CredentialUseCaseProtocol
     private let copyDataBasesUseCase: CopyDataBasesUseCaseProtocol
     private let favouriteItemsUseCase: FavouriteItemsUseCaseProtocol
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
 
-    init(authUseCase: AuthUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, favouriteItemsUseCase: FavouriteItemsUseCaseProtocol) {
-        self.authUseCase = authUseCase
+    init(credentialUseCase: CredentialUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, favouriteItemsUseCase: FavouriteItemsUseCaseProtocol) {
+        self.credentialUseCase = credentialUseCase
         self.copyDataBasesUseCase = copyDataBasesUseCase
         self.favouriteItemsUseCase = favouriteItemsUseCase
     }
@@ -35,7 +35,7 @@ final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     }
     
     func fetchFavouriteItems() -> EntryValue {
-        if authUseCase.sessionId() != nil {
+        if credentialUseCase.hasSession() {
             let items = favouriteItemsUseCase.fetchFavouriteItems(upTo: MEGAQuickAccessWidgetMaxDisplayItems).map {
                 QuickAccessItemModel(thumbnail: imageForPatExtension(URL(fileURLWithPath: $0.name).pathExtension), name: $0.name, url: URL(string: SectionDetail.favourites.link)?.appendingPathComponent($0.base64Handle), image: nil, description: nil)
             }

@@ -8,7 +8,7 @@ class DownloadLinkViewModelTests: XCTestCase {
     func testDownloadFileLinkUserLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()
         let viewModel = DownloadLinkViewModel(router: router,
-                                              authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId", isUserLoggedIn: true),
+                                              credentialUseCase: MockCredentialUseCase(session: true),
                                               link: URL(string: "fileLinkUrl")!,
                                               isFolderLink: false)
         viewModel.checkIfLinkCanBeDownloaded()
@@ -18,7 +18,7 @@ class DownloadLinkViewModelTests: XCTestCase {
     func testDownloadFolderLinkUserLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()
         let viewModel = DownloadLinkViewModel(router: router,
-                                              authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId", isUserLoggedIn: true),
+                                              credentialUseCase: MockCredentialUseCase(session: true),
                                               nodes: [NodeEntity()],
                                               isFolderLink: true)
         viewModel.checkIfLinkCanBeDownloaded()
@@ -28,7 +28,7 @@ class DownloadLinkViewModelTests: XCTestCase {
     func testDownloadFileLinkUserNotLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()
         let viewModel = DownloadLinkViewModel(router: router,
-                                              authUseCase: MockAuthUseCase(isUserLoggedIn: false),
+                                              credentialUseCase: MockCredentialUseCase(session: false),
                                               link: URL(string: "fileLinkUrl")!,
                                               isFolderLink: false)
         viewModel.checkIfLinkCanBeDownloaded()
@@ -38,7 +38,7 @@ class DownloadLinkViewModelTests: XCTestCase {
     func testDownloadFolderLinkUserNotLogged() {
         let router = MockDownloadLinkOrOnboardingRouter()
         let viewModel = DownloadLinkViewModel(router: router,
-                                              authUseCase: MockAuthUseCase(isUserLoggedIn: false),
+                                              credentialUseCase: MockCredentialUseCase(session: false),
                                               nodes: [NodeEntity()],
                                               isFolderLink: true)
         viewModel.checkIfLinkCanBeDownloaded()
