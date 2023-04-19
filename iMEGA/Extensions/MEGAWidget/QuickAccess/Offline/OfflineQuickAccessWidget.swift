@@ -6,7 +6,7 @@ struct OfflineTimelineProvider: TimelineProvider {
     typealias Entry = QuickAccessWidgetEntry
 
     var viewModel = OfflineQuickAccessWidgetViewModel(
-        authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()), credentialRepo: CredentialRepository()),
+        credentialUseCase: CredentialUseCase(repo: CredentialRepository.newRepo),
         copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository(fileManager: FileManager.default)),
         offlineFilesBasesUseCase: OfflineFilesUseCase(repo: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk()))
     )

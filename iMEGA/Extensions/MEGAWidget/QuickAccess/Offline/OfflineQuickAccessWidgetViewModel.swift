@@ -10,15 +10,15 @@ final class OfflineQuickAccessWidgetViewModel: ViewModelType {
     }
 
     // MARK: - Private properties
-    private let authUseCase: AuthUseCaseProtocol
+    private let credentialUseCase: CredentialUseCaseProtocol
     private let copyDataBasesUseCase: CopyDataBasesUseCaseProtocol
     private let offlineFilesUseCase: OfflineFilesUseCaseProtocol
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
 
-    init(authUseCase: AuthUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, offlineFilesBasesUseCase: OfflineFilesUseCaseProtocol) {
-        self.authUseCase = authUseCase
+    init(credentialUseCase: CredentialUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, offlineFilesBasesUseCase: OfflineFilesUseCaseProtocol) {
+        self.credentialUseCase = credentialUseCase
         self.copyDataBasesUseCase = copyDataBasesUseCase
         self.offlineFilesUseCase = offlineFilesBasesUseCase
     }
@@ -35,7 +35,7 @@ final class OfflineQuickAccessWidgetViewModel: ViewModelType {
     }
     
     func fetchOfflineItems() -> EntryValue {
-        if authUseCase.sessionId() != nil {
+        if credentialUseCase.hasSession() {
             let items = offlineFilesUseCase.offlineFiles().map {
                 QuickAccessItemModel(thumbnail: imageForPatExtension(URL(fileURLWithPath: $0.localPath).pathExtension), name: URL(fileURLWithPath: $0.localPath).lastPathComponent, url: URL(string: SectionDetail.offline.link)?.appendingPathComponent($0.base64Handle), image: nil, description: nil)
             }

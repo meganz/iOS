@@ -11,15 +11,15 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     }
 
     // MARK: - Private properties
-    private let authUseCase: AuthUseCaseProtocol
+    private let credentialUseCase: CredentialUseCaseProtocol
     private let copyDataBasesUseCase: CopyDataBasesUseCaseProtocol
     private let recentItemsUseCase: RecentItemsUseCaseProtocol
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
 
-    init(authUseCase: AuthUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, recentItemsUseCase: RecentItemsUseCaseProtocol) {
-        self.authUseCase = authUseCase
+    init(credentialUseCase: CredentialUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, recentItemsUseCase: RecentItemsUseCaseProtocol) {
+        self.credentialUseCase = credentialUseCase
         self.copyDataBasesUseCase = copyDataBasesUseCase
         self.recentItemsUseCase = recentItemsUseCase
     }
@@ -36,7 +36,7 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     }
     
     func fetchRecentItems() -> EntryValue {
-        if authUseCase.sessionId() != nil {
+        if credentialUseCase.hasSession() {
             let items = recentItemsUseCase.fetchRecentItems().map {
                 QuickAccessItemModel(thumbnail: imageForPatExtension(URL(fileURLWithPath:$0.name).pathExtension), name: $0.name, url: URL(string: SectionDetail.recents.link)?.appendingPathComponent($0.base64Handle), image: $0.isUpdate ? Image(Asset.Images.Generic.versioned.name): Image(Asset.Images.Recents.recentUpload.name), description: recentStringTimestamp($0.timestamp))
             }

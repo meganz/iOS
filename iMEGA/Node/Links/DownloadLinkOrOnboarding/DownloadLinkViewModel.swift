@@ -8,36 +8,36 @@ protocol DownloadLinkRouterProtocol {
 
 final class DownloadLinkViewModel {
     private let router: DownloadLinkRouterProtocol
-    private let authUseCase: AuthUseCaseProtocol
+    private let credentialUseCase: CredentialUseCaseProtocol
     
     private let link: URL?
     private let isFolderLink: Bool
     private let nodes: [NodeEntity]?
 
     init(router: DownloadLinkRouterProtocol,
-         authUseCase: AuthUseCaseProtocol,
+         credentialUseCase: CredentialUseCaseProtocol,
          link: URL,
          isFolderLink: Bool) {
         self.router = router
-        self.authUseCase = authUseCase
+        self.credentialUseCase = credentialUseCase
         self.link = link
         self.nodes = nil
         self.isFolderLink = isFolderLink
     }
     
     init(router: DownloadLinkRouterProtocol,
-         authUseCase: AuthUseCaseProtocol,
+         credentialUseCase: CredentialUseCaseProtocol,
          nodes: [NodeEntity],
          isFolderLink: Bool) {
         self.router = router
-        self.authUseCase = authUseCase
+        self.credentialUseCase = credentialUseCase
         self.isFolderLink = isFolderLink
         self.link = nil
         self.nodes = nodes
     }
     
     func checkIfLinkCanBeDownloaded() {
-        if authUseCase.sessionId() != nil {
+        if credentialUseCase.hasSession() {
             if isFolderLink {
                 router.downloadFolderLinkNodes()
             } else {
