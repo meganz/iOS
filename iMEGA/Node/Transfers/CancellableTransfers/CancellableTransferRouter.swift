@@ -1,6 +1,7 @@
 
 import Foundation
 import MEGADomain
+import MEGAData
 
 final class CancellableTransferRouter: NSObject, CancellableTransferRouting, TransferWidgetRouting {
     
