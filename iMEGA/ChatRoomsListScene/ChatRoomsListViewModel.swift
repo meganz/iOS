@@ -414,11 +414,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: userImageUseCase,
-            chatUseCase: ChatUseCase(
-                chatRepo: ChatRepository(
-                    sdk: MEGASdkManager.sharedMEGASdk(),
-                    chatSDK: MEGASdkManager.sharedMEGAChatSdk())
-            ),
+            chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase,
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
@@ -446,11 +442,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: userImageUseCase,
-            chatUseCase: ChatUseCase(
-                chatRepo: ChatRepository(
-                    sdk: MEGASdkManager.sharedMEGASdk(),
-                    chatSDK: MEGASdkManager.sharedMEGAChatSdk())
-            ),
+            chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),

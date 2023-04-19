@@ -11,15 +11,60 @@ public final class ChatRepository: ChatRepositoryProtocol {
     
     private let sdk: MEGASdk
     private let chatSDK: MEGAChatSdk
-    private lazy var chatStatusUpdateListener = ChatStatusUpdateListener(sdk: chatSDK)
-    private lazy var chatListItemUpdateListener = ChatListItemUpdateListener(sdk: chatSDK)
-    private lazy var chatCallUpdateListener = ChatCallUpdateListener(sdk: chatSDK)
-    private var chatConnectionUpdateListener: ChatConnectionUpdateListener?
-    private var chatPrivateModeUpdateListener: ChatRequestListener?
     
+    private lazy var chatStatusUpdateListener: ChatStatusUpdateListener = { [unowned self] in
+        let chatStatusUpdateListener = ChatStatusUpdateListener(sdk: chatSDK)
+        chatStatusUpdateListener.addListener()
+        removeChatStatusUpdateListener = chatStatusUpdateListener.removeListener
+        return chatStatusUpdateListener
+    }()
+    
+    private lazy var chatListItemUpdateListener: ChatListItemUpdateListener = { [unowned self] in
+        let chatListItemUpdateListener = ChatListItemUpdateListener(sdk: chatSDK)
+        chatListItemUpdateListener.addListener()
+        removeChatListItemUpdateListener = chatListItemUpdateListener.removeListener
+        return chatListItemUpdateListener
+    }()
+    
+    private lazy var chatCallUpdateListener: ChatCallUpdateListener = { [unowned self] in
+        let chatCallUpdateListener = ChatCallUpdateListener(sdk: chatSDK)
+        chatCallUpdateListener.addListener()
+        removeChatCallUpdateListener = chatCallUpdateListener.removeListener
+        return chatCallUpdateListener
+    }()
+    
+    private lazy var chatConnectionUpdateListener: ChatConnectionUpdateListener = { [unowned self] in
+        let chatConnectionUpdateListener = ChatConnectionUpdateListener(sdk: chatSDK)
+        chatConnectionUpdateListener.addListener()
+        removeChatConnectionUpdateListener = chatConnectionUpdateListener.removeListener
+        return chatConnectionUpdateListener
+    }()
+
+    private lazy var chatRequestListener: ChatRequestListener = { [unowned self] in
+        let chatRequestListener = ChatRequestListener(sdk: chatSDK)
+        chatRequestListener.addListener()
+        removeChatRequestListener = chatRequestListener.removeListener
+        return chatRequestListener
+    }()
+
+    private var removeChatStatusUpdateListener: (() -> Void)?
+    private var removeChatListItemUpdateListener: (() -> Void)?
+    private var removeChatCallUpdateListener: (() -> Void)?
+    private var removeChatConnectionUpdateListener: (() -> Void)?
+    private var removeChatRequestListener: (() -> Void)?
+
     public init(sdk: MEGASdk, chatSDK: MEGAChatSdk) {
         self.sdk = sdk
         self.chatSDK = chatSDK
+    }
+    
+    deinit {
+        removeChatStatusUpdateListener?()
+        removeChatListItemUpdateListener?()
+        removeChatCallUpdateListener?()
+        removeChatStatusUpdateListener?()
+        removeChatConnectionUpdateListener?()
+        removeChatRequestListener?()
     }
     
     public func myUserHandle() -> HandleEntity {
@@ -111,18 +156,18 @@ public final class ChatRepository: ChatRepositoryProtocol {
     }
     
     public func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never> {
-        let chatConnectionUpdateListener = ChatConnectionUpdateListener(sdk: chatSDK, chatId: chatId)
-        self.chatConnectionUpdateListener = chatConnectionUpdateListener
-        return chatConnectionUpdateListener
+        chatConnectionUpdateListener
             .monitor
+            .filter { $1 == chatId }
+            .map(\.0)
             .eraseToAnyPublisher()
     }
     
     public func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never> {
-        let chatPrivateModeUpdateListener = ChatRequestListener(sdk: chatSDK, chatId: chatId, changeType: .setPrivateMode)
-        self.chatPrivateModeUpdateListener = chatPrivateModeUpdateListener
-        return chatPrivateModeUpdateListener
+        chatRequestListener
             .monitor
+            .filter { $0.chatId == chatId && $1 == .setPrivateMode }
+            .map(\.0)
             .eraseToAnyPublisher()
     }
     
@@ -141,10 +186,13 @@ fileprivate class ChatListener: NSObject, MEGAChatDelegate {
     init(sdk: MEGAChatSdk) {
         self.sdk = sdk
         super.init()
+    }
+    
+    func addListener() {
         sdk.add(self, queueType: .globalBackground)
     }
     
-    deinit {
+    func removeListener() {
         sdk.remove(self)
     }
 }
@@ -177,22 +225,15 @@ fileprivate final class ChatListItemUpdateListener: ChatListener {
 }
 
 fileprivate final class ChatConnectionUpdateListener: ChatListener {
-    private let chatId: ChatIdEntity
-    private let source = PassthroughSubject<ChatConnectionStatus, Never>()
+    private let source = PassthroughSubject<(ChatConnectionStatus, ChatIdEntity), Never>()
     
-    var monitor: AnyPublisher<ChatConnectionStatus, Never> {
+    var monitor: AnyPublisher<(ChatConnectionStatus, ChatIdEntity), Never> {
         source.eraseToAnyPublisher()
     }
     
-    init(sdk: MEGAChatSdk, chatId: HandleEntity) {
-        self.chatId = chatId
-        super.init(sdk: sdk)
-    }
-    
     func onChatConnectionStateUpdate(_ api: MEGAChatSdk!, chatId: UInt64, newState: Int32) {
-        if chatId == self.chatId,
-           let chatConnectionState = MEGAChatConnection(rawValue: Int(newState))?.toChatConnectionStatus() {
-            source.send(chatConnectionState)
+        if let chatConnectionState = MEGAChatConnection(rawValue: Int(newState))?.toChatConnectionStatus() {
+            source.send((chatConnectionState, chatId))
         }
     }
 }
@@ -208,10 +249,13 @@ fileprivate final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
     init(sdk: MEGAChatSdk) {
         self.sdk = sdk
         super.init()
+    }
+    
+    func addListener() {
         sdk.add(self)
     }
     
-    deinit {
+    func removeListener() {
         sdk.remove(self)
     }
     
@@ -224,32 +268,28 @@ fileprivate final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
 
 fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
     private let sdk: MEGAChatSdk
-    private let changeType: MEGAChatRequestType
-    let chatId: HandleEntity
+    private let source = PassthroughSubject<(ChatRoomEntity, MEGAChatRequestType), Never>()
     
-    private let source = PassthroughSubject<ChatRoomEntity, Never>()
-    
-    var monitor: AnyPublisher<ChatRoomEntity, Never> {
+    var monitor: AnyPublisher<(ChatRoomEntity, MEGAChatRequestType), Never> {
         source.eraseToAnyPublisher()
     }
     
-    init(sdk: MEGAChatSdk, chatId: HandleEntity, changeType: MEGAChatRequestType) {
+    init(sdk: MEGAChatSdk) {
         self.sdk = sdk
-        self.changeType = changeType
-        self.chatId = chatId
         super.init()
-        sdk.add(self)
     }
     
-    deinit {
+    func addListener() {
+        sdk.add(self, queueType: .globalBackground)
+    }
+    
+    func removeListener() {
         sdk.remove(self)
     }
-    
+
     func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
-        if request.type == changeType,
-           chatId == request.chatHandle,
-           let chatRoom = sdk.chatRoom(forChatId: chatId) {
-            source.send(chatRoom.toChatRoomEntity())
+        if let chatRoom = sdk.chatRoom(forChatId: request.chatHandle) {
+            source.send((chatRoom.toChatRoomEntity(), request.type))
         }
     }
 }
