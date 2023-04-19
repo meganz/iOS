@@ -1,6 +1,7 @@
 import SwiftUI
 import MEGADomain
 import MEGAPresentation
+import MEGAData
 
 final class CallsSettingsViewRouter: Routing {
     private weak var presenter: UINavigationController?

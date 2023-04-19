@@ -1,6 +1,7 @@
 import UIKit
 import Combine
 import MEGADomain
+import MEGAData
 
 extension ChatViewController {
     func checkIfChatHasActiveCall() {

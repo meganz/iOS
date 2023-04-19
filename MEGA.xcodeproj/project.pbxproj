@@ -85,7 +85,6 @@
 		12696B1027A8B122008628EA /* PhotoLibraryZoomState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12696B0C27A8B121008628EA /* PhotoLibraryZoomState.swift */; };
 		127053A42822216800D64C21 /* AlbumListViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127053A32822216800D64C21 /* AlbumListViewRouter.swift */; };
 		129D51D52821D63E00A4D4D3 /* AlbumRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129D51D42821D63E00A4D4D3 /* AlbumRepository.swift */; };
-		12B1E5722874E30200D23A58 /* AnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E5712874E30200D23A58 /* AnalyticsRepository.swift */; };
 		12B1E57A2874FFEF00D23A58 /* AnalyticsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E5792874FFEF00D23A58 /* AnalyticsRepositoryTests.swift */; };
 		12B1E58028751B0700D23A58 /* MockMediaDiscoveryAnalyticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E57F28751B0700D23A58 /* MockMediaDiscoveryAnalyticsUseCase.swift */; };
 		12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E58228751FD100D23A58 /* PageStayTimeTrackerTests.swift */; };
@@ -1342,7 +1341,6 @@
 		A85EB25D2975728800AEDA05 /* MEGANodeLabel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */; };
 		A85EB25E297572BE00AEDA05 /* NodeTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E2226311EA100C5CB2A /* NodeTypeEntity+Mapper.swift */; };
 		A861B57F27BE7D32009C29C2 /* SupportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A861B57E27BE7D32009C29C2 /* SupportRepository.swift */; };
-		A86280B5291E83390010D6E0 /* AnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E5712874E30200D23A58 /* AnalyticsRepository.swift */; };
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A863223F29091456004FED9B /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A863223E29091456004FED9B /* Settings */; };
 		A866D9A9271D8B1900146302 /* AccountDetailsEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */; };
@@ -1398,7 +1396,6 @@
 		A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A717032639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift */; };
 		A8A923A62861DFAC006F66C3 /* CompressingLogFileManager+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */; };
 		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
-		A8AB7AED28F0616800D610EC /* AnalyticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1E5712874E30200D23A58 /* AnalyticsRepository.swift */; };
 		A8ABA36E292FA40000487D3A /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A8ABA36D292FA40000487D3A /* MEGAData */; };
 		A8AC23D8299A5D4E0025C2D3 /* TransferRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */; };
 		A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
@@ -2516,7 +2513,6 @@
 		12696B0C27A8B121008628EA /* PhotoLibraryZoomState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibraryZoomState.swift; sourceTree = "<group>"; };
 		127053A32822216800D64C21 /* AlbumListViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewRouter.swift; sourceTree = "<group>"; };
 		129D51D42821D63E00A4D4D3 /* AlbumRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRepository.swift; sourceTree = "<group>"; };
-		12B1E5712874E30200D23A58 /* AnalyticsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRepository.swift; sourceTree = "<group>"; };
 		12B1E5792874FFEF00D23A58 /* AnalyticsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRepositoryTests.swift; sourceTree = "<group>"; };
 		12B1E57F28751B0700D23A58 /* MockMediaDiscoveryAnalyticsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMediaDiscoveryAnalyticsUseCase.swift; sourceTree = "<group>"; };
 		12B1E58228751FD100D23A58 /* PageStayTimeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageStayTimeTrackerTests.swift; sourceTree = "<group>"; };
@@ -5352,14 +5348,6 @@
 				6DB6D41F292444B9005182CA /* UserAlbumRepository.swift */,
 			);
 			path = Album;
-			sourceTree = "<group>";
-		};
-		12B1E5702874E2D800D23A58 /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				12B1E5712874E30200D23A58 /* AnalyticsRepository.swift */,
-			);
-			path = Analytics;
 			sourceTree = "<group>";
 		};
 		12B1E58128751FAA00D23A58 /* PageStayTimeTracker */ = {
@@ -9794,7 +9782,6 @@
 			children = (
 				B645BC32252FAF8200D1D7CF /* Account */,
 				129D51D32821D63000A4D4D3 /* Album */,
-				12B1E5702874E2D800D23A58 /* Analytics */,
 				A84683032939FBC100FACCA1 /* AppConfiguration */,
 				BFAC873525FEF1F3009CA3F6 /* AudioVideo */,
 				B645BC31252FAF7000D1D7CF /* Authentication */,
@@ -12543,7 +12530,6 @@
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
 				BFBB88D528C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift in Sources */,
-				12B1E5722874E30200D23A58 /* AnalyticsRepository.swift in Sources */,
 				9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */,
 				A84683052939FBD500FACCA1 /* AppConfigurationRepository.swift in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
@@ -13995,7 +13981,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A86280B5291E83390010D6E0 /* AnalyticsRepository.swift in Sources */,
 				B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				B6F8CE18262823250074CBBF /* CoreDataErrorHandler.m in Sources */,
 				774941E42410F3CD00FC5CB6 /* MEGACD.xcdatamodeld in Sources */,
@@ -14130,7 +14115,6 @@
 				8340CAF8284E48F8007C3B39 /* ActionsView.swift in Sources */,
 				8340CAFB284E4F0C007C3B39 /* ActionViewModel.swift in Sources */,
 				0EE7A9CB29ED192F003DBC43 /* AlbumFeatureFlagProvider.swift in Sources */,
-				A8AB7AED28F0616800D610EC /* AnalyticsRepository.swift in Sources */,
 				5BE689BC2419189700462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B92419189300462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				A873E84626E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */,

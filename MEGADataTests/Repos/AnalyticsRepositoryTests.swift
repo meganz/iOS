@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGAData
 
 final class AnalyticsRepositoryTests: XCTestCase {
     
