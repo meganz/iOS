@@ -33,12 +33,11 @@ struct UserImageRepository: UserImageRepositoryProtocol {
     func avatar(forUserHandle handle: String?, destinationPath: String) async throws -> UIImage {
         try await withCheckedThrowingContinuation { continuation in
             let thumbnailRequestDelegate = AvatarRequestDelegate { request in
-                guard Task.isCancelled == false else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                
                 if let filePath = request.file, let image = UIImage(contentsOfFile: filePath) {
+                    guard Task.isCancelled == false else {
+                        continuation.resume(throwing: CancellationError())
+                        return
+                    }
                     continuation.resume(returning: image)
                 } else {
                     continuation.resume(throwing: UserImageLoadErrorEntity.unableToFetch)
