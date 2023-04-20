@@ -973,6 +973,25 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isSelected)
     }
     
+    func testSelect_onIsSelectionDisabled_shouldDisableSelection() throws {
+        let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library)
+        libraryViewModel.selectedMode = .all
+        libraryViewModel.selection.editMode = .active
+        libraryViewModel.selection.isSelectionDisabled = true
+        
+        let photo = NodeEntity(name: "0.jpg", handle: 0)
+        let sut = PhotoCellViewModel(
+            photo: photo,
+            viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel),
+            thumbnailUseCase: MockThumbnailUseCase(),
+            mediaUseCase: MockMediaUseCase()
+        )
+        XCTAssertFalse(sut.isSelected)
+        sut.select()
+        XCTAssertFalse(sut.isSelected)
+    }
+    
     func testShouldApplyContentOpacity_onEditModeItemIsNotSelectedAndLimitReached_shouldChangeContentOpacity() throws {
         let selectionLimit = 3
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)

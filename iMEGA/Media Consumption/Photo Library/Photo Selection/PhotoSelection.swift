@@ -42,6 +42,8 @@ final class PhotoSelection: ObservableObject {
     
     @Published var isHidden = false
     
+    @Published var isSelectionDisabled = false
+    
     func setSelectedPhotos(_ photos: [NodeEntity]) {
         self.photos = Dictionary(uniqueKeysWithValues: photos.map { ($0.handle, $0) })
     }
