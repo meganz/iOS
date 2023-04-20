@@ -1215,6 +1215,7 @@
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		94CC921829F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CC921729F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift */; };
 		94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */; };
 		94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */; };
 		94E71807283D24D3000EDDDF /* ChatStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E71806283D24D3000EDDDF /* ChatStatus.swift */; };
@@ -3712,6 +3713,7 @@
 		94C7373629D72FE30099E100 /* SupportRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportRepositoryTests.swift; sourceTree = "<group>"; };
 		94C7373829D738490099E100 /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
+		94CC921729F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeAccessEntity+Mapper_Tests.swift"; sourceTree = "<group>"; };
 		94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepositoryTests.swift; sourceTree = "<group>"; };
 		94E71806283D24D3000EDDDF /* ChatStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStatus.swift; sourceTree = "<group>"; };
@@ -11134,6 +11136,7 @@
 				B6FB5F8329A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift */,
 				6D0CA0EC2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift */,
 				320262ED298C97EE0049688C /* FilterTypeEntityMappingTests.swift */,
+				94CC921729F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift */,
 				0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */,
 				6D0CA0EA2981CFD400CBE9E4 /* NodeFormatEntityMappingTests.swift */,
 				BFE556FA27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift */,
@@ -14485,6 +14488,7 @@
 				BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */,
 				B6A6E198287BCDDD00179806 /* MockUserList.swift in Sources */,
 				8361D9F2283E7B4E0001FAC1 /* NameCollisionViewModelTests.swift in Sources */,
+				94CC921829F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift in Sources */,
 				837B9C0B24781B1600D409B4 /* NodeActionBuilderTests.swift in Sources */,
 				9487BF3D29B6744000645D32 /* NodeActionRepositoryTests.swift in Sources */,
 				A8919424299F90A700B2A225 /* NodeAttributeRepositoryTests.swift in Sources */,
