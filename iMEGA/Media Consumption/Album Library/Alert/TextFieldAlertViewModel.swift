@@ -6,6 +6,7 @@ struct TextFieldAlertViewModel {
     var placeholderText: String
     let affirmativeButtonTitle: String
     let affirmativeButtonInitiallyEnabled: Bool?
+    let highlightInitialText: Bool?
     let message: String?
     var action: ((String?) -> Void)?
     var validator: ((String?) -> TextFieldAlertError?)?
@@ -16,6 +17,7 @@ struct TextFieldAlertViewModel {
         placeholderText: String,
         affirmativeButtonTitle: String,
         affirmativeButtonInitiallyEnabled: Bool? = nil,
+        highlightInitialText: Bool? = nil,
         message: String? = nil,
         action: ((String?) -> Void)? = nil,
         validator: ((String?) -> TextFieldAlertError?)? = nil
@@ -25,6 +27,7 @@ struct TextFieldAlertViewModel {
         self.placeholderText = placeholderText
         self.affirmativeButtonTitle = affirmativeButtonTitle
         self.affirmativeButtonInitiallyEnabled = affirmativeButtonInitiallyEnabled
+        self.highlightInitialText = highlightInitialText
         self.message = message
         self.action = action
         self.validator = validator
