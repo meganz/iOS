@@ -8,6 +8,10 @@ extension UIAlertController {
             textField.text = alert.textString
             let textFieldAction = actionFor(textField: textField, within: self, viewModel: alert)
             textField.addAction(textFieldAction, for: .editingChanged)
+            
+            if let shouldHighlight = alert.highlightInitialText, shouldHighlight {
+                textField.addTarget(self, action: #selector(self.editingDidBegin), for: .editingDidBegin)
+            }
         }
         
         addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel) { _ in
@@ -41,5 +45,10 @@ extension UIAlertController {
                 alert.actions.last?.isEnabled = isEnabled
             })
         }
+    }
+    
+    @objc private func editingDidBegin() {
+        guard let textField = textFields?.first else { return }
+        textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
     }
 }

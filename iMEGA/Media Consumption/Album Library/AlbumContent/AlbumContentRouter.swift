@@ -40,6 +40,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                      placeholderText: "",
                                                      affirmativeButtonTitle: Strings.Localizable.rename,
                                                      affirmativeButtonInitiallyEnabled: false,
+                                                     highlightInitialText: true,
                                                      message: Strings.Localizable.renameNodeMessage,
                                                      validator: AlbumNameValidator(existingAlbumNames: existingAlbumNames).rename)
         
