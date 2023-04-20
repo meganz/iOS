@@ -96,6 +96,7 @@ class PhotoCellViewModel: ObservableObject {
     }
     
     func select() {
+        guard !selection.isSelectionDisabled else { return }
         if editMode.isEditing && (isSelected || !isSelectionLimitReached) {
             isSelected.toggle()
         } else {

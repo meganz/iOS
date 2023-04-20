@@ -214,12 +214,18 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     
     // MARK: - Private
     private func deleteAlbumPhotos(_ photos: [NodeEntity]) {
+        disablePhotoSelection(true)
         let alertController = UIAlertController(title: Strings.Localizable.CameraUploads.Albums.RemovePhotos.Alert.title,
                                                 message: nil, preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel) { [weak self] _ in
+            guard let self else { return }
+            disablePhotoSelection(false)
+        })
         alertController.addAction(UIAlertAction(title: Strings.Localizable.remove, style: .destructive) { [weak self] _ in
-            self?.viewModel.dispatch(.deletePhotos(photos))
-            self?.endEditingMode()
+            guard let self else { return }
+            disablePhotoSelection(false)
+            viewModel.dispatch(.deletePhotos(photos))
+            endEditingMode()
         })
         alertController.popoverPresentationController?.barButtonItem = albumToolbarConfigurator?.removeToRubbishBinItem
         present(alertController, animated: true)
