@@ -15,11 +15,12 @@ struct NodeAccessConfiguration {
 }
 
 class NodeAccess: NSObject {
-    private let sdk = MEGASdkManager.sharedMEGASdk()
+    private let sdk = MEGASdk.shared
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
     private var nodeLoadOperation: NodeLoadOperation?
     
     var nodeAccessConfiguration: NodeAccessConfiguration
+    var nodePath: String?
     
     /// All changes in the SDK and in memory are notified so that the handle value is always up to date. This handle is the single source of truth on target node handle check.
     private var handle: HandleEntity? {
@@ -98,6 +99,9 @@ class NodeAccess: NSObject {
     
     private func updateHandle(_ node: MEGANode?, error: Error?, completion: NodeLoadCompletion?) {
         self.handle = node?.handle
+        if let node {
+            self.nodePath = sdk.nodePath(for: node)
+        }
         completion?(node, error)
         
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -129,6 +133,7 @@ class NodeAccess: NSObject {
             switch result {
             case .success:
                 self?.handle = node.handle
+                self?.nodePath = self?.sdk.nodePath(for: node)
                 completion?(node, nil)
             case .failure(let error):
                 completion?(nil, error)
@@ -140,6 +145,7 @@ class NodeAccess: NSObject {
     
     @objc func didReceiveNodeChangeNotification() {
         handle = nil
+        nodePath = nil
         
         loadNodeToMemory()
     }
