@@ -60,9 +60,14 @@ struct AlbumContentRouter: AlbumContentRouting {
         let fileSearchRepository = FilesSearchRepository.newRepo
         let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
                                                       searchRepository: fileSearchRepository)
+        
         let viewModel = AlbumContentPickerViewModel(album: album,
                                                     photoLibraryUseCase: photoLibraryUseCase,
-                                                    completion: completion)
+                                                    completion: completion,
+                                                    contentConfig: PhotoLibraryContentConfig(
+                                                        selectLimit: 150,
+                                                        scaleFactor: UIDevice().iPadDevice ? .five : .three)
+                                                    )
         let content = AlbumContentPickerView(viewModel: viewModel)
         navigationController?.present(UIHostingController(rootView: content), animated: true)
     }

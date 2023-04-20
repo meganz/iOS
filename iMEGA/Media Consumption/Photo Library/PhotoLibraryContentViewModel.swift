@@ -3,7 +3,6 @@ import Combine
 import SwiftUI
 
 @objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
-    private let selectLimit: Int?
     @Published var library: PhotoLibrary
     @Published var selectedMode: PhotoLibraryViewMode = .all
     @Published var showFilter = false
@@ -11,16 +10,16 @@ import SwiftUI
     var cardScrollPosition: PhotoScrollPosition?
     var photoScrollPosition: PhotoScrollPosition?
     let contentMode: PhotoLibraryContentMode
+    let contentConfig: PhotoLibraryContentConfig?
     
-    lazy var selection = PhotoSelection(selectLimit: selectLimit)
+    lazy var selection = PhotoSelection(selectLimit: contentConfig?.selectLimit)
     lazy var filterViewModel = PhotoLibraryFilterViewModel(contentMode: contentMode)
     
     // MARK: - Init
-    init(library: PhotoLibrary, contentMode: PhotoLibraryContentMode = .library,
-         selectLimit: Int? = nil) {
+    init(library: PhotoLibrary, contentMode: PhotoLibraryContentMode = .library, contentConfig: PhotoLibraryContentConfig? = nil) {
         self.library = library
         self.contentMode = contentMode
-        self.selectLimit = selectLimit
+        self.contentConfig = contentConfig
         
         super.init()
     }

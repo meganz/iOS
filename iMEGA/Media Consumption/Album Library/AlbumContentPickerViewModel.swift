@@ -10,7 +10,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     var photosLoadingTask: Task<Void, Never>?
     
-    let selectLimit = 150
+    let selectLimit: Int
     @Published private(set) var photoSourceLocation: PhotosFilterLocation = .allLocations
     @Published var navigationTitle: String = ""
     @Published var photoSourceLocationNavigationTitle: String = ""
@@ -28,13 +28,16 @@ final class AlbumContentPickerViewModel: ObservableObject {
     init(album: AlbumEntity,
          photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
          completion: @escaping (AlbumEntity, [NodeEntity]) -> Void,
-         isNewAlbum: Bool = false) {
+         isNewAlbum: Bool = false,
+         contentConfig: PhotoLibraryContentConfig? = nil) {
         self.album = album
         self.photoLibraryUseCase = photoLibraryUseCase
         self.completion = completion
+        self.selectLimit = contentConfig?.selectLimit ?? 150
+        
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .album,
-                                                                    selectLimit: selectLimit)
+                                                                    contentConfig: contentConfig)
         navigationTitle = normalNavigationTitle
         isDoneButtonDisabled = !isNewAlbum
         setupSubscriptions(isNewAlbum: isNewAlbum)
