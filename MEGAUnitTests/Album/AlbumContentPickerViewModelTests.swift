@@ -13,6 +13,11 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectLimit, 150)
     }
     
+    func testInit_selectionLimit_isSetTo200() {
+        let sut = makeAlbumContentPickerViewModel(contentConfig: PhotoLibraryContentConfig(selectLimit: 200))
+        XCTAssertEqual(sut.selectLimit, 200)
+    }
+    
     func testOnDone_whenNoImagesSelected_shouldDismissTheScreen() async {
         let sut = makeAlbumContentPickerViewModel()
         await sut.photosLoadingTask?.value
@@ -301,7 +306,8 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
     private func makeAlbumContentPickerViewModel(allPhotos: [NodeEntity] = [],
                                                  allPhotosFromCloudDriveOnly: [NodeEntity] = [],
                                                  allPhotosFromCameraUpload: [NodeEntity] = [],
-                                                 completion: @escaping ((AlbumEntity, [NodeEntity]) -> Void) = {_, _ in }) -> AlbumContentPickerViewModel {
+                                                 completion: @escaping ((AlbumEntity, [NodeEntity]) -> Void) = {_, _ in },
+                                                 contentConfig: PhotoLibraryContentConfig = PhotoLibraryContentConfig()) -> AlbumContentPickerViewModel {
         let album = AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
         return AlbumContentPickerViewModel(album: album,
                                            photoLibraryUseCase:
@@ -309,7 +315,8 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                                 allPhotos: allPhotos,
                                                 allPhotosFromCloudDriveOnly: allPhotosFromCloudDriveOnly,
                                                 allPhotosFromCameraUpload: allPhotosFromCameraUpload),
-                                           completion: completion )
+                                           completion: completion,
+                                           contentConfig: contentConfig)
     }
     
     private func makeSamplePhotoNodes() throws -> [NodeEntity] {

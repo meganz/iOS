@@ -4,7 +4,10 @@ import MEGADomain
 final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel {
     override init(libraryViewModel: PhotoLibraryContentViewModel) {
         super.init(libraryViewModel: libraryViewModel)
-        zoomState = PhotoLibraryZoomState(maximumScaleFactor: .thirteen)
+        zoomState = PhotoLibraryZoomState(
+            scaleFactor: libraryViewModel.contentConfig?.scaleFactor ?? zoomState.scaleFactor,
+            maximumScaleFactor: .thirteen
+        )
         
         subscribeToLibraryChange()
         subscribeToZoomStateChange()

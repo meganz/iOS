@@ -934,9 +934,8 @@ final class PhotoCellViewModelTests: XCTestCase {
     }
     
     func testSelect_onEditModeAndLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {
-        let selectionLimit = 3
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
-        let libraryViewModel = PhotoLibraryContentViewModel(library: library, selectLimit: selectionLimit)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentConfig: PhotoLibraryContentConfig(selectLimit: 3))
         libraryViewModel.selectedMode = .all
         
         let photo = NodeEntity(name: "0.jpg", handle: 0)
@@ -955,7 +954,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testSelect_onEditModeItemNotSelectedAndLimitReached_shouldNotChangeIsSelectedOnCellTap() throws {
         let selectionLimit = 3
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
-        let libraryViewModel = PhotoLibraryContentViewModel(library: library, selectLimit: selectionLimit)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentConfig: PhotoLibraryContentConfig(selectLimit: selectionLimit))
         libraryViewModel.selectedMode = .all
         
         let photo = NodeEntity(name: "0.jpg", handle: 0)
@@ -976,7 +975,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldApplyContentOpacity_onEditModeItemIsNotSelectedAndLimitReached_shouldChangeContentOpacity() throws {
         let selectionLimit = 3
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
-        let libraryViewModel = PhotoLibraryContentViewModel(library: library, selectLimit: selectionLimit)
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentConfig: PhotoLibraryContentConfig(selectLimit: selectionLimit))
         libraryViewModel.selectedMode = .all
         
         let photo = NodeEntity(name: "0.jpg", handle: 0)
