@@ -9,10 +9,6 @@ struct BackupsRepository: BackupsRepositoryProtocol {
         BackupsRepository(sdk: MEGASdkManager.sharedMEGASdk())
     }
     
-    private enum Constants {
-        static let backupsRootNodePath = "//in/My backups"
-    }
-    
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
@@ -28,14 +24,16 @@ struct BackupsRepository: BackupsRepositoryProtocol {
     
     func isBackupNode(_ node: NodeEntity) -> Bool {
         guard let megaNode = node.toMEGANode(in: sdk),
-              let path = sdk.nodePath(for: megaNode) else { return false }
-        return path.hasPrefix(Constants.backupsRootNodePath)
+              let path = sdk.nodePath(for: megaNode),
+              let backupRootNodePath = BackupRootNodeAccess.shared.nodePath else { return false }
+        return path.hasPrefix(backupRootNodePath)
     }
     
     func isBackupsRootNode(_ node: NodeEntity) -> Bool {
         guard let megaNode = node.toMEGANode(in: sdk),
-              let path = sdk.nodePath(for: megaNode) else { return false }
-        return path == Constants.backupsRootNodePath
+              let path = sdk.nodePath(for: megaNode),
+              let backupRootNodePath = BackupRootNodeAccess.shared.nodePath else { return false }
+        return path == backupRootNodePath
     }
     
     func isBackupDeviceFolder(_ node: NodeEntity) -> Bool {
