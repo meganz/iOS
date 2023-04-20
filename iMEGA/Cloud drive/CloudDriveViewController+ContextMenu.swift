@@ -16,12 +16,13 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                   isRubbishBinFolder: true,
                                   isRestorable: parentNode.mnz_isRestorable())
         } else {
-            let parentNodeAccessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
-            let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
+            let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+            let parentNodeAccessLevel = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode.handle)
+            let isIncomingSharedRootChild = parentNodeAccessLevel != .owner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
            
             return CMConfigEntity(menuType: .menu(type: .display),
                                   viewMode: isListViewModeSelected() ? .list : .thumbnail,
-                                  accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
+                                  accessLevel: parentNodeAccessLevel.toShareAccessLevel(),
                                   sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                   isAFolder: parentNode.type != .root,
                                   isRubbishBinFolder: displayMode == .rubbishBin,
@@ -47,19 +48,41 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     
     @objc func setNavigationBarButtons() {
         guard let menuConfig = contextMenuConfiguration() else { return }
-        contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
-                                                   menu: contextMenuManager?.contextMenu(with: menuConfig))
+        var contextBarButtonItemUpdated = false
+        
+        if let contextMenuManager,
+           let updatedMenu = contextMenuManager.contextMenu(with: menuConfig),
+           !UIMenu.match(lhs: contextBarButtonItem.menu, rhs: updatedMenu) {
+            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+                                                   menu: updatedMenu)
+            contextBarButtonItemUpdated = true
+        }
+        
+        let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+        
         if displayMode != .rubbishBin,
            displayMode != .backup,
            !isFromViewInFolder,
            let parentNode = parentNode,
-           MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
+           nodeUseCase.nodeAccessLevel(nodeHandle: parentNode.handle) != .read {
             guard let menuConfig = uploadAddMenuConfiguration() else { return }
-            uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
-                                                         menu: contextMenuManager?.contextMenu(with: menuConfig))
-            navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
+            var uploadAddBarButtonItemUpdated = false
+            
+            if let contextMenuManager,
+               let updatedUploadAddMenu = contextMenuManager.contextMenu(with: menuConfig),
+               !UIMenu.match(lhs: uploadAddBarButtonItem.menu, rhs: updatedUploadAddMenu) {
+                uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
+                                                         menu: updatedUploadAddMenu)
+                uploadAddBarButtonItemUpdated = true
+            }
+            
+            if contextBarButtonItemUpdated || uploadAddBarButtonItemUpdated {
+                navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
+            }
         } else {
-            navigationItem.rightBarButtonItems = [contextBarButtonItem]
+            if contextBarButtonItemUpdated {
+                navigationItem.rightBarButtonItems = [contextBarButtonItem]
+            }
         }
         
         if presentingViewController != nil {

@@ -3,6 +3,14 @@ import MEGASwift
 @testable import MEGAUIKit
 
 final class UIMenuTests: XCTestCase {
+    var action1: UIAction!
+    var action2: UIAction!
+    
+    override func setUp() {
+        super.setUp()
+        action1 = UIAction(title: "Action 1", handler: {_ in})
+        action2 = UIAction(title: "Action 2", handler: {_ in})
+    }
     
     func testCompareMenuWhere_EitherAreNil() {
         let menuItemA:UIMenu? = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [])
@@ -36,16 +44,41 @@ final class UIMenuTests: XCTestCase {
     }
     
     func testCompareMenuWith_DifferentChildren() {
-        let action = UIAction(title: "", attributes: .hidden, state: .on) { _ in }
         let menuItemA = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [])
-        let menuItemB = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [action])
+        let menuItemB = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [action1])
         XCTAssertFalse(menuItemA ~~ menuItemB)
     }
     
     func testCompareMenuWith_SameChildren() {
-        let action = UIAction(title: "", attributes: .hidden, state: .on) { _ in }
-        let menuItemA = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [action])
-        let menuItemB = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [action])
+        let menuItemA = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [action1])
+        let menuItemB = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [action1])
         XCTAssertTrue(menuItemA ~~ menuItemB)
+    }
+    
+    func testDoMenuActionMatch_whenMenusAreIdentical_returnsTrue() {
+        let menu = UIMenu(title: "Test Menu", children: [action1, action2])
+        
+        XCTAssertTrue(UIMenu.match(lhs: menu, rhs: menu))
+    }
+    
+    func testDoMenuActionMatch_whenMenusAreDifferentButHaveSameActions_returnsTrue() {
+        let oldMenu = UIMenu(title: "Old Menu", children: [action1, action2])
+        let updatedMenu = UIMenu(title: "Updated Menu", children: [action1, action2])
+        
+        XCTAssertTrue(UIMenu.match(lhs: oldMenu, rhs: updatedMenu))
+    }
+    
+    func testDoMenuActionMatch_whenMenusHaveDifferentActions_returnsFalse() {
+        let oldMenu = UIMenu(title: "Old Menu", children: [action1])
+        let updatedMenu = UIMenu(title: "Updated Menu", children: [action2])
+    
+        XCTAssertFalse(UIMenu.match(lhs: oldMenu, rhs: updatedMenu))
+    }
+    
+    func testDoMenuActionMatch_whenMenusHaveSameActionsInDifferentOrder_returnsFalse() {
+        let oldMenu = UIMenu(title: "Test Menu", children: [action1, action2])
+        let updatedMenu = UIMenu(title: "Test Menu", children: [action2, action1])
+        
+        XCTAssertFalse(UIMenu.match(lhs: oldMenu, rhs: updatedMenu))
     }
 }

@@ -139,7 +139,7 @@ final class ContextMenuManager: NSObject {
     /// Converts an action entity to an ActionSheet action
     ///
     ///  - Parameters:
-    ///     - action: represent the context menu action entity that contains the information related to an action
+    ///     - action: Represent the context menu action entity that contains the information related to an action
     ///  - Returns: ActionSheet action, to configure the ActionSheetController (iOS 13)
     private func convertToAction(action: CMActionEntity) -> ContextActionSheetAction {
         var actionModel = action.toContextMenuModel()
@@ -158,7 +158,7 @@ final class ContextMenuManager: NSObject {
     /// Converts a menu entity within another menu, to an ActionSheet action. This type of conversion is needed whether the current context menu entity is a representable menu entity (has title, image, etc.)
     ///
     ///  - Parameters:
-    ///     - menu: represent a context menu entity that contains the information related to this menu
+    ///     - menu: Represent a context menu entity that contains the information related to this menu
     ///  - Returns: ActionSheet action, to configure the ActionSheetController (iOS 13)
     private func convertToAction(menu: CMEntity) -> ContextActionSheetAction {
         var menuModel = menu.toContextMenuModel()
@@ -178,7 +178,7 @@ final class ContextMenuManager: NSObject {
     /// Converts a menu entity to an array of ActionSheet actions.
     ///
     ///  - Parameters:
-    ///     - menu: represent a context menu entity that contains the information related to this menu
+    ///     - menu: Represent a context menu entity that contains the information related to this menu
     ///  - Returns: The ActionSheet actions array of the menu entity passed as a parameter
     func convertMenuToActions(menu: CMEntity) -> [ContextActionSheetAction] {
         menu.children.compactMap {
@@ -227,7 +227,7 @@ final class ContextMenuManager: NSObject {
     /// Converts a menu entity to a UIMenu.
     ///
     ///  - Parameters:
-    ///     - menu: represent a context menu entity that contains the information related to this menu
+    ///     - menu: Represent a context menu entity that contains the information related to this menu
     ///  - Returns: UIMenu that represent all actions and submenus of the current menu.
     private func convertToMenu(menu: CMEntity) -> UIMenu {
         var menuModel = menu.toContextMenuModel()
@@ -246,7 +246,7 @@ final class ContextMenuManager: NSObject {
     /// Converts a menu entity to a UIMenu.
     ///
     ///  - Parameters:
-    ///     - menu: represent a context menu entity that contains the information related to this menu
+    ///     - menu: Represent a context menu entity that contains the information related to this menu
     ///  - Returns: UIMenu that represent all actions and submenus of the current menu.
     func contextMenu(with configuration: CMConfigEntity) -> UIMenu? {
         guard let menuEntity = createContextMenuUC.createContextMenu(config: configuration) else { return nil }
