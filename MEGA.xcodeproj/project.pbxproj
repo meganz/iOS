@@ -1336,8 +1336,6 @@
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
-		A85CC10329CB32650012F98D /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */; };
-		A85CC10429CB35A30012F98D /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A85EB25C2975724300AEDA05 /* NodeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */; };
 		A85EB25D2975728800AEDA05 /* MEGANodeLabel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */; };
@@ -1366,6 +1364,8 @@
 		A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C022F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift */; };
 		A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */; };
 		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
+		A882981D29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A882982029F1668E00DEDE98 /* AppIntentVocabulary.plist */; };
+		A882981E29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A882982029F1668E00DEDE98 /* AppIntentVocabulary.plist */; };
 		A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
 		A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
@@ -3833,7 +3833,6 @@
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
 		A85740C32032F6B80033034C /* MOChatDraft+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataClass.h"; sourceTree = "<group>"; };
-		A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoQualityTableViewController.h; sourceTree = "<group>"; };
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
@@ -3853,6 +3852,25 @@
 		A87FF3C422F8244300EFD95C /* PasscodeDurationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeDurationInfo.swift; sourceTree = "<group>"; };
 		A88070EE27EB283C0089EC4A /* MEGAStore+Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+Message.swift"; sourceTree = "<group>"; };
 		A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileCompressor.swift; sourceTree = "<group>"; };
+		A882981F29F1668E00DEDE98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982129F166F100DEDE98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982229F166F300DEDE98 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ar; path = ar.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982329F166F400DEDE98 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "zh-Hans.lproj/AppIntentVocabulary.plist"; sourceTree = "<group>"; };
+		A882982429F166F600DEDE98 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hant"; path = "zh-Hant.lproj/AppIntentVocabulary.plist"; sourceTree = "<group>"; };
+		A882982529F166F700DEDE98 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = nl; path = nl.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982629F166F800DEDE98 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = de; path = de.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982729F166F900DEDE98 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = fr; path = fr.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982829F166FA00DEDE98 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = id; path = id.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982929F166FB00DEDE98 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = it; path = it.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982A29F166FC00DEDE98 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ja; path = ja.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982B29F166FC00DEDE98 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ko; path = ko.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982C29F166FD00DEDE98 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pl; path = pl.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982D29F166FE00DEDE98 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pt; path = pt.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982E29F1670000DEDE98 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ro; path = ro.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882982F29F1670100DEDE98 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ru; path = ru.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882983029F1670200DEDE98 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = es; path = es.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882983129F1670300DEDE98 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = th; path = th.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882983229F1670400DEDE98 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = vi; path = vi.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IntentHandler+StartCall.swift"; sourceTree = "<group>"; };
 		A885107A292D428F00E92A54 /* MEGAIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MEGAIntent.entitlements; sourceTree = "<group>"; };
 		A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogFileView.swift; sourceTree = "<group>"; };
@@ -7864,7 +7882,7 @@
 				B6D16A7B29DD050300402828 /* Debug */,
 				B6D16A7C29DD050700402828 /* QA */,
 				B6D16A7D29DD050A00402828 /* Release */,
-				A85CC10229CB32650012F98D /* AppIntentVocabulary.plist */,
+				A882982029F1668E00DEDE98 /* AppIntentVocabulary.plist */,
 				831B4912256FED6F0086002B /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -10271,13 +10289,13 @@
 				B6C444D9274A284900268D9A /* Month View */,
 				B6F853452794D22900028D51 /* Photo Selection */,
 				B6C444D8274A284300268D9A /* Year View */,
+				3234143729F0F6A500A06EFE /* PhotoLibraryContentConfig.swift */,
 				B6FCBFD427121AB600B3599F /* PhotoLibraryContentView.swift */,
 				B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */,
 				B67507B52766BE670034F951 /* PhotoLibraryContentViewRouter.swift */,
 				B6F853482794FB5A00028D51 /* PhotoLibraryPicker.swift */,
 				B6AB264827BEF6F1006C8AA0 /* PhotoLibraryProvider.swift */,
 				B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */,
-				3234143729F0F6A500A06EFE /* PhotoLibraryContentConfig.swift */,
 			);
 			path = "Photo Library";
 			sourceTree = "<group>";
@@ -12059,7 +12077,7 @@
 				5B72739A240D3465005816AB /* altIconNight@3x.png in Resources */,
 				5B3B0D282684B91B00479A68 /* altIconNight@3x~ipad.png in Resources */,
 				5B727385240D1682005816AB /* Appearance.storyboard in Resources */,
-				A85CC10429CB35A30012F98D /* AppIntentVocabulary.plist in Resources */,
+				A882981D29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
 				C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */,
 				BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */,
 				BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */,
@@ -12229,7 +12247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A85CC10329CB32650012F98D /* AppIntentVocabulary.plist in Resources */,
+				A882981E29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
 				B5925B7F279115FA00170CD6 /* Colors.xcassets in Resources */,
 				8314150E256FFF5300D48BE3 /* Localizable.strings in Resources */,
 				B5A9963D282CF625008B8ADD /* Localizable.stringsdict in Resources */,
@@ -13532,7 +13550,6 @@
 				B6F6E93C2914AC0300B319CB /* PhotoCellContent.swift in Sources */,
 				B6F39F232773D338002386BE /* PhotoCellImage.swift in Sources */,
 				122DA3AF27FD0DE600BC5619 /* PhotoCellVideoDurationViewModel.swift in Sources */,
-				3234143829F0F6A500A06EFE /* PhotoLibraryContentConfig.swift in Sources */,
 				1208CEC527FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift in Sources */,
 				B66E8076275A0C4200502601 /* PhotoCellViewModel.swift in Sources */,
 				B6F39F272773D547002386BE /* PhotoChronologicalCategory+Additions.swift in Sources */,
@@ -13560,6 +13577,7 @@
 				B6CA26DC28F7FCB5007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift in Sources */,
 				B6E3A9F12936E05900AE897E /* PhotoLibraryCollectionViewScrollTracker.swift in Sources */,
 				B67507B42766BB580034F951 /* PhotoLibraryConstants.swift in Sources */,
+				3234143829F0F6A500A06EFE /* PhotoLibraryContentConfig.swift in Sources */,
 				12CC1F9828348A3B00CE3447 /* PhotoLibraryContentMode.swift in Sources */,
 				B6FCBFD527121AB600B3599F /* PhotoLibraryContentView.swift in Sources */,
 				B6C5D09C2718D19B004FB105 /* PhotoLibraryContentViewModel.swift in Sources */,
@@ -14663,6 +14681,32 @@
 				A8399F5E296C43F90062B6BC /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		A882982029F1668E00DEDE98 /* AppIntentVocabulary.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A882982229F166F300DEDE98 /* ar */,
+				A882981F29F1668E00DEDE98 /* Base */,
+				A882982629F166F800DEDE98 /* de */,
+				A882982129F166F100DEDE98 /* en */,
+				A882983029F1670200DEDE98 /* es */,
+				A882982729F166F900DEDE98 /* fr */,
+				A882982829F166FA00DEDE98 /* id */,
+				A882982929F166FB00DEDE98 /* it */,
+				A882982A29F166FC00DEDE98 /* ja */,
+				A882982B29F166FC00DEDE98 /* ko */,
+				A882982529F166F700DEDE98 /* nl */,
+				A882982C29F166FD00DEDE98 /* pl */,
+				A882982D29F166FE00DEDE98 /* pt */,
+				A882982E29F1670000DEDE98 /* ro */,
+				A882982F29F1670100DEDE98 /* ru */,
+				A882983129F1670300DEDE98 /* th */,
+				A882983229F1670400DEDE98 /* vi */,
+				A882982329F166F400DEDE98 /* zh-Hans */,
+				A882982429F166F600DEDE98 /* zh-Hant */,
+			);
+			name = AppIntentVocabulary.plist;
 			sourceTree = "<group>";
 		};
 		B5A99634282CF625008B8ADD /* Localizable.stringsdict */ = {
