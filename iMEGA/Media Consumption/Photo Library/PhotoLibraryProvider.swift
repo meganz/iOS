@@ -12,6 +12,7 @@ protocol PhotoLibraryProvider: UIViewController {
     func enablePhotoLibraryEditMode(_ enable: Bool)
     func configPhotoLibrarySelectAll()
     func updateNavigationTitle(withSelectedPhotoCount count: Int)
+    func disablePhotoSelection(_ disable: Bool)
 }
 
 extension PhotoLibraryProvider {
@@ -69,6 +70,10 @@ extension PhotoLibraryProvider {
             
             hideNavigationEditBarButton(photoLibrary.isEmpty)
         }
+    }
+    
+    func disablePhotoSelection(_ disable: Bool) {
+        photoLibraryContentViewModel.selection.isSelectionDisabled = disable
     }
     
     // MARK: - Private
