@@ -166,6 +166,8 @@
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody],
                                                                      NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}
                                                           forState:UIControlStateNormal];
+    
+    [self setupNavigationBarColorWith:self.traitCollection];
 }
 
 - (void)configAddPhoneNumberTexts {

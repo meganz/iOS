@@ -26,4 +26,18 @@ extension MyAccountHallViewController {
             accountTypeLabel?.text = ""
         }
     }
+    
+    @objc func setupNavigationBarColor(with trait: UITraitCollection) {
+        let color: UIColor
+        switch trait.theme {
+        case .light:
+            color = Colors.General.White.f7F7F7.color
+        case .dark:
+            color = Colors.General.Black._161616.color
+        }
+        
+        navigationController?.navigationBar.standardAppearance.backgroundColor = color
+        navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = color
+        navigationController?.navigationBar.isTranslucent = false
+    }
 }
