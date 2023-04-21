@@ -13,7 +13,7 @@ struct ChatRoomParticipantsListView: View {
     var body: some View {
         VStack (spacing: Constants.spacing) {
             HStack {
-                Text(Strings.Localizable.Meetings.Panel.participantsCount(viewModel.totalParcitipantsCount))
+                Text(Strings.Localizable.Meetings.Panel.participantsCount(viewModel.totalParticipantsCount))
                     .font(.footnote)
                     .foregroundColor(colorScheme == .dark ? Color(UIColor.mnz_grayB5B5B5().withAlphaComponent(Constants.textOpacity)) : Color(UIColor.mnz_gray3C3C43().withAlphaComponent(Constants.textOpacity)))
                 Spacer()
