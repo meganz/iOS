@@ -74,6 +74,7 @@ class GetLinkViewController: UIViewController {
     private var getLinkVM = GetLinkViewModel()
     private var nodesToExportCount = 0
     private var justUpgradedToProAccount = false
+    private var defaultDateStored = false
     
     @objc class func instantiate(withNodes nodes: [MEGANode]) -> MEGANavigationController {
         guard let getLinkVC = UIStoryboard(name: "GetLink", bundle: nil).instantiateViewController(withIdentifier: "GetLinksViewControllerID") as? GetLinkViewController else {
@@ -399,6 +400,15 @@ class GetLinkViewController: UIViewController {
         MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.remove(self)
     }
     
+    private func update(expiryDate: Date, shouldCreateLink: Bool) {
+        getLinkVM.date = expiryDate
+        guard let expiryDateSection = sections().firstIndex(of: .expiryDate) else { return }
+        if shouldCreateLink {
+            setExpiryDate()
+        }
+        tableView.reloadSections([expiryDateSection], with: .automatic)
+    }
+    
     //MARK: - IBActions
     
     @IBAction func switchValueChanged(_ sender: UISwitch) {
@@ -424,11 +434,23 @@ class GetLinkViewController: UIViewController {
         }
     }
     
+    @IBAction func datePickerEditingBeginEnd(_ sender: UIDatePicker) {
+        if getLinkVM.date == nil {
+            update(expiryDate: sender.date, shouldCreateLink: false)
+            defaultDateStored = true
+        }
+    }
+    
+    @IBAction func datePickerEditingDidEnd(_ sender: UIDatePicker) {
+        if defaultDateStored {
+            setExpiryDate()
+            defaultDateStored = false
+        }
+    }
+    
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
-        getLinkVM.date = sender.date
-        guard let expiryDateSection = sections().firstIndex(of: .expiryDate) else { return }
-        setExpiryDate()
-        tableView.reloadSections([expiryDateSection], with: .automatic)
+        defaultDateStored = false
+        update(expiryDate: sender.date, shouldCreateLink: true)
     }
     
     @IBAction func shareBarButtonTapped(_ sender: UIBarButtonItem) {
