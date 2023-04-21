@@ -1,4 +1,5 @@
 import MEGADomain
+import RegexBuilder
 
 struct ScheduledMeetingDateBuilder {
     enum Formatter {
@@ -69,15 +70,11 @@ struct ScheduledMeetingDateBuilder {
     }
     
     private func oneOffDateString(_ startDate: Date, _ startDateString: String, _ startTimeString: String, _ endTimeString: String) -> String {
-        if scheduledMeeting.endDate < Date(), let chatRoom {
-            return Strings.Localizable.Meetings.Panel.participantsCount(chatRoom.peers.count + 1)
-        } else {
-            return Strings.Localizable.Meetings.Scheduled.oneOff
-                .replacingOccurrences(of: "[WeekDay]", with: DateFormatter.fromTemplate("E").localisedString(from: startDate))
-                .replacingOccurrences(of: "[StartDate]", with: startDateString)
-                .replacingOccurrences(of: "[StartTime]", with: startTimeString)
-                .replacingOccurrences(of: "[EndTime]", with: endTimeString)
-        }
+        Strings.Localizable.Meetings.Scheduled.oneOff
+            .replacingOccurrences(of: "[WeekDay]", with: DateFormatter.fromTemplate("E").localisedString(from: startDate))
+            .replacingOccurrences(of: "[StartDate]", with: startDateString)
+            .replacingOccurrences(of: "[StartTime]", with: startTimeString)
+            .replacingOccurrences(of: "[EndTime]", with: endTimeString)
     }
     
     private func dailyDateString(_ startDateString: String, _ endDateString: String, _ startTimeString: String, _ endTimeString: String) -> String {
@@ -566,10 +563,22 @@ struct ScheduledMeetingDateBuilder {
         }
     }
     
+    @available(iOS 16.0, *)
+    private func boldTagRegex() -> some RegexComponent {
+        Regex {
+            "["
+            Capture {
+                Optionally("/")
+                One(.word)
+            }
+            "]"
+        }
+    }
+    
     private func removeFormatters(fromString string: String) -> String {
         var formattedString = string
         if #available(iOS 16.0, *) {
-            formattedString.replace(/\[.{1, 2}\]/, with: "")
+            formattedString.replace(boldTagRegex(), with: "")
         } else {
             formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression)
         }
@@ -580,7 +589,7 @@ struct ScheduledMeetingDateBuilder {
     private func removeFirstFormatter(fromString string: String) -> String {
         var formattedString = string
         if #available(iOS 16.0, *) {
-            formattedString.replace(/\[.{1, 2}\]/, with: "", maxReplacements: 2)
+            formattedString.replace(boldTagRegex(), with: "", maxReplacements: 2)
         } else {
             if let range = formattedString.range(of:  #"\[.{2}\]"#, options: [.regularExpression, .backwards]) {
                 formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression, range: formattedString.startIndex..<range.upperBound)
@@ -593,7 +602,7 @@ struct ScheduledMeetingDateBuilder {
     private func removeLastFormatter(fromString string: String) -> String {
         var formattedString = string
         if #available(iOS 16.0, *) {
-            formattedString.ranges(of: /\[.{1, 2}\]/).suffix(2).reversed().forEach { range in
+            formattedString.ranges(of: boldTagRegex()).suffix(2).reversed().forEach { range in
                 formattedString.replaceSubrange(range, with: "")
             }
         } else {
