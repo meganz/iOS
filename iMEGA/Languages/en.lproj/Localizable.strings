@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="The following characters are not allowed: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Rename file %@?";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title" = "File extension change";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description" = "You might not be able to open this file if you change its extension";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok" = "Change anyway";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension" = "File without extension .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Replace";
 /* Success message shown when you have moved 1 file to the rubbish bin */

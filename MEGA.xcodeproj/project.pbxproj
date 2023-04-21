@@ -663,7 +663,6 @@
 		774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */; };
 		774941E62416552600FC5CB6 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		774941E724165F3A00FC5CB6 /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
-		77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */; };
 		7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */; };
 		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
@@ -13304,7 +13303,6 @@
 				2F4291E6257F2CDC00EDF780 /* MEGARecentActionBucket+MNZCategory.m in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
-				77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */,
 				BF6E8DBB25B927F2003A125A /* MEGARequest+Mapper.swift in Sources */,
 				5DF0E3D12563A8540052CC95 /* MEGAResultMappingRequestDelegate.swift in Sources */,
 				5DF0E3D22563A8540052CC95 /* MEGAResultRequestDelegate.swift in Sources */,

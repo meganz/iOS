@@ -14,7 +14,6 @@
 #import "MEGALinkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
-#import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
@@ -315,14 +314,14 @@
             textField.text = self.name;
             textField.returnKeyType = UIReturnKeyDone;
             textField.delegate = self;
-            [textField addTarget:self action:@selector(renameAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            [textField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];
         }];
         
         [renameAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
         UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UITextField *alertViewTextField = renameAlertController.textFields.firstObject;
+                NSString *alertViewTextFieldText = renameAlertController.textFields.firstObject.text;
                 MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
                 
                 MEGANodeType nodeType = MEGANodeTypeFile;
@@ -330,7 +329,7 @@
                     nodeType = MEGANodeTypeFolder;
                 }
                 
-                MEGANode *existingChildNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:parentNode name:alertViewTextField.text type:nodeType];
+                MEGANode *existingChildNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:parentNode name:alertViewTextFieldText type:nodeType];
                 
                 if (existingChildNode) {
                     NSString *duplicateErrorMessage = NSLocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.");
@@ -338,9 +337,12 @@
                         duplicateErrorMessage = NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.");
                     }
                     [SVProgressHUD showErrorWithStatus:duplicateErrorMessage];
+                } else if (![alertViewTextFieldText.pathExtension isEqualToString:self.name.pathExtension]) {
+                    [self showRenameNodeConfirmationAlertFrom:viewController completion:^{
+                        [self mnz_renameNode:alertViewTextFieldText.mnz_removeWhitespacesAndNewlinesFromBothEnds completion:completion];
+                    }];
                 } else {
-                    MEGARenameRequestDelegate *delegate = [[MEGARenameRequestDelegate alloc] initWithCompletion:completion];
-                    [[MEGASdkManager sharedMEGASdk] renameNode:self newName:alertViewTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds delegate:delegate];
+                    [self mnz_renameNode:alertViewTextFieldText.mnz_removeWhitespacesAndNewlinesFromBothEnds completion:completion];
                 }
             }
         }];
@@ -964,31 +966,6 @@
     
     return shouldReturn;
 
-}
-
-- (void)renameAlertTextFieldDidChange:(UITextField *)textField {
-    UIAlertController *renameAlertController = (UIAlertController *)UIApplication.mnz_visibleViewController;
-    if ([renameAlertController isKindOfClass:UIAlertController.class]) {
-        UIAlertAction *rightButtonAction = renameAlertController.actions.lastObject;
-        BOOL enableRightButton = NO;
-        
-        NSString *newName = textField.text;
-        NSString *nodeNameString = self.name;
-        
-        if (self.isFile || self.isFolder) {
-            BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-            enableRightButton = !([newName isEqualToString:@""] ||
-                                  [newName isEqualToString:nodeNameString] ||
-                                  newName.mnz_isEmpty ||
-                                  containsInvalidChars ||
-                                  (self.isFile && [newName.mnz_fileNameWithoutExtension isEqualToString:@""]));
-            
-            renameAlertController.title = [self fileFolderRenameAlertTitleWithInvalidChars:containsInvalidChars];
-            textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
-        }
-        
-        rightButtonAction.enabled = enableRightButton;
-    }
 }
 
 @end
