@@ -15,7 +15,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     @Published var myUserParticipant: ChatRoomParticipantViewModel
     @Published var chatRoomParticipants = [ChatRoomParticipantViewModel]()
     @Published var shouldShowAddParticipants = false
-    @Published var totalParcitipantsCount = 0
+    @Published var totalParticipantsCount = 0
     @Published var showExpandCollapseButton = true
     @Published var listExpanded = false
 
@@ -39,19 +39,9 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
             chatParticipantId: chatUseCase.myUserHandle(),
             chatRoom: chatRoom)
         self.updateShouldShowAddParticipants()
-        self.fetchParticipants()
+        self.updateParticipants()
         self.listenToInviteChanges()
         self.listenToParticipantsUpdate()
-    }
-    
-    func fetchParticipants() {
-        totalParcitipantsCount = chatRoom.peers.count + 1
-        if chatRoom.peers.count <= initialParticipantsLoad {
-            showExpandCollapseButton = false
-            loadAllParticipants()
-        } else {
-            loadInitialParticipants()
-        }
     }
     
     func addParticipantTapped() {
@@ -82,7 +72,13 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func loadInitialParticipants() {
-        chatRoomParticipants =  chatRoom.peers[0..<(initialParticipantsLoad - 1)]
+        let peerCount = Int(chatRoom.peerCount)
+        guard peerCount > 0 else {
+            chatRoomParticipants = []
+            return
+        }
+        let endIndex = (initialParticipantsLoad - 1) < peerCount ? (initialParticipantsLoad - 1) : peerCount
+        chatRoomParticipants =  chatRoom.peers[0..<endIndex]
             .map {
                 ChatRoomParticipantViewModel(router: router,
                                              chatRoomUseCase: chatRoomUseCase,
@@ -173,15 +169,17 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func updateParticipants() {
-        totalParcitipantsCount = chatRoom.peers.count + 1
-        showExpandCollapseButton = initialParticipantsLoad <= totalParcitipantsCount
+        totalParticipantsCount = chatRoom.peers.count + 1
+        showExpandCollapseButton = initialParticipantsLoad < totalParticipantsCount
         
         if showExpandCollapseButton {
-            loadAllParticipants()
-        } else {
-            if chatRoomParticipants.count > chatRoom.peers.count {
+            if listExpanded {
+                loadAllParticipants()
+            } else {
                 loadInitialParticipants()
             }
+        } else {
+            loadAllParticipants()
         }
     }
 }
