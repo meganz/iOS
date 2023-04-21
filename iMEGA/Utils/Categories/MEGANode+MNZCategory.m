@@ -44,7 +44,7 @@
 - (void)navigateToParentAndPresent {
     MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
     
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
+    if ([MEGASdk.shared accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
         mainTBC.selectedIndex = TabTypeSharedItems;
         SharedItemsViewController *sharedItemsVC = mainTBC.childViewControllers[TabTypeSharedItems].childViewControllers.firstObject;
         [sharedItemsVC selectSegment:0]; // Incoming
@@ -67,6 +67,7 @@
         }];
     }
     
+    BOOL isBackupNode = false;
     for (MEGANode *node in parentTreeArray) {
         if (node.handle != backupsRootNode.parentHandle) {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -75,6 +76,7 @@
                 cloudDriveVC.displayMode = DisplayModeBackup;
             }
             [navigationController pushViewController:cloudDriveVC animated:NO];
+            isBackupNode = true;
         }
     }
     
@@ -83,7 +85,11 @@
         case MEGANodeTypeRubbish: {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = self;
-            cloudDriveVC.displayMode = self.type == MEGANodeTypeRubbish ? DisplayModeRubbishBin : DisplayModeCloudDrive;
+            if (isBackupNode) {
+                cloudDriveVC.displayMode = DisplayModeBackup;
+            } else {
+                cloudDriveVC.displayMode = self.type == MEGANodeTypeRubbish ? DisplayModeRubbishBin : DisplayModeCloudDrive;
+            }
             [navigationController pushViewController:cloudDriveVC animated:NO];
 
             [UIApplication.mnz_presentingViewController dismissView];
@@ -92,12 +98,17 @@
             
         case MEGANodeTypeFile: {
             if (self.name.mnz_isVisualMediaPathExtension) {
-                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
-                MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdk] childrenForParent:parentNode];
+                MEGANode *parentNode = [MEGASdk.shared nodeForHandle:self.parentHandle];
+                MEGANodeList *nodeList = [MEGASdk.shared childrenForParent:parentNode];
                 NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaNodesMutableArrayFromNodeList];
                 
-                DisplayMode displayMode = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] == MEGAShareTypeAccessOwner ? DisplayModeCloudDrive : DisplayModeSharedItem;
-                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:self];
+                DisplayMode displayMode;
+                if (isBackupNode) {
+                    displayMode = DisplayModeBackup;
+                } else {
+                    displayMode = [MEGASdk.shared accessLevelForNode:self] == MEGAShareTypeAccessOwner ? DisplayModeCloudDrive : DisplayModeSharedItem;
+                }
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:displayMode presentingNode:self];
                 
                 [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
