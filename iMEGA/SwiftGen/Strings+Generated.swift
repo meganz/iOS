@@ -5015,6 +5015,20 @@ public enum Strings {
         }
       }
     }
+    public enum Rename {
+      /// File without extension .%@
+      public static func fileWithoutExtension(_ p1: Any) -> String {
+        return Strings.tr("Localizable", "rename.fileWithoutExtension", String(describing: p1))
+      }
+      public enum ConfirmationAlert {
+        /// You might not be able to open this file if you change its extension
+        public static let description = Strings.tr("Localizable", "rename.confirmationAlert.description")
+        /// Change anyway
+        public static let ok = Strings.tr("Localizable", "rename.confirmationAlert.ok")
+        /// File extension change
+        public static let title = Strings.tr("Localizable", "rename.confirmationAlert.title")
+      }
+    }
     public enum Settings {
       public enum Accept {
         public enum Cookies {
