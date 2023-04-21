@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ScheduledMeetingEntity {
+public struct ScheduledMeetingEntity: Sendable {
     public let cancelled: Bool
     public let new: Bool
     public let deleted: Bool

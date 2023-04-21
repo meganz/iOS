@@ -1626,7 +1626,8 @@
     if (section == 0
         && (self.contactsMode == ContactsModeChatCreateGroup
             || self.contactsMode == ContactsModeShareFoldersWith
-            || self.contactsMode == ContactsModeInviteParticipants)) {
+            || self.contactsMode == ContactsModeInviteParticipants
+            || self.contactsMode == ContactsModeScheduleMeeting)) {
         headerView.contentView.backgroundColor = UIColor.mnz_background;
         [headerView configureWithTitle:NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").localizedUppercaseString topDistance:14.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
         

@@ -31,8 +31,8 @@ final class ChatRoomLinkViewModel: ObservableObject {
         self.chatLinkUseCase = chatLinkUseCase
         self.subtitle = subtitle
 
-        fetchInitialValues()
         initSubscriptions()
+        fetchInitialValues()
     }
     
     private func fetchInitialValues() {

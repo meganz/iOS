@@ -12,7 +12,7 @@ struct ScheduleMeetingView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                ScheduleMeetingCreationNameView(viewModel: viewModel)
+                ScheduleMeetingCreationNameView(viewModel: viewModel, appearFocused: true)
                 if viewModel.meetingNameTooLong {
                     ErrorView(error: Strings.Localizable.Meetings.ScheduleMeeting.MeetingName.lenghtError)
                 }
@@ -29,6 +29,7 @@ struct ScheduleMeetingView: View {
             ) { _ in
                 scrollToBottom(proxy: proxy)
             }
+            .customScrollViewDismissKeyboard()
         }
         .padding(.vertical)
         .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))

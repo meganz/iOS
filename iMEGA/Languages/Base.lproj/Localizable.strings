@@ -3366,6 +3366,8 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="Discard changes";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Keep editing";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="Meeting created";
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Resume video?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */

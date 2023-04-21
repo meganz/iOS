@@ -3,9 +3,9 @@ import MEGADomain
 protocol ScheduleMeetingRouting {
     func showSpinner()
     func hideSpinner()
-    func dismissView()
     func discardChanges()
     func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void))
+    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
 }
 
 final class ScheduleMeetingViewModel: ObservableObject {
@@ -90,10 +90,12 @@ final class ScheduleMeetingViewModel: ObservableObject {
     
     func startsDidTap() {
         startDatePickerVisible.toggle()
+        endDatePickerVisible = false
     }
     
     func endsDidTap() {
         endDatePickerVisible.toggle()
+        startDatePickerVisible = false
     }
     
     func cancelDidTap() {
@@ -146,10 +148,11 @@ final class ScheduleMeetingViewModel: ObservableObject {
         let createScheduleMeeting = CreateScheduleMeetingEntity(title: meetingName, description: meetingDescription, participants: participants, calendarInvite: calendarInviteEnabled, openInvite: allowNonHostsToAddParticipantsEnabled, startDate: startDate, endDate: endDate)
         router.showSpinner()
         Task { [weak self] in
+            guard let self else { return }
             do {
                 let scheduledMeeting = try await scheduledMeetingUseCase.createScheduleMeeting(createScheduleMeeting)
-                await self?.createLinkIfNeeded(chatId: scheduledMeeting.chatId)
-                await self?.scheduleMeetingCreationComplete()
+                await createLinkIfNeeded(chatId: scheduledMeeting.chatId)
+                await scheduleMeetingCreationComplete(scheduledMeeting)
             } catch {
                 router.hideSpinner()
                 MEGALogDebug("Failed to create scheduled meeting with \(error)")
@@ -170,7 +173,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     @MainActor
-    private func scheduleMeetingCreationComplete() {
-        self.router.dismissView()
+    private func scheduleMeetingCreationComplete(_ scheduledMeeting: ScheduledMeetingEntity) {
+        self.router.showMeetingInfo(for: scheduledMeeting)
     }
 }

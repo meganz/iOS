@@ -38,11 +38,6 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
     func hideSpinner() {
         SVProgressHUD.dismiss()
     }
-    
-    func dismissView() {
-        SVProgressHUD.dismiss()
-        presenter.dismissView()
-    }
 
     func discardChanges() {
         presenter.dismissView()
@@ -60,6 +55,14 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
         
         baseViewController?.present(contactsNavigationController, animated: true) {
             contactController.selectUsers(alreadySelectedUsers.compactMap { $0.toMEGAUser() })
+        }
+    }
+    
+    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {
+        SVProgressHUD.dismiss()
+        presenter.dismiss(animated: true) {
+            MeetingInfoRouter(presenter: self.presenter, scheduledMeeting: scheduledMeeting).start()
+            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Meetings.ScheduleMeeting.meetingCreated)
         }
     }
 }

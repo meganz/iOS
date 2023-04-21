@@ -41,9 +41,6 @@ struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsOutShare(config.isOutShare)
                         .setIsExported(config.isExported)
                         .setIsEmptyState(config.isEmptyState)
-                        .setShouldStartMeeting(config.shouldStartMeeting)
-                        .setShouldJoinMeeting(config.shouldJoiningMeeting)
-                        .setShouldScheduleMeeting(config.shouldScheduleMeeting)
                         .build()
     }
 }

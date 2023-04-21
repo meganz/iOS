@@ -39,8 +39,6 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
                         .setIsOutShare(config.isOutShare)
                         .setIsExported(config.isExported)
                         .setIsEmptyState(config.isEmptyState)
-                        .setShouldStartMeeting(config.shouldStartMeeting)
-                        .setShouldJoinMeeting(config.shouldJoiningMeeting)
                         .build()
     }
 }
