@@ -1,7 +1,7 @@
 import Foundation
 
-public struct ScheduledMeetingRulesEntity {
-    public enum Frequency {
+public struct ScheduledMeetingRulesEntity: Sendable {
+    public enum Frequency : Sendable {
         case invalid
         case daily
         case weekly

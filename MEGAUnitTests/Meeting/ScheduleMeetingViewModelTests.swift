@@ -54,7 +54,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         viewModel.createDidTap()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
-            XCTAssertTrue(router.dismissView_calledTimes == 1)
+            XCTAssertTrue(router.showMeetingInfo_calledTimes == 1)
         } else {
             XCTFail()
         }
@@ -113,7 +113,7 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     
     var showSpinner_calledTimes = 0
     var hideSpinner_calledTimes = 0
-    var dismissView_calledTimes = 0
+    var showMeetingInfo_calledTimes = 0
     var discardChanges_calledTimes = 0
     var showAddParticipants_calledTimes = 0
     
@@ -125,8 +125,8 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
         hideSpinner_calledTimes += 1
     }
     
-    func dismissView() {
-        dismissView_calledTimes += 1
+    func showMeetingInfo(for scheduledMeeting: MEGADomain.ScheduledMeetingEntity) {
+        showMeetingInfo_calledTimes += 1
     }
     
     func discardChanges() {

@@ -2585,7 +2585,7 @@ public enum Strings {
       }
     }
     public enum YouCanNowSelectWhichSectionTheAppOpensAtLaunch {
-      /// You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.
+      /// You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud drive, or Home.
       public static let chooseTheOneThatBetterSuitsYourNeedsWhetherItSChatCloudDriveOrHome = Strings.tr("Localizable", "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home.")
     }
     public enum YouDoNotHaveEnoughStorageToUploadCamera {
@@ -4403,6 +4403,8 @@ public enum Strings {
         public static let end = Strings.tr("Localizable", "meetings.scheduleMeeting.end")
         /// Meeting link
         public static let link = Strings.tr("Localizable", "meetings.scheduleMeeting.link")
+        /// Meeting created
+        public static let meetingCreated = Strings.tr("Localizable", "meetings.scheduleMeeting.meetingCreated")
         /// Allow non-hosts to add participants
         public static let openInvite = Strings.tr("Localizable", "meetings.scheduleMeeting.openInvite")
         /// Recurrence
@@ -5016,7 +5018,7 @@ public enum Strings {
     public enum Settings {
       public enum Accept {
         public enum Cookies {
-          /// Cookies aren’t used for ad tracking or sharing any personal information with third parties
+          /// Cookies aren’t used for ad tracking or sharing any personal information with third parties.
           public static let footer = Strings.tr("Localizable", "settings.accept.cookies.footer")
         }
       }
