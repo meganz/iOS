@@ -514,6 +514,7 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
+        [self.viewModel sendAccountPlanTapStats: MEGAAccountTypeFree];
         [self dismissViewControllerAnimated:YES completion:nil];
         return;
     }
