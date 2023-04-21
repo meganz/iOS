@@ -113,44 +113,32 @@ extension NotificationsTableViewController {
     
     // MARK: - Private methods
     
-    private func createAttributedStringWithOneBoldTag(content: String) -> NSAttributedString? {
+    private func createAttributedStringForBoldTags(content: String) -> NSAttributedString? {
         let attributedContent = NSMutableAttributedString(string: content, attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1)])
-        let lowerRange = attributedContent.mutableString.range(of: "[B]")
-        let upperRange = attributedContent.mutableString.range(of: "[/B]")
-        
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(style: .caption1, weight: .bold)]
-        attributedContent.addAttributes(attributes, range: NSRange(location: lowerRange.location, length: upperRange.location + upperRange.length - lowerRange.location))
+
+        while attributedContent.mutableString.range(of: "[B]").location != NSNotFound {
+            let lowerRange = attributedContent.mutableString.range(of: "[B]")
+            let upperRange = attributedContent.mutableString.range(of: "[/B]")
+            
+            if upperRange.location != NSNotFound {
+                let location = lowerRange.location
+                let length = upperRange.location + upperRange.length - lowerRange.location
+                
+                attributedContent.addAttributes(attributes, range: NSRange(location: location, length: length))
+                attributedContent.deleteCharacters(in: upperRange)
+            }
+            
+            attributedContent.deleteCharacters(in: lowerRange)
+        }
         
-        attributedContent.deleteCharacters(in: upperRange)
-        attributedContent.deleteCharacters(in: lowerRange)
-        return attributedContent
-    }
-    
-    private func createAttributedStringWithTwoBoldTags(content: String) -> NSAttributedString? {
-        let attributedContent = NSMutableAttributedString(string: content, attributes: [.font: UIFont.preferredFont(forTextStyle: .caption1)])
-        let lowerRangeFromStart = attributedContent.mutableString.range(of: "[B]")
-        let upperRangeFromStart = attributedContent.mutableString.range(of: "[/B]")
-        
-        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(style: .caption1, weight: .bold)]
-        attributedContent.addAttributes(attributes, range: NSRange(location: lowerRangeFromStart.location, length: upperRangeFromStart.location + upperRangeFromStart.length - lowerRangeFromStart.location))
-        
-        let lowerRangeFromEnd = attributedContent.mutableString.range(of: "[B]", options: .backwards)
-        let upperRangeFromEnd = attributedContent.mutableString.range(of: "[/B]", options: .backwards)
-        
-        attributedContent.addAttributes(attributes, range: NSRange(location: lowerRangeFromEnd.location, length: upperRangeFromEnd.location + upperRangeFromEnd.length - lowerRangeFromEnd.location))
-        
-        attributedContent.deleteCharacters(in: upperRangeFromEnd)
-        attributedContent.deleteCharacters(in: lowerRangeFromEnd)
-        
-        attributedContent.deleteCharacters(in: upperRangeFromStart)
-        attributedContent.deleteCharacters(in: lowerRangeFromStart)
         return attributedContent
     }
     
     private func occurrenceContent(for alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
         if let notification = scheduleMeetingOccurrenceNotificationList.filter({ $0.alert.identifier == alert.identifier }).first {
             if let message = notification.message {
-                return createAttributedStringWithOneBoldTag(content: message)
+                return createAttributedStringForBoldTags(content: message)
             } else {
                 Task {
                     do {
@@ -201,7 +189,7 @@ extension NotificationsTableViewController {
             content += "\n" + dateInfo
         }
         
-       return createAttributedStringWithTwoBoldTags(content: content)
+       return createAttributedStringForBoldTags(content: content)
     }
     
     private func dateInfo(
@@ -343,7 +331,7 @@ extension NotificationsTableViewController {
             email: email,
             localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.New.description,
             removingFormatter: .all,
-            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
     }
     
@@ -358,7 +346,7 @@ extension NotificationsTableViewController {
             email: email,
             localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.Cancelled.description,
             removingFormatter: .all,
-            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
     }
     
@@ -373,7 +361,7 @@ extension NotificationsTableViewController {
             email: email,
             localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.MulitpleFieldsUpdate.description,
             removingFormatter: .all,
-            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
     }
     
@@ -388,7 +376,7 @@ extension NotificationsTableViewController {
             email: email,
             localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DescriptionFieldUpdate.description,
             removingFormatter: .all,
-            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
     }
     
@@ -423,7 +411,7 @@ extension NotificationsTableViewController {
                     email: alert.email ?? "",
                     localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DayChanged.description,
                     removingFormatter: .last,
-                    createAttributedStringWithBoldTag: createAttributedStringWithTwoBoldTags,
+                    createAttributedStringWithBoldTag: createAttributedStringForBoldTags,
                     startDate: startDate,
                     endDate: endDate,
                     startTime: startDate,
@@ -438,7 +426,7 @@ extension NotificationsTableViewController {
             email: alert.email ?? "",
             localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.TimeChanged.description,
             removingFormatter: .first,
-            createAttributedStringWithBoldTag: createAttributedStringWithTwoBoldTags,
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags,
             startDate: startDate,
             endDate: endDate,
             startTime: startDate,
@@ -449,7 +437,7 @@ extension NotificationsTableViewController {
     //MARK: - Recurring
     
     private func contentForRecurringCancelledScheduledMeeting(withEmail email: String) -> NSAttributedString? {
-        createAttributedStringWithOneBoldTag(
+        createAttributedStringForBoldTags(
             content: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.Cancelled.description.replacingOccurrences(
                 of: "[Email]",
                 with: email
@@ -493,7 +481,7 @@ extension NotificationsTableViewController {
             chatId: chatId,
             email: email,
             removingFormatter: .all,
-            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
     }
     
@@ -508,7 +496,7 @@ extension NotificationsTableViewController {
             chatId: chatId,
             email: email,
             removingFormatter: .all,
-            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
     }
     
@@ -523,7 +511,7 @@ extension NotificationsTableViewController {
             chatId: chatId,
             email: email,
             removingFormatter: .all,
-            createAttributedStringWithBoldTag: createAttributedStringWithOneBoldTag
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
     }
     
@@ -545,7 +533,7 @@ extension NotificationsTableViewController {
             withScheduleMeetingId: alert.scheduledMeetingId,
             chatId: alert.nodeHandle
         )?.toScheduledMeetingEntity() else {
-            return createAttributedStringWithOneBoldTag(content: description)
+            return createAttributedStringForBoldTags(content: description)
         }
         
         let startDateList = alert.startDateList
@@ -565,7 +553,7 @@ extension NotificationsTableViewController {
             chatId: alert.nodeHandle,
             email: alert.email ?? "",
             removingFormatter: removeFormatter,
-            createAttributedStringWithBoldTag: createAttributedStringWithTwoBoldTags,
+            createAttributedStringWithBoldTag: createAttributedStringForBoldTags,
             startDate: startDate,
             endDate: endDate,
             startTime: startDate,
