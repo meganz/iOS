@@ -5255,6 +5255,24 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "verifyCredentials.yourCredentials.title")
       }
     }
+    public enum Video {
+      public enum Alert {
+        public enum ResumeVideo {
+          /// %1$s will resume from %2$s
+          public static func message(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
+            return Strings.tr("Localizable", "video.alert.resumeVideo.message", p1, p2)
+          }
+          /// Resume video?
+          public static let title = Strings.tr("Localizable", "video.alert.resumeVideo.title")
+          public enum Button {
+            /// Restart
+            public static let restart = Strings.tr("Localizable", "video.alert.resumeVideo.button.restart")
+            /// Resume
+            public static let resume = Strings.tr("Localizable", "video.alert.resumeVideo.button.resume")
+          }
+        }
+      }
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
