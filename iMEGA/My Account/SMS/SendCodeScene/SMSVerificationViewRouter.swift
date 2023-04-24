@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAData
 
 @objc enum SMSVerificationType: Int {
     case unblockAccount

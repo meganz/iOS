@@ -1292,8 +1292,6 @@
 		A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E686286B318A004CED9E /* FirebaseCrashlytics */; };
 		A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68C286B3204004CED9E /* FirebaseCrashlytics */; };
 		A82A5CAD292E6AEE00EF700A /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A82A5CAC292E6AEE00EF700A /* MEGAData */; };
-		A82D5CE326BC083600E73D27 /* PreferenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */; };
-		A82D5CE426BC083700E73D27 /* PreferenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */; };
 		A82D5CE526BC086E00E73D27 /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
 		A82D5CE926BC090D00E73D27 /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
 		A82F364928EF352900093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82F364728EF31CE00093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift */; };
@@ -1679,7 +1677,6 @@
 		B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */; };
 		B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */; };
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
-		B67A2C8D2517EE6600B40D89 /* L10nRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67A2C8C2517EE6600B40D89 /* L10nRepository.swift */; };
 		B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D671250DBA0B00D74666 /* CGSize.swift */; };
 		B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */; };
 		B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */; };
@@ -1840,7 +1837,6 @@
 		B6E5D24E274C2E8600C8AB96 /* PhotoDayCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D24C274C2E8600C8AB96 /* PhotoDayCard.swift */; };
 		B6E5D251274C5FED00C8AB96 /* CardImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D250274C5FED00C8AB96 /* CardImage.swift */; };
 		B6E6726B277D4E4B00158FA0 /* PhotoUpdatePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6726A277D4E4B00158FA0 /* PhotoUpdatePublisher.swift */; };
-		B6E7A8E12503622200CD6AC2 /* PreferenceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */; };
 		B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026B5258308E900D29CB6 /* BackupRecorder.swift */; };
 		B6F0270225832F2C00D29CB6 /* BackupRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */; };
 		B6F2ACCB29AC5305004FC7A3 /* ChatRoomUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCA29AC5305004FC7A3 /* ChatRoomUserRepository.swift */; };
@@ -4192,7 +4188,6 @@
 		B678D6D72714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeThumbnailHomeUseCase.swift; sourceTree = "<group>"; };
 		B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+CameraUpload.swift"; sourceTree = "<group>"; };
 		B6790E05256B81C600154F6D /* MEGANode+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions.swift"; sourceTree = "<group>"; };
-		B67A2C8C2517EE6600B40D89 /* L10nRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nRepository.swift; sourceTree = "<group>"; };
 		B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileSystemImageCacheClient+Additions.swift"; sourceTree = "<group>"; };
 		B67B18EF25CB80690022D6C0 /* MEGA.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MEGA.xctestplan; sourceTree = "<group>"; };
 		B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhoneNumberViewController.swift; sourceTree = "<group>"; };
@@ -4402,7 +4397,6 @@
 		B6E5D24C274C2E8600C8AB96 /* PhotoDayCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDayCard.swift; sourceTree = "<group>"; };
 		B6E5D250274C5FED00C8AB96 /* CardImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImage.swift; sourceTree = "<group>"; };
 		B6E6726A277D4E4B00158FA0 /* PhotoUpdatePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoUpdatePublisher.swift; sourceTree = "<group>"; };
-		B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceRepository.swift; sourceTree = "<group>"; };
 		B6F026B5258308E900D29CB6 /* BackupRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRecorder.swift; sourceTree = "<group>"; };
 		B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRegister.swift; sourceTree = "<group>"; };
 		B6F2ACCA29AC5305004FC7A3 /* ChatRoomUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomUserRepository.swift; sourceTree = "<group>"; };
@@ -9711,15 +9705,6 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
-		B645BC33252FAF9D00D1D7CF /* Preference */ = {
-			isa = PBXGroup;
-			children = (
-				B67A2C8C2517EE6600B40D89 /* L10nRepository.swift */,
-				B6E7A8E02503622200CD6AC2 /* PreferenceRepository.swift */,
-			);
-			path = Preference;
-			sourceTree = "<group>";
-		};
 		B6472E062581D33C0040B2DB /* Heartbeat */ = {
 			isa = PBXGroup;
 			children = (
@@ -9900,7 +9885,6 @@
 				0D213E8C263A611500B43723 /* Node */,
 				32CB4912284EF55900697BA9 /* Photos */,
 				83C7C85027EDE80200CFB5E6 /* PhotosLibrary */,
-				B645BC33252FAF9D00D1D7CF /* Preference */,
 				830C26C025DFDCB400E9B56E /* Recents */,
 				945A8AE7297EC442007F76DA /* Settings */,
 				B6FD64F8268AAC5800988A17 /* Share */,
@@ -13165,7 +13149,6 @@
 				8340CAFE284E52F5007C3B39 /* ItemView.swift in Sources */,
 				BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */,
 				83B4FC6B292407A300364F04 /* KeyRotationView.swift in Sources */,
-				B67A2C8D2517EE6600B40D89 /* L10nRepository.swift in Sources */,
 				5D1B240D24AF669D00ACE1C5 /* LabelStyleFactory.swift in Sources */,
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */,
@@ -13697,7 +13680,6 @@
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
-				B6E7A8E12503622200CD6AC2 /* PreferenceRepository.swift in Sources */,
 				B6A0CF1A28A08D1B00D7F52E /* PreferenceUseCase+Additions.swift in Sources */,
 				837B179528815E4400A4D01B /* PreviewDocumentViewController+Additions.swift in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
@@ -14142,7 +14124,6 @@
 				83E3465725B6E0D0006F2AD6 /* OfflineFilesRepository.swift in Sources */,
 				8375B77A25EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift in Sources */,
 				8375B77B25EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift in Sources */,
-				A82D5CE426BC083700E73D27 /* PreferenceRepository.swift in Sources */,
 				836813532587C0B800596BBD /* QuickAccessItemModel.swift in Sources */,
 				8359E4B325F0E1DF0023FE18 /* QuickAccessWidgetAction.swift in Sources */,
 				835EE371258120C200D8E3B8 /* QuickAccessWidgetEntry.swift in Sources */,
@@ -14342,7 +14323,6 @@
 				B620C0662845BC37003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
-				A82D5CE326BC083600E73D27 /* PreferenceRepository.swift in Sources */,
 				B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,

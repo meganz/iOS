@@ -1,18 +1,18 @@
 import Foundation
 import MEGADomain
 
-struct PreferenceRepository: PreferenceRepositoryProtocol {
-    static var newRepo: PreferenceRepository {
+public struct PreferenceRepository: PreferenceRepositoryProtocol {
+    public static var newRepo: PreferenceRepository {
         PreferenceRepository(userDefaults: UserDefaults.standard)
     }
     
     private let userDefaults: UserDefaults
 
-    init(userDefaults: UserDefaults) {
+    public init(userDefaults: UserDefaults) {
         self.userDefaults = userDefaults
     }
     
-    subscript<T>(key: String) -> T? {
+    public subscript<T>(key: String) -> T? {
         get {
             userDefaults.object(forKey: key) as? T
         }
