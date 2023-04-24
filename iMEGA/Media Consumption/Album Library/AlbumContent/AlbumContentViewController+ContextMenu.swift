@@ -1,7 +1,5 @@
-import UIKit
-import SwiftUI
-import MEGAUIKit
 import MEGADomain
+import MEGAData
 
 extension AlbumContentViewController {
     func contextMenuManagerConfiguration() -> ContextMenuManager {

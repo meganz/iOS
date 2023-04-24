@@ -1,6 +1,7 @@
 import UIKit
 import CoreServices
 import MEGADomain
+import MEGAData
 
 extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     //MARK: - Context Menus configuration

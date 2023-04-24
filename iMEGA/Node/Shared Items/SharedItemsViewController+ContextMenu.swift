@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAData
 
 extension SharedItemsViewController: DisplayMenuDelegate {
     @objc func tableView(_ tableView: UITableView,

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 extension ContactLinkQRViewController: QRMenuDelegate {
     private func contextMenuConfiguration() -> CMConfigEntity {
