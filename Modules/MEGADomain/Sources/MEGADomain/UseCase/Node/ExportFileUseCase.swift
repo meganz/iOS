@@ -22,7 +22,8 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
                                 W: ExportChatMessagesRepositoryProtocol,
                                 X: ImportNodeRepositoryProtocol,
                                 Z: MEGAHandleRepositoryProtocol,
-                                M: MediaUseCaseProtocol> {
+                                M: MediaUseCaseProtocol,
+                                G: OfflineFileFetcherRepositoryProtocol> {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
     private let fileCacheRepository: V
@@ -32,6 +33,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     private let fileSystemRepository: F
     private let mediaUseCase: M
     private let megaHandleRepository: Z
+    private let offlineFileFetcherRepository: G
     
     public init(downloadFileRepository: T,
                 offlineFilesRepository: U,
@@ -41,7 +43,8 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
                 exportChatMessagesRepository: W,
                 importNodeRepository: X,
                 megaHandleRepository: Z,
-                mediaUseCase: M) {
+                mediaUseCase: M,
+                offlineFileFetcherRepository: G) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileCacheRepository = fileCacheRepository
@@ -51,6 +54,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         self.importNodeRepository = importNodeRepository
         self.megaHandleRepository = megaHandleRepository
         self.mediaUseCase = mediaUseCase
+        self.offlineFileFetcherRepository = offlineFileFetcherRepository
     }
     
     // MARK: - Private
@@ -67,7 +71,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     }
     
     private func offlineUrl(for base64Handle: Base64HandleEntity) -> URL? {
-        guard let offlinePath = offlineFilesRepository.offlineFile(for: base64Handle)?.localPath else { return nil }
+        guard let offlinePath = offlineFileFetcherRepository.offlineFile(for: base64Handle)?.localPath else { return nil }
         return URL(fileURLWithPath: offlineFilesRepository.offlineURL?.path.append(pathComponent: offlinePath) ?? "")
     }
     

@@ -8,7 +8,7 @@ public protocol DownloadNodeUseCaseProtocol {
     func cancelDownloadTransfers()
 }
 
-public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Y: NodeDataRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol>: DownloadNodeUseCaseProtocol {
+public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Y: NodeDataRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol, G: OfflineFileFetcherRepositoryProtocol>: DownloadNodeUseCaseProtocol {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
     private let fileSystemRepository: V
@@ -17,13 +17,14 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
     private let fileCacheRepository: Z
     private let mediaUseCase: M
     private let preferenceRepository: P
+    private let offlineFileFetcherRepository: G
     
     @PreferenceWrapper(key: .savePhotoToGallery, defaultValue: false)
     private var savePhotoInGallery: Bool
     @PreferenceWrapper(key: .saveVideoToGallery, defaultValue: false)
     private var saveVideoInGallery: Bool
     
-    public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, nodeDataRepository: Y, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P) {
+    public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, nodeDataRepository: Y, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P, offlineFileFetcherRepository: G) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileSystemRepository = fileSystemRepository
@@ -32,6 +33,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         self.fileCacheRepository = fileCacheRepository
         self.mediaUseCase = mediaUseCase
         self.preferenceRepository = preferenceRepository
+        self.offlineFileFetcherRepository = offlineFileFetcherRepository
         $savePhotoInGallery.useCase = PreferenceUseCase(repository: preferenceRepository)
         $saveVideoInGallery.useCase = PreferenceUseCase(repository: preferenceRepository)
     }
@@ -44,7 +46,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         
         if !shouldDownloadToGallery(name: node.name) {
             if node.isFile {
-                guard offlineFilesRepository.offlineFile(for: node.base64Handle) == nil else {
+                guard offlineFileFetcherRepository.offlineFile(for: node.base64Handle) == nil else {
                     completion?(.failure(.alreadyDownloaded))
                     return
                 }
@@ -89,7 +91,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         }
                 
         if !shouldDownloadToGallery(name: node.name) {
-            guard offlineFilesRepository.offlineFile(for: node.base64Handle) == nil else {
+            guard offlineFileFetcherRepository.offlineFile(for: node.base64Handle) == nil else {
                 completion?(.failure(.alreadyDownloaded))
                 return
             }
