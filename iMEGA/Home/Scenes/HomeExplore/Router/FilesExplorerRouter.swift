@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 struct FilesExplorerRouter {
     private weak var navigationController: UINavigationController?

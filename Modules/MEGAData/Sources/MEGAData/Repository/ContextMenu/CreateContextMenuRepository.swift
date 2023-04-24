@@ -1,11 +1,11 @@
 import MEGADomain
 
-struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
-    static var newRepo: CreateContextMenuRepository {
+public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
+    public static var newRepo: CreateContextMenuRepository {
         CreateContextMenuRepository()
     }
     
-    func createContextMenu(config: CMConfigEntity) -> CMEntity? {
+    public func createContextMenu(config: CMConfigEntity) -> CMEntity? {
         ContextMenuBuilder()
                         .setType(config.menuType)
                         .setViewMode(config.viewMode)

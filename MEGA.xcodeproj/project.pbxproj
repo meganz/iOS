@@ -1119,7 +1119,6 @@
 		94282D4028A3B29200F794BA /* MyAccountHallTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */; };
 		94282D4228A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */; };
 		94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */; };
-		9428B9912819227800DB7250 /* CreateContextMenuRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9428B9902819227700DB7250 /* CreateContextMenuRepository.swift */; };
 		9428B9A02819499A00DB7250 /* ContextMenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9428B99F2819499A00DB7250 /* ContextMenuManager.swift */; };
 		942A64F729C390410017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
 		942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
@@ -3596,7 +3595,6 @@
 		94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+TableViewDataSource.swift"; sourceTree = "<group>"; };
 		94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Backups.swift"; sourceTree = "<group>"; };
-		9428B9902819227700DB7250 /* CreateContextMenuRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateContextMenuRepository.swift; sourceTree = "<group>"; };
 		9428B99F2819499A00DB7250 /* ContextMenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuManager.swift; sourceTree = "<group>"; };
 		942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+TargetAction.swift"; sourceTree = "<group>"; };
 		942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGASdk+MNZCategory.h"; sourceTree = "<group>"; };
@@ -8800,14 +8798,6 @@
 			path = iMEGA/Extensions;
 			sourceTree = "<group>";
 		};
-		9428B98D2819226200DB7250 /* ContextMenu */ = {
-			isa = PBXGroup;
-			children = (
-				9428B9902819227700DB7250 /* CreateContextMenuRepository.swift */,
-			);
-			path = ContextMenu;
-			sourceTree = "<group>";
-		};
 		942FD0791EF3EE8800E99FB1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -9848,7 +9838,6 @@
 				B645BC31252FAF7000D1D7CF /* Authentication */,
 				838A7B6725D5677500767DB0 /* Calls */,
 				5BC47E2C253F0F7200853323 /* Chat */,
-				9428B98D2819226200DB7250 /* ContextMenu */,
 				830C28E925E69DD600E9B56E /* Data */,
 				830C266F25DFC70B00E9B56E /* Favourites */,
 				B52E231428A0B3050018C3C3 /* FeatureFlag */,
@@ -12886,7 +12875,6 @@
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				32D167C029497394008C5ED6 /* CreateAlbumCell.swift in Sources */,
 				32D167EC294C555F008C5ED6 /* CreateAlbumCellViewModel.swift in Sources */,
-				9428B9912819227800DB7250 /* CreateContextMenuRepository.swift in Sources */,
 				1246682F275DBE0500C94335 /* CreateTextFileAlertViewController.swift in Sources */,
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
