@@ -736,7 +736,6 @@
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
-		8311A2CA25876A2E0027BEFF /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
 		8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */; };
 		83135B2A2862123B0015AE2F /* HangOrEndCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83135B292862123B0015AE2F /* HangOrEndCallView.swift */; };
 		83139149293511F300E20170 /* UserAvatarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83139148293511F300E20170 /* UserAvatarViewModel.swift */; };
@@ -792,7 +791,6 @@
 		8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */; };
 		8333E51F24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */; };
 		83344F58258A1C780052DB3C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADED4251896D1009A874C /* AuthRepository.swift */; };
-		8334508C258B5EFE0052DB3C /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
 		83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
 		8335C63D282E7A7A00509479 /* NameCollisionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8363281F28102BE6004F6121 /* NameCollisionRouter.swift */; };
@@ -863,10 +861,6 @@
 		835B1B90245AD23C00E41FBE /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
 		835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */; };
 		835EE371258120C200D8E3B8 /* QuickAccessWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */; };
-		835EE3B32582430700D8E3B8 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
-		835EE401258249D900D8E3B8 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
-		835EE45125825FFE00D8E3B8 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2801A124455A4900C160D0 /* libKarere.a */; };
-		8361086325AF156800CAC6E1 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
 		8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
 		8361359321074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358F21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m */; };
@@ -905,7 +899,6 @@
 		836826B5292F7CBB00A0AB5F /* ChatRoomLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836826B4292F7CBB00A0AB5F /* ChatRoomLinkView.swift */; };
 		836826B7292F7DC500A0AB5F /* ChatRoomLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836826B6292F7DC500A0AB5F /* ChatRoomLinkViewModel.swift */; };
 		836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
-		836924D72582728100658F6C /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
 		836A04DE29813E62009C9405 /* ScheduledMeetingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A04DD29813E62009C9405 /* ScheduledMeetingRepository.swift */; };
 		836A04E829828A47009C9405 /* ScheduledMeetingOccurrenceEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A04E729828A47009C9405 /* ScheduledMeetingOccurrenceEntity+Mapper.swift */; };
 		836A783028E2F2B500B6849F /* ChatRoomsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A782F28E2F2B500B6849F /* ChatRoomsListView.swift */; };
@@ -1086,7 +1079,6 @@
 		83E345E025B5A662006F2AD6 /* RecentItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E345DF25B5A662006F2AD6 /* RecentItemsRepository.swift */; };
 		83E3460225B5C73E006F2AD6 /* QuickAccessWidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3460125B5C73E006F2AD6 /* QuickAccessWidgetManager.swift */; };
 		83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3463C25B6DE67006F2AD6 /* OfflineFilesRepository.swift */; };
-		83E3465725B6E0D0006F2AD6 /* OfflineFilesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E3463C25B6DE67006F2AD6 /* OfflineFilesRepository.swift */; };
 		83E53D29282A96D50049DFBE /* URL+FileAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E53D28282A96D50049DFBE /* URL+FileAttribute.swift */; };
 		83E53D2A282A96E70049DFBE /* URL+FileAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E53D28282A96D50049DFBE /* URL+FileAttribute.swift */; };
 		83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */; };
@@ -1321,11 +1313,9 @@
 		A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
 		A84F4A92298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
 		A84F4A93298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
-		A84F4A94298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
 		A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
 		A84F4A99298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
 		A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
-		A84F4A9B298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
 		A854C21D29AE1FB800CB37E7 /* NodeAttributeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */; };
 		A854C21E29AE27AD00CB37E7 /* NodeAttributeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */; };
 		A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
@@ -1364,6 +1354,8 @@
 		A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */; };
 		A882981D29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A882982029F1668E00DEDE98 /* AppIntentVocabulary.plist */; };
 		A882981E29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */ = {isa = PBXBuildFile; fileRef = A882982029F1668E00DEDE98 /* AppIntentVocabulary.plist */; };
+		A882983C29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A882983B29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift */; };
+		A882983D29F186AE00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A882983B29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift */; };
 		A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */; };
 		A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */; };
 		A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
@@ -1372,7 +1364,6 @@
 		A88E7FED2549FD8A001B0A66 /* Recents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A88E7FE82549FD8A001B0A66 /* Recents.storyboard */; };
 		A88E7FEE2549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A88E7FE92549FD8A001B0A66 /* RecentsTableViewHeaderFooterView.m */; };
 		A8919424299F90A700B2A225 /* NodeAttributeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8919423299F90A700B2A225 /* NodeAttributeRepositoryTests.swift */; };
-		A891E8A329C1E07C0020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A229C1E07C0020072A /* MEGASdk */; };
 		A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A429C1E09D0020072A /* MEGASdk */; };
 		A891E8A729C1E0A70020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A629C1E0A70020072A /* MEGASdk */; };
 		A891E8A929C1E0B00020072A /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = A891E8A829C1E0B00020072A /* MEGASdk */; };
@@ -1425,11 +1416,6 @@
 		A8C3CF2C29BB898D00891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
 		A8C3CF2D29BB898D00891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
 		A8C3CF2F29BB898D00891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
-		A8C3CF3429BB899200891CE1 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */; };
-		A8C3CF3529BB899200891CE1 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */; };
-		A8C3CF3829BB899200891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
-		A8C3CF3929BB899200891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
-		A8C3CF3B29BB899200891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
 		A8C4754D299A66AF0074511F /* TransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8A5A42990F964008518BE /* TransferRepository.swift */; };
 		A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BA146B29927784004389FE /* NodeActionRepository.swift */; };
 		A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
@@ -1561,7 +1547,6 @@
 		B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B6048912223CDA8400BA91F9 /* AssetFetchResult.m */; };
 		B6061FEC2897928D0094087E /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = B6061FEB2897928D0094087E /* MEGADomain */; };
-		B60D528125F88891003E9829 /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
 		B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D531A25FA940A003E9829 /* DiskFullBlockingViewController.swift */; };
 		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B60F05E92514C022005133C2 /* XCTestCase+ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */; };
@@ -1594,7 +1579,6 @@
 		B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */ = {isa = PBXBuildFile; productRef = B63D34132898A9AB0059DE66 /* MEGASwift */; };
 		B63D341A2898A9E20059DE66 /* MEGASwift in Frameworks */ = {isa = PBXBuildFile; productRef = B63D34192898A9E20059DE66 /* MEGASwift */; };
 		B63D341C2898A9E90059DE66 /* MEGASwift in Frameworks */ = {isa = PBXBuildFile; productRef = B63D341B2898A9E90059DE66 /* MEGASwift */; };
-		B63D341E2898AE3B0059DE66 /* MEGASwift in Frameworks */ = {isa = PBXBuildFile; productRef = B63D341D2898AE3B0059DE66 /* MEGASwift */; };
 		B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B63F3196223BA47400B0C6A6 /* CameraUpload.xcdatamodeld */; };
 		B63F31A0223BA8FA00B0C6A6 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		B642925E22277EDD007BB9DE /* LivePhotoScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B642925D22277EDD007BB9DE /* LivePhotoScanner.m */; };
@@ -1723,7 +1707,6 @@
 		B6A01BA8289A5E9200B503FD /* FolderContentStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A01BA6289A5E9200B503FD /* FolderContentStat.swift */; };
 		B6A01BA9289A5E9200B503FD /* FileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A01BA7289A5E9200B503FD /* FileManager+Additions.swift */; };
 		B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B6A01BAB289A61CA00B503FD /* MEGAFoundation */; };
-		B6A01BAE289A61E000B503FD /* MEGAFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B6A01BAD289A61E000B503FD /* MEGAFoundation */; };
 		B6A01BB0289A623C00B503FD /* MEGAFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B6A01BAF289A623C00B503FD /* MEGAFoundation */; };
 		B6A01BB4289A644D00B503FD /* MEGAFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B6A01BB3289A644D00B503FD /* MEGAFoundation */; };
 		B6A0CF1A28A08D1B00D7F52E /* PreferenceUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A0CF1928A08D1B00D7F52E /* PreferenceUseCase+Additions.swift */; };
@@ -3865,6 +3848,7 @@
 		A882983029F1670200DEDE98 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = es; path = es.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		A882983129F1670300DEDE98 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = th; path = th.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
 		A882983229F1670400DEDE98 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = vi; path = vi.lproj/AppIntentVocabulary.plist; sourceTree = "<group>"; };
+		A882983B29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineFileFetcherRepository.swift; sourceTree = "<group>"; };
 		A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IntentHandler+StartCall.swift"; sourceTree = "<group>"; };
 		A885107A292D428F00E92A54 /* MEGAIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MEGAIntent.entitlements; sourceTree = "<group>"; };
 		A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogFileView.swift; sourceTree = "<group>"; };
@@ -4982,19 +4966,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */,
-				835EE401258249D900D8E3B8 /* libc++.tbd in Frameworks */,
-				835EE45125825FFE00D8E3B8 /* libKarere.a in Frameworks */,
-				A8C3CF3429BB899200891CE1 /* libnative_api.xcframework in Frameworks */,
-				A8C3CF3529BB899200891CE1 /* libnative_video.xcframework in Frameworks */,
-				A8C3CF3829BB899200891CE1 /* libvideocapture_objc.xcframework in Frameworks */,
-				A8C3CF3929BB899200891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
-				A8C3CF3B29BB899200891CE1 /* libwebsockets.xcframework in Frameworks */,
 				A8D68A8B29E827B200F27204 /* MEGAData in Frameworks */,
 				B610447428979EA200AAECF4 /* MEGADomain in Frameworks */,
-				B6A01BAE289A61E000B503FD /* MEGAFoundation in Frameworks */,
 				946ACCC7299C0B3500E6C0F5 /* MEGAPresentation in Frameworks */,
-				A891E8A329C1E07C0020072A /* MEGASdk in Frameworks */,
-				B63D341E2898AE3B0059DE66 /* MEGASwift in Frameworks */,
 				BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8757,6 +8731,7 @@
 			isa = PBXGroup;
 			children = (
 				3232ADC2290F95C900FF7416 /* FilesSearchRepository.swift */,
+				A882983B29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift */,
 				83E3463C25B6DE67006F2AD6 /* OfflineFilesRepository.swift */,
 			);
 			path = Files;
@@ -11789,10 +11764,7 @@
 			packageProductDependencies = (
 				A828E684286B317F004CED9E /* FirebaseCrashlytics */,
 				B610447328979EA200AAECF4 /* MEGADomain */,
-				B6A01BAD289A61E000B503FD /* MEGAFoundation */,
 				946ACCC6299C0B3500E6C0F5 /* MEGAPresentation */,
-				A891E8A229C1E07C0020072A /* MEGASdk */,
-				B63D341D2898AE3B0059DE66 /* MEGASwift */,
 				BF0CB9412803AF6000C21F11 /* SAMKeychain */,
 				A8D68A8A29E827B200F27204 /* MEGAData */,
 			);
@@ -13521,6 +13493,7 @@
 				C4789ED3270E098500DFADF1 /* OfflineCollectionViewController+DynamicType.swift in Sources */,
 				83FB1434219AC7DD00418BE6 /* OfflineCollectionViewController.m in Sources */,
 				A8BAFCAB28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift in Sources */,
+				A882983C29F1854B00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */,
 				C4D665C425B1F84E002196E9 /* OfflineFileInfoRepository.swift in Sources */,
 				C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */,
 				83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */,
@@ -14096,16 +14069,10 @@
 				8375B76E25EFC7FF00B70F6B /* FavouritesQuickAccessWidgetViewModel.swift in Sources */,
 				830C28E025E6900200E9B56E /* GridView.swift in Sources */,
 				83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */,
-				A84F4A9B298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
 				A899467B297189F5008448C4 /* MEGAConstants.m in Sources */,
 				83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */,
 				B6B1A27B28A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
 				836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */,
-				836924D72582728100658F6C /* MEGAGenericRequestDelegate.m in Sources */,
-				8361086325AF156800CAC6E1 /* MEGALogger.m in Sources */,
-				8311A2CA25876A2E0027BEFF /* MEGANodeList+MNZCategory.m in Sources */,
-				A84F4A94298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
-				835EE3B32582430700D8E3B8 /* MEGASdkManager.m in Sources */,
 				83E345A525B598A7006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
 				83655A5F259379C2001A0846 /* MEGAStore.m in Sources */,
 				83422B25255984C300D46907 /* MEGAWidget.swift in Sources */,
@@ -14119,9 +14086,8 @@
 				83655AC32593855F001A0846 /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				83655A7A25938495001A0846 /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
-				8334508C258B5EFE0052DB3C /* NSDate+MNZCategory.m in Sources */,
 				A8BAFCAC28B6381200ED4259 /* OfflineFileEntity+Mapper.swift in Sources */,
-				83E3465725B6E0D0006F2AD6 /* OfflineFilesRepository.swift in Sources */,
+				A882983D29F186AE00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */,
 				8375B77A25EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift in Sources */,
 				8375B77B25EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift in Sources */,
 				836813532587C0B800596BBD /* QuickAccessItemModel.swift in Sources */,
@@ -14141,7 +14107,6 @@
 				8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */,
 				B5300AF62754A0A5001E516B /* Strings+Generated.swift in Sources */,
 				BF22BFB9268ACFB000460DB3 /* TransferRecordDTO.swift in Sources */,
-				B60D528125F88891003E9829 /* UIDevice+MNZCategory.m in Sources */,
 				B6990178262F920800176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */,
 				B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */,
@@ -16583,10 +16548,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
 		};
-		A891E8A229C1E07C0020072A /* MEGASdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGASdk;
-		};
 		A891E8A429C1E09D0020072A /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASdk;
@@ -16701,10 +16662,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASwift;
 		};
-		B63D341D2898AE3B0059DE66 /* MEGASwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGASwift;
-		};
 		B65D17CE2899E16400D5AD33 /* MEGAUIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAUIKit;
@@ -16722,10 +16679,6 @@
 			productName = MEGAUI;
 		};
 		B6A01BAB289A61CA00B503FD /* MEGAFoundation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAFoundation;
-		};
-		B6A01BAD289A61E000B503FD /* MEGAFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAFoundation;
 		};

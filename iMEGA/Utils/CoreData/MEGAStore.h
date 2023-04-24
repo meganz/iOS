@@ -9,6 +9,7 @@
 #import "MOMessage+CoreDataProperties.h"
 #import "MOOfflineFolderLayout+CoreDataProperties.h"
 #import "MEGACoreDataStack.h"
+#import "MEGASdk.h"
 
 @class TransferRecordDTO;
 

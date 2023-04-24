@@ -8,7 +8,7 @@ struct OfflineTimelineProvider: TimelineProvider {
     var viewModel = OfflineQuickAccessWidgetViewModel(
         credentialUseCase: CredentialUseCase(repo: CredentialRepository.newRepo),
         copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository(fileManager: FileManager.default)),
-        offlineFilesBasesUseCase: OfflineFilesUseCase(repo: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk()))
+        offlineFilesBasesUseCase: OfflineFilesUseCase(repo: OfflineFileFetcherRepository.newRepo)
     )
     
     func placeholder(in context: Context) -> QuickAccessWidgetEntry {

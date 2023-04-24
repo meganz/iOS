@@ -7,7 +7,7 @@ public protocol OfflineFilesUseCaseProtocol {
 }
 
 // MARK: - Use case implementation -
-public struct OfflineFilesUseCase<T: OfflineFilesRepositoryProtocol>: OfflineFilesUseCaseProtocol {
+public struct OfflineFilesUseCase<T: OfflineFileFetcherRepositoryProtocol>: OfflineFilesUseCaseProtocol {
 
     private let repo: T
 
