@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 final class FeatureFlagRepository: FeatureFlagRepositoryProtocol {
     

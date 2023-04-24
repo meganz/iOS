@@ -1,12 +1,14 @@
 import Foundation
 import MEGADomain
 
-struct L10nRepository: L10nRepositoryProtocol {
-    var appLanguage: String {
+public struct L10nRepository: L10nRepositoryProtocol {
+    public var appLanguage: String {
         Bundle.main.preferredLocalizations.first ?? "en"
     }
     
-    var deviceRegion: String {
+    public var deviceRegion: String {
         Locale.autoupdatingCurrent.regionCode ?? Locale.autoupdatingCurrent.identifier
     }
+    
+    public init() {}
 }
