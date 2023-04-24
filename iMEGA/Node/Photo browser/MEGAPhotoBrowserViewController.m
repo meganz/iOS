@@ -998,6 +998,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         } else {
             newScale = zoomableView.zoomScale > 1.0f ? 1.0f : 5.0f;
         }
+
+        [_imageViewsZoomCache setObject: @(newScale) forKey:@(self.dataProvider.currentIndex)];
+
         [self scrollViewWillBeginZooming:zoomableView withView:zoomableView.subviews.firstObject];
         [UIView animateWithDuration:0.3 animations:^{
             if (newScale > 1.0f) {
