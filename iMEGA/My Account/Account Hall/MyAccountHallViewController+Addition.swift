@@ -40,4 +40,15 @@ extension MyAccountHallViewController {
         navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = color
         navigationController?.navigationBar.isTranslucent = false
     }
+
+    @objc func registerCustomCells() {
+        self.tableView?.register(HostingTableViewCell<MyAccountHallPlanView>.self,
+                                 forCellReuseIdentifier: "AccountPlanUpgradeCell")
+    }
+    
+    //MARK: - Feature flag
+    
+    @objc func isNewUpgradeAccountPlanFeatureFlagEnabled() -> Bool {
+        FeatureFlagProvider().isFeatureFlagEnabled(for: .newUpgradeAccountPlanUI)
+    }
 }
