@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case scheduleMeeting = "Schedule Meeting"
