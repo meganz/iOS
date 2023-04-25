@@ -358,8 +358,7 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         
         let menuActions = decomposeMenuIntoActions(menu: cmMettingEntity)
         menuActionsArray = [.meeting(actionType: .startMeeting),
-                            .meeting(actionType: .joinMeeting),
-                            .meeting(actionType: .scheduleMeeting)
+                            .meeting(actionType: .joinMeeting)
         ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
