@@ -464,12 +464,13 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setType(.menu(type: .meeting))
                                                 .build())
                 
-        XCTAssertTrue(filterMeetingActions(from: decomposeMenuIntoActions(menu: menuEntity)) == [MeetingActionEntity.startMeeting, MeetingActionEntity.joinMeeting, MeetingActionEntity.scheduleMeeting])
+        XCTAssertTrue(filterMeetingActions(from: decomposeMenuIntoActions(menu: menuEntity)) == [MeetingActionEntity.startMeeting, MeetingActionEntity.joinMeeting])
     }
     
     func testMeetingActionsMenuWithScheduleMeeting() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                 .setType(.menu(type: .meeting))
+                                                .setShouldScheduleMeeting(true)
                                                 .build())
         
         XCTAssertTrue(filterMeetingActions(from: decomposeMenuIntoActions(menu: menuEntity)) == MeetingActionEntity
