@@ -60,6 +60,9 @@ internal enum Colors {
     }
   }
   internal enum General {
+    internal enum Background {
+      internal static let cellColor = ColorAsset(name: "cellColor")
+    }
     internal enum Black {
       internal static let _000000 = ColorAsset(name: "000000")
       internal static let _00000075 = ColorAsset(name: "000000_75")
@@ -205,6 +208,11 @@ internal enum Colors {
       internal static let secondGradient = ColorAsset(name: "secondGradient")
     }
     internal static let pasteImageBorder = ColorAsset(name: "pasteImageBorder")
+  }
+  internal enum UpgradeAccount {
+    internal static let buttonTint = ColorAsset(name: "buttonTint")
+    internal static let primaryGrayText = ColorAsset(name: "primaryGrayText")
+    internal static let primaryText = ColorAsset(name: "primaryText")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

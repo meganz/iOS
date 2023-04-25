@@ -4,7 +4,7 @@
 }
 
 @objc enum MyAccountMegaSection: Int, CaseIterable {
-    case storage = 0, contacts, backups, notifications, achievements, transfers, offline, rubbishBin
+    case plan = 0, storage , contacts, backups, notifications, achievements, transfers, offline, rubbishBin
 }
 
 @objc enum MyAccountOtherSection: Int, CaseIterable {
@@ -117,13 +117,35 @@ extension MyAccountHallViewController: UITableViewDataSource {
                                      isPendingViewVisible: true)
     }
     
+    //MARK: - Upgrade Plan row setup
+    private func upgradePlanSetupCell(_ indexPath: IndexPath) -> HostingTableViewCell<MyAccountHallPlanView> {
+        guard let cell = tableView?.dequeueReusableCell(withIdentifier: "AccountPlanUpgradeCell", for: indexPath) as? HostingTableViewCell<MyAccountHallPlanView> else {
+            return HostingTableViewCell<MyAccountHallPlanView>()
+        }
+
+        var currentPlan = ""
+        if let account = MEGASdk.shared.mnz_accountDetails {
+            currentPlan = MEGAAccountDetails.string(for: account.type)
+        }
+        
+        let viewModel = MyAccountHallPlanViewModel(currentPlan: currentPlan, router: UpgradeAccountRouter())
+        let upgradeCellView = MyAccountHallPlanView(viewModel: viewModel)
+        cell.host(upgradeCellView, parent: self)
+        cell.selectionStyle = .none
+        return cell
+    }
+    
     //MARK: - UITableView data source
     public func numberOfSections(in tableView: UITableView) -> Int {
         MyAccountSection.allCases.count
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        section == MyAccountSection.mega.rawValue ? MyAccountMegaSection.allCases.count : MyAccountOtherSection.allCases.count
+        guard isNewUpgradeAccountPlanFeatureFlagEnabled() else {
+            return section == MyAccountSection.mega.rawValue ? MyAccountMegaSection.allCases.count - 1 : MyAccountOtherSection.allCases.count
+        }
+        
+        return section == MyAccountSection.mega.rawValue ? MyAccountMegaSection.allCases.count : MyAccountOtherSection.allCases.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -140,7 +162,9 @@ extension MyAccountHallViewController: UITableViewDataSource {
             return cell
         }
         
-        switch MyAccountMegaSection(rawValue: indexPath.row) {
+        let rowIndex = isNewUpgradeAccountPlanFeatureFlagEnabled() ? indexPath.row : indexPath.row + 1
+        switch MyAccountMegaSection(rawValue: rowIndex) {
+        case .plan: return upgradePlanSetupCell(indexPath)
         case .storage: cell.setup(data: isShowStorageUsageCell ? storageBusinessAccountSetupData() : storageSetupData())
         case .contacts: cell.setup(data: contactsSetupData(existsPendingView: cell.pendingView != nil))
         case .backups: cell.setup(data: backupsSetupData())

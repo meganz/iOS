@@ -1531,6 +1531,7 @@
 		B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */; };
 		B5E4EBD829795A10009C5578 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4EBD729795A10009C5578 /* HomeViewModel.swift */; };
 		B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */; };
+		B5E9351B29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9351A29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift */; };
 		B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */; };
 		B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */; };
@@ -1538,6 +1539,8 @@
 		B5FC636229E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */; };
 		B5FC636429E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */; };
 		B5FC636929E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */; };
+		B5FC637F29E9444B00EE4C8E /* MyAccountHallPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC637E29E9444B00EE4C8E /* MyAccountHallPlanView.swift */; };
+		B5FC638129E9696300EE4C8E /* HostingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC638029E9696300EE4C8E /* HostingTableViewCell.swift */; };
 		B5FE690F286984AC00A1725C /* FavouritesExplorerGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */; };
 		B5FE691328698C5C00A1725C /* FavouritesExplorerGridSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */; };
 		B5FE693B286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */; };
@@ -4029,12 +4032,15 @@
 		B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFeatureFlagProvider.swift; sourceTree = "<group>"; };
 		B5E4EBD729795A10009C5578 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Account.swift"; sourceTree = "<group>"; };
+		B5E9351A29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallPlanViewModel.swift; sourceTree = "<group>"; };
 		B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagView.swift; sourceTree = "<group>"; };
 		B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModel.swift; sourceTree = "<group>"; };
 		B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModelTests.swift; sourceTree = "<group>"; };
 		B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCollectionViewCellViewModelTests.swift; sourceTree = "<group>"; };
+		B5FC637E29E9444B00EE4C8E /* MyAccountHallPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallPlanView.swift; sourceTree = "<group>"; };
+		B5FC638029E9696300EE4C8E /* HostingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingTableViewCell.swift; sourceTree = "<group>"; };
 		B5FE690E286984AC00A1725C /* FavouritesExplorerGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerGridViewController.swift; sourceTree = "<group>"; };
 		B5FE691228698C5C00A1725C /* FavouritesExplorerGridSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerGridSource.swift; sourceTree = "<group>"; };
 		B5FE693A286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
@@ -9498,6 +9504,8 @@
 			isa = PBXGroup;
 			children = (
 				E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */,
+				B5FC637E29E9444B00EE4C8E /* MyAccountHallPlanView.swift */,
+				B5E9351A29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift */,
 				94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */,
 				5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */,
 				5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */,
@@ -9602,6 +9610,7 @@
 			isa = PBXGroup;
 			children = (
 				B63995322898CBEB00EA88F1 /* WarningView */,
+				B5FC638029E9696300EE4C8E /* HostingTableViewCell.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -13088,6 +13097,7 @@
 				5D166B7B25219762004F4F4A /* HomeSearchState.swift in Sources */,
 				BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */,
 				B5E4EBD829795A10009C5578 /* HomeViewModel.swift in Sources */,
+				B5FC638129E9696300EE4C8E /* HostingTableViewCell.swift in Sources */,
 				B6D176872236F16600098084 /* ImageExporter.m in Sources */,
 				B65AC8BE21F6B5A40094FF4F /* ImageExportManager.m in Sources */,
 				B65AC8BA21F6A91A0094FF4F /* ImageExportOperation.m in Sources */,
@@ -13383,6 +13393,8 @@
 				BF22BFB1268AC51400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
 				B69AF65628A1E48B0022B094 /* MOUser+CoreDataProperties.m in Sources */,
 				417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */,
+				B5FC637F29E9444B00EE4C8E /* MyAccountHallPlanView.swift in Sources */,
+				B5E9351B29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift in Sources */,
 				94282D4028A3B29200F794BA /* MyAccountHallTableViewCell+Additions.swift in Sources */,
 				5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */,
 				9D68BBB228B55E23006FCBC5 /* MyAccountHallViewController+Addition.swift in Sources */,

@@ -53,6 +53,8 @@
     self.viewAndEditProfileLabel.text = NSLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     self.viewAndEditProfileButton.accessibilityLabel = NSLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
 
+    [self registerCustomCells];
+    
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
     self.profileView.gestureRecognizers = @[tapGestureRecognizer];
     
@@ -87,7 +89,13 @@
         [MEGASdkManager.sharedMEGASdk getAccountDetails];
     }
     [self reloadUI];
-    self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
+    
+    if ([self isNewUpgradeAccountPlanFeatureFlagEnabled]) {
+        self.buyPROBarButtonItem.title = nil;
+        self.buyPROBarButtonItem.enabled = false;
+    } else {
+        self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
+    }
     
     if (self.navigationController.isNavigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -354,7 +362,8 @@
 #pragma mark - MEGAPurchasePricingDelegate
 
 - (void)pricingsReady {
-    self.buyPROBarButtonItem.enabled = YES;
+    BOOL isEnabled = ![self isNewUpgradeAccountPlanFeatureFlagEnabled];
+    self.buyPROBarButtonItem.enabled = isEnabled;
 }
 
 #pragma mark - MEGAGlobalDelegate
