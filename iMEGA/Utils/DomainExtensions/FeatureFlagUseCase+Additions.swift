@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 extension FeatureFlagUseCase where T == FeatureFlagRepository {
     
