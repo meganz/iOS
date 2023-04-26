@@ -19,6 +19,9 @@ struct ScheduleMeetingView: View {
                 ScheduleMeetingCreationPropertiesView(viewModel: viewModel)
                 ScheduleMeetingCreationOpenInviteView(viewModel: viewModel)
                 ScheduleMeetingCreationDescriptionView(viewModel: viewModel, isBottomViewInFocus: $isBottomViewInFocus)
+                
+                Spacer()
+                    .frame(height: 0)
                     .id(bottomViewID)
             }
             .onChange(of: viewModel.meetingDescription) { _ in
