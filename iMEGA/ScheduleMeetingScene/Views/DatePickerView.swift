@@ -33,6 +33,7 @@ struct DatePickerView: View {
                 in: dateRange,
                 displayedComponents: [.date, .hourAndMinute]
             )
+            .labelsHidden()
             .datePickerStyle(.wheel)
             .onAppear {
                 UIDatePicker.appearance().minuteInterval = 5
