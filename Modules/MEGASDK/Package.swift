@@ -59,7 +59,8 @@ let package = Package(
                 // Libraries
                 .linkedLibrary("resolv"),
                 .linkedLibrary("z"),
-                .linkedLibrary("sqlite3")
+                .linkedLibrary("sqlite3"),
+                .linkedLibrary("icucore")
             ]
         ),
         .target(
