@@ -12,7 +12,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     
     enum Constants {
         static let meetingNameMaxLenght: Int = 30
-        static let meetingDescriptionMaxLenght: Int = 4000
+        static let meetingDescriptionMaxLenght: Int = 3000
         static let minDurationFiveMinutes: TimeInterval = 300
         static let defaultDurationHalfHour: TimeInterval = 1800
     }
