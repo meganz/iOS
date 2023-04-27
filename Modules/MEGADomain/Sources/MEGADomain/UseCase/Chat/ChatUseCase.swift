@@ -16,21 +16,23 @@ public protocol ChatUseCaseProtocol {
     func archivedChatListCount() -> UInt
     func unreadChatMessagesCount() -> Int
     func chatConnectionStatus() -> ChatConnectionStatus
+    func chatConnectionStatus(for chatId: ChatIdEntity) async -> ChatConnectionStatus
     func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity?
     func retryPendingConnections()
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
     func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never>
     func monitorChatPrivateModeUpdate(forChatId chatId: ChatIdEntity) -> AnyPublisher<ChatRoomEntity, Never>
+    func chatCall(for chatId: HandleEntity) async -> CallEntity?
 }
 
 // MARK: - Use case implementation -
 public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     private var chatRepo: T
-
+    
     public init(chatRepo: T) {
         self.chatRepo = chatRepo
     }
-
+    
     public func myUserHandle() -> HandleEntity {
         chatRepo.myUserHandle()
     }
@@ -87,6 +89,10 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
         chatRepo.chatConnectionStatus()
     }
     
+    public func chatConnectionStatus(for chatId: ChatIdEntity) async -> ChatConnectionStatus {
+        chatRepo.chatConnectionStatus(for: chatId)
+    }
+    
     public func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity? {
         chatRepo.chatListItem(forChatId: chatId)
     }
@@ -105,5 +111,9 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never> {
         chatRepo.monitorChatPrivateModeUpdate(forChatId: chatId)
+    }
+    
+    public func chatCall(for chatId: HandleEntity) async -> CallEntity? {
+        chatRepo.chatCall(for: chatId)
     }
 }

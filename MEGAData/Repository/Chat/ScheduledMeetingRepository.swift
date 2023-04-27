@@ -1,7 +1,12 @@
 import MEGADomain
+import MEGAData
 import Combine
 
 public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtocol {
+    public static var newRepo: ScheduledMeetingRepository {
+        ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)
+    }
+    
     private let chatSDK: MEGAChatSdk
     
     public init(chatSDK: MEGAChatSdk) {
@@ -42,7 +47,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                         continuation.resume(throwing: CancellationError())
                         return
                     }
-
+                    
                     guard error.type == .MEGAChatErrorTypeOk else {
                         continuation.resume(throwing: ChatRoomErrorEntity.noChatRoomFound)
                         return
@@ -67,7 +72,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                         continuation.resume(throwing: CancellationError())
                         return
                     }
-
+                    
                     guard error.type == .MEGAChatErrorTypeOk else {
                         continuation.resume(throwing: ChatRoomErrorEntity.noChatRoomFound)
                         return
@@ -81,10 +86,9 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     }
     
     public func createScheduleMeeting(_ meeting: CreateScheduleMeetingEntity) async throws -> ScheduledMeetingEntity {
-        
         let peerlist = MEGAChatPeerList()
         meeting.participants.forEach { peerlist.addPeer(withHandle: $0.handle, privilege: 2)}
-
+        
         return try await withCheckedThrowingContinuation { continuation in
             guard Task.isCancelled == false else {
                 continuation.resume(throwing: CancellationError())

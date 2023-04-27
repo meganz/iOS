@@ -1,7 +1,14 @@
 import MEGADomain
+import MEGAData
+
 import Combine
 
 public final class ChatRepository: ChatRepositoryProtocol {
+    
+    public static var newRepo: ChatRepository {
+        ChatRepository(sdk: MEGASdk.shared, chatSDK: MEGAChatSdk.shared)
+    }
+    
     private let sdk: MEGASdk
     private let chatSDK: MEGAChatSdk
     private lazy var chatStatusUpdateListener = ChatStatusUpdateListener(sdk: chatSDK)
@@ -41,6 +48,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
     
     public func chatConnectionStatus() -> ChatConnectionStatus {
         MEGAChatConnection(rawValue: chatSDK.initState().rawValue)?.toChatConnectionStatus() ?? .invalid
+    }
+    
+    public func chatConnectionStatus(for chatId: ChatIdEntity) -> ChatConnectionStatus {
+        chatSDK.chatConnectionState(chatId).toChatConnectionStatus()
     }
     
     public func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity? {
@@ -113,6 +124,14 @@ public final class ChatRepository: ChatRepositoryProtocol {
         return chatPrivateModeUpdateListener
             .monitor
             .eraseToAnyPublisher()
+    }
+    
+    public func chatCall(for chatId: HandleEntity) -> CallEntity? {
+        guard let call = chatSDK.chatCall(forChatId: chatId) else {
+            return nil
+        }
+        
+        return call.toCallEntity()
     }
 }
 

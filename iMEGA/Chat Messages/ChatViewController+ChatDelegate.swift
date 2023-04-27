@@ -4,7 +4,7 @@ extension ChatViewController: MEGAChatDelegate {
     func onChatConnectionStateUpdate(_ api: MEGAChatSdk, chatId: UInt64, newState: Int32) {
         if chatRoom.chatId == chatId {
             configureNavigationBar()
-            checkIfChatHasActiveCall()
+            chatContentViewModel.dispatch(.updateContent)
         }
     }
     
@@ -14,7 +14,7 @@ extension ChatViewController: MEGAChatDelegate {
         }
         
         if chatRoom.peerHandle(at: 0) == userHandle,
-        onlineStatus != .invalid {
+           onlineStatus != .invalid {
             configureNavigationBar()
             switch chatRoom.onlineStatus {
             case .offline, .away:
@@ -22,12 +22,10 @@ extension ChatViewController: MEGAChatDelegate {
             default:
                 break
             }
-
         }
     }
     
     func onChatPresenceLastGreen(_ api: MEGAChatSdk, userHandle: UInt64, lastGreen: Int) {
-        
         switch chatRoom.onlineStatus {
         case .offline, .away:
             if let titleView = navigationItem.titleView as? ChatTitleView {

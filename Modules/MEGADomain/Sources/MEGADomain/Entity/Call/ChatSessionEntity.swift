@@ -1,12 +1,12 @@
 
-public struct ChatSessionEntity {
-    public enum StatusType {
+public struct ChatSessionEntity: Sendable {
+    public enum StatusType: Sendable {
         case invalid
         case inProgress
         case destroyed
     }
     
-    public enum ChatSessionTermCode {
+    public enum ChatSessionTermCode: Sendable {
         case invalid
         case recoverable
         case nonRecoverable

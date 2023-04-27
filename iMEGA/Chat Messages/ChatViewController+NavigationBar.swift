@@ -5,51 +5,44 @@ import MEGADomain
 extension ChatViewController {
     private var rightBarButtons: [UIBarButtonItem] {
         var barButtons: [UIBarButtonItem] = []
-
+        
         if chatRoom.isGroup {
             if chatRoom.ownPrivilege == .moderator {
                 barButtons.append(addParticpantBarButtonItem)
             }
-
+            
             barButtons.append(audioCallBarButtonItem)
         } else {
             barButtons = [videoCallBarButtonItem, audioCallBarButtonItem]
         }
-
+        
         return barButtons
     }
-
-    var shouldDisableAudioVideoCall: Bool {
-        return shouldDisableAudioVideoCalling
-            || chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
-            || MEGASdkManager.sharedMEGAChatSdk().chatConnectionState(chatRoom.chatId) != .online
-            || !MEGAReachabilityManager.isReachable()
-            || MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
-            || MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) != nil
-            || isVoiceRecordingInProgress
-    }
-
+    
     func configureNavigationBar() {
         addRightBarButtons()
         setTitleView()
     }
-
+    
     func updateRightBarButtons() {
         guard !isEditing else {
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
             return
         }
         navigationItem.rightBarButtonItems = rightBarButtons
-
-        audioCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
-        videoCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
+        
+        let reachable = MEGAReachabilityManager.isReachable()
+        let existsActiveCall = MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+        
+        chatContentViewModel.dispatch(.updateCallNavigationBarButtons(shouldDisableAudioVideoCalling,
+                                                                      isVoiceRecordingInProgress, reachable, existsActiveCall))
     }
-
+    
     private func addRightBarButtons() {
         navigationItem.rightBarButtonItems = rightBarButtons
         updateRightBarButtons()
     }
-
+    
     private func setTitleView() {
         let titleView = ChatTitleView.instanceFromNib
         titleView.chatRoom = chatRoom
@@ -58,7 +51,7 @@ extension ChatViewController {
         }
         navigationItem.titleView = titleView
     }
-
+    
     private func didTapTitle() {
         if chatRoom.isGroup {
             if MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
@@ -69,7 +62,7 @@ extension ChatViewController {
             pushContactDetailsViewController(withPeerHandle: chatRoom.peerHandle(at: 0))
         }
     }
-
+    
     private func pushGroupDetailsViewController() {
         guard let navigationController else { return }
         if let scheduledMeeting = chatHasFutureScheduledMeeting() {
@@ -84,7 +77,7 @@ extension ChatViewController {
             }
         }
     }
-
+    
     private func chatHasFutureScheduledMeeting() -> ScheduledMeetingEntity? {
         let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared))
         let scheduledMeetings = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId)
@@ -103,11 +96,11 @@ extension ChatViewController {
         guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
             return
         }
-
+        
         guard let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: peerHandle) else {
             return
         }
-
+        
         contactDetailsVC.contactDetailsMode = chatRoom.isGroup ? .fromGroupChat : .fromChat
         contactDetailsVC.userEmail = userEmail
         contactDetailsVC.userHandle = peerHandle
