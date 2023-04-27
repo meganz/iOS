@@ -1,4 +1,5 @@
 import MEGASdk
+import MEGAData
 
 public final class MockMEGASet: MEGASet {
     private let setHandle: MEGAHandle
@@ -15,8 +16,8 @@ public final class MockMEGASet: MEGASet {
     public override var timestamp: Date { setModificationTime }
     
     public init(handle: MEGAHandle,
-                userId: MEGAHandle,
-                coverId: MEGAHandle,
+                userId: MEGAHandle = .invalidHandle,
+                coverId: MEGAHandle = .invalidHandle,
                 name: String = "",
                 changeType: MEGASetChangeType = .new,
                 modificationTime: Date = Date()) {
