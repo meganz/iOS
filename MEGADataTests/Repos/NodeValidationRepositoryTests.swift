@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADataMock
 
 final class NodeValidationRepositoryTests: XCTestCase {
 

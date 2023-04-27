@@ -2,6 +2,7 @@
 import XCTest
 import MEGADomain
 @testable import MEGA
+import MEGADataMock
 
 final class NodeActionRepositoryTests: XCTestCase {
     var repository: NodeActionRepository!

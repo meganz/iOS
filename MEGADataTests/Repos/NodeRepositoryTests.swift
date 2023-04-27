@@ -2,6 +2,7 @@ import XCTest
 import MEGADomainMock
 import MEGADomain
 @testable import MEGA
+import MEGADataMock
 
 final class NodeRepositoryTests: XCTestCase {
     let rootNode = MockNode(handle: 1, nodeType: .folder)
@@ -16,9 +17,9 @@ final class NodeRepositoryTests: XCTestCase {
     }
     
     func testParentTreeArray_severalFolderLevels() async {
-        let grandParentNode = await MockNode(handle: 2, nodeType: .folder, parentHandle: 1)
-        let parentNode = await MockNode(handle: 3, nodeType: .folder, parentHandle: 2)
-        let childNode = await MockNode(handle: 4, nodeType: .file, parentHandle: 3)
+        let grandParentNode = MockNode(handle: 2, nodeType: .folder, parentHandle: 1)
+        let parentNode = MockNode(handle: 3, nodeType: .folder, parentHandle: 2)
+        let childNode = MockNode(handle: 4, nodeType: .file, parentHandle: 3)
     
         sdk.setNodes([rootNode, grandParentNode, parentNode, childNode])
         sdk.setShareAccessLevel(.accessOwner)
@@ -34,7 +35,7 @@ final class NodeRepositoryTests: XCTestCase {
     }
     
     func testParentTreeArray_rootNodeChild_file() async {
-        let rootNodeChild = await MockNode(handle: 5, nodeType: .file, parentHandle: 1)
+        let rootNodeChild = MockNode(handle: 5, nodeType: .file, parentHandle: 1)
         
         sdk.setNodes([rootNode, rootNodeChild])
         sdk.setShareAccessLevel(.accessOwner)

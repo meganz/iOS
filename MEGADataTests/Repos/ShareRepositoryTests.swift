@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADataMock
 
 final class ShareRepositoryTests: XCTestCase {
     
@@ -21,7 +22,7 @@ final class ShareRepositoryTests: XCTestCase {
     }
     
     func testCreateShareKey_shouldReturnSameNodeHandle() async throws {
-        let mockNode = await MockNode(handle: 1)
+        let mockNode = MockNode(handle: 1)
         let sharedFolderNodeEntity = mockNode.toNodeEntity()
         let repo = ShareRepository(sdk: MockSdk(nodes:[mockNode]))
         let nodeEntityHandle = try await repo.createShareKey(forNode: sharedFolderNodeEntity)

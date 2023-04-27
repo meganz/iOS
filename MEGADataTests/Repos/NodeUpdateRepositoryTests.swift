@@ -1,6 +1,7 @@
 import XCTest
 import MEGADomain
 @testable import MEGA
+import MEGADataMock
 
 final class NodeUpdateRepositoryTests: XCTestCase {
     func testShouldProcessOnNodesUpdate_onUpdateNodesParentHandleMatch_shouldReturnTrue() {

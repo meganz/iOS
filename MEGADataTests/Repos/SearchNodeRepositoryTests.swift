@@ -2,6 +2,7 @@ import XCTest
 import MEGADomainMock
 import MEGADomain
 @testable import MEGA
+import MEGADataMock
 
 final class SearchNodeRepositoryTests: XCTestCase {
     var incomingNodes: [MockNode]!

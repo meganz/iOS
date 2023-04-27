@@ -3,6 +3,7 @@ import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGADataMock
 
 final class MediaDiscoveryViewModelTests: XCTestCase {
     private var router: MediaDiscoveryRouter!

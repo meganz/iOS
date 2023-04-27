@@ -1,6 +1,7 @@
 
 import XCTest
 @testable import MEGA
+import MEGADataMock
 
 final class MEGANode_Additions_Tests: XCTestCase {
     

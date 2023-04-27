@@ -1,6 +1,7 @@
 import XCTest
 import MEGADomain
 @testable import MEGA
+import MEGADataMock
 
 final class MediaDiscoveryRepositoryTests: XCTestCase {
     

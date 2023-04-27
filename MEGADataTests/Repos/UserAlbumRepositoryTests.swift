@@ -2,6 +2,7 @@ import XCTest
 import Combine
 import MEGADomain
 @testable import MEGA
+import MEGADataMock
 
 final class UserAlbumRepositoryTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
