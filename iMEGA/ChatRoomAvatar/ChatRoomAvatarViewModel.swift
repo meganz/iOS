@@ -83,6 +83,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         loadingChatRoomAvatarTask = nil
     }
     
+    @MainActor
     private func subscribeToAvatarUpdateNotification(forHandles handles: [HandleEntity]) {
         subscriptions.removeAll()
         
@@ -116,7 +117,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                         let primaryAvatar = try await createAvatar(withHandle: primaryAvatarUserHandle,
                                                                    isRightToLeftLanguage: isRightToLeftLanguage)
                         await updatePrimaryAvatar(primaryAvatar)
-                        subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle])
+                        await subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle])
                     } else {
                         let secondaryAvatarUserHandle = chatRoom.peers[1].handle
                         let primaryAvatar = try await createAvatar(withHandle: primaryAvatarUserHandle,
@@ -127,7 +128,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                         await updatePrimaryAvatar(primaryAvatar)
                         await updateSecondaryAvatar(secondaryAvatar)
                         
-                        subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle, secondaryAvatarUserHandle])
+                        await subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle, secondaryAvatarUserHandle])
                         
                         let downloadedSecondaryAvatar = try await downloadAvatar(forHandle: secondaryAvatarUserHandle)
                         await updateSecondaryAvatar(downloadedSecondaryAvatar)
@@ -142,7 +143,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                 await updatePrimaryAvatar(avatar)
             }
             
-            subscribeToAvatarUpdateNotification(forHandles: [peerHandle])
+            await subscribeToAvatarUpdateNotification(forHandles: [peerHandle])
             
             let downloadedAvatar = try await downloadAvatar(forHandle: peerHandle)
             await updatePrimaryAvatar(downloadedAvatar)
