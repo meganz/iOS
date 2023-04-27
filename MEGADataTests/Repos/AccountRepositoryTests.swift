@@ -2,6 +2,7 @@ import XCTest
 import MEGADomainMock
 import MEGADomain
 @testable import MEGA
+import MEGADataMock
 
 final class AccountRepositoryTests: XCTestCase {
     func testUpgradeSecurity_shouldReturnSuccess() async throws {

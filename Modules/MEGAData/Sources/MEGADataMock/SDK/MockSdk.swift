@@ -1,8 +1,6 @@
-import Foundation
-@testable import MEGA
-import MEGADomain
+import MEGASdk
 
-final class MockSdk: MEGASdk {
+public final class MockSdk: MEGASdk {
     private var nodes: [MEGANode]
     private let rubbishNodes: [MEGANode]
     private let syncDebrisNodes: [MEGANode]
@@ -25,30 +23,30 @@ final class MockSdk: MEGASdk {
     private let publicLinkNodes: MEGANodeList
     private let createSupportTicketError: MEGAErrorType
     
-    var hasGlobalDelegate = false
-    var apiURL: String?
-    var disablepkp: Bool?
-    var shareAccessLevel: MEGAShareType = .accessUnknown
+    public var hasGlobalDelegate = false
+    public var apiURL: String?
+    public var disablepkp: Bool?
+    public var shareAccessLevel: MEGAShareType = .accessUnknown
     
-    init(nodes: [MEGANode] = [],
-         rubbishNodes: [MEGANode] = [],
-         syncDebrisNodes: [MEGANode] = [],
-         incomingNodes: MEGANodeList = MEGANodeList(),
-         outgoingNodes: MEGANodeList = MEGANodeList(),
-         publicLinkNodes: MEGANodeList = MEGANodeList(),
-         myContacts: MEGAUserList = MEGAUserList(),
-         myUser: MEGAUser? = nil,
-         myEmail: String? = nil,
-         megaSets: [MEGASet] = [],
-         megaSetElements: [MEGASetElement] = [],
-         megaRootNode: MEGANode? = nil,
-         rubbishBinNode: MEGANode? = nil,
-         megaSetElementCounts: [MEGAHandle: UInt] = [:],
-         nodeList: MEGANodeList = MEGANodeList(),
-         shareList: MEGAShareList = MEGAShareList(),
-         isSharedFolderOwnerVerified: Bool = false,
-         sharedFolderOwner: MEGAUser? = nil,
-         createSupportTicketError: MEGAErrorType = .apiOk
+    public init(nodes: [MEGANode] = [],
+                rubbishNodes: [MEGANode] = [],
+                syncDebrisNodes: [MEGANode] = [],
+                incomingNodes: MEGANodeList = MEGANodeList(),
+                outgoingNodes: MEGANodeList = MEGANodeList(),
+                publicLinkNodes: MEGANodeList = MEGANodeList(),
+                myContacts: MEGAUserList = MEGAUserList(),
+                myUser: MEGAUser? = nil,
+                myEmail: String? = nil,
+                megaSets: [MEGASet] = [],
+                megaSetElements: [MEGASetElement] = [],
+                megaRootNode: MEGANode? = nil,
+                rubbishBinNode: MEGANode? = nil,
+                megaSetElementCounts: [MEGAHandle: UInt] = [:],
+                nodeList: MEGANodeList = MEGANodeList(),
+                shareList: MEGAShareList = MEGAShareList(),
+                isSharedFolderOwnerVerified: Bool = false,
+                sharedFolderOwner: MEGAUser? = nil,
+                createSupportTicketError: MEGAErrorType = .apiOk
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -72,71 +70,71 @@ final class MockSdk: MEGASdk {
         super.init()
     }
     
-    func setNodes(_ nodes: [MEGANode]) { self.nodes = nodes }
+    public func setNodes(_ nodes: [MEGANode]) { self.nodes = nodes }
     
-    func setShareAccessLevel(_ shareAccessLevel: MEGAShareType) {
+    public func setShareAccessLevel(_ shareAccessLevel: MEGAShareType) {
         self.shareAccessLevel = shareAccessLevel
     }
     
-    override var myUser: MEGAUser? { user }
+    public override var myUser: MEGAUser? { user }
     
-    override var myEmail: String? { email }
+    public override var myEmail: String? { email }
     
-    override func node(forHandle handle: HandleEntity) -> MEGANode? {
+    public override func node(forHandle handle: MEGAHandle) -> MEGANode? {
         nodes.first { $0.handle == handle }
     }
     
-    override func parentNode(for node: MEGANode) -> MEGANode? {
+    public override func parentNode(for node: MEGANode) -> MEGANode? {
         nodes.first { $0.handle == node.parentHandle }
     }
     
-    override func isNode(inRubbish node: MEGANode) -> Bool {
+    public override func isNode(inRubbish node: MEGANode) -> Bool {
         rubbishNodes.contains(node)
     }
     
-    override func children(forParent parent: MEGANode) -> MEGANodeList {
+    public override func children(forParent parent: MEGANode) -> MEGANodeList {
         let children = nodes.filter { $0.parentHandle == parent.handle }
         return MockNodeList(nodes: children)
     }
     
-    override func children(forParent parent: MEGANode, order: Int) -> MEGANodeList {
+    public override func children(forParent parent: MEGANode, order: Int) -> MEGANodeList {
         let children = nodes.filter { $0.parentHandle == parent.handle }
         return MockNodeList(nodes: children)
     }
     
-    override func contacts() -> MEGAUserList { myContacts }
+    public override func contacts() -> MEGAUserList { myContacts }
     
-    override func sendEvent(_ eventType: Int, message: String) {
+    public override func sendEvent(_ eventType: Int, message: String) {
         statsEventType = eventType
         statsEventMessage = message
     }
     
-    func isLastSentEvent(eventType type: Int, message: String) -> Bool {
+    public func isLastSentEvent(eventType type: Int, message: String) -> Bool {
         statsEventType == type && statsEventMessage == message
     }
     
-    override func add(_ delegate: MEGAGlobalDelegate) {
+    public override func add(_ delegate: MEGAGlobalDelegate) {
         hasGlobalDelegate = true
     }
     
-    override func remove(_ delegate: MEGAGlobalDelegate) {
+    public override func remove(_ delegate: MEGAGlobalDelegate) {
         hasGlobalDelegate = false
     }
     
-    override var rootNode: MEGANode? { megaRootNode }
-    override var rubbishNode: MEGANode? { rubbishBinNode }
+    public override var rootNode: MEGANode? { megaRootNode }
+    public override var rubbishNode: MEGANode? { rubbishBinNode }
     
-    override func nodeListSearch(for node: MEGANode, search searchString: String?, cancelToken: MEGACancelToken, recursive: Bool, orderType: MEGASortOrderType, nodeFormatType: MEGANodeFormatType, folderTargetType: MEGAFolderTargetType) -> MEGANodeList {
+    public override func nodeListSearch(for node: MEGANode, search searchString: String?, cancelToken: MEGACancelToken, recursive: Bool, orderType: MEGASortOrderType, nodeFormatType: MEGANodeFormatType, folderTargetType: MEGAFolderTargetType) -> MEGANodeList {
         MockNodeList(nodes: nodes)
     }
     
-    override func nodePath(for node: MEGANode) -> String? {
+    public override func nodePath(for node: MEGANode) -> String? {
         guard let mockNode = node as? MockNode else { return nil }
         
         return mockNode.nodePath
     }
     
-    override func numberChildren(forParent parent: MEGANode?) -> Int {
+    public override func numberChildren(forParent parent: MEGANode?) -> Int {
         var numberChildren = 0
         for node in nodes {
             if node.parentHandle == parent?.handle {
@@ -148,50 +146,50 @@ final class MockSdk: MEGASdk {
     
     //MARK: - Sets
     
-    override func megaSets() -> [MEGASet] {
+    public override func megaSets() -> [MEGASet] {
         sets
     }
     
-    override func megaSetElements(bySid sid: MEGAHandle, includeElementsInRubbishBin: Bool) -> [MEGASetElement] {
+    public override func megaSetElements(bySid sid: MEGAHandle, includeElementsInRubbishBin: Bool) -> [MEGASetElement] {
         setElements
     }
     
-    override func megaSetElementCount(_ sid: MEGAHandle, includeElementsInRubbishBin: Bool) -> UInt {
+    public override func megaSetElementCount(_ sid: MEGAHandle, includeElementsInRubbishBin: Bool) -> UInt {
         megaSetElementCounts[sid] ?? 0
     }
     
-    override func megaSetElement(bySid sid: MEGAHandle, eid: MEGAHandle) -> MEGASetElement? {
+    public override func megaSetElement(bySid sid: MEGAHandle, eid: MEGAHandle) -> MEGASetElement? {
         setElements.first(where: { $0.handle == eid})
     }
     
-    override func createSet(_ name: String?, delegate: MEGARequestDelegate) {
+    public override func createSet(_ name: String?, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         mockRequest.megaSet = MockMEGASet(handle: 1, userId: 0, coverId: 1, name: name ?? "")
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func updateSetName(_ sid: MEGAHandle, name: String, delegate: MEGARequestDelegate) {
+    public override func updateSetName(_ sid: MEGAHandle, name: String, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         mockRequest.megaSetName = name
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func removeSet(_ sid: MEGAHandle, delegate: MEGARequestDelegate) {
+    public override func removeSet(_ sid: MEGAHandle, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         mockRequest.megaSetHandle = sid
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func createSetElement(_ sid: MEGAHandle, nodeId: MEGAHandle, name: String?, delegate: MEGARequestDelegate) {
+    public override func createSetElement(_ sid: MEGAHandle, nodeId: MEGAHandle, name: String?, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func updateSetElement(_ sid: MEGAHandle, eid: MEGAHandle, name: String, delegate: MEGARequestDelegate) {
+    public override func updateSetElement(_ sid: MEGAHandle, eid: MEGAHandle, name: String, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         mockRequest.megaSetElementName = name
         mockRequest.updateSet = false
@@ -199,21 +197,21 @@ final class MockSdk: MEGASdk {
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func updateSetElementOrder(_ sid: MEGAHandle, eid: MEGAHandle, order: Int64, delegate: MEGARequestDelegate) {
+    public override func updateSetElementOrder(_ sid: MEGAHandle, eid: MEGAHandle, order: Int64, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         mockRequest.megaSetElementOrder = order
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func removeSetElement(_ sid: MEGAHandle, eid: MEGAHandle, delegate: MEGARequestDelegate) {
+    public override func removeSetElement(_ sid: MEGAHandle, eid: MEGAHandle, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         mockRequest.updateSet = false
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func putSetCover(_ sid: MEGAHandle, eid: MEGAHandle, delegate: MEGARequestDelegate) {
+    public override func putSetCover(_ sid: MEGAHandle, eid: MEGAHandle, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         mockRequest.megaCoverId = eid
         mockRequest.updateSetCover = true
@@ -221,47 +219,47 @@ final class MockSdk: MEGASdk {
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func changeApiUrl(_ apiURL: String, disablepkp: Bool) {
+    public override func changeApiUrl(_ apiURL: String, disablepkp: Bool) {
         self.apiURL = apiURL
         self.disablepkp = disablepkp
     }
     
     //MARK: - Share
-    override func contact(forEmail: String?) -> MEGAUser? {
+    public override func contact(forEmail: String?) -> MEGAUser? {
         sharedFolderOwner
     }
     
-    override func areCredentialsVerified(of: MEGAUser) -> Bool {
+    public override func areCredentialsVerified(of: MEGAUser) -> Bool {
         isSharedFolderOwnerVerified
     }
     
-    override func publicLinks(_ order: MEGASortOrderType) -> MEGANodeList {
+    public override func publicLinks(_ order: MEGASortOrderType) -> MEGANodeList {
         nodeList
     }
     
-    override func outShares(_ order: MEGASortOrderType) -> MEGAShareList {
+    public override func outShares(_ order: MEGASortOrderType) -> MEGAShareList {
         shareList
     }
     
-    override func openShareDialog(_ node: MEGANode, delegate: MEGARequestDelegate) {
+    public override func openShareDialog(_ node: MEGANode, delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: node.handle)
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
-
-    override func upgradeSecurity(with delegate: MEGARequestDelegate) {
+    
+    public override func upgradeSecurity(with delegate: MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1)
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func nodeListSearchOnInShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
+    public override func nodeListSearchOnInShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
         filterNodeList(incomingNodes, by: searchString)
     }
     
-    override func nodeListSearchOnOutShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
+    public override func nodeListSearchOnOutShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
         filterNodeList(outgoingNodes, by: searchString)
     }
     
-    override func nodeListSearchOnPublicLinks(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
+    public override func nodeListSearchOnPublicLinks(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
         filterNodeList(publicLinkNodes, by: searchString)
     }
     
@@ -271,8 +269,8 @@ final class MockSdk: MEGASdk {
         
         return MockNodeList(nodes: nodeArray)
     }
-        
-    override func disableExport(_ node: MEGANode, delegate: MEGARequestDelegate) {
+    
+    public override func disableExport(_ node: MEGANode, delegate: MEGARequestDelegate) {
         nodes = nodes.compactMap { currentNode in
             if currentNode.handle == node.handle {
                 return MockNode(handle: node.handle, isNodeExported: false)
@@ -284,11 +282,18 @@ final class MockSdk: MEGASdk {
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
-    override func accessLevel(for node: MEGANode) -> MEGAShareType {
+    public override func accessLevel(for node: MEGANode) -> MEGAShareType {
         shareAccessLevel
     }
     
-    override func createSupportTicket(withMessage message: String, type: Int, delegate: MEGARequestDelegate) {
+    public override func createSupportTicket(withMessage message: String, type: Int, delegate: MEGARequestDelegate) {
         delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: MockError(errorType: createSupportTicketError))
+    }
+}
+
+private extension MEGANodeList {
+    func toNodeArray() -> [MEGANode] {
+        guard (size?.intValue ?? 0) > 0 else { return [] }
+        return (0..<size.intValue).compactMap { node(at: $0) }
     }
 }

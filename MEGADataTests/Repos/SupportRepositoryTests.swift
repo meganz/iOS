@@ -2,6 +2,7 @@ import MEGADomainMock
 import MEGADomain
 import XCTest
 @testable import MEGA
+import MEGADataMock
 
 final class SupportRepositoryTests: XCTestCase {
     private var sdk: MockSdk!

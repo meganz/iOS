@@ -2,6 +2,7 @@ import XCTest
 import MEGADomain
 import MEGADomainMock
 @testable import MEGA
+import MEGADataMock
 
 final class FilesSearchRepositoryTests: XCTestCase {
     

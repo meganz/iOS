@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADataMock
 
 final class RubbishBinRepositoryTests: XCTestCase {
     private var sdk: MockSdk!

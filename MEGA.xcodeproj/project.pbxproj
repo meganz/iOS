@@ -634,8 +634,6 @@
 		6DB6D4292924E47C005182CA /* SetElementEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6D4272924E47C005182CA /* SetElementEntity+Mapper.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DD04A34292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */; };
-		6DD04A38292B07CF00B7E797 /* MockMEGASet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A37292B07CF00B7E797 /* MockMEGASet.swift */; };
-		6DD04A3A292B28C000B7E797 /* MockMEGASetElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A39292B28C000B7E797 /* MockMEGASetElement.swift */; };
 		6DE346BF28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
 		6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */; };
 		7271895827FF030600B2DB08 /* FeedbackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895727FF030600B2DB08 /* FeedbackRepository.swift */; };
@@ -1158,7 +1156,6 @@
 		94485B5E29BA0E17006B919E /* SharedItemsViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */; };
 		9448661429AF55C300CE3228 /* LoginViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */; };
 		9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */; };
-		9449939328BD41CC001AE14B /* MockFolderSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9449939228BD41CC001AE14B /* MockFolderSdk.swift */; };
 		944AD0B128EF039700AB1E59 /* BackupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B028EF039700AB1E59 /* BackupsRepository.swift */; };
 		944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */; };
 		944DB356295EE64900CE4D83 /* RubbishBinRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */; };
@@ -1200,7 +1197,6 @@
 		94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
 		94C7373729D72FE30099E100 /* SupportRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7373629D72FE30099E100 /* SupportRepositoryTests.swift */; };
-		94C7373929D738490099E100 /* MockError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7373829D738490099E100 /* MockError.swift */; };
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
@@ -1519,8 +1515,6 @@
 		B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */; };
 		B5CC2A642994A22800A966A0 /* ShareRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2A632994A22800A966A0 /* ShareRepositoryTests.swift */; };
-		B5CC2A662994AD8C00A966A0 /* MockShareList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2A652994AD8C00A966A0 /* MockShareList.swift */; };
-		B5CC2A682994BD0800A966A0 /* MockShare.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2A672994BD0800A966A0 /* MockShare.swift */; };
 		B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */; };
 		B5CC2AA52995F15200A966A0 /* SharedItemsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */; };
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
@@ -1595,9 +1589,6 @@
 		B64A71AF287943BA0085087D /* NodeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */; };
 		B64A71B128794CED0085087D /* PhotoBrowserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */; };
 		B64A71CB287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */; };
-		B64A71CE287BA1ED0085087D /* MockNodeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71CD287BA1ED0085087D /* MockNodeList.swift */; };
-		B64A71D5287BBAEB0085087D /* MockNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71D4287BBAEB0085087D /* MockNode.swift */; };
-		B64A71D7287BBB250085087D /* MockSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71D6287BBB250085087D /* MockSdk.swift */; };
 		B64F9A9C22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B64F9A9B22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m */; };
 		B64F9A9F2238F4A4000A4EA7 /* AssetResourceUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B64F9A9E2238F4A4000A4EA7 /* AssetResourceUploadOperation.m */; };
 		B6524E5F274B2D2900DB4160 /* PhotoMonthCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6524E5D274B2D2800DB4160 /* PhotoMonthCard.swift */; };
@@ -1719,13 +1710,9 @@
 		B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
 		B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11321A256B0007E7EEC /* MEGABackgroundTaskOperation.m */; };
 		B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */; };
-		B6A6E198287BCDDD00179806 /* MockUserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E197287BCDDD00179806 /* MockUserList.swift */; };
-		B6A6E19A287BCE3800179806 /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E199287BCE3800179806 /* MockUser.swift */; };
 		B6A6E19D287BCE8300179806 /* MockChatSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E19C287BCE8300179806 /* MockChatSdk.swift */; };
 		B6A6E19F287BCEA700179806 /* MockChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E19E287BCEA700179806 /* MockChatRoom.swift */; };
-		B6A6E1A1287BCF7C00179806 /* MockRecentActionBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E1A0287BCF7C00179806 /* MockRecentActionBucket.swift */; };
 		B6A6E1A3287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */; };
-		B6A6E1A5287BD8DB00179806 /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E1A4287BD8DB00179806 /* MockRequest.swift */; };
 		B6A6E1BF287CDE6600179806 /* MEGANode+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E1BE287CDE6600179806 /* MEGANode+Array.swift */; };
 		B6A6E1C1287CDE6600179806 /* MEGANode+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E1BE287CDE6600179806 /* MEGANode+Array.swift */; };
 		B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADE8D25183626009A874C /* VerificationCodeViewModelTests.swift */; };
@@ -1757,6 +1744,7 @@
 		B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */; };
 		B6BD983527D6F343006E4333 /* NSData+CameraUploads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD983427D6F343006E4333 /* NSData+CameraUploads.swift */; };
 		B6C1681028B8719800BEA824 /* PhotoLibraryYearViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1680F28B8719800BEA824 /* PhotoLibraryYearViewModelTests.swift */; };
+		B6C2CE0229F9F7D400D98DCD /* MEGADataMock in Frameworks */ = {isa = PBXBuildFile; productRef = B6C2CE0129F9F7D400D98DCD /* MEGADataMock */; };
 		B6C444CB274A27DE00268D9A /* PhotoLibraryMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444CA274A27DE00268D9A /* PhotoLibraryMonthView.swift */; };
 		B6C444D1274A280800268D9A /* PhotoLibraryDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444D0274A280800268D9A /* PhotoLibraryDayView.swift */; };
 		B6C444D3274A281700268D9A /* PhotoLibraryDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444D2274A281700268D9A /* PhotoLibraryDayViewModel.swift */; };
@@ -3124,8 +3112,6 @@
 		6DB6D4272924E47C005182CA /* SetElementEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetElementEntity+Mapper.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlbumRepositoryTests.swift; sourceTree = "<group>"; };
-		6DD04A37292B07CF00B7E797 /* MockMEGASet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGASet.swift; sourceTree = "<group>"; };
-		6DD04A39292B28C000B7E797 /* MockMEGASetElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGASetElement.swift; sourceTree = "<group>"; };
 		6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListRouting.swift; sourceTree = "<group>"; };
 		7271895727FF030600B2DB08 /* FeedbackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackRepository.swift; sourceTree = "<group>"; };
@@ -3647,7 +3633,6 @@
 		94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Search.swift"; sourceTree = "<group>"; };
 		9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginViewController+Additions.swift"; sourceTree = "<group>"; };
 		9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValidationRepositoryTests.swift; sourceTree = "<group>"; };
-		9449939228BD41CC001AE14B /* MockFolderSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFolderSdk.swift; sourceTree = "<group>"; };
 		944AD0B028EF039700AB1E59 /* BackupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsRepository.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
 		944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RubbishBinRepository.swift; sourceTree = "<group>"; };
@@ -3687,7 +3672,6 @@
 		94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeVersionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
 		94C7373629D72FE30099E100 /* SupportRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportRepositoryTests.swift; sourceTree = "<group>"; };
-		94C7373829D738490099E100 /* MockError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockError.swift; sourceTree = "<group>"; };
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
 		94CC921729F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeAccessEntity+Mapper_Tests.swift"; sourceTree = "<group>"; };
 		94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -4019,8 +4003,6 @@
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
 		B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepositoryTests.swift; sourceTree = "<group>"; };
 		B5CC2A632994A22800A966A0 /* ShareRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRepositoryTests.swift; sourceTree = "<group>"; };
-		B5CC2A652994AD8C00A966A0 /* MockShareList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockShareList.swift; sourceTree = "<group>"; };
-		B5CC2A672994BD0800A966A0 /* MockShare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockShare.swift; sourceTree = "<group>"; };
 		B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewModel.swift; sourceTree = "<group>"; };
 		B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewRouter.swift; sourceTree = "<group>"; };
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -4090,9 +4072,6 @@
 		B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserDataProvider.swift; sourceTree = "<group>"; };
 		B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserDataProvider_megaNode_Tests.swift; sourceTree = "<group>"; };
-		B64A71CD287BA1ED0085087D /* MockNodeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeList.swift; sourceTree = "<group>"; };
-		B64A71D4287BBAEB0085087D /* MockNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNode.swift; sourceTree = "<group>"; };
-		B64A71D6287BBB250085087D /* MockSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSdk.swift; sourceTree = "<group>"; };
 		B64F9A9A22389E6B000A4EA7 /* PHAssetResource+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHAssetResource+CameraUpload.h"; sourceTree = "<group>"; };
 		B64F9A9B22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PHAssetResource+CameraUpload.m"; sourceTree = "<group>"; };
 		B64F9A9D2238F4A4000A4EA7 /* AssetResourceUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetResourceUploadOperation.h; sourceTree = "<group>"; };
@@ -4240,13 +4219,9 @@
 		B6A4A11321A256B0007E7EEC /* MEGABackgroundTaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGABackgroundTaskOperation.m; sourceTree = "<group>"; };
 		B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+CameraUpload.h"; sourceTree = "<group>"; };
 		B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+CameraUpload.m"; sourceTree = "<group>"; };
-		B6A6E197287BCDDD00179806 /* MockUserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserList.swift; sourceTree = "<group>"; };
-		B6A6E199287BCE3800179806 /* MockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
 		B6A6E19C287BCE8300179806 /* MockChatSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatSdk.swift; sourceTree = "<group>"; };
 		B6A6E19E287BCEA700179806 /* MockChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatRoom.swift; sourceTree = "<group>"; };
-		B6A6E1A0287BCF7C00179806 /* MockRecentActionBucket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecentActionBucket.swift; sourceTree = "<group>"; };
 		B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowserDataProvider_nodeEntity_Tests.swift; sourceTree = "<group>"; };
-		B6A6E1A4287BD8DB00179806 /* MockRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		B6A6E1BE287CDE6600179806 /* MEGANode+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Array.swift"; sourceTree = "<group>"; };
 		B6AADE8D25183626009A874C /* VerificationCodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewModelTests.swift; sourceTree = "<group>"; };
 		B6AADE942518456B009A874C /* RegionListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewModelTests.swift; sourceTree = "<group>"; };
@@ -4917,6 +4892,7 @@
 				A8C3CF1229BB898400891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
 				A8C3CF1729BB898400891CE1 /* libwebsockets.xcframework in Frameworks */,
 				A89CE55528B7D573002802BC /* MEGAData in Frameworks */,
+				B6C2CE0229F9F7D400D98DCD /* MEGADataMock in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
 				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
@@ -5408,16 +5384,16 @@
 		137361811A6664C300B740E8 = {
 			isa = PBXGroup;
 			children = (
+				1373618C1A6664C300B740E8 /* iMEGA */,
+				B6CED48C22B8AC70009C4861 /* MEGAUnitTests */,
 				942254D71EDC02CB0074C51A /* Extensions */,
-				418851EE1A66826800FDBA15 /* Frameworks */,
+				B6061FE528978B040094087E /* Modules */,
 				B63AEB082511BD2B000B8517 /* MEGAData */,
 				B6D0B364283DC2320020C64D /* MEGADataTests */,
 				B654BF3724FF117700A3CBC8 /* MEGADomain */,
-				B6CED48C22B8AC70009C4861 /* MEGAUnitTests */,
-				B6061FE528978B040094087E /* Modules */,
+				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
 				77AEB94223CDB9EA0047CEBF /* Recovered References */,
-				1373618C1A6664C300B740E8 /* iMEGA */,
 			);
 			sourceTree = "<group>";
 		};
@@ -7118,7 +7094,6 @@
 				B6A6E19B287BCE5900179806 /* ChatSdk */,
 				5D33D66A250D9BC900D74666 /* Client */,
 				5D52C748250C4F2800286A43 /* Functions */,
-				B64A71CC287BA1D70085087D /* Sdk */,
 				B6FD6510268D7EA500988A17 /* UseCase */,
 				32A9DECC28D198E300ABC3F6 /* ViewModel */,
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
@@ -9679,26 +9654,6 @@
 			path = Heartbeat;
 			sourceTree = "<group>";
 		};
-		B64A71CC287BA1D70085087D /* Sdk */ = {
-			isa = PBXGroup;
-			children = (
-				94C7373829D738490099E100 /* MockError.swift */,
-				9449939228BD41CC001AE14B /* MockFolderSdk.swift */,
-				6DD04A37292B07CF00B7E797 /* MockMEGASet.swift */,
-				6DD04A39292B28C000B7E797 /* MockMEGASetElement.swift */,
-				B64A71D4287BBAEB0085087D /* MockNode.swift */,
-				B64A71CD287BA1ED0085087D /* MockNodeList.swift */,
-				B6A6E1A0287BCF7C00179806 /* MockRecentActionBucket.swift */,
-				B6A6E1A4287BD8DB00179806 /* MockRequest.swift */,
-				B64A71D6287BBB250085087D /* MockSdk.swift */,
-				B5CC2A672994BD0800A966A0 /* MockShare.swift */,
-				B5CC2A652994AD8C00A966A0 /* MockShareList.swift */,
-				B6A6E199287BCE3800179806 /* MockUser.swift */,
-				B6A6E197287BCDDD00179806 /* MockUserList.swift */,
-			);
-			path = Sdk;
-			sourceTree = "<group>";
-		};
 		B654BF3724FF117700A3CBC8 /* MEGADomain */ = {
 			isa = PBXGroup;
 			children = (
@@ -11700,6 +11655,7 @@
 				BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */,
 				A863223E29091456004FED9B /* Settings */,
 				A8B51AE827F3565E0030F1EA /* WSTagsField */,
+				B6C2CE0129F9F7D400D98DCD /* MEGADataMock */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -14457,37 +14413,24 @@
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
 				B6A6E19D287BCE8300179806 /* MockChatSdk.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
-				94C7373929D738490099E100 /* MockError.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
 				B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */,
-				9449939328BD41CC001AE14B /* MockFolderSdk.swift in Sources */,
 				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
 				12B1E58028751B0700D23A58 /* MockMediaDiscoveryAnalyticsUseCase.swift in Sources */,
 				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
-				6DD04A38292B07CF00B7E797 /* MockMEGASet.swift in Sources */,
-				6DD04A3A292B28C000B7E797 /* MockMEGASetElement.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
-				B64A71D5287BBAEB0085087D /* MockNode.swift in Sources */,
 				C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */,
-				B64A71CE287BA1ED0085087D /* MockNodeList.swift in Sources */,
 				BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
-				B6A6E1A1287BCF7C00179806 /* MockRecentActionBucket.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
-				B6A6E1A5287BD8DB00179806 /* MockRequest.swift in Sources */,
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
-				B64A71D7287BBB250085087D /* MockSdk.swift in Sources */,
-				B5CC2A682994BD0800A966A0 /* MockShare.swift in Sources */,
-				B5CC2A662994AD8C00A966A0 /* MockShareList.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
-				B6A6E19A287BCE3800179806 /* MockUser.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,
 				BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */,
-				B6A6E198287BCDDD00179806 /* MockUserList.swift in Sources */,
 				8361D9F2283E7B4E0001FAC1 /* NameCollisionViewModelTests.swift in Sources */,
 				94CC921829F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift in Sources */,
 				837B9C0B24781B1600D409B4 /* NodeActionBuilderTests.swift in Sources */,
@@ -16675,6 +16618,10 @@
 		B6A01BB3289A644D00B503FD /* MEGAFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAFoundation;
+		};
+		B6C2CE0129F9F7D400D98DCD /* MEGADataMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGADataMock;
 		};
 		BF0CB9352803AEAE00C21F11 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;

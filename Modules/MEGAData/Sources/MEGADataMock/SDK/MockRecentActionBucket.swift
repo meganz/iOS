@@ -1,19 +1,17 @@
-import Foundation
-@testable import MEGA
-import MEGADomain
+import MEGASdk
 
-final class MockRecentActionBucket: MEGARecentActionBucket {
+public final class MockRecentActionBucket: MEGARecentActionBucket {
     private let _timestamp: Date
     private let _email: String
-    private let _parentHandle: HandleEntity
+    private let _parentHandle: MEGAHandle
     private let _isUpdate: Bool
     private let _isMedia: Bool
     private let _nodeList: MEGANodeList
     
-    init(
+    public init(
         timestamp: Date = Date(),
         email: String = "name@email.com",
-        parentHandle: HandleEntity = 1,
+        parentHandle: MEGAHandle = 1,
         isUpdate: Bool = false,
         isMedia: Bool = false,
         nodeList: MEGANodeList = MockNodeList()
@@ -27,27 +25,27 @@ final class MockRecentActionBucket: MEGARecentActionBucket {
         super.init()
     }
     
-    override var timestamp: Date! {
+    public override var timestamp: Date! {
         _timestamp
     }
     
-    override var userEmail: String! {
+    public override var userEmail: String! {
         _email
     }
     
-    override var parentHandle: UInt64 {
+    public override var parentHandle: UInt64 {
         _parentHandle
     }
     
-    override var isUpdate: Bool {
+    public override var isUpdate: Bool {
         _isUpdate
     }
     
-    override var isMedia: Bool {
+    public override var isMedia: Bool {
         _isMedia
     }
     
-    override var nodesList: MEGANodeList! {
+    public override var nodesList: MEGANodeList! {
         _nodeList
     }
 }

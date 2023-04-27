@@ -2,6 +2,7 @@
 import XCTest
 import MEGADomain
 @testable import MEGA
+import MEGADataMock
 
 final class NodeAttributeRepositoryTests: XCTestCase {
 

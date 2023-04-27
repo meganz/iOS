@@ -1,7 +1,7 @@
-
 import XCTest
 @testable import MEGA
 @testable import MEGADomain
+import MEGADataMock
 
 final class RecentActionBucketEntity_Mapper_Tests: XCTestCase {
     

@@ -12,6 +12,9 @@ let package = Package(
         .library(
             name: "MEGAData",
             targets: ["MEGAData"]),
+        .library(
+            name: "MEGADataMock",
+            targets: ["MEGADataMock"])
     ],
     dependencies: [
         .package(path: "../MEGADomain"),
@@ -21,8 +24,12 @@ let package = Package(
         .target(
             name: "MEGAData",
             dependencies: ["MEGADomain", "MEGASdk"]),
+        .target(
+            name: "MEGADataMock",
+            dependencies: ["MEGAData"]
+        ),
         .testTarget(
             name: "MEGADataTests",
-            dependencies: ["MEGAData"]),
+            dependencies: ["MEGAData", "MEGADataMock"]),
     ]
 )
