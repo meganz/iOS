@@ -1,5 +1,3 @@
-
-
 import UIKit
 
 class ChatTitleView: UIView {
@@ -42,7 +40,6 @@ class ChatTitleView: UIView {
             handler()
         }
     }
-    
     
     private func updateTitleLabel() {
         titleLabel.text = chatRoom.title

@@ -6,16 +6,16 @@ import MEGADomain
 
 class ChatViewController: MessagesViewController {
     let spacePadding = "   "
-
-    // MARK: - Properties
     let sdk = MEGASdkManager.sharedMEGASdk()
     let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
     let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk()))
     let callUseCase = CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared))
+    let chatContentViewModel: ChatContentViewModel
+    
     @objc private(set) var chatRoom: MEGAChatRoom
     
     var chatCall: MEGAChatCall?
-
+    
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     var chatInputBar: ChatInputBar?
@@ -81,11 +81,11 @@ class ChatViewController: MessagesViewController {
     }
     
     open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
-
+    
     // join call
     var timer: Timer?
     var initDuration: TimeInterval?
-
+    
     lazy var startOrJoinCallButton: UIButton = {
         let button = UIButton()
         let textColor = traitCollection.userInterfaceStyle == .dark ? Colors.General.Black._000000.color : Colors.General.White.ffffff.color
@@ -113,27 +113,27 @@ class ChatViewController: MessagesViewController {
     var messages: [MessageType] {
         return chatRoomDelegate.messages
     }
-
+    
     var myUser = User(senderId: String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle ), displayName: "")
-
+    
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom)
     }()
-
+    
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.audioCall.image,
                                style: .done,
                                target: self,
                                action: #selector(startAudioCall))
     }()
-
+    
     lazy var videoCallBarButtonItem = {
         return UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.videoCall.image,
                                style: .done,
                                target: self,
                                action: #selector(startVideoCall))
     }()
-
+    
     lazy var addParticpantBarButtonItem = {
         return UIBarButtonItem(image: Asset.Images.Contacts.addContact.image,
                                style: .done,
@@ -143,7 +143,7 @@ class ChatViewController: MessagesViewController {
     
     lazy var cancelBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSelecting))
-     }()
+    }()
     
     private lazy var chatBottomInfoScreen: ChatBottomNewMessageIndicatorView = {
         let chatBottomNewMessageIndicatorView = ChatBottomNewMessageIndicatorView()
@@ -152,9 +152,9 @@ class ChatViewController: MessagesViewController {
     
     private var chatBottomInfoScreenBottomConstraint: NSLayoutConstraint?
     private var chatBottomInfoScreenBottomPadding: CGFloat = 5.0
-
+    
     // MARK: - Overriden methods
-
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         guard let chatViewMessagesFlowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout else {
             return
@@ -188,6 +188,9 @@ class ChatViewController: MessagesViewController {
     
     @objc init(chatRoom: MEGAChatRoom) {
         self.chatRoom = chatRoom
+        chatContentViewModel = ChatContentViewModel(chatRoom: chatRoom.toChatRoomEntity(),
+                                                    chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+                                                    scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo))
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -208,7 +211,7 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView = MessagesCollectionView(frame: .zero,
                                                         collectionViewLayout: ChatViewMessagesFlowLayout())
         registerCustomCells()
-
+        
         super.viewDidLoad()
         chatRoomDelegate.chatViewController = self
         configureMessageCollectionView()
@@ -222,6 +225,12 @@ class ChatViewController: MessagesViewController {
         addChatBottomInfoScreenToView()
         configureGuesture()
         subscribeToNoUserJoinedNotification()
+        
+        chatContentViewModel.invokeCommand = { [weak self] command in
+            guard let self else { return }
+            
+            excuteCommand(command)
+        }
     }
     
     @objc func update(chatRoom: MEGAChatRoom) {
@@ -229,7 +238,7 @@ class ChatViewController: MessagesViewController {
         update()
     }
     
-     @objc private func longPressed(_ gesture: UIGestureRecognizer) {
+    @objc private func longPressed(_ gesture: UIGestureRecognizer) {
         
         let touchLocation = gesture.location(in: messagesCollectionView)
         guard let indexPath = messagesCollectionView.indexPathForItem(at: touchLocation) else { return }
@@ -273,12 +282,12 @@ class ChatViewController: MessagesViewController {
         super.viewWillAppear(animated)
         MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatDelegate)
         MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatCallDelegate)
-
+        
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         configureNavigationBar()
-        checkIfChatHasActiveCall()
-                
+        chatContentViewModel.dispatch(.updateContent)
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(becomeFirstResponder),
                                                name: NSNotification.Name.MEGAPasscodeViewControllerWillClose,
@@ -356,13 +365,13 @@ class ChatViewController: MessagesViewController {
         saveDraft()
         MEGASdkManager.sharedMEGAChatSdk().remove(self as MEGAChatDelegate)
         MEGASdkManager.sharedMEGAChatSdk().remove(self as MEGAChatCallDelegate)
-
+        
         if previewMode || isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
         }
         audioController.stopAnyOngoingPlaying()
     }
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -375,7 +384,7 @@ class ChatViewController: MessagesViewController {
         let textColor = traitCollection.userInterfaceStyle == .dark ? Colors.General.Black._000000.color : Colors.General.White.ffffff.color
         startOrJoinCallButton.setTitleColor(textColor, for: .normal)
         startOrJoinCallButton.backgroundColor = traitCollection.userInterfaceStyle == .dark ? Colors.General.White.ffffff.color : Colors.General.Black._00000075.color
-
+        
         if let inputbar = inputAccessoryView as? ChatInputBar {
             inputbar.set(keyboardAppearance: traitCollection.userInterfaceStyle == .dark ? .dark : .light)
         }
@@ -392,10 +401,10 @@ class ChatViewController: MessagesViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
-        
+    
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         return false
     }
@@ -413,6 +422,7 @@ class ChatViewController: MessagesViewController {
            inputBar.voiceRecordingViewCanBeDismissed {
             inputBar.voiceRecordingViewEnabled = false
         }
+        
         showOrHideJumpToBottom()
     }
     
@@ -423,7 +433,7 @@ class ChatViewController: MessagesViewController {
             guard let overlayView = collectionView.dequeueReusableSupplementaryView(ofKind: "kCollectionElementKindEditOverlay",
                                                                                     withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier,
                                                                                     for: indexPath) as? MessageEditCollectionOverlayView,
-                let message = messages[indexPath.section] as? ChatMessage else {
+                  let message = messages[indexPath.section] as? ChatMessage else {
                 return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
             }
             overlayView.delegate = self
@@ -436,23 +446,23 @@ class ChatViewController: MessagesViewController {
         
         return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
     }
-
+    
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
-
+        
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
-              fatalError("Ouch. nil data source for messages")
+            fatalError("Ouch. nil data source for messages")
         }
         
         if let notificationMessage = message as? ChatNotificationMessage {
             guard let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatUnreadMessagesLabelCollectionCell.reuseIdentifier,
                                                                         for: indexPath) as? ChatUnreadMessagesLabelCollectionCell,
-                case .unreadMessage(let count) = notificationMessage.type else {
-                                                                            fatalError("Could not dequeue `ChatUnreadMessagesLabelCollectionCell`")
+                  case .unreadMessage(let count) = notificationMessage.type else {
+                fatalError("Could not dequeue `ChatUnreadMessagesLabelCollectionCell`")
             }
             cell.unreadMessageCount = count
             return cell
         }
-
+        
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
         if chatMessage.transfer?.transferChatMessageType() == .voiceClip  {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
@@ -463,7 +473,7 @@ class ChatViewController: MessagesViewController {
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
         } else if chatMessage.message.type == .attachment
-            || chatMessage.message.type == .contact {
+                    || chatMessage.message.type == .contact {
             if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
                 if let node = chatMessage.message.nodeList?.node(at: 0),
                    node.name?.mnz_isVisualMediaPathExtension ?? false {
@@ -472,7 +482,7 @@ class ChatViewController: MessagesViewController {
                     return cell
                 }
             }
-
+            
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
@@ -501,9 +511,9 @@ class ChatViewController: MessagesViewController {
             return cell
         } else if chatMessage.message.type == .containsMeta {
             if chatMessage.message.containsMeta?.type == .geolocation {
-                  let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
-                          cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                          return cell
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                return cell
             } else if chatMessage.message.containsMeta?.type == .richPreview {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
@@ -533,21 +543,21 @@ class ChatViewController: MessagesViewController {
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
         }
-
+        
     }
-
+    
     // MARK: - Interface methods
-
+    
     @objc func updateUnreadLabel() {
-        let unreadChats = MEGASdkManager.sharedMEGAChatSdk().unreadChats 
+        let unreadChats = MEGASdkManager.sharedMEGAChatSdk().unreadChats
         let unreadChatsString = unreadChats > 0 ? "\(unreadChats)" : ""
         
         let backBarButton = UIBarButtonItem(title: unreadChatsString, style: .plain, target: nil, action: nil)
         navigationController?.viewControllers.first?.navigationItem.backBarButtonItem = backBarButton
     }
-
+    
     @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView?) {
-
+        
     }
     
     @objc func closeChatRoom() {
@@ -575,25 +585,25 @@ class ChatViewController: MessagesViewController {
             self.chatBottomInfoScreen.alpha = 1.0
         }, completion: nil)
     }
-
+    
     // MARK: - Internal methods used by the extension of this class
-
+    
     func isFromCurrentSender(message: MessageType) -> Bool {
         return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle
     }
-
+    
     func isDateLabelVisible(for indexPath: IndexPath) -> Bool {
         if isPreviousMessageSentSameDay(at: indexPath) {
             return false
         }
-
+        
         return true
     }
-
+    
     func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath,
-            let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath) else {
-                return true
+              let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath) else {
+            return true
         }
         
         if !isPreviousMessageSameSender(at: indexPath)
@@ -603,23 +613,23 @@ class ChatViewController: MessagesViewController {
         
         return false
     }
-
+    
     func isPreviousMessageSentSameDay(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath,
-            let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath),
-            let previousMessageDate = messages[safe: previousMessageIndexPath.section]?.sentDate else {
-                return false
+              let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath),
+              let previousMessageDate = messages[safe: previousMessageIndexPath.section]?.sentDate else {
+            return false
         }
-
-
+        
+        
         return messages[safe: indexPath.section]?.sentDate.isSameDay(date: previousMessageDate) ?? false
     }
-
+    
     /// This method ignores the milliseconds.
     func isPreviousMessageSentSameTime(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath,
-            let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath)   else {
-                return true
+              let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath)   else {
+            return true
         }
         return isMessageSentAtSameMinute(between: previousMessageIndexPath, and: indexPath)
     }
@@ -628,11 +638,11 @@ class ChatViewController: MessagesViewController {
         let previousMessageDate = messages[indexPath1.section].sentDate
         return messages[indexPath2.section].sentDate.isSameMinute(date: previousMessageDate)
     }
-
+    
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath,
-            let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath)  else {
-                return false
+              let previousMessageIndexPath = mostRecentChatMessage(withinIndexPath: previousIndexPath)  else {
+            return false
         }
         
         guard let currentSenderId = messages[safe: indexPath.section]?.sender.senderId,
@@ -649,24 +659,49 @@ class ChatViewController: MessagesViewController {
         return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGAGenericRequestDelegate { (request, error) in
         })
     }
-
+    
     func initials(for message: MessageType) -> String {
         guard let userHandle = UInt64(message.sender.senderId) else {
             return ""
         }
-
+        
         if let displayName = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle)?.displayName {
             return (displayName as NSString).mnz_initialForAvatar()
         }
-
+        
         if let peerFullname = chatRoom.participantName(forUserHandle: userHandle) {
             return (peerFullname as NSString).mnz_initialForAvatar()
         }
-
+        
         return ""
     }
-
+    
     // MARK: - Private methods
+    
+    private func excuteCommand(_ command: ChatContentViewModel.Command) {
+        switch command {
+        case .initTimerForCall(let call):
+            initTimerForCall(call)
+        case .configNavigationBar:
+            configureNavigationBar()
+        case .tapToReturnToCallCleanUp:
+            tapToReturnToCallCleanup()
+        case .startOrJoinCallCleanUp(let inProgress, let meetings):
+            startOrJoinCallCleanUp(callInProgress: inProgress, scheduledMeetings: meetings)
+        case .showStartOrJoinCallButton:
+            showStartOrJoinCallButton()
+        case .showCallEndTimerIfNeeded(let callEntity):
+            showCallEndTimerIfNeeded(call: callEntity)
+        case .showTapToReturnToCall(let title):
+            showTapToReturnToCall(withTitle: title)
+        case .enableAudioVideoButtons(let enable):
+            shouldEnableAudioVideoButtons(enable)
+        case .startMeetingNoRinging(let videoCall, let scheduledMeeting):
+            startMeetingNoRinging(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
+        case .startOutGoingCall(let videoEnable):
+            startOutGoingCall(isVideoEnabled: videoEnable)
+        }
+    }
     
     private func mostRecentChatMessage(withinIndexPath indexPath: IndexPath) -> IndexPath? {
         if messages[safe: indexPath.section] is ChatMessage {
@@ -681,23 +716,23 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.register(ChatViewIntroductionHeaderView.nib,
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                         withReuseIdentifier: ChatViewIntroductionHeaderView.reuseIdentifier)
-
+        
         messagesCollectionView.register(LoadingMessageReusableView.nib,
-        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-        withReuseIdentifier: LoadingMessageReusableView.reuseIdentifier)
+                                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                        withReuseIdentifier: LoadingMessageReusableView.reuseIdentifier)
         
         messagesCollectionView.register(MessageEditCollectionOverlayView.nib,
                                         forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay",
                                         withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier)
         messagesCollectionView.register(MessageReactionReusableView.nib,
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                            withReuseIdentifier: MessageReactionReusableView.reuseIdentifier)
-            
+                                        withReuseIdentifier: MessageReactionReusableView.reuseIdentifier)
+        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
-
+        
         messagesCollectionView.emptyDataSetSource = self
         messagesCollectionView.emptyDataSetDelegate = self
         
@@ -730,7 +765,7 @@ class ChatViewController: MessagesViewController {
             startOrJoinCallButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 150.0)
         ].activate()
         
-        startOrJoinCallCleanup(callInProgress: false)
+        chatContentViewModel.dispatch(.startOrJoinCallCleanUp(false))
     }
     
     private func configurePreviewerButton() {
@@ -755,37 +790,36 @@ class ChatViewController: MessagesViewController {
     
     private func registerCustomCells() {
         messagesCollectionView.register(ChatViewCallCollectionCell.self,
-                                         forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
+                                        forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
         messagesCollectionView.register(ChatViewAttachmentCell.self,
-                                         forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
+                                        forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
         messagesCollectionView.register(ChatMediaCollectionViewCell.self,
-                                         forCellWithReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier)
+                                        forCellWithReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatRichPreviewMediaCollectionViewCell.self,
-                                               forCellWithReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier)
+                                        forCellWithReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ContactLinkCollectionViewCell.self,
-                                               forCellWithReuseIdentifier: ContactLinkCollectionViewCell.reuseIdentifier)
+                                        forCellWithReuseIdentifier: ContactLinkCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatVoiceClipCollectionViewCell.self,
-                                                 forCellWithReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier)
+                                        forCellWithReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatTextMessageViewCell.self,
-                                                     forCellWithReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier)
+                                        forCellWithReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatLocationCollectionViewCell.self,
                                         forCellWithReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatGiphyCollectionViewCell.self,
-                                              forCellWithReuseIdentifier: ChatGiphyCollectionViewCell.reuseIdentifier)
+                                        forCellWithReuseIdentifier: ChatGiphyCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatManagmentTypeCollectionViewCell.self,
                                         forCellWithReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatUnreadMessagesLabelCollectionCell.nib,
                                         forCellWithReuseIdentifier: ChatUnreadMessagesLabelCollectionCell.reuseIdentifier)
         messagesCollectionView.register(ChatRichPreviewDialogCollectionViewCell.self,
                                         forCellWithReuseIdentifier: ChatRichPreviewDialogCollectionViewCell.reuseIdentifier)
-
     }
-
+    
     @objc func update() {
         guard isViewLoaded else {
             return
         }
-
+        
         configureNavigationBar()
         chatRoomDelegate.openChatRoom()
         if !chatRoom.isGroup {
@@ -794,7 +828,7 @@ class ChatViewController: MessagesViewController {
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.setMessageOutgoingAvatarSize(.zero)
             layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets:  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
-
+            
         }
     }
     
@@ -823,12 +857,12 @@ class ChatViewController: MessagesViewController {
         
         chatRoomDelegate.loadMoreMessages()
     }
-
+    
     private func addObservers() {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.reachabilityChanged,
                                                object: nil,
                                                queue: OperationQueue.main) { [weak self] _ in
-                                                self?.configureNavigationBar()
+            self?.configureNavigationBar()
         }
         
         NotificationCenter.default.addObserver(self,
@@ -862,23 +896,22 @@ class ChatViewController: MessagesViewController {
                                                   name: UIResponder.keyboardWillHideNotification,
                                                   object: nil)
         NotificationCenter.default.removeObserver(self,
-                                               name: UIApplication.willResignActiveNotification,
-                                               object: nil)
+                                                  name: UIApplication.willResignActiveNotification,
+                                                  object: nil)
     }
-        
+    
     @objc private func handleKeyboardShown(_ notification: Notification) {
-        
         showOrHideJumpToBottom()
-
+        
         // When there are no messages and the introduction text is shown and the keyboard appears the content inset is not added automatically and we do need to add the inset to the collection
         guard chatRoomDelegate.chatMessages.isEmpty,
-            let inputView = inputAccessoryView as? ChatInputBar,
-            inputView.isTextViewTheFirstResponder() else {
+              let inputView = inputAccessoryView as? ChatInputBar,
+              inputView.isTextViewTheFirstResponder() else {
             return
         }
         
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
-            let inputAccessoryView = inputAccessoryView  else {
+              let inputAccessoryView = inputAccessoryView  else {
             return
         }
         
@@ -964,9 +997,9 @@ class ChatViewController: MessagesViewController {
             self.chatBottomInfoScreen.alpha = 1.0
         }
     }
-
+    
     // MARK: - Bar Button actions
-
+    
     @objc func startAudioCall() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
             if granted {
@@ -976,7 +1009,7 @@ class ChatViewController: MessagesViewController {
             }
         }
     }
-
+    
     @objc func startVideoCall() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
             if granted {
@@ -993,7 +1026,7 @@ class ChatViewController: MessagesViewController {
             }
         }
     }
-
+    
     @objc func dismissChatRoom() {
         dismiss(animated: true) {
             if MEGASdkManager.sharedMEGAChatSdk().initState() == .anonymous {
@@ -1026,16 +1059,7 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    private func startMeetingNoRinging(videoCall: Bool) {
-        guard !shouldDisableAudioVideoCall else {
-            return
-        }
-        
-        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else {
-            MEGALogError("Failed to fetch scheduled meeting to start no ringing call")
-            return
-        }
-        
+    private func startMeetingNoRinging(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
         preapareAudioForCall()
         callUseCase.startCallNoRinging(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true) { [weak self] result in
             guard let self else { return }
@@ -1052,10 +1076,6 @@ class ChatViewController: MessagesViewController {
     }
     
     private func startOutGoingCall(isVideoEnabled: Bool) {
-        guard !shouldDisableAudioVideoCall else {
-            return
-        }
-
         let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
             guard let self = self else { return }
             self.callRequestCompletion(isVideoEnabled: isVideoEnabled, errorType: error.type)
@@ -1104,7 +1124,7 @@ class ChatViewController: MessagesViewController {
                                call: callEntity,
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
-
+    
     private func preapareAudioForCall() {
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
@@ -1119,11 +1139,15 @@ class ChatViewController: MessagesViewController {
     
     func openCallViewWithVideo(videoCall: Bool) {
         guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
+            let reachable = MEGAReachabilityManager.isReachable()
+            let existsActiveCall = MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+            
             if chatRoom.isMeeting && scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).isNotEmpty {
-                startMeetingNoRinging(videoCall: videoCall)
+                chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
             } else {
-                startOutGoingCall(isVideoEnabled: videoCall)
+                chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
             }
+            
             return
         }
         

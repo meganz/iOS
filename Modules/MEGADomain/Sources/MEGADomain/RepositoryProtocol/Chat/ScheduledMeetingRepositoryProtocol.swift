@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol ScheduledMeetingRepositoryProtocol {
+public protocol ScheduledMeetingRepositoryProtocol: RepositoryProtocol {
     func scheduledMeetings() -> [ScheduledMeetingEntity]
     func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity]
     func scheduledMeeting(for scheduledMeetingId: ChatIdEntity, chatId: ChatIdEntity) -> ScheduledMeetingEntity?

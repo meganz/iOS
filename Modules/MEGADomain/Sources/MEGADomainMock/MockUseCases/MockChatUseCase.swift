@@ -49,7 +49,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.items = items
     }
     
-    public func myUserHandle() -> MEGADomain.HandleEntity {
+    public func myUserHandle() -> HandleEntity {
         userHandle
     }
     
@@ -77,7 +77,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         isCallActive
     }
     
-    public func activeCall() -> MEGADomain.CallEntity? {
+    public func activeCall() -> CallEntity? {
         activeCallEntity
     }
     
@@ -85,7 +85,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         items
     }
     
-    public func isCallInProgress(for chatRoomId: MEGADomain.HandleEntity) -> Bool {
+    public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {
         isCallInProgress
     }
     
@@ -101,7 +101,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         totalUnreadChats
     }
     
-    public func monitorChatCallStatusUpdate() -> AnyPublisher<MEGADomain.CallEntity, Never> {
+    public func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never> {
         chatCallStatusUpdatePublisher.eraseToAnyPublisher()
     }
     
@@ -113,7 +113,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         currentChatConnectionStatus
     }
     
-    public func chatListItem(forChatId chatId: MEGADomain.ChatIdEntity) -> ChatListItemEntity? {
+    public func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity? {
         items?.first
     }
     
@@ -121,7 +121,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         retryPendingConnections_calledTimes += 1
     }
     
-    public func monitorChatPrivateModeUpdate(forChatId chatId: MEGADomain.HandleEntity) -> AnyPublisher<MEGADomain.ChatRoomEntity, Never> {
+    public func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never> {
         chatPrivateModeUpdatePublisher.eraseToAnyPublisher()
     }
     
@@ -131,5 +131,13 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func scheduledMeetingsByChat(chatId: ChatIdEntity) -> [ScheduledMeetingEntity] {
         scheduledMeetingList
+    }
+    
+    public func chatCall(for chatId: HandleEntity) async -> CallEntity? {
+        activeCallEntity
+    }
+    
+    public func chatConnectionStatus(for chatId: ChatIdEntity) async -> ChatConnectionStatus {
+        currentChatConnectionStatus
     }
 }

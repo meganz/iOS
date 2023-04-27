@@ -1,7 +1,7 @@
 import Foundation
 
-public struct CallEntity {
-    public enum CallStatusType {
+public struct CallEntity: Sendable {
+    public enum CallStatusType: Sendable {
         case undefined
         case initial
         case userNoPresent
@@ -12,7 +12,7 @@ public struct CallEntity {
         case destroyed
     }
     
-    public enum TermCodeType {
+    public enum TermCodeType: Sendable {
         case invalid
         case userHangup
         case tooManyParticipants
@@ -21,7 +21,7 @@ public struct CallEntity {
         case noParticipate
     }
     
-    public enum ChangeType {
+    public enum ChangeType: Sendable {
         case noChanges
         case status
         case localAVFlags
@@ -34,13 +34,13 @@ public struct CallEntity {
         case outgoingRingingStop
     }
     
-    public enum ConfigurationType {
+    public enum ConfigurationType: Sendable {
         case audio
         case video
         case anyFlag
     }
     
-    public enum CompositionChangeType {
+    public enum CompositionChangeType: Sendable {
         case peerRemoved
         case noChange
         case peerAdded
@@ -85,4 +85,18 @@ public struct CallEntity {
         self.participants = participants
         self.uuid = uuid
     }
+}
+
+extension CallEntity: Hashable {
+    public static func == (lhs: CallEntity, rhs: CallEntity) -> Bool {
+        lhs.callId == rhs.callId
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(callId)
+    }
+}
+
+extension CallEntity: Identifiable {
+    public var id: HandleEntity { callId }
 }

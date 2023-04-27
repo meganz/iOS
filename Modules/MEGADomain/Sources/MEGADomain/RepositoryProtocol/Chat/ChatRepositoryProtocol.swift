@@ -1,6 +1,6 @@
 import Combine
 
-public protocol ChatRepositoryProtocol {
+public protocol ChatRepositoryProtocol: RepositoryProtocol {
     func myUserHandle() -> HandleEntity
     func isGuestAccount() -> Bool
     func chatStatus() -> ChatStatusEntity
@@ -15,9 +15,11 @@ public protocol ChatRepositoryProtocol {
     func archivedChatListCount() -> UInt
     func unreadChatMessagesCount() -> Int
     func chatConnectionStatus() -> ChatConnectionStatus
+    func chatConnectionStatus(for chatId: ChatIdEntity) -> ChatConnectionStatus
     func chatListItem(forChatId chatId: ChatIdEntity) -> ChatListItemEntity?
     func retryPendingConnections()
     func monitorChatCallStatusUpdate() -> AnyPublisher<CallEntity, Never>
     func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never> 
     func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never>
+    func chatCall(for chatId: HandleEntity) -> CallEntity?
 }

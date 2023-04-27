@@ -107,3 +107,17 @@ public struct ScheduledMeetingEntity: Sendable {
         case fifth
     }
 }
+
+extension ScheduledMeetingEntity: Hashable {
+    public static func == (lhs: ScheduledMeetingEntity, rhs: ScheduledMeetingEntity) -> Bool {
+        lhs.scheduledId == rhs.scheduledId
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(scheduledId)
+    }
+}
+
+extension ScheduledMeetingEntity: Identifiable {
+    public var id: HandleEntity { scheduledId }
+}
