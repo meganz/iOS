@@ -4,7 +4,7 @@
 }
 
 @objc enum MyAccountMegaSection: Int, CaseIterable {
-    case plan = 0, storage , contacts, backups, notifications, achievements, transfers, offline, rubbishBin
+    case plan = 0, storage, contacts, backups, notifications, achievements, transfers, offline, rubbishBin
 }
 
 @objc enum MyAccountOtherSection: Int, CaseIterable {
@@ -135,23 +135,39 @@ extension MyAccountHallViewController: UITableViewDataSource {
         return cell
     }
     
+    //MARK: - Row Index
+    private var showPlanRow: Bool {
+        !MEGASdkManager.sharedMEGASdk().isAccountType(.business) && !MEGASdkManager.sharedMEGASdk().isAccountType(.proFlexi)
+    }
+    
+    private var sectionRowCount: Int {
+        guard isNewUpgradeAccountPlanFeatureFlagEnabled() else {
+            return MyAccountMegaSection.allCases.count - 1
+        }
+        return showPlanRow ? MyAccountMegaSection.allCases.count : MyAccountMegaSection.allCases.count - 1
+    }
+    
     //MARK: - UITableView data source
+    @objc func menuRowIndex(_ indexPath: IndexPath) -> Int {
+        guard isNewUpgradeAccountPlanFeatureFlagEnabled() else {
+            return indexPath.row + 1
+        }
+        return showPlanRow ? indexPath.row : indexPath.row + 1
+    }
+
     public func numberOfSections(in tableView: UITableView) -> Int {
         MyAccountSection.allCases.count
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard isNewUpgradeAccountPlanFeatureFlagEnabled() else {
-            return section == MyAccountSection.mega.rawValue ? MyAccountMegaSection.allCases.count - 1 : MyAccountOtherSection.allCases.count
-        }
-        
-        return section == MyAccountSection.mega.rawValue ? MyAccountMegaSection.allCases.count : MyAccountOtherSection.allCases.count
+        section == MyAccountSection.mega.rawValue ? sectionRowCount : MyAccountOtherSection.allCases.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let rowIndex = menuRowIndex(indexPath)
         let isShowStorageUsageCell = (MEGASdkManager.sharedMEGASdk().isAccountType(.business) ||
                                       MEGASdkManager.sharedMEGASdk().isAccountType(.proFlexi)) &&
-                                    indexPath.row == MyAccountMegaSection.storage.rawValue &&
+                                    rowIndex == MyAccountMegaSection.storage.rawValue &&
                                     indexPath.section == MyAccountSection.mega.rawValue
         let identifier = isShowStorageUsageCell ? "MyAccountHallStorageUsageTableViewCellID" : "MyAccountHallTableViewCellID"
         
@@ -162,7 +178,6 @@ extension MyAccountHallViewController: UITableViewDataSource {
             return cell
         }
         
-        let rowIndex = isNewUpgradeAccountPlanFeatureFlagEnabled() ? indexPath.row : indexPath.row + 1
         switch MyAccountMegaSection(rawValue: rowIndex) {
         case .plan: return upgradePlanSetupCell(indexPath)
         case .storage: cell.setup(data: isShowStorageUsageCell ? storageBusinessAccountSetupData() : storageSetupData())
