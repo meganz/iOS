@@ -39,8 +39,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     
     // MARK:- Private methods.
     
-    private func configureTableView(_ tableView: UITableView) {        
-        tableView.rowHeight = 60
+    private func configureTableView(_ tableView: UITableView) {
         tableView.register(UINib(nibName: "NodeTableViewCell", bundle: nil),
                            forCellReuseIdentifier: "nodeCell")
     }
