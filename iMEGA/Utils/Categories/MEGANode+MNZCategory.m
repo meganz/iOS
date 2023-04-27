@@ -118,6 +118,7 @@
         }
             
         default:
+            [UIApplication.mnz_presentingViewController dismissView];
             break;
     }
 }
