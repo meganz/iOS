@@ -1,4 +1,5 @@
 import MEGASdk
+import MEGAData
 
 public final class MockMEGASetElement: MEGASetElement {
     private let setElementHandle: MEGAHandle
@@ -17,9 +18,9 @@ public final class MockMEGASetElement: MEGASetElement {
     public override var timestamp: Date { setElementModificationTime }
     
     public init(handle: MEGAHandle,
-                ownerId: MEGAHandle,
-                order: UInt64,
-                nodeId: MEGAHandle,
+                ownerId: MEGAHandle = .invalidHandle,
+                order: UInt64 = 0,
+                nodeId: MEGAHandle = .invalidHandle,
                 name: String = "",
                 changeType: MEGASetElementChangeType = .new,
                 modificationTime: Date = Date()) {

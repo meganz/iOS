@@ -22,6 +22,8 @@ public final class MockSdk: MEGASdk {
     private let outgoingNodes: MEGANodeList
     private let publicLinkNodes: MEGANodeList
     private let createSupportTicketError: MEGAErrorType
+    private let link: String?
+    private let megaSetError: MEGAErrorType
     
     public var hasGlobalDelegate = false
     public var apiURL: String?
@@ -46,7 +48,9 @@ public final class MockSdk: MEGASdk {
                 shareList: MEGAShareList = MEGAShareList(),
                 isSharedFolderOwnerVerified: Bool = false,
                 sharedFolderOwner: MEGAUser? = nil,
-                createSupportTicketError: MEGAErrorType = .apiOk
+                createSupportTicketError: MEGAErrorType = .apiOk,
+                link: String? = nil,
+                megaSetError: MEGAErrorType = .apiOk
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -67,6 +71,8 @@ public final class MockSdk: MEGASdk {
         self.outgoingNodes = outgoingNodes
         self.publicLinkNodes = publicLinkNodes
         self.createSupportTicketError = createSupportTicketError
+        self.link = link
+        self.megaSetError = megaSetError
         super.init()
     }
     
@@ -222,6 +228,26 @@ public final class MockSdk: MEGASdk {
     public override func changeApiUrl(_ apiURL: String, disablepkp: Bool) {
         self.apiURL = apiURL
         self.disablepkp = disablepkp
+    }
+    
+    public override func exportSet(_ sid: MEGAHandle, delegate: MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: 1)
+        mockRequest.megalink = link
+        delegate.onRequestFinish?(self, request: mockRequest,
+                                  error: MockError(errorType: megaSetError))
+    }
+    
+    public override func disableExportSet(_ sid: MEGAHandle, delegate: MEGARequestDelegate) {
+        delegate.onRequestFinish?(self, request: MEGARequest(),
+                                  error: MockError(errorType: megaSetError))
+    }
+    
+    public override func fetchPublicSet(_ publicSetLink: String, delegate: MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: 1)
+        mockRequest.megaSet = sets.first
+        mockRequest.megaElementInSet = setElements
+        delegate.onRequestFinish?(self, request: mockRequest,
+                                  error: MockError(errorType: megaSetError))
     }
     
     //MARK: - Share

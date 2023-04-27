@@ -626,10 +626,6 @@
 		6D854F7C290E5A78006CEC20 /* MediaDiscoveryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D854F7A290E58B4006CEC20 /* MediaDiscoveryRepositoryTests.swift */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */; };
 		6DB6D420292444B9005182CA /* UserAlbumRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6D41F292444B9005182CA /* UserAlbumRepository.swift */; };
-		6DB6D4252924D342005182CA /* SetEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6D4242924D342005182CA /* SetEntity+Mapper.swift */; };
-		6DB6D4262924D342005182CA /* SetEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6D4242924D342005182CA /* SetEntity+Mapper.swift */; };
-		6DB6D4282924E47C005182CA /* SetElementEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6D4272924E47C005182CA /* SetElementEntity+Mapper.swift */; };
-		6DB6D4292924E47C005182CA /* SetElementEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB6D4272924E47C005182CA /* SetElementEntity+Mapper.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DD04A34292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */; };
 		6DE346BF28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */; };
@@ -3084,8 +3080,6 @@
 		6D854F7A290E58B4006CEC20 /* MediaDiscoveryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryRepositoryTests.swift; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+FilterAndSort.swift"; sourceTree = "<group>"; };
 		6DB6D41F292444B9005182CA /* UserAlbumRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlbumRepository.swift; sourceTree = "<group>"; };
-		6DB6D4242924D342005182CA /* SetEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetEntity+Mapper.swift"; sourceTree = "<group>"; };
-		6DB6D4272924E47C005182CA /* SetElementEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SetElementEntity+Mapper.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DD04A33292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlbumRepositoryTests.swift; sourceTree = "<group>"; };
 		6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+NodesUpdate.swift"; sourceTree = "<group>"; };
@@ -7568,15 +7562,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		6DB6D4232924D32B005182CA /* SetEntityMapping */ = {
-			isa = PBXGroup;
-			children = (
-				6DB6D4272924E47C005182CA /* SetElementEntity+Mapper.swift */,
-				6DB6D4242924D342005182CA /* SetEntity+Mapper.swift */,
-			);
-			path = SetEntityMapping;
-			sourceTree = "<group>";
-		};
 		6DB772CC28836A3F00B75A93 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -9767,7 +9752,6 @@
 				A859043529F2D1A000632F0C /* Offline */,
 				A859043329F2D14300632F0C /* Preference */,
 				A859043629F2D1AC00632F0C /* Recent */,
-				6DB6D4232924D32B005182CA /* SetEntityMapping */,
 				0D7E5F1826322DFA00C5CB2A /* TransferEntityMapping */,
 				B6FB5F8029A321130023BA6A /* User */,
 			);
@@ -13650,8 +13634,6 @@
 				2F9F112A2508A43300896DFF /* ServiceConstant.swift in Sources */,
 				2F9F11152508A3E800896DFF /* ServiceManager.swift in Sources */,
 				2F9F111F2508A3F400896DFF /* Services.swift in Sources */,
-				6DB6D4282924E47C005182CA /* SetElementEntity+Mapper.swift in Sources */,
-				6DB6D4252924D342005182CA /* SetEntity+Mapper.swift in Sources */,
 				837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */,
 				9D3563D428B5515A00CB3365 /* SettingBuilder.swift in Sources */,
 				9D3563D628B551C600CB3365 /* SettingCellViewModel.swift in Sources */,
@@ -14393,8 +14375,6 @@
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,
 				0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */,
 				94485B5C29B9FBE5006B919E /* SearchNodeRepositoryTests.swift in Sources */,
-				6DB6D4292924E47C005182CA /* SetElementEntity+Mapper.swift in Sources */,
-				6DB6D4262924D342005182CA /* SetEntity+Mapper.swift in Sources */,
 				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,
 				9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */,
 				B5CC2A642994A22800A966A0 /* ShareRepositoryTests.swift in Sources */,

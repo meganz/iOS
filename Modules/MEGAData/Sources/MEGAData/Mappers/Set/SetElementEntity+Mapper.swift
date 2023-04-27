@@ -1,13 +1,14 @@
 import MEGADomain
+import MEGASdk
 
 extension MEGASetElement {
-    func toSetElementEntity() -> SetElementEntity {
+    public func toSetElementEntity() -> SetElementEntity {
         SetElementEntity(setElement: self)
     }
 }
 
 extension Array where Element: MEGASetElement {
-    func toSetElementsEntities() -> [SetElementEntity] {
+    public func toSetElementsEntities() -> [SetElementEntity] {
         map { $0.toSetElementEntity() }
     }
 }
