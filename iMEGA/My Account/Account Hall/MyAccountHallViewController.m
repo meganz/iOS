@@ -289,7 +289,8 @@
         return;
     }
     
-    switch (indexPath.row) {
+    NSInteger rowIndex = [self menuRowIndex:indexPath];
+    switch (rowIndex) {
         case MyAccountMegaSectionStorage: {
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
                 UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"Usage" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
@@ -354,9 +355,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (indexPath.row == MyAccountMegaSectionAchievements &&
+    NSInteger rowIndex = [self menuRowIndex:indexPath];
+    return (rowIndex == MyAccountMegaSectionAchievements &&
             ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | [MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness]) ||
-            (indexPath.row == MyAccountMegaSectionBackups && !self.isBackupSectionVisible) ? 0.0f : UITableViewAutomaticDimension;
+            (rowIndex == MyAccountMegaSectionBackups && !self.isBackupSectionVisible) ? 0.0f : UITableViewAutomaticDimension;
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
