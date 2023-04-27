@@ -1,8 +1,8 @@
-import Foundation
 import MEGADomain
+import MEGASdk
 
 extension MEGAAccountType {
-    func toAccountTypeEntity() -> AccountTypeEntity {
+    public func toAccountTypeEntity() -> AccountTypeEntity {
         switch self {
         case .free:
             return .free

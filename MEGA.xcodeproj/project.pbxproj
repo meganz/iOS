@@ -1328,7 +1328,6 @@
 		A861B57F27BE7D32009C29C2 /* SupportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A861B57E27BE7D32009C29C2 /* SupportRepository.swift */; };
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A863223F29091456004FED9B /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A863223E29091456004FED9B /* Settings */; };
-		A866D9A9271D8B1900146302 /* AccountDetailsEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */; };
 		A868537929CA1674006C7A58 /* ThumbnailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199F326E7CAF600402358 /* ThumbnailRepository.swift */; };
 		A868537A29CA16BB006C7A58 /* AppGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665A6A2283755AA00A251C3 /* AppGroupContainer.swift */; };
 		A868537B29CA1707006C7A58 /* MEGARequest+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */; };
@@ -1416,8 +1415,6 @@
 		A8C4754D299A66AF0074511F /* TransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8A5A42990F964008518BE /* TransferRepository.swift */; };
 		A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BA146B29927784004389FE /* NodeActionRepository.swift */; };
 		A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
-		A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */; };
-		A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
 		A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */; };
 		A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */; };
@@ -1569,7 +1566,6 @@
 		B63995382898CBEB00EA88F1 /* WarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63995352898CBEB00EA88F1 /* WarningViewModel.swift */; };
 		B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B63995402898CF1000EA88F1 /* MEGASwiftUI */; };
 		B63995442898D03400EA88F1 /* MEGASwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B63995432898D03400EA88F1 /* MEGASwiftUI */; };
-		B63AE687250EFA3A000B8517 /* SMSState+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63AE686250EFA3A000B8517 /* SMSState+Mapper.swift */; };
 		B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63AEB132511F73C000B8517 /* AddPhoneNumberViewModelTests.swift */; };
 		B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63AEB172512040E000B8517 /* Array+Additions.swift */; };
 		B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */ = {isa = PBXBuildFile; productRef = B63D34132898A9AB0059DE66 /* MEGASwift */; };
@@ -3802,7 +3798,6 @@
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A861B57E27BE7D32009C29C2 /* SupportRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportRepository.swift; sourceTree = "<group>"; };
 		A863223D2909142A004FED9B /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
-		A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountDetailsEntity+Mapper.swift"; sourceTree = "<group>"; };
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
@@ -3902,8 +3897,6 @@
 		A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_video.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_video.xcframework; sourceTree = "<group>"; };
 		A8C47591299D02B70074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C47593299D02E60074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAccountType+Mapper.swift"; sourceTree = "<group>"; };
-		A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASubscriptionStatus+Mapper.swift"; sourceTree = "<group>"; };
 		A8C93C0B22D718030030CE1B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryKeyTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
@@ -4056,7 +4049,6 @@
 		B63995342898CBEB00EA88F1 /* WarningViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningViewRouter.swift; sourceTree = "<group>"; };
 		B63995352898CBEB00EA88F1 /* WarningViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningViewModel.swift; sourceTree = "<group>"; };
 		B639953F2898CE9100EA88F1 /* MEGASwiftUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASwiftUI; sourceTree = "<group>"; };
-		B63AE686250EFA3A000B8517 /* SMSState+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SMSState+Mapper.swift"; sourceTree = "<group>"; };
 		B63AEB132511F73C000B8517 /* AddPhoneNumberViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPhoneNumberViewModelTests.swift; sourceTree = "<group>"; };
 		B63AEB172512040E000B8517 /* Array+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Additions.swift"; sourceTree = "<group>"; };
 		B63F3197223BA47400B0C6A6 /* CameraUpload.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CameraUpload.xcdatamodel; sourceTree = "<group>"; };
@@ -9177,17 +9169,6 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		A866D9A7271D8B0600146302 /* Account */ = {
-			isa = PBXGroup;
-			children = (
-				A866D9A8271D8B1900146302 /* AccountDetailsEntity+Mapper.swift */,
-				A8C79A4F27229B370038834D /* MEGAAccountType+Mapper.swift */,
-				A8C79A5327229BF90038834D /* MEGASubscriptionStatus+Mapper.swift */,
-				B63AE686250EFA3A000B8517 /* SMSState+Mapper.swift */,
-			);
-			path = Account;
-			sourceTree = "<group>";
-		};
 		A86AC4AA26710A9000E8E89A /* ChangeName */ = {
 			isa = PBXGroup;
 			children = (
@@ -9836,7 +9817,6 @@
 		B662B86F24F331D50089376A /* Model Mapping */ = {
 			isa = PBXGroup;
 			children = (
-				A866D9A7271D8B0600146302 /* Account */,
 				A83BB99328E5F181001A7C68 /* Chat */,
 				320262F7298CB0A20049688C /* Filter */,
 				A859043429F2D17400632F0C /* Lists */,
@@ -12450,7 +12430,6 @@
 			files = (
 				BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
-				A866D9A9271D8B1900146302 /* AccountDetailsEntity+Mapper.swift in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				B6FD6506268B39D800988A17 /* AccountRepository.swift in Sources */,
 				B6AADEBB251893FD009A874C /* AchievementRepository.swift in Sources */,
@@ -13160,7 +13139,6 @@
 				BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */,
 				BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */,
 				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,
-				A8C79A5027229B370038834D /* MEGAAccountType+Mapper.swift in Sources */,
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
 				5D8A76F124FCD0C900C0610C /* MEGAAvatarGeneratingUseCase.swift in Sources */,
@@ -13299,7 +13277,6 @@
 				B6F8CE3D2628F1970074CBBF /* MEGAStore+User.swift in Sources */,
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				B662B87124F332250089376A /* MEGAStringList+Mapper.swift in Sources */,
-				A8C79A5427229BF90038834D /* MEGASubscriptionStatus+Mapper.swift in Sources */,
 				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
 				A8DEF28F298AC0C700137E38 /* MEGATransferList+Mapper.swift in Sources */,
@@ -13798,7 +13775,6 @@
 				B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */,
 				B6B73E7022C9A39500ACAD48 /* SMSRegion.swift in Sources */,
 				B6AADEA825188D77009A874C /* SMSRepository.swift in Sources */,
-				B63AE687250EFA3A000B8517 /* SMSState+Mapper.swift in Sources */,
 				B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */,
 				B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */,
 				B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */,
