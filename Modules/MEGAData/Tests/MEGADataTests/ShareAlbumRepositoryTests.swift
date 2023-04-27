@@ -73,7 +73,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         XCTAssertEqual(result.setElements, expectedSetElements.toSetElementsEntities())
     }
     
-    func testPublicAlbumContents_onSDKNotOkKnownError_shouldThrowCorrectError() async throws {
+    func testPublicAlbumContents_onSDKNotOkKnownError_shouldThrowCorrectError() async {
         let testCase = [(MEGAErrorType.apiENoent, SharedAlbumErrorEntity.resourceNotFound),
                         (.apiEInternal, .couldNotBeReadOrDecrypted),
                         (.apiEArgs, .malformed),
@@ -102,7 +102,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         XCTAssertFalse(result.contains(where: { !$0 }))
     }
     
-    func testPublicAlbumContents_onSDKNotOkUnknownError_shouldThrowGenericError() async throws {
+    func testPublicAlbumContents_onSDKNotOkUnknownError_shouldThrowGenericError() async {
         let mockSdk = MockSdk(megaSetError: .apiEBlocked)
         let sut = ShareAlbumRepository(sdk: mockSdk)
         do {
