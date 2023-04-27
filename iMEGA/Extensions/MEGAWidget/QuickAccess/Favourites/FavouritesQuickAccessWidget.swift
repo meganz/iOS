@@ -1,13 +1,14 @@
 import WidgetKit
 import SwiftUI
 import MEGADomain
+import MEGAData
 
 struct FavouritesTimelineProvider: TimelineProvider {
     typealias Entry = QuickAccessWidgetEntry
 
     var viewModel = FavouritesQuickAccessWidgetViewModel(
         credentialUseCase: CredentialUseCase(repo: CredentialRepository.newRepo),
-        copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository(fileManager: FileManager.default)),
+        copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository.newRepo),
         favouriteItemsUseCase: FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance()))
     )
     
