@@ -1,26 +1,27 @@
 import Foundation
 import MEGADomain
+import MEGASdk
 
 extension NodeEntity {
-    func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
+    public func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
         sdk.node(forHandle: handle)
     }
 }
 
 extension Array where Element == NodeEntity {
-    func toMEGANodes(in sdk: MEGASdk) -> [MEGANode] {
+    public func toMEGANodes(in sdk: MEGASdk) -> [MEGANode] {
         compactMap { $0.toMEGANode(in: sdk) }
     }
 }
 
 extension Array where Element: MEGANode {
-    func toNodeEntities() -> [NodeEntity] {
+    public func toNodeEntities() -> [NodeEntity] {
         map { $0.toNodeEntity() }
     }
 }
 
 extension MEGANode {
-    func toNodeEntity() -> NodeEntity {
+    public func toNodeEntity() -> NodeEntity {
         NodeEntity(node: self)
     }
 }
@@ -88,7 +89,7 @@ fileprivate extension NodeEntity {
 }
 
 fileprivate extension String {
-    func toMediaTypeEntity() -> MediaTypeEntity? {
+    public func toMediaTypeEntity() -> MediaTypeEntity? {
         let pathExtension = URL(fileURLWithPath: self).pathExtension.lowercased()
         if ImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) ||
             RawImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) {

@@ -1,7 +1,8 @@
 import Foundation
+import MEGASdk
 
 extension MEGAStringList {
-    func toArray() -> [String] {
+    public func toArray() -> [String] {
         (0..<size).map { string(at: $0) }
     }
 }

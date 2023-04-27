@@ -4,7 +4,7 @@ import MEGADomainMock
 
 final class GetSMSUseCaseTests: XCTestCase {
     func testVerifiedPhoneNumber_nil() {
-        let repo = MockSMSRepository(verifiedNumber: nil)
+        let repo = MockSMSRepository.newRepo
         let sut = GetSMSUseCase(repo: repo, l10n: MockL10nRepository())
         XCTAssertNil(sut.verifiedPhoneNumber())
     }

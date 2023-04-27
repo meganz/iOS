@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension NodeTypeEntity {
-    init?(nodeType: MEGANodeType) {
+    public init?(nodeType: MEGANodeType) {
         self.init(rawValue: nodeType.rawValue)
     }
 }

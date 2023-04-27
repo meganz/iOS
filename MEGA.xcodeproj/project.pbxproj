@@ -19,7 +19,6 @@
 		0D4A123B2689921E0024997E /* GlobalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4A123A2689921E0024997E /* GlobalDelegate.swift */; };
 		0D7E5E0726311D9700C5CB2A /* TransferTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E0626311D9600C5CB2A /* TransferTypeEntity+Mapper.swift */; };
 		0D7E5E1126311E0900C5CB2A /* TransferStateEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E1026311E0900C5CB2A /* TransferStateEntity+Mapper.swift */; };
-		0D7E5E2326311EA100C5CB2A /* NodeTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E2226311EA100C5CB2A /* NodeTypeEntity+Mapper.swift */; };
 		0D7E5E3B2631258700C5CB2A /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
 		0D7E5FA62634E1E800C5CB2A /* DownloadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */; };
 		0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */; };
@@ -391,7 +390,6 @@
 		5B86D7C5248957E100B7888D /* ContactsTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B86D7C4248957E100B7888D /* ContactsTableViewHeader.xib */; };
 		5B8D209B246A98F8009BD3E9 /* ChangeCredentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8D209A246A98F8009BD3E9 /* ChangeCredentials.storyboard */; };
 		5B8DE74C27A00F3700B265EB /* MockExportNodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8DE74927A00F3700B265EB /* MockExportNodeUseCase.swift */; };
-		5B9199EA26E781C600402358 /* MEGANodeLabel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */; };
 		5B9199F426E7CAF600402358 /* ThumbnailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199F326E7CAF600402358 /* ThumbnailRepository.swift */; };
 		5B92CEE72423E9F100FE1BCC /* UpgradeAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */; };
 		5B947A9A267A20CD00715B0C /* NodeCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B947A99267A20CD00715B0C /* NodeCellViewModel.swift */; };
@@ -403,7 +401,6 @@
 		5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */; };
 		5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */; };
 		5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
-		5B9F5D65259DDA9D00BADB11 /* CookieSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */; };
 		5B9FBDFD26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */; };
 		5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BA53FE82462B26000D168B9 /* InviteContact.storyboard */; };
 		5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
@@ -796,7 +793,6 @@
 		8335C63E282E7A8400509479 /* NameCollisionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8363282328102BFC004F6121 /* NameCollisionViewModel.swift */; };
 		8335C641282E7ABB00509479 /* NameCollisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83293C592806CB7800369A86 /* NameCollisionView.swift */; };
 		8335C645282E7B2100509479 /* ThumbnailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199F326E7CAF600402358 /* ThumbnailRepository.swift */; };
-		8335C646282E7B3900509479 /* MEGARequest+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */; };
 		83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */; };
 		8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8336E3F82906B449000F1E9F /* ChatRoomsListViewModelTests.swift */; };
 		8337BC61256283F400F3A81A /* ShortcutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8337BC60256283F400F3A81A /* ShortcutDetail.swift */; };
@@ -1187,6 +1183,7 @@
 		9479F02528BF93CA008578BE /* DNDTurnOnOptionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */; };
 		9479F02728BFA4C3008578BE /* ContextMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02628BFA4C3008578BE /* ContextMenuModel.swift */; };
 		9479F02B28BFAB26008578BE /* ContextMenuModel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02A28BFAB26008578BE /* ContextMenuModel+Mapper.swift */; };
+		947B526E29F94813003D4536 /* CookieSettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947B526D29F94813003D4536 /* CookieSettingsRepository.swift */; };
 		9487BF3D29B6744000645D32 /* NodeActionRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
@@ -1320,14 +1317,10 @@
 		A859043729F2D2A900632F0C /* MEGANodeList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */; };
 		A859043829F2D2C500632F0C /* MEGANodeList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
-		A85EB25C2975724300AEDA05 /* NodeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */; };
-		A85EB25D2975728800AEDA05 /* MEGANodeLabel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */; };
-		A85EB25E297572BE00AEDA05 /* NodeTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E2226311EA100C5CB2A /* NodeTypeEntity+Mapper.swift */; };
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A863223F29091456004FED9B /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A863223E29091456004FED9B /* Settings */; };
 		A868537929CA1674006C7A58 /* ThumbnailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199F326E7CAF600402358 /* ThumbnailRepository.swift */; };
 		A868537A29CA16BB006C7A58 /* AppGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B665A6A2283755AA00A251C3 /* AppGroupContainer.swift */; };
-		A868537B29CA1707006C7A58 /* MEGARequest+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		A86FB61A297AF2EC00561DF8 /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
@@ -1579,8 +1572,6 @@
 		B647DB8628A09F7100BD0202 /* TransferErrorEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B647DB8528A09F7100BD0202 /* TransferErrorEntity+Mapper.swift */; };
 		B647DB8728A09F7100BD0202 /* TransferErrorEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B647DB8528A09F7100BD0202 /* TransferErrorEntity+Mapper.swift */; };
 		B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A0CF1928A08D1B00D7F52E /* PreferenceUseCase+Additions.swift */; };
-		B64A71AB287943AF0085087D /* NodeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */; };
-		B64A71AF287943BA0085087D /* NodeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */; };
 		B64A71B128794CED0085087D /* PhotoBrowserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */; };
 		B64A71CB287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */; };
 		B64F9A9C22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B64F9A9B22389E6B000A4EA7 /* PHAssetResource+CameraUpload.m */; };
@@ -1613,7 +1604,6 @@
 		B662B86724ED14A30089376A /* VerificationCodeViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B86624ED14A30089376A /* VerificationCodeViewRouter.swift */; };
 		B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B86824F322E10089376A /* SMSVerificationViewModel.swift */; };
 		B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B86A24F322F60089376A /* SMSVerificationViewRouter.swift */; };
-		B662B87124F332250089376A /* MEGAStringList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87024F332250089376A /* MEGAStringList+Mapper.swift */; };
 		B662B87F24F7D05B0089376A /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
 		B662B88324F8D8F60089376A /* RegionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88224F8D8F60089376A /* RegionListViewModel.swift */; };
 		B662B88524F8DA600089376A /* RegionListViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88424F8DA600089376A /* RegionListViewRouter.swift */; };
@@ -1712,8 +1702,6 @@
 		B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADE8D25183626009A874C /* VerificationCodeViewModelTests.swift */; };
 		B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADE942518456B009A874C /* RegionListViewModelTests.swift */; };
 		B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADE9B251845E2009A874C /* Routing+Addition.swift */; };
-		B6AADEA825188D77009A874C /* SMSRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADEA725188D77009A874C /* SMSRepository.swift */; };
-		B6AADEBB251893FD009A874C /* AchievementRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADEBA251893FD009A874C /* AchievementRepository.swift */; };
 		B6AADED5251896D1009A874C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADED4251896D1009A874C /* AuthRepository.swift */; };
 		B6AB264927BEF6F1006C8AA0 /* PhotoLibraryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB264827BEF6F1006C8AA0 /* PhotoLibraryProvider.swift */; };
 		B6AB265127BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */; };
@@ -1903,7 +1891,6 @@
 		BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatInputBar.swift */; };
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
-		BF46B7F225A68316008641BB /* PSARepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B7F125A68316008641BB /* PSARepository.swift */; };
 		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
 		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
 		BF49DEE72818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */; };
@@ -1954,7 +1941,6 @@
 		BF6DF36B2457A06300D612D0 /* AddToChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */; };
 		BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */; };
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
-		BF6E8DBB25B927F2003A125A /* MEGARequest+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */; };
 		BF6E8DFF25BA556C003A125A /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */; };
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
@@ -2223,8 +2209,6 @@
 		C46157B82538A48D00F3970D /* ActionSheetSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C46157B62538A48D00F3970D /* ActionSheetSwitchCell.xib */; };
 		C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46157B52538A48D00F3970D /* ActionSheetSwitchCell.swift */; };
 		C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C463CCD426A5E03C00577271 /* MEGAButton.swift */; };
-		C46517B2272C9FBD004F27A0 /* NodeTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E2226311EA100C5CB2A /* NodeTypeEntity+Mapper.swift */; };
-		C46517B4272C9FE3004F27A0 /* MEGANodeLabel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */; };
 		C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527D326526BBA00371270 /* BannerContainerViewController.swift */; };
 		C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527F026526C2300371270 /* BannerContainerViewModel.swift */; };
 		C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46527FA26526C3100371270 /* BannerContainerViewRouter.swift */; };
@@ -2408,7 +2392,6 @@
 		0D4A123A2689921E0024997E /* GlobalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDelegate.swift; sourceTree = "<group>"; };
 		0D7E5E0626311D9600C5CB2A /* TransferTypeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferTypeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		0D7E5E1026311E0900C5CB2A /* TransferStateEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferStateEntity+Mapper.swift"; sourceTree = "<group>"; };
-		0D7E5E2226311EA100C5CB2A /* NodeTypeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTypeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferDelegate.swift; sourceTree = "<group>"; };
 		0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFileRepository.swift; sourceTree = "<group>"; };
 		0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewBaseDataSource.swift; sourceTree = "<group>"; };
@@ -2867,7 +2850,6 @@
 		5B86D7C4248957E100B7888D /* ContactsTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsTableViewHeader.xib; sourceTree = "<group>"; };
 		5B8D209A246A98F8009BD3E9 /* ChangeCredentials.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeCredentials.storyboard; sourceTree = "<group>"; };
 		5B8DE74927A00F3700B265EB /* MockExportNodeUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockExportNodeUseCase.swift; sourceTree = "<group>"; };
-		5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeLabel+Mapper.swift"; sourceTree = "<group>"; };
 		5B9199F326E7CAF600402358 /* ThumbnailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailRepository.swift; sourceTree = "<group>"; };
 		5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UpgradeAccount.storyboard; sourceTree = "<group>"; };
 		5B947A99267A20CD00715B0C /* NodeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCellViewModel.swift; sourceTree = "<group>"; };
@@ -2876,7 +2858,6 @@
 		5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportChatMessagesRepository.swift; sourceTree = "<group>"; };
 		5B9CC936269DA6A8006342FC /* GenericNodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericNodeTableViewCell.xib; sourceTree = "<group>"; };
 		5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContactLinkQR.storyboard; sourceTree = "<group>"; };
-		5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsRepository.swift; sourceTree = "<group>"; };
 		5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+InAppPurchase.swift"; sourceTree = "<group>"; };
 		5BA53FE82462B26000D168B9 /* InviteContact.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InviteContact.storyboard; sourceTree = "<group>"; };
 		5BAC3B0F277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransfersWidgetViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -3657,6 +3638,7 @@
 		9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DNDTurnOnOptionEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9479F02628BFA4C3008578BE /* ContextMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuModel.swift; sourceTree = "<group>"; };
 		9479F02A28BFAB26008578BE /* ContextMenuModel+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContextMenuModel+Mapper.swift"; sourceTree = "<group>"; };
+		947B526D29F94813003D4536 /* CookieSettingsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieSettingsRepository.swift; sourceTree = "<group>"; };
 		9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionRepositoryTests.swift; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
@@ -4058,7 +4040,6 @@
 		B6472DFA25819A6E0040B2DB /* CameraUploadHeartbeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadHeartbeat.swift; sourceTree = "<group>"; };
 		B6472E072581D35D0040B2DB /* HeartbeatRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatRequestDelegate.swift; sourceTree = "<group>"; };
 		B647DB8528A09F7100BD0202 /* TransferErrorEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferErrorEntity+Mapper.swift"; sourceTree = "<group>"; };
-		B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserDataProvider.swift; sourceTree = "<group>"; };
 		B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserDataProvider_megaNode_Tests.swift; sourceTree = "<group>"; };
 		B64F9A9A22389E6B000A4EA7 /* PHAssetResource+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHAssetResource+CameraUpload.h"; sourceTree = "<group>"; };
@@ -4107,7 +4088,6 @@
 		B662B86624ED14A30089376A /* VerificationCodeViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewRouter.swift; sourceTree = "<group>"; };
 		B662B86824F322E10089376A /* SMSVerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationViewModel.swift; sourceTree = "<group>"; };
 		B662B86A24F322F60089376A /* SMSVerificationViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationViewRouter.swift; sourceTree = "<group>"; };
-		B662B87024F332250089376A /* MEGAStringList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStringList+Mapper.swift"; sourceTree = "<group>"; };
 		B662B87E24F7D05B0089376A /* CredentialRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialRepository.swift; sourceTree = "<group>"; };
 		B662B88224F8D8F60089376A /* RegionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewModel.swift; sourceTree = "<group>"; };
 		B662B88424F8DA600089376A /* RegionListViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewRouter.swift; sourceTree = "<group>"; };
@@ -4215,8 +4195,6 @@
 		B6AADE8D25183626009A874C /* VerificationCodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewModelTests.swift; sourceTree = "<group>"; };
 		B6AADE942518456B009A874C /* RegionListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewModelTests.swift; sourceTree = "<group>"; };
 		B6AADE9B251845E2009A874C /* Routing+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routing+Addition.swift"; sourceTree = "<group>"; };
-		B6AADEA725188D77009A874C /* SMSRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSRepository.swift; sourceTree = "<group>"; };
-		B6AADEBA251893FD009A874C /* AchievementRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementRepository.swift; sourceTree = "<group>"; };
 		B6AADED4251896D1009A874C /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		B6AB264827BEF6F1006C8AA0 /* PhotoLibraryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryProvider.swift; sourceTree = "<group>"; };
 		B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPublisher.swift; sourceTree = "<group>"; };
@@ -4423,7 +4401,6 @@
 		BF33EF8324457A0700CD35AC /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
-		BF46B7F125A68316008641BB /* PSARepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSARepository.swift; sourceTree = "<group>"; };
 		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
 		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
 		BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -4472,7 +4449,6 @@
 		BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatImageCell.swift; sourceTree = "<group>"; };
 		BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatImageCell.xib; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
-		BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGARequest+Mapper.swift"; sourceTree = "<group>"; };
 		BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageLoadErrorEntity.swift; sourceTree = "<group>"; };
@@ -5038,12 +5014,9 @@
 		0D7E5ED926322BFB00C5CB2A /* NodeEntityMapping */ = {
 			isa = PBXGroup;
 			children = (
-				5B9199E926E781C600402358 /* MEGANodeLabel+Mapper.swift */,
 				0D213EA9263A638B00B43723 /* NodeAccessEntity+Mapper.swift */,
-				B64A71AA287943AF0085087D /* NodeEntity+Mapper.swift */,
 				6DE346BE28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift */,
 				6D6FCBF1297E14ED0051EB4A /* NodeFormatEntity+Mapper.swift */,
-				0D7E5E2226311EA100C5CB2A /* NodeTypeEntity+Mapper.swift */,
 			);
 			path = NodeEntityMapping;
 			sourceTree = "<group>";
@@ -9107,7 +9080,6 @@
 				A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */,
 				A84533DE25ECF027007E0751 /* MEGANodeList+Mapper.swift */,
 				B6FD64F4268AABC000988A17 /* MEGAShareList+Mapper.swift */,
-				B662B87024F332250089376A /* MEGAStringList+Mapper.swift */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -9126,14 +9098,6 @@
 				BF782D80269BA8600001D169 /* RecentActionBucketEntity+Mapper.swift */,
 			);
 			path = Recent;
-			sourceTree = "<group>";
-		};
-		A859043929F2D56100632F0C /* Request */ = {
-			isa = PBXGroup;
-			children = (
-				BF6E8DBA25B927F2003A125A /* MEGARequest+Mapper.swift */,
-			);
-			path = Request;
 			sourceTree = "<group>";
 		};
 		A861B58127BE7D52009C29C2 /* Help */ = {
@@ -9612,10 +9576,7 @@
 			isa = PBXGroup;
 			children = (
 				B6FD6505268B39D700988A17 /* AccountRepository.swift */,
-				B6AADEBA251893FD009A874C /* AchievementRepository.swift */,
-				5B9F5D64259DDA9D00BADB11 /* CookieSettingsRepository.swift */,
-				BF46B7F125A68316008641BB /* PSARepository.swift */,
-				B6AADEA725188D77009A874C /* SMSRepository.swift */,
+				947B526D29F94813003D4536 /* CookieSettingsRepository.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -9806,7 +9767,6 @@
 				A859043529F2D1A000632F0C /* Offline */,
 				A859043329F2D14300632F0C /* Preference */,
 				A859043629F2D1AC00632F0C /* Recent */,
-				A859043929F2D56100632F0C /* Request */,
 				6DB6D4232924D32B005182CA /* SetEntityMapping */,
 				0D7E5F1826322DFA00C5CB2A /* TransferEntityMapping */,
 				B6FB5F8029A321130023BA6A /* User */,
@@ -12414,7 +12374,6 @@
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				B6FD6506268B39D800988A17 /* AccountRepository.swift in Sources */,
-				B6AADEBB251893FD009A874C /* AchievementRepository.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
 				5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */,
 				C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */,
@@ -12790,7 +12749,7 @@
 				9428B9A02819499A00DB7250 /* ContextMenuManager.swift in Sources */,
 				9479F02B28BFAB26008578BE /* ContextMenuModel+Mapper.swift in Sources */,
 				9479F02728BFA4C3008578BE /* ContextMenuModel.swift in Sources */,
-				5B9F5D65259DDA9D00BADB11 /* CookieSettingsRepository.swift in Sources */,
+				947B526E29F94813003D4536 /* CookieSettingsRepository.swift in Sources */,
 				5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */,
 				5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */,
 				5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */,
@@ -13198,7 +13157,6 @@
 				BF08A9F525CA12A0009DE3D2 /* MEGANode+FilePath.swift in Sources */,
 				B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
-				5B9199EA26E781C600402358 /* MEGANodeLabel+Mapper.swift in Sources */,
 				A84533DF25ECF028007E0751 /* MEGANodeList+Mapper.swift in Sources */,
 				5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */,
 				B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */,
@@ -13229,7 +13187,6 @@
 				2F4291E6257F2CDC00EDF780 /* MEGARecentActionBucket+MNZCategory.m in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
-				BF6E8DBB25B927F2003A125A /* MEGARequest+Mapper.swift in Sources */,
 				5DF0E3D12563A8540052CC95 /* MEGAResultMappingRequestDelegate.swift in Sources */,
 				5DF0E3D22563A8540052CC95 /* MEGAResultRequestDelegate.swift in Sources */,
 				5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */,
@@ -13258,7 +13215,6 @@
 				83E3459225B59844006F2AD6 /* MEGAStore+QuickAccessWidget.swift in Sources */,
 				B6F8CE3D2628F1970074CBBF /* MEGAStore+User.swift in Sources */,
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
-				B662B87124F332250089376A /* MEGAStringList+Mapper.swift in Sources */,
 				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
 				A8DEF28F298AC0C700137E38 /* MEGATransferList+Mapper.swift in Sources */,
@@ -13347,7 +13303,6 @@
 				B5FC636229E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift in Sources */,
 				943092F7291438200092B99A /* NodeDataRepository.swift in Sources */,
 				5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */,
-				B64A71AB287943AF0085087D /* NodeEntity+Mapper.swift in Sources */,
 				6DE346BF28F7723B00F86E30 /* NodeEntity+NodesUpdate.swift in Sources */,
 				5D609288255BA0AE005FA3E4 /* NodeFavouriteActionRepository.swift in Sources */,
 				6D6FCBF2297E14ED0051EB4A /* NodeFormatEntity+Mapper.swift in Sources */,
@@ -13380,7 +13335,6 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
-				0D7E5E2326311EA100C5CB2A /* NodeTypeEntity+Mapper.swift in Sources */,
 				0E32FFB2293E896A004BB11D /* NodeUpdateRepository.swift in Sources */,
 				943092FA291440010092B99A /* NodeValidationRepository.swift in Sources */,
 				94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */,
@@ -13583,7 +13537,6 @@
 				A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */,
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
 				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
-				BF46B7F225A68316008641BB /* PSARepository.swift in Sources */,
 				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
 				BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */,
@@ -13756,7 +13709,6 @@
 				32B0722928A4E0B5002BAE34 /* SlideShowViewModel.swift in Sources */,
 				B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */,
 				B6B73E7022C9A39500ACAD48 /* SMSRegion.swift in Sources */,
-				B6AADEA825188D77009A874C /* SMSRepository.swift in Sources */,
 				B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */,
 				B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */,
 				B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */,
@@ -14134,14 +14086,12 @@
 				B6A6E1C1287CDE6600179806 /* MEGANode+Array.swift in Sources */,
 				C4C6A49A27A4632600873165 /* MegaNode+Display.swift in Sources */,
 				BF08AA0925CA28AF009DE3D2 /* MEGANode+FilePath.swift in Sources */,
-				C46517B4272C9FE3004F27A0 /* MEGANodeLabel+Mapper.swift in Sources */,
 				A859043829F2D2C500632F0C /* MEGANodeList+Mapper.swift in Sources */,
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				C460506F27282F9500D67A44 /* MEGAOperation.m in Sources */,
 				83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
 				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,
-				8335C646282E7B3900509479 /* MEGARequest+Mapper.swift in Sources */,
 				7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */,
 				B6880DAE298394390072AF7D /* MEGASdk+Sendable.swift in Sources */,
 				A84F4A92298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
@@ -14180,7 +14130,6 @@
 				943092F52914376A0092B99A /* NodeActionsRepository.swift in Sources */,
 				94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */,
 				943092F829143DE60092B99A /* NodeDataRepository.swift in Sources */,
-				B64A71AF287943BA0085087D /* NodeEntity+Mapper.swift in Sources */,
 				6D60254E28F7B9C000FF9767 /* NodeEntity+NodesUpdate.swift in Sources */,
 				C460506B27282D7200D67A44 /* NodeHandle+Additions.swift in Sources */,
 				C42C357A2743D96E004D8BA9 /* NodeLoadOperation.swift in Sources */,
@@ -14189,7 +14138,6 @@
 				A82F364928EF352900093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift in Sources */,
 				B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */,
-				C46517B2272C9FBD004F27A0 /* NodeTypeEntity+Mapper.swift in Sources */,
 				5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */,
 				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,
 				83751C6829E5B2040030310B /* NSString+Additions.swift in Sources */,
@@ -14265,15 +14213,11 @@
 				A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */,
 				A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
-				A85EB25D2975728800AEDA05 /* MEGANodeLabel+Mapper.swift in Sources */,
 				A859043729F2D2A900632F0C /* MEGANodeList+Mapper.swift in Sources */,
-				A868537B29CA1707006C7A58 /* MEGARequest+Mapper.swift in Sources */,
 				A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
 				A8B09DEB29B0FFE200C922B9 /* MEGATransferList+Mapper.swift in Sources */,
 				A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */,
 				A854C21D29AE1FB800CB37E7 /* NodeAttributeRepository.swift in Sources */,
-				A85EB25C2975724300AEDA05 /* NodeEntity+Mapper.swift in Sources */,
-				A85EB25E297572BE00AEDA05 /* NodeTypeEntity+Mapper.swift in Sources */,
 				A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */,
 				A868537929CA1674006C7A58 /* ThumbnailRepository.swift in Sources */,
 				A86FB61A297AF2EC00561DF8 /* TransferDelegate.swift in Sources */,

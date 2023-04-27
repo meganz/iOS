@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAData
 
 @objc final class AddPhoneNumberRouter: NSObject, AddPhoneNumberRouting {
     private weak var baseViewController: UIViewController?
@@ -13,9 +14,7 @@ import MEGADomain
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
-        let repo = AchievementRepository(sdk: sdk)
-        let vm = AddPhoneNumberViewModel(router: self, achievementUseCase: AchievementUseCase(repo: repo), hideDontShowAgain: hideDontShowAgain)
+        let vm = AddPhoneNumberViewModel(router: self, achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo), hideDontShowAgain: hideDontShowAgain)
         
         let vc = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID") as! AddPhoneNumberViewController
         vc.modalPresentationStyle = .fullScreen
