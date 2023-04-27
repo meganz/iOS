@@ -42,7 +42,6 @@ final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProto
     // MARK:- Private methods.
     
     private func configureTableView(_ tableView: UITableView) {
-        tableView.rowHeight = 60
         tableView.register(UINib(nibName: "NodeTableViewCell", bundle: nil),
                            forCellReuseIdentifier: "nodeCell")
     }

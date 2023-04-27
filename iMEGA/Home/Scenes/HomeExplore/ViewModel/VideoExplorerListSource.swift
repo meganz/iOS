@@ -24,7 +24,6 @@ final class VideoExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
     private func configureTableView(_ tableView: UITableView?) {
         guard let tableView = tableView else { return }
         
-        tableView.rowHeight = 110
         tableView.register(VideoExplorerTableViewCell.nib,
                            forCellReuseIdentifier: VideoExplorerTableViewCell.reuseIdentifier)
     }
