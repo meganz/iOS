@@ -1,13 +1,14 @@
 import WidgetKit
 import SwiftUI
 import MEGADomain
+import MEGAData
 
 struct OfflineTimelineProvider: TimelineProvider {
     typealias Entry = QuickAccessWidgetEntry
 
     var viewModel = OfflineQuickAccessWidgetViewModel(
         credentialUseCase: CredentialUseCase(repo: CredentialRepository.newRepo),
-        copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository(fileManager: FileManager.default)),
+        copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository.newRepo),
         offlineFilesBasesUseCase: OfflineFilesUseCase(repo: OfflineFileFetcherRepository.newRepo)
     )
     

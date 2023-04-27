@@ -732,7 +732,6 @@
 		830C28BB25E68FA700E9B56E /* QuickAccessWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */; };
 		830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28CC25E68FC200E9B56E /* DetailItemView.swift */; };
 		830C28E025E6900200E9B56E /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28DF25E6900200E9B56E /* GridView.swift */; };
-		830C28EB25E69DFE00E9B56E /* CopyDataBasesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28EA25E69DFE00E9B56E /* CopyDataBasesRepository.swift */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */; };
 		83113495223900CB00647AB4 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83113494223900CB00647AB4 /* GradientView.m */; };
@@ -1367,7 +1366,6 @@
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
 		A899466F29716A69008448C4 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADED4251896D1009A874C /* AuthRepository.swift */; };
 		A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
-		A8994679297182E7008448C4 /* CopyDataBasesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830C28EA25E69DFE00E9B56E /* CopyDataBasesRepository.swift */; };
 		A899467B297189F5008448C4 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		A899F0E8278F3567001A2D43 /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A899F0E7278F3567001A2D43 /* CompressingLogFileManager.m */; };
 		A89CE55528B7D573002802BC /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A89CE55428B7D573002802BC /* MEGAData */; };
@@ -3214,7 +3212,6 @@
 		830C28B125E68F8400E9B56E /* QuickAccessWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetView.swift; sourceTree = "<group>"; };
 		830C28CC25E68FC200E9B56E /* DetailItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailItemView.swift; sourceTree = "<group>"; };
 		830C28DF25E6900200E9B56E /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
-		830C28EA25E69DFE00E9B56E /* CopyDataBasesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyDataBasesRepository.swift; sourceTree = "<group>"; };
 		830EF9A220062F3800FAA947 /* DevicePermissionsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePermissionsHelper.h; sourceTree = "<group>"; };
 		830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePermissionsHelper.m; sourceTree = "<group>"; };
 		8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterEmailViewController.swift; sourceTree = "<group>"; };
@@ -7767,14 +7764,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		830C28E925E69DD600E9B56E /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				830C28EA25E69DFE00E9B56E /* CopyDataBasesRepository.swift */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		83135B262862120F0015AE2F /* HangOrEndCallScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -7933,9 +7922,9 @@
 			children = (
 				BFFB13312908A54500A6B2CA /* Mocks */,
 				BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */,
+				6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */,
 				8336E3F82906B449000F1E9F /* ChatRoomsListViewModelTests.swift */,
 				83751C5529E5734D0030310B /* MockChatLinkUseCase.swift */,
-				6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -9779,7 +9768,6 @@
 				B645BC31252FAF7000D1D7CF /* Authentication */,
 				838A7B6725D5677500767DB0 /* Calls */,
 				5BC47E2C253F0F7200853323 /* Chat */,
-				830C28E925E69DD600E9B56E /* Data */,
 				830C266F25DFC70B00E9B56E /* Favourites */,
 				83E3463B25B6DE56006F2AD6 /* Files */,
 				B6ADE4DA2732184B00C19F36 /* FileSystem */,
@@ -12643,6 +12631,7 @@
 				2FA4CB71252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift in Sources */,
 				BFE444462914FE1E00AAF882 /* ChatConnectionStatus+Mapper.swift in Sources */,
 				BFD2141F28F7A2430057150E /* ChatContainsMetaEntity+Mapper.swift in Sources */,
+				6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */,
 				BFD2142328F7A2B90057150E /* ChatGeolocationEntity+Mapper.swift in Sources */,
 				2F7E7064251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift in Sources */,
 				BFD2142528F7A2C70057150E /* ChatGiphyEntity+Mapper.swift in Sources */,
@@ -12748,7 +12737,6 @@
 				1243A31D276AB8F100067A8F /* CheckMarkView.swift in Sources */,
 				0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */,
 				BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */,
-				6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */,
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689AA2419135400462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
 				C45093FE270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift in Sources */,
@@ -13987,7 +13975,6 @@
 			files = (
 				83344F58258A1C780052DB3C /* AuthRepository.swift in Sources */,
 				B5925B8E279119E400170CD6 /* Colors+Generated.swift in Sources */,
-				830C28EB25E69DFE00E9B56E /* CopyDataBasesRepository.swift in Sources */,
 				B6F8CE212628232C0074CBBF /* CoreDataErrorHandler.m in Sources */,
 				A82D5CE526BC086E00E73D27 /* CredentialRepository.swift in Sources */,
 				830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */,
@@ -14272,7 +14259,6 @@
 			files = (
 				A868537A29CA16BB006C7A58 /* AppGroupContainer.swift in Sources */,
 				A899466F29716A69008448C4 /* AuthRepository.swift in Sources */,
-				A8994679297182E7008448C4 /* CopyDataBasesRepository.swift in Sources */,
 				A8399FB7296DD5550062B6BC /* CredentialRepository.swift in Sources */,
 				A8399F4B296C40070062B6BC /* FileProviderEnumerator.swift in Sources */,
 				A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */,
@@ -14345,6 +14331,7 @@
 				83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */,
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6FB5F8429A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift in Sources */,
+				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */,
 				8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */,
 				BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */,
@@ -14467,7 +14454,6 @@
 				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,
 				9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */,
 				B5CC2A642994A22800A966A0 /* ShareRepositoryTests.swift in Sources */,
-				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */,
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,

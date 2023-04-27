@@ -1,13 +1,14 @@
 import WidgetKit
 import SwiftUI
 import MEGADomain
+import MEGAData
 
 struct RecentsTimelineProvider: TimelineProvider {
     typealias Entry = QuickAccessWidgetEntry
 
     var viewModel = RecentsQuickAccessWidgetViewModel(
         credentialUseCase: CredentialUseCase(repo: CredentialRepository.newRepo),
-        copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository(fileManager: FileManager.default)),
+        copyDataBasesUseCase: CopyDataBasesUseCase(repo: CopyDataBasesRepository.newRepo),
         recentItemsUseCase: RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance()))
     )
     

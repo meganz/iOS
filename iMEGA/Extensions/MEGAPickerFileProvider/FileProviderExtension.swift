@@ -1,5 +1,6 @@
 import FileProvider
 import MEGADomain
+import MEGAData
 
 final class FileProviderExtension: NSFileProviderExtension {
     private let semaphore = DispatchSemaphore(value: 0)
@@ -283,7 +284,7 @@ final class FileProviderExtension: NSFileProviderExtension {
             return
         }
         
-        let copyDataBasesUseCase = CopyDataBasesUseCase(repo: CopyDataBasesRepository(fileManager: FileManager.default))
+        let copyDataBasesUseCase = CopyDataBasesUseCase(repo: CopyDataBasesRepository.newRepo)
         
         copyDataBasesUseCase.copyFromMainApp { (result) in
             switch result {

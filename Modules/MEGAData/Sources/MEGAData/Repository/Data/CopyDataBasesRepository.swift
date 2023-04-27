@@ -1,26 +1,34 @@
 import MEGADomain
+import Foundation
 
-struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
+public struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
+    public static var newRepo: CopyDataBasesRepository {
+        CopyDataBasesRepository(fileManager: FileManager.default)
+       }
  
     let fileManager: FileManager
     
-    init(fileManager: FileManager) {
+    enum Constants {
+        static let groupIdentifier = "group.mega.ios"
+        static let extensionGroupSupportFolder = "GroupSupport"
+    }
+    
+    public init(fileManager: FileManager) {
         self.fileManager = fileManager
     }
     
-    func applicationSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func applicationSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void) {
         do {
             let applicationSupportDirectoryURL = try fileManager.url(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
             completion(.success(applicationSupportDirectoryURL))
         } catch {
-            MEGALogError("Failed copy Databases From Main App with error: \(error)");
             completion(.failure(.fileManager))
         }
     }
     
-    func groupSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void) {
-        guard let groupSupportURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionGroupSupportFolder) else {
-            MEGALogError("No groupSupportURL")
+    public func groupSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void) {
+        guard let groupSupportURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupIdentifier)?.appendingPathComponent(
+            Constants.extensionGroupSupportFolder) else {
             completion(.failure(.fileManager))
             return
         }
@@ -28,7 +36,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         completion(.success(groupSupportURL))
     }
     
-    func newestModificationDateOfItemAt(url: URL, completion: @escaping (Result<Date, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func newestModificationDateOfItemAt(url: URL, completion: @escaping (Result<Date, GetFavouriteNodesErrorEntity>) -> Void) {
         var newestDate = Date(timeIntervalSince1970: 0)
 
         contentsOfItemAt(url: url) { (result) in
@@ -42,7 +50,6 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
                                 newestDate = date!
                             }
                         } catch {
-                            MEGALogError("Error getting newest modification date of contents at url: \(url)")
                             completion(.failure(.fileManager))
                         }
                     }
@@ -54,18 +61,17 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         }
     }
     
-    func contentsOfItemAt(url: URL, completion: @escaping (Result<[String], GetFavouriteNodesErrorEntity>) -> Void) {
+    public func contentsOfItemAt(url: URL, completion: @escaping (Result<[String], GetFavouriteNodesErrorEntity>) -> Void) {
 
         do {
             let pathContent = try fileManager.contentsOfDirectory(atPath: url.path)
             completion(.success(pathContent))
         } catch {
-            MEGALogError("Error getting contents at url: \(url)")
             completion(.failure(.fileManager))
         }
     }
     
-    func removeContentsOfItemAt(url: URL, completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func removeContentsOfItemAt(url: URL, completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         contentsOfItemAt(url: url) { (result) in
             switch result {
             case .success(let pathContent):
@@ -74,7 +80,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
                         do {
                             try fileManager.removeItem(at: url.appendingPathComponent(filename))
                         } catch {
-                            MEGALogError("Failed remove item: \(error)");
+                            completion(.failure(.fileManager))
                         }
                     }
                 }
@@ -85,7 +91,7 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
         }
     }
     
-    func copyContentsOfItemAt(url: URL, to destination: URL, completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
+    public func copyContentsOfItemAt(url: URL, to destination: URL, completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         contentsOfItemAt(url: url) { (result) in
             switch result {
             case .success(let pathContent):
@@ -97,7 +103,6 @@ struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
                     }
                     completion(.success(()))
                 } catch  {
-                    MEGALogError("Failed copy items from group to application support with error: \(error)");
                     completion(.failure(.fileManager))
                 }
             case .failure(_):

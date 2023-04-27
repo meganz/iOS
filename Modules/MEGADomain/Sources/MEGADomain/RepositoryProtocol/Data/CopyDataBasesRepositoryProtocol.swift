@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol CopyDataBasesRepositoryProtocol {
+public protocol CopyDataBasesRepositoryProtocol: RepositoryProtocol {
     func applicationSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void)
     func groupSupportDirectoryURL(completion: @escaping (Result<URL, GetFavouriteNodesErrorEntity>) -> Void)
     func newestModificationDateOfItemAt(url: URL, completion: @escaping (Result<Date, GetFavouriteNodesErrorEntity>) -> Void)
