@@ -48,7 +48,7 @@ struct AccountRepository: AccountRepositoryProtocol {
         sdk.getAccountDetails(with: RequestDelegate { (result) in
             switch result {
             case .success(let request):
-                completion(.success(AccountDetailsEntity(accountDetails: request.megaAccountDetails)))
+                completion(.success(request.megaAccountDetails.toAccountDetailsEntity()))
             case .failure:
                 completion(.failure(.generic))
             }

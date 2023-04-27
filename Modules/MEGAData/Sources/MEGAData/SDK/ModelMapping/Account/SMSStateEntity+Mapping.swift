@@ -1,8 +1,8 @@
-import Foundation
 import MEGADomain
+import MEGASdk
 
 extension SMSState {
-    func toStateEntity() -> SMSStateEntity {
+    public func toStateEntity() -> SMSStateEntity {
         SMSStateEntity.init(rawValue: self.rawValue) ?? .notAllowed
     }
 }
