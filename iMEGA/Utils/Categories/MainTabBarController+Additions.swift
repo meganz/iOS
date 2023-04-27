@@ -1,11 +1,11 @@
 import MEGADomain
+import MEGAData
 
 extension MainTabBarController {
     
     @objc func createPSAViewModel() -> PSAViewModel? {
         let router = PSAViewRouter(tabBarController: self)
-        let repo = PSARepository(sdk: MEGASdkManager.sharedMEGASdk())
-        let useCase = PSAUseCase(repo: repo)
+        let useCase = PSAUseCase(repo: PSARepository.newRepo)
         return PSAViewModel(router: router, useCase: useCase)
     }
     

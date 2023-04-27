@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension MEGARequest {
-    func toPSAEntity() -> PSAEntity {
+    public func toPSAEntity() -> PSAEntity {
         PSAEntity(
             identifier: number.intValue,
             title: name,
@@ -13,7 +14,7 @@ extension MEGARequest {
         )
     }
     
-    func toFileURL() -> URL? {
+    public func toFileURL() -> URL? {
         guard let path = file else {
             return nil
         }
@@ -21,11 +22,11 @@ extension MEGARequest {
         return URL(string: path)
     }
     
-    func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
+    public func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
         sdk.node(forHandle: nodeHandle)
     }
     
-    func toNodeEntity(in sdk: MEGASdk) -> NodeEntity? {
+    public func toNodeEntity(in sdk: MEGASdk) -> NodeEntity? {
         toMEGANode(in: sdk)?.toNodeEntity()
     }
 }

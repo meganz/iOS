@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension MEGANodeLabel {
-    init?(nodeLabelTypeEntity: NodeLabelTypeEntity) {
+    public init?(nodeLabelTypeEntity: NodeLabelTypeEntity) {
         switch nodeLabelTypeEntity {
         case .unknown:
             self = .unknown
@@ -22,7 +23,7 @@ extension MEGANodeLabel {
         }
     }
     
-    func toNodeLabelTypeEntity() -> NodeLabelTypeEntity {
+    public func toNodeLabelTypeEntity() -> NodeLabelTypeEntity {
         switch self {
         case .unknown:
             return .unknown

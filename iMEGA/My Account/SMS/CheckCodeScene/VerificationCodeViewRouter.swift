@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAData
 
 final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     private weak var baseViewController: UIViewController?
@@ -15,10 +16,9 @@ final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
         let vm = VerificationCodeViewModel(router: self,
-                                           checkSMSUseCase: CheckSMSUseCase(repo: SMSRepository(sdk: sdk)),
-                                           authUseCase: AuthUseCase(repo: AuthRepository(sdk: sdk), credentialRepo: CredentialRepository()),
+                                           checkSMSUseCase: CheckSMSUseCase(repo: SMSRepository.newRepo),
+                                           authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository()),
                                            verificationType: verificationType,
                                            phoneNumber: phoneNumber)
         

@@ -1,23 +1,24 @@
 import Foundation
 import MEGADomain
 import MEGAFoundation
+import MEGASdk
 
-struct AchievementRepository: AchievementRepositoryProtocol {
-    static var newRepo: AchievementRepository {
-        AchievementRepository(sdk: MEGASdkManager.sharedMEGASdk())
+public struct AchievementRepository: AchievementRepositoryProtocol {
+    public static var newRepo: AchievementRepository {
+        AchievementRepository(sdk: MEGASdk.sharedSdk)
     }
     
     private let sdk: MEGASdk
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
     
-    func checkIsAchievementsEnabled() -> Bool {
+    public func checkIsAchievementsEnabled() -> Bool {
         sdk.isAchievementsEnabled
     }
     
-    func getAchievementStorage(by type: AchievementTypeEntity, completion: @escaping (Result<Measurement<UnitDataStorage>, AchievementErrorEntity>) -> Void) {
+    public func getAchievementStorage(by type: AchievementTypeEntity, completion: @escaping (Result<Measurement<UnitDataStorage>, AchievementErrorEntity>) -> Void) {
         getAchievementDetails {
             completion(
                 $0.map { achievementDetails in
@@ -31,13 +32,13 @@ struct AchievementRepository: AchievementRepositoryProtocol {
     }
     
     private func getAchievementDetails(completion: @escaping (Result<MEGAAchievementsDetails, MEGAError>) -> Void) {
-        sdk.getAccountAchievements(with: MEGAGenericRequestDelegate { (request, error) in
-            guard error.type == .apiOk else {
+        sdk.getAccountAchievements(with: RequestDelegate { result in
+            switch result {
+            case .success(let request):
+                completion(.success(request.megaAchievementsDetails))
+            case .failure(let error):
                 completion(.failure(error))
-                return
             }
-            
-            completion(.success(request.megaAchievementsDetails))
         })
     }
 }

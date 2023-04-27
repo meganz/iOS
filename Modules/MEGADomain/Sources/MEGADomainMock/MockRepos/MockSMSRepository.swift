@@ -2,6 +2,10 @@ import Foundation
 import MEGADomain
 
 public struct MockSMSRepository: SMSRepositoryProtocol {
+    public static var newRepo: MockSMSRepository {
+        MockSMSRepository()
+    }
+    
     private let verifiedNumber: String?
     private let smsState: SMSStateEntity
     private let regionCodesResult: Result<[RegionEntity], GetSMSErrorEntity>

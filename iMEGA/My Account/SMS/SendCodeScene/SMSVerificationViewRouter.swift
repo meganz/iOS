@@ -21,13 +21,12 @@ final class SMSVerificationViewRouter: NSObject, SMSVerificationViewRouting {
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
-        let repo = SMSRepository(sdk: sdk)
+        let repo = SMSRepository.newRepo
         let smsUseCase = SMSUseCase(getSMSUseCase: GetSMSUseCase(repo: repo, l10n: L10nRepository()), checkSMSUseCase: CheckSMSUseCase(repo: repo))
         let vm = SMSVerificationViewModel(router: self,
                                           smsUseCase: smsUseCase,
-                                          achievementUseCase: AchievementUseCase(repo: AchievementRepository(sdk: sdk)),
-                                          authUseCase: AuthUseCase(repo: AuthRepository(sdk: sdk), credentialRepo: CredentialRepository()),
+                                          achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
+                                          authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository()),
                                           verificationType: verificationType)
         
         let vc = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "SMSVerificationViewControllerID") as! SMSVerificationViewController
