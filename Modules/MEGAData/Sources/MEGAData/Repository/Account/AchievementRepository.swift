@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 import MEGAFoundation
 import MEGASdk
+import MEGASwift
 
 public struct AchievementRepository: AchievementRepositoryProtocol {
     public static var newRepo: AchievementRepository {
@@ -18,27 +19,21 @@ public struct AchievementRepository: AchievementRepositoryProtocol {
         sdk.isAchievementsEnabled
     }
     
-    public func getAchievementStorage(by type: AchievementTypeEntity, completion: @escaping (Result<Measurement<UnitDataStorage>, AchievementErrorEntity>) -> Void) {
-        getAchievementDetails {
-            completion(
-                $0.map { achievementDetails in
-                    .bytes(of: achievementDetails.classStorage(forClassId: type.rawValue))
-                }
-                .mapError { _ in
-                    AchievementErrorEntity.generic
-                }
-            )
-        }
+    public func getAchievementStorage(by type: AchievementTypeEntity) async throws -> Measurement<UnitDataStorage> {
+        let achievementDetails = try await getAchievementDetails()
+        return Measurement<UnitDataStorage>.bytes(of: achievementDetails.classStorage(for: type))
     }
-    
-    private func getAchievementDetails(completion: @escaping (Result<MEGAAchievementsDetails, MEGAError>) -> Void) {
-        sdk.getAccountAchievements(with: RequestDelegate { result in
-            switch result {
-            case .success(let request):
-                completion(.success(request.megaAchievementsDetails))
-            case .failure(let error):
-                completion(.failure(error))
-            }
+
+    public func getAchievementDetails() async throws -> AchievementDetailsEntity {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.getAccountAchievements(with: RequestDelegate(completion: { result in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.megaAchievementsDetails.toAchievementDetailsEntity()))
+                case .failure:
+                    completion(.failure(AchievementErrorEntity.generic))
+                }
+            }))
         })
     }
 }

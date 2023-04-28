@@ -4,15 +4,17 @@ import MEGADomainMock
 
 final class AchievementUseCaseTests: XCTestCase {
     
-    func testGetAchievementStorage_disabled() {
-        let sut = AchievementUseCase(repo: MockAchievementRepository(isAchievementsEnabled: false, storageResult: .success(.bytes(of: 1000))))
-        sut.getAchievementStorage(by: .addPhone) { result in
-            switch result {
-            case .success:
+    func testGetAchievementStorage_disabled() async {
+        let sut = AchievementUseCase(repo: MockAchievementRepository(isAchievementsEnabled: false, storageResult: .bytes(of: 1000)))
+        do {
+            let _ = try await sut.getAchievementStorage(by: .addPhone)
+            XCTFail("achievementsDisabled error is expected!")
+        } catch let error {
+            guard let achievementError = error as? AchievementErrorEntity else {
                 XCTFail("achievementsDisabled error is expected!")
-            case .failure(let error):
-                XCTAssertEqual(error, .achievementsDisabled)
+                return
             }
+            XCTAssertEqual(achievementError, .achievementsDisabled)
         }
     }
 }

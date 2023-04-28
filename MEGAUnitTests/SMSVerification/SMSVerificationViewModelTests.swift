@@ -25,7 +25,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
             
             let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),
                                                smsUseCase: sms,
-                                               achievementUseCase: MockAchievementUseCase(result: .failure(error)),
+                                               achievementUseCase: MockAchievementUseCase(),
                                                authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                                verificationType: .addPhoneNumber)
             
