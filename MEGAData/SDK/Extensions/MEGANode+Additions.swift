@@ -91,7 +91,7 @@ extension MEGANode {
                                   (self.isFile() && isNewNameWithoutExtension)
             )
             
-            if isNewNameWithoutExtension, let name = self.name {
+            if isNewNameWithoutExtension, let name = self.name, self.isFile() {
                 renameAlertController.title = Strings.Localizable.Rename.fileWithoutExtension((name as NSString).pathExtension)
                 renameAlertController.textFields?.first?.textColor = UIColor.mnz_redError()
                 
