@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension SortOrderEntity {
-    func toMEGASortOrderType() -> MEGASortOrderType {
+    public func toMEGASortOrderType() -> MEGASortOrderType {
         switch self {
         case .none:
             return .none
@@ -46,7 +47,7 @@ extension SortOrderEntity {
 }
 
 extension MEGASortOrderType {
-    func toSortOrderEntity() -> SortOrderEntity {
+    public func toSortOrderEntity() -> SortOrderEntity {
         switch self {
         case .none:
             return .none

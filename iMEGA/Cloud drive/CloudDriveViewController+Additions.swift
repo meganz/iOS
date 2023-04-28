@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 extension CloudDriveViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {

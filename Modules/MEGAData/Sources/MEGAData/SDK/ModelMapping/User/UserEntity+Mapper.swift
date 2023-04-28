@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension MEGAUserVisibility {
-    func toVisibilityEntity() -> UserEntity.VisibilityEntity {
+    public func toVisibilityEntity() -> UserEntity.VisibilityEntity {
         switch self {
         case .unknown:
             return .unknown
@@ -20,13 +21,13 @@ extension MEGAUserVisibility {
 }
 
 extension MEGAUserChangeType {
-    func toChangeTypeEntity() -> UserEntity.ChangeTypeEntity {
+    public func toChangeTypeEntity() -> UserEntity.ChangeTypeEntity {
         UserEntity.ChangeTypeEntity(rawValue: rawValue)
     }
 }
 
 extension MEGAUser {
-    func toUserEntity() -> UserEntity {
+    public func toUserEntity() -> UserEntity {
         let changeSource: UserEntity.ChangeSource
         if isOwnChange == 0 {
             changeSource = .externalChange
@@ -46,7 +47,7 @@ extension MEGAUser {
 }
 
 extension MEGAUserList {
-    func toUserEntities() -> [UserEntity] {
+    public func toUserEntities() -> [UserEntity] {
         let count = size?.intValue ?? 0
         guard count > 0 else { return [] }
         return (0..<count).compactMap { user(at: $0)?.toUserEntity() }
@@ -54,7 +55,7 @@ extension MEGAUserList {
 }
 
 extension UserEntity {
-    func toMEGAUser() -> MEGAUser? {
-        MEGASdk.shared.contact(forEmail: email)
+    public func toMEGAUser() -> MEGAUser? {
+        MEGASdk.sharedSdk.contact(forEmail: email)
     }
 }

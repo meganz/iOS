@@ -1,4 +1,4 @@
-public protocol ShareUseCaseProtocol: Sendable {
+public protocol ShareUseCaseProtocol {
     func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity]
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity]
     func createShareKeys(forNodes nodes: [NodeEntity]) async throws -> [HandleEntity]
