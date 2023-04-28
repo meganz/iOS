@@ -1,20 +1,18 @@
-import Foundation
+import MEGASdk
 import MEGADomain
-import MEGAData
 
-struct ShareRepository: ShareRepositoryProtocol {
-    
-    static var newRepo: ShareRepository {
-        ShareRepository(sdk: MEGASdkManager.sharedMEGASdk())
+public struct ShareRepository: ShareRepositoryProtocol {
+    public static var newRepo: ShareRepository {
+        ShareRepository(sdk: MEGASdk.sharedSdk)
     }
     
     private let sdk: MEGASdk
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
     
-    func user(sharing node: NodeEntity) -> UserEntity? {
+    public func user(sharing node: NodeEntity) -> UserEntity? {
         guard let megaNode = node.toMEGANode(in: sdk) else {
             return nil
         }
@@ -22,16 +20,16 @@ struct ShareRepository: ShareRepositoryProtocol {
         return sdk.userFrom(inShare: megaNode)?.toUserEntity()
     }
     
-    func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
+    public func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity] {
         sdk.publicLinks(order.toMEGASortOrderType())
             .toNodeEntities()
     }
-
-    func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity] {
+    
+    public func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity] {
         sdk.outShares(order.toMEGASortOrderType()).toShareEntities()
     }
     
-    func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity {
+    public func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity {
         guard let sharedNode = node.toMEGANode(in: sdk) else { throw ShareErrorEntity.nodeNotFound }
         
         return try await withCheckedThrowingContinuation { continuation in

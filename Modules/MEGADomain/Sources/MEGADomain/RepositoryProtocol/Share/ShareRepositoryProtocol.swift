@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol ShareRepositoryProtocol: RepositoryProtocol, Sendable {
+public protocol ShareRepositoryProtocol: RepositoryProtocol {
     func user(sharing node: NodeEntity) -> UserEntity?
     func allPublicLinks(sortBy order: SortOrderEntity) -> [NodeEntity]
     func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity]

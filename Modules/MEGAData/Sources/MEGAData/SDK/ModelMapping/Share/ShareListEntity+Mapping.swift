@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension MEGAShareType {
-    func toShareAccessLevelEntity() -> ShareAccessLevelEntity {
+    public func toShareAccessLevelEntity() -> ShareAccessLevelEntity {
         switch self {
         case .accessUnknown:
             return .unknown
@@ -20,7 +21,7 @@ extension MEGAShareType {
 }
 
 extension MEGAShare {
-    func toShareEntity() -> ShareEntity {
+    public func toShareEntity() -> ShareEntity {
         ShareEntity(sharedUserEmail: user,
                     nodeHandle: nodeHandle,
                     accessLevel: access.toShareAccessLevelEntity(),
@@ -31,7 +32,7 @@ extension MEGAShare {
 }
 
 extension MEGAShareList {
-    func toShareEntities() -> [ShareEntity] {
+    public func toShareEntities() -> [ShareEntity] {
         guard let count = size?.intValue else {
             return []
         }
