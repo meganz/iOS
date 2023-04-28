@@ -76,7 +76,7 @@ final class AlbumListViewModelTests: XCTestCase {
         
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testHasCustomAlbum_whenUserLoadAlbums_shouldReturnTrue() async throws {

@@ -83,7 +83,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteURL, type: .preview)))
     }
     
@@ -106,22 +106,20 @@ final class PhotoCellViewModelTests: XCTestCase {
             mediaUseCase: MockMediaUseCase()
         )
         
-        let exp = expectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail should not be changed")
+        exp.isInverted = true
+        
         sut.$thumbnailContainer
             .dropFirst()
             .sink { _ in
-                XCTFail("Thumbnail should not be changed")
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         allViewModel.zoomState.zoom(.out)
         XCTAssertEqual(sut.currentZoomScaleFactor, .five)
         XCTAssertNil(sut.thumbnailLoadingTask)
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("Thumbnail should not be changed")
-            return
-        }
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testLoadThumbnail_hasCachedThumbnail_showThumbnailUponInit() async throws {
@@ -155,23 +153,20 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.thumbnailContainer = ImageContainer(image: Image(systemName: "heart"), type: .thumbnail)
         
-        let exp = expectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail should not be changed")
+        exp.isInverted = true
+        
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTFail("Thumbnail should not be changed")
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
         
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("Thumbnail should not be changed")
-            return
-        }
-        
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(systemName: "heart"), type: .thumbnail)))
     }
     
@@ -185,23 +180,19 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
         
-        let exp = expectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail should not be changed")
+        exp.isInverted = true
+        
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTFail("thumbnail should not be changed")
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("thumbnail should not be changed")
-            return
-        }
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testLoadThumbnail_noCachedThumbnailAndNonSingleColumn_loadThumbnail() async throws {
@@ -237,7 +228,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remoteThumbnailURL, type: .thumbnail)))
     }
     
@@ -278,7 +269,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
         XCTAssertTrue(expectedContainers.isEmpty)
     }
@@ -305,24 +296,20 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
-        let exp = expectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail should not be changed")
+        exp.isInverted = true
+        
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTFail("thumbnail should not be changed")
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("thumbnail should not be changed")
-            return
-        }
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testLoadThumbnail_hasCachedThumbnailAndNonSingleColumnAndDifferentRemoteThumbnail_noLoading() async throws {
@@ -352,24 +339,20 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
         
-        let exp = expectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail should not be changed")
+        exp.isInverted = true
+        
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTFail("thumbnail should not be changed")
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("thumbnail should not be changed")
-            return
-        }
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testLoadThumbnail_hasCachedThumbnailAndZoomInToSingleColumnAndSameRemoteThumbnail_onlyLoadPreview() async throws {
@@ -406,7 +389,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
     }
     
@@ -452,7 +435,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: remotePreviewURL, type: .preview)))
         XCTAssertTrue(expectedContainers.isEmpty)
     }
@@ -492,7 +475,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: previewURL, type: .preview)))
     }
     
@@ -541,7 +524,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         allViewModel.zoomState.zoom(.in)
         XCTAssertEqual(sut.currentZoomScaleFactor, .one)
         await sut.thumbnailLoadingTask?.value
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL, type: .preview)))
     }
     
@@ -569,22 +552,18 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
         
-        let exp = expectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail should not be changed")
+        exp.isInverted = true
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTFail("thumbnail should not be changed")
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("thumbnail should not be changed")
-            return
-        }
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testLoadThumbnail_hasCachedPreviewAndSingleColumnAndHasDifferentCachedPreview_noLoading() async throws {
@@ -615,22 +594,19 @@ final class PhotoCellViewModelTests: XCTestCase {
         )
         
         sut.thumbnailContainer = try XCTUnwrap(URLImageContainer(imageURL: localURL, type: .preview))
-        let exp = expectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail should not be changed")
+        exp.isInverted = true
+        
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTFail("thumbnail should not be changed")
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("thumbnail should not be changed")
-            return
-        }
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testLoadThumbnail_hasCachedThumbnailAndPreviewAndSingleColumn_showPreviewAndNoLoading() async throws {
@@ -669,22 +645,19 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL, type: .preview)))
         
-        let exp = expectation(description: "thumbnail is changed")
+        let exp = expectation(description: "thumbnail should not be changed")
+        exp.isInverted = true
+        
         sut.$thumbnailContainer
             .dropFirst()
             .sink { container in
-                XCTFail("thumbnail should not be changed")
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         sut.startLoadingThumbnail()
         await sut.thumbnailLoadingTask?.value
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL, type: .preview)))
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("thumbnail should not be changed")
-            return
-        }
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testIsSelected_notSelectedAndSelect_selected() {
@@ -852,22 +825,19 @@ final class PhotoCellViewModelTests: XCTestCase {
         )
         XCTAssertFalse(sut.isFavorite)
         
-        let exp = expectation(description: "isFavourite is updated")
+        let exp = expectation(description: "isFavourite should not be updated")
+        exp.isInverted = true
+        
         sut.$isFavorite
             .dropFirst()
-            .sink { isFavorite in
-                XCTFail("isFavourite should not be updated")
+            .sink { _ in
+                exp.fulfill()
             }
             .store(in: &subscriptions)
         
         NotificationCenter.default.post(name: .didPhotoFavouritesChange,
                                         object: [NodeEntity(name: "00.jpg", handle: 1, isFavourite: true)])
-        let result = XCTWaiter.wait(for: [exp], timeout: 2.0)
-        XCTAssertFalse(sut.isFavorite)
-        guard case XCTWaiter.Result.timedOut = result else {
-            XCTFail("isFavourite should not be updated")
-            return
-        }
+        wait(for: [exp], timeout: 1.0)
     }
     
     func testShouldShowEditState_editing() {

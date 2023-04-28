@@ -19,17 +19,17 @@ final class PhotoCellVideoDurationViewModelTests: XCTestCase {
     }
     
     func testShouldShowDurationDetail_video_validDuration() {
-        var sut = PhotoCellVideoDurationViewModel(isVideo: true, duration: "01:00")
+        let sut = PhotoCellVideoDurationViewModel(isVideo: true, duration: "01:00")
         XCTAssertTrue(sut.shouldShowDurationDetail)
     }
     
     func testShouldShowDurationDetail_video_invalidDuration() {
-        var sut = PhotoCellVideoDurationViewModel(isVideo: true, duration: "")
+        let sut = PhotoCellVideoDurationViewModel(isVideo: true, duration: "")
         XCTAssertFalse(sut.shouldShowDurationDetail)
     }
     
     func testShouldShowDurationDetail_notVideo_invalidDuration() {
-        var sut = PhotoCellVideoDurationViewModel(isVideo: false, duration: "")
+        let sut = PhotoCellVideoDurationViewModel(isVideo: false, duration: "")
         XCTAssertFalse(sut.shouldShowDurationDetail)
     }
 
