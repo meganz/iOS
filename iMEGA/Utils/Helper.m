@@ -418,8 +418,11 @@
             MEGANode *node = (MEGANode *)object;
             [MEGAStore.shareInstance insertOrUpdateCloudSortTypeWithHandle:node.handle sortType:selectedSortOrderType];
         } else if ([object isKindOfClass:NSString.class]) {
-            NSString *offlinePath = (NSString *)object;
-            [MEGAStore.shareInstance insertOrUpdateOfflineSortTypeWithPath:offlinePath sortType:selectedSortOrderType];
+            NSString *relativeOfflinePath = [self pathRelativeToOfflineDirectory:(NSString *)object];
+            if ([relativeOfflinePath length] == 0) {
+                relativeOfflinePath = @"Documents";
+            }
+            [MEGAStore.shareInstance insertOrUpdateOfflineSortTypeWithPath:relativeOfflinePath sortType:selectedSortOrderType];
         }
                 
         [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(sortingPreference), MEGASortingPreferenceType : @(selectedSortOrderType)}];
@@ -441,8 +444,11 @@
                 CloudAppearancePreference *cloudAppearancePreference = [MEGAStore.shareInstance fetchCloudAppearancePreferenceWithHandle:node.handle];
                 sortType = cloudAppearancePreference ? cloudAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
             } else if ([object isKindOfClass:NSString.class]) {
-                NSString *offlinePath = (NSString *)object;
-                OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath:offlinePath];
+                NSString *relativeOfflinePath = [self pathRelativeToOfflineDirectory:(NSString *)object];
+                if ([relativeOfflinePath length] == 0) {
+                    relativeOfflinePath = @"Documents";
+                }
+                OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath: relativeOfflinePath];
                 sortType = offlineAppearancePreference ? offlineAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
             } else {
                 sortType = MEGASortOrderTypeDefaultAsc;
