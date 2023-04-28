@@ -41,7 +41,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         sut.onDone()
         await sut.photosLoadingTask?.value
         XCTAssertTrue(sut.isDismiss)
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testOnCancel_dismissSetToTrue() {
@@ -147,7 +147,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         
         sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = .allLocations
         await sut.photosLoadingTask?.value
-        wait(for: [exp], timeout: 1.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertEqual(sut.photoSourceLocation, .allLocations)
     }
     
@@ -169,7 +169,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         
         sut.photoLibraryContentViewModel.filterViewModel.appliedFilterLocation = expectedLocation
         await sut.photosLoadingTask?.value
-        wait(for: [exp], timeout: 1.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertEqual(sut.photoSourceLocationNavigationTitle, expectedLocation.localization)
     }
     
@@ -240,7 +240,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
             .store(in: &subscriptions)
         
         await sut.photosLoadingTask?.value
-        wait(for: [exp], timeout: 1.0)
+        await fulfillment(of: [exp], timeout: 1.0)
         XCTAssertTrue(sut.shouldRemoveFilter)
     }
     

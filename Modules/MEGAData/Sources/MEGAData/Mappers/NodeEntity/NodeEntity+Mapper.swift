@@ -89,7 +89,7 @@ fileprivate extension NodeEntity {
 }
 
 fileprivate extension String {
-    public func toMediaTypeEntity() -> MediaTypeEntity? {
+    func toMediaTypeEntity() -> MediaTypeEntity? {
         let pathExtension = URL(fileURLWithPath: self).pathExtension.lowercased()
         if ImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) ||
             RawImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) {
