@@ -14,7 +14,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
 
         for flag in hideDontShowAgains {
             let sut = AddPhoneNumberViewModel(router: MockAddPhoneNumberRouter(),
-                                              achievementUseCase: MockAchievementUseCase(result: .success(.bytes(of: 1000))),
+                                              achievementUseCase: MockAchievementUseCase(result: .bytes(of: 1000)),
                                               hideDontShowAgain: flag)
             
             test(viewModel: sut,
@@ -29,7 +29,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         
         for error in errors {
             let sut = AddPhoneNumberViewModel(router: MockAddPhoneNumberRouter(),
-                                              achievementUseCase: MockAchievementUseCase(result: .failure(error)),
+                                              achievementUseCase: MockAchievementUseCase(),
                                               hideDontShowAgain: false)
             test(viewModel: sut,
                  action: .onViewReady,
@@ -41,7 +41,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
     func testAction_addPhoneNumber() {
         let router = MockAddPhoneNumberRouter()
         let sut = AddPhoneNumberViewModel(router: router,
-                                          achievementUseCase: MockAchievementUseCase(result: .failure(.generic)),
+                                          achievementUseCase: MockAchievementUseCase(),
                                           hideDontShowAgain: false)
         
         test(viewModel: sut, action: .addPhoneNumber, expectedCommands: [])
@@ -51,7 +51,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
     func testAction_notNow() {
         let router = MockAddPhoneNumberRouter()
         let sut = AddPhoneNumberViewModel(router: router,
-                                          achievementUseCase: MockAchievementUseCase(result: .failure(.generic)),
+                                          achievementUseCase: MockAchievementUseCase(),
                                           hideDontShowAgain: false)
         
         test(viewModel: sut, action: .notNow, expectedCommands: [])
@@ -65,7 +65,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         XCTAssertTrue(preference[.dontShowAgainAddPhoneNumber] == Optional<Bool>.none)
         
         let sut = AddPhoneNumberViewModel(router: router,
-                                          achievementUseCase: MockAchievementUseCase(result: .failure(.generic)),
+                                          achievementUseCase: MockAchievementUseCase(),
                                           preferenceUseCase: preference,
                                           hideDontShowAgain: false)
         
