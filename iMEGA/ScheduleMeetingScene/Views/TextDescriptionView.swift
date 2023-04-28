@@ -54,6 +54,8 @@ struct FocusableTextDescriptionView: View {
                 .padding(.horizontal)
             }
         }
+        .font(.footnote)
+        .lineSpacing(-2)
         .focused($focused)
         .onChange(of: focused) { isFocused in
             onChange(isFocused)
@@ -67,6 +69,7 @@ struct FocusableTextDescriptionView: View {
                     Text(Strings.Localizable.Meetings.Info.descriptionLabel)
                         .frame(maxWidth: .infinity, maxHeight: Constants.titleHeight, alignment: .leading)
                         .padding(.horizontal)
+                        .font(.body)
                     Spacer()
                 }
             }
