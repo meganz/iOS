@@ -6,9 +6,9 @@ import MEGADataMock
 final class NodeValidationRepositoryTests: XCTestCase {
 
     func test_isNode_desdendantOf_ancestor() async {
-        let grandParentNode = await MockNode(handle: 1)
-        let parentNode = await MockNode(handle: 2, parentHandle: 1)
-        let childNode = await MockNode(handle: 3, parentHandle: 2)
+        let grandParentNode = MockNode(handle: 1)
+        let parentNode = MockNode(handle: 2, parentHandle: 1)
+        let childNode = MockNode(handle: 3, parentHandle: 2)
         
         let sdk = MockSdk(nodes: [grandParentNode, parentNode, childNode])
         let repo = NodeValidationRepository(sdk: sdk)

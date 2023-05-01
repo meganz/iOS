@@ -20,7 +20,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         let errors: [AchievementErrorEntity] = [.achievementsDisabled, .generic]
         let message = Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA
         
-        for error in errors {
+        errors.forEach { _ in
             let sms = SMSUseCase(getSMSUseCase: MockGetSMSUseCase(), checkSMSUseCase: MockCheckSMSUseCase())
             
             let sut = SMSVerificationViewModel(router: MockSMSVerificationViewRouter(),

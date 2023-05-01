@@ -62,7 +62,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         
         shouldLoadAvatar = false
         loadingChatRoomAvatarTask = Task { [weak self] in
-            guard let `self` = self else { return }
+            guard let self else { return }
             
             defer { cancelLoadingTask() }
             

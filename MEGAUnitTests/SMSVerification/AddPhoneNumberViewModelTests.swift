@@ -11,7 +11,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         let hideDontShowAgains = [true, false]
         
         let text = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(String.memoryStyleString(fromByteCount: 1000))
-
+        
         for flag in hideDontShowAgains {
             let sut = AddPhoneNumberViewModel(router: MockAddPhoneNumberRouter(),
                                               achievementUseCase: MockAchievementUseCase(result: .bytes(of: 1000)),
@@ -27,7 +27,7 @@ final class AddPhoneNumberViewModelTests: XCTestCase {
         let errors: [AchievementErrorEntity] = [.generic, .achievementsDisabled]
         let message = Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA
         
-        for error in errors {
+        errors.forEach { _ in
             let sut = AddPhoneNumberViewModel(router: MockAddPhoneNumberRouter(),
                                               achievementUseCase: MockAchievementUseCase(),
                                               hideDontShowAgain: false)

@@ -174,6 +174,6 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         viewModel.dispatch(.onViewReady)
         await viewModel.loadNameTask?.value
         userImageUseCase.avatarChangePublisher.send([100])
-        await waitForExpectations(timeout: 1)
+        await fulfillment(of: [expectation], timeout: 1.0)
     }
 }

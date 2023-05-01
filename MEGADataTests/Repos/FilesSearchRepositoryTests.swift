@@ -28,7 +28,7 @@ final class FilesSearchRepositoryTests: XCTestCase {
     
     func testFetchNodeForHandle_onRetrieval_shouldMapToNodeEnity() async {
         let handle = HandleEntity(25)
-        let mockNode = await MockNode(handle: handle)
+        let mockNode = MockNode(handle: handle)
         let repo = FilesSearchRepository(sdk: MockSdk(nodes: [mockNode]))
         let result = await repo.node(by: handle)
         XCTAssertEqual(result, mockNode.toNodeEntity())

@@ -15,6 +15,7 @@ extension FutureMeetingRoomViewModel {
         callUseCase: CallUseCaseProtocol = MockCallUseCase(),
         audioSessionUseCase: AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
+        megaHandleUseCase: MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
         isTesting: Bool = true
     ) {
@@ -30,6 +31,7 @@ extension FutureMeetingRoomViewModel {
             callUseCase: callUseCase,
             audioSessionUseCase: audioSessionUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,
+            megaHandleUseCase: megaHandleUseCase,
             chatNotificationControl: chatNotificationControl
         )
     }
