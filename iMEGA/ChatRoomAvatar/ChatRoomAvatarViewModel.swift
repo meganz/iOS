@@ -19,6 +19,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var loadingChatRoomAvatarTask: Task<Void, Never>?
     private var loadingAvatarSubscription: AnyCancellable?
+    private var shouldLoadAvatar = true
     
     init(
         title: String,
@@ -52,19 +53,14 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     
     func cancelLoading() {
         cancelLoadingTask()
-        
-        subscriptions.removeAll()
     }
     
     //MARK: - Private methods
     
     private func loadChatRoomAvatarIfNeeded(isRightToLeftLanguage: Bool) {
-        if chatRoomEntity.peers.count > 1 {
-            guard primaryAvatar == nil, secondaryAvatar == nil else { return }
-        } else {
-            guard primaryAvatar == nil else { return }
-        }
+        guard shouldLoadAvatar else { return }
         
+        shouldLoadAvatar = false
         loadingChatRoomAvatarTask = Task { [weak self] in
             guard let `self` = self else { return }
             
@@ -73,6 +69,8 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             do {
                 try await fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
             } catch {
+                shouldLoadAvatar = true
+                subscriptions.removeAll()
                 MEGALogDebug("Unable to fetch avatar for \(chatRoomEntity.chatId) - \(error.localizedDescription)")
             }
         }
@@ -83,7 +81,6 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         loadingChatRoomAvatarTask = nil
     }
     
-    @MainActor
     private func subscribeToAvatarUpdateNotification(forHandles handles: [HandleEntity]) {
         subscriptions.removeAll()
         
@@ -117,7 +114,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                         let primaryAvatar = try await createAvatar(withHandle: primaryAvatarUserHandle,
                                                                    isRightToLeftLanguage: isRightToLeftLanguage)
                         await updatePrimaryAvatar(primaryAvatar)
-                        await subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle])
+                        subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle])
                     } else {
                         let secondaryAvatarUserHandle = chatRoom.peers[1].handle
                         let primaryAvatar = try await createAvatar(withHandle: primaryAvatarUserHandle,
@@ -128,7 +125,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                         await updatePrimaryAvatar(primaryAvatar)
                         await updateSecondaryAvatar(secondaryAvatar)
                         
-                        await subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle, secondaryAvatarUserHandle])
+                        subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle, secondaryAvatarUserHandle])
                         
                         let downloadedSecondaryAvatar = try await downloadAvatar(forHandle: secondaryAvatarUserHandle)
                         await updateSecondaryAvatar(downloadedSecondaryAvatar)
@@ -143,7 +140,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                 await updatePrimaryAvatar(avatar)
             }
             
-            await subscribeToAvatarUpdateNotification(forHandles: [peerHandle])
+            subscribeToAvatarUpdateNotification(forHandles: [peerHandle])
             
             let downloadedAvatar = try await downloadAvatar(forHandle: peerHandle)
             await updatePrimaryAvatar(downloadedAvatar)
