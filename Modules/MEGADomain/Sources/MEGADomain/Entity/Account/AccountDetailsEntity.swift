@@ -1,4 +1,4 @@
-public enum AccountTypeEntity {
+public enum AccountTypeEntity: Sendable {
     case free
     case proI
     case proII
