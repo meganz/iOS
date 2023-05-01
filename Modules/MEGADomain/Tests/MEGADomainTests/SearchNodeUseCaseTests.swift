@@ -29,7 +29,7 @@ final class SearchNodeUseCaseTests: XCTestCase {
         XCTAssertEqual(nodes, self.filteredNodes(by: self.searchText))
         expectation.fulfill()
         
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
     }
     
     func testSearch_noResults() async throws {
@@ -39,7 +39,7 @@ final class SearchNodeUseCaseTests: XCTestCase {
         XCTAssertEqual(nodes, self.filteredNodes(by: self.searchText))
         expectation.fulfill()
         
-        wait(for: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 2.0)
     }
     
     func testCancelSearch() async throws {
@@ -50,7 +50,7 @@ final class SearchNodeUseCaseTests: XCTestCase {
         XCTAssertEqual(searchNodeRepo.cancelSearch_calledTimes, 1)
         expectation.fulfill()
         
-        wait(for: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
     }
     
     private func filteredNodes(by text: String) -> [NodeEntity]? {

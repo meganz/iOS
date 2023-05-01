@@ -56,7 +56,7 @@ final class SearchNodeRepositoryTests: XCTestCase {
         XCTAssertEqual(nodeNames, filteredNodeNames)
         exp.fulfill()
         
-        wait(for: [exp], timeout: 1.0)
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     func testSearch_incoming_nodes_shouldReturnSuccess() async throws {
@@ -74,7 +74,7 @@ final class SearchNodeRepositoryTests: XCTestCase {
         
         exp.fulfill()
         
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 2.0)
     }
     
     func testSearch_outgoing_nodes_shouldReturnSuccess() async throws {
@@ -92,7 +92,7 @@ final class SearchNodeRepositoryTests: XCTestCase {
         
         exp.fulfill()
         
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 2.0)
     }
     
     func testSearch_public_links_shouldReturnSuccess() async throws {
@@ -110,7 +110,7 @@ final class SearchNodeRepositoryTests: XCTestCase {
         
         exp.fulfill()
         
-        wait(for: [exp], timeout: 2.0)
+        await fulfillment(of: [exp], timeout: 2.0)
     }
 }
 

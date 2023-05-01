@@ -27,7 +27,7 @@ final class ChatContentViewModelTests: XCTestCase {
     
     func testAction_startMeetingNoRinging_callStartMeetingNoRinging() {
         let chatRoom = MockChatRoom(ownPrivilage: .standard).toChatRoomEntity()
-        var chatUseCase = MockChatUseCase()
+        let chatUseCase = MockChatUseCase()
         chatUseCase.currentChatConnectionStatus = .online
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
@@ -38,7 +38,7 @@ final class ChatContentViewModelTests: XCTestCase {
     
     func testAction_startOutGoingCall_callStartOutGoingCall() {
         let chatRoom = MockChatRoom(ownPrivilage: .standard).toChatRoomEntity()
-        var chatUseCase = MockChatUseCase()
+        let chatUseCase = MockChatUseCase()
         chatUseCase.currentChatConnectionStatus = .online
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
@@ -50,7 +50,7 @@ final class ChatContentViewModelTests: XCTestCase {
     func testUpdateContentIfNeeded_callIsNil_shouldCallCleanUpAndUpdateStartOrJoinCallButton() {
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
-        var chatUseCase = MockChatUseCase()
+        let chatUseCase = MockChatUseCase()
         chatUseCase.currentChatConnectionStatus = .online
         
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
@@ -62,7 +62,7 @@ final class ChatContentViewModelTests: XCTestCase {
     func testUpdateContentIfNeeded_connectionIsNotOnline_shouldCallCleanUpAndUpdateStartOrJoinCallButton() {
         let chatRoom = MockChatRoom().toChatRoomEntity()
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
-        var chatUseCase = MockChatUseCase()
+        let chatUseCase = MockChatUseCase()
         chatUseCase.activeCallEntity = CallEntity()
         chatUseCase.currentChatConnectionStatus = .invalid
         

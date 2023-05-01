@@ -11,6 +11,7 @@ extension ChatRoomViewModel {
         userImageUseCase: UserImageUseCaseProtocol = MockUserImageUseCase(),
         chatUseCase: ChatUseCaseProtocol = MockChatUseCase(),
         accountUseCase: AccountUseCaseProtocol = MockAccountUseCase(),
+        megaHandleUseCase: MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(),
         audioSessionUseCase: AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
@@ -18,19 +19,7 @@ extension ChatRoomViewModel {
         notificationCenter: NotificationCenter = .default,
         isTesting: Bool = true
     ) {
-        self.init(
-            chatListItem: chatListItem,
-            router: router,
-            chatRoomUseCase: chatRoomUseCase,
-            chatRoomUserUseCase: chatRoomUserUseCase,
-            userImageUseCase: userImageUseCase,
-            chatUseCase: chatUseCase,
-            accountUseCase: accountUseCase,
-            callUseCase: callUseCase,
-            audioSessionUseCase: audioSessionUseCase,
-            scheduledMeetingUseCase: scheduledMeetingUseCase,
-            chatNotificationControl: chatNotificationControl
-        )
+        self.init(chatListItem: chatListItem, router: router, chatRoomUseCase: chatRoomUseCase, chatRoomUserUseCase: chatRoomUserUseCase, userImageUseCase: userImageUseCase, chatUseCase: chatUseCase, accountUseCase: accountUseCase, megaHandleUseCase: megaHandleUseCase, callUseCase: callUseCase, audioSessionUseCase: audioSessionUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase, chatNotificationControl: chatNotificationControl)
     }
 }
 
