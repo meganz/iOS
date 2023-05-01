@@ -4,6 +4,8 @@ public protocol AlbumContentsUseCaseProtocol {
     func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never>
     func photos(in album: AlbumEntity) async throws -> [AlbumPhotoEntity]
     func userAlbumPhotos(by id: HandleEntity) async -> [AlbumPhotoEntity]
+    func userAlbumUpdatedPublisher(for album: AlbumEntity) -> AnyPublisher<SetEntity, Never>?
+    func userAlbumCoverPhoto(in album: AlbumEntity, forPhotoId photoId: HandleEntity) async -> NodeEntity?
 }
 
 public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
@@ -54,8 +56,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
             let albumContent = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
             albumContent.forEach { setElement in
                 group.addTask {
-                    guard let photo = await fileSearchRepo.node(by: setElement.nodeId),
-                          photo.mediaType != nil else {
+                    guard let photo = await albumCoverPhoto(forNodeId: setElement.nodeId) else {
                         return nil
                     }
                     return AlbumPhotoEntity(photo: photo,
@@ -67,6 +68,24 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
                 if let photo = $1 { $0.append(photo) }
             })
         }
+    }
+    
+    public func userAlbumUpdatedPublisher(for album: AlbumEntity) -> AnyPublisher<SetEntity, Never>? {
+        guard album.type == .user else {
+            return nil
+        }
+        return userAlbumRepo.setsUpdatedPublisher
+            .compactMap { $0.first(where: { $0.id == album.id }) }
+            .eraseToAnyPublisher()
+    }
+    
+    public func userAlbumCoverPhoto(in album: AlbumEntity, forPhotoId photoId: HandleEntity) async -> NodeEntity? {
+        guard album.type == .user,
+              let setElement = await userAlbumRepo.albumElement(by: album.id,
+                                                                elementId: photoId) else {
+            return nil
+        }
+        return await albumCoverPhoto(forNodeId: setElement.nodeId)
     }
     
     // MARK: Private
@@ -87,5 +106,13 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         }
         
         return nodes
+    }
+    
+    private func albumCoverPhoto(forNodeId nodeId: HandleEntity) async -> NodeEntity? {
+        guard let photo = await fileSearchRepo.node(by: nodeId),
+              photo.mediaType != nil else {
+            return nil
+        }
+        return photo
     }
 }

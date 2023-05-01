@@ -15,11 +15,12 @@ extension Array where Element: MEGASet {
 
 fileprivate extension SetEntity {
     init(set: MEGASet) {
-        self.init(handle            :set.handle,
-                  userId            :set.userId,
-                  coverId           :set.cover,
-                  modificationTime  :set.timestamp,
-                  name              :set.name ?? ""
+        self.init(handle            : set.handle,
+                  userId            : set.userId,
+                  coverId           : set.cover,
+                  modificationTime  : set.timestamp,
+                  name              : set.name ?? "",
+                  changes           : set.changes().toChangesEntity()
         )
     }
 }

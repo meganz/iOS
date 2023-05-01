@@ -191,4 +191,94 @@ final class AlbumContentUseCaseTests: XCTestCase {
             .sorted(by: { $0.albumPhotoId ?? .invalid < $1.albumPhotoId ?? .invalid })
         XCTAssertEqual(result, expectedResult)
     }
+    
+    func testUserAlbumUpdatedPublisher_onNonUserAlbum_shouldReturnNil() throws {
+        let sut = AlbumContentsUseCase(
+            albumContentsRepo: albumContentsRepo,
+            mediaUseCase: MockMediaUseCase(),
+            fileSearchRepo: MockFilesSearchRepository(),
+            userAlbumRepo: MockUserAlbumRepository()
+        )
+        let nonUserAlbum = AlbumEntity(id: 1, name: "Test", coverNode: nil,
+                                       count: 1, type: .favourite)
+        XCTAssertNil(sut.userAlbumUpdatedPublisher(for: nonUserAlbum))
+    }
+    
+    func testUserAlbumUpdatedPublisher_onSetChangedForUserAlbum_shouldReturnSetElement() throws {
+        let albumId = HandleEntity(65)
+        
+        let setsUpdatedPublisher = PassthroughSubject<[SetEntity], Never>()
+        let sut = AlbumContentsUseCase(
+            albumContentsRepo: albumContentsRepo,
+            mediaUseCase: MockMediaUseCase(),
+            fileSearchRepo: MockFilesSearchRepository(),
+            userAlbumRepo: MockUserAlbumRepository(setsUpdatedPublisher: setsUpdatedPublisher.eraseToAnyPublisher())
+        )
+        let userAlbum = AlbumEntity(id: albumId, name: "Test", coverNode: nil,
+                                    count: 1, type: .user)
+        
+        let expectedSetUpdate = SetEntity(handle: albumId, changes: .name)
+        
+        let exp = expectation(description: "Update received")
+        try XCTUnwrap(sut.userAlbumUpdatedPublisher(for: userAlbum))
+            .sink {
+                XCTAssertEqual($0, expectedSetUpdate)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        setsUpdatedPublisher.send([])
+        setsUpdatedPublisher.send([SetEntity(handle: 5)])
+        setsUpdatedPublisher.send([expectedSetUpdate])
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testUserAlbumCoverPhoto_onAlbumElementNotFound_shouldReturnNil() async {
+        let sut = AlbumContentsUseCase(
+            albumContentsRepo: albumContentsRepo,
+            mediaUseCase: MockMediaUseCase(),
+            fileSearchRepo: MockFilesSearchRepository(),
+            userAlbumRepo: MockUserAlbumRepository()
+        )
+        let userAlbum = AlbumEntity(id: 1, name: "Test", coverNode: nil,
+                                    count: 1, type: .user)
+        let coverPhoto = await sut.userAlbumCoverPhoto(in: userAlbum, forPhotoId: HandleEntity(2))
+        XCTAssertNil(coverPhoto)
+    }
+    
+    func testUserAlbumCoverPhoto_onUserAlbumElementFound_shouldReturnNode() async {
+        let albumId = HandleEntity(25)
+        let photoId = HandleEntity(42)
+        let expectedCoverPhoto = NodeEntity(handle: 15, mediaType: .image)
+        let coverSetElement = SetElementEntity(handle: photoId, ownerId: albumId,
+                                               order: 1, nodeId: expectedCoverPhoto.handle, modificationTime: Date(), name: "")
+        let sut = AlbumContentsUseCase(
+            albumContentsRepo: albumContentsRepo,
+            mediaUseCase: MockMediaUseCase(),
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: [expectedCoverPhoto]),
+            userAlbumRepo: MockUserAlbumRepository(albumElement: coverSetElement)
+        )
+        let userAlbum = AlbumEntity(id: 1, name: "Test", coverNode: nil,
+                                    count: 1, type: .user)
+        let coverPhoto = await sut.userAlbumCoverPhoto(in: userAlbum, forPhotoId: photoId)
+        XCTAssertEqual(coverPhoto, expectedCoverPhoto)
+    }
+    
+    func testUserAlbumCoverPhoto_onUserAlbumElementFoundWithNoMediaType_shouldReturnNil() async {
+        let albumId = HandleEntity(25)
+        let photoId = HandleEntity(42)
+        let expectedCoverPhoto = NodeEntity(handle: 15)
+        let coverSetElement = SetElementEntity(handle: photoId, ownerId: albumId,
+                                               order: 1, nodeId: expectedCoverPhoto.handle, modificationTime: Date(), name: "")
+        let sut = AlbumContentsUseCase(
+            albumContentsRepo: albumContentsRepo,
+            mediaUseCase: MockMediaUseCase(),
+            fileSearchRepo: MockFilesSearchRepository(photoNodes: [expectedCoverPhoto]),
+            userAlbumRepo: MockUserAlbumRepository(albumElement: coverSetElement)
+        )
+        let userAlbum = AlbumEntity(id: 1, name: "Test", coverNode: nil,
+                                    count: 1, type: .user)
+        let coverPhoto = await sut.userAlbumCoverPhoto(in: userAlbum, forPhotoId: photoId)
+        XCTAssertNil(coverPhoto)
+    }
 }
