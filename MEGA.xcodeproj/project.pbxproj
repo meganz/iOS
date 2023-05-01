@@ -1456,6 +1456,9 @@
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */; };
+		B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */; };
+		B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */; };
+		B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5663EE529F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift */; };
 		B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */; };
 		B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */; };
 		B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */; };
@@ -1508,6 +1511,8 @@
 		B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */; };
 		B5EDB093275A2CAE00A8CFC2 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF0A7529F0EE2000B166B1 /* AccountPlanPurchaseRepository.swift */; };
+		B5EF0A8F29F145C600B166B1 /* AccountPlanEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF0A8329F11E7400B166B1 /* AccountPlanEntity+Mapper.swift */; };
 		B5FC636229E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */; };
 		B5FC636429E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */; };
 		B5FC636929E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */; };
@@ -3918,6 +3923,9 @@
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
+		B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMEGAPurchase.swift; sourceTree = "<group>"; };
+		B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSKProduct.swift; sourceTree = "<group>"; };
+		B5663EE529F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPlanPurchaseRepositoryTests.swift; sourceTree = "<group>"; };
 		B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Banner.swift"; sourceTree = "<group>"; };
 		B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+UpgradeSecurity.swift"; sourceTree = "<group>"; };
 		B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -3971,6 +3979,8 @@
 		B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagView.swift; sourceTree = "<group>"; };
 		B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModel.swift; sourceTree = "<group>"; };
 		B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModelTests.swift; sourceTree = "<group>"; };
+		B5EF0A7529F0EE2000B166B1 /* AccountPlanPurchaseRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPlanPurchaseRepository.swift; sourceTree = "<group>"; };
+		B5EF0A8329F11E7400B166B1 /* AccountPlanEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountPlanEntity+Mapper.swift"; sourceTree = "<group>"; };
 		B5FC636129E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		B5FC636329E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B5FC636829E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCollectionViewCellViewModelTests.swift; sourceTree = "<group>"; };
@@ -5037,6 +5047,7 @@
 		1200A0E5286E4E2F00791A60 /* Repos */ = {
 			isa = PBXGroup;
 			children = (
+				B5663EE529F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift */,
 				B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */,
 				6D58E9E6299F1647007BE910 /* AlbumContentsUpdateNotifierRepositoryTests.swift */,
 				12B1E5792874FFEF00D23A58 /* AnalyticsRepositoryTests.swift */,
@@ -6042,8 +6053,6 @@
 		41A66D031AE78FF9007D7E20 /* Upgrade */ = {
 			isa = PBXGroup;
 			children = (
-				41D4080E1B8F240B0001F8BE /* MEGAPurchase.h */,
-				41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */,
 				41D14F6F1B8603AF0005A27A /* ProductDetailTableViewCell.h */,
 				41D14F701B8603AF0005A27A /* ProductDetailTableViewCell.m */,
 				C4709A9C26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift */,
@@ -9336,6 +9345,30 @@
 			path = LiveText;
 			sourceTree = "<group>";
 		};
+		B5663EDD29F8F3A70080FFDA /* Purchase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Purchase;
+			sourceTree = "<group>";
+		};
+		B5663EDE29F8F3C20080FFDA /* MEGAPurchase */ = {
+			isa = PBXGroup;
+			children = (
+				B5663EDF29F8F3DB0080FFDA /* MockMEGAPurchase.swift */,
+				B5663EE129F8F7FC0080FFDA /* MockSKProduct.swift */,
+			);
+			path = MEGAPurchase;
+			sourceTree = "<group>";
+		};
+		B5663EE729F901A40080FFDA /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B5663EDE29F8F3C20080FFDA /* MEGAPurchase */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		B582965627C5DF28004DD7A5 /* Transfers */ = {
 			isa = PBXGroup;
 			children = (
@@ -9406,6 +9439,41 @@
 				B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */,
 			);
 			path = "Feature Flag";
+			sourceTree = "<group>";
+		};
+		B5EF0A6829F0ECF900B166B1 /* Upgrade Account */ = {
+			isa = PBXGroup;
+			children = (
+				B5EF0A6F29F0ED9700B166B1 /* Data Model */,
+				B5EF0A7229F0EDF100B166B1 /* Repository */,
+			);
+			path = "Upgrade Account";
+			sourceTree = "<group>";
+		};
+		B5EF0A6F29F0ED9700B166B1 /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				B5EF0A8329F11E7400B166B1 /* AccountPlanEntity+Mapper.swift */,
+			);
+			path = "Data Model";
+			sourceTree = "<group>";
+		};
+		B5EF0A7229F0EDF100B166B1 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				B5EF0A7329F0EDF900B166B1 /* MEGAPurchase */,
+				B5EF0A7529F0EE2000B166B1 /* AccountPlanPurchaseRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		B5EF0A7329F0EDF900B166B1 /* MEGAPurchase */ = {
+			isa = PBXGroup;
+			children = (
+				41D4080E1B8F240B0001F8BE /* MEGAPurchase.h */,
+				41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */,
+			);
+			path = MEGAPurchase;
 			sourceTree = "<group>";
 		};
 		B5FC636529E92FE400EE4C8E /* Node */ = {
@@ -10198,6 +10266,7 @@
 				12B1E58128751FAA00D23A58 /* PageStayTimeTracker */,
 				32F03D54287D222800C518A4 /* Photos */,
 				BF6E8D1725B53F3C003A125A /* PSA */,
+				B5663EDD29F8F3A70080FFDA /* Purchase */,
 				A8EE47AB27DFAEF600D37685 /* Report Issue */,
 				5B9FBDE9264925900014B7FD /* Settings */,
 				32B0723128A4E3CA002BAE34 /* Slideshow */,
@@ -10215,6 +10284,7 @@
 		B6D0B364283DC2320020C64D /* MEGADataTests */ = {
 			isa = PBXGroup;
 			children = (
+				B5663EE729F901A40080FFDA /* Mocks */,
 				1200A0E5286E4E2F00791A60 /* Repos */,
 				BFE556F427E183B40028EF1F /* SDK */,
 				B6D0B367283DC2AD0020C64D /* AppGroupContainerTests.swift */,
@@ -11427,6 +11497,7 @@
 				9419B6BD1F20D18300FEBE31 /* Spotlight */,
 				5B5FBDDD20BD8C76000EE35B /* Two Factor Authentication */,
 				41A66D031AE78FF9007D7E20 /* Upgrade */,
+				B5EF0A6829F0ECF900B166B1 /* Upgrade Account */,
 				5BB8A851243DF3DA009FE957 /* Usage */,
 			);
 			path = "My Account";
@@ -12337,6 +12408,8 @@
 				BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
+				B5EF0A8F29F145C600B166B1 /* AccountPlanEntity+Mapper.swift in Sources */,
+				B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */,
 				B6FD6506268B39D800988A17 /* AccountRepository.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
 				5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */,
@@ -14199,6 +14272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
@@ -14289,6 +14363,7 @@
 				8394EB8D2643E5080064F741 /* MockLocalVideoUseCase.swift in Sources */,
 				12B1E58028751B0700D23A58 /* MockMediaDiscoveryAnalyticsUseCase.swift in Sources */,
 				2FE5438D264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift in Sources */,
+				B5663EE029F8F3DB0080FFDA /* MockMEGAPurchase.swift in Sources */,
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
 				C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */,
 				BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */,
@@ -14296,6 +14371,7 @@
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
+				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
