@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 final class TurnOnNotificationsViewRouter: TurnOnNotificationsViewRouting {
     private weak var baseViewController: UIViewController?
@@ -12,7 +13,7 @@ final class TurnOnNotificationsViewRouter: TurnOnNotificationsViewRouting {
     func build() -> UIViewController {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let vm = TurnOnNotificationsViewModel(router: self,
-                                              authUseCase: AuthUseCase(repo: AuthRepository(sdk: sdk), credentialRepo: CredentialRepository()))
+                                              authUseCase: AuthUseCase(repo: AuthRepository(sdk: sdk), credentialRepo: CredentialRepository.newRepo))
         self.vm = vm
         let vc = TurnOnNotificationsViewController(viewModel: vm)        
         baseViewController = vc

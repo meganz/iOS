@@ -1,19 +1,19 @@
 import Foundation
 import MEGADomain
-import MEGAData
+import MEGASdk
 
-struct AuthRepository: AuthRepositoryProtocol {
+public struct AuthRepository: AuthRepositoryProtocol {
     private let sdk: MEGASdk
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
     
-    func logout() {
+    public func logout() {
         sdk.logout()
     }
     
-    func login(sessionId: String) async throws {
+    public func login(sessionId: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             sdk.fastLogin(withSession: sessionId, delegate: RequestDelegate { result in
                 switch result {
@@ -26,7 +26,7 @@ struct AuthRepository: AuthRepositoryProtocol {
         }
     }
     
-    func isLoggedIn() -> Bool {
+    public func isLoggedIn() -> Bool {
         sdk.isLoggedIn() > 0
     }
 }

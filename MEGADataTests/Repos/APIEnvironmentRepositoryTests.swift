@@ -24,7 +24,7 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
         repo = APIEnvironmentRepository(sdk: sdk,
                                 folderSdk: folderSdk,
                                 chatSdk: chatSdk,
-                                credentialRepository: CredentialRepository.newRepo)
+                                credentialRepository: MockCredentialRepository.newRepo)
     }
     
     func testChangeAPIURL_production() throws {

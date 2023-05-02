@@ -199,11 +199,14 @@
 		3232ADC3290F95C900FF7416 /* FilesSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3232ADC2290F95C900FF7416 /* FilesSearchRepository.swift */; };
 		3234143829F0F6A500A06EFE /* PhotoLibraryContentConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3234143729F0F6A500A06EFE /* PhotoLibraryContentConfig.swift */; };
 		3235F2C528C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3235F2C428C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift */; };
+		3241349729FB712B006E5310 /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = 3241349629FB712B006E5310 /* MEGASdk */; };
 		3256C38929A63A74001B0280 /* AlbumSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3256C38829A63A74001B0280 /* AlbumSelection.swift */; };
 		3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3256C39429A8656C001B0280 /* AlbumSelectionTests.swift */; };
 		325857332845D410007890F5 /* MediaUploadNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325857322845D410007890F5 /* MediaUploadNodeAccess.swift */; };
 		3258B90F298B787C0055E65C /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3258B90E298B787C0055E65C /* FilterType.swift */; };
 		325EFA7328AB9408005D4851 /* Slideshow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325EFA7028AB9405005D4851 /* Slideshow.storyboard */; };
+		327717B529FB82C4004DE295 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 327717B429FB82C4004DE295 /* MEGAPresentation */; };
+		327717BB29FB84BC004DE295 /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = 327717BA29FB84BC004DE295 /* MEGAData */; };
 		3282013E29AC431200C0E841 /* PhotoAlbumContainerViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3282013D29AC431200C0E841 /* PhotoAlbumContainerViewController+ContextMenu.swift */; };
 		3282014029AC45C000C0E841 /* PhotoAlbumContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3282013F29AC45C000C0E841 /* PhotoAlbumContainerViewModel.swift */; };
 		3282016829AEDEE100C0E841 /* AlbumNameValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3282016729AEDEE100C0E841 /* AlbumNameValidator.swift */; };
@@ -782,7 +785,6 @@
 		83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83337CAA21009494000F40A7 /* ItemListModel.m */; };
 		8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */; };
 		8333E51F24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */; };
-		83344F58258A1C780052DB3C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADED4251896D1009A874C /* AuthRepository.swift */; };
 		8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
 		83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
 		8335C63D282E7A7A00509479 /* NameCollisionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8363281F28102BE6004F6121 /* NameCollisionRouter.swift */; };
@@ -1238,7 +1240,6 @@
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
-		A803C8F92955DA040056C9F0 /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
 		A803C8FB2955DB550056C9F0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A803C8FA2955DB550056C9F0 /* MEGADomain */; };
 		A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A803C8FC2955DB790056C9F0 /* SAMKeychain */; };
 		A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */; };
@@ -1271,8 +1272,6 @@
 		A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E686286B318A004CED9E /* FirebaseCrashlytics */; };
 		A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68C286B3204004CED9E /* FirebaseCrashlytics */; };
 		A82A5CAD292E6AEE00EF700A /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A82A5CAC292E6AEE00EF700A /* MEGAData */; };
-		A82D5CE526BC086E00E73D27 /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
-		A82D5CE926BC090D00E73D27 /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
 		A82F364928EF352900093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82F364728EF31CE00093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift */; };
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
@@ -1288,7 +1287,6 @@
 		A8399F71296C53180062B6BC /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		A8399F72296C54A30062B6BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		A8399F93296D72A90062B6BC /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
-		A8399FB7296DD5550062B6BC /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
 		A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FB8296DD5A70062B6BC /* SAMKeychain */; };
 		A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FBA296DD5F10062B6BC /* MEGADomain */; };
 		A83BB99E28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */; };
@@ -1349,7 +1347,6 @@
 		A893322A24127B1B0088E588 /* MOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAD1DEC792400A193D5 /* MOUser.m */; };
 		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
-		A899466F29716A69008448C4 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADED4251896D1009A874C /* AuthRepository.swift */; };
 		A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		A899467B297189F5008448C4 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		A899F0E8278F3567001A2D43 /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A899F0E7278F3567001A2D43 /* CompressingLogFileManager.m */; };
@@ -1601,7 +1598,6 @@
 		B662B86724ED14A30089376A /* VerificationCodeViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B86624ED14A30089376A /* VerificationCodeViewRouter.swift */; };
 		B662B86924F322E10089376A /* SMSVerificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B86824F322E10089376A /* SMSVerificationViewModel.swift */; };
 		B662B86B24F322F60089376A /* SMSVerificationViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B86A24F322F60089376A /* SMSVerificationViewRouter.swift */; };
-		B662B87F24F7D05B0089376A /* CredentialRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B87E24F7D05B0089376A /* CredentialRepository.swift */; };
 		B662B88324F8D8F60089376A /* RegionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88224F8D8F60089376A /* RegionListViewModel.swift */; };
 		B662B88524F8DA600089376A /* RegionListViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88424F8DA600089376A /* RegionListViewRouter.swift */; };
 		B662B88D24FC3F990089376A /* RegionListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B88C24FC3F990089376A /* RegionListSource.swift */; };
@@ -1699,7 +1695,6 @@
 		B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADE8D25183626009A874C /* VerificationCodeViewModelTests.swift */; };
 		B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADE942518456B009A874C /* RegionListViewModelTests.swift */; };
 		B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADE9B251845E2009A874C /* Routing+Addition.swift */; };
-		B6AADED5251896D1009A874C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AADED4251896D1009A874C /* AuthRepository.swift */; };
 		B6AB264927BEF6F1006C8AA0 /* PhotoLibraryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB264827BEF6F1006C8AA0 /* PhotoLibraryProvider.swift */; };
 		B6AB265127BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */; };
 		B6ADE4D52731E54E00C19F36 /* PhotoYearCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ADE4D42731E54E00C19F36 /* PhotoYearCardViewModel.swift */; };
@@ -4082,7 +4077,6 @@
 		B662B86624ED14A30089376A /* VerificationCodeViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewRouter.swift; sourceTree = "<group>"; };
 		B662B86824F322E10089376A /* SMSVerificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationViewModel.swift; sourceTree = "<group>"; };
 		B662B86A24F322F60089376A /* SMSVerificationViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSVerificationViewRouter.swift; sourceTree = "<group>"; };
-		B662B87E24F7D05B0089376A /* CredentialRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialRepository.swift; sourceTree = "<group>"; };
 		B662B88224F8D8F60089376A /* RegionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewModel.swift; sourceTree = "<group>"; };
 		B662B88424F8DA600089376A /* RegionListViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewRouter.swift; sourceTree = "<group>"; };
 		B662B88C24FC3F990089376A /* RegionListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListSource.swift; sourceTree = "<group>"; };
@@ -4189,7 +4183,6 @@
 		B6AADE8D25183626009A874C /* VerificationCodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewModelTests.swift; sourceTree = "<group>"; };
 		B6AADE942518456B009A874C /* RegionListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionListViewModelTests.swift; sourceTree = "<group>"; };
 		B6AADE9B251845E2009A874C /* Routing+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Routing+Addition.swift"; sourceTree = "<group>"; };
-		B6AADED4251896D1009A874C /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		B6AB264827BEF6F1006C8AA0 /* PhotoLibraryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryProvider.swift; sourceTree = "<group>"; };
 		B6AB265027BF0FAC006C8AA0 /* PhotoLibraryPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPublisher.swift; sourceTree = "<group>"; };
 		B6ADE4D42731E54E00C19F36 /* PhotoYearCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoYearCardViewModel.swift; sourceTree = "<group>"; };
@@ -4912,6 +4905,9 @@
 				A828E683286B3150004CED9E /* FirebaseCrashlytics in Frameworks */,
 				A803C8FB2955DB550056C9F0 /* MEGADomain in Frameworks */,
 				A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */,
+				327717B529FB82C4004DE295 /* MEGAPresentation in Frameworks */,
+				327717BB29FB84BC004DE295 /* MEGAData in Frameworks */,
+				3241349729FB712B006E5310 /* MEGASdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9598,15 +9594,6 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		B645BC31252FAF7000D1D7CF /* Authentication */ = {
-			isa = PBXGroup;
-			children = (
-				B6AADED4251896D1009A874C /* AuthRepository.swift */,
-				B662B87E24F7D05B0089376A /* CredentialRepository.swift */,
-			);
-			path = Authentication;
-			sourceTree = "<group>";
-		};
 		B645BC32252FAF8200D1D7CF /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -9761,7 +9748,6 @@
 				129D51D32821D63000A4D4D3 /* Album */,
 				A84683032939FBC100FACCA1 /* AppConfiguration */,
 				BFAC873525FEF1F3009CA3F6 /* AudioVideo */,
-				B645BC31252FAF7000D1D7CF /* Authentication */,
 				838A7B6725D5677500767DB0 /* Calls */,
 				5BC47E2C253F0F7200853323 /* Chat */,
 				830C266F25DFC70B00E9B56E /* Favourites */,
@@ -11703,6 +11689,9 @@
 				A828E682286B3150004CED9E /* FirebaseCrashlytics */,
 				A803C8FA2955DB550056C9F0 /* MEGADomain */,
 				A803C8FC2955DB790056C9F0 /* SAMKeychain */,
+				3241349629FB712B006E5310 /* MEGASdk */,
+				327717B429FB82C4004DE295 /* MEGAPresentation */,
+				327717BA29FB84BC004DE295 /* MEGAData */,
 			);
 			productName = MEGAIntent;
 			productReference = 831B490E256FED6F0086002B /* MEGAIntent.appex */;
@@ -12531,7 +12520,6 @@
 				940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */,
 				BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */,
 				BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */,
-				B6AADED5251896D1009A874C /* AuthRepository.swift in Sources */,
 				C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
 				A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */,
@@ -12803,7 +12791,6 @@
 				1246682F275DBE0500C94335 /* CreateTextFileAlertViewController.swift in Sources */,
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
-				B662B87F24F7D05B0089376A /* CredentialRepository.swift in Sources */,
 				A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */,
 				12466802275DB82000C94335 /* CustomModalAlertContactsRouter.swift in Sources */,
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
@@ -13955,10 +13942,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83344F58258A1C780052DB3C /* AuthRepository.swift in Sources */,
 				B5925B8E279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				B6F8CE212628232C0074CBBF /* CoreDataErrorHandler.m in Sources */,
-				A82D5CE526BC086E00E73D27 /* CredentialRepository.swift in Sources */,
 				830C28D625E68FC700E9B56E /* DetailItemView.swift in Sources */,
 				B6FD64F12689E2C600988A17 /* FavouriteItemsRepository.swift in Sources */,
 				8375B76525EFC7FB00B70F6B /* FavouritesQuickAccessWidget.swift in Sources */,
@@ -14014,7 +13999,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5925B8F279119E400170CD6 /* Colors+Generated.swift in Sources */,
-				A803C8F92955DA040056C9F0 /* CredentialRepository.swift in Sources */,
 				A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */,
 				831B4911256FED6F0086002B /* IntentHandler.swift in Sources */,
 				A821A5902862257400DB7017 /* IntentPersonProvider.swift in Sources */,
@@ -14056,7 +14040,6 @@
 				B5925B8C279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				77892E9E20E501DC0020A533 /* ContactTableViewCell.m in Sources */,
 				B6F8CE17262823240074CBBF /* CoreDataErrorHandler.m in Sources */,
-				A82D5CE926BC090D00E73D27 /* CredentialRepository.swift in Sources */,
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
@@ -14235,8 +14218,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A868537A29CA16BB006C7A58 /* AppGroupContainer.swift in Sources */,
-				A899466F29716A69008448C4 /* AuthRepository.swift in Sources */,
-				A8399FB7296DD5550062B6BC /* CredentialRepository.swift in Sources */,
 				A8399F4B296C40070062B6BC /* FileProviderEnumerator.swift in Sources */,
 				A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */,
 				A8399F49296C40070062B6BC /* FileProviderItem.swift in Sources */,
@@ -16348,6 +16329,18 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3241349629FB712B006E5310 /* MEGASdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASdk;
+		};
+		327717B429FB82C4004DE295 /* MEGAPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPresentation;
+		};
+		327717BA29FB84BC004DE295 /* MEGAData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAData;
+		};
 		946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPresentation;

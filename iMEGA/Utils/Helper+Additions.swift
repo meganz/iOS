@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAData
 
 extension Helper {
     @objc static func cleanAccount() {

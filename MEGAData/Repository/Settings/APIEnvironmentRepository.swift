@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
     static var newRepo: APIEnvironmentRepository {
