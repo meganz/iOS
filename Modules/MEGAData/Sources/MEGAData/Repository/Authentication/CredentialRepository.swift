@@ -2,8 +2,8 @@ import Foundation
 import SAMKeychain
 import MEGADomain
 
-struct CredentialRepository: CredentialRepositoryProtocol {
-    static var newRepo: CredentialRepository {
+public struct CredentialRepository: CredentialRepositoryProtocol {
+    public static var newRepo: CredentialRepository {
         CredentialRepository()
     }
     
@@ -18,16 +18,16 @@ struct CredentialRepository: CredentialRepositoryProtocol {
         static let keychainPasscodeAccountName = "demoPasscode"
     }
     
-    func sessionId() -> String? {
+    public func sessionId() -> String? {
         SAMKeychain.password(forService: Constants.keychainServiceName, account: Constants.keychainSessionAccountName)
     }
     
-    func clearSession() {
+    public func clearSession() {
         SAMKeychain.deletePassword(forService: Constants.keychainServiceName,
                                    account: Constants.keychainSessionAccountName)
     }
     
-    func clearEphemeralSession() {
+    public func clearEphemeralSession() {
         SAMKeychain.deletePassword(forService: Constants.keychainServiceName,
                                    account: Constants.keychainSessionIdAccountName)
         SAMKeychain.deletePassword(forService: Constants.keychainServiceName,
@@ -38,7 +38,7 @@ struct CredentialRepository: CredentialRepositoryProtocol {
                                    account: Constants.keychainPasswordAccountName)
     }
     
-    func isPasscodeEnabled() -> Bool {
+    public func isPasscodeEnabled() -> Bool {
         SAMKeychain.password(forService: Constants.keychainPasscodeServiceName, account: Constants.keychainPasscodeAccountName) != nil
     }
 }

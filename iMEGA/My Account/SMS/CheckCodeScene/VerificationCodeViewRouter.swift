@@ -18,7 +18,7 @@ final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     func build() -> UIViewController {
         let vm = VerificationCodeViewModel(router: self,
                                            checkSMSUseCase: CheckSMSUseCase(repo: SMSRepository.newRepo),
-                                           authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository()),
+                                           authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository.newRepo),
                                            verificationType: verificationType,
                                            phoneNumber: phoneNumber)
         

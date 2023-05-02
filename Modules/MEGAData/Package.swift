@@ -18,12 +18,13 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../MEGADomain"),
-        .package(path: "../MEGASdk")
+        .package(path: "../MEGASdk"),
+        .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0")
     ],
     targets: [
         .target(
             name: "MEGAData",
-            dependencies: ["MEGADomain", "MEGASdk"]),
+            dependencies: ["MEGADomain", "MEGASdk", "SAMKeychain"]),
         .target(
             name: "MEGADataMock",
             dependencies: ["MEGAData"]
