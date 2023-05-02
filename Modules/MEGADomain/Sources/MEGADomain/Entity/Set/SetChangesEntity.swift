@@ -1,7 +1,5 @@
 import Foundation
 
-import Foundation
-
 public struct SetChangesEntity: OptionSet, Hashable, Sendable {
     public let rawValue: UInt
     

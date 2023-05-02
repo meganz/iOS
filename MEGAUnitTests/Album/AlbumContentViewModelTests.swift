@@ -698,6 +698,52 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.contextMenuConfiguration?.isSelectHidden, expectedContextConfigurationSelectHidden)
     }
     
+    func testSubscription_onUserAlbumPublisherEmission_shouldDismissIfSetContainsRemoveChangeType() {
+        let userAlbum = AlbumEntity(id: 1, type: .user)
+        let albumUpdatedPublisher = PassthroughSubject<SetEntity, Never>()
+        let sut = AlbumContentViewModel(album: userAlbum,
+                                        albumContentsUseCase: MockAlbumContentUseCase(albumUpdatedPublisher: albumUpdatedPublisher.eraseToAnyPublisher()),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router,
+                                        alertViewModel: alertViewModel())
+        let exp = expectation(description: "album dismissal")
+        sut.invokeCommand = {
+            switch $0 {
+            case .dismissAlbum:
+                exp.fulfill()
+            default:
+                XCTFail("Unexpected command returned")
+            }
+        }
+        albumUpdatedPublisher.send(SetEntity(handle: albumEntity.id, changes: .removed))
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testSubscription_onUserAlbumPublisherEmission_shouldUpdateNavigationTitleNameIfItContainsNameChangeType() {
+        let userAlbum = AlbumEntity(id: 1, type: .user)
+        let albumUpdatedPublisher = PassthroughSubject<SetEntity, Never>()
+        let sut = AlbumContentViewModel(album: userAlbum,
+                                        albumContentsUseCase: MockAlbumContentUseCase(albumUpdatedPublisher: albumUpdatedPublisher.eraseToAnyPublisher()),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router,
+                                        alertViewModel: alertViewModel())
+        let expectedNewName = "The new name"
+        let exp = expectation(description: "album name should update")
+        sut.invokeCommand = {
+            switch $0 {
+            case .updateNavigationTitle:
+                XCTAssertEqual(sut.albumName, expectedNewName)
+                exp.fulfill()
+            default:
+                XCTFail("Unexpected command returned")
+            }
+        }
+        albumUpdatedPublisher.send(SetEntity(handle: albumEntity.id, name: expectedNewName, changes: .name))
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title, placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder, affirmativeButtonTitle: Strings.Localizable.rename, message: nil)
     }

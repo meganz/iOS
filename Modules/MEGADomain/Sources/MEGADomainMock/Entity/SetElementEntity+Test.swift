@@ -19,4 +19,3 @@ public extension SetElementEntity {
                   changes: changes)
     }
 }
-
