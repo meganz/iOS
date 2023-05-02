@@ -95,5 +95,5 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     ///   - albumId: The album need to be updated
     ///   - elementId: The album element to be set as cover
     /// - Returns: The album element id to be set as the new cover
-    func updateAlbumCover(for albumId: HandleEntity,elementId: HandleEntity) async throws -> HandleEntity
+    func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity
 }

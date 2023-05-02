@@ -56,7 +56,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
             let albumContent = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
             albumContent.forEach { setElement in
                 group.addTask {
-                    guard let photo = await albumCoverPhoto(forNodeId: setElement.nodeId) else {
+                    guard let photo = await photo(forNodeId: setElement.nodeId) else {
                         return nil
                     }
                     return AlbumPhotoEntity(photo: photo,
@@ -85,7 +85,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
                                                                 elementId: photoId) else {
             return nil
         }
-        return await albumCoverPhoto(forNodeId: setElement.nodeId)
+        return await photo(forNodeId: setElement.nodeId)
     }
     
     // MARK: Private
@@ -108,7 +108,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
         return nodes
     }
     
-    private func albumCoverPhoto(forNodeId nodeId: HandleEntity) async -> NodeEntity? {
+    private func photo(forNodeId nodeId: HandleEntity) async -> NodeEntity? {
         guard let photo = await fileSearchRepo.node(by: nodeId),
               photo.mediaType != nil else {
             return nil

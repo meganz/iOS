@@ -278,8 +278,18 @@ final class AlbumContentViewModel: ViewModelType {
         albumContentsUseCase.albumReloadPublisher(forAlbum: album)
             .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
             .sink { [weak self] in
-                self?.reloadAlbum()
+                guard let self else { return }
+                reloadAlbum()
             }.store(in: &subscriptions)
+        
+        if let userAlbumUpdatedPublisher = albumContentsUseCase.userAlbumUpdatedPublisher(for: album) {
+            userAlbumUpdatedPublisher
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    guard let self else { return }
+                    handleUserAlbumUpdate(setEntity: $0)
+                }.store(in: &subscriptions)
+        }
     }
     
     private func updateSortOrder(_ sortOrder: SortOrderType) {
@@ -312,7 +322,7 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func updateAlbumCover(albumPhoto: AlbumPhotoEntity) {
-        selectAlbumCoverTask = Task { [weak self] in
+        Task { [weak self] in
             guard let self else { return }
             
             do {
@@ -363,6 +373,29 @@ final class AlbumContentViewModel: ViewModelType {
                 invokeCommand?(.showHud(.custom(Asset.Images.Hud.hudMinus.image, successMsg)))
             } else {
                 MEGALogError("Error occurred when deleting the album id: \(album.id)")
+            }
+        }
+    }
+    
+    private func handleUserAlbumUpdate(setEntity: SetEntity) {
+        if setEntity.changes.contains(.removed) {
+            invokeCommand?(.dismissAlbum)
+            return
+        }
+        if setEntity.changes.contains(.name) && albumName != setEntity.name {
+            album = album.update(name: setEntity.name)
+            invokeCommand?(.updateNavigationTitle)
+        }
+        if setEntity.changes.contains(.cover) {
+            retriveNewUserAlbumCover(photoId: setEntity.coverId)
+        }
+    }
+
+    private func retriveNewUserAlbumCover(photoId: HandleEntity) {
+        Task { [weak self] in
+            guard let self else { return }
+            if let newCover = await albumContentsUseCase.userAlbumCoverPhoto(in: album, forPhotoId: photoId) {
+                album.coverNode = newCover
             }
         }
     }
