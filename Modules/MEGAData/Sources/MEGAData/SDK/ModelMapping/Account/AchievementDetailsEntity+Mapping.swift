@@ -3,10 +3,11 @@ import MEGADomain
 
 extension MEGAAchievementsDetails {
     public func toAchievementDetailsEntity() -> AchievementDetailsEntity {
-        let awards: [UInt] = (0...awardsCount-1).map { $0 }
-        let classes = (0...awardsCount-1).map { awardClass(at: $0) }
-
+        let totalCount = max(0, awardsCount-1)
+        let awards: [UInt] = (0...totalCount).map { $0 }
+        let classes = (0...totalCount).map { awardClass(at: $0) }
         var awardEmailsArray: [String] = []
+        
         classes.forEach {
             guard let awardEmails = awardEmails(at: UInt($0)), awardEmails.size > 0 else { return }
             awardEmailsArray.append(awardEmails.string(at: 0))
