@@ -22,6 +22,8 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     
     private let viewModel: MediaDiscoveryViewModel
     
+    private lazy var emptyView = EmptyStateView.create(for: .photos)
+    
     // MARK: - Init
     
     @objc init(viewModel: MediaDiscoveryViewModel, folderName: String) {
@@ -130,12 +132,13 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
             if nodes.isEmpty {
                 rightBarButtonItem.isEnabled = false
                 showEmptyView()
+            } else if emptyView.superview != nil {
+                emptyView.removeFromSuperview()
             }
         }
     }
     
     private func showEmptyView() {
-        let emptyView = EmptyStateView.create(for: .photos)
         view.addSubview(emptyView)
         
         emptyView.translatesAutoresizingMaskIntoConstraints = false
