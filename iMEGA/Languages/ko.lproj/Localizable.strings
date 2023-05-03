@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="다음의 문자는 허용되지 않습니다: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="%@ 파일의 이름을 바꿀까요?";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="파일 확장자 변경";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="확장자를 변경하면 파일을 열지 못할 수도 있습니다.";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="어쨌든 변경하기";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="확장자가 없는 파일 .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="바꾸기";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1616,10 +1624,6 @@
 "openBrowser"="브라우저 열기";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="재시작";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="재생을 재개할까요?";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s님이 %2$s에서 계속할 것입니다";
 /*  */
 "resume"="재개";
 /* Title to preview document */
@@ -3071,7 +3075,7 @@
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="오프라인에서 이용 가능하게 하기";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
-"general.fileIsBeingDownloaded"="File is already being downloaded";
+"general.fileIsBeingDownloaded"="파일이 이미 다운로드 중입니다";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="모두 통화 종료";
 /* Title of the popup that ends the meeting for all */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="30자 이하로 입력하세요";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="4,000자 이하로 입력하세요";
+"meetings.scheduleMeeting.description.lenghtError"="3,000자 이하로 입력하세요";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="취소";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="변경 취소";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="계속 편집";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="회의가 생성되었습니다";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="이어서 볼까요?";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$s은/는 %2$s부터 재개됩니다";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="재개";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="재시작";

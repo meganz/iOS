@@ -2324,5 +2324,77 @@
         <string>Você está compartilhando as seguintes pastas: [A]</string>
       </dict>
     </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Foi feito o upload de “[A]“ a “[B]“</string>
+        <key>many</key>
+        <string>Foi feito o upload de %d de itens a “[B]“</string>
+        <key>other</key>
+        <string>Foi feito o upload de %d itens a “[B]”</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Foi feito o upload de “[A]” item à Nuvem de arquivos</string>
+        <key>many</key>
+        <string>Foi feito o upload de %d de itens à Nuvem de arquivos</string>
+        <key>other</key>
+        <string>Foi feito o upload de %d itens à Nuvem de arquivos</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Enviar “[A]” ao chat</string>
+        <key>many</key>
+        <string>Enviar “[A]” a todos os chats</string>
+        <key>other</key>
+        <string>Enviar “[A]” a todos os chats</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Enviar [A] ao chat</string>
+        <key>many</key>
+        <string>Enviar [A] a todos os chats</string>
+        <key>other</key>
+        <string>Enviar [A] a todos os chats</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

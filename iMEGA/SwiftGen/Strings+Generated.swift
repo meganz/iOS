@@ -503,10 +503,6 @@ public enum Strings {
     public static let contains = Strings.tr("Localizable", "contains")
     /// Continue
     public static let `continue` = Strings.tr("Localizable", "continue")
-    /// %1$s will continue at %2$s
-    public static func continueOrRestartVideoMessage(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-      return Strings.tr("Localizable", "continueOrRestartVideoMessage", p1, p2)
-    }
     /// Copied to the clipboard
     public static let copiedToTheClipboard = Strings.tr("Localizable", "copiedToTheClipboard")
     /// Copy
@@ -1747,8 +1743,6 @@ public enum Strings {
     public static let resumeAll = Strings.tr("Localizable", "Resume All")
     /// Resume transfers?
     public static let resumeTransfers = Strings.tr("Localizable", "Resume Transfers?")
-    /// Resume playback?
-    public static let resumePlayback = Strings.tr("Localizable", "resumePlayback")
     /// Retry
     public static let retry = Strings.tr("Localizable", "retry")
     /// Retrying…
@@ -4416,7 +4410,7 @@ public enum Strings {
         /// Schedule meeting
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
         public enum Description {
-          /// Enter fewer than 4,000 characters
+          /// Enter fewer than 3,000 characters
           public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.description.lenghtError")
         }
         public enum DiscardChanges {
@@ -5021,7 +5015,7 @@ public enum Strings {
         return Strings.tr("Localizable", "rename.fileWithoutExtension", String(describing: p1))
       }
       public enum ConfirmationAlert {
-        /// You might not be able to open this file if you change its extension
+        /// You might not be able to open this file if you change its extension.
         public static let description = Strings.tr("Localizable", "rename.confirmationAlert.description")
         /// Change anyway
         public static let ok = Strings.tr("Localizable", "rename.confirmationAlert.ok")

@@ -465,13 +465,13 @@
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Rename file %@?";
 /* Rename file confirmation alert title to ask if user is sure to change the file extension. */
-"rename.confirmationAlert.title" = "File extension change";
+"rename.confirmationAlert.title"="File extension change";
 /* Rename file confirmation alert description to ask if user is sure to change the file extension. */
-"rename.confirmationAlert.description" = "You might not be able to open this file if you change its extension";
+"rename.confirmationAlert.description"="You might not be able to open this file if you change its extension.";
 /* Rename file confirmation confirm button title */
-"rename.confirmationAlert.ok" = "Change anyway";
+"rename.confirmationAlert.ok"="Change anyway";
 /* Rename file no extension warning text */
-"rename.fileWithoutExtension" = "File without extension .%@";
+"rename.fileWithoutExtension"="File without extension .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Replace";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1624,10 +1624,6 @@
 "openBrowser"="Open browser";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Restart";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Resume playback?";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s will continue at %2$s";
 /*  */
 "resume"="Resume";
 /* Title to preview document */
@@ -3363,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Enter fewer than 30 characters";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter fewer than 4,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="Enter fewer than 3,000 characters";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Cancel";
 /* Schedule meeting create button */

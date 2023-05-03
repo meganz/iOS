@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="Următoarele caractere nu sunt permise: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Redenumești fișierul %@?";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="Modificarea extensiei fișierului";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="Este posibil să nu poți deschide acest fișier dacă îi modifici extensia.";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="Modifică oricum";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="File without extension .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Înlocuiește";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1616,10 +1624,6 @@
 "openBrowser"="Deschide browserul";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Repornește";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Reiei redarea?";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s va continua de la %2$s";
 /*  */
 "resume"="Reia";
 /* Title to preview document */
@@ -1917,7 +1921,7 @@
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
 "Your payment for the %1 plan was received."="Plata pentru planul %1 a fost primită.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="We didn’t receive your payment for the %1 plan.";
+"Your payment for the %1 plan was unsuccessful."="Nu am primit plata pentru planul %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
 "Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru Pro va expira mâine.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
@@ -2425,9 +2429,9 @@
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
 "Automatically delete messages older than a certain amount of time"="Șterge automat mesajele mai vechi de o anumită perioadă de timp.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Automatically delete messages older than one day.";
+"Automatically delete messages older than one day"="Ștergeți automat mesajele mai vechi de o zi.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Automatically delete messages older than one week.";
+"Automatically delete messages older than one week"="Ștergeți automat mesajele mai vechi de o săptămână.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Șterge automat mesajele mai vechi de o lună.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Introdu mai puțin de 30 de caractere";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Introdu mai puțin de 4 000 de caractere";
+"meetings.scheduleMeeting.description.lenghtError"="Enter fewer than 3,000 characters";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Anulează";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="Renunță la modificări";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Keep editing";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="Meeting created";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="Reiei videoclipul?";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$s va fi reluat de la %2$s";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="Reia";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="Repornește";

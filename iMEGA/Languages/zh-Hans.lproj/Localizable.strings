@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="不允许使用这些字符：%@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="是否重命名文件%@？";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="更改文件扩展名";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="如果更改扩展名，您可能无法打开此文件。";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="仍要更改";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="文件缺少扩展名 .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="替换";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1616,10 +1624,6 @@
 "openBrowser"="打开浏览器";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="重启";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="继续播放？";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="将从%2$s继续播放%1$s";
 /*  */
 "resume"="恢复";
 /* Title to preview document */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="输入少于30个字符";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="输入少于4,000个字符";
+"meetings.scheduleMeeting.description.lenghtError"="输入少于3,000 个字符";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="取消";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="放弃修改";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="继续编辑";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="已创建会议";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="继续播放？";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$s将从%2$s开始继续播放";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="恢复";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="重启";

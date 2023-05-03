@@ -199,7 +199,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Thư mục rỗng";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Ổ Mây không có tệp tin nào";
+"cloudDriveEmptyState_title"="Ổ Mây của bạn không có tệp tin nào";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Thêm tệp tin";
 /* Title shown when you make a search and there is 'No Results' */
@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="Các ký tự này không được phép sử dụng: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Đổi tên tệp %@?";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="Thay đổi định dạng tệp tin";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="Bạn có thể sẽ không truy cập được vào tệp tin này nếu bạn thay đổi định dạng.";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="Vẫn cứ đổi";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="Tệp tin thiếu định dạng. %@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Thay thế";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -695,7 +703,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Ảnh";
 /* Photo view is empty */
-"photo.empty.title"="Không Có Ảnh Nào";
+"photo.empty.title"="Không có ảnh nào";
 /* Title of Photo's Years tab */
 "media.photoLibrary.category.years.title"="Năm";
 /* Title of Photo's Months tab */
@@ -1217,7 +1225,7 @@
 /* Chat section header */
 "chat"="Chát";
 /* Empty Conversations section */
-"noConversations"="Không có Cuộc Trò Chuyện nào";
+"noConversations"="Không có cuộc trò chuyện nào";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="Bắt đầu trò chuyện với các tên liên lạc của bạn, với tính bảo mật mã hóa vô kiến thức tối ưu";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
@@ -1589,7 +1597,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Trước khi tiến hành đăng xuất, chúng tôi khuyên nên lưu lại Chìa Khóa Phục Hồi ở một nơi an toàn dễ nhớ. Chú ý rằng, quên mật khẩu và không có chìa khóa sẽ không lấy lại được tài khoản.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Không hiện nữa";
+"dontShowAgain"="Đừng hiện lại nữa";
 /* Label for test password button and titles */
 "testPassword"="Kiểm tra mật khẩu";
 /* Label for recovery key button */
@@ -1616,10 +1624,6 @@
 "openBrowser"="Mở trình duyệt";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Khởi động lại";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Tiếp tục phát?";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s sẽ được tiếp tục tại mốc %2$s";
 /*  */
 "resume"="Tiếp tục truyền";
 /* Title to preview document */
@@ -1883,11 +1887,11 @@
 /* Response text after clicking Ignore on an incoming contact request notification. */
 "You ignored a contact request"="Đã bỏ qua yêu cầu thêm liên lạc";
 /* Response text after clicking Accept on an incoming contact request notification. */
-"You accepted a contact request"="Bạn chấp nhận yêu cầu liên lạc này";
+"You accepted a contact request"="Bạn đã chấp nhận yêu cầu liên lạc này";
 /* Response text after clicking Deny on an incoming contact request notification. */
 "You denied a contact request"="Bạn từ chối yêu cầu liên lạc này";
 /* When somebody accepted your contact request */
-"Accepted your contact request"="Đã chấp nhận lời mời thêm vào sổ liên lạc từ bạn";
+"Accepted your contact request"="Đã chấp nhận yêu cầu thêm liên lạc của bạn";
 /* When somebody denied your contact request */
 "Denied your contact request"="Đã từ chối lời mời thêm vào sổ liên lạc từ bạn";
 /* notification text */
@@ -2229,7 +2233,7 @@
 /* Description of High Image Quality option */
 "Send original size, increased quality images"="Luôn gửi hình ảnh với kích thước gốc.";
 /* Setting title for Doc scan view */
-"Save Settings"="Tùy Chọn Khi Lưu";
+"Save Settings"="Tùy chọn lưu lại";
 /* Default title given to the document created when you use the option 'Scan Document' in the app */
 "cloudDrive.scanDocument.defaultName"="Bản quét %@";
 /* file type title, used in changing the export format of scaned doc */
@@ -2477,11 +2481,11 @@
 /* Audio Explorer Screen: No audio files in the account */
 "No audio files found"="Không có tệp tin âm thanh nào";
 /* Video Explorer Screen: No audio files in the account */
-"No videos found"="Không có tệp video nào";
+"No videos found"="Không có video nào";
 /* Image title for the photo explorer */
 "home.images.title"="Hình Ảnh";
 /* Photo Explorer Screen: No images in the account */
-"home.images.empty"="Không Có Hình Nào";
+"home.images.empty"="Không có hình nào";
 /* Title of Favourites explorer view card on Home */
 "home.favourites.title"="Ưa Thích";
 /* Accessibility label for Home section in tabbar item */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Nhập ít hơn 30 ký tự";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Nhập ít hơn 4 000 ký tự";
+"meetings.scheduleMeeting.description.lenghtError"="Nhập ít hơn 3 000 ký tự";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Hủy";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="Loại bỏ các thay đổi";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Tiếp tục chỉnh sửa";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="Cuộc họp đã được tạo";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="Tiếp tục phát video?";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$s sẽ tiếp tục phát tại %2$s";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="Tiếp tục truyền";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="Khởi động lại";

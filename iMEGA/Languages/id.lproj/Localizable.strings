@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="Karakter berikut tidak diperbolehkan: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Ganti nama file %@?";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="Ekstensi file berubah";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="Anda mungkin tidak dapat membuka file ini jika anda mengubah ekstensinya.";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="Tetap ganti";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="Berkas tanpa ekstensi .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Ganti";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1616,10 +1624,6 @@
 "openBrowser"="Buka browser";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Restart";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Lanjutkan playback?";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s akan lanjut pada %2$s";
 /*  */
 "resume"="Lanjutkan";
 /* Title to preview document */
@@ -1883,11 +1887,11 @@
 /* Response text after clicking Ignore on an incoming contact request notification. */
 "You ignored a contact request"="Anda tidak mengindahkan request kontak";
 /* Response text after clicking Accept on an incoming contact request notification. */
-"You accepted a contact request"="Anda menerima request kontak";
+"You accepted a contact request"="Anda menerima permintaan kontak";
 /* Response text after clicking Deny on an incoming contact request notification. */
 "You denied a contact request"="Anda menolak request kontak";
 /* When somebody accepted your contact request */
-"Accepted your contact request"="Menerima request kontak anda";
+"Accepted your contact request"="Menerima permintaan kontak anda";
 /* When somebody denied your contact request */
 "Denied your contact request"="Menolak request kontak anda";
 /* notification text */
@@ -2553,11 +2557,11 @@
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Dengan demikian, anda akan melihat pesan baru di perangkat anda secara instan.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="1. Open <b>Settings</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Buka <b>Pengaturan</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="2. Tap <b>Notifications</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Tekan <b>Notifikasi</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="3. Tap <b>MEGA</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Tekan <b>MEGA</b>";
 /* Fourth step to turn on notifications */
 "dialog.turnOnNotifications.label.stepFour"="4. Nyalakan <b>Izinkan notifikasi</b>";
 /* Title of the button to open Settings */
@@ -3071,7 +3075,7 @@
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Buat tersedia saat offline";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
-"general.fileIsBeingDownloaded"="File is already being downloaded";
+"general.fileIsBeingDownloaded"="File sedang diunduh";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Akhiri panggilan untuk semua";
 /* Title of the popup that ends the meeting for all */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Masukan kurang dari 30 karakter";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Masukan kurang dari 4,000 karakter";
+"meetings.scheduleMeeting.description.lenghtError"="Masukan kurang dari 3.000 karakter";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Batal";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="Membuang perubahan";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Terus ubah";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="Rapat telah dibuat";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="Lanjutkan video?";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$s akan dilanjutkan dari %2$s";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="Lanjutkan";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="Restart";

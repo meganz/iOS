@@ -2066,5 +2066,69 @@
         <string>U bent de volgende mappen aan het delen: [A]</string>
       </dict>
     </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A]geüpload naar “[B]“</string>
+        <key>other</key>
+        <string>%d items geüpload naar “[B]“</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string> “[A]“ geüpload naar Cloud schijf</string>
+        <key>other</key>
+        <string>%d items geüpload naar Cloud schijf</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” verstuurd naar gesprek</string>
+        <key>other</key>
+        <string>“[A]” verstuurd naar alle gesprekken</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] verstuurd naar gesprek</string>
+        <key>other</key>
+        <string>[A] verstuurd naar alle gesprekken</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

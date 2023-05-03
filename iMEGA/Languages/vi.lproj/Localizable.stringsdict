@@ -614,10 +614,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d unread message</string>
         <key>other</key>
-        <string>%d unread messages</string>
+        <string>%d tin nhắn chưa đọc</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -630,10 +628,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>You can add only up to %d item at a time to an album.</string>
         <key>other</key>
-        <string>You can add only up to %d items at a time to an album.</string>
+        <string>Bạn chỉ có thể chọn mỗi lần lên tới %d mục để thêm vào một album.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addedItemTo</key>
@@ -1810,6 +1806,62 @@
         <string>d</string>
         <key>other</key>
         <string>Bạn hiện đang chia sẻ các thư mục sau đây: [A]</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Đã tải lên %d mục vào “[B]”</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Đã tải lên %d mục lên Ổ Mây</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Đã gửi “[A]” tới tất cả cuộc chát</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Đã gửi [A] tới tất cả cuộc chát</string>
       </dict>
     </dict>
   </dict>

@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="De volgende tekens zijn niet toegestaan: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Bestand %@ hernoemen?";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="Bestand extensie wijziging";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="U kunt dit bestand mogelijk niet openen als u de extensie wijzigt.";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="Toch wijzigen";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="Bestand zonder extensie .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Vervangen";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1616,10 +1624,6 @@
 "openBrowser"="Browser openen";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Herstarten";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Afspelen hervatten?";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s wordt hervat bij %2$s";
 /*  */
 "resume"="Doorgaan";
 /* Title to preview document */
@@ -1883,11 +1887,11 @@
 /* Response text after clicking Ignore on an incoming contact request notification. */
 "You ignored a contact request"="U hebt een contactverzoek genegeerd";
 /* Response text after clicking Accept on an incoming contact request notification. */
-"You accepted a contact request"="U hebt een contact verzoek geaccepteerd";
+"You accepted a contact request"="U heeft een contact verzoek geaccepteerd";
 /* Response text after clicking Deny on an incoming contact request notification. */
 "You denied a contact request"="U hebt een contact verzoek afgewezen";
 /* When somebody accepted your contact request */
-"Accepted your contact request"="Heeft uw contact verzoek aanvraag";
+"Accepted your contact request"="Heeft uw contact verzoek geaccepteerd";
 /* When somebody denied your contact request */
 "Denied your contact request"="Uw contact verzoek is geweigerd";
 /* notification text */
@@ -3071,7 +3075,7 @@
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Maak beschikbaar offline";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
-"general.fileIsBeingDownloaded"="File is already being downloaded";
+"general.fileIsBeingDownloaded"="Bestand wordt al gedownload";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Oproep voor iedereen beëindigen";
 /* Title of the popup that ends the meeting for all */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Voer minder dan 30 tekens in";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Voer minder dan 4000 tekens in";
+"meetings.scheduleMeeting.description.lenghtError"="Voer minder dan 3000 tekens in ";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Annuleren";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="Wijzigingen Ongedaan maken";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Doorgaan met bewerken";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="Vergadering gecreëerd";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="Video hervatten?";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$s wordt hervat van %2$s";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="Hervatten";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="Herstarten";

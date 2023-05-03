@@ -614,10 +614,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d unread message</string>
         <key>other</key>
-        <string>%d unread messages</string>
+        <string>%d pesan yang belum dibaca </string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -630,10 +628,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>You can add only up to %d item at a time to an album.</string>
         <key>other</key>
-        <string>You can add only up to %d items at a time to an album.</string>
+        <string>Anda hanya dapat menambahkan hingga %d item sekaligus ke album. </string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addedItemTo</key>
@@ -1810,6 +1806,62 @@
         <string>d</string>
         <key>other</key>
         <string>Anda sedang berbagi folder berikut: [A]</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Telah diunggah %d barang ke “[B]“</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Telah diunggah %d barang ke drive Cloud</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Terkirim “[A]” ke semua obrolan</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Terkirim [A] ke semua obrolan</string>
       </dict>
     </dict>
   </dict>

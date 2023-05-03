@@ -873,9 +873,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d unread message</string>
+        <string>%d непрочитанное сообщение</string>
+        <key>few</key>
+        <string>%d непрочитанных сообщения</string>
+        <key>many</key>
+        <string>%d непрочитанных сообщений</string>
         <key>other</key>
-        <string>%d unread messages</string>
+        <string>%d непрочитанных сообщения</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -2576,6 +2580,86 @@
         <string>В настоящее время у вас открыт доступ к следующим папкам: [A]</string>
         <key>other</key>
         <string>В настоящее время у вас открыт доступ к следующим папкам: [A]</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>В «[B]» загружен элемент «[A]»</string>
+        <key>few</key>
+        <string>В «[B]» загружено %d элемента</string>
+        <key>many</key>
+        <string>В «[B]» загружено %d элементов</string>
+        <key>other</key>
+        <string>В «[B]» загружено %d элемента</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>В облачный диск загружен элемент «[A]»</string>
+        <key>few</key>
+        <string>В облачный диск загружено %d элемента</string>
+        <key>many</key>
+        <string>В облачный диск загружено %d элементов</string>
+        <key>other</key>
+        <string>В облачный диск загружено %d элемента</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Файл «[A]» отправлен в чат</string>
+        <key>few</key>
+        <string>Файл «[A]» отправлен во все чаты</string>
+        <key>many</key>
+        <string>Файл «[A]» отправлен во все чаты</string>
+        <key>other</key>
+        <string>Файл «[A]» отправлен во все чаты</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] отправлено в чат</string>
+        <key>few</key>
+        <string>[A] отправлено во все чаты</string>
+        <key>many</key>
+        <string>[A] отправлено во все чаты</string>
+        <key>other</key>
+        <string>[A] отправлено во все чаты</string>
       </dict>
     </dict>
   </dict>

@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="次の文字は許可されていません：%@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="ファイル%@の名前を変更しますか？";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="ファイル拡張子の変更";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="拡張子を変更すると、このファイルが開けなくなる可能性があります。";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="とにかく変更する";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="ファイルに拡張子.%@がありません";
 /* Title for the action that allows you to replace a file. */
 "replace"="置き換える";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1616,10 +1624,6 @@
 "openBrowser"="ブラウザを開く";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="再起動";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="再生を再開しますか？";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$sさんは%2$sに再開します";
 /*  */
 "resume"="再開";
 /* Title to preview document */
@@ -1883,7 +1887,7 @@
 /* Response text after clicking Ignore on an incoming contact request notification. */
 "You ignored a contact request"="連絡先要求を無視しました";
 /* Response text after clicking Accept on an incoming contact request notification. */
-"You accepted a contact request"="連絡先要求を受け入れました";
+"You accepted a contact request"="連作先要求を受け入れました";
 /* Response text after clicking Deny on an incoming contact request notification. */
 "You denied a contact request"="連絡先要求を拒否しました";
 /* When somebody accepted your contact request */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="30文字未満で入力してください";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="4000 文字未満で入力してください";
+"meetings.scheduleMeeting.description.lenghtError"="3000 文字未満で入力してください";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="キャンセル";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="変更を破棄";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="編集を続ける";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="ミーティングが作成されました";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="動画を再開しますか？";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$sは%2$sから再開します";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="再開";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="再起動";

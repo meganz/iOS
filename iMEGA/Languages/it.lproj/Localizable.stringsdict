@@ -787,9 +787,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d unread message</string>
+        <string>%d messaggio non letto</string>
+        <key>many</key>
+        <string>%d di messaggi non letti</string>
         <key>other</key>
-        <string>%d unread messages</string>
+        <string>%d messaggi non letti</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -803,9 +805,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>You can add only up to %d item at a time to an album.</string>
+        <string>Puoi aggiungere solo fino a %d oggetto per volta in un album.</string>
+        <key>many</key>
+        <string>Puoi aggiungere solo fino a %d di oggetti per volta in un album.</string>
         <key>other</key>
-        <string>You can add only up to %d items at a time to an album.</string>
+        <string>Puoi aggiungere solo fino a %d oggetti per volta in un album.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addedItemTo</key>
@@ -2318,6 +2322,78 @@
         <string>Al momento stai condividendo le seguenti cartelle: [A]</string>
         <key>other</key>
         <string>Al momento stai condividendo le seguenti cartelle: [A]</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” caricato in “[B]”</string>
+        <key>many</key>
+        <string>%d di oggetti caricati in “[B]”</string>
+        <key>other</key>
+        <string> %d oggetti caricati in “[B]”</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” caricato nel Cloud drive</string>
+        <key>many</key>
+        <string>%d di oggetti caricati nel Cloud Drive</string>
+        <key>other</key>
+        <string>%d oggetti caricati nel Cloud Drive</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” inviato alla chat</string>
+        <key>many</key>
+        <string>“[A]” inviato a tutte le chat</string>
+        <key>other</key>
+        <string>“[A]” inviato a tutte le chat</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[A] inviato alla chat</string>
+        <key>many</key>
+        <string>[A] inviato a tutte le chat</string>
+        <key>other</key>
+        <string>[A] inviato a tutte le chat</string>
       </dict>
     </dict>
   </dict>
