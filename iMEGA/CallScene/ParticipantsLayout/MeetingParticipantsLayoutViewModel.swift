@@ -753,9 +753,9 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             cancelReconnecting1on1Subscription()
         }
         initTimerIfNeeded(with: Int(call.duration))
+        callParticipants.append(participant)
         participantName(for: participant.participantId) { [weak self] in
             participant.name = $0
-            self?.callParticipants.append(participant)
             self?.invokeCommand?(.insertParticipant(self?.callParticipants ?? []))
             if self?.callParticipants.count == 1 && self?.layoutMode == .speaker {
                 self?.invokeCommand?(.shouldHideSpeakerView(false))
