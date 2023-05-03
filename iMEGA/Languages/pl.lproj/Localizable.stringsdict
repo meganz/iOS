@@ -2582,5 +2582,85 @@
         <string>Obecnie udostępniasz następujące katalogi: [A]</string>
       </dict>
     </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Wgrano “[A]“ do “[B]“</string>
+        <key>few</key>
+        <string>Wgrano %d elementów do “[B]“</string>
+        <key>many</key>
+        <string>Wgrano %d elementów do “[B]“</string>
+        <key>other</key>
+        <string>Wgrano %d elementów do “[B]“</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Wgrano “[A]“ na Dysk w chmurze</string>
+        <key>few</key>
+        <string>Wgrano %d elementów do Dysku w chmurze</string>
+        <key>many</key>
+        <string>Wgrano %d elementów do Dysku w chmurze</string>
+        <key>other</key>
+        <string>Wgrano %d elementów do Dysku w chmurze</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Wysyłanie &quot;[A]&quot; do czatu</string>
+        <key>few</key>
+        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
+        <key>many</key>
+        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
+        <key>other</key>
+        <string>Wysyłanie &quot;[A]&quot; do wszystkich czatów</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Wysyłanie [A] do czatu</string>
+        <key>few</key>
+        <string>Wysyłanie [A] do wszystkich czatów</string>
+        <key>many</key>
+        <string>Wysyłanie [A] do wszystkich czatów</string>
+        <key>other</key>
+        <string>Wysyłanie [A] do wszystkich czatów</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

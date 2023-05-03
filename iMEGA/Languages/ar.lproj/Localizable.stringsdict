@@ -1044,10 +1044,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d رسالة غير مقروءة</string>
         <key>one</key>
-        <string>%d unread message</string>
+        <string>%d رسالة غير مقروءة</string>
+        <key>two</key>
+        <string>%d رسالتين غير مقروءتين</string>
+        <key>few</key>
+        <string>%d رسائل غير مقروءة</string>
+        <key>many</key>
+        <string>%d رسالة غير مقروءة</string>
         <key>other</key>
-        <string>%d unread messages</string>
+        <string>%d رسالة غير مقروءة</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -3088,6 +3096,102 @@
         <string></string>
         <key>other</key>
         <string></string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تم ترفيع %d عنصر إلى ”[B]“</string>
+        <key>one</key>
+        <string>تم ترفيع ”[A]” إلى ”[B]“</string>
+        <key>two</key>
+        <string>تم ترفيع %d عنصرين إلى ”[B]“</string>
+        <key>few</key>
+        <string>تم ترفيع %d عناصر إلى ”[B]“</string>
+        <key>many</key>
+        <string>تم ترفيع %d عنصراً إلى ”[B]“</string>
+        <key>other</key>
+        <string>تم ترفيع %d عنصر إلى ”[B]“</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>ترفيع %d عنصر إلى السواقة السحابية</string>
+        <key>one</key>
+        <string>ترفيع ”[A]“ إلى السواقة السحابية</string>
+        <key>two</key>
+        <string>ترفيع %d عنصرين إلى السواقة السحابية</string>
+        <key>few</key>
+        <string>ترفيع %d عناصر إلى السواقة السحابية</string>
+        <key>many</key>
+        <string>ترفيع %d عنصراً إلى السواقة السحابية</string>
+        <key>other</key>
+        <string>ترفيع  %d عنصر إلى السواقة السحابية</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تم إرسال ”[A]“ إلى كل المحادثات</string>
+        <key>one</key>
+        <string>تم إرسال ”[A]“ إلى المحادثة</string>
+        <key>two</key>
+        <string>تم إرسال ”[A]“ إلى كل المحادثات</string>
+        <key>few</key>
+        <string>تم إرسال ”[A]“ إلى كل المحادثات</string>
+        <key>many</key>
+        <string>تم إرسال ”[A]“ إلى كل المحادثات</string>
+        <key>other</key>
+        <string>تم إرسال ”[A]“ إلى كل المحادثات</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تم إرسال [A] إلى كل المحادثات</string>
+        <key>one</key>
+        <string>تم إرسال [A] إلى المحادثة</string>
+        <key>two</key>
+        <string>تم إرسال [A] إلى كل المحادثات</string>
+        <key>few</key>
+        <string>تم إرسال [A] إلى كل المحادثات</string>
+        <key>many</key>
+        <string>تم إرسال [A] إلى كل المحادثات</string>
+        <key>other</key>
+        <string>تم إرسال [A] إلى كل المحادثات</string>
       </dict>
     </dict>
   </dict>

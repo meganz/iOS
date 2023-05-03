@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="Los siguientes caracteres no están permitidos: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="¿Renombrar archivo %@?";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="Cambio de extensión del archivo";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="Es posible que no puedas abrir este archivo si cambia su extensión.";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="Cambiar de todos modos";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="Archivo sin extensión .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Sustituir";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1616,10 +1624,6 @@
 "openBrowser"="Abrir navegador";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Reiniciar";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="¿Reanudar la reproducción?";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s continuará desde %2$s";
 /*  */
 "resume"="Reanudar";
 /* Title to preview document */
@@ -3071,7 +3075,7 @@
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Disponible sin conexión";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
-"general.fileIsBeingDownloaded"="File is already being downloaded";
+"general.fileIsBeingDownloaded"="El archivo ya se está descargando";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Finalizar llamada para todos";
 /* Title of the popup that ends the meeting for all */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Introducir menos de 30 caracteres";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Introducir menos de 4 000 caracteres";
+"meetings.scheduleMeeting.description.lenghtError"="Introducir menos de 3000 caracteres";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Cancelar";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="Descartar los cambios";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Seguir editando";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="Reunión creada";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="¿Reanudar vídeo?";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$s se reanudará desde %2$s";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="Reanudar";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="Reiniciar";

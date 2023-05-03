@@ -2077,9 +2077,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Uploaded “[A]“ to “[B]“</string>
+        <string>Uploaded “[A]” to “[B]”</string>
         <key>other</key>
-        <string>Uploaded %d items to “[B]“</string>
+        <string>Uploaded %d items to “[B]”</string>
       </dict>
     </dict>
     <key>share.message.uploadedToCloudDrive</key>
@@ -2093,7 +2093,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Uploaded “[A]“ to Cloud drive</string>
+        <string>Uploaded “[A]” to Cloud drive</string>
         <key>other</key>
         <string>Uploaded %d items to Cloud drive</string>
       </dict>

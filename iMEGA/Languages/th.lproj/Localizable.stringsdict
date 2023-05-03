@@ -614,10 +614,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d unread message</string>
         <key>other</key>
-        <string>%d unread messages</string>
+        <string>%d ข้อความที่ยังไม่ได้อ่าน</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -630,10 +628,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>You can add only up to %d item at a time to an album.</string>
         <key>other</key>
-        <string>You can add only up to %d items at a time to an album.</string>
+        <string>คุณสามารถเพิ่มรายการลงในอัลบั้มได้ครั้งละไม่เกิน %d รายการ</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addedItemTo</key>
@@ -1810,6 +1806,62 @@
         <string>d</string>
         <key>other</key>
         <string>คุณกำลังแชร์โฟลเดอร์ต่อไปนี้: [A]</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToDestinationFolder</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>อัปโหลด %d รายการไปไว้ที่ “[B]” แล้ว</string>
+      </dict>
+    </dict>
+    <key>share.message.uploadedToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>อัปโหลด %d รายการไปไว้ที่คลาว์ไดร์ฟแล้ว</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withOneFile</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ส่ง “[A]” ไปที่แชททั้งหมดแล้ว</string>
+      </dict>
+    </dict>
+    <key>share.message.sendToChat.withMultipleFiles</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@receiverCount@</string>
+      <key>receiverCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>ส่ง [A] ไปที่แชททั้งหมดแล้ว</string>
       </dict>
     </dict>
   </dict>

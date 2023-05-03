@@ -464,6 +464,14 @@
 "general.error.charactersNotAllowed"="I seguenti caratteri non sono ammessi: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
 "rename_file_alert_title"="Rinominare il file %@?";
+/* Rename file confirmation alert title to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.title"="Cambio dell'estensione file";
+/* Rename file confirmation alert description to ask if user is sure to change the file extension. */
+"rename.confirmationAlert.description"="Potresti non riuscire ad aprire questo se cambi la sua estensione.";
+/* Rename file confirmation confirm button title */
+"rename.confirmationAlert.ok"="Cambia lo stesso";
+/* Rename file no extension warning text */
+"rename.fileWithoutExtension"="File without extension .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Sostituisci";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1616,10 +1624,6 @@
 "openBrowser"="Apri browser";
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Riavvia";
-/* Title to alert user the possibility of resume playing the video or start from the beginning */
-"resumePlayback"="Ricominciare playback?";
-/* Message to show the user info (name and time) about the resume of the video */
-"continueOrRestartVideoMessage"="%1$s continuerà a %2$s";
 /*  */
 "resume"="Riprendi";
 /* Title to preview document */
@@ -3355,7 +3359,7 @@
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="Inserisci meno di 30 caratteri";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Inserisci meno di 4 000 caratteri";
+"meetings.scheduleMeeting.description.lenghtError"="Inserisci meno di 3000 caratteri";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Annulla";
 /* Schedule meeting create button */
@@ -3366,3 +3370,13 @@
 "meetings.scheduleMeeting.discardChanges.confirm"="Annulla cambiamenti";
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Continua a modificare";
+/* Schedule meeting creation complete */
+"meetings.scheduleMeeting.meetingCreated"="Meeting created";
+/* Alert title shown for video with options to resume playing the video or start from the beginning */
+"video.alert.resumeVideo.title"="Riprendere il video?";
+/* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
+"video.alert.resumeVideo.message"="%1$s riprenderà da %2$s";
+/* Alert button title that will resume playing the video */
+"video.alert.resumeVideo.button.resume"="Riprendi";
+/* Alert button title that will start playing the video from the beginning */
+"video.alert.resumeVideo.button.restart"="Riavvia";
