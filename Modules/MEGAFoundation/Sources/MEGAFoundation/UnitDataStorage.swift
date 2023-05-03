@@ -15,6 +15,8 @@ public class UnitDataStorage: Dimension {
     }
 }
 
+extension UnitDataStorage: @unchecked Sendable {}
+
 public extension Measurement where UnitType == UnitDataStorage {
 
     init<T>(value: T, unit: UnitType) where T: FixedWidthInteger {

@@ -61,7 +61,7 @@ final class AddPhoneNumberViewModel: ViewModelType {
     
     // MARK: - Get achievement storage
     private func getAchievementStorage() {
-        Task { [weak self] in
+        Task { @MainActor [weak self] in
             do {
                 guard let storage = try await self?.achievementUseCase.getAchievementStorage(by: .addPhone) else { return }
                 let storageText = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(String.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))

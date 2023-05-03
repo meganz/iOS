@@ -1,6 +1,6 @@
 import Foundation
 
-public struct AchievementDetailsEntity {
+public struct AchievementDetailsEntity: Sendable {
     public let baseStorage: Int64
     public let currentStorage: Int64
     public let currentTransfer: Int64
@@ -84,7 +84,7 @@ public struct AchievementDetailsEntity {
     }
 }
 
-public struct AchivementDetailsClassStorage {
+public struct AchivementDetailsClassStorage: Sendable {
     public let achievementType: AchievementTypeEntity
     public let storage: Int64
 
@@ -94,7 +94,7 @@ public struct AchivementDetailsClassStorage {
     }
 }
 
-public struct AchivementDetailsClassTransfer {
+public struct AchivementDetailsClassTransfer: Sendable {
     public let achievementType: AchievementTypeEntity
     public let transfer: Int64
 
@@ -104,7 +104,7 @@ public struct AchivementDetailsClassTransfer {
     }
 }
 
-public struct AchivementDetailsClassExpire {
+public struct AchivementDetailsClassExpire: Sendable {
     public let achievementType: AchievementTypeEntity
     public let expire: Int
 
