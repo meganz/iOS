@@ -1,6 +1,7 @@
 // MARK: - Use case protocol -
 public protocol NodeUseCaseProtocol {
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
+    func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
     func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)
     func hasVersions(nodeHandle: HandleEntity) -> Bool
@@ -21,6 +22,10 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
         nodeDataRepository.nodeAccessLevel(nodeHandle: nodeHandle)
+    }
+    
+    public func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity {
+        await nodeDataRepository.nodeAccessLevelAsync(nodeHandle: nodeHandle)
     }
     
     public func labelString(label: NodeLabelTypeEntity) -> String {

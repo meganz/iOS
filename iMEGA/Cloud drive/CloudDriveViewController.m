@@ -232,7 +232,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
         
-        [self reloadData];
+        [self reloadList];
     }
 }
 
@@ -687,12 +687,16 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
 }
 
-- (void)reloadData {
+- (void)reloadList {
     if (self.viewModePreference == ViewModePreferenceList) {
         [self.cdTableView.tableView reloadData];
     } else {
         [self.cdCollectionView reloadData];
     }
+}
+
+- (void)reloadData {
+    [self reloadList];
     
     if (!self.cdTableView.tableView.isEditing && !self.cdCollectionView.collectionView.allowsMultipleSelection) {
         if (self.displayMode == DisplayModeBackup) {

@@ -22,6 +22,12 @@ struct NodeDataRepository: NodeDataRepositoryProtocol {
         return NodeAccessTypeEntity(shareAccess: sdk.accessLevel(for: node)) ?? .unknown
     }
     
+    func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity {
+        await Task.detached {
+            nodeAccessLevel(nodeHandle: nodeHandle)
+        }.value
+    }
+    
     func labelString(label: NodeLabelTypeEntity) -> String {
         let nodeLabel = MEGANodeLabel(nodeLabelTypeEntity: label) ?? .unknown
         return MEGANode.string(for: nodeLabel) ?? "" + "Small"

@@ -2,6 +2,7 @@ import Foundation
 
 public protocol NodeDataRepositoryProtocol: RepositoryProtocol {
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity
+    func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
     func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)
     func nameForNode(handle: HandleEntity) -> String?
