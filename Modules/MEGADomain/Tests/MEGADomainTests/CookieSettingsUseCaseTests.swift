@@ -12,14 +12,14 @@ final class CookieSettingsUseCaseTests: XCTestCase {
     }
     
     func testCookieBanner_disable() {
-        let repo = MockCookieSettingsRepository()
+        let repo = MockCookieSettingsRepository.newRepo
         let sut = CookieSettingsUseCase(repository: repo)
         XCTAssertFalse(sut.cookieBannerEnabled())
     }
     
     func testCookieSetting_error_Generic() {
         let mockError: CookieSettingsErrorEntity = .generic
-        let repo = MockCookieSettingsRepository()
+        let repo = MockCookieSettingsRepository.newRepo
         let sut = CookieSettingsUseCase(repository: repo)
         sut.cookieSettings { result in
             switch result {
@@ -76,7 +76,7 @@ final class CookieSettingsUseCaseTests: XCTestCase {
     
     func testSetCookieSetting_error_Generic() {
         let mockError: CookieSettingsErrorEntity = .generic
-        let repo = MockCookieSettingsRepository()
+        let repo = MockCookieSettingsRepository.newRepo
         let sut = CookieSettingsUseCase(repository: repo)
         sut.setCookieSettings(with: 10) { result in
             switch result {
@@ -104,7 +104,7 @@ final class CookieSettingsUseCaseTests: XCTestCase {
     
     func test_enableCrashlytics() {
         let enable = true
-        let repo = MockCookieSettingsRepository()
+        let repo = MockCookieSettingsRepository.newRepo
         let sut = CookieSettingsUseCase(repository: repo)
         sut.setCrashlyticsEnabled(enable)
         XCTAssertTrue(enable)
@@ -112,7 +112,7 @@ final class CookieSettingsUseCaseTests: XCTestCase {
     
     func test_disableCrashlytics() {
         let enable = false
-        let repo = MockCookieSettingsRepository()
+        let repo = MockCookieSettingsRepository.newRepo
         let sut = CookieSettingsUseCase(repository: repo)
         sut.setCrashlyticsEnabled(enable)
         XCTAssertFalse(enable)
