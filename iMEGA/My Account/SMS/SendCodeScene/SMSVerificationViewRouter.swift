@@ -13,10 +13,16 @@ final class SMSVerificationViewRouter: NSObject, SMSVerificationViewRouting {
     private weak var navigationController: UINavigationController?
     
     private let verificationType: SMSVerificationType
+    private let onPhoneNumberVerified: (() -> Void)?
     
-    @objc init(verificationType: SMSVerificationType, presenter: UIViewController) {
+    @objc init(
+        verificationType: SMSVerificationType,
+        presenter: UIViewController,
+        onPhoneNumberVerified: (() -> Void)? = nil
+    ) {
         self.verificationType = verificationType
         self.presenter = presenter
+        self.onPhoneNumberVerified = onPhoneNumberVerified
         super.init()
     }
     
@@ -53,8 +59,12 @@ final class SMSVerificationViewRouter: NSObject, SMSVerificationViewRouting {
         router.start()
     }
     
-    func goToVerificationCode(forPhoneNumber number: String) {
-        let router = VerificationCodeViewRouter(navigationController: navigationController, verificationType: verificationType, phoneNumber: number)
+    func goToVerificationCode(forPhoneNumber number: String){
+        let router = VerificationCodeViewRouter(
+            navigationController: navigationController,
+            verificationType: verificationType, phoneNumber: number,
+            onPhoneNumberVerified: { self.onPhoneNumberVerified?() }
+        )
         router.start()
     }
 }

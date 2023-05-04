@@ -153,6 +153,9 @@
     NSNumber *index = [self.achievementsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:achievementClass]];
     achievementsDetailsVC.completedAchievementIndex = index;
     achievementsDetailsVC.achievementClass = achievementClass;
+    achievementsDetailsVC.onAchievementDetailsUpdated = ^(MEGAAchievementsDetails* achievementDetails){
+        [self setupView:achievementDetails];
+    };
     
     [self.navigationController pushViewController:achievementsDetailsVC animated:YES];
 }
@@ -166,6 +169,47 @@
 
 - (void)dismissViewController {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)setupView:(MEGAAchievementsDetails *)achievementDetails {
+    self.achievementsDetails = achievementDetails;
+    bool hasReferralBonuses = NO;
+    bool hasWelcomeBonuses = NO;
+    self.achievementsIndexesMutableDictionary = [[NSMutableDictionary alloc] init];
+    NSUInteger awardsCount = self.achievementsDetails.awardsCount;
+    for (NSUInteger i = 0; i < awardsCount; i++) {
+        MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:i];
+        if (achievementClass == MEGAAchievementInvite) {
+            hasReferralBonuses = YES;
+        } else {
+            if (achievementClass == MEGAAchievementWelcome) {
+                hasWelcomeBonuses = YES;
+            }
+            [self.achievementsIndexesMutableDictionary setObject:[NSNumber numberWithInteger:i] forKey:[NSNumber numberWithInteger:achievementClass]];
+        }
+    }
+
+    self.displayOrderMutableArray = [[NSMutableArray alloc] init];
+    if (hasReferralBonuses) {
+        [self.displayOrderMutableArray addObject:[NSNumber numberWithInt:MEGAAchievementInvite]];
+    }
+    if (hasWelcomeBonuses) {
+        [self.displayOrderMutableArray addObject:[NSNumber numberWithInt:MEGAAchievementWelcome]];
+    }
+    [self.displayOrderMutableArray addObjectsFromArray:@[
+        [NSNumber numberWithInt:MEGAAchievementDesktopInstall],
+        [NSNumber numberWithInt:MEGAAchievementMobileInstall],
+        [NSNumber numberWithInt:MEGAAchievementAddPhone]
+    ]];
+
+    NSString *inviteStorageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
+    self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.referral.subtitle", nil), inviteStorageString];
+
+    self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];
+
+    [self.inviteYourFriendsSubtitleLabel sizeToFit];
+
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource
@@ -262,44 +306,7 @@
             return;
         }
         
-        self.achievementsDetails = request.megaAchievementsDetails;
-        bool hasReferralBonuses = NO;
-        bool hasWelcomeBonuses = NO;
-        self.achievementsIndexesMutableDictionary = [[NSMutableDictionary alloc] init];
-        NSUInteger awardsCount = self.achievementsDetails.awardsCount;
-        for (NSUInteger i = 0; i < awardsCount; i++) {
-            MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:i];
-            if (achievementClass == MEGAAchievementInvite) {
-                hasReferralBonuses = YES;
-            } else {
-                if (achievementClass == MEGAAchievementWelcome) {
-                    hasWelcomeBonuses = YES;
-                }
-                [self.achievementsIndexesMutableDictionary setObject:[NSNumber numberWithInteger:i] forKey:[NSNumber numberWithInteger:achievementClass]];
-            }
-        }
-        
-        self.displayOrderMutableArray = [[NSMutableArray alloc] init];
-        if (hasReferralBonuses) {
-            [self.displayOrderMutableArray addObject:[NSNumber numberWithInt:MEGAAchievementInvite]];
-        }
-        if (hasWelcomeBonuses) {
-            [self.displayOrderMutableArray addObject:[NSNumber numberWithInt:MEGAAchievementWelcome]];
-        }
-        [self.displayOrderMutableArray addObjectsFromArray:@[
-            [NSNumber numberWithInt:MEGAAchievementDesktopInstall],
-            [NSNumber numberWithInt:MEGAAchievementMobileInstall],
-            [NSNumber numberWithInt:MEGAAchievementAddPhone]
-        ]];
-        
-        NSString *inviteStorageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
-        self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.referral.subtitle", nil), inviteStorageString];
-        
-        self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];
-        
-        [self.inviteYourFriendsSubtitleLabel sizeToFit];
-        
-        [self.tableView reloadData];
+        [self setupView: request.megaAchievementsDetails];
     }
 }
 

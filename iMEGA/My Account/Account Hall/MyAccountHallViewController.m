@@ -277,7 +277,7 @@
 }
 
 - (IBAction)didTapAddPhoneNumberView {
-    [[[SMSVerificationViewRouter alloc] initWithVerificationType:SMSVerificationTypeAddPhoneNumber presenter:self] start];
+    [[[SMSVerificationViewRouter alloc] initWithVerificationType:SMSVerificationTypeAddPhoneNumber presenter:self onPhoneNumberVerified: nil] start];
 }
 
 #pragma mark - UITableViewDelegate

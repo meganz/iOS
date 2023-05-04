@@ -11,9 +11,9 @@ enum VerificationCodeAction: ActionType {
 }
 
 protocol VerificationCodeViewRouting: Routing {
-    func dismiss()
     func goBack()
     func goToOnboarding()
+    func phoneNumberVerified()
 }
 
 struct VerificationCodeViewModel: ViewModelType {
@@ -105,8 +105,8 @@ struct VerificationCodeViewModel: ViewModelType {
     }
     
     private func didCheckCodeSucceeded() {
-        router.dismiss()
-        
+        router.phoneNumberVerified()
+
         guard verificationType == .unblockAccount else { return }
         
         guard let sessionId = authUseCase.sessionId() else {
