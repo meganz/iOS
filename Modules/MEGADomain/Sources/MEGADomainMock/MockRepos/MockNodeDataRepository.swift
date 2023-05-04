@@ -28,6 +28,10 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
         nodeAccessLevel
     }
     
+    public func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity {
+        nodeAccessLevel
+    }
+    
     public func labelString(label: NodeLabelTypeEntity) -> String {
         labelString
     }

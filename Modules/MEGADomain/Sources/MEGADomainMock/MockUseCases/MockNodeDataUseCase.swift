@@ -31,6 +31,10 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         return nodeAccessLevelVariable
     }
     
+    public func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity {
+        nodeAccessLevelVariable
+    }
+    
     public func downloadToOffline(nodeHandle: HandleEntity) { }
     
     public func labelString(label: NodeLabelTypeEntity) -> String {
