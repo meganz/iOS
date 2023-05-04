@@ -244,6 +244,33 @@ final class AlbumContentViewModelTests: XCTestCase {
         XCTAssertFalse(config.isFilterEnabled)
         XCTAssertFalse(config.isEmptyState)
     }
+    
+    func testContextMenuConfiguration_onAlbumShareLinkTurnedOff_shouldSetShareLinkStatusToUnavailble() throws {
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, type: .user),
+                                        albumContentsUseCase: MockAlbumContentUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router,
+                                        alertViewModel: alertViewModel(),
+                                        featureFlagProvider: MockFeatureFlagProvider(list: [.albumShareLink: false]))
+
+        let config = try XCTUnwrap(sut.contextMenuConfiguration)
+        XCTAssertEqual(config.sharedLinkStatus, .unavailable)
+    }
+    
+    func testContextMenuConfiguration_onAlbumSharedLinkTurnedOn_shouldSetCorrectStatusInContext() throws {
+        let expectedAlbumShareLinkStatus = SharedLinkStatusEntity.exported(true)
+        let sut = AlbumContentViewModel(album: AlbumEntity(id: 1, type: .user, sharedLinkStatus: expectedAlbumShareLinkStatus),
+                                        albumContentsUseCase: MockAlbumContentUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router,
+                                        alertViewModel: alertViewModel(),
+                                        featureFlagProvider: MockFeatureFlagProvider(list: [.albumShareLink: true]))
+        
+        let config = try XCTUnwrap(sut.contextMenuConfiguration)
+        XCTAssertEqual(config.sharedLinkStatus, expectedAlbumShareLinkStatus)
+    }
 
     func testDispatchChangeSortOrder_onSortOrderTheSame_shouldDoNothing() throws {
         let sut = AlbumContentViewModel(album: albumEntity,

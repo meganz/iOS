@@ -6,6 +6,7 @@ enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case createAlbum = "Create Album"
     case albumContextMenu = "Enable Album Context Menu"
     case newUpgradeAccountPlanUI = "New Upgrade Account Plan UI"
+    case albumShareLink = "Album Share Link"
 }
 
 final class FeatureFlagViewModel: ObservableObject {

@@ -7,6 +7,7 @@ public extension SetEntity {
          coverId: HandleEntity = .invalid,
          modificationTime: Date = Date(),
          name: String = "",
+         isExported: Bool = false,
          changes: SetChangesEntity = [],
          isTesting: Bool = true) {
         self.init(handle: handle,
@@ -14,6 +15,7 @@ public extension SetEntity {
                   coverId: coverId,
                   modificationTime: modificationTime,
                   name: name,
+                  isExported: isExported,
                   changes: changes)
     }
 }

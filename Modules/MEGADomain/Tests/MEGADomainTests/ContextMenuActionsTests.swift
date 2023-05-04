@@ -104,6 +104,24 @@ final class ContextMenuActionsTests: XCTestCase {
         }
     }
     
+    private func filterAlbumActions(from menuActions: [CMElementTypeEntity]) -> [AlbumActionEntity] {
+        menuActions.compactMap {
+            if case let .album(action) = $0 {
+                return action
+            }
+            return nil
+        }
+    }
+    
+    private func filterFilterActions(from menuActions: [CMElementTypeEntity]) -> [FilterEntity] {
+        menuActions.compactMap {
+            if case let .filter(action) = $0 {
+                return action
+            }
+            return nil
+        }
+    }
+    
     func testUploadAddMenu() throws {
         let menuEntity = try XCTUnwrap(ContextMenuBuilder()
                                                 .setType(.menu(type: .uploadAdd))
@@ -507,5 +525,49 @@ final class ContextMenuActionsTests: XCTestCase {
         
         XCTAssertEqual(filterDisplayActions(from: actions),
                        [.select, .sort, .filter])
+    }
+    
+    func testAlbumMenu_onSharedLinkExportedState_showsCorrectLinkActions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.menu(type: .album))
+                                                .setSortType(.defaultDesc)
+                                                .setFilterType(.allMedia)
+                                                .setAlbumType(.user)
+                                                .setIsFilterEnabled(true)
+                                                .setIsSelectHidden(false)
+                                                .setIsEmptyState(false)
+                                                .setSharedLinkStatus(.exported(true))
+                                                .build())
+        
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        
+        XCTAssertEqual(filterQuickActions(from: actions),
+                       [.manageLink, .removeLink, .rename])
+        XCTAssertEqual(filterAlbumActions(from: actions),
+                       [.selectAlbumCover, .delete])
+        XCTAssertEqual(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)), [.modificationDesc, .modificationAsc])
+        XCTAssertEqual(filterFilterActions(from: decomposeMenuIntoActions(menu: menuEntity)), [.allMedia, .images, .videos])
+    }
+    
+    func testAlbumMenu_onAlbumShareLinkUnavailable_showsNoLinkActions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.menu(type: .album))
+                                                .setAlbumType(.user)
+                                                .setSharedLinkStatus(.unavailable)
+                                                .build())
+        
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        XCTAssertEqual(filterQuickActions(from: actions), [.rename])
+    }
+    
+    func testAlbumMenu_onAlbumShareLinkNotExported_showsShareLinkAction() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+                                                .setType(.menu(type: .album))
+                                                .setAlbumType(.user)
+                                                .setSharedLinkStatus(.exported(false))
+                                                .build())
+        
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        XCTAssertTrue(filterQuickActions(from: actions).contains(.shareLink))
     }
 }
