@@ -77,11 +77,11 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                 uploadAddBarButtonItemUpdated = true
             }
             
-            if contextBarButtonItemUpdated || uploadAddBarButtonItemUpdated {
+            if contextBarButtonItemUpdated || uploadAddBarButtonItemUpdated || isEditingModeBeingDisabled {
                 navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
             }
         } else {
-            if contextBarButtonItemUpdated {
+            if contextBarButtonItemUpdated || isEditingModeBeingDisabled {
                 navigationItem.rightBarButtonItems = [contextBarButtonItem]
             }
         }
