@@ -14,20 +14,24 @@ public struct AlbumEntity: Identifiable, Hashable, Sendable {
     public let count: Int
     public let type: AlbumEntityType
     public let modificationTime: Date?
+    public let sharedLinkStatus: SharedLinkStatusEntity
     
-    public init(id: HandleEntity, name: String, coverNode: NodeEntity?, count: Int, type: AlbumEntityType, modificationTime: Date? = nil) {
+    public init(id: HandleEntity, name: String, coverNode: NodeEntity?, count: Int, type: AlbumEntityType, modificationTime: Date? = nil,
+                sharedLinkStatus: SharedLinkStatusEntity = .unavailable) {
         self.id = id
         self.name = name
         self.coverNode = coverNode
         self.count = count
         self.type = type
         self.modificationTime = modificationTime
+        self.sharedLinkStatus = sharedLinkStatus
     }
 }
 
 extension AlbumEntity {
     public func update(name newName: String) -> AlbumEntity {
-        AlbumEntity(id: self.id, name: newName, coverNode: self.coverNode, count: self.count, type: self.type, modificationTime: self.modificationTime)
+        AlbumEntity(id: self.id, name: newName, coverNode: self.coverNode, count: self.count, type: self.type,
+                    modificationTime: self.modificationTime, sharedLinkStatus: self.sharedLinkStatus)
     }
     
     public var systemAlbum: Bool {

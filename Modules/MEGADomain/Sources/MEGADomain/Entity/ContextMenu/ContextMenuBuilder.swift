@@ -34,6 +34,7 @@ public final class ContextMenuBuilder {
     private var showMediaDiscovery: Bool = false
     private var chatStatus: ChatStatusEntity = .invalid
     private var shouldScheduleMeeting = false
+    private var sharedLinkStatus: SharedLinkStatusEntity = .unavailable
     
     public init() {}
     
@@ -209,6 +210,11 @@ public final class ContextMenuBuilder {
     
     public func setShouldScheduleMeeting(_ shouldScheduleMeeting: Bool) -> ContextMenuBuilder {
         self.shouldScheduleMeeting = shouldScheduleMeeting
+        return self
+    }
+    
+    public func setSharedLinkStatus(_ sharedLinkStatus: SharedLinkStatusEntity?) -> ContextMenuBuilder {
+        self.sharedLinkStatus = sharedLinkStatus ?? .unavailable
         return self
     }
     
@@ -485,7 +491,11 @@ public final class ContextMenuBuilder {
     }
     
     private func userAlbumMenu() -> CMEntity {
-        var children: [CMElement] = [rename, selectAlbumCover]
+        var children = [CMElement]()
+        if case let .exported(isLinkExported) = sharedLinkStatus {
+            children.append(contentsOf: isLinkExported ? [manageLink, removeLink] : [shareLink])
+        }
+        children.append(contentsOf: [rename, selectAlbumCover])
         if !isSelectHidden {
             children.append(contentsOf: selectMenu().children)
         }

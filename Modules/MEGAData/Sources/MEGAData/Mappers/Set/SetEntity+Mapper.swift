@@ -20,6 +20,7 @@ fileprivate extension SetEntity {
                   coverId           : set.cover,
                   modificationTime  : set.timestamp,
                   name              : set.name ?? "",
+                  isExported        : set.isExported(),
                   changes           : set.changes().toChangesEntity()
         )
     }

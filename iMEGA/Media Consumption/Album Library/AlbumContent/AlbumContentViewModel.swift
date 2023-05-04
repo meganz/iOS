@@ -35,6 +35,8 @@ final class AlbumContentViewModel: ViewModelType {
     private let albumModificationUseCase: AlbumModificationUseCaseProtocol
     private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
     private let router: AlbumContentRouting
+    private let featureFlagProvider: FeatureFlagProviderProtocol
+    
     private var loadingTask: Task<Void, Never>?
     private var photos = [AlbumPhotoEntity]()
     private var subscriptions = Set<AnyCancellable>()
@@ -66,7 +68,8 @@ final class AlbumContentViewModel: ViewModelType {
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
         router: AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
-        alertViewModel: TextFieldAlertViewModel
+        alertViewModel: TextFieldAlertViewModel,
+        featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
     ) {
         self.album = album
         self.newAlbumPhotosToAdd = newAlbumPhotosToAdd
@@ -75,6 +78,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.photoLibraryUseCase = photoLibraryUseCase
         self.router = router
         self.alertViewModel = alertViewModel
+        self.featureFlagProvider = featureFlagProvider
         
         setupSubscription()
         setupAlbumModification()
@@ -141,7 +145,8 @@ final class AlbumContentViewModel: ViewModelType {
             albumType: album.type,
             isFilterEnabled: isFilterEnabled,
             isSelectHidden: isPhotoSelectionHidden,
-            isEmptyState: photos.isEmpty
+            isEmptyState: photos.isEmpty,
+            sharedLinkStatus: featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink) ? album.sharedLinkStatus : .unavailable
         )
     }
     

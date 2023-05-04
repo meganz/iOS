@@ -118,6 +118,19 @@ final class AlbumListUseCaseTests: XCTestCase {
                                                  coverNode: expectedCoverNode, count: expectedFavouritesCount, type: .favourite))
     }
     
+    func testSystemAlbums_onLoad_verifySharedLinkStatusIsUnavailable() async throws {
+        let favouriteImage = NodeEntity(handle: 22, hasThumbnail: true, isFavourite: true, mediaType: .image)
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository(),
+            fileSearchRepository: MockFilesSearchRepository(photoNodes: [favouriteImage]),
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
+            albumContentsUseCase: MockAlbumContentUseCase())
+        let albums = try await sut.systemAlbums()
+        XCTAssertEqual(albums.first?.sharedLinkStatus, .unavailable)
+    }
+    
     func testUserAlbums_loadAndRetrieveAlbumCover() async {
         let albumId = HandleEntity(1)
         let albumSetCoverId = HandleEntity(3)
@@ -191,6 +204,23 @@ final class AlbumListUseCaseTests: XCTestCase {
         XCTAssertEqual(albums.count, expectedAlbums.count)
         XCTAssertEqual(albums.first?.count, albumPhotos.count)
         XCTAssertEqual(albums.first?.coverNode, expectedAlbumCoverNode)
+    }
+    
+    func testUserAlbum_onSetExported_verifySharedLinkStatusExportedIsSetCorrectly() async {
+        let albumId = HandleEntity(1)
+        let expectedIsExported = true
+        let expectedAlbums = [
+            SetEntity(handle: albumId, isExported: expectedIsExported),
+        ]
+        let sut = AlbumListUseCase(
+            albumRepository: MockAlbumRepository.newRepo,
+            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
+            fileSearchRepository: MockFilesSearchRepository(),
+            mediaUseCase: MockMediaUseCase(),
+            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
+            albumContentsUseCase: MockAlbumContentUseCase())
+        let albums = await sut.userAlbums()
+        XCTAssertEqual(albums.first?.sharedLinkStatus, .exported(expectedIsExported))
     }
     
     func testCreateUserAlbum_shouldCreateAlbumWithName() async throws {

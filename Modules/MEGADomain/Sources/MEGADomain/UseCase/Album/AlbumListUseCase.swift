@@ -79,7 +79,8 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
                                        coverNode: coverNode,
                                        count: userAlbumContent.count,
                                        type: .user,
-                                       modificationTime: setEntity.modificationTime)
+                                       modificationTime: setEntity.modificationTime,
+                                       sharedLinkStatus: .exported(setEntity.isExported))
                 }
             }
             return await group.reduce(into: [AlbumEntity]()) {
@@ -95,7 +96,8 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
                            coverNode: nil,
                            count: 0,
                            type: .user,
-                           modificationTime: setEntity.modificationTime)
+                           modificationTime: setEntity.modificationTime,
+                           sharedLinkStatus: .exported(false))
     }
     
     // MARK: - Private
