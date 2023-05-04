@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAPresentation
+import MEGAData
 
 protocol CookieSettingsRouting: Routing {
     func didTap(on source: CookieSettingsSource)
