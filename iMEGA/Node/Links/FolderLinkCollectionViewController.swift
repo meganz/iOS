@@ -211,6 +211,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
                                         image: Asset.Images.ActionSheetIcons.select.image) { _ in
                 self.setCollectionViewEditing(true, animated: true)
                 self.collectionView?.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
+                self.collectionView?.reloadData()
             }
             return UIMenu(title: "", children: [selectAction])
         }
