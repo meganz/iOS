@@ -265,7 +265,7 @@ final class NodeActionBuilder {
         }
         nodeActions.append(.downloadAction())
         if accessLevel == .accessOwner || isLink {
-            nodeActions.append(.shareLinkAction())
+            nodeActions.append(contentsOf: exportedNodeActions())
         }
         if accessLevel == .accessOwner {
             nodeActions.append(.exportFileAction())

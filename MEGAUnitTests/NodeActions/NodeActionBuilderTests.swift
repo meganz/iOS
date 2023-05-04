@@ -653,6 +653,72 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfThumbnailView]))
     }
     
+    func testDocumentPreviewPdfPageView_isExported_isLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewPdfPage)
+            .setIsPdf(true)
+            .setIsLink(true)
+            .setIsExported(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .manageLink, .removeLink, .sendToChat, .search, .pdfThumbnailView]))
+    }
+    
+    func testDocumentPreviewPdfPageView_isNotExported_isLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewPdfPage)
+            .setIsPdf(true)
+            .setIsLink(true)
+            .setIsExported(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfThumbnailView]))
+    }
+    
+    func testDocumentPreviewPdfPageView_isNotExported_isNotLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewPdfPage)
+            .setIsPdf(true)
+            .setIsLink(false)
+            .setIsExported(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfThumbnailView]))
+    }
+    
+    func testDocumentPreviewPdfThumbnail_isExported_isLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsLink(true)
+            .setIsExported(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .manageLink, .removeLink, .sendToChat, .search, .pdfPageView]))
+    }
+    
+    func testDocumentPreviewPdfThumbnail_isNotExported_isLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsLink(true)
+            .setIsExported(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .shareLink, .sendToChat, .search, .pdfPageView]))
+    }
+
+    func testDocumentPreviewPdfThumbnail_isNotExported_isNotLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsLink(false)
+            .setIsExported(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView]))
+    }
+    
     func testDocumentPreviewPdfThumbnailLink() {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
@@ -709,6 +775,16 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfThumbnailView]))
     }
     
+    func testPreviewPdfPageViewDocumentOwner_isExported() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewPdfPage)
+            .setIsPdf(true)
+            .setAccessLevel(.accessOwner)
+            .setIsExported(true)
+            .build()
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .exportFile, .sendToChat, .search, .pdfThumbnailView]))
+    }
+    
     func testPreviewPdfThumbnailDocument() {
         actions = NodeActionBuilder()
             .setDisplayMode(.previewDocument)
@@ -736,6 +812,16 @@ class NodeActionBuilderTests: XCTestCase {
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView]))
+    }
+    
+    func testPreviewPdfThumbnailDocumentOwner_isExported() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setAccessLevel(.accessOwner)
+            .setIsExported(true)
+            .build()
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .exportFile, .sendToChat, .search, .pdfPageView]))
     }
     
     // MARK: - Chat tests
