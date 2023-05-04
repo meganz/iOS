@@ -5,9 +5,7 @@ import MEGAData
 
 extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     //MARK: - Context Menus configuration
-    func contextMenuConfiguration() -> CMConfigEntity? {
-        guard let parentNode = parentNode else { return nil }
-        
+    func contextMenuConfiguration(parentNode: MEGANode, parentAccessLevel: NodeAccessTypeEntity) -> CMConfigEntity {
         if parentNode.isFolder(),
            displayMode == .rubbishBin,
            parentNode.handle != MEGASdkManager.sharedMEGASdk().rubbishNode?.handle {
@@ -17,13 +15,10 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                   isRubbishBinFolder: true,
                                   isRestorable: parentNode.mnz_isRestorable())
         } else {
-            let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
-            let parentNodeAccessLevel = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode.handle)
-            let isIncomingSharedRootChild = parentNodeAccessLevel != .owner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
-           
+            let isIncomingSharedRootChild = parentAccessLevel != .owner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
             return CMConfigEntity(menuType: .menu(type: .display),
                                   viewMode: isListViewModeSelected() ? .list : .thumbnail,
-                                  accessLevel: parentNodeAccessLevel.toShareAccessLevel(),
+                                  accessLevel: parentAccessLevel.toShareAccessLevel(),
                                   sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                   isAFolder: parentNode.type != .root,
                                   isRubbishBinFolder: displayMode == .rubbishBin,
@@ -48,9 +43,17 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     @objc func setNavigationBarButtons() {
-        guard let menuConfig = contextMenuConfiguration() else { return }
+        Task { @MainActor in
+            guard let parentNode = parentNode else { return }
+            let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+            let parentAccessLevel = await nodeUseCase.nodeAccessLevelAsync(nodeHandle: parentNode.handle)
+            let menuConfig = contextMenuConfiguration(parentNode: parentNode, parentAccessLevel: parentAccessLevel)
+            configNavigationBarMenus(menuConfig: menuConfig, parentAccessLevel: parentAccessLevel)
+        }
+    }
+    
+    private func configNavigationBarMenus(menuConfig: CMConfigEntity, parentAccessLevel: NodeAccessTypeEntity) {
         var contextBarButtonItemUpdated = false
-        
         if let contextMenuManager,
            let updatedMenu = contextMenuManager.contextMenu(with: menuConfig),
            !UIMenu.match(lhs: contextBarButtonItem.menu, rhs: updatedMenu) {
@@ -59,13 +62,10 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             contextBarButtonItemUpdated = true
         }
         
-        let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
-        
         if displayMode != .rubbishBin,
            displayMode != .backup,
            !isFromViewInFolder,
-           let parentNode = parentNode,
-           nodeUseCase.nodeAccessLevel(nodeHandle: parentNode.handle) != .read {
+           parentAccessLevel != .read {
             guard let menuConfig = uploadAddMenuConfiguration() else { return }
             var uploadAddBarButtonItemUpdated = false
             
