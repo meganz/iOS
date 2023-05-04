@@ -50,7 +50,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             phoneNumber: "")
         
         test(viewModel: sut, action: VerificationCodeAction.didCheckCodeSucceeded, expectedCommands: [])
-        XCTAssertEqual(router.dismiss_calledTimes, 1)
+        XCTAssertEqual(router.phoneNumberVerified_calledTimes, 1)
     }
     
     func testAction_didCheckCodeSucceeded_unblockAccount_notLogin() {
@@ -62,7 +62,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             phoneNumber: "")
         
         test(viewModel: sut, action: VerificationCodeAction.didCheckCodeSucceeded, expectedCommands: [])
-        XCTAssertEqual(router.dismiss_calledTimes, 1)
+        XCTAssertEqual(router.phoneNumberVerified_calledTimes, 1)
         XCTAssertEqual(router.goToOnboarding_calledTimes, 1)
     }
     
@@ -76,7 +76,7 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             phoneNumber: "")
         
         test(viewModel: sut, action: VerificationCodeAction.didCheckCodeSucceeded, expectedCommands: [])
-        XCTAssertEqual(router.dismiss_calledTimes, 1)
+        XCTAssertEqual(router.phoneNumberVerified_calledTimes, 1)
     }
     
     func testAction_checkVerificationCode_success() {
@@ -117,13 +117,9 @@ final class VerificationCodeViewModelTests: XCTestCase {
 }
 
 final class MockVerificationCodeViewRouter: VerificationCodeViewRouting {
-    var dismiss_calledTimes = 0
     var goBack_calledTimes = 0
     var goToOnboarding_calledTimes = 0
-    
-    func dismiss() {
-        dismiss_calledTimes += 1
-    }
+    var phoneNumberVerified_calledTimes = 0
     
     func goBack() {
         goBack_calledTimes += 1
@@ -131,5 +127,9 @@ final class MockVerificationCodeViewRouter: VerificationCodeViewRouting {
     
     func goToOnboarding() {
         goToOnboarding_calledTimes += 1
+    }
+
+    func phoneNumberVerified() {
+        phoneNumberVerified_calledTimes += 1
     }
 }

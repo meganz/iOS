@@ -111,6 +111,7 @@
 #import "LoginViewcontroller.h"
 
 #import "AchievementsViewController.h"
+#import "AchievementsDetailsViewController.h"
 #import "ProductDetailViewController.h"
 #import "GroupChatDetailsViewController.h"
 #import "ContactDetailsViewController.h"

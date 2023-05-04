@@ -8,11 +8,18 @@ final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     
     private let verificationType: SMSVerificationType
     private let phoneNumber: String
+    private let onPhoneNumberVerified: () -> Void
     
-    init(navigationController: UINavigationController?, verificationType: SMSVerificationType, phoneNumber: String) {
+    init(
+        navigationController: UINavigationController?,
+        verificationType: SMSVerificationType,
+        phoneNumber: String,
+        onPhoneNumberVerified: @escaping () -> Void
+    ) {
         self.navigationController = navigationController
         self.verificationType = verificationType
         self.phoneNumber = phoneNumber
+        self.onPhoneNumberVerified = onPhoneNumberVerified
     }
     
     func build() -> UIViewController {
@@ -34,6 +41,11 @@ final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     }
     
     // MARK: - UI Actions
+    func phoneNumberVerified() {
+        onPhoneNumberVerified()
+        dismiss()
+    }
+
     func dismiss() {
         baseViewController?.dismiss(animated: true)
     }

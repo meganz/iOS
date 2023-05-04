@@ -1200,6 +1200,7 @@
 		94E71807283D24D3000EDDDF /* ChatStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E71806283D24D3000EDDDF /* ChatStatus.swift */; };
 		94E7180B283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */; };
 		94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */; };
+		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
 		9D26F234294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
@@ -3640,6 +3641,7 @@
 		94E71806283D24D3000EDDDF /* ChatStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStatus.swift; sourceTree = "<group>"; };
 		94E7180A283D6603000EDDDF /* ChatRoomsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewController+Additions.swift"; sourceTree = "<group>"; };
+		94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsDetailsViewController+Additions.swift"; sourceTree = "<group>"; };
 		9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewWrapper.swift; sourceTree = "<group>"; };
 		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
 		9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouter.swift; sourceTree = "<group>"; };
@@ -6461,6 +6463,7 @@
 			isa = PBXGroup;
 			children = (
 				5B46D96824333D6100404ED4 /* Achievements.storyboard */,
+				94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */,
 				5B40AB311F7A512E0034C3B3 /* AchievementsDetailsViewController.h */,
 				5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */,
 				5B48F8041F4C80F4001E3A29 /* AchievementsTableViewCell.h */,
@@ -12836,6 +12839,7 @@
 				BFAFB17F252AD1D9003ADFE3 /* DocAndAudioListSource.swift in Sources */,
 				BFCF843D246A6471004FA3B1 /* DocScannerActionTableViewCell.swift in Sources */,
 				BFCF843B246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift in Sources */,
+				94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */,
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
