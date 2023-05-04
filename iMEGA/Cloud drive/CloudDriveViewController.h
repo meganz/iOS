@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) BOOL isFromSharedItem;
 @property (assign, nonatomic) MEGAShareType shareType; //Control the actions allowed for node/nodes selected
 @property (assign, nonatomic) BOOL hasMediaFiles;
+@property (assign, nonatomic) BOOL isEditingModeBeingDisabled;
 
 @property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
 

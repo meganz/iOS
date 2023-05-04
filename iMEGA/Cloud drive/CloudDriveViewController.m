@@ -917,6 +917,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }];
         }
     } else {
+        self.isEditingModeBeingDisabled = YES;
         [self setNavigationBarButtonItems];
         self.allNodesSelected = NO;
         self.selectedNodesArray = nil;
@@ -929,6 +930,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 [self.toolbar removeFromSuperview];
             }
         }];
+        self.isEditingModeBeingDisabled = NO;
     }
     
     if (!self.selectedNodesArray) {
