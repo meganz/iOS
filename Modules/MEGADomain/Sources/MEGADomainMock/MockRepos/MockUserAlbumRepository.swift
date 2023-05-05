@@ -39,7 +39,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     public func createAlbum(_ name: String?) async throws -> SetEntity {
-        SetEntity(handle: HandleEntity(1), userId: HandleEntity(2), coverId: HandleEntity(3), modificationTime: Date(), name: name ?? "", changes: .new)
+        SetEntity(handle: HandleEntity(1), userId: HandleEntity(2), coverId: HandleEntity(3), modificationTime: Date(), name: name ?? "", changeTypes: .new)
     }
     
     public func updateAlbumName(_ name: String, _ id: HandleEntity) async throws -> String {

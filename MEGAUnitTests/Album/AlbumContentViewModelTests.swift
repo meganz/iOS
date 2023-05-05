@@ -743,7 +743,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                 XCTFail("Unexpected command returned")
             }
         }
-        albumUpdatedPublisher.send(SetEntity(handle: albumEntity.id, changes: .removed))
+        albumUpdatedPublisher.send(SetEntity(handle: albumEntity.id, changeTypes: .removed))
         wait(for: [exp], timeout: 1.0)
     }
     
@@ -767,7 +767,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                 XCTFail("Unexpected command returned")
             }
         }
-        albumUpdatedPublisher.send(SetEntity(handle: albumEntity.id, name: expectedNewName, changes: .name))
+        albumUpdatedPublisher.send(SetEntity(handle: albumEntity.id, name: expectedNewName, changeTypes: .name))
         wait(for: [exp], timeout: 1.0)
     }
     

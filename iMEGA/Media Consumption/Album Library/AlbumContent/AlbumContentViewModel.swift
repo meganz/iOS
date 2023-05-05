@@ -383,15 +383,15 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private func handleUserAlbumUpdate(setEntity: SetEntity) {
-        if setEntity.changes.contains(.removed) {
+        if setEntity.changeTypes.contains(.removed) {
             invokeCommand?(.dismissAlbum)
             return
         }
-        if setEntity.changes.contains(.name) && albumName != setEntity.name {
+        if setEntity.changeTypes.contains(.name) && albumName != setEntity.name {
             album = album.update(name: setEntity.name)
             invokeCommand?(.updateNavigationTitle)
         }
-        if setEntity.changes.contains(.cover) {
+        if setEntity.changeTypes.contains(.cover) {
             retriveNewUserAlbumCover(photoId: setEntity.coverId)
         }
     }

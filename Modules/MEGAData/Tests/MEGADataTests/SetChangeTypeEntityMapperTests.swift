@@ -2,8 +2,8 @@ import XCTest
 import MEGASdk
 import MEGADomain
 
-final class SetChangesEntityMapperTests: XCTestCase {
-    let sut: [MEGASetChanges] = [
+final class SetChangeTypeEntityMapperTests: XCTestCase {
+    let sut: [MEGASetChangeType] = [
         .new,
         .name,
         .cover,
@@ -13,7 +13,7 @@ final class SetChangesEntityMapperTests: XCTestCase {
     
     func testSetChangesMapping() {
         for type in sut {
-            let entity = type.toChangesEntity()
+            let entity = type.toChangeTypeEntity()
             switch type {
             case .new:
                 XCTAssertEqual(entity, .new)
@@ -26,7 +26,7 @@ final class SetChangesEntityMapperTests: XCTestCase {
             case .exported:
                 XCTAssertEqual(entity, .exported)
             default:
-                XCTFail("Please map the new MEGASetChanges to SetChangesEntity")
+                XCTFail("Please map the new MEGASetChangeType to SetChangeTypeEntity")
             }
         }
     }
