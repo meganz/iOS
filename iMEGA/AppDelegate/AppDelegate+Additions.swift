@@ -2,6 +2,7 @@ import Foundation
 import SafariServices
 import MEGADomain
 import MEGAData
+import Combine
 
 extension AppDelegate {
     @objc func showAddPhoneNumberIfNeeded() {
@@ -319,5 +320,125 @@ extension AppDelegate {
         let secureFlagManager = SharedSecureFingerprintManager()
         let isSecure = secureFlagManager.secureFingerprintVerification
         secureFlagManager.setSecureFingerprintFlag(isSecure)
+    }
+}
+
+//MARK: - Actionable notification for Scheduled meetings
+
+extension AppDelegate {
+    @objc func isScheduleMeeting(response: UNNotificationResponse) -> Bool {
+        ScheduleMeetingPushNotifications.isScheduleMeeting(response: response)
+    }
+    
+    @objc func hasTappedOnJoinAction(response: UNNotificationResponse) -> Bool {
+        ScheduleMeetingPushNotifications.hasTappedOnJoinAction(forResponse: response)
+    }
+    
+    @MainActor
+    @objc func openScheduleMeeting(forChatId chatId: ChatIdEntity, retry: Bool = true) {
+        guard MEGAChatSdk.shared.chatRoom(forChatId: chatId) != nil else {
+            guard retry else { return }
+            
+            Task {
+                do {
+                    try await waitUntilChatStatusComesOnline(forChatId: chatId)
+                    openScheduleMeeting(forChatId: chatId, retry: false)
+                } catch {
+                    MEGALogError("Unable to wait until the status is online error \(error)")
+                }
+            }
+            
+            return
+        }
+        
+        guard let mainTabBarController = mainTBC else {
+            MEGALogDebug("Unable to find the main tabbar controller")
+            self.openChatLater = NSNumber(value: chatId)
+            return
+        }
+        
+        mainTabBarController.openChatRoom(chatId: chatId)
+    }
+    
+    @MainActor
+    @objc func joinScheduleMeeting(forChatId chatId: ChatIdEntity, retry: Bool = true) {
+        guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId) else {
+            guard retry else { return }
+            
+            Task {
+                do {
+                    try await waitUntilChatStatusComesOnline(forChatId: chatId)
+                    joinScheduleMeeting(forChatId: chatId, retry: false)
+                } catch {
+                    MEGALogDebug("Unable to wait until the status is online error \(error)")
+                }
+            }
+            
+            return
+        }
+        
+        guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatId), call.status == .inProgress else {
+            if MEGAChatSdk.shared.chatConnectionState(chatId) == .online {
+                Task {
+                    do {
+                        try await startCallWithNoRinging(forChatRoom: chatRoom)
+                    } catch {
+                        MEGALogDebug("Unable to start call for chat id \(chatId) with error \(error)")
+                    }
+                }
+            } else {
+                Task {
+                    do {
+                        try await waitUntilChatStatusComesOnline(forChatId: chatId)
+                        try await startCallWithNoRinging(forChatRoom: chatRoom)
+                    } catch {
+                        MEGALogDebug("Unable to wait until the chat status is online and start call for chat id \(chatId) with error \(error)")
+                    }
+                }
+            }
+            
+            return
+        }
+        
+        performCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, isSpeakerEnabled: AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker))
+    }
+    
+    @objc func registerCustomActionsForStartScheduledMeetingNotification() {
+        ScheduleMeetingPushNotifications.registerCustomActions()
+    }
+        
+    private func startCallWithNoRinging(forChatRoom chatRoom: MEGAChatRoom) async throws {
+        let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
+        audioSessionUC.configureCallAudioSession()
+        audioSessionUC.enableLoudSpeaker()
+        
+        let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk()))
+        let callUseCase = CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared))
+
+        if let scheduleMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
+            let callEntity = try await callUseCase.startCallNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true)
+            join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
+        } else {
+            let callEntity = try await callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true)
+            join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
+        }
+    }
+    
+    @MainActor
+    private func join(call: CallEntity, chatRoom: ChatRoomEntity) {
+        MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, call: call, isSpeakerEnabled: true).start()
+    }
+    
+    private func waitUntilChatStatusComesOnline(forChatId chatId: HandleEntity) async throws {
+        let chatStateListener = ChatStateListener(chatId: chatId, connectionState: .online)
+        chatStateListener.addListener()
+        
+        do {
+            try await chatStateListener.connectionStateReached()
+            chatStateListener.removeListener()
+        } catch {
+            chatStateListener.removeListener()
+            throw error
+        }
     }
 }
