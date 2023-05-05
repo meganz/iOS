@@ -9,7 +9,7 @@ public extension SetEntity {
          modificationTime: Date = Date(),
          name: String = "",
          isExported: Bool = false,
-         changes: SetChangesEntity = [],
+         changeTypes: SetChangeTypeEntity = [],
          isTesting: Bool = true) {
         self.init(handle: handle,
                   userId: userId,
@@ -18,6 +18,6 @@ public extension SetEntity {
                   modificationTime: modificationTime,
                   name: name,
                   isExported: isExported,
-                  changes: changes)
+                  changeTypes: changeTypes)
     }
 }

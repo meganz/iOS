@@ -2,19 +2,19 @@ import XCTest
 import MEGASdk
 import MEGADomain
 
-final class SetElementChangesEntityMapperTests: XCTestCase {
-    let sut: [MEGASetElementChanges] = [
-        .changeNew,
+final class SetElementChangeTypeEntityMapperTests: XCTestCase {
+    let sut: [MEGASetElementChangeType] = [
+        .new,
         .name,
         .order,
         .removed
     ]
     
-    func testSetElementChangesMapping() {
+    func testSetElementChangeTypeEntityMapping() {
         for type in sut {
-            let entity = type.toChangesEntity()
+            let entity = type.toChangeTypeEntity()
             switch type {
-            case .changeNew:
+            case .new:
                 XCTAssertEqual(entity, .new)
             case .name:
                 XCTAssertEqual(entity, .name)
@@ -23,7 +23,7 @@ final class SetElementChangesEntityMapperTests: XCTestCase {
             case .removed:
                 XCTAssertEqual(entity, .removed)
             default:
-                XCTFail("Please map the new MEGASetElementChanges to SetElementChangesEntity")
+                XCTFail("Please map the new MEGASetElementChangeType to SetElementChangeTypeEntity")
             }
         }
     }

@@ -22,7 +22,7 @@ fileprivate extension SetEntity {
                   modificationTime  : set.timestamp,
                   name              : set.name ?? "",
                   isExported        : set.isExported(),
-                  changes           : set.changes().toChangesEntity()
+                  changeTypes       : set.changes().toChangeTypeEntity()
         )
     }
 }

@@ -217,7 +217,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let userAlbum = AlbumEntity(id: albumId, name: "Test", coverNode: nil,
                                     count: 1, type: .user)
         
-        let expectedSetUpdate = SetEntity(handle: albumId, changes: .name)
+        let expectedSetUpdate = SetEntity(handle: albumId, changeTypes: .name)
         
         let exp = expectation(description: "Update received")
         try XCTUnwrap(sut.userAlbumUpdatedPublisher(for: userAlbum))

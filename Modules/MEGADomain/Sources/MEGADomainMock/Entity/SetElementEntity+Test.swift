@@ -8,7 +8,7 @@ public extension SetElementEntity {
          nodeId: HandleEntity = .invalid,
          modificationTime: Date = Date(),
          name: String = "",
-         changes: SetElementChangesEntity = [],
+         changeTypes: SetElementChangeTypeEntity = [],
          isTesting: Bool = true) {
         self.init(handle: handle,
                   ownerId: ownerId,
@@ -16,6 +16,6 @@ public extension SetElementEntity {
                   nodeId: nodeId,
                   modificationTime: modificationTime,
                   name: name,
-                  changes: changes)
+                  changeTypes: changeTypes)
     }
 }
