@@ -70,12 +70,18 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             NotificationService.session = session
         }
         
-        processNotification()
+        if bestAttemptContent?.isStartScheduledMeetingNotification == true {
+            processStartScheduledMeetingNotification()
+        } else {
+            processNotification()
+        }
     }
 
     override func serviceExtensionTimeWillExpire() {
         MEGALogDebug("Service extension time will expire")
-        if let chatId = chatId, let msgId = msgId, let message = MEGASdkManager.sharedMEGAChatSdk().message(forChat: chatId, messageId: msgId) {
+        if bestAttemptContent?.isStartScheduledMeetingNotification == true {
+            processStartScheduledMeetingNotification(shouldPostImmediately: true)
+        } else if let chatId = chatId, let msgId = msgId, let message = MEGASdkManager.sharedMEGAChatSdk().message(forChat: chatId, messageId: msgId) {
             if message.type == .unknown {
                 postNotification(withError: "Unknown message")
             } else {
@@ -269,6 +275,59 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         })
     }
     
+    private func processStartScheduledMeetingNotification(shouldPostImmediately: Bool = false) {
+        MEGALogDebug("Process start schedule meeting notification")
+        guard let megadataDictionary = bestAttemptContent?.userInfo["megadata"] as? [AnyHashable: Any],
+              let notificationInfo = ScheduleMeetingNotificationInfo(dictionary: megadataDictionary) else {
+            postNotification(withError: "No chatId in the notification")
+            return
+        }
+        
+        guard let body = bodyForStartScheduledMeetingNotification(withInfo: notificationInfo) else {
+            postNotification(withError: "f value not found")
+            return
+        }
+
+        let chatId = MEGASdk.handle(forBase64UserHandle: notificationInfo.chatId)
+        guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) else {
+            MEGALogDebug("Chatroom does not exists yet")
+                        
+            if shouldPostImmediately {
+                processStartScheduledMeetingNotification(withTitle: "", body: body, notificationInfo: notificationInfo)
+            }
+            
+            return
+        }
+        
+        processStartScheduledMeetingNotification(withTitle: chatRoom.title, body: body, notificationInfo: notificationInfo)
+    }
+    
+    private func bodyForStartScheduledMeetingNotification(withInfo notificationInfo: ScheduleMeetingNotificationInfo) -> String? {
+        NSLocalizedString(
+            notificationInfo.startTime == .now
+            ? "meetings.scheduleMeeting.notification.meetingStartsNow.message"
+            : "meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message",
+            comment: ""
+        )
+    }
+    
+    private func processStartScheduledMeetingNotification(withTitle title: String?, body: String, notificationInfo: ScheduleMeetingNotificationInfo) {
+        bestAttemptContent?.categoryIdentifier = notificationInfo.startTime == .now ? ScheduleMeetingPushNotifications.startsNowCategoryIdentifier : ScheduleMeetingPushNotifications.startsInFifteenMinutesCategoryIdentifier
+        bestAttemptContent?.title = title ?? ""
+        bestAttemptContent?.summaryArgument = title ?? ""
+        bestAttemptContent?.body = body
+        bestAttemptContent?.sound = UNNotificationSound.default
+        bestAttemptContent?.userInfo = ["chatId": MEGASdk.handle(forBase64UserHandle: notificationInfo.chatId)]
+        bestAttemptContent?.threadIdentifier = notificationInfo.chatId
+        
+        guard let contentHandler, let bestAttemptContent else {
+            postNotification(withError: "content handler or bestAttemptContent is nil")
+            return
+        }
+        
+        contentHandler(bestAttemptContent)
+    }
+    
     private func restartExtensionProcess(with session: String) {
         NotificationService.session = nil
         MEGASdk.sharedNSE.localLogout(with: MEGAGenericRequestDelegate {
@@ -285,7 +344,11 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 }
                 if NotificationService.initExtensionProcess(with: session) {
                     NotificationService.session = session
-                    self.processNotification()
+                    if self.bestAttemptContent?.isStartScheduledMeetingNotification == true {
+                        self.processStartScheduledMeetingNotification()
+                    } else {
+                        self.processNotification()
+                    }
                 }
             })
         })

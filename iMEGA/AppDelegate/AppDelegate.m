@@ -89,8 +89,6 @@
 
 @property (nonatomic) MEGAChatInit chatLastKnownInitState;
 
-@property (nonatomic) NSNumber *openChatLater;
-
 @property (nonatomic, strong) QuickAccessWidgetManager *quickAccessWidgetManager API_AVAILABLE(ios(14.0));
 
 @property (nonatomic, strong) RatingRequestMonitor *ratingRequestMonitor;
@@ -393,6 +391,8 @@
     NSString *deviceTokenString = [NSString stringWithString:hexString];
     MEGALogDebug(@"[App Lifecycle] Application did register for remote notifications with device token %@", deviceTokenString);
     [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
+    
+    [self registerCustomActionsForStartScheduledMeetingNotification];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -1160,7 +1160,16 @@
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
     self.megatype = (MEGANotificationType)[response.notification.request.content.userInfo[@"megatype"] integerValue];
     
-    if (self.megatype) {
+    if ([self isScheduleMeetingWithResponse:response]) {
+        NSNumber *chatId = response.notification.request.content.userInfo[@"chatId"];
+        
+        if ([self hasTappedOnJoinActionWithResponse:response]) {
+            [self joinScheduleMeetingForChatId:chatId.unsignedLongLongValue retry:YES];
+        } else {
+            [self openScheduleMeetingForChatId:chatId.unsignedLongLongValue retry:YES];
+        }
+        
+    } else if (self.megatype) {
         [self openTabBasedOnNotificationMegatype];
     } else {
         if (self.mainTBC) {

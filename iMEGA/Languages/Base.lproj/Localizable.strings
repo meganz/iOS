@@ -3380,3 +3380,11 @@
 "video.alert.resumeVideo.button.resume"="Resume";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="Restart";
+/* Push notification message to be shown when the meeting is about to start now. */
+"meetings.scheduleMeeting.notification.meetingStartsNow.message" = "Meeting starts now";
+/* Push notification message to be shown when the meeting is about to start in 15 min. */
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message" = "Meeting starts in 15 minutes.";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.join" = "Join";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.message" = "Message";

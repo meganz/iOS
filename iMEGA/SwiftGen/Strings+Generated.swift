@@ -4431,6 +4431,24 @@ public enum Strings {
           /// Meeting name
           public static let placeholder = Strings.tr("Localizable", "meetings.scheduleMeeting.meetingName.placeholder")
         }
+        public enum Notification {
+          public enum MeetingStarts {
+            public enum Button {
+              /// Join
+              public static let join = Strings.tr("Localizable", "meetings.scheduleMeeting.notification.meetingStarts.button.join")
+              /// Message
+              public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.notification.meetingStarts.button.message")
+            }
+          }
+          public enum MeetingStartsInFifteenMins {
+            /// Meeting starts in 15 minutes.
+            public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message")
+          }
+          public enum MeetingStartsNow {
+            /// Meeting starts now
+            public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.notification.meetingStartsNow.message")
+          }
+        }
       }
       public enum Scheduled {
         /// [B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]

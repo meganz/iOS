@@ -71,10 +71,38 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         callActionManager.startCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
     }
     
+    @MainActor
+    func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio) { result in
+                switch result {
+                case .success(let callEntity):
+                    continuation.resume(returning: callEntity)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
     func startCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         let delegate = createStartMeetingRequestDelegate(for: scheduledMeeting.chatId, completion: completion)
         
         callActionManager.startCallNoRinging(chatId: scheduledMeeting.chatId, scheduledId: scheduledMeeting.scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
+    }
+    
+    @MainActor
+    func startCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            startCallNoRinging(for: scheduledMeeting, enableVideo: enableVideo, enableAudio: enableAudio) { result in
+                switch result {
+                case .success(let callEntity):
+                    continuation.resume(returning: callEntity)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
     
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
