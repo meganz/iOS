@@ -59,10 +59,12 @@ final class SMSVerificationViewRouter: NSObject, SMSVerificationViewRouting {
         router.start()
     }
     
-    func goToVerificationCode(forPhoneNumber number: String){
+    func goToVerificationCode(forPhoneNumber number: String, withRegionCode regionCode: RegionCode) {
         let router = VerificationCodeViewRouter(
             navigationController: navigationController,
-            verificationType: verificationType, phoneNumber: number,
+            verificationType: verificationType,
+            phoneNumber: number,
+            regionCode: regionCode,
             onPhoneNumberVerified: { self.onPhoneNumberVerified?() }
         )
         router.start()

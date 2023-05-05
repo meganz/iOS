@@ -8,17 +8,20 @@ final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     
     private let verificationType: SMSVerificationType
     private let phoneNumber: String
+    private let regionCode: RegionCode
     private let onPhoneNumberVerified: () -> Void
     
     init(
         navigationController: UINavigationController?,
         verificationType: SMSVerificationType,
         phoneNumber: String,
+        regionCode: RegionCode,
         onPhoneNumberVerified: @escaping () -> Void
     ) {
         self.navigationController = navigationController
         self.verificationType = verificationType
         self.phoneNumber = phoneNumber
+        self.regionCode = regionCode
         self.onPhoneNumberVerified = onPhoneNumberVerified
     }
     
@@ -27,7 +30,8 @@ final class VerificationCodeViewRouter: VerificationCodeViewRouting {
                                            checkSMSUseCase: CheckSMSUseCase(repo: SMSRepository.newRepo),
                                            authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository.newRepo),
                                            verificationType: verificationType,
-                                           phoneNumber: phoneNumber)
+                                           phoneNumber: phoneNumber,
+                                           regionCode: regionCode)
         
         let vc = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "VerificationCodeViewControllerID") as! VerificationCodeViewController
         

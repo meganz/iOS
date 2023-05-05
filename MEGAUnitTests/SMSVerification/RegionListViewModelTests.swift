@@ -2,10 +2,10 @@ import XCTest
 @testable import MEGA
 
 final class RegionListViewModelTests: XCTestCase {
-    private let nzRegion = SMSRegion(displayCallingCode: "+64", displayName: "New Zealand (+64)")
-    private let auRegion = SMSRegion(displayCallingCode: "+61", displayName: "Australia (+61)")
-    private let austriaRegion = SMSRegion(displayCallingCode: "+43", displayName: "Austria (+43)")
-    private let usRegion = SMSRegion(displayCallingCode: "+1", displayName: "United States (+1)")
+    private let nzRegion = SMSRegion(regionCode: "NZ", displayCallingCode: "+64", displayName: "New Zealand (+64)")
+    private let auRegion = SMSRegion(regionCode: "AU", displayCallingCode: "+61", displayName: "Australia (+61)")
+    private let austriaRegion = SMSRegion(regionCode: "AT", displayCallingCode: "+43", displayName: "Austria (+43)")
+    private let usRegion = SMSRegion(regionCode: "US", displayCallingCode: "+1", displayName: "United States (+1)")
     private let collation = UILocalizedIndexedCollation.current()
     
     private lazy var sortedRegions = collation.sortedArray(from: [nzRegion, auRegion, usRegion, austriaRegion],

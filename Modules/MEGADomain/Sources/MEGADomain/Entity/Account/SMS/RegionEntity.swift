@@ -1,9 +1,12 @@
+
+public typealias RegionCode = String
+
 public struct RegionEntity: Equatable {
-    let regionCode: String
+    public let regionCode: RegionCode
     public let regionName: String?
     public let callingCodes: [String]
     
-    public init(regionCode: String, regionName: String?, callingCodes: [String]) {
+    public init(regionCode: RegionCode, regionName: String?, callingCodes: [String]) {
         self.regionCode = regionCode
         self.regionName = regionName
         self.callingCodes = callingCodes

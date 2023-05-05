@@ -93,9 +93,9 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     }
 
     @IBAction private func didTapNextButton() {
-        guard let localNumber = phoneNumberTextField.text else { return }
+        guard let localNumber = phoneNumberTextField.text, let selectedRegion = viewModel.selectedRegion else { return }
         let phoneNumber = "\(countryCodeLabel.text ?? "")\(localNumber)"
-        viewModel.dispatch(.sendCodeToLocalPhoneNumber(phoneNumber))
+        viewModel.dispatch(.sendCodeToPhoneNumber(phoneNumber, regionCode: selectedRegion.regionCode))
     }
 
     @IBAction private func didEditingChangedInPhoneNumberField() {
