@@ -30,6 +30,7 @@ struct VerificationCodeViewModel: ViewModelType {
     private let authUseCase: AuthUseCaseProtocol
     private let verificationType: SMSVerificationType
     private let router: VerificationCodeViewRouting
+    private let regionCode: RegionCode
     private let phoneNumber: String
     private var screenTitle: String {
         switch verificationType {
@@ -48,19 +49,22 @@ struct VerificationCodeViewModel: ViewModelType {
          checkSMSUseCase: CheckSMSUseCaseProtocol,
          authUseCase: AuthUseCaseProtocol,
          verificationType: SMSVerificationType,
-         phoneNumber: String) {
+         phoneNumber: String,
+         regionCode: RegionCode) {
         self.router = router
         self.checkSMSUseCase = checkSMSUseCase
         self.authUseCase = authUseCase
         self.verificationType = verificationType
         self.phoneNumber = phoneNumber
+        self.regionCode = regionCode
     }
     
     // MARK: - Dispatch action
     func dispatch(_ action: VerificationCodeAction) {
         switch action {
         case .onViewReady:
-            invokeCommand?(.configView(phoneNumber: formatNumber(phoneNumber), screenTitle: screenTitle))
+            invokeCommand?(.configView(phoneNumber: formatNumber(phoneNumber, withRegionCode: regionCode),
+                                       screenTitle: screenTitle))
         case .checkVerificationCode(let code):
             checkVerificationCode(code)
         case .resendCode:
@@ -70,10 +74,10 @@ struct VerificationCodeViewModel: ViewModelType {
         }
     }
     
-    private func formatNumber(_ number: String) -> String {
+    private func formatNumber(_ number: String, withRegionCode regionCode: RegionCode) -> String {
         do {
             let numberKit = PhoneNumberKit()
-            return numberKit.format(try numberKit.parse(number), toType: .international)
+            return numberKit.format(try numberKit.parse(number, withRegion: regionCode), toType: .international)
         } catch {
             return number
         }

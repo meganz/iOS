@@ -8,14 +8,14 @@ enum SMSVerificationAction: ActionType {
     case loadRegionCodes
     case logout
     case showRegionList
-    case sendCodeToLocalPhoneNumber(String)
+    case sendCodeToPhoneNumber(String, regionCode: RegionCode)
     case cancel
 }
 
 protocol SMSVerificationViewRouting: Routing {
     func dismiss()
     func goToRegionList(_ list: [SMSRegion], onRegionSelected: @escaping (SMSRegion) -> Void)
-    func goToVerificationCode(forPhoneNumber number: String)
+    func goToVerificationCode(forPhoneNumber number: String, withRegionCode: RegionCode)
 }
 
 final class SMSVerificationViewModel: ViewModelType {
@@ -39,6 +39,7 @@ final class SMSVerificationViewModel: ViewModelType {
     private let achievementUseCase: AchievementUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
     private var regionList = [SMSRegion]()
+    var selectedRegion: SMSRegion? = nil
     private let router: SMSVerificationViewRouting
     
     // MARK: - Internal properties
@@ -69,10 +70,11 @@ final class SMSVerificationViewModel: ViewModelType {
             loadCallingCodes()
         case .showRegionList:
             router.goToRegionList(regionList) { [weak self] in
+                self?.setSelectedRegion($0)
                 self?.showRegion($0)
             }
-        case .sendCodeToLocalPhoneNumber(let number):
-            sendCodeToPhoneNumber(number)
+        case .sendCodeToPhoneNumber(let number, let regionCode):
+            sendCodeToPhoneNumber(number, regionCode: regionCode)
         case .logout:
             authUseCase.logout()
         case .cancel:
@@ -91,6 +93,7 @@ final class SMSVerificationViewModel: ViewModelType {
             case .success(let codes):
                 self.regionList = codes.allRegions.compactMap { $0.toSMSRegion() }
                 if let region = codes.currentRegion?.toSMSRegion() {
+                    self.setSelectedRegion(region)
                     self.showRegion(region)
                 }
             case .failure(let error):
@@ -100,6 +103,10 @@ final class SMSVerificationViewModel: ViewModelType {
     }
     
     // MARK: - Show a region
+    private func setSelectedRegion(_ region: SMSRegion) {
+        selectedRegion = region
+    }
+    
     private func showRegion(_ region: SMSRegion) {
         invokeCommand?(.showRegion(region.displayName, callingCode: region.displayCallingCode))
     }
@@ -120,12 +127,12 @@ final class SMSVerificationViewModel: ViewModelType {
     }
     
     // MARK: - Send code
-    private func sendCodeToPhoneNumber(_ phoneNumber: String) {
+    private func sendCodeToPhoneNumber(_ phoneNumber: String, regionCode: RegionCode) {
         invokeCommand?(.startLoading)
         let formattedNumber: String
         do {
             let numberKit = PhoneNumberKit()
-            let parsedNumber = try numberKit.parse(phoneNumber)
+            let parsedNumber = try numberKit.parse(phoneNumber, withRegion: regionCode)
             formattedNumber = numberKit.format(parsedNumber, toType: .e164)
         } catch {
             let message = Strings.Localizable.pleaseEnterAValidPhoneNumber
@@ -137,7 +144,7 @@ final class SMSVerificationViewModel: ViewModelType {
             self?.invokeCommand?(.finishLoading)
             switch $0 {
             case .success(let number):
-                DispatchQueue.main.async { self?.router.goToVerificationCode(forPhoneNumber: number) }
+                DispatchQueue.main.async { self?.router.goToVerificationCode(forPhoneNumber: number, withRegionCode: regionCode) }
             case .failure(let error):
                 let message: String
                 switch error {

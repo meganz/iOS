@@ -10,7 +10,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             checkSMSUseCase: MockCheckSMSUseCase(),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .addPhoneNumber,
-                                            phoneNumber: "+64272320000")
+                                            phoneNumber: "+64272320000",
+                                            regionCode: "NZ")
         
         test(viewModel: sut,
              action: VerificationCodeAction.onViewReady,
@@ -22,7 +23,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             checkSMSUseCase: MockCheckSMSUseCase(),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .unblockAccount,
-                                            phoneNumber: "+64272320000")
+                                            phoneNumber: "+64272320000",
+                                            regionCode: "NZ")
         
         test(viewModel: sut,
              action: VerificationCodeAction.onViewReady,
@@ -35,7 +37,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             checkSMSUseCase: MockCheckSMSUseCase(),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .addPhoneNumber,
-                                            phoneNumber: "")
+                                            phoneNumber: "",
+                                            regionCode: "")
         
         test(viewModel: sut, action: VerificationCodeAction.resendCode, expectedCommands: [])
         XCTAssertEqual(router.goBack_calledTimes, 1)
@@ -47,7 +50,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             checkSMSUseCase: MockCheckSMSUseCase(),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .addPhoneNumber,
-                                            phoneNumber: "")
+                                            phoneNumber: "",
+                                            regionCode: "")
         
         test(viewModel: sut, action: VerificationCodeAction.didCheckCodeSucceeded, expectedCommands: [])
         XCTAssertEqual(router.phoneNumberVerified_calledTimes, 1)
@@ -59,7 +63,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             checkSMSUseCase: MockCheckSMSUseCase(),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .unblockAccount,
-                                            phoneNumber: "")
+                                            phoneNumber: "",
+                                            regionCode: "")
         
         test(viewModel: sut, action: VerificationCodeAction.didCheckCodeSucceeded, expectedCommands: [])
         XCTAssertEqual(router.phoneNumberVerified_calledTimes, 1)
@@ -73,7 +78,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             authUseCase: MockAuthUseCase(loginSessionId: "mockSessionId",
                                                                          isUserLoggedIn: true),
                                             verificationType: .unblockAccount,
-                                            phoneNumber: "")
+                                            phoneNumber: "",
+                                            regionCode: "")
         
         test(viewModel: sut, action: VerificationCodeAction.didCheckCodeSucceeded, expectedCommands: [])
         XCTAssertEqual(router.phoneNumberVerified_calledTimes, 1)
@@ -84,7 +90,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                             checkSMSUseCase: MockCheckSMSUseCase(checkCodeResult: .success("")),
                                             authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                             verificationType: .unblockAccount,
-                                            phoneNumber: "")
+                                            phoneNumber: "",
+                                            regionCode: "")
         
         test(viewModel: sut,
              action: VerificationCodeAction.checkVerificationCode(""),
@@ -105,7 +112,8 @@ final class VerificationCodeViewModelTests: XCTestCase {
                                                 checkSMSUseCase: MockCheckSMSUseCase(checkCodeResult: .failure(error)),
                                                 authUseCase: MockAuthUseCase(isUserLoggedIn: true),
                                                 verificationType: .unblockAccount,
-                                                phoneNumber: "")
+                                                phoneNumber: "",
+                                                regionCode: "")
             
             test(viewModel: sut,
                  action: VerificationCodeAction.checkVerificationCode(""),

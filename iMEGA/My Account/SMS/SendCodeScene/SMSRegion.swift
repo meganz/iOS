@@ -2,10 +2,12 @@ import Foundation
 import MEGADomain
 
 final class SMSRegion {
+    let regionCode: RegionCode
     let displayCallingCode: String
     @objc let displayName: String
     
-    init(displayCallingCode: String, displayName: String) {
+    init(regionCode: RegionCode, displayCallingCode: String, displayName: String) {
+        self.regionCode = regionCode
         self.displayCallingCode = displayCallingCode
         self.displayName = displayName
     }
@@ -25,7 +27,8 @@ extension RegionEntity {
         }
         
         let displayCallingCode = "+\(callingCode)"
-        return SMSRegion(displayCallingCode: displayCallingCode,
+        return SMSRegion(regionCode: regionCode,
+                         displayCallingCode: displayCallingCode,
                          displayName: "\(regionName) (\(displayCallingCode))")
     }
 }
