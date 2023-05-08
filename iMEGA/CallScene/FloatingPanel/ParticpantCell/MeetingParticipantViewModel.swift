@@ -35,7 +35,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private var isMe: Bool {
-        accountUseCase.currentUser?.handle == participant.participantId
+        accountUseCase.currentUserHandle == participant.participantId
     }
     
     private var isOneToOneChat: Bool {

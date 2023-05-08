@@ -1517,6 +1517,7 @@
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
+            [self postLoginNotification];
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
                 isFetchNodesDone = NO;

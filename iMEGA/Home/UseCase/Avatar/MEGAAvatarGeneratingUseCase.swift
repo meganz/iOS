@@ -29,7 +29,7 @@ final class MEGAAavatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol {
     // MARK: - Generating Avatar Image
 
     func avatarName() -> String? {
-        guard let userHandle = accountUseCase.currentUser?.handle else {
+        guard let userHandle = accountUseCase.currentUserHandle else {
             return nil
         }
 
@@ -40,7 +40,7 @@ final class MEGAAavatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol {
     }
 
     func avatarBackgroundColorHex() -> String? {
-        guard let userHandle = accountUseCase.currentUser?.handle else {
+        guard let userHandle = accountUseCase.currentUserHandle else {
             return nil
         }
 
