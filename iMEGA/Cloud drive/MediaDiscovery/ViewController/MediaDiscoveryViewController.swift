@@ -133,6 +133,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 rightBarButtonItem.isEnabled = false
                 showEmptyView()
             } else if emptyView.superview != nil {
+                rightBarButtonItem.isEnabled = true
                 emptyView.removeFromSuperview()
             }
         }
