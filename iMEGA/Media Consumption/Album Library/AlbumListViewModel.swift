@@ -106,12 +106,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         createAlbumTask = Task {
             do {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
-  
-                if let insertIndex = albums.firstIndex(where: { $0.type == .user && (newAlbum.modificationTime ?? .distantPast) > ($0.modificationTime ?? .distantPast) }) {
-                    albums.insert(newAlbum, at: insertIndex)
-                }  else {
-                    albums.append(newAlbum)
-                }
+
                 newlyAddedAlbum = await usecase.hasNoPhotosAndVideos() ? nil : newAlbum
                 photoAlbumContainerViewModel?.shouldShowSelectBarButton = true
             } catch {
@@ -176,7 +171,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     private func userAlbums() async -> [AlbumEntity] {
         var userAlbums = await usecase.userAlbums()
         photoAlbumContainerViewModel?.shouldShowSelectBarButton = userAlbums.isNotEmpty
-        userAlbums.sort { ($0.modificationTime ?? .distantPast) > ($1.modificationTime ?? .distantPast) }
+        userAlbums.sort { $0.creationTime ?? Date.distantPast > $1.creationTime ?? Date.distantPast }
         return userAlbums
     }
     

@@ -13,15 +13,15 @@ final class AlbumListViewModelTests: XCTestCase {
         let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
         let rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
         let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
-                                     count: 1, type: .user, modificationTime: nil)
+                                     count: 1, type: .user, creationTime: try "2022-12-31T22:01:04Z".date)
         let userAlbum2 = AlbumEntity(id: 5, name: "Album 2", coverNode: NodeEntity(handle: 4),
-                                     count: 1, type: .user, modificationTime: try "2022-12-31T22:01:04Z".date)
+                                     count: 1, type: .user, creationTime: try "2022-12-31T22:02:04Z".date)
         let userAlbum3 = AlbumEntity(id: 6, name: "Other Album 1", coverNode: NodeEntity(handle: 5),
-                                     count: 1, type: .user, modificationTime: nil)
+                                     count: 1, type: .user, creationTime: try "2022-12-31T22:03:04Z".date)
         let userAlbum4 = AlbumEntity(id: 7, name: "Other Album 4", coverNode: NodeEntity(handle: 6),
-                                     count: 1, type: .user, modificationTime: try "2023-01-16T10:01:04Z".date)
+                                     count: 1, type: .user, creationTime: try "2022-12-31T22:04:04Z".date)
         let userAlbum5 = AlbumEntity(id: 8, name: "Album 5", coverNode: NodeEntity(handle: 7),
-                                     count: 1, type: .user, modificationTime: try "2023-01-16T10:01:04Z".date)
+                                     count: 1, type: .user, creationTime: try "2022-12-31T22:05:04Z".date)
         let useCase = MockAlbumListUseCase(albums: [favouriteAlbum, gifAlbum, rawAlbum,
                                                     userAlbum1, userAlbum2, userAlbum3, userAlbum4, userAlbum5])
 
@@ -34,11 +34,11 @@ final class AlbumListViewModelTests: XCTestCase {
             favouriteAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Favourites.title),
             gifAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Gif.title),
             rawAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Raw.title),
-            userAlbum4,
             userAlbum5,
+            userAlbum4,
+            userAlbum3,
             userAlbum2,
             userAlbum1,
-            userAlbum3,
         ])
     }
     
@@ -47,7 +47,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
         let rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
         let userAlbum = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
-                                    count: 1, type: .user, modificationTime: nil)
+                                    count: 1, type: .user)
         let useCase = MockAlbumListUseCase(albums: [favouriteAlbum, gifAlbum, rawAlbum,
                                                     userAlbum])
         let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
@@ -82,7 +82,7 @@ final class AlbumListViewModelTests: XCTestCase {
     func testHasCustomAlbum_whenUserLoadAlbums_shouldReturnTrue() async throws {
         let rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
         let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
-                                     count: 1, type: .user, modificationTime: nil)
+                                     count: 1, type: .user)
         let mockAlbumUseCase = MockAlbumListUseCase(albums: [rawAlbum, userAlbum1])
                                      
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
@@ -97,7 +97,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testCreateUserAlbum_shouldCreateUserAlbum() {
-        let exp = expectation(description: "should load album at first after creating")
+        let exp = expectation(description: "Create a new user album")
         let useCase = MockAlbumListUseCase()
         let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
                                      featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
@@ -110,9 +110,6 @@ final class AlbumListViewModelTests: XCTestCase {
             }.store(in: &subscriptions)
         
         wait(for: [exp], timeout: 2.0)
-        XCTAssertEqual(sut.albums.last?.name, "userAlbum")
-        XCTAssertEqual(sut.albums.last?.type, .user)
-        XCTAssertEqual(sut.albums.last?.count, 0)
     }
     
     func testHasCustomAlbum_whenUserCreateNewAlbum_shouldReturnTrue() {
@@ -131,26 +128,6 @@ final class AlbumListViewModelTests: XCTestCase {
         
         wait(for: [exp], timeout: 2.0)
         XCTAssertTrue(photoAlbumContainerViewModel.shouldShowSelectBarButton)
-    }
-    
-    func testCreateUserAlbum_shouldCreateUserAlbumAndInsertBeforeOlderUserAlbums() async throws {
-        let newAlbumName = "New Album"
-        let existingUserAlbum = AlbumEntity(id: 1, name: "User Album", coverNode: nil,
-                                    count: 0, type: .user, modificationTime: try "2023-01-16T10:01:04Z".date)
-        let newUserAlbum = AlbumEntity(id: 1, name: newAlbumName, coverNode: nil,
-                                       count: 0, type: .user, modificationTime: try "2023-01-16T11:01:04Z".date)
-        let useCase = MockAlbumListUseCase(albums: [existingUserAlbum],
-                                           createdUserAlbums: [newAlbumName: newUserAlbum])
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
-        
-        sut.loadAlbums()
-        await sut.albumLoadingTask?.value
-        XCTAssertEqual(sut.albums, [existingUserAlbum])
-        
-        sut.createUserAlbum(with: newAlbumName)
-        await sut.createAlbumTask?.value
-        XCTAssertEqual(sut.albums, [newUserAlbum, existingUserAlbum])
     }
     
     func testCreateUserAlbum_whenUserCreatingAnAlbum_setShouldShowSelectBarButtonToFalse() async throws {
@@ -387,7 +364,7 @@ final class AlbumListViewModelTests: XCTestCase {
     
     func testReloadUpdates_onAlbumsUpdateEmiited_shouldRealodAlbums() {
         let albums = [AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
-                                  count: 1, type: .user, modificationTime: nil)]
+                                  count: 1, type: .user)]
         let albumsUpdatedPublisher = PassthroughSubject<Void, Never>()
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: albums,
                                                                    albumsUpdatedPublisher: albumsUpdatedPublisher.eraseToAnyPublisher()),

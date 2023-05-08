@@ -79,6 +79,7 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
                                        coverNode: coverNode,
                                        count: userAlbumContent.count,
                                        type: .user,
+                                       creationTime: setEntity.creationTime,
                                        modificationTime: setEntity.modificationTime,
                                        sharedLinkStatus: .exported(setEntity.isExported))
                 }
@@ -96,6 +97,7 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
                            coverNode: nil,
                            count: 0,
                            type: .user,
+                           creationTime: setEntity.creationTime,
                            modificationTime: setEntity.modificationTime,
                            sharedLinkStatus: .exported(false))
     }
