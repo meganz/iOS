@@ -1,3 +1,4 @@
+import MEGADomain
 
 extension AppDelegate {
     @objc func expiredAccountTitle() -> String {
@@ -35,5 +36,9 @@ extension AppDelegate {
     
     @objc func showUpgradeSecurityAlert() {
         CustomModalAlertRouter(.upgradeSecurity, presenter: UIApplication.mnz_presentingViewController()).start()
+    }
+    
+    @objc func postLoginNotification() {
+        NotificationCenter.default.post(name: .accountLoginNotification, object: nil)
     }
 }

@@ -62,7 +62,7 @@ final class SlideShowViewModel: ViewModelType {
         self.slideShowUseCase = slideShowUseCase
         self.accountUseCase = accountUseCase
         
-        if let userHandle = accountUseCase.currentUser?.handle {
+        if let userHandle = accountUseCase.currentUserHandle {
             configuration = slideShowUseCase.loadConfiguration(forUser: userHandle)
         } else {
             configuration = slideShowUseCase.defaultConfig
@@ -132,7 +132,7 @@ extension SlideShowViewModel: SlideShowViewModelPreferenceProtocol {
     
     func restart(withConfig config: SlideShowConfigurationEntity) {
         do {
-            if let userHandle = accountUseCase.currentUser?.handle {
+            if let userHandle = accountUseCase.currentUserHandle {
                 try slideShowUseCase.saveConfiguration(config: config, forUser: userHandle)
             }
         } catch {
