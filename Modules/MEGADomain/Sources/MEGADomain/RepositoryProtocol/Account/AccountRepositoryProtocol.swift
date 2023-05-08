@@ -1,5 +1,6 @@
 public protocol AccountRepositoryProtocol: RepositoryProtocol {
-    var currentUser: UserEntity? { get }
+    var currentUserHandle: HandleEntity? { get }
+    func currentUser() async -> UserEntity?
     var isGuest: Bool { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]

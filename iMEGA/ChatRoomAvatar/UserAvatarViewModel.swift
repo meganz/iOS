@@ -128,7 +128,7 @@ final class UserAvatarViewModel: ObservableObject {
     }
     
     private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {
-        if userHandle == accountUseCase.currentUser?.handle {
+        if userHandle == accountUseCase.currentUserHandle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }

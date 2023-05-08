@@ -28,7 +28,11 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
     }
     
-    public var currentUser: UserEntity? {
+    public var currentUserHandle: HandleEntity? {
+        _currentUser?.handle
+    }
+    
+    public func currentUser() async -> UserEntity? {
         _currentUser
     }
     

@@ -142,7 +142,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .enabledLoudSpeaker(let enabled):
             speakerQuickActionView?.isSelected = enabled
         case .microphoneMuted(let muted):
-            if let myHandle = accountUseCase.currentUser?.handle,
+            if let myHandle = accountUseCase.currentUserHandle,
                let participant = callParticipants.first(where: { $0.participantId == myHandle }) {
                 participant.audio = muted ? .off : .on
                 participantsTableView.reloadData()
@@ -151,7 +151,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .updatedCameraPosition(let position):
             updatedCameraPosition(position)
         case .cameraTurnedOn(let on):
-            if let myHandle = accountUseCase.currentUser?.handle,
+            if let myHandle = accountUseCase.currentUserHandle,
                let participant = callParticipants.first(where: { $0.participantId == myHandle }) {
                 participant.video = on ? .on : .off
                 participantsTableView.reloadData()

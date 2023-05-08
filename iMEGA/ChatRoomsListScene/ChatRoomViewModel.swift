@@ -409,7 +409,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     }
     
     private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {
-        if userHandle == accountUseCase.currentUser?.handle {
+        if userHandle == accountUseCase.currentUserHandle {
             return shouldUseMeText ? Strings.Localizable.me : chatUseCase.myFullName()
         } else {
             guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return nil }
@@ -572,7 +572,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         case .rejected:
             return Strings.Localizable.callWasRejected
         case .noAnswer:
-            if userHandle == accountUseCase.currentUser?.handle {
+            if userHandle == accountUseCase.currentUserHandle {
                 return Strings.Localizable.callWasNotAnswered
             } else {
                 return Strings.Localizable.missedCall
@@ -580,7 +580,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         case .failed:
             return Strings.Localizable.callFailed
         case .cancelled:
-            if userHandle == accountUseCase.currentUser?.handle {
+            if userHandle == accountUseCase.currentUserHandle {
                 return Strings.Localizable.callWasCancelled
             } else {
                 return Strings.Localizable.missedCall

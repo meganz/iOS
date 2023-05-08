@@ -41,7 +41,7 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
     // MARK: - Search Local Cached Avatar
 
     func getCachedAvatarImage() -> UIImage? {
-        guard let handle = accountUseCase.currentUser?.handle else {
+        guard let handle = accountUseCase.currentUserHandle else {
             return nil
         }
         
@@ -54,7 +54,7 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
     }
 
     func loadCachedAvatarImage(completion: @escaping (UIImage?) -> Void) {
-        guard let handle = accountUseCase.currentUser?.handle else {
+        guard let handle = accountUseCase.currentUserHandle else {
             completion(nil)
             return
         }
@@ -71,7 +71,7 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
     }
 
     func loadRemoteAvatarImage(completion: @escaping (UIImage?) -> Void) {
-        guard let handle = accountUseCase.currentUser?.handle else {
+        guard let handle = accountUseCase.currentUserHandle else {
             completion(nil)
             return
         }

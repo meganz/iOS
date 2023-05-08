@@ -1,7 +1,8 @@
 
 // MARK: - Use case protocol
 public protocol AccountUseCaseProtocol {
-    var currentUser: UserEntity? { get }
+    var currentUserHandle: HandleEntity? { get }
+    func currentUser() async -> UserEntity?
     var isGuest: Bool { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]
@@ -21,8 +22,12 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
         self.repository = repository
     }
     
-    public var currentUser: UserEntity? {
-        repository.currentUser
+    public var currentUserHandle: HandleEntity? {
+        repository.currentUserHandle
+    }
+    
+    public func currentUser() async -> UserEntity? {
+        await repository.currentUser()
     }
     
     public var isGuest: Bool {

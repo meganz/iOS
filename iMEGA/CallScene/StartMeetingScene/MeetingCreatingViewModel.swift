@@ -199,7 +199,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         case .updateLastName(let name):
             lastName = name
         case .loadAvatarImage:
-            guard let myHandle = accountUseCase.currentUser?.handle,
+            guard let myHandle = accountUseCase.currentUserHandle,
                   let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: myHandle),
                   let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
                 return

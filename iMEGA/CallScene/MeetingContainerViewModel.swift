@@ -237,7 +237,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private func isOnlyMyselfInTheMeeting() -> Bool {
         guard let call = call,
               call.numberOfParticipants == 1,
-              call.participants.first == accountUseCase.currentUser?.handle else {
+              call.participants.first == accountUseCase.currentUserHandle else {
             return false
         }
         
