@@ -8,13 +8,19 @@ struct AccountRepository: AccountRepositoryProtocol {
     }
     
     private let sdk: MEGASdk
+    private let currentUserSource: CurrentUserSource
     
-    init(sdk: MEGASdk) {
+    init(sdk: MEGASdk, currentUserSource: CurrentUserSource = .shared) {
         self.sdk = sdk
+        self.currentUserSource =  currentUserSource
     }
     
-    var currentUser: UserEntity? {
-        sdk.myUser?.toUserEntity()
+    var currentUserHandle: HandleEntity? {
+        currentUserSource.currentUserHandle
+    }
+    
+    func currentUser() async -> UserEntity? {
+        await currentUserSource.currentUser()
     }
     
     var isGuest: Bool {

@@ -8,7 +8,7 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
     private let _isLoggedIn: Bool
     private let _contacts: [UserEntity]
     
-    public let currentUser: UserEntity?
+    let currentUser: UserEntity?
     public let isGuest: Bool
     
     public init(currentUser: UserEntity? = nil,
@@ -27,6 +27,14 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
         self.accountDetails = accountDetails
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
+    }
+    
+    public var currentUserHandle: HandleEntity? {
+        currentUser?.handle
+    }
+    
+    public func currentUser() async -> UserEntity? {
+        currentUser
     }
     
     public func isLoggedIn() -> Bool {

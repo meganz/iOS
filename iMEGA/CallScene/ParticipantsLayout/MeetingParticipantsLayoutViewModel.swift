@@ -514,7 +514,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func showEmptyCallMessageIfNeeded() {
         if let call = callUseCase.call(for: chatRoom.chatId),
            call.numberOfParticipants == 1,
-           call.participants.first == accountUseCase.currentUser?.handle {
+           call.participants.first == accountUseCase.currentUserHandle {
             invokeCommand?(hasParticipantJoinedBefore ? .showNoOneElseHereMessage : .showWaitingForOthersMessage)
         }
     }
@@ -574,7 +574,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     @MainActor
     private func handle(addedParticipantCount: Int, removedParticipantCount: Int, addedParticipantNames: [String], removedParticipantNames: [String]) {
         guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
-        let isOnlyMyselfRemainingInTheCall = call.numberOfParticipants == 1 && call.participants.first == accountUseCase.currentUser?.handle
+        let isOnlyMyselfRemainingInTheCall = call.numberOfParticipants == 1 && call.participants.first == accountUseCase.currentUserHandle
         
         self.invokeCommand?(
             .participantsStatusChanged(addedParticipantCount: addedParticipantCount,
