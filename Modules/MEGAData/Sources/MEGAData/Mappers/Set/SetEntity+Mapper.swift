@@ -18,6 +18,7 @@ fileprivate extension SetEntity {
         self.init(handle            : set.handle,
                   userId            : set.userId,
                   coverId           : set.cover,
+                  creationTime      : set.timestampCreated,
                   modificationTime  : set.timestamp,
                   name              : set.name ?? "",
                   isExported        : set.isExported(),
