@@ -207,6 +207,8 @@ pipeline {
                                         if (env.gitlabTriggerPhrase == 'deliver_qa_include_new_devices') {
                                             readonly = "false"
                                         }
+
+                                        sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'development' readonly:${readonly}"
                                         sh "bundle exec fastlane install_certificate_and_profile_to_temp_keychain type:'adhoc' readonly:${readonly}"
                                     }                                   
                                 }
