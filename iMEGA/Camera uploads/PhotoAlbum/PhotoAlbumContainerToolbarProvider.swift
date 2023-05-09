@@ -6,7 +6,8 @@ protocol PhotoAlbumContainerToolbarProvider {
     
     func showToolbar()
     func hideToolbar()
-    func updateToolbarDeleteButton(_ numOfItems: Int)
+    func updateToolbarButtonEnabledState(isSelected: Bool)
+    func updateRemoveLinksToolbarButtons(canRemoveLinks: Bool)
 }
 
 extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider {
@@ -17,7 +18,13 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
     func showToolbar() {
         guard let tabBarController = tabBarController else { return }
         guard !tabBarController.view.subviews.contains(toolbar) else { return }
-        
+        if toolbar.items == nil {
+            if isAlbumShareLinkEnabled {
+                toolbar.items = [shareLinkBarButton, flexibleItem, deleteBarButton]
+            } else {
+                toolbar.items = [flexibleItem, deleteBarButton]
+            }
+        }
         toolbar.alpha = 0.0
         tabBarController.view.addSubview(toolbar)
         
@@ -32,8 +39,6 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         UIView.animate(withDuration: 0.3) {
             self.toolbar.alpha = 1.0
         }
-        
-        updateToolbarDeleteButton(0)
     }
     
     func hideToolbar() {
@@ -45,27 +50,22 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         }
     }
     
-    @objc private func onDeleteAlbumConfirmation() {
-        viewModel.showDeleteAlbumAlert.toggle()
-    }
-    
     var flexibleItem: UIBarButtonItem {
         UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
                         target: nil,
                         action: nil)
     }
     
-    func deleteButton(_ numOfItems: Int) -> UIBarButtonItem {
-        let title = numOfItems > 0 ? Strings.Localizable.CameraUploads.Albums.delete(numOfItems) : Strings.Localizable.delete
-        let deleteButton = UIBarButtonItem(title: title,
-                                           style: .plain,
-                                           target: self,
-                                           action: #selector(onDeleteAlbumConfirmation))
-        deleteButton.isEnabled = numOfItems > 0
-        return deleteButton
+    func updateToolbarButtonEnabledState(isSelected: Bool) {
+        deleteBarButton.isEnabled = isSelected
+        shareLinkBarButton.isEnabled = isSelected
     }
     
-    func updateToolbarDeleteButton(_ numOfItems: Int) {
-        toolbar.setItems([flexibleItem, deleteButton(numOfItems)], animated: false)
+    func updateRemoveLinksToolbarButtons(canRemoveLinks: Bool) {
+        if canRemoveLinks {
+            toolbar.items = [shareLinkBarButton, flexibleItem, removeLinksBarButton, flexibleItem, deleteBarButton]
+        } else {
+            toolbar.items = [shareLinkBarButton, flexibleItem, deleteBarButton]
+        }
     }
 }
