@@ -79,10 +79,12 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             
             if contextBarButtonItemUpdated || uploadAddBarButtonItemUpdated || isEditingModeBeingDisabled {
                 navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
+                isEditingModeBeingDisabled = false
             }
         } else {
             if contextBarButtonItemUpdated || isEditingModeBeingDisabled {
                 navigationItem.rightBarButtonItems = [contextBarButtonItem]
+                isEditingModeBeingDisabled = false
             }
         }
         
