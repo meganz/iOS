@@ -934,7 +934,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 [self.toolbar removeFromSuperview];
             }
         }];
-        self.isEditingModeBeingDisabled = NO;
     }
     
     if (!self.selectedNodesArray) {
