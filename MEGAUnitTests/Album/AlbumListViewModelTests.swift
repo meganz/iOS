@@ -455,7 +455,7 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
-    func testNumOfSelectedAlbums_whenAlbumSelectionChanged_shouldSetNumOfSelectedAlbumsToTheRightValue() async {
+    func testNumOfSelectedAlbums_onAlbumSelectionChanged_shouldSetIsAlbumSelected() {
         let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user)]
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
         let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
@@ -463,11 +463,10 @@ final class AlbumListViewModelTests: XCTestCase {
                                      alertViewModel: alertViewModel(),
                                      photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
-        XCTAssertEqual(photoAlbumContainerViewModel.numOfSelectedAlbums, 0)
+        XCTAssertFalse(photoAlbumContainerViewModel.isAlbumsSelected)
         
         sut.selection.setSelectedAlbums(albums)
-        await sut.albumLoadingTask?.value
-        XCTAssertEqual(photoAlbumContainerViewModel.numOfSelectedAlbums, albums.count)
+        XCTAssertTrue(photoAlbumContainerViewModel.isAlbumsSelected)
     }
     
     func testShowDeleteAlbumAlert_whenUserTapDeleteButton_shouldSetShowDeleteAlbumAlertToTrue() async {
@@ -479,6 +478,18 @@ final class AlbumListViewModelTests: XCTestCase {
         
         photoAlbumContainerViewModel.showDeleteAlbumAlert = true
         XCTAssertTrue(sut.showDeleteAlbumAlert)
+    }
+    
+    func testIsExportedAlbumSelected_onExportedAlbumSelected_shouldSetIsExportedAlbumSelected() {
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
+                                     albumModificationUseCase: MockAlbumModificationUseCase(),
+                                     alertViewModel: alertViewModel(),
+                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        XCTAssertFalse(photoAlbumContainerViewModel.isExportedAlbumSelected)
+        let exportedUserAlbum = AlbumEntity(id: 5, type: .user, sharedLinkStatus: .exported(true))
+        sut.selection.setSelectedAlbums([exportedUserAlbum])
+        XCTAssertTrue(photoAlbumContainerViewModel.isExportedAlbumSelected)
     }
     
     private func alertViewModel() -> TextFieldAlertViewModel {

@@ -24,14 +24,27 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
     
     let pageTabViewModel = PagerTabViewModel()
     let viewModel = PhotoAlbumContainerViewModel()
-    let featureFlagProvider: FeatureFlagProviderProtocol = AlbumFeatureFlagProvider()
+    let featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
     
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?
     private var albumHostingController: UIViewController?
     
     var leftBarButton: UIBarButtonItem?
-    lazy var isCreateAlbumEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
+    lazy var isAlbumShareLinkEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink)
+    lazy var shareLinkBarButton = UIBarButtonItem(image: Asset.Images.Generic.link.image,
+                                               style: .plain,
+                                               target: self,
+                                               action: #selector(shareLinksButtonPressed))
+    lazy var removeLinksBarButton = UIBarButtonItem(image: Asset.Images.NodeActions.removeLink.image,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(removeLinksButtonPressed))
+    lazy var deleteBarButton = UIBarButtonItem(image: Asset.Images.NodeActions.rubbishBin.image,
+                                                        style: .plain,
+                                                        target: self,
+                                                        action: #selector(deleteAlbumButtonPressed))
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -211,12 +224,24 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
             }
             .store(in: &subscriptions)
         
-        viewModel.$numOfSelectedAlbums
-            .receive(on: DispatchQueue.main)
+        viewModel.$isAlbumsSelected
+            .removeDuplicates()
             .sink { [weak self] in
-                self?.updateToolbarDeleteButton($0)
+                guard let self else { return }
+                updateToolbarButtonEnabledState(isSelected: $0)
             }
             .store(in: &subscriptions)
+        
+        if isAlbumShareLinkEnabled {
+            viewModel.$isExportedAlbumSelected
+                .removeDuplicates()
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    guard let self else { return }
+                    updateRemoveLinksToolbarButtons(canRemoveLinks: $0)
+                }
+                .store(in: &subscriptions)
+        }
     }
     
     private func updatePageTabViewLayout() {
@@ -242,5 +267,17 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
             self.pageController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.pageController.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    @objc private func deleteAlbumButtonPressed() {
+        viewModel.showDeleteAlbumAlert.toggle()
+    }
+    
+    @objc private func shareLinksButtonPressed() {
+        viewModel.showShareAlbumLinks.toggle()
+    }
+    
+    @objc private func removeLinksButtonPressed() {
+        viewModel.showRemoveAlbumLinksAlert.toggle()
     }
 }

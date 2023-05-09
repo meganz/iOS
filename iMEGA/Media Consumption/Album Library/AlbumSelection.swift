@@ -31,3 +31,24 @@ final class AlbumSelection: ObservableObject {
     }
 }
 
+extension AlbumSelection {
+    var isAlbumSelectedPublisher: AnyPublisher<Bool, Never> {
+        $albums
+            .map { $0.values.isNotEmpty }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+    
+    var isExportedAlbumSelectedPublisher: AnyPublisher<Bool, Never> {
+        $albums.map {
+            $0.values.contains(where: {
+                if case .exported(let isExported) = $0.sharedLinkStatus {
+                    return isExported
+                }
+                return false
+            })
+        }
+        .removeDuplicates()
+        .eraseToAnyPublisher()
+    }
+}

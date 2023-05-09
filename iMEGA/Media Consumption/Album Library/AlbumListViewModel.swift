@@ -240,18 +240,19 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
                 self?.loadAlbums()
             }.store(in: &subscriptions)
         
-        selection.$albums
-            .sink { [weak self] in
-                self?.photoAlbumContainerViewModel?.numOfSelectedAlbums = $0.count
-            }
-            .store(in: &subscriptions)
-        
         photoAlbumContainerViewModel?.$showDeleteAlbumAlert
             .dropFirst()
             .sink { [weak self] _ in
                 self?.showDeleteAlbumAlert = true
             }
             .store(in: &subscriptions)
+        
+        if let photoAlbumContainerViewModel {
+            selection.isAlbumSelectedPublisher
+                .assign(to: &photoAlbumContainerViewModel.$isAlbumsSelected)
+            selection.isExportedAlbumSelectedPublisher
+                .assign(to: &photoAlbumContainerViewModel.$isExportedAlbumSelected)
+        }
     }
     
     private func subscribeToEditMode() {
