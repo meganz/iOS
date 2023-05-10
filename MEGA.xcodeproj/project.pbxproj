@@ -11580,6 +11580,7 @@
 				942254FF1EDC03150074C51A /* Embed Foundation Extensions */,
 				2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */,
 				B67FFF9329D530F500E830FA /* Run Script: Copy GoogleService-Info */,
+				1637D1072A0A4B28001D66CF /* Run Script: SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -12231,6 +12232,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1637D1072A0A4B28001D66CF /* Run Script: SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"SwiftLint is not installed. You can install them from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;

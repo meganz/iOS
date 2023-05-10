@@ -1,0 +1,139 @@
+# MEGA Lint Rules Configuration
+
+# Currently we use `only_rules` so that we can validate each and every default rule.
+# Once everything has been set, we can start using the `disabled_rules` and `opt_in_rules`.
+
+only_rules:
+
+  # SwiftLint Default Rules
+
+    # Can be enabled right away (0 issues)
+
+      - blanket_disable_command
+      - block_based_kvo
+      - deployment_target
+      - duplicate_conditions
+      - duplicate_enum_cases
+      - duplicated_key_in_dictionary_literal
+      - dynamic_inline
+      - empty_parameters
+      - generic_type_name
+      - invalid_swiftlint_command
+      - legacy_cggeometry_functions
+      - legacy_constant
+      - legacy_hashing
+      - legacy_nsgeometry_functions
+      - legacy_random
+      - no_fallthrough_only
+      - nsobject_prefer_isequal
+      - orphaned_doc_comment
+      - private_unit_test
+      - protocol_property_accessors_order
+      - redundant_set_access_control
+      - redundant_string_enum_value
+      - self_in_property_initialization
+      - superfluous_disable_command
+      - unavailable_condition
+      - unused_control_flow_label
+      - valid_ibinspectable
+
+    # Small fixes or small-moderate amount of issues (<100) that are easy to fix
+
+      # - computed_accessors_order (1 issue)
+      # - is_disjoint (1 issue)
+      # - reduce_boolean (1 issue)
+      # - redundant_objc_attribute (1 issue)
+      # - todo (1 issue)
+      # - unused_enumerated (1 issue)
+      # - unused_optional_binding (1 issue)
+      # - unused_setter_value (1 issue)
+      # - duplicate_imports (2 issues)
+      # - switch_case_alignment (3 issues)
+      # - unneeded_break_in_switch (6 issues)
+      # - operator_whitespace (10 issues)
+      # - redundant_discardable_let (11 issues)
+      # - legacy_constructor (12 issues)
+      # - shorthand_operator (12 issues)
+      # - ns_number_init_as_function_reference (12 issues)
+      # - return_arrow_whitespace (13 issues)
+      # - closing_brace (14 issues)
+      # - void_return (15 issues)
+      # - for_where (16 issues)
+      # - implicit_getter (16 issues)
+      # - xctfail_message (16 issues)
+      # - redundant_void_return (17 issues)
+      # - syntactic_sugar (19 issues)
+      # - closure_parameter_position (21 issues)
+      # - multiple_closures_with_trailing_closure (22 issues)
+      # - statement_position (22 issues)
+      # - no_space_in_method_call (42 issues)
+      # - empty_parentheses_with_trailing_closure (46 issues)
+      # - trailing_semicolon (47 issues)
+      # - vertical_parameter_alignment (50 issues)
+      # - private_over_fileprivate (54 issues)
+      # - redundant_optional_initialization (56 issues)
+      # - control_statement (59 issues)
+      # - trailing_newline (81 issues)
+      # - empty_enum_arguments (87 issues)
+
+    # Complex fixes or a ton of issues (>100 issues)
+
+      # - type_name (91 issues) - complex because we need to rename stuff
+      # - comma (103 issues)
+      # - unused_closure_parameter (116 issues)
+      # - trailing_comma (123 issues)
+      # - cyclomatic_complexity (132 issues)
+        # A somewhat complex fix, because we need extract functions into smaller functions to avoid overly complex logic, but I think this should be enabled in the future so that we can refactor our code to make sure our functions are small, simple, and adhere to the SOLID principles.
+      # - opening_brace (183 issues)
+      # - vertical_whitespace (232 issues)
+      # - comment_spacing (293 issues)
+      # - mark (365 issues)
+      # - leading_whitespace (398 issues)
+      # - identifier_name (427 issues)
+      # - colon (725 issues)
+      # - trailing_whitespace (17200 issues, mindblown)
+
+    # Not sure if we should implement
+
+      # - class_delegate_protocol (4 issues)
+      # - compiler_protocol_init (3 issues)
+      # - discouraged_direct_init (2 issues)
+        # Using `UIDevice()` directly is discouraged, but we're currently using it to check whether or not the device is an iPad by doing this `UIDevice().iPadDevice`
+      # - force_cast
+      # - force_try (2 issues)
+        # I think both force try and force casting is OK at some cases, as long as we're using it appropriately and not abusing it
+      # - inclusive_language (2 issues)
+      # - nesting (14 issues)
+      # - notification_center_detachment (5 issues)
+      # - void_function_in_ternary (13 issues)
+        # This is something that has been discussed and I need to know you guys' opinions on the rule.
+
+    # Should be implemented, but not sure about how much the config values should be
+
+      # - large_tuple (14 issues, max 2 members)
+      # - file_length (40 issues, max 400 lines)
+      # - type_body_length (47 issues, max 250 lines)
+      # - function_body_length (43 issues, max 50 lines)
+      # - function_parameter_count (68 issues, max 5 parameters)
+      # - line_length (4202 issues, max of 120 characters)
+
+
+# Path Configurations
+
+included: # Paths to include during linting. `--path` is ignored if present.
+  - iMEGA
+  - MEGAData
+  - MEGADomain
+  - MEGADataTests
+  - MEGADomainTests
+  - MEGAUnitTests
+  - Modules
+
+excluded: # Paths to ignore during linting. Takes precedence over `included`.
+  - iMEGA/SwiftGen
+  - SwiftGen
+  - transifex
+  - Xcode Templates
+
+allow_zero_lintable_files: false
+reporter: "xcode"
