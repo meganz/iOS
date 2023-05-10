@@ -194,4 +194,13 @@ extension MyAccountHallViewController: UITableViewDataSource {
         cell.sectionLabel.sizeToFit()
         return cell
     }
+    
+    func calculateIndexPath(for row: Int, in section: Int) -> IndexPath {
+        if section == MyAccountSection.mega.rawValue &&
+            (!isNewUpgradeAccountPlanFeatureFlagEnabled() ||
+             (isNewUpgradeAccountPlanFeatureFlagEnabled() && showPlanRow)) {
+            return IndexPath(row: row - 1, section: section)
+        }
+        return IndexPath(row: row, section: section)
+    }
 }

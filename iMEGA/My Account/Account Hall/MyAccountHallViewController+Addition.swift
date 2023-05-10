@@ -51,4 +51,25 @@ extension MyAccountHallViewController {
     @objc func isNewUpgradeAccountPlanFeatureFlagEnabled() -> Bool {
         FeatureFlagProvider().isFeatureFlagEnabled(for: .newUpgradeAccountPlanUI)
     }
+    
+    //MARK: - Open sections programmatically
+    @objc func openAchievements() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let achievementsIndexPath = self.calculateIndexPath(for: MyAccountMegaSection.achievements.rawValue, in: MyAccountSection.mega.rawValue)
+            if let tableView = self.tableView {
+                tableView.selectRow(at: achievementsIndexPath, animated: true, scrollPosition: .none)
+                tableView.delegate?.tableView?(tableView, didSelectRowAt: achievementsIndexPath)
+            }
+        }
+    }
+    
+    @objc func openOffline() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let offlineIndexPath = self.calculateIndexPath(for: MyAccountMegaSection.offline.rawValue, in: MyAccountSection.mega.rawValue)
+            if let tableView = self.tableView {
+                tableView.selectRow(at: offlineIndexPath, animated: true, scrollPosition: .none)
+                tableView.delegate?.tableView?(tableView, didSelectRowAt: offlineIndexPath)
+            }
+        }
+    }
 }
