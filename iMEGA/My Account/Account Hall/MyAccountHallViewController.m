@@ -219,20 +219,6 @@
     [self.tableView reloadData];
 }
 
-- (void)openAchievements {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionAchievements inSection:MyAccountSectionMega];
-        [self tableView:self.tableView didSelectRowAtIndexPath:achievementsIndexPath];
-    });
-}
-
-- (void)openOffline {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionOffline inSection:MyAccountSectionMega];
-        [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
-    });
-}
-
 - (void)avatarTapped:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"ContactLinkQR" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];

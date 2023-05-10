@@ -7,8 +7,5 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) MEGANode *backupsRootNode;
 @property (nonatomic, assign) BOOL isBackupSectionVisible;
 
-- (void)openOffline;
-- (void)openAchievements;
-
 @end
 NS_ASSUME_NONNULL_END
