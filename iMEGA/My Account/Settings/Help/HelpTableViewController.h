@@ -1,8 +1,8 @@
 
 #import <UIKit/UIKit.h>
-@class SendFeedbackViewRouter;
+@class SendFeedbackViewModel;
 
 @interface HelpTableViewController : UITableViewController
-@property (nonatomic, strong, nullable) SendFeedbackViewRouter *sendFeedbackRouter;
+@property (nonatomic, strong) SendFeedbackViewModel *sendFeedbackViewModel;
 
 @end
