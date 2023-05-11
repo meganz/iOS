@@ -81,4 +81,57 @@ final class UIMenuTests: XCTestCase {
         
         XCTAssertFalse(UIMenu.match(lhs: oldMenu, rhs: updatedMenu))
     }
+    
+    func testDoMenuActionMatch_whenMenusHaveSameActionsAndActionStates_returnsTrue() {
+        let action1_ON = UIAction(title: "Action 1", state: .on, handler: {_ in})
+        let action2_OFF = UIAction(title: "Action 2", state: .off, handler: {_ in})
+        
+        let oldMenu = UIMenu(title: "Test Menu", children: [action1_ON, action2_OFF])
+        let updatedMenu = UIMenu(title: "Test Menu", children: [action1_ON, action2_OFF])
+        
+        XCTAssertTrue(UIMenu.match(lhs: oldMenu, rhs: updatedMenu))
+    }
+    
+    func testDoMenuActionMatch_whenMenusAreDifferentButHaveSameActionsAndActionStates_returnsFalse() {
+        let action1_ON = UIAction(title: "Action 1", state: .on, handler: {_ in})
+        let action2_OFF = UIAction(title: "Action 2", state: .off, handler: {_ in})
+        
+        let oldMenu = UIMenu(title: "Old Menu", children: [action1_ON, action2_OFF])
+        let updatedMenu = UIMenu(title: "Updated Menu", children: [action1_ON, action2_OFF])
+        
+        XCTAssertTrue(UIMenu.match(lhs: oldMenu, rhs: updatedMenu))
+    }
+    
+    func testDoMenuActionMatch_whenMenusAreDifferentAndHaveSameActionsButDifferentActionStates_returnsFalse() {
+        let action1_ON = UIAction(title: "Action 1", state: .on, handler: {_ in})
+        let action1_OFF = UIAction(title: "Action 1", state: .off, handler: {_ in})
+        let action2_ON = UIAction(title: "Action 2", state: .on, handler: {_ in})
+        let action2_OFF = UIAction(title: "Action 2", state: .off, handler: {_ in})
+        
+        let oldMenu = UIMenu(title: "Old Menu", children: [action1_ON, action2_OFF])
+        let updatedMenu = UIMenu(title: "Updated Menu", children: [action1_OFF, action2_ON])
+        
+        XCTAssertFalse(UIMenu.match(lhs: oldMenu, rhs: updatedMenu))
+    }
+    
+    func testMatch_sameActionStates_returnsFalse() {
+        let action1_ON = UIAction(title: "Action 1", state: .on, handler: {_ in})
+        let menu1 = UIMenu(title: "Updated Menu", options: [], children: [action1_ON])
+        let menu2 = UIMenu(title: "Updated Menu", options: [], children: [action1_ON])
+        
+        let result = UIMenu.match(lhs: menu1, rhs: menu2)
+       
+        XCTAssertTrue(result)
+   }
+    
+    func testMatch_differentActionStates_returnsFalse() {
+        let action1_ON = UIAction(title: "Action 1", state: .on, handler: {_ in})
+        let menu1 = UIMenu(title: "Updated Menu", options: [], children: [action1_ON])
+        let action1_OFF = UIAction(title: "Action 1", state: .off, handler: {_ in})
+        let menu2 = UIMenu(title: "Updated Menu", options: [], children: [action1_OFF])
+        
+        let result = UIMenu.match(lhs: menu1, rhs: menu2)
+       
+        XCTAssertFalse(result)
+   }
 }
