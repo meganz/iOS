@@ -11,7 +11,7 @@ public extension String {
     }
     
     var base64Decoded: String? {
-        guard let data = Data(base64Encoded: self) else { return nil }
+        guard let data = Data(base64Encoded: addPaddingIfNecessaryForBase64String()) else { return nil }
         return String(data: data, encoding: .utf8)
     }
 
@@ -21,13 +21,9 @@ public extension String {
 
     // Conversion of base64-URL to base64 https://stackoverflow.com/questions/43499651/decode-base64url-to-base64-swift
     var base64URLToBase64: String {
-        var base64 = self
-            .replacingOccurrences(of: "-", with: "+")
+        replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
-        if base64.count % 4 != 0 {
-            base64.append(String(repeating: "=", count: 4 - base64.count % 4))
-        }
-        return base64
+            .addPaddingIfNecessaryForBase64String()
     }
 
     var trim: String? {
@@ -48,6 +44,16 @@ public extension String {
                 trimmedString.isNotEmpty,
                 let initialString = trimmedString.first else { return "" }
         return initialString.uppercased()
+    }
+    
+    func addPaddingIfNecessaryForBase64String() -> String {
+        var finalString = self
+        
+        if (finalString.count % 4) != 0 {
+            finalString.append(String(repeating: "=", count: 4 - (finalString.count % 4)))
+        }
+        
+        return finalString
     }
 }
 

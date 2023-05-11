@@ -1167,12 +1167,13 @@
     self.megatype = (MEGANotificationType)[response.notification.request.content.userInfo[@"megatype"] integerValue];
     
     if ([self isScheduleMeetingWithResponse:response]) {
-        NSNumber *chatId = response.notification.request.content.userInfo[@"chatId"];
+        NSString *chatIdBase64 = response.notification.request.content.userInfo[@"chatId"];
+        uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdBase64];
         
         if ([self hasTappedOnJoinActionWithResponse:response]) {
-            [self joinScheduleMeetingForChatId:chatId.unsignedLongLongValue retry:YES];
+            [self joinScheduleMeetingForChatId:chatId retry:YES];
         } else {
-            [self openScheduleMeetingForChatId:chatId.unsignedLongLongValue retry:YES];
+            [self openScheduleMeetingForChatId:chatId retry:YES];
         }
         
     } else if (self.megatype) {

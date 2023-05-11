@@ -14,6 +14,18 @@ final class MEGASwiftTests: XCTestCase {
         XCTAssertEqual(string, "Hello, MEGA!")
     }
     
+    func testBase64Decoded_stringOmittingASinglePadding_shouldMatch() throws {
+        let base64Encoded = "MTI6MDA"
+        let string = try XCTUnwrap(base64Encoded.base64Decoded)
+        XCTAssertEqual(string, "12:00")
+    }
+    
+    func testBase64Decoded_stringOmittingMultiplePadding_shouldMatch() throws {
+        let base64Encoded = "TWVldGluZyAxMzozOA"
+        let string = try XCTUnwrap(base64Encoded.base64Decoded)
+        XCTAssertEqual(string, "Meeting 13:38")
+    }
+    
     func testMemoryStyleString() {
         let oneMegaInBytes: Int64 = 1048576
         let onMegaString = "1 MB"
