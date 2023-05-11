@@ -91,7 +91,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                 
                 Task {
                     do {
-                        try await self.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
+                        try await self.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage, forceDownload: true)
                     } catch {
                         MEGALogDebug("Updating Avatar task failed for handles \(handles)")
                     }
@@ -100,13 +100,13 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func fetchAvatar(isRightToLeftLanguage: Bool) async throws {
+    private func fetchAvatar(isRightToLeftLanguage: Bool, forceDownload: Bool = false) async throws {
         if chatRoomEntity.chatType != .oneToOne {
             if let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatRoomEntity.chatId) {
                 if chatRoom.peerCount == 0 {
-                    guard let avatar = createAvatar(usingName: title, isRightToLeftLanguage: isRightToLeftLanguage) else { return }
+                    guard let emptyGroupAvatar = createAvatar(usingName: title, isRightToLeftLanguage: isRightToLeftLanguage) else { return }
                     
-                    await updatePrimaryAvatar(avatar)
+                    await updatePrimaryAvatar(emptyGroupAvatar)
                 } else {
                     let primaryAvatarUserHandle = chatRoom.peers[0].handle
                     
@@ -117,22 +117,22 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                         subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle])
                     } else {
                         let secondaryAvatarUserHandle = chatRoom.peers[1].handle
-                        let primaryAvatar = try await createAvatar(withHandle: primaryAvatarUserHandle,
+                        let primaryDefaultAvatar = try await createAvatar(withHandle: primaryAvatarUserHandle,
                                                                    isRightToLeftLanguage: isRightToLeftLanguage)
-                        let secondaryAvatar = try await createAvatar(withHandle: secondaryAvatarUserHandle,
+                        let secondaryDefaultAvatar = try await createAvatar(withHandle: secondaryAvatarUserHandle,
                                                                      isRightToLeftLanguage: isRightToLeftLanguage)
-                        
-                        await updatePrimaryAvatar(primaryAvatar)
-                        await updateSecondaryAvatar(secondaryAvatar)
+
+                        await updatePrimaryAvatar(primaryDefaultAvatar)
+                        await updateSecondaryAvatar(secondaryDefaultAvatar)
                         
                         subscribeToAvatarUpdateNotification(forHandles: [primaryAvatarUserHandle, secondaryAvatarUserHandle])
                         
-                        let downloadedSecondaryAvatar = try await downloadAvatar(forHandle: secondaryAvatarUserHandle)
-                        await updateSecondaryAvatar(downloadedSecondaryAvatar)
+                        let secondaryAvatar = try await userAvatar(forHandle: secondaryAvatarUserHandle, forceDownload: forceDownload)
+                        await updateSecondaryAvatar(secondaryAvatar)
                     }
                     
-                    let downloadedPrimaryAvatar = try await downloadAvatar(forHandle: primaryAvatarUserHandle)
-                    await updatePrimaryAvatar(downloadedPrimaryAvatar)
+                    let primaryAvatar = try await userAvatar(forHandle: primaryAvatarUserHandle, forceDownload: forceDownload)
+                    await updatePrimaryAvatar(primaryAvatar)
                 }
             }
         } else {
@@ -142,8 +142,8 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             
             subscribeToAvatarUpdateNotification(forHandles: [peerHandle])
             
-            let downloadedAvatar = try await downloadAvatar(forHandle: peerHandle)
-            await updatePrimaryAvatar(downloadedAvatar)
+            let oneToOneAvatar = try await userAvatar(forHandle: peerHandle, forceDownload: forceDownload)
+            await updatePrimaryAvatar(oneToOneAvatar)
         }
     }
     
@@ -182,12 +182,12 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
-    private func downloadAvatar(forHandle handle: HandleEntity) async throws -> UIImage {
+    private func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> UIImage {
         guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: handle) else {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
         
-        return try await userImageUseCase.downloadAvatar(withUserHandle: handle, base64Handle: base64Handle)
+        return try await userImageUseCase.fetchAvatar(withUserHandle: handle, base64Handle: base64Handle, forceDownload: forceDownload)
     }
     
     private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {

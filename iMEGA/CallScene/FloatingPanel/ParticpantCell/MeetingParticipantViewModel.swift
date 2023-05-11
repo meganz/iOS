@@ -169,7 +169,7 @@ final class MeetingParticipantViewModel: ViewModelType {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
         
-        let downloadedAvatar = try await userImageUseCase.downloadAvatar(withUserHandle: participant.participantId, base64Handle: base64Handle)
+        let downloadedAvatar = try await userImageUseCase.fetchAvatar(withUserHandle: participant.participantId, base64Handle: base64Handle, forceDownload: true)
         try Task.checkCancellation()
         await updateAvatar(image: downloadedAvatar)
     }
