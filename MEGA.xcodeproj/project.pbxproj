@@ -1849,7 +1849,7 @@
 		BF1164C027F6A74D00E5C5A4 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164BF27F6A74D00E5C5A4 /* PureLayout */; };
 		BF1164CA27F6A81F00E5C5A4 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164C927F6A81F00E5C5A4 /* PureLayout */; };
 		BF121D672A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D662A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift */; };
-		BF121D692A09FF3F00DA3633 /* UNMutableNotificationContent+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D682A09FF3F00DA3633 /* UNMutableNotificationContent+Additions.swift */; };
+		BF121D692A09FF3F00DA3633 /* UNNotificationContent+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D682A09FF3F00DA3633 /* UNNotificationContent+Additions.swift */; };
 		BF14A144289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14A143289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift */; };
 		BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		BF15891F2435EF85007AF9EC /* ChatViewCallCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */; };
@@ -1883,6 +1883,7 @@
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
 		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
 		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
+		BF4989602A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */; };
 		BF49DEE72818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */; };
 		BF49DF352820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DF342820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift */; };
 		BF49DF57282333BA00DE3742 /* CameraUploadManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */; };
@@ -4369,7 +4370,7 @@
 		BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUnreadMessagesLabelCollectionCell.swift; sourceTree = "<group>"; };
 		BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatUnreadMessagesLabelCollectionCell.xib; sourceTree = "<group>"; };
 		BF121D662A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingNotificationInfo.swift; sourceTree = "<group>"; };
-		BF121D682A09FF3F00DA3633 /* UNMutableNotificationContent+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNMutableNotificationContent+Additions.swift"; sourceTree = "<group>"; };
+		BF121D682A09FF3F00DA3633 /* UNNotificationContent+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNNotificationContent+Additions.swift"; sourceTree = "<group>"; };
 		BF14A143289B3DA900BC6DCF /* SharedItemsViewController+TabSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+TabSelection.swift"; sourceTree = "<group>"; };
 		BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatRoom+Additions.swift"; sourceTree = "<group>"; };
 		BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewCallCollectionCell.swift; sourceTree = "<group>"; };
@@ -4395,6 +4396,7 @@
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
 		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
 		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
+		BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService+ScheduleMeeting.swift"; sourceTree = "<group>"; };
 		BF49DEE62818A5BC00DE3742 /* MEGAPhotoBrowserViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+Additions.swift"; sourceTree = "<group>"; };
 		BF49DF342820AF7E00DE3742 /* CameraUploadBGRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBGRefreshManager.swift; sourceTree = "<group>"; };
 		BF49DF56282333BA00DE3742 /* CameraUploadManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadManager+Additions.swift"; sourceTree = "<group>"; };
@@ -7644,8 +7646,9 @@
 				7794AEE0231E54680039C1D2 /* MEGANotifications-Bridging-Header.h */,
 				7794AEE2231E5C2F0039C1D2 /* MEGANotifications-PrefixHeader.pch */,
 				7794AED6231E4E0A0039C1D2 /* NotificationService.swift */,
+				BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */,
 				BF121D662A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift */,
-				BF121D682A09FF3F00DA3633 /* UNMutableNotificationContent+Additions.swift */,
+				BF121D682A09FF3F00DA3633 /* UNNotificationContent+Additions.swift */,
 			);
 			path = MEGANotifications;
 			sourceTree = "<group>";
@@ -13918,6 +13921,7 @@
 				5B205D1B2449AD3200EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */,
 				A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
+				BF4989602A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift in Sources */,
 				7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */,
 				774941DE2410EABC00FC5CB6 /* MEGACoreDataStack.m in Sources */,
 				77BE2FFB24084E9600514DB8 /* MEGAFunctions.swift in Sources */,
@@ -13934,7 +13938,7 @@
 				774941E02410EAE000FC5CB6 /* MOMediaDestination+CoreDataClass.m in Sources */,
 				774941DD2410EA7F00FC5CB6 /* MOMessage+CoreDataClass.m in Sources */,
 				BF121D672A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift in Sources */,
-				BF121D692A09FF3F00DA3633 /* UNMutableNotificationContent+Additions.swift in Sources */,
+				BF121D692A09FF3F00DA3633 /* UNNotificationContent+Additions.swift in Sources */,
 				774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */,
 				BFCB32B72A023A7F0013409C /* ScheduleMeetingPushNotifications.swift in Sources */,
 				774941E32410EAFB00FC5CB6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
