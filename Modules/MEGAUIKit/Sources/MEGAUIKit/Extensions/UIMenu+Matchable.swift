@@ -16,7 +16,10 @@ extension UIMenu {
         let oldMenuActionTitles = lhs.decomposeMenuIntoActionTitles()
         let updatedMenuActionTitle = rhs.decomposeMenuIntoActionTitles()
         
-        return oldMenuActionTitles.elementsEqual(updatedMenuActionTitle)
+        let oldMenuActions = lhs.decomposeMenuIntoActions()
+        let updatedMenuActions = rhs.decomposeMenuIntoActions()
+        
+        return oldMenuActionTitles.elementsEqual(updatedMenuActionTitle) && matchActionStates(lhs: oldMenuActions, rhs: updatedMenuActions)
     }
     
     private func decomposeMenuIntoActionTitles() -> [String] {
@@ -28,5 +31,30 @@ extension UIMenu {
             }
             return nil
         }.reduce([], +)
+    }
+    
+    private func decomposeMenuIntoActions() -> [UIAction] {
+        children.compactMap {
+            if let action = $0 as? UIAction {
+                return [action]
+            } else if let menu = $0 as? UIMenu {
+                return menu.decomposeMenuIntoActions()
+            }
+            return nil
+        }.reduce([], +)
+    }
+    
+    private static func matchActionStates(lhs: [UIAction]?, rhs: [UIAction]?) -> Bool {
+        guard let lhs, let rhs, lhs.count == rhs.count else { return false }
+        
+        let actions1 = lhs.map { ($0, $0.state) }
+        let actions2 = rhs.map { ($0, $0.state) }
+        
+        for (index, action) in actions1.enumerated() {
+            if action != actions2[index] {
+                return false
+            }
+        }
+        return true
     }
 }
