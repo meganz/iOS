@@ -1,10 +1,18 @@
 import MEGADomain
 
 extension HelpTableViewController {
+    @objc func createSendFeedbackViewModel() -> SendFeedbackViewModel {
+        SendFeedbackViewModel(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
+    }
+    
     @objc func sendUserFeedback() {
-        let getFeedbackInfoUC = GetFeedbackInfoUseCase(repo: FeedbackRepository.newRepo)
+        guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
         
-        sendFeedbackRouter = SendFeedbackViewRouter(presenter: self, feedbackEntity: getFeedbackInfoUC.getFeedback())
-        sendFeedbackRouter?.start()
+        Task { @MainActor in
+            do {
+                let feedbackEntity = await sendFeedbackViewModel.getFeedback()
+                SendFeedbackViewRouter(presenter: self, feedbackEntity: feedbackEntity).start()
+            }
+        }
     }
 }

@@ -47,6 +47,13 @@
     }
 }
 
+- (SendFeedbackViewModel *)sendFeedbackViewModel {
+    if (_sendFeedbackViewModel == nil) {
+        _sendFeedbackViewModel = [self createSendFeedbackViewModel];
+    }
+    return _sendFeedbackViewModel;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -75,7 +82,7 @@
                 
             case 1:
                 if (indexPath.row == 0) {
-                    [self sendFeedback];
+                    [self sendUserFeedback];
                 } else {
                     [self reportIssue];
                 }
@@ -100,12 +107,6 @@
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
-}
-
-- (void)sendFeedback {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self sendUserFeedback];
-    }
 }
 
 - (void)openHelpCentre {
