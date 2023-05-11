@@ -162,7 +162,7 @@ extension CloudDriveViewController {
                 
             case .recents:
                 if let nodes {
-                    navigationTitle = Strings.Localizable._1DItems(nodes.size.intValue)
+                    navigationTitle = Strings.Localizable.Recents.Section.Title.items(nodes.size.intValue)
                 }
                 
             default: break

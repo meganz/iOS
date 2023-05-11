@@ -5025,6 +5025,12 @@ public enum Strings {
             }
           }
         }
+        public enum Title {
+          /// Plural format key: "%#@items@"
+          public static func items(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "recents.section.title.items", p1)
+          }
+        }
       }
     }
     public enum Rename {
