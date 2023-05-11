@@ -1,5 +1,6 @@
 
 import UIKit
+import MEGAData
 
 class ContactsGroupTableViewCell: UITableViewCell {
 
@@ -16,7 +17,7 @@ class ContactsGroupTableViewCell: UITableViewCell {
             return
         }
         backAvatarImage.mnz_setImage(forUserHandle: chatRoom.peerHandle(at: 0))
-        let handle = chatRoom.peerCount > 1 ? chatRoom.peerHandle(at: 1) : MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle
+        let handle = chatRoom.peerCount > 1 ? chatRoom.peerHandle(at: 1) : MEGASdk.currentUserHandle()?.uint64Value ?? MEGAInvalidHandle
         frontAvatarImage.mnz_setImage(forUserHandle: handle)
         frontAvatarImage.borderColor = .mnz_backgroundElevated(traitCollection)
     }

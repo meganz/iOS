@@ -15,6 +15,7 @@
 #import "NSString+MNZCategory.h"
 
 #import "MEGA-Swift.h"
+@import MEGAData;
 
 @interface MEGAImagePickerController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -99,7 +100,7 @@
 }
 
 - (NSString *)createAvatarWithImagePath:(NSString *)imagePath {
-    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
+    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
     NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:base64Handle];
     if ([[MEGASdkManager sharedMEGASdk] createAvatar:imagePath destinationPath:avatarFilePath]) {
         return avatarFilePath;

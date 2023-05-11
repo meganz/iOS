@@ -5,6 +5,7 @@
 
 #import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
+@import MEGAData;
 
 @interface MEGAPurchase ()
 @property (nonatomic, strong) NSArray *iOSProductIdentifiers;
@@ -67,7 +68,7 @@
             [SVProgressHUD show];
             
             SKMutablePayment *paymentRequest = [SKMutablePayment paymentWithProduct:product];
-            NSString *base64UserHandle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
+            NSString *base64UserHandle = [MEGASdk base64HandleForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
             paymentRequest.applicationUsername = base64UserHandle;
             [[SKPaymentQueue defaultQueue] addPayment:paymentRequest];
         } else {

@@ -30,6 +30,7 @@
 #import "ItemListViewController.h"
 #import "NSArray+MNZCategory.h"
 @import MEGAUIKit;
+@import MEGAData;
 
 @interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -2089,7 +2090,7 @@
         MEGAUser *user = [userList userAtIndex:i];
         NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
         NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
-        if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle]) && (user.isOwnChange != 0)) {
+        if (([user handle] == MEGASdk.currentUserHandle.unsignedLongLongValue) && (user.isOwnChange != 0)) {
             continue;
         } else if (user.isOwnChange == 0) { //If the change is external, update the modified contacts
             switch (user.visibility) {

@@ -18,6 +18,7 @@
 #import "TransfersWidgetViewController.h"
 #import "UIImage+MNZCategory.h"
 #import "UsageViewController.h"
+@import MEGAData;
 
 @interface MyAccountHallViewController () <UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
 
@@ -213,7 +214,7 @@
     [self configNavigationItem];
     [self configTableFooterView];
     
-    self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
+    self.nameLabel.text = [MEGAUser mnz_fullName:MEGASdk.currentUserHandle.unsignedLongLongValue];
     [self setUserAvatar];
     
     [self.tableView reloadData];
@@ -230,8 +231,7 @@
 }
 
 - (void)setUserAvatar {
-    MEGAUser *myUser = MEGASdkManager.sharedMEGASdk.myUser;
-    [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
+    [self.avatarImageView mnz_setImageForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
 }
 
 - (void)configTableFooterView {
@@ -388,7 +388,7 @@
             }
             
             if ((request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) && request.email == nil) {
-                self.nameLabel.text = api.myUser.mnz_fullName;
+                self.nameLabel.text = [MEGAUser mnz_fullName:MEGASdk.currentUserHandle.unsignedLongLongValue];
             }
             break;
         }

@@ -17,6 +17,7 @@
 #endif
 
 @import SDWebImage;
+@import MEGAData;
 
 static const void *base64HandleKey = &base64HandleKey;
 
@@ -73,7 +74,7 @@ static const void *base64HandleKey = &base64HandleKey;
 }
 
 - (void)mnz_setImageUsingCurrentUserAvatarOrColor {
-    [self mnz_setImageAvatarOrColorForUserHandle:MEGASdkManager.sharedMEGASdk.myUser.handle];
+    [self mnz_setImageAvatarOrColorForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
 }
 
 - (void)mnz_setThumbnailByNode:(MEGANode *)node {

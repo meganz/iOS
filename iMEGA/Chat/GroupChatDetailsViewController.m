@@ -22,6 +22,7 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
+@import MEGAData;
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
 
@@ -937,7 +938,7 @@
                 NSInteger index = [self shouldShowAddParticipants] ? (indexPath.row - 1) : indexPath.row;
                 uint64_t userHandle = [self.participantsMutableArray[index] unsignedLongLongValue];
 
-                if (userHandle != MEGASdkManager.sharedMEGASdk.myUser.handle) {
+                if (userHandle != MEGASdk.currentUserHandle.unsignedLongLongValue) {
                     NSString *userEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
                     [self openContactDetailsWithEmail:userEmail userHandle:userHandle];
                 }
