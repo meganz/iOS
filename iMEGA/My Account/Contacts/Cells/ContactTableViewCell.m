@@ -14,6 +14,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+@import MEGAData;
 
 @implementation ContactTableViewCell
 
@@ -91,7 +92,7 @@
 
 - (NSString *)userNameForUser:(MEGAUser *)user {
     NSString *userName;
-    if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
+    if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue) {
         userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", NSLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
     } else {
         userName = user.mnz_displayName;

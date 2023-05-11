@@ -8,6 +8,7 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
+@import MEGAData;
 
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -34,7 +35,7 @@
     
     self.navigationItem.title = NSLocalizedString(@"changeName", @"Button title that allows the user change his name");
     
-    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
     self.firstName = moUser.firstname;
     self.lastName = moUser.lastname;
     

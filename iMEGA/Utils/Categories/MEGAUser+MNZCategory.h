@@ -21,5 +21,6 @@
 
 - (void)resetAvatarIfNeededInSdk:(MEGASdk *)sdk;
 - (void)removeAvatarFromLocalCache;
++ (NSString *)mnz_fullName:(uint64_t)handle;
 
 @end

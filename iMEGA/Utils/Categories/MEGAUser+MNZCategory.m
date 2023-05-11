@@ -9,7 +9,11 @@
 @implementation MEGAUser (MNZCategory)
 
 - (NSString *)mnz_fullName {
-    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.handle];
+    return [[self class] mnz_fullName:self.handle];
+}
+
++ (NSString *)mnz_fullName:(uint64_t)handle {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:handle];
     return moUser.fullName;
 }
 

@@ -17,6 +17,7 @@
 #import "UIImage+GKContact.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+@import MEGAData;
 
 typedef NS_ENUM(NSInteger, QRSection) {
     QRSectionMyCode = 0,
@@ -171,8 +172,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 #pragma mark - User avatar and camera mask
 
 - (void)setUserAvatar {
-    MEGAUser *myUser = [[MEGASdkManager sharedMEGASdk] myUser];
-    [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
+    [self.avatarImageView mnz_setImageForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
 }
 
 - (void)setupCameraMask {

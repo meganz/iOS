@@ -11,6 +11,7 @@
 #import "MEGA-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+@import MEGAData;
 
 typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     FileManagementTableSectionMobileData = 0,
@@ -298,7 +299,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         
-        if (user.handle == api.myUser.handle && [user hasChangedType:MEGAUserChangeTypeDisableVersions] && user.isOwnChange == 0) {
+        if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue && [user hasChangedType:MEGAUserChangeTypeDisableVersions] && user.isOwnChange == 0) {
             [api getFileVersionsOptionWithDelegate:self];
         }
     }

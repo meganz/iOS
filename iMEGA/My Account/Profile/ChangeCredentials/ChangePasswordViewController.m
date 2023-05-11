@@ -15,6 +15,7 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 #import "TwoFactorAuthenticationViewController.h"
+@import MEGAData;
 
 typedef NS_ENUM(NSUInteger, TextFieldTag) {
     CurrentEmailTextFieldTag = 0,
@@ -538,7 +539,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     NSInteger count = userList.size.integerValue;
     for (NSInteger i = 0 ; i < count; i++) {
         MEGAUser *user = [userList userAtIndex:i];
-        if (user.handle == [MEGASdkManager sharedMEGASdk].myUser.handle && user.changes == MEGAUserChangeTypeEmail) {
+        if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue && user.changes == MEGAUserChangeTypeEmail) {
             NSString *emailChangedString = [NSLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:user.email];
             [SVProgressHUD showSuccessWithStatus:emailChangedString];
             [self dismissViewControllerAnimated:YES completion:nil];

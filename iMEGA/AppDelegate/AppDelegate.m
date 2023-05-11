@@ -51,6 +51,7 @@
 #import "MEGASdkManager+CleanUp.h"
 @import Firebase;
 @import SDWebImageWebPCoder;
+@import MEGAData;
 
 #import "MEGA-Swift.h"
 
@@ -671,7 +672,12 @@
 }
 
 - (void)requestUserName {
-    if (![[MEGAStore shareInstance] fetchUserWithUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]]) {
+    NSNumber *handle = MEGASdk.currentUserHandle;
+    if (handle == nil) {
+        return;
+    }
+    
+    if (![[MEGAStore shareInstance] fetchUserWithUserHandle:[handle unsignedLongLongValue]]) {
         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
     }
@@ -1246,7 +1252,7 @@
             }
             
             if (user.isOwnChange == 0) { //If the change is external
-                if (user.handle == sdk.myUser.handle) {
+                if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue) {
                     [user resetAvatarIfNeededInSdk:sdk];
                     
                     if ([user hasChangedType:MEGAUserChangeTypeFirstname]) {
@@ -1684,16 +1690,16 @@
         }
             
         case MEGARequestTypeSetAttrUser: {
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] myUser];
-            if (user) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
+            uint64_t handle = MEGASdk.currentUserHandle.unsignedLongLongValue;
+            if (handle) {
+                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:handle];
                 if (moUser) {
                     if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
-                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle firstname:request.text];
+                        [[MEGAStore shareInstance] updateUserWithUserHandle:handle firstname:request.text];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname && ![request.text isEqualToString:moUser.lastname]) {
-                        [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle lastname:request.text];
+                        [[MEGAStore shareInstance] updateUserWithUserHandle:handle lastname:request.text];
                     }
                 }
             }

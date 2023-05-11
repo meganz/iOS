@@ -23,7 +23,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
             return userName
         }
         
-        return chatSdk.userFullnameFromCache(byUserHandle:  sdk.myUser?.handle ?? 0) ?? ""
+        return chatSdk.userFullnameFromCache(byUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? 0) ?? ""
     }
     
     func getCall(forChatId chatId: UInt64) -> CallEntity? {

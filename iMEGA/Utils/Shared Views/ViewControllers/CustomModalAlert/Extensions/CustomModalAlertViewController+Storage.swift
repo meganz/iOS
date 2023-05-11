@@ -51,7 +51,7 @@ extension CustomModalAlertViewController {
         let imageName = Asset.Images.WarningTransferQuota.transferQuotaEmpty.name
         let title = Strings.Localizable.depletedTransferQuotaTitle
         let detailText = Strings.Localizable.depletedTransferQuotaMessage
-        let base64Handle = MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle)
+        let base64Handle = MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? MEGAInvalidHandle)
         
         configureUpgradeAccountThreeButtons(title, detailText, base64Handle, imageName, hasBonusButton: false)
     }

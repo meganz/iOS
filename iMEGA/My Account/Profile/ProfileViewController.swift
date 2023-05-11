@@ -68,7 +68,7 @@ enum SessionSectionRow: Int {
         avatarCollapsedPosition = view.frame.size.height * 0.3
         avatarViewHeightConstraint.constant = avatarCollapsedPosition
         
-        nameLabel.text = MEGASdkManager.sharedMEGASdk().myUser?.mnz_fullName
+        nameLabel.text = MEGASdk.currentUserHandle().map { MEGAUser.mnz_fullName($0.uint64Value) }
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
         nameLabel.layer.shadowColor = Colors.General.Shadow.blackAlpha20.color.cgColor
         nameLabel.layer.shadowRadius = 2.0
@@ -80,7 +80,7 @@ enum SessionSectionRow: Int {
         emailLabel.layer.shadowRadius = 2.0
         emailLabel.layer.shadowOpacity = 1
         
-        avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0)
+        avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? ~0)
         configureGestures()
         
         MEGASdkManager.sharedMEGASdk().add(self)
@@ -136,7 +136,7 @@ enum SessionSectionRow: Int {
     }
     
     private func configureGestures() -> Void {
-        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ??  ~0) ?? "")
+        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ??  ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
             let panAvatar = UIPanGestureRecognizer(target: self, action:#selector(handlePan(recognizer:)))
@@ -260,7 +260,7 @@ enum SessionSectionRow: Int {
         changeAvatarAlertController.popoverPresentationController?.sourceRect = cell.frame;
         changeAvatarAlertController.popoverPresentationController?.sourceView = tableView;
         
-        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? "")
+        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
             let removeAvatarAlertAction = UIAlertAction.init(title: Strings.Localizable.removePhoto, style: .default) { (UIAlertAction) in
@@ -478,7 +478,7 @@ extension ProfileViewController: UITableViewDataSource {
             case .changeName:
                 cell.nameLabel.text = Strings.Localizable.changeName
             case .changePhoto:
-                let hasPhotoAvatar = FileManager.default.fileExists(atPath:Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? ""))
+                let hasPhotoAvatar = FileManager.default.fileExists(atPath:Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? ~0) ?? ""))
                 cell.nameLabel.text = hasPhotoAvatar ? Strings.Localizable.changePhoto : Strings.Localizable.addPhoto
             case .changeEmail:
                 updateCellInRelationWithTwoFactorStatus(cell: cell)
