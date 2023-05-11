@@ -62,7 +62,7 @@ final class UserAvatarViewModel: ObservableObject {
                 
                 self.updateAvatarTask = Task {
                     do {
-                        try await self.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
+                        try await self.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage, forceDownload: true)
                     } catch {
                         MEGALogDebug("Updating Avatar task failed for handles \(handles)")
                     }
@@ -71,7 +71,7 @@ final class UserAvatarViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func fetchAvatar(isRightToLeftLanguage: Bool) async throws {
+    private func fetchAvatar(isRightToLeftLanguage: Bool, forceDownload: Bool = false) async throws {
         if let avatar = try await createAvatar(withHandle: userId, isRightToLeftLanguage: isRightToLeftLanguage) {
             await updatePrimaryAvatar(avatar)
         }
@@ -79,7 +79,7 @@ final class UserAvatarViewModel: ObservableObject {
         subscribeToAvatarUpdateNotification(forHandles: [userId])
         try Task.checkCancellation()
         
-        let downloadedAvatar = try await downloadAvatar(forHandle: userId)
+        let downloadedAvatar = try await userAvatar(forHandle: userId, forceDownload: forceDownload)
         await updatePrimaryAvatar(downloadedAvatar)
     }
     
@@ -119,12 +119,12 @@ final class UserAvatarViewModel: ObservableObject {
             isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
-    private func downloadAvatar(forHandle handle: HandleEntity) async throws -> UIImage {
+    private func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> UIImage {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
         
-        return try await userImageUseCase.downloadAvatar(withUserHandle: handle, base64Handle: base64Handle)
+        return try await userImageUseCase.fetchAvatar(withUserHandle: handle, base64Handle: base64Handle, forceDownload: false)
     }
     
     private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {

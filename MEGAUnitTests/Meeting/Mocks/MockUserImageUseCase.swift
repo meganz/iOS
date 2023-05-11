@@ -10,7 +10,6 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
     var clearAvatarCache = false
     var avatarChangePublisher = PassthroughSubject<[HandleEntity], Never>()
     
-    
     func avatarColorHex(forBase64UserHandle handle: Base64HandleEntity) -> String? {
         ""
     }
@@ -27,7 +26,7 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
         clearAvatarCacheCompletion?(handle)
     }
     
-    func downloadAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) async throws -> UIImage {
+    func fetchAvatar(withUserHandle handle: MEGADomain.HandleEntity, base64Handle: MEGADomain.Base64HandleEntity, forceDownload: Bool) async throws -> UIImage {
         downloadAvatarCompletion?(handle)
         switch result {
         case .success(let image):
