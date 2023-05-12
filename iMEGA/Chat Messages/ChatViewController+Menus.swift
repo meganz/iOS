@@ -27,19 +27,8 @@ extension ChatViewController {
     }
     
     func forwardMessage(_ message: ChatMessage) {
-        selectedMessages.insert(message)
-        customToolbar(type: .text)
-        setEditing(true, animated: true)
-        
-        guard let index = messages.firstIndex(where: { chatMessage -> Bool in
-            guard let chatMessage = chatMessage as? ChatMessage else {
-                return false
-            }
-            return message == chatMessage
-        }) else { return }
-        
-        messagesCollectionView.scrollToItem(at: IndexPath(row: 0, section: index), at: .centeredVertically, animated: true)
-        
+        selectedMessages = [message]
+        forwardSelectedMessages()
     }
     
     func editMessage(_ message: ChatMessage) {
