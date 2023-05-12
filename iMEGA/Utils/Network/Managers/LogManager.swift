@@ -136,11 +136,11 @@ extension LogManager {
         let httpMethod: String = String(describing: request.method.rawValue)
         var body: String = ""
         var bodyStrings: [String] = []
-        for (_, value) in request.body.enumerated() {
-            if let valueValue = value.value {
-                bodyStrings.append("\(value.key): \(type(of: valueValue))(\(valueValue))")
+        for item in request.body {
+            if let value = item.value {
+                bodyStrings.append("\(item.key): \(type(of: value))(\(value))")
             } else {
-                bodyStrings.append("\(value.key): nil")
+                bodyStrings.append("\(item.key): nil")
             }
         }
         body = bodyStrings.joined(separator: ", ")

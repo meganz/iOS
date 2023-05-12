@@ -41,6 +41,6 @@ struct AlbumNameValidator {
                              Strings.Localizable.CameraUploads.Albums.Raw.title,
                              Strings.Localizable.CameraUploads.Albums.MyAlbum.title,
                              Strings.Localizable.CameraUploads.Albums.SharedAlbum.title]
-        return reservedNames.reduce(false) { $0 || name.caseInsensitiveCompare($1) == .orderedSame }
+        return reservedNames.contains(where: { name.caseInsensitiveCompare($0) == .orderedSame })
     }
 }

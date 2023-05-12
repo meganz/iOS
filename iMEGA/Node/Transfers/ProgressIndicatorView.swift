@@ -357,7 +357,6 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
             switch error.type {
             case .apiEgoingOverquota, .apiEOverQuota:
                 overquota = true
-                break
             default:
                 break
             }

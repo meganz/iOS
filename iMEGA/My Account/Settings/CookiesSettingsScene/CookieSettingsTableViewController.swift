@@ -77,7 +77,6 @@ class CookieSettingsTableViewController: UITableViewController {
             
         case .error(let message):
             SVProgressHUD.showError(withStatus: message)
-            break
         }
     }
     

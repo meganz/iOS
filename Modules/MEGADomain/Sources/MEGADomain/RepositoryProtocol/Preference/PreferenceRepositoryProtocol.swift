@@ -8,6 +8,7 @@ public struct EmptyPreferenceRepository: PreferenceRepositoryProtocol {
         EmptyPreferenceRepository()
     }
     
+    // swiftlint:disable unused_setter_value
     public subscript<T>(key: String) -> T? {
         get {
             nil
@@ -16,4 +17,5 @@ public struct EmptyPreferenceRepository: PreferenceRepositoryProtocol {
             // Empty
         }
     }
+    // swiftlint:enable unused_setter_value
 }

@@ -115,7 +115,6 @@ class RichPreviewDialogView: UIView {
             neverButton.flex.display(.none)
         default:
             isHidden = true
-            break
         }
         
         rootFlexContainer.flex.markDirty()
