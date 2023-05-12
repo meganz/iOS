@@ -1,4 +1,6 @@
 import MEGADomain
+import SwiftUI
+import Combine
 
 final class ScheduleMeetingRouter {
     private(set) var presenter: UINavigationController
@@ -65,4 +67,13 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
             SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Meetings.ScheduleMeeting.meetingCreated)
         }
     }
+    
+    @MainActor
+    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
+        guard let baseViewController else { return nil }
+        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(presenter: baseViewController, rules: rules)
+        router.start()
+        return router.$rules.eraseToAnyPublisher()
+    }
 }
+ 

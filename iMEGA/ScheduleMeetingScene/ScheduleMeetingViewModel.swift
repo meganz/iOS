@@ -1,4 +1,5 @@
 import MEGADomain
+import Combine
 
 protocol ScheduleMeetingRouting {
     func showSpinner()
@@ -6,6 +7,7 @@ protocol ScheduleMeetingRouting {
     func discardChanges()
     func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void))
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
+    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
 }
 
 final class ScheduleMeetingViewModel: ObservableObject {
@@ -69,7 +71,10 @@ final class ScheduleMeetingViewModel: ObservableObject {
             participantsCount = participants.count
         }
     }
-    @Published var participantsCount = 0 
+    @Published var participantsCount = 0
+
+    @Published
+    private(set) var rules: ScheduledMeetingRulesEntity
 
     init(router: ScheduleMeetingRouting,
          scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
@@ -79,6 +84,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.rules = ScheduledMeetingRulesEntity(frequency: .invalid)
         self.startDate = nextDateMinutesIsFiveMultiple(startDate)
         self.endDate = startDate.addingTimeInterval(Constants.defaultDurationHalfHour)
     }
@@ -116,6 +122,25 @@ final class ScheduleMeetingViewModel: ObservableObject {
         }
     }
     
+    func showRecurrenceOptionsView() {
+        router
+            .showRecurrenceOptionsView(rules: rules)?
+            .assign(to: &$rules)
+    }
+    
+    func recurrenceOptionText() -> String {
+        switch rules.frequency {
+        case .invalid:
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.never
+        case .daily:
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.daily
+        case .weekly:
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.weekly
+        case .monthly:
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.monthly
+        }
+    }
+    
     //MARK: - Private
     private func formatDate(_ date: Date) -> String {
         dateFormatter.localisedString(from: date) + " " + timeFormatter.localisedString(from: date)
@@ -144,8 +169,21 @@ final class ScheduleMeetingViewModel: ObservableObject {
         startDateFormatted = formatDate(startDate)
     }
     
+    private func constructCreateScheduleMeetingEntity() -> CreateScheduleMeetingEntity {
+        return CreateScheduleMeetingEntity(
+            title: meetingName,
+            description: meetingDescription,
+            participants: participants,
+            calendarInvite: calendarInviteEnabled,
+            openInvite: allowNonHostsToAddParticipantsEnabled,
+            startDate: startDate,
+            endDate: endDate,
+            rules: rules
+        )
+    }
+    
     private func createScheduleMeeting() {
-        let createScheduleMeeting = CreateScheduleMeetingEntity(title: meetingName, description: meetingDescription, participants: participants, calendarInvite: calendarInviteEnabled, openInvite: allowNonHostsToAddParticipantsEnabled, startDate: startDate, endDate: endDate)
+        let createScheduleMeeting = constructCreateScheduleMeetingEntity()
         router.showSpinner()
         Task { [weak self] in
             guard let self else { return }

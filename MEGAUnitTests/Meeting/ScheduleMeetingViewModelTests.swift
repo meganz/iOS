@@ -2,6 +2,7 @@ import XCTest
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import Combine
 
 final class ScheduleMeetingViewModelTests: XCTestCase {
     func test_configureCreateButton_titleEmpty_buttonShouldBeDisabled() {
@@ -110,12 +111,12 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
 }
 
 final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
-    
     var showSpinner_calledTimes = 0
     var hideSpinner_calledTimes = 0
     var showMeetingInfo_calledTimes = 0
     var discardChanges_calledTimes = 0
     var showAddParticipants_calledTimes = 0
+    var scheduleMettingRulesEntityPublisher: PassthroughSubject<ScheduledMeetingRulesEntity, Never>?
     
     func showSpinner() {
         showSpinner_calledTimes += 1
@@ -135,5 +136,9 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     
     func showAddParticipants(alreadySelectedUsers: [MEGADomain.UserEntity], newSelectedUsers: @escaping (([MEGADomain.UserEntity]?) -> Void)) {
         showAddParticipants_calledTimes += 1
+    }
+    
+    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
+        scheduleMettingRulesEntityPublisher?.eraseToAnyPublisher()
     }
 }

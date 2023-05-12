@@ -4409,6 +4409,32 @@ public enum Strings {
         public static let start = Strings.tr("Localizable", "meetings.scheduleMeeting.start")
         /// Schedule meeting
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
+        public enum Create {
+          public enum RecurrenceOptionScreen {
+            /// Custom
+            public static let custom = Strings.tr("Localizable", "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom")
+            /// Every day
+            public static let daily = Strings.tr("Localizable", "meetings.scheduleMeeting.create.recurrenceOptionScreen.daily")
+            /// Every month
+            public static let monthly = Strings.tr("Localizable", "meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly")
+            /// Recurrence
+            public static let navigationTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle")
+            /// Never
+            public static let never = Strings.tr("Localizable", "meetings.scheduleMeeting.create.recurrenceOptionScreen.never")
+            /// Every week
+            public static let weekly = Strings.tr("Localizable", "meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly")
+          }
+          public enum SelectedRecurrenceOption {
+            /// Daily
+            public static let daily = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrenceOption.daily")
+            /// Monthly
+            public static let monthly = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly")
+            /// Never
+            public static let never = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrenceOption.never")
+            /// Weekly
+            public static let weekly = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly")
+          }
+        }
         public enum Description {
           /// Enter fewer than 3,000 characters
           public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.description.lenghtError")

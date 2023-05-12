@@ -25,7 +25,11 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
                 Divider()
                     .padding(.leading)
             }
-            DetailDisclosureView(text: Strings.Localizable.Meetings.ScheduleMeeting.recurrence, detail: Strings.Localizable.never) {}
+            DetailDisclosureView(
+                text: Strings.Localizable.Meetings.ScheduleMeeting.recurrence,
+                detail: viewModel.recurrenceOptionText(),
+                action: viewModel.showRecurrenceOptionsView
+            )
             Divider()
                 .padding(.leading)
         }
