@@ -40,6 +40,9 @@ internal enum Colors {
       internal static let sectionTitle = ColorAsset(name: "sectionTitle")
       internal static let subtitleText = ColorAsset(name: "subtitleText")
     }
+    internal enum Meeting {
+      internal static let frequencySelectionTickMark = ColorAsset(name: "FrequencySelectionTickMark")
+    }
     internal enum ReactionBubble {
       internal static let border = ColorAsset(name: "border")
       internal static let selectedDark = ColorAsset(name: "selectedDark")
@@ -151,9 +154,6 @@ internal enum Colors {
   }
   internal enum MediaDiscovery {
     internal static let exitButtonTint = ColorAsset(name: "exitButtonTint")
-  }
-  internal enum Meeting {
-    internal static let startConversationImageBackground = ColorAsset(name: "startConversationImageBackground")
   }
   internal enum PROAccount {
     internal static let proLITE = ColorAsset(name: "proLITE")

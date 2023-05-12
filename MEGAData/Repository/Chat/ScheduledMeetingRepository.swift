@@ -107,7 +107,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 endDate: Int(meeting.endDate.timeIntervalSince1970),
                 description: meeting.description,
                 flags: MEGAChatScheduledFlags(sendEmails: meeting.calendarInvite),
-                rules: MEGAChatScheduledRules(),
+                rules: meeting.rules.toMEGAChatScheduledRules(),
                 attributes: nil,
                 delegate: MEGAChatGenericRequestDelegate { request, error in
                     guard Task.isCancelled == false else {

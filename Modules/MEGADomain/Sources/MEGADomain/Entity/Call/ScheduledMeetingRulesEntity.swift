@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ScheduledMeetingRulesEntity: Sendable {
+public struct ScheduledMeetingRulesEntity: Sendable, Equatable {
     public enum Frequency : Sendable {
         case invalid
         case daily
@@ -17,11 +17,11 @@ public struct ScheduledMeetingRulesEntity: Sendable {
     
     public init(
         frequency: Frequency,
-        interval: Int,
-        until: Date?,
-        monthDayList: [Int]?,
-        weekDayList: [Int]?,
-        monthWeekDayList: [[Int]]?
+        interval: Int = 0,
+        until: Date? = nil,
+        monthDayList: [Int]? = nil,
+        weekDayList: [Int]? = nil,
+        monthWeekDayList: [[Int]]? = nil
     ) {
         self.frequency = frequency
         self.interval = interval
