@@ -1,7 +1,8 @@
 import MEGADomain
+import Foundation
 
-struct AppConfigurationRepository: AppConfigurationRepositoryProtocol {
-    static var newRepo: AppConfigurationRepository {
+public struct AppConfigurationRepository: AppConfigurationRepositoryProtocol {
+    public static var newRepo: AppConfigurationRepository {
         AppConfigurationRepository()
     }
     
@@ -23,7 +24,7 @@ struct AppConfigurationRepository: AppConfigurationRepositoryProtocol {
 #endif
     }
     
-    var configuration: AppConfigurationEntity {
+    public var configuration: AppConfigurationEntity {
         if isDebug {
             return .debug
         } else if isQa {

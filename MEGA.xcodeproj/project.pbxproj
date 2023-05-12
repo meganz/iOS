@@ -1290,7 +1290,6 @@
 		A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FBA296DD5F10062B6BC /* MEGADomain */; };
 		A83BB99E28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */; };
 		A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */; };
-		A84683052939FBD500FACCA1 /* AppConfigurationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84683042939FBD500FACCA1 /* AppConfigurationRepository.swift */; };
 		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */; };
 		A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
@@ -3751,7 +3750,6 @@
 		A8399F8A296C7A250062B6BC /* MEGAPickerFileProvider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAPickerFileProvider-Bridging-Header.h"; sourceTree = "<group>"; };
 		A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAHandleList+Mapper.swift"; sourceTree = "<group>"; };
 		A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDDLogFormatter.swift; sourceTree = "<group>"; };
-		A84683042939FBD500FACCA1 /* AppConfigurationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationRepository.swift; sourceTree = "<group>"; };
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
 		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
 		A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SharedInstanceWrapper.swift"; sourceTree = "<group>"; };
@@ -9024,14 +9022,6 @@
 			path = Messages;
 			sourceTree = "<group>";
 		};
-		A84683032939FBC100FACCA1 /* AppConfiguration */ = {
-			isa = PBXGroup;
-			children = (
-				A84683042939FBD500FACCA1 /* AppConfigurationRepository.swift */,
-			);
-			path = AppConfiguration;
-			sourceTree = "<group>";
-		};
 		A84E92E126FB5F6300606AA7 /* Versions */ = {
 			isa = PBXGroup;
 			children = (
@@ -9757,7 +9747,6 @@
 			children = (
 				B645BC32252FAF8200D1D7CF /* Account */,
 				129D51D32821D63000A4D4D3 /* Album */,
-				A84683032939FBC100FACCA1 /* AppConfiguration */,
 				BFAC873525FEF1F3009CA3F6 /* AudioVideo */,
 				838A7B6725D5677500767DB0 /* Calls */,
 				5BC47E2C253F0F7200853323 /* Chat */,
@@ -12490,7 +12479,6 @@
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
 				BFBB88D528C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift in Sources */,
 				9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */,
-				A84683052939FBD500FACCA1 /* AppConfigurationRepository.swift in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				B611E175286165ED00F360CF /* AppDelegate+SDK.swift in Sources */,
