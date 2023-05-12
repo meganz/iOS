@@ -12228,7 +12228,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"SwiftLint is not installed. You can install them from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftlint \"$SRCROOT\" --config ../.swiftlint.yml ../iOS_dev\n";
 		};
 		2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */ = {
 			isa = PBXShellScriptBuildPhase;
