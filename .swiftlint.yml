@@ -36,20 +36,20 @@ only_rules:
       - unavailable_condition
       - unused_control_flow_label
       - valid_ibinspectable
+      - computed_accessors_order
+      - is_disjoint
+      - reduce_boolean
+      - redundant_objc_attribute
+      - todo
+      - unused_enumerated
+      - unused_optional_binding
+      - unused_setter_value
+      - duplicate_imports
+      - switch_case_alignment
+      - unneeded_break_in_switch
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
-
-      # - computed_accessors_order (1 issue)
-      # - is_disjoint (1 issue)
-      # - reduce_boolean (1 issue)
-      # - redundant_objc_attribute (1 issue)
-      # - todo (1 issue)
-      # - unused_enumerated (1 issue)
-      # - unused_optional_binding (1 issue)
-      # - unused_setter_value (1 issue)
-      # - duplicate_imports (2 issues)
-      # - switch_case_alignment (3 issues)
-      # - unneeded_break_in_switch (6 issues)
+    
       # - operator_whitespace (10 issues)
       # - redundant_discardable_let (11 issues)
       # - legacy_constructor (12 issues)

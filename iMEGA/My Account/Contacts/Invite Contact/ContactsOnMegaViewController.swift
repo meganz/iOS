@@ -190,7 +190,6 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
                         ContactsOnMegaManager.shared.configureContactsOnMega(completion: {
                             self.contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
                             tableView.reloadData()
-                            //FIXME: The search bar does not appear after grating the Contacts permissions
                             self.showSearch()
                             SVProgressHUD.dismiss()
                         })

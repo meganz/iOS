@@ -59,7 +59,7 @@ extension DocAndAudioListSource {
         guard let node = nodes?[indexPath.row] else { return UITableViewCell() }
         
         var cell: NodeTableViewCell?
-        if let handle = node.base64Handle, let _ = Helper.downloadingNodes()[handle] {
+        if let handle = node.base64Handle, Helper.downloadingNodes()[handle] != nil {
             cell = tableView.dequeueReusableCell(withIdentifier: "downloadingNodeCell", for: indexPath) as? NodeTableViewCell
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell

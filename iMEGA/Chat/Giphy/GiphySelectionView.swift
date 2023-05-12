@@ -39,22 +39,6 @@ class GiphySelectionView: UIView {
     var searchKey = ""
 
     var datasource: [GiphyResponseModel] {
-        set {
-            if searchKey.isEmpty {
-                switch category {
-                case .gifs:
-                    gifs = newValue
-                case .stickers:
-                    stickers = newValue
-                case .text:
-                    text = newValue
-                case .emoji:
-                    emoji = newValue
-                }
-            } else {
-                filteredGifs = newValue
-            }
-        }
         get {
             if searchKey.isEmpty {
                 switch category {
@@ -69,6 +53,22 @@ class GiphySelectionView: UIView {
                 }
             } else {
                 return filteredGifs
+            }
+        }
+        set {
+            if searchKey.isEmpty {
+                switch category {
+                case .gifs:
+                    gifs = newValue
+                case .stickers:
+                    stickers = newValue
+                case .text:
+                    text = newValue
+                case .emoji:
+                    emoji = newValue
+                }
+            } else {
+                filteredGifs = newValue
             }
         }
     }

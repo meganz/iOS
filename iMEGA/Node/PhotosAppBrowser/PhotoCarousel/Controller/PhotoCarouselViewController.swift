@@ -274,7 +274,7 @@ extension PhotoCarouselViewController: AlbumDelegate {
         
         if let removedIndexPaths = removedIndexPaths,
               let changedIndexPaths = changedIndexPaths,
-              !Set(changedIndexPaths).intersection(removedIndexPaths).isEmpty {
+              !Set(changedIndexPaths).isDisjoint(with: removedIndexPaths) {
             collectionView.reloadData()
             return
         }

@@ -784,7 +784,6 @@ extension GetLinkViewController: UITableViewDelegate {
                     getLinkVM.link = nodes[0].publicLink ?? ""
                     tableView.reloadData()
                 }
-                break
             case .key:
                 copyKeyToPasteBoard()
             }

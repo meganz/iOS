@@ -36,7 +36,6 @@ class JoinInputBar: UIView {
             joinButton.isHidden = false
             joiningOrLeavingView.isHidden = true
             indicator.stopAnimating()
-            break
         }
     }
     

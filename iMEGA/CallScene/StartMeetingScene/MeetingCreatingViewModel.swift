@@ -211,10 +211,10 @@ final class MeetingCreatingViewModel: ViewModelType {
                                              name: meetingUseCase.getUsername()) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
-                    case .success(let image):
-                        self.invokeCommand?(.updateAvatarImage(image))
-                    default:
-                        break
+                case .success(let image):
+                    self.invokeCommand?(.updateAvatarImage(image))
+                default:
+                    break
                 }
             }
         }
