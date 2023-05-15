@@ -21,6 +21,7 @@
 #import "NSArray+MNZCategory.h"
 
 @import MEGAFoundation;
+@import MEGAData;
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 
@@ -29,7 +30,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 @property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
 
 @property (nonatomic) NSDateFormatter *dateFormatter;
-@property (strong, nonatomic) NSString *myEmail;
 
 @end
 
@@ -68,8 +68,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     if (@available(iOS 15.0, *)) {
         self.tableView.sectionHeaderTopPadding = 0.0f;
     }
-    
-    self.myEmail = MEGASdkManager.sharedMEGASdk.myEmail;
 }
 
 - (void)removeFromParentViewController {
@@ -146,7 +144,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (NodeTableViewCell *)nodeTableViewCellForIndexPath:(NSIndexPath *)indexPath recentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
-    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:self.myEmail] ? @"RecentsNodeTVC" : @"RecentsSharedNodeTVC";
+    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail] ? @"RecentsNodeTVC" : @"RecentsSharedNodeTVC";
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellReuseIdentifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [NodeTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];
@@ -157,7 +155,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
 }
 
 - (ThumbnailViewerTableViewCell *)thumbnailViewerTableViewCellForIndexPath:(NSIndexPath *)indexPath recentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
-    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:self.myEmail] ? @"RecentsMediaTVC" : @"RecentsSharedMediaTVC";
+    NSString *cellReuseIdentifier =  [recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail] ? @"RecentsMediaTVC" : @"RecentsSharedMediaTVC";
     ThumbnailViewerTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellReuseIdentifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [ThumbnailViewerTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellReuseIdentifier];

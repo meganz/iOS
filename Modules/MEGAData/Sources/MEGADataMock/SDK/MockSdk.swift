@@ -5,7 +5,7 @@ public final class MockSdk: MEGASdk {
     private let rubbishNodes: [MEGANode]
     private let syncDebrisNodes: [MEGANode]
     private let myContacts: MEGAUserList
-    private let user: MEGAUser?
+    public var _myUser: MEGAUser?
     private let email: String?
     private var statsEventType: Int?
     private var statsEventMessage: String?
@@ -56,7 +56,7 @@ public final class MockSdk: MEGASdk {
         self.rubbishNodes = rubbishNodes
         self.syncDebrisNodes = syncDebrisNodes
         self.myContacts = myContacts
-        user = myUser
+        _myUser = myUser
         email = myEmail
         sets = megaSets
         setElements = megaSetElements
@@ -82,7 +82,7 @@ public final class MockSdk: MEGASdk {
         self.shareAccessLevel = shareAccessLevel
     }
     
-    public override var myUser: MEGAUser? { user }
+    public override var myUser: MEGAUser? { _myUser }
     
     public override var myEmail: String? { email }
     

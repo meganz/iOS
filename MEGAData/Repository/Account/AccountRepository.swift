@@ -24,7 +24,7 @@ struct AccountRepository: AccountRepositoryProtocol {
     }
     
     var isGuest: Bool {
-        sdk.isGuestAccount
+        currentUserSource.isGuest
     }
     
     func isLoggedIn() -> Bool {

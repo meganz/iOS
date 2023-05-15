@@ -79,7 +79,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             self.theNewPasswordView.hidden = self.confirmPasswordView.hidden = YES;
             self.currentEmailInputView.hidden = self.theNewEmailInputView.hidden = NO;
             
-            self.currentEmailInputView.inputTextField.text = [MEGASdkManager sharedMEGASdk].myEmail;
+            self.currentEmailInputView.inputTextField.text = MEGASdk.currentUserEmail;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
             
             self.theNewEmailInputView.inputTextField.returnKeyType = UIReturnKeyNext;

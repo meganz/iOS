@@ -6,6 +6,7 @@
 #import "SVProgressHUD.h"
 #import "CustomModalAlertViewController.h"
 #import "UIApplication+MNZCategory.h"
+@import MEGAData;
 
 @interface MEGAInviteContactRequestDelegate ()
 
@@ -51,7 +52,7 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         switch (error.type) {
             case MEGAErrorTypeApiEArgs:
-                if ([request.email isEqualToString:api.myEmail]) {
+                if ([request.email isEqualToString:MEGASdk.currentUserEmail]) {
                     [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
                 }
                 break;

@@ -1,13 +1,5 @@
 
-extension MEGASdk {
-    @objc var isGuestAccount: Bool {
-        guard let email = myUser?.email else {
-            return true
-        }
-        
-        return email.isEmpty
-    }
-    
+extension MEGASdk {    
     @objc func visibleContacts() -> [MEGAUser] {
         let contactsArray = contacts()
         let contactsArraySize = contactsArray.size.intValue

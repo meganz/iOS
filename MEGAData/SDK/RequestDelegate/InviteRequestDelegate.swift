@@ -13,7 +13,7 @@ final class InviteRequestDelegate: NSObject, MEGARequestDelegate {
             completion(.success(()))
         } else {
             switch error.type {
-            case .apiEArgs where request.email == api.myEmail:
+            case .apiEArgs where request.email == MEGASdk.currentUserEmail:
                 completion(.failure(.ownEmailEntered))
             case .apiEExist:
                 if let user = api.contact(forEmail: request.email), user.visibility == .visible {

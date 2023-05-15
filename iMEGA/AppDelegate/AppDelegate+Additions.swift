@@ -27,7 +27,7 @@ extension AppDelegate {
         
         if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
 
-        if MEGASdkManager.sharedMEGASdk().isGuestAccount { return }
+        if MEGASdk.isGuest { return }
 
         if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() != nil { return }
 
@@ -55,7 +55,7 @@ extension AppDelegate {
             return
         }
 
-        MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdkManager.sharedMEGASdk().myEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, _) in
+        MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdk.currentUserEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, _) in
             if request.flag {
                 return //Two Factor Authentication Enabled
             }
