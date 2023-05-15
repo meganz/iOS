@@ -8,4 +8,6 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
     func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void)
     func upgradeSecurity() async throws -> Bool
+    func incomingContactsRequestsCount() -> Int
+    func relevantUnseenUserAlertsCount() -> UInt
 }

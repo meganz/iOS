@@ -40,10 +40,22 @@ extension MyAccountHallViewController {
         navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = color
         navigationController?.navigationBar.isTranslucent = false
     }
-
+    
     @objc func registerCustomCells() {
         self.tableView?.register(HostingTableViewCell<MyAccountHallPlanView>.self,
                                  forCellReuseIdentifier: "AccountPlanUpgradeCell")
+    }
+    
+    @objc func setUpInvokeCommands() {
+        viewModel.invokeCommand = { [weak self] command in
+            guard let self else { return }
+            
+            excuteCommand(command)
+        }
+    }
+    
+    @objc func reloadContent() {
+        viewModel.dispatch(.onViewAppear)
     }
     
     //MARK: - Feature flag
@@ -70,6 +82,15 @@ extension MyAccountHallViewController {
                 tableView.selectRow(at: offlineIndexPath, animated: true, scrollPosition: .none)
                 tableView.delegate?.tableView?(tableView, didSelectRowAt: offlineIndexPath)
             }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func excuteCommand(_ command: AccountHallViewModel.Command) {
+        switch command {
+        case .reload:
+            tableView?.reloadData()
         }
     }
 }

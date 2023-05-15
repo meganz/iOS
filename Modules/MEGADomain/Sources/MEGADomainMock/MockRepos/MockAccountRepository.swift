@@ -7,6 +7,8 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
     private let isUpgradeSecuritySuccess: Bool
     private let _isLoggedIn: Bool
     private let _contacts: [UserEntity]
+    private let contactsRequestsCount: Int
+    private let unseenUserAlertsCount: UInt
     
     let currentUser: UserEntity?
     public let isGuest: Bool
@@ -16,6 +18,8 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
                 isLoggedIn: Bool = true,
                 contacts: [UserEntity] = [],
                 nodesCount: UInt = 0,
+                contactsRequestsCount: Int = 0,
+                unseenUserAlertsCount: UInt = 0,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 accountDetails: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
                 isUpgradeSecuritySuccess: Bool = false) {
@@ -27,6 +31,8 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
         self.accountDetails = accountDetails
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
+        self.contactsRequestsCount = contactsRequestsCount
+        self.unseenUserAlertsCount = unseenUserAlertsCount
     }
     
     public var currentUserHandle: HandleEntity? {
@@ -61,5 +67,13 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
     
     public func upgradeSecurity() async throws -> Bool {
         isUpgradeSecuritySuccess
+    }
+    
+    public func incomingContactsRequestsCount() -> Int {
+        contactsRequestsCount
+    }
+    
+    public func relevantUnseenUserAlertsCount() -> UInt {
+        unseenUserAlertsCount
     }
 }

@@ -196,8 +196,14 @@ final class HomeRouter: HomeRouterProtocol {
     // MARK: - Show Account View Controller
 
     private func routeToAccount(with navigationController: UINavigationController?) {
-        let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
-            .instantiateViewController(withIdentifier: "MyAccountHall")
+        guard let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
+                .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
+            return
+        }
+        
+        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo))
+        myAccountViewController.viewModel = viewModel
+        
         navigationController?.pushViewController(myAccountViewController, animated: true)
     }
 
@@ -221,6 +227,10 @@ final class HomeRouter: HomeRouterProtocol {
                 .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
             return
         }
+        
+        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo))
+        myAccountViewController.viewModel = viewModel
+        
         navigationController?.pushViewController(myAccountViewController, animated: true)
         myAccountViewController.openAchievements()
     }
