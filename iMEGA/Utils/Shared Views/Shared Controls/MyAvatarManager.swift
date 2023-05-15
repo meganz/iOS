@@ -52,8 +52,14 @@ import MEGAData
     }
     
     @objc private func navigateToMyAccount() {
-        let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
-            .instantiateViewController(withIdentifier: "MyAccountHall")
+        guard let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
+                .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
+            return
+        }
+        
+        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo))
+        myAccountViewController.viewModel = viewModel
+        
         navigationController?.pushViewController(myAccountViewController, animated: true)
     }
     

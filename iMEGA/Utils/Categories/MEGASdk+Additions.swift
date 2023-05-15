@@ -1,3 +1,4 @@
+import MEGAData
 
 extension MEGASdk {    
     @objc func visibleContacts() -> [MEGAUser] {

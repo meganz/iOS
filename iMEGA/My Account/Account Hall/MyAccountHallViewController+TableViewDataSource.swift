@@ -23,10 +23,10 @@ extension MyAccountHallViewController: UITableViewDataSource {
     private func storageBusinessAccountSetupData() -> MyAccountHallCellData {
         let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
-                              storageText: Strings.Localizable.storage,
-                              transferText: Strings.Localizable.transfer,
-                              storageUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.storageUsed.int64Value ?? 0)),
-                              transferUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.transferOwnUsed.int64Value ?? 0)))
+                                     storageText: Strings.Localizable.storage,
+                                     transferText: Strings.Localizable.transfer,
+                                     storageUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.storageUsed.int64Value ?? 0)),
+                                     transferUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.transferOwnUsed.int64Value ?? 0)))
     }
     
     //MARK: - Storage row setup data
@@ -45,18 +45,16 @@ extension MyAccountHallViewController: UITableViewDataSource {
     private func contactsSetupData(existsPendingView: Bool) -> MyAccountHallCellData {
         var isPendingViewVisible = false
         var pendingText = ""
-        
-        let incomingContactsLists = MEGASdk.shared.incomingContactRequests()
-        let incomingContacts = incomingContactsLists.size.intValue
+        let incomingContacts = viewModel.incomingContactRequestsCount
         
         if existsPendingView && incomingContacts != 0 {
             isPendingViewVisible = true
             pendingText = String(describing: incomingContacts)
         }
         return MyAccountHallCellData(sectionText: Strings.Localizable.contactsTitle,
-                                          icon: Asset.Images.MyAccount.iconContacts.image.imageFlippedForRightToLeftLayoutDirection(),
-                                          isPendingViewVisible: isPendingViewVisible,
-                                          pendingText: pendingText)
+                                     icon: Asset.Images.MyAccount.iconContacts.image.imageFlippedForRightToLeftLayoutDirection(),
+                                     isPendingViewVisible: isPendingViewVisible,
+                                     pendingText: pendingText)
     }
     
     //MARK: - Notifications row setup data
@@ -64,7 +62,8 @@ extension MyAccountHallViewController: UITableViewDataSource {
         var isPendingViewVisible = false
         var pendingText = ""
         
-        let unseenUserAlerts = MEGASdk.shared.userAlertList().mnz_relevantUnseenCount
+        let unseenUserAlerts = viewModel.relevantUnseenUserAlertsCount
+        
         if existsPendingView && unseenUserAlerts != 0 {
             isPendingViewVisible = true
             pendingText = String(describing: unseenUserAlerts)
@@ -122,7 +121,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         guard let cell = tableView?.dequeueReusableCell(withIdentifier: "AccountPlanUpgradeCell", for: indexPath) as? HostingTableViewCell<MyAccountHallPlanView> else {
             return HostingTableViewCell<MyAccountHallPlanView>()
         }
-
+        
         var currentPlan = ""
         if let account = MEGASdk.shared.mnz_accountDetails {
             currentPlan = MEGAAccountDetails.string(for: account.type)
@@ -154,7 +153,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         }
         return showPlanRow ? indexPath.row : indexPath.row + 1
     }
-
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
         MyAccountSection.allCases.count
     }
@@ -167,8 +166,8 @@ extension MyAccountHallViewController: UITableViewDataSource {
         let rowIndex = menuRowIndex(indexPath)
         let isShowStorageUsageCell = (MEGASdkManager.sharedMEGASdk().isAccountType(.business) ||
                                       MEGASdkManager.sharedMEGASdk().isAccountType(.proFlexi)) &&
-                                    rowIndex == MyAccountMegaSection.storage.rawValue &&
-                                    indexPath.section == MyAccountSection.mega.rawValue
+        rowIndex == MyAccountMegaSection.storage.rawValue &&
+        indexPath.section == MyAccountSection.mega.rawValue
         let identifier = isShowStorageUsageCell ? "MyAccountHallStorageUsageTableViewCellID" : "MyAccountHallTableViewCellID"
         
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? MyAccountHallTableViewCell ?? MyAccountHallTableViewCell(style: .default, reuseIdentifier: identifier)
@@ -192,6 +191,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         }
         
         cell.sectionLabel.sizeToFit()
+        
         return cell
     }
     

@@ -35,6 +35,14 @@ struct AccountRepository: AccountRepositoryProtocol {
         sdk.contacts().toUserEntities()
     }
     
+    func incomingContactsRequestsCount() -> Int {
+        sdk.incomingContactRequests().size.intValue
+    }
+    
+    func relevantUnseenUserAlertsCount() -> UInt {
+        sdk.userAlertList().mnz_relevantUnseenCount
+    }
+    
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
         MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, error in
             guard let myChatFilesFolderNode = myChatFilesFolderNode else {
@@ -72,7 +80,7 @@ struct AccountRepository: AccountRepositoryProtocol {
                     continuation.resume(throwing: CancellationError())
                     return
                 }
-
+                
                 switch result {
                 case .success:
                     continuation.resume(returning: true)

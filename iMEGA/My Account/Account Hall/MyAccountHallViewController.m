@@ -50,10 +50,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        
+    
     self.viewAndEditProfileLabel.text = NSLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     self.viewAndEditProfileButton.accessibilityLabel = NSLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
-
+    
     [self registerCustomCells];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
@@ -69,13 +69,14 @@
     UITapGestureRecognizer *tapAvatarGestureRecognizer = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(avatarTapped:)];
     self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
     self.avatarImageView.userInteractionEnabled = YES;
-    
     self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     self.addPhoneNumberView.hidden = YES;
     
     [self configAddPhoneNumberTexts];
     
     [self updateAppearance];
+    
+    [self setUpInvokeCommands];
     
     self.isBackupSectionVisible = false;
 }
@@ -181,7 +182,7 @@
 
 - (void)configAddPhoneNumberTexts {
     self.addPhoneNumberTitle.text = NSLocalizedString(@"Add Your Phone Number", nil);
-
+    
     if (!MEGASdkManager.sharedMEGASdk.isAchievementsEnabled) {
         self.addPhoneNumberDescription.text = NSLocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", nil);
     } else {
@@ -216,8 +217,7 @@
     
     self.nameLabel.text = [MEGAUser mnz_fullName:MEGASdk.currentUserHandle.unsignedLongLongValue];
     [self setUserAvatar];
-    
-    [self.tableView reloadData];
+    [self reloadContent];
 }
 
 - (void)avatarTapped:(UITapGestureRecognizer *)sender {
@@ -316,7 +316,7 @@
             [self.navigationController pushViewController:transferVC animated:YES];
             break;
         }
-
+            
         case MyAccountMegaSectionOffline: {
             OfflineViewController *offlineVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
             [self.navigationController pushViewController:offlineVC animated:YES];
@@ -344,7 +344,7 @@
     NSInteger rowIndex = [self menuRowIndex:indexPath];
     return (rowIndex == MyAccountMegaSectionAchievements &&
             ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | [MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness]) ||
-            (rowIndex == MyAccountMegaSectionBackups && !self.isBackupSectionVisible) ? 0.0f : UITableViewAutomaticDimension;
+    (rowIndex == MyAccountMegaSectionBackups && !self.isBackupSectionVisible) ? 0.0f : UITableViewAutomaticDimension;
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
