@@ -1,4 +1,5 @@
 import Contacts
+import MEGAData
 
 struct ContactOnMega: Codable {
     let handle: UInt64
@@ -166,7 +167,7 @@ struct ContactOnMega: Codable {
         }
         contactsOnMegaDictionary.forEach { (contactOnMega) in
             let emailRequestDelegate = MEGAChatGenericRequestDelegate(completion: { [weak self] (request, _) in
-                if let email = request.text, email != MEGASdkManager.sharedMEGASdk().myEmail {
+                if let email = request.text, email != MEGASdk.currentUserEmail {
                     self?.contactsOnMega.append(ContactOnMega(handle: contactOnMega.key, email: email, name: contactOnMega.value))
                 }
                 contactsCount -= 1

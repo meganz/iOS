@@ -56,7 +56,7 @@ class DeleteAccountRouter: Routing {
     
     private func getMultiFactorAuthenticationStatus(completion: @escaping (Bool) -> Void) {
         guard MEGAReachabilityManager.isReachable() else { return }
-        guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else { return }
+        guard let myEmail = MEGASdk.currentUserEmail else { return }
         MEGASdkManager.sharedMEGASdk()
             .multiFactorAuthCheck(withEmail: myEmail,
                                   delegate: MEGAMultiFactorAuthCheckRequestDelegate { (request, error) in

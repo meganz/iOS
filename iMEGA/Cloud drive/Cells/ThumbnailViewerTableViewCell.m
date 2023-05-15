@@ -16,6 +16,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGA-Swift.h"
 #import "MEGARecentActionBucket+MNZCategory.h"
+@import MEGAData;
 
 @interface ThumbnailViewerTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -90,7 +91,7 @@
     self.nameLabel.text = title;
     
     MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:nodesArray.firstObject];
-    if ([recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
+    if ([recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail]) {
         if (shareType == MEGAShareTypeAccessOwner) {
             MEGANode *firstbornParentNode = [[MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {

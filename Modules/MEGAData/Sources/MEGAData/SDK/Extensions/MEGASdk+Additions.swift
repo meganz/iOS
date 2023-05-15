@@ -6,4 +6,12 @@ public extension MEGASdk {
             NSNumber(value: $0)
         }
     }
+    
+    @objc static var isGuest: Bool {
+        CurrentUserSource.shared.isGuest
+    }
+    
+    @objc static var currentUserEmail: String? {
+        CurrentUserSource.shared.currentUserEmail
+    }
 }

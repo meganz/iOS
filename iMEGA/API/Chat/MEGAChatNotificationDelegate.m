@@ -5,6 +5,7 @@
 #import "MEGAStore.h"
 #import "UIApplication+MNZCategory.h"
 #import "MEGA-Swift.h"
+@import MEGAData;
 
 @implementation MEGAChatNotificationDelegate
 
@@ -13,7 +14,7 @@
 - (void)onChatNotification:(MEGAChatSdk *)api chatId:(uint64_t)chatId message:(MEGAChatMessage *)message {
     MEGALogDebug(@"[Notification] On chat %@ message %@", [MEGASdk base64HandleForUserHandle:chatId], message);
     
-    if (MEGASdkManager.sharedMEGASdk.isGuestAccount) {
+    if (MEGASdk.isGuest) {
         return;
     }
     

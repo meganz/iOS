@@ -1,5 +1,6 @@
 import Foundation
 import MEGAFoundation
+import MEGAData
 
 @objc final class OverDiskQuotaCommand: NSObject {
 
@@ -164,7 +165,7 @@ fileprivate final class OverDiskQuotaQueryTask {
 
     private func updatedUserData(with api: MEGASdk)
         -> Result<OverDiskQuotaUserData, OverDiskQuotaService.DataObtainingError> {
-        guard let email = api.myEmail else { return .failure(.invalidUserEmail) }
+        guard let email = MEGASdk.currentUserEmail else { return .failure(.invalidUserEmail) }
         return .success(OverDiskQuotaUserData(email: email,
                                               deadline: api.overquotaDeadlineDate(),
                                               warningDates: api.overquotaWarningDateList(),

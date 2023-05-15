@@ -1249,7 +1249,7 @@
                     [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:nil lastname:nil nickname:nil email:user.email];
                 }
                 
-                [[NSNotificationCenter defaultCenter] postNotificationName:MEGAEmailHasChangedNotification object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:MEGAEmailHasChangedNotification object:nil userInfo:@{@"user" : user}];
             }
             
             if (user.isOwnChange == 0) { //If the change is external
@@ -1404,7 +1404,7 @@
     switch ([request type]) {
             
         case MEGARequestTypeLogout: {
-            if (MEGALinkManager.urlType == URLTypeCancelAccountLink || MEGASdkManager.sharedMEGASdk.isGuestAccount) {
+            if (MEGALinkManager.urlType == URLTypeCancelAccountLink || MEGASdk.isGuest) {
                 return;
             }
             
@@ -1581,7 +1581,7 @@
             MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
             [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
             
-            if ([MEGASdkManager sharedMEGASdk].isGuestAccount) {
+            if (MEGASdk.isGuest) {
                 return;
             }
             

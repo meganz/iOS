@@ -8,6 +8,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     private var chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
     private var chatUseCase: ChatUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
     private let router: MeetingInfoRouting
     private var chatRoom: ChatRoomEntity
     private var subscriptions = Set<AnyCancellable>()
@@ -23,12 +24,14 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
+         accountUseCase: AccountUseCaseProtocol,
          chatRoom: ChatRoomEntity)
     {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.chatUseCase = chatUseCase
+        self.accountUseCase = accountUseCase
         self.chatRoom = chatRoom
         
         self.myUserParticipant = ChatRoomParticipantViewModel(
@@ -120,7 +123,8 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func updateShouldShowAddParticipants() {
-        shouldShowAddParticipants = chatRoom.ownPrivilege == .moderator || (chatRoom.isOpenInviteEnabled && !chatUseCase.isGuestAccount() && chatRoom.ownPrivilege.isUserInChat)
+        shouldShowAddParticipants = chatRoom.ownPrivilege == .moderator
+        || (chatRoom.isOpenInviteEnabled && !accountUseCase.isGuest && chatRoom.ownPrivilege.isUserInChat)
     }
     
     private func listenToInviteChanges() {

@@ -17,6 +17,8 @@
 #import "MEGA-Swift.h"
 #endif
 
+@import MEGAData;
+
 @interface NodeTableViewCell()
 
 @property (weak, nonatomic) IBOutlet UILabel *infoStringRightLabel;
@@ -173,7 +175,7 @@
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
     MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
-    if ([recentActionBucket.userEmail isEqualToString:MEGASdkManager.sharedMEGASdk.myEmail]) {
+    if ([recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail]) {
         if (shareType == MEGAShareTypeAccessOwner) {
             MEGANode *firstbornParentNode = [[MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {

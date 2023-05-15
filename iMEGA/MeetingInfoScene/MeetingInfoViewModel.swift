@@ -119,7 +119,9 @@ final class MeetingInfoViewModel: ObservableObject {
             router: router,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
-            chatUseCase: chatUseCase, chatRoom: chatRoom)
+            chatUseCase: chatUseCase,
+            accountUseCase: accountUseCase,
+            chatRoom: chatRoom)
     }
     
     private func chatRoomLinkViewModel(for chatRoom: ChatRoomEntity) -> ChatRoomLinkViewModel {
