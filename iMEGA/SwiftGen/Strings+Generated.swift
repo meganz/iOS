@@ -399,8 +399,8 @@ public enum Strings {
     public static let chatNotFound = Strings.tr("Localizable", "chatNotFound")
     /// Chatting with
     public static let chattingWith = Strings.tr("Localizable", "chattingWith")
-    /// Choose your country
-    public static let chooseYourCountry = Strings.tr("Localizable", "Choose Your Country")
+    /// Choose your region
+    public static let chooseYourRegion = Strings.tr("Localizable", "Choose Your Region")
     /// Choose from Photos
     public static let choosePhotoVideo = Strings.tr("Localizable", "choosePhotoVideo")
     /// Choose one of the plans from below:

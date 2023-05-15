@@ -1084,8 +1084,8 @@
 "Verify Your Account"="Verify your account";
 /* Add your phone number title */
 "Add Your Phone Number"="Add your phone number";
-/* Choose Your Country title */
-"Choose Your Country"="Choose your country";
+/* Choose Your Region title */
+"Choose Your Region"="Choose your region";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="months";
 /*  */
