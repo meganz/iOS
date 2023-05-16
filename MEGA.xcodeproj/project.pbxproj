@@ -10444,8 +10444,8 @@
 		B6D5482E283E2AF000D7302F /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
 				6D5A19AF2A10D33E00FDD5B3 /* AccountHallViewModelTests.swift */,
+				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -12349,6 +12349,7 @@
 				BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
+				6D64B70D2A09BCB1002ECBD1 /* AccountHallViewModel.swift in Sources */,
 				B5EF0A8F29F145C600B166B1 /* AccountPlanEntity+Mapper.swift in Sources */,
 				B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */,
 				B6FD6506268B39D800988A17 /* AccountRepository.swift in Sources */,
@@ -12579,7 +12580,6 @@
 				836BCF1C28EDD12100515E18 /* ChatListItemEntity+Mapper.swift in Sources */,
 				2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */,
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
-				6D64B70D2A09BCB1002ECBD1 /* AccountHallViewModel.swift in Sources */,
 				2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */,
 				BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */,
 				2F04634024BFF13900A47A81 /* ChatMessageActionMenuViewController.swift in Sources */,
@@ -14216,6 +14216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D5A19B02A10D33E00FDD5B3 /* AccountHallViewModelTests.swift in Sources */,
 				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
@@ -14384,7 +14385,6 @@
 				3235F2C528C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift in Sources */,
 				B622D8AA2966CEF400C265C4 /* ThumbnailTypeEntityMappingTests.swift in Sources */,
 				A8AC23D8299A5D4E0025C2D3 /* TransferRepositoryTests.swift in Sources */,
-				6D5A19B02A10D33E00FDD5B3 /* AccountHallViewModelTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				6DD04A34292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift in Sources */,
 				5D52C747250C4F0200286A43 /* UserAlert.swift in Sources */,
@@ -16176,8 +16176,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/FLEXTool/FLEX";
 			requirement = {
-				kind = exactVersion;
-				version = 4.7.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 		A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */ = {
