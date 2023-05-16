@@ -8,9 +8,12 @@ final class ScheduleMeetingCreationRecurrenceOptionsRouter {
     @Published
     var rules: ScheduledMeetingRulesEntity
     
-    init(presenter: UINavigationController, rules: ScheduledMeetingRulesEntity) {
+    let startDate: Date
+
+    init(presenter: UINavigationController, rules: ScheduledMeetingRulesEntity, startDate: Date) {
         self.presenter = presenter
         self.rules = rules
+        self.startDate = startDate
     }
     
     @discardableResult
