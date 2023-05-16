@@ -14,7 +14,7 @@ class QuickAccessWidgetManager: NSObject {
 
     override init() {
         self.recentItemsUseCase = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance()))
-        self.recentNodesUseCase = RecentNodesUseCase(repo: RecentNodesRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        self.recentNodesUseCase = RecentNodesUseCase(repo: RecentNodesRepository.newRepo)
         self.favouriteItemsUseCase = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance()))
         self.favouriteNodesUseCase = FavouriteNodesUseCase(repo: FavouriteNodesRepository.newRepo)
     }
@@ -85,9 +85,9 @@ class QuickAccessWidgetManager: NSObject {
     }
     
     private func createRecentItemsData() {
-        recentNodesUseCase.getRecentActionBuckets(limitCount: MEGAQuickAccessWidgetMaxDisplayItems) { (result) in
-            switch result {
-            case .success(let recentActions):
+        Task {
+            do {
+                let recentActions = try await recentNodesUseCase.recentActionBuckets(limitCount: MEGAQuickAccessWidgetMaxDisplayItems)
                 var recentItems = [RecentItemEntity]()
                 recentActions.forEach { (bucket) in
                     bucket.nodes.forEach({ (node) in
@@ -96,13 +96,13 @@ class QuickAccessWidgetManager: NSObject {
                 }
                 self.recentItemsUseCase.resetRecentItems(by: recentItems) { (result) in
                     switch result {
-                    case .success(_):
+                    case .success:
                         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGARecentsQuickAccessWidget)
-                    case .failure(_):
+                    case .failure:
                         MEGALogError("Error creating recent items data for widget")
                     }
                 }
-            case .failure(_):
+            } catch {
                 MEGALogError("Error creating recent items data for widget")
             }
         }
