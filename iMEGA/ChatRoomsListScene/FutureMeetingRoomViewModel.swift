@@ -273,7 +273,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         if call.status == .userNoPresent {
             callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: false, enableAudio: true) { [weak self] result in
                 switch result {
-                case .success(_):
+                case .success:
                     self?.prepareAndShowCallUI(for: call, in: chatRoom)
                 case .failure(let error):
                     switch error {

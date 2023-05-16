@@ -77,9 +77,9 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
 
         copyDataBasesUseCase.copyFromMainApp { (result) in
             switch result {
-            case .success(_):
+            case .success:
                 self.updateStatus(.connected)
-            case .failure(_):
+            case .failure:
                 self.updateStatus(.error)
             }
         }

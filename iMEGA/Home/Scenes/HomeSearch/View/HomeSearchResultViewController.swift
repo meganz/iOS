@@ -48,7 +48,7 @@ final class HomeSearchResultViewController: UIViewController {
     ) {
         dataSource.attachTo(tableView)
         switch searchResultState {
-        case .loading, .empty, .error(message: _): break
+        case .loading, .empty, .error: break
         case .data(let files):
             self.resultTableViewDataSource.reload(tableView, withData: files)
         }

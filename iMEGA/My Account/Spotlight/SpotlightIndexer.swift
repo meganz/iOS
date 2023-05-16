@@ -60,7 +60,7 @@ final class SpotlightIndexer: NSObject {
                     
                     self.favouritesIndexed = true
                     
-                case .failure(_):
+                case .failure:
                     MEGALogError("[Spotlight] Error getting all favourites nodes")
                 }
             }

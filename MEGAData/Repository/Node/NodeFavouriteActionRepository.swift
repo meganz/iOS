@@ -25,7 +25,7 @@ struct NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol {
                     continuation.resume(throwing: NodeFavouriteErrorEntity.generic)
                     return
                 }
-                if case .failure(_) = result {
+                if case .failure = result {
                     continuation.resume(throwing: NodeFavouriteErrorEntity.generic)
                     return
                 }
@@ -49,7 +49,7 @@ struct NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol {
                     continuation.resume(throwing: NodeFavouriteErrorEntity.generic)
                     return
                 }
-                if case .failure(_) = result {
+                if case .failure = result {
                     continuation.resume(throwing: NodeFavouriteErrorEntity.generic)
                     return
                 }

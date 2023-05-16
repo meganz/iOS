@@ -138,7 +138,7 @@ final class NodeCellViewModel: ViewModelType {
                             self?.invokeCommand?(.setIcon(folderImageName!))
                         }
                         
-                    case .failure(_):
+                    case .failure:
                         let folderImageName = self?.folderImageName(for: self!.nodeModel)
                         self?.invokeCommand?(.setIcon(folderImageName!))
                     }

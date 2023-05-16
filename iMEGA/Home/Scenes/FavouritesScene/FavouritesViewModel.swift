@@ -49,7 +49,7 @@ final class FavouritesViewModel: ViewModelType {
             case .success(let nodeEntities):
                 self?.invokeCommand?(.showFavouritesNodes(nodeEntities))
                 
-            case .failure(_):
+            case .failure:
                 MEGALogError("Error getting all favourites nodes")
             }
         }

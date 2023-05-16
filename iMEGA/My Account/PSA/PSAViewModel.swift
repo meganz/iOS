@@ -78,7 +78,7 @@ final class PSAViewModel: NSObject, ViewModelType {
                 } else {
                     completion(true)
                 }
-            case .failure(_):
+            case .failure:
                 completion(false)
             }
         }

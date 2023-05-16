@@ -135,7 +135,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
                     return
                 }
                 downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileSystemRepository.documentsDirectory(), metaData: metaData, startFirst: true, start: start, update: update, completion: completion)
-            case .failure(_):
+            case .failure:
                 completion(.failure(.couldNotFindNodeByLink))
             }
         }

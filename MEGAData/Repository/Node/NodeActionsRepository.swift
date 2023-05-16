@@ -55,7 +55,7 @@ struct NodeActionsRepository: NodeActionsRepositoryProtocol {
             
             let delegate = RequestDelegate { result in
                 switch result {
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: CopyOrMoveErrorEntity.nodeCopyFailed)
                 case .success(let request):
                     continuation.resume(returning: request.nodeHandle)
@@ -79,7 +79,7 @@ struct NodeActionsRepository: NodeActionsRepositoryProtocol {
             
             let delegate = RequestDelegate { result in
                 switch result {
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: CopyOrMoveErrorEntity.nodeCopyFailed)
                 case .success(let request):
                     continuation.resume(returning: request.nodeHandle)

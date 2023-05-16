@@ -251,10 +251,10 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.meetingUseCase.createEphemeralAccountAndJoinChat(firstName: self.firstName, lastName: self.lastName, link: link) { [weak self] in
             guard let self = self else { return }
             switch $0 {
-            case .success(_):
+            case .success:
                 self.joinChatCall(chatId: chatId)
                 
-            case .failure(_):
+            case .failure:
                 self.dismiss()
             }
         } karereInitCompletion: {
@@ -279,7 +279,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 }
                 self.router.dismiss()
                 self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled, isSpeakerEnabled: self.isSpeakerEnabled)
-            case .failure(_):
+            case .failure:
                 self.dismiss()
             }
         }
@@ -312,7 +312,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                 self.meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
                 self.dismiss()
                 self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isVideoEnabled: self.isVideoEnabled, isSpeakerEnabled: self.isSpeakerEnabled)
-            case .failure(_):
+            case .failure:
                 self.dismiss()
             }
         }
@@ -358,7 +358,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                         isMicrophoneEnabled: self.isMicrophoneEnabled)
                 )
                 self.chatId = chatRoom.chatId
-            case .failure(_):
+            case .failure:
                 self.dismiss()
             }
         }

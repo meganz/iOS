@@ -48,7 +48,7 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
                 
                 completion(.success(favouritesNodesArray))
                 
-            case .failure(_):
+            case .failure:
                 completion(.failure(.sdk))
             }
         })

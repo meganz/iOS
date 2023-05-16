@@ -363,7 +363,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 switch result {
                 case .success:
                     self.invokeCommand?(.cameraTurnedOn(on: on))
-                case .failure(_):
+                case .failure:
                     MEGALogDebug("Error enabling local video")
                 }
                 completion?()
@@ -373,7 +373,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 switch result {
                 case .success:
                     self.invokeCommand?(.cameraTurnedOn(on: on))
-                case .failure(_):
+                case .failure:
                     MEGALogDebug("Error disabling local video")
                 }
                 completion?()

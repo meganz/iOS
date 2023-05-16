@@ -198,7 +198,7 @@ final class FilesExplorerViewModel {
                 let nodeList = nodes.toMEGANodes(in: MEGASdkManager.sharedMEGASdk())
                 self?.updateListenerForFilesDownload(withNodes: nodeList)
                 self?.invokeCommand?(.reloadNodes(nodes: nodeList, searchText: text))
-            case .failure(_):
+            case .failure:
                 MEGALogError("Error getting all favourites nodes")
             }
         }

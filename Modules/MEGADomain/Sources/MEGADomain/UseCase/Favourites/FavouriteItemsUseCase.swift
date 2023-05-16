@@ -21,7 +21,7 @@ public struct FavouriteItemsUseCase<T: FavouriteItemsRepositoryProtocol>: Favour
     public func createFavouriteItems(_ items: [FavouriteItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         repo.deleteAllFavouriteItems { (result) in
             switch result {
-            case .success():
+            case .success:
                 repo.batchInsertFavouriteItems(items) { insertResult in
                     completion(insertResult)
                 }
