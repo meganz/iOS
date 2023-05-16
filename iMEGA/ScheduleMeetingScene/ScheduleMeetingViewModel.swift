@@ -7,7 +7,7 @@ protocol ScheduleMeetingRouting {
     func discardChanges()
     func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void))
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
-    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
+    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
 }
 
 final class ScheduleMeetingViewModel: ObservableObject {
@@ -124,7 +124,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     
     func showRecurrenceOptionsView() {
         router
-            .showRecurrenceOptionsView(rules: rules)?
+            .showRecurrenceOptionsView(rules: rules, startDate: startDate)?
             .assign(to: &$rules)
     }
     
@@ -167,6 +167,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         }
         minimunEndDate = startDate.addingTimeInterval(Constants.minDurationFiveMinutes)
         startDateFormatted = formatDate(startDate)
+        rules.updateDayList(usingStartDate: startDate)
     }
     
     private func constructCreateScheduleMeetingEntity() -> CreateScheduleMeetingEntity {

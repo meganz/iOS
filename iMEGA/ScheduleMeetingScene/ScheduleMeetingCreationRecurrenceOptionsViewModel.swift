@@ -5,16 +5,19 @@ final class ScheduleMeetingCreationRecurrenceOptionsViewModel: ObservableObject 
     
     @Published
     private(set) var rules: ScheduledMeetingRulesEntity
+    
+    private let startDate: Date
         
     lazy var selectedOption: ScheduleMeetingCreationRecurrenceOption = ScheduleMeetingCreationRecurrenceOption(rules: rules) {
         didSet {
-            updateSelection()
+            updateSelection(withRecurrenceOption: selectedOption)
         }
     }
     
     init(router: ScheduleMeetingCreationRecurrenceOptionsRouter) {
         self.router = router
         self.rules = router.rules
+        self.startDate = router.startDate
     }
     
     func recurrenceOptions(forSection section: Int) -> [ScheduleMeetingCreationRecurrenceOption] {
@@ -28,43 +31,31 @@ final class ScheduleMeetingCreationRecurrenceOptionsViewModel: ObservableObject 
         }
     }
 
-    private func updateSelection() {
-        guard selectedOption != .custom else {
+    private func updateSelection(withRecurrenceOption recurrenceOption: ScheduleMeetingCreationRecurrenceOption) {
+        guard recurrenceOption != .custom else {
             return
         }
-         
+                 
+        let frequency = revelantFrequencey(forRecurrenceOption: recurrenceOption)
+        rules.reset(toFrequency: frequency, usingStartDate: startDate)
+        router.dismiss()
+    }
+    
+    private func revelantFrequencey(forRecurrenceOption recurrenceOption: ScheduleMeetingCreationRecurrenceOption) -> ScheduledMeetingRulesEntity.Frequency {
         let frequency: ScheduledMeetingRulesEntity.Frequency
-        var weekDayList: [Int]? = nil
-        var monthDayList: [Int]? = nil
         
-        switch selectedOption {
+        switch recurrenceOption {
         case .daily:
-            weekDayList = Array(1...7)
             frequency = .daily
         case .weekly:
-            let weekDay = Calendar(identifier: .gregorian).component(.weekday, from: Date())
-            weekDayList = [((weekDay + 5) % 7) + 1] // gregorian - 1 is Sunday but we need Monday as 1
             frequency = .weekly
         case .monthly:
-            if let day = Calendar.current.dateComponents([.day], from: Date()).day {
-                monthDayList = [day]
-            }
             frequency = .monthly
         default:
             frequency = .invalid
-            break
         }
         
-        rules = ScheduledMeetingRulesEntity(
-            frequency: frequency,
-            interval: rules.interval,
-            until: rules.until,
-            monthDayList: monthDayList,
-            weekDayList: weekDayList,
-            monthWeekDayList: rules.monthWeekDayList
-        )
-        
-        router.dismiss()
+        return frequency
     }
 }
 

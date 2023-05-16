@@ -138,7 +138,7 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
         showAddParticipants_calledTimes += 1
     }
     
-    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
+    func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
         scheduleMettingRulesEntityPublisher?.eraseToAnyPublisher()
     }
 }
