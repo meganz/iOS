@@ -1,7 +1,8 @@
 import XCTest
 import MEGADomain
-@testable import MEGA
+import MEGADomainMock
 import MEGADataMock
+import MEGAData
 
 final class MediaDiscoveryRepositoryTests: XCTestCase {
     
@@ -9,7 +10,7 @@ final class MediaDiscoveryRepositoryTests: XCTestCase {
         let childrenNodes = sampleNodes()
         let sdk = MockSdk(nodes: childrenNodes)
         let repo = MediaDiscoveryRepository(sdk:sdk)
-        let parentNode = NodeEntity(handle:0)
+        let parentNode = NodeEntity(handle: 0)
         let nodes = try await repo.loadNodes(forParent: parentNode)
         
         XCTAssertEqual(nodes.count, childrenNodes.count)
