@@ -72,6 +72,50 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         }
     }
     
+    func testSelectChatMode_inviteContactNow_shouldMatch() throws {
+        let router = MockChatRoomsListRouter()
+        let viewModel = ChatRoomsListViewModel(router: router, chatViewMode: .meetings)
+        
+        let expectation = expectation(description: "Waiting for contactsOnMegaViewState to be updated")
+        var chatRoomsTopRowViewState: ChatRoomsTopRowViewState?
+        
+        subscription = viewModel
+            .$contactsOnMegaViewState
+            .dropFirst()
+            .sink { chatRoomViewState in
+                chatRoomsTopRowViewState = chatRoomViewState
+                expectation.fulfill()
+            }
+
+        viewModel.selectChatMode(.chats)
+        wait(for: [expectation], timeout: 3)
+        
+        let state = try XCTUnwrap(chatRoomsTopRowViewState)
+        XCTAssertTrue(state.description == Strings.Localizable.inviteContactNow)
+    }
+    
+    func testSelectChatMode_seeWhoIsAlreadyOnMega_shouldMatch() throws {
+        let router = MockChatRoomsListRouter()
+        let contactsUseCase = MockContactsUseCase(authorized: false)
+        let viewModel = ChatRoomsListViewModel(router: router, contactsUseCase: contactsUseCase, chatViewMode: .meetings)
+        
+        let expectation = expectation(description: "Waiting for contactsOnMegaViewState to be updated")
+        var chatRoomsTopRowViewState: ChatRoomsTopRowViewState?
+        
+        subscription = viewModel
+            .$contactsOnMegaViewState
+            .dropFirst()
+            .sink { chatRoomViewState in
+                chatRoomsTopRowViewState = chatRoomViewState
+                expectation.fulfill()
+            }
+
+        viewModel.selectChatMode(.chats)
+        wait(for: [expectation], timeout: 3)
+        
+        let state = try XCTUnwrap(chatRoomsTopRowViewState)
+        XCTAssertTrue(state.description == Strings.Localizable.seeWhoSAlreadyOnMEGA)
+    }
     
     func testAction_selectMeetingsMode() {
         let viewModel = ChatRoomsListViewModel(

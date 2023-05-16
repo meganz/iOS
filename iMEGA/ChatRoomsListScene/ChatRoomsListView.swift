@@ -69,8 +69,7 @@ struct ChatRoomsListView: View {
                                 .padding(10)
                         }
                         
-                        if !viewModel.isSearchActive {
-                            let contactsOnMega = viewModel.contactsOnMegaViewState()
+                        if !viewModel.isSearchActive, let contactsOnMega = viewModel.contactsOnMegaViewState {
                             ChatRoomsTopRowView(state: contactsOnMega)
                                 .onTapGesture {
                                     contactsOnMega.action()
