@@ -57,6 +57,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var displayPastMeetings: [ChatRoomViewModel]?
     @Published var displayFutureMeetings: [FutureMeetingSection]?
     
+    @Published var contactsOnMegaViewState: ChatRoomsTopRowViewState?
+    
     @Published var activeCallViewModel: ActiveCallViewModel?
     @Published var searchText: String {
         didSet {
@@ -132,6 +134,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         listenToChatStatusUpdate()
         monitorNetworkChanges()
         monitorActiveCallChanges()
+        createTaskToUpdateContactsOnMegaViewStateIfRequired()
     }
     
     func cancelLoading() {
@@ -143,17 +146,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         cancelSearchTask()
     }
     
-    func fetchChats() {
-        loadingTask = Task {
-            defer { cancelLoadingTask() }
-            
-            if chatViewMode == .meetings {
-                await fetchMeetings()
-            } else {
-                await fetchNonMeetingChats()
-            }
-        }
-    }
     
     func contextMenuConfiguration() -> CMConfigEntity {
         CMConfigEntity(menuType: .menu(type: .chat),
@@ -167,6 +159,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         chatViewMode = mode
         
         fetchChats()
+        createTaskToUpdateContactsOnMegaViewStateIfRequired()
     }
     
     func addChatButtonTapped() {
@@ -178,29 +171,6 @@ final class ChatRoomsListViewModel: ObservableObject {
             return
         }
         chatUseCase.changeChatStatus(to: status)
-    }
-    
-    func contactsOnMegaViewState() -> ChatRoomsTopRowViewState {
-        ContactsOnMegaManager.shared.loadContactsOnMegaFromLocal()
-        let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
-        
-        let topRowDescription: String
-        
-        if contactsUseCase.isAuthorizedToAccessPhoneContacts {
-            if contactsOnMegaCount > 0 {
-                topRowDescription = contactsOnMegaCount == 1 ?  Strings.Localizable._1ContactFoundOnMEGA : Strings.Localizable.xContactsFoundOnMEGA.replacingOccurrences(of: "[X]", with: "\(contactsOnMegaCount)")
-            } else {
-                topRowDescription = Strings.Localizable.inviteContactNow
-            }
-        } else {
-            topRowDescription = Strings.Localizable.seeWhoSAlreadyOnMEGA
-        }
-        
-        return ChatRoomsTopRowViewState(
-            image: Asset.Images.Chat.inviteToChat.image,
-            description: topRowDescription) { [weak self] in
-                self?.topRowViewTapped()
-            }
     }
     
     func archiveChatsViewState() -> ChatRoomsTopRowViewState? {
@@ -229,7 +199,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     func noNetworkEmptyViewState() -> ChatRoomsEmptyViewState {
         ChatRoomsEmptyViewState(
-            contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState() : nil,
+            contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState : nil,
             archivedChats: archiveChatsViewState(),
             centerImageAsset: Asset.Images.EmptyStates.noInternetEmptyState,
             centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
@@ -242,7 +212,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     func emptyChatRoomsViewState() -> ChatRoomsEmptyViewState {
         ChatRoomsEmptyViewState(
-            contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState() : nil,
+            contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState : nil,
             archivedChats: archiveChatsViewState(),
             centerImageAsset: chatViewMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState,
             centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
@@ -259,6 +229,61 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     //MARK: - Private
+    
+    private func fetchChats() {
+        loadingTask = Task {
+            defer { cancelLoadingTask() }
+            
+            if chatViewMode == .meetings {
+                await fetchMeetings()
+            } else {
+                await fetchNonMeetingChats()
+            }
+        }
+    }
+    
+    private func createTaskToUpdateContactsOnMegaViewStateIfRequired() {
+        if chatViewMode == .chats {
+            Task {
+                await updateContactsOnMegaViewStateIfRequired()
+            }
+        }
+    }
+    
+    private func updateContactsOnMegaViewStateIfRequired() async {
+        let description = descriptionForContactsOnMegaViewState()
+        if contactsOnMegaViewState?.description != description {
+            await createContactsOnMegaViewState(withDescription: description)
+        }
+    }
+    
+    private func descriptionForContactsOnMegaViewState() -> String {
+        ContactsOnMegaManager.shared.loadContactsOnMegaFromLocal()
+        let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
+        
+        let description: String
+        
+        if contactsUseCase.isAuthorizedToAccessPhoneContacts {
+            if contactsOnMegaCount > 0 {
+                description = contactsOnMegaCount == 1 ?  Strings.Localizable._1ContactFoundOnMEGA : Strings.Localizable.xContactsFoundOnMEGA.replacingOccurrences(of: "[X]", with: "\(contactsOnMegaCount)")
+            } else {
+                description = Strings.Localizable.inviteContactNow
+            }
+        } else {
+            description = Strings.Localizable.seeWhoSAlreadyOnMEGA
+        }
+        
+        return description
+    }
+    
+    @MainActor
+    private func createContactsOnMegaViewState(withDescription description: String) {
+        contactsOnMegaViewState = ChatRoomsTopRowViewState(
+            image: Asset.Images.Chat.inviteToChat.image,
+            description: description) { [weak self] in
+                self?.topRowViewTapped()
+            }
+    }
     
     private func cancelLoadingTask() {
         loadingTask?.cancel()
