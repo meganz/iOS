@@ -6,7 +6,7 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     func contacts() -> [UserEntity]
     func totalNodesCount() -> UInt
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
-    func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void)
+    func accountDetails() async throws -> AccountDetailsEntity
     func upgradeSecurity() async throws -> Bool
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt

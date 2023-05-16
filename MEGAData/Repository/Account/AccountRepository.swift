@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAData
+import MEGASwift
 
 struct AccountRepository: AccountRepositoryProtocol {
     static var newRepo: AccountRepository {
@@ -58,14 +59,16 @@ struct AccountRepository: AccountRepositoryProtocol {
         sdk.totalNodes
     }
     
-    func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void) {
-        sdk.getAccountDetails(with: RequestDelegate { (result) in
-            switch result {
-            case .success(let request):
-                completion(.success(request.megaAccountDetails.toAccountDetailsEntity()))
-            case .failure:
-                completion(.failure(.generic))
-            }
+    func accountDetails() async throws -> AccountDetailsEntity {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.getAccountDetails(with: RequestDelegate { (result) in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.megaAccountDetails.toAccountDetailsEntity()))
+                case .failure:
+                    completion(.failure(AccountDetailsErrorEntity.generic))
+                }
+            })
         })
     }
     

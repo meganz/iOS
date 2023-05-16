@@ -98,19 +98,24 @@ final class FileVersioningViewModel: ViewModelType {
             self?.fileVersionsUseCase.deletePreviousFileVersions { [weak self] in
                 switch $0 {
                 case .success:
-                    self?.accountUseCase.getAccountDetails { [weak self]  in
-                        guard let self = self else { return }
-                        switch $0 {
-                        case .success:
-#if MAIN_APP_TARGET
-                            self.invokeCommand?(.updateFileVersions(self.fileVersionsUseCase.rootNodeFileVersionCount()))
-#endif
-                            self.invokeCommand?(.updateFileVersionsSize(self.fileVersionsUseCase.rootNodeFileVersionTotalSizeInBytes()))
-                        case .failure: break
-                        }
-                    }
+                    self?.updateFileVersion()
                 case .failure: break
                 }
+            }
+        }
+    }
+    
+    private func updateFileVersion() {
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                _ = try await self.accountUseCase.accountDetails()
+    #if MAIN_APP_TARGET
+                self.invokeCommand?(.updateFileVersions(self.fileVersionsUseCase.rootNodeFileVersionCount()))
+    #endif
+                self.invokeCommand?(.updateFileVersionsSize(self.fileVersionsUseCase.rootNodeFileVersionTotalSizeInBytes()))
+            } catch {
+                MEGALogError("[File versioning] Error loading account details. Error: \(error)")
             }
         }
     }

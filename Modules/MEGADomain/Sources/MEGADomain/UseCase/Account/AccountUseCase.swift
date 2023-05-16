@@ -9,7 +9,7 @@ public protocol AccountUseCaseProtocol {
     
     func totalNodesCount() -> UInt
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
-    func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void)
+    func accountDetails() async throws -> AccountDetailsEntity
     func upgradeSecurity() async throws -> Bool
 }
 
@@ -50,8 +50,8 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
         repository.getMyChatFilesFolder(completion: completion)
     }
     
-    public func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void) {
-        repository.getAccountDetails(completion: completion)
+    public func accountDetails() async throws -> AccountDetailsEntity {
+        try await repository.accountDetails()
     }
     
     public func upgradeSecurity() async throws -> Bool {
