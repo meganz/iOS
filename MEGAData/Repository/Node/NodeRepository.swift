@@ -36,7 +36,7 @@ struct NodeRepository: NodeRepositoryProtocol {
                     return
                 }
                 completion(.success(node.toNodeEntity()))
-            case .failure(_):
+            case .failure:
                 completion(.failure(.nodeNotFound))
             }
         })

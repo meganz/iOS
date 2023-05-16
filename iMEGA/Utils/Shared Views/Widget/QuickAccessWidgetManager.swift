@@ -124,13 +124,13 @@ class QuickAccessWidgetManager: NSObject {
                 }
                 self.favouriteItemsUseCase.createFavouriteItems(favouriteItems) { (result) in
                     switch result {
-                    case .success(_):
+                    case .success:
                         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
-                    case .failure(_):
+                    case .failure:
                         MEGALogError("Error creating favourite items data for widget")
                     }
                 }
-            case .failure(_):
+            case .failure:
                 MEGALogError("Error creating favourite items data for widget")
             }
         }

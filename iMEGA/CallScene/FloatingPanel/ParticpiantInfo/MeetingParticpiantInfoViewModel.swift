@@ -124,7 +124,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
             switch result {
             case .success(let image):
                 invokeCommand?(.updateAvatarImage(image: image))
-            case .failure(_):
+            case .failure:
                 break
             }
         }
@@ -147,7 +147,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         
         userInviteUseCase.sendInvite(forEmail: email) { result in
             switch result {
-            case .success():
+            case .success:
                 self.router.showInviteSuccess(email: email)
             case .failure(let error):
                 errorInvitingToContact(error, email: email)

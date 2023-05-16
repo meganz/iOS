@@ -122,7 +122,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         MEGALogDebug("Create meeting: Now logging out of anonymous account")
         chatSdk.logout(with: MEGAChatResultRequestDelegate(completion: { (result) in
             switch result {
-            case .success(_):
+            case .success:
                 self.chatSdk.initKarere(withSid: nil)
                 karereInitCompletion()
                 MEGALogDebug("Create meeting: Now creating ephemeral account plus plus with firstname - \(firstName) and lastname - \(lastName)")
@@ -137,7 +137,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                             MEGALogDebug("Create meeting: Now fetching node for ephemeral account")
                             self.sdk.fetchNodes(with: RequestDelegate(completion: { (result) in
                                 switch result {
-                                case .success(_):
+                                case .success:
                                     MEGALogDebug("Create meeting: success fetching node for ephemeral account and now connecting to chat")
                                     self.connectToChat(link: link, request: request, completion: completion)
                                 case .failure(let error):

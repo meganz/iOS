@@ -148,7 +148,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         
         cookieSettingsUseCase.setCookieSettings(with: cookiesBitmap.rawValue) { [weak self] in
             switch $0 {
-            case .success(_):
+            case .success:
                 self?.invokeCommand?(.cookieSettingsSaved)
                 
             case .failure(let error):

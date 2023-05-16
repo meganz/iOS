@@ -47,6 +47,7 @@ only_rules:
       - duplicate_imports
       - switch_case_alignment
       - unneeded_break_in_switch
+      - empty_enum_arguments
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
     
@@ -74,7 +75,6 @@ only_rules:
       # - redundant_optional_initialization (56 issues)
       # - control_statement (59 issues)
       # - trailing_newline (81 issues)
-      # - empty_enum_arguments (87 issues)
 
     # Complex fixes or a ton of issues (>100 issues)
 

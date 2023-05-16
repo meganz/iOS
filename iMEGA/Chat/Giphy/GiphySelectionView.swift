@@ -120,7 +120,7 @@ class GiphySelectionView: UIView {
                 } else {
                     self.filteredGifs = self.filteredGifs + response
                 }
-            case Result.failure(_):
+            case Result.failure:
                 // Handle error
                 break
             }

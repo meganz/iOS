@@ -31,10 +31,10 @@ public struct CopyDataBasesUseCase<T: CopyDataBasesRepositoryProtocol>: CopyData
                                         if applicationNewestDate.compare(groupNewestDate) == .orderedAscending {
                                             repo.removeContentsOfItemAt(url: applicationURL) { (result) in
                                                 switch result {
-                                                case .success(_):
+                                                case .success:
                                                     repo.copyContentsOfItemAt(url: groupUrl, to: applicationURL) { (result) in
                                                         switch result {
-                                                        case .success(_):
+                                                        case .success:
                                                             completion(.success(()))
                                                         case .failure(let error):
                                                             completion(.failure(error))

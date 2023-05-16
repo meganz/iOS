@@ -15,7 +15,7 @@ public struct RecentItemsUseCase<T: RecentItemsRepositoryProtocol>: RecentItemsU
     public func resetRecentItems(by items: [RecentItemEntity], completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         repo.deleteAllRecentItems { (result) in
             switch result {
-            case .success(_):
+            case .success:
                 repo.batchInsertRecentItems(items) { insertResult in
                     completion(insertResult)
                 }

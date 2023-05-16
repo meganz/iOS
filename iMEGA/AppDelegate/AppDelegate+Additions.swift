@@ -102,7 +102,7 @@ extension AppDelegate {
         if cookieSettingsUseCase.cookieBannerEnabled() {
             cookieSettingsUseCase.cookieSettings { [weak self] in
                 switch $0 {
-                case .success(_): break //Cookie settings already set
+                case .success: break //Cookie settings already set
                     
                 case .failure(let error):
                     switch error {
@@ -237,7 +237,7 @@ extension AppDelegate {
                 let isPerformanceAndAnalyticsEnabled = CookiesBitmap(rawValue: bitmap).contains(.analytics)
                 cookieSettingsUseCase.setCrashlyticsEnabled(isPerformanceAndAnalyticsEnabled)
 
-            case .failure(_): break
+            case .failure: break
             }
         }
     }

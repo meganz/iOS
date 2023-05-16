@@ -1066,10 +1066,10 @@ class ChatViewController: MessagesViewController {
             self.shouldDisableAudioVideoCalling = false
             self.updateRightBarButtons()
             switch result {
-            case .success(_):
+            case .success:
                 self.startMeetingUI(isVideoEnabled: videoCall,
                                     isSpeakerEnabled: self.chatRoom.isMeeting || videoCall)
-            case .failure(_):
+            case .failure:
                 MEGALogDebug("Cannot start no ringing call for scheduled meeting")
             }
         }

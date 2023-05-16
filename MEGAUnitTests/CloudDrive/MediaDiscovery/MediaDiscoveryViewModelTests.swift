@@ -95,7 +95,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         
         sut.invokeCommand = { command in
             switch command {
-            case .loadMedia(nodes: _):
+            case .loadMedia:
                 loadMediaExpectation.fulfill()
             }
         }

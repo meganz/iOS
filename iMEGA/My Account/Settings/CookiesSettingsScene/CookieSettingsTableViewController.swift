@@ -72,7 +72,7 @@ class CookieSettingsTableViewController: UITableViewController {
     
     func executeCommand(_ command: CookieSettingsViewModel.Command.ResultCommand) {
         switch command {
-        case .success(_):
+        case .success:
             router.dismiss()
             
         case .error(let message):

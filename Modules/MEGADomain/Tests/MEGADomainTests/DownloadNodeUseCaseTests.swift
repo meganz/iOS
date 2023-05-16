@@ -13,7 +13,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
         let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: offlineFilesRepo, fileSystemRepository: MockFileSystemRepository(), nodeRepository: nodeRepo, nodeDataRepository: MockNodeDataRepository.newRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo, offlineFileFetcherRepository: offlineFileFetcherRepo)
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
-            case .success(_):
+            case .success:
                 XCTFail("Nodes already in offline, should return \(mockError) error")
             case .failure(let error):
                 XCTAssertEqual(error, mockError)
@@ -29,7 +29,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
         let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: fileSytemRepo, nodeRepository: nodeRepo, nodeDataRepository: MockNodeDataRepository.newRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo, offlineFileFetcherRepository: MockOfflineFileFetcherRepository.newRepo)
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
-            case .success(_):
+            case .success:
                 XCTFail("Nodes copied from temp folder, should return \(mockError) error")
             case .failure(let error):
                 XCTAssertEqual(error, mockError)
@@ -44,7 +44,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
         let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: MockFileSystemRepository(), nodeRepository: nodeRepo, nodeDataRepository: MockNodeDataRepository.newRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo, offlineFileFetcherRepository: MockOfflineFileFetcherRepository.newRepo)
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
-            case .success(_):
+            case .success:
                 XCTFail("Folder nodes named 'Inbox' could not be saved in Documents folder, should return \(mockError) error")
             case .failure(let error):
                 XCTAssertEqual(error, mockError)
@@ -60,7 +60,7 @@ class DownloadNodeUseCaseTests: XCTestCase {
         let sut = DownloadNodeUseCase(downloadFileRepository: MockDownloadFileRepository(), offlineFilesRepository: MockOfflineFilesRepository(), fileSystemRepository: fileSytemRepo, nodeRepository: nodeRepo, nodeDataRepository: MockNodeDataRepository.newRepo, fileCacheRepository: MockFileCacheRepository(), mediaUseCase: MockMediaUseCase(), preferenceRepository: EmptyPreferenceRepository.newRepo, offlineFileFetcherRepository: MockOfflineFileFetcherRepository.newRepo)
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
-            case .success(_):
+            case .success:
                 XCTFail("Folder nodes named 'Inbox' could not be saved in Documents folder, should return \(mockError) error")
             case .failure(let error):
                 XCTAssertEqual(error, mockError)

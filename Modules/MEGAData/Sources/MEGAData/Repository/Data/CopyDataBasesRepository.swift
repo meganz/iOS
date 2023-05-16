@@ -55,7 +55,7 @@ public struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
                     }
                 }
                 completion(.success(newestDate))
-            case .failure(_):
+            case .failure:
                 completion(.failure(.fileManager))
             }
         }
@@ -85,7 +85,7 @@ public struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
                     }
                 }
                 completion(.success(()))
-            case .failure(_):
+            case .failure:
                 completion(.failure(.fileManager))
             }
         }
@@ -105,7 +105,7 @@ public struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
                 } catch  {
                     completion(.failure(.fileManager))
                 }
-            case .failure(_):
+            case .failure:
                 completion(.failure(.fileManager))
             }
         }

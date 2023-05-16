@@ -133,7 +133,7 @@ final class MeetingContainerViewModel: ViewModelType {
                                           link: link,
                                           isGuestAccount: self.accountUseCase.isGuest,
                                           completion: completion)
-                case .failure(_):
+                case .failure:
                     self.router.showShareMeetingError()
                 }
             }

@@ -87,13 +87,13 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
             case .success(let node):
                 downloadFileRepository.downloadFileLink(fileLink, named: node.name, to: fileCacheRepository.base64HandleTempFolder(for: node.base64Handle), metaData: .saveInPhotos, startFirst: true, start: nil, update: nil) { result in
                     switch result {
-                    case .success(_):
+                    case .success:
                         completion(.success)
                     case .failure(let error):
                         completion(.failure(error == TransferErrorEntity.cancelled ? .cancelled : .downloadFailed))
                     }
                 }
-            case .failure(_):
+            case .failure:
                 completion(.failure(.nodeNotFound))
             }
         }

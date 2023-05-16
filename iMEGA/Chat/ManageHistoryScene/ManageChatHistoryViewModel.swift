@@ -134,7 +134,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
                     
                     self?.historyRetentionOptionSelected = .disabled
                     
-                case .failure(_): break
+                case .failure: break
                     
                 }
             }
@@ -201,7 +201,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
                     
                     self?.updateHistoryRetentionFooter()
                     
-                case .failure(_): break
+                case .failure: break
                 }
             }
             
@@ -253,10 +253,10 @@ final class ManageChatHistoryViewModel: ViewModelType {
         case .clearChatHistoryConfirmed:
             manageChatHistoryUseCase.clearChatHistoryUseCase.clearChatHistory(for: chatId) { [weak self] in
                 switch $0 {
-                case .success(_):
+                case .success:
                     self?.invokeCommand?(.showResult(.content(Asset.Images.Chat.ContactDetails.clearChatHistory.image, Strings.Localizable.chatHistoryHasBeenCleared)))
                     
-                case .failure(_):
+                case .failure:
                     self?.invokeCommand?(.showResult(.error(Strings.Localizable.AnErrorHasOccurred.theChatHistoryHasNotBeenSuccessfullyCleared)))
                 }
             }

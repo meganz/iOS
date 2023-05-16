@@ -302,7 +302,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             switch result {
             case .success(let image):
                 completion(image)
-            case .failure(_):
+            case .failure:
                 MEGALogError("Error fetching avatar for participant \(self?.megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
             }
         }
@@ -457,7 +457,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 switch result {
                 case .success(let title):
                     self?.invokeCommand?(.updateName(title))
-                case .failure(_):
+                case .failure:
                     MEGALogDebug("Could not change the chat title")
                 }
                 self?.containerViewModel?.dispatch(.changeMenuVisibility)
@@ -645,7 +645,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             switch result {
             case .success:
                 self?.remoteVideoUseCase.requestLowResolutionVideos(for: chatId, clientId: clientId, completion: nil)
-            case .failure(_):
+            case .failure:
                 break
             }
         }
@@ -656,7 +656,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             switch result {
             case .success:
                 self?.remoteVideoUseCase.requestHighResolutionVideo(for: chatId, clientId: clientId, completion: nil)
-            case .failure(_):
+            case .failure:
                 break
             }
         }

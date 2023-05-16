@@ -82,7 +82,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
             let url = URL(fileURLWithPath: path)
             completion(.success(url))
             
-        case .failure(_):
+        case .failure:
             completion(.failure(.downloadFailed))
         }
     }

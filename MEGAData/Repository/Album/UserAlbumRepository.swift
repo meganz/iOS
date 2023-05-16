@@ -57,7 +57,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                     }
                     
                     continuation.resume(returning: set.toSetEntity())
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
             })
@@ -72,7 +72,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 switch result {
                 case .success(let request):
                     continuation.resume(returning: request.text ?? "")
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
             })
@@ -87,7 +87,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 switch result {
                 case .success(let request):
                     continuation.resume(returning: request.parentHandle)
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
             })
@@ -106,7 +106,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 case .success(let result):
                     let entity = AlbumElementsResultEntity(success:result.0, failure: result.1)
                     continuation.resume(returning:entity)
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
             }
@@ -125,7 +125,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 switch result {
                 case .success(let request):
                     continuation.resume(returning: request.text ?? "")
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
             })
@@ -140,7 +140,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 switch result {
                 case .success(let request):
                     continuation.resume(returning: request.number.int64Value)
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
             })
@@ -158,7 +158,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 case .success(let result):
                     let entity = AlbumElementsResultEntity(success:result.0, failure: result.1)
                     continuation.resume(returning:entity)
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
             }
@@ -178,7 +178,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 switch result {
                 case .success(let request):
                     continuation.resume(returning: request.nodeHandle)
-                case .failure(_):
+                case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
             })

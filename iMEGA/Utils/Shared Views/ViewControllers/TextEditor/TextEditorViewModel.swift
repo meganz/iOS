@@ -199,9 +199,9 @@ final class TextEditorViewModel: ViewModelType {
                 }
                 
                 switch result {
-                case .failure(_):
+                case .failure:
                     self.invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.upload))
-                case .success(_):
+                case .success:
                     if self.textEditorMode == .edit {
                         self.textEditorMode = .view
                         self.setupView(shallUpdateContent: false)
@@ -269,7 +269,7 @@ final class TextEditorViewModel: ViewModelType {
             self.invokeCommand?(.updateProgressView(progress: percentage))
         } completion: { (result) in
             switch result {
-            case .failure(_):
+            case .failure:
                 self.invokeCommand?(.showError(message: Strings.Localizable.transferFailed + " " + Strings.Localizable.download))
             case .success(let transferEntity):
                 guard let path = transferEntity.path else { return }

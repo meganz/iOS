@@ -164,7 +164,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
             guestVideoFrame(width: width, height: height, buffer: buffer)
         case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
             selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
-        case .updateCameraPosition(position: _):
+        case .updateCameraPosition:
             break
         }
     }
