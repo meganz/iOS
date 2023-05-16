@@ -326,8 +326,10 @@ extension AppDelegate {
 //MARK: - Actionable notification for Scheduled meetings
 
 extension AppDelegate {
-    @objc func isScheduleMeeting(response: UNNotificationResponse) -> Bool {
-        ScheduleMeetingPushNotifications.isScheduleMeeting(response: response)
+    
+    @objc(isScheduleMeetingNotification:)
+    func isScheduleMeeting(notification: UNNotification) -> Bool {
+        ScheduleMeetingPushNotifications.isScheduleMeeting(notification: notification)
     }
     
     @objc func hasTappedOnJoinAction(response: UNNotificationResponse) -> Bool {

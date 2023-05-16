@@ -41,9 +41,9 @@ struct ScheduleMeetingPushNotifications {
         UNUserNotificationCenter.current().setNotificationCategories([startScheduledMeetingCategory])
     }
     
-    static func isScheduleMeeting(response: UNNotificationResponse) -> Bool {
-        response.notification.request.content.categoryIdentifier == startsNowCategoryIdentifier
-        || response.notification.request.content.categoryIdentifier == startsInFifteenMinutesCategoryIdentifier
+    static func isScheduleMeeting(notification: UNNotification) -> Bool {
+        notification.request.content.categoryIdentifier == startsNowCategoryIdentifier
+        || notification.request.content.categoryIdentifier == startsInFifteenMinutesCategoryIdentifier
     }
     
     static func hasTappedOnJoinAction(forResponse response: UNNotificationResponse) -> Bool {
