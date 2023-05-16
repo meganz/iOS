@@ -1166,7 +1166,7 @@
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[response.notification.request.identifier]];
     self.megatype = (MEGANotificationType)[response.notification.request.content.userInfo[@"megatype"] integerValue];
     
-    if ([self isScheduleMeetingWithResponse:response]) {
+    if ([self isScheduleMeetingNotification:response.notification]) {
         NSString *chatIdBase64 = response.notification.request.content.userInfo[@"chatId"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdBase64];
         
@@ -1191,6 +1191,12 @@
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
     MEGALogDebug(@"[Notification] will present notification %@", notification);
+    
+    if ([self isScheduleMeetingNotification:notification]) {
+        completionHandler(UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner);
+        return;
+    }
+    
     uint64_t chatId = [notification.request.content.userInfo[@"chatId"] unsignedLongLongValue];
     uint64_t msgId =  [notification.request.content.userInfo[@"msgId"] unsignedLongLongValue];
     MEGALogDebug(@"[Notification] chatId: %@ messageId: %@", [MEGASdk base64HandleForUserHandle:chatId], [MEGASdk base64HandleForUserHandle:msgId]);
