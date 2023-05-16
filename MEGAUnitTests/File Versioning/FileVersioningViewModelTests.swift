@@ -23,7 +23,7 @@ final class FileVersioningViewModelTests: XCTestCase {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(false), enableFileVersions: .success(true))
         let sut = FileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
-                                          accountUseCase: MockAccountUseCase(accountDetails: .success(AccountDetailsEntity())))
+                                          accountUseCase: MockAccountUseCase())
         
         test(viewModel: sut,
              action: .enableFileVersions,
@@ -35,7 +35,7 @@ final class FileVersioningViewModelTests: XCTestCase {
                                                           enableFileVersions: .success(false))
         let sut = FileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
-                                          accountUseCase: MockAccountUseCase(accountDetails: .success(AccountDetailsEntity())))
+                                          accountUseCase: MockAccountUseCase())
         
         test(viewModel: sut,
              action: .disableFileVersions,
@@ -48,7 +48,7 @@ final class FileVersioningViewModelTests: XCTestCase {
         mockRouter.tapYesDisableAlert = false
         let sut = FileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
-                                          accountUseCase: MockAccountUseCase(accountDetails: .success(AccountDetailsEntity())))
+                                          accountUseCase: MockAccountUseCase())
         
         test(viewModel: sut,
              action: .disableFileVersions,
@@ -74,7 +74,7 @@ final class FileVersioningViewModelTests: XCTestCase {
         let fileVersionsUseCase = MockFileVersionsUseCase(isFileVersionsEnabled: .success(true))
         let sut = FileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
-                                          accountUseCase: MockAccountUseCase(accountDetails: .success(AccountDetailsEntity())))
+                                          accountUseCase: MockAccountUseCase())
         
         test(viewModel: sut,
              action: .deletePreviousVersions,

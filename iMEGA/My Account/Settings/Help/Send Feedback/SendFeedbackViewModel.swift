@@ -44,14 +44,11 @@ final class SendFeedbackViewModel: NSObject {
     }
     
     private func setupAccountDetails() async {
-        await withAsyncValue(in: { completion in
-            accountUseCase.getAccountDetails { result in
-                if case let .success(request) = result {
-                    self.accountDetails = request
-                }
-                completion(.success(()))
-            }
-        })
+        do {
+            accountDetails = try await accountUseCase.accountDetails()
+        } catch {
+            MEGALogError("[Send Feedback] Error loading account details. Error: \(error)")
+        }
     }
     
     private func feedbackMessageBody() -> String {

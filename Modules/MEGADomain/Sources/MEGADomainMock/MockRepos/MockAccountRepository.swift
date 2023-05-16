@@ -61,8 +61,11 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
         completion(getMyChatFilesFolderResult)
     }
     
-    public func getAccountDetails(completion: @escaping (Result<AccountDetailsEntity, AccountDetailsErrorEntity>) -> Void) {
-        completion(accountDetails)
+    public func accountDetails() async throws -> AccountDetailsEntity {
+        switch accountDetails {
+        case .success(let details): return details
+        case .failure(let error): throw error
+        }
     }
     
     public func upgradeSecurity() async throws -> Bool {
