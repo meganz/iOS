@@ -3,7 +3,6 @@
 
 #import "UIScrollView+EmptyDataSet.h"
 
-#import "Helper.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
@@ -23,11 +22,9 @@
 @import MEGAFoundation;
 @import MEGAData;
 
-static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
+static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 
 @interface RecentsViewController () <UITableViewDataSource, UITableViewDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, AudioPlayerPresenterProtocol, TextFileEditable, RecentsPreferenceProtocol>
-
-@property (strong, nonatomic) NSArray<MEGARecentActionBucket *> *recentActionBucketArray;
 
 @property (nonatomic) NSDateFormatter *dateFormatter;
 
@@ -51,9 +48,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"RecentsTableViewHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"RecentsHeaderFooterView"];
     
-    self.recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
-    
-    [self.tableView reloadData];
+    [self getRecentActions];
     
     self.tableView.separatorStyle = (self.tableView.numberOfSections == 0) ? UITableViewCellSeparatorStyleNone : UITableViewCellSeparatorStyleSingleLine;
     
@@ -352,11 +347,6 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     }
 }
 
-- (void)reloadUI {
-    self.recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
-    [self.tableView reloadData];
-}
-
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
@@ -372,13 +362,13 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 1.0;
     }
     
     if (shouldProcessOnNodesUpdate) {
-        [self debounce:@selector(reloadUI) delay:RecentsViewReloadTimeDelay];
+        [self debounce:@selector(getRecentActions) delay:RecentsViewReloadTimeDelay];
     }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (request.type == MEGARequestTypeFetchNodes) {
-        [self reloadUI];
+        [self getRecentActions];
     }
 }
 

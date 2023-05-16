@@ -1,6 +1,5 @@
 public protocol RecentNodesUseCaseProtocol {
-    func getAllRecentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void)
-    func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void)
+    func recentActionBuckets(limitCount: Int) async throws -> [RecentActionBucketEntity]
 }
 
 public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol>: RecentNodesUseCaseProtocol {
@@ -10,11 +9,7 @@ public struct RecentNodesUseCase<T: RecentNodesRepositoryProtocol>: RecentNodesU
         self.repo = repo
     }
     
-    public func getAllRecentActionBuckets(completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        repo.getAllRecentActionBuckets(completion: completion)
-    }
-    
-    public func getRecentActionBuckets(limitCount: Int, completion: @escaping (Result<[RecentActionBucketEntity], GetFavouriteNodesErrorEntity>) -> Void) {
-        repo.getRecentActionBuckets(limitCount: limitCount, completion: completion)
+    public func recentActionBuckets(limitCount: Int) async throws -> [RecentActionBucketEntity] {
+        try await repo.recentActionBuckets(limitCount: limitCount)
     }
 }

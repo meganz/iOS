@@ -1,3 +1,4 @@
+import MEGAData
 
 extension RecentsViewController {
     
@@ -11,11 +12,22 @@ extension RecentsViewController {
         verifyCredentialsVC.userName = user.mnz_displayName ?? user.email
         verifyCredentialsVC.setContactVerification(true)
         verifyCredentialsVC.statusUpdateCompletionBlock = { [weak self] in
-            self?.reloadUI()
+            self?.getRecentActions()
         }
         
         let navigationController = MEGANavigationController(rootViewController: verifyCredentialsVC)
         navigationController.addRightCancelButton()
         self.present(navigationController, animated: true)
+    }
+    
+    @objc func getRecentActions() {
+        MEGASdk.shared.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, delegate: RequestDelegate { [weak self] result in
+            if case let .success(request) = result {
+                self?.recentActionBucketArray = request.recentActionsBuckets
+                self?.getRecentActionsActivityIndicatorView?.stopAnimating()
+                self?.tableView?.isHidden = false
+                self?.tableView?.reloadData()
+            }
+        })
     }
 }
