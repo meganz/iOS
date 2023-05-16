@@ -1,24 +1,25 @@
 import MEGADomain
+import MEGASdk
 import Combine
 
-final class MediaDiscoveryRepository: NSObject, MediaDiscoveryRepositoryProtocol {
-    static var newRepo: MediaDiscoveryRepository {
-        MediaDiscoveryRepository(sdk: MEGASdkManager.sharedMEGASdk())
+final public class MediaDiscoveryRepository: NSObject, MediaDiscoveryRepositoryProtocol {
+    public static var newRepo: MediaDiscoveryRepository {
+        MediaDiscoveryRepository(sdk: MEGASdk.sharedSdk)
     }
     
     private let updater: PassthroughSubject<[NodeEntity], Never>
     private let sdk: MEGASdk
     
-    let nodesUpdatePublisher: AnyPublisher<[NodeEntity], Never>
+    public let nodesUpdatePublisher: AnyPublisher<[NodeEntity], Never>
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
         
         updater = PassthroughSubject<[NodeEntity], Never>()
         nodesUpdatePublisher = AnyPublisher(updater)
     }
     
-    func loadNodes(forParent parent: NodeEntity) async throws -> [NodeEntity] {
+    public func loadNodes(forParent parent: NodeEntity) async throws -> [NodeEntity] {
         guard let megaNode = parent.toMEGANode(in: sdk) else { return [] }
         
         return try await withCheckedThrowingContinuation { continuation in
@@ -31,17 +32,17 @@ final class MediaDiscoveryRepository: NSObject, MediaDiscoveryRepositoryProtocol
         }
     }
     
-    func startMonitoringNodesUpdate() {
+    public func startMonitoringNodesUpdate() {
         sdk.add(self)
     }
     
-    func stopMonitoringNodesUpdate() {
+    public func stopMonitoringNodesUpdate() {
         sdk.remove(self)
     }
 }
 
 extension MediaDiscoveryRepository: MEGAGlobalDelegate {
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         updater.send(nodeList?.toNodeEntities() ?? [])
     }
 }
