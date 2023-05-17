@@ -37,10 +37,6 @@ public enum Strings {
   public enum Localizable {
     /// %1 of %2
     public static let _1Of2 = Strings.tr("Localizable", "%1 of %2")
-    /// %1$d items
-    public static func _1DItems(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "%1$d items", p1)
-    }
     /// %@ created a chat link
     public static func createdAPublicLinkForTheChat(_ p1: Any) -> String {
       return Strings.tr("Localizable", "%@ created a public link for the chat.", String(describing: p1))
@@ -207,8 +203,6 @@ public enum Strings {
     public static let allMedia = Strings.tr("Localizable", "All Media")
     /// All the photos from your burst photo sequences will be uploaded.
     public static let allThePhotosFromYourBurstPhotoSequencesWillBeUploaded = Strings.tr("Localizable", "All the photos from your burst photo sequences will be uploaded.")
-    /// All transfers
-    public static let allInUppercaseTransfers = Strings.tr("Localizable", "allInUppercaseTransfers")
     /// Allow access
     public static let allowAccess = Strings.tr("Localizable", "Allow Access")
     /// Allow access to photos
@@ -439,14 +433,6 @@ public enum Strings {
     public static let cloudDriveEmptyStateTitle = Strings.tr("Localizable", "cloudDriveEmptyState_title")
     /// Empty Rubbish bin
     public static let cloudDriveEmptyStateTitleRubbishBin = Strings.tr("Localizable", "cloudDriveEmptyState_titleRubbishBin")
-    /// [S]Your Cloud drive is almost full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
-    public static func cloudDriveIsAlmostFull(_ p1: Any, _ p2: Any) -> String {
-      return Strings.tr("Localizable", "cloudDriveIsAlmostFull", String(describing: p1), String(describing: p2))
-    }
-    /// [S]Your Cloud drive is full.[/S] [A]Upgrade now[/A] to a Pro account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.
-    public static func cloudDriveIsFull(_ p1: Any, _ p2: Any) -> String {
-      return Strings.tr("Localizable", "cloudDriveIsFull", String(describing: p1), String(describing: p2))
-    }
     /// Code scanned
     public static let codeScanned = Strings.tr("Localizable", "codeScanned")
     /// Completed
@@ -657,8 +643,6 @@ public enum Strings {
     public static func downloading(_ p1: Any) -> String {
       return Strings.tr("Localizable", "Downloading %@", String(describing: p1))
     }
-    /// Download transfers
-    public static let downloadInUppercaseTransfers = Strings.tr("Localizable", "downloadInUppercaseTransfers")
     /// Downloads
     public static let downloads = Strings.tr("Localizable", "downloads")
     /// Download started
@@ -2213,8 +2197,6 @@ public enum Strings {
     public static let uploadSharedAlbums = Strings.tr("Localizable", "Upload Shared Albums")
     /// Upload videos for Live photos
     public static let uploadVideosForLivePhotos = Strings.tr("Localizable", "Upload Videos for Live Photos")
-    /// Upload transfers
-    public static let uploadInUppercaseTransfers = Strings.tr("Localizable", "uploadInUppercaseTransfers")
     /// Uploads
     public static let uploads = Strings.tr("Localizable", "uploads")
     /// Upload started
@@ -3678,7 +3660,7 @@ public enum Strings {
         public static let sitx = Strings.tr("Localizable", "general.filetype.sitx")
         /// Spreadsheet
         public static let spreadsheet = Strings.tr("Localizable", "general.filetype.spreadsheet")
-        /// SQL database
+        /// SQL statements
         public static let sql = Strings.tr("Localizable", "general.filetype.sql")
         /// Sony RAW image
         public static let srf = Strings.tr("Localizable", "general.filetype.srf")
@@ -4436,7 +4418,7 @@ public enum Strings {
           }
         }
         public enum Description {
-          /// Enter fewer than 3,000 characters
+          /// Enter up to 3,000 characters
           public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.description.lenghtError")
         }
         public enum DiscardChanges {
@@ -4452,7 +4434,7 @@ public enum Strings {
           public static let description = Strings.tr("Localizable", "meetings.scheduleMeeting.link.description")
         }
         public enum MeetingName {
-          /// Enter fewer than 30 characters
+          /// Enter up to 30 characters
           public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.meetingName.lenghtError")
           /// Meeting name
           public static let placeholder = Strings.tr("Localizable", "meetings.scheduleMeeting.meetingName.placeholder")
@@ -4467,7 +4449,7 @@ public enum Strings {
             }
           }
           public enum MeetingStartsInFifteenMins {
-            /// Meeting starts in 15 minutes.
+            /// Meeting starts in 15 minutes
             public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message")
           }
           public enum MeetingStartsNow {

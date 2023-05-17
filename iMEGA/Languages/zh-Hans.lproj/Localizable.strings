@@ -1000,12 +1000,6 @@
 "cancelTransfersTitle"="取消传输";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="您确定要取消所有传输吗？";
-/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="所有传输";
-/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="上传传输";
-/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="下载传输";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="升级";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1084,8 +1078,8 @@
 "Verify Your Account"="验证您的帐户";
 /* Add your phone number title */
 "Add Your Phone Number"="添加您的手机号";
-/* Choose Your Country title */
-"Choose Your Country"="选择您的国家";
+/* Choose Your Region title */
+"Choose Your Region"="选择您的国家";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="月";
 /*  */
@@ -1128,10 +1122,6 @@
 "Manage Account"="管理帐户";
 /*  */
 "chooseYourAccountType"="选择您的帐户类型";
-/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的云盘空间几乎已满。[/S] [A]立即升级[/A]至Pro会员帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
-/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的云盘空间已满。[/S] [A]立即升级[/A]至Pro会员帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="存储空间";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -2006,8 +1996,6 @@
 "home.recent.createdByLabel"="由%@创建";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="无近期动态";
-/* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d个项目";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="聊天链接不可用";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2897,7 +2885,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X压缩";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL数据库";
+"general.filetype.sql"="SQL语句";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="索尼RAW图像";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3357,9 +3345,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="添加说明";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="输入少于30个字符";
+"meetings.scheduleMeeting.meetingName.lenghtError"="输入最多30 个字符（15个中文字）";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="输入少于3,000 个字符";
+"meetings.scheduleMeeting.description.lenghtError"="输入最多3,000 个字符（1,500个中文字）";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="取消";
 /* Schedule meeting create button */
@@ -3380,3 +3368,31 @@
 "video.alert.resumeVideo.button.resume"="恢复";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="重启";
+/* Push notification message to be shown when the meeting is about to start now. */
+"meetings.scheduleMeeting.notification.meetingStartsNow.message"="会议现在开始";
+/* Push notification message to be shown when the meeting is about to start in 15 min. */
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="会议将在15分钟后开始";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.join"="加入";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.message"="信息";
+/* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="从不";
+/* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="每日";
+/* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="每周";
+/* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="每月";
+/* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="自定义";
+/* Navigation title of the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="重复";
+/* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="从不";
+/* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="每日";
+/* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="每周";
+/* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="每月";

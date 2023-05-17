@@ -159,7 +159,7 @@
         <key>zero</key>
         <string>%d ساعة</string>
         <key>one</key>
-        <string>1 ساعة</string>
+        <string>%d ساعة</string>
         <key>two</key>
         <string>%d ساعتان</string>
         <key>few</key>
@@ -183,7 +183,7 @@
         <key>zero</key>
         <string>%d يوم</string>
         <key>one</key>
-        <string>1 يوم</string>
+        <string>%d يوم</string>
         <key>two</key>
         <string>%d يومان</string>
         <key>few</key>
@@ -207,7 +207,7 @@
         <key>zero</key>
         <string>%d أسبوع</string>
         <key>one</key>
-        <string>1 أسبوع</string>
+        <string>%d أسبوع</string>
         <key>two</key>
         <string>%d أسبوعان</string>
         <key>few</key>
@@ -231,7 +231,7 @@
         <key>zero</key>
         <string>%d شهر</string>
         <key>one</key>
-        <string>1 شهر</string>
+        <string>%d شهر</string>
         <key>two</key>
         <string>%d شهران</string>
         <key>few</key>
@@ -255,7 +255,7 @@
         <key>zero</key>
         <string>%d سنة</string>
         <key>one</key>
-        <string>1 سنة</string>
+        <string>%d سنة</string>
         <key>two</key>
         <string>%d سنتان</string>
         <key>few</key>
@@ -384,6 +384,22 @@
         <string></string>
         <key>other</key>
         <string></string>
+      </dict>
+    </dict>
+    <key>recents.section.title.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@items@</string>
+      <key>items</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item</string>
+        <key>other</key>
+        <string>%d items</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>

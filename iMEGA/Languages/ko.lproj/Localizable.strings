@@ -1000,12 +1000,6 @@
 "cancelTransfersTitle"="전송 취소";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="모든 전송을 취소하시겠습니까?";
-/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="모든 전송";
-/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="업로드 전송";
-/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="다운로드 전송";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="업그레이드";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1084,8 +1078,8 @@
 "Verify Your Account"="계정 인증";
 /* Add your phone number title */
 "Add Your Phone Number"="전화번호 추가";
-/* Choose Your Country title */
-"Choose Your Country"="국가 선택";
+/* Choose Your Region title */
+"Choose Your Region"="국가를 선택하세요";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="개월";
 /*  */
@@ -1128,10 +1122,6 @@
 "Manage Account"="계정 관리";
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
-/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] Pro 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@TB (%@GB)[/S]의 클라우드 저장 공간을 받으세요.";
-/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] Pro 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@TB (%@GB)[/S]의 클라우드 저장 공간을 얻으세요.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="저장소";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -2006,8 +1996,6 @@
 "home.recent.createdByLabel"="%@님이 생성";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="최근 활동 없음";
-/* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d개의 항목";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="대화 링크 이용 불가";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2897,7 +2885,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X 압축";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL 데이터베이스";
+"general.filetype.sql"="SQL statements";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Sony RAW 이미지";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3357,9 +3345,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="설명 추가";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="30자 이하로 입력하세요";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="3,000자 이하로 입력하세요";
+"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="취소";
 /* Schedule meeting create button */
@@ -3380,3 +3368,31 @@
 "video.alert.resumeVideo.button.resume"="재개";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="재시작";
+/* Push notification message to be shown when the meeting is about to start now. */
+"meetings.scheduleMeeting.notification.meetingStartsNow.message"="회의가 지금 시작됩니다";
+/* Push notification message to be shown when the meeting is about to start in 15 min. */
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="15분 내에 회의가 시작됩니다";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.join"="참여";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.message"="메시지";
+/* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="절대 안함";
+/* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+/* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+/* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+/* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="이용자 지정";
+/* Navigation title of the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="되풀이";
+/* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="절대 안함";
+/* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="매일";
+/* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="매주";
+/* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="월간";

@@ -1000,12 +1000,6 @@
 "cancelTransfersTitle"="Overdrachten annuleren";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="Wilt u ALLE overdrachten annuleren?";
-/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="Alle overdrachten";
-/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="Upload overdrachten";
-/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="Download overdrachten";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Upgraden";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1084,8 +1078,8 @@
 "Verify Your Account"="Verifieer uw account";
 /* Add your phone number title */
 "Add Your Phone Number"="Uw Telefoonnummer Toevoegen";
-/* Choose Your Country title */
-"Choose Your Country"="Kies Uw Land";
+/* Choose Your Region title */
+"Choose Your Region"="Kies uw regio";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="maanden";
 /*  */
@@ -1128,10 +1122,6 @@
 "Manage Account"="Beheer Account";
 /*  */
 "chooseYourAccountType"="Kies uw accounttype";
-/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een Pro-account en krijg [S] tot %@TB (%@GB) [/S]aan cloud opslagruimte.";
-/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een Pro-account en krijg [S]tot %@TB (%@GB) [/S] aan cloud opslagruimte.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Opslag";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1625,7 +1615,7 @@
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="Herstarten";
 /*  */
-"resume"="Doorgaan";
+"resume"="Hervatten";
 /* Title to preview document */
 "previewContent"="Inhoud Weergeven";
 /* Title of the notification for a missed call */
@@ -2006,8 +1996,6 @@
 "home.recent.createdByLabel"="Gecreëerd door %@";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Geen Recente Activiteit";
-/* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d items";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Gesprekslink Onbeschikbaar";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2897,7 +2885,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X Gecomprimeerd";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL Database";
+"general.filetype.sql"="SQL-instructies";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Sony RAW Afbeelding";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3357,9 +3345,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Omschrijving toevoegen";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Voer minder dan 30 tekens in";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Voer tot 30 tekens in";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Voer minder dan 3000 tekens in ";
+"meetings.scheduleMeeting.description.lenghtError"="Voer tot 3000 tekens in";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Annuleren";
 /* Schedule meeting create button */
@@ -3380,3 +3368,31 @@
 "video.alert.resumeVideo.button.resume"="Hervatten";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="Herstarten";
+/* Push notification message to be shown when the meeting is about to start now. */
+"meetings.scheduleMeeting.notification.meetingStartsNow.message"="Vergadering begint nu";
+/* Push notification message to be shown when the meeting is about to start in 15 min. */
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="Vergadering begint over 15 minuten";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.join"="Aansluiten";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.message"="Bericht";
+/* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="Nooit";
+/* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Elke dag";
+/* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Elke week";
+/* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Elke maand";
+/* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Aangepast";
+/* Navigation title of the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="Herhaling";
+/* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="Nooit";
+/* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="Dagelijks";
+/* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Wekelijks";
+/* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Maandelijks";

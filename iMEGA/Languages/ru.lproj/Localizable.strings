@@ -1000,12 +1000,6 @@
 "cancelTransfersTitle"="Отменить передачи";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="Вы хотите отменить ВСЕ передачи?";
-/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="ВСЕ передачи";
-/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="ЗАГРУЗКИ в облако";
-/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="ЗАГРУЗКИ с сервера";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Улучшить";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1084,8 +1078,8 @@
 "Verify Your Account"="Подтвердите аккаунт";
 /* Add your phone number title */
 "Add Your Phone Number"="Добавьте номер телефона";
-/* Choose Your Country title */
-"Choose Your Country"="Выберите свою страну";
+/* Choose Your Region title */
+"Choose Your Region"="Выберите регион";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="мес.";
 /*  */
@@ -1128,10 +1122,6 @@
 "Manage Account"="Управлять аккаунтом";
 /*  */
 "chooseYourAccountType"="Выберите тип учётной записи";
-/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ваш облачный диск почти заполнен.[/S] [A]Улучшите аккаунт сейчас[/A] до Pro и получите [S]до %@ ТБ (%@ ГБ)[/S] места в облаке.";
-/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до Pro и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Хранилище данных";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -2006,8 +1996,6 @@
 "home.recent.createdByLabel"="Создано пользователем %@";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Нет недавней активности";
-/* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d элем.";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Ссылка на чат недоступна";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2897,7 +2885,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="Архив X";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="База данных SQL";
+"general.filetype.sql"="SQL-инструкции";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Изображение Sony RAW";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3357,9 +3345,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Добавить описание";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Введите меньше 30 символов";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Введите до 30 символов";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Введите меньше 3000 символов";
+"meetings.scheduleMeeting.description.lenghtError"="Введите до 3 000 символов";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Отмена";
 /* Schedule meeting create button */
@@ -3380,3 +3368,31 @@
 "video.alert.resumeVideo.button.resume"="Возобновить";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="Перезапуск";
+/* Push notification message to be shown when the meeting is about to start now. */
+"meetings.scheduleMeeting.notification.meetingStartsNow.message"="Встреча начинается";
+/* Push notification message to be shown when the meeting is about to start in 15 min. */
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="Встреча начнётся через 15 минут";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.join"="Войти";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.message"="Сообщение";
+/* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="Никогда";
+/* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Каждый день";
+/* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Каждую неделю";
+/* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Каждый месяц";
+/* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Другой срок";
+/* Navigation title of the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="Повторение";
+/* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="Никогда";
+/* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="Ежедневно";
+/* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Еженедельно";
+/* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Ежемесячно";
