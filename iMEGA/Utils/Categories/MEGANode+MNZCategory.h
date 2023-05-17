@@ -10,8 +10,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink inViewController:(UIViewController *_Nullable)viewController;
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
 
-- (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
-
 #pragma mark - Actions
 
 - (void)mnz_editTextFileInViewController:(UIViewController *)viewController;

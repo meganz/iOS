@@ -55,10 +55,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.node && !self.node.hasThumbnail && !self.isFolderLink && self.node.name.mnz_isVideoPathExtension) {
-        [self.node mnz_generateThumbnailForVideoAtPath:self.fileUrl];
-    }
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(movieFinishedCallback:)
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
