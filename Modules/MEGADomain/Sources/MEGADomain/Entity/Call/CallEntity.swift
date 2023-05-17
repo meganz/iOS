@@ -32,6 +32,8 @@ public struct CallEntity: Sendable {
         case audioLevel
         case networkQuality
         case outgoingRingingStop
+        case ownPermission
+        case genericNotification
     }
     
     public enum ConfigurationType: Sendable {
@@ -44,6 +46,11 @@ public struct CallEntity: Sendable {
         case peerRemoved
         case noChange
         case peerAdded
+    }
+    
+    public enum NotificationType: Sendable {
+        case invalid
+        case serverError
     }
     
     public let status: CallStatusType?

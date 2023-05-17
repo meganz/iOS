@@ -99,6 +99,10 @@ extension MEGAChatCallChangeType {
             return .networkQuality
         case .outgoingRingingStop:
             return .outgoingRingingStop
+        case .ownPermissions:
+            return .ownPermission
+        case .genericNotification:
+            return .genericNotification
         @unknown default:
             return .noChanges
         }
@@ -116,6 +120,19 @@ extension MEGAChatCallCompositionChange {
             return .peerAdded
         @unknown default:
             return .noChange
+        }
+    }
+}
+
+extension MEGAChatCallNotificationType {
+    func toNotificationTypeEntity() -> CallEntity.NotificationType {
+        switch self {
+        case .invalid:
+            return .invalid
+        case .sfuError:
+            return .serverError
+        @unknown default:
+            return .invalid
         }
     }
 }
