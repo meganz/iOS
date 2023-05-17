@@ -6,8 +6,12 @@ import Combine
 
 final class ChatRoomsListViewModelTests: XCTestCase {
     var subscription: AnyCancellable?
-    let chatsListMock = [ChatListItemEntity(chatId: 1, title: "Chat1"), ChatListItemEntity(chatId: 3, title: "Chat2"), ChatListItemEntity(chatId: 67, title: "Chat3")]
-    let meetingsListMock = [ChatListItemEntity(chatId: 11, title: "Meeting 1"), ChatListItemEntity(chatId: 14, title: "Meeting 2"), ChatListItemEntity(chatId: 51, title: "Meeting 3")]
+    let chatsListMock = [ChatListItemEntity(chatId: 1, title: "Chat1"),
+                         ChatListItemEntity(chatId: 3, title: "Chat2"),
+                         ChatListItemEntity(chatId: 67, title: "Chat3")]
+    let meetingsListMock = [ChatListItemEntity(chatId: 11, title: "Meeting 1", meeting: true),
+                            ChatListItemEntity(chatId: 14, title: "Meeting 2", meeting: true),
+                            ChatListItemEntity(chatId: 51, title: "Meeting 3", meeting: true)]
     
     func test_remoteChatStatusChange() {
         let userHandle: HandleEntity = 100
@@ -51,25 +55,6 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         viewModel.addChatButtonTapped()
         
         XCTAssert(router.presentStartConversation_calledTimes == 1)
-    }
-    
-    func testAction_selectChatsMode() {
-        let viewModel = ChatRoomsListViewModel(
-            chatUseCase:  MockChatUseCase(items: chatsListMock),
-            chatViewMode: .meetings
-        )
-        
-        viewModel.loadChatRoomsIfNeeded()
-        viewModel.selectChatMode(.chats)
-        
-        guard let chatRoomsCount  = viewModel.displayChatRooms?.count else {
-            XCTFail("No Chat Rooms, count should be equal to chatsListMock.count")
-            return
-        }
-        
-        for index in 0..<chatRoomsCount {
-            XCTAssert(viewModel.displayChatRooms?[index].chatListItem.chatId == chatsListMock[index].chatId)
-        }
     }
     
     func testSelectChatMode_inviteContactNow_shouldMatch() throws {
@@ -117,23 +102,47 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertTrue(state.description == Strings.Localizable.seeWhoSAlreadyOnMEGA)
     }
     
-    func testAction_selectMeetingsMode() {
+    func testSelectChatsMode_inputAsChats_viewModelesShouldMatch() {
+        let mockList = chatsListMock
         let viewModel = ChatRoomsListViewModel(
-            chatUseCase:  MockChatUseCase(items: meetingsListMock),
+            chatUseCase:  MockChatUseCase(items: mockList),
             chatViewMode: .meetings
         )
-        
         viewModel.loadChatRoomsIfNeeded()
+
+        
+        let expectation = expectation(description: "Compare the past meetings")
+        subscription = viewModel
+            .$displayChatRooms
+            .dropFirst()
+            .sink {
+                XCTAssert(mockList.map { ChatRoomViewModel(chatListItem: $0) } == $0)
+                expectation.fulfill()
+            }
+        
         viewModel.selectChatMode(.chats)
+        wait(for: [expectation], timeout: 6)
+    }
+    
+    func testSelectChatsMode_inputAsMeeting_viewModelsShouldMatch() {
+        let mockList = meetingsListMock
+        let viewModel = ChatRoomsListViewModel(
+            chatUseCase:  MockChatUseCase(items: mockList),
+            chatViewMode: .chats
+        )
+        viewModel.loadChatRoomsIfNeeded()
         
-        guard let chatRoomsCount  = viewModel.displayChatRooms?.count else {
-            XCTFail("No Chat Rooms, count should be equal to chatsListMock.count")
-            return
-        }
-        
-        for index in 0..<chatRoomsCount {
-            XCTAssert(viewModel.displayChatRooms?[index].chatListItem.chatId == meetingsListMock[index].chatId)
-        }
+        let expectation = expectation(description: "Compare the past meetings")
+        subscription = viewModel
+            .$displayPastMeetings
+            .filter { $0?.count == 3 }
+            .sink {
+                XCTAssert(mockList.map { ChatRoomViewModel(chatListItem: $0) } == $0)
+                expectation.fulfill()
+            }
+
+        viewModel.selectChatMode(.meetings)
+        wait(for: [expectation], timeout: 6)
     }
     
     func test_EmptyChatsList() {
