@@ -28,6 +28,7 @@
 #import "NSArray+MNZCategory.h"
 
 @import MEGAUIKit;
+@import MEGAData;
 
 static const CGFloat GapBetweenPages = 10.0;
 static const long long MaxSizeToDownloadOriginal = 50 * 1024 * 1024; // 50 MB. Download original as long it's smaller than 50MB
@@ -239,7 +240,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.secondWindow.hidden = YES;
     self.secondWindow = nil;
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

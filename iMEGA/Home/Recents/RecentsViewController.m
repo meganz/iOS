@@ -69,7 +69,8 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     [super removeFromParentViewController];
     
     RecentsPreferenceManager.delegate = nil;
-    [MEGASdkManager.sharedMEGASdk removeMEGADelegate:self];
+
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

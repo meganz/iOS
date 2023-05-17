@@ -1,7 +1,7 @@
-
 #import "LaunchViewController.h"
-
 #import "MEGASdkManager.h"
+
+@import MEGAData;
 
 @interface LaunchViewController () <MEGARequestDelegate>
 
@@ -43,7 +43,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
 }
 
 - (BOOL)prefersStatusBarHidden {

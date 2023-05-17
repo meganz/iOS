@@ -24,6 +24,7 @@
 
 @import DZNEmptyDataSet;
 @import MEGAUIKit;
+@import MEGAData;
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
@@ -108,7 +109,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

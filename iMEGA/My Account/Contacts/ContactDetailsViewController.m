@@ -26,6 +26,7 @@
 #import "MEGA-Swift.h"
 
 @import MEGAUIKit;
+@import MEGAData;
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionDonotDisturb = 0,
@@ -204,10 +205,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [super viewWillDisappear:animated];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
     
     if (self.isMovingFromParentViewController) {
-        [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+        [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
