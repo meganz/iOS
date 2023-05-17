@@ -132,10 +132,14 @@ final class ImageScrollView: UIScrollView {
         if let gifImageFileUrl = gifImageFileUrl {
             zoomView?.sd_setImage(with: gifImageFileUrl, placeholderImage: image)
         }
-        configureAfterDisplay()
-        configureImageForSize(image.size)
-        adjustFrameToCenter()
-        setNeedsDisplay()
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            configureAfterDisplay()
+            configureImageForSize(image.size)
+            adjustFrameToCenter()
+            setNeedsDisplay()
+        }
     }
     
     private func configureAfterDisplay() {
