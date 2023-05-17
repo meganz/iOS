@@ -7,7 +7,6 @@
 #import "Helper.h"
 #import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
-#import "MEGAUserAlertList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
