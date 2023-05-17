@@ -220,7 +220,7 @@ class ChatSharedItemsViewController: UIViewController {
         sendToVC.sendMode = .forward
         sendToVC.messages = messages
         sendToVC.sourceChatId = chatRoom.chatId
-        sendToVC.completion = { [weak self] chatIdNumbers, sentMessages in
+        sendToVC.completion = { [weak self] _, _ in
             SVProgressHUD.showSuccess(withStatus: Strings.Localizable.messageSent)
             self?.cancelSelectTapped()
         }
@@ -296,11 +296,11 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
         tableView.mnz_performBatchUpdates({
             self.messagesArray.insert(message, at: 0)
             self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-        }) { _ in
+        }, completion: { _ in
             if self.tableView.isEmptyDataSetVisible {
                 self.tableView.reloadEmptyDataSet()
             }
-        }
+        })
     }
     
     func onAttachmentDeleted(_ api: MEGAChatSdk, messageId: UInt64) {
@@ -316,12 +316,12 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
         tableView.mnz_performBatchUpdates({
             self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
             self.messagesArray.remove(at: index)
-        }) { _ in
+        }, completion: { _ in
             if self.messagesArray.isEmpty {
                 self.navigationItem.rightBarButtonItem = nil
                 self.tableView.reloadEmptyDataSet()
             }
-        }
+        })
     }
     
     func onTruncate(_ api: MEGAChatSdk, messageId: UInt64) {

@@ -68,8 +68,8 @@ class PhoneNumberViewController: UITableViewController {
     
     private func showModifyPhoneAlert() {
         let modifyPhoneNumberAlert = UIAlertController(title: Strings.Localizable.modifyPhoneNumber, message: Strings.Localizable.thisOperationWillRemoveYourCurrentPhoneNumberAndStartTheProcessOfAssociatingANewPhoneNumberWithYourAccount, preferredStyle: .alert)
-        modifyPhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { (action) in
-            MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (request, error) in
+        modifyPhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
+            MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (_, error) in
                 if error.type == .apiOk {
                     let presenter = self.presentingViewController
                     self.dismiss(animated: true, completion: {
@@ -88,8 +88,8 @@ class PhoneNumberViewController: UITableViewController {
     
     private func showRemovePhoneAlert() {
         let removePhoneNumberAlert = UIAlertController(title: Strings.Localizable.removePhoneNumber, message: Strings.Localizable.ThisWillRemoveYourAssociatedPhoneNumberFromYourAccount.ifYouLaterChooseToAddAPhoneNumberYouWillBeRequiredToVerifyIt, preferredStyle: .alert)
-        removePhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { (action) in
-            MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (request, error) in
+        removePhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
+            MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (_, error) in
                 if error.type == .apiOk {
                     self.dismiss(animated: true, completion: {
                         SVProgressHUD.showInfo(withStatus: Strings.Localizable.yourPhoneNumberHasBeenRemovedSuccessfully)

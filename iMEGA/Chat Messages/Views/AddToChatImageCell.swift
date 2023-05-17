@@ -106,10 +106,10 @@ class AddToChatImageCell: UICollectionViewCell {
             UIView.animate(withDuration: animationDuration,
                            animations: {
                             self.foregroundView.alpha = 0.0
-            }) { _ in
+            }, completion: { _ in
                 self.foregroundView.isHidden = true
                 self.foregroundView.alpha = 1.0
-            }
+            })
         }
     }
 

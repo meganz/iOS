@@ -224,13 +224,13 @@ extension EnterEmailViewController: UIAdaptivePresentationControllerDelegate {
 extension EnterEmailViewController {
 
     private func configureTagFieldEvents() {
-        tagsField.onDidAddTag = { field, tag in
+        tagsField.onDidAddTag = { _, _ in
             if self.tagsField.tags.isNotEmpty {
                 self.enableInviteContactsButton()
             }
         }
 
-        tagsField.onDidRemoveTag = { field, tag in
+        tagsField.onDidRemoveTag = { _, _ in
             self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
             
             if self.tagsField.tags.isNotEmpty {

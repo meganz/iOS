@@ -45,7 +45,7 @@ struct AccountRepository: AccountRepositoryProtocol {
     }
     
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
-        MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, error in
+        MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, _ in
             guard let myChatFilesFolderNode = myChatFilesFolderNode else {
                 completion(.failure(AccountErrorEntity.nodeNotFound))
                 return

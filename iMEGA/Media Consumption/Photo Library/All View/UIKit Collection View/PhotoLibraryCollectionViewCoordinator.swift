@@ -30,15 +30,14 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(
             elementKind: UICollectionView.elementKindSectionHeader
-        ) { [unowned self] header, elementKind, indexPath in
+        ) { [unowned self] header, _, indexPath in
             header.contentConfiguration = UIHostingConfiguration {
                 PhotoSectionHeader(section: self.photoSections[indexPath.section])
             }
             .margins(.all, 0)
         }
         
-        cellRegistration = UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity> {
-            [unowned self] cell, indexPath, photo in
+        cellRegistration = UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity> { [unowned self] cell, _, photo in
             let viewModel = PhotoCellViewModel(
                 photo: photo,
                 viewModel: representer.viewModel,

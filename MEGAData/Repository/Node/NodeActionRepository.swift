@@ -21,7 +21,7 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
             
             guard let megaNode = node.toMEGANode(in: sdk) else { return }
             
-            sdk.disableExport(megaNode, delegate: RequestDelegate() { result in
+            sdk.disableExport(megaNode, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else {
                     continuation.resume(throwing: CancellationError())
                     return

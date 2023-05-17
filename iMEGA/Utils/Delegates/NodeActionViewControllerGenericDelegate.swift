@@ -39,7 +39,7 @@ final class NodeActionViewControllerGenericDelegate:
             openShareFolderDialog(node, viewController: viewController)
             
         case .manageShare:
-            BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+            BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded { [weak self] in
                 self?.manageShare(node)
             }
             
@@ -190,7 +190,7 @@ final class NodeActionViewControllerGenericDelegate:
     }
     
     private func showContactListForShareFolderNode(_ node: MEGANode, viewController: UIViewController) {
-        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+        BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded { [weak self] in
             self?.shareFolder(node)
        }
     }

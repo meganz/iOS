@@ -46,7 +46,7 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
     }
     
     func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionErrorEntity>) -> Void) {
-        let delegate =  MEGAChatGenericRequestDelegate { request, error in
+        let delegate =  MEGAChatGenericRequestDelegate { _, error in
             if error.type == .MEGAChatErrorTypeOk {
                 completion(.success)
             } else {
@@ -58,7 +58,7 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
     }
     
     func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        chatSdk.openVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { request, error in
+        chatSdk.openVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { _, error in
             if error.type == .MEGAChatErrorTypeOk {
                 completion(.success)
             } else {
@@ -68,7 +68,7 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
     }
     
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        chatSdk.releaseVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { request, error in
+        chatSdk.releaseVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { _, error in
             if error.type == .MEGAChatErrorTypeOk {
                 if error.type == .MEGAChatErrorTypeOk {
                     completion(.success)

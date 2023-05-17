@@ -31,7 +31,7 @@ class ContactLinkContentView: UIView {
         titleLabel.text = message.richTitle
         descriptionLabel.text = message.richString
         
-        imageView.image = UIImage.mnz_image(forUserHandle: message.userHandle, name: message.richString ?? "", size: CGSize(width: 40, height: 40), delegate: MEGAGenericRequestDelegate { [weak self] (request, error) in
+        imageView.image = UIImage.mnz_image(forUserHandle: message.userHandle, name: message.richString ?? "", size: CGSize(width: 40, height: 40), delegate: MEGAGenericRequestDelegate { [weak self] (_, error) in
             guard let `self` = self else { return }
             if error.type != .apiOk {
                 self.imageView.isHidden = true

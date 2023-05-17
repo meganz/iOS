@@ -127,7 +127,7 @@ final class NodeCellViewModel: ViewModelType {
                 let cameraUploadsFolderImageName = "folder_image"
                 self.invokeCommand?(.setIcon(cameraUploadsFolderImageName))
             } else if nodeModel.name == Strings.Localizable.myChatFiles {
-                accountUseCase.getMyChatFilesFolder() { [weak self] in
+                accountUseCase.getMyChatFilesFolder { [weak self] in
                     switch $0 {
                     case .success(let myChatFilesNodeEntity):
                         if self?.nodeModel.handle == myChatFilesNodeEntity.handle {

@@ -433,7 +433,7 @@ class MessageInputBar: UIView {
             forName: UIResponder.keyboardDidHideNotification,
             object: nil,
             queue: .main
-        ) { [weak self] notification in
+        ) { [weak self] _ in
             guard let `self` = self else {
                 return
             }
@@ -456,7 +456,7 @@ class MessageInputBar: UIView {
             self.sendButton.alpha = 0.0
             self.layoutIfNeeded()
             MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation started")
-        }) { _ in
+        }, completion: { _ in
             
             if self.backgroundViewTrailingTextViewConstraint.isActive  {
                 self.sendButton.isHidden = true
@@ -467,7 +467,7 @@ class MessageInputBar: UIView {
 
                 MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation ended")
             }
-        }
+        })
     }
     
     private func showSendButtonUI() {
@@ -488,7 +488,7 @@ class MessageInputBar: UIView {
             self.layoutIfNeeded()
             MEGALogDebug("[MessageInputBar] Send Button UI animation started")
             
-        }) { _ in
+        }, completion: { _ in
             if self.backgroundViewTrailingButtonConstraint.isActive {
                 self.micButton.isHidden = true
                 self.micButton.alpha = 1.0
@@ -497,7 +497,7 @@ class MessageInputBar: UIView {
                 self.sendButton.alpha = 1.0
                 MEGALogDebug("[MessageInputBar] Send Button UI animation completed")
             }
-        }
+        })
     }
     
     private func updateTextUI() {

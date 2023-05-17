@@ -202,11 +202,7 @@ extension FavouritesExplorerListSource {
     }
 
     private func contextualAction(withImageName imageName: String, backgroundColor: UIColor, completion: @escaping () -> Void) -> UIContextualAction {
-        let action = UIContextualAction(style: .normal,
-                                        title: nil)
-        { (action, sourceView, callback) in
-            completion()
-        }
+        let action = UIContextualAction(style: .normal, title: nil) { _, _, _ in completion() }
 
         action.image = UIImage(named: imageName)
         action.image = action.image?.withTintColor(.white)

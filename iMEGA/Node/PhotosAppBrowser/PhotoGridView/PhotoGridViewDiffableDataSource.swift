@@ -32,8 +32,7 @@ final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
     func configureDataSource() {
         guard let collectionView = collectionView else { return }
         
-        dataSource = UICollectionViewDiffableDataSource<Section, PHAsset>(collectionView: collectionView) { [weak self]
-            (collectionView: UICollectionView, indexPath: IndexPath, asset: PHAsset) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, PHAsset>(collectionView: collectionView) { [weak self] (collectionView: UICollectionView, indexPath: IndexPath, asset: PHAsset) -> UICollectionViewCell? in
             guard let self = self,
                   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoGridViewCell.reuseIdentifier,
                                                                 for: indexPath) as? PhotoGridViewCell else {

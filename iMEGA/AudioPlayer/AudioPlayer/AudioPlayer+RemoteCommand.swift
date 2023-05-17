@@ -34,7 +34,7 @@ extension AudioPlayer {
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.asset.duration.seconds
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: isPaused ? 0.0 : 1.0)
         if let artwork = item.artwork {
-            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { size in
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { _ in
                 artwork
             }
         }
@@ -75,7 +75,7 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
         }
         
         disableRemoteCommands()
-        playNext() { [weak self] in
+        playNext { [weak self] in
             guard let `self` = self else { return }
             self.enableRemoteCommands()
         }
@@ -87,7 +87,7 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
         guard event.command.isEnabled, queuePlayer != nil, !isAudioPlayerInterrupted else { return .commandFailed }
         
         disableRemoteCommands()
-        playPrevious() { [weak self] in
+        playPrevious { [weak self] in
             guard let `self` = self else { return }
             self.enableRemoteCommands()
         }

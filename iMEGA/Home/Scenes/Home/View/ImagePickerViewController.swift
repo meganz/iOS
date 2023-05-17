@@ -148,7 +148,7 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
         PHPhotoLibrary.shared().performChanges({
             let assetCreationRequest = PHAssetCreationRequest.forAsset()
             assetCreationRequest.addResource(with: assetType, fileURL: assetURL, options: nil)
-        }) { [completion] (success, error) in
+        }, completionHandler: { [completion] (success, _) in
             guard success else {
                 completion?(.success(relativeLocalPath(filePath)))
                 return
@@ -159,7 +159,7 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
             default:
                 completion?(.failure(.unsupportedFileType))
             }
-        }
+        })
     }
 }
 

@@ -18,7 +18,7 @@ extension ServiceManager {
             LogManager.req(request)
         }
 
-       let task = URLSession.shared.dataTask(with: request.urlRequest()) { data, response, error in
+       let task = URLSession.shared.dataTask(with: request.urlRequest()) { data, _, error in
             guard let data = data, var responseModel = try? JSONDecoder().decode(ResponseModel<T>.self, from: data) else {
                 let error: ErrorModel = ErrorModel(ErrorKey.parsing.rawValue)
                 LogManager.err(error)

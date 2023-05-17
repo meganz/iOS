@@ -252,7 +252,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private func addChatRoomParticipantsChangedListener() {
         chatRoomUseCase
             .participantsUpdated(forChatRoom: chatRoom)
-            .sink() { [weak self] peerHandles in
+            .sink { [weak self] peerHandles in
                 guard let self = self else { return }
                 
                 self.chatRoomParticipantsUpdatedTask?.cancel()
@@ -275,7 +275,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func disableLoudSpeaker() {
-        audioSessionUseCase.disableLoudSpeaker { [weak self] result in
+        audioSessionUseCase.disableLoudSpeaker { [weak self] _ in
             self?.updateSpeakerInfo()
         }
     }
@@ -431,7 +431,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching allow host to add participants with error \(error)")
-            }, receiveValue: { [weak self] handle in
+            }, receiveValue: { [weak self] _ in
                 guard let self = self,
                       let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatRoom.chatId) else {
                     return

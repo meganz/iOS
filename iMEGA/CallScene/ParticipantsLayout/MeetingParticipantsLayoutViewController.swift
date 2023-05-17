@@ -330,7 +330,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         renameAlertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: { [weak self] _ in
             self?.viewModel.dispatch(.discardChangeTitle)
         }))
-        renameAlertController.addAction(UIAlertAction(title: Strings.Localizable.rename, style: .default, handler: { [weak self] action in
+        renameAlertController.addAction(UIAlertAction(title: Strings.Localizable.rename, style: .default, handler: { [weak self] _ in
             guard let newTitle = renameAlertController.textFields?.first?.text else {
                 return
             }

@@ -108,7 +108,7 @@ class MegaAvatarView: UIView {
             return
         }
         
-        let delegate = MEGAChatGenericRequestDelegate { (request, error) in
+        let delegate = MEGAChatGenericRequestDelegate { (_, error) in
             guard error.type == .MEGAChatErrorTypeOk,
                   let name = sdk.userFullnameFromCache(byUserHandle: peerId) else {
                 MEGALogDebug("error fetching attributes for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")

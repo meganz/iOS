@@ -12,7 +12,7 @@ struct PhotoLibraryCollectionLayoutBuilder {
     }
     
     private func buildMultipleColumnsLayout() -> UICollectionViewLayout {
-        UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
+        UICollectionViewCompositionalLayout { _, layoutEnvironment in
             let contentWidth = layoutEnvironment.container.effectiveContentSize.width
             let spacing: CGFloat = zoomState.scaleFactor == .thirteen ? 0 : 4
             

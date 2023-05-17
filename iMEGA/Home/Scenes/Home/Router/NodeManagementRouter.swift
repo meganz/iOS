@@ -36,8 +36,7 @@ final class NodeManagementRouter: NSObject {
     }
 
     func showLabelColorAction(for node: MEGANode) {
-        ActionSheetFactory().nodeLabelColorView(forNode: node.handle) {
-            [navigationController] (actionViewControllerResult) in
+        ActionSheetFactory().nodeLabelColorView(forNode: node.handle) { [navigationController] (actionViewControllerResult) in
             switch actionViewControllerResult {
             case .failure:
                 break // not implemented, save for later to define.

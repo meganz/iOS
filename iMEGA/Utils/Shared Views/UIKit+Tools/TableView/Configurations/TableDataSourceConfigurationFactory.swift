@@ -13,11 +13,11 @@ extension TableDataSourceConfigurationFactory {
             return TableDataSourceConfiguration<CellItem>(
                 numberOfSections: { () -> Int in
                     1
-                }, numberOfRows: { section -> Int in
+                }, numberOfRows: { _ in
                     items.count
                 }, itemAtIndexPath: { indexPath in
                     return items[safe: indexPath.row]
-                }, headerTitle: { section -> String? in
+                }, headerTitle: { _ -> String? in
                     nil
                 }
             )
@@ -33,11 +33,11 @@ extension TableDataSourceConfigurationFactory where CellItem: Comparable {
                 return TableDataSourceConfiguration<CellItem>(
                     numberOfSections: { () -> Int in
                         1
-                    }, numberOfRows: { section -> Int in
+                    }, numberOfRows: { _ in
                         sortedItems.count
                     }, itemAtIndexPath: { indexPath in
                         return sortedItems[safe: indexPath.row]
-                    }, headerTitle: { section -> String? in
+                    }, headerTitle: { _ -> String? in
                         nil
                     }
                 )

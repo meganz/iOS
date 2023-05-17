@@ -56,7 +56,7 @@ final class FavouritesViewModel: ViewModelType {
     }
     
     private func registerOnNodesUpdate() {
-        favouritesUseCase.registerOnNodesUpdate { [weak self] nodeEntities in
+        favouritesUseCase.registerOnNodesUpdate { [weak self] _ in
             self?.getAllFavouritesNodes()
         }
     }

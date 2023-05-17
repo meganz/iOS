@@ -66,8 +66,7 @@ fileprivate extension QueryConstraint {
     }
     
     /// A composite query constraint who composite `storagGreaterThan` and `mimumPrice` together.
-    static let minimumPriceForStorageInBytesGreaterThan: (Measurement<UnitDataStorage>) -> QueryConstraint = {
-        (storage) -> QueryConstraint in
+    static let minimumPriceForStorageInBytesGreaterThan: (Measurement<UnitDataStorage>) -> QueryConstraint = { (storage) -> QueryConstraint in
         return QueryConstraint { plans in
             QueryConstraint.minimumPrice(
                 QueryConstraint.storagGreaterThan(storage)(plans))

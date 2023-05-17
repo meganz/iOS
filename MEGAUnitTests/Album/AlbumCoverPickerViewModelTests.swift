@@ -10,7 +10,7 @@ final class AlbumCoverPickerViewModelTests: XCTestCase {
         let exp = expectation(description: "Should call completion handler and set isDismiss to true")
         
         let photo = AlbumPhotoEntity(photo: NodeEntity(handle: 1))
-        let sut = albumCoverPickerViewModel { album, node in
+        let sut = albumCoverPickerViewModel { _, node in
             XCTAssertEqual(node, photo)
             exp.fulfill()
         }

@@ -42,7 +42,7 @@ extension SDKNodeClient {
             }
             let destinationPath = destinationPathURL.path
             megaSDKOperationQueue.addOperation {
-                let delegate = MEGAGenericRequestDelegate { (request, error) in
+                let delegate = MEGAGenericRequestDelegate { (_, error) in
                     guard error.type == .apiOk else {
                         asyncOnGlobal { completion(false) }
                         return

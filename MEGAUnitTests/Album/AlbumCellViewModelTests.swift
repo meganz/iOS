@@ -73,7 +73,7 @@ final class AlbumCellViewModelTests: XCTestCase {
         
         sut.$thumbnailContainer
             .dropFirst()
-            .sink { container in
+            .sink { _ in
                 exp.fulfill()
             }.store(in: &subscriptions)
         

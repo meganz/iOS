@@ -37,9 +37,9 @@ class TapAndHoldMessageView: UIView {
         
         UIView.animate(withDuration: 0.4, animations: {
             self.alpha = 1.0
-        }) { _ in
+        }, completion: { _ in
             self.startTimer()
-        }
+        })
     }
     
     //MARK: - Private methods
@@ -57,9 +57,9 @@ class TapAndHoldMessageView: UIView {
         
         UIView.animate(withDuration: 0.4, animations: {
             self.alpha = 0.0
-        }) { _ in
+        }, completion: { _ in
             self.removeFromSuperview()
-        }
+        })
     }
     
     private func setLabelText() {

@@ -57,11 +57,11 @@ private struct SearchBarOverlayView: View {
             if clearEnabled {
                 Button(action: {
                     action()
-                }) {
+                }, label: {
                     Image(systemName: "multiply.circle.fill")
                         .foregroundColor(.gray)
                         .padding(.trailing, 8)
-                }
+                })
                 .buttonStyle(BorderlessButtonStyle())
             }
         }
@@ -75,9 +75,9 @@ private struct SearchBarCancelButton: View {
     public var body: some View {
         Button(action: {
             action()
-        }) {
+        }, label: {
             Text(cancelTitle)
-        }
+        })
         .buttonStyle(BorderlessButtonStyle())
         .foregroundColor(.secondary)
         .padding(.trailing, 10)

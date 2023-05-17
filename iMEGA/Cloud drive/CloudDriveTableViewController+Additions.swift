@@ -48,7 +48,7 @@ extension CloudDriveTableViewController {
     }
     
     private func swipeAction(image: UIImage, backgroundColor: UIColor, completion: @escaping () -> Void) -> UIContextualAction {
-        let action = UIContextualAction(style: .normal, title: nil, handler: { action, sourceView, completionHandler in
+        let action = UIContextualAction(style: .normal, title: nil, handler: { _, _, _ in
             completion()
         })
         

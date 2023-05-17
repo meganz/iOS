@@ -79,14 +79,14 @@ final class FilesExplorerViewModel {
         self.createContextMenuUseCase = createContextMenuUseCase
         self.filesDownloadUseCase = filesDownloadUseCase
 
-        self.useCase?.onNodesUpdate { [weak self] nodes in
+        self.useCase?.onNodesUpdate { [weak self] _ in
             guard let self = self else { return }
             self.debouncer.start {
                 self.invokeCommand?(.reloadData)
             }
         }
         
-        self.favouritesUseCase?.registerOnNodesUpdate { [weak self] nodes in
+        self.favouritesUseCase?.registerOnNodesUpdate { [weak self] _ in
             guard let self = self else { return }
             self.debouncer.start {
                 self.invokeCommand?(.reloadData)

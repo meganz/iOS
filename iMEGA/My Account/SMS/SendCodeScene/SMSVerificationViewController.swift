@@ -214,12 +214,12 @@ final class SMSVerificationViewController: UIViewController, ViewType {
             self.cancelButton.isHidden = true
             self.titleLabel.isHidden = true
             self.setNeedsStatusBarAppearanceUpdate()
-        }) { _ in
+        }, completion: { _ in
             var insets = self.scrollView.contentInset
             insets.bottom = keyboardHeight
             self.scrollView.contentInset = insets
             self.scrollView.scrollIndicatorInsets = insets
-        }
+        })
     }
     
     // MARK: - Execute command

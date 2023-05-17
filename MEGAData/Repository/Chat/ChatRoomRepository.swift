@@ -234,7 +234,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool {
         await withCheckedContinuation { continuation in
-            sdk.leaveChat(chatRoom.chatId, delegate: ChatRequestListener { (request, error) in
+            sdk.leaveChat(chatRoom.chatId, delegate: ChatRequestListener { (_, error) in
                 guard let error, error.type == .MEGAChatErrorTypeOk else {
                     continuation.resume(returning: false)
                     return

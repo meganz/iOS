@@ -41,8 +41,7 @@ final class SearchFileHistoryUseCase: SearchFileHistoryUseCaseProtocol {
     }
 
     func saveSearchHistoryEntry(_ newEntry: SearchFileHistoryEntryDomain) {
-        let updatedSearchHistoryEntries = searchHintsUpdatingStrategies.reduce((searchHistoryEntries(), newEntry)) {
-            result, strategy in
+        let updatedSearchHistoryEntries = searchHintsUpdatingStrategies.reduce((searchHistoryEntries(), newEntry)) { result, strategy in
             strategy.updatingSearchHistoryEntries(result.0, result.1)
         }.0
         try? fileSearchHistoryRepository.saveSearchHistory(updatedSearchHistoryEntries)

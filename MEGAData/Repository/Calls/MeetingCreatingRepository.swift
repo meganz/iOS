@@ -36,7 +36,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     }
     
     func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
+        let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, _) in
             guard let self = self else { return }
             guard let chatroom = self.chatSdk.chatRoom(forChatId: request.chatHandle) else {
                 MEGALogDebug("ChatRoom not found with chat handle \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
@@ -69,7 +69,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
     }
 
     func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
+        let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, _) in
             guard let self = self, let megaChatRoom = self.chatSdk.chatRoom(forChatId: request.chatHandle) else {
                 MEGALogDebug("ChatRoom not found with chat handle \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
                 completion(.failure(.generic))
@@ -171,7 +171,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
             switch $0 {
             case .success(let chatRequest):
                 MEGALogDebug("Create meeting: open chat preview succeeded with request \(chatRequest)")
-                self.chatResultDelegate = MEGAChatResultDelegate { sdk, chatId, newState in
+                self.chatResultDelegate = MEGAChatResultDelegate { _, chatId, newState in
                     if chatRequest.chatHandle == chatId, newState == .online, let chatResultDelegate = self.chatResultDelegate {
                         self.chatSdk.remove(chatResultDelegate)
                         completion(.success(()))

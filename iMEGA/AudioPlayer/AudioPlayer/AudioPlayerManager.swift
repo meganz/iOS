@@ -75,7 +75,7 @@ import MEGADomain
     func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem]) {
         if self.player != nil {
             CrashlyticsLogger.log("[AudioPlayer] current instance of the player \(String(describing: player)) need to be closed")
-            player?.close() { [weak self] in
+            player?.close { [weak self] in
                 MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
                 self?.player = nil
                 CrashlyticsLogger.log("[AudioPlayer] player closed")
@@ -136,7 +136,7 @@ import MEGADomain
     
     func playPrevious() {
         player?.blockAudioPlayerInteraction()
-        player?.playPrevious() { [weak self] in
+        player?.playPrevious { [weak self] in
             self?.player?.unblockAudioPlayerInteraction()
         }
     }
@@ -166,7 +166,7 @@ import MEGADomain
     
     func playNext() {
         player?.blockAudioPlayerInteraction()
-        player?.playNext() { [weak self] in
+        player?.playNext { [weak self] in
             self?.player?.unblockAudioPlayerInteraction()
         }
     }
@@ -258,7 +258,7 @@ import MEGADomain
     }
     
     func closePlayer() {
-        player?.close() { [weak self] in
+        player?.close { [weak self] in
             self?.audioSessionUseCase.configureCallAudioSession()
         }
         

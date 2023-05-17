@@ -93,7 +93,7 @@ final class MeetingContainerViewModel: ViewModelType {
             if isOneToOneChat == false {
                 muteMicSubscription = Just(Void.self)
                     .delay(for: .seconds(Constants.muteMicTimerDuration), scheduler: RunLoop.main)
-                    .sink() { [weak self] _ in
+                    .sink { [weak self] _ in
                         guard let self = self else { return }
 
                         self.muteMicrophoneIfNoOtherParticipantsArePresent()
@@ -103,7 +103,7 @@ final class MeetingContainerViewModel: ViewModelType {
                 noUserJoinedSubscription = noUserJoinedUseCase
                     .monitor
                     .receive(on: DispatchQueue.main)
-                    .sink() { [weak self] in
+                    .sink { [weak self] in
                         guard let self = self else { return }
                         
                         self.showEndCallDialogIfNeeded {

@@ -121,7 +121,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                let itemToRepeat = itemToRepeat,
                lastItem == itemToRepeat {
                 notify(aboutTheBeginningOfBlockingAction)
-                playPrevious() { [weak self] in
+                playPrevious { [weak self] in
                     guard let `self` = self else { return }
                     self.notify(self.aboutTheEndOfBlockingAction)
                 }

@@ -18,7 +18,7 @@ struct ChatRoomUserRepository: ChatRoomUserRepositoryProtocol {
         }
         
         return try await withCheckedThrowingContinuation { continuation in
-            let delegate = MEGAChatGenericRequestDelegate { (request, error) in
+            let delegate = MEGAChatGenericRequestDelegate { (_, error) in
                 guard error.type == .MEGAChatErrorTypeOk,
                       let name = self.sdk.userFullnameFromCache(byUserHandle: peerId) else {
                     MEGALogDebug("error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")

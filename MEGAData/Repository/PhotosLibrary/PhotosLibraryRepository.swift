@@ -17,7 +17,7 @@ struct PhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
         let type: PHAssetResourceType = url.lastPathComponent.mnz_isImagePathExtension ? .photo : .video
         PHPhotoLibrary.shared().performChanges {
             PHAssetCreationRequest.forAsset().addResource(with: type, fileURL: url, options: self.options)
-        } completionHandler: { success, error in
+        } completionHandler: { success, _ in
             if success {
                 completion?(nil)
             } else {

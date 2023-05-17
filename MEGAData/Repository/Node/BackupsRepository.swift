@@ -49,7 +49,7 @@ struct BackupsRepository: BackupsRepositoryProtocol {
     
     func backupRootNode() async throws -> NodeEntity {
         try await withAsyncThrowingValue(in: { completion in
-            BackupRootNodeAccess.shared.loadNode { node, error in
+            BackupRootNodeAccess.shared.loadNode { node, _ in
                 guard let node = node else {
                     completion(.failure(FolderInfoErrorEntity.notFound))
                     return

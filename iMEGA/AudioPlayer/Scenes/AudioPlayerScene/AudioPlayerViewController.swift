@@ -74,7 +74,7 @@ final class AudioPlayerViewController: UIViewController {
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
-        coordinator.animate(alongsideTransition: { [weak self] context in
+        coordinator.animate(alongsideTransition: { [weak self] _ in
             guard let `self` = self else { return }
             self.style(with: self.traitCollection)
         })
