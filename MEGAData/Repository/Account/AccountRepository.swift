@@ -41,7 +41,7 @@ struct AccountRepository: AccountRepositoryProtocol {
     }
     
     func relevantUnseenUserAlertsCount() -> UInt {
-        sdk.userAlertList().mnz_relevantUnseenCount
+        sdk.userAlertList().relevantUnseenCount
     }
     
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {

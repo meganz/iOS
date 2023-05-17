@@ -6,7 +6,6 @@
 #import "MEGANavigationController.h"
 #import "MyAccountHallViewController.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGAUserAlertList+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
 #import "TransfersWidgetViewController.h"

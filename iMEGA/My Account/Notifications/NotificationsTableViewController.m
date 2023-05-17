@@ -16,9 +16,10 @@
 #import "MEGA-Swift.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGAUserAlert.h"
-#import "MEGAUserAlertList+MNZCategory.h"
 #import "NotificationTableViewCell.h"
 #import "SharedItemsViewController.h"
+
+@import MEGAData;
 
 @interface NotificationsTableViewController () <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, MEGAGlobalDelegate>
 
@@ -383,7 +384,7 @@
 }
 
 - (void)fetchAlerts {
-    NSArray<MEGAUserAlert *> *alerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUserAlertsArray;
+    NSArray<MEGAUserAlert *> *alerts = [MEGASdkManager sharedMEGASdk].userAlertList.relevantUserAlertsArray;
     
     NSMutableArray *filteredAlerts = [NSMutableArray array];
     for(MEGAUserAlert *alert in alerts) {

@@ -130,7 +130,6 @@
 #import "UICollectionView+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAUserAlert.h"
-#import "MEGAUserAlertList+MNZCategory.h"
 #import "NodeTableViewCell.h"
 #import "MyAccountHallViewController.h"
 #import "RecentsViewController.h"
