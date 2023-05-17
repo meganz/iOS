@@ -1870,11 +1870,6 @@
         [SaveNodeUseCaseOCWrapper.alloc.init saveNodeIfNeededFrom:transfer];
         
         [QuickAccessWidgetManager reloadWidgetContentOfKindWithKind:MEGAOfflineQuickAccessWidget];
-        
-        if (transfer.fileName.mnz_isVideoPathExtension && !node.hasThumbnail) {
-            NSURL *videoURL = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:transfer.path]];
-            [node mnz_generateThumbnailForVideoAtPath:videoURL];
-        }
     }
     
     [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferFinishedNotification object:nil userInfo:@{MEGATransferUserInfoKey : transfer}];
