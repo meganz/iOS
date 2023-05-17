@@ -110,8 +110,7 @@
     
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault:
-            [self configureSelectorViewForChatType:MEGAChatTypeNonMeeting];
-            self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItemsByType:self.chatTypeSelected];
+            [self loadChatListItemListForSelectedChatType];
             self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
             self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
             break;
@@ -646,8 +645,22 @@
     }
 }
 
+- (void)loadChatListItemListForSelectedChatType {
+    if (self.chatTypeSelected == MEGAChatTypeMeeting) {
+        self.chatListItemList = [MEGAChatSdk.shared chatListItemsByMask:MEGAChatListMaskMeetingOrNonMeeting | MEGAChatListMaskArchivedOrNonArchived
+                                                                 filter:MEGAChatListFilterMeeting | MEGAChatListFilterNonArchived];
+    } else {
+        self.chatListItemList = [MEGAChatSdk.shared chatListItemsByMask:MEGAChatListMaskMeetingOrNonMeeting | MEGAChatListMaskArchivedOrNonArchived
+                                                                 filter:MEGAChatListFilterNonMeeting | MEGAChatListFilterNonArchived];
+    }
+}
+
 - (void)reloadData {
-    self.chatListItemList = self.chatRoomsType == ChatRoomsTypeDefault ? [[MEGASdkManager sharedMEGAChatSdk] chatListItemsByType:self.chatTypeSelected] : [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+    if (self.chatRoomsType == ChatRoomsTypeDefault) {
+        [self loadChatListItemListForSelectedChatType];
+    } else {
+        self.chatListItemList = [MEGAChatSdk.shared archivedChatListItems];
+    }
     self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     [self reorderList];
     [self updateChatIdIndexPathDictionary];

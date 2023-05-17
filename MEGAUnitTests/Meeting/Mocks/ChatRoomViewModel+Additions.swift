@@ -14,7 +14,7 @@ extension ChatRoomViewModel {
         megaHandleUseCase: MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(),
         audioSessionUseCase: AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
-        scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
+        scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
         notificationCenter: NotificationCenter = .default,
         isTesting: Bool = true

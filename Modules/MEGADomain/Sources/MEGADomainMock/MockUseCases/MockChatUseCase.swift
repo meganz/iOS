@@ -81,7 +81,11 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         activeCallEntity
     }
     
-    public func chatsList(ofType type: ChatTypeEntity) -> [ChatListItemEntity]? {
+    public func fetchNonMeetings() -> [ChatListItemEntity]? {
+        items
+    }
+    
+    public func fetchMeetings() -> [ChatListItemEntity]? {
         items
     }
     
