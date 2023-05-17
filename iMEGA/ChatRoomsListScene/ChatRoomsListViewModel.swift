@@ -298,7 +298,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func fetchNonMeetingChats() async {
         guard isViewOnScreen else { return }
         
-        let chatListItems = chatUseCase.chatsList(ofType: .nonMeeting) ?? []
+        let chatListItems = chatUseCase.fetchNonMeetings() ?? []
         chatRooms = chatListItems.map(constructChatRoomViewModel)
         
         await filterChats()
@@ -310,7 +310,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             return
         }
         
-        let chatListItems =  chatUseCase.chatsList(ofType: .meeting) ?? []
+        let chatListItems = chatUseCase.fetchMeetings() ?? []
         
         fetchFutureScheduledMeetings()
         

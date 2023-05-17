@@ -333,7 +333,7 @@ final class ScheduleMeetingCreationRecurrenceOptionsViewModelTests: XCTestCase {
         let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
             presenter: UINavigationController(),
             rules: inputRules[0],
-            startDate: Date.now
+            startDate: date
         )
         
         let expectation = expectation(description: "Selection updated from monthly to daily")
