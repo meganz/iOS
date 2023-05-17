@@ -10,7 +10,7 @@ struct ActionsView: View {
     
     var body: some View {
         ForEach(actions) { actionItem in
-            Button() {
+            Button {
                 action(actionItem.actionType)
             } label: {
                 ActionView(viewModel: ActionViewModel(actionItem: actionItem))

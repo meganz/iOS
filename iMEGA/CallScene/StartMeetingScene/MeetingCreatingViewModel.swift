@@ -103,7 +103,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         
         appDidBecomeActiveSubscription = NotificationCenter.default
             .publisher(for: UIApplication.didBecomeActiveNotification)
-            .sink() { [weak self] _ in
+            .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.audioSessionUseCase.configureCallAudioSession()
                 self.addRouteChangedListener()
@@ -112,7 +112,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         
         appWillResignActiveSubscription = NotificationCenter.default
             .publisher(for: UIApplication.willResignActiveNotification)
-            .sink() { [weak self] _ in
+            .sink { [weak self] _ in
                 self?.removeRouteChangedListener()
             }
     }
@@ -155,11 +155,11 @@ final class MeetingCreatingViewModel: ViewModelType {
             checkForVideoPermission {
                 self.isVideoEnabled = !self.isVideoEnabled
                 if self.isVideoEnabled {
-                    self.localVideoUseCase.openVideoDevice { result in
+                    self.localVideoUseCase.openVideoDevice { _ in
                         self.localVideoUseCase.addLocalVideo(for: MEGAInvalidHandle, callbacksDelegate: self)
                     }
                 } else {
-                    self.localVideoUseCase.releaseVideoDevice { result in
+                    self.localVideoUseCase.releaseVideoDevice { _ in
                         self.localVideoUseCase.removeLocalVideo(for: MEGAInvalidHandle, callbacksDelegate: self)
                     }
                 }
@@ -233,11 +233,11 @@ final class MeetingCreatingViewModel: ViewModelType {
     
     private func enableLoudSpeaker(enabled: Bool) {
         if enabled {
-            audioSessionUseCase.enableLoudSpeaker { [weak self] result in
+            audioSessionUseCase.enableLoudSpeaker { [weak self] _ in
                 self?.updateSpeakerInfo()
             }
         } else {
-            audioSessionUseCase.disableLoudSpeaker { [weak self] result in
+            audioSessionUseCase.disableLoudSpeaker { [weak self] _ in
                 self?.updateSpeakerInfo()
             }
         }

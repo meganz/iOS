@@ -2,7 +2,7 @@
     @objc class func inAppPurchaseAlertWithAppStoreSettingsButton(_ alertTitle: String, alertMessage: String?) -> UIAlertController {
         let alertController: UIAlertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         
-        let appStoreSettingsAlertAction = UIAlertAction(title: Strings.Localizable.InAppPurchase.Error.Alert.primaryButtonTitle, style: .default, handler: { UIAlertAction in
+        let appStoreSettingsAlertAction = UIAlertAction(title: Strings.Localizable.InAppPurchase.Error.Alert.primaryButtonTitle, style: .default, handler: { _ in
             UIApplication.openAppStoreSettings()
         })
         alertController.addAction(appStoreSettingsAlertAction)

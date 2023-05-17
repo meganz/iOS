@@ -339,7 +339,7 @@ class ChatViewController: MessagesViewController {
             }
             customModalAlertVC.secondCompletion = { [weak customModalAlertVC] in
                 customModalAlertVC?.dismiss(animated: true, completion: {
-                    MEGASdkManager.sharedMEGAChatSdk().removeChatLink(self.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                    MEGASdkManager.sharedMEGAChatSdk().removeChatLink(self.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate(completion: { (_, error) in
                         if error.type == .MEGAChatErrorTypeOk {
                             SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
                         }
@@ -395,9 +395,9 @@ class ChatViewController: MessagesViewController {
         
         coordinator.animate(alongsideTransition: { [weak self] _ in
             self?.relayoutChatInputBarIfNeeded()
-        }) { [weak self] _ in
+        }, completion: { [weak self] _ in
             self?.relayoutChatInputBarIfNeeded()
-        }
+        })
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -656,7 +656,7 @@ class ChatViewController: MessagesViewController {
     func avatarImage(for message: MessageType) -> UIImage? {
         guard let userHandle = UInt64(message.sender.senderId) else { return nil }
         
-        return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGAGenericRequestDelegate { (request, error) in
+        return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGAGenericRequestDelegate { (_, _) in
         })
     }
     
@@ -945,7 +945,7 @@ class ChatViewController: MessagesViewController {
             
             let cancel = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel)
             
-            let action2 = UIAlertAction(title: Strings.Localizable.resume, style: .default) { (action:UIAlertAction) in
+            let action2 = UIAlertAction(title: Strings.Localizable.resume, style: .default) { _ in
                 MEGASdkManager.sharedMEGASdk().pauseTransfers(false)
                 UserDefaults.standard.set(false, forKey: "TransfersPaused")
             }
@@ -992,10 +992,10 @@ class ChatViewController: MessagesViewController {
         
         UIView.animate(withDuration: 0.2, animations: {
             self.chatBottomInfoScreen.alpha = 0.0
-        }) { _ in
+        }, completion: { _ in
             self.chatBottomInfoScreen.isHidden = true
             self.chatBottomInfoScreen.alpha = 1.0
-        }
+        })
     }
     
     // MARK: - Bar Button actions

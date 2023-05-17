@@ -97,7 +97,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .saveToPhotos:
             saveToPhotos(nodes: [node.toNodeEntity()])
         case .manageShare:
-            BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() { [weak self] in
+            BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded { [weak self] in
                 self?.manageShare(node)
             }
         case .shareFolder:

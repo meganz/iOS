@@ -19,7 +19,7 @@ extension ContactsViewController {
     }
     
     @objc func showBackupNodesWarningIfNeeded(completion: @escaping () -> Void) {
-        BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded() {
+        BackupNodesValidator(presenter: self, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded {
             completion()
         }
     }

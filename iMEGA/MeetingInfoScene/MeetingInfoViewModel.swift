@@ -139,7 +139,7 @@ final class MeetingInfoViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogError("error fetching allow host to add participants with error \(error)")
-            }, receiveValue: { [weak self] handle in
+            }, receiveValue: { [weak self] _ in
                 guard let self = self,
                       let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
                     return
@@ -164,7 +164,7 @@ final class MeetingInfoViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")
-            }, receiveValue: { [weak self] handle in
+            }, receiveValue: { [weak self] _ in
                 guard  let self,
                        let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
                     return

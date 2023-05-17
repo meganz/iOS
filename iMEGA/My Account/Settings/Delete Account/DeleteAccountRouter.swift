@@ -59,7 +59,7 @@ class DeleteAccountRouter: Routing {
         guard let myEmail = MEGASdk.currentUserEmail else { return }
         MEGASdkManager.sharedMEGASdk()
             .multiFactorAuthCheck(withEmail: myEmail,
-                                  delegate: MEGAMultiFactorAuthCheckRequestDelegate { (request, error) in
+                                  delegate: MEGAMultiFactorAuthCheckRequestDelegate { (request, _) in
                 guard let authRequest = request else { return }
                 completion(authRequest.flag)
             })

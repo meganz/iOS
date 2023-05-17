@@ -40,11 +40,11 @@ struct SnackBarView: View {
                     Spacer()
                     Button(action: {
                         viewModel.snackBar.action?()
-                    }) {
+                    }, label: {
                         Text(viewModel.snackBar.title ?? "")
                             .font(.footnote).bold()
                             .foregroundColor(Color(Colors.General.Green._00A886.name))
-                    }
+                    })
                     .padding([.trailing, .bottom], Constants.padding)
                 }
             }

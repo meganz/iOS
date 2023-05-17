@@ -3,7 +3,7 @@ final class SharedItemsViewRouter: NSObject {
     
     func showShareFoldersContactView(withNodes nodes: [MEGANode]) {
         let presenter = UIApplication.mnz_visibleViewController()
-        BackupNodesValidator(presenter: presenter, nodes: nodes.toNodeEntities()).showWarningAlertIfNeeded() {
+        BackupNodesValidator(presenter: presenter, nodes: nodes.toNodeEntities()).showWarningAlertIfNeeded {
             guard let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else {
                 fatalError("Could not instantiate ContactsViewController")
             }

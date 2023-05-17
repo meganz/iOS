@@ -283,7 +283,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private func subscribeToAppDidBecomeActiveSubscription(withChatRoom chatRoom: ChatRoomEntity) {
         self.appDidBecomeActiveSubscription = NotificationCenter.default
             .publisher(for: UIApplication.didBecomeActiveNotification)
-            .sink() { [weak self] _ in
+            .sink { [weak self] _ in
                 guard let self = self else { return }
                 
                 if self.createCallUseCase.call(for: chatRoom.chatId) == nil {

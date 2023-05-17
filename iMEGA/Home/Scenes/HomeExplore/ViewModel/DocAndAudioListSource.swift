@@ -184,7 +184,7 @@ extension DocAndAudioListSource {
     private func contextualAction(withImageName imageName: String, backgroundColor: UIColor, completion: @escaping () -> Void) -> UIContextualAction {
         let action = UIContextualAction(style: .normal,
                                         title: nil)
-        { (action, sourceView, callback) in
+        { (_, _, _) in
             completion()
         }
 

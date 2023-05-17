@@ -26,7 +26,7 @@ struct PageTabView: View {
     var body: some View {
         GeometryReader { proxy in
             VStack(spacing: 10) {
-                HStack() {
+                HStack {
                     Button {
                         withAnimation {
                             viewModel.tabOffset = 0

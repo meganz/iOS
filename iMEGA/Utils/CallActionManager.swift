@@ -198,7 +198,7 @@ import MEGADomain
     }
     
     private func enableRTCAudioIfRequiredWhenCallInProgress(chatId: UInt64) {
-        self.callInProgressListener = CallInProgressListener(chatId: chatId, sdk: chatSdk) { [weak self] chatId, call in
+        self.callInProgressListener = CallInProgressListener(chatId: chatId, sdk: chatSdk) { [weak self] _, _ in
             // There is a race condition that sometimes microphone does not seem to work when on a call.
             // Once the call state changes to inProgress, after one second delay we are checking if the microphone is disabled. Enable it in case it is disabled.
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {

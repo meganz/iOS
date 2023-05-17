@@ -101,9 +101,9 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         
         UIView.animate(withDuration: 0.2, animations: {
             lifeFeedFadingView.alpha = 0.0
-        }) { _ in
+        }, completion: { _ in
             lifeFeedFadingView.removeFromSuperview()
-        }
+        })
 
     }
     

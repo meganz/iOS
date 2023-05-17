@@ -278,11 +278,11 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
-            megaHandleUseCase: megaHandleUseCase) {
-                [weak self] participant, button in
-                guard let self = self else { return }
-                self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
-            }
+            megaHandleUseCase: megaHandleUseCase
+        ) { [weak self] participant, button in
+            guard let self = self else { return }
+            self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
+        }
         return cell
     }
 }

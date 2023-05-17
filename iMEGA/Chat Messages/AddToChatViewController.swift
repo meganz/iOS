@@ -245,7 +245,7 @@ class AddToChatViewController: UIViewController {
     }
     
     private func loadPhotosViewAndDismiss() {
-        dismiss() {
+        dismiss {
             self.addToChatDelegate?.loadPhotosView()
         }
     }
@@ -265,7 +265,7 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
     }
     
     func showCamera() {
-        dismiss() {
+        dismiss {
             self.addToChatDelegate?.showCamera()
         }
     }
@@ -273,7 +273,7 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
 
 extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     func showGiphy() {
-        dismiss() {
+        dismiss {
             self.addToChatDelegate?.showGiphy()
         }
     }
@@ -283,13 +283,13 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     }
     
     func showCloudDrive() {
-        dismiss() {
+        dismiss {
             self.addToChatDelegate?.showCloudDrive()
         }
     }
     
     func showScanDoc() {
-        dismiss() {
+        dismiss {
             self.addToChatDelegate?.showScanDoc()
         }
     }
@@ -297,20 +297,20 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     func showVoiceClip() {
         if let delegate = addToChatDelegate,
             delegate.canRecordAudio() {
-            dismiss() {
+            dismiss {
                 self.addToChatDelegate?.showVoiceClip()
             }
         }
     }
     
     func showContacts() {
-        dismiss() {
+        dismiss {
             self.addToChatDelegate?.showContacts()
         }
     }
     
     func showLocation() {
-        dismiss() {
+        dismiss {
             self.addToChatDelegate?.showLocation()
         }
     }

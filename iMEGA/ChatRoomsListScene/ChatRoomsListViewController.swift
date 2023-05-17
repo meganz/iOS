@@ -81,7 +81,7 @@ final class ChatRoomsListViewController: UIViewController {
             viewModel.$chatViewMode.sink(receiveValue: { [weak self] chatViewMode in
                 self?.configureNavigationBarButtons(chatViewMode: chatViewMode)
             }),
-            viewModel.$chatStatus.sink(receiveValue: { [weak self] chatStatus in
+            viewModel.$chatStatus.sink(receiveValue: { [weak self] _ in
                 self?.refreshContextMenuBarButton()
                 self?.updateTitleView()
             }),

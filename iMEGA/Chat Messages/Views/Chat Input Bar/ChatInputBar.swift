@@ -88,12 +88,12 @@ class ChatInputBar: UIView {
                 UIView.animate(withDuration: animationDuration, animations: {
                     voiceClipInputBarHeightConstraint.constant = voiceClipInputBarHeight
                     self.layoutIfNeeded()
-                }) { _ in
+                }, completion: { _ in
                     self.messageInputBar.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
                     self.voiceRecordingViewCanBeDismissed = true
-                }
+                })
             } else {
                 voiceRecordingViewCanBeDismissed = false
                 guard let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints.first(where: { $0.firstAttribute == .height }) else {
@@ -107,7 +107,7 @@ class ChatInputBar: UIView {
                 UIView.animate(withDuration: animationDuration, animations: {
                     voiceClipInputBarHeightConstraint.constant = 0.0
                     self.layoutIfNeeded()
-                }) { _ in
+                }, completion: { _ in
                     self.messageInputBar.autoPinEdge(toSuperviewEdge: .bottom)
 
                     self.voiceClipInputBar.startRecordingView.isHidden = false
@@ -123,7 +123,7 @@ class ChatInputBar: UIView {
                     
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
-                }
+                })
             }
         }
     }
@@ -261,7 +261,7 @@ class ChatInputBar: UIView {
             self.messageInputBar.alpha = 1.0
             self.audioRecordingInputBar.viewHeightConstraint.constant = self.storedMessageInputBarHeight
             self.audioRecordingInputBar.layoutIfNeeded()
-        }) { _ in
+        }, completion: { _ in
             self.audioRecordingInputBar.cancelRecordingIfNeeded()
             self.audioRecordingInputBar.removeFromSuperview()
             self.audioRecordingInputBar = nil
@@ -269,7 +269,7 @@ class ChatInputBar: UIView {
             if let handler = completionBlock {
                 handler()
             }
-        }
+        })
     }
     
     private func textInputToVoiceInputBarSwitch() {

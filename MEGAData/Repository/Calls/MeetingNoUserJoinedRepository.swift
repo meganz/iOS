@@ -28,7 +28,7 @@ final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedReposito
         self.chatId = chatId
         subscription = Just(Void.self)
             .delay(for: .seconds(duration), scheduler: DispatchQueue.global())
-            .sink() { _ in
+            .sink { _ in
                 self.source.send()
                 self.cleanUp()
             }

@@ -20,7 +20,7 @@ final class SnackBarViewModel: ObservableObject {
         
         displaySnackBarSubscription = Just(Void.self)
             .delay(for: .seconds(displayDuration), scheduler: RunLoop.main)
-            .sink() { [weak self] _ in
+            .sink { [weak self] _ in
                 self?.dismissSnackBar()
             }
     }

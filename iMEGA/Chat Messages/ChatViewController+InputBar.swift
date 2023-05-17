@@ -132,7 +132,7 @@ extension ChatViewController {
             MEGALinkManager.selectedOption = .joinChatLink
             dismissChatRoom()
         } else {
-            let delegate = MEGAChatGenericRequestDelegate { (request, error) in
+            let delegate = MEGAChatGenericRequestDelegate { (request, _) in
                 guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle) else {
                     MEGALogDebug("ChatRoom not found with chat handle \(request.chatHandle)")
                     return
@@ -334,7 +334,7 @@ extension ChatViewController {
             }
             
             self.uploadAsset(withFilePath: filePath, parentNode: parentNode, localIdentifier: "")
-        }) { [weak self] error in
+        }, error: { [weak self] error in
             guard let `self` = self else {
                 return
             }
@@ -347,7 +347,7 @@ extension ChatViewController {
             DispatchQueue.main.async {
                 self.present(viewController: alertController)
             }
-        }
+        })
         
         processAsset?.prepare()
     }
@@ -374,7 +374,7 @@ extension ChatViewController {
                     self.uploadAsset(withFilePath: filePath, parentNode: myChatFilesFolderNode, localIdentifier: assets[index].localIdentifier)
                 }
                 
-            }) { errors in
+            }, errors: { errors in
                 guard let errors = errors else {
                     return
                 }
@@ -398,7 +398,7 @@ extension ChatViewController {
                 DispatchQueue.main.async {
                     self.present(alertController, animated: true)
                 }
-            }
+            })
             
             DispatchQueue.global(qos: .background).async {
                 processAsset?.isOriginalName = true
@@ -471,7 +471,7 @@ extension ChatViewController: ChatInputBarDelegate {
                     self.richLinkWarningCounterValue = request.number.uintValue
                     self.chatRoomDelegate.updateMessage(message)
                 }
-            }, error: { (request, error) in
+            }, error: { (request, _) in
                 if let request = request, request.flag {
                     message.warningDialog = (request.number.intValue >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
                     self.richLinkWarningCounterValue = request.number.uintValue
@@ -640,7 +640,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     
     func showCamera() {
         guard let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera,
-                                                               filePathCompletion: { [weak self] (filePath, sourceType, node) in
+                                                               filePathCompletion: { [weak self] (filePath, _, node) in
             guard let path = filePath,
                 let parentNode = node,
                 let `self` = self else {
@@ -725,7 +725,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showLocation() {
-        let genericRequestDelegate = MEGAGenericRequestDelegate { (request, error) in
+        let genericRequestDelegate = MEGAGenericRequestDelegate { (_, error) in
             if error.type != .apiOk {
                 let title = Strings.Localizable.sendLocation
                 
@@ -734,7 +734,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil)
                 
                 let continueAction = UIAlertAction(title: Strings.Localizable.continue, style: .default) { _ in
-                    let enableGeolocationDelegate = MEGAGenericRequestDelegate { (request, error) in
+                    let enableGeolocationDelegate = MEGAGenericRequestDelegate { (_, error) in
                         if error.type != .apiOk {
                             let alertTitle = Strings.Localizable.error
                             let errorName = error.name ?? Strings.Localizable.somethingWentWrong

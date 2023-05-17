@@ -75,7 +75,7 @@ extension Albums {
     }
     
     private func populate(fromCollection collection: PHFetchResult<PHAssetCollection>) {
-        collection.enumerateObjects { (collection, index , stop) in
+        collection.enumerateObjects { (collection, _ , _) in
             let fetchResult = PHAsset.fetchAssets(in: collection, options: self.fetchOptions)
             
             if let title = collection.localizedTitle {

@@ -20,7 +20,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         subscription = chatUseCase
             .statusChangePublisher
             .receive(on: DispatchQueue.main)
-            .sink(){ _ in
+            .sink { _ in
                 expectation.fulfill()
             }
         

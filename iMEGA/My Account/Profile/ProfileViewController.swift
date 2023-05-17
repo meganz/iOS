@@ -226,7 +226,7 @@ enum SessionSectionRow: Int {
         let changeAvatarAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         changeAvatarAlertController.addAction(UIAlertAction.init(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
         
-        let fromPhotosAlertAction = UIAlertAction.init(title: Strings.Localizable.choosePhotoVideo, style: .default) { (UIAlertAction) in
+        let fromPhotosAlertAction = UIAlertAction.init(title: Strings.Localizable.choosePhotoVideo, style: .default) { _ in
             DevicePermissionsHelper.photosPermission(completionHandler: { (granted) in
                 if granted {
                     self.showImagePicker(sourceType: .photoLibrary)
@@ -237,7 +237,7 @@ enum SessionSectionRow: Int {
         }
         changeAvatarAlertController.addAction(fromPhotosAlertAction)
         
-        let captureAlertAction = UIAlertAction.init(title: Strings.Localizable.capturePhotoVideo, style: .default) { (UIAlertAction) in
+        let captureAlertAction = UIAlertAction.init(title: Strings.Localizable.capturePhotoVideo, style: .default) { _ in
             DevicePermissionsHelper.videoPermission(completionHandler: { (granted) in
                 if granted {
                     DevicePermissionsHelper.photosPermission(completionHandler: { (granted) in
@@ -263,7 +263,7 @@ enum SessionSectionRow: Int {
         let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
-            let removeAvatarAlertAction = UIAlertAction.init(title: Strings.Localizable.removePhoto, style: .default) { (UIAlertAction) in
+            let removeAvatarAlertAction = UIAlertAction.init(title: Strings.Localizable.removePhoto, style: .default) { _ in
                 MEGASdkManager.sharedMEGASdk().setAvatarUserWithSourceFilePath(nil)
             }
             changeAvatarAlertController.addAction(removeAvatarAlertAction)
@@ -322,7 +322,7 @@ enum SessionSectionRow: Int {
                     return
                 }
                 
-                MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
+                MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, _) in
                     self.twoFactorAuthStatus = request.flag ? .enabled : .disabled
                     self.tableView.reloadRows(at: [indexPath], with: .none)
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag

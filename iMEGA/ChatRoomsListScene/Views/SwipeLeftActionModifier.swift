@@ -57,7 +57,7 @@ struct SwipeLeftActionModifier: ViewModifier  {
                         }
                 )
             
-            GeometryReader { proxy in
+            GeometryReader { _ in
                 HStack(spacing: 0) {
                     Spacer()
                     HStack(spacing: 0) {

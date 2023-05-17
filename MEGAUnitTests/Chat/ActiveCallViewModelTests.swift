@@ -31,7 +31,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         subscription = activeCallUseCase
             .callUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink(){ _ in
+            .sink { _ in
                 expectation.fulfill()
             }
          
@@ -53,7 +53,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         subscription = activeCallUseCase
             .callUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink(){ _ in
+            .sink { _ in
                 expectation.fulfill()
             }
          
@@ -75,7 +75,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         subscription = activeCallUseCase
             .callUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink(){ _ in
+            .sink { _ in
                 expectation.fulfill()
             }
          
@@ -97,7 +97,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         subscription = activeCallUseCase
             .callUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink(){ _ in
+            .sink { _ in
                 expectation.fulfill()
             }
          
@@ -119,7 +119,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         subscription = activeCallUseCase
             .callUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink(){ _ in
+            .sink { _ in
                 expectation.fulfill()
             }
 
@@ -141,7 +141,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         subscription = activeCallUseCase
             .callUpdatePublisher
             .receive(on: DispatchQueue.main)
-            .sink(){ _ in
+            .sink { _ in
                 expectation.fulfill()
             }
 

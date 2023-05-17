@@ -3,7 +3,7 @@
 extension SDKAvatarClient {
 
     static var foundNil: Self {
-        return Self(loadUserAvatar: { userHandle, destinationPath, completion in
+        return Self(loadUserAvatar: { _, _, completion in
             completion(nil)
         }, avatarBackgroundColorHex: { _ in
             return nil
@@ -11,7 +11,7 @@ extension SDKAvatarClient {
     }
 
     static var foundImage: Self {
-        return Self(loadUserAvatar: { userHandle, destinationPath, completion in
+        return Self(loadUserAvatar: { _, _, completion in
             completion(UIImage())
         }, avatarBackgroundColorHex: { _ in
             return "#FFCCDD"

@@ -158,7 +158,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.$thumbnailContainer
             .dropFirst()
-            .sink { container in
+            .sink { _ in
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -185,7 +185,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.$thumbnailContainer
             .dropFirst()
-            .sink { container in
+            .sink { _ in
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -301,7 +301,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.$thumbnailContainer
             .dropFirst()
-            .sink { container in
+            .sink { _ in
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -344,7 +344,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.$thumbnailContainer
             .dropFirst()
-            .sink { container in
+            .sink { _ in
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -556,7 +556,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         exp.isInverted = true
         sut.$thumbnailContainer
             .dropFirst()
-            .sink { container in
+            .sink { _ in
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -599,7 +599,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.$thumbnailContainer
             .dropFirst()
-            .sink { container in
+            .sink { _ in
                 exp.fulfill()
             }
             .store(in: &subscriptions)
@@ -650,7 +650,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         sut.$thumbnailContainer
             .dropFirst()
-            .sink { container in
+            .sink { _ in
                 exp.fulfill()
             }
             .store(in: &subscriptions)

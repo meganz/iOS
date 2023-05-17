@@ -153,7 +153,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         var subscription: AnyCancellable? = noUserJoinedUseCase
             .monitor
             .receive(on: DispatchQueue.main)
-            .sink() { _ in
+            .sink { _ in
             expectation.fulfill()
         }
         

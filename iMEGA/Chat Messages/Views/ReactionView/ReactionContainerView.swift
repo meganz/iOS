@@ -53,7 +53,7 @@ class ReactionContainerView: UIView {
                     emojiButton.addHaptic(.selection, forControlEvents: .touchDown)
                     
                     if let delegate = delegate {
-                        emojiButton.buttonPressed = { [weak self] emoji, emojiButton in
+                        emojiButton.buttonPressed = { [weak self] emoji, _ in
                             if isEmojiSelected {
                                 MEGASdkManager.sharedMEGAChatSdk().deleteReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
                             } else {

@@ -120,7 +120,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         var readyToPost = true
         if displayName == nil {
-            MEGASdkManager.sharedMEGAChatSdk().loadUserAttributes(forChatId: chatId, usersHandles: [message.userHandle] as [NSNumber], delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
+            MEGASdkManager.sharedMEGAChatSdk().loadUserAttributes(forChatId: chatId, usersHandles: [message.userHandle] as [NSNumber], delegate: MEGAChatGenericRequestDelegate { [weak self] _, error in
                 if error.type != .MEGAChatErrorTypeOk {
                     return
                 }
@@ -268,7 +268,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatNotificationDelegate)
-        MEGASdkManager.sharedMEGAChatSdk().pushReceived(withBeep: true, chatId: chatId, delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
+        MEGASdkManager.sharedMEGAChatSdk().pushReceived(withBeep: true, chatId: chatId, delegate: MEGAChatGenericRequestDelegate { [weak self] _, error in
             if error.type != .MEGAChatErrorTypeOk {
                 self?.postNotification(withError: "Error in pushReceived \(error)")
             }
@@ -277,14 +277,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private func restartExtensionProcess(with session: String) {
         NotificationService.session = nil
-        MEGASdk.sharedNSE.localLogout(with: MEGAGenericRequestDelegate {
-            request, error in
+        MEGASdk.sharedNSE.localLogout(with: MEGAGenericRequestDelegate { _, error in
             if error.type != .apiOk {
                 self.postNotification(withError: "SDK error in localLogout \(error)")
                 return
             }
-            MEGASdkManager.sharedMEGAChatSdk().localLogout(with: MEGAChatGenericRequestDelegate {
-                request, error in
+            MEGASdkManager.sharedMEGAChatSdk().localLogout(with: MEGAChatGenericRequestDelegate { _, error in
                 if error.type != .MEGAChatErrorTypeOk {
                     self.postNotification(withError: "MEGAChat error in localLogout \(error)")
                     return
@@ -501,7 +499,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private static func loginToMEGA(with session: String) {
         MEGALogDebug("Login to MEGA")
-        MEGASdk.sharedNSE.fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { request, error in
+        MEGASdk.sharedNSE.fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { _, error in
             if error.type != .apiOk {
                 MEGALogError("Login error \(error)")
                 return

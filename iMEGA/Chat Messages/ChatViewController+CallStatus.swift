@@ -123,7 +123,7 @@ extension ChatViewController {
         noUserJoinedSubscription = usecase
             .monitor
             .receive(on: DispatchQueue.main)
-            .sink() { [weak self] _ in
+            .sink { [weak self] _ in
                 guard let self = self,
                       MeetingContainerRouter.isAlreadyPresented == false,
                       let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: self.chatRoom.chatId) else {
@@ -170,7 +170,7 @@ extension ChatViewController {
         
         endCallSubscription = Just(Void.self)
             .delay(for: .seconds(120), scheduler: RunLoop.main)
-            .sink() { [weak self] _ in
+            .sink { [weak self] _ in
                 self?.tonePlayer.play(tone: .callEnded)
                 analyticsEventStatsUseCase.sendAnalyticsEvent(.meetings(.endCallWhenEmptyCallTimeout))
                 

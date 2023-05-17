@@ -103,7 +103,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
             )
         }
 
-        let moreAction: (HandleEntity, UIButton) -> Void = { handle, button in
+        let moreAction: (HandleEntity, UIButton) -> Void = { _, button in
             self.router.didTapMoreAction(on: file.handle, button: button)
         }
 

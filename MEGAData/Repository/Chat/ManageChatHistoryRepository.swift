@@ -47,7 +47,7 @@ struct ManageChatHistoryRepository: ManageChatHistoryRepositoryProtocol {
     }
     
     func clearChatHistory(for chatId: ChatIdEntity, completion: @escaping (Result<Void, ManageChatHistoryErrorEntity>) -> Void) {
-        chatSdk.clearChatHistory(chatId, delegate: MEGAChatGenericRequestDelegate { request, error in
+        chatSdk.clearChatHistory(chatId, delegate: MEGAChatGenericRequestDelegate { _, error in
             let clearChatHistoryError: ManageChatHistoryErrorEntity
             switch error.type {
             case .MEGAChatErrorTypeOk:

@@ -54,7 +54,7 @@ extension SDKUserAlertsClient {
                 .random,
                 .random,
             ]
-        }, userAlertsUpdate: { (callback) in
+        }, userAlertsUpdate: { _ in
 
         }, incomingContactRequestUpdate: { _ in
 

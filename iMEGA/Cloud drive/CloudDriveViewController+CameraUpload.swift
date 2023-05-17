@@ -31,7 +31,7 @@ extension CloudDriveViewController {
             return
         }
         
-        CameraUploadNodeAccess.shared.loadNode { [weak self] (cuNode, error) in
+        CameraUploadNodeAccess.shared.loadNode { [weak self] (cuNode, _) in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
@@ -77,7 +77,7 @@ extension CloudDriveViewController {
             return
         }
         
-        CameraUploadNodeAccess.shared.loadNode { node, error in
+        CameraUploadNodeAccess.shared.loadNode { node, _ in
             guard let cuNode = node else { return }
             
             let isSelected = selectedNodes.contains {

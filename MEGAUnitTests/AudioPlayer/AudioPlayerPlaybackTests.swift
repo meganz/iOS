@@ -43,7 +43,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         
         let nextItem = audioPlayer.tracks[(audioPlayer.currentIndex ?? 0) + 1]
         
-        audioPlayer.playNext() {
+        audioPlayer.playNext {
             expect.fulfill()
         }
         
@@ -65,11 +65,11 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         let currentItem = try XCTUnwrap(audioPlayer.currentItem())
         let nextItem = audioPlayer.tracks[(audioPlayer.currentIndex ?? 0) + 1]
         
-        audioPlayer.playNext() {
+        audioPlayer.playNext {
             XCTAssertNotNil(self.audioPlayer.currentItem)
             XCTAssertTrue(nextItem == self.audioPlayer.currentItem())
             
-            self.audioPlayer.playPrevious() {
+            self.audioPlayer.playPrevious {
                 XCTAssertNotNil(self.audioPlayer.currentItem)
                 XCTAssertTrue(currentItem == self.audioPlayer.currentItem())
                 expect.fulfill()

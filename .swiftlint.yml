@@ -48,6 +48,10 @@ only_rules:
       - switch_case_alignment
       - unneeded_break_in_switch
       - empty_enum_arguments
+      - unused_closure_parameter
+      - closure_parameter_position
+      - empty_parentheses_with_trailing_closure
+      - multiple_closures_with_trailing_closure
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
     
@@ -64,11 +68,8 @@ only_rules:
       # - xctfail_message (16 issues)
       # - redundant_void_return (17 issues)
       # - syntactic_sugar (19 issues)
-      # - closure_parameter_position (21 issues)
-      # - multiple_closures_with_trailing_closure (22 issues)
       # - statement_position (22 issues)
       # - no_space_in_method_call (42 issues)
-      # - empty_parentheses_with_trailing_closure (46 issues)
       # - trailing_semicolon (47 issues)
       # - vertical_parameter_alignment (50 issues)
       # - private_over_fileprivate (54 issues)
@@ -80,7 +81,6 @@ only_rules:
 
       # - type_name (91 issues) - complex because we need to rename stuff
       # - comma (103 issues)
-      # - unused_closure_parameter (116 issues)
       # - trailing_comma (123 issues)
       # - cyclomatic_complexity (132 issues)
         # A somewhat complex fix, because we need extract functions into smaller functions to avoid overly complex logic, but I think this should be enabled in the future so that we can refactor our code to make sure our functions are small, simple, and adhere to the SOLID principles.

@@ -256,7 +256,7 @@ class GetLinkViewController: UIViewController {
     }
     
     private func exportNode(node: MEGANode) {
-        MEGASdkManager.sharedMEGASdk().export(node, delegate: MEGAExportRequestDelegate.init(completion: { [weak self] (request) in
+        MEGASdkManager.sharedMEGASdk().export(node, delegate: MEGAExportRequestDelegate.init(completion: { [weak self] _ in
             (self?.nodesToExportCount -= 1)
             if self?.nodesToExportCount == 0 {
                 SVProgressHUD.dismiss()

@@ -86,7 +86,7 @@ final class MiniPlayerViewController: UIViewController {
         imageView.image = Asset.Images.AudioPlayer.defaultArtwork.image
         
         collectionView.reloadData()
-        collectionView.performBatchUpdates(nil) { (result) in
+        collectionView.performBatchUpdates(nil) { _ in
             let indexPath = IndexPath(row: queue?.firstIndex(of: currentItem) ?? 0, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         }

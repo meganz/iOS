@@ -215,7 +215,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func initTimerIfNeeded(with duration: Int) {
         if timer == nil {
             let callDurationInfo = CallDurationInfo(initDuration: duration, baseDate: Date())
-            let timer = Timer(timeInterval: 1, repeats: true, block: { [weak self] (timer) in
+            let timer = Timer(timeInterval: 1, repeats: true, block: { [weak self] _ in
                 let duration = Int(Date().timeIntervalSince1970) - Int(callDurationInfo.baseDate.timeIntervalSince1970) + callDurationInfo.initDuration
                 self?.invokeCommand?(.updateDuration(TimeInterval(duration).timeString))
             })
@@ -352,9 +352,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
                 
                 self.namesFetchingTask?.cancel()
-                self.namesFetchingTask = Task { [weak self,
-                                                 chatRoomUserUseCase = self.chatRoomUserUseCase,
-                                                 chatRoom = self.chatRoom] in
+                self.namesFetchingTask = Task { [weak self, chatRoomUserUseCase = self.chatRoomUserUseCase, chatRoom = self.chatRoom] in
                     guard let self = self else { return }
                     
                     let addedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.addedHandlers)
@@ -671,7 +669,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         
         reconnecting1on1Subscription = Just(Void.self)
             .delay(for: .seconds(10), scheduler: RunLoop.main)
-            .sink() { [weak self] _ in
+            .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.tonePlayer.play(tone: .callEnded)
                 self.reconnecting1on1Subscription = nil

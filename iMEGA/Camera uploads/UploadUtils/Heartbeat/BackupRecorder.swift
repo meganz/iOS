@@ -48,7 +48,7 @@ final class BackupRecorder: NSObject {
     }
     
     private func checkUploadStats() {
-        CameraUploadManager.shared().loadCurrentUploadStats { stats, error in
+        CameraUploadManager.shared().loadCurrentUploadStats { stats, _ in
             guard stats?.isUploadCompleted == true else {
                 return
             }
