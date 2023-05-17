@@ -18,6 +18,7 @@
 #import "TransfersWidgetViewController.h"
 #import "UIImage+MNZCategory.h"
 #import "UsageViewController.h"
+
 @import MEGAData;
 
 @interface MyAccountHallViewController () <UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
@@ -84,8 +85,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
     
     if (MEGASdkManager.sharedMEGASdk.mnz_shouldRequestAccountDetails) {
         [MEGASdkManager.sharedMEGASdk getAccountDetails];
@@ -111,8 +112,8 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-    [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
     
     if (self.isMovingFromParentViewController) {
         [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];

@@ -25,7 +25,9 @@
 #import "ShareDestinationTableViewController.h"
 #import "MEGASdkManager+CleanUp.h"
 #import "MEGAProcessAsset.h"
+
 @import Firebase;
+@import MEGAData;
 
 #define MNZ_ANIMATION_TIME 0.35
 
@@ -167,7 +169,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self.logoutDelegate];
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

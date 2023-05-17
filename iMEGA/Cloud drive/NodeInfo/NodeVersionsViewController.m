@@ -15,6 +15,8 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
+@import MEGAData;
+
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, NodeActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
 }
@@ -69,7 +71,7 @@
     [super viewWillDisappear:animated];
     
     if (!self.presentedViewController) {
-        [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+        [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
     }
 }
 

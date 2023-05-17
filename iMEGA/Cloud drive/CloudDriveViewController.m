@@ -50,6 +50,7 @@
 
 @import Photos;
 @import MEGAUIKit;
+@import MEGAData;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;
@@ -199,8 +200,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
