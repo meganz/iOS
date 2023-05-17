@@ -322,6 +322,26 @@
         <string></string>
       </dict>
     </dict>
+    <key>recents.section.title.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@items@</string>
+      <key>items</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d элемент</string>
+        <key>few</key>
+        <string>%d элемента</string>
+        <key>many</key>
+        <string>%d элементов</string>
+        <key>other</key>
+        <string>%d элемента</string>
+      </dict>
+    </dict>
     <key>recents.section.thumbnail.count.image</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

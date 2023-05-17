@@ -1000,12 +1000,6 @@
 "cancelTransfersTitle"="إلغاء عمليات التراسل";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="هل تريد إلغاء كل عمليات التراسل؟";
-/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="كل عمليات التراسل";
-/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="عمليات تراسل الترفيع";
-/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="عمليات تراسل التنزيل";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="الترقية";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1084,8 +1078,8 @@
 "Verify Your Account"="تحقق من حسابك";
 /* Add your phone number title */
 "Add Your Phone Number"="أضف رقم هاتفك";
-/* Choose Your Country title */
-"Choose Your Country"="اختر بلدك";
+/* Choose Your Region title */
+"Choose Your Region"="اختر منطقتك";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="شهر";
 /*  */
@@ -1128,10 +1122,6 @@
 "Manage Account"="إدارة الحساب";
 /*  */
 "chooseYourAccountType"="اختر نوع حسابك";
-/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]السواقة السحابية الخاصة بك ممتلئة تقريباً.[/S] [A]قم بالترقية الآن[/A] إلى حساب برو Pro واحصل على [S]ما يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة التخزين السحابية.";
-/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]السواقة السحابية الخاصة بك ممتلئة.[/S] [A]قم بالترقية الآن[/A] إلى حساب برو Pro واحصل على [S]ما يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة التخزين السحابية.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="مساحة التخزين";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -2006,8 +1996,6 @@
 "home.recent.createdByLabel"="انشأ من قبل %@";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="لا وجود لأي نشاط مؤخراً";
-/* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d عنصر";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="رابط المحادثة غير متاح";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2897,7 +2885,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="ملف مضغوط اكس X";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="قاعدة بيانات SQL Database";
+"general.filetype.sql"="SQL statements";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="صورة Sony RAW";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3357,9 +3345,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="إضافة وصف";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="أدخل أقل من 30 محرفاً";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="أدخل أقل من 3000 محرفاً";
+"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="إلغاء";
 /* Schedule meeting create button */
@@ -3371,7 +3359,7 @@
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="استمر في التعديل";
 /* Schedule meeting creation complete */
-"meetings.scheduleMeeting.meetingCreated"="Meeting created";
+"meetings.scheduleMeeting.meetingCreated"="تم إنشاء الاجتماع";
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="استئناف الفيديو؟";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
@@ -3380,3 +3368,31 @@
 "video.alert.resumeVideo.button.resume"="اعادة";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="إعادة تشغيل";
+/* Push notification message to be shown when the meeting is about to start now. */
+"meetings.scheduleMeeting.notification.meetingStartsNow.message"="يبدأ الاجتماع الآن";
+/* Push notification message to be shown when the meeting is about to start in 15 min. */
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="يبدأ الاجتماع خلال 15 دقيقة";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.join"="الانضمام";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.message"="رسالة";
+/* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="أبداً";
+/* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+/* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+/* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+/* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="تخصيص";
+/* Navigation title of the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="التكرار";
+/* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="أبداً";
+/* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="يومياً";
+/* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="أسبوعياً";
+/* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="شهرياً";

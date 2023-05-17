@@ -753,7 +753,7 @@
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="Nous recommandons H.264, car c’est le format le plus compatible pour les vidéos.";
 /* Footer for video compression quality */
-"Compression quality when to transcode HEVC videos to H.264 format."="Qualité de la compression quand les vidéos HEVC sont transcodées en format H.264.";
+"Compression quality when to transcode HEVC videos to H.264 format."="Qualité de la compression quand les vidéos HEVC sont transcodées en format H.264.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Téléverser les vidéos";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
@@ -1000,12 +1000,6 @@
 "cancelTransfersTitle"="Annuler les transferts";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="Voulez-vous annuler TOUS les transferts ?";
-/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="Tous les transferts";
-/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="Transferts en téléversement";
-/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="Transferts en téléchargement";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Surclasser le compte";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1084,8 +1078,8 @@
 "Verify Your Account"="Confirmer votre compte";
 /* Add your phone number title */
 "Add Your Phone Number"="Ajouter votre numéro de téléphone";
-/* Choose Your Country title */
-"Choose Your Country"="Choisir votre pays";
+/* Choose Your Region title */
+"Choose Your Region"="Choisir votre région";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="mois";
 /*  */
@@ -1128,10 +1122,6 @@
 "Manage Account"="Gérer le compte";
 /*  */
 "chooseYourAccountType"="Choisissez votre type de compte";
-/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Votre Disque nuagique est presque saturé.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
-/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Votre Disque nuagique est saturé.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte Pro et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Espace de stockage";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1279,7 +1269,7 @@
 /*  */
 "busy"="Occupé";
 /*  */
-"notifications"="Notifications ";
+"notifications"="Notifications";
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
@@ -2006,8 +1996,6 @@
 "home.recent.createdByLabel"="Créé par %@";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Aucune activité récente";
-/* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d éléments";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Le lien de conversation n’est pas disponible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2281,7 +2269,7 @@
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
 "Same for All"="Identique pour tous";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"Sorting preference"="Préférence de tri ";
+"Sorting preference"="Préférence de tri";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Préférence du mode d’affichage";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
@@ -2897,7 +2885,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="Fichier compressé X";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="Base de données SQL";
+"general.filetype.sql"="Commandes SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Image RAW Sony";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3357,9 +3345,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Ajoutez une description";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Saisir moins de 30 caractères";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Saisir jusqu’à 30 caractères";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Saisir moins de 3000 caractères";
+"meetings.scheduleMeeting.description.lenghtError"="Saisir jusqu’à 3 000 caractères";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Annuler";
 /* Schedule meeting create button */
@@ -3380,3 +3368,31 @@
 "video.alert.resumeVideo.button.resume"="Reprendre";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="Redémarrer";
+/* Push notification message to be shown when the meeting is about to start now. */
+"meetings.scheduleMeeting.notification.meetingStartsNow.message"="La réunion commence maintenant";
+/* Push notification message to be shown when the meeting is about to start in 15 min. */
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="La réunion commence dans 15 minutes";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.join"="Me joindre";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.message"="Envoyer un message";
+/* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="Jamais";
+/* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Quotidienne";
+/* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Hebdomadaire";
+/* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Mensuelle";
+/* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Personnalisée";
+/* Navigation title of the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="Récurrence";
+/* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="Jamais";
+/* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="Quotidienne";
+/* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Hebdomadaire";
+/* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensuelle";

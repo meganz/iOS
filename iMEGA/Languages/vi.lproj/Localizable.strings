@@ -845,7 +845,7 @@
 /* Text next to a switch that allows disabling the HTTP protocol for transfers */
 "dontUseHttp"="Không dùng HTTP";
 /* Footer text that explains when disabling the HTTP protocol for transfers may be useful */
-"transfersSectionFooter"="Chỉ bật tính năng này khi các phiên truyền tải không lưu thông. Trong các trường hợp bình thường, HTTP là đủ thích hợp vì các phiên truyền tải đã được mã hóa.";
+"transfersSectionFooter"="Chỉ nên bật khi các phiên truyền tải không lưu thông. Trong các trường hợp bình thường, HTTP là đủ đáp ứng vì các phiên truyền tải đã được mã hóa.";
 /* Title of the dialog displayed the first time that a user want to download a image. Asks if wants to export image files to the photo album after download in future and informs that user can change this option afterwards - (String as short as possible). */
 "Download options"="Tuỳ chọn tải xuống";
 /* Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped */
@@ -1000,12 +1000,6 @@
 "cancelTransfersTitle"="Hủy các phiên truyền tải";
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="Bạn có muốn hủy TẤT CẢ phiên truyền tải không?";
-/* Rest of the message of the alert shown when you try to cancel transfers. ALL uppercase. */
-"allInUppercaseTransfers"="TẤT CẢ truyền tải";
-/* Rest of the message of the alert shown when you try to cancel transfers. UPLOAD uppercase. */
-"uploadInUppercaseTransfers"="Phiên TẢI LÊN";
-/* Rest of the message of the alert shown when you try to cancel transfers. DOWNLOAD uppercase. */
-"downloadInUppercaseTransfers"="phiên TẢI XUỐNG";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Nâng Cấp";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -1084,8 +1078,8 @@
 "Verify Your Account"="Xác thực tài khoản";
 /* Add your phone number title */
 "Add Your Phone Number"="Thêm Số Điện Thoại";
-/* Choose Your Country title */
-"Choose Your Country"="Chọn Quốc Gia";
+/* Choose Your Region title */
+"Choose Your Region"="Chọn vùng lãnh thổ";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="tháng";
 /*  */
@@ -1109,11 +1103,11 @@
 /* Hint text for the last name (Placeholder) */
 "lastName"="Họ";
 /* Title for "Local" used space. */
-"localLabel"="Nội Bộ";
+"localLabel"="Cục bộ";
 /* Title for MEGA "Available" space. */
-"availableLabel"="Không Gian Trống";
+"availableLabel"="Không gian trống";
 /* title of the My Account screen */
-"accountType"="Hạng Tài Khoản:";
+"accountType"="Hạng tài khoản:";
 /* Label to indicate that the current user has a Free account. */
 "Free"="Miễn phí";
 /* Text that shows the expiry date of the account PRO level */
@@ -1121,19 +1115,15 @@
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="Ngày tự gia hạn";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
-"incomingShares"="Mục Chia Sẻ Nhận Được";
+"incomingShares"="Mục chia sẻ nhận được";
 /* Button title which triggers the action to upgrade your MEGA account level */
-"upgradeAccount"="Nâng Cấp Tài Khoản";
+"upgradeAccount"="Nâng cấp tài khoản";
 /* account management button title in business account’s landing page */
-"Manage Account"="Quản Lý Tài Khoản";
+"Manage Account"="Quản lý tài khoản";
 /*  */
-"chooseYourAccountType"="Chọn hạng tài khoản";
-/* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ổ Mây sắp hết chỗ trống.[/S] [A]Nâng cấp ngay[/A] lên hạng Pro để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
-/* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ổ Mây đã bị đầy.[/S] [A]Nâng cấp ngay[/A] lên hạng Pro để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
+"chooseYourAccountType"="Chọn hạng tài khoản";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
-"Storage"="Lưu Trữ";
+"Storage"="Lưu trữ";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Tùy thuộc vào việc tham gia của người sử dụng dịch vụ khi thực hiện các nhiệm vụ phần thưởng thành tích.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
@@ -1147,9 +1137,9 @@
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
 "To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Để nâng cấp gói đăng ký dịch vụ hiện tại, xin liên hệ với đội hỗ trợ để có một [A]gói theo nhu cầu[/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"inAppPurchase.upgrade.label.currentPlan"="Gói Hiện Tại:";
+"inAppPurchase.upgrade.label.currentPlan"="Gói hiện tại:";
 /* A label which shows the user's current PRO plan. */
-"inAppPurchase.productDetail.navigation.currentPlan"="Gói hiện tại";
+"inAppPurchase.productDetail.navigation.currentPlan"="Gói hiện tại";
 /* Mail title to upgrade to a custom plan */
 "Upgrade to a custom plan"="Nâng cấp thành gói cước theo nhu cầu";
 /* Mail subject to upgrade to a custom plan */
@@ -1161,7 +1151,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Tiết kiệm 16%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="GIAO DỊCH SAI %@ (%ld)";
+"wrongPurchase"="Giao dịch thất bại %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Mua in-app bị tắt, xin bật lại trong phần Cài đặt của iOS";
 /* Error message shown when the selected product doesn't exist */
@@ -1213,7 +1203,7 @@
 /* Alert message shown when the user remove various items from the Offline section */
 "removeItemsFromOffline"="Ban có chắc muốn xóa các mục này khỏi mục lưu Ngoại Tuyến?";
 /* Giphy section header */
-"Send GIF"="Gửi Ảnh GIF";
+"Send GIF"="Gửi ảnh GIF";
 /* This is the placeholder text for GIPHY search */
 "Search GIPHY"="Tìm trong GIPHY";
 /* Empty Gifs section */
@@ -1281,7 +1271,7 @@
 /*  */
 "notifications"="Thông Báo";
 /* Title to perform the action of sending a message to a contact. */
-"sendMessage"="Gửi Tin Nhắn";
+"sendMessage"="Gửi tin nhắn";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Xác thực chứng thực";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
@@ -2006,8 +1996,6 @@
 "home.recent.createdByLabel"="Đã tạo bởi %@";
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Không Có Hoạt Động Gần Đây";
-/* Plural of items which contains a folder. 2 items */
-"%1$d items"="%1$d mục";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat Link Unavailable"="Liên Kết Chát Không Khả Dụng";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
@@ -2897,7 +2885,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X Compressed";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="Database SQL";
+"general.filetype.sql"="Câu lệnh SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Ảnh RAW của Sony";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3357,9 +3345,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Thêm miêu tả";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Nhập ít hơn 30 ký tự";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Nhập được tới 30 ký tự";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Nhập ít hơn 3 000 ký tự";
+"meetings.scheduleMeeting.description.lenghtError"="Nhập được tới 3.000 ký tự";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Hủy";
 /* Schedule meeting create button */
@@ -3380,3 +3368,31 @@
 "video.alert.resumeVideo.button.resume"="Tiếp tục truyền";
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="Khởi động lại";
+/* Push notification message to be shown when the meeting is about to start now. */
+"meetings.scheduleMeeting.notification.meetingStartsNow.message"="Cuộc họp bắt đầu ngay bây giờ";
+/* Push notification message to be shown when the meeting is about to start in 15 min. */
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="Cuộc họp bắt đầu trong 15 phút";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.join"="Tham gia";
+/* Push notification: Button title to be shown when the meeting is about to start. */
+"meetings.scheduleMeeting.notification.meetingStarts.button.message"="Nhắn tin";
+/* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="Không bao giờ";
+/* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Mỗi ngày";
+/* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Mỗi tuần";
+/* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Mỗi tháng";
+/* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Tùy chỉnh";
+/* Navigation title of the recurrence options screen while creating the schedule meeting. */
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="Tái diễn";
+/* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="Không bao giờ";
+/* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="Hằng ngày";
+/* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Hằng tháng";
+/* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Hàng tháng";
