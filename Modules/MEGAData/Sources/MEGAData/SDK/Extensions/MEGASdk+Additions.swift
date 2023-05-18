@@ -15,10 +15,6 @@ public extension MEGASdk {
         CurrentUserSource.shared.currentUserEmail
     }
     
-    @objc static var isLoggedIn: Bool {
-        CurrentUserSource.shared.isLoggedIn
-    }
-    
     @objc func removeMEGADelegateAsync(_ delegate: MEGADelegate) {
         Task.detached {
             MEGASdk.sharedSdk.remove(delegate)

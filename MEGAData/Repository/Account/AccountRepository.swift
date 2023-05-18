@@ -29,7 +29,7 @@ struct AccountRepository: AccountRepositoryProtocol {
     }
     
     func isLoggedIn() -> Bool {
-        currentUserSource.isLoggedIn
+        sdk.isLoggedIn() > 0
     }
     
     func contacts() -> [UserEntity] {
