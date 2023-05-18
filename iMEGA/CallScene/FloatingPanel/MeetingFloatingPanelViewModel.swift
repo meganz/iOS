@@ -444,7 +444,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func participantPrivilegeChanged(forUserHandle handle: HandleEntity, chatRoom: ChatRoomEntity) {
-        callParticipants.filter( { $0.participantId == handle} ).forEach { participant in
+        callParticipants.filter({ $0.participantId == handle }).forEach { participant in
             participant.isModerator = chatRoomUseCase.peerPrivilege(forUserHandle: participant.participantId, chatRoom: chatRoom) == .moderator
         }
         invokeCommand?(.reloadParticpantsList(participants: callParticipants))

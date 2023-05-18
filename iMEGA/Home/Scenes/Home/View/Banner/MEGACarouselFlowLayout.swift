@@ -102,7 +102,7 @@ final class MEGACarouselFlowLayout: UICollectionViewFlowLayout {
         attributes.transform3D = CATransform3DScale(CATransform3DIdentity, scale, scale, 1)
         attributes.zIndex = Int(alpha * 10)
 
-        attributes.center.y = attributes.center.y + shift
+        attributes.center.y += shift
 
         return attributes
     }

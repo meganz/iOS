@@ -12,7 +12,7 @@ final class MockSlideShowDataSource: SlideShowDataSourceProtocol {
     }
     
     var nodeEntities: [NodeEntity]
-    var initialPhotoDownloadCallback: (() -> ())?
+    var initialPhotoDownloadCallback: (() -> Void)?
     var thumbnailUseCase: ThumbnailUseCaseProtocol
     
     init(

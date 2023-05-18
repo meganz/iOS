@@ -45,12 +45,10 @@ public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: Sc
     public func recurringMeetingsNextDates(_ meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity:Date] {
         var futureMeetingDates = [ChatIdEntity:Date]()
         
-        for meeting in meetings {
-            if meeting.rules.frequency != .invalid {
-                let occurrences = try await scheduledMeetingOccurrencesByChat(chatId: meeting.chatId)
-                if let nextOccurrence = occurrences.first(where: { !$0.cancelled } ) {
-                    futureMeetingDates[meeting.scheduledId] = nextOccurrence.startDate
-                }
+        for meeting in meetings where meeting.rules.frequency != .invalid {
+            let occurrences = try await scheduledMeetingOccurrencesByChat(chatId: meeting.chatId)
+            if let nextOccurrence = occurrences.first(where: { !$0.cancelled }) {
+                futureMeetingDates[meeting.scheduledId] = nextOccurrence.startDate
             }
         }
             

@@ -217,19 +217,15 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     private func removePreviousGenericNotifications() {
         UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
             var identifiers = [String]()
-            for request in requests {
-                if request.content.body == NotificationService.genericBody {
-                    identifiers.append(request.identifier)
-                }
+            for request in requests where request.content.body == NotificationService.genericBody {
+                identifiers.append(request.identifier)
             }
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
         }
         UNUserNotificationCenter.current().getDeliveredNotifications { (notifications) in
             var identifiers = [String]()
-            for notification in notifications {
-                if notification.request.content.body == NotificationService.genericBody {
-                    identifiers.append(notification.request.identifier)
-                }
+            for notification in notifications where notification.request.content.body == NotificationService.genericBody {
+                identifiers.append(notification.request.identifier)
             }
             UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
         }
@@ -453,23 +449,19 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         let cacheSessionName = session.dropFirst(Int(MEGADropFirstCharactersFromSession))
-        for filename in nseCacheContent {
-            if filename.contains(cacheSessionName) {
-                let pathToRemove = nseCacheURL.appendingPathComponent(filename).path
-                fileManager.mnz_removeItem(atPath: pathToRemove)
-            }
+        for filename in nseCacheContent where filename.contains(cacheSessionName) {
+            let pathToRemove = nseCacheURL.appendingPathComponent(filename).path
+            fileManager.mnz_removeItem(atPath: pathToRemove)
         }
-
-        for filename in groupSupportPathContent {
-            if filename.contains(cacheSessionName) {
-                let sourceURL = groupSupportURL.appendingPathComponent(filename)
-                let destinationURL = nseCacheURL.appendingPathComponent(filename)
-                do {
-                    MEGALogDebug("Copy item: \(sourceURL.absoluteString)")
-                    try fileManager.copyItem(at: sourceURL, to: destinationURL)
-                } catch {
-                    MEGALogError("Copy item at path failed with error: \(error)")
-                }
+        
+        for filename in groupSupportPathContent where filename.contains(cacheSessionName) {
+            let sourceURL = groupSupportURL.appendingPathComponent(filename)
+            let destinationURL = nseCacheURL.appendingPathComponent(filename)
+            do {
+                MEGALogDebug("Copy item: \(sourceURL.absoluteString)")
+                try fileManager.copyItem(at: sourceURL, to: destinationURL)
+            } catch {
+                MEGALogError("Copy item at path failed with error: \(error)")
             }
         }
     }

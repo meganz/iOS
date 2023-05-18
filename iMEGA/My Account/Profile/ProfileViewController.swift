@@ -144,13 +144,11 @@ enum SessionSectionRow: Int {
             guard let enumerated = avatarImageView.gestureRecognizers?.enumerated() else {
                 return
             }
-            for (_, value) in enumerated {
-                if value.isKind(of: UIPanGestureRecognizer.self) {
-                    guard let popGestureRecognized = navigationController?.interactivePopGestureRecognizer else {
-                        return
-                    }
-                    value.require(toFail: popGestureRecognized)
+            for (_, value) in enumerated where value.isKind(of: UIPanGestureRecognizer.self) {
+                guard let popGestureRecognized = navigationController?.interactivePopGestureRecognizer else {
+                    return
                 }
+                value.require(toFail: popGestureRecognized)
             }
         }
     }

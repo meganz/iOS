@@ -190,7 +190,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         
         if albumIds.count == 1,
            let albumId = albumIds.first,
-           let albumName = Array(selection.albums.values).first(where: {$0.id == albumId} )?.name {
+           let albumName = Array(selection.albums.values).first(where: { $0.id == albumId })?.name {
             albumDeletedSuccessMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
                     .replacingOccurrences(of: "[A]", with: albumName)
         } else {

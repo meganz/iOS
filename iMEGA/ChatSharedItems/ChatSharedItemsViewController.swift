@@ -305,7 +305,7 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
     
     func onAttachmentDeleted(_ api: MEGAChatSdk, messageId: UInt64) {
         MEGALogDebug("[ChatSharedFiles] onAtonAttachmentReceivedtachmentLoaded \(messageId)")
-        guard let message = messagesArray.first(where: {$0.messageId == messageId} ) else {
+        guard let message = messagesArray.first(where: { $0.messageId == messageId }) else {
             return
         }
         
@@ -476,13 +476,13 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         switch action {
         case .forward:
-            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
+            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
                 return
             }
             forwardMessages([message])
             
         case .saveToPhotos:
-            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
+            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
                 return
             }
             
@@ -497,7 +497,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             })
             
         case .download:
-            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
+            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
                 return
             }
             let transfer = CancellableTransfer(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat)
@@ -508,7 +508,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             importNodes([node])
             
         case .exportFile:
-            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle } ) else {
+            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
                 return
             }
             ExportFileRouter(presenter: self, sender: sender).exportMessage(node: node, messageId: message.messageId, chatId: chatRoom.chatId)

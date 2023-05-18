@@ -55,15 +55,15 @@ only_rules:
       - operator_whitespace
       - redundant_discardable_let
       - legacy_constructor
+      - shorthand_operator
+      - ns_number_init_as_function_reference
+      - return_arrow_whitespace
+      - closing_brace
+      - void_return
+      - for_where
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
-    
-      # - shorthand_operator (12 issues)
-      # - ns_number_init_as_function_reference (12 issues)
-      # - return_arrow_whitespace (13 issues)
-      # - closing_brace (14 issues)
-      # - void_return (15 issues)
-      # - for_where (16 issues)
+
       # - implicit_getter (16 issues)
       # - xctfail_message (16 issues)
       # - redundant_void_return (17 issues)

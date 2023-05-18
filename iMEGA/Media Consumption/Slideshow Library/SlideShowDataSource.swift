@@ -4,7 +4,7 @@ import MEGADomain
 protocol SlideShowDataSourceProtocol {
     var photos: [SlideShowMediaEntity] { get set }
     var nodeEntities: [NodeEntity] { get set }
-    var initialPhotoDownloadCallback: (() -> ())? { get set }
+    var initialPhotoDownloadCallback: (() -> Void)? { get set }
     
     func resetData()
     func loadSelectedPhotoPreview() -> Bool
@@ -26,7 +26,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     }
     
     var thumbnailLoadingTask: Task<Void, Never>?
-    var initialPhotoDownloadCallback: (() -> ())?
+    var initialPhotoDownloadCallback: (() -> Void)?
     private let fileExistenceUseCase: FileExistUseCaseProtocol
     private let thumbnailUseCase: ThumbnailUseCaseProtocol
     private let fileDownloadUseCase: FileDownloadUseCaseProtocol

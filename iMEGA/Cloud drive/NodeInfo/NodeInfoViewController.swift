@@ -261,14 +261,14 @@ class NodeInfoViewController: UIViewController {
         guard let outShares = node.outShares() as? [MEGAShare] else {
             return []
         }
-        return outShares.filter( { $0.isPending } )
+        return outShares.filter({ $0.isPending })
     }
     
     private func activeOutShares() -> [MEGAShare] {
         guard let outShares = node.outShares() as? [MEGAShare] else {
             return []
         }
-        return outShares.filter( { !$0.isPending } )
+        return outShares.filter({ !$0.isPending })
     }
     
     //MARK: - TableView Data Source

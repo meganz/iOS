@@ -10,16 +10,12 @@ extension Array where Element: PhotoDateSection {
     }
     
     func indexPath(of position: PhotoScrollPosition, in timeZone: TimeZone? = nil) -> IndexPath? {
-        for (sectionIndex, section) in self.enumerated() {
-            if section.photoByDayList.contains(where: { $0.categoryDate == position.date.removeTimestamp(timeZone: timeZone) }) {
-                for (itemIndex, photo) in section.contentList.enumerated() {
-                    if photo.handle == position.handle {
-                        return IndexPath(item: itemIndex, section: sectionIndex)
-                    }
-                }
-                
-                break
+        for (sectionIndex, section) in self.enumerated() where section.photoByDayList.contains(where: { $0.categoryDate == position.date.removeTimestamp(timeZone: timeZone) }) {
+            for (itemIndex, photo) in section.contentList.enumerated() where photo.handle == position.handle {
+                return IndexPath(item: itemIndex, section: sectionIndex)
             }
+            
+            break
         }
         
         return nil

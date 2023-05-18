@@ -79,7 +79,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
     
     // MARK: - Private
     
-    private func sampleImageNodesForCloudDrive() ->[NodeEntity] {
+    private func sampleImageNodesForCloudDrive() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:4, parentHandle: 1)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:5, parentHandle: 1)
         let node3 = NodeEntity(nodeType:.file, name:"TestImage3.png", handle:6, parentHandle: 2)
@@ -88,7 +88,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         return [node1, node2, node3, node4]
     }
     
-    private func sampleVideoNodesForCloudDrive() ->[NodeEntity] {
+    private func sampleVideoNodesForCloudDrive() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:4, parentHandle: 1)
         let node2 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:5, parentHandle: 1)
         let node3 = NodeEntity(nodeType:.file, name:"TestVideo3.mp4", handle:6, parentHandle: 2)
@@ -97,7 +97,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         return [node1, node2, node3, node4]
     }
     
-    private func samplePhotoNodesFromCameraUpload() ->[NodeEntity] {
+    private func samplePhotoNodesFromCameraUpload() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:4, parentHandle: 2)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:5, parentHandle: 2)
         let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:6, parentHandle: 2)
@@ -106,7 +106,7 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         return [node1, node2, node3, node4]
     }
     
-    private func samplePhotoNodesFromMediaUpload() ->[NodeEntity] {
+    private func samplePhotoNodesFromMediaUpload() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:4, parentHandle: 3)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:5, parentHandle: 3)
         let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:6, parentHandle: 3)

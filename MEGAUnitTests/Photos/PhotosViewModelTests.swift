@@ -138,7 +138,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isSelectHidden)
     }
     
-    private func sampleNodesForAllLocations() ->[NodeEntity] {
+    private func sampleNodesForAllLocations() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 0, hasThumbnail: true)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
         let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 2, hasThumbnail: true)
@@ -151,7 +151,7 @@ final class PhotosViewModelTests: XCTestCase {
         return [node1, node2, node3, node4, node5, node6, node7, node8]
     }
     
-    private func sampleNodesForCloudDriveOnly() ->[NodeEntity] {
+    private func sampleNodesForCloudDriveOnly() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 1, hasThumbnail: true)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
         let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 1, hasThumbnail: true)
@@ -160,7 +160,7 @@ final class PhotosViewModelTests: XCTestCase {
         return [node1, node2, node3, node4]
     }
     
-    private func sampleNodesForCameraUploads() ->[NodeEntity] {
+    private func sampleNodesForCameraUploads() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 1, hasThumbnail: true)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
         let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 1, hasThumbnail: true)

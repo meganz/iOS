@@ -19,7 +19,7 @@ final class AssetDownloader {
     
     // MARK:- Interface methods.
     
-    func download(handler: ((Bool)-> Void)?) {
+    func download(handler: ((Bool) -> Void)?) {
         let scale = UIScreen.main.scale
         let size = CGSize(width: imageSize.width * scale,
                           height: imageSize.width * scale)

@@ -140,7 +140,7 @@ class ContactsPickerViewController: UIViewController {
         searchController.isActive = false
 
         dismiss(animated: true) {
-            self.delegate?.contactsPicker(self, didSelectContacts: self.selectedContacts.map( { $0.contactDetail } ))
+            self.delegate?.contactsPicker(self, didSelectContacts: self.selectedContacts.map({ $0.contactDetail }))
         }
     }
     

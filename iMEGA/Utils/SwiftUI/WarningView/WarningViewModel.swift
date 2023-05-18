@@ -16,13 +16,13 @@ enum WarningType: CustomStringConvertible {
     let warningType: WarningType
     let router: WarningViewRouting?
     let isShowCloseButton: Bool
-    var hideWarningViewAction: (() -> ())?
+    var hideWarningViewAction: (() -> Void)?
     @Published var isHideWarningView: Bool = false
     
     init(warningType: WarningType,
          router: WarningViewRouting? = nil,
          isShowCloseButton: Bool = false,
-         hideWarningViewAction: (() -> ())? = nil) {
+         hideWarningViewAction: (() -> Void)? = nil) {
         self.warningType = warningType
         self.router = router
         self.isShowCloseButton = isShowCloseButton
