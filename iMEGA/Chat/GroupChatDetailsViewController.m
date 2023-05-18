@@ -925,7 +925,7 @@
             }
                 
             case GroupChatDetailsSectionParticipants:
-                if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
+                if (!MEGASdk.isLoggedIn) {
                     break;
                 }
                 

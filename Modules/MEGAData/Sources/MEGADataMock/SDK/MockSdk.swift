@@ -6,6 +6,7 @@ public final class MockSdk: MEGASdk {
     private let syncDebrisNodes: [MEGANode]
     private let myContacts: MEGAUserList
     public var _myUser: MEGAUser?
+    public var _isLoggedIn: Int
     private let email: String?
     private var statsEventType: Int?
     private var statsEventMessage: String?
@@ -38,6 +39,7 @@ public final class MockSdk: MEGASdk {
                 publicLinkNodes: MEGANodeList = MEGANodeList(),
                 myContacts: MEGAUserList = MEGAUserList(),
                 myUser: MEGAUser? = nil,
+                isLoggedIn: Int = 0,
                 myEmail: String? = nil,
                 megaSets: [MEGASet] = [],
                 megaSetElements: [MEGASetElement] = [],
@@ -57,6 +59,7 @@ public final class MockSdk: MEGASdk {
         self.syncDebrisNodes = syncDebrisNodes
         self.myContacts = myContacts
         _myUser = myUser
+        _isLoggedIn = isLoggedIn
         email = myEmail
         sets = megaSets
         setElements = megaSetElements
@@ -85,6 +88,8 @@ public final class MockSdk: MEGASdk {
     public override var myUser: MEGAUser? { _myUser }
     
     public override var myEmail: String? { email }
+    
+    public override func isLoggedIn() -> Int { _isLoggedIn }
     
     public override func node(forHandle handle: MEGAHandle) -> MEGANode? {
         nodes.first { $0.handle == handle }
