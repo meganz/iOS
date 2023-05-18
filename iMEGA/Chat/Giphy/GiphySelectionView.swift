@@ -111,14 +111,14 @@ class GiphySelectionView: UIView {
                 if self.searchKey.isEmpty {
                     switch self.category {
                     case .gifs:
-                        self.gifs = self.gifs + response
+                        self.gifs += response
                     case .stickers:
-                        self.stickers = self.stickers + response
+                        self.stickers += response
                     default:
                         break
                     }
                 } else {
-                    self.filteredGifs = self.filteredGifs + response
+                    self.filteredGifs += response
                 }
             case Result.failure:
                 // Handle error

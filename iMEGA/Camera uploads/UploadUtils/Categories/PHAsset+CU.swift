@@ -18,10 +18,8 @@ extension PHAsset {
     /// - Returns: It returns the first found asset resource according to the type search list
     private func searchResource(by types: [PHAssetResourceType]) -> PHAssetResource? {
         for type in types {
-            for resource in PHAssetResource.assetResources(for: self) {
-                if resource.type == type {
-                    return resource
-                }
+            for resource in PHAssetResource.assetResources(for: self) where resource.type == type {
+                return resource
             }
         }
         

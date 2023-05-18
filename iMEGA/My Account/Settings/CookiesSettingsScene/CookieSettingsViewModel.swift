@@ -168,10 +168,8 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             return true
         }
         
-        for (index, value) in currentCookiesConfigArray.enumerated() {
-            if cookiesConfigArray[index] != value {
-                return true
-            }
+        for (index, value) in currentCookiesConfigArray.enumerated() where cookiesConfigArray[index] != value {
+            return true
         }
         
         return false

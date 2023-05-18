@@ -104,10 +104,8 @@ class ReactionContainerView: UIView {
     }
     
     func emojiSelected(_ userhandles: MEGAHandleList) -> Bool {
-        for index in 0..<userhandles.size {
-            if userhandles.megaHandle(at: index) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle {
-                return true
-            }
+        for index in 0..<userhandles.size where userhandles.megaHandle(at: index) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle {
+            return true
         }
         
         return false

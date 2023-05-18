@@ -1,7 +1,7 @@
 import MEGADomain
 
 extension CloudDriveViewController: NodeActionViewControllerDelegate {
-    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) ->  () {
+    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
         switch action {
         case .download:
             download(nodes)

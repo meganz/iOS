@@ -92,7 +92,7 @@ final class AlbumCoverPickerViewModel: ObservableObject {
     
     private func selectCoverNode() {
         if let coverNode = album.coverNode,
-           let coverPhoto = photos.first(where: { $0.id == coverNode.handle } ) {
+           let coverPhoto = photos.first(where: { $0.id == coverNode.handle }) {
             photoSelection.selectedPhoto = coverPhoto
         } else {
             photoSelection.selectedPhoto = photos.first

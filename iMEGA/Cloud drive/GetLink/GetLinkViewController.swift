@@ -211,7 +211,7 @@ class GetLinkViewController: UIViewController {
     }
     
     private func updateModel(forNode node: MEGANode) {
-        guard let index = nodes.firstIndex(where: { $0.handle == node.handle } ) else { return }
+        guard let index = nodes.firstIndex(where: { $0.handle == node.handle }) else { return }
         nodes[index] = node
         if getLinkVM.multilink {
             tableView.reloadSections([index], with: .automatic)

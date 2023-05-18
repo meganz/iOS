@@ -50,10 +50,8 @@ extension UIMenu {
         let actions1 = lhs.map { ($0, $0.state) }
         let actions2 = rhs.map { ($0, $0.state) }
         
-        for (index, action) in actions1.enumerated() {
-            if action != actions2[index] {
-                return false
-            }
+        for (index, action) in actions1.enumerated() where action != actions2[index] {
+            return false
         }
         return true
     }

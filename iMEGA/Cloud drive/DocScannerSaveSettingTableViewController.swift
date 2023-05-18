@@ -394,7 +394,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                     if completionCounter == self.docs!.count - 1 {
                         SVProgressHUD.showSuccess(withStatus: Strings.Localizable.sharedSuccessfully)
                     }
-                    completionCounter = completionCounter + 1
+                    completionCounter += 1
                 }
                 MEGASdkManager.sharedMEGASdk().startUploadForChat(withLocalPath: path, parent: myChatFilesFolderNode, appData: appData, isSourceTemporary: true, fileName: nil, delegate: startUploadTransferDelegate!)
             }

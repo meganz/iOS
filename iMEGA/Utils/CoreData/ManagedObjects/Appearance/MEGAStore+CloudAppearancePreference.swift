@@ -7,11 +7,11 @@ extension MEGAStore {
         guard let context = stack.viewContext else { return }
         
         if let cloudAppearancePreference = fetchCloudAppearancePreference(handle: handle) {
-            cloudAppearancePreference.sortType = NSNumber.init(value: sortType)
+            cloudAppearancePreference.sortType = NSNumber(value: sortType)
         } else {
             let cloudAppearancePreference = NSEntityDescription.insertNewObject(forEntityName: "CloudAppearancePreference", into: context) as! CloudAppearancePreference
-            cloudAppearancePreference.handle = NSNumber.init(value: handle)
-            cloudAppearancePreference.sortType = NSNumber.init(value: sortType)
+            cloudAppearancePreference.handle = NSNumber(value: handle)
+            cloudAppearancePreference.sortType = NSNumber(value: sortType)
         }
         
         MEGAStore.shareInstance().save(context)
@@ -21,11 +21,11 @@ extension MEGAStore {
         guard let context = stack.viewContext else { return }
         
         if let cloudAppearancePreference = fetchCloudAppearancePreference(handle: handle) {
-            cloudAppearancePreference.viewMode = NSNumber.init(value: viewMode)
+            cloudAppearancePreference.viewMode = NSNumber(value: viewMode)
         } else {
             let cloudAppearancePreference = NSEntityDescription.insertNewObject(forEntityName: "CloudAppearancePreference", into: context) as! CloudAppearancePreference
-            cloudAppearancePreference.handle = NSNumber.init(value: handle)
-            cloudAppearancePreference.viewMode = NSNumber.init(value: viewMode)
+            cloudAppearancePreference.handle = NSNumber(value: handle)
+            cloudAppearancePreference.viewMode = NSNumber(value: viewMode)
         }
         
         MEGAStore.shareInstance().save(context)

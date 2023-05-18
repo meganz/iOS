@@ -147,10 +147,8 @@ public final class MockSdk: MEGASdk {
     
     public override func numberChildren(forParent parent: MEGANode?) -> Int {
         var numberChildren = 0
-        for node in nodes {
-            if node.parentHandle == parent?.handle {
-                numberChildren += 1
-            }
+        for node in nodes where node.parentHandle == parent?.handle {
+            numberChildren += 1
         }
         return numberChildren
     }

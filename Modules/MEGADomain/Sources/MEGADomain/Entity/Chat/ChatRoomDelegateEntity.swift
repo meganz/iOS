@@ -1,11 +1,11 @@
 
 public struct ChatRoomDelegateEntity {
-    public var onChatRoomUpdate: ((ChatRoomEntity) -> ())?
-    public var onMessageLoaded: ((ChatMessageEntity?) -> ())?
-    public var onMessageReceived: ((ChatMessageEntity) -> ())?
-    public var onMessageUpdate: ((ChatMessageEntity) -> ())?
-    public var onHistoryReloaded: ((ChatRoomEntity) -> ())?
-    public var onReactionUpdate: ((ChatIdEntity, String, Int) -> ())?
+    public var onChatRoomUpdate: ((ChatRoomEntity) -> Void)?
+    public var onMessageLoaded: ((ChatMessageEntity?) -> Void)?
+    public var onMessageReceived: ((ChatMessageEntity) -> Void)?
+    public var onMessageUpdate: ((ChatMessageEntity) -> Void)?
+    public var onHistoryReloaded: ((ChatRoomEntity) -> Void)?
+    public var onReactionUpdate: ((ChatIdEntity, String, Int) -> Void)?
     
     public init(
         onChatRoomUpdate: ((ChatRoomEntity) -> Void)? = nil,

@@ -148,13 +148,13 @@ extension LogManager {
         var log: String = "[\(ServiceManager.shared.BASE_URL)\(path)]"
         
         if !request.headers.isEmpty {
-            log = log + "\n\(headers)"
+            log += "\n\(headers)"
         }
         
-        log = log + "\n[\(httpMethod)]"
+        log += "\n[\(httpMethod)]"
         
         if !request.body.isEmpty {
-            log = log + "\n[\(body)]"
+            log += "\n[\(body)]"
         }
         
         print("LogManager: \n--- Request ---\n[\(Date().toString())] \n\(log) \n--- End ---\n")
@@ -171,13 +171,13 @@ extension LogManager {
         var log: String = ""
         
         if let path = path {
-            log = log + "[\(ServiceManager.shared.BASE_URL)\(path)]\n"
+            log += "[\(ServiceManager.shared.BASE_URL)\(path)]\n"
         }
         
-        log = log + "[isSuccess: \(isSuccess)]\n[message: \(message)]"
+        log += "[isSuccess: \(isSuccess)]\n[message: \(message)]"
         
         if let json = dataJSON {
-            log = log + "\n[\(json)]"
+            log += "\n[\(json)]"
         }
         
         print("LogManager: \n--- Response ---\n[\(Date().toString())] \n\(log) \n--- End ---\n")
@@ -191,7 +191,7 @@ extension LogManager {
         var log: String = ""
         
         if let errorKey = errorKey {
-            log = log + "\n[key: \(errorKey)]"
+            log += "\n[key: \(errorKey)]"
         }
         
         if log.isEmpty { return }

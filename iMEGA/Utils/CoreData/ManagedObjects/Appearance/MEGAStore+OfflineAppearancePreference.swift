@@ -7,11 +7,11 @@ extension MEGAStore {
         guard let context = stack.viewContext else { return }
         
         if let offlineAppearancePreference = fetchOfflineAppearancePreference(path: path) {
-            offlineAppearancePreference.sortType = NSNumber.init(value: sortType)
+            offlineAppearancePreference.sortType = NSNumber(value: sortType)
         } else {
             let offlineAppearancePreference = NSEntityDescription.insertNewObject(forEntityName: "OfflineAppearancePreference", into: context) as! OfflineAppearancePreference
             offlineAppearancePreference.localPath = path
-            offlineAppearancePreference.sortType = NSNumber.init(value: sortType)
+            offlineAppearancePreference.sortType = NSNumber(value: sortType)
         }
         
         MEGAStore.shareInstance().save(context)
@@ -21,11 +21,11 @@ extension MEGAStore {
         guard let context = stack.viewContext else { return }
         
         if let offlineAppearancePreference = fetchOfflineAppearancePreference(path: path) {
-            offlineAppearancePreference.viewMode = NSNumber.init(value: viewMode)
+            offlineAppearancePreference.viewMode = NSNumber(value: viewMode)
         } else {
             let offlineAppearancePreference = NSEntityDescription.insertNewObject(forEntityName: "OfflineAppearancePreference", into: context) as! OfflineAppearancePreference
             offlineAppearancePreference.localPath = path
-            offlineAppearancePreference.viewMode = NSNumber.init(value: viewMode)
+            offlineAppearancePreference.viewMode = NSNumber(value: viewMode)
         }
         
         MEGAStore.shareInstance().save(context)

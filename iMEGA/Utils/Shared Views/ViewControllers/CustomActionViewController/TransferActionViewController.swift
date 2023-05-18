@@ -2,7 +2,7 @@ import UIKit
 import MEGADomain
 
 @objc protocol TransferActionViewControllerDelegate: NodeActionViewControllerDelegate {
-   @objc optional func transferAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for transfer: MEGATransfer, from sender: Any) ->  ()
+   @objc optional func transferAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for transfer: MEGATransfer, from sender: Any)
 }
 
 class TransferActionViewController: NodeActionViewController {
