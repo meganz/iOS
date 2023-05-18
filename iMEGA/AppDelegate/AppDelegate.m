@@ -13,7 +13,6 @@
 
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
-#import "MEGAApplication.h"
 #import "MEGALinkManager.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -55,7 +54,7 @@
 
 #import "MEGA-Swift.h"
 
-@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
+@interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
 }
@@ -341,9 +340,7 @@
     [sharedUserDefaults setInteger:0 forKey:MEGAApplicationIconBadgeNumber];    
     application.applicationIconBadgeNumber = 0;
     
-    if (MEGASdkManager.sharedMEGAChatSdk.isSignalActivityRequired) {
-        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
-    }
+    [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
     
     if (![NSStringFromClass([UIApplication sharedApplication].windows.firstObject.class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
@@ -1881,14 +1878,6 @@
     }
     
     [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferFinishedNotification object:nil userInfo:@{MEGATransferUserInfoKey : transfer}];
-}
-
-#pragma mark - MEGAApplicationDelegate
-
-- (void)application:(MEGAApplication *)application willSendTouchEvent:(UIEvent *)event {
-    if (MEGASdkManager.sharedMEGAChatSdk.isSignalActivityRequired) {
-        [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
-    }
 }
 
 @end
