@@ -29,7 +29,7 @@ extension SharedItemsViewController {
     }
     
     @objc func indexPathFromSender(_ sender: UIButton) -> IndexPath? {
-        let nonZeroPoint = CGPointMake(2, 2);
+        let nonZeroPoint = CGPoint(x: 2, y: 2);
         let buttonPosition = sender.convert(nonZeroPoint, to: tableView)
         return tableView?.indexPathForRow(at: buttonPosition)
     }

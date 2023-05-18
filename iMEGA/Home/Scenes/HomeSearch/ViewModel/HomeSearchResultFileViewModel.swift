@@ -22,7 +22,7 @@ extension HomeSearchResultFileViewModel {
         lhs.name < rhs.name
     }
 
-    static func ==(lhs: HomeSearchResultFileViewModel, rhs: HomeSearchResultFileViewModel) -> Bool {
+    static func == (lhs: HomeSearchResultFileViewModel, rhs: HomeSearchResultFileViewModel) -> Bool {
         return lhs.handle == rhs.handle
     }
 }

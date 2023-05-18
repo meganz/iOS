@@ -4,11 +4,11 @@ infix operator ~~: ComparisonPrecedence
 infix operator !~: ComparisonPrecedence
 
 public protocol Matchable {
-    static func ~~(lhs: Self, rhs: Self) -> Bool
+    static func ~~ (lhs: Self, rhs: Self) -> Bool
 }
 
 public extension Matchable {
-    static func !~(lhs: Self, rhs: Self) -> Bool {
+    static func !~ (lhs: Self, rhs: Self) -> Bool {
         !(lhs ~~ rhs)
     }
 }

@@ -23,7 +23,7 @@ class SlideShowDataSourceTests: XCTestCase {
     
     private func emptyImage(with size: CGSize) throws -> UIImage {
         UIGraphicsBeginImageContext(size)
-        try XCTUnwrap(UIGraphicsGetCurrentContext()!.addRect(CGRectMake(0, 0, size.width, size.height)))
+        try XCTUnwrap(UIGraphicsGetCurrentContext()!.addRect(CGRect(origin: .zero, size: size)))
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return try XCTUnwrap(image)

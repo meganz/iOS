@@ -6,7 +6,7 @@ struct HomeSearchHintViewModel: Comparable, Hashable {
 
     let searchTime: Date
 
-    static func <(lhs: HomeSearchHintViewModel, rhs: HomeSearchHintViewModel) -> Bool {
+    static func < (lhs: HomeSearchHintViewModel, rhs: HomeSearchHintViewModel) -> Bool {
         return lhs.searchTime < rhs.searchTime
     }
 }

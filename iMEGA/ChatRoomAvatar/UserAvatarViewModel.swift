@@ -102,7 +102,7 @@ final class UserAvatarViewModel: ObservableObject {
                                                        useCache: false)
     }
     
-    private func createAvatar(usingName name: String, isRightToLeftLanguage: Bool, size: CGSize = CGSizeMake(100, 100)) -> UIImage?  {
+    private func createAvatar(usingName name: String, isRightToLeftLanguage: Bool, size: CGSize = CGSize(width: 100, height: 100)) -> UIImage?  {
         let initials = name
             .components(separatedBy: " ")
             .prefix(2)

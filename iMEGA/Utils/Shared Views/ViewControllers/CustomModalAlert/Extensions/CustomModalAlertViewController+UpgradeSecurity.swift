@@ -12,7 +12,7 @@ extension CustomModalAlertViewController {
                 Task.detached { @MainActor in
                     do {
                         let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-                        let _ = try await accountUseCase.upgradeSecurity()
+                        _ = try await accountUseCase.upgradeSecurity()
                     } catch {
                         SVProgressHUD.showError(withStatus: error.localizedDescription)
                     }

@@ -139,7 +139,7 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: NodeActionsRepo
     //MARK: - Private
     private func removeOriginalDuplicatedItemIfNeeded(for collision: NameCollisionEntity) async throws {
         if (collision.collisionAction == .replace || collision.collisionAction == .update), let collisionHandle = collision.collisionNodeHandle, let rubbish = nodeRepository.rubbishNode() {
-            let _ = try await nodeActionsRepository.moveNode(handle: collisionHandle, in: rubbish.handle, newName: nil)
+            _ = try await nodeActionsRepository.moveNode(handle: collisionHandle, in: rubbish.handle, newName: nil)
         }
     }
 }

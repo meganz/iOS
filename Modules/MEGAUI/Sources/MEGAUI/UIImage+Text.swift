@@ -22,7 +22,7 @@ public extension UIImage {
         context.setStrokeColor(backgroundColor.cgColor)
         context.setFillColor(backgroundColor.cgColor)
         
-        let path = UIBezierPath(ovalIn: CGRectMake(0, 0, width, height))
+        let path = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: width, height: height))
         path.addClip()
         path.lineWidth = 1.0
         path.stroke()
@@ -46,7 +46,7 @@ public extension UIImage {
             context.drawLinearGradient(gradient, start: CGPoint(x: 0, y: height), end: CGPoint(x: width, y: 0), options: [])
         } else {
             context.setFillColor(backgroundColor.cgColor)
-            context.fill(CGRectMake(0, 0, width, height))
+            context.fill(CGRect(x: 0, y: 0, width: width, height: height))
         }
         
         let dict: [NSAttributedString.Key : Any] = [
@@ -57,7 +57,11 @@ public extension UIImage {
         let textSize = initials.size(withAttributes: dict)
         
         let xFactor: CGFloat = isRightToLeftLanguage ? -1 : 1
-        initials.draw(in: CGRectMake(xFactor * (radius - textSize.width / 2), radius - font.lineHeight / 2, textSize.width, textSize.height), withAttributes:dict)
+        initials.draw(in: CGRect(x: xFactor * (radius - textSize.width / 2),
+                                 y: radius - font.lineHeight / 2,
+                                 width: textSize.width,
+                                 height: textSize.height),
+                      withAttributes: dict)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         
