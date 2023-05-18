@@ -11,9 +11,7 @@ final class TurnOnNotificationsViewRouter: TurnOnNotificationsViewRouting {
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
-        let vm = TurnOnNotificationsViewModel(router: self,
-                                              authUseCase: AuthUseCase(repo: AuthRepository(sdk: sdk), credentialRepo: CredentialRepository.newRepo))
+        let vm = TurnOnNotificationsViewModel(router: self, accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
         self.vm = vm
         let vc = TurnOnNotificationsViewController(viewModel: vm)        
         baseViewController = vc
