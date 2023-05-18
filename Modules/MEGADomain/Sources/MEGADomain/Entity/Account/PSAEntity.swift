@@ -21,7 +21,7 @@ public struct PSAEntity {
 }
 
 extension PSAEntity: Equatable {
-    public static func ==(lhs: PSAEntity, rhs: PSAEntity) -> Bool {
+    public static func == (lhs: PSAEntity, rhs: PSAEntity) -> Bool {
         return lhs.identifier == rhs.identifier
     }
 }

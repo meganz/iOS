@@ -49,7 +49,7 @@ final class AlbumModificationUseCaseTests: XCTestCase {
         let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents))
         
         do {
-            let _ = try await sut.updateAlbumCover(album: HandleEntity(1), withAlbumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(2)), albumPhotoId: nil))
+            _ = try await sut.updateAlbumCover(album: HandleEntity(1), withAlbumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(2)), albumPhotoId: nil))
         } catch let errorEntity as AlbumPhotoErrorEntity {
             XCTAssertTrue(errorEntity == .photoIdDoesNotExist)
         }

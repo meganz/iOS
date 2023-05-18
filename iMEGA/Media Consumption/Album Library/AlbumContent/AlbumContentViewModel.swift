@@ -331,7 +331,7 @@ final class AlbumContentViewModel: ViewModelType {
             guard let self else { return }
             
             do {
-                let _ = try await self.albumModificationUseCase.updateAlbumCover(album: album.id, withAlbumPhoto: albumPhoto)
+                _ = try await self.albumModificationUseCase.updateAlbumCover(album: album.id, withAlbumPhoto: albumPhoto)
                 self.album.coverNode = albumPhoto.photo
                 
                 let message = Strings.Localizable.CameraUploads.Albums.albumCoverUpdated

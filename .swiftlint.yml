@@ -52,12 +52,12 @@ only_rules:
       - closure_parameter_position
       - empty_parentheses_with_trailing_closure
       - multiple_closures_with_trailing_closure
+      - operator_whitespace
+      - redundant_discardable_let
+      - legacy_constructor
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
     
-      # - operator_whitespace (10 issues)
-      # - redundant_discardable_let (11 issues)
-      # - legacy_constructor (12 issues)
       # - shorthand_operator (12 issues)
       # - ns_number_init_as_function_reference (12 issues)
       # - return_arrow_whitespace (13 issues)

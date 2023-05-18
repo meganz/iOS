@@ -11731,8 +11731,9 @@
 		137361821A6664C300B740E8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = MEGA;
 				TargetAttributes = {
 					137361891A6664C300B740E8 = {

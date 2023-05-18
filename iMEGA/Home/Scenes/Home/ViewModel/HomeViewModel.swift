@@ -11,7 +11,7 @@ import MEGADomain
     func openShareFolderDialog(forNode node: MEGANode, router: HomeRouter?) {
         Task {
             do {
-                let _ = try await shareUseCase.createShareKeys(forNodes: [node.toNodeEntity()])
+                _ = try await shareUseCase.createShareKeys(forNodes: [node.toNodeEntity()])
                 router?.didTap(on: .shareFolder(node))
             } catch {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

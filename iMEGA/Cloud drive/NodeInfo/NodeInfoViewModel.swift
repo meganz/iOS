@@ -24,7 +24,7 @@ import MEGADomain
         
         Task {
             do {
-                let _ = try await shareUseCase?.createShareKeys(forNodes: [node.toNodeEntity()])
+                _ = try await shareUseCase?.createShareKeys(forNodes: [node.toNodeEntity()])
                 router.showShareFoldersContactView(withNodes: [node])
             } catch {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

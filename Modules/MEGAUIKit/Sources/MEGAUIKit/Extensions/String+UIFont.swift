@@ -13,10 +13,10 @@ public extension String {
             }
             
             let affectedLocation = openTagRange.location + openTagRange.length
-            let searchRange = NSMakeRange(affectedLocation, plainString.length - affectedLocation)
+            let searchRange = NSRange(location: affectedLocation, length: plainString.length - affectedLocation)
             let closeTagRange = plainString.range(of: closeTag, options: NSString.CompareOptions(), range: searchRange)
             
-            attributedString.setAttributes([NSAttributedString.Key.font: withFont], range: NSMakeRange(affectedLocation, closeTagRange.location - affectedLocation))
+            attributedString.setAttributes([NSAttributedString.Key.font: withFont], range: NSRange(location: affectedLocation, length: closeTagRange.location - affectedLocation))
             attributedString.deleteCharacters(in: closeTagRange)
             attributedString.deleteCharacters(in: openTagRange)
         }
