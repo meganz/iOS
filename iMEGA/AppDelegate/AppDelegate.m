@@ -274,9 +274,11 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will resign active");
     
-    if (MEGASdk.isLoggedIn) {
-        [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
-    }
+    [MEGASdkManager.sharedMEGASdk isLoggedInWithCompletion:^(BOOL isLoggedIn) {
+        if (isLoggedIn) {
+            [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
+        }
+    }];
     
     [MEGASdkManager.sharedMEGASdk areTherePendingTransfersWithCompletion:^(BOOL pendingTransfers) {
         if (pendingTransfers) {
@@ -314,12 +316,14 @@
     
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
     
-    if (MEGASdk.isLoggedIn && self->isFetchNodesDone) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
-            [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
-        });
-    }
+    [MEGASdkManager.sharedMEGASdk isLoggedInWithCompletion:^(BOOL isLoggedIn) {
+        if (isLoggedIn && self->isFetchNodesDone) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
+                [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
+            });
+        }
+    }];
     
     [self.privacyView removeFromSuperview];
     self.privacyView = nil;

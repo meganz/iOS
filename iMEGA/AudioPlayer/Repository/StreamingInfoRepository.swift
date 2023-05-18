@@ -1,6 +1,5 @@
 import Foundation
 import MEGADomain
-import MEGAData
 
 protocol StreamingInfoRepositoryProtocol {
     func serverStart()
@@ -15,7 +14,7 @@ final class StreamingInfoRepository: StreamingInfoRepositoryProtocol {
     
     private let sdk: MEGASdk
     
-    init(sdk: MEGASdk = MEGASdk.isLoggedIn ? MEGASdk.sharedSdk : MEGASdk.sharedFolderLinkSdk) {
+    init(sdk: MEGASdk = MEGASdkManager.sharedMEGASdk().isLoggedIn() != 0 ? MEGASdkManager.sharedMEGASdk() : MEGASdkManager.sharedMEGASdkFolder()) {
         self.sdk = sdk
     }
     

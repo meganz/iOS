@@ -7,7 +7,6 @@
 #import "CameraUploadManager.h"
 #import "NSString+MNZCategory.h"
 #import "NSError+CameraUpload.h"
-@import MEGAData;
 
 static NSString * const AttributesDirectoryName = @"Attributes";
 
@@ -133,7 +132,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 
 - (void)scanLocalAttributeFilesAndRetryUploadIfNeeded {
     MEGALogDebug(@"[Camera Upload] scan local attribute files and retry upload");
-    if (!(MEGASdk.isLoggedIn && CameraUploadManager.shared.isNodeTreeCurrent)) {
+    if (!(MEGASdkManager.sharedMEGASdk.isLoggedIn && CameraUploadManager.shared.isNodeTreeCurrent)) {
         return;
     }
     
