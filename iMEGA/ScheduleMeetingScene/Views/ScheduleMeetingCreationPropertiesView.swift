@@ -9,7 +9,10 @@ struct ScheduleMeetingCreationPropertiesView: View {
         VStack(spacing: 0) {
             VStack {
                 VStack {
-                    ScheduleMeetingCreationDateAndRecurrenceView(viewModel: viewModel)
+                    ScheduleMeetingCreationDateAndRecurrenceView(
+                        viewModel: viewModel,
+                        showMonthlyRecurrenceFootnoteView: viewModel.showMonthlyRecurrenceFootnoteView
+                    )
                     Toggle(Strings.Localizable.Meetings.ScheduleMeeting.link, isOn: $viewModel.meetingLinkEnabled)
                         .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
                         .padding(.horizontal)

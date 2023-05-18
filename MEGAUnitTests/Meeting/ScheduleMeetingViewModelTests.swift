@@ -104,6 +104,85 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertTrue(router.showAddParticipants_calledTimes == 1)
     }
     
+    func testCreateDidTap_neverReccurrence_createScheduleMeetingEntityshouldBeNil() {
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase()
+        let viewModel = ScheduleMeetingViewModel(scheduledMeetingUseCase: scheduleMeetingUseCase)
+        viewModel.createDidTap()
+        XCTAssert(scheduleMeetingUseCase.createScheduleMeetingEntity == nil)
+    }
+    
+    func testCreateDidTap_dailyReccurrence_createScheduleMeetingEntityRulesShouldMatch() {
+        let rules = ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7))
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase()
+        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase)
+        let predicate = NSPredicate { _, _ in
+            scheduleMeetingUseCase.createScheduleMeetingEntity?.rules == rules
+        }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        viewModel.createDidTap()
+        wait(for: [expectation], timeout: 6)
+    }
+    
+    func testCreateDidTap_weeklyReccurrence_createScheduleMeetingEntityRulesShouldMatch() throws {
+        let date = try XCTUnwrap(sampleDate())
+        let rules = ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [2])
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase()
+        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase)
+        viewModel.startDate = date
+        let predicate = NSPredicate { _, _ in
+            scheduleMeetingUseCase.createScheduleMeetingEntity?.rules == rules
+        }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        viewModel.createDidTap()
+        wait(for: [expectation], timeout: 6)
+    }
+    
+    func testCreateDidTap_monthlyReccurrence_createScheduleMeetingEntityRulesShouldMatch() throws {
+        let date = try XCTUnwrap(sampleDate())
+        let rules = ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [16])
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase()
+        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase)
+        viewModel.startDate = date
+        let predicate = NSPredicate { _, _ in
+            scheduleMeetingUseCase.createScheduleMeetingEntity?.rules == rules
+        }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        viewModel.createDidTap()
+        wait(for: [expectation], timeout: 6)
+    }
+    
+    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthly_shouldBeTrue() throws {
+        let date = try XCTUnwrap(sampleDate())
+        let rules = ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [16])
+        let viewModel = ScheduleMeetingViewModel(rules: rules)
+        viewModel.startDate = date
+
+        XCTAssertTrue(viewModel.showMonthlyRecurrenceFootnoteView)
+    }
+    
+    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionNever_shouldBeFalse() {
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .invalid))
+        XCTAssertFalse(viewModel.showMonthlyRecurrenceFootnoteView)
+    }
+    
+    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionDaily_shouldBeFalse() {
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7)))
+        XCTAssertFalse(viewModel.showMonthlyRecurrenceFootnoteView)
+    }
+    
+    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionWeekly_shouldBeFalse() {
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [1]))
+        XCTAssertFalse(viewModel.showMonthlyRecurrenceFootnoteView)
+    }
+    
+    //MARK: - Private methods.
+    
+    private func sampleDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return dateFormatter.date(from: "16/05/2023")
+    }
+    
     private func randomString(length: Int) -> String {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
       return String((0..<length).map{ _ in letters.randomElement()! })

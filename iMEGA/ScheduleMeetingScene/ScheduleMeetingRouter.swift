@@ -13,6 +13,7 @@ final class ScheduleMeetingRouter {
     func build() -> UINavigationController {
         let viewModel = ScheduleMeetingViewModel(
             router: self,
+            rules: ScheduledMeetingRulesEntity(frequency: .invalid),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)

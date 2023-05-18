@@ -4392,6 +4392,10 @@ public enum Strings {
         /// Schedule meeting
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
         public enum Create {
+          public enum MonthlyRecurrenceOption {
+            /// Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.
+            public static let footNote = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthlyRecurrenceOption.footNote")
+          }
           public enum RecurrenceOptionScreen {
             /// Custom
             public static let custom = Strings.tr("Localizable", "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom")

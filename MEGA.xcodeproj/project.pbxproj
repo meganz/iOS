@@ -2057,6 +2057,8 @@
 		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
 		BFB889792A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */; };
 		BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */; };
+		BFB889932A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889922A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift */; };
+		BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */; };
 		BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB888A28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift */; };
 		BFBB888F28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */; };
 		BFBB88D528C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB88D428C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift */; };
@@ -4533,6 +4535,8 @@
 		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
 		BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingRulesEntity+UIHelper.swift"; sourceTree = "<group>"; };
 		BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingRulesEntityTests.swift; sourceTree = "<group>"; };
+		BFB889922A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduleMeetingViewModel+Init.swift"; sourceTree = "<group>"; };
+		BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingMonthlyRecurrenceFootnoteView.swift; sourceTree = "<group>"; };
 		BFBB888A28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsEventUseCase.swift; sourceTree = "<group>"; };
 		BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingParticipantsLayoutViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFBB88D428C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowNonHostToAddParticipantsErrorEntity.swift; sourceTree = "<group>"; };
@@ -8522,6 +8526,7 @@
 				BF085C9E29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift */,
 				BF085CA229E66B38001E6AB7 /* ScheduleMeetingCreationInvitationView.swift */,
 				BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift */,
+				BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */,
 				BF085CA429E66BE9001E6AB7 /* ScheduleMeetingCreationNameView.swift */,
 				BF085CA029E66B11001E6AB7 /* ScheduleMeetingCreationOpenInviteView.swift */,
 				BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */,
@@ -10682,6 +10687,7 @@
 				83669E8B2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift */,
 				BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */,
 				BFDE0EEA263A44BC00FC586E /* MockUserInviteUseCase.swift */,
+				BFB889922A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -13839,6 +13845,7 @@
 				BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */,
+				BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */,
 				94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
@@ -14360,6 +14367,7 @@
 				32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */,
+				BFB889932A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
 				A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,

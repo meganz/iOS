@@ -75,16 +75,21 @@ final class ScheduleMeetingViewModel: ObservableObject {
 
     @Published
     private(set) var rules: ScheduledMeetingRulesEntity
+    
+    var showMonthlyRecurrenceFootnoteView: Bool {
+        rules.frequency == .monthly
+    }
 
     init(router: ScheduleMeetingRouting,
+         rules: ScheduledMeetingRulesEntity,
          scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
          chatLinkUseCase: ChatLinkUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol) {
         self.router = router
+        self.rules = rules
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.chatRoomUseCase = chatRoomUseCase
-        self.rules = ScheduledMeetingRulesEntity(frequency: .invalid)
         self.startDate = nextDateMinutesIsFiveMultiple(startDate)
         self.endDate = startDate.addingTimeInterval(Constants.defaultDurationHalfHour)
     }
@@ -179,16 +184,16 @@ final class ScheduleMeetingViewModel: ObservableObject {
             openInvite: allowNonHostsToAddParticipantsEnabled,
             startDate: startDate,
             endDate: endDate,
-            rules: rules
+            rules: rules.frequency == .invalid ? nil : rules
         )
     }
     
     private func createScheduleMeeting() {
-        let createScheduleMeeting = constructCreateScheduleMeetingEntity()
         router.showSpinner()
         Task { [weak self] in
             guard let self else { return }
             do {
+                let createScheduleMeeting = constructCreateScheduleMeetingEntity()
                 let scheduledMeeting = try await scheduledMeetingUseCase.createScheduleMeeting(createScheduleMeeting)
                 await createLinkIfNeeded(chatId: scheduledMeeting.chatId)
                 await scheduleMeetingCreationComplete(scheduledMeeting)

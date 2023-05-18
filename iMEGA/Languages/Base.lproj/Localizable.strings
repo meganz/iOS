@@ -3396,3 +3396,5 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Weekly";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Monthly";
+/* Footnote that is shown to the user when the monthly recurrence option is chosen. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
