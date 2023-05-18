@@ -432,7 +432,7 @@ public final class ContextMenuBuilder {
     //MARK: - Chat Context Actions
     private func chatMenu() -> CMEntity {
         CMEntity(displayInline: true,
-                 children: [chatStatusMenu(), doNotDisturbMenu()])
+                 children: [chatStatusMenu(), doNotDisturbMenu(), CMActionEntity(type: .chat(actionType: .archivedChats))])
     }
     
     private func chatStatusMenu() -> CMEntity {

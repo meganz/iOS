@@ -55,7 +55,7 @@ public enum RubbishBinActionEntity: CaseIterable {
 }
 
 public enum ChatActionEntity: CaseIterable {
-    case status, doNotDisturb
+    case status, doNotDisturb, archivedChats
 }
 
 public enum DNDDisabledActionEntity: CaseIterable {

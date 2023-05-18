@@ -347,7 +347,8 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                             .chatDoNotDisturbEnabled(optionType: .oneHour),
                             .chatDoNotDisturbEnabled(optionType: .sixHours),
                             .chatDoNotDisturbEnabled(optionType: .twentyFourHours),
-                            .chatDoNotDisturbEnabled(optionType: .morningEightAM)
+                            .chatDoNotDisturbEnabled(optionType: .morningEightAM),
+                            .chat(actionType: .archivedChats),
         ]
         
         XCTAssertTrue(menuActions == menuActionsArray)
