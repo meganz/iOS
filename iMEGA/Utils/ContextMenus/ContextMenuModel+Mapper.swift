@@ -197,6 +197,8 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "status", title: Strings.Localizable.status, subtitle: currentChatStatus)
         case .doNotDisturb:
             return ContextMenuDataModel(identifier: "doNotDisturb", title: Strings.Localizable.doNotDisturb, subtitle: dndRemainingTime)
+        case .archivedChats:
+            return ContextMenuDataModel(identifier: "archivedChats", title: Strings.Localizable.archivedChats)
         }
     }
 

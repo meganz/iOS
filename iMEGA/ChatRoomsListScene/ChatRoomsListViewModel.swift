@@ -625,6 +625,10 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
             self?.notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
         }
     }
+    
+    func archivedChatsTapped() {
+        router.showArchivedChatRooms()
+    }
 }
 
 //MARK: - MeetingContextMenuDelegate

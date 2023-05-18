@@ -24,6 +24,7 @@ protocol ChatMenuDelegate: AnyObject {
     func chatStatusMenu(didSelect action: ChatStatusEntity)
     func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption)
     func chatDisableDoNotDisturb()
+    func archivedChatsTapped()
 }
 
 protocol QRMenuDelegate: AnyObject {
@@ -127,8 +128,15 @@ final class ContextMenuManager: NSObject {
             
         case .meeting(let action):
             meetingContextMenuDelegate?.meetingContextMenu(didSelect: action)
+            
         case .album(let action):
             albumMenuDelegate?.albumMenu(didSelect: action)
+            
+        case .chat(let action):
+            if action == .archivedChats {
+                chatMenuDelegate?.archivedChatsTapped()
+            }
+            
         default:
             break
         }

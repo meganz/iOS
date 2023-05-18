@@ -326,6 +326,7 @@ final class ScheduleMeetingCreationRecurrenceOptionsViewModelTests: XCTestCase {
     }
     
     func testRuleChangeNotificaton_fromMonthlyToDailyRecurrence_shouldMatch() throws {
+        let date = try XCTUnwrap(sampleDate())
         let inputRules = [ScheduledMeetingRulesEntity(frequency: .monthly, weekDayList: [2]),
                           ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7))]
         var outputRules: [ScheduledMeetingRulesEntity] = []

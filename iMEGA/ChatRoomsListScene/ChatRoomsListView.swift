@@ -60,15 +60,6 @@ struct ChatRoomsListView: View {
                     }
                     
                     if chatRooms.isNotEmpty {
-                        if let archivedChatsViewState = viewModel.archiveChatsViewState(), !viewModel.isSearchActive {
-                            ChatRoomsTopRowView(state: archivedChatsViewState)
-                                .onTapGesture {
-                                    archivedChatsViewState.action()
-                                }
-                                .listRowInsets(EdgeInsets())
-                                .padding(10)
-                        }
-                        
                         if !viewModel.isSearchActive, let contactsOnMega = viewModel.contactsOnMegaViewState {
                             ChatRoomsTopRowView(state: contactsOnMega)
                                 .onTapGesture {

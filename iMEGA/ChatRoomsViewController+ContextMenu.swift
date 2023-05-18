@@ -114,6 +114,12 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         }
     }
     
+    func archivedChatsTapped() {
+        guard let archivedChatRoomsViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatRoomsViewControllerID") as? ChatRoomsViewController else { return }
+        archivedChatRoomsViewController.chatRoomsType = .archived
+        navigationController?.pushViewController(archivedChatRoomsViewController, animated: true)
+    }
+    
     func meetingContextMenu(didSelect action: MeetingActionEntity) {
         if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
             MeetingAlreadyExistsAlert.show(presenter: self)
