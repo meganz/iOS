@@ -2780,6 +2780,12 @@ public enum Strings {
         /// New to MEGA?
         public static let newToMega = Strings.tr("Localizable", "account.login.newToMega")
       }
+      public enum Profile {
+        public enum Avatar {
+          /// Upload photo
+          public static let uploadPhoto = Strings.tr("Localizable", "account.profile.avatar.uploadPhoto")
+        }
+      }
       public enum Storage {
         /// [B]20 GB+[/B] Storage
         public static let freePlan = Strings.tr("Localizable", "account.storage.freePlan")

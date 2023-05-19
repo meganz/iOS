@@ -476,8 +476,7 @@ extension ProfileViewController: UITableViewDataSource {
             case .changeName:
                 cell.nameLabel.text = Strings.Localizable.changeName
             case .changePhoto:
-                let hasPhotoAvatar = FileManager.default.fileExists(atPath:Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? ~0) ?? ""))
-                cell.nameLabel.text = hasPhotoAvatar ? Strings.Localizable.changePhoto : Strings.Localizable.addPhoto
+                cell.nameLabel.text = Strings.Localizable.Account.Profile.Avatar.uploadPhoto
             case .changeEmail:
                 updateCellInRelationWithTwoFactorStatus(cell: cell)
                 cell.nameLabel.text = Strings.Localizable.changeEmail
