@@ -97,8 +97,3 @@ extension MEGAChatMessageEndCallReason {
         }
     }
 }
-
-
-
-
-

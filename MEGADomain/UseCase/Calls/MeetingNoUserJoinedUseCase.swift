@@ -25,4 +25,3 @@ struct MeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
         repository.start(timerDuration: duration, chatId: chatId)
     }
 }
-

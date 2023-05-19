@@ -9,4 +9,3 @@ public final class MockFolderSdk: MEGASdk {
         self.disablepkp = disablepkp
     }
 }
-

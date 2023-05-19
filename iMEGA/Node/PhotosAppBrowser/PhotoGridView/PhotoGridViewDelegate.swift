@@ -71,4 +71,3 @@ extension PhotoGridViewDelegate: UICollectionViewDelegateFlowLayout {
        cellSize
     }
 }
-

@@ -7,4 +7,3 @@ public protocol TransferInventoryRepositoryProtocol {
     func isExportFileTransfer(_ transfer: TransferEntity) -> Bool
     func isSaveToPhotosAppTransfer(_ transfer: TransferEntity) -> Bool
 }
-

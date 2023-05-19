@@ -47,4 +47,3 @@ final class SlideShowCollectionViewLayout: UICollectionViewFlowLayout {
         return context
     }
 }
-

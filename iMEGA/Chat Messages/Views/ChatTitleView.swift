@@ -103,5 +103,3 @@ class ChatTitleView: UIView {
         }
     }
 }
-
-

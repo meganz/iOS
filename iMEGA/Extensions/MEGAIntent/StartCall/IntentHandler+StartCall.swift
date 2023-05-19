@@ -63,4 +63,3 @@ extension IntentHandler: INStartCallIntentHandling {
         return [.disambiguation(with: persons)]
     }
 }
-

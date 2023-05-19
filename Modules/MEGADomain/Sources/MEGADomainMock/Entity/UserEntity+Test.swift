@@ -12,4 +12,3 @@ public extension UserEntity {
         self.init(email: email, handle: handle, visibility: visibility, changes: changes, changeSource: changeSource, addedDate: addedDate)
     }
 }
-

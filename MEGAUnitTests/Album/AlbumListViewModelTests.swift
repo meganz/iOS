@@ -499,4 +499,3 @@ final class AlbumListViewModelTests: XCTestCase {
                                                    message: nil)
     }
 }
-

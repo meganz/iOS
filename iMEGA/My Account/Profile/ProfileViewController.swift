@@ -254,9 +254,9 @@ enum SessionSectionRow: Int {
         }
         changeAvatarAlertController.addAction(captureAlertAction)
         
-        changeAvatarAlertController.modalPresentationStyle = .popover;
-        changeAvatarAlertController.popoverPresentationController?.sourceRect = cell.frame;
-        changeAvatarAlertController.popoverPresentationController?.sourceView = tableView;
+        changeAvatarAlertController.modalPresentationStyle = .popover
+        changeAvatarAlertController.popoverPresentationController?.sourceRect = cell.frame
+        changeAvatarAlertController.popoverPresentationController?.sourceView = tableView
         
         let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? ~0) ?? "")
         
@@ -646,7 +646,7 @@ extension ProfileViewController: MEGARequestDelegate {
             if request.type == .MEGARequestTypeLogout {
                 api.remove(self)
             }
-            return;
+            return
         }
         switch request.type {
         case .MEGARequestTypeGetAttrUser:
@@ -691,7 +691,7 @@ extension ProfileViewController: MEGARequestDelegate {
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             
         default:
-            break;
+            break
         }
     }
 }

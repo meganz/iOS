@@ -113,4 +113,3 @@ final class SearchNodeRepositoryTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 2.0)
     }
 }
-

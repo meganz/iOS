@@ -89,7 +89,7 @@ final class FileVersioningTableViewController: UITableViewController, ViewType {
         case FileVersioningSettingsSection.deletePreviousVersions.rawValue:
             title = Strings.Localizable.AllCurrentFilesWillRemain.onlyHistoricVersionsOfYourFilesWillBeDeleted
         default:
-            break;
+            break
         }
         return title
     }

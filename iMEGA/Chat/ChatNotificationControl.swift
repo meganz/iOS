@@ -72,7 +72,7 @@ extension ChatNotificationControl {
 
     private func chatDND(chatId: ChatIdEntity) -> Int64 {
         guard let pushNotificationSettings = pushNotificationSettings else {
-            return -1;
+            return -1
         }
         
         return pushNotificationSettings.timestamp(forChatId: chatId)

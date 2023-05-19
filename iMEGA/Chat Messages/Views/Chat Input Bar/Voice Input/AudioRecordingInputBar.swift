@@ -167,5 +167,3 @@ class AudioRecordingInputBar: UIView {
         audioWavesBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
 }
-
-

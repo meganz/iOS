@@ -42,4 +42,3 @@ public struct ChatSessionEntity: Sendable {
         self.canReceiveVideoLowRes = canReceiveVideoLowRes
     }
 }
-

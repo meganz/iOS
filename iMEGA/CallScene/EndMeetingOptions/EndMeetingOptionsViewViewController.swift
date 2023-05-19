@@ -69,4 +69,3 @@ extension EndMeetingOptionsViewViewController: PanModalPresentable {
         false
     }
 }
-

@@ -25,4 +25,3 @@ public struct CheckSMSUseCase<T: SMSRepositoryProtocol>: CheckSMSUseCaseProtocol
         repo.checkState()
     }
 }
-

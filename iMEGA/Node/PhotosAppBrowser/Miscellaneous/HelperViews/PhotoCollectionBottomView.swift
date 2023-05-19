@@ -55,7 +55,7 @@ final class PhotoCollectionBottomView: UIView {
         let ratio = CGFloat(3.0) / CGFloat(4.0)
         let iconHeight = bounds.height * ratio
         videoIconLayer.transform = CATransform3DMakeScale(iconHeight/CGFloat(20.0),
-                                                          iconHeight/CGFloat(20.0), CGFloat(1));
+                                                          iconHeight/CGFloat(20.0), CGFloat(1))
         videoIconLayer.frame = CGRect(origin: CGPoint(x: padding,
                                                       y: (bounds.height/CGFloat(2.0)) - (iconHeight/CGFloat(2))),
                                       size: CGSize(width: iconHeight, height: iconHeight))

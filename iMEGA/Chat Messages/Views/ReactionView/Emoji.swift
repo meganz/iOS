@@ -30,4 +30,3 @@ struct EmojiListReader {
         return nil
     }
 }
-

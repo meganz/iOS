@@ -39,5 +39,3 @@ extension ChatNotificationMessage: MessageType {
         return .custom(self)
     }
 }
-
-

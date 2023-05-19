@@ -4,4 +4,3 @@ public extension Result where Success == Void {
         return .success(())
     }
 }
-

@@ -27,4 +27,3 @@ public struct ScheduledMeetingOccurrenceEntity: Hashable {
         self.endDate = endDate
     }
 }
-

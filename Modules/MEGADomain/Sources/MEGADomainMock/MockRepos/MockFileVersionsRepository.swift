@@ -41,4 +41,3 @@ public struct MockFileVersionsRepository: FileVersionsRepositoryProtocol {
         completion(deletePreviousFileVersions)
     }
 }
-

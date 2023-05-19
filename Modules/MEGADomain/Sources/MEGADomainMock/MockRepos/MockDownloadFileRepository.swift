@@ -43,4 +43,3 @@ public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
     
     public func cancelDownloadTransfers() { }
 }
-

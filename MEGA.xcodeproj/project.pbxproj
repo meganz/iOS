@@ -471,7 +471,6 @@
 		5D166B8D252198EF004F4F4A /* HomeSearchHintViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D166B8C252198EF004F4F4A /* HomeSearchHintViewModel.swift */; };
 		5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */; };
 		5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D18BDA1249718280045F9B3 /* MarkedString.swift */; };
-		5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */; };
 		5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */; };
 		5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F024AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift */; };
 		5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F224AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift */; };
@@ -2926,7 +2925,6 @@
 		5D166B8C252198EF004F4F4A /* HomeSearchHintViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchHintViewModel.swift; sourceTree = "<group>"; };
 		5D17CFA32541C46C0000194A /* StartConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartConversationViewModel.swift; sourceTree = "<group>"; };
 		5D18BDA1249718280045F9B3 /* MarkedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedString.swift; sourceTree = "<group>"; };
-		5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAShadowStyle.swift; sourceTree = "<group>"; };
 		5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonColorFactory.swift; sourceTree = "<group>"; };
 		5D1B23F024AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryThemeButtonTextColorFactory.swift; sourceTree = "<group>"; };
 		5D1B23F224AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryThemeButtonTextColorFactory.swift; sourceTree = "<group>"; };
@@ -6780,14 +6778,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		5D1B23DB24AEF73200ACE1C5 /* StyleKeys */ = {
-			isa = PBXGroup;
-			children = (
-				5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */,
-			);
-			path = StyleKeys;
-			sourceTree = "<group>";
-		};
 		5D1B23EC24AF2FD200ACE1C5 /* StyleFactory */ = {
 			isa = PBXGroup;
 			children = (
@@ -7278,7 +7268,6 @@
 			children = (
 				5D33E40524B2DD7B003DC1E2 /* BasicStyle */,
 				5D1B23EC24AF2FD200ACE1C5 /* StyleFactory */,
-				5D1B23DB24AEF73200ACE1C5 /* StyleKeys */,
 				5DA253F524AF794E004DA739 /* ThemeColor */,
 				5D8DC6B9248CB4230067A4F9 /* ViewStyle */,
 			);
@@ -8738,13 +8727,6 @@
 			path = SharedItems;
 			sourceTree = "<group>";
 		};
-		9448662529AF7F3400CE3228 /* Actions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Actions;
-			sourceTree = "<group>";
-		};
 		9458610A2926963200866F03 /* Snackbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -9755,7 +9737,6 @@
 		B6730B0A2735F34100A9CF5F /* Shared Views */ = {
 			isa = PBXGroup;
 			children = (
-				9448662529AF7F3400CE3228 /* Actions */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
 				C467AD4D26A8651400AFE4D2 /* DynamicType */,
 				5B06BB7B21D508D1001F3C31 /* Flow Layouts */,
@@ -13185,7 +13166,6 @@
 				C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */,
 				C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */,
 				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
-				5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */,
 				C45390CD256587BF0026F215 /* MEGASlider.swift in Sources */,

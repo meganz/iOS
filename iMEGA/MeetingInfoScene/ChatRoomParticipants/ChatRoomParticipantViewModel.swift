@@ -166,4 +166,3 @@ extension ChatRoomParticipantViewModel: Equatable {
         lhs.chatRoom == rhs.chatRoom
     }
 }
-

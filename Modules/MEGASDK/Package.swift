@@ -105,4 +105,3 @@ let package = Package(
     ],
     cxxLanguageStandard: .cxx14
 )
-

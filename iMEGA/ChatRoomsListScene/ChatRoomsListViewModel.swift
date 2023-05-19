@@ -688,4 +688,3 @@ extension ChatRoomsListViewModel :PushNotificationControlProtocol {
         notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
     }
 }
-
