@@ -1,4 +1,5 @@
 import MEGASdk
+import MEGAData
 
 public final class MockSdk: MEGASdk {
     private var nodes: [MEGANode]
@@ -24,6 +25,11 @@ public final class MockSdk: MEGASdk {
     private let createSupportTicketError: MEGAErrorType
     private let link: String?
     private let megaSetError: MEGAErrorType
+    private let _isLoggedIn: Int
+    private let _incomingContactRequests: MEGAContactRequestList
+    private let _userAlertList: MEGAUserAlertList
+    private let _upgradeSecurity: (MEGASdk, MEGARequestDelegate) -> Void
+    private let _accountDetails: (MEGASdk, MEGARequestDelegate) -> Void
     
     public var hasGlobalDelegate = false
     public var apiURL: String?
@@ -50,7 +56,12 @@ public final class MockSdk: MEGASdk {
                 sharedFolderOwner: MEGAUser? = nil,
                 createSupportTicketError: MEGAErrorType = .apiOk,
                 link: String? = nil,
-                megaSetError: MEGAErrorType = .apiOk
+                megaSetError: MEGAErrorType = .apiOk,
+                isLoggedIn: Int = .random(in: 0...1),
+                incomingContactRequestList: MEGAContactRequestList = MEGAContactRequestList(),
+                userAlertList: MEGAUserAlertList = MEGAUserAlertList(),
+                upgradeSecurity: @escaping (MEGASdk, MEGARequestDelegate) -> Void = { _, _ in },
+                accountDetails: @escaping (MEGASdk, MEGARequestDelegate) -> Void = { _, _ in }
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -73,6 +84,11 @@ public final class MockSdk: MEGASdk {
         self.createSupportTicketError = createSupportTicketError
         self.link = link
         self.megaSetError = megaSetError
+        self._incomingContactRequests = incomingContactRequestList
+        _isLoggedIn = isLoggedIn
+        _userAlertList = userAlertList
+        _upgradeSecurity = upgradeSecurity
+        _accountDetails = accountDetails
         super.init()
     }
     
@@ -85,6 +101,8 @@ public final class MockSdk: MEGASdk {
     public override var myUser: MEGAUser? { _myUser }
     
     public override var myEmail: String? { email }
+    
+    public override var totalNodes: UInt { UInt(nodes.count) }
     
     public override func node(forHandle handle: MEGAHandle) -> MEGANode? {
         nodes.first { $0.handle == handle }
@@ -271,8 +289,7 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func upgradeSecurity(with delegate: MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
+        _upgradeSecurity(self, delegate)
     }
     
     public override func nodeListSearchOnInShares(by searchString: String, cancelToken: MEGACancelToken, order orderType: MEGASortOrderType) -> MEGANodeList {
@@ -312,6 +329,26 @@ public final class MockSdk: MEGASdk {
     
     public override func createSupportTicket(withMessage message: String, type: Int, delegate: MEGARequestDelegate) {
         delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: MockError(errorType: createSupportTicketError))
+    }
+    
+    // MARK: - Login Requests
+    
+    public override func isLoggedIn() -> Int { _isLoggedIn }
+    
+    // MARK: - File System Inspection
+    
+    public override func incomingContactRequests() -> MEGAContactRequestList {
+        _incomingContactRequests
+    }
+    
+    public override func userAlertList() -> MEGAUserAlertList {
+        _userAlertList
+    }
+    
+    // MARK: - Account Management
+    
+    public override func getAccountDetails(with delegate: MEGARequestDelegate) {
+        _accountDetails(self, delegate)
     }
 }
 

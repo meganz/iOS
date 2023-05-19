@@ -107,6 +107,7 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
+		167845552A173EF500568FBE /* XCTestCase+AsyncAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
 		2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */; };
 		2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */; };
@@ -2483,6 +2484,8 @@
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AsyncAssertions.swift"; sourceTree = "<group>"; };
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
 		2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManagmentTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageActionMenuViewController.swift; sourceTree = "<group>"; };
@@ -5919,6 +5922,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				167845462A172AAA00568FBE /* XCTest.framework */,
 				2FA6DA61243E919D007A8E81 /* Accelerate.framework */,
 				9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */,
 				A8C262971FA0B4A2006172CE /* AudioToolbox.framework */,
@@ -9535,6 +9539,7 @@
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
 				B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */,
+				167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -14290,6 +14295,7 @@
 				BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */,
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
+				167845552A173EF500568FBE /* XCTestCase+AsyncAssertions.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,

@@ -1,6 +1,6 @@
 import Foundation
 
-public struct UserEntity: Sendable {
+public struct UserEntity: Sendable, Equatable {
     public enum VisibilityEntity: Sendable {
         case unknown
         case hidden
