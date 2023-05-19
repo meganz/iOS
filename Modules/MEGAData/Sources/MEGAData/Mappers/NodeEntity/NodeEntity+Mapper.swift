@@ -90,13 +90,33 @@ fileprivate extension NodeEntity {
 
 fileprivate extension String {
     func toMediaTypeEntity() -> MediaTypeEntity? {
-        let pathExtension = URL(fileURLWithPath: self).pathExtension.lowercased()
-        if ImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) ||
-            RawImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) {
+        guard let pathExtension = filePathExtension() else { return nil }
+        
+        if isImageType(pathExtension) {
             return .image
-        } else if  VideoFileExtensionEntity().videoSupportedExtensions.contains(pathExtension) {
+        } else if isVideoType(pathExtension) {
             return .video
+        } else {
+            return nil
         }
-        return nil
+    }
+    
+    private func filePathExtension() -> String? {
+        guard !self.isEmpty else { return nil }
+        
+        let components = self.components(separatedBy: ".")
+        
+        guard components.last?.isEmpty == false else { return nil }
+        
+        return components.last
+    }
+    
+    private func isImageType(_ pathExtension: String) -> Bool {
+        ImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension) ||
+            RawImageFileExtensionEntity().imagesSupportedExtensions.contains(pathExtension)
+    }
+    
+    private func isVideoType(_ pathExtension: String) -> Bool {
+        VideoFileExtensionEntity().videoSupportedExtensions.contains(pathExtension)
     }
 }
