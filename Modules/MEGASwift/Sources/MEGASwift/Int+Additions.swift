@@ -8,4 +8,8 @@ extension Int {
         formatter.unitsStyle = unitStyle
         return formatter.string(from: TimeInterval(self))
     }
+    
+    public static func random() -> Int {
+        Int.random(in: Int.min...Int.max)
+    }
 }

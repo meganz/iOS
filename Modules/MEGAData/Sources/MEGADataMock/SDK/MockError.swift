@@ -10,4 +10,13 @@ public final class MockError: MEGAError {
     public override var type: MEGAErrorType {
         megaErrorType
     }
+    
+    public static var failingError: MEGAError { MockError(errorType: .anyFailingErrorType) }
+}
+
+public extension MEGAErrorType {
+    static var anyFailingErrorType: MEGAErrorType {
+        let randomFailingError = Int.random(in: -29..<0)
+        return MEGAErrorType(rawValue: randomFailingError) ?? .apiENoent
+    }
 }
