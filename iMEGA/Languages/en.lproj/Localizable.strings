@@ -2730,6 +2730,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Visit AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the cloud. Please enter your password below.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Upload photo";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Another call in progress. Please end your current call before making another.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
