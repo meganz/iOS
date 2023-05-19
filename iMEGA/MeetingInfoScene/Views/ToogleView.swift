@@ -29,4 +29,3 @@ struct ToogleView: View {
         .frame(minHeight: Constants.viewHeight)
     }
 }
-

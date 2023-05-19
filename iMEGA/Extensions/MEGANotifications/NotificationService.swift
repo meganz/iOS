@@ -438,7 +438,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         do {
             try fileManager.createDirectory(at: nseCacheURL, withIntermediateDirectories: true, attributes: nil)
         } catch {
-            MEGALogError("Failed to locate/create \(nseCacheURL.path) directory");
+            MEGALogError("Failed to locate/create \(nseCacheURL.path) directory")
         }
         
         guard let nseCacheContent = try? fileManager.contentsOfDirectory(atPath: nseCacheURL.path),

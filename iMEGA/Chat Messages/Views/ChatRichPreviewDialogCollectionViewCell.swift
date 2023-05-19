@@ -99,4 +99,3 @@ open class ChatRichPreviewDialogCollectionViewSizeCalculator: TextMessageSizeCal
         }
     }
 }
-

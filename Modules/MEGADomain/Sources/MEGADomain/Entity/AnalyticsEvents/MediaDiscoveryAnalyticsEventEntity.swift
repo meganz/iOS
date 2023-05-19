@@ -6,4 +6,3 @@ public enum MediaDiscoveryAnalyticsEventEntity {
     case stayOnMediaDiscoveryOver60s
     case stayOnMediaDiscoveryOver180s
 }
-

@@ -14,4 +14,3 @@ public struct AnalyticsEventUseCase<T: AnalyticsRepositoryProtocol>: AnalyticsEv
         repo.sendAnalyticsEvent(event)
     }
 }
-

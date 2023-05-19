@@ -202,4 +202,3 @@ final class MeetingParticipantViewModel: ViewModelType {
         invokeCommand?(.updateAvatarImage(image: image))
     }
 }
-

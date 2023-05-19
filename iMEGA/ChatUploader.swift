@@ -195,8 +195,8 @@ extension ChatUploader: MEGATransferDelegate {
                 self.store.deleteChatUploadTransfer(withChatRoomId: chatRoomIdString,
                                                transferTag: String(transfer.tag),
                                                context: context)
-                MEGALogInfo("[ChatUploader] transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
-                return;
+                MEGALogInfo("[ChatUploader] transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName)
+                return
             }
             
             MEGALogInfo("[ChatUploader] upload complete File path \(transfer.path ?? "No file path found")")
@@ -215,4 +215,3 @@ extension ChatUploader: MEGATransferDelegate {
     }
     
 }
-

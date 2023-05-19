@@ -17,4 +17,3 @@ struct SwipeActionLabel: Identifiable, Hashable {
         lhs.id == rhs.id
     }
 }
-

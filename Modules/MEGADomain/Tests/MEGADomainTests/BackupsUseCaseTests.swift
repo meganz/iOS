@@ -61,4 +61,3 @@ final class BackupsUseCaseTests: XCTestCase {
         XCTAssertTrue(isBackupNode)
     }
 }
-

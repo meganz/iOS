@@ -92,5 +92,3 @@ extension Album: PHPhotoLibraryChangeObserver {
         }
     }
 }
-
-

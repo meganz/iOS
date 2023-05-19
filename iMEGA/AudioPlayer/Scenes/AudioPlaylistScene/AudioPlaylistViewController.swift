@@ -77,7 +77,7 @@ final class AudioPlaylistViewController: UIViewController {
                            animations: {
                 self.toolbarBottomConstraint.constant = 0
                 self.toolbarView.layoutIfNeeded()
-                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.toolbarView.frame.height, right: 0);
+                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.toolbarView.frame.height, right: 0)
             })
         }
     }

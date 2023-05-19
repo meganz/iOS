@@ -341,4 +341,3 @@ extension CallInProgressListener: MEGAChatCallDelegate {
         }
     }
 }
-

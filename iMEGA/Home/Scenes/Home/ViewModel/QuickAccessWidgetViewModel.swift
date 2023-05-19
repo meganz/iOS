@@ -29,7 +29,7 @@ final class QuickAccessWidgetViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     init(offlineFilesUseCase: OfflineFilesUseCaseProtocol) {
-        self.offlineFilesUseCase = offlineFilesUseCase;
+        self.offlineFilesUseCase = offlineFilesUseCase
     }
     
     func dispatch(_ action: QuickAccessWidgetAction) {

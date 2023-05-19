@@ -51,4 +51,3 @@ final class TransferInventoryUseCaseTests: XCTestCase {
         XCTAssertEqual(sut.completedTransfers(filteringUserTransfers: true).count, 3)
     }
 }
-

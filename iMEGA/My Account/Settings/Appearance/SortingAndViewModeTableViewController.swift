@@ -134,7 +134,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
             orderTypeIndex = 5
             
         default:
-            orderTypeIndex = 0;
+            orderTypeIndex = 0
         }
         
         sortingPreferenceSameForAllDetailLabel.text = localizedSortByStringsArray[orderTypeIndex]

@@ -21,7 +21,7 @@ class ChatSharedItemTableViewCell: UITableViewCell {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
     
-        self.moreButton.isHidden = editing;
+        self.moreButton.isHidden = editing
                 
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.separatorInset = UIEdgeInsets(top: 0, left: CGFloat(editing ? 100 : 60), bottom: 0, right: 0)

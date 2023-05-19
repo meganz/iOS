@@ -3,7 +3,7 @@ import BackgroundTasks
 final class CameraUploadBGRefreshManager {
     private enum Constants {
         static let identifier = "mega.iOS.cameraUpload.backgroundFetch"
-        static let backgroundFetchInterval: TimeInterval = 3 * 3600;
+        static let backgroundFetchInterval: TimeInterval = 3 * 3600
     }
     
     static let shared = CameraUploadBGRefreshManager()
@@ -38,4 +38,3 @@ final class CameraUploadBGRefreshManager {
         BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: Constants.identifier)
     }
 }
-

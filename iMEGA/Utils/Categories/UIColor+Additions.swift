@@ -445,9 +445,9 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return mnz_gray3D3D3D();
+                return mnz_gray3D3D3D()
             } else {
-                return mnz_gray515151();
+                return mnz_gray515151()
             }
             
         case .dark:
@@ -741,4 +741,3 @@ extension UIColor {
         return Colors.General.Brown._544b27.color
     }
 }
-

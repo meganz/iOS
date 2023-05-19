@@ -61,6 +61,8 @@ only_rules:
       - closing_brace
       - void_return
       - for_where
+      - trailing_semicolon
+      - trailing_newline
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
 
@@ -70,12 +72,10 @@ only_rules:
       # - syntactic_sugar (19 issues)
       # - statement_position (22 issues)
       # - no_space_in_method_call (42 issues)
-      # - trailing_semicolon (47 issues)
       # - vertical_parameter_alignment (50 issues)
       # - private_over_fileprivate (54 issues)
       # - redundant_optional_initialization (56 issues)
       # - control_statement (59 issues)
-      # - trailing_newline (81 issues)
 
     # Complex fixes or a ton of issues (>100 issues)
 

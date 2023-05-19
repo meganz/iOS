@@ -3,4 +3,3 @@ public enum RemoveLinkErrorEntity: Error, Equatable {
     case businessExpired
     case notFound
 }
-

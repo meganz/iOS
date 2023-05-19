@@ -6,4 +6,3 @@ extension StoreUser {
         return StoreUser(fullName: "Mock Name", firstName: "Mock", displayName: "Mr. Mock", interactedWith: false)
     }
 }
-

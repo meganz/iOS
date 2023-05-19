@@ -177,4 +177,3 @@ extension GroupChatDetailsViewController: PushNotificationControlProtocol {
         }
     }
 }
-

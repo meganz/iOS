@@ -90,7 +90,7 @@ class FolderLinkCollectionViewController: UIViewController  {
         collectionView.allowsMultipleSelection = editing
         
         if #available(iOS 14, *) {
-            collectionView.allowsMultipleSelectionDuringEditing = editing;
+            collectionView.allowsMultipleSelectionDuringEditing = editing
         }
         
         folderLink.setViewEditing(editing)

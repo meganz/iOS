@@ -9,4 +9,3 @@ public enum ChatMessageStatusEntity {
     case notSeen
     case seen
 }
-

@@ -88,7 +88,7 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
         collectionView.allowsMultipleSelection = editing
         
         if #available(iOS 14, *) {
-            collectionView.allowsMultipleSelectionDuringEditing = editing;
+            collectionView.allowsMultipleSelectionDuringEditing = editing
         }
         
         collectionView.alwaysBounceVertical = !editing

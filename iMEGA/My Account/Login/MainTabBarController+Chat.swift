@@ -50,4 +50,3 @@ extension MainTabBarController {
         openChatRoom(withPublicLink: nil, chatID: chatId)
     }
 }
-

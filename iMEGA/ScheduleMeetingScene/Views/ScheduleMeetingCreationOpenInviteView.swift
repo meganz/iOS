@@ -17,4 +17,3 @@ struct ScheduleMeetingCreationOpenInviteView: View {
         .padding(.vertical)
     }
 }
-

@@ -92,4 +92,3 @@ struct SearchFileHistoryEntryDomain: Comparable {
         return lhs.timeWhenSearchOccur > rhs.timeWhenSearchOccur
     }
 }
-

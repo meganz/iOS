@@ -67,4 +67,3 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
         XCTAssertTrue(disablepkp)
     }
 }
-

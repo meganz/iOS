@@ -33,5 +33,3 @@ extension AppFirstLaunchSecurityChecker {
         )
     }
 }
-
-

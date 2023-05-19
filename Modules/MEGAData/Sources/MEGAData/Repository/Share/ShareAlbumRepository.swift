@@ -73,4 +73,3 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         })
     }
 }
-

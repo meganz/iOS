@@ -9,7 +9,7 @@ final class CreateTextFileAlertViewController: UIAlertController {
             textField.addTarget(self, action: #selector(self.createTextFileAlertTextFieldBeginEdit), for: .editingDidBegin)
             textField.addTarget(self, action: #selector(self.createTextFileAlertTextFieldDidChange), for: .editingChanged)
             textField.shouldReturnCompletion = {(textField) -> Bool in
-                return (!(textField?.text?.mnz_isEmpty() ?? true) && !(textField?.text?.mnz_containsInvalidChars() ?? false));
+                return (!(textField?.text?.mnz_isEmpty() ?? true) && !(textField?.text?.mnz_containsInvalidChars() ?? false))
             }
         }
         addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))

@@ -8,4 +8,3 @@ public struct ContactsRepository: ContactsRepositoryProtocol {
     
     public init() {}
 }
-

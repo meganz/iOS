@@ -112,7 +112,7 @@ final class HomeViewController: UIViewController {
             homeQuickActionSearch = false
             activateSearch()
         }
-        AudioPlayerManager.shared.addDelegate(self);
+        AudioPlayerManager.shared.addDelegate(self)
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
     }
 

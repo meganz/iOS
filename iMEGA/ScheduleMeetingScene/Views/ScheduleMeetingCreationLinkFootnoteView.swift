@@ -11,4 +11,3 @@ struct ScheduleMeetingCreationLinkFootnoteView: View {
             .padding(.horizontal)
     }
 }
-

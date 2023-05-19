@@ -84,10 +84,10 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                     guard visibleIndexPaths.contains(indexPath), error.type == .apiOk else {
                         return
                     }
-                    let totalNumberOfFiles = request.megaFolderInfo.files;
-                    let numOfVersionedFiles = request.megaFolderInfo.versions;
-                    let totalFileSize = request.megaFolderInfo.currentSize;
-                    let versionsSize = request.megaFolderInfo.versionsSize;
+                    let totalNumberOfFiles = request.megaFolderInfo.files
+                    let numOfVersionedFiles = request.megaFolderInfo.versions
+                    let totalFileSize = request.megaFolderInfo.currentSize
+                    let versionsSize = request.megaFolderInfo.versionsSize
                     let sizeWithoutIncludingVersionsSize = totalFileSize - versionsSize
                     
                     megaMessage.richString = NSString.mnz_string(byFiles: totalNumberOfFiles - numOfVersionedFiles, andFolders: request.megaFolderInfo.folders)

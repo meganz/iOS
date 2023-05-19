@@ -42,4 +42,3 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
                         .build()
     }
 }
-

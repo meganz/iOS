@@ -26,5 +26,3 @@ final class ChatRoomViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.description == Strings.Localizable.Chat.Listing.Description.MeetingCreated.message("Bob"))
     }
 }
-
-

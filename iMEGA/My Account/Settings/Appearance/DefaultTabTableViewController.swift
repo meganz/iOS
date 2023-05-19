@@ -31,7 +31,7 @@ final class DefaultTabTableViewController: UITableViewController {
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
         cell.accessoryView?.isHidden = TabManager.getPreferenceTab().tabType.rawValue != indexPath.row
         
-        return cell;
+        return cell
     }
 
     // MARK: - UITableViewDelegate

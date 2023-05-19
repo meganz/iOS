@@ -14,4 +14,3 @@ struct VideoExplorerViewConfiguration: FilesExplorerViewConfiguration {
         return VideoExplorerListSource.self
     }
 }
-

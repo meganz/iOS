@@ -126,6 +126,6 @@ final class GenericNodeTableViewCell: UITableViewCell {
     }
     
     private func sizeForFile(_ nodeModel: NodeEntity) -> String {
-        return String.memoryStyleString(fromByteCount: Int64(nodeModel.size));
+        return String.memoryStyleString(fromByteCount: Int64(nodeModel.size))
     }
 }
