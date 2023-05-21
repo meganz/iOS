@@ -4,7 +4,6 @@ import SwiftUI
 struct ScheduleMeetingCreationDateAndRecurrenceView: View {
     @ObservedObject var viewModel: ScheduleMeetingViewModel
     @Environment(\.colorScheme) private var colorScheme
-    var showMonthlyRecurrenceFootnoteView: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -38,8 +37,8 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
                     .padding(.leading)
             }
             
-            if showMonthlyRecurrenceFootnoteView {
-                ScheduleMeetingMonthlyRecurrenceFootnoteView()
+            if let monthlyRecurrenceFootnoteViewText = viewModel.monthlyRecurrenceFootnoteViewText {
+                ScheduleMeetingMonthlyRecurrenceFootnoteView(text: monthlyRecurrenceFootnoteViewText)
                 Divider()
                     .padding(.leading)
             }
