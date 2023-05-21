@@ -2,9 +2,10 @@ import SwiftUI
 
 struct ScheduleMeetingMonthlyRecurrenceFootnoteView: View {
     @Environment(\.colorScheme) private var colorScheme
+    let text: String
     
     var body: some View {
-        Text(Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.footNote)
+        Text(text)
             .font(.footnote)
             .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.6) : Color(UIColor.mnz_gray3C3C43()).opacity(0.6))
             .frame(maxWidth: .infinity, alignment: .leading)

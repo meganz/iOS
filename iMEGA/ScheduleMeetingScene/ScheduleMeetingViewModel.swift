@@ -76,8 +76,19 @@ final class ScheduleMeetingViewModel: ObservableObject {
     @Published
     private(set) var rules: ScheduledMeetingRulesEntity
     
-    var showMonthlyRecurrenceFootnoteView: Bool {
-        rules.frequency == .monthly
+    var monthlyRecurrenceFootnoteViewText: String? {
+        guard rules.frequency == .monthly, let day = rules.monthDayList?.first else { return nil }
+        
+        switch day {
+        case 29:
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayTwentyNineSelected.footNote
+        case 30:
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtySelected.footNote
+        case 31:
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtyFirstSelected.footNote
+        default:
+            return nil
+        }
     }
 
     init(router: ScheduleMeetingRouting,

@@ -151,36 +151,61 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 6)
     }
     
-    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthly_shouldBeTrue() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let rules = ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [16])
+    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDayTwentyNine_shouldBeTrue() throws {
+        let date = try XCTUnwrap(sampleDate(withDay: 29))
+        let rules = ScheduledMeetingRulesEntity(frequency: .monthly)
         let viewModel = ScheduleMeetingViewModel(rules: rules)
         viewModel.startDate = date
-
-        XCTAssertTrue(viewModel.showMonthlyRecurrenceFootnoteView)
+        XCTAssert(viewModel.monthlyRecurrenceFootnoteViewText == Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayTwentyNineSelected.footNote)
+    }
+    
+    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDayThirty_shouldBeTrue() throws {
+        let date = try XCTUnwrap(sampleDate(withDay: 30))
+        let rules = ScheduledMeetingRulesEntity(frequency: .monthly)
+        let viewModel = ScheduleMeetingViewModel(rules: rules)
+        viewModel.startDate = date
+        XCTAssert(viewModel.monthlyRecurrenceFootnoteViewText == Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtySelected.footNote)
+    }
+    
+    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDayThirtyOne_shouldBeTrue() throws {
+        let date = try XCTUnwrap(sampleDate(withDay: 31))
+        let rules = ScheduledMeetingRulesEntity(frequency: .monthly)
+        let viewModel = ScheduleMeetingViewModel(rules: rules)
+        viewModel.startDate = date
+        XCTAssert(viewModel.monthlyRecurrenceFootnoteViewText == Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtyFirstSelected.footNote)
+    }
+    
+    func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDaySixteen_shouldBeTrue() throws {
+        let date = try XCTUnwrap(sampleDate())
+        let rules = ScheduledMeetingRulesEntity(frequency: .monthly)
+        let viewModel = ScheduleMeetingViewModel(rules: rules)
+        viewModel.startDate = date
+        XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionNever_shouldBeFalse() {
         let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .invalid))
-        XCTAssertFalse(viewModel.showMonthlyRecurrenceFootnoteView)
+        XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionDaily_shouldBeFalse() {
         let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7)))
-        XCTAssertFalse(viewModel.showMonthlyRecurrenceFootnoteView)
+        XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionWeekly_shouldBeFalse() {
         let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [1]))
-        XCTAssertFalse(viewModel.showMonthlyRecurrenceFootnoteView)
+        XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
     //MARK: - Private methods.
     
-    private func sampleDate() -> Date? {
+    private func sampleDate(withDay day: Int = 16) -> Date? {
+        guard day >= 1 && day <= 31 else { return nil }
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        return dateFormatter.date(from: "16/05/2023")
+        return dateFormatter.date(from: "\(day)/05/2023")
     }
     
     private func randomString(length: Int) -> String {
