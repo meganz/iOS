@@ -287,7 +287,7 @@ pipeline {
                     }
                     steps {
                         script {
-                            if (env.gitlabTriggerPhrase.startsWith("deliver_appStore")) {
+                            if (env.gitlabTriggerPhrase == 'deliver_appStore' || env.gitlabTriggerPhrase == 'deliver_appStore_with_whats_new') {
                                 gitlabCommitStatus(name: 'Upload appstore symbols to crashlytics') {
                                     injectEnvironments({
                                         sh "bundle exec fastlane upload_symbols configuration:Release"
