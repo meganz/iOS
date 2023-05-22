@@ -8,6 +8,7 @@
 #import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
+#import <CoreMedia/CoreMedia.h>
 
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
@@ -860,11 +861,11 @@ static NSString* const B = @"[B]";
     if (self.mnz_isVideoPathExtension) {
         AVAsset *asset = [AVAsset assetWithURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]]];
         for (AVMetadataItem *item in asset.metadata) {
-            if ([item.commonKey isEqualToString:AVMetadataCommonKeyLocation]) {
-                NSString *latlon = item.stringValue;
-                NSString *latitude  = [latlon substringToIndex:8];
-                NSString *longitude = [latlon substringWithRange:NSMakeRange(8, 9)];
-                if (latitude && longitude) {
+            if ([item.key isEqual:AVMetadataQuickTimeMetadataKeyLocationISO6709]) {
+                NSString *locationDescription = item.stringValue;
+                if (locationDescription) {
+                    NSString *latitude = [locationDescription substringToIndex:8];
+                    NSString *longitude = [locationDescription substringWithRange:NSMakeRange(8, 9)];
                     return [NSString stringWithFormat:@"%@&%@", latitude, longitude];
                 }
             }
