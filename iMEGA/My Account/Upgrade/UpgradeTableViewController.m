@@ -58,8 +58,6 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *termsAndPoliciesBarButtonItem;
-
-@property (strong, nonatomic) NSMutableArray *proLevelsMutableArray;
 @property (strong, nonatomic) NSMutableDictionary *proLevelsIndexesMutableDictionary;
 @property (nonatomic) MEGAAccountType userProLevel;
 
@@ -247,28 +245,26 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
             if (self.isChoosingTheAccountType) {
                 [self.proLevelsMutableArray insertObject:[NSNumber numberWithInteger:MEGAAccountTypeFree] atIndex:0];
             }
-            
+
             self.currentPlanLabelView.hidden = self.currentPlanCellView.hidden = YES;
             break;
         
         case MEGAAccountTypeLite:
-            [self.proLevelsMutableArray removeObjectAtIndex:SubscriptionOrderLite];
+            [self removeSubscriptionOrderAt:SubscriptionOrderLite];
             break;
             
         case MEGAAccountTypeProI:
-            [self.proLevelsMutableArray removeObjectAtIndex:SubscriptionOrderProI];
+            [self removeSubscriptionOrderAt:SubscriptionOrderProI];
             break;
             
         case MEGAAccountTypeProII:
-            [self.proLevelsMutableArray removeObjectAtIndex:SubscriptionOrderProII];
+            [self removeSubscriptionOrderAt:SubscriptionOrderProII];
             break;
             
         case MEGAAccountTypeProIII:
             self.customPlanLabel.hidden = self.customPlanButton.hidden = NO;
-            
-            [self.proLevelsMutableArray removeObjectAtIndex:SubscriptionOrderProIII];
+            [self removeSubscriptionOrderAt:SubscriptionOrderProIII];
             break;
-            
         default:
             break;
     }
