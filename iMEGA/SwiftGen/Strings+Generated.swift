@@ -3059,6 +3059,12 @@ public enum Strings {
           }
         }
       }
+      public enum Call {
+        public enum QuickAction {
+          /// Camera
+          public static let camera = Strings.tr("Localizable", "chat.call.quickAction.camera")
+        }
+      }
       public enum CallInProgress {
         /// Tap to return to call %@
         public static func tapToReturnToCall(_ p1: Any) -> String {
