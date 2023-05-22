@@ -21,9 +21,9 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         
         let expectation = expectation(description: "Awaiting publisher")
         
-        subscription = chatUseCase
-            .statusChangePublisher
-            .receive(on: DispatchQueue.main)
+        subscription = viewModel
+            .$chatStatus
+            .dropFirst()
             .sink { _ in
                 expectation.fulfill()
             }
