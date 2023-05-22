@@ -12,6 +12,11 @@ extension UpgradeTableViewController {
     @objc func createUpgradeAccountViewModel() -> UpgradeAccountViewModel {
         UpgradeAccountViewModel(accountPlanAnalyticsUsecase: AccountPlanAnalyticsUseCase(repository: AnalyticsRepository.newRepo))
     }
+
+    @objc func removeSubscriptionOrder(at index: Int) {
+        guard index < proLevelsMutableArray.count else { return }
+        proLevelsMutableArray.removeObject(at: index)
+    }
 }
 
 //MARK: - Product Plan
