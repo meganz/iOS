@@ -155,7 +155,7 @@
             break;
             
         case 2: //Camera
-            titleHeader = NSLocalizedString(@"Camera", @"Setting associated with the 'Camera' of the device");
+            titleHeader = NSLocalizedString(@"Camera", @"Header title of Camera section on MEGA Settings > Advanced screen.");
             break;
         
     }

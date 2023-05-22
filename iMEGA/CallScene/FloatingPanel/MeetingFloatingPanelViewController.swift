@@ -87,7 +87,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]
         quickActions.forEach { $0?.properties = quickActionProperties }
         
-        [cameraQuickActionView: Strings.Localizable.camera,
+        [cameraQuickActionView: Strings.Localizable.Chat.Call.QuickAction.camera,
            muteQuickActionView: Strings.Localizable.mute,
         speakerQuickActionView: Strings.Localizable.Meetings.QuickAction.speaker,
            flipQuickActionView: Strings.Localizable.Meetings.QuickAction.flip
