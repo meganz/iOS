@@ -151,7 +151,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         CMConfigEntity(menuType: .menu(type: .chat),
                        isDoNotDisturbEnabled: globalDNDNotificationControl.isGlobalDNDEnabled,
                        timeRemainingToDeactiveDND: globalDNDNotificationControl.timeRemainingToDeactiveDND ?? "",
-                       chatStatus: chatUseCase.chatStatus())
+                       chatStatus: chatUseCase.chatStatus(),
+                       isArchivedChatsVisible: chatUseCase.archivedChatListCount() > 0)
     }
     
     func selectChatMode(_ mode: ChatViewMode) {
