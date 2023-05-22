@@ -73,6 +73,24 @@ extension MEGAChatSdk {
         return [MEGAChatListItem](recentChats[0..<min(max, recentChats.count)])
     }
     
+    @objc func removeMEGAChatRequestDelegateAsync(_ delegate: MEGAChatRequestDelegate) {
+        Task.detached {
+            MEGAChatSdk.shared.remove(delegate)
+        }
+    }
+    
+    @objc func removeMEGAChatDelegateAsync(_ delegate: MEGAChatDelegate) {
+        Task.detached {
+            MEGAChatSdk.shared.remove(delegate)
+        }
+    }
+    
+    @objc func removeMEGACallDelegateAsync(_ delegate: MEGAChatCallDelegate) {
+        Task.detached {
+            MEGAChatSdk.shared.remove(delegate)
+        }
+    }
+    
     func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> MEGANode? {
         if let message = self.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle {
             return node

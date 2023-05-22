@@ -32,4 +32,10 @@ public extension MEGASdk {
             MEGASdk.sharedSdk.remove(delegate)
         }
     }
+    
+    @objc func removeMEGATransferDelegateAsync(_ delegate: MEGATransferDelegate) {
+        Task.detached {
+            MEGASdk.sharedSdk.remove(delegate)
+        }
+    }
 }
