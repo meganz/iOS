@@ -214,6 +214,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) throws {
         openChatRooms.insert(chatId)
+        
         if !sdk.openChatRoom(chatId, delegate: delegate) {
             throw ChatRoomErrorEntity.generic
         }

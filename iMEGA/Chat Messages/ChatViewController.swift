@@ -296,6 +296,7 @@ class ChatViewController: MessagesViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         dismissKeyboardIfRequired()
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.MEGAPasscodeViewControllerWillClose, object: nil)
     }
@@ -362,13 +363,16 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
         saveDraft()
-        MEGASdkManager.sharedMEGAChatSdk().remove(self as MEGAChatDelegate)
-        MEGASdkManager.sharedMEGAChatSdk().remove(self as MEGAChatCallDelegate)
+        
+        MEGASdkManager.sharedMEGAChatSdk().removeMEGAChatDelegateAsync(self as MEGAChatDelegate)
+        MEGASdkManager.sharedMEGAChatSdk().removeMEGACallDelegateAsync(self as MEGAChatCallDelegate)
         
         if previewMode || isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
         }
+        
         audioController.stopAnyOngoingPlaying()
     }
     
@@ -561,11 +565,11 @@ class ChatViewController: MessagesViewController {
     }
     
     @objc func closeChatRoom() {
-        chatRoomDelegate.closeChatRoom()
+        chatRoomDelegate.resetChatRoom()
+        chatRoomDelegate.removeDelegatesAsync()
     }
     
     func showJumpToBottom() {
-        
         chatBottomInfoScreen.unreadNewMessagesCount = unreadNewMessagesCount
         
         let contentInset = messagesCollectionView.adjustedContentInset.bottom
@@ -822,9 +826,11 @@ class ChatViewController: MessagesViewController {
         
         configureNavigationBar()
         chatRoomDelegate.openChatRoom()
+        
         if !chatRoom.isGroup {
             MEGASdkManager.sharedMEGAChatSdk().requestLastGreen(chatRoom.peerHandle(at: 0))
         }
+        
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.setMessageOutgoingAvatarSize(.zero)
             layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets:  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
