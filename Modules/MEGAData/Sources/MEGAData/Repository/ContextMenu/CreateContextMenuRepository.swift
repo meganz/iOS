@@ -43,6 +43,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsEmptyState(config.isEmptyState)
                         .setShouldScheduleMeeting(config.shouldScheduleMeeting)
                         .setSharedLinkStatus(config.sharedLinkStatus)
+                        .setIsArchivedChatsVisible(config.isArchivedChatsVisible)
                         .build()
     }
 }

@@ -35,7 +35,8 @@ public final class ContextMenuBuilder {
     private var chatStatus: ChatStatusEntity = .invalid
     private var shouldScheduleMeeting = false
     private var sharedLinkStatus: SharedLinkStatusEntity = .unavailable
-    
+    private var isArchivedChatsVisible: Bool = false
+
     public init() {}
     
     public func setType(_ menuType: CMElementTypeEntity?) -> ContextMenuBuilder {
@@ -215,6 +216,11 @@ public final class ContextMenuBuilder {
     
     public func setSharedLinkStatus(_ sharedLinkStatus: SharedLinkStatusEntity?) -> ContextMenuBuilder {
         self.sharedLinkStatus = sharedLinkStatus ?? .unavailable
+        return self
+    }
+    
+    public func setIsArchivedChatsVisible(_ archivedChatVisible: Bool) -> ContextMenuBuilder {
+        isArchivedChatsVisible = archivedChatVisible
         return self
     }
     
@@ -431,8 +437,11 @@ public final class ContextMenuBuilder {
     
     //MARK: - Chat Context Actions
     private func chatMenu() -> CMEntity {
-        CMEntity(displayInline: true,
-                 children: [chatStatusMenu(), doNotDisturbMenu(), CMActionEntity(type: .chat(actionType: .archivedChats))])
+        if isArchivedChatsVisible {
+            return CMEntity(displayInline: true, children: [chatStatusMenu(), doNotDisturbMenu(), CMActionEntity(type: .chat(actionType: .archivedChats))])
+        } else {
+            return CMEntity(displayInline: true, children: [chatStatusMenu(), doNotDisturbMenu()])
+        }
     }
     
     private func chatStatusMenu() -> CMEntity {

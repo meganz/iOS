@@ -331,11 +331,12 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
-    func testCreateContextMenu_ChatList() throws {
+    func testCreateContextMenu_ChatListWithArchived() throws {
         let cmChatEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .chat),
                                                                             isDoNotDisturbEnabled: false,
                                                                             timeRemainingToDeactiveDND: nil,
-                                                                            chatStatus: .online))
+                                                                            chatStatus: .online,
+                                                                            isArchivedChatsVisible: true))
         
         let menuActions = decomposeMenuIntoActions(menu: cmChatEntity)
         menuActionsArray = [.chatStatus(actionType: .offline),
@@ -349,6 +350,29 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
                             .chatDoNotDisturbEnabled(optionType: .twentyFourHours),
                             .chatDoNotDisturbEnabled(optionType: .morningEightAM),
                             .chat(actionType: .archivedChats),
+        ]
+        
+        XCTAssertTrue(menuActions == menuActionsArray)
+    }
+    
+    func testCreateContextMenu_ChatListWithOutArchived() throws {
+        let cmChatEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .chat),
+                                                                            isDoNotDisturbEnabled: false,
+                                                                            timeRemainingToDeactiveDND: nil,
+                                                                            chatStatus: .online,
+                                                                           isArchivedChatsVisible: false))
+        
+        let menuActions = decomposeMenuIntoActions(menu: cmChatEntity)
+        menuActionsArray = [.chatStatus(actionType: .offline),
+                            .chatStatus(actionType: .away),
+                            .chatStatus(actionType: .online),
+                            .chatStatus(actionType: .busy),
+                            .chatDoNotDisturbDisabled(actionType: .off),
+                            .chatDoNotDisturbEnabled(optionType: .thirtyMinutes),
+                            .chatDoNotDisturbEnabled(optionType: .oneHour),
+                            .chatDoNotDisturbEnabled(optionType: .sixHours),
+                            .chatDoNotDisturbEnabled(optionType: .twentyFourHours),
+                            .chatDoNotDisturbEnabled(optionType: .morningEightAM),
         ]
         
         XCTAssertTrue(menuActions == menuActionsArray)

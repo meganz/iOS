@@ -39,6 +39,7 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
                         .setIsOutShare(config.isOutShare)
                         .setIsExported(config.isExported)
                         .setIsEmptyState(config.isEmptyState)
+                        .setIsArchivedChatsVisible(config.isArchivedChatsVisible)
                         .build()
     }
 }
