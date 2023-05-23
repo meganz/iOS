@@ -11,7 +11,7 @@ struct AccountPlanPurchaseRepository: AccountPlanPurchaseRepositoryProtocol {
         self.purchase = purchase
     }
     
-    func accountPlanProducts() -> [AccountPlanEntity] {
+    func accountPlanProducts() async -> [AccountPlanEntity] {
         guard let products = purchase.products as? [SKProduct] else { return [] }
 
         var accountPlans: [AccountPlanEntity] = []

@@ -4,28 +4,28 @@ import MEGADomainMock
 
 final class AccountPlanPurchaseUseCaseTests: XCTestCase {
 
-    func testAccountPlanProducts_monthly() {
+    func testAccountPlanProducts_monthly() async {
         let plans = monthlyPlans
         let mockRepo = MockAccountPlanPurchaseRepository(plans: plans)
         let sut = AccountPlanPurchaseUseCase(repository: mockRepo)
-        
-        XCTAssertTrue(sut.accountPlanProducts() == plans)
+        let products = await sut.accountPlanProducts()
+        XCTAssertTrue(products == plans)
     }
     
-    func testAccountPlanProducts_yearly() {
+    func testAccountPlanProducts_yearly() async {
         let plans = yearlyPlans
         let mockRepo = MockAccountPlanPurchaseRepository(plans: plans)
         let sut = AccountPlanPurchaseUseCase(repository: mockRepo)
-        
-        XCTAssertTrue(sut.accountPlanProducts() == plans)
+        let products = await sut.accountPlanProducts()
+        XCTAssertTrue(products == plans)
     }
     
-    func testAccountPlanProducts_monthlyAndYearly() {
+    func testAccountPlanProducts_monthlyAndYearly() async {
         let plans = allPlans
         let mockRepo = MockAccountPlanPurchaseRepository(plans: plans)
         let sut = AccountPlanPurchaseUseCase(repository: mockRepo)
-        
-        XCTAssertTrue(sut.accountPlanProducts() == plans)
+        let products = await sut.accountPlanProducts()
+        XCTAssertTrue(products == plans)
     }
     
     private var monthlyPlans: [AccountPlanEntity] {

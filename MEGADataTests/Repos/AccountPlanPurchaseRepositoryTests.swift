@@ -4,7 +4,7 @@ import MEGADomain
 
 final class AccountPlanPurchaseRepositoryTests: XCTestCase {
 
-    func testAccountPlanProducts_monthly() {
+    func testAccountPlanProducts_monthly() async {
         let products = [MockSKProduct(identifier: "pro1.oneMonth", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro2.oneMonth", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro3.oneMonth", price: "1", priceLocale: Locale.current),
@@ -16,10 +16,11 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         
         let mockPurchase = MockMEGAPurchase(productPlans: products)
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase)
-        XCTAssertEqual(sut.accountPlanProducts(), expectedResult)
+        let plans = await sut.accountPlanProducts()
+        XCTAssertEqual(plans, expectedResult)
     }
     
-    func testAccountPlanProducts_yearly() {
+    func testAccountPlanProducts_yearly() async {
         let products = [MockSKProduct(identifier: "pro1.oneYear", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro2.oneYear", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro3.oneYear", price: "1", priceLocale: Locale.current),
@@ -31,6 +32,7 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         
         let mockPurchase = MockMEGAPurchase(productPlans: products)
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase)
-        XCTAssertEqual(sut.accountPlanProducts(), expectedResult)
+        let plans = await sut.accountPlanProducts()
+        XCTAssertEqual(plans, expectedResult)
     }
 }

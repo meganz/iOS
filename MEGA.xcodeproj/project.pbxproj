@@ -1475,6 +1475,13 @@
 		B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
 		B5925B8E279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
 		B5925B8F279119E400170CD6 /* Colors+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5925B88279119E400170CD6 /* Colors+Generated.swift */; };
+		B59580A82A1478D400E5FC1C /* UpgradeAccountPlanRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */; };
+		B59580A92A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */; };
+		B59580AA2A1478D400E5FC1C /* UpgradeAccountPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */; };
+		B59580B22A1478E800E5FC1C /* UpgradeSectionSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AD2A1478E600E5FC1C /* UpgradeSectionSubscriptionView.swift */; };
+		B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */; };
+		B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */; };
+		B59580B72A1478F700E5FC1C /* UpgradeStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580B62A1478F700E5FC1C /* UpgradeStrings.swift */; };
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
 		B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */; };
@@ -1500,7 +1507,6 @@
 		B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */; };
 		B5E4EBD829795A10009C5578 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4EBD729795A10009C5578 /* HomeViewModel.swift */; };
 		B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */; };
-		B5E9351B29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9351A29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift */; };
 		B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */; };
 		B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */; };
@@ -3914,6 +3920,13 @@
 		B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+SortOrder.swift"; sourceTree = "<group>"; };
 		B5925B78279115FA00170CD6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B5925B88279119E400170CD6 /* Colors+Generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Colors+Generated.swift"; sourceTree = "<group>"; };
+		B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanRouter.swift; sourceTree = "<group>"; };
+		B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModel.swift; sourceTree = "<group>"; };
+		B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanView.swift; sourceTree = "<group>"; };
+		B59580AD2A1478E600E5FC1C /* UpgradeSectionSubscriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionSubscriptionView.swift; sourceTree = "<group>"; };
+		B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionHeaderView.swift; sourceTree = "<group>"; };
+		B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionFeatureOfProView.swift; sourceTree = "<group>"; };
+		B59580B62A1478F700E5FC1C /* UpgradeStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeStrings.swift; sourceTree = "<group>"; };
 		B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModel.swift; sourceTree = "<group>"; };
 		B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModel.swift; sourceTree = "<group>"; };
@@ -3951,7 +3964,6 @@
 		B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFeatureFlagProvider.swift; sourceTree = "<group>"; };
 		B5E4EBD729795A10009C5578 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Account.swift"; sourceTree = "<group>"; };
-		B5E9351A29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallPlanViewModel.swift; sourceTree = "<group>"; };
 		B5E9D3FA28ACEB0800504F1F /* FeatureFlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagView.swift; sourceTree = "<group>"; };
 		B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModel.swift; sourceTree = "<group>"; };
 		B5E9D41428ACF8CE00504F1F /* FeatureFlagViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagViewModelTests.swift; sourceTree = "<group>"; };
@@ -5920,7 +5932,6 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				167845462A172AAA00568FBE /* XCTest.framework */,
 				2FA6DA61243E919D007A8E81 /* Accelerate.framework */,
 				9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */,
 				A8C262971FA0B4A2006172CE /* AudioToolbox.framework */,
@@ -5973,6 +5984,7 @@
 				77B3AE222163BDB8008E889A /* UserNotifications.framework */,
 				A8F6E8901F9E75C20087859C /* VideoToolbox.framework */,
 				83199F1225556CD900344531 /* WidgetKit.framework */,
+				167845462A172AAA00568FBE /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -8519,10 +8531,10 @@
 				BF085C9E29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift */,
 				BF085CA229E66B38001E6AB7 /* ScheduleMeetingCreationInvitationView.swift */,
 				BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift */,
-				BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */,
 				BF085CA429E66BE9001E6AB7 /* ScheduleMeetingCreationNameView.swift */,
 				BF085CA029E66B11001E6AB7 /* ScheduleMeetingCreationOpenInviteView.swift */,
 				BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */,
+				BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */,
 				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
 				83DBDDE229D730C800CF433B /* TextFieldView.swift */,
 			);
@@ -9306,6 +9318,36 @@
 			path = Transfers;
 			sourceTree = "<group>";
 		};
+		B59580A32A1478AE00E5FC1C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B59580A42A1478C300E5FC1C /* Upgrade Plan View */,
+				B59580B62A1478F700E5FC1C /* UpgradeStrings.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B59580A42A1478C300E5FC1C /* Upgrade Plan View */ = {
+			isa = PBXGroup;
+			children = (
+				B59580AB2A1478DC00E5FC1C /* Sections */,
+				B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */,
+				B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */,
+				B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */,
+			);
+			path = "Upgrade Plan View";
+			sourceTree = "<group>";
+		};
+		B59580AB2A1478DC00E5FC1C /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */,
+				B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */,
+				B59580AD2A1478E600E5FC1C /* UpgradeSectionSubscriptionView.swift */,
+			);
+			path = Sections;
+			sourceTree = "<group>";
+		};
 		B5B0E30427F1BC1100DB6146 /* Warning */ = {
 			isa = PBXGroup;
 			children = (
@@ -9338,7 +9380,6 @@
 				6D64B70B2A09BC95002ECBD1 /* ViewModel */,
 				E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */,
 				B5FC637E29E9444B00EE4C8E /* MyAccountHallPlanView.swift */,
-				B5E9351A29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift */,
 				94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */,
 				5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */,
 				5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */,
@@ -9374,6 +9415,7 @@
 			children = (
 				B5EF0A6F29F0ED9700B166B1 /* Data Model */,
 				B5EF0A7229F0EDF100B166B1 /* Repository */,
+				B59580A32A1478AE00E5FC1C /* Views */,
 			);
 			path = "Upgrade Account";
 			sourceTree = "<group>";
@@ -13230,7 +13272,6 @@
 				B69AF65628A1E48B0022B094 /* MOUser+CoreDataProperties.m in Sources */,
 				417B5AAF1DEC792400A193D5 /* MOUser.m in Sources */,
 				B5FC637F29E9444B00EE4C8E /* MyAccountHallPlanView.swift in Sources */,
-				B5E9351B29EE380A00FA6941 /* MyAccountHallPlanViewModel.swift in Sources */,
 				94282D4028A3B29200F794BA /* MyAccountHallTableViewCell+Additions.swift in Sources */,
 				5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */,
 				9D68BBB228B55E23006FCBC5 /* MyAccountHallViewController+Addition.swift in Sources */,
@@ -13581,6 +13622,7 @@
 				BF6C83D92A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift in Sources */,
 				BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */,
 				BF6C83D72A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift in Sources */,
+				BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */,
 				83DE6D1F2989410E000503CC /* ScheduleMeetingOccurence.swift in Sources */,
 				BF0D5125298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift in Sources */,
 				BFCB32B62A0239A60013409C /* ScheduleMeetingPushNotifications.swift in Sources */,
@@ -13789,8 +13831,15 @@
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */,
+				B59580A82A1478D400E5FC1C /* UpgradeAccountPlanRouter.swift in Sources */,
+				B59580AA2A1478D400E5FC1C /* UpgradeAccountPlanView.swift in Sources */,
+				B59580A92A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift in Sources */,
 				5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */,
 				B5AD33C529D136A600707496 /* UpgradeAccountViewModel.swift in Sources */,
+				B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */,
+				B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */,
+				B59580B22A1478E800E5FC1C /* UpgradeSectionSubscriptionView.swift in Sources */,
+				B59580B72A1478F700E5FC1C /* UpgradeStrings.swift in Sources */,
 				C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */,
@@ -13830,7 +13879,6 @@
 				BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,
 				B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */,
-				BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */,
 				94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
@@ -14275,7 +14323,6 @@
 				BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */,
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
-				167845552A173EF500568FBE /* XCTestCase+AsyncAssertions.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,
@@ -14353,7 +14400,6 @@
 				32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */,
-				BFB889932A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
 				A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
@@ -14361,6 +14407,7 @@
 				BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */,
 				BF4989772A0DD694005C9ABD /* ScheduleMeetingCreationRecurrenceOptionsViewModelTests.swift in Sources */,
 				BF121D7B2A0B5C5300DA3633 /* ScheduleMeetingCreationRecurrenceOptionTests.swift in Sources */,
+				BFB889932A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift in Sources */,
 				83751C5429E572DC0030310B /* ScheduleMeetingViewModelTests.swift in Sources */,
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,
 				0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */,
@@ -14388,6 +14435,7 @@
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
 				B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */,
 				B60F05E92514C022005133C2 /* XCTestCase+ActionCommand.swift in Sources */,
+				167845552A173EF500568FBE /* XCTestCase+AsyncAssertions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

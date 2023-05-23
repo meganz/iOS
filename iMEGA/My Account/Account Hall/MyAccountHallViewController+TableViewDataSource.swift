@@ -122,13 +122,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
             return HostingTableViewCell<MyAccountHallPlanView>()
         }
         
-        var currentPlan = ""
-        if let account = MEGASdk.shared.mnz_accountDetails {
-            currentPlan = MEGAAccountDetails.string(for: account.type)
-        }
-        
-        let viewModel = MyAccountHallPlanViewModel(currentPlan: currentPlan, router: UpgradeAccountRouter())
-        let upgradeCellView = MyAccountHallPlanView(viewModel: viewModel)
+        let upgradeCellView = MyAccountHallPlanView(viewModel: self.viewModel)
         cell.host(upgradeCellView, parent: self)
         cell.selectionStyle = .none
         return cell
