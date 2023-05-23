@@ -1,6 +1,7 @@
 public protocol AccountHallUseCaseProtocol {
     func incomingContactsRequestsCount() async -> Int
     func relevantUnseenUserAlertsCount() async -> UInt
+    func accountDetails() async throws -> AccountDetailsEntity
 }
 
 public struct AccountHallUseCase<T: AccountRepositoryProtocol>: AccountHallUseCaseProtocol {
@@ -16,5 +17,9 @@ public struct AccountHallUseCase<T: AccountRepositoryProtocol>: AccountHallUseCa
     
     public func relevantUnseenUserAlertsCount() async -> UInt {
         repository.relevantUnseenUserAlertsCount()
+    }
+    
+    public func accountDetails() async throws -> AccountDetailsEntity {
+        try await repository.accountDetails()
     }
 }

@@ -1,6 +1,6 @@
 
 public protocol AccountPlanPurchaseUseCaseProtocol {
-    func accountPlanProducts() -> [AccountPlanEntity]
+    func accountPlanProducts() async -> [AccountPlanEntity]
 }
 
 public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtocol>: AccountPlanPurchaseUseCaseProtocol {
@@ -10,7 +10,7 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
         repo = repository
     }
     
-    public func accountPlanProducts() -> [AccountPlanEntity] {
-        repo.accountPlanProducts()
+    public func accountPlanProducts() async -> [AccountPlanEntity] {
+        await repo.accountPlanProducts()
     }
 }

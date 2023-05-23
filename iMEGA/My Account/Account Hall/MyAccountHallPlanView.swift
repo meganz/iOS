@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MyAccountHallPlanView: View {
-    var viewModel: MyAccountHallPlanViewModel
+    @ObservedObject var viewModel: AccountHallViewModel
     
     var body: some View {
         HStack {
@@ -14,7 +14,7 @@ struct MyAccountHallPlanView: View {
                     .font(.footnote)
                     .foregroundColor(Color(Colors.UpgradeAccount.primaryGrayText.color))
                 
-                Text(viewModel.currentPlan)
+                Text(viewModel.currentPlanName)
                     .font(.body)
                     .foregroundColor(Color(Colors.UpgradeAccount.primaryText.color))
             }
@@ -22,10 +22,10 @@ struct MyAccountHallPlanView: View {
             Spacer()
             
             Button {
-                viewModel.tappedUpgradeButton()
+                viewModel.dispatch(.didTapUpgradeButton)
             } label: {
                 Text(Strings.Localizable.upgrade)
-                    .foregroundColor(Color(Colors.UpgradeAccount.buttonTint.color))
+                    .foregroundColor(Color(Colors.Views.turquoise.color))
                     .font(.subheadline.bold())
                     .frame(height: 50)
                     .frame(maxWidth: 300)
@@ -34,7 +34,7 @@ struct MyAccountHallPlanView: View {
                     .contentShape(Rectangle())
                     .overlay (
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color(Colors.UpgradeAccount.buttonTint.color), lineWidth: 2)
+                            .stroke(Color(Colors.Views.turquoise.color), lineWidth: 2)
                     )
             }
             .padding()
