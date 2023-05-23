@@ -63,14 +63,13 @@ only_rules:
       - for_where
       - trailing_semicolon
       - trailing_newline
+      - implicit_getter
+      - redundant_void_return
+      - syntactic_sugar
+      - statement_position
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
-
-      # - implicit_getter (16 issues)
       # - xctfail_message (16 issues)
-      # - redundant_void_return (17 issues)
-      # - syntactic_sugar (19 issues)
-      # - statement_position (22 issues)
       # - no_space_in_method_call (42 issues)
       # - vertical_parameter_alignment (50 issues)
       # - private_over_fileprivate (54 issues)

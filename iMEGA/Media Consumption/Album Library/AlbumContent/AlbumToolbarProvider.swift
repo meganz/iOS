@@ -172,8 +172,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                 Task {
                     try await favoriteUseCase.unFavourite(node: node.toNodeEntity())
                 }
-            }
-            else {
+            } else {
                 Task {
                     try await favoriteUseCase.favourite(node: node.toNodeEntity())
                 }

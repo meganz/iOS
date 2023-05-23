@@ -27,7 +27,7 @@ public extension Array where Element: Equatable {
         move(item, to: endIndex-1)
     }
     
-    func shifted(_ distance: Int = 1) -> Array<Element> {
+    func shifted(_ distance: Int = 1) -> [Element] {
         let offsetIndex = distance >= 0 ?
         index(startIndex, offsetBy: distance, limitedBy: endIndex) :
         index(endIndex, offsetBy: distance, limitedBy: startIndex)

@@ -49,9 +49,15 @@ import MEGADomain
     }
     
     func currentRepeatMode() -> RepeatMode {
-        if player?.isRepeatOneMode() ?? false { return .repeatOne }
-        else if player?.isRepeatAllMode() ?? false { return .loop }
-        return .none
+        guard let player else { return .none }
+        
+        if player.isRepeatOneMode() {
+            return .repeatOne
+        } else if player.isRepeatAllMode() {
+            return .loop
+        } else {
+            return .none
+        }
     }
     
     func currentSpeedMode() -> SpeedMode {

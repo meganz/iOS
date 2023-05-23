@@ -41,8 +41,8 @@ final class HistoryRetentionPickerViewModel: NSObject, ViewModelType {
         case updateMeasurementPickerComponent
     }
     
-    var unitsValuesArray: Array<String> = UnitsComponentValues().hours //Default to values for hours, default measurament component
-    var measuramentsValuesArray: Array<String> = MeasurementsComponent.singular.values() //Default to singular, when the picker is shown the default position is '1 hour'
+    var unitsValuesArray: [String] = UnitsComponentValues().hours //Default to values for hours, default measurament component
+    var measuramentsValuesArray: [String] = MeasurementsComponent.singular.values() //Default to singular, when the picker is shown the default position is '1 hour'
     
     var invokeCommand: ((Command) -> Void)?
         
@@ -65,7 +65,7 @@ final class HistoryRetentionPickerViewModel: NSObject, ViewModelType {
     
     private func historyRetentionPickerValueToUInt(_ unitsRow: Int, _ measurementsRow: Int) -> UInt {
         let hoursDaysWeeksMonthsOrYearValue: UInt = UInt(unitsRow + 1)
-        let measuramentsComponentValue: Array<UInt> = [UInt(secondsInAHour), UInt(secondsInADay), UInt(secondsInAWeek), UInt(secondsInAMonth_30), UInt(secondsInAYear)]
+        let measuramentsComponentValue: [UInt] = [UInt(secondsInAHour), UInt(secondsInADay), UInt(secondsInAWeek), UInt(secondsInAMonth_30), UInt(secondsInAYear)]
         let hoursDaysWeeksMonthsOrYear = measurementsRow
         let historyRetentionValue = hoursDaysWeeksMonthsOrYearValue * measuramentsComponentValue[hoursDaysWeeksMonthsOrYear]
         
@@ -202,7 +202,7 @@ extension HistoryRetentionPickerViewModel: UIPickerViewDelegate {
         return pickerSelectionChanged
     }
     
-    private func updateComponentsDueAutomaticChange(_ units: Array<String>, _ pickerView: UIPickerView) {
+    private func updateComponentsDueAutomaticChange(_ units: [String], _ pickerView: UIPickerView) {
         unitsValuesArray = units
         measuramentsValuesArray = MeasurementsComponent.singular.values()
         

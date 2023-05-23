@@ -66,8 +66,7 @@ final class AddPhoneNumberViewModel: ViewModelType {
                 guard let storage = try await self?.achievementUseCase.getAchievementStorage(by: .addPhone) else { return }
                 let storageText = Strings.Localizable.GetFreeWhenYouAddYourPhoneNumber.thisMakesItEasierForYourContactsToFindYouOnMEGA(String.memoryStyleString(fromByteCount: storage.valueNumber.int64Value))
                 self?.invokeCommand?(.showAchievementStorage(storageText))
-            }
-            catch {
+            } catch {
                 self?.invokeCommand?(.loadAchievementError(message: Strings.Localizable.AddYourPhoneNumberToMEGA.thisMakesItEasierForYourContactsToFindYouOnMEGA))
             }
 

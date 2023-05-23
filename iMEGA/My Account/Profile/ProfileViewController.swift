@@ -135,7 +135,7 @@ enum SessionSectionRow: Int {
         avatarBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }
     
-    private func configureGestures() -> Void {
+    private func configureGestures() {
         let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ??  ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
@@ -212,7 +212,7 @@ enum SessionSectionRow: Int {
         }
     }
     
-    private func showImagePicker(sourceType: UIImagePickerController.SourceType) -> Void {
+    private func showImagePicker(sourceType: UIImagePickerController.SourceType) {
         guard let imagePickerController = MEGAImagePickerController.init(toChangeAvatarWith: sourceType) else {
             return            
         }
@@ -220,7 +220,7 @@ enum SessionSectionRow: Int {
         self.present(imagePickerController, animated: true, completion: nil)
     }
     
-    private func presentChangeAvatarController(tableView: UITableView, cell: UITableViewCell) -> Void {
+    private func presentChangeAvatarController(tableView: UITableView, cell: UITableViewCell) {
         let changeAvatarAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         changeAvatarAlertController.addAction(UIAlertAction.init(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
         
@@ -310,7 +310,7 @@ enum SessionSectionRow: Int {
         return [.logout]
     }
     
-    func presentChangeViewController(changeType: ChangeType, indexPath: IndexPath) -> Void {
+    func presentChangeViewController(changeType: ChangeType, indexPath: IndexPath) {
         let changePasswordViewController = UIStoryboard.init(name: "ChangeCredentials", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
         changePasswordViewController.changeType = changeType
         if changeType == .email || changeType == .password {

@@ -8,7 +8,7 @@ public protocol CookieSettingsUseCaseProtocol {
     
     func setCookieSettings(with settings: Int, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void)
     
-    func setCrashlyticsEnabled(_ bool: Bool) -> Void
+    func setCrashlyticsEnabled(_ bool: Bool)
 }
 
 // MARK: - Use case implementation
@@ -31,7 +31,7 @@ public struct CookieSettingsUseCase<T: CookieSettingsRepositoryProtocol>: Cookie
         repository.setCookieSettings(with: settings, completion: completion)
     }
     
-    public func setCrashlyticsEnabled(_ bool: Bool) -> Void {
+    public func setCrashlyticsEnabled(_ bool: Bool) {
         repository.setCrashlyticsEnabled(bool)
     }
 }

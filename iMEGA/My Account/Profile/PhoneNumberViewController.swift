@@ -41,8 +41,7 @@ class PhoneNumberViewController: UITableViewController {
             let phoneNumber = try PhoneNumberKit().parse(verifiedPhone)
             countrycodeLabel.text = "+" + String(phoneNumber.countryCode)
             phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .national)
-        }
-        catch {
+        } catch {
             MEGALogError("Device contact number parser error " + verifiedPhone)
             phoneNumberLabel.text = verifiedPhone
         }

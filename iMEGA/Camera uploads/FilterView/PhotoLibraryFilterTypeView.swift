@@ -40,8 +40,7 @@ struct PhotoLibraryFilterTypeView: View {
         ZStack {
             if selected {
                 btnSelectedLabel
-            }
-            else {
+            } else {
                 btnNormal
             }
         }

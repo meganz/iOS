@@ -25,7 +25,7 @@ final class MockFavouriteNodesUseCase: FavouriteNodesUseCaseProtocol {
         callback(onNodesUpdateCallback)
     }
     
-    func unregisterOnNodesUpdate() -> Void {
+    func unregisterOnNodesUpdate() {
         onNodesUpdateCallback = nil
     }
 }

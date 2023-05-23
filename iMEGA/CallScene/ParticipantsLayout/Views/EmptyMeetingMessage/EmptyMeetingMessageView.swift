@@ -6,9 +6,7 @@ class EmptyMeetingMessageView: UIView {
     
     private let minWidth: CGFloat = 160.0
     private var maxWidth: CGFloat {
-        get {
-            return UIScreen.main.bounds.size.width - defaultMargin
-        }
+        UIScreen.main.bounds.size.width - defaultMargin
     }
     private let minHeight: CGFloat = 44
     private let defaultMargin: CGFloat = 32

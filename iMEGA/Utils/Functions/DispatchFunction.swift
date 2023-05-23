@@ -2,11 +2,11 @@ import Foundation
 
 // MARK: - Asynchronous on Queue
 
-func async(_ action: @escaping () -> Void, on queue: DispatchQueue) -> Void {
+func async(_ action: @escaping () -> Void, on queue: DispatchQueue) {
     queue.async(execute: action)
 }
 
-func async(on queue: DispatchQueue, _ action: @escaping () -> Void) -> Void {
+func async(on queue: DispatchQueue, _ action: @escaping () -> Void) {
     queue.async(execute: action)
 }
 

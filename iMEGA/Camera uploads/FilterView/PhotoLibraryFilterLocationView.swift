@@ -38,8 +38,7 @@ struct PhotoLibraryFilterLocationView: View {
         HStack {
             if selected {
                 btnSelectedLabel
-            }
-            else {
+            } else {
                 btnNormal
             }
             Spacer()

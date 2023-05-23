@@ -92,7 +92,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
             presenter?.dismiss(animated: true, completion: {
                 SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
             })
-        }else {
+        } else {
             SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
         }
     }

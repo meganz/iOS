@@ -11,9 +11,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     var transferStatus: Int?
     var transfers = [TransferEntity]()
     var transfersPaused: Bool {
-        get {
-            UserDefaults.standard.bool(forKey: "TransfersPaused")
-        }
+        UserDefaults.standard.bool(forKey: "TransfersPaused")
     }
     
     private var isWidgetForbidden = false

@@ -2,22 +2,14 @@ import MEGADomain
 
 extension ExtensionsAnalyticsEventEntity: AnalyticsEventProtocol {
     var code: Int {
-        get {
-            var value: Int
-            switch self {
-            case .withoutNoDDatabase: value = 99316
-            }
-            return value
+        switch self {
+        case .withoutNoDDatabase: return 99316
         }
     }
     
     var description: String {
-        get {
-            var value: String
-            switch self {
-            case .withoutNoDDatabase: value = "Extension without NoD database"
-            }
-            return value
+        switch self {
+        case .withoutNoDDatabase: return "Extension without NoD database"
         }
     }
 
