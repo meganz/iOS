@@ -85,6 +85,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var isViewOnScreen = false
     
+    var refreshContextMenuBarButton: (@MainActor () -> Void)?
+
     init(router: ChatRoomsListRouting,
          chatUseCase: ChatUseCaseProtocol,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
@@ -145,7 +147,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         cancelLoadingTask()
         cancelSearchTask()
     }
-    
     
     func contextMenuConfiguration() -> CMConfigEntity {
         CMConfigEntity(menuType: .menu(type: .chat),
@@ -601,6 +602,13 @@ final class ChatRoomsListViewModel: ObservableObject {
                 self.fetchChats()
             }
         }
+        if chatListItems.contains(where: { $0.changeType == .archived }) {
+            refreshContextMenu()
+        }
+    }
+    
+    private func refreshContextMenu() {
+        Task { @MainActor in refreshContextMenuBarButton?() }
     }
 }
 
@@ -613,7 +621,7 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
     
     func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption) {
         globalDNDNotificationControl.turnOnDND(dndTurnOnOption: option) { [weak self] in
-            self?.notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
+            self?.refreshContextMenu()
         }
     }
     
@@ -623,7 +631,7 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
         }
         
         globalDNDNotificationControl.turnOffDND { [weak self] in
-            self?.notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
+            self?.refreshContextMenu()
         }
     }
     
@@ -686,6 +694,6 @@ extension ChatRoomsListViewModel :PushNotificationControlProtocol {
     }
     
     func pushNotificationSettingsLoaded() {
-        notificationCenter.post(name: .chatDoNotDisturbUpdate, object: nil)
+        refreshContextMenu()
     }
 }

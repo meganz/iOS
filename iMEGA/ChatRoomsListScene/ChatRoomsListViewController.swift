@@ -8,15 +8,11 @@ final class ChatRoomsListViewController: UIViewController {
     lazy var moreBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: nil, action: nil)
     
     private(set) var viewModel: ChatRoomsListViewModel
-    private let notificationCenter: NotificationCenter
 
     private var subscriptions = Set<AnyCancellable>()
 
-    init(viewModel: ChatRoomsListViewModel,
-         notificationCenter: NotificationCenter = NotificationCenter.default
-    ) {
+    init(viewModel: ChatRoomsListViewModel) {
         self.viewModel = viewModel
-        self.notificationCenter = notificationCenter
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -77,6 +73,7 @@ final class ChatRoomsListViewController: UIViewController {
     }
     
     private func initSubscriptions() {
+        viewModel.refreshContextMenuBarButton = { [weak self] in self?.refreshContextMenuBarButton() }
         subscriptions = [
             viewModel.$chatViewMode.sink(receiveValue: { [weak self] chatViewMode in
                 self?.configureNavigationBarButtons(chatViewMode: chatViewMode)
@@ -85,11 +82,6 @@ final class ChatRoomsListViewController: UIViewController {
                 self?.refreshContextMenuBarButton()
                 self?.updateTitleView()
             }),
-            notificationCenter
-                .publisher(for: .chatDoNotDisturbUpdate)
-                .sink(receiveValue: { [weak self] _ in
-                    self?.refreshContextMenuBarButton()
-                }),
             viewModel.$myAvatarBarButton.sink(receiveValue: { [weak self] myAvatarBarButton in
                 self?.navigationItem.leftBarButtonItem = myAvatarBarButton
             }),
