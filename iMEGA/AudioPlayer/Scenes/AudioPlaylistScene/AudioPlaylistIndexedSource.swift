@@ -48,7 +48,7 @@ final class AudioPlaylistIndexedSource: NSObject, AudioPlaylistSource, UITableVi
         }
     }
     
-    func indexPathsOf(item: AudioPlayerItem) -> [IndexPath]? {
+    func indexPathsOf(item: AudioPlayerItem) -> [IndexPath] {
         indexedTracks.compactMap { list in
             guard let section = indexedTracks.firstIndex(of: list) else { return nil }
             return list?.filter({ $0 == item }).compactMap {
