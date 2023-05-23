@@ -5,51 +5,6 @@ import MEGAData
 import Combine
 
 extension AppDelegate {
-    @objc func showAddPhoneNumberIfNeeded() {
-        let visibleViewController = UIApplication.mnz_visibleViewController()
-        if  visibleViewController is AddPhoneNumberViewController ||
-            visibleViewController is InitialLaunchViewController ||
-            visibleViewController is LaunchViewController ||
-            visibleViewController is SMSVerificationViewController ||
-            visibleViewController is VerificationCodeViewController ||
-            visibleViewController is CreateAccountViewController ||
-            visibleViewController is UpgradeTableViewController ||
-            visibleViewController is OnboardingViewController ||
-            visibleViewController is UIAlertController ||
-            visibleViewController is VerifyEmailViewController ||
-            visibleViewController is LoginViewController ||
-            visibleViewController is SFSafariViewController { return }
-
-        if MEGASdkManager.sharedMEGASdk().isAccountType(.business) &&
-            MEGASdkManager.sharedMEGASdk().businessStatus != .active {
-            return
-        }
-        
-        if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
-
-        if MEGASdk.isGuest { return }
-
-        if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() != nil { return }
-
-        if UserDefaults.standard.bool(forKey: "dontShowAgainAddPhoneNumber") {
-            return
-        }
-        
-        if let lastDateAddPhoneNumberShowed = UserDefaults.standard.value(forKey: "lastDateAddPhoneNumberShowed") {
-            guard let days = Calendar.current.dateComponents([.day], from: lastDateAddPhoneNumberShowed as! Date, to: Date()).day else { return }
-            if days < 7 { return }
-        }
-
-        UserDefaults.standard.set(Date(), forKey: "lastDateAddPhoneNumberShowed")
-        var hideDontShowAgain = true
-        let timesAddPhoneNumberShowed = UserDefaults.standard.integer(forKey: "timesAddPhoneNumberShowed")
-        if timesAddPhoneNumberShowed >= MEGAOptOutOfAddYourPhoneNumberMinCount {
-            hideDontShowAgain = false
-        }
-        UserDefaults.standard.set(timesAddPhoneNumberShowed + 1, forKey: "timesAddPhoneNumberShowed")
-        AddPhoneNumberRouter(hideDontShowAgain: hideDontShowAgain, presenter: UIApplication.mnz_presentingViewController()).start()
-    }
-
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
         if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
             return
