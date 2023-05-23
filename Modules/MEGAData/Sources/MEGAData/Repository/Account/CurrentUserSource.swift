@@ -33,17 +33,15 @@ public final class CurrentUserSource {
     private func registerAccountNotifications() {
         NotificationCenter
             .default
-            .publisher(for: .accountLoginNotification)
+            .publisher(for: .accountDidLogin)
             .sink { [weak self] _ in
-                let user = self?.sdk.myUser
-                self?.currentUserHandle = user?.handle
-                self?.currentUserEmail = user?.email
+                self?.currentUserHandle = self?.sdk.myUser?.handle
             }
             .store(in: &subscriptions)
         
         NotificationCenter
             .default
-            .publisher(for: .accountLogoutNotification)
+            .publisher(for: .accountDidLogout)
             .sink { [weak self] _ in
                 self?.currentUserHandle = nil
                 self?.currentUserEmail = nil
@@ -52,7 +50,15 @@ public final class CurrentUserSource {
         
         NotificationCenter
             .default
-            .publisher(for: .accountEmailChangedNotification)
+            .publisher(for: .accountDidFinishFetchNodes)
+            .sink { [weak self] _ in
+                self?.currentUserEmail = self?.sdk.myUser?.email
+            }
+            .store(in: &subscriptions)
+        
+        NotificationCenter
+            .default
+            .publisher(for: .accountEmailDidChange)
             .compactMap {
                 $0.userInfo?["user"] as? MEGAUser
             }
