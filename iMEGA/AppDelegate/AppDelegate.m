@@ -1559,7 +1559,7 @@
         }
             
         case MEGARequestTypeFetchNodes: {
-            
+            [self postDidFinishFetchNodesNotification];
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {

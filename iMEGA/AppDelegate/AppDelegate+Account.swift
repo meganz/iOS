@@ -39,6 +39,10 @@ extension AppDelegate {
     }
     
     @objc func postLoginNotification() {
-        NotificationCenter.default.post(name: .accountLoginNotification, object: nil)
+        NotificationCenter.default.post(name: .accountDidLogin, object: nil)
+    }
+    
+    @objc func postDidFinishFetchNodesNotification() {
+        NotificationCenter.default.post(name: .accountDidFinishFetchNodes, object: nil)
     }
 }
