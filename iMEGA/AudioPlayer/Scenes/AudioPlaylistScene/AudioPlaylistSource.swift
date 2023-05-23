@@ -2,7 +2,7 @@ import Foundation
 
 protocol AudioPlaylistSource: UITableViewDataSource {
     func item(at indexPath: IndexPath) -> AudioPlayerItem?
-    func indexPathsOf(item: AudioPlayerItem) -> [IndexPath]?
+    func indexPathsOf(item: AudioPlayerItem) -> [IndexPath]
 }
 
 extension AudioPlaylistSource  {

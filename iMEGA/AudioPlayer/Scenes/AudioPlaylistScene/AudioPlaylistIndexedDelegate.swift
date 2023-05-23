@@ -3,9 +3,11 @@ import Foundation
 protocol AudioPlaylistDelegate: AnyObject {
     func didSelect(item: AudioPlayerItem)
     func didDeselect(item: AudioPlayerItem)
+    func draggWillBegin()
+    func draggDidEnd()
 }
 
-final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate {
+final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate, UITableViewDragDelegate {
     private weak var delegate: AudioPlaylistDelegate?
     private let traitCollection: UITraitCollection
     
@@ -59,5 +61,17 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, shouldBeginMultipleSelectionInteractionAt indexPath: IndexPath) -> Bool {
         indexPath.section != 0
+    }
+    
+    func tableView(_ tableView: UITableView, dragSessionWillBegin session: UIDragSession) {
+        delegate?.draggWillBegin()
+    }
+    
+    func tableView(_ tableView: UITableView, dragSessionDidEnd session: UIDragSession) {
+        delegate?.draggDidEnd()
+    }
+    
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        []
     }
 }

@@ -27,6 +27,7 @@ final class AudioPlaylistViewController: UIViewController {
     private var playlistDelegate: AudioPlaylistIndexedDelegate? {
         didSet {
             tableView.delegate = playlistDelegate
+            tableView.dragDelegate = playlistDelegate
         }
     }
     
@@ -56,7 +57,7 @@ final class AudioPlaylistViewController: UIViewController {
             }
             
             updateAppearance()
-            reloadData()
+            reloadData(items: [])
         }
     }
     
@@ -116,21 +117,18 @@ final class AudioPlaylistViewController: UIViewController {
         }
     }
     
-    private func reloadData(item: AudioPlayerItem? = nil) {
+    private func reloadData(items: [AudioPlayerItem]) {
         guard let playlistSource = playlistSource else { return }
-        var indexPaths: [IndexPath] = []
-        
-        if let item = item {
-            indexPaths = playlistSource.indexPathsOf(item: item) ?? []
-        }
+    
+        let indexPaths = items.flatMap(playlistSource.indexPathsOf)
         
         let selectedIndexPaths = tableView.indexPathsForSelectedRows
         
         tableView.beginUpdates()
-        item != nil ? tableView.reloadRows(at: indexPaths, with: .none) : tableView.reloadData()
+        items.isNotEmpty ? tableView.reloadRows(at: indexPaths, with: .none) : tableView.reloadData()
         tableView.endUpdates()
         
-        let indexesToReload = item != nil ?
+        let indexesToReload = items.isNotEmpty ?
         Array(Set(selectedIndexPaths ?? []).intersection(Set(indexPaths))) : selectedIndexPaths
         
         indexesToReload?.forEach {
@@ -196,8 +194,8 @@ final class AudioPlaylistViewController: UIViewController {
         switch command {
         case .reloadTracks(let currentTrack, let queueTracks, let selectedIndexPaths):
             updateDataSource(currentTrack, queueTracks, selectedIndexPaths)
-        case .reload(let item):
-            reloadData(item: item)
+        case .reload(let items):
+            reloadData(items: items)
         case .title(let title):
             titleLabel.text = title
         case .deselectAll:
@@ -231,5 +229,13 @@ extension AudioPlaylistViewController: AudioPlaylistSourceDelegate, AudioPlaylis
     
     func didDeselect(item: AudioPlayerItem) {
         viewModel.dispatch(.didDeselect(item))
+    }
+    
+    func draggWillBegin() {
+        viewModel.dispatch(.willDraggBegin)
+    }
+    
+    func draggDidEnd() {
+        viewModel.dispatch(.didDraggEnd)
     }
 }

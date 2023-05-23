@@ -9,7 +9,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
                                                 router: router,
                                                 nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()))
     
-    func testAudioPlayerActions() {
+    func testAudioPlayerActions() throws {
         test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands: [.reloadTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, selectedIndexPaths: []),
                                                                               .title(title: "")])
         
@@ -27,6 +27,12 @@ final class AudioPlaylistViewModelTests: XCTestCase {
         
         test(viewModel: viewModel, action: .deinit, expectedCommands: [])
         XCTAssertEqual(playerHandler.removePlayerListener_calledTimes, 1)
+        
+        test(viewModel: viewModel, action: .willDraggBegin, expectedCommands: [])
+        let file1URL = try XCTUnwrap(Bundle.main.url(forResource: "incoming_voice_video_call_iOS9", withExtension: "mp3"))
+        let track1 = AudioPlayerItem(name: "file 1", url: file1URL, node: nil)
+        viewModel.audio(player: AVQueuePlayer(), reload: track1)
+        test(viewModel: viewModel, action: .didDraggEnd, expectedCommands: [.reload(items: [track1])])
     }
     
     func testRouterActions() {

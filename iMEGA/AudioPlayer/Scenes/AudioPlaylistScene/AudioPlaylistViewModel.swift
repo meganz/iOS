@@ -7,6 +7,8 @@ enum AudioPlaylistAction: ActionType {
     case removeSelectedItems
     case didSelect(AudioPlayerItem)
     case didDeselect(AudioPlayerItem)
+    case willDraggBegin
+    case didDraggEnd
     case dismiss
     case `deinit`
 }
@@ -19,7 +21,7 @@ final class AudioPlaylistViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case title(title: String)
         case reloadTracks(currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, selectedIndexPaths: [IndexPath]?)
-        case reload(item: AudioPlayerItem)
+        case reload(items: [AudioPlayerItem])
         case deselectAll
         case showToolbar
         case hideToolbar
@@ -32,6 +34,8 @@ final class AudioPlaylistViewModel: ViewModelType {
     private let router: AudioPlaylistViewRouting
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol
     private var selectedItems: [AudioPlayerItem]?
+    private var isDataReloadingEnabled = true
+    private var pendingItemsToBeUpdatedArray = [AudioPlayerItem]()
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -88,6 +92,15 @@ final class AudioPlaylistViewModel: ViewModelType {
         }
     }
     
+    private func reloadPendingItems() {
+        guard isDataReloadingEnabled, pendingItemsToBeUpdatedArray.isNotEmpty else {
+            return
+        }
+        
+        invokeCommand?(.reload(items: pendingItemsToBeUpdatedArray))
+        pendingItemsToBeUpdatedArray.removeAll()
+    }
+    
     // MARK: - Dispatch action
     func dispatch(_ action: AudioPlaylistAction) {
         switch action {
@@ -109,6 +122,11 @@ final class AudioPlaylistViewModel: ViewModelType {
             router.dismiss()
         case .deinit:
             configEntity.playerHandler.removePlayer(listener: self)
+        case .willDraggBegin:
+            isDataReloadingEnabled = false
+        case .didDraggEnd:
+            isDataReloadingEnabled = true
+            reloadPendingItems()
         }
     }
 }
@@ -122,7 +140,8 @@ extension AudioPlaylistViewModel: AudioPlayerObserversProtocol {
 
     func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {
         guard let item = item else { return }
-        invokeCommand?(.reload(item: item))
+        pendingItemsToBeUpdatedArray.append(item)
+        reloadPendingItems()
     }
     
     func audioPlayerWillStartBlockingAction() {
