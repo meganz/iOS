@@ -1222,7 +1222,6 @@
 - (void)readyToShowRecommendations {
     [self presentAccountExpiredViewIfNeeded];
     [self showCookieDialogIfNeeded];
-    [self showAddPhoneNumberIfNeeded];
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
@@ -1376,10 +1375,6 @@
             }
             
             [self presentAccountExpiredViewIfNeeded];
-            break;
-            
-        case EventMiscFlagsReady:
-            [self showAddPhoneNumberIfNeeded];
             break;
             
         case EventStorageSumChanged:
