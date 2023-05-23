@@ -900,7 +900,6 @@
 		836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AEDE42018AD1F00868FC7 /* PasswordView.m */; };
 		836B091129224BD70058D53C /* ChatLinkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B091029224BD70058D53C /* ChatLinkRepository.swift */; };
 		836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B956E2063EADE003E279B /* SearchInPdfViewController.m */; };
-		836BCF1828ED93C400515E18 /* NotificationName+DoNotDisturb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1728ED93C400515E18 /* NotificationName+DoNotDisturb.swift */; };
 		836BCF1A28EDC83D00515E18 /* ChatTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1928EDC83D00515E18 /* ChatTypeEntity+Mapper.swift */; };
 		836BCF1C28EDD12100515E18 /* ChatListItemEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1B28EDD12100515E18 /* ChatListItemEntity+Mapper.swift */; };
 		836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */; };
@@ -3370,7 +3369,6 @@
 		836B091029224BD70058D53C /* ChatLinkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkRepository.swift; sourceTree = "<group>"; };
 		836B956D2063EADE003E279B /* SearchInPdfViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchInPdfViewController.h; sourceTree = "<group>"; };
 		836B956E2063EADE003E279B /* SearchInPdfViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchInPdfViewController.m; sourceTree = "<group>"; };
-		836BCF1728ED93C400515E18 /* NotificationName+DoNotDisturb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+DoNotDisturb.swift"; sourceTree = "<group>"; };
 		836BCF1928EDC83D00515E18 /* ChatTypeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatTypeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		836BCF1B28EDD12100515E18 /* ChatListItemEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatListItemEntity+Mapper.swift"; sourceTree = "<group>"; };
 		836E74C22099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatChangeGroupNameRequestDelegate.h; sourceTree = "<group>"; };
@@ -8131,7 +8129,6 @@
 				83B71A6328F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift */,
 				BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */,
 				BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */,
-				836BCF1728ED93C400515E18 /* NotificationName+DoNotDisturb.swift */,
 				BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */,
 			);
 			path = "Data Model";
@@ -13343,7 +13340,6 @@
 				943092FA291440010092B99A /* NodeValidationRepository.swift in Sources */,
 				94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
-				836BCF1828ED93C400515E18 /* NotificationName+DoNotDisturb.swift in Sources */,
 				B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */,
 				BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
