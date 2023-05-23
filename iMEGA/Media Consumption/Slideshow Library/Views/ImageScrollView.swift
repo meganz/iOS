@@ -70,15 +70,13 @@ final class ImageScrollView: UIScrollView {
         
         if frameToCenter.size.width < bounds.width {
             frameToCenter.origin.x = (bounds.width - frameToCenter.size.width) / 2
-        }
-        else {
+        } else {
             frameToCenter.origin.x = 0
         }
         
         if frameToCenter.size.height < bounds.height {
             frameToCenter.origin.y = (bounds.height - frameToCenter.size.height) / 2
-        }
-        else {
+        } else {
             frameToCenter.origin.y = 0
         }
         unwrappedZoomView.frame = frameToCenter

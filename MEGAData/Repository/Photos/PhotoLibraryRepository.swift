@@ -61,12 +61,10 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
                 
                 if let node {
                     continuation.resume(returning: node.toNodeEntity())
-                }
-                else if let error = error {
+                } else if let error = error {
                     MEGALogWarning("Couldn't load CU: \(error)")
                     continuation.resume(throwing: PhotoLibraryErrorEntity.cameraUploadNodeDoesNotExist)
-                }
-                else {
+                } else {
                     continuation.resume(throwing: PhotoLibraryErrorEntity.cameraUploadNodeDoesNotExist)
                 }
             }
@@ -84,12 +82,10 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
                 
                 if let node {
                     continuation.resume(returning: node.toNodeEntity())
-                }
-                else if let error = error {
+                } else if let error {
                     MEGALogWarning("Couldn't load MU: \(error)")
                     continuation.resume(throwing: PhotoLibraryErrorEntity.mediaUploadNodeDoesNotExist)
-                }
-                else {
+                } else {
                     continuation.resume(throwing: PhotoLibraryErrorEntity.mediaUploadNodeDoesNotExist)
                 }
             }

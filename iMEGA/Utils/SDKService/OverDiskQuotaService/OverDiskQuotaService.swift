@@ -48,7 +48,7 @@ import Foundation
 
     func completion(
         ofCommand command: OverDiskQuotaCommand?,
-        result: OverDiskQuotaCommand.OverDiskQuotaFetchResult) -> Void {
+        result: OverDiskQuotaCommand.OverDiskQuotaFetchResult) {
         if let command = command {
             remove(command)
         }

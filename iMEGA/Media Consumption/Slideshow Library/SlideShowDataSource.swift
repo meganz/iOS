@@ -108,8 +108,7 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         
         if oldSlideIndex > currentSlideIndex {
             reloadUnusedPhotos(currentSlideIndex)
-        }
-        else if currentSlideIndex > oldSlideIndex {
+        } else if currentSlideIndex > oldSlideIndex {
             removeUnusedPhotos(currentSlideIndex)
         }
     }

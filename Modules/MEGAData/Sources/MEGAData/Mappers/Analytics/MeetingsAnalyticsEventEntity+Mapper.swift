@@ -2,32 +2,30 @@ import MEGADomain
 
 extension MeetingsAnalyticsEventEntity: AnalyticsEventProtocol {
     var code: Int {
-        get {
-            var value: Int
-            switch self {
-            case .endCallForAll: value = 99309
-            case .endCallInNoParticipantsPopup: value = 99311
-            case .stayOnCallInNoParticipantsPopup: value = 99313
-            case .enableCallSoundNotifications: value = 99312
-            case .disableCallSoundNotifications: value = 99314
-            case .endCallWhenEmptyCallTimeout: value = 99315
-            }
-            return value
+        switch self {
+        case .endCallForAll: return 99309
+        case .endCallInNoParticipantsPopup: return 99311
+        case .stayOnCallInNoParticipantsPopup: return 99313
+        case .enableCallSoundNotifications: return 99312
+        case .disableCallSoundNotifications: return 99314
+        case .endCallWhenEmptyCallTimeout: return 99315
         }
     }
     
     var description: String {
-        get {
-            var value: String
-            switch self {
-            case .endCallForAll: value = "Meeting End Call For All Tapped"
-            case .endCallInNoParticipantsPopup: value = "Meeting End Call Tapped In No Participants Popup"
-            case .stayOnCallInNoParticipantsPopup: value = "Meeting Stay On Call Tapped In No Participants Popup"
-            case .enableCallSoundNotifications: value = "Meeting Enable Sound Notification"
-            case .disableCallSoundNotifications: value = "Meeting Disable Sound Notification"
-            case .endCallWhenEmptyCallTimeout: value = "Meeting Ended when Empty Call Timeout"
-            }
-            return value
+        switch self {
+        case .endCallForAll:
+            return "Meeting End Call For All Tapped"
+        case .endCallInNoParticipantsPopup:
+            return "Meeting End Call Tapped In No Participants Popup"
+        case .stayOnCallInNoParticipantsPopup:
+            return "Meeting Stay On Call Tapped In No Participants Popup"
+        case .enableCallSoundNotifications:
+            return "Meeting Enable Sound Notification"
+        case .disableCallSoundNotifications:
+            return "Meeting Disable Sound Notification"
+        case .endCallWhenEmptyCallTimeout:
+            return "Meeting Ended when Empty Call Timeout"
         }
     }
 }

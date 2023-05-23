@@ -27,7 +27,7 @@ extension MEGAChatSdk {
     }
     
     @objc func mnz_createChatRoom(
-        usersArray: Array<MEGAUser>,
+        usersArray: [MEGAUser],
         title: String?,
         allowNonHostToAddParticipants: Bool,
         completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void

@@ -44,6 +44,6 @@ import MEGADomain
     }
     
     @objc func setSelectedNodes(_ nodes: [MEGANode]) {
-        megaNodes = Dictionary<HandleEntity, MEGANode>(uniqueKeysWithValues: nodes.map { ($0.handle, $0) })
+        megaNodes = .init(uniqueKeysWithValues: nodes.map { ($0.handle, $0) })
     }
 }

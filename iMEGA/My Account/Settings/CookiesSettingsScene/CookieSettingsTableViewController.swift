@@ -26,7 +26,7 @@ class CookieSettingsTableViewController: UITableViewController {
     var router: CookieSettingsRouter!
     var viewModel: CookieSettingsViewModel!
     
-    private var footersArray: Array<String> = ["", "", "", "", "", ""]
+    private var footersArray: [String] = ["", "", "", "", "", ""]
     
     // MARK: - View lifecycle
     override func viewDidLoad() {

@@ -56,7 +56,7 @@ import MEGADomain
             if let timeStamp = dndTimeInterval(dndTurnOnOption: option) {
                 if option == .forever {
                     self.pushNotificationSettings?.setChatEnabled(false, forChatId: chatId)
-                }  else {
+                } else {
                     self.pushNotificationSettings?.setChatDndForChatId(chatId, untilTimestamp: timeStamp)
                 }
             } else {

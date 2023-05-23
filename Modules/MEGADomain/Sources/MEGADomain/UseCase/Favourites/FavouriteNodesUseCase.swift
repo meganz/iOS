@@ -5,7 +5,7 @@ public protocol FavouriteNodesUseCaseProtocol {
     func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void)
     func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void)
-    func unregisterOnNodesUpdate() -> Void
+    func unregisterOnNodesUpdate()
 }
 
 public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol>: FavouriteNodesUseCaseProtocol {
@@ -33,7 +33,7 @@ public struct FavouriteNodesUseCase<T: FavouriteNodesRepositoryProtocol>: Favour
         repo.registerOnNodesUpdate(callback: callback)
     }
     
-    public func unregisterOnNodesUpdate() -> Void {
+    public func unregisterOnNodesUpdate() {
         repo.unregisterOnNodesUpdate()
     }
 }

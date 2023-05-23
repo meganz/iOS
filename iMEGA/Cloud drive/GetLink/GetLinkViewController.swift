@@ -40,12 +40,10 @@ struct GetLinkViewModel {
         }
     }
     var key: String {
-        get {
-            if link.contains("file") || link.contains("folder") {
-                return link.components(separatedBy: "#")[1]
-            } else {
-                return link.components(separatedBy: "!")[2]
-            }
+        if link.contains("file") || link.contains("folder") {
+            return link.components(separatedBy: "#")[1]
+        } else {
+            return link.components(separatedBy: "!")[2]
         }
     }
     var expiryDate: Bool = false

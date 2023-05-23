@@ -21,8 +21,7 @@ public extension View {
     func customScrollViewDismissKeyboard() -> some View {
         if #available(iOS 16, *) {
             self.modifier(ScrollViewDismissKeyboardInteractivelyModifier())
-        }
-        else {
+        } else {
             self.modifier(ScrollViewDismissKeyboardOnDragModifier())
         }
     }

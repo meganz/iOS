@@ -60,8 +60,7 @@ extension NotificationsTableViewController {
                     email: alert.email
                 )
             }
-            
-        }  else if alert.hasScheduledMeetingChangeType(.title) {
+        } else if alert.hasScheduledMeetingChangeType(.title) {
             let titleList = alert.titleList.toArray()
             return contentForScheduledMeetingTitleUpdate(
                 withScheduleMeetingId: alert.scheduledMeetingId,

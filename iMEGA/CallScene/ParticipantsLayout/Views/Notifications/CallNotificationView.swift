@@ -12,9 +12,7 @@ class CallNotificationView: UIView {
     @IBOutlet weak var notificationLabel: UILabel!
 
     private var maxWidth: CGFloat {
-        get {
-            return UIScreen.main.bounds.size.width - Constants.defaultMargin
-        }
+        UIScreen.main.bounds.size.width - Constants.defaultMargin
     }
     
     private var topLayoutConstraint: NSLayoutConstraint?

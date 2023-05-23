@@ -57,8 +57,7 @@ class DeviceContactsOperation: Operation {
                             let formatedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
                             
                             fetchedContacts.append(DeviceContact(name: name, avatarData: contact.thumbnailImageData, contactDetail: formatedNumber, contactDetailDescription: phone.label))
-                        }
-                        catch {
+                        } catch {
                             MEGALogError("Device contact number parser error " + phone.value.stringValue)
                         }
                     }

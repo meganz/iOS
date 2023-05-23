@@ -25,7 +25,7 @@ extension SharedItemsViewController: UISearchBarDelegate {
                 if let mutableNodeArray = (nodes as NSArray).mutableCopy() as? NSMutableArray {
                     searchNodesArray = mutableNodeArray
                 }
-            }  else {
+            } else {
                 searchNodesArray.removeAllObjects()
             }
             await SVProgressHUD.dismiss()

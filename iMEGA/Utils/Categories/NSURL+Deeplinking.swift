@@ -135,7 +135,7 @@ extension NSURL {
             return .startConversation
         } else if host == DeeplinkHostKey.shortcutAddContact.rawValue {
             return .addContact
-        }  else if host == DeeplinkHostKey.shortcutRecent.rawValue {
+        } else if host == DeeplinkHostKey.shortcutRecent.rawValue {
             return .showRecents
         } else if host == DeeplinkHostKey.shortcutFavourites.rawValue {
             guard let path = path, !path.isEmpty else { return .showFavourites }

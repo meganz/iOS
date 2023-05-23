@@ -87,7 +87,7 @@ extension FavouriteNodesRepository: MEGAGlobalDelegate {
         guard let nodesUpdateArray = nodeList?.toNodeArray() else { return }
         var shouldProcessOnNodesUpdate: Bool = false
         
-        var favouritesDictionary: Dictionary<String, String> = Dictionary()
+        var favouritesDictionary = [String: String]()
         self.favouritesNodesEntityArray?.forEach({ nodeEntity in
             favouritesDictionary[nodeEntity.base64Handle] = nodeEntity.base64Handle
         })
