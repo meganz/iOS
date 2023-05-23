@@ -1,5 +1,18 @@
 # MEGA Lint Rules Configuration
+      
+# Custom Rules
+custom_rules:
 
+    discouraged_path_extension:
+        regex: 'URL\(fileURLWithPath: [a-zA-Z0-9\$\(\)\.]*\).pathExtension'
+        name: "Discouraged use of getting path extension with URL.init"
+        message: "Using URL(fileURLWithPath:) to get a string pathExtension might cause the app to crash. Use MEGASwift.String.pathExtension instead."
+
+    discouraged_last_path_component:
+        regex: 'URL\(fileURLWithPath: [a-zA-Z0-9\$\(\)\.]*\).lastPathComponent'
+        name: "Discouraged use of getting last path component with URL.init"
+        message: "Using URL(fileURLWithPath:) to get a string lastPathComponent might cause the app to crash. Use MEGASwift.String.lastPathComponent instead."
+    
 # Currently we use `only_rules` so that we can validate each and every default rule.
 # Once everything has been set, we can start using the `disabled_rules` and `opt_in_rules`.
 
@@ -67,6 +80,7 @@ only_rules:
       - redundant_void_return
       - syntactic_sugar
       - statement_position
+      - custom_rules
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
       # - xctfail_message (16 issues)

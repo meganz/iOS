@@ -55,6 +55,14 @@ public extension String {
         
         return finalString
     }
+    
+    var pathExtension: String {
+        NSString(string: self).pathExtension.lowercased()
+    }
+    
+    var lastPathComponent: String {
+        NSString(string: self).lastPathComponent
+    }
 }
 
 public extension String {

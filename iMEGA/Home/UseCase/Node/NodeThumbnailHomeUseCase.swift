@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import MEGADomain
+import MEGASwift
 
 protocol NodeThumbnailHomeUseCaseProtocol {
     func loadThumbnail(
@@ -117,8 +118,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         _ nodeName: String,
         completion: @escaping (UIImage?) -> Void
     ) {
-        let pathExtension = URL(fileURLWithPath: nodeName).pathExtension
-        guard let fileTypeImageName = Helper.fileTypesDictionary()[pathExtension] as? String,
+        guard let fileTypeImageName = Helper.fileTypesDictionary()[nodeName.pathExtension] as? String,
             !fileTypeImageName.isEmpty else {
             completion(UIImage.mnz_generic())
             return

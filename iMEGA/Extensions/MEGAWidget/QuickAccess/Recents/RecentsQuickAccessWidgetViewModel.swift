@@ -3,6 +3,7 @@ import Foundation
 import MEGAFoundation
 import MEGADomain
 import MEGAPresentation
+import MEGASwift
 
 final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     
@@ -37,13 +38,27 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     
     func fetchRecentItems() -> EntryValue {
         if credentialUseCase.hasSession() {
-            let items = recentItemsUseCase.fetchRecentItems().map {
-                QuickAccessItemModel(thumbnail: imageForPatExtension(URL(fileURLWithPath:$0.name).pathExtension), name: $0.name, url: URL(string: SectionDetail.recents.link)?.appendingPathComponent($0.base64Handle), image: $0.isUpdate ? Image(Asset.Images.Generic.versioned.name): Image(Asset.Images.Recents.recentUpload.name), description: recentStringTimestamp($0.timestamp))
-            }
+            let items = recentItemsUseCase
+                .fetchRecentItems()
+                .map(quickAccessItemModel(from:))
+            
             return (items, .connected)
         } else {
             return ([], .noSession)
         }
+    }
+    
+    private func quickAccessItemModel(
+        from item: RecentItemEntity
+    ) -> QuickAccessItemModel {
+        QuickAccessItemModel(
+            thumbnail: imageForPatExtension(item.name.pathExtension),
+            name: item.name,
+            url: URL(string: SectionDetail.recents.link)?
+                .appendingPathComponent(item.base64Handle),
+            image: Image(item.isUpdate ? Asset.Images.Generic.versioned.name : Asset.Images.Recents.recentUpload.name),
+            description: recentStringTimestamp(item.timestamp)
+        )
     }
     
     //MARK: -Private
