@@ -1,6 +1,7 @@
 import FileProvider
 import UniformTypeIdentifiers
 import MEGADomain
+import MEGASwift
 
 final class FileProviderItem: NSObject, NSFileProviderItem {
     private let node: NodeEntity
@@ -36,8 +37,7 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
             return .folder
         }
         
-        let nameUrl = URL(fileURLWithPath: node.name)
-        return UTType(filenameExtension: nameUrl.pathExtension) ?? .data
+        return UTType(filenameExtension: node.name.pathExtension) ?? .data
     }
     
     var childItemCount: NSNumber? {

@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import MEGADomain
 import MEGAPresentation
+import MEGASwift
 
 final class OfflineQuickAccessWidgetViewModel: ViewModelType {
     
@@ -37,7 +38,7 @@ final class OfflineQuickAccessWidgetViewModel: ViewModelType {
     func fetchOfflineItems() -> EntryValue {
         if credentialUseCase.hasSession() {
             let items = offlineFilesUseCase.offlineFiles().map {
-                QuickAccessItemModel(thumbnail: imageForPatExtension(URL(fileURLWithPath: $0.localPath).pathExtension), name: URL(fileURLWithPath: $0.localPath).lastPathComponent, url: URL(string: SectionDetail.offline.link)?.appendingPathComponent($0.base64Handle), image: nil, description: nil)
+                QuickAccessItemModel(thumbnail: imageForPatExtension($0.localPath.pathExtension), name: $0.localPath.lastPathComponent, url: URL(string: SectionDetail.offline.link)?.appendingPathComponent($0.base64Handle), image: nil, description: nil)
             }
             return (items, .connected)
         } else {

@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import MEGADomain
 import MEGAPresentation
+import MEGASwift
 
 final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     
@@ -37,7 +38,7 @@ final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     func fetchFavouriteItems() -> EntryValue {
         if credentialUseCase.hasSession() {
             let items = favouriteItemsUseCase.fetchFavouriteItems(upTo: MEGAQuickAccessWidgetMaxDisplayItems).map {
-                QuickAccessItemModel(thumbnail: imageForPatExtension(URL(fileURLWithPath: $0.name).pathExtension), name: $0.name, url: URL(string: SectionDetail.favourites.link)?.appendingPathComponent($0.base64Handle), image: nil, description: nil)
+                QuickAccessItemModel(thumbnail: imageForPatExtension($0.name.pathExtension), name: $0.name, url: URL(string: SectionDetail.favourites.link)?.appendingPathComponent($0.base64Handle), image: nil, description: nil)
             }
             return (items, .connected)
         } else {

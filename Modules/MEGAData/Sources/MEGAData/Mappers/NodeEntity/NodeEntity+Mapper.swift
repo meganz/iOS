@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 extension NodeEntity {
     public func toMEGANode(in sdk: MEGASdk) -> MEGANode? {
@@ -90,8 +91,6 @@ fileprivate extension NodeEntity {
 
 fileprivate extension String {
     func toMediaTypeEntity() -> MediaTypeEntity? {
-        guard let pathExtension = filePathExtension() else { return nil }
-        
         if isImageType(pathExtension) {
             return .image
         } else if isVideoType(pathExtension) {
@@ -99,16 +98,6 @@ fileprivate extension String {
         } else {
             return nil
         }
-    }
-    
-    private func filePathExtension() -> String? {
-        guard !self.isEmpty else { return nil }
-        
-        let components = self.components(separatedBy: ".")
-        
-        guard components.last?.isEmpty == false else { return nil }
-        
-        return components.last
     }
     
     private func isImageType(_ pathExtension: String) -> Bool {

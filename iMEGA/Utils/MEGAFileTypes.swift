@@ -1,9 +1,10 @@
+import MEGASwift
+
 typealias MEGAFileType = String
 
 struct FileTypes {
     func fileType(forFileName name: String) -> MEGAFileType {
-        let fileExtension = URL(fileURLWithPath: name).pathExtension
-        return fileType(forFileExtension: fileExtension)
+        fileType(forFileExtension: name.pathExtension)
     }
     
     func fileType(forFileExtension fileExtension: String) -> MEGAFileType {

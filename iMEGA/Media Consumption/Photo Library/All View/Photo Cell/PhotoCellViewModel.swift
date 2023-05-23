@@ -59,7 +59,7 @@ class PhotoCellViewModel: ObservableObject {
         self.mediaUseCase = mediaUseCase
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         
-        isVideo = mediaUseCase.isVideo(for: URL(fileURLWithPath: photo.name))
+        isVideo = mediaUseCase.isVideo(photo.name)
         isFavorite = photo.isFavourite
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
         

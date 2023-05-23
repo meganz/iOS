@@ -1,3 +1,5 @@
+import MEGASwift
+
 extension OfflineCollectionViewController {
     @objc func collectionView(_ collectionView: UICollectionView,
                               contextMenuConfigurationForItemAt indexPath: IndexPath,
@@ -7,8 +9,7 @@ extension OfflineCollectionViewController {
         let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
             if isDirectory.boolValue {
                 let offlineVC = self.storyboard?.instantiateViewController(withIdentifier: "OfflineViewControllerID") as? OfflineViewController
-                let url = URL(fileURLWithPath: itemPath)
-                offlineVC?.folderPathFromOffline = self.offline.folderPath(fromOffline: itemPath, folder: url.lastPathComponent)
+                offlineVC?.folderPathFromOffline = self.offline.folderPath(fromOffline: itemPath, folder: itemPath.lastPathComponent)
                 return offlineVC
             } else {
                 return nil

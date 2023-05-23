@@ -1,6 +1,7 @@
 import UIKit
 import MEGADomain
 import MEGAData
+import MEGASwift
 
 @objc protocol NodeActionViewControllerDelegate {
     // Method that handles selected node action for a single node. It may have an action specifically for single nodes. e.g Info, Versions
@@ -177,7 +178,7 @@ class NodeActionViewController: ActionSheetViewController {
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(self.displayMode)
-            .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
+            .setIsPdf(node.name?.pathExtension == "pdf")
             .setIsLink(isLink)
             .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
             .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
@@ -317,7 +318,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setLabel(node.label)
             .setIsBackupNode(isBackupNode)
             .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
-            .setIsPdf(NSString(string: node.name ?? "").pathExtension.lowercased() == "pdf")
+            .setIsPdf(node.name?.pathExtension == "pdf")
             .setisIncomingShareChildView(isIncoming)
             .setIsExported(node.isExported())
             .setIsOutshare(node.isOutShare())

@@ -1,4 +1,5 @@
 import Foundation
+import MEGASwift
 
 protocol OfflineInfoRepositoryProtocol {
     func info(fromFiles: [String]?) -> [AudioPlayerItem]?
@@ -16,7 +17,7 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
     }
     
     func info(fromFiles: [String]?) -> [AudioPlayerItem]? {
-        fromFiles?.compactMap { AudioPlayerItem(name: URL(fileURLWithPath: $0).lastPathComponent, url: URL(fileURLWithPath: $0), node: nil) }
+        fromFiles?.compactMap { AudioPlayerItem(name: $0.lastPathComponent, url: URL(fileURLWithPath: $0), node: nil) }
     }
     
     func localPath(fromNode: MEGANode) -> URL? {
