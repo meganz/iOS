@@ -13,12 +13,14 @@ public final class CurrentUserSource {
         let user = sdk.myUser
         currentUserHandle = user?.handle
         currentUserEmail = user?.email
+        isLoggedIn = sdk.isLoggedIn() > 0
         
         registerAccountNotifications()
     }
     
-    public var currentUserHandle: HandleEntity?
-    public var currentUserEmail: String?
+    public private(set) var currentUserHandle: HandleEntity?
+    public private(set) var currentUserEmail: String?
+    public private(set) var isLoggedIn: Bool
     
     public var isGuest: Bool {
         currentUserEmail?.isEmpty != false
@@ -35,7 +37,9 @@ public final class CurrentUserSource {
             .default
             .publisher(for: .accountDidLogin)
             .sink { [weak self] _ in
-                self?.currentUserHandle = self?.sdk.myUser?.handle
+                guard let self else { return }
+                currentUserHandle = sdk.myUser?.handle
+                isLoggedIn = true
             }
             .store(in: &subscriptions)
         
@@ -43,8 +47,10 @@ public final class CurrentUserSource {
             .default
             .publisher(for: .accountDidLogout)
             .sink { [weak self] _ in
-                self?.currentUserHandle = nil
-                self?.currentUserEmail = nil
+                guard let self else { return }
+                currentUserHandle = nil
+                currentUserEmail = nil
+                isLoggedIn = false
             }
             .store(in: &subscriptions)
         
