@@ -1366,7 +1366,7 @@
 		A8BAFCAC28B6381200ED4259 /* OfflineFileEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BAFCAA28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift */; };
 		A8BB95122813028F002449D7 /* SharedItemsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */; };
 		A8BB95202816A006002449D7 /* SharedItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */; };
-		A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */; };
+		A8C1B73E27734A22007095F4 /* OfflineTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */; };
 		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
 		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
 		A8C3CF1029BB898400891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
@@ -3826,7 +3826,7 @@
 		A8BAFCAA28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OfflineFileEntity+Mapper.swift"; sourceTree = "<group>"; };
 		A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SharedItemsTableViewCell.xib; sourceTree = "<group>"; };
 		A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsTableViewCell.swift; sourceTree = "<group>"; };
-		A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineCollectionViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		A8C262971FA0B4A2006172CE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -5804,7 +5804,7 @@
 				83FB1433219AC7DD00418BE6 /* OfflineCollectionViewController.m */,
 				E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */,
 				E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */,
-				A8C1B73D27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift */,
+				A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */,
 				83FB142F219AC7CD00418BE6 /* OfflineTableViewViewController.h */,
 				83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */,
 				9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */,
@@ -13369,7 +13369,7 @@
 				C4D665B825B1F835002196E9 /* OfflineFileInfoUseCase.swift in Sources */,
 				83E3463D25B6DE67006F2AD6 /* OfflineFilesRepository.swift in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
-				A8C1B73E27734A22007095F4 /* OfflineTableViewController+ContextMenu.swift in Sources */,
+				A8C1B73E27734A22007095F4 /* OfflineTableViewController+Additions.swift in Sources */,
 				83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */,
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
 				A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */,
