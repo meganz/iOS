@@ -313,20 +313,20 @@ final class TextEditorViewModel: ViewModelType {
     private func makeNavbarItemsModel() -> TextEditorNavbarItemsModel {
         switch textEditorMode {
         case .load:
-            return TextEditorNavbarItemsModel (
+            return TextEditorNavbarItemsModel(
                 leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
                 rightItem: nil,
                 textEditorMode: textEditorMode
             )
         case .view:
-            return TextEditorNavbarItemsModel (
+            return TextEditorNavbarItemsModel(
                 leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
                 rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
                 textEditorMode: textEditorMode
             )
         case .edit,
              .create:
-            return TextEditorNavbarItemsModel (
+            return TextEditorNavbarItemsModel(
                 leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
                 rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
                 textEditorMode: textEditorMode

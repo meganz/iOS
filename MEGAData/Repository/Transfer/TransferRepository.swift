@@ -26,7 +26,7 @@ struct TransferRepository: TransferRepositoryProtocol {
                     return
                 }
                 switch result {
-                case .success (let transfer):
+                case .success(let transfer):
                     continuation.resume(returning: transfer)
                 case .failure(let error):
                     continuation.resume(throwing: error)
@@ -50,7 +50,7 @@ struct TransferRepository: TransferRepositoryProtocol {
                     return
                 }
                 switch result {
-                case .success (let transfer):
+                case .success(let transfer):
                     continuation.resume(returning: transfer)
                 case .failure(let error):
                     continuation.resume(throwing: error)

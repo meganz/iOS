@@ -94,7 +94,7 @@ struct QuickAccessWidgetView: View {
     func noSessionView() -> some View {
         VStack {
             Spacer()
-            HStack (spacing: 0) {
+            HStack(spacing: 0) {
                 Spacer()
                 Text(Strings.Localizable.login)
                     .font(.system(size: 17, weight: .semibold, design: .default))

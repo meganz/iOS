@@ -24,7 +24,7 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
         let content = "[\(messageTimestamp ?? "")]#\(userName): \(messageContent)\n"
         
         let messageFilePath = NSTemporaryDirectory() + "Message \(message.messageId).txt"
-        if (FileManager.default.createFile(atPath: messageFilePath, contents: content.data(using: .utf8), attributes: nil)) {
+        if FileManager.default.createFile(atPath: messageFilePath, contents: content.data(using: .utf8), attributes: nil) {
             return URL(fileURLWithPath: messageFilePath)
         } else {
             return nil

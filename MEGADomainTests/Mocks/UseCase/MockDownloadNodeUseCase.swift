@@ -1,8 +1,8 @@
 @testable import MEGA
 
 final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
-    var transferEntity: TransferEntity? = nil
-    var result: (Result<TransferEntity, TransferErrorEntity>)? = nil
+    var transferEntity: TransferEntity?
+    var result: (Result<TransferEntity, TransferErrorEntity>)?
 
     func downloadFileToOffline(forNodeHandle handle: MEGAHandle, toPath localPath: String, filename: String?, appdata: String?, startFirst: Bool, cancelToken: MEGACancelToken, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?) {
         guard let result = result else { return }

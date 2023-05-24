@@ -134,7 +134,7 @@ final class FileProviderExtension: NSFileProviderExtension {
             do {
                 try await NSFileProviderManager.default.signalEnumerator(for: identifier)
                 try await NSFileProviderManager.default.signalEnumerator(for: fileProviderItem.parentItemIdentifier)
-            } catch (let error) {
+            } catch {
                 MEGALogError("Error signaling item: \(error)")
             }
             

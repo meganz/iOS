@@ -156,7 +156,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     }
     
     private func localisedName(forAlbumType albumType: AlbumEntityType) -> String? {
-        switch (albumType) {
+        switch albumType {
         case .favourite:
             return Strings.Localizable.CameraUploads.Albums.Favourites.title
         case .gif:

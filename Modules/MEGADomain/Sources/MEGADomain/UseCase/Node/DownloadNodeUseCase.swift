@@ -61,7 +61,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
                     }
                 }
             } else {
-                guard (node.name != "Inbox") else {
+                guard node.name != "Inbox" else {
                     completion?(.failure(.inboxFolderNameNotAllowed))
                     return
                 }

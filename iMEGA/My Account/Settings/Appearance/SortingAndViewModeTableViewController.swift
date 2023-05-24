@@ -114,7 +114,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
     
     private func setupSortingPreferenceSameForAllDetailLabel(orderType: Int) {
         var orderTypeIndex: Int
-        switch (orderType) {
+        switch orderType {
         case MEGASortOrderType.defaultAsc.rawValue:
             orderTypeIndex = 0
             

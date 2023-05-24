@@ -144,7 +144,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
             return
         }
 
-        if (collectionView.allowsMultipleSelection) {
+        if collectionView.allowsMultipleSelection {
             folderLink.selectedNodesArray?.add(node)
             folderLink.setNavigationBarTitleLabel()
             folderLink.setToolbarButtonsEnabled(true)

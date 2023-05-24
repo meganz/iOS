@@ -62,7 +62,7 @@ class FileExplorerGridCell: UICollectionViewCell {
     private var markSelection: Bool = false {
         didSet {
             selectImageView.image = markSelection ? Asset.Images.Generic.thumbnailSelected.image : Asset.Images.Login.checkBoxUnselected.image
-            if (markSelection) {
+            if markSelection {
                 self.borderColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
             } else {
                 self.borderColor = traitCollection.theme == .dark ? #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3450980392, alpha: 0.65) : #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)

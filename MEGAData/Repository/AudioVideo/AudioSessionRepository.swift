@@ -53,7 +53,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             }
             try audioSession.setActive(true)
             completion?(.success)
-        } catch (let error) {
+        } catch {
             MEGALogError("[AudioSession] configureCallAudioSession Error: \(error.localizedDescription)")
             completion?(.failure(.generic))
         }

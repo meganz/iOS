@@ -25,7 +25,7 @@ extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
         
         users.forEach {
             let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(byUser: $0.handle)
-            if (chatRoom != nil) {
+            if chatRoom != nil {
                 guard let chatId = chatRoom?.chatId else {
                     return
                 }

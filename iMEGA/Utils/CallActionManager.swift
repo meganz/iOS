@@ -253,7 +253,7 @@ extension ChatOnlineListener: MEGAChatDelegate {
             removeListener()
             completion?(chatId)
             self.completion = nil
-        } else if (self.chatId == chatId) {
+        } else if self.chatId == chatId {
             MEGALogDebug("CallActionManager: new state is \(newState) for chat id \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
         }
     }

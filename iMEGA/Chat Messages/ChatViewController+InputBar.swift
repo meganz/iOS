@@ -305,7 +305,7 @@ extension ChatViewController {
     }
     
     private func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String) {
-        var appData: String? = nil
+        var appData: String?
         
         if let cordinates = (filePath as NSString).mnz_coordinatesOfPhotoOrVideo() {
             appData = NSString().mnz_appData(toSaveCoordinates: cordinates)

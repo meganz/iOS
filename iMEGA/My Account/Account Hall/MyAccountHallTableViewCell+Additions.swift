@@ -66,13 +66,13 @@ extension MyAccountHallTableViewCell {
 }
 
 struct MyAccountHallCellData {
-    var sectionText: String? = nil
-    var detailText: String? = nil
-    var icon: UIImage? = nil
-    var storageText: String? = nil
-    var transferText: String? = nil
-    var storageUsedText: String? = nil
-    var transferUsedText: String? = nil
+    var sectionText: String?
+    var detailText: String?
+    var icon: UIImage?
+    var storageText: String?
+    var transferText: String?
+    var storageUsedText: String?
+    var transferUsedText: String?
     var isPendingViewVisible: Bool = false
-    var pendingText: String? = nil
+    var pendingText: String?
 }

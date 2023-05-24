@@ -11,7 +11,7 @@ struct ChatRoomParticipantsListView: View {
     }
     
     var body: some View {
-        VStack (spacing: Constants.spacing) {
+        VStack(spacing: Constants.spacing) {
             HStack {
                 Text(Strings.Localizable.Meetings.Panel.participantsCount(viewModel.totalParticipantsCount))
                     .font(.footnote)

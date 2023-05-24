@@ -5,8 +5,8 @@ import Foundation
 final class MockUploadFileUseCase: UploadFileUseCaseProtocol {
     var duplicate: Bool = true
     var newName: String?
-    var uploadFileResult: (Result<Void, TransferErrorEntity>)? = nil
-    var uploadSupportFileResult: (Result<TransferEntity, TransferErrorEntity>)? = nil
+    var uploadFileResult: (Result<Void, TransferErrorEntity>)?
+    var uploadSupportFileResult: (Result<TransferEntity, TransferErrorEntity>)?
     var cancelTransferResult: (Result<Void, TransferErrorEntity>) = .failure(.generic)
     var filename: String = ""
     var nodeEntity: NodeEntity?

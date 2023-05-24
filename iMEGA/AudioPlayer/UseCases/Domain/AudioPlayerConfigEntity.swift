@@ -1,16 +1,16 @@
 
 struct AudioPlayerConfigEntity {
     // Nodes, File Links, Folder Links
-    var node: MEGANode? = nil
+    var node: MEGANode?
     var isFolderLink = false
     
-    var fileLink: String? = nil
+    var fileLink: String?
     
     // Offline Files
-    var relatedFiles: [String]? = nil
+    var relatedFiles: [String]?
     
     // Playlist
-    var parentNode: MEGANode? = nil
+    var parentNode: MEGANode?
     
     // Common properties
     var playerHandler: AudioPlayerHandlerProtocol

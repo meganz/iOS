@@ -258,7 +258,7 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     }
     
     func imageForEmptyDataSet() -> UIImage? {
-        if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
+        if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
             return Asset.Images.EmptyStates.searchEmptyState.image
         } else {
             return Asset.Images.EmptyStates.contactsEmptyState.image
@@ -267,7 +267,7 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     
     func titleForEmptyDataSet() -> String? {
         if CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized {
-            if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
+            if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
                 return Strings.Localizable.noResults
             } else {
                 return Strings.Localizable.contactsEmptyStateTitle

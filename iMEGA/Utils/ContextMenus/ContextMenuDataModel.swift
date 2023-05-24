@@ -1,7 +1,7 @@
 
 struct ContextMenuDataModel {
-    var identifier: String? = nil
-    var title: String? = nil
-    var subtitle: String? = nil
-    var image: UIImage? = nil
+    var identifier: String?
+    var title: String?
+    var subtitle: String?
+    var image: UIImage?
 }

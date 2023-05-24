@@ -180,7 +180,7 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
     }
     
     private func imageForEmptyDataSet() -> UIImage? {
-        if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
+        if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
             return Asset.Images.EmptyStates.searchEmptyState.image
         } else {
             return Asset.Images.EmptyStates.chatEmptyState.image
@@ -188,7 +188,7 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
     }
     
     private func titleForEmptyDataSet() -> String? {
-        if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
+        if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
             return Strings.Localizable.noResults
         } else {
             return Strings.Localizable.noConversations

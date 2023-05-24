@@ -114,7 +114,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     }
     
     func loginToFolder(link: String) {
-        if (folderSDK.isLoggedIn() == 0) {
+        if folderSDK.isLoggedIn() == 0 {
             folderSDK.login(toFolderLink: link)
         }
     }

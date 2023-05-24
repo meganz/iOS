@@ -65,9 +65,9 @@ struct PhotoLibraryFilterView: View {
     }
     
     var locationView: some View {
-        VStack (spacing: 8){
+        VStack(spacing: 8){
             PhotoLibraryFilterViewHeadline(viewModel.showItemsFromTitle)
-            VStack (spacing: 2) {
+            VStack(spacing: 2) {
                 ForEach(PhotosFilterLocation.allCases, id: \.self) { location in
                     if location != PhotosFilterLocation.allCases.first { Divider() }
                     PhotoLibraryFilterLocationView(location: location, filterViewModel: viewModel)
@@ -80,9 +80,9 @@ struct PhotoLibraryFilterView: View {
     
     var body: some View {
         GeometryReader { geo in
-            VStack (spacing: 35) {
+            VStack(spacing: 35) {
                 navigationBar
-                VStack (spacing: 20) {
+                VStack(spacing: 20) {
                     typeView(geo)
                     locationView
                 }

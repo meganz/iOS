@@ -14,17 +14,17 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var allowNonHostToAddParticipantsEnabled = false
     var allowNonHostToAddParticipantsValueChangedSubject = PassthroughSubject<Bool, Never>()
     var userStatusEntity = ChatStatusEntity.invalid
-    var message: ChatMessageEntity? = nil
-    var contactEmail: String? = nil
-    var base64Handle: String? = nil
-    var messageSeenChatId: ((ChatIdEntity) -> Void)? = nil
-    var archivedChatId: ((ChatIdEntity, Bool) -> Void)? = nil
-    var closePreviewChatId: ((ChatIdEntity) -> Void)? = nil
+    var message: ChatMessageEntity?
+    var contactEmail: String?
+    var base64Handle: String?
+    var messageSeenChatId: ((ChatIdEntity) -> Void)?
+    var archivedChatId: ((ChatIdEntity, Bool) -> Void)?
+    var closePreviewChatId: ((ChatIdEntity) -> Void)?
     var leaveChatRoomSuccess = false
     var ownPrivilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
-    var updatedChatPrivilege: ((HandleEntity, ChatRoomPrivilegeEntity) -> Void)? = nil
-    var invitedToChat: ((HandleEntity) -> Void)? = nil
-    var removedFromChat: ((HandleEntity) -> Void)? = nil
+    var updatedChatPrivilege: ((HandleEntity, ChatRoomPrivilegeEntity) -> Void)?
+    var invitedToChat: ((HandleEntity) -> Void)?
+    var removedFromChat: ((HandleEntity) -> Void)?
 
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity

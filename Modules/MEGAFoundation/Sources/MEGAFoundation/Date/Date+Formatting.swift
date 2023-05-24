@@ -96,9 +96,9 @@ public extension DateStyle {
         typealias FormatString = String
 
         let dateFormat: FormatString
-        var calendar: Calendar? = nil
-        var timeZone: TimeZone? = nil
-        var locale: Locale? = nil
+        var calendar: Calendar?
+        var timeZone: TimeZone?
+        var locale: Locale?
     }
 }
 
@@ -124,10 +124,10 @@ public extension DateStyle {
         /// If a date formatter uses relative date formatting, where possible it replaces the date component of its output with a phrase—such as
         ///  “today” or “tomorrow”—that indicates a relative date. The available phrases depend on the locale for the date formatter; whereas,
         ///  for dates in the future, English may only allow “tomorrow,” French may allow “the day after the day after tomorrow,”
-        var relativeDateFormatting: Bool? = nil
-        var calendar: Calendar? = nil
-        var timeZone: TimeZone? = nil
-        var locale: Locale? = nil
+        var relativeDateFormatting: Bool?
+        var calendar: Calendar?
+        var timeZone: TimeZone?
+        var locale: Locale?
     }
 }
 

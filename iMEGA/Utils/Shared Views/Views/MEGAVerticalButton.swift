@@ -2,8 +2,8 @@ import UIKit
 
 @IBDesignable
 final class MEGAVerticalButton: MEGAButton {
-    private var badgeView: UIView? = nil
-    private var badgeLabel: UILabel? = nil
+    private var badgeView: UIView?
+    private var badgeLabel: UILabel?
     
     override func layoutSubviews() {
         super.layoutSubviews()

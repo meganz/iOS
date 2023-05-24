@@ -191,7 +191,7 @@ extension ChatUploader: MEGATransferDelegate {
                 return
             }
             
-            if (error.type == .apiEExist) {
+            if error.type == .apiEExist {
                 self.store.deleteChatUploadTransfer(withChatRoomId: chatRoomIdString,
                                                transferTag: String(transfer.tag),
                                                context: context)

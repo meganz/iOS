@@ -60,7 +60,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     
     // Listening for event about the status of the playback
     func audio(player: AVQueuePlayer, didChangeTimeControlStatus value: NSKeyValueObservedChange<AVQueuePlayer.TimeControlStatus>) {
-        switch (player.timeControlStatus) {
+        switch player.timeControlStatus {
         case .paused:
             isPaused = true
             invalidateTimer()

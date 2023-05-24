@@ -240,8 +240,8 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     }
     
     func imageForEmptyDataSet() -> UIImage? {
-        if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
+        if MEGAReachabilityManager.isReachable() {
+            if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
                 return Asset.Images.EmptyStates.searchEmptyState.image
             } else {
                 return nil
@@ -252,8 +252,8 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     }
     
     func titleForEmptyDataSet() -> String? {
-        if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true) {
+        if MEGAReachabilityManager.isReachable() {
+            if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
                 return Strings.Localizable.noResults
             } else {
                 return nil

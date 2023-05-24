@@ -478,7 +478,7 @@ class ChatViewController: MessagesViewController {
             return cell
         } else if chatMessage.message.type == .attachment
                     || chatMessage.message.type == .contact {
-            if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
+            if chatMessage.message.nodeList?.size?.intValue ?? 0 == 1 {
                 if let node = chatMessage.message.nodeList?.node(at: 0),
                    node.name?.mnz_isVisualMediaPathExtension ?? false {
                     let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell

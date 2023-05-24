@@ -6,7 +6,7 @@ struct PhotoCardTitle: ViewModifier {
             .foregroundColor(.white)
             .padding(20)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background (
+            .background(
                 LinearGradient(colors: [.black.opacity(0.3), .black.opacity(0)], startPoint: .top, endPoint: .bottom)
             )
     }

@@ -20,7 +20,7 @@ struct ChatRoomParticipantView: View {
             VStack {
                 Spacer()
                 HStack {
-                    VStack (alignment: .leading, spacing: Constants.verticalSpacing) {
+                    VStack(alignment: .leading, spacing: Constants.verticalSpacing) {
                         HStack {
                             Text(viewModel.name)
                                 .font(.subheadline)

@@ -18,7 +18,7 @@ struct SeeMoreParticipantsView: View {
     let isExpanded: Bool
 
     var body: some View {
-        VStack (spacing: Constants.spacing) {
+        VStack(spacing: Constants.spacing) {
             HStack {
                 Image(systemName: discolureIndicator)
                     .foregroundColor(.gray.opacity(Constants.disclosureOpacity))

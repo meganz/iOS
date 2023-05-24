@@ -19,7 +19,7 @@ public final class ContextMenuBuilder {
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
     private var isCameraUploadExplorer: Bool = false
-    private var albumType: AlbumEntityType? = nil
+    private var albumType: AlbumEntityType?
     private var isFilterEnabled: Bool = false
     private var isDoNotDisturbEnabled: Bool = false
     private var isShareAvailable: Bool = false
@@ -29,7 +29,7 @@ public final class ContextMenuBuilder {
     private var isOutShare: Bool = false
     private var isExported: Bool = false
     private var isEmptyState: Bool = false
-    private var timeRemainingToDeactiveDND: String? = nil
+    private var timeRemainingToDeactiveDND: String?
     private var versionsCount: Int = 0
     private var showMediaDiscovery: Bool = false
     private var chatStatus: ChatStatusEntity = .invalid

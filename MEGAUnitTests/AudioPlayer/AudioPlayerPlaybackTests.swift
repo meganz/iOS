@@ -91,7 +91,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         XCTAssertTrue(CMTIME_IS_VALID(currentTime))
         
         let observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
-            switch (qPlayer.timeControlStatus) {
+            switch qPlayer.timeControlStatus {
             case .playing:
                 self.audioPlayer.rewindForward(duration: CMTime(seconds: self.audioPlayer.defaultRewindInterval, preferredTimescale: qPlayer.currentTime().timescale)) { _ in
                     XCTAssertTrue(currentTime.seconds < qPlayer.currentTime().seconds)
@@ -118,7 +118,7 @@ final class AudioPlayerPlaybackTests: XCTestCase {
         XCTAssertTrue(CMTIME_IS_VALID(currentTime))
         
         let observer = queuePlayer.observe(\.timeControlStatus, options: [.new, .old]) { (qPlayer, _) in
-            switch (qPlayer.timeControlStatus) {
+            switch qPlayer.timeControlStatus {
             case .playing:
                 self.audioPlayer.rewindBackward { _ in
                     XCTAssertTrue(currentTime.seconds <= self.audioPlayer.defaultRewindInterval ?

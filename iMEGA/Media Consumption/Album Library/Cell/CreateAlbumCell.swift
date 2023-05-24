@@ -10,7 +10,7 @@ struct CreateAlbumCell: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ZStack (alignment: .center) {
+            ZStack(alignment: .center) {
                 Color(Colors.General.Gray.ebebeb.color)
                     .aspectRatio(contentMode: .fill)
                     .cornerRadius(6)
