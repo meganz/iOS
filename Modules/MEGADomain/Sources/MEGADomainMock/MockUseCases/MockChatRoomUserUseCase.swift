@@ -9,14 +9,17 @@ public struct MockChatRoomUserUseCase: ChatRoomUserUseCaseProtocol {
     private let userEmails: [HandleEntity: String]
     private let contactEmail: String?
     private let chatRoomUsersDescriptionResult: Result<String, Error>
-    
+    private let userEmail: Result<String, Error>
+
     public init(userFullNamesResult: Result<[String], Error> = .failure(GenericErrorEntity()),
                 userDisplayNameForPeerResult: Result<String, Error> = .failure(GenericErrorEntity()),
                 userDisplayNamesForPeersResult: Result<[(HandleEntity, String)], Error> = .failure(GenericErrorEntity()),
                 userNickNames: [HandleEntity : String] = [:],
                 userEmails: [HandleEntity : String] = [:],
                 contactEmail: String? = nil,
-                chatRoomUsersDescriptionResult: Result<String, Error> = .failure(GenericErrorEntity())) {
+                chatRoomUsersDescriptionResult: Result<String, Error> = .failure(GenericErrorEntity()),
+                userEmail: Result<String, Error> = .failure(GenericErrorEntity())
+    ) {
         self.userFullNamesResult = userFullNamesResult
         self.userDisplayNameForPeerResult = userDisplayNameForPeerResult
         self.userDisplayNamesForPeersResult = userDisplayNamesForPeersResult
@@ -24,6 +27,7 @@ public struct MockChatRoomUserUseCase: ChatRoomUserUseCaseProtocol {
         self.userEmails = userEmails
         self.contactEmail = contactEmail
         self.chatRoomUsersDescriptionResult = chatRoomUsersDescriptionResult
+        self.userEmail = userEmail
     }
     
     public func userFullNames(for chatRoom: ChatRoomEntity) async throws -> [String] {
@@ -59,6 +63,12 @@ public struct MockChatRoomUserUseCase: ChatRoomUserUseCaseProtocol {
     
     public func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
         contactEmail
+    }
+    
+    public func userEmail(forUserHandle userHandle: MEGADomain.HandleEntity) async throws -> String {
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: userEmail)
+        }
     }
     
     public func chatRoomUsersDescription(for chatRoom: ChatRoomEntity) async throws -> String {
