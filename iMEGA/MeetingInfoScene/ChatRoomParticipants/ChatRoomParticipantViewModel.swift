@@ -127,10 +127,14 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     }
     
     func chatParticipantTapped() {
-        guard let participantEmail = chatRoomUserUseCase.contactEmail(forUserHandle: chatParticipantId) else {
-            return
+        Task { @MainActor in
+            do {
+                let participantEmail = try await chatRoomUserUseCase.userEmail(forUserHandle: chatParticipantId)
+                router.showParticipantDetails(email: participantEmail, userHandle: chatParticipantId, chatRoom: chatRoom)
+            } catch {
+                MEGALogError("Email for participant handle: \(chatParticipantId) not found")
+            }
         }
-        router.showParticipantDetails(email: participantEmail, userHandle: chatParticipantId, chatRoom: chatRoom)
     }
     
     func privilegeTapped() {

@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
 struct ChatRoomUserRepository: ChatRoomUserRepositoryProtocol {
     static var newRepo: ChatRoomUserRepository {
@@ -37,5 +38,23 @@ struct ChatRoomUserRepository: ChatRoomUserRepositoryProtocol {
     
     func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
         sdk.contactEmail(byHandle: userHandle)
+    }
+    
+    func userEmail(forUserHandle userHandle: HandleEntity) async throws -> String {
+        if let contactEmail = sdk.contactEmail(byHandle: userHandle) {
+            return contactEmail
+        } else if let cachedUserEmail = sdk.userEmailFromCache(byUserHandle: userHandle) {
+            return cachedUserEmail
+        } else {
+            return try await withAsyncThrowingValue(in: { completion in
+                sdk.userEmail(byUserHandle: userHandle, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                    guard error.type == .MEGAChatErrorTypeOk else {
+                        completion(.failure(ChatRoomErrorEntity.generic))
+                        return
+                    }
+                    completion(.success(request.text))
+                }))
+            })
+        }
     }
 }

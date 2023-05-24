@@ -7,6 +7,7 @@ public protocol ChatRoomUserUseCaseProtocol: Sendable {
     func userNickNames(for chatRoom: ChatRoomEntity) async -> [HandleEntity: String]
     func userEmails(for chatRoom: ChatRoomEntity) async -> [HandleEntity: String]
     func contactEmail(forUserHandle userHandle: HandleEntity) -> String?
+    func userEmail(forUserHandle userHandle: HandleEntity) async throws -> String
     func chatRoomUsersDescription(for chatRoom: ChatRoomEntity) async throws -> String
 }
 
@@ -109,6 +110,10 @@ public struct ChatRoomUserUseCase<T: ChatRoomUserRepositoryProtocol, U: UserStor
     
     public func contactEmail(forUserHandle userHandle: HandleEntity) -> String? {
         chatRoomRepo.contactEmail(forUserHandle: userHandle)
+    }
+    
+    public func userEmail(forUserHandle userHandle: HandleEntity) async throws -> String {
+        try await chatRoomRepo.userEmail(forUserHandle: userHandle)
     }
     
     public func chatRoomUsersDescription(for chatRoom: ChatRoomEntity) async throws -> String {
