@@ -1,4 +1,5 @@
 import MEGASwift
+import MEGADomain
 
 extension OfflineTableViewViewController {
     @objc func tableView(_ tableView: UITableView,
@@ -31,6 +32,20 @@ extension OfflineTableViewViewController {
         guard let offlineVC = animator.previewViewController as? OfflineViewController else { return }
         animator.addCompletion {
             self.navigationController?.pushViewController(offlineVC, animated: true)
+        }
+    }
+    
+    @objc func refreshThumbnailImage(
+        for cell: OfflineTableViewCell,
+        thumbnailFilePath: String,
+        nodeName: String
+    ) {
+        if let thumbnailImage = UIImage(contentsOfFile: thumbnailFilePath) {
+            let isVideoExtension = VideoFileExtensionEntity()
+                .videoSupportedExtensions.contains(nodeName.pathExtension)
+            
+            cell.thumbnailImageView.image = thumbnailImage
+            cell.thumbnailImageView.isHidden = !isVideoExtension
         }
     }
 }
