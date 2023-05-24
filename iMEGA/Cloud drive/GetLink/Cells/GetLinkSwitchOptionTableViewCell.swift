@@ -8,6 +8,20 @@ class GetLinkSwitchOptionTableViewCell: UITableViewCell {
     @IBOutlet weak var activityIndicatorContainerView: UIView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
+    var viewModel: GetLinkSwitchOptionCellViewModel? {
+        didSet {
+            viewModel?.invokeCommand = { [weak self] in
+                self?.executeCommand($0)
+            }
+            viewModel?.dispatch(.onViewReady)
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        viewModel = nil
+    }
+    
     func configureDecryptKeySeparatedCell(isOn: Bool, enabled: Bool) {
         nameLabel.text = Strings.Localizable.sendDecryptionKeySeparately
         nameLabel.alpha = enabled ? 1 : 0.3
@@ -23,5 +37,20 @@ class GetLinkSwitchOptionTableViewCell: UITableViewCell {
         selectorSwitch.isHidden = justUpgraded
         selectorSwitch.isOn = isOn
         activityIndicatorContainerView.isHidden = !justUpgraded
+    }
+    
+    @MainActor
+    private func executeCommand(_ command: GetLinkSwitchOptionCellViewModel.Command) {
+        switch command {
+        case .configView(let config):
+            nameLabel.text = config.title
+            nameLabel.alpha = config.isEnabled ? 1 : 0.3
+            proImageView.isHidden = config.isProImageViewHidden
+            selectorSwitch.isOn =  config.isSwitchOn
+            selectorSwitch.isEnabled = config.isEnabled
+            activityIndicatorContainerView.isHidden = config.isActivityIndicatorHidden
+        case .updateSwitch(let isOn):
+            selectorSwitch.isOn = isOn
+        }
     }
 }
