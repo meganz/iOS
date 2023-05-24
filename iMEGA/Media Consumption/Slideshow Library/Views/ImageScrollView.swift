@@ -19,7 +19,7 @@ final class ImageScrollView: UIScrollView {
     
     var imageContentMode: ScaleMode = .widthFill
     var initialOffset: Offset = .begining
-    private(set) var zoomView: UIImageView? = nil
+    private(set) var zoomView: UIImageView?
     var imageSize: CGSize = CGSize.zero
     private var pointToCenterAfterResize: CGPoint = CGPoint.zero
     private var scaleToRestoreAfterResize: CGFloat = 1.0

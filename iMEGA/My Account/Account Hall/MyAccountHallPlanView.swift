@@ -32,7 +32,7 @@ struct MyAccountHallPlanView: View {
                     .background(Color.clear)
                     .cornerRadius(10)
                     .contentShape(Rectangle())
-                    .overlay (
+                    .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color(Colors.Views.turquoise.color), lineWidth: 2)
                     )

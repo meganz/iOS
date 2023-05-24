@@ -454,7 +454,7 @@ extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
 //MARK: - Empty State
     
     func titleForEmtyState() -> String {
-        if (MEGAReachabilityManager.isReachable()) {
+        if MEGAReachabilityManager.isReachable() {
             return Strings.Localizable.noSharedFiles
         } else {
             return Strings.Localizable.noInternetConnection
@@ -462,7 +462,7 @@ extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
     }
     
     func imageForEmptyState() -> UIImage? {
-        if (MEGAReachabilityManager.isReachable()) {
+        if MEGAReachabilityManager.isReachable() {
             return Asset.Images.EmptyStates.sharedFilesEmptyState.image
         } else {
             return Asset.Images.EmptyStates.noInternetEmptyState.image

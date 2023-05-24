@@ -5,13 +5,13 @@ import MEGAData
 typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: Error?) -> Void
 
 struct NodeAccessConfiguration {
-    var autoCreate: (() -> Bool)? = nil
+    var autoCreate: (() -> Bool)?
     let updateInMemoryNotificationName: Notification.Name?
     let updateInRemoteNotificationName: Notification.Name?
     let loadNodeRequest: (MEGARequestDelegate) -> Void
-    var setNodeRequest: ((HandleEntity, MEGARequestDelegate) -> Void)? = nil
-    var nodeName: String? = nil
-    var createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)? = nil
+    var setNodeRequest: ((HandleEntity, MEGARequestDelegate) -> Void)?
+    var nodeName: String?
+    var createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)?
 }
 
 class NodeAccess: NSObject {

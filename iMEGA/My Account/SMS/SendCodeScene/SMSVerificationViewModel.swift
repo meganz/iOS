@@ -39,7 +39,7 @@ final class SMSVerificationViewModel: ViewModelType {
     private let achievementUseCase: AchievementUseCaseProtocol
     private let authUseCase: AuthUseCaseProtocol
     private var regionList = [SMSRegion]()
-    var selectedRegion: SMSRegion? = nil
+    var selectedRegion: SMSRegion?
     private let router: SMSVerificationViewRouting
     
     // MARK: - Internal properties

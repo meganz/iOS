@@ -16,13 +16,13 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         nameLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName : node.name
         linkedView.isHidden = !node.isExported()
-        if (node.type == .file) {
+        if node.type == .file {
             previewImage.mnz_setThumbnail(by: node)
             sizeLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
             shareStackView.isHidden = true
             versionedView.isHidden = !MEGASdkManager.sharedMEGASdk().hasVersions(for: node)
             playIconImage.isHidden = node.name?.mnz_isVideoPathExtension != true
-        } else if (node.type == .folder) {
+        } else if node.type == .folder {
             previewImage.image = NodeAssetsManager.shared.icon(for: node)
             let nodeAccess = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
             shareStackView.isHidden = isNodeInRubbish || (nodeAccess != .accessOwner)

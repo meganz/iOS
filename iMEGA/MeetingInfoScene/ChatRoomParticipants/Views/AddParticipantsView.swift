@@ -16,7 +16,7 @@ struct AddParticipantsView: View {
             Image(Asset.Images.Chat.inviteToChat.name)
                 .padding(Constants.padding)
                 .frame(width: Constants.imageSize.width, height: Constants.imageSize.height)
-            VStack (alignment: .leading) {
+            VStack(alignment: .leading) {
                 Spacer()
                 Text(Strings.Localizable.addParticipant)
                     .font(.subheadline)

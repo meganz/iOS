@@ -17,7 +17,7 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
         do {
             let items = try fetchItems()
             observer.didEnumerate(items)
-        } catch (let error) {
+        } catch {
             observer.finishEnumeratingWithError(error)
             return
         }

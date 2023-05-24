@@ -117,14 +117,14 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: NodeActionsRepo
             }
             filename.replaceSubrange(counterRange, with: "(\(counter + 1))")
             filename = filename + "." + name.pathExtension
-            if (nodeRepository.childNodeNamed(name: filename, in: parentHandle) != nil) {
+            if nodeRepository.childNodeNamed(name: filename, in: parentHandle) != nil {
                 return renameNode(named: filename as NSString, inParent: parentHandle)
             } else {
                 return filename
             }
         } else {
             filename = filename + " (1)." + name.pathExtension
-            if (nodeRepository.childNodeNamed(name: filename, in: parentHandle) != nil) {
+            if nodeRepository.childNodeNamed(name: filename, in: parentHandle) != nil {
                 return renameNode(named: filename as NSString, inParent: parentHandle)
             } else {
                 return filename

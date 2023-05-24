@@ -9,7 +9,7 @@ extension FileManager {
             for file in dc {
                 var isDirectory:ObjCBool = false
                 let path = pathForItem.append(pathComponent: file)
-                if (path.lowercased() != "mega") {
+                if path.lowercased() != "mega" {
                     self.fileExists(atPath: path, isDirectory: &isDirectory)
                     if isDirectory.boolValue {
                         folders += 1

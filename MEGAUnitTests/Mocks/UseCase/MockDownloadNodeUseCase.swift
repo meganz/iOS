@@ -2,8 +2,8 @@
 import MEGADomain
 
 final class MockDownloadNodeUseCase: DownloadNodeUseCaseProtocol {
-    var transferEntity: TransferEntity? = nil
-    var result: (Result<TransferEntity, TransferErrorEntity>)? = nil
+    var transferEntity: TransferEntity?
+    var result: (Result<TransferEntity, TransferErrorEntity>)?
     var transferError: TransferErrorEntity = .generic
     
     func downloadFileToOffline(forNodeHandle handle: HandleEntity, filename: String?, appdata: String?, startFirst: Bool, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)?) {

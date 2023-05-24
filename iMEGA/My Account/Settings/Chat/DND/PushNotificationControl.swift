@@ -23,7 +23,7 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
     
     var pushNotificationSettings: MEGAPushNotificationSettings? {
         didSet {
-            if (oldValue == nil && pushNotificationSettings != nil) {
+            if oldValue == nil && pushNotificationSettings != nil {
                 if let pushNotificationSettingsLoadedMethod = delegate?.pushNotificationSettingsLoaded {
                     pushNotificationSettingsLoadedMethod()
                 }

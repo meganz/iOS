@@ -30,7 +30,7 @@ enum WarningType: CustomStringConvertible {
     }
     
     func tapAction() {
-        switch (warningType) {
+        switch warningType {
         case .limitedPhotoAccess:
             router?.goToSettings()
         case .noInternetConnection,

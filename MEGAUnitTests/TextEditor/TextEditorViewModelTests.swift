@@ -35,13 +35,13 @@ final class TextEditorViewModelTests: XCTestCase {
             }
             
             if textEditorMode == .view {
-                navbarItemsModel = TextEditorNavbarItemsModel (
+                navbarItemsModel = TextEditorNavbarItemsModel(
                     leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
                     rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
                     textEditorMode: textEditorMode
                 )
             } else {
-                navbarItemsModel = TextEditorNavbarItemsModel (
+                navbarItemsModel = TextEditorNavbarItemsModel(
                     leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
                     rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
                     textEditorMode: textEditorMode
@@ -88,7 +88,7 @@ final class TextEditorViewModelTests: XCTestCase {
             accessLevel: nil
         )
         
-        let navbarItemsLoadModel = TextEditorNavbarItemsModel (
+        let navbarItemsLoadModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
@@ -100,7 +100,7 @@ final class TextEditorViewModelTests: XCTestCase {
             accessLevel: nodeAccessLevel
         )
         
-        let navbarItemsViewModel = TextEditorNavbarItemsModel (
+        let navbarItemsViewModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
             textEditorMode: .view
@@ -164,7 +164,7 @@ final class TextEditorViewModelTests: XCTestCase {
             accessLevel: nil
         )
         
-        let navbarItemsModel = TextEditorNavbarItemsModel (
+        let navbarItemsModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
@@ -216,7 +216,7 @@ final class TextEditorViewModelTests: XCTestCase {
             accessLevel: nil
         )
         
-        let navbarItemsModel = TextEditorNavbarItemsModel (
+        let navbarItemsModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
@@ -288,7 +288,7 @@ final class TextEditorViewModelTests: XCTestCase {
             accessLevel: nodeAccessLevel
         )
         
-        let navbarItemsModel = TextEditorNavbarItemsModel (
+        let navbarItemsModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
             textEditorMode: .view
@@ -679,7 +679,7 @@ final class TextEditorViewModelTests: XCTestCase {
             accessLevel: nil
         )
         
-        let navbarItemsModel = TextEditorNavbarItemsModel (
+        let navbarItemsModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
             rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
             textEditorMode: .edit
@@ -753,7 +753,7 @@ final class TextEditorViewModelTests: XCTestCase {
             accessLevel: nil
         )
         
-        let navbarItemsModel = TextEditorNavbarItemsModel (
+        let navbarItemsModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
             rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
             textEditorMode: .edit
@@ -936,7 +936,7 @@ final class TextEditorViewModelTests: XCTestCase {
             accessLevel: nodeAccessLevel
         )
         
-        let navbarItemsModel = TextEditorNavbarItemsModel (
+        let navbarItemsModel = TextEditorNavbarItemsModel(
             leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
             rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
             textEditorMode: .view

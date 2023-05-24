@@ -101,7 +101,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         MEGALogDebug("Create meeting: check chat link \(link)")
         chatSdk.checkChatLink(url, delegate: MEGAChatGenericRequestDelegate(completion: { [weak self] (request, error) in
           
-            guard (error.type == .MEGAChatErrorTypeOk || error.type == .MegaChatErrorTypeExist) else {
+            guard error.type == .MEGAChatErrorTypeOk || error.type == .MegaChatErrorTypeExist else {
                 MEGALogDebug("Create meeting: failed to check chat link \(link)")
                 completion(.failure(.generic))
                 return

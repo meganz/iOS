@@ -24,7 +24,7 @@ extension ShareViewController {
     }
     
     @objc func openApp(loginRequired: Bool) {
-        if (self.openAppNC == nil) {
+        if self.openAppNC == nil {
             self.openAppNC = UIStoryboard(name: "Share", bundle: Bundle(for: OpenAppRequiredViewController.self)).instantiateViewController(withIdentifier: "OpenAppRequiredNavigationViewController") as? UINavigationController
             let openAppVC = self.openAppNC?.children.first as? OpenAppRequiredViewController
             openAppVC?.isLoginRequired = loginRequired

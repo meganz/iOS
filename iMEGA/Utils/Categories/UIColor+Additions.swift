@@ -355,7 +355,7 @@ extension UIColor {
     
     @objc class func mnz_color(proLevel : MEGAAccountType) -> UIColor? {
         var proLevelColor: UIColor?
-        switch (proLevel) {
+        switch proLevel {
         case MEGAAccountType.free:
             proLevelColor = UIColor.systemGreen
             
@@ -380,7 +380,7 @@ extension UIColor {
     
     @objc class func mnz_colorForPriceLabel(proLevel : MEGAAccountType, traitCollection :UITraitCollection) -> UIColor? {
         var proLevelColor: UIColor?
-        switch (proLevel) {
+        switch proLevel {
         case MEGAAccountType.free:
             proLevelColor = UIColor.systemGreen
             

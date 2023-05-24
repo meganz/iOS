@@ -287,7 +287,7 @@ extension SharedItemsViewController {
     }
     
     @objc func showRemoveLinkWarning(_ nodes: [MEGANode]) {
-        if (MEGAReachabilityManager.isReachableHUDIfNot()) {
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
             ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
                 SVProgressHUD.show()
             }, onActionFinish: { [weak self] result in

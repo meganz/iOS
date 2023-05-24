@@ -89,8 +89,8 @@ fileprivate struct ChatRoomsEmptyBottomButtonView: View {
     var maxWidth: CGFloat? = 288
     var cornerRadius: CGFloat = 10
     var font: Font = .headline
-    var menus: [ChatRoomsEmptyBottomButtonMenu]? = nil
-    var action: (() -> Void)? = nil
+    var menus: [ChatRoomsEmptyBottomButtonMenu]?
+    var action: (() -> Void)?
 
     var body: some View {
         if let menus {

@@ -874,7 +874,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func callTerminated(_ call: CallEntity) {
         callUseCase.stopListeningForCall()
         timer?.invalidate()
-        if (call.termCodeType == .tooManyParticipants) {
+        if call.termCodeType == .tooManyParticipants {
             containerViewModel?.dispatch(.dismissCall(completion: {
                 SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
             }))

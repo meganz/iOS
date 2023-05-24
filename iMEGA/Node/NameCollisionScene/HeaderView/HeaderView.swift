@@ -8,7 +8,7 @@ struct HeaderView: View {
     }
     
     var body: some View {
-        VStack (alignment: .leading, spacing: Constants.verticalSpacing) {
+        VStack(alignment: .leading, spacing: Constants.verticalSpacing) {
             HStack {
                 Text(viewModel.titleComponents[0])
                     .font(.subheadline) +

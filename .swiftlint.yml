@@ -81,14 +81,14 @@ only_rules:
       - syntactic_sugar
       - statement_position
       - custom_rules
+      - no_space_in_method_call
+      - redundant_optional_initialization
+      - control_statement
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
       # - xctfail_message (16 issues)
-      # - no_space_in_method_call (42 issues)
       # - vertical_parameter_alignment (50 issues)
       # - private_over_fileprivate (54 issues)
-      # - redundant_optional_initialization (56 issues)
-      # - control_statement (59 issues)
 
     # Complex fixes or a ton of issues (>100 issues)
 
@@ -147,6 +147,9 @@ excluded: # Paths to ignore during linting. Takes precedence over `included`.
   - SwiftGen
   - transifex
   - Xcode Templates
+  
+  # Excluded temporarily because it is low priority but requires changes in the SDK git project, which needed to be merged by the SDK team
+  - Modules/MEGASDK/Sources/MEGASDK/examples
 
 allow_zero_lintable_files: false
 reporter: "xcode"

@@ -6,7 +6,7 @@ struct MeetingDescriptionView: View {
     let description: String
 
     var body: some View {
-        VStack (alignment: .leading) {
+        VStack(alignment: .leading) {
             Divider()
             Text(Strings.Localizable.Meetings.Info.descriptionLabel)
                 .font(.body)

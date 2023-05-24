@@ -712,16 +712,16 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         
         if yearModulo == 0 {
             return Strings.Localizable.General.Format.RetentionPeriod.year(1)
-        } else if (monthsModulo == 0) {
+        } else if monthsModulo == 0 {
             let months = seconds / secondsInAMonth
             return Strings.Localizable.General.Format.RetentionPeriod.month(months)
-        } else if (weeksModulo == 0) {
+        } else if weeksModulo == 0 {
             let weeks = seconds / secondsInAWeek
             return Strings.Localizable.General.Format.RetentionPeriod.week(weeks)
-        } else if (daysModulo == 0) {
+        } else if daysModulo == 0 {
             let days = seconds / secondsInADay
             return Strings.Localizable.General.Format.RetentionPeriod.day(days)
-        } else if (hoursModulo == 0) {
+        } else if hoursModulo == 0 {
             let hours = seconds / secondsInAHour
             return Strings.Localizable.General.Format.RetentionPeriod.hour(hours)
         }

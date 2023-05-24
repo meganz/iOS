@@ -3,7 +3,7 @@ import MEGAUIKit
 
 struct FontStyle: Codable {
     let style: TextStyle
-    var weight: Weight? = nil
+    var weight: Weight?
 }
 
 extension FontStyle {

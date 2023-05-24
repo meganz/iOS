@@ -82,13 +82,13 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
                 }
                 
                 switch result {
-                case .success (let request):
+                case .success(let request):
                     guard let node = sdk.node(forHandle: request.nodeHandle) else {
                         continuation.resume(throwing: CreateFolderErrorEntity.generic)
                         return
                     }
                     continuation.resume(returning: node.toNodeEntity())
-                case .failure (let error):
+                case .failure(let error):
                     if error.type == .apiEBusinessPastDue {
                         continuation.resume(throwing: CreateFolderErrorEntity.businessExpired)
                     } else {
@@ -116,13 +116,13 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
                 }
                 
                 switch result {
-                case .success (let request):
+                case .success(let request):
                     guard let node = sdk.node(forHandle: request.nodeHandle) else {
                         continuation.resume(throwing: RenameNodeErrorEntity.generic)
                         return
                     }
                     continuation.resume(returning: node.toNodeEntity())
-                case .failure (let error):
+                case .failure(let error):
                     if error.type == .apiEBusinessPastDue {
                         continuation.resume(throwing: RenameNodeErrorEntity.businessExpired)
                     } else {
@@ -151,13 +151,13 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
                 }
                 
                 switch result {
-                case .success (let request):
+                case .success(let request):
                     guard let node = sdk.node(forHandle: request.nodeHandle) else {
                         continuation.resume(throwing: MoveNodeErrorEntity.generic)
                         return
                     }
                     continuation.resume(returning: node.toNodeEntity())
-                case .failure (let error):
+                case .failure(let error):
                     if error.type == .apiEBusinessPastDue {
                         continuation.resume(throwing: MoveNodeErrorEntity.businessExpired)
                     } else {
@@ -189,13 +189,13 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
                 }
                 
                 switch result {
-                case .success (let request):
+                case .success(let request):
                     guard let node = sdk.node(forHandle: request.nodeHandle) else {
                         continuation.resume(throwing: MoveNodeErrorEntity.generic)
                         return
                     }
                     continuation.resume(returning: node.toNodeEntity())
-                case .failure (let error):
+                case .failure(let error):
                     if error.type == .apiEBusinessPastDue {
                         continuation.resume(throwing: MoveNodeErrorEntity.businessExpired)
                     } else {
@@ -224,7 +224,7 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
                 switch result {
                 case .success:
                     continuation.resume()
-                case .failure (let error):
+                case .failure(let error):
                     if error.type == .apiEMasterOnly {
                         continuation.resume(throwing: RemoveNodeErrorEntity.masterOnly)
                     } else {
@@ -253,13 +253,13 @@ struct NodeActionRepository: NodeActionRepositoryProtocol {
                 }
                 
                 switch result {
-                case .success (let request):
+                case .success(let request):
                     guard let node = sdk.node(forHandle: request.nodeHandle) else {
                         continuation.resume(throwing: MoveNodeErrorEntity.generic)
                         return
                     }
                     continuation.resume(returning: node.toNodeEntity())
-                case .failure (let error):
+                case .failure(let error):
                     if error.type == .apiEBusinessPastDue {
                         continuation.resume(throwing: MoveNodeErrorEntity.businessExpired)
                     } else {

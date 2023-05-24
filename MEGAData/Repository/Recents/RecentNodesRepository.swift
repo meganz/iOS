@@ -23,7 +23,7 @@ struct RecentNodesRepository: RecentNodesRepositoryProtocol {
         try await withAsyncThrowingValue(in: { completion in
             sdk.getRecentActionsAsync(sinceDays: Constants.maxRecommendedDays, maxNodes: limitCount, delegate: RequestDelegate { result in
                 switch result {
-                case .success (let request):
+                case .success(let request):
                     completion(.success(request.recentActionsBuckets.compactMap { RecentActionBucketEntity(with: $0) }))
                 case .failure:
                     completion(.failure(GenericErrorEntity()))

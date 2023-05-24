@@ -7,8 +7,8 @@ extension UIImage {
         let height = self.size.height
         var newWidth = width
         var newHeight = height
-        if (width > maxSize || height > maxSize) {
-            if (width > height) {
+        if width > maxSize || height > maxSize {
+            if width > height {
                 newWidth = maxSize
                 newHeight = (height * maxSize) / width
             } else {

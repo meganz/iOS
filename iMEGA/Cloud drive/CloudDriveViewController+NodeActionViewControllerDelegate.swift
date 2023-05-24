@@ -42,7 +42,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         setEditMode(false)
         
-        switch (action) {
+        switch action {
         case .download:
             download([node])
         case .exportFile:

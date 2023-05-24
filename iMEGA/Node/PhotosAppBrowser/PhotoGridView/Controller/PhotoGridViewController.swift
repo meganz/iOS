@@ -133,8 +133,8 @@ final class PhotoGridViewController: UIViewController {
                 cellsPerRow = PhotoAlbumItemsPerRowCount.chat.rawValue
             }
             
-            if (weakSelf.traitCollection.horizontalSizeClass == .regular &&
-                    weakSelf.traitCollection.verticalSizeClass == .regular) {
+            if weakSelf.traitCollection.horizontalSizeClass == .regular &&
+                    weakSelf.traitCollection.verticalSizeClass == .regular {
                 cellsPerRow = PhotoAlbumItemsPerRowCount.other.rawValue
             }
             

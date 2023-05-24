@@ -60,8 +60,8 @@ final class PSAViewModel: NSObject, ViewModelType {
     
     private func shouldShowView(completion: @escaping ((Bool) -> Void)) {
         // Avoid showing PSA if it is shown already within 1 hour (3600 seconds) time span.
-        guard (lastPSARequestTimestampPreference <= 0
-                || (Date().timeIntervalSince1970 - lastPSARequestTimestampPreference) >= 3600) else {
+        guard lastPSARequestTimestampPreference <= 0
+                || (Date().timeIntervalSince1970 - lastPSARequestTimestampPreference) >= 3600 else {
             MEGALogDebug("PSA is already fetched \(Date().timeIntervalSince1970 - lastPSARequestTimestampPreference) seconds back")
             completion(false)
             return

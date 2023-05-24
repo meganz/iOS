@@ -15,7 +15,7 @@ final class DocumentActionViewController: FPUIActionExtensionViewController {
     
     override func prepare(forError error: Error) {
         let nsError = error as NSError
-        if (nsError.userInfo[PickerConstant.passcodeEnabled] != nil) {
+        if nsError.userInfo[PickerConstant.passcodeEnabled] != nil {
             titleLabel?.text = Strings.Localizable.Picker.Disable.Passcode.title
             messageLabel.text = Strings.Localizable.Picker.Disable.Passcode.description
         }

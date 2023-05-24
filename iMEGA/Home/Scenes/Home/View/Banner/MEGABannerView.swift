@@ -214,7 +214,7 @@ extension MEGABannerView: TraitEnviromentAware {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
         
-        if (traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory) {
+        if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
             calculateCarouselItemSize()
             carouselCollectionView.reloadData()
         }
