@@ -216,6 +216,7 @@ final class ContextMenuManager: NSObject {
         items.compactMap {
             if let action = ($0 as? CMActionEntity) {
                 var actionModel = action.toContextMenuModel()
+                CrashlyticsLogger.log("[ContextMenu] Action Entity: isEnabled: \(action.isEnabled), state: \(action.state), type: \(action.type)\n[ContextMenu] Action Model Data: \(String(describing: actionModel.data))")
                 return UIAction(title: actionModel.data?.title ?? "",
                                 image: actionModel.data?.image?.alpha(value: action.isEnabled ? 1.0 : 0.5),
                                 identifier: UIAction.Identifier(rawValue: actionModel.data?.identifier ?? ""),
