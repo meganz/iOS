@@ -18,6 +18,7 @@
 #import "NSError+CameraUpload.h"
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
+@import MEGAData;
 
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 
@@ -297,12 +298,9 @@ static const NSUInteger VideoUploadBatchCount = 1;
         return;
     }
     
-    __weak typeof(self) weakSelf = self;
-    [MEGASdkManager.sharedMEGASdk isLoggedInWithCompletion:^(BOOL isLoggedIn) {
-        if (isLoggedIn) {
-            [weakSelf scanAndStartCameraUpload];
-        }
-    }];
+    if (MEGASdk.isLoggedIn) {
+        [self scanAndStartCameraUpload];
+    }
 }
 
 - (void)scanAndStartCameraUpload {

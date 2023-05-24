@@ -25,8 +25,4 @@ public struct AuthRepository: AuthRepositoryProtocol {
             })
         }
     }
-    
-    public func isLoggedIn() -> Bool {
-        sdk.isLoggedIn() > 0
-    }
 }

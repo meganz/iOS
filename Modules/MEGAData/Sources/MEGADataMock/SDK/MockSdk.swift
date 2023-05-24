@@ -7,6 +7,7 @@ public final class MockSdk: MEGASdk {
     private let syncDebrisNodes: [MEGANode]
     private let myContacts: MEGAUserList
     public var _myUser: MEGAUser?
+    public var _isLoggedIn: Int
     private let email: String?
     private var statsEventType: Int?
     private var statsEventMessage: String?
@@ -25,7 +26,6 @@ public final class MockSdk: MEGASdk {
     private let createSupportTicketError: MEGAErrorType
     private let link: String?
     private let megaSetError: MEGAErrorType
-    private let _isLoggedIn: Int
     private let _incomingContactRequests: MEGAContactRequestList
     private let _userAlertList: MEGAUserAlertList
     private let _upgradeSecurity: (MEGASdk, MEGARequestDelegate) -> Void
@@ -44,6 +44,7 @@ public final class MockSdk: MEGASdk {
                 publicLinkNodes: MEGANodeList = MEGANodeList(),
                 myContacts: MEGAUserList = MEGAUserList(),
                 myUser: MEGAUser? = nil,
+                isLoggedIn: Int = 0,
                 myEmail: String? = nil,
                 megaSets: [MEGASet] = [],
                 megaSetElements: [MEGASetElement] = [],
@@ -57,7 +58,6 @@ public final class MockSdk: MEGASdk {
                 createSupportTicketError: MEGAErrorType = .apiOk,
                 link: String? = nil,
                 megaSetError: MEGAErrorType = .apiOk,
-                isLoggedIn: Int = .random(in: 0...1),
                 incomingContactRequestList: MEGAContactRequestList = MEGAContactRequestList(),
                 userAlertList: MEGAUserAlertList = MEGAUserAlertList(),
                 upgradeSecurity: @escaping (MEGASdk, MEGARequestDelegate) -> Void = { _, _ in },
@@ -68,6 +68,7 @@ public final class MockSdk: MEGASdk {
         self.syncDebrisNodes = syncDebrisNodes
         self.myContacts = myContacts
         _myUser = myUser
+        _isLoggedIn = isLoggedIn
         email = myEmail
         sets = megaSets
         setElements = megaSetElements
@@ -85,7 +86,6 @@ public final class MockSdk: MEGASdk {
         self.link = link
         self.megaSetError = megaSetError
         self._incomingContactRequests = incomingContactRequestList
-        _isLoggedIn = isLoggedIn
         _userAlertList = userAlertList
         _upgradeSecurity = upgradeSecurity
         _accountDetails = accountDetails

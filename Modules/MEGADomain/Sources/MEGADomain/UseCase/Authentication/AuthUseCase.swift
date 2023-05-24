@@ -4,7 +4,6 @@ public protocol AuthUseCaseProtocol {
     func logout()
     func login(sessionId: String) async throws
     func sessionId() -> String?
-    func isLoggedIn() -> Bool
 }
 
 public struct AuthUseCase<T: AuthRepositoryProtocol, U: CredentialRepositoryProtocol>: AuthUseCaseProtocol {
@@ -26,9 +25,5 @@ public struct AuthUseCase<T: AuthRepositoryProtocol, U: CredentialRepositoryProt
     
     public func sessionId() -> String? {
         credentialRepo.sessionId()
-    }
-    
-    public func isLoggedIn() -> Bool {
-        repo.isLoggedIn()
     }
 }

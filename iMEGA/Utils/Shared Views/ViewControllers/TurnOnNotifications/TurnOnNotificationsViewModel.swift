@@ -27,16 +27,16 @@ final class TurnOnNotificationsViewModel: ViewModelType {
     @PreferenceWrapper(key: .timesTurnOnNotificationsShowed, defaultValue: 0)
     private var timesTurnOnNotificationsShowedPreference: Int
     
-    private let authUseCase: AuthUseCaseProtocol
+    private let accountUseCase: AccountUseCaseProtocol
         
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
     init(router: TurnOnNotificationsViewRouting,
          preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         authUseCase: AuthUseCaseProtocol) {
+         accountUseCase: AccountUseCaseProtocol) {
         self.router = router
-        self.authUseCase = authUseCase
+        self.accountUseCase = accountUseCase
         $lastDateTurnOnNotificationsShowedPreference.useCase = preferenceUseCase
         $timesTurnOnNotificationsShowedPreference.useCase = preferenceUseCase
     }
@@ -46,7 +46,7 @@ final class TurnOnNotificationsViewModel: ViewModelType {
             return false
         }
         if timesTurnOnNotificationsShowedPreference < 3 && days > 7
-            && authUseCase.isLoggedIn() {
+            && accountUseCase.isLoggedIn() {
             return true
         }
         return false

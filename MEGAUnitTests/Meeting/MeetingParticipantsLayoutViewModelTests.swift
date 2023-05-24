@@ -753,8 +753,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             viewModel.dispatch(action)
         }
         
-        _ = XCTWaiter.wait(for: [nameExpectation], timeout: 2)
-        
+        _ = await XCTWaiter.fulfillment(of: [nameExpectation], timeout: 2)
         await viewModel.namesFetchingTask?.value
         await fulfillment(of: [commandExpectation], timeout: 1.0)
     }
