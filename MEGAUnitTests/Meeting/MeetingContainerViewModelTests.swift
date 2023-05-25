@@ -5,12 +5,14 @@ import MEGADomain
 import MEGADomainMock
 
 final class MeetingContainerViewModelTests: XCTestCase {
+    
+    var viewModel: MeetingContainerViewModel!
 
     func testAction_onViewReady() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let callCoordinatorUseCase = MockCallCoordinatorUseCase()
-        let viewModel = MeetingContainerViewModel(
+        viewModel = MeetingContainerViewModel(
             router: router,
             chatRoom: chatRoom,
             callCoordinatorUseCase: callCoordinatorUseCase
@@ -25,7 +27,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let router = MockMeetingContainerRouter()
         let callEntity = CallEntity(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)
         let callUseCase = MockCallUseCase(call: callEntity)
-        let viewModel = MeetingContainerViewModel(router: router,
+        viewModel = MeetingContainerViewModel(router: router,
                                                   chatRoom: chatRoom,
                                                   callUseCase: callUseCase,
                                                   accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: true, isLoggedIn: false))
@@ -39,7 +41,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let callEntity = CallEntity(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)
         let callUseCase = MockCallUseCase(call: callEntity)
         let callManagerUserCase = MockCallCoordinatorUseCase()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(router.dismiss_calledTimes == 1)
         XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
@@ -49,7 +51,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_backButtonTap() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         test(viewModel: viewModel, action: .tapOnBackButton, expectedCommands: [])
         XCTAssert(router.dismiss_calledTimes == 1)
     }
@@ -57,7 +59,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_ChangeMenuVisibility() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         test(viewModel: viewModel, action: .changeMenuVisibility, expectedCommands: [])
         XCTAssert(router.toggleFloatingPanel_CalledTimes == 1)
     }
@@ -66,7 +68,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
         let chatRoomUseCase = MockChatRoomUseCase(publicLinkCompletion: .success(""))
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, chatRoomUseCase: chatRoomUseCase)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, chatRoomUseCase: chatRoomUseCase)
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 1)
     }
@@ -74,7 +76,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_shareLink_Failure() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 0)
     }
@@ -82,7 +84,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_displayParticipantInMainView() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         test(viewModel: viewModel, action: .displayParticipantInMainView(particpant), expectedCommands: [])
         XCTAssert(router.displayParticipantInMainView_calledTimes == 1)
@@ -91,7 +93,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_didDisplayParticipantInMainView() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         let particpant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
         test(viewModel: viewModel, action: .didDisplayParticipantInMainView(particpant), expectedCommands: [])
         XCTAssert(router.didDisplayParticipantInMainView_calledTimes == 1)
@@ -100,7 +102,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_didSwitchToGridView() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         test(viewModel: viewModel, action: .didSwitchToGridView, expectedCommands: [])
         XCTAssert(router.didSwitchToGridView_calledTimes == 1)
     }
@@ -110,7 +112,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let router = MockMeetingContainerRouter()
         let callEntity = CallEntity(numberOfParticipants: 1, participants: [100])
         let callUseCase = MockCallUseCase(call: callEntity)
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase)
         test(viewModel: viewModel, action: .showEndCallDialogIfNeeded, expectedCommands: [])
         XCTAssert(router.didShowEndDialog_calledTimes == 1)
     }
@@ -119,7 +121,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
 
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         test(viewModel: viewModel, action: .participantAdded, expectedCommands: [])
         XCTAssert(router.removeEndDialog_calledTimes == 1)
     }
@@ -127,7 +129,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_removeEndCallDialogAndEndCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         test(viewModel: viewModel, action: .removeEndCallAlertAndEndCall, expectedCommands: [])
         XCTAssert(router.removeEndDialog_calledTimes == 1)
     }
@@ -135,7 +137,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_showJoinMegaScreen() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         test(viewModel: viewModel, action: .showJoinMegaScreen, expectedCommands: [])
         XCTAssert(router.showJoinMegaScreen_calledTimes == 1)
     }
@@ -147,7 +149,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let noUserJoinedUseCase = MockMeetingNoUserJoinedUseCase()
         let expectation = expectation(description: "testAction_OnViewReady_NoUserJoined")
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, noUserJoinedUseCase: noUserJoinedUseCase)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase, noUserJoinedUseCase: noUserJoinedUseCase)
         test(viewModel: viewModel, action: .onViewReady, expectedCommands: [])
         
         var subscription: AnyCancellable? = noUserJoinedUseCase
@@ -172,7 +174,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let call = CallEntity(hasLocalAudio: true, numberOfParticipants: 1, participants: [100])
         let callUseCase = MockCallUseCase(call: call)
         let callCoordinatorUseCase = MockCallCoordinatorUseCase()
-        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
+        viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
                                                   chatRoomUseCase: chatRoomUsecase,
                                                   callCoordinatorUseCase: callCoordinatorUseCase,
                                                   accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
@@ -190,7 +192,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         
         let callCoordinatorUseCase = MockCallCoordinatorUseCase()
         
-        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
+        viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
                                                   chatRoomUseCase: chatRoomUsecase,
                                                   callCoordinatorUseCase: callCoordinatorUseCase,
                                                   accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
@@ -208,7 +210,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         
         let callCoordinatorUseCase = MockCallCoordinatorUseCase()
         
-        let viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
+        viewModel = MeetingContainerViewModel(callUseCase: callUseCase,
                                                   chatRoomUseCase: chatRoomUsecase,
                                                   callCoordinatorUseCase: callCoordinatorUseCase,
                                                   accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
@@ -220,7 +222,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_showHangOrEndCallDialog() {
         let chatRoom = ChatRoomEntity(chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
 
         test(viewModel: viewModel, action: .showHangOrEndCallDialog, expectedCommands: [])
         XCTAssert(router.showHangOrEndCallDialog_calledTimes == 1)
@@ -229,7 +231,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_endCallForAll() {
         let chatRoom = ChatRoomEntity(chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
 
         test(viewModel: viewModel, action: .endCallForAll, expectedCommands: [])
         XCTAssert(router.dismiss_calledTimes == 1)
@@ -261,7 +263,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     ) {
         let callCoordinatorUseCase = MockCallCoordinatorUseCase()
         let callUseCase = MockCallUseCase(call: CallEntity(hasLocalAudio: hasLocalAudio))
-        let viewModel = MeetingContainerViewModel(
+        viewModel = MeetingContainerViewModel(
             callUseCase: callUseCase,
             callCoordinatorUseCase: callCoordinatorUseCase
         )
