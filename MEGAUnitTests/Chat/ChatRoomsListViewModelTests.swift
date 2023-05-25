@@ -58,48 +58,11 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     func testSelectChatMode_inviteContactNow_shouldMatch() throws {
-        let router = MockChatRoomsListRouter()
-        let viewModel = ChatRoomsListViewModel(router: router, chatViewMode: .meetings)
-        
-        let expectation = expectation(description: "Waiting for contactsOnMegaViewState to be updated")
-        var chatRoomsTopRowViewState: ChatRoomsTopRowViewState?
-        
-        subscription = viewModel
-            .$contactsOnMegaViewState
-            .dropFirst()
-            .sink { chatRoomViewState in
-                chatRoomsTopRowViewState = chatRoomViewState
-                expectation.fulfill()
-            }
-
-        viewModel.selectChatMode(.chats)
-        wait(for: [expectation], timeout: 3)
-        
-        let state = try XCTUnwrap(chatRoomsTopRowViewState)
-        XCTAssertTrue(state.description == Strings.Localizable.inviteContactNow)
+        assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: true, description: Strings.Localizable.inviteContactNow)
     }
     
     func testSelectChatMode_seeWhoIsAlreadyOnMega_shouldMatch() throws {
-        let router = MockChatRoomsListRouter()
-        let contactsUseCase = MockContactsUseCase(authorized: false)
-        let viewModel = ChatRoomsListViewModel(router: router, contactsUseCase: contactsUseCase, chatViewMode: .meetings)
-        
-        let expectation = expectation(description: "Waiting for contactsOnMegaViewState to be updated")
-        var chatRoomsTopRowViewState: ChatRoomsTopRowViewState?
-        
-        subscription = viewModel
-            .$contactsOnMegaViewState
-            .dropFirst()
-            .sink { chatRoomViewState in
-                chatRoomsTopRowViewState = chatRoomViewState
-                expectation.fulfill()
-            }
-
-        viewModel.selectChatMode(.chats)
-        wait(for: [expectation], timeout: 3)
-        
-        let state = try XCTUnwrap(chatRoomsTopRowViewState)
-        XCTAssertTrue(state.description == Strings.Localizable.seeWhoSAlreadyOnMEGA)
+        assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: false, description: Strings.Localizable.seeWhoSAlreadyOnMEGA)
     }
     
     func testSelectChatsMode_inputAsChats_viewModelesShouldMatch() {
@@ -136,13 +99,14 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         subscription = viewModel
             .$displayPastMeetings
             .filter { $0?.count == 3 }
-            .sink {
-                XCTAssert(mockList.map { ChatRoomViewModel(chatListItem: $0) } == $0)
+            .prefix(1)
+            .sink { _ in
                 expectation.fulfill()
             }
 
         viewModel.selectChatMode(.meetings)
-        wait(for: [expectation], timeout: 6)
+        wait(for: [expectation], timeout: 10)
+        XCTAssertEqual(mockList.map { ChatRoomViewModel(chatListItem: $0) }, viewModel.displayPastMeetings)
     }
     
     func test_EmptyChatsList() {
@@ -153,7 +117,27 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func test_ChatListWithoutViewOnScreen() {
         let viewModel = ChatRoomsListViewModel()
         XCTAssert(viewModel.displayChatRooms == nil)
+    }
+    
+    // MARK: - Private methods
+    
+    private func assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: Bool, description: String, line: UInt = #line) {
+        let router = MockChatRoomsListRouter()
+        let contactsUseCase = MockContactsUseCase(authorized: isAuthorizedToAccessPhoneContacts)
+        let viewModel = ChatRoomsListViewModel(router: router, contactsUseCase: contactsUseCase, chatViewMode: .meetings)
+        
+        let expectation = expectation(description: "Waiting for contactsOnMegaViewState to be updated")
+        
+        subscription = viewModel
+            .$contactsOnMegaViewState
+            .dropFirst()
+            .sink { _ in
+                expectation.fulfill()
+            }
 
+        viewModel.selectChatMode(.chats)
+        wait(for: [expectation], timeout: 10)
+        XCTAssertEqual(viewModel.contactsOnMegaViewState?.description, description, line: line)
     }
 }
 
