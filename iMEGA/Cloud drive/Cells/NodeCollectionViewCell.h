@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NodeCollectionViewCell : UICollectionViewCell
 
 @property (strong, nonatomic) NodeCollectionViewCellViewModel *viewModel;
+@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 
 - (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
 - (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;

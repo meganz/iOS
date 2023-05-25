@@ -30,7 +30,6 @@ static NSString *kIndex = @"kIndex";
 static NSString *kPath = @"kPath";
 static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
-static NSString *kDuration = @"kDuration";
 static NSString *kisDirectory = @"kisDirectory";
 
 @interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
@@ -389,14 +388,7 @@ static NSString *kisDirectory = @"kisDirectory";
             if (!isDirectory) {
                 [self.offlineSortedFileItems addObject:tempDictionary];
                 if (fileName.mnz_isMultimediaPathExtension) {
-                    AVURLAsset *asset = [AVURLAsset assetWithURL:fileURL];
-                    if (asset.playable) {
-                        [self.offlineMultimediaFiles addObject:[fileURL path]];
-                        [tempDictionary setValue:[NSNumber numberWithDouble:CMTimeGetSeconds(asset.duration)] forKey:kDuration];
-                    } else {
-                        offsetIndex++;
-                        [self.offlineFiles addObject:[fileURL path]];                        
-                    }
+                    [self.offlineMultimediaFiles addObject:[fileURL path]];
                 } else if (![self shouldSkipQLPreviewForFile:fileName]) {
                     offsetIndex++;
                     [self.offlineFiles addObject:[fileURL path]];
