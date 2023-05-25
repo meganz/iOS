@@ -13,7 +13,7 @@ extension NodeCollectionViewCell {
         let asset = AVURLAsset(url: URL(fileURLWithPath: path, isDirectory: false))
         asset.loadValuesAsynchronously(forKeys: ["duration"]) {
             DispatchQueue.main.async {
-                var error: NSError? = nil
+                var error: NSError?
                 switch asset.statusOfValue(forKey: "duration", error: &error) {
                 case .loaded:
                     let time = asset.duration
