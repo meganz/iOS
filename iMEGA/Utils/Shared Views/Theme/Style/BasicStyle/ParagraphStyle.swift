@@ -78,7 +78,7 @@ fileprivate extension TextAlignment {
     }
 }
 
-fileprivate func apply(style: ParagraphStyle) -> (TextAttributes) -> TextAttributes {
+private func apply(style: ParagraphStyle) -> (TextAttributes) -> TextAttributes {
     return { attributes in
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = style.alignment.nsTextAlignment
@@ -92,7 +92,7 @@ fileprivate func apply(style: ParagraphStyle) -> (TextAttributes) -> TextAttribu
     }
 }
 
-fileprivate func apply(style: ParagraphStyle) -> (UILabel) -> UILabel {
+private func apply(style: ParagraphStyle) -> (UILabel) -> UILabel {
     return { label in
         label.textAlignment = style.alignment.nsTextAlignment
         label.lineBreakMode = style.lineBreakMode.nsLineBreakMode

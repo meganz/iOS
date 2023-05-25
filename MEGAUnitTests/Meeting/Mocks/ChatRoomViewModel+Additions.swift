@@ -24,4 +24,4 @@ extension ChatRoomViewModel {
 }
 
 
-fileprivate final class MockPushNotificationControl: PushNotificationControlProtocol {}
+private final class MockPushNotificationControl: PushNotificationControlProtocol {}

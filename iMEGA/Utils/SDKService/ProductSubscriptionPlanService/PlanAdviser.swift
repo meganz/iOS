@@ -34,7 +34,7 @@ enum MEGAPlanUpgradeAdvice {
 }
 
 
-fileprivate struct QueryConstraint {
+private struct QueryConstraint {
     var run: ([MEGAPlan]) -> [MEGAPlan]
 
     func callAsFunction(_ plans: [MEGAPlan]) -> [MEGAPlan] {
@@ -42,7 +42,7 @@ fileprivate struct QueryConstraint {
     }
 }
 
-fileprivate extension QueryConstraint {
+private extension QueryConstraint {
     
     /// Query constraint generator that takes a `Double` type of `minimumStorage` and generates a `QueryConstraint` which only returns
     /// `MEGAPlan`s whose storage space greater than minimum storage provided in the parameter.

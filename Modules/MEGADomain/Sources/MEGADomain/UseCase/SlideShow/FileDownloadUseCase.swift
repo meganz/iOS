@@ -13,9 +13,11 @@ public struct FileDownloadUseCase<T:DownloadFileRepositoryProtocol,
     public let fileSystemRepository: U
     public let downloadFileRepository: T
     
-    public init(fileCacheRepository: V,
-         fileSystemRepository: U,
-         downloadFileRepository: T) {
+    public init(
+        fileCacheRepository: V,
+        fileSystemRepository: U,
+        downloadFileRepository: T
+    ) {
         self.fileCacheRepository = fileCacheRepository
         self.fileSystemRepository = fileSystemRepository
         self.downloadFileRepository = downloadFileRepository

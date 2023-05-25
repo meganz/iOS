@@ -70,7 +70,7 @@ struct ChatRoomView: View {
     }
 }
 
-fileprivate struct ChatRoomContentView: View {
+private struct ChatRoomContentView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     @Environment(\.layoutDirection) private var layoutDirection
     
@@ -117,7 +117,7 @@ fileprivate struct ChatRoomContentView: View {
     }
 }
 
-fileprivate struct ChatRoomContentDetailsView: View {
+private struct ChatRoomContentDetailsView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     
     var body: some View {
@@ -175,7 +175,7 @@ fileprivate struct ChatRoomContentDetailsView: View {
     }
 }
 
-fileprivate struct ChatRoomContentTitleView: View {
+private struct ChatRoomContentTitleView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     
     var body: some View {
@@ -201,7 +201,7 @@ fileprivate struct ChatRoomContentTitleView: View {
     }
 }
 
-fileprivate struct ChatRoomContentDescriptionView: View {
+private struct ChatRoomContentDescriptionView: View {
     @EnvironmentObject private var viewModel: ChatRoomViewModel
     
     var body: some View {

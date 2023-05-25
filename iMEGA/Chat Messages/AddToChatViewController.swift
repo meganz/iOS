@@ -330,7 +330,7 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     }
 }
 
-fileprivate struct SafeArea {
+private struct SafeArea {
     let width: CGFloat
     let height: CGFloat
     

@@ -170,9 +170,11 @@ class ExplorerToolbarConfigurator {
         return lowestAccessLevel
     }
     
-    func enable(_ enable: Bool,
-                        barButtonItems: [UIBarButtonItem],
-                        excludeBarButtonItems: [UIBarButtonItem] = []) -> [UIBarButtonItem] {
+    func enable(
+        _ enable: Bool,
+        barButtonItems: [UIBarButtonItem],
+        excludeBarButtonItems: [UIBarButtonItem] = []
+    ) -> [UIBarButtonItem] {
         barButtonItems.forEach {
             if !excludeBarButtonItems.contains($0){
                 $0.isEnabled = enable

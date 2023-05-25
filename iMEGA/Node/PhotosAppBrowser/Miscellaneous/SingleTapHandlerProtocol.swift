@@ -34,4 +34,4 @@ extension UIView {
     }
 }
 
-fileprivate class SingleTapGestureRecognizer: UITapGestureRecognizer { }
+private class SingleTapGestureRecognizer: UITapGestureRecognizer { }

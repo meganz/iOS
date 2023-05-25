@@ -194,7 +194,7 @@ final class FileUploadingRouter {
     }
 }
 
-fileprivate final class DocumentImportsDelegate: NSObject, UIDocumentPickerDelegate {
+private final class DocumentImportsDelegate: NSObject, UIDocumentPickerDelegate {
 
     weak var navigationController: UINavigationController?
 
@@ -218,7 +218,7 @@ final class TargetFolderBrowserVCDelegate: NSObject, BrowserViewControllerDelega
     }
 }
 
-fileprivate final class VNDocumentCameraVCDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
+private final class VNDocumentCameraVCDelegate: NSObject, VNDocumentCameraViewControllerDelegate {
     var completion: (([UIImage]) -> Void)?
 
     func documentCameraViewController(

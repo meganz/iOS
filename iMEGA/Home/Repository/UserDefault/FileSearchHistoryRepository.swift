@@ -54,7 +54,7 @@ extension FileSearchHistoryRepository {
     }
 }
 
-fileprivate struct FileSearchHistoryEntity: Codable {
+private struct FileSearchHistoryEntity: Codable {
     let searchText: String
     let searchTime: Date
 }

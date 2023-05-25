@@ -51,7 +51,7 @@ final class MEGAPlanCommand: NSObject {
     }
 }
 
-fileprivate final class MEGAPlanLoadTask {
+private final class MEGAPlanLoadTask {
 
     // MARK: - Methods
 

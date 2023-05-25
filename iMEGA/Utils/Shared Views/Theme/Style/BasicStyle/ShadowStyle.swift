@@ -22,7 +22,7 @@ extension ShadowStyle {
 }
 
 @discardableResult
-fileprivate func apply(style: ShadowStyle) -> (UIView) -> UIView {
+private func apply(style: ShadowStyle) -> (UIView) -> UIView {
     return { view in
         view.layer.shadowColor = style.shadowColor.uiColor.cgColor
         view.layer.shadowOffset = style.shadowOffset

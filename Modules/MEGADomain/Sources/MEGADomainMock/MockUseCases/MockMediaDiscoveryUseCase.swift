@@ -6,8 +6,11 @@ public struct MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
     private let nodes: [NodeEntity]
     private let shouldReload: Bool
     
-    public init(nodeUpdates: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher(),
-         nodes: [NodeEntity] = [], shouldReload: Bool = true) {
+    public init(
+        nodeUpdates: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher(),
+        nodes: [NodeEntity] = [],
+        shouldReload: Bool = true
+    ) {
         self.nodeUpdatesPublisher = nodeUpdates
         self.nodes = nodes
         self.shouldReload = shouldReload

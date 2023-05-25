@@ -258,7 +258,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     }
 }
 
-fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
+private final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
     typealias Completion = (_ request: MEGAChatRequest?, _ error: MEGAChatError?) -> Void
     private let completion: Completion
     
@@ -272,7 +272,7 @@ fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
     }
 }
 
-fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
+private final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
     private let sdk: MEGAChatSdk
     let chatId: HandleEntity
     
@@ -298,7 +298,7 @@ fileprivate final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
     }
 }
 
-fileprivate class ChatRoomDelegateDTO: NSObject, MEGAChatRoomDelegate {
+private class ChatRoomDelegateDTO: NSObject, MEGAChatRoomDelegate {
     private let chatId: ChatIdEntity
     private let chatRoomDelegate: ChatRoomDelegateEntity
 

@@ -6,9 +6,11 @@ public struct MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
     private let disableAlbumShareResult: Result<Void, Error>
     private let publicAlbumContentsResult: Result<SharedAlbumEntity, Error>
     
-    public init(shareAlbumResult: Result<String?, Error> = .failure(GenericErrorEntity()),
-         disableAlbumShareResult: Result<Void, Error> = .failure(GenericErrorEntity()),
-         publicAlbumContentsResult: Result<SharedAlbumEntity, Error> = .failure(GenericErrorEntity())) {
+    public init(
+        shareAlbumResult: Result<String?, Error> = .failure(GenericErrorEntity()),
+        disableAlbumShareResult: Result<Void, Error> = .failure(GenericErrorEntity()),
+        publicAlbumContentsResult: Result<SharedAlbumEntity, Error> = .failure(GenericErrorEntity())
+    ) {
         self.shareAlbumResult = shareAlbumResult
         self.disableAlbumShareResult = disableAlbumShareResult
         self.publicAlbumContentsResult = publicAlbumContentsResult

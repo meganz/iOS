@@ -10,9 +10,11 @@ public struct RatingRequestBaseConditionsUseCase<T: PreferenceUseCaseProtocol, U
     private let accountRepo: U
     private let currentAppVersion: String
 
-    public init(preferenceUserCase: T,
-         accountRepo: U,
-         currentAppVersion: String) {
+    public init(
+        preferenceUserCase: T,
+        accountRepo: U,
+        currentAppVersion: String
+    ) {
         self.accountRepo = accountRepo
         self.currentAppVersion = currentAppVersion
         $lastRequestedVersion.useCase = preferenceUserCase

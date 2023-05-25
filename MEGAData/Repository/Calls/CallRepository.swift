@@ -196,7 +196,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     }
 }
 
-fileprivate final class CallUpdateListener: NSObject, MEGAChatCallDelegate {
+private final class CallUpdateListener: NSObject, MEGAChatCallDelegate {
     private let sdk: MEGAChatSdk
     let changeType: CallEntity.ChangeType
     let callId: HandleEntity

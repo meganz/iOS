@@ -35,9 +35,11 @@ public extension DateFormatter {
     ///   - timeZone: The time zone for the date fomat
     ///   - locale: The locale for the date format
     /// - Returns: A date formatting object to format date to a string like "November 2021"
-    static func monthTemplate(calendar: Calendar? = nil,
-                             timeZone: TimeZone? = nil,
-                             locale: Locale? = nil) -> DateFormatting {
+    static func monthTemplate(
+        calendar: Calendar? = nil,
+        timeZone: TimeZone? = nil,
+        locale: Locale? = nil
+    ) -> DateFormatting {
         return fromTemplate("MMMyyyy",
                             calendar: calendar,
                             timeZone: timeZone,

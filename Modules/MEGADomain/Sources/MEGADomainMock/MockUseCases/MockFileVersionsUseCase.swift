@@ -7,11 +7,13 @@ public struct MockFileVersionsUseCase: FileVersionsUseCaseProtocol {
     private let enableFileVersions: (Result<Bool, FileVersionErrorEntity>)
     private let deletePreviousFileVersions: (Result<Bool, FileVersionErrorEntity>)
     
-    public init(versions: Int64 = 0,
-         versionsSize: Int64 = 0,
-         isFileVersionsEnabled: Result<Bool, FileVersionErrorEntity> = .failure(.generic),
-         enableFileVersions: Result<Bool, FileVersionErrorEntity> = .failure(.generic),
-         deletePreviousFileVersions: Result<Bool, FileVersionErrorEntity> = .failure(.generic)) {
+    public init(
+        versions: Int64 = 0,
+        versionsSize: Int64 = 0,
+        isFileVersionsEnabled: Result<Bool, FileVersionErrorEntity> = .failure(.generic),
+        enableFileVersions: Result<Bool, FileVersionErrorEntity> = .failure(.generic),
+        deletePreviousFileVersions: Result<Bool, FileVersionErrorEntity> = .failure(.generic)
+    ) {
         self.versions = versions
         self.versionsSize = versionsSize
         self.isFileVersionsEnabled = isFileVersionsEnabled

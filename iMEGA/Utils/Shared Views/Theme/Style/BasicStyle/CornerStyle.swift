@@ -23,7 +23,7 @@ extension CornerStyle {
 }
 
 @discardableResult
-fileprivate func apply<T: UIView>(style: CornerStyle) -> (T) -> T {
+private func apply<T: UIView>(style: CornerStyle) -> (T) -> T {
     return { view in
         view.layer.cornerRadius = style.radius
         view.clipsToBounds = true
