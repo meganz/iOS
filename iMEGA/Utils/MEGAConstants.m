@@ -162,6 +162,7 @@ const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes
 #pragma mark - Calls
 
 const NSUInteger MEGAGroupCallsPeersChangeLayout = 7;
+NSString * const MEGACallMuteUnmuteOperationFailedNotification = @"nz.mega.calls.muteUnmuteOperationFailed";
 
 #pragma mark - Add Your Phone Number
 

@@ -481,7 +481,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                                       accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel, action: .muteUnmuteCall(mute: true), expectedCommands: [.microphoneMuted(muted: true)])
-        XCTAssert(callManagerUserCase.muteUnmute_CalledTimes == 1)
+        XCTAssert(callManagerUserCase.muteUnmute_Calls == [true])
     }
     
     func testAction_unmuteCall() {
@@ -503,7 +503,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                                       accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel, action: .muteUnmuteCall(mute: false), expectedCommands: [.microphoneMuted(muted: false)])
-        XCTAssert(callManagerUserCase.muteUnmute_CalledTimes == 1)
+        XCTAssert(callManagerUserCase.muteUnmute_Calls == [false])
     }
     
     func testAction_turnCameraOnBackCamera() {
