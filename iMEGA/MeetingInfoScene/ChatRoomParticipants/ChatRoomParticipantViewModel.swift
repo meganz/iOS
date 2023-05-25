@@ -127,6 +127,8 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     }
     
     func chatParticipantTapped() {
+        guard !isMyUser else { return }
+        
         Task { @MainActor in
             do {
                 let participantEmail = try await chatRoomUserUseCase.userEmail(forUserHandle: chatParticipantId)
