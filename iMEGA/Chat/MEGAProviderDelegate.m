@@ -378,6 +378,12 @@
 
 - (void)provider:(CXProvider *)provider timedOutPerformingAction:(CXAction *)action {
     MEGALogDebug(@"[CallKit] Provider time out performing action");
+    if ([action isKindOfClass:[CXSetMutedCallAction class]]) {
+        BOOL muted = ((CXSetMutedCallAction *) action).muted;
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGACallMuteUnmuteOperationFailedNotification
+                                                          object:nil
+                                                        userInfo:@{@"muted" : @(muted)}];
+    }
 }
 
 - (void)provider:(CXProvider *)provider didActivateAudioSession:(AVAudioSession *)audioSession {

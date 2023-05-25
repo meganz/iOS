@@ -46,6 +46,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let megaHandleUseCase: MEGAHandleUseCaseProtocol
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
+    private var muteUnmuteFailedNotificationsSubscription: AnyCancellable?
 
     private var call: CallEntity? {
         callUseCase.call(for: chatRoom.chatId)
@@ -82,6 +83,8 @@ final class MeetingContainerViewModel: ViewModelType {
             self.callCoordinatorUseCase.removeCallRemovedHandler()
             router.dismiss(animated: false, completion: nil)
         }
+        
+        listenToMuteUnmuteFailedNotifications()
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -282,6 +285,23 @@ final class MeetingContainerViewModel: ViewModelType {
         } else {
             self.dismissCall(completion: nil)
         }
+    }
+    
+    private func listenToMuteUnmuteFailedNotifications() {
+        muteUnmuteFailedNotificationsSubscription = NotificationCenter
+            .default
+            .publisher(for: .MEGACallMuteUnmuteOperationFailed)
+            .sink { [weak self] notification in
+                guard let self,
+                        let userInfo = notification.userInfo,
+                        let muted = userInfo["muted"] as? Bool,
+                        let call else {
+                    return
+                }
+                
+                MEGALogError("mute unmute callkit action failure\n failure to set it as muted: \(muted)\n retrying it again with muted: \(!call.hasLocalAudio)")
+                callCoordinatorUseCase.muteUnmuteCall(call, muted: !call.hasLocalAudio)
+            }
     }
     
     deinit {

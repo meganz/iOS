@@ -165,6 +165,8 @@ extern const long long MEGAMaxFileLinkAutoOpenSize;
 /// In group calls the layout for the collection view changes when the peers are 7 or more
 extern const NSUInteger MEGAGroupCallsPeersChangeLayout;
 
+extern NSString * const MEGACallMuteUnmuteOperationFailedNotification;
+
 #pragma mark - Add Your Phone Number
 
 extern const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount;

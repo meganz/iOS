@@ -178,7 +178,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
                                                   accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssert(callCoordinatorUseCase.muteUnmute_CalledTimes == 1)
+        XCTAssertEqual(callCoordinatorUseCase.muteUnmute_Calls, [true])
     }
     
     func testAction_muteMicrophoneForGroupWhenLastParticipantLeft() {
@@ -196,7 +196,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
                                                   accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssert(callCoordinatorUseCase.muteUnmute_CalledTimes == 1)
+        XCTAssertEqual(callCoordinatorUseCase.muteUnmute_Calls, [true])
     }
     
     func testAction_donotMuteMicrophoneForOneToOneWhenLastParticipantLeft() {
@@ -214,7 +214,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
                                                   accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         
         test(viewModel: viewModel, action: .participantRemoved, expectedCommands: [])
-        XCTAssert(callCoordinatorUseCase.muteUnmute_CalledTimes == 0)
+        XCTAssertEqual(callCoordinatorUseCase.muteUnmute_Calls, [])
     }
     
     func testAction_showHangOrEndCallDialog() {
@@ -234,6 +234,47 @@ final class MeetingContainerViewModelTests: XCTestCase {
         test(viewModel: viewModel, action: .endCallForAll, expectedCommands: [])
         XCTAssert(router.dismiss_calledTimes == 1)
     }
+    
+    func testMuteUnmuteOperationFailedNotification_withCallStateMutedAndPreviousMuteOperationFailure_shouldMatch() {
+        assertWhenMuteUnmuteOperationFailed(withMutedValue: true, hasLocalAudio: false, expectsMuteUnmuteCalls: [true])
+    }
+    
+    func testMuteUnmuteOperationFailedNotification_withCallStateUnmutedAndPreviousUnmuteOperationFailure_shouldMatch() {
+        assertWhenMuteUnmuteOperationFailed(withMutedValue: false, hasLocalAudio: true, expectsMuteUnmuteCalls: [false])
+    }
+    
+    func testMuteUnmuteOperationFailedNotification_withCallStateMutedAndPreviousUnmuteOperationFailure_shouldMatch() {
+        assertWhenMuteUnmuteOperationFailed(withMutedValue: false, hasLocalAudio: false, expectsMuteUnmuteCalls: [true])
+    }
+    
+    func testMuteUnmuteOperationFailedNotification_withCallStateUnmutedAndPreviousMuteOperationFailure_shouldMatch() {
+        assertWhenMuteUnmuteOperationFailed(withMutedValue: true, hasLocalAudio: true, expectsMuteUnmuteCalls: [false])
+    }
+    
+    // MARK: - Private methods
+    
+    private func assertWhenMuteUnmuteOperationFailed(
+        withMutedValue muted: Bool,
+        hasLocalAudio: Bool,
+        expectsMuteUnmuteCalls expectedCalls: [Bool],
+        line: UInt = #line
+    ) {
+        let callCoordinatorUseCase = MockCallCoordinatorUseCase()
+        let callUseCase = MockCallUseCase(call: CallEntity(hasLocalAudio: hasLocalAudio))
+        let viewModel = MeetingContainerViewModel(
+            callUseCase: callUseCase,
+            callCoordinatorUseCase: callCoordinatorUseCase
+        )
+
+        NotificationCenter.default.post(
+            name: .MEGACallMuteUnmuteOperationFailed,
+            object: nil,
+            userInfo: ["muted": muted]
+        )
+        
+        XCTAssertEqual(callCoordinatorUseCase.muteUnmute_Calls, expectedCalls, line: line)
+    }
+
 }
 
 final class MockMeetingContainerRouter: MeetingContainerRouting {
