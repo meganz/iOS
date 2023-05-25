@@ -84,8 +84,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     if (MEGASdkManager.sharedMEGASdk.mnz_shouldRequestAccountDetails) {
         [MEGASdkManager.sharedMEGASdk getAccountDetails];
