@@ -13,7 +13,7 @@ extension BackgroundStyle {
 }
 
 @discardableResult
-fileprivate func apply(style: BackgroundStyle) -> (UIView) -> UIView {
+private func apply(style: BackgroundStyle) -> (UIView) -> UIView {
     return { view in
         view.backgroundColor = style.backgroundColor.uiColor
         return view

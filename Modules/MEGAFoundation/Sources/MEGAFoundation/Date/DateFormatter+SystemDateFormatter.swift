@@ -29,9 +29,11 @@ public extension DateFormatter {
     }
     
     /// `1 Jan 1970 at 15:32`, `1 ene 1970 15:32`, `1970年1月1日 15:32`
-    @objc static func dateMediumTimeShort(calendar: Calendar? = nil,
-                                 timeZone: TimeZone? = nil,
-                                 locale: Locale? = nil) -> DateFormatting {
+    @objc static func dateMediumTimeShort(
+        calendar: Calendar? = nil,
+        timeZone: TimeZone? = nil,
+        locale: Locale? = nil
+    ) -> DateFormatting {
         systemDateFormatter(dateStyle: .medium,
                             timeStyle: .short,
                             isRelative: false,
@@ -65,9 +67,11 @@ public extension DateFormatter {
     }
     
     /// `15:32`
-    @objc static func timeShort(calendar: Calendar? = nil,
-                               timeZone: TimeZone? = nil,
-                               locale: Locale? = nil) -> DateFormatting {
+    @objc static func timeShort(
+        calendar: Calendar? = nil,
+        timeZone: TimeZone? = nil,
+        locale: Locale? = nil
+    ) -> DateFormatting {
         systemDateFormatter(dateStyle: .none,
                             timeStyle: .short,
                             isRelative: false,
@@ -79,12 +83,14 @@ public extension DateFormatter {
 
 // MARK: - Privates
 
-fileprivate func systemDateFormatter(dateStyle: DateFormatter.Style,
-                                     timeStyle: DateFormatter.Style,
-                                     isRelative: Bool,
-                                     calendar: Calendar?,
-                                     timeZone: TimeZone?,
-                                     locale: Locale?) -> DateFormatting {
+private func systemDateFormatter(
+    dateStyle: DateFormatter.Style,
+    timeStyle: DateFormatter.Style,
+    isRelative: Bool,
+    calendar: Calendar?,
+    timeZone: TimeZone?,
+    locale: Locale?
+) -> DateFormatting {
     let style = DateStyle.dateStyleFactory.systemStyle(ofDateStyle: dateStyle,
                                                        timeStyle: timeStyle,
                                                        relativeDateFormatting: isRelative,

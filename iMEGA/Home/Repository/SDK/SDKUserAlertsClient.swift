@@ -65,13 +65,13 @@ extension SDKUserAlertsClient {
     }
 }
 
-fileprivate func convert(_ megaUserAlertList: MEGAUserAlertList) -> [UserAlert] {
+private func convert(_ megaUserAlertList: MEGAUserAlertList) -> [UserAlert] {
     return (0..<megaUserAlertList.size).compactMap { index in
         UserAlert(withMEGAAlert: megaUserAlertList.usertAlert(at: index))
     }
 }
 
-fileprivate func convert(_ megaContactRequestList: MEGAContactRequestList) -> [ContactRequest] {
+private func convert(_ megaContactRequestList: MEGAContactRequestList) -> [ContactRequest] {
     (0..<megaContactRequestList.size.intValue).compactMap { index in
         ContactRequest(from: megaContactRequestList.contactRequest(at: index))
     }

@@ -49,7 +49,7 @@ struct ChatRoomsEmptyView: View {
     }
 }
 
-fileprivate struct ChatRoomsEmptyCenterView: View {
+private struct ChatRoomsEmptyCenterView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
     let imageAsset: ImageAsset?
@@ -81,7 +81,7 @@ fileprivate struct ChatRoomsEmptyCenterView: View {
     }
 }
 
-fileprivate struct ChatRoomsEmptyBottomButtonView: View {
+private struct ChatRoomsEmptyBottomButtonView: View {
     let name: String
     var height: CGFloat? = 50
     var backgroundColor = Color(red: 0, green: 0.66, blue: 0.52)

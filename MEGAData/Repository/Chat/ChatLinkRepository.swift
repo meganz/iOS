@@ -69,7 +69,7 @@ struct ChatLinkRepository: ChatLinkRepositoryProtocol {
     }
 }
 
-fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
+private final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
     private let sdk: MEGAChatSdk
     private let changeType: MEGAChatRequestType
     let chatId: HandleEntity

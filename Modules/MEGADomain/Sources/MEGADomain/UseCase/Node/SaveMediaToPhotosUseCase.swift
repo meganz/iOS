@@ -10,9 +10,11 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
     private let fileCacheRepository: U
     private let nodeRepository: V
 
-    public init(downloadFileRepository: T,
-         fileCacheRepository: U,
-         nodeRepository: V) {
+    public init(
+        downloadFileRepository: T,
+        fileCacheRepository: U,
+        nodeRepository: V
+    ) {
         self.downloadFileRepository = downloadFileRepository
         self.fileCacheRepository = fileCacheRepository
         self.nodeRepository = nodeRepository

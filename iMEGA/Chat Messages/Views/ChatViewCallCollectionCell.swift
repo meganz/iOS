@@ -52,9 +52,11 @@ class ChatViewCallCollectionCell: MessageContentCell {
         setupConstraints()
     }
 
-    override func configure(with message: MessageType,
-                   at indexPath: IndexPath,
-                   and messagesCollectionView: MessagesCollectionView) {
+    override func configure(
+        with message: MessageType,
+        at indexPath: IndexPath,
+        and messagesCollectionView: MessagesCollectionView
+    ) {
         
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 

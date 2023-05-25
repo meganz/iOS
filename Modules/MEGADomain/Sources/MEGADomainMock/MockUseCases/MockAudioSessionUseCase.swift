@@ -14,8 +14,20 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     private var configureInstantSoundsAudioSession_calledTimes: Int
     private var configureVideoAudioSession_calledTimes: Int
     
-    public init(isBluetoothAudioRouteAvailable: Bool = false, currentSelectedAudioPort: AudioPort = .builtInReceiver, audioPortOutput: AudioPort = .builtInReceiver, enableLoudSpeaker_calledTimes: Int = 0, disableLoudSpeaker_calledTimes: Int = 0, configureDefaultAudioSession_calledTimes: Int = 0, configureCallAudioSession_calledTimes: Int = 0, configureAudioPlayerAudioSession_calledTimes: Int = 0, configureChatDefaultAudioPlayerAudioSession_calledTimes: Int = 0, configureAudioRecorderAudioSession_calledTimes: Int = 0, configureInstantSoundsAudioSession_calledTimes: Int = 0,
-        configureVideoAudioSession_calledTimes: Int = 0) {
+    public init(
+        isBluetoothAudioRouteAvailable: Bool = false,
+        currentSelectedAudioPort: AudioPort = .builtInReceiver,
+        audioPortOutput: AudioPort = .builtInReceiver,
+        enableLoudSpeaker_calledTimes: Int = 0,
+        disableLoudSpeaker_calledTimes: Int = 0,
+        configureDefaultAudioSession_calledTimes: Int = 0,
+        configureCallAudioSession_calledTimes: Int = 0,
+        configureAudioPlayerAudioSession_calledTimes: Int = 0,
+        configureChatDefaultAudioPlayerAudioSession_calledTimes: Int = 0,
+        configureAudioRecorderAudioSession_calledTimes: Int = 0,
+        configureInstantSoundsAudioSession_calledTimes: Int = 0,
+        configureVideoAudioSession_calledTimes: Int = 0
+    ) {
         self.isBluetoothAudioRouteAvailable = isBluetoothAudioRouteAvailable
         self.currentSelectedAudioPort = currentSelectedAudioPort
         self.audioPortOutput = audioPortOutput

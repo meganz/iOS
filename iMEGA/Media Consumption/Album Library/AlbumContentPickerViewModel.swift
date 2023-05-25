@@ -144,8 +144,11 @@ final class AlbumContentPickerViewModel: ObservableObject {
         self.photoSourceLocation = selectedFilterLocation
     }
     
-    private func photoNodes(for location: PhotosFilterLocation, from cloudDrivePhotos: [NodeEntity],
-                       and cameraUploadPhotos: [NodeEntity]) -> [NodeEntity] {
+    private func photoNodes(
+        for location: PhotosFilterLocation,
+        from cloudDrivePhotos: [NodeEntity],
+        and cameraUploadPhotos: [NodeEntity]
+    ) -> [NodeEntity] {
         switch location {
         case .allLocations:
             return cloudDrivePhotos + cameraUploadPhotos

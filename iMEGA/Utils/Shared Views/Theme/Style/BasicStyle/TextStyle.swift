@@ -37,14 +37,14 @@ extension TextStyle {
     }
 }
 
-fileprivate func apply(style: TextStyle) -> (UILabel) -> UILabel {
+private func apply(style: TextStyle) -> (UILabel) -> UILabel {
     return { label in
         label.font = style.font.value
         return label
     }
 }
 
-fileprivate func apply(style: TextStyle) -> (UIButton) -> UIButton {
+private func apply(style: TextStyle) -> (UIButton) -> UIButton {
     return { button in
         button.titleLabel?.font = style.font.value
         return button
@@ -52,7 +52,7 @@ fileprivate func apply(style: TextStyle) -> (UIButton) -> UIButton {
 }
 
 typealias TextAttributes = [NSAttributedString.Key: Any]
-fileprivate func apply(style: TextStyle) -> (TextAttributes) -> TextAttributes {
+private func apply(style: TextStyle) -> (TextAttributes) -> TextAttributes {
     return { attributes in
         var copyAttributes = attributes
         copyAttributes[.font] = style.font.value
@@ -60,7 +60,7 @@ fileprivate func apply(style: TextStyle) -> (TextAttributes) -> TextAttributes {
     }
 }
 
-fileprivate func apply(style: TextStyle) -> (UITextField) -> UITextField {
+private func apply(style: TextStyle) -> (UITextField) -> UITextField {
     return { textField in
         textField.font = style.font.value
         return textField

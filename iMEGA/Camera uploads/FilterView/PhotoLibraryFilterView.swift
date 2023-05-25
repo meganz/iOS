@@ -100,7 +100,7 @@ struct PhotoLibraryFilterView: View {
     }
 }
 
-fileprivate struct PhotoLibraryFilterViewHeadline: View {
+private struct PhotoLibraryFilterViewHeadline: View {
     let title: String
     
     init(_ title: String) {

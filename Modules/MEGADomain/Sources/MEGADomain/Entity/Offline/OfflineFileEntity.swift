@@ -7,11 +7,13 @@ public struct OfflineFileEntity: Equatable {
     let fingerprint: String?
     let timestamp: Date?
     
-    public init(base64Handle: String,
-         localPath: String,
-         parentBase64Handle: String?,
-         fingerprint: String?,
-         timestamp: Date?) {
+    public init(
+        base64Handle: String,
+        localPath: String,
+        parentBase64Handle: String?,
+        fingerprint: String?,
+        timestamp: Date?
+    ) {
         self.base64Handle = base64Handle
         self.localPath = localPath
         self.parentBase64Handle = parentBase64Handle

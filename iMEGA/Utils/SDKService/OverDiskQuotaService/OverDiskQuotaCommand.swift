@@ -48,7 +48,7 @@ import MEGAData
     }
 }
 
-fileprivate final class OverDiskQuotaQueryTask {
+private final class OverDiskQuotaQueryTask {
 
     // MARK: - Errors
 
@@ -186,7 +186,7 @@ fileprivate final class OverDiskQuotaQueryTask {
     }
 }
 
-fileprivate struct OverDiskQuotaUserData {
+private struct OverDiskQuotaUserData {
     typealias Email = String
     typealias Deadline = Date
     typealias WarningDates = [Date]
@@ -198,12 +198,12 @@ fileprivate struct OverDiskQuotaUserData {
     var numberOfFilesOnCloud: FileCount
 }
 
-fileprivate struct OverDiskQuotaPlans {
+private struct OverDiskQuotaPlans {
     typealias AvailablePlans = [MEGAPlan]
     var availablePlans: AvailablePlans
 }
 
-fileprivate struct OverDiskQuotaStorageUsed {
+private struct OverDiskQuotaStorageUsed {
     typealias StorageUsedInBytes = Measurement<UnitDataStorage>
     var cloudStorageTaking: StorageUsedInBytes
 }

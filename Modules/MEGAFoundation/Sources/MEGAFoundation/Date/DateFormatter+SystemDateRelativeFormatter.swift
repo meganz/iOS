@@ -5,9 +5,11 @@ public extension DateFormatter {
     // MARK: - Relative date formatter, e.g. date in the next day will be "Tomorrow" etc.
     
     /// `Yesterday`,  `Today`, `Tomorrow`    /   `hoy`, `mañana`, `pasado mañana`    /   `昨天`, `今天`,  `明天`,  `后天`
-    @objc static func dateRelativeShort(calendar: Calendar? = nil,
-                                         timeZone: TimeZone? = nil,
-                                         locale: Locale? = nil) -> DateFormatting {
+    @objc static func dateRelativeShort(
+        calendar: Calendar? = nil,
+        timeZone: TimeZone? = nil,
+        locale: Locale? = nil
+    ) -> DateFormatting {
         systemDateFormatter(dateStyle: .short,
                             timeStyle: .none,
                             isRelative: true,
@@ -55,12 +57,14 @@ public extension DateFormatter {
 
 // MARK: - Privates
 
-fileprivate func systemDateFormatter(dateStyle: DateFormatter.Style,
-                                     timeStyle: DateFormatter.Style,
-                                     isRelative: Bool,
-                                     calendar: Calendar?,
-                                     timeZone: TimeZone?,
-                                     locale: Locale?) -> DateFormatting {
+private func systemDateFormatter(
+    dateStyle: DateFormatter.Style,
+    timeStyle: DateFormatter.Style,
+    isRelative: Bool,
+    calendar: Calendar?,
+    timeZone: TimeZone?,
+    locale: Locale?
+) -> DateFormatting {
     let style = DateStyle.dateStyleFactory.systemStyle(ofDateStyle: dateStyle,
                                                        timeStyle: timeStyle,
                                                        relativeDateFormatting: isRelative,

@@ -14,9 +14,11 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     private var nodesUpdateListenerRepo: NodesUpdateListenerProtocol
     private var nodesUpdateHandler: (([NodeEntity]) -> Void)?
     
-    public init(repo: FilesSearchRepositoryProtocol,
-         nodeFormat: NodeFormatEntity,
-         nodesUpdateListenerRepo: NodesUpdateListenerProtocol) {
+    public init(
+        repo: FilesSearchRepositoryProtocol,
+        nodeFormat: NodeFormatEntity,
+        nodesUpdateListenerRepo: NodesUpdateListenerProtocol
+    ) {
         self.repo = repo
         self.nodeFormat = nodeFormat
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
@@ -24,12 +26,14 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
         addNodesUpdateHandler()
     }
     
-    public func search(string: String?,
-                parent node: NodeEntity?,
-                supportCancel: Bool,
-                sortOrderType: SortOrderEntity,
-                cancelPreviousSearchIfNeeded: Bool,
-                completion: @escaping ([NodeEntity]?, Bool) -> Void) {
+    public func search(
+        string: String?,
+        parent node: NodeEntity?,
+        supportCancel: Bool,
+        sortOrderType: SortOrderEntity,
+        cancelPreviousSearchIfNeeded: Bool,
+        completion: @escaping ([NodeEntity]?, Bool) -> Void
+    ) {
         if cancelPreviousSearchIfNeeded {
             repo.cancelSearch()
         }

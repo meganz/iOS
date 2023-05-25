@@ -21,7 +21,7 @@ struct ScheduleMeetingCreationRecurrenceOptionsView: View {
     }
 }
 
-fileprivate struct RecurrenceOptionView: View {
+private struct RecurrenceOptionView: View {
     let name: String
     let isSelected: Bool
     

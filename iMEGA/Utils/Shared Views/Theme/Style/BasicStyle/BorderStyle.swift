@@ -18,7 +18,7 @@ extension BorderStyle {
 }
 
 @discardableResult
-fileprivate func apply(style: BorderStyle) -> (UIView) -> UIView {
+private func apply(style: BorderStyle) -> (UIView) -> UIView {
     return { view in
         view.layer.borderColor = style.color.uiColor.cgColor
         view.layer.borderWidth = style.width

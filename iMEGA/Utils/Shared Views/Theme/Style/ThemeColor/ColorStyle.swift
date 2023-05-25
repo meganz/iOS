@@ -50,7 +50,7 @@ extension ColorStyle {
     }
 }
 
-fileprivate func apply(style: ColorStyle) -> (UILabel) -> UILabel {
+private func apply(style: ColorStyle) -> (UILabel) -> UILabel {
     return { label in
         switch style.type {
         case .foreground: label.textColor = style.color.uiColor
@@ -61,7 +61,7 @@ fileprivate func apply(style: ColorStyle) -> (UILabel) -> UILabel {
     }
 }
 
-fileprivate func apply(style: ColorStyle, state: ButtonState) -> (UIButton) -> UIButton {
+private func apply(style: ColorStyle, state: ButtonState) -> (UIButton) -> UIButton {
     return { button in
         switch style.type {
         case .foreground:
@@ -72,7 +72,7 @@ fileprivate func apply(style: ColorStyle, state: ButtonState) -> (UIButton) -> U
     }
 }
 
-fileprivate func apply(style: ColorStyle) -> (TextAttributes) -> TextAttributes {
+private func apply(style: ColorStyle) -> (TextAttributes) -> TextAttributes {
     return { attributes in
         var copyAttributes = attributes
         switch style.type {
@@ -84,7 +84,7 @@ fileprivate func apply(style: ColorStyle) -> (TextAttributes) -> TextAttributes 
     }
 }
 
-fileprivate func apply(style: ColorStyle) -> (UITextField) -> UITextField {
+private func apply(style: ColorStyle) -> (UITextField) -> UITextField {
     return { textField in
         switch style.type {
         case .foreground: textField.textColor = style.color.uiColor
@@ -95,7 +95,7 @@ fileprivate func apply(style: ColorStyle) -> (UITextField) -> UITextField {
     }
 }
 
-fileprivate func apply(style: ColorStyle) -> (UIPageControl) -> UIPageControl {
+private func apply(style: ColorStyle) -> (UIPageControl) -> UIPageControl {
     return { pageControl in
         switch style.type {
         case .background: pageControl.backgroundColor = style.color.uiColor

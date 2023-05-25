@@ -62,7 +62,7 @@ struct UserImageRepository: UserImageRepositoryProtocol {
     }
 }
 
-fileprivate final class AvatarRequestDelegate: NSObject, MEGARequestDelegate {
+private final class AvatarRequestDelegate: NSObject, MEGARequestDelegate {
     private let completion: (MEGARequest) -> Void
     
     init(completion: @escaping (MEGARequest) -> Void) {
@@ -75,7 +75,7 @@ fileprivate final class AvatarRequestDelegate: NSObject, MEGARequestDelegate {
     }
 }
 
-fileprivate final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate {
+private final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate {
     private let handles: [HandleEntity]
     private let source: PassthroughSubject<[HandleEntity], Never>
     

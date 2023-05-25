@@ -84,11 +84,11 @@ only_rules:
       - no_space_in_method_call
       - redundant_optional_initialization
       - control_statement
+      - vertical_parameter_alignment
+      - private_over_fileprivate
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
       # - xctfail_message (16 issues)
-      # - vertical_parameter_alignment (50 issues)
-      # - private_over_fileprivate (54 issues)
 
     # Complex fixes or a ton of issues (>100 issues)
 

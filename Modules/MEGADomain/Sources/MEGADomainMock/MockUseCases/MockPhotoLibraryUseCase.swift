@@ -5,9 +5,11 @@ public struct MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
     private let allPhotosFromCloudDriveOnly: [NodeEntity]
     private let allPhotosFromCameraUpload: [NodeEntity]
     
-    public init(allPhotos: [NodeEntity] = [],
-         allPhotosFromCloudDriveOnly: [NodeEntity] = [],
-         allPhotosFromCameraUpload: [NodeEntity] = []) {
+    public init(
+        allPhotos: [NodeEntity] = [],
+        allPhotosFromCloudDriveOnly: [NodeEntity] = [],
+        allPhotosFromCameraUpload: [NodeEntity] = []
+    ) {
         self.allPhotos = allPhotos
         self.allPhotosFromCloudDriveOnly = allPhotosFromCloudDriveOnly
         self.allPhotosFromCameraUpload = allPhotosFromCameraUpload

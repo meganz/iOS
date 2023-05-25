@@ -177,7 +177,7 @@ public final class ChatRepository: ChatRepositoryProtocol {
     }
 }
 
-fileprivate class ChatListener: NSObject, MEGAChatDelegate {
+private class ChatListener: NSObject, MEGAChatDelegate {
     private let sdk: MEGAChatSdk
     
     init(sdk: MEGAChatSdk) {
@@ -194,7 +194,7 @@ fileprivate class ChatListener: NSObject, MEGAChatDelegate {
     }
 }
 
-fileprivate final class ChatStatusUpdateListener: ChatListener {
+private final class ChatStatusUpdateListener: ChatListener {
     private let source = PassthroughSubject<(HandleEntity, ChatStatusEntity), Never>()
     var monitor: AnyPublisher<(HandleEntity, ChatStatusEntity), Never> {
         source.eraseToAnyPublisher()
@@ -209,7 +209,7 @@ fileprivate final class ChatStatusUpdateListener: ChatListener {
     }
 }
 
-fileprivate final class ChatListItemUpdateListener: ChatListener {
+private final class ChatListItemUpdateListener: ChatListener {
     private let source = PassthroughSubject<ChatListItemEntity, Never>()
     
     var monitor: AnyPublisher<ChatListItemEntity, Never> {
@@ -221,7 +221,7 @@ fileprivate final class ChatListItemUpdateListener: ChatListener {
     }
 }
 
-fileprivate final class ChatConnectionUpdateListener: ChatListener {
+private final class ChatConnectionUpdateListener: ChatListener {
     private let source = PassthroughSubject<(ChatConnectionStatus, ChatIdEntity), Never>()
     
     var monitor: AnyPublisher<(ChatConnectionStatus, ChatIdEntity), Never> {
@@ -235,7 +235,7 @@ fileprivate final class ChatConnectionUpdateListener: ChatListener {
     }
 }
 
-fileprivate final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
+private final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
     private let sdk: MEGAChatSdk
     private let source = PassthroughSubject<CallEntity, Never>()
     
@@ -263,7 +263,7 @@ fileprivate final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
     }
 }
 
-fileprivate final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
+private final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
     private let sdk: MEGAChatSdk
     private let source = PassthroughSubject<(ChatRoomEntity, MEGAChatRequestType), Never>()
     
