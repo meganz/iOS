@@ -14,7 +14,6 @@
 
 static NSString *kFileName = @"kFileName";
 static NSString *kFileSize = @"kFileSize";
-static NSString *kDuration = @"kDuration";
 
 @interface NodeCollectionViewCell ()
 
@@ -36,7 +35,6 @@ static NSString *kDuration = @"kDuration";
 @property (weak, nonatomic) IBOutlet UIView *linkView;
 @property (weak, nonatomic) IBOutlet UIImageView *linkImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *videoIconView;
-@property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
 @property (weak, nonatomic) IBOutlet UIView *downloadedView;
 
@@ -222,11 +220,11 @@ static NSString *kDuration = @"kDuration";
     self.selectImageView.hidden = !multipleSelection;
     self.moreButton.hidden = multipleSelection;
     BOOL isNodeVideo = [self.viewModel isNodeVideoWithName:nameString];
-    self.durationLabel.hidden = self.videoIconView.hidden = !isNodeVideo;
-    if (!self.durationLabel.hidden) {
-        self.durationLabel.layer.cornerRadius = 4;
-        self.durationLabel.layer.masksToBounds = YES;
-        self.durationLabel.text = isNodeVideo ? [NSString mnz_stringFromTimeInterval:[item[kDuration] doubleValue]] : @"";
+    if (isNodeVideo) {
+        self.videoIconView.hidden = NO;
+        [self setDurationForVideoWithPath:pathForItem];
+    } else {
+        self.videoIconView.hidden = YES;
     }
     
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
