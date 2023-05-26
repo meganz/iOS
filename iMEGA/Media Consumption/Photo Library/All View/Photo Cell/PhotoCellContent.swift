@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGASwiftUI
 
 struct PhotoCellContent: View {
     @ObservedObject var viewModel: PhotoCellViewModel
@@ -12,9 +13,12 @@ struct PhotoCellContent: View {
         ZStack(alignment: .bottomTrailing) {
             image()
             
-            CheckMarkView(markedSelected: viewModel.isSelected)
-                .offset(x: -5, y: -5)
-                .opacity(viewModel.shouldShowEditState ? 1 : 0)
+            CheckMarkView(
+                markedSelected: viewModel.isSelected,
+                foregroundColor: viewModel.isSelected ? .green : Color(Colors.Photos.photoSeletionBorder.color)
+            )
+            .offset(x: -5, y: -5)
+            .opacity(viewModel.shouldShowEditState ? 1 : 0)
         }
         .favorite(viewModel.shouldShowFavorite)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
