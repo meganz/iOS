@@ -9497,16 +9497,13 @@
 		B6061FE528978B040094087E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				A861B8332907F5DB00AB06D4 /* Features */,
-				A89CE55328B7D23F002802BC /* MEGAData */,
-				B6061FE82897909C0094087E /* MEGADomain */,
-				B6A01BAA289A618500B503FD /* MEGAFoundation */,
-				946ACCC1299C099900E6C0F5 /* MEGAPresentation */,
+				B6FDEF7A2A204E8300276DD6 /* DataSource */,
+				B6FDEF782A204E7700276DD6 /* Domain */,
+				B6FDEF772A204E6700276DD6 /* Infrastracture */,
 				A8C3CEF629BB661D00891CE1 /* MEGASDK */,
-				B6FCDABA2898A86400319754 /* MEGASwift */,
-				B639953F2898CE9100EA88F1 /* MEGASwiftUI */,
-				B6826B662898F43900B2B8D0 /* MEGAUI */,
-				B65D17CB2899E07200D5AD33 /* MEGAUIKit */,
+				B6FDEF7C2A204E9600276DD6 /* Presentation */,
+				B6FDEF792A204E7D00276DD6 /* Repository */,
+				B6FDEF7B2A204E9000276DD6 /* UI */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -10558,6 +10555,57 @@
 				0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		B6FDEF772A204E6700276DD6 /* Infrastracture */ = {
+			isa = PBXGroup;
+			children = (
+				B6A01BAA289A618500B503FD /* MEGAFoundation */,
+				B6FCDABA2898A86400319754 /* MEGASwift */,
+			);
+			path = Infrastracture;
+			sourceTree = "<group>";
+		};
+		B6FDEF782A204E7700276DD6 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B6061FE82897909C0094087E /* MEGADomain */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		B6FDEF792A204E7D00276DD6 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				A89CE55328B7D23F002802BC /* MEGAData */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		B6FDEF7A2A204E8300276DD6 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		B6FDEF7B2A204E9000276DD6 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B639953F2898CE9100EA88F1 /* MEGASwiftUI */,
+				B6826B662898F43900B2B8D0 /* MEGAUI */,
+				B65D17CB2899E07200D5AD33 /* MEGAUIKit */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		B6FDEF7C2A204E9600276DD6 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				A861B8332907F5DB00AB06D4 /* Features */,
+				946ACCC1299C099900E6C0F5 /* MEGAPresentation */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		BF06E3E0243191B800B30FB7 /* Chat Messages */ = {
