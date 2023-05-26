@@ -11,9 +11,12 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         self.sdk = sdk
     }
     
-    public func shareAlbum(by id: HandleEntity) async throws -> String? {
-        try await withAsyncThrowingValue(in: { completion in
-            sdk.exportSet(id, delegate: RequestDelegate { result in
+    public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
+        if album.isLinkShared {
+            return sdk.publicLinkForExportedSet(bySid: album.id)
+        }
+        return try await withAsyncThrowingValue(in: { completion in
+            sdk.exportSet(album.id, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
                     completion(.success(request.link))
@@ -28,7 +31,7 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         })
     }
     
-    public func disableAlbumShare(by id: HandleEntity) async throws {
+    public func removeSharedLink(forAlbumId id: HandleEntity) async throws {
         try await withAsyncThrowingValue(in: { completion in
             sdk.disableExportSet(id, delegate: RequestDelegate { result in
                 switch result {

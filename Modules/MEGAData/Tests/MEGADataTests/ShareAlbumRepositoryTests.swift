@@ -5,11 +5,19 @@ import MEGADomain
 import MEGADataMock
 
 class ShareAlbumRepositoryTests: XCTestCase {
-    func testShareAlbum_onSuccess_shouldReturnLink() async throws {
+    func testShareAlbumLink_onAlbumThatsNotShared_shouldReturnSharedLink() async throws {
         let expectedLink = "the_shared_link"
         let mockSdk = MockSdk(link: expectedLink)
         let sut = ShareAlbumRepository(sdk: mockSdk)
-        let result = try await sut.shareAlbum(by: 1)
+        let result = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
+        XCTAssertEqual(result, expectedLink)
+    }
+    
+    func testShareAlbumLink_onAlbumThatsShared_shouldReturnExistingSharedLink() async throws {
+        let expectedLink = "the_existing_shared_link"
+        let mockSdk = MockSdk(link: expectedLink)
+        let sut = ShareAlbumRepository(sdk: mockSdk)
+        let result = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true)))
         XCTAssertEqual(result, expectedLink)
     }
     
@@ -17,7 +25,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBusinessPastDue)
         let sut = ShareAlbumRepository(sdk: mockSdk)
         do {
-            _ = try await sut.shareAlbum(by: 1)
+            _ = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
         } catch {
             XCTAssertEqual(error as? ShareAlbumErrorEntity, ShareAlbumErrorEntity.buisinessPastDue)
         }
@@ -27,7 +35,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBlocked)
         let sut = ShareAlbumRepository(sdk: mockSdk)
         do {
-            _ = try await sut.shareAlbum(by: 1)
+            _ = try await sut.shareAlbumLink(AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false)))
         } catch let error as GenericErrorEntity {
             XCTAssertNotNil(error)
         } catch {
@@ -37,14 +45,14 @@ class ShareAlbumRepositoryTests: XCTestCase {
     
     func testDisableAlbumShare_onSuccess_shouldComplete() async throws {
         let sut = ShareAlbumRepository(sdk: MockSdk())
-        try await sut.disableAlbumShare(by: 1)
+        try await sut.removeSharedLink(forAlbumId: 1)
     }
     
     func testDisableAlbumShare_onBuisinessPastDue_shouldThrowError() async {
         let mockSdk = MockSdk(megaSetError: .apiEBusinessPastDue)
         let sut = ShareAlbumRepository(sdk: mockSdk)
         do {
-            try await sut.disableAlbumShare(by: 1)
+            try await sut.removeSharedLink(forAlbumId: 1)
         } catch {
             XCTAssertEqual(error as? ShareAlbumErrorEntity, ShareAlbumErrorEntity.buisinessPastDue)
         }
@@ -54,7 +62,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let mockSdk = MockSdk(megaSetError: .apiEBlocked)
         let sut = ShareAlbumRepository(sdk: mockSdk)
         do {
-            try await sut.disableAlbumShare(by: 1)
+            try await sut.removeSharedLink(forAlbumId: 1)
         } catch let error as GenericErrorEntity {
             XCTAssertNotNil(error)
         } catch {
