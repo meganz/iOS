@@ -169,6 +169,10 @@ final class NodeActionBuilder {
     }
     
     func multiselectBuild() -> [NodeAction] {
+        guard !isTakedown else {
+            return selectedNodeCount == 1 ? takedownNodeActions() : [.moveToRubbishBinAction()]
+        }
+
         switch displayMode {
         case .photosAlbum:
             return normalAlbumActions()
