@@ -27,19 +27,27 @@ import MEGADomain
     }
     
     @objc func image(for extension: String) -> UIImage {
+        imageAsset(for: `extension`).image
+    }
+    
+    @objc func imageName(for extension: String) -> String {
+        imageAsset(for: `extension`).name
+    }
+    
+    private func imageAsset(for extension: String) -> ImageAsset {
         let ext = `extension`.lowercased()
         
         if ext.matches(regex: FileExtensionType.jpg.rawValue) {
-            return Asset.Images.Filetypes.image.image
+            return Asset.Images.Filetypes.image
         } else {
             let fileTypesDictionary = Helper.fileTypesDictionary()
         
             guard let fileTypeImage = fileTypesDictionary[ext] as? String,
                   !fileTypeImage.isEmpty else {
-                return Asset.Images.Filetypes.generic.image
+                return Asset.Images.Filetypes.generic
             }
             
-            return ImageAsset(name: "\(fileTypeImage)").image
+            return ImageAsset(name: fileTypeImage)
         }
     }
     
