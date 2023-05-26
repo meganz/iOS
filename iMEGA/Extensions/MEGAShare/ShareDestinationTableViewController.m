@@ -17,10 +17,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
-@property (weak, nonatomic) UITextField *activeTextField;
-
-@property (nonatomic, getter=isChatReady) BOOL chatReady;
-
 @end
 
 @implementation ShareDestinationTableViewController
@@ -44,6 +40,7 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     tapGesture.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:tapGesture];
+    [self registerCustomCells];
     
     self.chatReady = MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitOnlineSession && MEGASdkManager.sharedMEGAChatSdk.activeChatListItems.size == 0;
 }
@@ -87,118 +84,6 @@
     [self.view endEditing:YES];
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSUInteger rows = 0;
-    
-    if (section == 0) {
-        return 2;
-    } else if (section == 1) {
-        return [ShareAttachment attachmentsArray].count;
-    }
-    
-    return rows;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell;
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
-    
-    if (indexPath.section == 0) {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"destinationCell" forIndexPath:indexPath];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"destinationCell"];
-        }
-        
-        UIImageView *imageView = cell.contentView.subviews.firstObject;
-        UILabel *label = cell.contentView.subviews.lastObject;
-
-        
-        cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-        if (indexPath.row == 0) {
-            imageView.image = [UIImage imageNamed:@"upload"];
-            label.text = NSLocalizedString(@"uploadToMega", nil);
-            label.enabled = cell.userInteractionEnabled = YES;
-            cell.accessoryView = nil;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else if (indexPath.row == 1) {
-            imageView.image = [UIImage imageNamed:@"sendToChat"];
-            imageView.tintColor = UIColor.grayColor;
-            label.text = NSLocalizedString(@"general.sendToChat", nil);
-            label.enabled = cell.userInteractionEnabled = self.isChatReady;
-            
-            if (self.isChatReady) {
-                cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-                cell.accessoryView = nil;
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            } else {
-                cell.tintColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.5];
-                
-                UIActivityIndicatorView *activityIndicator = UIActivityIndicatorView.mnz_init;
-                [activityIndicator startAnimating];
-                cell.accessoryView = activityIndicator;
-            }
-        }
-    } else {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:@"fileCell" forIndexPath:indexPath];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"fileCell"];
-        }
-        
-        ShareAttachment *attachment = [[ShareAttachment attachmentsArray] objectAtIndex:indexPath.row];
-        NSString *extension;
-        if (attachment.type == ShareAttachmentTypeURL) {
-            extension = @"html";
-        } else {
-            extension = [attachment.name componentsSeparatedByString:@"."].lastObject;
-        }
-        UIImageView *imageView = cell.contentView.subviews.firstObject;
-        UITextField *textField = cell.contentView.subviews.lastObject;
-        
-        [imageView setImage:[NodeAssetsManager.shared imageFor:extension]];
-        textField.text = attachment.name;
-        textField.tag = indexPath.row;
-        textField.delegate = self;
-    }
-    
-    return cell;
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *sectionTitle = @"";
-    
-    if (section == 0) {
-        sectionTitle = NSLocalizedString(@"selectDestination", nil);
-    } else if (section == 1) {
-        NSString *format = NSLocalizedString(@"extensions.share.destination.section.files","Share extension section title that displays number of selected files to be shared to Mega.");
-        sectionTitle = [NSString stringWithFormat:format, [ShareAttachment attachmentsArray].count];
-    }
-    
-    return sectionTitle;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    NSString *sectionFooter = @"";
-    
-    if (section == 1) {
-        sectionFooter = NSLocalizedString(@"tapFileToRename", nil);
-    }
-    
-    return sectionFooter;
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-    if (section == 1) {
-        UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
-        footer.textLabel.textAlignment = NSTextAlignmentCenter;
-    }
-}
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -226,51 +111,10 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    if (self.activeTextField && self.activeTextField.isFirstResponder) {
-        [self.activeTextField resignFirstResponder];
-    }
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [self.shareViewController hideViewWithCompletion:^{
         [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Cancel tapped" code:-1 userInfo:nil]];
     }];
-}
-
-#pragma mark - UITextFieldDelegate
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.activeTextField = textField;
-    ShareAttachment *attachment = [[ShareAttachment attachmentsArray] objectAtIndex:textField.tag];
-    if (attachment.type == ShareAttachmentTypeURL) {
-        return;
-    }
-    
-    NSString *name = textField.text;
-    NSString *extension = [name componentsSeparatedByString:@"."].lastObject;
-
-    UITextPosition *beginning = textField.beginningOfDocument;
-    UITextRange *textRange;
-    if (extension.mnz_isEmpty) {
-        UITextPosition *end = textField.endOfDocument;
-        textRange = [textField textRangeFromPosition:beginning toPosition:end];
-    } else {
-        NSRange filenameRange = [name rangeOfString:@"." options:NSBackwardsSearch];
-        UITextPosition *beforeExtension = [textField positionFromPosition:beginning offset:filenameRange.location];
-        textRange = [textField textRangeFromPosition:beginning toPosition:beforeExtension];
-    }
-    textField.selectedTextRange = textRange;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    if ([ShareAttachment attachmentsArray].count > textField.tag) {
-        ([ShareAttachment attachmentsArray][textField.tag]).name = textField.text;
-    }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    self.activeTextField = nil;
-    
-    return YES;
 }
 
 #pragma mark - MEGAChatDelegate

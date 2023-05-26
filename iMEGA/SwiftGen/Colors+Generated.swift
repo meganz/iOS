@@ -138,6 +138,10 @@ internal enum Colors {
       internal static let blackAlpha10 = ColorAsset(name: "blackAlpha10")
       internal static let blackAlpha20 = ColorAsset(name: "blackAlpha20")
     }
+    internal enum View {
+      internal static let cellBackground = ColorAsset(name: "cellBackground")
+      internal static let textForeground = ColorAsset(name: "textForeground")
+    }
     internal enum White {
       internal static let eeeeee = ColorAsset(name: "EEEEEE")
       internal static let efefef = ColorAsset(name: "EFEFEF")
