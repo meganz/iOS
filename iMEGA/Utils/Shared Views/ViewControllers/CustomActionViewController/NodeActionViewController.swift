@@ -88,8 +88,10 @@ class NodeActionViewController: ActionSheetViewController {
         
         let nodesCount = nodes.count
         let linkedNodeCount = nodes.publicLinkedNodes().count
+        let containsDisputedFiles = nodes.filter { $0.isTakenDown() }.count > 0
         actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
+            .setIsTakedown(containsDisputedFiles)
             .setNodeSelectionType(selectionType, selectedNodeCount: nodesCount)
             .setLinkedNodeCount(linkedNodeCount)
             .setIsAllLinkedNode(linkedNodeCount == nodesCount)

@@ -188,6 +188,51 @@ class NodeActionBuilderTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
     }
+
+    func testTakeDownNode_onSingleFileSelection_shouldHaveDisputedActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 1)
+            .setIsTakedown(true)
+            .multiselectBuild()
+
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
+    }
+
+    func testTakeDownNode_onMultipleFilesSelection_shouldHaveOnlyMoveToBinAction() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 2)
+            .setIsTakedown(true)
+            .multiselectBuild()
+
+        XCTAssertTrue(isEqual(nodeActionTypes: [.moveToRubbishBin]))
+    }
+
+    func testTakeDownNode_onSingleFolderSelection_shouldHaveDisputedActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders, selectedNodeCount: 1)
+            .setIsTakedown(true)
+            .multiselectBuild()
+
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .disputeTakedown, .rename, .moveToRubbishBin]))
+    }
+
+    func testTakeDownNode_onMultipleFoldersSelection_shouldHaveOnlyMoveToBinAction() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders, selectedNodeCount: 2)
+            .setIsTakedown(true)
+            .multiselectBuild()
+
+        XCTAssertTrue(isEqual(nodeActionTypes: [.moveToRubbishBin]))
+    }
+
+    func testTakeDownNode_onMultipleFilesAndFoldersSelection_shouldHaveOnlyMoveToBinAction() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 2)
+            .setIsTakedown(true)
+            .multiselectBuild()
+
+        XCTAssertTrue(isEqual(nodeActionTypes: [.moveToRubbishBin]))
+    }
     
     //MARK: - Backup
     func testBackupNodeWithNoVersion() {
