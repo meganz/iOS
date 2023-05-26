@@ -39,4 +39,8 @@ extension AlbumEntity {
     public var systemAlbum: Bool {
         type == .raw || type == .gif || type == .favourite
     }
+    
+    public var isLinkShared: Bool {
+        sharedLinkStatus == .exported(true)
+    }
 }

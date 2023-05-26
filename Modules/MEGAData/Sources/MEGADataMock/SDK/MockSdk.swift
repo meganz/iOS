@@ -253,6 +253,10 @@ public final class MockSdk: MEGASdk {
                                   error: MockError(errorType: megaSetError))
     }
     
+    public override func publicLinkForExportedSet(bySid sid: MEGAHandle) -> String? {
+        link
+    }
+    
     public override func disableExportSet(_ sid: MEGAHandle, delegate: MEGARequestDelegate) {
         delegate.onRequestFinish?(self, request: MEGARequest(),
                                   error: MockError(errorType: megaSetError))

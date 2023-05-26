@@ -1,8 +1,8 @@
 import Foundation
 
 public protocol ShareAlbumUseCaseProtocol {
-    func share(album: AlbumEntity) async throws -> String?
-    func disableShare(album: AlbumEntity) async throws
+    func shareAlbumLink(_ album: AlbumEntity) async throws -> String?
+    func removeSharedLink(forAlbum album: AlbumEntity) async throws
 }
 
 public struct ShareAlbumUseCase: ShareAlbumUseCaseProtocol {
@@ -12,17 +12,17 @@ public struct ShareAlbumUseCase: ShareAlbumUseCaseProtocol {
         self.shareAlbumRepository = shareAlbumRepository
     }
     
-    public func share(album: AlbumEntity) async throws -> String? {
+    public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
         guard album.type == .user else {
             throw ShareAlbumErrorEntity.invalidAlbumType
         }
-        return try await shareAlbumRepository.shareAlbum(by: album.id)
+        return try await shareAlbumRepository.shareAlbumLink(album)
     }
     
-    public func disableShare(album: AlbumEntity) async throws {
+    public func removeSharedLink(forAlbum album: AlbumEntity) async throws {
         guard album.type == .user else {
             throw ShareAlbumErrorEntity.invalidAlbumType
         }
-        try await shareAlbumRepository.disableAlbumShare(by: album.id)
+        try await shareAlbumRepository.removeSharedLink(forAlbumId: album.id)
     }
 }

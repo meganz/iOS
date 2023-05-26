@@ -16,13 +16,13 @@ public struct MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
         self.publicAlbumContentsResult = publicAlbumContentsResult
     }
     
-    public func shareAlbum(by id: HandleEntity) async throws -> String? {
+    public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
         try await withCheckedThrowingContinuation {
             $0.resume(with: shareAlbumResult)
         }
     }
     
-    public func disableAlbumShare(by id: HandleEntity) async throws {
+    public func removeSharedLink(forAlbumId id: HandleEntity) async throws {
         try await withCheckedThrowingContinuation {
             $0.resume(with: disableAlbumShareResult)
         }
