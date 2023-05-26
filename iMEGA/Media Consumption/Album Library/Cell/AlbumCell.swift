@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGASwiftUI
 
 struct AlbumCell: View {
     @StateObject var viewModel: AlbumCellViewModel
@@ -16,9 +17,12 @@ struct AlbumCell: View {
                 ProgressView()
                     .opacity(viewModel.isLoading ? 1.0 : 0.0)
                 
-                CheckMarkView(markedSelected: viewModel.isSelected)
-                    .offset(x: -5, y: -5)
-                    .opacity(viewModel.shouldShowEditStateOpacity)
+                CheckMarkView(
+                    markedSelected: viewModel.isSelected,
+                    foregroundColor: viewModel.isSelected ? .green : Color(Colors.Photos.photoSeletionBorder.color)
+                )
+                .offset(x: -5, y: -5)
+                .opacity(viewModel.shouldShowEditStateOpacity)
             }
             
             VStack(alignment: .leading, spacing: 6) {

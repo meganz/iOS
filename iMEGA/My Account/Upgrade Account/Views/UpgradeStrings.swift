@@ -35,6 +35,28 @@ enum UpgradeStrings {
                     static let subscriptionDetails = "Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as  the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page."
                 }
             }
+            enum Plan {
+              enum Details {
+                static func storage(_ p1: String) -> String {
+                  return "Storage: \(p1)"
+                }
+                static func transfer(_ p1: String) -> String {
+                  return "Transfer: \(p1)"
+                }
+                enum Pricing {
+                  static func localCurrencyPerMonth(_ p1: String) -> String {
+                    return "\(p1)/month"
+                  }
+                  static func localCurrencyPerYear(_ p1: String) -> String {
+                    return "\(p1)/year"
+                  }
+                }
+              }
+              enum Tag {
+                static let currentPlan = "Current plan"
+                static let recommended = "Recommended"
+              }
+            }
         }
     }
 }

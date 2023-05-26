@@ -219,8 +219,17 @@ internal enum Colors {
     internal static let pasteImageBorder = ColorAsset(name: "pasteImageBorder")
   }
   internal enum UpgradeAccount {
+    internal enum Plan {
+      internal static let bodyBackground = ColorAsset(name: "bodyBackground")
+      internal static let borderTint = ColorAsset(name: "borderTint")
+      internal static let currentPlan = ColorAsset(name: "currentPlan")
+      internal static let headerBackground = ColorAsset(name: "headerBackground")
+      internal static let recommended = ColorAsset(name: "recommended")
+      internal static let unselectedTint = ColorAsset(name: "unselectedTint")
+    }
     internal static let primaryGrayText = ColorAsset(name: "primaryGrayText")
     internal static let primaryText = ColorAsset(name: "primaryText")
+    internal static let secondaryText = ColorAsset(name: "secondaryText")
     internal static let subMessageBackground = ColorAsset(name: "subMessageBackground")
   }
   internal enum Views {

@@ -33,3 +33,10 @@ extension AccountPlanEntity: Equatable {
         lhs.type == rhs.type && lhs.term == rhs.term
     }
 }
+
+extension AccountPlanEntity: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(type)
+        hasher.combine(term)
+    }
+}

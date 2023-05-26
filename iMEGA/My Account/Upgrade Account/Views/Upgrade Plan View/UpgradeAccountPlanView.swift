@@ -26,7 +26,14 @@ struct UpgradeAccountPlanView: View {
                                              selectedTermIndex: $viewModel.selectedTermIndex)
                     
                     Section {
+                        ForEach(viewModel.filteredPlanList, id: \.self) { plan in
+                            AccountPlanView(viewModel: viewModel.createAccountPlanViewModel(plan))
+                                .padding(.bottom, 5)
+                        }
+                        
                         UpgradeSectionFeatureOfProView()
+                            .padding(.top, 15)
+                        
                     } footer: {
                         if viewModel.isShowBuyButton {
                             VStack {
