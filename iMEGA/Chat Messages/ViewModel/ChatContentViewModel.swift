@@ -194,18 +194,18 @@ final class ChatContentViewModel: ViewModelType {
         chatCall = call
         
         switch call.status {
-        case .initial,.joining,.userNoPresent:
-            invokeCommand?(.startOrJoinCallCleanUp(false,scheduledMeetings))
+        case .initial, .joining, .userNoPresent:
+            invokeCommand?(.startOrJoinCallCleanUp(false, scheduledMeetings))
             invokeCommand?(.tapToReturnToCallCleanUp)
             invokeCommand?(.showStartOrJoinCallButton)
         case .inProgress:
-            invokeCommand?(.startOrJoinCallCleanUp(false,scheduledMeetings))
+            invokeCommand?(.startOrJoinCallCleanUp(false, scheduledMeetings))
             invokeCommand?(.initTimerForCall(call))
             invokeCommand?(.showCallEndTimerIfNeeded(call))
         case .connecting:
             invokeCommand?(.showTapToReturnToCall(Strings.Localizable.reconnecting))
         case .destroyed, .terminatingUserParticipation, .undefined:
-            invokeCommand?(.startOrJoinCallCleanUp(false,scheduledMeetings))
+            invokeCommand?(.startOrJoinCallCleanUp(false, scheduledMeetings))
             invokeCommand?(.tapToReturnToCallCleanUp)
         default:
             return

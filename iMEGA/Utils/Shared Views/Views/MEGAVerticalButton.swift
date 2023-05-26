@@ -50,10 +50,10 @@ final class MEGAVerticalButton: MEGAButton {
             badgeView.heightAnchor.constraint(equalToConstant: 18),
             badgeView.bottomAnchor.constraint(equalTo: imageView.topAnchor, constant: 14),
             badgeView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: (imageView.frame.width / 2) + 6),
-            badgeLabel.leadingAnchor.constraint(equalTo: badgeView.leadingAnchor , constant: 4),
-            badgeLabel.trailingAnchor.constraint(equalTo: badgeView.trailingAnchor , constant: -4),
-            badgeLabel.topAnchor.constraint(equalTo: badgeView.topAnchor , constant: 2),
-            badgeLabel.bottomAnchor.constraint(equalTo: badgeView.bottomAnchor , constant: -2)
+            badgeLabel.leadingAnchor.constraint(equalTo: badgeView.leadingAnchor, constant: 4),
+            badgeLabel.trailingAnchor.constraint(equalTo: badgeView.trailingAnchor, constant: -4),
+            badgeLabel.topAnchor.constraint(equalTo: badgeView.topAnchor, constant: 2),
+            badgeLabel.bottomAnchor.constraint(equalTo: badgeView.bottomAnchor, constant: -2)
         ])
     }
 }

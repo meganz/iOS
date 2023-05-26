@@ -38,7 +38,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
         case .onViewReady:
             invokeCommand?(.configView(actions: actions()))
         case .shareLinkAction:
-            containerViewModel?.dispatch(.shareLink(presenter: nil, sender: sender, completion: { _,_,_,_ in 
+            containerViewModel?.dispatch(.shareLink(presenter: nil, sender: sender, completion: { _, _, _, _ in 
                 containerViewModel?.dispatch(.hideOptionsMenu)
             }))
         case .renameAction:

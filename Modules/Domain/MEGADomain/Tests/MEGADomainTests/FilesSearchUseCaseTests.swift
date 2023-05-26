@@ -13,7 +13,7 @@ final class FilesSearchUseCaseTests: XCTestCase {
             NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true),
             NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true),
             NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true),
-            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true),
+            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true)
         ]
         
         let sut = FilesSearchUseCase(repo: MockFilesSearchRepository(photoNodes: nodes),

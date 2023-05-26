@@ -188,7 +188,7 @@ extension ChatViewController {
             }
         } else {
             addToChatViewController.transitioningDelegate = self
-            if UIDevice.current.deviceName() == "iPhone SE 1st" , #available(iOS 14.0, *) {
+            if UIDevice.current.deviceName() == "iPhone SE 1st", #available(iOS 14.0, *) {
                 // to fix https://testrail.systems.mega.nz/index.php?/tests/view/1052975
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     self.present(viewController: addToChatViewController)

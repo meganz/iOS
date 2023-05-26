@@ -6,7 +6,7 @@ final class UIActionTests: XCTestCase {
     
     func testCompareUIActionWith_sameData_equal() {
         let actionA = UIAction(title: "UIAction.A.Title", image: nil, identifier: UIAction.Identifier("UIAction.A"), attributes: .hidden, state: .on) { _ in }
-        let actionB = UIAction(title: "UIAction.A.Title", image: nil,  identifier: UIAction.Identifier("UIAction.A"), attributes: .hidden, state: .on) { _ in }
+        let actionB = UIAction(title: "UIAction.A.Title", image: nil, identifier: UIAction.Identifier("UIAction.A"), attributes: .hidden, state: .on) { _ in }
         XCTAssertTrue(actionA ~~ actionB)
     }
     
@@ -38,8 +38,8 @@ final class UIActionTests: XCTestCase {
         guard #available(iOS 15.0, *) else {
             throw XCTSkip("Required API is not available for this test.")
         }
-        let actionA = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.A.Subtitle",image: nil, attributes: .hidden) { _ in }
-        let actionB = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.B.Subtitle",image: nil, attributes: .hidden, state: .on) { _ in }
+        let actionA = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.A.Subtitle", image: nil, attributes: .hidden) { _ in }
+        let actionB = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.B.Subtitle", image: nil, attributes: .hidden, state: .on) { _ in }
         XCTAssertFalse(actionA ~~ actionB)
     }
 }

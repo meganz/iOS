@@ -60,7 +60,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         guard let message = messages[section] as? ChatMessage else {
             return .zero
         }
-        let list = MEGASdkManager.sharedMEGAChatSdk().messageReactions(forChat: message.chatRoom.chatId , messageId: message.message.messageId)
+        let list = MEGASdkManager.sharedMEGAChatSdk().messageReactions(forChat: message.chatRoom.chatId, messageId: message.message.messageId)
 
         if message.message.isManagementMessage || list?.size == 0 {
             return .zero

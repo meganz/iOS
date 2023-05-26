@@ -1,6 +1,6 @@
 import Foundation
 
-typealias AlbumElementRequestCompletion = (_ result: Result<(UInt,UInt), MEGAError>) -> Void
+typealias AlbumElementRequestCompletion = (_ result: Result<(UInt, UInt), MEGAError>) -> Void
 
 final class AlbumElementRequestDelegate: NSObject, MEGARequestDelegate {
     let completion: AlbumElementRequestCompletion
@@ -23,7 +23,7 @@ final class AlbumElementRequestDelegate: NSObject, MEGARequestDelegate {
         }
         
         if succeedCount + failedCount == numberOfCalls {
-            completion(.success((succeedCount,failedCount)))
+            completion(.success((succeedCount, failedCount)))
         }
     }
 }

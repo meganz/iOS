@@ -22,7 +22,7 @@ final class SearchFileHistoryUseCase: SearchFileHistoryUseCaseProtocol {
         .replaceExistingWithinDuration(Constant.oneDay),
         .appendingNewEntry,
         .sortedBySearchTime,
-        .excludingEntriesOver(Constant.maximumNumberOfHistoryEntries),
+        .excludingEntriesOver(Constant.maximumNumberOfHistoryEntries)
     ]
 
     private lazy var searchHistoryCache: [SearchFileHistoryEntryDomain] = []

@@ -24,7 +24,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(title: "Test Name meeting", type: .start, isMicrophoneEnabled: false),
+                .configView(title: "Test Name meeting", type: .start, isMicrophoneEnabled: false)
              ])
     }
     
@@ -53,7 +53,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
              expectedCommands: [
                 .loadingStartMeeting,
                 .loadingEndMeeting,
-                .configView(title: "Unit tests", type: .join, isMicrophoneEnabled: false),
+                .configView(title: "Unit tests", type: .join, isMicrophoneEnabled: false)
              ])
     }
     

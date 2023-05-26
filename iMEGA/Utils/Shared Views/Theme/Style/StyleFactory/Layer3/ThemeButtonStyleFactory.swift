@@ -108,14 +108,14 @@ private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
             return ButtonStatedStyle<BackgroundStyle>(stated: [
                 .normal: BackgroundStyle(backgroundColor: themeButtonBackgroundFactory.normalColor()),
                 .disabled: BackgroundStyle(backgroundColor: themeButtonBackgroundFactory.disabledColor()),
-                .highlighted: BackgroundStyle(backgroundColor: themeButtonBackgroundFactory.highlightedColor()),
+                .highlighted: BackgroundStyle(backgroundColor: themeButtonBackgroundFactory.highlightedColor())
             ])
         case .secondary:
             let themeButtonBackgroundFactory = colorFactory.themeButtonBackgroundFactory(.secondary)
             return  ButtonStatedStyle<BackgroundStyle>(stated: [
                .normal: BackgroundStyle(backgroundColor: themeButtonBackgroundFactory.normalColor()),
                .disabled: BackgroundStyle(backgroundColor: themeButtonBackgroundFactory.disabledColor()),
-               .highlighted: BackgroundStyle(backgroundColor: themeButtonBackgroundFactory.highlightedColor()),
+               .highlighted: BackgroundStyle(backgroundColor: themeButtonBackgroundFactory.highlightedColor())
            ])
         }
     }

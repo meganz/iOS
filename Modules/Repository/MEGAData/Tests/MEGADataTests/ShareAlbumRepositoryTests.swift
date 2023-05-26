@@ -85,7 +85,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let testCase = [(MEGAErrorType.apiENoent, SharedAlbumErrorEntity.resourceNotFound),
                         (.apiEInternal, .couldNotBeReadOrDecrypted),
                         (.apiEArgs, .malformed),
-                        (.apiEAccess, .permissionError),
+                        (.apiEAccess, .permissionError)
         ]
         
         let result = await withTaskGroup(of: Bool.self) { group in

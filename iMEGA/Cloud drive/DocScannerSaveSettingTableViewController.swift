@@ -272,7 +272,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                         popover.sourceRect = tableView.rectForRow(at: indexPath)
                     }
                     
-                    alert.addAction(UIAlertAction(title: Strings.Localizable.cancel , style: .cancel, handler: nil))
+                    alert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
                     
                     present(alert, animated: true, completion: nil)
                 }

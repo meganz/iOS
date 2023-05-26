@@ -16,7 +16,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
             NodeEntity(name: "test2.jpg", handle: 4, hasThumbnail: true, mediaType: .image),
             NodeEntity(name: "test3.png", handle: 5, hasThumbnail: true, mediaType: .image),
             NodeEntity(name: "test3.mp4", handle: 6, hasThumbnail: true, mediaType: .video),
-            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true, mediaType: .image),
+            NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: true, mediaType: .image)
         ]
         let gifNodes = nodes.filter { $0.name.contains(".gif") }
         let sut = AlbumContentsUseCase(
@@ -39,7 +39,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
             NodeEntity(name: "test3.png", handle: 4, hasThumbnail: true, mediaType: .image),
             NodeEntity(name: "sample3.raw", handle: 7, hasThumbnail: true, mediaType: .image),
             NodeEntity(name: "test.gif", handle: 2, hasThumbnail: true, mediaType: .image),
-            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true, mediaType: .video),
+            NodeEntity(name: "test3.mp4", handle: 5, hasThumbnail: true, mediaType: .video)
         ]
         let rawImageNodes = nodes.filter { $0.name.contains(".raw") }
         let sut = AlbumContentsUseCase(
@@ -108,7 +108,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
             .sorted(by: { $0.albumPhotoId ?? .invalid < $1.albumPhotoId ?? .invalid })
         XCTAssertEqual(result, [
             AlbumPhotoEntity(photo: node1, albumPhotoId: handle1),
-            AlbumPhotoEntity(photo: node2, albumPhotoId: handle2),
+            AlbumPhotoEntity(photo: node2, albumPhotoId: handle2)
         ])
     }
     
@@ -185,7 +185,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         )
         let expectedResult = [
             AlbumPhotoEntity(photo: imageNode, albumPhotoId: element1.id),
-            AlbumPhotoEntity(photo: videoNode, albumPhotoId: element2.id),
+            AlbumPhotoEntity(photo: videoNode, albumPhotoId: element2.id)
         ]
         let result = await sut.userAlbumPhotos(by: albumId)
             .sorted(by: { $0.albumPhotoId ?? .invalid < $1.albumPhotoId ?? .invalid })

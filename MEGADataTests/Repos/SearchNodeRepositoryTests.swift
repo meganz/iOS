@@ -19,7 +19,7 @@ final class SearchNodeRepositoryTests: XCTestCase {
         
         outgoingNodes = [MockNode(handle: 4, name: "test_outshares_1"),
                          MockNode(handle: 5, name: "test_outshares_2"),
-                         MockNode(handle: 6, name: "test_outshares_3"),
+                         MockNode(handle: 6, name: "test_outshares_3")
         ]
         
         publicLinksNodes = [MockNode(handle: 7, name: "test_public_link_1"),

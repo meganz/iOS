@@ -8,7 +8,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     func testAction_onViewReady_isMyselfModerator_isGroupMeeting() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let callUseCase = MockCallUseCase(call: CallEntity())
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom,callUseCase: callUseCase)
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
         let audioSessionUseCase = MockAudioSessionUseCase()
         let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
@@ -87,7 +87,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .front, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
                 .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
-                .microphoneMuted(muted: true),
+                .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
@@ -414,7 +414,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let router = MockMeetingFloatingPanelRouter()
         let mockAccountUseCase = MockAccountUseCase(contacts: [
             UserEntity(email: "user@email.com", handle: 101, visibility: .visible),
-            UserEntity(email: "user@email.com", handle: 102, visibility: .blocked),
+            UserEntity(email: "user@email.com", handle: 102, visibility: .blocked)
         ])
         let chatRoomUseCase = MockChatRoomUseCase(myPeerHandles: [101])
         let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: mockAccountUseCase, chatRoomUseCase: chatRoomUseCase)
@@ -560,7 +560,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .turnCamera(on: true),
              expectedCommands: [
-                .cameraTurnedOn(on: true),
+                .cameraTurnedOn(on: true)
              ])
         
     }
@@ -590,7 +590,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .turnCamera(on: false),
              expectedCommands: [
-                .cameraTurnedOn(on: false),
+                .cameraTurnedOn(on: false)
              ])
     }
     
@@ -797,7 +797,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let expectation = expectation(description: "testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled")
         viewModel.invokeCommand = { command in
             switch command {
-            case .configView(_ , _, _, _, let allowNonHostToAddParticipantsEnabled, _):
+            case .configView(_, _, _, _, let allowNonHostToAddParticipantsEnabled, _):
                 XCTAssertTrue(allowNonHostToAddParticipantsEnabled)
                 expectation.fulfill()
             default:
@@ -828,7 +828,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let expectation = expectation(description: "testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled")
         viewModel.invokeCommand = { command in
             switch command {
-            case .configView(_ , _, _, _, let allowNonHostToAddParticipantsEnabled, _):
+            case .configView(_, _, _, _, let allowNonHostToAddParticipantsEnabled, _):
                 XCTAssertFalse(allowNonHostToAddParticipantsEnabled)
                 expectation.fulfill()
             default:

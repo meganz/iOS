@@ -10,7 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "MEGASwift",
-            targets: ["MEGASwift"]),
+            targets: ["MEGASwift"])
     ],
     dependencies: [
     ],
@@ -20,6 +20,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "MEGASwiftTests",
-            dependencies: ["MEGASwift"]),
+            dependencies: ["MEGASwift"])
     ]
 )

@@ -9,7 +9,7 @@ final class NameCollisionViewModelTests: XCTestCase {
     lazy var nameCollisions = [
         NameCollisionEntity(parentHandle: parentHandle, name: "Node1", isFile: Bool.random()),
         NameCollisionEntity(parentHandle: parentHandle, name: "Node2", isFile: Bool.random()),
-        NameCollisionEntity(parentHandle: parentHandle, name: "Node3", isFile: Bool.random()),
+        NameCollisionEntity(parentHandle: parentHandle, name: "Node3", isFile: Bool.random())
     ]
     
     

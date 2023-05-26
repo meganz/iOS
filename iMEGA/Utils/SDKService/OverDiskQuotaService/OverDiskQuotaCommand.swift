@@ -108,7 +108,7 @@ private final class OverDiskQuotaQueryTask {
 
     private func fetchUserData(
         _ api: MEGASdk,
-        _ completion: @escaping (Result<OverDiskQuotaInfomationProtocol,OverDiskQuotaService.DataObtainingError>) -> Void
+        _ completion: @escaping (Result<OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         api.getUserData(with: MEGAGenericRequestDelegate(completion: { [weak self] (_, error) in
             guard let self = self else {

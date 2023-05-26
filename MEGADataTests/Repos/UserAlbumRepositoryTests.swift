@@ -152,14 +152,14 @@ final class UserAlbumRepositoryTests: XCTestCase {
         let set2 = MockMEGASet(handle: 2, userId: 0, coverId: 2)
         let set3 = MockMEGASet(handle: 3, userId: 0, coverId: 3)
         
-        return [set1,set2,set3]
+        return [set1, set2, set3]
     }
     
     private func sampleSetElements() -> [MockMEGASetElement] {
         let setElement1 = MockMEGASetElement(handle: 1, ownerId: 3, order: 0, nodeId: 1)
         let setElement2 = MockMEGASetElement(handle: 2, ownerId: 3, order: 0, nodeId: 2)
         
-        return [setElement1,setElement2]
+        return [setElement1, setElement2]
     }
     
     private func sampleNodes() -> [MockNode] {
@@ -167,6 +167,6 @@ final class UserAlbumRepositoryTests: XCTestCase {
         let node1 = MockNode(handle: 1, name: "Test1", parentHandle: 0)
         let node2 = MockNode(handle: 2, name: "Test2", parentHandle: 0)
         
-        return [node0,node1,node2]
+        return [node0, node1, node2]
     }
 }

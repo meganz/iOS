@@ -31,7 +31,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     func testLoadAlbumThumbnail_onThumbnailLoaded_loadingStateIsCorrect() throws {
         let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
-        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)),album: album, selection: AlbumSelection())
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)), album: album, selection: AlbumSelection())
         
         let exp = expectation(description: "loading should change during loading of albums")
         exp.expectedFulfillmentCount = 2
@@ -51,7 +51,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     
     func testLoadAlbumThumbnail_onLoadThumbnail_thumbnailContainerIsUpdatedWithLoadedImageIfContainerIsCurrentlyPlaceholder() throws {
         let thumbnail = ThumbnailEntity(url: imageURL, type: .thumbnail)
-        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)),album: album, selection: AlbumSelection())
+        let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(thumbnail)), album: album, selection: AlbumSelection())
         
         let exp = expectation(description: "thumbnail image changed")
         sut.$thumbnailContainer

@@ -58,7 +58,7 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     func testSystemAlbums_whenLoadingGifSystemAlbumMarkedAsFavourite_shouldReturnFavouriteAndGifAlbumEntity() async throws {
         let favouriteGifPhotos = [
-            NodeEntity(name: "1.gif", handle: 2, hasThumbnail: true, isFavourite: true, mediaType: .image),
+            NodeEntity(name: "1.gif", handle: 2, hasThumbnail: true, isFavourite: true, mediaType: .image)
         ]
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
@@ -102,7 +102,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let favouriteVideos = [
             NodeEntity(name: "b.mp4", handle: 3, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date, mediaType: .video),
             expectedCoverNode,
-            NodeEntity(name: "c.mp4", handle: 5, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date),
+            NodeEntity(name: "c.mp4", handle: 5, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date)
         ]
         let expectedFavouritesCount = (favouritePhotos + favouriteVideos).filter { $0.hasThumbnail && $0.mediaType != nil && $0.isFavourite }.count
         let sut = AlbumListUseCase(
@@ -138,7 +138,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let expectedAlbumCover = NodeEntity(handle: albumCoverNodeId)
         let expectedAlbums = [
             SetEntity(handle: albumId, userId: HandleEntity(2), coverId: albumSetCoverId,
-                      modificationTime: Date(), name: "Album 1"),
+                      modificationTime: Date(), name: "Album 1")
         ]
         let albumElement = SetElementEntity(handle: albumSetCoverId, ownerId: albumId, order: 2,
                                             nodeId: albumCoverNodeId, modificationTime: Date(), name: "Test")
@@ -161,7 +161,7 @@ final class AlbumListUseCaseTests: XCTestCase {
     func testUserAlbums_loadAlbumWithoutCover_coverIdIsNil() async {
         let expectedAlbums = [
             SetEntity(handle: 1, userId: HandleEntity(2), coverId: HandleEntity.invalid,
-                      modificationTime: Date(), name: "Album 1"),
+                      modificationTime: Date(), name: "Album 1")
         ]
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,
@@ -179,7 +179,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let albumId = HandleEntity(1)
         let expectedAlbums = [
             SetEntity(handle: albumId, userId: HandleEntity(2), coverId: HandleEntity.invalid,
-                      modificationTime: Date(), name: "Album 1"),
+                      modificationTime: Date(), name: "Album 1")
         ]
         let expectedAlbumCoverNode = NodeEntity(name: "Test 4.mov", handle: 4, modificationTime: try "2023-03-01T06:01:04Z".date)
         let albumPhotos = [
@@ -210,7 +210,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let albumId = HandleEntity(1)
         let expectedIsExported = true
         let expectedAlbums = [
-            SetEntity(handle: albumId, isExported: expectedIsExported),
+            SetEntity(handle: albumId, isExported: expectedIsExported)
         ]
         let sut = AlbumListUseCase(
             albumRepository: MockAlbumRepository.newRepo,

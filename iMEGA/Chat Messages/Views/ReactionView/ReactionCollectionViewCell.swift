@@ -27,7 +27,7 @@ class ReactionCollectionViewCell: UILabel {
         delegate.emojiLongPressed(emoji, sender: self)
     }
 
-    func configureCell(_ emoji: String,_ count: Int) {
+    func configureCell(_ emoji: String, _ count: Int) {
         self.emoji = emoji
         self.count = count
         
