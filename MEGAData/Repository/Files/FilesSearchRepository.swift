@@ -47,7 +47,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
                            sortOrderType: sortOrderType,
                            formatType: formatType) { nodes, fail in
             let nodes = nodes?.toNodeEntities()
-            completion(nodes,fail)
+            completion(nodes, fail)
         }
     }
     

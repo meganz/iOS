@@ -36,7 +36,7 @@ final class HandlerView: UIView {
             slideIndicatorView.heightAnchor.constraint(equalToConstant: 10),
             centerYAnchor.constraint(equalTo: slideIndicatorView.centerYAnchor),
             leadingAnchor.constraint(equalTo: slideIndicatorView.leadingAnchor),
-            trailingAnchor.constraint(equalTo: slideIndicatorView.trailingAnchor),
+            trailingAnchor.constraint(equalTo: slideIndicatorView.trailingAnchor)
         ])
 
         let config = RoundCornerShadowConfiguration(

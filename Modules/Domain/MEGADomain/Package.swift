@@ -28,6 +28,6 @@ let package = Package(
             dependencies: ["MEGADomain"]),
         .testTarget(
             name: "MEGADomainTests",
-            dependencies: ["MEGADomain", "MEGADomainMock"]),
+            dependencies: ["MEGADomain", "MEGADomainMock"])
     ]
 )

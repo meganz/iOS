@@ -33,7 +33,7 @@ final class ChangeTypeEntityMapperTests: XCTestCase {
         .deviceNames,
         .backupFolder,
         .cookieSetting,
-        .noCallKit,
+        .noCallKit
     ]
     
     func testChangeTypeMapper() {

@@ -66,7 +66,7 @@ final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {
         if let collectionView = collectionView {
             let collectionViewXOffset = ceil(CGFloat(currentPage) * collectionViewWidth)
             let collectionViewYOffset = collectionView.contentOffset.y
-            collectionView.contentOffset = CGPoint(x: collectionViewXOffset,y: collectionViewYOffset)
+            collectionView.contentOffset = CGPoint(x: collectionViewXOffset, y: collectionViewYOffset)
         }
         
         cellEstimatedCenterPoints = []

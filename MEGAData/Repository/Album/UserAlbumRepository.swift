@@ -170,7 +170,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     }
     
     // MARK: Album Cover
-    func updateAlbumCover(for albumId: HandleEntity,elementId: HandleEntity) async throws -> HandleEntity {
+    func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.putSetCover(albumId, eid: elementId, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }

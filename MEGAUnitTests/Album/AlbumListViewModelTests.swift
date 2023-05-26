@@ -38,7 +38,7 @@ final class AlbumListViewModelTests: XCTestCase {
             userAlbum4,
             userAlbum3,
             userAlbum2,
-            userAlbum1,
+            userAlbum1
         ])
     }
     
@@ -58,7 +58,7 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.albums, [
             favouriteAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Favourites.title),
             gifAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Gif.title),
-            rawAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Raw.title),
+            rawAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Raw.title)
         ])
     }
     

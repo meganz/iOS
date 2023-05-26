@@ -38,7 +38,7 @@ final class SlideIndicatorView: UIView {
             indicatorView.widthAnchor.constraint(equalToConstant: Constant.indicatorWidth),
             indicatorView.heightAnchor.constraint(equalToConstant: Constant.indicatorHeight),
             indicatorView.centerXAnchor.constraint(equalTo: indicatorParentView.centerXAnchor, constant: 0),
-            indicatorView.centerYAnchor.constraint(equalTo: indicatorParentView.centerYAnchor, constant: 0),
+            indicatorView.centerYAnchor.constraint(equalTo: indicatorParentView.centerYAnchor, constant: 0)
         ])
 
         setupAppearance(with: trait)

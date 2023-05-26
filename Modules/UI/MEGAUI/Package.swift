@@ -10,7 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "MEGAUI",
-            targets: ["MEGAUI"]),
+            targets: ["MEGAUI"])
     ],
     dependencies: [
     ],
@@ -20,6 +20,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "MEGAUITests",
-            dependencies: ["MEGAUI"]),
+            dependencies: ["MEGAUI"])
     ]
 )

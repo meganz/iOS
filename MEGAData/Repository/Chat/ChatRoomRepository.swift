@@ -117,7 +117,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         sdk.archiveChat(chatRoom.chatId, archive: archive)
     }
     
-    func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity,  messageId: HandleEntity) {
+    func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) {
         sdk.setMessageSeenForChat(chatRoom.chatId, messageId: messageId)
     }
     

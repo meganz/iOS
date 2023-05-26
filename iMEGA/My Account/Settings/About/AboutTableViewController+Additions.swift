@@ -18,7 +18,7 @@ extension AboutTableViewController {
     private func showAlert(withRelease release: AppDistributionRelease) {
         let title = "New Version Available"
         let message = "Version \(release.displayVersion)(\(release.buildVersion)) is available."
-        let alertController = UIAlertController(title: title,message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         alertController.addAction(
             UIAlertAction(title: "Update", style: .default) { _ in
@@ -34,7 +34,7 @@ extension AboutTableViewController {
     }
     
     private func showAlert(withError error: Error) {
-        let alertController = UIAlertController(title: "Error" ,message: error.localizedDescription, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         
         alertController.addAction(
             UIAlertAction(title: "OK", style: .cancel, handler: nil)

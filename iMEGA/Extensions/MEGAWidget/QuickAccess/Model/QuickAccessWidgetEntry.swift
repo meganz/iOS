@@ -14,6 +14,6 @@ struct QuickAccessWidgetEntry: TimelineEntry {
         QuickAccessWidgetEntry(date: Date(),
                                section: SectionDetail.defaultSection.title,
                                link: "mega://widget.quickaccess.reload",
-                               value: ([QuickAccessItemModel(thumbnail: Image(Asset.Images.Filetypes.generic.name),name: "File.txt", url: URL(fileURLWithPath: "mega://widget.quickaccess.reload"), image: nil, description: nil)], .connected))
+                               value: ([QuickAccessItemModel(thumbnail: Image(Asset.Images.Filetypes.generic.name), name: "File.txt", url: URL(fileURLWithPath: "mega://widget.quickaccess.reload"), image: nil, description: nil)], .connected))
     }
 }

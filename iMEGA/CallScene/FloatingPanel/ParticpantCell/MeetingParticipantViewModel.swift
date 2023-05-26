@@ -175,7 +175,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private func createAvatarUsingName(forParticipant participant: CallParticipantEntity) async throws -> UIImage? {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId) ,
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId),
               let name = try await chatRoomUserUseCase.userDisplayNames(
                 forPeerIds: [participant.participantId],
                 in: chatRoom

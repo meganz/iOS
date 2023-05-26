@@ -282,7 +282,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             viewModel: viewModel,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
-                                                      removedParticipantCount: 0 ,
+                                                      removedParticipantCount: 0,
                                                       addedParticipantNames: handleNamePairArray.map(\.name),
                                                       removedParticipantNames: [],
                                                       isOnlyMyselfRemainingInTheCall: false)
@@ -319,7 +319,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             viewModel: viewModel,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
-                                                      removedParticipantCount: 0 ,
+                                                      removedParticipantCount: 0,
                                                       addedParticipantNames: handleNamePairArray.map(\.name),
                                                       removedParticipantNames: [],
                                                       isOnlyMyselfRemainingInTheCall: false)
@@ -356,7 +356,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             viewModel: viewModel,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
             relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
-                                                      removedParticipantCount: 0 ,
+                                                      removedParticipantCount: 0,
                                                       addedParticipantNames: Array(handleNamePairArray.map(\.name).prefix(1)),
                                                       removedParticipantNames: [],
                                                       isOnlyMyselfRemainingInTheCall: false)

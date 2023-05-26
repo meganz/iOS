@@ -8,7 +8,7 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         let products = [MockSKProduct(identifier: "pro1.oneMonth", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro2.oneMonth", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro3.oneMonth", price: "1", priceLocale: Locale.current),
-                        MockSKProduct(identifier: "lite.oneMonth", price: "1", priceLocale: Locale.current),]
+                        MockSKProduct(identifier: "lite.oneMonth", price: "1", priceLocale: Locale.current)]
         let expectedResult = [AccountPlanEntity(type: .proI, term: .monthly),
                               AccountPlanEntity(type: .proII, term: .monthly),
                               AccountPlanEntity(type: .proIII, term: .monthly),

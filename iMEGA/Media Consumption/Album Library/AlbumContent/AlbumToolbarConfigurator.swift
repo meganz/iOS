@@ -107,7 +107,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             downloadItem,
             flexibleItem,
             shareLinkItem,
-            flexibleItem,
+            flexibleItem
         ]
         if isCreateAlbumFeatureFlagEnabled {
             barButtonItems.append(contentsOf: [
@@ -132,7 +132,7 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         case .user:
             barButtonItems.append(contentsOf: [
                 flexibleItem,
-                removeToRubbishBinItem,
+                removeToRubbishBinItem
             ])
         }
 

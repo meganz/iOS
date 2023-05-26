@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "MEGASDK",
     platforms: [
-        .iOS(.v14),
+        .iOS(.v14)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -15,7 +15,7 @@ let package = Package(
             targets: ["MEGASdkCpp"]),
         .library(
             name: "MEGASdk",
-            targets: ["MEGASdk"]),
+            targets: ["MEGASdk"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -101,7 +101,7 @@ let package = Package(
         .binaryTarget(
             name: "libzen",
             path: "Sources/MEGASDK/bindings/ios/3rdparty/lib/libzen.xcframework"
-        ),
+        )
     ],
     cxxLanguageStandard: .cxx14
 )

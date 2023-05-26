@@ -86,6 +86,8 @@ only_rules:
       - control_statement
       - vertical_parameter_alignment
       - private_over_fileprivate
+      - comma
+      - trailing_comma
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
       # - xctfail_message (16 issues)
@@ -93,8 +95,6 @@ only_rules:
     # Complex fixes or a ton of issues (>100 issues)
 
       # - type_name (91 issues) - complex because we need to rename stuff
-      # - comma (103 issues)
-      # - trailing_comma (123 issues)
       # - cyclomatic_complexity (132 issues)
         # A somewhat complex fix, because we need extract functions into smaller functions to avoid overly complex logic, but I think this should be enabled in the future so that we can refactor our code to make sure our functions are small, simple, and adhere to the SOLID principles.
       # - opening_brace (183 issues)

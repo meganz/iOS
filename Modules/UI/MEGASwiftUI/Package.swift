@@ -10,10 +10,10 @@ let package = Package(
     products: [
         .library(
             name: "MEGASwiftUI",
-            targets: ["MEGASwiftUI"]),
+            targets: ["MEGASwiftUI"])
     ],
     dependencies: [
-        .package(path: "../MEGAUI"),
+        .package(path: "../MEGAUI")
     ],
     targets: [
         .target(
@@ -21,6 +21,6 @@ let package = Package(
             dependencies: ["MEGAUI"]),
         .testTarget(
             name: "MEGASwiftUITests",
-            dependencies: ["MEGASwiftUI"]),
+            dependencies: ["MEGASwiftUI"])
     ]
 )

@@ -52,12 +52,12 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
             return ButtonStatedStyle<ColorStyle>(stated: [
                 .normal: normalTextColor,
                 .selected: selectedTextColor,
-                .highlighted: selectedTextColor,
+                .highlighted: selectedTextColor
             ])
         case .searchControllerCancel:
             let normalTextColor = colorFactory.textColor(.tertiary).asTextColorStyle
             return ButtonStatedStyle<ColorStyle>(stated: [
-                .normal: normalTextColor,
+                .normal: normalTextColor
             ])
         }
     }
@@ -68,12 +68,12 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
             return ButtonStatedStyle<TextStyle>(stated: [
                 .normal: textStyleFactory.textStyle(of: .subheadlineBold),
                 .highlighted: textStyleFactory.textStyle(of: .headlineBold),
-                .selected: textStyleFactory.textStyle(of: .headlineBold),
+                .selected: textStyleFactory.textStyle(of: .headlineBold)
             ])
         case .searchControllerCancel:
             return ButtonStatedStyle<TextStyle>(stated: [
                 .normal: textStyleFactory.textStyle(of: .body),
-                .selected: textStyleFactory.textStyle(of: .body),
+                .selected: textStyleFactory.textStyle(of: .body)
             ])
         }
     }
@@ -85,14 +85,14 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
             return ButtonStatedStyle<ColorStyle>(stated: [
                 .normal: clearColor,
                 .selected: clearColor,
-                .highlighted: clearColor,
+                .highlighted: clearColor
             ])
         case .searchControllerCancel:
             let clearColor = colorFactory.independent(.clear).asBackgroundColorStyle
             return ButtonStatedStyle<ColorStyle>(stated: [
                 .normal: clearColor,
                 .selected: clearColor,
-                .highlighted: clearColor,
+                .highlighted: clearColor
             ])
         }
     }

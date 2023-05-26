@@ -35,7 +35,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case updatedCameraPosition(position: CameraPositionEntity)
         case cameraTurnedOn(on: Bool)
         case reloadParticpantsList(participants: [CallParticipantEntity])
-        case updatedAudioPortSelection(audioPort: AudioPort,bluetoothAudioRouteAvailable: Bool)
+        case updatedAudioPortSelection(audioPort: AudioPort, bluetoothAudioRouteAvailable: Bool)
         case transitionToShortForm
         case updateAllowNonHostToAddParticipants(enabled: Bool)
     }

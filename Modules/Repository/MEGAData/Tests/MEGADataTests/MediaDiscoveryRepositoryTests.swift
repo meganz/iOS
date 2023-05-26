@@ -43,6 +43,6 @@ final class MediaDiscoveryRepositoryTests: XCTestCase {
         let node2 = MockNode(handle: 2, name: "Test2", parentHandle: 0)
         let node3 = MockNode(handle: 3, name: "Test3", parentHandle: 0)
         
-        return [node0,node1,node2,node3]
+        return [node0, node1, node2, node3]
     }
 }

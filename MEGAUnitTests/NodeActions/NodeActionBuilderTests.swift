@@ -1170,7 +1170,7 @@ class NodeActionBuilderTests: XCTestCase {
             .setDisplayMode(.photosFavouriteAlbum)
             .multiselectBuild()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos  , .favourite, .copy, .moveToRubbishBin]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .favourite, .copy, .moveToRubbishBin]))
     }
     
     func testMultiselectMediaFiles_PhotosTimeline() {

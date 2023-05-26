@@ -41,7 +41,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
             NodeEntity(name: "i.jpg", handle: 9, modificationTime: try "2018-09-18T22:01:04Z".date),
             NodeEntity(name: "j.jpg", handle: 10, modificationTime: try "2016-03-18T22:01:04Z".date),
             NodeEntity(name: "k.jpg", handle: 11, modificationTime: try "2016-03-18T20:01:04Z".date),
-            NodeEntity(name: "l.jpg", handle: 12, modificationTime: try "2016-03-15T10:01:04Z".date),
+            NodeEntity(name: "l.jpg", handle: 12, modificationTime: try "2016-03-15T10:01:04Z".date)
         ]
             .toPhotoLibrary(withSortType: .newest, in: .GMT)
             .photoMonthSections
@@ -58,7 +58,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
             NodeEntity(name: "i.jpg", handle: 9, modificationTime: try "2018-09-18T22:01:04Z".date),
             NodeEntity(name: "j.jpg", handle: 10, modificationTime: try "2016-03-18T22:01:04Z".date),
             NodeEntity(name: "k.jpg", handle: 11, modificationTime: try "2016-03-18T20:01:04Z".date),
-            NodeEntity(name: "l.jpg", handle: 120000, modificationTime: try "2016-03-15T10:01:04Z".date),
+            NodeEntity(name: "l.jpg", handle: 120000, modificationTime: try "2016-03-15T10:01:04Z".date)
         ]
             .toPhotoLibrary(withSortType: .newest, in: .GMT)
             .photoMonthSections
@@ -98,7 +98,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
         let newCategories = [
             NodeEntity(name: "a.jpg", handle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:01:04Z".date),
             NodeEntity(name: "b.jpg", handle: 2, isFavourite: true, modificationTime: try "2022-07-18T22:01:04Z".date),
-            NodeEntity(name: "c.mov", handle: 3, hasPreview: true, modificationTime: try "2022-04-18T22:01:04Z".date),
+            NodeEntity(name: "c.mov", handle: 3, hasPreview: true, modificationTime: try "2022-04-18T22:01:04Z".date)
         ]
             .toPhotoLibrary(withSortType: .newest, in: .GMT)
             .photoMonthSections
@@ -115,7 +115,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
             NodeEntity(name: "e.jpg", handle: 5, modificationTime: try "2021-01-18T22:01:04Z".date),
             NodeEntity(name: "f.jpg", handle: 6, modificationTime: try "2020-12-18T22:01:04Z".date),
             NodeEntity(name: "g.jpg", handle: 7, modificationTime: try "2020-10-18T22:01:04Z".date),
-            NodeEntity(name: "h.jpg", handle: 8, modificationTime: try "2020-10-15T22:01:04Z".date),
+            NodeEntity(name: "h.jpg", handle: 8, modificationTime: try "2020-10-15T22:01:04Z".date)
         ]
             .toPhotoLibrary(withSortType: .newest, in: .GMT)
             .photoMonthSections
@@ -128,7 +128,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
             NodeEntity(name: "e.jpg", handle: 5, modificationTime: try "2021-01-18T22:01:04Z".date),
             NodeEntity(name: "f.jpg", handle: 6, modificationTime: try "2020-12-18T22:01:04Z".date),
             NodeEntity(name: "g.jpg", handle: 7, modificationTime: try "2020-10-18T22:01:04Z".date),
-            NodeEntity(name: "h.jpg", handle: 8, modificationTime: try "2020-10-15T22:01:04Z".date),
+            NodeEntity(name: "h.jpg", handle: 8, modificationTime: try "2020-10-15T22:01:04Z".date)
         ]
             .toPhotoLibrary(withSortType: .newest, in: .GMT)
             .photoMonthSections
@@ -199,7 +199,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
             NodeEntity(name: "g.jpg", handle: 7, modificationTime: try "2020-10-18T22:01:04Z".date),
             NodeEntity(name: "h.jpg", handle: 8, modificationTime: try "2020-10-17T22:01:04Z".date),
             NodeEntity(name: "i.jpg", handle: 9, modificationTime: try "2020-10-16T22:01:04Z".date),
-            NodeEntity(name: "j.jpg", handle: 10, modificationTime: try "2020-10-12T22:01:04Z".date),
+            NodeEntity(name: "j.jpg", handle: 10, modificationTime: try "2020-10-12T22:01:04Z".date)
         ]
             .toPhotoLibrary(withSortType: .newest, in: .GMT)
             .photoMonthSections
@@ -214,7 +214,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
             NodeEntity(name: "g.jpg", handle: 7, modificationTime: try "2020-10-18T22:01:04Z".date),
             NodeEntity(name: "h.jpg", handle: 8, hasThumbnail: true, modificationTime: try "2020-10-17T22:01:04Z".date),
             NodeEntity(name: "i.jpg", handle: 9, modificationTime: try "2020-10-16T22:01:04Z".date),
-            NodeEntity(name: "j.jpg", handle: 10, hasPreview: true, modificationTime: try "2020-10-12T22:01:04Z".date),
+            NodeEntity(name: "j.jpg", handle: 10, hasPreview: true, modificationTime: try "2020-10-12T22:01:04Z".date)
         ]
             .toPhotoLibrary(withSortType: .newest, in: .GMT)
             .photoMonthSections
@@ -225,7 +225,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
             NodeEntity(name: "c.mov", handle: 3, hasThumbnail: true, modificationTime: try "2022-08-16T22:01:04Z".date),
             NodeEntity(name: "d.mp4", handle: 4, hasPreview: true, modificationTime: try "2022-08-15T22:01:04Z".date),
             NodeEntity(name: "h.jpg", handle: 8, hasThumbnail: true, modificationTime: try "2020-10-17T22:01:04Z".date),
-            NodeEntity(name: "j.jpg", handle: 10, hasPreview: true, modificationTime: try "2020-10-12T22:01:04Z".date),
+            NodeEntity(name: "j.jpg", handle: 10, hasPreview: true, modificationTime: try "2020-10-12T22:01:04Z".date)
         ]
         
         for node in visibleAndRefreshableNodes {

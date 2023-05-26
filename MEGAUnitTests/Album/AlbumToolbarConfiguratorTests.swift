@@ -108,7 +108,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
             sut.flexibleItem,
             sut.sendToChatItem,
             sut.flexibleItem,
-            sut.favouriteItem,
+            sut.favouriteItem
         ])
     }
     
@@ -135,7 +135,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
             sut.flexibleItem,
             sut.sendToChatItem,
             sut.flexibleItem,
-            sut.removeToRubbishBinItem,
+            sut.removeToRubbishBinItem
         ])
     }
     

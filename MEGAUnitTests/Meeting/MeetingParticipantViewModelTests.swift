@@ -17,7 +17,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
                                                     chatRoomUserUseCase: userUseCase,
-                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
+                                                    megaHandleUseCase: megaHandleUseCase) { _, _ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -39,7 +39,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
                                                     chatRoomUserUseCase: userUseCase,
-                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
+                                                    megaHandleUseCase: megaHandleUseCase) { _, _ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -61,7 +61,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
                                                     chatRoomUserUseCase: userUseCase,
-                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
+                                                    megaHandleUseCase: megaHandleUseCase) { _, _ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -83,7 +83,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
                                                     chatRoomUserUseCase: userUseCase,
-                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
+                                                    megaHandleUseCase: megaHandleUseCase) { _, _ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -105,7 +105,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
                                                     chatRoomUserUseCase: userUseCase,
-                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
+                                                    megaHandleUseCase: megaHandleUseCase) { _, _ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -127,7 +127,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
                                                     chatRoomUserUseCase: userUseCase,
-                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
+                                                    megaHandleUseCase: megaHandleUseCase) { _, _ in }
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
@@ -149,7 +149,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
                                                     chatRoomUserUseCase: userUseCase,
-                                                    megaHandleUseCase: MockMEGAHandleUseCase()) { _,_ in completionBlockCalled = true }
+                                                    megaHandleUseCase: MockMEGAHandleUseCase()) { _, _ in completionBlockCalled = true }
         test(viewModel: viewModel, action: .contextMenuTapped(button: UIButton()), expectedCommands: [])
         XCTAssert(completionBlockCalled, "Context menu completion block not called")
     }
@@ -170,7 +170,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
                                                     accountUseCase: accountUseCase,
                                                     chatRoomUseCase: chatRoomUseCase,
                                                     chatRoomUserUseCase: userUseCase,
-                                                    megaHandleUseCase: megaHandleUseCase) { _,_ in }
+                                                    megaHandleUseCase: megaHandleUseCase) { _, _ in }
         viewModel.dispatch(.onViewReady)
         await viewModel.loadNameTask?.value
         userImageUseCase.avatarChangePublisher.send([100])

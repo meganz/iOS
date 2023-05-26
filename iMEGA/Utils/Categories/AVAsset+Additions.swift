@@ -29,7 +29,7 @@ public extension AVAsset {
         }
     }
     
-    func loadMetadata(completion: @escaping ((_ name: String?,_ artist: String?,_ album: String?,_ artwork: Data?) -> Void)) {
+    func loadMetadata(completion: @escaping ((_ name: String?, _ artist: String?, _ album: String?, _ artwork: Data?) -> Void)) {
         
         loadAttributeAsynchronously(.commonMetadata) {
             guard let metadata = self.loadedAttributeValue(for: .commonMetadata) as [AVMetadataItem]? else {

@@ -107,7 +107,7 @@ final class ImageScrollView: UIScrollView {
     }
     
     private func maximumContentOffset() -> CGPoint {
-        return CGPoint(x: contentSize.width - bounds.width,y:contentSize.height - bounds.height)
+        return CGPoint(x: contentSize.width - bounds.width, y:contentSize.height - bounds.height)
     }
     
     private func minimumContentOffset() -> CGPoint {

@@ -48,7 +48,7 @@ final class PhotosViewModelTests: XCTestCase {
             NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true),
             NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 2, hasThumbnail: false),
             NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 3, hasThumbnail: false),
-            NodeEntity(nodeType:.file, name:"TestImage1.png", handle:5, parentHandle: 4, hasThumbnail: true),
+            NodeEntity(nodeType:.file, name:"TestImage1.png", handle:5, parentHandle: 4, hasThumbnail: true)
         ]
         
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())

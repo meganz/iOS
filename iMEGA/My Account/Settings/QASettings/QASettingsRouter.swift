@@ -31,7 +31,7 @@ struct QASettingsRouter: QASettingsRouting {
     }
     
     func showAlert(withTitle title: String, message: String, actions: [UIAlertAction]) {
-        let alertController = UIAlertController(title: title,message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         actions.forEach(alertController.addAction)
         presenter?.present(alertController, animated: true, completion: nil)
     }

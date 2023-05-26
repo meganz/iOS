@@ -11,7 +11,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MEGAPresentation",
-            targets: ["MEGAPresentation"]),
+            targets: ["MEGAPresentation"])
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain")
@@ -24,6 +24,6 @@ let package = Package(
             dependencies: ["MEGADomain"]),
         .testTarget(
             name: "MEGAPresentationTests",
-            dependencies: ["MEGAPresentation"]),
+            dependencies: ["MEGAPresentation"])
     ]
 )

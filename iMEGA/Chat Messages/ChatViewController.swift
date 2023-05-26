@@ -40,7 +40,7 @@ class ChatViewController: MessagesViewController {
     private(set) lazy var tonePlayer = TonePlayer()
     
     lazy var exportBarButtonItem: UIBarButtonItem = {
-        let exportBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.export.image.imageFlippedForRightToLeftLayoutDirection(), style: .done,  target: self, action: #selector(ChatViewController.exportSelectedMessages))
+        let exportBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.export.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.exportSelectedMessages))
         return exportBarButtonItem
     }()
     lazy var forwardBarButtonItem: UIBarButtonItem = {

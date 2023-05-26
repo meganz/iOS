@@ -14,7 +14,7 @@ final class TransferRepositoryTests: XCTestCase {
     
     func testTransferUpload() async throws {
         let parent = NodeEntity(handle: 12345)
-        let transfer = try await sut.uploadFile(at: URL(fileURLWithPath: "/path/file.txt") , to: parent)
+        let transfer = try await sut.uploadFile(at: URL(fileURLWithPath: "/path/file.txt"), to: parent)
         XCTAssertEqual(transfer.parentHandle, parent.handle)
     }
 }

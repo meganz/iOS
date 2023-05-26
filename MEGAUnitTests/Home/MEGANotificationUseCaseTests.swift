@@ -46,13 +46,13 @@ extension SDKUserAlertsClient {
                 setIrrelevant(.random),
                 setSeen(.random),
                 setIrrelevant(setSeen(.random)),
-                setIrrelevant(setNotSeen(.random)),
+                setIrrelevant(setNotSeen(.random))
             ]
 
         }, contactRequest: { () -> [ContactRequest] in
             return [
                 .random,
-                .random,
+                .random
             ]
         }, userAlertsUpdate: { _ in
 
