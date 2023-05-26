@@ -391,8 +391,12 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                             })
                         }
                     }
-                    if completionCounter == self.docs!.count - 1 {
-                        SVProgressHUD.showSuccess(withStatus: Strings.Localizable.sharedSuccessfully)
+                    if completionCounter == paths.count - 1 {
+                        let receiverCount = chats.count + users.count
+                        let fileName = self.currentFileName ?? self.originalFileName
+                        let message = Strings.Localizable.Share.Message.SendToChat.withOneFile(receiverCount)
+                            .replacingOccurrences(of: "[A]", with: fileName)
+                        SVProgressHUD.showSuccess(withStatus: message)
                     }
                     completionCounter += 1
                 }
