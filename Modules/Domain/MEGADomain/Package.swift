@@ -16,8 +16,8 @@ let package = Package(
             targets: ["MEGADomainMock"])
     ],
     dependencies: [
-        .package(path: "../MEGASwift"),
-        .package(path: "../MEGAFoundation")
+        .package(path: "../../Infrastracture/MEGASwift"),
+        .package(path: "../../Infrastracture/MEGAFoundation")
     ],
     targets: [
         .target(

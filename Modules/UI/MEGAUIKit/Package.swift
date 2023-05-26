@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../MEGAUI"),
-        .package(path: "../MEGASwift")
+        .package(path: "../../Infrastracture/MEGASwift")
     ],
     targets: [
         .target(
