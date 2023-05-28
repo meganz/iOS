@@ -1313,6 +1313,22 @@
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85B7AC42A14F5C7002B1D6A /* MEGAApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
+		A85ED1FB2A20B5940036C0E5 /* MEGASDK in Resources */ = {isa = PBXBuildFile; fileRef = A85ED1FA2A20B5920036C0E5 /* MEGASDK */; };
+		A85ED2012A20C1260036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FC2A20C1250036C0E5 /* libvideoframebuffer_objc.xcframework */; };
+		A85ED2022A20C1260036C0E5 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FD2A20C1250036C0E5 /* libvideocapture_objc.xcframework */; };
+		A85ED2032A20C1260036C0E5 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */; };
+		A85ED2042A20C1260036C0E5 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FF2A20C1260036C0E5 /* libnative_video.xcframework */; };
+		A85ED2052A20C1260036C0E5 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED2002A20C1260036C0E5 /* libnative_api.xcframework */; };
+		A85ED2062A20C12E0036C0E5 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED2002A20C1260036C0E5 /* libnative_api.xcframework */; };
+		A85ED2072A20C12E0036C0E5 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FF2A20C1260036C0E5 /* libnative_video.xcframework */; };
+		A85ED2082A20C12E0036C0E5 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FD2A20C1250036C0E5 /* libvideocapture_objc.xcframework */; };
+		A85ED2092A20C12E0036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FC2A20C1250036C0E5 /* libvideoframebuffer_objc.xcframework */; };
+		A85ED20A2A20C12E0036C0E5 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */; };
+		A85ED20B2A20C1370036C0E5 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED2002A20C1260036C0E5 /* libnative_api.xcframework */; };
+		A85ED20C2A20C1370036C0E5 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FF2A20C1260036C0E5 /* libnative_video.xcframework */; };
+		A85ED20D2A20C1370036C0E5 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FD2A20C1250036C0E5 /* libvideocapture_objc.xcframework */; };
+		A85ED20E2A20C1370036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FC2A20C1250036C0E5 /* libvideoframebuffer_objc.xcframework */; };
+		A85ED20F2A20C1370036C0E5 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */; };
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A863223F29091456004FED9B /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A863223E29091456004FED9B /* Settings */; };
 		A868537929CA1674006C7A58 /* ThumbnailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9199F326E7CAF600402358 /* ThumbnailRepository.swift */; };
@@ -1381,21 +1397,6 @@
 		A8C1B73E27734A22007095F4 /* OfflineTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */; };
 		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
 		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
-		A8C3CF1029BB898400891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
-		A8C3CF1129BB898400891CE1 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */; };
-		A8C3CF1229BB898400891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
-		A8C3CF1729BB898400891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
-		A8C3CF1829BB898400891CE1 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */; };
-		A8C3CF1C29BB898900891CE1 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */; };
-		A8C3CF1D29BB898900891CE1 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */; };
-		A8C3CF2029BB898900891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
-		A8C3CF2129BB898900891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
-		A8C3CF2329BB898900891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
-		A8C3CF2829BB898D00891CE1 /* libnative_api.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */; };
-		A8C3CF2929BB898D00891CE1 /* libnative_video.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */; };
-		A8C3CF2C29BB898D00891CE1 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */; };
-		A8C3CF2D29BB898D00891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */; };
-		A8C3CF2F29BB898D00891CE1 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */; };
 		A8C4754D299A66AF0074511F /* TransferRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8A5A42990F964008518BE /* TransferRepository.swift */; };
 		A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BA146B29927784004389FE /* NodeActionRepository.swift */; };
 		A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
@@ -3789,6 +3790,12 @@
 		A85D93BA2045751E0066F45B /* ChatVideoQualityTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoQualityTableViewController.h; sourceTree = "<group>"; };
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
+		A85ED1FA2A20B5920036C0E5 /* MEGASDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASDK; sourceTree = "<group>"; };
+		A85ED1FC2A20C1250036C0E5 /* libvideoframebuffer_objc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libvideoframebuffer_objc.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libvideoframebuffer_objc.xcframework; sourceTree = "<group>"; };
+		A85ED1FD2A20C1250036C0E5 /* libvideocapture_objc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libvideocapture_objc.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libvideocapture_objc.xcframework; sourceTree = "<group>"; };
+		A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebsockets.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libwebsockets.xcframework; sourceTree = "<group>"; };
+		A85ED1FF2A20C1260036C0E5 /* libnative_video.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_video.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_video.xcframework; sourceTree = "<group>"; };
+		A85ED2002A20C1260036C0E5 /* libnative_api.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_api.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_api.xcframework; sourceTree = "<group>"; };
 		A863223D2909142A004FED9B /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
@@ -3868,7 +3875,6 @@
 		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A8C262A61FA0B60B006172CE /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		A8C3CEF629BB661D00891CE1 /* MEGASDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASDK; sourceTree = "<group>"; };
 		A8C3CF0129BB898200891CE1 /* libzen.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libzen.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libzen.xcframework; sourceTree = "<group>"; };
 		A8C3CF0229BB898200891CE1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libcurl.xcframework; sourceTree = "<group>"; };
 		A8C3CF0329BB898200891CE1 /* libuv.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libuv.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libuv.xcframework; sourceTree = "<group>"; };
@@ -4883,11 +4889,11 @@
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
-				A8C3CF1129BB898400891CE1 /* libnative_api.xcframework in Frameworks */,
-				A8C3CF1829BB898400891CE1 /* libnative_video.xcframework in Frameworks */,
-				A8C3CF1029BB898400891CE1 /* libvideocapture_objc.xcframework in Frameworks */,
-				A8C3CF1229BB898400891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
-				A8C3CF1729BB898400891CE1 /* libwebsockets.xcframework in Frameworks */,
+				A85ED2052A20C1260036C0E5 /* libnative_api.xcframework in Frameworks */,
+				A85ED2042A20C1260036C0E5 /* libnative_video.xcframework in Frameworks */,
+				A85ED2022A20C1260036C0E5 /* libvideocapture_objc.xcframework in Frameworks */,
+				A85ED2012A20C1260036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A85ED2032A20C1260036C0E5 /* libwebsockets.xcframework in Frameworks */,
 				A89CE55528B7D573002802BC /* MEGAData in Frameworks */,
 				B6C2CE0229F9F7D400D98DCD /* MEGADataMock in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
@@ -4920,11 +4926,11 @@
 				A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */,
 				7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */,
 				7794AEE4231E65570039C1D2 /* libKarere.a in Frameworks */,
-				A8C3CF2829BB898D00891CE1 /* libnative_api.xcframework in Frameworks */,
-				A8C3CF2929BB898D00891CE1 /* libnative_video.xcframework in Frameworks */,
-				A8C3CF2C29BB898D00891CE1 /* libvideocapture_objc.xcframework in Frameworks */,
-				A8C3CF2D29BB898D00891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
-				A8C3CF2F29BB898D00891CE1 /* libwebsockets.xcframework in Frameworks */,
+				A85ED2062A20C12E0036C0E5 /* libnative_api.xcframework in Frameworks */,
+				A85ED2072A20C12E0036C0E5 /* libnative_video.xcframework in Frameworks */,
+				A85ED2082A20C12E0036C0E5 /* libvideocapture_objc.xcframework in Frameworks */,
+				A85ED2092A20C12E0036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A85ED20A2A20C12E0036C0E5 /* libwebsockets.xcframework in Frameworks */,
 				A82A5CAD292E6AEE00EF700A /* MEGAData in Frameworks */,
 				A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */,
 				B6A01BB4289A644D00B503FD /* MEGAFoundation in Frameworks */,
@@ -4968,11 +4974,11 @@
 				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
 				94B28C251F0E464C000331E6 /* libKarere.a in Frameworks */,
-				A8C3CF1C29BB898900891CE1 /* libnative_api.xcframework in Frameworks */,
-				A8C3CF1D29BB898900891CE1 /* libnative_video.xcframework in Frameworks */,
-				A8C3CF2029BB898900891CE1 /* libvideocapture_objc.xcframework in Frameworks */,
-				A8C3CF2129BB898900891CE1 /* libvideoframebuffer_objc.xcframework in Frameworks */,
-				A8C3CF2329BB898900891CE1 /* libwebsockets.xcframework in Frameworks */,
+				A85ED20B2A20C1370036C0E5 /* libnative_api.xcframework in Frameworks */,
+				A85ED20C2A20C1370036C0E5 /* libnative_video.xcframework in Frameworks */,
+				A85ED20D2A20C1370036C0E5 /* libvideocapture_objc.xcframework in Frameworks */,
+				A85ED20E2A20C1370036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */,
+				A85ED20F2A20C1370036C0E5 /* libwebsockets.xcframework in Frameworks */,
 				A8ABA36E292FA40000487D3A /* MEGAData in Frameworks */,
 				B610447228979E9B00AAECF4 /* MEGADomain in Frameworks */,
 				B6A01BB0289A623C00B503FD /* MEGAFoundation in Frameworks */,
@@ -6016,15 +6022,20 @@
 				94B28C231F0E464C000331E6 /* libKarere.a */,
 				A88BFFEC1F0A56B80081BCE3 /* libKarere.a */,
 				A8C3CF0829BB898300891CE1 /* libmediainfo.xcframework */,
+				A85ED2002A20C1260036C0E5 /* libnative_api.xcframework */,
 				A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */,
+				A85ED1FF2A20C1260036C0E5 /* libnative_video.xcframework */,
 				A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */,
 				A82751111E97AB73007CD9E2 /* libresolv.tbd */,
 				A8C3CF0729BB898300891CE1 /* libsodium.xcframework */,
 				A82751131E97AB79007CD9E2 /* libsqlite3.tbd */,
 				A8C3CF0329BB898200891CE1 /* libuv.xcframework */,
+				A85ED1FD2A20C1250036C0E5 /* libvideocapture_objc.xcframework */,
 				A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */,
+				A85ED1FC2A20C1250036C0E5 /* libvideoframebuffer_objc.xcframework */,
 				A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */,
 				A8C3CF0A29BB898300891CE1 /* libwebrtc.xcframework */,
+				A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */,
 				A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */,
 				A827510F1E97AB6E007CD9E2 /* libz.tbd */,
 				A8C3CF0129BB898200891CE1 /* libzen.xcframework */,
@@ -9574,7 +9585,6 @@
 				B6FDEF7A2A204E8300276DD6 /* DataSource */,
 				B6FDEF782A204E7700276DD6 /* Domain */,
 				B6FDEF772A204E6700276DD6 /* Infrastracture */,
-				A8C3CEF629BB661D00891CE1 /* MEGASDK */,
 				B6FDEF7C2A204E9600276DD6 /* Presentation */,
 				B6FDEF792A204E7D00276DD6 /* Repository */,
 				B6FDEF7B2A204E9000276DD6 /* UI */,
@@ -10659,6 +10669,7 @@
 		B6FDEF7A2A204E8300276DD6 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
+				A85ED1FA2A20B5920036C0E5 /* MEGASDK */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -12202,6 +12213,7 @@
 				7764AAB1246EE0B200134C88 /* MegaAvatarView.xib in Resources */,
 				5DAC09DF24CFE832001B6476 /* MEGABannerView.xib in Resources */,
 				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
+				A85ED1FB2A20B5940036C0E5 /* MEGASDK in Resources */,
 				5D9DE5C4254BE9F600FA69C8 /* MEGASearchBarView.xib in Resources */,
 				2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */,
 				BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */,
@@ -14945,8 +14957,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/iMEGA",
-					"$(PROJECT_DIR)/iMEGA/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/Supporting Files/MEGA-PrefixHeader.pch";
@@ -14962,10 +14972,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					iMEGA/Vendor/SSKeychain,
-					iMEGA/Vendor/PureLayout/PureLayout,
-					iMEGA/Vendor/Import,
-					iMEGA/Vendor/FrameAccessor,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				INTENTS_CODEGEN_LANGUAGE = "Objective-C";
@@ -14992,7 +14998,7 @@
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
-					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -15016,8 +15022,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/iMEGA",
-					"$(PROJECT_DIR)/iMEGA/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/Supporting Files/MEGA-PrefixHeader.pch";
@@ -15031,10 +15035,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					iMEGA/Vendor/SSKeychain,
-					iMEGA/Vendor/PureLayout/PureLayout,
-					iMEGA/Vendor/Import,
-					iMEGA/Vendor/FrameAccessor,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -15060,7 +15060,7 @@
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
-					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -15806,7 +15806,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
-					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = Debug;
@@ -15861,7 +15861,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
-					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = Release;
@@ -15940,8 +15940,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/iMEGA",
-					"$(PROJECT_DIR)/iMEGA/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/Supporting Files/MEGA-PrefixHeader.pch";
@@ -15956,10 +15954,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					iMEGA/Vendor/SSKeychain,
-					iMEGA/Vendor/PureLayout/PureLayout,
-					iMEGA/Vendor/Import,
-					iMEGA/Vendor/FrameAccessor,
 				);
 				INFOPLIST_FILE = "iMEGA/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -15985,7 +15979,7 @@
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
-					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 					"$(inherited)",
 				);
 				VERSIONING_SYSTEM = "";
@@ -16163,7 +16157,7 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"iMEGA/Vendor/Karere/bindings/Objective-C",
 					"$(inherited)",
-					"Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
+					"Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/webrtc/sdk/objc/**",
 				);
 			};
 			name = QA;

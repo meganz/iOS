@@ -1,5 +1,5 @@
-[submodule "iMEGA/Vendor/SDK"]
-	path = Modules/MEGASDK/Sources/MEGASDK
+[submodule "MEGASDK"]
+	path = Modules/DataSource/MEGASDK/Sources/MEGASDK
 	url = https://code.developers.mega.co.nz/sdk/sdk.git
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
