@@ -14,7 +14,7 @@ file="AENVGYjC"
 key="HhUgIOBY69zVZZtOa4e6vdySpHefnUo4GcoQYElmEo4"
 fileLinkUrl="https://mega.nz/#!${file}!${key}"
 downloadFilePath="./../download_3rdparty/${file}"
-unzipPath="./Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty"
+unzipPath="./Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty"
 
 mkdir -p $downloadFilePath
 echo "downloading the 3rd party libraries"

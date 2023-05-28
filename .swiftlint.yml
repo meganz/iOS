@@ -149,7 +149,7 @@ excluded: # Paths to ignore during linting. Takes precedence over `included`.
   - Xcode Templates
   
   # Excluded temporarily because it is low priority but requires changes in the SDK git project, which needed to be merged by the SDK team
-  - Modules/MEGASDK/Sources/MEGASDK/examples
+  - Modules/DataSource/MEGASDK/Sources/MEGASDK/examples
 
 allow_zero_lintable_files: false
 reporter: "xcode"
