@@ -33,6 +33,10 @@
 		0E3B1A4E2A1DBFC400EC5859 /* GetLinkStringCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A4D2A1DBFC400EC5859 /* GetLinkStringCellViewModel.swift */; };
 		0E3B1A502A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A4F2A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift */; };
 		0E3B1A542A1DCDF100EC5859 /* GetLinkSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A532A1DCDF100EC5859 /* GetLinkSectionViewModel.swift */; };
+		0E3E07A12A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E07A02A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift */; };
+		0E3E07A32A1EA6C700A2A71B /* GetAlbumLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E07A22A1EA6C600A2A71B /* GetAlbumLinkViewModelTests.swift */; };
+		0E3E07A92A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */; };
+		0E3E07AD2A1EBEDF00A2A71B /* GetLinkViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */; };
 		0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */; };
 		0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */; };
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
@@ -2433,6 +2437,10 @@
 		0E3B1A4D2A1DBFC400EC5859 /* GetLinkStringCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkStringCellViewModel.swift; sourceTree = "<group>"; };
 		0E3B1A4F2A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkStringTableViewCellTests.swift; sourceTree = "<group>"; };
 		0E3B1A532A1DCDF100EC5859 /* GetLinkSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSectionViewModel.swift; sourceTree = "<group>"; };
+		0E3E07A02A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAlbumLinkViewModel.swift; sourceTree = "<group>"; };
+		0E3E07A22A1EA6C600A2A71B /* GetAlbumLinkViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetAlbumLinkViewModelTests.swift; sourceTree = "<group>"; };
+		0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlbumLinkInitialSections.swift; sourceTree = "<group>"; };
+		0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkViewModelType.swift; sourceTree = "<group>"; };
 		0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeEntityMapppingTests.swift; sourceTree = "<group>"; };
 		0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepositoryTests.swift; sourceTree = "<group>"; };
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
@@ -5076,6 +5084,7 @@
 			isa = PBXGroup;
 			children = (
 				0E3B1A372A1D918300EC5859 /* Cells */,
+				0E3E07A22A1EA6C600A2A71B /* GetAlbumLinkViewModelTests.swift */,
 			);
 			path = GetLink;
 			sourceTree = "<group>";
@@ -8264,10 +8273,13 @@
 			children = (
 				A86F05722567E65500437985 /* Cells */,
 				837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */,
+				0E3E07A02A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift */,
 				837EE204253DB8540083D927 /* GetLink.storyboard */,
 				0E3B1A532A1DCDF100EC5859 /* GetLinkSectionViewModel.swift */,
 				837EE20E253DBABD0083D927 /* GetLinkViewController.swift */,
+				0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */,
 				837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */,
+				0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */,
 			);
 			path = GetLink;
 			sourceTree = "<group>";
@@ -13089,6 +13101,7 @@
 				83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */,
 				5B947A9E267A2A3400715B0C /* GenericNodeTableViewCell.swift in Sources */,
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
+				0E3E07A12A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift in Sources */,
 				0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */,
 				0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */,
 				837DC7A8256D196400CA289E /* GetLinkDatePickerTableViewCell.swift in Sources */,
@@ -13102,6 +13115,7 @@
 				0E3B1A482A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift in Sources */,
 				837DC7AA256D196400CA289E /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
 				837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */,
+				0E3E07AD2A1EBEDF00A2A71B /* GetLinkViewModelType.swift in Sources */,
 				A81C658B254B2D3000105BF4 /* GiphyCategoryView.swift in Sources */,
 				2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */,
 				A81C6593254B2EC900105BF4 /* GiphyPreviewViewController.swift in Sources */,
@@ -13833,6 +13847,7 @@
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
 				5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
+				0E3E07A92A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift in Sources */,
 				946E783529C0F79800BB3FE6 /* SharedItemsSearchOperation.swift in Sources */,
 				A8BB95202816A006002449D7 /* SharedItemsTableViewCell.swift in Sources */,
 				94485B5B29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift in Sources */,
@@ -14474,6 +14489,7 @@
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
+				0E3E07A32A1EA6C700A2A71B /* GetAlbumLinkViewModelTests.swift in Sources */,
 				0E3B1A392A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift in Sources */,
 				0E3B1A502A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift in Sources */,
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,

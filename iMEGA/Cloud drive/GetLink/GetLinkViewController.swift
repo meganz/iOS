@@ -29,7 +29,7 @@ enum KeySectionRow {
     case key
 }
 
-struct GetLinkViewModel {
+struct GetNodeLinkViewModel {
     var link: String = ""
     var separateKey: Bool = false
     var linkWithoutKey: String {
@@ -69,10 +69,12 @@ class GetLinkViewController: UIViewController {
     let flexibleBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     
     private var nodes = [MEGANode]()
-    private var getLinkVM = GetLinkViewModel()
+    private var getLinkVM = GetNodeLinkViewModel()
     private var nodesToExportCount = 0
     private var justUpgradedToProAccount = false
     private var defaultDateStored = false
+    
+    private var getLinkViewModel: (any GetLinkViewModelType)?
     
     @objc class func instantiate(withNodes nodes: [MEGANode]) -> MEGANavigationController {
         guard let getLinkVC = UIStoryboard(name: "GetLink", bundle: nil).instantiateViewController(withIdentifier: "GetLinksViewControllerID") as? GetLinkViewController else {
@@ -85,9 +87,42 @@ class GetLinkViewController: UIViewController {
         return MEGANavigationController.init(rootViewController: getLinkVC)
     }
     
+    class func instantiate(viewModel: any GetLinkViewModelType) -> MEGANavigationController {
+        guard let getLinkVC = UIStoryboard(name: "GetLink", bundle: nil).instantiateViewController(withIdentifier: "GetLinksViewControllerID") as? GetLinkViewController else {
+            fatalError("Could not instantiate GetLinkViewController")
+        }
+        
+        getLinkVC.getLinkViewModel = viewModel
+        
+        return MEGANavigationController(rootViewController: getLinkVC)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         
+        copyKeyBarButton.title = Strings.Localizable.copyKey
+        
+        if var getLinkViewModel {
+            let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
+            navigationItem.rightBarButtonItem = doneBarButtonItem
+            
+            getLinkViewModel.invokeCommand = { [weak self] command in
+                self?.executeCommand(command)
+            }
+            
+            getLinkViewModel.dispatch(.onViewReady)
+        } else {
+            loadNodes()
+        }
+        
+        updateAppearance()
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+    }
+    
+    private func loadNodes() {
         if !MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
             MEGASdkManager.sharedMEGASdk().add(self as MEGARequestDelegate)
             
@@ -96,27 +131,11 @@ class GetLinkViewController: UIViewController {
         }
         
         configureNavigation()
-        
-        tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
-        
-        if getLinkVM.multilink {
-            multilinkDescriptionLabel.text = Strings.Localizable.optionsSuchAsSendDecryptionKeySeparatelySetExpiryDateOrPasswordsAreOnlyAvailableForSingleItems
-            multilinkDescriptionView.isHidden = false
-        } else {
-            tableView.isUserInteractionEnabled = false
-        }
+        configureMultiLink(isMultiLink: getLinkVM.multilink)
         
         processNodes()
         
         shareBarButton.title = Strings.Localizable.General.MenuAction.ShareLink.title(nodesToExportCount)
-        copyLinkBarButton.title = getLinkVM.multilink ? Strings.Localizable.copyAll : Strings.Localizable.copyLink
-        copyKeyBarButton.title = Strings.Localizable.copyKey
-        
-        updateAppearance()
-        
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -412,6 +431,11 @@ class GetLinkViewController: UIViewController {
     @IBAction func switchValueChanged(_ sender: UISwitch) {
         guard let point = sender.superview?.convert(sender.center, to: tableView), let indexPath = tableView.indexPathForRow(at: point) else { return }
         
+        if let getLinkViewModel {
+            getLinkViewModel.dispatch(.switchToggled(indexPath: indexPath, isOn: sender.isOn))
+            return
+        }
+        
         switch sections()[indexPath.section] {
         case .decryptKeySeparate:
             configureDecryptKeySeparate(isOn: sender.isOn)
@@ -485,12 +509,15 @@ class GetLinkViewController: UIViewController {
     
     //MARK: - TableView cells
     
-    private func infoCell(forIndexPath indexPath: IndexPath) -> GetLinkInfoTableViewCell {
+    private func infoCell(forIndexPath indexPath: IndexPath, cellViewModel: GetLinkAlbumInfoCellViewModel? = nil) -> GetLinkInfoTableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkInfoTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkInfoTableViewCell else {
             fatalError("Could not get GetLinkInfoTableViewCell")
         }
-        
-        cell.configure(forNode: nodes[indexPath.section])
+        if let cellViewModel {
+            cell.viewModel = cellViewModel
+        } else {
+            cell.configure(forNode: nodes[indexPath.section])
+        }
         
         return cell
     }
@@ -545,9 +572,14 @@ class GetLinkViewController: UIViewController {
         return cell
     }
     
-    private func linkCell(forIndexPath indexPath: IndexPath) -> GetLinkStringTableViewCell {
+    private func linkCell(forIndexPath indexPath: IndexPath, cellViewModel: GetLinkStringCellViewModel? = nil) -> GetLinkStringTableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkStringTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkStringTableViewCell else {
             fatalError("Could not get GetLinkStringTableViewCell")
+        }
+        
+        if let cellViewModel {
+            cell.viewModel = cellViewModel
+            return cell
         }
         
         if getLinkVM.multilink {
@@ -595,12 +627,65 @@ class GetLinkViewController: UIViewController {
         return cell
     }
     
+    private func switchOptionCell(forIndexPath indexPath: IndexPath, cellViewModel: GetLinkSwitchOptionCellViewModel) -> GetLinkSwitchOptionTableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkSwitchOptionTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkSwitchOptionTableViewCell else {
+            fatalError("Could not get GetLinkSwitchOptionTableViewCell")
+        }
+        cell.viewModel = cellViewModel
+        return cell
+    }
+    
+    private func linkStringCell(forIndexPath indexPath: IndexPath, cellViewModel: GetLinkStringCellViewModel) -> GetLinkStringTableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkStringTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkStringTableViewCell else {
+            fatalError("Could not get GetLinkStringTableViewCell")
+        }
+        cell.viewModel = cellViewModel
+        return cell
+    }
+    
+    @MainActor
+    private func executeCommand(_ command: GetLinkViewModelCommand) {
+        switch command {
+        case .configureView(let newTitle, let isMultiLink):
+            title = newTitle
+            configureMultiLink(isMultiLink: isMultiLink)
+        case .enableLinkActions:
+            tableView.isUserInteractionEnabled = true
+            navigationController?.setToolbarHidden(false, animated: true)
+            setToolbarItems([shareBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
+        case .reloadSections(let sections):
+            tableView.reloadSections(sections, with: .automatic)
+        case .reloadRows(let indexPaths):
+            tableView.reloadRows(at: indexPaths, with: .automatic)
+        case .deleteSections(let sections):
+            tableView.beginUpdates()
+            tableView.deleteSections(sections, with: .none)
+            tableView.endUpdates()
+        case .insertSections(let sections):
+            tableView.beginUpdates()
+            tableView.insertSections(sections, with: .none)
+            tableView.endUpdates()
+        }
+    }
+    
+    private func configureMultiLink(isMultiLink: Bool) {
+        copyLinkBarButton.title = isMultiLink ? Strings.Localizable.copyAll : Strings.Localizable.copyLink
+        if isMultiLink {
+            multilinkDescriptionLabel.text = Strings.Localizable.optionsSuchAsSendDecryptionKeySeparatelySetExpiryDateOrPasswordsAreOnlyAvailableForSingleItems
+            multilinkDescriptionView.isHidden = false
+        } else {
+            tableView.isUserInteractionEnabled = false
+        }
+    }
 }
 
 //MARK: - UITableViewDataSource
 
 extension GetLinkViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
+        if let getLinkViewModel {
+            return getLinkViewModel.numberOfSections
+        }
         if getLinkVM.multilink {
             return nodes.count
         } else {
@@ -609,6 +694,9 @@ extension GetLinkViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let getLinkViewModel {
+            return getLinkViewModel.numberOfRowsInSection(section)
+        }
         if getLinkVM.multilink {
             return 2
         } else {
@@ -628,6 +716,19 @@ extension GetLinkViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let getLinkViewModel {
+            switch getLinkViewModel.cellViewModel(indexPath: indexPath) {
+            case let cellViewModel as GetLinkAlbumInfoCellViewModel:
+                return infoCell(forIndexPath: indexPath, cellViewModel: cellViewModel)
+            case let cellViewModel as GetLinkSwitchOptionCellViewModel:
+                return switchOptionCell(forIndexPath: indexPath, cellViewModel: cellViewModel)
+            case let cellViewModel as GetLinkStringCellViewModel:
+                return linkStringCell(forIndexPath: indexPath, cellViewModel: cellViewModel)
+            default:
+                return UITableViewCell()
+            }
+        }
+        
         if getLinkVM.multilink {
             if indexPath.row == 0 {
                 return infoCell(forIndexPath: indexPath)
@@ -680,11 +781,19 @@ extension GetLinkViewController: UITableViewDelegate {
         
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
-        if getLinkVM.multilink {
+
+        var isMultiLink = getLinkVM.multilink
+        var sectionType: GetLinkTableViewSection? = sections()[section]
+        if let getLinkViewModel {
+            isMultiLink = getLinkViewModel.isMultiLink
+            sectionType = getLinkViewModel.sectionType(forSection: section)
+        }
+        
+        if isMultiLink {
             header.titleLabel.textAlignment = .left
             header.configure(title: Strings.Localizable.link, topDistance: section == 0 ? 17.0 : 25.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         } else {
-            switch sections()[section] {
+            switch sectionType {
             case .link:
                 header.configure(title: Strings.Localizable.link, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             case .key:
@@ -709,12 +818,18 @@ extension GetLinkViewController: UITableViewDelegate {
         }
         
         footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-
-        if getLinkVM.multilink {
+        var isMultiLink = getLinkVM.multilink
+        var sectionType: GetLinkTableViewSection? = sections()[section]
+        if let getLinkViewModel {
+            isMultiLink = getLinkViewModel.isMultiLink
+            sectionType = getLinkViewModel.sectionType(forSection: section)
+        }
+        
+        if isMultiLink {
             footer.titleLabel.textAlignment = .center
             footer.configure(title: Strings.Localizable.tapToCopy, topDistance: 4, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
         } else {
-            switch sections()[section] {
+            switch sectionType {
             case .decryptKeySeparate:
                 let attributedString = NSMutableAttributedString(string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately)
                 let learnMoreString = NSAttributedString(string: " " + Strings.Localizable.learnMore, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
@@ -733,6 +848,8 @@ extension GetLinkViewController: UITableViewDelegate {
                 }
             case .link, .key, .info, .passwordProtection:
                 footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+            default:
+                return footer
             }
         }
         return footer
