@@ -6,7 +6,7 @@ enum GetLinkInfoCellAction: ActionType {
     case onViewReady
 }
 
-final class GetLinkAlbumInfoCellViewModel: GetLinkCellViewModelType {
+final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelType {
     enum Command: CommandType, Equatable {
         case setThumbnail(path: String)
         case setPlaceholderThumbnail

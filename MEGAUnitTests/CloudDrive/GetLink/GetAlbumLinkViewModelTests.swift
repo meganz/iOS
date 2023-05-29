@@ -64,7 +64,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(1)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: expectedTitle,
-                           isMultilink: false)
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1))
         ])
     }
     
@@ -76,7 +77,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(1)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: expectedTitle,
-                           isMultilink: false)
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1))
         ])
     }
     
@@ -94,7 +96,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         let updatedIndexPath = IndexPath(row: 0, section: 0)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
-                           isMultilink: false),
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)),
             .enableLinkActions,
             .reloadRows([updatedIndexPath])
         ])
@@ -121,7 +124,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                         sectionViewModels: sections)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
-                           isMultilink: false),
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
+                          ),
             .enableLinkActions,
             .reloadRows([IndexPath(row: 0, section: 1)])
         ])
@@ -130,12 +135,155 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         test(viewModel: sut, action: .switchToggled(indexPath: decryptToggleIndexPath, isOn: true),
              expectedCommands: [
                 .insertSections([expectedKeySectionIndex]),
-                .reloadSections([1])
+                .reloadSections([1]),
+                .configureToolbar(isDecryptionKeySeperate: true)
              ])
+        let decryptCellViewModel = try XCTUnwrap(sut.cellViewModel(indexPath: decryptToggleIndexPath) as?  GetLinkSwitchOptionCellViewModel)
+        XCTAssertTrue(decryptCellViewModel.isSwitchOn)
         test(viewModel: sut, action: .switchToggled(indexPath: decryptToggleIndexPath, isOn: false),
              expectedCommands: [
                 .reloadSections([1]),
                 .deleteSections([expectedKeySectionIndex]),
+                .configureToolbar(isDecryptionKeySeperate: false)
+             ])
+    }
+    
+    func testDispatchShareLink_onDecryptSeperateOff_shouldOnlyShareOriginalLink() {
+        let album = AlbumEntity(id: 1, type: .user)
+        let link = "https://mega.nz/collection/link#key"
+        let sections = [
+            GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
+                                    cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
+                                                                                      configuration: GetLinkSwitchCellViewConfiguration(title: "Test"))],
+                                    itemHandle: album.id)
+        ]
+        let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
+        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
+                                        sectionViewModels: sections)
+        
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
+                          )
+        ])
+        let barButton = UIBarButtonItem()
+        test(viewModel: sut, action: .shareLink(sender: barButton),
+             expectedCommands: [
+                .showShareActivity(sender: barButton, link: link, key: nil)
+             ])
+    }
+    
+    func testDispatchShareLink_onDecryptSeperateOn_shouldShareLinkSeperatelyFromKey() {
+        let album = AlbumEntity(id: 1, type: .user)
+        let linkOnly = "https://mega.nz/collection/link"
+        let key = "key"
+        let link = "\(linkOnly)#\(key)"
+        let sections = [
+            GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
+                                    cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
+                                                                                      configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
+                                    itemHandle: album.id)
+        ]
+        let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
+        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
+                                        sectionViewModels: sections)
+        
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
+                          )
+        ])
+        let barButton = UIBarButtonItem()
+        test(viewModel: sut, action: .shareLink(sender: barButton),
+             expectedCommands: [
+                .showShareActivity(sender: barButton, link: linkOnly, key: key)
+             ])
+    }
+    
+    func testDispatchCopyLink_onDecryptSeperateOff_shouldCopyShareOriginalLink() {
+        let album = AlbumEntity(id: 1, type: .user)
+        let link = "https://mega.nz/collection/link#key"
+        let sections = [
+            GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
+                                    cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
+                                                                                      configuration: GetLinkSwitchCellViewConfiguration(title: "Test"))],
+                                    itemHandle: album.id)
+        ]
+        let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
+        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
+                                        sectionViewModels: sections)
+        
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
+                          )
+        ])
+        test(viewModel: sut, action: .copyLink,
+             expectedCommands: [
+                .addToPasteBoard(link),
+                .showHud(.custom(Asset.Images.NodeActions.copy.image,
+                                                Strings.Localizable.linkCopiedToClipboard))
+             ])
+    }
+    
+    func testDispatchCopyLink_onDecryptSeperateOn_shouldCopyOnlyLink() {
+        let album = AlbumEntity(id: 1, type: .user)
+        let linkOnly = "https://mega.nz/collection/link"
+        let key = "key"
+        let link = "\(linkOnly)#\(key)"
+        let sections = [
+            GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
+                                    cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
+                                                                                      configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
+                                    itemHandle: album.id)
+        ]
+        let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
+        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
+                                        sectionViewModels: sections)
+        
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
+                          )
+        ])
+        test(viewModel: sut, action: .copyLink,
+             expectedCommands: [
+                .addToPasteBoard(linkOnly),
+                .showHud(.custom(Asset.Images.NodeActions.copy.image,
+                                                Strings.Localizable.linkCopiedToClipboard))
+             ])
+    }
+    
+    func testDispatchCopyKey_onDecryptSeperateOn_shouldCopyKey() {
+        let album = AlbumEntity(id: 1, type: .user)
+        let linkOnly = "https://mega.nz/collection/link"
+        let key = "key"
+        let link = "\(linkOnly)#\(key)"
+        let sections = [
+            GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
+                                    cellViewModels: [GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate,
+                                                                                      configuration: GetLinkSwitchCellViewConfiguration(title: "Test", isSwitchOn: true))],
+                                    itemHandle: album.id)
+        ]
+        let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
+        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
+                                        sectionViewModels: sections)
+        
+        test(viewModel: sut, action: .onViewReady, expectedCommands: [
+            .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
+                           isMultilink: false,
+                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
+                          )
+        ])
+        test(viewModel: sut, action: .copyKey,
+             expectedCommands: [
+                .addToPasteBoard(key),
+                .showHud(.custom(Asset.Images.NodeActions.copy.image,
+                                 Strings.Localizable.keyCopiedToClipboard))
              ])
     }
 }

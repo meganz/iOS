@@ -179,7 +179,11 @@ class GetLinkViewController: UIViewController {
     private func configureDecryptKeySeparate(isOn: Bool) {
         getLinkVM.separateKey = isOn
         tableView.reloadData()
-        if getLinkVM.separateKey {
+        configureToolbarItems(isDecryptionKeySeperate: isOn)
+    }
+    
+    private func configureToolbarItems(isDecryptionKeySeperate: Bool) {
+        if isDecryptionKeySeperate {
             setToolbarItems([shareBarButton, flexibleBarButton, copyKeyBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
         } else {
             setToolbarItems([shareBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
@@ -476,6 +480,10 @@ class GetLinkViewController: UIViewController {
     }
     
     @IBAction func shareBarButtonTapped(_ sender: UIBarButtonItem) {
+        if let getLinkViewModel {
+            getLinkViewModel.dispatch(.shareLink(sender: sender))
+            return
+        }
         let textToShare = getLinkVM.multilink ? nodes.compactMap { $0.publicLink }.joined(separator: "\n") : getLinkVM.separateKey ? getLinkVM.linkWithoutKey : getLinkVM.link
         
         showShareActivity(sender, textToShare: textToShare) { [weak self] in
@@ -500,11 +508,19 @@ class GetLinkViewController: UIViewController {
     }
     
     @IBAction func copyKeyBarButtonTapped(_ sender: UIBarButtonItem) {
-        copyKeyToPasteBoard()
+        if let getLinkViewModel {
+            getLinkViewModel.dispatch(.copyKey)
+        } else {
+            copyKeyToPasteBoard()
+        }
     }
     
     @IBAction func copyLinkBarButtonTapped(_ sender: UIBarButtonItem) {
-        copyLinkToPasteboard(atIndex: nil)
+        if let getLinkViewModel {
+            getLinkViewModel.dispatch(.copyLink)
+        } else {
+            copyLinkToPasteboard(atIndex: nil)
+        }
     }
     
     //MARK: - TableView cells
@@ -631,7 +647,7 @@ class GetLinkViewController: UIViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkSwitchOptionTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkSwitchOptionTableViewCell else {
             fatalError("Could not get GetLinkSwitchOptionTableViewCell")
         }
-        cell.viewModel = cellViewModel
+        cell.configure(viewModel: cellViewModel)
         return cell
     }
     
@@ -646,9 +662,10 @@ class GetLinkViewController: UIViewController {
     @MainActor
     private func executeCommand(_ command: GetLinkViewModelCommand) {
         switch command {
-        case .configureView(let newTitle, let isMultiLink):
+        case .configureView(let newTitle, let isMultiLink, let shareButtonTitle):
             title = newTitle
             configureMultiLink(isMultiLink: isMultiLink)
+            shareBarButton.title = shareButtonTitle
         case .enableLinkActions:
             tableView.isUserInteractionEnabled = true
             navigationController?.setToolbarHidden(false, animated: true)
@@ -665,6 +682,26 @@ class GetLinkViewController: UIViewController {
             tableView.beginUpdates()
             tableView.insertSections(sections, with: .none)
             tableView.endUpdates()
+        case .configureToolbar(let isDecryptionKeySeperate):
+            configureToolbarItems(isDecryptionKeySeperate: isDecryptionKeySeperate)
+        case .showHud(let messageType):
+            switch messageType {
+            case .status(let status):
+                SVProgressHUD.show(withStatus: status)
+            case .custom(let image, let status):
+                SVProgressHUD.show(image, status: status)
+            }
+        case .addToPasteBoard(let value):
+            UIPasteboard.general.string = value
+        case .showShareActivity(let sender, let link, let key):
+            showShareActivity(sender, textToShare: link) { [weak self] in
+                guard let self else { return }
+                if let key {
+                    showIncompleteShareLinkAlert(title: Strings.Localizable.decryptionKey, message: Strings.Localizable.ThisLinkWasSharedWithoutADecryptionKey.doYouWantToShareItsKey.localizedCapitalized) {
+                        self.showShareActivity(sender, textToShare: key, completion: nil)
+                    }
+                }
+            }
         }
     }
     
