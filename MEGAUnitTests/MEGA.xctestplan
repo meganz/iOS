@@ -154,66 +154,66 @@
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/MEGADomain",
+        "containerPath" : "container:Modules\/Domain\/MEGADomain",
         "identifier" : "MEGADomainTests",
         "name" : "MEGADomainTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/MEGAFoundation",
+        "containerPath" : "container:Modules\/Infrastracture\/MEGAFoundation",
         "identifier" : "MEGAFoundationTests",
         "name" : "MEGAFoundationTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/MEGAData",
+        "containerPath" : "container:Modules\/Repository\/MEGAData",
         "identifier" : "MEGADataTests",
         "name" : "MEGADataTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/MEGASwift",
+        "containerPath" : "container:Modules\/Infrastracture\/MEGASwift",
         "identifier" : "MEGASwiftTests",
         "name" : "MEGASwiftTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/MEGASwiftUI",
+        "containerPath" : "container:Modules\/UI\/MEGASwiftUI",
         "identifier" : "MEGASwiftUITests",
         "name" : "MEGASwiftUITests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/MEGAUI",
+        "containerPath" : "container:Modules\/UI\/MEGAUI",
         "identifier" : "MEGAUITests",
         "name" : "MEGAUITests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/MEGAUIKit",
+        "containerPath" : "container:Modules\/UI\/MEGAUIKit",
         "identifier" : "MEGAUIKitTests",
         "name" : "MEGAUIKitTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/Features\/Settings",
+        "containerPath" : "container:Modules\/Presentation\/Features\/Settings",
         "identifier" : "SettingsTests",
         "name" : "SettingsTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:Modules\/MEGAPresentation",
+        "containerPath" : "container:Modules\/Presentation\/MEGAPresentation",
         "identifier" : "MEGAPresentationTests",
         "name" : "MEGAPresentationTests"
-        }
+      }
     }
   ],
   "version" : 1
