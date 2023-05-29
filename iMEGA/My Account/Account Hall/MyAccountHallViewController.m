@@ -91,6 +91,7 @@
         [MEGASdkManager.sharedMEGASdk getAccountDetails];
     }
     [self reloadUI];
+    [self reloadContent];
     
     if ([self isNewUpgradeAccountPlanFeatureFlagEnabled]) {
         self.buyPROBarButtonItem.title = nil;
@@ -217,7 +218,8 @@
     
     self.nameLabel.text = [MEGAUser mnz_fullName:MEGASdk.currentUserHandle.unsignedLongLongValue];
     [self setUserAvatar];
-    [self reloadContent];
+    
+    [self.tableView reloadData];
 }
 
 - (void)avatarTapped:(UITapGestureRecognizer *)sender {
