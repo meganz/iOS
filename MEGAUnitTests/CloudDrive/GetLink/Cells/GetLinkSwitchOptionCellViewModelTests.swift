@@ -2,19 +2,15 @@ import XCTest
 @testable import MEGA
 
 final class GetLinkSwitchOptionCellViewModelTests: XCTestCase {
-    func testDispatch_onViewReady_shouldConfigureView() {
+    func testInit_onViewConfiguration_shouldSetupCorrectly() {
         let viewConfig = GetLinkSwitchCellViewConfiguration(title: "Test")
-        let sut = GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate, configuration: viewConfig)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configView(viewConfig)
-        ])
-    }
-    
-    func testDispatch_onSwitchToggled_shouldUpdateSwitchValue() {
-        let expectedValue = true
-        let sut = GetLinkSwitchOptionCellViewModel(type: .decryptKeySeparate, configuration: GetLinkSwitchCellViewConfiguration(title: "Test"))
-        test(viewModel: sut, action: .onSwitchToggled(isOn: expectedValue), expectedCommands: [
-            .updateSwitch(isOn: expectedValue)
-        ])
+        let expectedTye = GetLinkCellType.decryptKeySeparate
+        let sut = GetLinkSwitchOptionCellViewModel(type: expectedTye, configuration: viewConfig)
+        XCTAssertEqual(sut.type, expectedTye)
+        XCTAssertEqual(sut.title, viewConfig.title)
+        XCTAssertEqual(sut.isEnabled, viewConfig.isEnabled)
+        XCTAssertEqual(sut.isProImageViewHidden, viewConfig.isProImageViewHidden)
+        XCTAssertEqual(sut.isSwitchOn, viewConfig.isSwitchOn)
+        XCTAssertEqual(sut.isActivityIndicatorHidden, viewConfig.isActivityIndicatorHidden)
     }
 }

@@ -5,7 +5,7 @@ enum GetLinkStringCellAction: ActionType {
     case onViewReady
 }
 
-final class GetLinkStringCellViewModel: GetLinkCellViewModelType {
+final class GetLinkStringCellViewModel: ViewModelType, GetLinkCellViewModelType {
     enum Command: CommandType, Equatable {
         case configView(title: String, leftImage: UIImage, isRightImageViewHidden: Bool)
     }

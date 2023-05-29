@@ -8,6 +8,6 @@ public enum GetLinkCellType: Sendable {
     case key
 }
 
-protocol GetLinkCellViewModelType: ViewModelType {
+protocol GetLinkCellViewModelType {
     var type: GetLinkCellType { get }
 }
