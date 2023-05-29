@@ -43,7 +43,7 @@ git submodule update --init --recursive
 
 ## Build 3rdparty packages manually
 If you want to build the third party dependencies by yourself: 
-1. Open a terminal in the directory `Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty`. 
+1. Open a terminal in the directory `Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty`. 
 2. Run sh build-all.sh --enable-chat (Wait until the process ends, it will take some time, ~30 minutes). 
 
 - To build all third party dependencies, you need to have installed: `autoconf`, `automake`, `cmake` and `libtool`. 
