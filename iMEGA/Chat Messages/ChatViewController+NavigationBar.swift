@@ -83,12 +83,15 @@ extension ChatViewController {
         let scheduledMeetings = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId)
         
         return scheduledMeetings.first(where: {
-            $0.parentScheduledId == .invalid &&
-            (
-                ($0.rules.frequency == .invalid && $0.endDate >= Date())
-                ||
-                ($0.rules.frequency != .invalid && $0.rules.until ?? Date() >= Date())
-            )
+            if $0.rules.frequency == .invalid {
+                return $0.endDate >= Date()
+            } else {
+                if let until = $0.rules.until  {
+                    return until >= Date()
+                } else {
+                    return true
+                }
+            }
         })
     }
     
