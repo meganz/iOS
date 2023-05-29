@@ -9,9 +9,7 @@ struct ChatRoomNotificationsView: View {
             ToogleView(
                 image: Asset.Images.Meetings.Info.enableChatNotifications.name,
                 text: Strings.Localizable.Meetings.Info.chatNotifications,
-                isOn: $viewModel.isChatNotificationsOn) { newValue in
-                viewModel.chatNotificationsValueChanged(to: newValue)
-            }
+                isOn: $viewModel.isChatNotificationsOn)
             if !viewModel.isChatNotificationsOn {
                 Text(viewModel.remainingDNDTime())
                     .font(.footnote)

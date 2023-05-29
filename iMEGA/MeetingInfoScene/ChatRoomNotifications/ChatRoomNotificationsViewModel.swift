@@ -1,18 +1,19 @@
 import MEGADomain
+import Combine
 
 final class ChatRoomNotificationsViewModel: ObservableObject {
     private var chatRoom: ChatRoomEntity
-    private var isChatNotificationsActionCancelled = false
-    lazy private var globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
     lazy private var chatNotificationControl = ChatNotificationControl(delegate: self)
     
     @Published var isChatNotificationsOn = true
     @Published var showDNDTurnOnOptions = false
     
+    private var subscriptions = Set<AnyCancellable>()
+
     init(chatRoom: ChatRoomEntity) {
         self.chatRoom = chatRoom
-        
-        self.isChatNotificationsOn = !chatNotificationControl.isChatDNDEnabled(chatId: chatRoom.chatId)
+        synchronizeChatNotificationsOn()
+        listenToChatNotificationSwitchChanges()
     }
     
     func dndTurnOnOptions() -> [DNDTurnOnOption] {
@@ -27,35 +28,44 @@ final class ChatRoomNotificationsViewModel: ObservableObject {
         chatNotificationControl.timeRemainingForDNDDeactivationString(chatId: chatRoom.chatId) ?? ""
     }
     
-    func chatNotificationsValueChanged(to enabled: Bool) {
-        toggleDND()
-    }
-    
     func cancelChatNotificationsChange() {
-        isChatNotificationsActionCancelled = true
-        isChatNotificationsOn.toggle()
+        synchronizeChatNotificationsOn()
     }
     
-    private func toggleDND() {
-        guard !isChatNotificationsActionCancelled else {
-            isChatNotificationsActionCancelled = false
-            return
-        }
-        if chatNotificationControl.isChatDNDEnabled(chatId: chatRoom.chatId) {
+    // MARK: - Private methods.
+    
+    private func updateChatNotificationsIfNeeded() {
+        guard !showDNDTurnOnOptions else { return }
+        synchronizeChatNotificationsOn()
+    }
+    
+    private func listenToChatNotificationSwitchChanges() {
+        $isChatNotificationsOn
+            .dropFirst()
+            .sink { [weak self] isChatNotificationSwitchOn in
+                guard let self else { return }
+                updateChatNotificationSetting(isOn: isChatNotificationSwitchOn)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func updateChatNotificationSetting(isOn: Bool) {
+        let notificationsEnabled = !chatNotificationControl.isChatDNDEnabled(chatId: chatRoom.chatId)
+        guard isOn != notificationsEnabled else { return }
+        
+        if isOn {
             chatNotificationControl.turnOffDND(chatId: chatRoom.chatId)
         } else {
             showDNDTurnOnOptions = true
         }
     }
     
-    private func updateChatNotificationsIfNeeded() {
-        if showDNDTurnOnOptions {
-            return
-        }
+    private func synchronizeChatNotificationsOn() {
         let notificationsEnabled = !chatNotificationControl.isChatDNDEnabled(chatId: chatRoom.chatId)
         guard notificationsEnabled != isChatNotificationsOn else {
             return
         }
+        
         isChatNotificationsOn = notificationsEnabled
     }
 }

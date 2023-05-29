@@ -95,6 +95,19 @@ final class MeetingInfoViewModel: ObservableObject {
         self.subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
         initSubscriptions()
         fetchInitialValues()
+        listenToIsAllowNonHostToAddParticipantsOnChange()
+    }
+    
+    private func listenToIsAllowNonHostToAddParticipantsOnChange() {
+        $isAllowNonHostToAddParticipantsOn
+            .dropFirst()
+            .sink { [weak self] newValue in
+                guard let self, newValue != chatRoom?.isOpenInviteEnabled else { return }
+                Task {
+                    await self.allowNonHostToAddParticipantsValueChanged(to: newValue)
+                }
+            }
+            .store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
@@ -184,10 +197,7 @@ extension MeetingInfoViewModel{
         Task {
             do {
                 guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
-                isAllowNonHostToAddParticipantsOn = try await chatRoomUseCase.allowNonHostToAddParticipants(
-                    isAllowNonHostToAddParticipantsOn,
-                    forChatRoom: chatRoom
-                )
+                isAllowNonHostToAddParticipantsOn = try await chatRoomUseCase.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)
             } catch {
                 MEGALogDebug("Unable to set the isAllowNonHostToAddParticipantsOn to \(enabled) for \(scheduledMeeting.chatId)")
             }
