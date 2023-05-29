@@ -8,7 +8,6 @@ struct ToogleView: View {
     let image: String?
     let text: String
     @Binding var isOn: Bool
-    let valueChanged: ((Bool) -> Void)
 
     var body: some View {
         VStack {
@@ -21,9 +20,6 @@ struct ToogleView: View {
                     .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
             }
             .padding(.horizontal)
-            .onChange(of: isOn) { newValue in
-                valueChanged(newValue)
-            }
             Divider()
         }
         .frame(minHeight: Constants.viewHeight)

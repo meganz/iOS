@@ -10,9 +10,7 @@ struct ChatRoomLinkView: View {
             ToogleView(
                 image: nil,
                 text: Strings.Localizable.Meetings.Info.meetingLink,
-                isOn: $viewModel.isMeetingLinkOn) { newValue in
-                viewModel.meetingLinkValueChanged(to: newValue)
-            }
+                isOn: $viewModel.isMeetingLinkOn)
             if viewModel.isMeetingLinkOn {
                 Button {
                     viewModel.shareMeetingLinkTapped()
