@@ -1319,7 +1319,6 @@
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85B7AC42A14F5C7002B1D6A /* MEGAApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
-		A85ED1FB2A20B5940036C0E5 /* MEGASDK in Resources */ = {isa = PBXBuildFile; fileRef = A85ED1FA2A20B5920036C0E5 /* MEGASDK */; };
 		A85ED2012A20C1260036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FC2A20C1250036C0E5 /* libvideoframebuffer_objc.xcframework */; };
 		A85ED2022A20C1260036C0E5 /* libvideocapture_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FD2A20C1250036C0E5 /* libvideocapture_objc.xcframework */; };
 		A85ED2032A20C1260036C0E5 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */; };
@@ -3887,18 +3886,13 @@
 		A8C2629A1FA0B4EA006172CE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A8C262A31FA0B5CD006172CE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A8C262A61FA0B60B006172CE /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
-		A8C3CF0129BB898200891CE1 /* libzen.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libzen.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libzen.xcframework; sourceTree = "<group>"; };
-		A8C3CF0229BB898200891CE1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libcurl.xcframework; sourceTree = "<group>"; };
-		A8C3CF0329BB898200891CE1 /* libuv.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libuv.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libuv.xcframework; sourceTree = "<group>"; };
-		A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libvideocapture_objc.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libvideocapture_objc.xcframework; sourceTree = "<group>"; };
-		A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_api.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_api.xcframework; sourceTree = "<group>"; };
-		A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libvideoframebuffer_objc.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libvideoframebuffer_objc.xcframework; sourceTree = "<group>"; };
-		A8C3CF0729BB898300891CE1 /* libsodium.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libsodium.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libsodium.xcframework; sourceTree = "<group>"; };
-		A8C3CF0829BB898300891CE1 /* libmediainfo.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libmediainfo.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libmediainfo.xcframework; sourceTree = "<group>"; };
-		A8C3CF0929BB898300891CE1 /* libcryptopp.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcryptopp.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libcryptopp.xcframework; sourceTree = "<group>"; };
-		A8C3CF0A29BB898300891CE1 /* libwebrtc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebrtc.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libwebrtc.xcframework; sourceTree = "<group>"; };
-		A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebsockets.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libwebsockets.xcframework; sourceTree = "<group>"; };
-		A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_video.xcframework; path = Modules/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_video.xcframework; sourceTree = "<group>"; };
+		A8C3CF0129BB898200891CE1 /* libzen.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libzen.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libzen.xcframework; sourceTree = "<group>"; };
+		A8C3CF0229BB898200891CE1 /* libcurl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcurl.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libcurl.xcframework; sourceTree = "<group>"; };
+		A8C3CF0329BB898200891CE1 /* libuv.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libuv.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libuv.xcframework; sourceTree = "<group>"; };
+		A8C3CF0729BB898300891CE1 /* libsodium.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libsodium.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libsodium.xcframework; sourceTree = "<group>"; };
+		A8C3CF0829BB898300891CE1 /* libmediainfo.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libmediainfo.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libmediainfo.xcframework; sourceTree = "<group>"; };
+		A8C3CF0929BB898300891CE1 /* libcryptopp.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libcryptopp.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libcryptopp.xcframework; sourceTree = "<group>"; };
+		A8C3CF0A29BB898300891CE1 /* libwebrtc.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebrtc.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libwebrtc.xcframework; sourceTree = "<group>"; };
 		A8C47591299D02B70074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C47593299D02E60074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C93C0B22D718030030CE1B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -6054,20 +6048,15 @@
 				A88BFFEC1F0A56B80081BCE3 /* libKarere.a */,
 				A8C3CF0829BB898300891CE1 /* libmediainfo.xcframework */,
 				A85ED2002A20C1260036C0E5 /* libnative_api.xcframework */,
-				A8C3CF0529BB898300891CE1 /* libnative_api.xcframework */,
 				A85ED1FF2A20C1260036C0E5 /* libnative_video.xcframework */,
-				A8C3CF0C29BB898400891CE1 /* libnative_video.xcframework */,
 				A82751111E97AB73007CD9E2 /* libresolv.tbd */,
 				A8C3CF0729BB898300891CE1 /* libsodium.xcframework */,
 				A82751131E97AB79007CD9E2 /* libsqlite3.tbd */,
 				A8C3CF0329BB898200891CE1 /* libuv.xcframework */,
 				A85ED1FD2A20C1250036C0E5 /* libvideocapture_objc.xcframework */,
-				A8C3CF0429BB898200891CE1 /* libvideocapture_objc.xcframework */,
 				A85ED1FC2A20C1250036C0E5 /* libvideoframebuffer_objc.xcframework */,
-				A8C3CF0629BB898300891CE1 /* libvideoframebuffer_objc.xcframework */,
 				A8C3CF0A29BB898300891CE1 /* libwebrtc.xcframework */,
 				A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */,
-				A8C3CF0B29BB898300891CE1 /* libwebsockets.xcframework */,
 				A827510F1E97AB6E007CD9E2 /* libz.tbd */,
 				A8C3CF0129BB898200891CE1 /* libzen.xcframework */,
 				A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */,
@@ -9701,15 +9690,15 @@
 		B63AEB16251203F5000B8517 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				2488EBC12A13B4F2005F910E /* Delegates */,
 				5BBC13E426CE64A30010115B /* Cells */,
+				2488EBC12A13B4F2005F910E /* Delegates */,
 				0EE7A9CC29ED1A45003DBC43 /* FeatureFlags */,
 				A874D305263FF683000861DB /* ViewControllers */,
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
 				B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */,
-				245385FF2A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift */,
 				167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */,
+				245385FF2A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -12239,7 +12228,6 @@
 				7764AAB1246EE0B200134C88 /* MegaAvatarView.xib in Resources */,
 				5DAC09DF24CFE832001B6476 /* MEGABannerView.xib in Resources */,
 				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
-				A85ED1FB2A20B5940036C0E5 /* MEGASDK in Resources */,
 				5D9DE5C4254BE9F600FA69C8 /* MEGASearchBarView.xib in Resources */,
 				2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */,
 				BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */,
@@ -14506,14 +14494,12 @@
 				BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
-				245386002A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */,
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6FB5F8429A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift in Sources */,
 				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */,
 				8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */,
-				2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */,
 				BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */,
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
 				5D52C74C250C4FA700286A43 /* ContactRequest.swift in Sources */,
@@ -14591,6 +14577,7 @@
 				94CC921829F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift in Sources */,
 				837B9C0B24781B1600D409B4 /* NodeActionBuilderTests.swift in Sources */,
 				9487BF3D29B6744000645D32 /* NodeActionRepositoryTests.swift in Sources */,
+				2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */,
 				A8919424299F90A700B2A225 /* NodeAttributeRepositoryTests.swift in Sources */,
 				5BBC13E626CE64F50010115B /* NodeCellViewModelTests.swift in Sources */,
 				B5FC636929E9351100EE4C8E /* NodeCollectionViewCellViewModelTests.swift in Sources */,
@@ -14598,6 +14585,7 @@
 				6D0CA0EB2981CFD400CBE9E4 /* NodeFormatEntityMappingTests.swift in Sources */,
 				BFE556FD27E183B40028EF1F /* NodeHandle+Additions_Tests.swift in Sources */,
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
+				245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */,
 				94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */,
 				0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */,
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
@@ -14641,7 +14629,6 @@
 				B55EC7152A08A515000F19DA /* SendFeedbackViewModelTests.swift in Sources */,
 				9D68BBC128B6A135006FCBC5 /* SettingCellViewModelTests.swift in Sources */,
 				9D68BBBF28B69F26006FCBC5 /* SettingsViewModelTests.swift in Sources */,
-				245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */,
 				3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */,
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
@@ -14664,6 +14651,7 @@
 				B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */,
 				B60F05E92514C022005133C2 /* XCTestCase+ActionCommand.swift in Sources */,
 				167845552A173EF500568FBE /* XCTestCase+AsyncAssertions.swift in Sources */,
+				245386002A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
