@@ -25,8 +25,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let useCase = MockAlbumListUseCase(albums: [favouriteAlbum, gifAlbum, rawAlbum,
                                                     userAlbum1, userAlbum2, userAlbum3, userAlbum4, userAlbum5])
 
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
@@ -50,8 +49,7 @@ final class AlbumListViewModelTests: XCTestCase {
                                     count: 1, type: .user)
         let useCase = MockAlbumListUseCase(albums: [favouriteAlbum, gifAlbum, rawAlbum,
                                                     userAlbum])
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: false]))
+        let sut = albumListViewModel(usecase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: false]))
         
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
@@ -63,8 +61,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testLoadAlbums_onAlbumsLoadedFinsihed_shouldLoadSetToFalse() async throws {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: false]))
+        let sut = albumListViewModel(featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         let exp = expectation(description: "should load set after album load")
         
         sut.$shouldLoad
@@ -86,9 +83,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let mockAlbumUseCase = MockAlbumListUseCase(albums: [rawAlbum, userAlbum1])
                                      
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: mockAlbumUseCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel,
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: mockAlbumUseCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
@@ -98,9 +93,7 @@ final class AlbumListViewModelTests: XCTestCase {
     
     func testCreateUserAlbum_shouldCreateUserAlbum() {
         let exp = expectation(description: "Create a new user album")
-        let useCase = MockAlbumListUseCase()
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.createUserAlbum(with: "userAlbum")
         sut.$shouldLoad
             .dropFirst()
@@ -115,9 +108,7 @@ final class AlbumListViewModelTests: XCTestCase {
     func testHasCustomAlbum_whenUserCreateNewAlbum_shouldReturnTrue() {
         let exp = expectation(description: "Should set hasCustomAlbut to true when user create a new album")
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel,
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         sut.createUserAlbum(with: "userAlbum")
         sut.$shouldLoad
             .dropFirst()
@@ -137,7 +128,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let useCase = MockAlbumListUseCase(albums: [], createdUserAlbums: [newAlbumName: newUserAlbum])
         
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(usecase: useCase, photoAlbumContainerViewModel: photoAlbumContainerViewModel)
 
         sut.createUserAlbum(with: newAlbumName)
         XCTAssertTrue(photoAlbumContainerViewModel.disableSelectBarButton)
@@ -146,9 +137,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testNewAlbumName_whenAlbumContainsNoNewAlbum() async {
-        let useCase = MockAlbumListUseCase()
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
         XCTAssertEqual(sut.newAlbumName(), Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
@@ -157,8 +146,7 @@ final class AlbumListViewModelTests: XCTestCase {
     func testNewAlbumName_whenAlbumContainsNewAlbum() async {
         let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
         let useCase = MockAlbumListUseCase(albums: [newAlbum])
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
         XCTAssertEqual(sut.albums.count, 1)
@@ -174,8 +162,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let newAlbum4 = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + "Some Random name")
         
         let useCase = MockAlbumListUseCase(albums: [newAlbum4, newAlbum, newAlbum1, newAlbum3])
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
         
@@ -192,8 +179,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let newAlbum4 = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder + "Some Random name")
         
         let useCase = MockAlbumListUseCase(albums: [newAlbum4, newAlbum1, newAlbum3])
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
         
@@ -205,8 +191,7 @@ final class AlbumListViewModelTests: XCTestCase {
     func testNewAlbumNamePlaceholderText_whenAlbumContainsNewAlbum_shouldReturnCounterSuffix() async {
         let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder)
         let useCase = MockAlbumListUseCase(albums: [newAlbum])
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
         sut.showCreateAlbumAlert = true
@@ -215,40 +200,39 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testValidateAlbum_whenAlbumNameIsNil_returnsNil() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         XCTAssertNil(sut.alertViewModel.validator?(nil))
     }
     
     func testValidateAlbum_whenAlbumNameIsEmpty_returnsNil() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         XCTAssertNil(sut.alertViewModel.validator?(""))
     }
     
     func testValidateAlbum_whenAlbumNameIsSpaces_returnsError() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         XCTAssertNotNil(sut.alertViewModel.validator?("      "))
     }
     
     func testValidateAlbum_whenAlbumNameIsValidButWithWhiteSpaces_returnsNil() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         XCTAssertNil(sut.alertViewModel.validator?("  userAlbum    "))
     }
     
     func testValidateAlbum_whenAlbumNameIsValid_returnsNil() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         XCTAssertNil(sut.alertViewModel.validator?("userAlbum"))
     }
     
     func testValidateAlbum_whenAlbumNameContainsInvalidChars_returnsErrorMessage() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         XCTAssertNotNil(sut.alertViewModel.validator?("userAlbum:/;"))
     }
     
     func testValidateAlbum_whenAlbumNameIsSameAsExistingUserAlbum_returnsErrorMessage() async {
         let newAlbum = MockAlbumListUseCase.sampleUserAlbum(name: "userAlbum")
         let useCase = MockAlbumListUseCase(albums: [newAlbum])
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
         XCTAssertEqual(sut.albums.count, 1)
@@ -259,8 +243,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let newSysAlbum = AlbumEntity(id: AlbumIdEntity.favourite.rawValue, name: Strings.Localizable.CameraUploads.Albums.Favourites.title,
                                       coverNode: NodeEntity(handle: AlbumIdEntity.favourite.rawValue), count: 0, type: .favourite)
         let useCase = MockAlbumListUseCase(albums: [newSysAlbum])
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
         XCTAssertEqual(sut.albums.count, 1)
@@ -268,7 +251,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() async {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
 
         let sampleAlbum = AlbumEntity(id: 1, name: "hello", coverNode: nil, count: 0, type: .user)
         let nodes = [NodeEntity(handle: 1)]
@@ -284,28 +267,27 @@ final class AlbumListViewModelTests: XCTestCase {
                              Strings.Localizable.CameraUploads.Albums.Raw.title,
                              Strings.Localizable.CameraUploads.Albums.MyAlbum.title,
                              Strings.Localizable.CameraUploads.Albums.SharedAlbum.title]
-        let useCase = MockAlbumListUseCase()
-        let sut = AlbumListViewModel(usecase: useCase, albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         reservedNames.forEach { name in
             XCTAssertNotNil(sut.alertViewModel.validator?(name))
         }
     }
     
     func testColumns_createFeatureFlagIsOffThatThreeColumsReturn() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(), featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: false]))
+        let sut = albumListViewModel(featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: false]))
         let result = sut.columns(horizontalSizeClass: .regular)
         XCTAssertEqual(result.count, 3)
     }
     
     func testColumns_sizeConfigurationsChangesReturnCorrectColumnsWhenCreateAlbumFeatureIsTurnedOn() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(), featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         XCTAssertEqual(sut.columns(horizontalSizeClass: .compact).count, 3)
         XCTAssertEqual(sut.columns(horizontalSizeClass: nil).count, 3)
         XCTAssertEqual(sut.columns(horizontalSizeClass: .regular).count, 5)
     }
     
     func testNavigateToNewAlbum_onNewAlbumContentAdded_shouldNavigateToAlbumContentIfSet() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         let userAlbum = AlbumEntity(id: 1, name: "User", coverNode: nil, count: 0, type: .user)
         let newAlbumPhotos = [NodeEntity(name: "a.jpg", handle: 1),
                               NodeEntity(name: "b.jpg", handle: 2)]
@@ -316,7 +298,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testNavigateToNewAlbum_onNewAlbumContentAddedNotCalled_shouldNotNavigate() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         
         sut.navigateToNewAlbum()
         XCTAssertNil(sut.album)
@@ -324,7 +306,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testOnAlbumTap_whenUserTap_shouldSetCorrectValues() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
         
         sut.onAlbumTap(gifAlbum)
@@ -333,7 +315,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testOnCreateAlbum_whenIsEditModeActive_shouldReturnFalseForShowCreateAlbumAlert() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         
         sut.selection.editMode = .active
         XCTAssertFalse(sut.showCreateAlbumAlert)
@@ -342,7 +324,7 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testOnCreateAlbum_whenIsEditModeNotActive_shouldToggleShowCreateAlbumAlert() {
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel())
+        let sut = albumListViewModel()
         
         XCTAssertFalse(sut.showCreateAlbumAlert)
         sut.onCreateAlbum()
@@ -354,8 +336,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let album2 = AlbumEntity(id: 1, name: "", coverNode: nil, count: 0, type: .user)
         let album3 = AlbumEntity(id: 1, name: "Favourites", coverNode: nil, count: 0, type: .favourite)
         
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: [album1, album2, album3]), albumModificationUseCase: MockAlbumModificationUseCase(), alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: MockAlbumListUseCase(albums: [album1, album2, album3]), featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
         
@@ -366,11 +347,7 @@ final class AlbumListViewModelTests: XCTestCase {
         let albums = [AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
                                   count: 1, type: .user)]
         let albumsUpdatedPublisher = PassthroughSubject<Void, Never>()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: albums,
-                                                                   albumsUpdatedPublisher: albumsUpdatedPublisher.eraseToAnyPublisher()),
-                                     albumModificationUseCase: MockAlbumModificationUseCase(),
-                                     alertViewModel: alertViewModel(),
-                                     featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
+        let sut = albumListViewModel(usecase: MockAlbumListUseCase(albums: albums, albumsUpdatedPublisher: albumsUpdatedPublisher.eraseToAnyPublisher()), featureFlagProvider: MockFeatureFlagProvider(list: [.createAlbum: true]))
         XCTAssertTrue(sut.albums.isEmpty)
         
         let exp = expectation(description: "should retrieve albums")
@@ -387,26 +364,23 @@ final class AlbumListViewModelTests: XCTestCase {
     
     func testShowDeleteAlbumAlert_whenUserTapOnDeleteButton_shouldSetShowDeleteAlbumAlertToTrue() {
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
-                                     albumModificationUseCase: MockAlbumModificationUseCase(),
-                                     alertViewModel: alertViewModel(),
-                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
-        XCTAssertFalse(sut.showDeleteAlbumAlert)
+        XCTAssertNil(sut.albumAlertType)
         photoAlbumContainerViewModel.showDeleteAlbumAlert = true
-        XCTAssertTrue(sut.showDeleteAlbumAlert)
+        XCTAssertNotNil(sut.albumAlertType)
+        XCTAssertEqual(sut.albumAlertType, .deleteAlbum)
     }
     
     func testOnAlbumListDeleteConfirm_whenAlbumDeletedSuccessfully_shouldDeleteMultipleAlbums() async {
         let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user),
                       AlbumEntity(id: HandleEntity(2), name: "DEF", coverNode: nil, count: 2, type: .user)]
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: albums),
+        let sut = albumListViewModel(usecase: MockAlbumListUseCase(albums: albums),
                                      albumModificationUseCase: MockAlbumModificationUseCase(albums: albums),
-                                     alertViewModel: alertViewModel(),
                                      photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
-        XCTAssertNil(sut.albumDeletedSuccessMsg)
+        XCTAssertNil(sut.albumHudMessage)
         
         sut.onAlbumListDeleteConfirm()
         
@@ -414,54 +388,47 @@ final class AlbumListViewModelTests: XCTestCase {
         
         let targetMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albums.count)
         
-        XCTAssertEqual(sut.albumDeletedSuccessMsg, targetMsg)
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: Asset.Images.Hud.hudMinus.image))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
     func testOnAlbumListDeleteConfirm_whenAlbumDeletedSuccessfully_shouldDeleteSingleAlbum() async {
         let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user)]
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(albums: albums),
+        let sut = albumListViewModel(usecase: MockAlbumListUseCase(albums: albums),
                                      albumModificationUseCase: MockAlbumModificationUseCase(albums: albums),
-                                     alertViewModel: alertViewModel(),
                                      photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
-        XCTAssertNil(sut.albumDeletedSuccessMsg)
+        XCTAssertNil(sut.albumHudMessage)
         
         sut.onAlbumListDeleteConfirm()
         await sut.deleteAlbumTask?.value
         
         let targetMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albums.count)
         
-        XCTAssertEqual(sut.albumDeletedSuccessMsg, targetMsg)
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: Asset.Images.Hud.hudMinus.image))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
     func testOnAlbumListDeleteConfirm_whenAlbumDeletedFailed_shouldDoNothing() async {
         let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user)]
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
-                                     albumModificationUseCase: MockAlbumModificationUseCase(),
-                                     alertViewModel: alertViewModel(),
-                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(usecase: MockAlbumListUseCase(), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         sut.selection.setSelectedAlbums(albums)
         
-        XCTAssertNil(sut.albumDeletedSuccessMsg)
+        XCTAssertNil(sut.albumHudMessage)
         
         sut.onAlbumListDeleteConfirm()
         await sut.deleteAlbumTask?.value
         
-        XCTAssertNil(sut.albumDeletedSuccessMsg)
+        XCTAssertNil(sut.albumHudMessage)
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
     func testNumOfSelectedAlbums_onAlbumSelectionChanged_shouldSetIsAlbumSelected() {
         let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user)]
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
-                                     albumModificationUseCase: MockAlbumModificationUseCase(),
-                                     alertViewModel: alertViewModel(),
-                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
         XCTAssertFalse(photoAlbumContainerViewModel.isAlbumsSelected)
         
@@ -469,27 +436,88 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertTrue(photoAlbumContainerViewModel.isAlbumsSelected)
     }
     
-    func testShowDeleteAlbumAlert_whenUserTapDeleteButton_shouldSetShowDeleteAlbumAlertToTrue() async {
+    func testShowDeleteAlbumAlert_whenUserTapDeleteButton_shouldSetShowAlertToTrueAndAlertTypeToDeleteAlbum() async {
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
-                                     albumModificationUseCase: MockAlbumModificationUseCase(),
-                                     alertViewModel: alertViewModel(),
-                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
         photoAlbumContainerViewModel.showDeleteAlbumAlert = true
-        XCTAssertTrue(sut.showDeleteAlbumAlert)
+        XCTAssertNotNil(sut.albumAlertType)
+        XCTAssertEqual(sut.albumAlertType, .deleteAlbum)
     }
     
     func testIsExportedAlbumSelected_onExportedAlbumSelected_shouldSetIsExportedAlbumSelected() {
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = AlbumListViewModel(usecase: MockAlbumListUseCase(),
-                                     albumModificationUseCase: MockAlbumModificationUseCase(),
-                                     alertViewModel: alertViewModel(),
-                                     photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         XCTAssertFalse(photoAlbumContainerViewModel.isExportedAlbumSelected)
         let exportedUserAlbum = AlbumEntity(id: 5, type: .user, sharedLinkStatus: .exported(true))
         sut.selection.setSelectedAlbums([exportedUserAlbum])
         XCTAssertTrue(photoAlbumContainerViewModel.isExportedAlbumSelected)
+    }
+    
+    func testIsAllExportedAlbumSelected_onExportedAlbumSelected_shouldSetisAllExportedAlbumSelectedToTrue() {
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        XCTAssertFalse(photoAlbumContainerViewModel.isOnlyExportedAlbumsSelected)
+        let exportedUserAlbum1 = AlbumEntity(id: 5, type: .user, sharedLinkStatus: .exported(true))
+        let exportedUserAlbum2 = AlbumEntity(id: 4, type: .user, sharedLinkStatus: .exported(true))
+        sut.selection.setSelectedAlbums([exportedUserAlbum1, exportedUserAlbum2])
+        XCTAssertTrue(photoAlbumContainerViewModel.isOnlyExportedAlbumsSelected)
+    }
+    
+    func testIsAllExportedAlbumSelected_onExportedAlbumSelected_shouldSetisAllExportedAlbumSelectedToFalse() {
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        XCTAssertFalse(photoAlbumContainerViewModel.isOnlyExportedAlbumsSelected)
+        let exportedUserAlbum1 = AlbumEntity(id: 5, type: .user, sharedLinkStatus: .exported(true))
+        let normalAlbum = AlbumEntity(id: 4, type: .user)
+        sut.selection.setSelectedAlbums([exportedUserAlbum1, normalAlbum])
+        XCTAssertFalse(photoAlbumContainerViewModel.isOnlyExportedAlbumsSelected)
+    }
+    
+    func testShowAlbumRemoveShareLinkAlert_whenUserTapRemoveLinkButton_shouldSetShowAlertToTrueAndAlertTypeToRemoveAlbumShareLink() async {
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        photoAlbumContainerViewModel.showRemoveAlbumLinksAlert = true
+        XCTAssertNotNil(sut.albumAlertType)
+        XCTAssertEqual(sut.albumAlertType, .removeAlbumShareLink)
+    }
+    
+    func testOnShareLinkRemoveConfirm_whenAllAlbumShareLinkRemoveSuccessfully_shouldShowMultipleAlbumLinkDeleteHudMessage() async {
+        let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user),
+                      AlbumEntity(id: HandleEntity(2), name: "DEF", coverNode: nil, count: 2, type: .user)]
+
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = albumListViewModel(shareAlbumUseCase: MockShareAlbumUseCase(successfullyRemoveSharedAlbumLinkIds: [HandleEntity(1), HandleEntity(2)]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+
+        XCTAssertNil(sut.albumHudMessage)
+        sut.onAlbumShareLinkRemoveConfirm(albums)
+        await sut.albumRemoveShareLinkTask?.value
+
+        let targetMsg = Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
+
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: Asset.Images.Hud.hudSuccess.image))
+        XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
+    }
+    
+    func testOnShareLinkRemoveConfirm_whenSomeAlbumShareLinkRemoveSuccessfully_shouldShowSingleAlbumLinkDeleteHudMessage() async {
+        let albums = [AlbumEntity(id: HandleEntity(1), name: "ABC", coverNode: nil, count: 1, type: .user),
+                      AlbumEntity(id: HandleEntity(2), name: "DEF", coverNode: nil, count: 2, type: .user),
+                      AlbumEntity(id: HandleEntity(3), name: "GHI", coverNode: nil, count: 4, type: .user)]
+        
+        let succesfullyDeleteAlbum = albums[0]
+
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = albumListViewModel(shareAlbumUseCase: MockShareAlbumUseCase(successfullyRemoveSharedAlbumLinkIds: [succesfullyDeleteAlbum.id]), photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+
+        XCTAssertNil(sut.albumHudMessage)
+        sut.onAlbumShareLinkRemoveConfirm(albums)
+        await sut.albumRemoveShareLinkTask?.value
+
+        let targetMsg = Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1)
+
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: Asset.Images.Hud.hudSuccess.image))
+        XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
     private func alertViewModel() -> TextFieldAlertViewModel {
@@ -497,5 +525,22 @@ final class AlbumListViewModelTests: XCTestCase {
                                                    placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                    affirmativeButtonTitle: Strings.Localizable.createFolderButton,
                                                    message: nil)
+    }
+    
+    private func albumListViewModel(
+        usecase: MockAlbumListUseCase = MockAlbumListUseCase(),
+        albumModificationUseCase: MockAlbumModificationUseCase = MockAlbumModificationUseCase(),
+        shareAlbumUseCase: MockShareAlbumUseCase = MockShareAlbumUseCase(),
+        featureFlagProvider: FeatureFlagProviderProtocol = AlbumFeatureFlagProvider(),
+        photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
+    ) -> AlbumListViewModel {
+        AlbumListViewModel(
+            usecase: usecase,
+            albumModificationUseCase: albumModificationUseCase,
+            shareAlbumUseCase: shareAlbumUseCase,
+            alertViewModel: alertViewModel(),
+            photoAlbumContainerViewModel: photoAlbumContainerViewModel,
+            featureFlagProvider: featureFlagProvider
+        )
     }
 }

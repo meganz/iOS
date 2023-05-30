@@ -36,4 +36,12 @@ class ShareAlbumUseCaseTests: XCTestCase {
         let sut = ShareAlbumUseCase(shareAlbumRepository: repository)
         try await sut.removeSharedLink(forAlbum: AlbumEntity(id: 5, type: .user))
     }
+    
+    func testRemoveSharedLink_onMultipleUserAlbum_shouldComplete() async {
+        let repository = MockShareAlbumRepository(disableAlbumShareResult: .success)
+        let sut = ShareAlbumUseCase(shareAlbumRepository: repository)
+        let albums = [AlbumEntity(id: 5, type: .user), AlbumEntity(id: 6, type: .user)]
+        let albumIds = await sut.removeSharedLink(forAlbums: albums)
+        XCTAssertEqual(Set(albums.map { $0.id }), Set(albumIds))
+    }
 }

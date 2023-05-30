@@ -39,10 +39,13 @@ final class AlbumCellViewModel: ObservableObject {
         selection.editMode.isEditing
     }
     
+    let isLinkShared: Bool
+    
     init(
         thumbnailUseCase: ThumbnailUseCaseProtocol,
         album: AlbumEntity,
-        selection: AlbumSelection
+        selection: AlbumSelection,
+        featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
     ) {
         self.thumbnailUseCase = thumbnailUseCase
         self.album = album
@@ -50,6 +53,7 @@ final class AlbumCellViewModel: ObservableObject {
         
         title = album.name
         numberOfNodes = album.count
+        isLinkShared = featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink) ? album.isLinkShared : false
         
         if let coverNode = album.coverNode,
            let container = thumbnailUseCase.cachedThumbnailContainer(for: coverNode, type: .thumbnail) {

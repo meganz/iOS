@@ -9,7 +9,8 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     @Published var shouldLoad = true
     @Published var albums = [AlbumEntity]()
     @Published var newlyAddedAlbum: AlbumEntity?
-    @Published var albumDeletedSuccessMsg: String?
+    @Published var albumHudMessage: AlbumHudMessage?
+    @Published var albumAlertType: AlbumAlertType?
 
     @Published var showCreateAlbumAlert = false {
         willSet {
@@ -17,14 +18,14 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         }
     }
     
-    @Published var showDeleteAlbumAlert = false
-   
     lazy var selection = AlbumSelection()
     
     var albumCreationAlertMsg: String?
     var albumLoadingTask: Task<Void, Never>?
     var createAlbumTask: Task<Void, Never>?
     var deleteAlbumTask: Task<Void, Never>?
+    var albumRemoveShareLinkTask: Task<Void, Never>?
+    
     var isCreateAlbumFeatureFlagEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
     }
@@ -36,6 +37,7 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     
     private let usecase: AlbumListUseCaseProtocol
     private let albumModificationUseCase: AlbumModificationUseCaseProtocol
+    private let shareAlbumUseCase: ShareAlbumUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     private let featureFlagProvider: FeatureFlagProviderProtocol
     private var subscriptions = Set<AnyCancellable>()
@@ -44,11 +46,13 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
     
     init(usecase: AlbumListUseCaseProtocol,
          albumModificationUseCase: AlbumModificationUseCaseProtocol,
+         shareAlbumUseCase: ShareAlbumUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
          featureFlagProvider: FeatureFlagProviderProtocol = AlbumFeatureFlagProvider()) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
+        self.shareAlbumUseCase = shareAlbumUseCase
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         self.featureFlagProvider = featureFlagProvider
@@ -122,21 +126,40 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         showCreateAlbumAlert.toggle()
     }
     
-    func deleteAlbumAlertView() -> Alert {
-        Alert(
-            title: Text(Strings.Localizable.CameraUploads.Albums.deleteAlbumTitle(selection.albums.count)),
-            message: Text(Strings.Localizable.CameraUploads.Albums.deleteAlbumMessage(selection.albums.count)),
-            primaryButton: .default(Text(Strings.Localizable.delete)) { [weak self] in
-                self?.onAlbumListDeleteConfirm()
-            },
-            secondaryButton: .cancel(Text(Strings.Localizable.cancel))
-        )
+    func showAlertView(_ albumAlertType: AlbumAlertType) -> Alert {
+        switch albumAlertType {
+        case .deleteAlbum:
+            return deleteAlbumAlertView()
+        case .removeAlbumShareLink:
+            return removeShareLinkAlertView()
+        }
     }
     
     func onAlbumListDeleteConfirm() {
         deleteAlbumTask = Task {
             let albumIds = await albumModificationUseCase.delete(albums: Array(selection.albums.keys))
             onAlbumDeleteSuccess(albumIds)
+        }
+    }
+    
+    func onAlbumShareLinkRemoveConfirm(_ albums: [AlbumEntity]) {
+        albumRemoveShareLinkTask = Task { [weak self] in
+            guard let self else { return }
+            
+            defer { cancelAlbumRemoveShareLinkTask() }
+            
+            let removeLinkAlbumIds = Set(albums.map { $0.id })
+            let successfullyRemoveLinkAlbumIds = await shareAlbumUseCase.removeSharedLink(forAlbums: albums)
+            let diff = Set(removeLinkAlbumIds).subtracting(Set(successfullyRemoveLinkAlbumIds))
+            
+            if diff.count == 0 {
+                onRemoveAlbumShareLinkSuccess(successfullyRemoveLinkAlbumIds)
+            } else if diff.count < removeLinkAlbumIds.count {
+                onRemoveAlbumShareLinkSuccess(successfullyRemoveLinkAlbumIds)
+                MEGALogError("Albums [\(diff)] share link can not be removed")
+            } else {
+                MEGALogError("Albums [\(diff)] share link can not be removed")
+            }
         }
     }
     
@@ -188,15 +211,51 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
             return
         }
         
+        var hudMessage = ""
         if albumIds.count == 1,
            let albumId = albumIds.first,
            let albumName = Array(selection.albums.values).first(where: { $0.id == albumId })?.name {
-            albumDeletedSuccessMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
-                    .replacingOccurrences(of: "[A]", with: albumName)
+            hudMessage = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1).replacingOccurrences(of: "[A]", with: albumName)
         } else {
-            albumDeletedSuccessMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albumIds.count)
+            hudMessage = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albumIds.count)
         }
         photoAlbumContainerViewModel?.editMode = .inactive
+        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: Asset.Images.Hud.hudMinus.image)
+    }
+    
+    private func onRemoveAlbumShareLinkSuccess(_ albumIds: [HandleEntity]) {
+        guard albumIds.count > 0 else {
+            photoAlbumContainerViewModel?.editMode = .inactive
+            return
+        }
+        
+        let hudMessage = albumIds.count == 1 ? Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1) : Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
+        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: Asset.Images.Hud.hudSuccess.image)
+
+        photoAlbumContainerViewModel?.editMode = .inactive
+    }
+    
+    private func deleteAlbumAlertView() -> Alert {
+        Alert(
+            title: Text(Strings.Localizable.CameraUploads.Albums.deleteAlbumTitle(selection.albums.count)),
+            message: Text(Strings.Localizable.CameraUploads.Albums.deleteAlbumMessage(selection.albums.count)),
+            primaryButton: .default(Text(Strings.Localizable.delete)) { [weak self] in
+                self?.onAlbumListDeleteConfirm()
+            },
+            secondaryButton: .cancel(Text(Strings.Localizable.cancel))
+        )
+    }
+    
+    private func removeShareLinkAlertView() -> Alert {
+        Alert(
+            title: Text(Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertTitle(selection.albums.count)),
+            message: Text(Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertMessage(selection.albums.count)),
+            primaryButton: .default(Text(Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertConfirmButtonTitle(selection.albums.count))) { [weak self] in
+                guard let self = self else { return }
+                onAlbumShareLinkRemoveConfirm(Array(selection.albums.values))
+            },
+            secondaryButton: .cancel(Text(Strings.Localizable.cancel))
+        )
     }
 
     func newAlbumName() -> String {
@@ -243,7 +302,16 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
         photoAlbumContainerViewModel?.$showDeleteAlbumAlert
             .dropFirst()
             .sink { [weak self] _ in
-                self?.showDeleteAlbumAlert = true
+                guard let self = self else { return }
+                albumAlertType = .deleteAlbum
+            }
+            .store(in: &subscriptions)
+        
+        photoAlbumContainerViewModel?.$showRemoveAlbumLinksAlert
+            .dropFirst()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                albumAlertType = .removeAlbumShareLink
             }
             .store(in: &subscriptions)
         
@@ -252,6 +320,8 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
                 .assign(to: &photoAlbumContainerViewModel.$isAlbumsSelected)
             selection.isExportedAlbumSelectedPublisher
                 .assign(to: &photoAlbumContainerViewModel.$isExportedAlbumSelected)
+            selection.isOnlyExportedAlbumsSelectedPublisher
+                .assign(to: &photoAlbumContainerViewModel.$isOnlyExportedAlbumsSelected)
         }
     }
     
@@ -262,5 +332,10 @@ final class AlbumListViewModel: NSObject, ObservableObject  {
                 self?.selection.editMode = $0
             })
             .store(in: &subscriptions)
+    }
+    
+    private func cancelAlbumRemoveShareLinkTask() {
+        albumRemoveShareLinkTask?.cancel()
+        albumRemoveShareLinkTask = nil
     }
 }

@@ -17,12 +17,20 @@ struct AlbumCell: View {
                 ProgressView()
                     .opacity(viewModel.isLoading ? 1.0 : 0.0)
                 
-                CheckMarkView(
-                    markedSelected: viewModel.isSelected,
-                    foregroundColor: viewModel.isSelected ? .green : Color(Colors.Photos.photoSeletionBorder.color)
-                )
-                .offset(x: -5, y: -5)
-                .opacity(viewModel.shouldShowEditStateOpacity)
+                VStack {
+                    SharedLinkView()
+                        .offset(x: 2, y: 0)
+                        .opacity(viewModel.isLinkShared ? 1.0 : 0.0)
+                    
+                    Spacer()
+                    
+                    CheckMarkView(
+                        markedSelected: viewModel.isSelected,
+                        foregroundColor: viewModel.isSelected ? .green : Color(Colors.Photos.photoSeletionBorder.color)
+                    )
+                    .offset(x: -5, y: -5)
+                    .opacity(viewModel.shouldShowEditStateOpacity)
+                }
             }
             
             VStack(alignment: .leading, spacing: 6) {

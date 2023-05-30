@@ -2916,6 +2916,22 @@ public enum Strings {
         public static func removedItemFrom(_ p1: Int) -> String {
           return Strings.tr("Localizable", "cameraUploads.albums.removedItemFrom", p1)
         }
+        /// Plural format key: "%#@count@"
+        public static func removeShareLinkAlertConfirmButtonTitle(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle", p1)
+        }
+        /// Plural format key: "%#@count@"
+        public static func removeShareLinkAlertMessage(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.removeShareLinkAlertMessage", p1)
+        }
+        /// Plural format key: "%#@count@"
+        public static func removeShareLinkAlertTitle(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.removeShareLinkAlertTitle", p1)
+        }
+        /// Plural format key: "%#@count@"
+        public static func removeShareLinkSuccessMessage(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "cameraUploads.albums.removeShareLinkSuccessMessage", p1)
+        }
         /// Select album cover
         public static let selectAlbumCover = Strings.tr("Localizable", "cameraUploads.albums.selectAlbumCover")
         /// Albums
