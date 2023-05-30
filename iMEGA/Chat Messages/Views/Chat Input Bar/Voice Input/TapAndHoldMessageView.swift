@@ -3,19 +3,19 @@ import Foundation
 
 class TapAndHoldMessageView: UIView {
     
-    //MARK: - Properties
+    // MARK: - Properties
 
     @IBOutlet weak var label: UILabel!
     private var timer: Timer!
     
-    //MARK: - Overriden method
+    // MARK: - Overriden method
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setLabelText()
     }
     
-    //MARK: - Actions
+    // MARK: - Actions
 
     @IBAction func didTapClose(_ button: UIButton) {
         timer.invalidate()
@@ -27,7 +27,7 @@ class TapAndHoldMessageView: UIView {
         close()
     }
     
-    //MARK: - Interface methods
+    // MARK: - Interface methods
 
     func add(toView view: UIView, bottom: CGFloat) {
         alpha = 0.0
@@ -42,7 +42,7 @@ class TapAndHoldMessageView: UIView {
         })
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in

@@ -108,7 +108,7 @@ extension MEGAStore {
         }
     }
     
-    //MARK: - Private methods.
+    // MARK: - Private methods.
     
     private func fetchMostRecentChatUploadTransfer(context: NSManagedObjectContext) -> ChatUploadTransfer? {
         let fetchRequest: NSFetchRequest<ChatUploadTransfer> = ChatUploadTransfer.fetchRequest()

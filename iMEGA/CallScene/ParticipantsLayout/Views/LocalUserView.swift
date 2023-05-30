@@ -69,7 +69,7 @@ class LocalUserView: UIView {
         }
     }
 
-    //MARK: - Public
+    // MARK: - Public
     func configure(for position: CameraPositionEntity) {
         if !isHidden {
             return
@@ -142,7 +142,7 @@ class LocalUserView: UIView {
         blurEffectView.removeFromSuperview()
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func positionView(by center: CGPoint, animated: Bool = true) {
         if animated {
             guard let superview = superview else { return }

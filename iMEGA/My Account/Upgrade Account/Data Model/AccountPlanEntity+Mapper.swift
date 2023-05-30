@@ -1,6 +1,6 @@
 import MEGADomain
 
-//MARK: - SKProduct
+// MARK: - SKProduct
 extension SKProduct {
     func toAccountPlanEntity(product: SKProduct,
                              storage: Int,
@@ -11,7 +11,7 @@ extension SKProduct {
     }
 }
 
-//MARK: - AccountPlanTerm
+// MARK: - AccountPlanTerm
 fileprivate extension AccountPlanTermEntity {
     init(productIdentifier identifier: String) {
         switch identifier {
@@ -22,7 +22,7 @@ fileprivate extension AccountPlanTermEntity {
     }
 }
 
-//MARK: - AccountPlanEntity
+// MARK: - AccountPlanEntity
 fileprivate extension AccountPlanEntity {
     init(product: SKProduct,
          storageLimit: Int,

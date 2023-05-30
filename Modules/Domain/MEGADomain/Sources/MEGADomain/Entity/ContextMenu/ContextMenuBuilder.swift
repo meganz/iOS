@@ -271,7 +271,7 @@ public final class ContextMenuBuilder {
         timeRemainingToDeactiveDND
     }
 
-    //MARK: - Upload Add Context Actions grouping functions
+    // MARK: - Upload Add Context Actions grouping functions
     private func uploadAddMenu() -> CMEntity {
         var uploadAddActions: [CMElement] = []
         
@@ -287,7 +287,7 @@ public final class ContextMenuBuilder {
                         children: uploadAddActions)
     }
     
-    //MARK: - Display Context Actions grouping functions
+    // MARK: - Display Context Actions grouping functions
     private func selectMenu() -> CMEntity {
         let selectAction = select
         
@@ -411,7 +411,7 @@ public final class ContextMenuBuilder {
                         children: quickActions)
     }
     
-    //MARK: - Rubbish Bin Children Context Actions grouping functions
+    // MARK: - Rubbish Bin Children Context Actions grouping functions
     private func rubbishBinChildFolderMenu() -> CMEntity {
         CMEntity(displayInline: true, children: [selectMenu(), viewTypeMenu(), sortMenu(), rubbishBinChildQuickActionsMenu()])
     }
@@ -435,7 +435,7 @@ public final class ContextMenuBuilder {
         return CMEntity(displayInline: true, children: rubbishBinActions)
     }
     
-    //MARK: - Chat Context Actions
+    // MARK: - Chat Context Actions
     private func chatMenu() -> CMEntity {
         if isArchivedChatsVisible {
             return CMEntity(displayInline: true, children: [chatStatusMenu(), doNotDisturbMenu(), CMActionEntity(type: .chat(actionType: .archivedChats))])
@@ -472,7 +472,7 @@ public final class ContextMenuBuilder {
                         children: doNotDisturbElements)
     }
     
-    //MARK: - Meeting Context Actions
+    // MARK: - Meeting Context Actions
     private func meetingMenu() -> CMEntity {
         CMEntity(
             displayInline: true,
@@ -480,7 +480,7 @@ public final class ContextMenuBuilder {
         )
     }
     
-    //MARK: - My QR Code Actions
+    // MARK: - My QR Code Actions
     private func myQRCodeMenu() -> CMEntity {
         var myQRCodeActions = [CMActionEntity]()
         
@@ -494,7 +494,7 @@ public final class ContextMenuBuilder {
                         children: myQRCodeActions)
     }
     
-    //MARK: - Album
+    // MARK: - Album
     private var isAlbum: Bool {
         albumType != nil
     }

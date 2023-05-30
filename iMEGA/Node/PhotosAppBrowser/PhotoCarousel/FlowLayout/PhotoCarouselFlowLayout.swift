@@ -51,14 +51,14 @@ final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {
     
     var currentPage: Int = 0
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
 
     func relayout() {
         shouldLayoutEverything = true
         invalidateLayout()
     }
     
-    // MARK:- Overriden methods.
+    // MARK: - Overriden methods.
     
     override func prepare() {
         guard shouldLayoutEverything else { return }

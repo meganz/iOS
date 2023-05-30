@@ -88,6 +88,7 @@ only_rules:
       - private_over_fileprivate
       - comma
       - trailing_comma
+      - mark
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
       # - xctfail_message (16 issues)
@@ -100,7 +101,6 @@ only_rules:
       # - opening_brace (183 issues)
       # - vertical_whitespace (232 issues)
       # - comment_spacing (293 issues)
-      # - mark (365 issues)
       # - leading_whitespace (398 issues)
       # - identifier_name (427 issues)
       # - colon (725 issues)

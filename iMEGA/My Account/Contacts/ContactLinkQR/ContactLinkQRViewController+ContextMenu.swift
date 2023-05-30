@@ -17,7 +17,7 @@ extension ContactLinkQRViewController: QRMenuDelegate {
                                                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
     }
     
-    //MARK: - QRMenuDelegate functions
+    // MARK: - QRMenuDelegate functions
     func qrMenu(didSelect action: MyQRActionEntity) {
         switch action {
         case .share:

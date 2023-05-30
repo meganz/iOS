@@ -148,7 +148,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         return audioSession.mnz_isOutputEqual(toPortType: avAudioSessionPort)
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     private func addObservers() {
         NotificationCenter.default.addObserver(self,

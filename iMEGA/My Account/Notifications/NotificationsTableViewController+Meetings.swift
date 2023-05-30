@@ -433,7 +433,7 @@ extension NotificationsTableViewController {
         )
     }
     
-    //MARK: - Recurring
+    // MARK: - Recurring
     
     private func contentForRecurringCancelledScheduledMeeting(withEmail email: String) -> NSAttributedString? {
         createAttributedStringForBoldTags(

@@ -1,6 +1,6 @@
 
 extension MEGANode {
-    //MARK: - Import
+    // MARK: - Import
     func openBrowserToImport(in viewController: UIViewController) {
         let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
         guard let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController

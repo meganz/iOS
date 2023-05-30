@@ -152,7 +152,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         router.showDetails(forChatId: scheduledMeeting.chatId, unreadMessagesCount: chatRoom.unreadCount)
     }
     
-    //MARK: - Private methods.
+    // MARK: - Private methods.
     
     private func loadFutureMeetingSearchString() {
         Task { [weak self] in

@@ -194,7 +194,7 @@ final class AnalyticsEventUseCaseTests: XCTestCase {
         XCTAssertTrue(repo.type == .download(.exportFile))
     }
     
-    //MARK: - Account Plan
+    // MARK: - Account Plan
     
     func testSendEvent_accountPlan_tappedFreePlan() {
         let repo = MockAnalyticsRepository.newRepo

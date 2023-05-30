@@ -180,7 +180,7 @@ final class MeetingContainerViewModel: ViewModelType {
         }
     }
     
-    //MARK: -Private
+    // MARK: - Private
     private func hangCall(presenter: UIViewController?, sender: UIButton?) {
         if !accountUseCase.isGuest {
             dismissCall(completion: nil)

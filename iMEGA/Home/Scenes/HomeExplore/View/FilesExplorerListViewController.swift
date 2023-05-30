@@ -39,7 +39,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         listSource?.selectedNodes
     }
     
-    //MARK: - Interface methods
+    // MARK: - Interface methods
     
     override func toggleSelectAllNodes() {
         listSource?.toggleSelectAllNodes()

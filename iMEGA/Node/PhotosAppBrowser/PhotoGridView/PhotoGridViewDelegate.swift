@@ -8,7 +8,7 @@ class PhotoGridViewDelegate: NSObject {
     var updateBottomView: (() -> Void)?
     private var selecting: Bool = true
     
-    // MARK:- Initializer.
+    // MARK: - Initializer.
     
     init(collectionView: UICollectionView, cellsPerRow: @escaping () -> Int) {
         self.collectionView = collectionView
@@ -16,7 +16,7 @@ class PhotoGridViewDelegate: NSObject {
     }
 }
 
-// MARK:- Private methods.
+// MARK: - Private methods.
 
 private extension PhotoGridViewDelegate {
     var cellSize: CGSize {
@@ -30,7 +30,7 @@ private extension PhotoGridViewDelegate {
     }
 }
 
-// MARK:- UICollectionViewDelegate.
+// MARK: - UICollectionViewDelegate.
 
 extension PhotoGridViewDelegate: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
@@ -62,7 +62,7 @@ extension PhotoGridViewDelegate: UICollectionViewDelegate {
     }
 }
 
-// MARK:- UICollectionViewDelegateFlowLayout.
+// MARK: - UICollectionViewDelegateFlowLayout.
 
 extension PhotoGridViewDelegate: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,

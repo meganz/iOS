@@ -47,7 +47,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         XCTAssertTrue(mediaDiscRepo.stopMonitoringNodesUpdateCalled == 1)
     }
     
-    //MARK: Should reload
+    // MARK: Should reload
     
     func testShouldReload_onShouldProcessNodesUpdateReturnFalse_shouldReturnFalse() {
         let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: false)

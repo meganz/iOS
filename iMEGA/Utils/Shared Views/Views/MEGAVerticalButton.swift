@@ -11,7 +11,7 @@ final class MEGAVerticalButton: MEGAButton {
         mnz_alignImageAndTitleVertically(padding: 0.0)
     }
     
-    //MARK: - Badge
+    // MARK: - Badge
     @objc func setBadgeCount(value: String) {
         guard !value.isEmpty else {
             badgeView?.isHidden = true

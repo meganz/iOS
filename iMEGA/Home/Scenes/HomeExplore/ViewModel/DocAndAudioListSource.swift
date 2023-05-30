@@ -7,7 +7,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     var tableView: UITableView
     weak var delegate: FilesExplorerListSourceDelegate?
     
-    // MARK:- Initializers.
+    // MARK: - Initializers.
 
     init(tableView: UITableView,
          nodes: [MEGANode]?,
@@ -23,7 +23,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
         configureTableView(tableView)
     }
 
-    // MARK:- Actions
+    // MARK: - Actions
     
     @objc func moreButtonTapped(sender: UIButton) {
         guard let node = nodes?[sender.tag] else { return  }
@@ -31,13 +31,13 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
         delegate?.showMoreOptions(forNode: node, sender: sender)
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
     
     func onTransferCompleted(forNode node: MEGANode) {
         reloadCell(withNode: node, afterDelay: 0)
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     private func configureTableView(_ tableView: UITableView) {
         tableView.register(UINib(nibName: "NodeTableViewCell", bundle: nil),
@@ -52,7 +52,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     }
 }
 
-// MARK:- UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension DocAndAudioListSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,7 +86,7 @@ extension DocAndAudioListSource {
     }
 }
 
-// MARK:- UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension DocAndAudioListSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -111,7 +111,7 @@ extension DocAndAudioListSource {
     }
 }
 
-// MARK:- Swipe gesture UITableViewDelegate
+// MARK: - Swipe gesture UITableViewDelegate
 
 extension DocAndAudioListSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -146,7 +146,7 @@ extension DocAndAudioListSource {
         return nil
     }
 
-    // MARK:- Private methods
+    // MARK: - Private methods
     
     private func indexPath(forNode node: MEGANode) -> IndexPath? {
         guard let index = nodes?.firstIndex(of: node) else {

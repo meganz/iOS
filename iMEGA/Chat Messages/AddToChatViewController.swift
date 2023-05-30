@@ -17,7 +17,7 @@ protocol AddToChatViewControllerDelegate: AnyObject {
 
 class AddToChatViewController: UIViewController {
     
-    // MARK:- Properties.
+    // MARK: - Properties.
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet private weak var patchView: UIView!
@@ -47,7 +47,7 @@ class AddToChatViewController: UIViewController {
     
     private let iPadPopoverWidth: CGFloat = 340.0
     
-    // MARK:- View lifecycle methods.
+    // MARK: - View lifecycle methods.
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -234,7 +234,7 @@ class AddToChatViewController: UIViewController {
         pageControl.currentPageIndicatorTintColor = .mnz_primaryGray(for: traitCollection)
     }
     
-    // MARK:- Actions.
+    // MARK: - Actions.
 
     @IBAction func backgroundViewTapped(_ tapGesture: UITapGestureRecognizer) {
         dismiss()

@@ -26,7 +26,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         setupPlans()
     }
     
-    //MARK: - Setup
+    // MARK: - Setup
     private func setupPlans() {
         Task {
             planList = await purchaseUseCase.accountPlanProducts()
@@ -45,7 +45,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         }
     }
 
-    //MARK: - Public
+    // MARK: - Public
     var currentPlanName: String {
         currentPlan?.name ?? ""
     }
@@ -81,7 +81,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         self.selectedPlan = selectedPlan != plan ? plan : nil
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func planTag(_ plan: AccountPlanEntity) -> AccountPlanTagEntity {
         if let currentPlan, plan == currentPlan { return .currentPlan }
         if let recommendedPlan, plan == recommendedPlan { return .recommended }

@@ -12,7 +12,7 @@ final class ExportFileRouter: ExportFileViewRouting {
         self.sender = sender
     }
     
-    //MARK: - Dispatch actions without viewcontroller -
+    // MARK: - Dispatch actions without viewcontroller -
     func export(node: NodeEntity) {
         viewModel.dispatch(.exportFileFromNode(node))
     }
@@ -29,7 +29,7 @@ final class ExportFileRouter: ExportFileViewRouting {
         viewModel.dispatch(.exportFileFromMessageNode(node, messageId, chatId))
     }
     
-    //MARK: - Private -
+    // MARK: - Private -
     private lazy var viewModel: ExportFileViewModel = {
         let exportFileUC = ExportFileUseCase(
             downloadFileRepository: DownloadFileRepository.newRepo,
@@ -48,7 +48,7 @@ final class ExportFileRouter: ExportFileViewRouting {
                                    exportFileUseCase: exportFileUC)
     }()
     
-    //MARK: - ExportFileViewRouting -
+    // MARK: - ExportFileViewRouting -
     func exportedFiles(urls: [URL]) {
         let activityViewController = UIActivityViewController.init(activityItems: urls, applicationActivities: nil)
         

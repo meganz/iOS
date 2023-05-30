@@ -4,7 +4,7 @@ import Photos
 
 final class PhotoGridViewCell: UICollectionViewCell {
     
-    // MARK:- Outlets.
+    // MARK: - Outlets.
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var markerView: PhotoSelectedMarkerView!
@@ -12,7 +12,7 @@ final class PhotoGridViewCell: UICollectionViewCell {
     @IBOutlet weak var markerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomViewBottomConstraint: NSLayoutConstraint!
 
-    // MARK:- Instance variables.
+    // MARK: - Instance variables.
 
     var asset: PHAsset?
     var tapHandler: ((PhotoGridViewCell, CGSize, CGPoint) -> Void)?
@@ -36,7 +36,7 @@ final class PhotoGridViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK:- Overriden methods.
+    // MARK: - Overriden methods.
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,7 +49,7 @@ final class PhotoGridViewCell: UICollectionViewCell {
         relayoutSubViews()
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
     
     func willDisplay(size: CGSize) {
         guard let asset = asset,
@@ -72,7 +72,7 @@ final class PhotoGridViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     @objc private func tapped(_ tapGesture: UITapGestureRecognizer) {
         if let handler = tapHandler {

@@ -86,7 +86,7 @@ extension ChangeNameViewController: UITextFieldDelegate {
         return false
     }
     
-    //MARK: - UITextFieldDelegate
+    // MARK: - UITextFieldDelegate
     public func textFieldDidEndEditing(_ textField: UITextField) {
         switch textField.tag {
         case TextFieldType.firstName.rawValue, TextFieldType.lastName.rawValue:

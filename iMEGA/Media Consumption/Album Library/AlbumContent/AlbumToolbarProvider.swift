@@ -69,7 +69,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         toolbar.items = albumToolbarConfigurator?.toolbarItems(forNodes: selectedNodes())
     }
     
-    // MARK:- Toolbar Button actions
+    // MARK: - Toolbar Button actions
     func downloadButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
@@ -265,7 +265,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
     private func downloadStarted(forNode node: MEGANode) { }
 }
 
-//MARK: - NodeActionViewControllerDelegate
+// MARK: - NodeActionViewControllerDelegate
 extension AlbumContentViewController: NodeActionViewControllerDelegate {
     func nodeAction(
         _ nodeAction: NodeActionViewController,
@@ -316,7 +316,7 @@ extension AlbumContentViewController: NodeActionViewControllerDelegate {
     }
 }
 
-//MARK: - BrowserViewControllerDelegate
+// MARK: - BrowserViewControllerDelegate
 extension AlbumContentViewController: BrowserViewControllerDelegate {
     func nodeEditCompleted(_ complete: Bool) {
         endEditingMode()

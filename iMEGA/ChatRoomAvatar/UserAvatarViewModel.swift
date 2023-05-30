@@ -34,7 +34,7 @@ final class UserAvatarViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
     }
 
-    //MARK: - Interface methods
+    // MARK: - Interface methods
     
     func loadData(isRightToLeftLanguage: Bool) {
         self.isRightToLeftLanguage = isRightToLeftLanguage
@@ -42,7 +42,7 @@ final class UserAvatarViewModel: ObservableObject {
         loadingChatRoomAvatarTask = createLoadingChatRoomAvatarTask(isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     private func createLoadingChatRoomAvatarTask(isRightToLeftLanguage: Bool) -> Task<Void, Never> {
         Task { [weak self] in

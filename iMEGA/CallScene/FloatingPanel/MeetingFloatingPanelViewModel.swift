@@ -213,7 +213,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    //MARK:- Private methods
+    // MARK: - Private methods
     private func inviteParticipants() {
         let participantsAddingViewFactory = createParticipantsAddingViewFactory()
         

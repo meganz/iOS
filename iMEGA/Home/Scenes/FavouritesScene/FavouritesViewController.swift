@@ -74,7 +74,7 @@ final class FavouritesViewController: UIViewController, ViewType {
     }
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension FavouritesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -89,7 +89,7 @@ extension FavouritesViewController: UITableViewDelegate {
     }
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension FavouritesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -121,7 +121,7 @@ extension FavouritesViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - DZNEmptyDataSetSource
+// MARK: - DZNEmptyDataSetSource
 
 extension FavouritesViewController: DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {

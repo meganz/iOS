@@ -2,7 +2,7 @@ import UIKit
 
 final class EndCallDialog {
     
-    //MARK: - Private properties
+    // MARK: - Private properties
 
     private var endCallDialogViewController: UIAlertController?
     
@@ -12,7 +12,7 @@ final class EndCallDialog {
     private var stayOnCallAction: () -> Void
     private var endCallAction: () -> Void
     
-    //MARK: - Init
+    // MARK: - Init
 
     init(type: EndCallDialogType = .endCallForMyself,
          forceDarkMode: Bool = false,
@@ -27,7 +27,7 @@ final class EndCallDialog {
         self.endCallAction = endCallAction
     }
     
-    //MARK: - Interface methods
+    // MARK: - Interface methods
 
     func show(animated: Bool = true) {
         let endCallDialogViewController = createDialog()
@@ -39,7 +39,7 @@ final class EndCallDialog {
         endCallDialogViewController?.dismiss(animated: animated, completion: completion)
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     private func createDialog() -> UIAlertController {
         let endCallDialogViewController = UIAlertController(

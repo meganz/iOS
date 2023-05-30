@@ -114,7 +114,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
         return successMessage
     }
     
-    //MARK: - Share extension upload
+    // MARK: - Share extension upload
     private func startShareExtensionFileUploads() {
         fileTransfers.forEach { transferViewEntity in
             guard let uploadLocalURL = transferViewEntity.localFileURL else {

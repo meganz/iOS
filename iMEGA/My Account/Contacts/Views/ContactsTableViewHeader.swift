@@ -38,7 +38,7 @@ class ContactsTableViewHeader: UIView {
         }
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func updateAppearance() {
         backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
@@ -53,7 +53,7 @@ class ContactsTableViewHeader: UIView {
         requestsDetailLabel.text = contactsCount == 0 ? "" : incomingContactsLists.size.stringValue
     }
     
-    //MARK: - IBAction
+    // MARK: - IBAction
     
     @IBAction func requestsTapped(_ sender: UITapGestureRecognizer) {
         let contactRequestsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsRequestsViewControllerID")

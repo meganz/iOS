@@ -173,7 +173,7 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
     }
 }
 
-//MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegate
 extension FavouritesExplorerGridViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if gridSource?.allowsMultipleSelection ?? false {
@@ -232,7 +232,7 @@ extension FavouritesExplorerGridViewController: CHTCollectionViewDelegateWaterfa
     }
 }
 
-//MARK: - FilesExplorerGridSourceDelegate
+// MARK: - FilesExplorerGridSourceDelegate
 extension FavouritesExplorerGridViewController: FilesExplorerGridSourceDelegate {
     func showMoreNodeOptions(for node: MEGANode, sender: UIView) {
         showMoreOptions(forNode: node, sender: sender)

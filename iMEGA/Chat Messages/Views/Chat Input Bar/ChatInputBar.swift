@@ -15,7 +15,7 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
 
 class ChatInputBar: UIView {
 
-    // MARK:- Gestures properties
+    // MARK: - Gestures properties
 
     private lazy var longPressGesture: UILongPressGestureRecognizer = {
         let recognizer = UILongPressGestureRecognizer(target: self, action:#selector(longPress))
@@ -39,7 +39,7 @@ class ChatInputBar: UIView {
         return recognizer
     }()
     
-    // MARK:- Private properties
+    // MARK: - Private properties
 
     private let messageInputBar = MessageInputBar.instanceFromNib
     private var audioRecordingInputBar: AudioRecordingInputBar!
@@ -50,7 +50,7 @@ class ChatInputBar: UIView {
     private var voiceClipInputBarRegularHeight: CGFloat = 320.0
     private var keyboardFrameChangeObserver: NSObjectProtocol!
 
-    // MARK:- Interface properties
+    // MARK: - Interface properties
 
     weak var delegate: ChatInputBarDelegate?
     var editMessage: ChatMessage? {
@@ -132,7 +132,7 @@ class ChatInputBar: UIView {
         return messageInputBar.text
     }
 
-    // MARK:- overriden properties and methods
+    // MARK: - overriden properties and methods
 
     override var intrinsicContentSize: CGSize {
         return .zero
@@ -195,7 +195,7 @@ class ChatInputBar: UIView {
     }
 
     
-    //MARK: - Interface methods.
+    // MARK: - Interface methods.
     
     func set(text: String, showKeyboard: Bool = true) {
         guard messageInputBar.superview != nil else {
@@ -343,7 +343,7 @@ class ChatInputBar: UIView {
         }
     }
     
-    // MARK:- Gesture callback methods.
+    // MARK: - Gesture callback methods.
     
     @objc func fingerLiftUpDetected(_ gesture: FingerLiftupGestureRecognizer) {
         guard gesture.state == .ended,

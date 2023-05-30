@@ -451,7 +451,7 @@ extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
         return EmptyStateView(image: imageForEmptyState(), title: titleForEmtyState(), description: nil, buttonTitle: nil)
     }
     
-//MARK: - Empty State
+// MARK: - Empty State
     
     func titleForEmtyState() -> String {
         if MEGAReachabilityManager.isReachable() {

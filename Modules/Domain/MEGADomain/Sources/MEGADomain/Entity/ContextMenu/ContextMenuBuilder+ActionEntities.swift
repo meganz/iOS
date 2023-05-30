@@ -1,6 +1,6 @@
 extension ContextMenuBuilder {
     
-    //MARK: - Upload Add Actions
+    // MARK: - Upload Add Actions
     
     var choosePhotoVideo: CMActionEntity {
         CMActionEntity(type: .uploadAdd(actionType: .chooseFromPhotos))
@@ -26,7 +26,7 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .uploadAdd(actionType: .newFolder))
     }
     
-    //MARK: - Display Actions
+    // MARK: - Display Actions
     
     var select: CMActionEntity {
         CMActionEntity(type: .display(actionType: .select))
@@ -50,7 +50,7 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .display(actionType: .mediaDiscovery))
     }
     
-    //MARK: - Sort Actions
+    // MARK: - Sort Actions
     
     var sortNameAscending: CMActionEntity {
         CMActionEntity(type: .sort(actionType: .defaultAsc),
@@ -92,7 +92,7 @@ extension ContextMenuBuilder {
                        state: currentSortType() == .favouriteAsc ? .on : .off)
     }
     
-    //MARK: - Filter Actions
+    // MARK: - Filter Actions
     var filter: CMActionEntity {
         CMActionEntity(type: .display(actionType: .filter))
     }
@@ -112,7 +112,7 @@ extension ContextMenuBuilder {
                        state: currentFilterType() == .videos ? .on : .off)
     }
     
-    //MARK: - Quick Folder Actions
+    // MARK: - Quick Folder Actions
     
     var info: CMActionEntity {
         CMActionEntity(type: .quickActions(actionType: .info))
@@ -158,7 +158,7 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .quickActions(actionType: .rename))
     }
     
-    //MARK: - Rubbish Bin Actions
+    // MARK: - Rubbish Bin Actions
     
     var restore: CMActionEntity {
         CMActionEntity(type: .rubbishBin(actionType: .restore))
@@ -176,7 +176,7 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .rubbishBin(actionType: .remove))
     }
     
-    //MARK: - Chat Actions
+    // MARK: - Chat Actions
     
     func chatStatus(_ status: ChatStatusEntity) -> CMActionEntity {
         CMActionEntity(type: .chatStatus(actionType: status),
@@ -187,7 +187,7 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .chatDoNotDisturbEnabled(optionType: option))
     }
     
-    //MARK: - My QR Code Actions
+    // MARK: - My QR Code Actions
     
     var share: CMActionEntity {
         CMActionEntity(type: .qr(actionType: .share))
@@ -201,7 +201,7 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .qr(actionType: .resetQR))
     }
     
-    //MARK: - Meeting
+    // MARK: - Meeting
     
     var startMeeting: CMActionEntity {
         CMActionEntity(type: .meeting(actionType: .startMeeting))
@@ -215,7 +215,7 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .meeting(actionType: .scheduleMeeting))
     }
     
-    //MARK: - Album
+    // MARK: - Album
     
     var selectAlbumCover: CMActionEntity {
         CMActionEntity(type: .album(actionType: .selectAlbumCover))

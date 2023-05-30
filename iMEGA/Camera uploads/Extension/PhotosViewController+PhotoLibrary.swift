@@ -33,7 +33,7 @@ extension PhotosViewController: PhotoLibraryProvider {
     
     func hideNavigationEditBarButton(_ hide: Bool) { }
     
-    // Mark: - override
+    // MARK: - override
     
     func updateNavigationTitle(withSelectedPhotoCount count: Int) {
         var message = ""

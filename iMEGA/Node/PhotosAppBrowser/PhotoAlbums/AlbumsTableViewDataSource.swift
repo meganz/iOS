@@ -6,13 +6,13 @@ final class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
     private let albums: Albums
     private let imageManager = PHCachingImageManager.default()
     
-    // MARK:- Initializer.
+    // MARK: - Initializer.
     
     init(albums: Albums) {
         self.albums = albums
     }
 
-    // MARK:- Table view data source.
+    // MARK: - Table view data source.
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        albums.numberOfAlbums()

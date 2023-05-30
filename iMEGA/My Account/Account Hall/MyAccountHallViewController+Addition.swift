@@ -59,13 +59,13 @@ extension MyAccountHallViewController {
         viewModel.dispatch(.onViewAppear)
     }
     
-    //MARK: - Feature flag
+    // MARK: - Feature flag
     
     @objc func isNewUpgradeAccountPlanFeatureFlagEnabled() -> Bool {
         FeatureFlagProvider().isFeatureFlagEnabled(for: .newUpgradeAccountPlanUI)
     }
     
-    //MARK: - Open sections programmatically
+    // MARK: - Open sections programmatically
     @objc func openAchievements() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             let achievementsIndexPath = self.calculateIndexPath(for: MyAccountMegaSection.achievements.rawValue, in: MyAccountSection.mega.rawValue)

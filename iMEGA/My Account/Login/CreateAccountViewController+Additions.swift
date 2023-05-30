@@ -1,6 +1,6 @@
 extension CreateAccountViewController {
     
-    //MARK: - Login
+    // MARK: - Login
     @objc func setLoginAttributedText() {
         let font = UIFont.mnz_preferredFont(withStyle: .caption1, weight: .regular)
         let accountAttributedString = NSMutableAttributedString(string: Strings.Localizable.Account.CreateAccount.alreadyHaveAnAccount,

@@ -80,7 +80,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
         searchOperationQueue.cancelAllOperations()
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func search(string: String?,
                         parent node: NodeEntity?,

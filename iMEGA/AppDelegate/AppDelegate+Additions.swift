@@ -269,7 +269,7 @@ extension AppDelegate {
     }
 }
 
-//MARK: - Shared Secure fingerprint
+// MARK: - Shared Secure fingerprint
 extension AppDelegate {
     @objc func configSharedSecureFingerprintFlag() {
         let secureFlagManager = SharedSecureFingerprintManager()
@@ -278,7 +278,7 @@ extension AppDelegate {
     }
 }
 
-//MARK: - Actionable notification for Scheduled meetings
+// MARK: - Actionable notification for Scheduled meetings
 
 extension AppDelegate {
     

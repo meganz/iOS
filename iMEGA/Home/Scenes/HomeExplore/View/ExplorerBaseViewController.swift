@@ -76,7 +76,7 @@ class ExplorerBaseViewController: UIViewController {
         toolbar.items = explorerToolbarConfigurator?.toolbarItems(forNodes: selectedNodes())
     }
     
-    // MARK:- Toolbar Button actions
+    // MARK: - Toolbar Button actions
     private func didPressedFavouriteBarButton(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty else {
@@ -244,7 +244,7 @@ class ExplorerBaseViewController: UIViewController {
         }).start()
     }
     
-    //MARK:- Methods needs to be overriden by the subclass
+    // MARK: - Methods needs to be overriden by the subclass
     
     func selectedNodes() -> [MEGANode]? {
         fatalError("selectedNodes() method needs to be implemented by the subclass")
@@ -272,7 +272,7 @@ extension ExplorerBaseViewController: BrowserViewControllerDelegate {
     }
 }
 
-//MARK: - NodeActionViewControllerDelegate
+// MARK: - NodeActionViewControllerDelegate
 extension ExplorerBaseViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
         handleNodesAction(action: action, nodes: nodes, sender: sender)

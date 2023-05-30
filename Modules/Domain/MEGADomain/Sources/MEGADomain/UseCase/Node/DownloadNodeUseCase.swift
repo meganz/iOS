@@ -145,7 +145,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         downloadFileRepository.cancelDownloadTransfers()
     }
 
-    //MARK: - Private
+    // MARK: - Private
     private func tempURL(for node: NodeEntity) -> URL {
         mediaUseCase.isImage(node.name) ? fileCacheRepository.cachedOriginalURL(for: node.base64Handle, name: node.name) : fileCacheRepository.tempFileURL(for: node)
     }

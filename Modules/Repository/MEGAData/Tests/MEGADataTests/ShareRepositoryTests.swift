@@ -29,7 +29,7 @@ final class ShareRepositoryTests: XCTestCase {
         XCTAssertTrue(nodeEntityHandle == sharedFolderNodeEntity.handle)
     }
     
-    //MARK: Private
+    // MARK: Private
     private func mockNodes() -> [MockNode] {
         [MockNode(handle: 1, name: "1"),
          MockNode(handle: 2, name: "2")]

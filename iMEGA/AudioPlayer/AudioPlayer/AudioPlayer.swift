@@ -9,7 +9,7 @@ enum PlayerConfiguration: String {
 
 final class AudioPlayer: NSObject {
     
-    //MARK: - Internal properties
+    // MARK: - Internal properties
     var observers = [UIViewController]()
     var queuePlayer : AVQueuePlayer?
     var tracks: [AudioPlayerItem] = []
@@ -43,7 +43,7 @@ final class AudioPlayer: NSObject {
     var isCloseRequested = false
     var needToBeResumedAfterInterruption = false
     
-    //MARK: - Private properties
+    // MARK: - Private properties
     private let assetQueue = DispatchQueue(label: "player.queue", qos: .utility)
     private let assetKeysRequiredToPlay = ["playable"]
     private var playerViewControllerKVOContext = 0
@@ -51,7 +51,7 @@ final class AudioPlayer: NSObject {
     private var taskId: UIBackgroundTaskIdentifier?
     private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))
     
-    //MARK: - Internal Computed Properties
+    // MARK: - Internal Computed Properties
     var currentIndex: Int? {
         queuePlayer?.items().firstIndex(where:{$0 as? AudioPlayerItem == currentItem()})
     }
@@ -102,7 +102,7 @@ final class AudioPlayer: NSObject {
         (isPlaying || isPaused) && !isCloseRequested
     }
     
-    //MARK: - Private Computed Properties
+    // MARK: - Private Computed Properties
     private var duration: Double {
         guard let currentItem = queuePlayer?.currentItem, currentItem.duration.isValid else { return 0.0 }
         
@@ -113,7 +113,7 @@ final class AudioPlayer: NSObject {
         currentTime == 0.0 || duration == 0.0 ? 0.0 : Float(currentTime / duration)
     }
     
-    //MARK: - Private Functions
+    // MARK: - Private Functions
     init(config: [PlayerConfiguration: Any]? = [.loop: false, .shuffle: false, .repeatOne: false]) {
         if let config = config { audioPlayerConfig = config }
     }
@@ -217,7 +217,7 @@ final class AudioPlayer: NSObject {
         self.queuePlayer?.replaceCurrentItem(with: newItem)
     }
 
-    //MARK: - Internal Functions
+    // MARK: - Internal Functions
     func setAudioPlayerSession(active: Bool) {
         resetAudioSessionCategoryIfNeeded()
         setAudioSession(active: active)

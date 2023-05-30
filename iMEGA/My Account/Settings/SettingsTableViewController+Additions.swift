@@ -1,4 +1,4 @@
-//MARK: UITableViewDelegate
+// MARK: UITableViewDelegate
 extension SettingsTableViewController {
     
     @objc func bindViewModel() {
@@ -41,7 +41,7 @@ extension SettingsTableViewController {
     }
 }
 
-//MARK: - Delete account
+// MARK: - Delete account
 extension SettingsTableViewController {
     
     @objc func showDeleteAccountEmailConfirmationView() {
@@ -53,7 +53,7 @@ extension SettingsTableViewController {
     }
 }
 
-//MARK: - MEGARequestDelegate
+// MARK: - MEGARequestDelegate
 extension SettingsTableViewController: MEGARequestDelegate {
     public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         switch request.type {

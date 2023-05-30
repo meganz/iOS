@@ -107,7 +107,7 @@ final class FilesExplorerGridSource: NSObject {
     }
 }
 
-// MARK:- UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 
 extension FilesExplorerGridSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -130,7 +130,7 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
     }
 }
 
-//MARK: - Manage CollectionViewCells size with
+// MARK: - Manage CollectionViewCells size with
 extension FilesExplorerGridSource: DynamicTypeCollectionViewSizing {
     func provideSizingCell(for indexPath: IndexPath) -> UICollectionViewCell? {
         guard let node = nodes?[indexPath.item] else { return nil }
@@ -143,7 +143,7 @@ extension FilesExplorerGridSource: DynamicTypeCollectionViewSizing {
     }
 }
 
-//MARK: - NodeCollectionViewCellDelegate
+// MARK: - NodeCollectionViewCellDelegate
 extension FilesExplorerGridSource: NodeCollectionViewCellDelegate {
     func showMoreMenu(for node: MEGANode, from sender: UIButton) {
         guard !collectionView.allowsMultipleSelection else { return }

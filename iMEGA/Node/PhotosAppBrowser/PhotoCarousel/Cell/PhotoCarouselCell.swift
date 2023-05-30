@@ -4,7 +4,7 @@ import Photos
 
 final class PhotoCarouselCell: UICollectionViewCell {
     
-    // MARK:- Outlets.
+    // MARK: - Outlets.
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
@@ -17,7 +17,7 @@ final class PhotoCarouselCell: UICollectionViewCell {
     @IBOutlet weak var videoDurationViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoDurationViewLeadingConstraint: NSLayoutConstraint!
     
-    // MARK:- Instance variables.
+    // MARK: - Instance variables.
 
     private let videoDurationLabelPadding: CGFloat = 5.0
     private var assetDownloader: AssetDownloader?
@@ -71,7 +71,7 @@ final class PhotoCarouselCell: UICollectionViewCell {
         }
     }
     
-    // MARK:- overriden methods.
+    // MARK: - overriden methods.
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -86,7 +86,7 @@ final class PhotoCarouselCell: UICollectionViewCell {
         videoDurationViewBottomConstraint.constant = 0
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
     
     func willDisplay(size: CGSize) {
         guard let asset = asset,
@@ -108,7 +108,7 @@ final class PhotoCarouselCell: UICollectionViewCell {
         cancelDownloadRequest()
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     private func cancelDownloadRequest() {
         if assetDownloader != nil {

@@ -77,7 +77,7 @@ class QuickAccessWidgetManager: NSObject {
         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func createRecentItemsDataWithDebounce() {
         debouncer.start {
             self.createRecentItemsData()

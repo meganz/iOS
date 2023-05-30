@@ -67,7 +67,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         presenter?.present(build(), animated: true)
     }
     
-    // MARK:- Actions
+    // MARK: - Actions
     
     func showInfo() {
         guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {

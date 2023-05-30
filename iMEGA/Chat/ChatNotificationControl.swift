@@ -8,7 +8,7 @@ import MEGADomain
 }
 
 @objc class ChatNotificationControl: PushNotificationControl {
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
 
     @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: ChatIdEntity) {
         
@@ -66,7 +66,7 @@ import MEGADomain
     }
 }
 
-// MARK:- Private methods extension.
+// MARK: - Private methods extension.
 
 extension ChatNotificationControl {
 
@@ -79,7 +79,7 @@ extension ChatNotificationControl {
     }
 }
 
-// MARK:- DNDTurnOnAlertControllerAction extension
+// MARK: - DNDTurnOnAlertControllerAction extension
 
 extension ChatNotificationControl: DNDTurnOnAlertControllerAction {
   

@@ -120,7 +120,7 @@ final class NameCollisionViewModel: ObservableObject {
         remainingCollisionsCount = collisions.filter { $0.collisionAction == nil && $0.collisionNodeHandle != nil }.count
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func applyMergeActionToAllFolderCollisions() {
         for i in 0..<collisions.count {

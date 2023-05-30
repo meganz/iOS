@@ -36,7 +36,7 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
         }
     }
     
-    //MARK:- Private methods
+    // MARK: - Private methods
     
     private func configureAsLocation(withNode node: MEGANode) {
         keyLabel.text = Strings.Localizable.CloudDrive.Info.Node.location

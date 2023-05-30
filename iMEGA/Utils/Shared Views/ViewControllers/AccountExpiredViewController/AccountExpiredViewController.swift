@@ -11,7 +11,7 @@ class AccountExpiredViewController: UIViewController {
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class AccountExpiredViewController: UIViewController {
         }
     }
     
-    //MARK: - Set contents
+    // MARK: - Set contents
     func getAccountDetails() {
         activityIndicator.startAnimating()
         MEGASdkManager.sharedMEGASdk().getAccountDetails()
@@ -76,7 +76,7 @@ class AccountExpiredViewController: UIViewController {
         }
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func updateAppearance() {
         view.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
@@ -86,7 +86,7 @@ class AccountExpiredViewController: UIViewController {
         dismissButton.mnz_setupCancel(traitCollection)
     }
     
-    //MARK: - IBActions
+    // MARK: - IBActions
     
     @IBAction func dismissTouchUpInside(_ sender: UIButton) {
         self.dismiss(animated: true) {

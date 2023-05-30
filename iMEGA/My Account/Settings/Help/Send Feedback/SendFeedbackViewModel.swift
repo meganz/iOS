@@ -23,7 +23,7 @@ final class SendFeedbackViewModel: NSObject {
         self.timeZone = timeZone
     }
     
-    //MARK: - Public
+    // MARK: - Public
     func getFeedback() async -> FeedbackEntity {
         await setupAccountDetails()
         userEmail = await accountUseCase.currentUser()?.email
@@ -38,7 +38,7 @@ final class SendFeedbackViewModel: NSObject {
                               logsFileName: logsFileName)
     }
 
-    //MARK: - Private
+    // MARK: - Private
     private var appVersion: String? {
         bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
     }

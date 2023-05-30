@@ -701,7 +701,7 @@ private extension Selector {
     static let didTapNewChat = #selector(HomeViewController.didTapNewChat)
 }
 
-//MARK: - AudioPlayer
+// MARK: - AudioPlayer
 extension HomeViewController: AudioPlayerPresenterProtocol {
     func updateContentView(_ height: CGFloat) {
         slidePanelView.offlineScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)

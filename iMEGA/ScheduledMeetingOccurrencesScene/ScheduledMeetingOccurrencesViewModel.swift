@@ -31,12 +31,12 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         fetchOccurrences()
     }
 
-    //MARK: - Public
+    // MARK: - Public
     func seeMoreTapped() {
         fetchOccurrences()
     }
 
-    //MARK: - Private
+    // MARK: - Private
     private func updateSubtitle(){
         switch scheduledMeeting.rules.frequency {
         case .invalid:

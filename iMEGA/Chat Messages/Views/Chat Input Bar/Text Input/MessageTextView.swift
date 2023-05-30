@@ -1,7 +1,7 @@
 
 class MessageTextView: UITextView {
     
-    //MARK: - Properties
+    // MARK: - Properties
 
     var numberOfLinesBeforeScroll: UInt = 4
     var collapsedMaxHeightReachedAction: ((Bool) -> Void)?
@@ -28,7 +28,7 @@ class MessageTextView: UITextView {
         }
     }
     
-    //MARK: - Private properties
+    // MARK: - Private properties
     
     private var textChangeNotificationToken: NSObjectProtocol?
 
@@ -54,7 +54,7 @@ class MessageTextView: UITextView {
         return textView
     }()
     
-    //MARK: - Overridden Properties and methods
+    // MARK: - Overridden Properties and methods
 
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
@@ -107,7 +107,7 @@ class MessageTextView: UITextView {
         }
     }
     
-    //MARK: - Interface methods
+    // MARK: - Interface methods
     
     func set(text: String, showKeyboard: Bool) {
         self.text = text
@@ -132,7 +132,7 @@ class MessageTextView: UITextView {
         invalidateIntrinsicContentSize()
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     private func updateAppearance() {
         placeholderTextView.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
@@ -171,7 +171,7 @@ class MessageTextView: UITextView {
         pasteAction?(image)
     }
     
-    //MARK: - Deinit
+    // MARK: - Deinit
     
     deinit {
         NotificationCenter.default.removeObserver(textChangeNotificationToken!)

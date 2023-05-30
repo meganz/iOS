@@ -36,7 +36,7 @@ struct ScheduledMeetingDateBuilder {
         }
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     private func descriptionString(
         startDate: Date? = nil,

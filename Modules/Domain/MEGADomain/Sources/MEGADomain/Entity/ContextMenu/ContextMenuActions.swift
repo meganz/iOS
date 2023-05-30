@@ -1,5 +1,5 @@
 
-//MARK: - Context Menu different types
+// MARK: - Context Menu different types
 
 /// Different context menu items  types defined in the app
 ///
@@ -32,12 +32,12 @@ public enum CMElementTypeEntity: Equatable {
     case unknown
 }
 
-//MARK: - Context Menu types
+// MARK: - Context Menu types
 public enum ContextMenuTypeEntity {
     case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline
 }
 
-//MARK: - Context Menu grouped actions
+// MARK: - Context Menu grouped actions
 public enum UploadAddActionEntity: CaseIterable {
     case chooseFromPhotos, capture, importFrom, scanDocument, newFolder, newTextFile
 }

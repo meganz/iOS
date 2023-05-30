@@ -14,7 +14,7 @@ protocol MessageInputBarDelegate: AnyObject {
 
 class MessageInputBar: UIView {
     
-    // MARK:- Outlets
+    // MARK: - Outlets
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var addButtonBottomConstraint: NSLayoutConstraint!
     
@@ -53,7 +53,7 @@ class MessageInputBar: UIView {
         }
     }
 
-    // MARK:- Interface properties
+    // MARK: - Interface properties
 
     weak var delegate: MessageInputBarDelegate?
     
@@ -68,7 +68,7 @@ class MessageInputBar: UIView {
         }
     }
             
-    // MARK:- Private properties
+    // MARK: - Private properties
     private let kMEGAUIKeyInputCarriageReturn = "\r"
 
     private var keyboardShowObserver: NSObjectProtocol?
@@ -148,7 +148,7 @@ class MessageInputBar: UIView {
         }
     }
     
-    //MARK: - interface method.
+    // MARK: - interface method.
     
     func isMicButtonPresent(atLocation point: CGPoint) -> Bool {
         let view = hitTest(point, with: nil)

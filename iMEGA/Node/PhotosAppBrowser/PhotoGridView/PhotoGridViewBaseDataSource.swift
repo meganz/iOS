@@ -22,7 +22,7 @@ class PhotoGridViewBaseDataSource: NSObject {
         }
     }
 
-    // MARK:- Initializer.
+    // MARK: - Initializer.
 
     init(collectionView: UICollectionView,
          selectedAssets: [PHAsset],
@@ -32,7 +32,7 @@ class PhotoGridViewBaseDataSource: NSObject {
         self.selectionHandler = selectionHandler
     }
     
-    // MARK:- methods.
+    // MARK: - methods.
     
     func handlePanSelection (isSelected: Bool, asset: PHAsset) -> Int? {
         if isSelected {

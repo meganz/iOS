@@ -67,7 +67,7 @@ struct FileSystemRepository: FileSystemRepositoryProtocol {
         }
     }
     
-    //MARK: - File attributes
+    // MARK: - File attributes
     func fileSize(at url: URL) -> UInt64? {
         url.attributes?[.size] as? UInt64
     }

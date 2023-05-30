@@ -20,7 +20,7 @@ final class PhotoCarouselVideoIcon: SingleTapView {
         return playIconLayer
     }()
     
-    // MARK:- Initializers.
+    // MARK: - Initializers.
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,7 +32,7 @@ final class PhotoCarouselVideoIcon: SingleTapView {
         configure()
     }
     
-    // MARK:- Overriden method.
+    // MARK: - Overriden method.
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -53,7 +53,7 @@ final class PhotoCarouselVideoIcon: SingleTapView {
 
     }
     
-    // MARK:- Private method.
+    // MARK: - Private method.
     
     private func configure() {
         addSubview(vibrancyView)
@@ -61,7 +61,7 @@ final class PhotoCarouselVideoIcon: SingleTapView {
     }
 }
 
-// MARK:- UIBezierPath Extension for the play Icon path and default size.
+// MARK: - UIBezierPath Extension for the play Icon path and default size.
 
 fileprivate extension UIBezierPath {
     static var playIconDefaultSize: CGSize {

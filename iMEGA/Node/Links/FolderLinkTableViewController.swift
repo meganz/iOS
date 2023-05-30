@@ -74,7 +74,7 @@ class FolderLinkTableViewController: UIViewController  {
     }
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension FolderLinkTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -149,7 +149,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension FolderLinkTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

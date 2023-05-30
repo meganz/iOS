@@ -4,7 +4,7 @@ import MediaPlayer
 
 @objc protocol AudioPlayerProtocol: AnyObject {}
 
-//MARK: - Audio Player Control State Functions
+// MARK: - Audio Player Control State Functions
 protocol AudioPlayerStateProtocol {
     func play()
     func pause()
@@ -37,13 +37,13 @@ protocol AudioPlayerStateProtocol {
     func resetCurrentItem()
 }
 
-//MARK: - Audio Player Time Functions
+// MARK: - Audio Player Time Functions
 protocol AudioPlayerTimerProtocol {
     func setTimer()
     func invalidateTimer()
 }
 
-//MARK: - Audio Player Remote Command Functions
+// MARK: - Audio Player Remote Command Functions
 protocol AudioPlayerRemoteCommandProtocol {
     func audioPlayer(didReceivePlayCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus
     func audioPlayer(didReceivePauseCommand event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus
@@ -53,12 +53,12 @@ protocol AudioPlayerRemoteCommandProtocol {
     func audioPlayer(didReceiveChangePlaybackPositionCommand event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus
 }
 
-//MARK: - Audio Player Metadata Functions
+// MARK: - Audio Player Metadata Functions
 protocol AudioPlayerMetadataLoaderProtocol {
     func preloadNextTracksMetadata()
 }
 
-//MARK: - Audio Player Observed Events Functions
+// MARK: - Audio Player Observed Events Functions
 protocol AudioPlayerObservedEventsProtocol {
     func audio(player: AVQueuePlayer, didChangeItem value: NSKeyValueObservedChange<AVPlayerItem?>)
     func audio(player: AVQueuePlayer, didChangeTimeControlStatus value: NSKeyValueObservedChange<AVQueuePlayer.TimeControlStatus>)
@@ -69,7 +69,7 @@ protocol AudioPlayerObservedEventsProtocol {
     func audio(playerItem: AVPlayerItem, isPlaybackBufferFull value: NSKeyValueObservedChange<Bool>)
 }
 
-//MARK: - Audio Player Observers Functions
+// MARK: - Audio Player Observers Functions
 @objc protocol AudioPlayerObserversProtocol: AudioPlayerProtocol {
     @objc optional func audio(player: AVQueuePlayer, showLoading: Bool)
     @objc optional func audio(player: AVQueuePlayer, name: String, artist: String, thumbnail: UIImage?)
@@ -88,7 +88,7 @@ protocol AudioPlayerObservedEventsProtocol {
     @objc optional func audioPlayerDidFinishBuffering()
 }
 
-//MARK: - Audio Player Notify Observers Functions
+// MARK: - Audio Player Notify Observers Functions
 protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func notify(_ closure: (AudioPlayerObserversProtocol) -> Void)
     func notify(_ closures: [(AudioPlayerObserversProtocol) -> Void])
@@ -108,10 +108,10 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func aboutAudioPlayerDidFinishBuffering(_ observer: AudioPlayerObserversProtocol)
 }
 
-//MARK: - Audio Player Handler
+// MARK: - Audio Player Handler
 @objc protocol AudioPlayerHandlerProtocol: AudioPlayerCurrentStatusProtocol & AudioPlayerPlaybackProtocol & AudioPlayerConfigurationProtocol {}
 
-//MARK: - Audio Player Current Status Functions
+// MARK: - Audio Player Current Status Functions
 @objc protocol AudioPlayerCurrentStatusProtocol: AnyObject {
     func isPlayerDefined() -> Bool
     func isPlayerEmpty() -> Bool
@@ -130,7 +130,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func playerTracksContains(url: URL) -> Bool
 }
 
-//MARK: - Audio Player Playback Functions
+// MARK: - Audio Player Playback Functions
 @objc protocol AudioPlayerPlaybackProtocol: AnyObject {
     func move(item: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)
     func delete(items: [AudioPlayerItem])
@@ -154,7 +154,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func resetCurrentItem()
 }
 
-//MARK: - Audio Player Configuration Functions
+// MARK: - Audio Player Configuration Functions
 @objc protocol AudioPlayerConfigurationProtocol: AnyObject {
     func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem])
     func addPlayer(tracks: [AudioPlayerItem])
@@ -175,7 +175,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func resetAudioPlayerConfiguration()
 }
 
-//MARK: - Mini Audio Player Handlers Functions
+// MARK: - Mini Audio Player Handlers Functions
 @objc protocol AudioMiniPlayerHandlerProtocol: AudioPlayerProtocol {
     func presentMiniPlayer(_ viewController: UIViewController)
     func showMiniPlayer()
@@ -184,7 +184,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func resetMiniPlayerContainer()
 }
 
-//MARK: - Audio Player Presenters
+// MARK: - Audio Player Presenters
 @objc protocol AudioPlayerPresenterProtocol: AudioPlayerProtocol {
     func updateContentView(_ height: CGFloat)
 }

@@ -42,7 +42,7 @@ public class MediaDiscoveryUseCase<T: MediaDiscoveryRepositoryProtocol,
         updatedNodes.hasModifiedParent()
     }
     
-    //MARK: Private
+    // MARK: Private
     
     private func isAnyNodeMovedToTrash(nodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {
         let existingNodes = Set(nodes.map { $0.handle })

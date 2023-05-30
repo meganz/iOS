@@ -157,7 +157,7 @@ class GetLinkViewController: UIViewController {
         }
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func configureNavigation() {
         navigationController?.setToolbarHidden(false, animated: true)
@@ -430,7 +430,7 @@ class GetLinkViewController: UIViewController {
         tableView.reloadSections([expiryDateSection], with: .automatic)
     }
     
-    //MARK: - IBActions
+    // MARK: - IBActions
     
     @IBAction func switchValueChanged(_ sender: UISwitch) {
         guard let point = sender.superview?.convert(sender.center, to: tableView), let indexPath = tableView.indexPathForRow(at: point) else { return }
@@ -523,7 +523,7 @@ class GetLinkViewController: UIViewController {
         }
     }
     
-    //MARK: - TableView cells
+    // MARK: - TableView cells
     
     private func infoCell(forIndexPath indexPath: IndexPath, cellViewModel: GetLinkAlbumInfoCellViewModel? = nil) -> GetLinkInfoTableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkInfoTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkInfoTableViewCell else {
@@ -716,7 +716,7 @@ class GetLinkViewController: UIViewController {
     }
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension GetLinkViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -808,7 +808,7 @@ extension GetLinkViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension GetLinkViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -945,7 +945,7 @@ extension GetLinkViewController: UITableViewDelegate {
     }
 }
 
-//MARK: - MEGARequestDelegate
+// MARK: - MEGARequestDelegate
 
 extension GetLinkViewController: MEGARequestDelegate {
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
@@ -963,7 +963,7 @@ extension GetLinkViewController: MEGARequestDelegate {
     }
 }
 
-//MARK: - SetLinkPasswordViewControllerDelegate
+// MARK: - SetLinkPasswordViewControllerDelegate
 
 extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
     func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String) {
@@ -978,7 +978,7 @@ extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
     }
 }
 
-//MARK: - MEGAPurchaseDelegate
+// MARK: - MEGAPurchaseDelegate
 
 extension GetLinkViewController: MEGAPurchaseDelegate {
     func successfulPurchase(_ megaPurchase: MEGAPurchase!) {
@@ -987,7 +987,7 @@ extension GetLinkViewController: MEGAPurchaseDelegate {
     }
 }
 
-//MARK: - MEGARestoreDelegate
+// MARK: - MEGARestoreDelegate
 
 extension GetLinkViewController: MEGARestoreDelegate {
     func successfulRestore(_ megaPurchase: MEGAPurchase!) {

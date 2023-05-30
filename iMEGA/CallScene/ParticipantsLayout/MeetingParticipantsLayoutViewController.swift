@@ -257,7 +257,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         viewModel.dispatch(.tapOnView(onParticipantsView: yPosition > 0 && yPosition < callCollectionView.frame.height))
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
         switch mode {

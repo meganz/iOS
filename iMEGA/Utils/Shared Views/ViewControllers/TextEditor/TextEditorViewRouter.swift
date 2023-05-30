@@ -52,7 +52,7 @@ final class TextEditorViewRouter: NSObject {
 
 extension TextEditorViewRouter: TextEditorViewRouting {
     
-    //MARK: - U-R-MVVM Routing
+    // MARK: - U-R-MVVM Routing
     @objc func build() -> UIViewController {
         let sdk = MEGASdkManager.sharedMEGASdk()
         let nodeRepository = NodeRepository.newRepo
@@ -96,7 +96,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         presenter?.present(build(), animated: true, completion: nil)
     }
     
-    //MARK: - TextEditorViewRouting
+    // MARK: - TextEditorViewRouting
     func chooseParentNode(completion: @escaping (HandleEntity) -> Void) {
         let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
         guard let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController

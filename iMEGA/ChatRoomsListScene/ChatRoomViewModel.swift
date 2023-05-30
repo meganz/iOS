@@ -108,7 +108,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         loadChatRoomSearchString()
     }
     
-    //MARK: - Interface methods
+    // MARK: - Interface methods
     
     func onViewAppear() {
         isViewOnScreen = true
@@ -223,7 +223,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         }
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     private func formattedLastMessageSentDate() -> String? {
         guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to:Date()) else { return nil }
