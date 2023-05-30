@@ -245,7 +245,7 @@ final class NodeActionBuilder {
     private func textEditorActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
-        if !isBackupNode && accessLevel != .accessRead && accessLevel != .accessUnknown  {
+        if !isBackupNode && accessLevel != .accessRead && accessLevel != .accessUnknown {
             nodeActions.append(.textEditorAction())
         }
         nodeActions.append(.downloadAction())

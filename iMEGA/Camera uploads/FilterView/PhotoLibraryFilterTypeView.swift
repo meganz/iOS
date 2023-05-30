@@ -6,7 +6,7 @@ struct PhotoLibraryFilterTypeView: View {
     @ObservedObject var filterViewModel: PhotoLibraryFilterViewModel
     
     var btnSelectedLabel: some View {
-        HStack(spacing: 4){
+        HStack(spacing: 4) {
             Image(systemName: "checkmark")
             Text(type.localization)
         }

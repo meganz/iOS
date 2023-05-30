@@ -136,7 +136,7 @@ final class ReportIssueViewModel: ObservableObject {
         }
     }
     
-    func reportIssueAlertData() -> ReportIssueAlertDataModel  {
+    func reportIssueAlertData() -> ReportIssueAlertDataModel {
         switch reportAlertType {
         case .uploadLogFileFailure, .createSupportTicketFailure:
             return ReportIssueAlertDataModel(title: Strings.Localizable.somethingWentWrong,

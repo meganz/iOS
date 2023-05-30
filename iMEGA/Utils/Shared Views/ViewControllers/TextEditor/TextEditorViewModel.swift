@@ -248,7 +248,7 @@ final class TextEditorViewModel: ViewModelType {
     private func cancel() {
         if textEditorMode == .create {
             router.dismissTextEditorVC()
-        } else if textEditorMode == .edit{
+        } else if textEditorMode == .edit {
             textEditorMode = .view
             self.setupView(shallUpdateContent: true)
         }

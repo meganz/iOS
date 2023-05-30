@@ -1,7 +1,7 @@
 
 import Foundation
 
-class FolderLinkCollectionViewController: UIViewController  {
+class FolderLinkCollectionViewController: UIViewController {
    
     @IBOutlet weak var collectionView: UICollectionView!
 

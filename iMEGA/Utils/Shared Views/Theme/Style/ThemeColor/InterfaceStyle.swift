@@ -37,7 +37,7 @@ extension UITraitCollection {
 
 extension UITraitCollection {
     
-    func backgroundStyler(of style: MEGAColor.Background) -> ViewStyler  {
+    func backgroundStyler(of style: MEGAColor.Background) -> ViewStyler {
         let theme = self.theme
         return { view in
             view.backgroundColor = theme.colorFactory.backgroundColor(style).uiColor
@@ -49,7 +49,7 @@ extension UITraitCollection {
 
 extension UITraitCollection {
 
-    func alwaysBrightLabelStyler(of style: MEGALabelStyle) -> LabelStyler  {
+    func alwaysBrightLabelStyler(of style: MEGALabelStyle) -> LabelStyler {
         theme.alwyasBrightLabelStyleFactory.styler(of: style)
     }
 }

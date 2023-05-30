@@ -349,7 +349,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
 
     private func forceDarkNavigationUI() {
-        guard let navigationBar = navigationController?.navigationBar else  { return }
+        guard let navigationBar = navigationController?.navigationBar else { return }
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
     

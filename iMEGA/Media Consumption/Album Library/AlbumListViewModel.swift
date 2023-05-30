@@ -3,7 +3,7 @@ import SwiftUI
 import MEGADomain
 
 @MainActor
-final class AlbumListViewModel: NSObject, ObservableObject  {
+final class AlbumListViewModel: NSObject, ObservableObject {
     @Published var cameraUploadNode: NodeEntity?
     @Published var album: AlbumEntity?
     @Published var shouldLoad = true

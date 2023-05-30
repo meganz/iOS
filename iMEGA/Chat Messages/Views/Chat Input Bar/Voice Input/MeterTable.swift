@@ -68,7 +68,7 @@ class MeterTable {
     }
 
     subscript(index: Float) -> Float {
-        if index < minDecibels  {
+        if index < minDecibels {
             return 0.0
         } else if index >= 0.0 {
             return 1.0

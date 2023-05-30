@@ -647,7 +647,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                     return
             }
             
-            if (path as NSString).mnz_isImagePathExtension  {
+            if (path as NSString).mnz_isImagePathExtension {
                 self.uploadAsset(withFilePath: path, parentNode: parentNode, localIdentifier: "")
             } else if (path as NSString).mnz_isVideoPathExtension {
                 self.uploadVideo(withFilePath: path, parentNode: parentNode)

@@ -146,7 +146,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         router.showDetails(forChatId: chatListItem.chatId, unreadMessagesCount: chatRoom.unreadCount)
     }
     
-    func presentMoreOptionsForChat(){
+    func presentMoreOptionsForChat() {
         router.presentMoreOptionsForChat(
             withDNDEnabled: chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         ) { [weak self] in
@@ -538,7 +538,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         updateDescription(withMessage: message)
     }
     
-    private func updateDescriptionForTruncate() async throws  {
+    private func updateDescriptionForTruncate() async throws {
         guard let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: false) else {
             return
         }
@@ -590,7 +590,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private func removeFormatters(fromString string: String) -> String {
         var formattedString = string
         if #available(iOS 16.0, *) {
+            // swiftlint:disable opening_brace
             formattedString.replace(/\[.{1, 2}\]/, with: "")
+            // swiftlint:enable opening_brace
         } else {
             formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression)
         }

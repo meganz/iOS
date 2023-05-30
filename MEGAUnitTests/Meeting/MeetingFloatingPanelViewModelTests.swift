@@ -919,7 +919,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         showAllContactsAlreadyAddedAlert_CalledTimes += 1
     }
     
-    func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory){
+    func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
         showNoAvailableContactsAlert_CalledTimes += 1
     }
     

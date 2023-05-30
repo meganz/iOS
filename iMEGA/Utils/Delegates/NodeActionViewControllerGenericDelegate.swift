@@ -3,8 +3,7 @@ import MEGADomain
 import MEGAData
 
 final class NodeActionViewControllerGenericDelegate:
-    NodeActionViewControllerDelegate
-{
+    NodeActionViewControllerDelegate {
     private weak var viewController: UIViewController?
 
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)

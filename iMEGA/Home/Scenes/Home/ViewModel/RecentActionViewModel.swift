@@ -26,8 +26,7 @@ protocol HomeRecentActionViewModelType {
 final class HomeRecentActionViewModel:
     HomeRecentActionViewModelType,
     HomeRecentActionViewModelInputs,
-    HomeRecentActionViewModelOutputs
-{
+    HomeRecentActionViewModelOutputs {
     // MARK: - HomeRecentActionViewModelInputs
 
     func saveToPhotoAlbum(of node: MEGANode) {

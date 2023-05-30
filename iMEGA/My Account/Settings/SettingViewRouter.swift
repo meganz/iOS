@@ -48,7 +48,7 @@ class SettingViewRouter: Routing {
     func bindViewModels(vm: SettingsViewModel) {
         vm.sectionViewModels.forEach { sectionModel in
             sectionModel.cellViewModels.forEach { cellModel in
-                cellModel.invokeCommand =  { [weak vm] cmd in
+                cellModel.invokeCommand = { [weak vm] cmd in
                     switch cmd {
                     case .reloadData:
                         vm?.reloadData()

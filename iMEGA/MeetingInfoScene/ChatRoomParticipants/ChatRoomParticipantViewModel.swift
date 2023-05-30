@@ -25,8 +25,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
          chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          chatParticipantId: MEGAHandle,
-         chatRoom: ChatRoomEntity)
-    {
+         chatRoom: ChatRoomEntity) {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase

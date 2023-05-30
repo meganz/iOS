@@ -47,7 +47,7 @@ public struct ChatRoomUserUseCase<T: ChatRoomUserRepositoryProtocol, U: UserStor
                 }
             }
             
-            return await group.reduce(into: [HandleEntity: String]()){ result, handleEntityNamePair in
+            return await group.reduce(into: [HandleEntity: String]()) { result, handleEntityNamePair in
                 if let handleEntityNamePair {
                     for (key, value) in handleEntityNamePair {
                         result[key] = value
@@ -72,7 +72,7 @@ public struct ChatRoomUserUseCase<T: ChatRoomUserRepositoryProtocol, U: UserStor
                 }
             }
             
-            return await group.reduce(into: [HandleEntity: String]()){ result, handleEntityEmailPair in
+            return await group.reduce(into: [HandleEntity: String]()) { result, handleEntityEmailPair in
                 if let handleEntityEmailPair {
                     for (key, value) in handleEntityEmailPair {
                         result[key] = value

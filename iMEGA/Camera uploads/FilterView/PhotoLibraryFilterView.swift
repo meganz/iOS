@@ -65,7 +65,7 @@ struct PhotoLibraryFilterView: View {
     }
     
     var locationView: some View {
-        VStack(spacing: 8){
+        VStack(spacing: 8) {
             PhotoLibraryFilterViewHeadline(viewModel.showItemsFromTitle)
             VStack(spacing: 2) {
                 ForEach(PhotosFilterLocation.allCases, id: \.self) { location in

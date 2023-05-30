@@ -66,7 +66,7 @@ public enum MyQRActionEntity: CaseIterable {
     case share, settings, resetQR
 }
 
-public enum MeetingActionEntity: CaseIterable  {
+public enum MeetingActionEntity: CaseIterable {
     case startMeeting, joinMeeting, scheduleMeeting
 }
 

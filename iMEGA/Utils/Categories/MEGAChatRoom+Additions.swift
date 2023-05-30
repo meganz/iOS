@@ -65,7 +65,7 @@ extension MEGAChatRoom {
         return MEGASdkManager.sharedMEGAChatSdk().userFullnameFromCache(byUserHandle: userHandle)
     }
     @objc func chatTitle() -> String {
-        if isGroup && !hasCustomTitle && peerCount == 0  {
+        if isGroup && !hasCustomTitle && peerCount == 0 {
             let date = Date(timeIntervalSince1970: TimeInterval(creationTimeStamp))
             let dateString = DateFormatter.dateMediumTimeShort().localisedString(from: date)
             return Strings.Localizable.chatCreatedOnS1(dateString)

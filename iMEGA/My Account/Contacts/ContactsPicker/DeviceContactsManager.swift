@@ -6,7 +6,7 @@ protocol DeviceContactProtocol {
     var name: String { get }
     var avatarData: Data? { get }
     var contactDetail: String { get } //Could be a phone number or a email address
-    var contactDetailDescription: String?  { get } //Label to specify the contact detail (Home, Work, iPhone...)
+    var contactDetailDescription: String? { get } //Label to specify the contact detail (Home, Work, iPhone...)
 }
 
 struct DeviceContact: DeviceContactProtocol, Hashable {

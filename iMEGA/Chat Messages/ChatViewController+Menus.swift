@@ -157,7 +157,7 @@ extension ChatViewController {
                let name = node.name,
                (name.mnz_isVisualMediaPathExtension) {
                 if chatRoom.isPreview,
-                   let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken)  {
+                   let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
                     node = authorizedNode
                 }
                 

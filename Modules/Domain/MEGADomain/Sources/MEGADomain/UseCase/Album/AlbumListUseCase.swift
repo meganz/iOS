@@ -151,7 +151,7 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
             if mediaUseCase.isRawImage(photo.name) {
                 numOfRawPhotos += 1
                 if coverOfRawPhoto == nil { coverOfRawPhoto = photo }
-            } else if mediaUseCase.isGifImage(photo.name){
+            } else if mediaUseCase.isGifImage(photo.name) {
                 numOfGifPhotos += 1
                 if coverOfGifPhoto == nil { coverOfGifPhoto = photo }
             }

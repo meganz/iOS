@@ -13,7 +13,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         let mockChatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: MockChatRoom().toChatRoomEntity())
         let viewModel = ActiveCallViewModel(call: call, router: router, activeCallUseCase: MockActiveCallUseCase(), chatRoomUseCase: mockChatRoomUseCase)
         viewModel.activeCallViewTapped()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.openCallView_calledTimes == 1)
         } else {
             XCTFail()

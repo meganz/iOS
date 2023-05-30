@@ -21,7 +21,7 @@ class NodeActionBuilderTests: XCTestCase {
         guard actions.count == types.count else {
             return false
         }
-        let actionTypes = actions.map{ $0.type }
+        let actionTypes = actions.map { $0.type }
         return actionTypes == types
     }
     

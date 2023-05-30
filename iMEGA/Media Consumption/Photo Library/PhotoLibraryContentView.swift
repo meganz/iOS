@@ -30,7 +30,7 @@ struct PhotoLibraryContentView: View {
                 }
             }
         }
-        .sheet(isPresented: $viewModel.showFilter){
+        .sheet(isPresented: $viewModel.showFilter) {
             PhotoLibraryFilterView(viewModel: viewModel.filterViewModel,
                                    isPresented: $viewModel.showFilter,
                                    onFilterUpdate: onFilterUpdate)

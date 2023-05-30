@@ -65,7 +65,7 @@ extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
     func aboutUpdateCurrentIndexPath(_ observer: AudioPlayerObserversProtocol) {
         guard let player = queuePlayer else { return }
         
-        if let currentIndex = tracks.firstIndex(where:{$0 == currentItem()}) {
+        if let currentIndex = tracks.firstIndex(where: { $0 == currentItem() }) {
             observer.audio?(player: player, currentItem: currentItem(), indexPath: IndexPath(row: currentIndex, section: 0))
         }
     }
@@ -73,7 +73,7 @@ extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
     func notifyAboutToReload(item: AudioPlayerItem) {
         guard let player = queuePlayer else { return }
         
-        listenerManager.notify{$0.audio?(player: player, reload: item)}
+        listenerManager.notify { $0.audio?(player: player, reload: item) }
     }
     
     func aboutAudioPlayerDidPausePlayback(_ observer: AudioPlayerObserversProtocol) {

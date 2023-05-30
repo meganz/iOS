@@ -129,7 +129,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             } else {
                 enableLoudSpeaker(enabled: isSpeakerEnabled)
             }
-            devicePermissionUseCase.getAudioAuthorizationStatus{ _ in  }
+            devicePermissionUseCase.getAudioAuthorizationStatus { _ in  }
             selectFrontCameraIfNeeded()
             switch type {
             case .join, .guestJoin:

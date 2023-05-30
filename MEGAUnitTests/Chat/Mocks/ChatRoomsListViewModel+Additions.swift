@@ -16,7 +16,7 @@ extension ChatRoomsListViewModel {
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,
         isTesting: Bool = true
-    )  {
+    ) {
         self.init(
             router: router,
             chatUseCase: chatUseCase,

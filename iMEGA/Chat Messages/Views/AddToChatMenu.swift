@@ -15,7 +15,7 @@ struct AddToChatMenu: Codable {
     let imageKey: String
     
     static func menus() -> [AddToChatMenu]? {
-        if let fileURL = Bundle.main.url(forResource: "AddToChatMenus", withExtension: "plist")  {
+        if let fileURL = Bundle.main.url(forResource: "AddToChatMenus", withExtension: "plist") {
             do {
                 let propertyListDecoder = PropertyListDecoder()
                 let data = try Data(contentsOf: fileURL)

@@ -190,7 +190,7 @@ final class MeetingInfoViewModel: ObservableObject {
     }
 }
 
-extension MeetingInfoViewModel{
+extension MeetingInfoViewModel {
     // MARK: - Open Invite
     
     @MainActor func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) {

@@ -10,7 +10,7 @@ struct PhotoPermission {
 extension PhotoPermission {
 
     static var live: PhotoPermission {
-        return Self  { completion in
+        return Self { completion in
             let photoLibraryCallback: (PHAuthorizationStatus) -> Void = { authorization in
                 DispatchQueue.main.async {
                     completion(PhotoAuthorization(with: authorization) ?? .unknown)

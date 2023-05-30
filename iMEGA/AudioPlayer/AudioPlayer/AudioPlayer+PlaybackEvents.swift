@@ -63,7 +63,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         guard let queuePlayer = queuePlayer,
               let loopAllowed = audioPlayerConfig[.loop] as? Bool, loopAllowed,
               let currentItem = currentItem(),
-              let currentIndex = tracks.firstIndex(where:{$0 == currentItem}) else { return }
+              let currentIndex = tracks.firstIndex(where: { $0 == currentItem }) else { return }
         
         if currentIndex == 0 {
             queuePlayer.secureInsert(tracks[tracks.count - 1], after: queuePlayer.items().last)
@@ -80,7 +80,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         guard let queuePlayer = queuePlayer,
               let loopAllowed = audioPlayerConfig[.loop] as? Bool, !loopAllowed,
               let currentItem = currentItem(),
-              let currentIndex = tracks.firstIndex(where:{$0 == currentItem}) else { return }
+              let currentIndex = tracks.firstIndex(where: { $0 == currentItem }) else { return }
         
         queuePlayer.items().filter({$0 != currentItem}).forEach {
             queuePlayer.remove($0)
@@ -113,7 +113,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             
         } else {
             guard let currentItem = currentItem(),
-                  let currentIndex = tracks.firstIndex(where:{$0 == currentItem}) else { return }
+                  let currentIndex = tracks.firstIndex(where: { $0 == currentItem }) else { return }
             
             let lastItem = currentIndex > 0 ? tracks[currentIndex - 1] : nil
             
@@ -230,7 +230,7 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             }
         } else {
             queuePlayer.items()
-                .compactMap{ $0 as? AudioPlayerItem }
+                .compactMap { $0 as? AudioPlayerItem }
                 .filter({
                     guard let trackIndex = tracks.firstIndex(of: $0),
                           trackIndex < index else { return false }
@@ -375,13 +375,13 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                 return
             }
             insertInQueue(item: movedItem, afterItem: afterItem as? AudioPlayerItem)
-            if let trackPosition = tracks.firstIndex(where:{$0 == afterItem as? AudioPlayerItem}) {
+            if let trackPosition = tracks.firstIndex(where: { $0 == afterItem as? AudioPlayerItem }) {
                 tracks.move(movedItem, to: trackPosition + 1)
             }
             
         } else {
             insertInQueue(item: movedItem, afterItem: afterItem as? AudioPlayerItem)
-            if let trackPosition = tracks.firstIndex(where:{$0 == afterItem as? AudioPlayerItem}) {
+            if let trackPosition = tracks.firstIndex(where: { $0 == afterItem as? AudioPlayerItem }) {
                 tracks.move(movedItem, to: trackPosition)
             }
         }
@@ -418,11 +418,11 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     @objc func deletePlaylist(items: [AudioPlayerItem]) {
         guard let player = queuePlayer else { return }
         
-        let itemsToRemove = items.filter{$0 != currentItem()}
+        let itemsToRemove = items.filter { $0 != currentItem() }
         itemsToRemove.forEach(player.remove)
         
         notify([aboutCurrentItemAndQueue])
-        update(tracks: tracks.filter{!itemsToRemove.contains($0)})
+        update(tracks: tracks.filter { !itemsToRemove.contains($0) })
     }
     
     @objc func playerCurrentTime() -> TimeInterval { currentTime }

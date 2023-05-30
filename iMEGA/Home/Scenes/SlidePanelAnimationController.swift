@@ -100,7 +100,7 @@ final class SlidePanelAnimationController {
         animationProgress = fraction
         if translationY > 0 {
             delegate?.didUpdateAnimationProgress(animationProgress, from: .top, to: .bottom)
-        } else{
+        } else {
             delegate?.didUpdateAnimationProgress(animationProgress, from: .bottom, to: .top)
         }
     }

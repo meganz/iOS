@@ -68,7 +68,7 @@ final class Albums: NSObject {
 // MARK: - Private methods.
 
 extension Albums {
-    private func populateAlbums()  {
+    private func populateAlbums() {
         populate(fromCollection: smartAlbumFetchResult)
         populate(fromCollection: albumFetchResult)
         sortAlbums()
@@ -107,7 +107,7 @@ extension Albums {
                 self.emptyAlbums.remove(at: index)
                 self.delegate?.albumAdded(album, atIndex: self.albums.count - 1)
             } else if let index = self.albums.firstIndex(of: album) {
-                if album.assetCount() == 0  {
+                if album.assetCount() == 0 {
                     self.emptyAlbums.append(album)
                     self.albums.remove(at: index)
                     self.delegate?.albumRemoved(album, atIndex: index)

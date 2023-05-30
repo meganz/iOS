@@ -150,7 +150,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             return
         }
         
-        switch chatMessage.message.type  {
+        switch chatMessage.message.type {
         case .invalid, .revokeAttachment:
             actions = []
         case .normal:

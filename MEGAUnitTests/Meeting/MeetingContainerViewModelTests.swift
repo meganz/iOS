@@ -338,11 +338,11 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
         displayParticipantInMainView_calledTimes += 1
     }
     
-    func didDisplayParticipantInMainView(_ participant: CallParticipantEntity){
+    func didDisplayParticipantInMainView(_ participant: CallParticipantEntity) {
         didDisplayParticipantInMainView_calledTimes += 1
     }
     
-    func didSwitchToGridView(){
+    func didSwitchToGridView() {
         didSwitchToGridView_calledTimes += 1
     }
     

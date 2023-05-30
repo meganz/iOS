@@ -27,7 +27,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         
         var results = [[NodeEntity]]()
         useCase.nodeUpdatesPublisher.sink(receiveCompletion: { _ in expectaction.fulfill() },
-                                 receiveValue:  {
+                                 receiveValue: {
             results.append($0)
         }).store(in: &subscriptions)
         

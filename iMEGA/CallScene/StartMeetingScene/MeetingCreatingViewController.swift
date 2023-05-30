@@ -170,7 +170,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func forceDarkNavigationUI() {
-        guard let navigationBar = navigationController?.navigationBar else  { return }
+        guard let navigationBar = navigationController?.navigationBar else { return }
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
     
@@ -325,7 +325,7 @@ extension MeetingCreatingViewController: TraitEnviromentAware {
     }
     
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
-        guard let navigationBar = navigationController?.navigationBar else  { return }
+        guard let navigationBar = navigationController?.navigationBar else { return }
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
 }

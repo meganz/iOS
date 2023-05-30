@@ -37,7 +37,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     }
 
     // MARK: - Private
-    private func updateSubtitle(){
+    private func updateSubtitle() {
         switch scheduledMeeting.rules.frequency {
         case .invalid:
             MEGALogError("A recurring meeting must have frequency")

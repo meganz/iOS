@@ -40,7 +40,7 @@ enum SettingsCommand: CommandType, Equatable {
     }
     
     func cellViewModel(at section: Int, in row: Int) -> SettingCellViewModel? {
-        if sectionViewModels.indices.contains(section)  {
+        if sectionViewModels.indices.contains(section) {
             if sectionViewModels[section].cellViewModels.indices.contains(row) {
                 return sectionViewModels[section].cellViewModels[row]
             }

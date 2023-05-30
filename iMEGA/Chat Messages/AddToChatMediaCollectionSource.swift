@@ -128,7 +128,7 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
         if let cameraCell = cell as? AddToChatCameraCollectionCell,
-            !cameraCell.isCurrentShowingLiveFeed{
+            !cameraCell.isCurrentShowingLiveFeed {
             
             if showLiveFeedIfRequired {
                 do {

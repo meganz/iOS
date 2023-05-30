@@ -67,7 +67,7 @@ extension ChatViewController: MessagesDataSource {
             fatalError("Failed to dequeue MessageReactionReusableView")
         }
         
-        if let chatMessage = messages[indexPath.section] as? ChatMessage  {
+        if let chatMessage = messages[indexPath.section] as? ChatMessage {
             chatMessageReactionView.chatMessage = chatMessage
             chatMessageReactionView.indexPath = indexPath
         }

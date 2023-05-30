@@ -213,13 +213,13 @@ class AddToChatViewController: UIViewController {
             let contentViewPadding = (safeArea.width - suitableWidth(forHeight: safeArea.height)) / 2.0
             self.contentViewLeadingConstraint.constant = contentViewPadding
             self.contentViewTrailingConstraint.constant = -contentViewPadding
-        } else if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width < UIScreen.main.bounds.height)  {
+        } else if !UIDevice.current.iPadDevice && (UIScreen.main.bounds.width < UIScreen.main.bounds.height) {
             self.contentViewLeadingConstraint.constant = 0
             self.contentViewTrailingConstraint.constant = 0
         }
     }
     
-    private func dismiss(completionBlock: (() -> Void)? = nil){
+    private func dismiss(completionBlock: (() -> Void)? = nil) {
         dismiss(animated: true) { [weak self] in 
             self?.dismissHandler?()
             completionBlock?()

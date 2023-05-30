@@ -42,8 +42,7 @@ extension AppDelegate {
                 asyncOnMain {
                     let visibleViewController = UIApplication.mnz_visibleViewController()
                     if visibleViewController is CustomModalAlertViewController ||
-                        visibleViewController is AccountExpiredViewController
-                    { return }
+                        visibleViewController is AccountExpiredViewController { return }
                     
                     TurnOnNotificationsViewRouter(presenter: UIApplication.mnz_presentingViewController()).start()
                 }

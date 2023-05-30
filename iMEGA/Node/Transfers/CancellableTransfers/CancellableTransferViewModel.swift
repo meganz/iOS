@@ -191,8 +191,7 @@ final class CancellableTransferViewModel: ViewModelType {
                                          fileName: transferViewEntity.name,
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: true,
-                                         startFirst: transferViewEntity.priority)
-            { transferEntity in
+                                         startFirst: transferViewEntity.priority) { transferEntity in
                 transferViewEntity.state = transferEntity.state
                 self.continueFolderTransfersIfNeeded()
             } update: { _ in } completion: { [weak self]  result in
@@ -219,8 +218,7 @@ final class CancellableTransferViewModel: ViewModelType {
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: true,
                                          startFirst: transferViewEntity.priority,
-                                         start: nil)
-            { transferEntity in
+                                         start: nil) { transferEntity in
                 transferViewEntity.stage = transferEntity.stage
                 transferViewEntity.state = transferEntity.state
                 switch transferEntity.stage {
@@ -250,8 +248,7 @@ final class CancellableTransferViewModel: ViewModelType {
                                                           chatId: transferViewEntity.chatId,
                                                           filename: transferViewEntity.name,
                                                           appdata: transferViewEntity.appData,
-                                                          startFirst: transferViewEntity.priority)
-            { transferEntity in
+                                                          startFirst: transferViewEntity.priority) { transferEntity in
                 transferViewEntity.state = transferEntity.state
                 self.continueFolderTransfersIfNeeded()
             } update: { _ in } completion: { [weak self] result in
@@ -274,8 +271,7 @@ final class CancellableTransferViewModel: ViewModelType {
             downloadNodeUseCase.downloadFileToOffline(forNodeHandle: transferViewEntity.handle,
                                                       filename: transferViewEntity.name,
                                                       appdata: transferViewEntity.appData,
-                                                      startFirst: transferViewEntity.priority)
-            { transferEntity in
+                                                      startFirst: transferViewEntity.priority) { transferEntity in
                 transferViewEntity.state = transferEntity.state
                 self.continueFolderTransfersIfNeeded()
             } update: { _ in } completion: { [weak self] result in
@@ -302,8 +298,7 @@ final class CancellableTransferViewModel: ViewModelType {
         downloadNodeUseCase.downloadFileLinkToOffline(fileLink,
                                                       filename: transferViewEntity.name,
                                                       metaData: nil,
-                                                      startFirst: transferViewEntity.priority)
-        { transferEntity in
+                                                      startFirst: transferViewEntity.priority) { transferEntity in
             transferViewEntity.state = transferEntity.state
             self.manageTransfersCompletion()
         } update: { _ in } completion: { [weak self] result in
@@ -326,8 +321,7 @@ final class CancellableTransferViewModel: ViewModelType {
                                                       filename: transferViewEntity.name,
                                                       appdata: transferViewEntity.appData,
                                                       startFirst: transferViewEntity.priority,
-                                                      start: nil)
-            { transferEntity in
+                                                      start: nil) { transferEntity in
                 switch transferEntity.stage {
                 case .transferringFiles:
                     transferViewEntity.stage = transferEntity.stage
@@ -364,7 +358,7 @@ final class CancellableTransferViewModel: ViewModelType {
     }
     
     private func sendDownloadAnalyticsStats() {
-        let multimediaNodesCount = transfers.filter{ mediaUseCase.isMultimedia($0.name ?? "") == true }.count
+        let multimediaNodesCount = transfers.filter { mediaUseCase.isMultimedia($0.name ?? "") == true }.count
         
         if multimediaNodesCount == transfers.count {
             analyticsEventUseCase.sendAnalyticsEvent(.download(.makeAvailableOfflinePhotosVideos))

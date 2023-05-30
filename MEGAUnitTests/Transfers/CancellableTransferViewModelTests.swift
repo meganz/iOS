@@ -45,7 +45,7 @@ final class CancellableTransferViewModelTests: XCTestCase {
         let viewModel = CancellableTransferViewModel(router: MockCancellableTransferRouter(),
                                                      uploadFileUseCase: MockUploadFileUseCase(),
                                                      downloadNodeUseCase: MockDownloadNodeUseCase(),
-                                                     mediaUseCase: MockMediaUseCase(multimediaNodeNames: multimediaNodes.compactMap{$0.name}),
+                                                     mediaUseCase: MockMediaUseCase(multimediaNodeNames: multimediaNodes.compactMap {$0.name}),
                                                      analyticsEventUseCase: analyticsEventUseCase,
                                                      transfers: transfers,
                                                      transferType: .download)

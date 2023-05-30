@@ -8,7 +8,7 @@ public protocol MediaDiscoveryUseCaseProtocol {
 }
 
 public class MediaDiscoveryUseCase<T: MediaDiscoveryRepositoryProtocol,
-                                   U: NodeUpdateRepositoryProtocol>: MediaDiscoveryUseCaseProtocol  {
+                                   U: NodeUpdateRepositoryProtocol>: MediaDiscoveryUseCaseProtocol {
     private let mediaDiscoveryRepository: T
     private let nodeUpdateRepository: U
     
