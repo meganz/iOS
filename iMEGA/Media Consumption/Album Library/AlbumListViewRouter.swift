@@ -1,6 +1,7 @@
 import SwiftUI
 import MEGADomain
 import MEGAPresentation
+import MEGAData
 import Combine
 
 protocol AlbumListViewRouting {
@@ -43,6 +44,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                                                            userAlbumRepo: userAlbumRepo)
             ),
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
+            shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                        placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                        affirmativeButtonTitle: Strings.Localizable.createFolderButton,

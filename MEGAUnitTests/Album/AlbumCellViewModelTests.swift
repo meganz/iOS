@@ -262,4 +262,30 @@ final class AlbumCellViewModelTests: XCTestCase {
         sut.onAlbumTap()
         XCTAssertFalse(sut.isSelected)
     }
+    
+    func testFeatureFlagForShowingShareIconOnAlbum_whenTurnedOff_shouldNotShowShareLink() {
+        let featureFlagProvider =  MockFeatureFlagProvider(list: [.albumShareLink : true])
+        
+        let sut = AlbumCellViewModel(
+            thumbnailUseCase: MockThumbnailUseCase(),
+            album: AlbumEntity(id: 4, name: "User", coverNode: NodeEntity(handle: 3),
+                               count: 1, type: .user, modificationTime: nil, sharedLinkStatus: .exported(true)),
+            selection: AlbumSelection(),
+            featureFlagProvider: featureFlagProvider)
+        
+        XCTAssertTrue(sut.isLinkShared)
+    }
+    
+    func testFeatureFlagForShowingShareIconOnAlbum_whenTurnedOn_shouldShowShareLink() {
+        let featureFlagProvider =  MockFeatureFlagProvider(list: [.albumShareLink : false])
+        
+        let sut = AlbumCellViewModel(
+            thumbnailUseCase: MockThumbnailUseCase(),
+            album: AlbumEntity(id: 4, name: "User", coverNode: NodeEntity(handle: 3),
+                               count: 1, type: .user, modificationTime: nil, sharedLinkStatus: .exported(true)),
+            selection: AlbumSelection(),
+            featureFlagProvider: featureFlagProvider)
+        
+        XCTAssertFalse(sut.isLinkShared)
+    }
 }

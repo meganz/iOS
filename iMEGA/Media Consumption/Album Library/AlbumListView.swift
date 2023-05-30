@@ -28,9 +28,9 @@ struct AlbumListView: View {
             .padding(.horizontal, 6)
         }
         .alert(isPresented: $viewModel.showCreateAlbumAlert, viewModel.alertViewModel)
-        .alert(isPresented: $viewModel.showDeleteAlbumAlert) {
-            viewModel.deleteAlbumAlertView()
-        }
+        .alert(item: $viewModel.albumAlertType, content: { albumAlertType in
+            viewModel.showAlertView(albumAlertType)
+        })
         .overlay(viewModel.shouldLoad ? ProgressView()
             .scaleEffect(1.5) : nil)
         .fullScreenCover(item: $viewModel.album, onDismiss: {
@@ -56,11 +56,10 @@ struct AlbumListView: View {
         .onReceive(viewModel.selection.$editMode) {
             editMode = $0
         }
-        .onReceive(viewModel.$albumDeletedSuccessMsg) { msg in
-            guard let msg = msg else { return }
+        .onReceive(viewModel.$albumHudMessage) { hudMessage in
+            guard let hudMessage else { return }
             SVProgressHUD.dismiss(withDelay: 3)
-            SVProgressHUD.show(Asset.Images.Hud.hudMinus.image, status: msg)
-            viewModel.albumDeletedSuccessMsg = nil
+            SVProgressHUD.show(hudMessage.icon, status: hudMessage.message)
         }
     }
     

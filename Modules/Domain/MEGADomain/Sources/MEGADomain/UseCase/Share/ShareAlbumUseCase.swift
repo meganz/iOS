@@ -3,6 +3,7 @@ import Foundation
 public protocol ShareAlbumUseCaseProtocol {
     func shareAlbumLink(_ album: AlbumEntity) async throws -> String?
     func removeSharedLink(forAlbum album: AlbumEntity) async throws
+    func removeSharedLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity]
 }
 
 public struct ShareAlbumUseCase: ShareAlbumUseCaseProtocol {
@@ -24,5 +25,24 @@ public struct ShareAlbumUseCase: ShareAlbumUseCaseProtocol {
             throw ShareAlbumErrorEntity.invalidAlbumType
         }
         try await shareAlbumRepository.removeSharedLink(forAlbumId: album.id)
+    }
+    
+    public func removeSharedLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity] {
+        await withTaskGroup(of: HandleEntity?.self) { group in
+            albums.forEach { album in
+                group.addTask {
+                    do {
+                        try await removeSharedLink(forAlbum: album)
+                        return album.id
+                    } catch {
+                        return nil
+                    }
+                }
+            }
+            
+            return await group.reduce(into: [HandleEntity](), {
+                if let removeShareLinkAlbumId = $1 { $0.append(removeShareLinkAlbumId) }
+            })
+        }
     }
 }

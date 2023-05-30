@@ -233,7 +233,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
             .store(in: &subscriptions)
         
         if isAlbumShareLinkEnabled {
-            viewModel.$isExportedAlbumSelected
+            viewModel.$isOnlyExportedAlbumsSelected
                 .removeDuplicates()
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in

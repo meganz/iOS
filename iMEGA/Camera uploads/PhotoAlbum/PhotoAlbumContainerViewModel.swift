@@ -1,6 +1,5 @@
 import SwiftUI
 import Combine
-import MEGADomain
 
 final class PhotoAlbumContainerViewModel: ObservableObject {
     @Published var editMode: EditMode = .inactive
@@ -8,6 +7,7 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     @Published var isAlbumsSelected = false
     @Published var showDeleteAlbumAlert = false
     @Published var isExportedAlbumSelected: Bool = false
+    @Published var isOnlyExportedAlbumsSelected = false 
     @Published var showShareAlbumLinks = false
     @Published var showRemoveAlbumLinksAlert = false
     

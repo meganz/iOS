@@ -3,11 +3,14 @@ import MEGADomain
 public struct MockShareAlbumUseCase: ShareAlbumUseCaseProtocol {
     private let shareAlbumLinkResult: Result<String, Error>
     private let removeSharedAlbumLinkResult: Result<Void, Error>
+    private let successfullyRemoveSharedAlbumLinkIds: [HandleEntity]
     
     public init(shareAlbumLinkResult: Result<String, Error> = .failure(GenericErrorEntity()),
-                removeSharedAlbumLinkResult: Result<Void, Error> = .failure(GenericErrorEntity())) {
+                removeSharedAlbumLinkResult: Result<Void, Error> = .failure(GenericErrorEntity()),
+                successfullyRemoveSharedAlbumLinkIds: [HandleEntity] = [HandleEntity]()) {
         self.shareAlbumLinkResult = shareAlbumLinkResult
         self.removeSharedAlbumLinkResult = removeSharedAlbumLinkResult
+        self.successfullyRemoveSharedAlbumLinkIds = successfullyRemoveSharedAlbumLinkIds
     }
     
     public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
@@ -20,5 +23,9 @@ public struct MockShareAlbumUseCase: ShareAlbumUseCaseProtocol {
         try await withCheckedThrowingContinuation { continuation in
             continuation.resume(with: removeSharedAlbumLinkResult)
         }
+    }
+    
+    public func removeSharedLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity] {
+        successfullyRemoveSharedAlbumLinkIds
     }
 }

@@ -51,4 +51,14 @@ extension AlbumSelection {
         .removeDuplicates()
         .eraseToAnyPublisher()
     }
+    
+    var isOnlyExportedAlbumsSelectedPublisher: AnyPublisher <Bool, Never> {
+        $albums.map {
+            $0.values.count > 0 && $0.values.allSatisfy { album in
+                album.isLinkShared == true
+            }
+        }
+        .removeDuplicates()
+        .eraseToAnyPublisher()
+    }
 }
