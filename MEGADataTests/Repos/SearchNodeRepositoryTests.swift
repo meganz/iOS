@@ -43,8 +43,8 @@ final class SearchNodeRepositoryTests: XCTestCase {
         }
         
         return nodes
-            .filter{$0.name.contains(text)}
-            .compactMap{$0.name}
+            .filter {$0.name.contains(text)}
+            .compactMap {$0.name}
     }
     
     private func search(type: SearchNodeTypeEntity, filteredNodeNames: [String], text: String) async throws {
@@ -52,7 +52,7 @@ final class SearchNodeRepositoryTests: XCTestCase {
         
         let nodes = try await repo.search(type: type, text: text, sortType: .defaultAsc)
         XCTAssertNotNil(nodes)
-        let nodeNames = nodes.compactMap{$0.name}
+        let nodeNames = nodes.compactMap {$0.name}
         XCTAssertEqual(nodeNames, filteredNodeNames)
         exp.fulfill()
         

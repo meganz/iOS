@@ -315,7 +315,7 @@ final class ContextMenuActionsTests: XCTestCase {
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
-                                                                                                            .filter{ !excludedQuickActions.contains($0) })
+                                                                                                            .filter { !excludedQuickActions.contains($0) })
         
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
@@ -340,7 +340,7 @@ final class ContextMenuActionsTests: XCTestCase {
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
-                                                                                                            .filter{ !excludedQuickActions.contains($0) })
+                                                                                                            .filter { !excludedQuickActions.contains($0) })
         
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
@@ -366,7 +366,7 @@ final class ContextMenuActionsTests: XCTestCase {
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
                                                                                                             .allCases
-                                                                                                            .filter{ !excludedQuickActions.contains($0) })
+                                                                                                            .filter { !excludedQuickActions.contains($0) })
         
         XCTAssertTrue(filterDisplayActions(from: decomposeMenuIntoActions(menu: menuEntity)) == DisplayActionEntity
                                                                                                                 .allCases
@@ -393,7 +393,7 @@ final class ContextMenuActionsTests: XCTestCase {
         
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid
-                                                                                                        .filter{ !excludedSortOptions.contains($0) })
+                                                                                                        .filter { !excludedSortOptions.contains($0) })
     }
 
     func testDisplayMenuFavouritesExplorerSortByOptions() throws {
@@ -407,7 +407,7 @@ final class ContextMenuActionsTests: XCTestCase {
         
         XCTAssertTrue(filterSortActions(from: decomposeMenuIntoActions(menu: menuEntity)) == SortOrderEntity
                                                                                                         .allValid
-                                                                                                        .filter{ !excludedSortOptions.contains($0) })
+                                                                                                        .filter { !excludedSortOptions.contains($0) })
     }
 
     func testDisplayMenuDocumentExplorerSortByOptions() throws {
@@ -456,14 +456,14 @@ final class ContextMenuActionsTests: XCTestCase {
         
         XCTAssertTrue(filterChatStatusActions(from: decomposeMenuIntoActions(menu: menuEntity)) == ChatStatusEntity
                                                                                                                 .allCases
-                                                                                                                .filter{ !excludedChatStatusActions.contains($0) })
+                                                                                                                .filter { !excludedChatStatusActions.contains($0) })
         
         XCTAssertTrue(filterDoNotDisturbDisabled(from: decomposeMenuIntoActions(menu: menuEntity)) == DNDDisabledActionEntity
                                                                                                                         .allCases)
         
         XCTAssertTrue(filterDoNotDisturbEnabled(from: decomposeMenuIntoActions(menu: menuEntity)) == DNDTurnOnOptionEntity
                                                                                                                         .allCases
-                                                                                                                        .filter{ !excludedDoNotDisturbEnabledOptions.contains($0) })
+                                                                                                                        .filter { !excludedDoNotDisturbEnabledOptions.contains($0) })
                                                                             
     }
     

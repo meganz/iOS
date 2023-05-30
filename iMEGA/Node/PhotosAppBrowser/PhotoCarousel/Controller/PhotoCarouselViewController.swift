@@ -296,7 +296,7 @@ extension PhotoCarouselViewController: AlbumDelegate {
                 newIndexPath = indexPath
                 
                 snapshotView = view.snapshotView(afterScreenUpdates: false)
-                if let snapshotView = snapshotView  {
+                if let snapshotView = snapshotView {
                     view.addSubview(snapshotView)
                     snapshotView.autoPinEdgesToSuperviewEdges()
                 }

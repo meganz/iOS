@@ -2,7 +2,7 @@
 import Foundation
 import MEGADomain
 
-class FolderLinkTableViewController: UIViewController  {
+class FolderLinkTableViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     

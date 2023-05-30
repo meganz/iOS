@@ -5,7 +5,7 @@ protocol AudioPlaylistSource: UITableViewDataSource {
     func indexPathsOf(item: AudioPlayerItem) -> [IndexPath]
 }
 
-extension AudioPlaylistSource  {
+extension AudioPlaylistSource {
     func cell(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "trackCell", for: indexPath) as? PlaylistItemTableViewCell else { return UITableViewCell() }
         

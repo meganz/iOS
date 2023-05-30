@@ -155,7 +155,7 @@ final class AlbumContentViewModel: ViewModelType {
         addAdditionalPhotosTask?.cancel()
     }
     
-    func showAlbumContentPicker()  {
+    func showAlbumContentPicker() {
         router.showAlbumContentPicker(album: album, completion: { [weak self] _, albumPhotos in
             self?.addAdditionalPhotos(albumPhotos)
         })
@@ -342,7 +342,7 @@ final class AlbumContentViewModel: ViewModelType {
         }
     }
     
-    private func showAlbumCoverPicker()  {
+    private func showAlbumCoverPicker() {
         router.showAlbumCoverPicker(album: album, completion: { [weak self] _, coverPhoto in
             self?.updateAlbumCover(albumPhoto: coverPhoto)
         })

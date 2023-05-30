@@ -161,7 +161,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never> {
         chatRoomUpdateListener(forChatId: chatRoom.chatId)
             .monitor
-            .filter{ $0.changeType == .participants }
+            .filter { $0.changeType == .participants }
             .map({ $0.peers.map({ $0.handle })})
             .eraseToAnyPublisher()
     }
@@ -169,7 +169,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     func userPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never> {
         chatRoomUpdateListener(forChatId: chatRoom.chatId)
             .monitor
-            .filter{ $0.changeType == .participants }
+            .filter { $0.changeType == .participants }
             .map(\.userHandle)
             .eraseToAnyPublisher()
     }
@@ -177,7 +177,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     func ownPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never> {
         chatRoomUpdateListener(forChatId: chatRoom.chatId)
             .monitor
-            .filter{ $0.changeType == .ownPrivilege }
+            .filter { $0.changeType == .ownPrivilege }
             .map(\.userHandle)
             .eraseToAnyPublisher()
     }
@@ -185,7 +185,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     func allowNonHostToAddParticipantsValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
         chatRoomUpdateListener(forChatId: chatRoom.chatId)
             .monitor
-            .filter{ $0.changeType == .openInvite}
+            .filter { $0.changeType == .openInvite}
             .map(\.isOpenInviteEnabled)
             .eraseToAnyPublisher()
     }

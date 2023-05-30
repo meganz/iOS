@@ -458,7 +458,7 @@ class MessageInputBar: UIView {
             MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation started")
         }, completion: { _ in
             
-            if self.backgroundViewTrailingTextViewConstraint.isActive  {
+            if self.backgroundViewTrailingTextViewConstraint.isActive {
                 self.sendButton.isHidden = true
                 self.sendButton.alpha = 1.0
                 
@@ -515,7 +515,7 @@ class MessageInputBar: UIView {
         }
     }
     
-    private func calculateEditViewHeight()  {
+    private func calculateEditViewHeight() {
         editViewHeightConstraint.constant = editMessageTitleLabel.sizeThatFits(CGSize(width: editMessageTitleLabel.frame.width, height: .greatestFiniteMagnitude)).height
             + editMessageLabel.sizeThatFits(CGSize(width: editMessageLabel.frame.width, height: .greatestFiniteMagnitude)).height
             + 12

@@ -25,8 +25,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
          chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
          chatUseCase: ChatUseCaseProtocol,
          accountUseCase: AccountUseCaseProtocol,
-         chatRoom: ChatRoomEntity)
-    {
+         chatRoom: ChatRoomEntity) {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase

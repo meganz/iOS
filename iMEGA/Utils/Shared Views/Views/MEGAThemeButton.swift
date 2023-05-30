@@ -4,7 +4,7 @@ extension UIControl.State: Hashable {}
 
 protocol ButtonBackgroundStateAware {
 
-    var statedColor: [UIControl.State: UIColor]  { get }
+    var statedColor: [UIControl.State: UIColor] { get }
     
     func setBackgroundColor(_ color: UIColor, for state: UIControl.State)
 }

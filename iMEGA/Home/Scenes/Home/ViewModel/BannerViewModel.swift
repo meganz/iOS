@@ -25,7 +25,7 @@ protocol HomeBannerViewModelType {
 
 final class HomeBannerViewModel: HomeBannerViewModelType {
 
-    var inputs: HomeBannerViewModelInputs  { self }
+    var inputs: HomeBannerViewModelInputs { self }
 
     var outputs: HomeBannerViewModelOutputs { self }
 

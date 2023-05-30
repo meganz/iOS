@@ -27,7 +27,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
         viewModel.checkNameCollisions()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveSuccess_calledTimes == 1)
         } else {
             XCTFail()
@@ -40,7 +40,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
         viewModel.checkNameCollisions()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveError_calledTimes == 1)
         } else {
             XCTFail()
@@ -58,7 +58,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
         viewModel.checkNameCollisions()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showNameCollisionsView_calledTimes == 1)
         } else {
             XCTFail()
@@ -71,7 +71,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .move)
         viewModel.checkNameCollisions()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveSuccess_calledTimes == 1)
         } else {
             XCTFail()
@@ -84,7 +84,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .move)
         viewModel.checkNameCollisions()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveError_calledTimes == 1)
         } else {
             XCTFail()
@@ -97,7 +97,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .upload)
         viewModel.checkNameCollisions()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.resolvedUploadCollisions_calledTimes == 1)
         } else {
             XCTFail()

@@ -121,7 +121,7 @@ extension DocAndAudioListSource {
             return nil
         }
 
-        if !isNodeInRubbishBin(node){
+        if !isNodeInRubbishBin(node) {
             let shareLinkAction = contextualAction(
                 withImageName: Asset.Images.Generic.link.name,
                 backgroundColor: .systemOrange
@@ -183,8 +183,7 @@ extension DocAndAudioListSource {
 
     private func contextualAction(withImageName imageName: String, backgroundColor: UIColor, completion: @escaping () -> Void) -> UIContextualAction {
         let action = UIContextualAction(style: .normal,
-                                        title: nil)
-        { (_, _, _) in
+                                        title: nil) { (_, _, _) in
             completion()
         }
 

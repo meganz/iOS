@@ -189,7 +189,7 @@ class PhotoCellViewModel: ObservableObject {
     private func subscribeToPhotoFavouritesChange() {
         NotificationCenter.default
             .publisher(for: .didPhotoFavouritesChange)
-            .compactMap{$0.object as? [NodeEntity]}
+            .compactMap { $0.object as? [NodeEntity] }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] updatedNodes in
                 guard let self = self,

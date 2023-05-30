@@ -102,7 +102,7 @@ public struct CopyDataBasesRepository: CopyDataBasesRepositoryProtocol {
                         }
                     }
                     completion(.success(()))
-                } catch  {
+                } catch {
                     completion(.failure(.fileManager))
                 }
             case .failure:

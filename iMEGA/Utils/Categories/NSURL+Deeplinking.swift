@@ -140,7 +140,7 @@ extension NSURL {
         } else if host == DeeplinkHostKey.shortcutFavourites.rawValue {
             guard let path = path, !path.isEmpty else { return .showFavourites }
             return .presentFavouritesNode
-        } else if host == DeeplinkHostKey.shortcutOffline.rawValue  {
+        } else if host == DeeplinkHostKey.shortcutOffline.rawValue {
             guard let path = path, !path.isEmpty else { return .showOffline }
             return .presentOfflineFile
         }

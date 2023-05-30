@@ -13,15 +13,13 @@ extension Reader where R: Collection, R.Element: Comparable {
 extension Reader where
     R: Collection, R.Element: Aggregatable & Comparable,
     A: Collection, A.Element == ItemGroup<R.Element>,
-    R.Element.Key: Comparable
-{
+    R.Element.Key: Comparable {
 
    static func aggregating(
         _ type: R.Element.Type,
         sortingSection: SortingOrder<A.Element> = .asc,
         sortingItems: SortingOrder<R.Element> = .asc
-    ) -> Reader<[R.Element], [ItemGroup<R.Element>]>
-    {
+    ) -> Reader<[R.Element], [ItemGroup<R.Element>]> {
         identity(type) <|> grouping(by: sortingItems) <|> sorting(by: sortingSection)
     }
 }
@@ -73,8 +71,7 @@ private func sortingStrategy<Item>(
     for type: Item.Type,
     sectionAsc: Bool,
     itemsAsc: Bool
-) -> Reader<[Item], [ItemGroup<Item>]> where Item.Key: Comparable, Item: Aggregatable & Comparable
-{
+) -> Reader<[Item], [ItemGroup<Item>]> where Item.Key: Comparable, Item: Aggregatable & Comparable {
     identity(type) <|> grouping(asc:itemsAsc) <|> sorting(asc: sectionAsc)
 }
 
@@ -82,7 +79,6 @@ private func grouping<Item>(
     _ type: Item.Type,
     sortingSection: SortingOrder<ItemGroup<Item>> = .asc,
     sortingItems: SortingOrder<Item> = .asc
-) -> Reader<[Item], [ItemGroup<Item>]> where Item.Key: Comparable, Item: Aggregatable & Comparable
-{
+) -> Reader<[Item], [ItemGroup<Item>]> where Item.Key: Comparable, Item: Aggregatable & Comparable {
     identity(type) <|> grouping(by: sortingItems) <|> sorting(by: sortingSection)
 }

@@ -141,7 +141,7 @@ extension FavouritesExplorerListSource {
             return nil
         }
 
-        if !isNodeInRubbishBin(node){
+        if !isNodeInRubbishBin(node) {
             let shareLinkAction = contextualAction(
                 withImageName: Asset.Images.Generic.link.name,
                 backgroundColor: .systemOrange

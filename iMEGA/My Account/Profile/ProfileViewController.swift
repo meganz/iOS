@@ -367,7 +367,7 @@ enum SessionSectionRow: Int {
                                                                     return DateFormatter.dateMedium()
         }
         let numberOfDaysAWeek = 7
-        if daysOfDistance > numberOfDaysAWeek  {
+        if daysOfDistance > numberOfDaysAWeek {
             return DateFormatter.dateMedium()
         }
 

@@ -63,7 +63,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         }
 
         sdkNodeClient.loadThumbnail(nodeHandle, destinationThumbnailCachePath) { finished in
-            guard finished else  {
+            guard finished else {
                 completion(nil)
                 return
             }

@@ -83,7 +83,7 @@
     }
     
     private func cleanupDatabase() {
-        guard let context = store.stack.newBackgroundContext() else  { return }
+        guard let context = store.stack.newBackgroundContext() else { return }
         
         context.performAndWait {
             let transferList = MEGASdkManager.sharedMEGASdk().transfers

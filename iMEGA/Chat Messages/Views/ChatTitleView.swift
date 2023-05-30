@@ -6,7 +6,7 @@ class ChatTitleView: UIView {
     @IBOutlet weak var statusView: UIView!
     
     var lastGreen: Int? {
-        didSet{
+        didSet {
             updateSubtitleLabel()
         }
     }

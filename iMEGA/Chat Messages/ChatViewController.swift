@@ -468,7 +468,7 @@ class ChatViewController: MessagesViewController {
         }
         
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
-        if chatMessage.transfer?.transferChatMessageType() == .voiceClip  {
+        if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell

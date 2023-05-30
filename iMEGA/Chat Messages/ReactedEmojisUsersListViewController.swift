@@ -5,7 +5,7 @@ protocol ReactedEmojisUsersListViewControllerDelegate: AnyObject {
     func didSelectUserhandle(_ userhandle: UInt64)
 }
 
-class ReactedEmojisUsersListViewController: UIViewController  {
+class ReactedEmojisUsersListViewController: UIViewController {
     
     var selectedEmoji: String {
         didSet {

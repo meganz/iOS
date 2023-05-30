@@ -9,7 +9,7 @@ struct TemporaryDirectoryFinding {
 extension TemporaryDirectoryFinding {
 
     static var live: Self {
-        return Self(searchFor:  { searchType in
+        return Self(searchFor: { searchType in
             let temporaryDirectory = NSTemporaryDirectory()
             let sdk = MEGASdkManager.sharedMEGASdk()
             switch searchType {

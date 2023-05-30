@@ -9,7 +9,7 @@ final class OfflineFileInfoUseCaseTests: XCTestCase {
         let folderLinkNodesArray = try XCTUnwrap(offlineFileInfoSuccessRepository.info(fromFiles: [""]))
         let mockArray = try XCTUnwrap(AudioPlayerItem.mockArray)
         
-        XCTAssertEqual(folderLinkNodesArray.compactMap{$0.url}, mockArray.compactMap{$0.url})
+        XCTAssertEqual(folderLinkNodesArray.compactMap {$0.url}, mockArray.compactMap {$0.url})
         XCTAssertNil(offlineFileInfoFailureRepository.info(fromFiles: [""]))
     }
     

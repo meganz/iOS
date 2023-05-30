@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ChatTabsSelectorView: View  {
+struct ChatTabsSelectorView: View {
     @Environment(\.colorScheme) private var colorScheme
     var chatViewMode: ChatViewMode
     var action: (ChatViewMode) -> Void

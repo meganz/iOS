@@ -101,7 +101,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
         guard let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController
         else { return }
-        if browserVCDelegate == nil  {
+        if browserVCDelegate == nil {
             browserVCDelegate = TargetFolderBrowserVCDelegate()
         }
         

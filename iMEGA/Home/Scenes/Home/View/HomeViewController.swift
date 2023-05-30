@@ -192,7 +192,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func toggleBannerCollectionView(isOn: Bool) {
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.2, options: [], animations:  {
+        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.2, options: [], animations: {
             self.bannerCollectionView.isHidden = !isOn
         }, completion: { _ in
             if !RecentsPreferenceManager.showRecents() {

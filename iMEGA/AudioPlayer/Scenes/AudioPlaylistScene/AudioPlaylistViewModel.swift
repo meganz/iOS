@@ -68,7 +68,7 @@ final class AudioPlaylistViewModel: ViewModelType {
     
     private func removeSelected(_ item: AudioPlayerItem) {
         if selectedItems?.contains(item) ?? false,
-           let index = selectedItems?.firstIndex(where:{$0 == item}) {
+           let index = selectedItems?.firstIndex(where: { $0 == item }) {
             selectedItems?.remove(at: index)
         }
     }

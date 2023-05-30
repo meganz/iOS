@@ -6,7 +6,7 @@ extension View {
     }
 }
 
-struct SwipeLeftActionModifier: ViewModifier  {
+struct SwipeLeftActionModifier: ViewModifier {
     @State private var offset: CGFloat = 0
     @State private var oldOffset: CGFloat = 0
     @State private var buttonsVisible = false
@@ -37,7 +37,7 @@ struct SwipeLeftActionModifier: ViewModifier  {
                         .onChanged { (value) in
                             let totalSlide = value.translation.width + oldOffset
                             if Int(minTrailingOffset)...0 ~= Int(totalSlide) {
-                                withAnimation{
+                                withAnimation {
                                     offset = totalSlide
                                 }
                             }

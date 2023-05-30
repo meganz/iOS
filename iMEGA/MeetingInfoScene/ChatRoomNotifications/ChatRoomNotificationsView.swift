@@ -28,10 +28,9 @@ struct ChatRoomNotificationsView: View {
                 viewModel.turnOnDNDOption(dndOption)
             }
         }
-        buttons.append(ActionSheet.Button.cancel( {
+        buttons.append(ActionSheet.Button.cancel({
             viewModel.cancelChatNotificationsChange()
-        })
-        )
+        }))
         return buttons
     }
 }

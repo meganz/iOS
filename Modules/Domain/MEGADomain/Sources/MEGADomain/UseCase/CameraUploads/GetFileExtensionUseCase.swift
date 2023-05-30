@@ -15,7 +15,7 @@ public struct GetFileExtensionUseCase: GetFileExtensionUseCaseProtocol {
     public func fileExtension(for type: MediaTypeEntity, url: URL?, uti: UTType?) -> FileExtension {
         if let fileExtension = fileExtension(for: url) {
             return fileExtension
-        } else if let fileExtension = fileExtension(for: uti)  {
+        } else if let fileExtension = fileExtension(for: uti) {
             return fileExtension
         }
         
@@ -25,7 +25,7 @@ public struct GetFileExtensionUseCase: GetFileExtensionUseCaseProtocol {
     public func fileExtension(for type: MediaTypeEntity, url: URL?, uniformTypeIdentifier uti: String?) -> FileExtension {
         if let fileExtension = fileExtension(for: url) {
             return fileExtension
-        } else if let fileExtension = fileExtension(forUTI: uti)  {
+        } else if let fileExtension = fileExtension(forUTI: uti) {
             return fileExtension
         }
         

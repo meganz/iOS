@@ -67,7 +67,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         
         let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
         let quality = UserDefaults.standard.string(forKey: keys.docScanQualityKey)
-        if fileType == nil || docs?.count ?? 0 > 1  {
+        if fileType == nil || docs?.count ?? 0 > 1 {
             UserDefaults.standard.set(DocScanExportFileType.pdf.rawValue, forKey: keys.docScanExportFileTypeKey)
         }
         if quality == nil {

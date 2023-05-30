@@ -12,7 +12,7 @@ struct AddParticipantsView: View {
     }
     
     var body: some View {
-        HStack(spacing: Constants.spacing)  {
+        HStack(spacing: Constants.spacing) {
             Image(Asset.Images.Chat.inviteToChat.name)
                 .padding(Constants.padding)
                 .frame(width: Constants.imageSize.width, height: Constants.imageSize.height)

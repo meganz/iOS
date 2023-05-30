@@ -54,7 +54,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
         
         viewModel.createDidTap()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssertTrue(router.showMeetingInfo_calledTimes == 1)
         } else {
             XCTFail()
@@ -67,7 +67,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: scheduleMeetingUseCase, chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
         
         viewModel.createDidTap()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut{
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssertTrue(router.hideSpinner_calledTimes == 1)
         } else {
             XCTFail()
@@ -210,7 +210,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     
     private func randomString(length: Int) -> String {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<length).map{ _ in letters.randomElement()! })
+      return String((0..<length).map { _ in letters.randomElement()! })
     }
 }
 

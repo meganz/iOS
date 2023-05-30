@@ -22,7 +22,7 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
         if pathStatus == .unsatisfied && monitor.currentPath.status == .satisfied {
             pathStatus = monitor.currentPath.status
         }
-        monitor.pathUpdateHandler =  { [weak self] path in
+        monitor.pathUpdateHandler = { [weak self] path in
             if self?.pathStatus != path.status {
                 self?.pathStatus = path.status
                 DispatchQueue.main.async {

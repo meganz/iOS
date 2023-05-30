@@ -256,7 +256,7 @@ import MEGADomain
         }
         
         guard let delegate = presenter as? AudioPlayerPresenterProtocol else {
-            miniPlayerHandlerListenerManager.notify{$0.hideMiniPlayer()}
+            miniPlayerHandlerListenerManager.notify { $0.hideMiniPlayer() }
             return
         }
         
@@ -269,7 +269,7 @@ import MEGADomain
         }
         
         player?.updateContentViews()
-        miniPlayerHandlerListenerManager.notify{$0.closeMiniPlayer()}
+        miniPlayerHandlerListenerManager.notify { $0.closeMiniPlayer() }
         
         NotificationCenter.default.post(name: NSNotification.Name.MEGAAudioPlayerShouldUpdateContainer, object: nil)
         
@@ -282,9 +282,9 @@ import MEGADomain
         guard presenter.conforms(to: AudioPlayerPresenterProtocol.self) else { return }
         
         if hidden {
-            miniPlayerHandlerListenerManager.notify{$0.hideMiniPlayer()}
+            miniPlayerHandlerListenerManager.notify { $0.hideMiniPlayer() }
         } else {
-            miniPlayerHandlerListenerManager.notify{$0.showMiniPlayer()}
+            miniPlayerHandlerListenerManager.notify { $0.showMiniPlayer() }
         }
         
         player?.updateContentViews()
@@ -316,7 +316,7 @@ import MEGADomain
     
     func presentMiniPlayer(_ viewController: UIViewController) {
         miniPlayerVC = viewController as? MiniPlayerViewController
-        miniPlayerHandlerListenerManager.notify{$0.presentMiniPlayer(viewController)}
+        miniPlayerHandlerListenerManager.notify { $0.presentMiniPlayer(viewController) }
     }
     
     func showMiniPlayer() {
@@ -324,7 +324,7 @@ import MEGADomain
             miniPlayerRouter?.start()
             return
         }
-        miniPlayerHandlerListenerManager.notify{$0.presentMiniPlayer(miniPlayerVC)}
+        miniPlayerHandlerListenerManager.notify { $0.presentMiniPlayer(miniPlayerVC) }
     }
     
     func audioInterruptionDidStart() {

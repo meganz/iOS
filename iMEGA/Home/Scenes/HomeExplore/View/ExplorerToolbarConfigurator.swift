@@ -176,7 +176,7 @@ class ExplorerToolbarConfigurator {
         excludeBarButtonItems: [UIBarButtonItem] = []
     ) -> [UIBarButtonItem] {
         barButtonItems.forEach {
-            if !excludeBarButtonItems.contains($0){
+            if !excludeBarButtonItems.contains($0) {
                 $0.isEnabled = enable
             }
         }

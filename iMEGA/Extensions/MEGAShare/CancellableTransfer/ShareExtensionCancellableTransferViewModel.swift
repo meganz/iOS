@@ -125,8 +125,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
                                          fileName: transferViewEntity.name,
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: false,
-                                         startFirst: transferViewEntity.priority)
-            { transferEntity in
+                                         startFirst: transferViewEntity.priority) { transferEntity in
                 transferViewEntity.state = transferEntity.state
             } update: { _ in } completion: { [weak self] result in
                 switch result {
@@ -152,8 +151,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
                                          appData: transferViewEntity.appData,
                                          isSourceTemporary: false,
                                          startFirst: transferViewEntity.priority,
-                                         start: nil)
-            { transferEntity in
+                                         start: nil) { transferEntity in
                 transferViewEntity.stage = transferEntity.stage
             } completion: { [weak self] result in
                 switch result {

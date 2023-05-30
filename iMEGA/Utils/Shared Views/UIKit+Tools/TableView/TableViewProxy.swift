@@ -4,8 +4,7 @@ final class TableViewProxy<CellItem> :
     NSObject,
     UITableViewDataSource,
     UITableViewDelegate,
-    DZNEmptyDataSetSource
-{
+    DZNEmptyDataSetSource {
 
     typealias DataSourceConfigurationGenerator
         = ([CellItem]) -> TableDataSourceConfiguration<CellItem>

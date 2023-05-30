@@ -53,7 +53,7 @@ final class AudioPlayer: NSObject {
     
     // MARK: - Internal Computed Properties
     var currentIndex: Int? {
-        queuePlayer?.items().firstIndex(where:{$0 as? AudioPlayerItem == currentItem()})
+        queuePlayer?.items().firstIndex(where: { $0 as? AudioPlayerItem == currentItem() })
     }
     
     var currentName: String? {
@@ -297,7 +297,7 @@ final class AudioPlayer: NSObject {
     }
     
     func playerTracksContains(url: URL) -> Bool {
-        tracks.compactMap{$0.url}
+        tracks.compactMap { $0.url }
             .contains(url)
     }
 }

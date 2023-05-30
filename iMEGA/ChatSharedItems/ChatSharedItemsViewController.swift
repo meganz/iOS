@@ -358,7 +358,7 @@ extension ChatSharedItemsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if !attachmentsLoaded && !attachmentsLoading  {
+        if !attachmentsLoaded && !attachmentsLoading {
             let bottomView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 60))
             activityIndicator.center = bottomView.center
             activityIndicator.startAnimating()
@@ -371,7 +371,7 @@ extension ChatSharedItemsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        if !attachmentsLoaded && !attachmentsLoading  {
+        if !attachmentsLoaded && !attachmentsLoading {
             loadMoreFiles()
         }
     }
