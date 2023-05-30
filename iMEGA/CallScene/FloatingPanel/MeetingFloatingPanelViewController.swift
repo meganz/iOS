@@ -210,7 +210,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         viewModel.dispatch(.allowNonHostToAddParticipants(enabled: allowNonHostToAddParticipantsSwitch.isOn))
     }
     
-    //MARK:- Private methods
+    // MARK: - Private methods
     
     private func updatedCameraPosition(_ position: CameraPositionEntity) {
         flipQuickActionView.isSelected = position == .back

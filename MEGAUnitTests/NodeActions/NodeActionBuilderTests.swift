@@ -15,7 +15,7 @@ class NodeActionBuilderTests: XCTestCase {
         actions.removeAll()
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     func isEqual(nodeActionTypes types: [MegaNodeActionType]) -> Bool {
         guard actions.count == types.count else {
@@ -234,7 +234,7 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.moveToRubbishBin]))
     }
     
-    //MARK: - Backup
+    // MARK: - Backup
     func testBackupNodeWithNoVersion() {
         actions = NodeActionBuilder()
             .setDisplayMode(.backup)
@@ -257,7 +257,7 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .download, .shareLink, .exportFile, .sendToChat, .copy]))
     }
     
-    //MARK: - Rubbish Bin
+    // MARK: - Rubbish Bin
     func testRubbishBinNodeRestorableFolder() {
         actions = NodeActionBuilder()
             .setDisplayMode(.rubbishBin)
@@ -332,7 +332,7 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.restoreBackup, .info, .remove]))
     }
     
-    //MARK: - Recent Items tests
+    // MARK: - Recent Items tests
     
     func testRecentNodeNoVersion() {
         actions = NodeActionBuilder()

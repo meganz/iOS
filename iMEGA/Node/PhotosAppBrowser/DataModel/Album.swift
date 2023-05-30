@@ -23,7 +23,7 @@ final class Album: NSObject {
 
     weak var delegate: AlbumDelegate?
     
-    // MARK:- Initializer.
+    // MARK: - Initializer.
 
     init(title: String, subType: PHAssetCollectionSubtype, fetchResult: PHFetchResult<PHAsset>, updatedFetchResultsHandler: @escaping UpdatedFetchResultsHandler) {
         self.title = title
@@ -39,7 +39,7 @@ final class Album: NSObject {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
     
     func assetCount() -> Int {
        fetchResult.count

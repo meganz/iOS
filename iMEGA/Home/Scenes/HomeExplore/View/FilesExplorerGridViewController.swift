@@ -214,7 +214,7 @@ extension FilesExplorerGridViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK:- Scrollview delegate
+// MARK: - Scrollview delegate
 extension FilesExplorerGridViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.didScroll(scrollView: scrollView)
@@ -230,7 +230,7 @@ extension FilesExplorerGridViewController: CHTCollectionViewDelegateWaterfallLay
     }
 }
 
-//MARK: - FilesExplorerGridSourceDelegate
+// MARK: - FilesExplorerGridSourceDelegate
 extension FilesExplorerGridViewController: FilesExplorerGridSourceDelegate {
     func showMoreNodeOptions(for node: MEGANode, sender: UIView) {
         showMoreOptions(forNode: node, sender: sender)

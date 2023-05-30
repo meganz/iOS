@@ -5,7 +5,7 @@ import Photos
 class PhotoGridViewDataSource: PhotoGridViewBaseDataSource {
     var album: Album
 
-    // MARK:- Initializer.
+    // MARK: - Initializer.
 
     init(album: Album,
          collectionView: UICollectionView,
@@ -15,7 +15,7 @@ class PhotoGridViewDataSource: PhotoGridViewBaseDataSource {
         super.init(collectionView: collectionView, selectedAssets: selectedAssets, selectionHandler: selectionHandler)
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
 
     func didSelect(asset: PHAsset, atIndexPath indexPath: IndexPath) {
         if let index = selectedAssets.firstIndex(of: asset) {
@@ -30,7 +30,7 @@ class PhotoGridViewDataSource: PhotoGridViewBaseDataSource {
         collectionCell.selectedIndex = selectedIndex
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     private func add(asset: PHAsset, selectedIndexPath: IndexPath) {
         updateCollectionCell(atIndexPath: selectedIndexPath, selectedIndex: selectedAssets.count)
@@ -44,7 +44,7 @@ class PhotoGridViewDataSource: PhotoGridViewBaseDataSource {
     }
 }
 
-// MARK:- UICollectionViewDataSource.
+// MARK: - UICollectionViewDataSource.
 
 extension PhotoGridViewDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

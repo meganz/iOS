@@ -230,7 +230,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func fetchChats() {
         loadingTask = Task {
@@ -612,7 +612,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
 }
 
-//MARK: - ChatMenuDelegate
+// MARK: - ChatMenuDelegate
 extension ChatRoomsListViewModel: ChatMenuDelegate {
     
     func chatStatusMenu(didSelect action: ChatStatusEntity) {
@@ -640,7 +640,7 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
     }
 }
 
-//MARK: - MeetingContextMenuDelegate
+// MARK: - MeetingContextMenuDelegate
 extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
     func meetingContextMenu(didSelect action: MeetingActionEntity) {
         if chatUseCase.existsActiveCall() {
@@ -659,7 +659,7 @@ extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
     }
 }
 
-//MARK: - MyAvatarPresenterProtocol
+// MARK: - MyAvatarPresenterProtocol
 extension ChatRoomsListViewModel: MyAvatarPresenterProtocol {
     func setupMyAvatar(barButton: UIBarButtonItem) {
         myAvatarBarButton = barButton
@@ -677,7 +677,7 @@ extension ChatRoomsListViewModel: MyAvatarPresenterProtocol {
     }
 }
 
-//MARK: - PushNotificationControlProtocol
+// MARK: - PushNotificationControlProtocol
 extension ChatRoomsListViewModel :PushNotificationControlProtocol {
     func presentAlertController(_ alert: UIAlertController) {
         router.present(alert: alert, animated: true)

@@ -1,4 +1,4 @@
-//MARK: - Favourite sort by
+// MARK: - Favourite sort by
 extension Array where Element == MEGANode {
     func sort(by orderType: SortOrderType) -> [MEGANode] {
         switch orderType {

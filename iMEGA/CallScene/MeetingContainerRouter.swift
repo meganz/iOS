@@ -255,7 +255,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         self.hangOrEndCallRouter = hangOrEndCallRouter
     }
     
-    //MARK:- Private methods.
+    // MARK: - Private methods.
     private func showCallViewRouter(containerViewModel: MeetingContainerViewModel) {
         guard let baseViewController = baseViewController else { return }
         let callViewRouter = MeetingParticipantsLayoutRouter(presenter: baseViewController,

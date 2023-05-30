@@ -2,7 +2,7 @@ import MEGADomain
 import MEGAData
 
 extension OfflineViewController: DisplayMenuDelegate {
-    //MARK: - Context Menus configuration
+    // MARK: - Context Menus configuration
     func contextMenuConfiguration() -> CMConfigEntity {
         return CMConfigEntity(menuType: .menu(type: .display),
                               viewMode: isListViewModeSelected() ? .list : .thumbnail,

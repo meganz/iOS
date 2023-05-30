@@ -180,7 +180,7 @@ final class CancellableTransferViewModel: ViewModelType {
         }
     }
     
-    //MARK: - Upload
+    // MARK: - Upload
     private func startFileUploads() {
         fileTransfers.forEach { transferViewEntity in
             guard let uploadLocalURL = transferViewEntity.localFileURL else {
@@ -242,7 +242,7 @@ final class CancellableTransferViewModel: ViewModelType {
         }
     }
     
-    //MARK: - Downloads
+    // MARK: - Downloads
     private func startChatFileDownloads() {
         fileTransfers.forEach { transferViewEntity in
             downloadNodeUseCase.downloadChatFileToOffline(forNodeHandle: transferViewEntity.handle,

@@ -10,7 +10,7 @@ extension SharedItemsViewController: ContatctsViewControllerDelegate {
     }
 }
 
-//MARK: - Unverified outgoing and incoming nodes
+// MARK: - Unverified outgoing and incoming nodes
 extension SharedItemsViewController {
     @objc func createSharedItemsViewModel() -> SharedItemsViewModel {
         SharedItemsViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
@@ -311,7 +311,7 @@ extension SharedItemsViewController {
     }
 }
 
-//MARK: - SharedItemsTableViewCellDelegate
+// MARK: - SharedItemsTableViewCellDelegate
 extension SharedItemsViewController: SharedItemsTableViewCellDelegate {
         
     func didTapInfoButton(sender: UIButton) {

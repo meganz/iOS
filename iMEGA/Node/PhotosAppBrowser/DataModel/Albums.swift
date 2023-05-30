@@ -33,7 +33,7 @@ final class Albums: NSObject {
         return fetchOptions
     }()
 
-    // MARK:- Initializer.
+    // MARK: - Initializer.
     
     override init() {
         super.init()
@@ -46,7 +46,7 @@ final class Albums: NSObject {
         }
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
 
     func loadAlbums() {
         let status = PHPhotoLibrary.authorizationStatus()
@@ -65,7 +65,7 @@ final class Albums: NSObject {
     }
 }
 
-// MARK:- Private methods.
+// MARK: - Private methods.
 
 extension Albums {
     private func populateAlbums()  {

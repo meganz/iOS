@@ -166,7 +166,7 @@ public final class MockSdk: MEGASdk {
         return numberChildren
     }
     
-    //MARK: - Sets
+    // MARK: - Sets
     
     public override func megaSets() -> [MEGASet] {
         sets
@@ -270,7 +270,7 @@ public final class MockSdk: MEGASdk {
                                   error: MockError(errorType: megaSetError))
     }
     
-    //MARK: - Share
+    // MARK: - Share
     public override func contact(forEmail: String?) -> MEGAUser? {
         sharedFolderOwner
     }

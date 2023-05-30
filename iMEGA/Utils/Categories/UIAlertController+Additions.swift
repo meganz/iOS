@@ -1,6 +1,6 @@
 extension UIAlertController {
     
-    //MARK - UIAlertController for interactive dismissal
+    // MARK: - UIAlertController for interactive dismissal
     
     @objc func discardChanges(fromBarButton barButton: UIBarButtonItem, withConfirmAction action: @escaping (() -> Void)) -> UIAlertController {
         let alert = discardChangesAlert(withConfirmAction: action)

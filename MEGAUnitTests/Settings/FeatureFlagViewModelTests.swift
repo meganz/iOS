@@ -6,7 +6,7 @@ import MEGADomainMock
 
 class FeatureFlagViewModelTests: XCTestCase {
 
-    //MARK: Save New Feature Flags
+    // MARK: Save New Feature Flags
     func testSaveNewFeatureFlags_oneNew() {
         let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false)]
         let featureListWithNewFeature = [FeatureFlagEntity(name: "Feature1", isEnabled: false),
@@ -81,7 +81,7 @@ class FeatureFlagViewModelTests: XCTestCase {
         XCTAssertEqual(Set(mockUseCase.savedFeatureList), Set([updatedExistingFeature]))
     }
     
-    //MARK: Remove Old Feature Flags
+    // MARK: Remove Old Feature Flags
     func testCleanSavedFeatureFlags_oneOld() {
         let savedFeatureFlagList = [FeatureFlagEntity(name: "Feature1", isEnabled: false),
                                     FeatureFlagEntity(name: "Feature2", isEnabled: false)]

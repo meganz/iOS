@@ -33,7 +33,7 @@ final class PhotoCollectionBottomView: UIView {
         }
     }
     
-    // MARK:- Initializers.
+    // MARK: - Initializers.
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,7 +45,7 @@ final class PhotoCollectionBottomView: UIView {
         configure()
     }
     
-    // MARK:- Overriden method.
+    // MARK: - Overriden method.
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -63,7 +63,7 @@ final class PhotoCollectionBottomView: UIView {
         layoutLabel()
     }
     
-    // MARK:- Private methods
+    // MARK: - Private methods
     
     private func configure() {
         layer.addSublayer(gradientLayer)
@@ -79,7 +79,7 @@ final class PhotoCollectionBottomView: UIView {
     }
 }
 
-// MARK:- UIBezierPath extension for video icon drawing path.
+// MARK: - UIBezierPath extension for video icon drawing path.
 
 fileprivate extension UIBezierPath {
     static var videoIconPath: UIBezierPath {

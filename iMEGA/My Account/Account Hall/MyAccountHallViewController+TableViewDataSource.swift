@@ -13,14 +13,14 @@ import MEGASwiftUI
 }
 
 extension MyAccountHallViewController: UITableViewDataSource {
-    //MARK: - Settings row setup data
+    // MARK: - Settings row setup data
     private func settingsSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.settingsTitle,
                               icon: Asset.Images.MyAccount.iconSettings.image.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
-    //MARK: - Storage row setup data for Business and Pro Flexi accounts
+    // MARK: - Storage row setup data for Business and Pro Flexi accounts
     private func storageBusinessAccountSetupData() -> MyAccountHallCellData {
         let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
@@ -30,7 +30,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
                                      transferUsedText: NSString.mnz_formatString(fromByteCountFormatter: String.memoryStyleString(fromByteCount: accountDetails?.transferOwnUsed.int64Value ?? 0)))
     }
     
-    //MARK: - Storage row setup data
+    // MARK: - Storage row setup data
     private func storageSetupData() -> MyAccountHallCellData {
         let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails
         let detailText = String(format: "%@ / %@",
@@ -42,7 +42,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
                                      icon: Asset.Images.MyAccount.iconStorage.image.imageFlippedForRightToLeftLayoutDirection())
     }
     
-    //MARK: - Contacts row setup data
+    // MARK: - Contacts row setup data
     private func contactsSetupData(existsPendingView: Bool) -> MyAccountHallCellData {
         var isPendingViewVisible = false
         var pendingText = ""
@@ -58,7 +58,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
                                      pendingText: pendingText)
     }
     
-    //MARK: - Notifications row setup data
+    // MARK: - Notifications row setup data
     private func notificationsSetupData(existsPendingView: Bool) -> MyAccountHallCellData {
         var isPendingViewVisible = false
         var pendingText = ""
@@ -76,35 +76,35 @@ extension MyAccountHallViewController: UITableViewDataSource {
                                      pendingText: pendingText)
     }
     
-    //MARK: - Backups row setup data
+    // MARK: - Backups row setup data
     private func backupsSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.Backups.title,
                               icon: Asset.Images.MyAccount.backups.image.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
-    //MARK: - Achievements row setup data
+    // MARK: - Achievements row setup data
     private func achievementsSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.achievementsTitle,
                               icon: Asset.Images.MyAccount.iconAchievements.image.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
-    //MARK: - Transfers row setup data
+    // MARK: - Transfers row setup data
     private func transfersSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.transfers,
                               icon: Asset.Images.MyAccount.iconTransfers.image.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
-    //MARK: - Offline row setup data
+    // MARK: - Offline row setup data
     private func offlineSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.offline,
                               icon: Asset.Images.MyAccount.iconOffline.image.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
-    //MARK: - Rubbish Bin row setup data
+    // MARK: - Rubbish Bin row setup data
     private func rubbishBinSetupData() -> MyAccountHallCellData {
         var rubbishBinSize = ""
         if let rubbishBinNode = MEGASdkManager.sharedMEGASdk().rubbishNode {
@@ -117,7 +117,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
                                      isPendingViewVisible: true)
     }
     
-    //MARK: - Upgrade Plan row setup
+    // MARK: - Upgrade Plan row setup
     private func upgradePlanSetupCell(_ indexPath: IndexPath) -> HostingTableViewCell<MyAccountHallPlanView> {
         guard let cell = tableView?.dequeueReusableCell(withIdentifier: "AccountPlanUpgradeCell", for: indexPath) as? HostingTableViewCell<MyAccountHallPlanView> else {
             return HostingTableViewCell<MyAccountHallPlanView>()
@@ -129,7 +129,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         return cell
     }
     
-    //MARK: - Row Index
+    // MARK: - Row Index
     private var showPlanRow: Bool {
         !MEGASdkManager.sharedMEGASdk().isAccountType(.business) && !MEGASdkManager.sharedMEGASdk().isAccountType(.proFlexi)
     }
@@ -141,7 +141,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         return showPlanRow ? MyAccountMegaSection.allCases.count : MyAccountMegaSection.allCases.count - 1
     }
     
-    //MARK: - UITableView data source
+    // MARK: - UITableView data source
     @objc func menuRowIndex(_ indexPath: IndexPath) -> Int {
         guard isNewUpgradeAccountPlanFeatureFlagEnabled() else {
             return indexPath.row + 1

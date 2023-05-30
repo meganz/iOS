@@ -191,7 +191,7 @@ final class MeetingInfoViewModel: ObservableObject {
 }
 
 extension MeetingInfoViewModel{
-    //MARK: - Open Invite
+    // MARK: - Open Invite
     
     @MainActor func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) {
         Task {
@@ -204,7 +204,7 @@ extension MeetingInfoViewModel{
         }
     }
     
-    //MARK: - SharedFiles
+    // MARK: - SharedFiles
     func sharedFilesViewTapped() {
         guard let chatRoom else {
             return
@@ -212,7 +212,7 @@ extension MeetingInfoViewModel{
         router.showSharedFiles(for: chatRoom)
     }
     
-    //MARK: - Chat History
+    // MARK: - Chat History
     func manageChatHistoryViewTapped() {
         guard let chatRoom else {
             return
@@ -220,7 +220,7 @@ extension MeetingInfoViewModel{
         router.showManageChatHistory(for: chatRoom)
     }
     
-    //MARK: - Key Rotation
+    // MARK: - Key Rotation
     func enableEncryptionKeyRotationViewTapped() {
         guard let chatRoom else {
             return
@@ -228,7 +228,7 @@ extension MeetingInfoViewModel{
         router.showEnableKeyRotation(for: chatRoom)
     }
     
-    //MARK: - Share link non host
+    // MARK: - Share link non host
     func shareMeetingLinkViewTapped() {
         guard let chatRoomLinkViewModel else {
             return
@@ -236,7 +236,7 @@ extension MeetingInfoViewModel{
         chatRoomLinkViewModel.showShareMeetingLinkOptions = true
     }
     
-    //MARK: - Leave group
+    // MARK: - Leave group
     func leaveGroupViewTapped() {
         guard let chatRoom else {
             return

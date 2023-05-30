@@ -26,7 +26,7 @@ extension MEGASdk {
     }
     
     
-    //MARK: Account types
+    // MARK: Account types
     @objc func isAccountType(_ accountType: MEGAAccountType) -> Bool {
         guard let accountDetails = mnz_accountDetails else {
             return false

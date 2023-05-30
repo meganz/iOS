@@ -63,7 +63,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         return section.sectionType
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func updateViewConfiguration() {
         let title = album.isLinkShared ? Strings.Localizable.General.MenuAction.ManageLink.title(1) :
         Strings.Localizable.General.MenuAction.ShareLink.title(1)

@@ -68,7 +68,7 @@ final class FileCacheRepository: FileCacheRepositoryProtocol {
         return directory.appendingPathComponent(name)
     }
     
-    //MARK: - Offline
+    // MARK: - Offline
     func offlineFileURL(name: String) -> URL {
         (fileManager.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: "")).appendingPathComponent(name)
     }

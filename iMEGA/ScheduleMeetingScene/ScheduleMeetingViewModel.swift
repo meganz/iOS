@@ -105,7 +105,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         self.endDate = startDate.addingTimeInterval(Constants.defaultDurationHalfHour)
     }
     
-    //MARK: - Public
+    // MARK: - Public
     func createDidTap() {
         createScheduleMeeting()
     }
@@ -157,7 +157,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         }
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func formatDate(_ date: Date) -> String {
         dateFormatter.localisedString(from: date) + " " + timeFormatter.localisedString(from: date)
     }

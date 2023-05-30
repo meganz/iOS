@@ -61,7 +61,7 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
         )
     }
     
-    //MARK: -Private
+    // MARK: - Private
     func recentStringTimestamp(_ timestamp: Date) -> String {
         if timestamp.isToday(on: Calendar.current) {
             return DateFormatter.timeShort().localisedString(from: timestamp)

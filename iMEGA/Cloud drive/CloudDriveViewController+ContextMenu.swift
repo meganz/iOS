@@ -4,7 +4,7 @@ import MEGADomain
 import MEGAData
 
 extension CloudDriveViewController: CloudDriveContextMenuDelegate {
-    //MARK: - Context Menus configuration
+    // MARK: - Context Menus configuration
     func contextMenuConfiguration(parentNode: MEGANode, parentAccessLevel: NodeAccessTypeEntity) -> CMConfigEntity {
         if parentNode.isFolder(),
            displayMode == .rubbishBin,
@@ -100,7 +100,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         dismiss(animated: true)
     }
     
-    //MARK: - CloudDriveContextMenuDelegate functions
+    // MARK: - CloudDriveContextMenuDelegate functions
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .select:

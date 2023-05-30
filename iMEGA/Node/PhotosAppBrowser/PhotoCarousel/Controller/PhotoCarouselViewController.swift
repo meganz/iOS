@@ -4,20 +4,20 @@ import Photos
 import AVKit
 import Combine
 
-// MARK:- PhotoCarouselViewControllerDelegate.
+// MARK: - PhotoCarouselViewControllerDelegate.
 
 protocol PhotoCarouselViewControllerDelegate: AnyObject {
     func selected(assets: [PHAsset])
     func sendButtonTapped()
 }
 
-// MARK:- PhotoCarouselViewController.
+// MARK: - PhotoCarouselViewController.
 
 final class PhotoCarouselViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    // MARK:- Private instance variables.
+    // MARK: - Private instance variables.
     
     private let album: Album
     private let selectedPhotoIndexPath: IndexPath
@@ -63,7 +63,7 @@ final class PhotoCarouselViewController: UIViewController {
     
     weak private var delegate: PhotoCarouselViewControllerDelegate?
     
-    // MARK:- Initializers.
+    // MARK: - Initializers.
 
     init(album: Album,
          selectedPhotoIndexPath: IndexPath,
@@ -86,7 +86,7 @@ final class PhotoCarouselViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK:- View controller lifecycle methods.
+    // MARK: - View controller lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,7 +142,7 @@ final class PhotoCarouselViewController: UIViewController {
         }
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
     
     func didViewPage(atIndex index: Int) {
         updateFlowLayoutCurrentPage(withIndex: index)
@@ -192,7 +192,7 @@ final class PhotoCarouselViewController: UIViewController {
         delegate?.selected(assets: selectedAssets)
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     private func loaded(playerViewController: AVPlayerViewController) {
         playerViewController.player?.play()
@@ -340,7 +340,7 @@ extension PhotoCarouselViewController: AlbumDelegate {
     }
 }
 
-// MARK:- PHAsset extension Helper.
+// MARK: - PHAsset extension Helper.
 
 fileprivate extension PHAsset {
     var attributedTitleString: NSAttributedString? {
@@ -364,7 +364,7 @@ fileprivate extension PHAsset {
     }
 }
 
-// MARK:- Date Extension Helper.
+// MARK: - Date Extension Helper.
 
 fileprivate extension Date {
     var dateString: String {

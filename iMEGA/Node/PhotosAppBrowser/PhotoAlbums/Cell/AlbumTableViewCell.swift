@@ -19,7 +19,7 @@ final class AlbumTableViewCell: UITableViewCell {
         }
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
     
     func displayPreviewImages() {
         guard let album = album else {
@@ -60,7 +60,7 @@ final class AlbumTableViewCell: UITableViewCell {
         assetDownloaders = []
     }
     
-    // MARK:- Overriden methods.
+    // MARK: - Overriden methods.
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -72,7 +72,7 @@ final class AlbumTableViewCell: UITableViewCell {
     }
 }
 
-// MARK:- Show and Hide Activity Indicator methods.
+// MARK: - Show and Hide Activity Indicator methods.
 
 extension AlbumTableViewCell {
     private func showImageDownloadInProgress() {

@@ -341,7 +341,7 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         XCTAssert(router.displayInMainView_calledTimes == 1)
     }
     
-    //MARK:- Private methods
+    // MARK: - Private methods
     
     private func infoAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.info,

@@ -1,14 +1,14 @@
 import MEGADomain
 
 final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
-    // MARK:- Private variables
+    // MARK: - Private variables
     var nodes: [MEGANode]?
     var selectedNodes: [MEGANode]?
     var explorerType: ExplorerTypeEntity
     var tableView: UITableView
     weak var delegate: FilesExplorerListSourceDelegate?
     
-    // MARK:- Initializers
+    // MARK: - Initializers
 
     init(tableView: UITableView,
          nodes: [MEGANode]?,
@@ -25,7 +25,7 @@ final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProto
         configureTableView(tableView)
     }
 
-    // MARK:- Actions
+    // MARK: - Actions
     
     @objc func moreButtonTapped(sender: UIButton) {
         guard let node = nodes?[sender.tag] else { return  }
@@ -33,13 +33,13 @@ final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProto
         delegate?.showMoreOptions(forNode: node, sender: sender)
     }
     
-    // MARK:- Interface methods.
+    // MARK: - Interface methods.
     
     func onTransferCompleted(forNode node: MEGANode) {
         reloadCell(withNode: node, afterDelay: 0)
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     private func configureTableView(_ tableView: UITableView) {
         tableView.register(UINib(nibName: "NodeTableViewCell", bundle: nil),
@@ -72,7 +72,7 @@ final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProto
     }
 }
 
-// MARK:- UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension FavouritesExplorerListSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -106,7 +106,7 @@ extension FavouritesExplorerListSource {
     }
 }
 
-// MARK:- UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension FavouritesExplorerListSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -131,7 +131,7 @@ extension FavouritesExplorerListSource {
     }
 }
 
-// MARK:- Swipe gesture UITableViewDelegate
+// MARK: - Swipe gesture UITableViewDelegate
 
 extension FavouritesExplorerListSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -166,7 +166,7 @@ extension FavouritesExplorerListSource {
         return nil
     }
 
-    // MARK:- Private methods
+    // MARK: - Private methods
     
     private func indexPath(forNode node: MEGANode) -> IndexPath? {
         guard let index = nodes?.firstIndex(of: node) else {

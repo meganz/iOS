@@ -49,11 +49,11 @@ final class ManageChatHistoryViewModel: ViewModelType {
         }
     }
     
-    //MARK: - Private properties
-    //MARK: UI Layer
+    // MARK: - Private properties
+    // MARK: UI Layer
     private let router: ManageChatHistoryViewRouter
     
-    //MARK: Domain Layer
+    // MARK: Domain Layer
     private let manageChatHistoryUseCase: ManageChatHistoryUseCase
     
     private let chatId: ChatIdEntity
@@ -62,7 +62,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
     private var historyRetentionOption = HistoryRetentionOption.disabled
     private var historyRetentionOptionSelected = HistoryRetentionOption.disabled
     
-    //MARK: - Internal properties
+    // MARK: - Internal properties
     
     var invokeCommand: ((Command) -> Void)?
     

@@ -60,7 +60,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         listExpanded.toggle()
     }
     
-    //MARK:- Private methods
+    // MARK: - Private methods
     
     private func loadAllParticipants() {
         chatRoomParticipants = chatRoom.peers

@@ -12,7 +12,7 @@ final class AlbumsTableViewController: UITableViewController {
     
     typealias CompletionBlock = ([PHAsset]) -> Void
     
-    // MARK:- Initializers.
+    // MARK: - Initializers.
     
     @objc init(selectionActionType: AlbumsSelectionActionType,
                selectionActionDisabledText: String,
@@ -27,7 +27,7 @@ final class AlbumsTableViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK:- View controller Lifecycle methods.
+    // MARK: - View controller Lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +63,7 @@ final class AlbumsTableViewController: UITableViewController {
         albums.delegate = nil
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     private func showDetail(album: Album) {
         let gridViewController = PhotoGridViewController(album: album,

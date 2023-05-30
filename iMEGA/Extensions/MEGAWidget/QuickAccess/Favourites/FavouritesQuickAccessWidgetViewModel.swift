@@ -46,7 +46,7 @@ final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
         }
     }
     
-    //MARK: -Private
+    // MARK: - Private
     
     private func imageForPatExtension(_ pathExtension: String) -> Image {
         if pathExtension != "" {

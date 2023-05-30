@@ -9,13 +9,13 @@ enum ShareDestinationRow: Int, CaseIterable {
 }
 
 extension ShareDestinationTableViewController {
-    //MARK: - Register cells
+    // MARK: - Register cells
     @objc func registerCustomCells() {
         tableView.register(HostingTableViewCell<ShareAttachmentCellView>.self,
                            forCellReuseIdentifier: "ShareAttachmentCellView")
     }
     
-    //MARK: - Cells
+    // MARK: - Cells
     private func attachmentFieldCell(_ indexPath: IndexPath) -> HostingTableViewCell<ShareAttachmentCellView> {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ShareAttachmentCellView", for: indexPath) as? HostingTableViewCell<ShareAttachmentCellView>,
               let attachment = ShareAttachment.attachmentsArray().object(at: indexPath.row) as? ShareAttachment else {
@@ -49,7 +49,7 @@ extension ShareDestinationTableViewController {
         return cell
     }
     
-    //MARK: - UITableView data source
+    // MARK: - UITableView data source
     open override func numberOfSections(in tableView: UITableView) -> Int {
         2
     }

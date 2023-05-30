@@ -53,7 +53,7 @@ final class SearchFileHistoryUseCase: SearchFileHistoryUseCaseProtocol {
     }
 }
 
-// MARK: -  SearchEntryUpdating
+// MARK: - SearchEntryUpdating
 
 private struct SearchEntryUpdating {
     

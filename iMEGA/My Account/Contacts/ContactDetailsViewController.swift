@@ -45,7 +45,7 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
     }
 }
 
-//MARK: - NodeInfo
+// MARK: - NodeInfo
 extension ContactDetailsViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
         NodeInfoViewModel(withNode: node)

@@ -43,7 +43,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         self.megaHandleUseCase = megaHandleUseCase
     }
     
-    //MARK: - Interface methods
+    // MARK: - Interface methods
     
     func loadAvatar(isRightToLeftLanguage: Bool) {
         self.isRightToLeftLanguage = isRightToLeftLanguage
@@ -55,7 +55,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         cancelLoadingTask()
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     
     private func loadChatRoomAvatarIfNeeded(isRightToLeftLanguage: Bool) {
         guard shouldLoadAvatar else { return }

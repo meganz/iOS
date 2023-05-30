@@ -62,7 +62,7 @@ final class PSAViewRouter: NSObject, PSAViewRouting {
         }
     }
 
-    // MARK:- PSAViewDelegate
+    // MARK: - PSAViewDelegate
     
     func openPSAURLString(_ urlString: String) {
         guard let url = URL(string: urlString) else {

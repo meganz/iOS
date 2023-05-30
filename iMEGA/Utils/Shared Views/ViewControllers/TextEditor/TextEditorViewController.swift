@@ -49,7 +49,7 @@ final class TextEditorViewController: UIViewController {
     }
 }
 
-//MARK: - U-R-MVVM ViewController ViewType
+// MARK: - U-R-MVVM ViewController ViewType
 extension TextEditorViewController: ViewType {
     func executeCommand(_ command: TextEditorViewModel.Command) {
         switch command {

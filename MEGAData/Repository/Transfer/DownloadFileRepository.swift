@@ -127,7 +127,7 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
         }
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func downloadFile(for node: MEGANode, name: String, to url: URL, completion: ((Result<TransferEntity, TransferErrorEntity>) -> Void)?, start: ((TransferEntity) -> Void)?, update: ((TransferEntity) -> Void)?, folderUpdate: ((FolderTransferUpdateEntity) -> Void)? = nil, filename: String? = nil, appdata: String? = nil, startFirst: Bool, cancelToken: MEGACancelToken?) {
         let offlineNameString = sdk.escapeFsIncompatible(name, destinationPath: url.path)
         let filePath = url.path + "/" + (offlineNameString ?? name)

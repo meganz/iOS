@@ -19,7 +19,7 @@ extension UpgradeTableViewController {
     }
 }
 
-//MARK: - Product Plan
+// MARK: - Product Plan
 extension UpgradeTableViewController {
     @objc func getAvailableProductPlans() -> [NSNumber] {
         guard let products = MEGAPurchase.sharedInstance().products as? [SKProduct] else {

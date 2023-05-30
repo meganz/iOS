@@ -382,7 +382,7 @@ final class ScheduleMeetingCreationRecurrenceOptionsViewModelTests: XCTestCase {
     }
     
     
-    //MARK: - Private methods.
+    // MARK: - Private methods.
     
     private func sampleDate() -> Date? {
         let dateFormatter = DateFormatter()

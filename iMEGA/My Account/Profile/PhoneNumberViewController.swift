@@ -57,7 +57,7 @@ class PhoneNumberViewController: UITableViewController {
         }
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func updateAppearance() {
         tableView.backgroundColor = .mnz_tertiaryBackgroundGrouped(traitCollection)
@@ -102,7 +102,7 @@ class PhoneNumberViewController: UITableViewController {
         present(removePhoneNumberAlert, animated: true, completion: nil)
     }
     
-    //MARK: - TableViewDelegate
+    // MARK: - TableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == PhoneNumberTableViewSection.registeredPhone.rawValue && indexPath.row == RegisteredPhonSectionRow.modify.rawValue {

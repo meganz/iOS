@@ -36,7 +36,7 @@ final class PhotoGridViewController: UIViewController {
     private let selectionActionDisabledText: String
     private let source: PhotoLibrarySelectionSource
     
-    // MARK:- Initializers.
+    // MARK: - Initializers.
     
     init(album: Album,
          selectionActionType: AlbumsSelectionActionType,
@@ -55,7 +55,7 @@ final class PhotoGridViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK:- View controller lifecycle methods.
+    // MARK: - View controller lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +95,7 @@ final class PhotoGridViewController: UIViewController {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     private func showDetail(indexPath: IndexPath) {
         guard let selectedAssets = diffableDataSource?.selectedAssets  else {

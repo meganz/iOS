@@ -1,14 +1,14 @@
 
 
 class ChatViewAttachmentCellViewModel {
-    //MARK: - Private properties.
+    // MARK: - Private properties.
     private let chatMessage: ChatMessage
     
     private var message: MEGAChatMessage {
         return chatMessage.message
     }
     
-    //MARK: - Inteface properties.
+    // MARK: - Inteface properties.
     
     var title: String {
         switch chatMessage.message.type {
@@ -33,13 +33,13 @@ class ChatViewAttachmentCellViewModel {
         }
     }
     
-    //MARK: - Intializers.
+    // MARK: - Intializers.
     
     init(chatMessage: ChatMessage) {
         self.chatMessage = chatMessage
     }
     
-    //MARK: - Interface methods.
+    // MARK: - Interface methods.
     
     func set(imageView: UIImageView) {
         switch message.type {
@@ -52,7 +52,7 @@ class ChatViewAttachmentCellViewModel {
         }
     }
     
-    //MARK: - Private methods.
+    // MARK: - Private methods.
     
     private func titleForAttachment() -> String {
         if message.nodeList?.size.uintValue == 1 {

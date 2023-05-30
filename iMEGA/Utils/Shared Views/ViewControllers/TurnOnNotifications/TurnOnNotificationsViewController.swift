@@ -204,7 +204,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         }
     }
     
-    // MARK:- Private methods
+    // MARK: - Private methods
     
     private func addHeaderImageView() {
         view.addSubview(headerImageView)

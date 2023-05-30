@@ -198,7 +198,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
-    //MARK: - Private methods.
+    // MARK: - Private methods.
     
     private func sampleDate(withDay day: Int = 16) -> Date? {
         guard day >= 1 && day <= 31 else { return nil }

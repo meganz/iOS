@@ -70,7 +70,7 @@ class VoiceClipInputBar: UIView {
         }
     }
     
-    // MARK:- Private methods
+    // MARK: - Private methods
     
     private func recordingUIUpdates() {
         trashViewHorizontalConstraint.constant = trashViewPaddingWhenRecording()

@@ -59,7 +59,7 @@ final class LiveTextImageView: UIImageView {
     }
 }
 
-//MARK: - UIImageView Live Text
+// MARK: - UIImageView Live Text
 extension UIImageView {
     @objc func startImageLiveTextAnalysisIfNeeded() {
         guard #available(iOS 16, *),

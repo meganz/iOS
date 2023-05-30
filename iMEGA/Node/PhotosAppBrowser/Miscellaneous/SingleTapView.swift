@@ -1,6 +1,6 @@
 
 class SingleTapView: UIView, SingleTapHandlerProtocol {
-    // MARK:- SingleTapHandlerProtocol
+    // MARK: - SingleTapHandlerProtocol
     
     var singleTapHandler: (() -> Void)? {
         didSet {

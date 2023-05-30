@@ -91,7 +91,7 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         filesExplorerViewController?.updateSearchResults(for: searchString)
     }
 
-    //MARK:- FilesExplorerViewControllerDelegate
+    // MARK: - FilesExplorerViewControllerDelegate
     
     func updateSearchResults() {
         containerViewController.updateSearchResults()

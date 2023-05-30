@@ -59,7 +59,7 @@ final class PhotoSelectedMarkerView: SingleTapView {
         }
     }
     
-    // MARK:- Initializers.
+    // MARK: - Initializers.
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,7 +71,7 @@ final class PhotoSelectedMarkerView: SingleTapView {
         configureLayers()
     }
     
-    // MARK:- Overriden method.
+    // MARK: - Overriden method.
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -82,7 +82,7 @@ final class PhotoSelectedMarkerView: SingleTapView {
                                      dy: labelInset + innerCircleInsetValue)
     }
     
-    // MARK:- Private methods.
+    // MARK: - Private methods.
     
     private func configureLayers() {
         layer.addSublayer(outerCircle)

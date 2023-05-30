@@ -39,7 +39,7 @@ final class NodeOpener {
         navigationController.present(nodeActionVC, animated: true, completion: nil)
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func openFileNode(_ node: MEGANode, allNodes: [MEGANode]?) {
         guard (node.name as NSString?)?.mnz_isVisualMediaPathExtension == true else {

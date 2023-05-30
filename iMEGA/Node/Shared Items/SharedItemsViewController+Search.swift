@@ -51,7 +51,7 @@ extension SharedItemsViewController: UISearchBarDelegate {
         }
     }
     
-    //MARK: - UISearchBarDelegate
+    // MARK: - UISearchBarDelegate
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchNodesArray.removeAllObjects()
         searchUnverifiedNodesArray.removeAllObjects()

@@ -19,7 +19,7 @@ protocol DNDTurnOnAlertControllerAction {
 }
 
 class PushNotificationControl: NSObject, MEGARequestDelegate {
-    // MARK:- Constants and Variables
+    // MARK: - Constants and Variables
     
     var pushNotificationSettings: MEGAPushNotificationSettings? {
         didSet {
@@ -33,7 +33,7 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
     
     weak var delegate: PushNotificationControlProtocol?
     
-    // MARK:- Initializer
+    // MARK: - Initializer
     
     @objc init(delegate: PushNotificationControlProtocol) {
         self.delegate = delegate
@@ -46,13 +46,13 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
         MEGASdkManager.sharedMEGASdk().remove(self as MEGARequestDelegate)
     }
     
-    //MARK:- Interface.
+    // MARK: - Interface.
     
     @objc func isNotificationSettingsLoaded() -> Bool {
         return pushNotificationSettings != nil
     }
     
-    // MARK:- MEGARequestDelegate
+    // MARK: - MEGARequestDelegate
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         if (request.type == .MEGARequestTypeGetAttrUser || request.type == .MEGARequestTypeSetAttrUser) && request.paramType == MEGAUserAttribute.pushSettings.rawValue {
             if error.type == .apiENoent {
@@ -67,7 +67,7 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
     }
 }
 
-// MARK:- Methods used by subclass.
+// MARK: - Methods used by subclass.
 
 extension PushNotificationControl {
     func string(from timeLeft: Int64) -> String? {
@@ -113,7 +113,7 @@ extension PushNotificationControl {
     }
 }
 
-//MARK:- Progress extension
+// MARK: - Progress extension
 
 extension PushNotificationControl {
     func showProgress() {

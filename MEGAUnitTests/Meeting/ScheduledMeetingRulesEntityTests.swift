@@ -84,7 +84,7 @@ final class ScheduledMeetingRulesEntityTests: XCTestCase {
         XCTAssert(rules.monthWeekDayList == nil)
     }
     
-    //MARK: - Private methods.
+    // MARK: - Private methods.
     
     private func sampleDate() -> Date? {
         let dateFormatter = DateFormatter()

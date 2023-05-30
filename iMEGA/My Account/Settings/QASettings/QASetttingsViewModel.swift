@@ -19,7 +19,7 @@ final class QASettingsViewModel {
         checkForUpdateTask?.cancel()
     }
     
-    //MARK: - Check for Update
+    // MARK: - Check for Update
     func checkForUpdate() {
         checkForUpdateTask = Task { @MainActor in
             do {
@@ -58,7 +58,7 @@ final class QASettingsViewModel {
         router.showAlert(withError: error)
     }
     
-    //MARK: - Fingerprint flag
+    // MARK: - Fingerprint flag
     func fingerprintVerificationFlagStatus() -> String {
         SharedSecureFingerprintManager().secureFingerprintStatus()
     }

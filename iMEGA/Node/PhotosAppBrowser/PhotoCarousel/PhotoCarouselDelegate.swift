@@ -4,7 +4,7 @@ import UIKit
 final class PhotoCarouselDelegate: PhotoGridViewDelegate {
     weak var viewController: PhotoCarouselViewController?
     
-    // MARK:- Initializer.
+    // MARK: - Initializer.
 
     init(viewController: PhotoCarouselViewController,
          collectionView: UICollectionView,
@@ -13,7 +13,7 @@ final class PhotoCarouselDelegate: PhotoGridViewDelegate {
         super.init(collectionView: collectionView, cellsPerRow: cellsPerRow)
     }
     
-    // MARK:- Overriden UICollectionViewDelegate methods.
+    // MARK: - Overriden UICollectionViewDelegate methods.
     
     override func collectionView(_ collectionView: UICollectionView,
                                  willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -50,7 +50,7 @@ final class PhotoCarouselDelegate: PhotoGridViewDelegate {
        CGSize(width: collectionView.bounds.width, height: collectionView.bounds.width)
     }
     
-    // MARK:- ScrollView delegate method.
+    // MARK: - ScrollView delegate method.
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageWidth = scrollView.frame.size.width

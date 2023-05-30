@@ -60,7 +60,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         titleLabel.attributedText = attributedTitle
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func configure(topDistance: CGFloat, isTopSeparatorVisible: Bool, isBottomSeparatorVisible: Bool) {
         if topDistance == 0 {
             marginView.isHidden = true

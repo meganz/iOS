@@ -4,7 +4,7 @@
 /// Please note: This gesture can be cancelled if the user of the gesture is not interested in the event temporarily.
 class FingerLiftupGestureRecognizer: UIGestureRecognizer {
         
-    //MARK: - Interface methods.
+    // MARK: - Interface methods.
     
     func failGestureIfRecognized() {
         guard state == .possible else {
@@ -14,7 +14,7 @@ class FingerLiftupGestureRecognizer: UIGestureRecognizer {
         state = .failed
     }
     
-    //MARK: - Overriden methods.
+    // MARK: - Overriden methods.
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesEnded(touches, with: event)

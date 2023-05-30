@@ -80,7 +80,7 @@ struct ParticipantsAddingViewFactory {
         return navigationController
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
     private func alert(withTitle title: String, message: String, inviteAction: @escaping () -> Void) -> UIAlertController {
         let inviteButtonTitle = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.confirmationButtonTitle
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)

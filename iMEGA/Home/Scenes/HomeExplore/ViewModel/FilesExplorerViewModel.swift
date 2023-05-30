@@ -190,7 +190,7 @@ final class FilesExplorerViewModel {
         return self.explorerType
     }
     
-    //MARK: Favourites
+    // MARK: Favourites
     private func startSearchingFavouriteNodes(_ text: String?) {
         favouritesUseCase?.allFavouriteNodes(searchString: text) { [weak self] result in
             switch result {

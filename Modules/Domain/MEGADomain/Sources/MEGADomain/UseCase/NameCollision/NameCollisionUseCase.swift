@@ -136,7 +136,7 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: NodeActionsRepo
         nodeRepository.nodeForHandle(handle)
     }
     
-    //MARK: - Private
+    // MARK: - Private
     private func removeOriginalDuplicatedItemIfNeeded(for collision: NameCollisionEntity) async throws {
         if (collision.collisionAction == .replace || collision.collisionAction == .update), let collisionHandle = collision.collisionNodeHandle, let rubbish = nodeRepository.rubbishNode() {
             _ = try await nodeActionsRepository.moveNode(handle: collisionHandle, in: rubbish.handle, newName: nil)

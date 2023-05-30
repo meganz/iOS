@@ -3,7 +3,7 @@ import MEGADomain
 import MEGAData
 
 class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
-    //MARK:- Private variables
+    // MARK: - Private variables
     
     enum ViewPreference {
         case list
@@ -26,7 +26,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         return sc
     }()
     
-    //MARK:- States
+    // MARK: - States
 
     lazy var currentState = states[FilesExplorerContainerListViewState.identifier]!
     lazy var states = [
@@ -38,7 +38,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
                                                 viewModel: viewModel)
     ]
     
-    //MARK:-
+    // MARK: -
     
     init(viewModel: FilesExplorerViewModel, viewPreference: ViewPreference) {
         self.viewModel = viewModel
@@ -74,7 +74,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         AudioPlayerManager.shared.removeDelegate(self)
     }
     
-    //MARK:- Bar Buttons    
+    // MARK: - Bar Buttons    
     func updateTitle(_ title: String?) {
         self.title = title
     }
@@ -192,7 +192,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         }
     }
     
-    //MARK:- Actions
+    // MARK: - Actions
     
     @objc private func cancelButtonPressed(_ button: UIBarButtonItem) {
         currentState.endEditingMode()

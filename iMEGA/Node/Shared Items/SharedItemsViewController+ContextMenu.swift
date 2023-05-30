@@ -35,7 +35,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         }
     }
     
-    //MARK: - Context Menus configuration
+    // MARK: - Context Menus configuration
     func contextMenuConfiguration() -> CMConfigEntity {
         return CMConfigEntity(menuType: .menu(type: .display),
                               sortType: SortOrderType(megaSortOrderType: sortOrderType).megaSortOrderType.toSortOrderEntity(),
@@ -77,7 +77,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         }
     }
 
-    //MARK: - NodeActionMenu
+    // MARK: - NodeActionMenu
     @objc func showPendingOutShareModal(forIndexPath indexPath: IndexPath) {
         guard let share = shareAtIndexPath(indexPath), let userEmail = share.user else {
             return

@@ -40,7 +40,7 @@ struct PlanStorageDetailView: View {
     }
 }
 
-//MARK: - Attributed String for iOS 14 and below
+// MARK: - Attributed String for iOS 14 and below
 struct LabelTextWithAttributedString: UIViewRepresentable {
     var title: String
     var detail: String

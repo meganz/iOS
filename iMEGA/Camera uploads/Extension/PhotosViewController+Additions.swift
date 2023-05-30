@@ -95,7 +95,7 @@ extension PhotosViewController {
     }
 }
 
-//MARK: - NodeActionViewControllerDelegate
+// MARK: - NodeActionViewControllerDelegate
 extension PhotosViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
         handleNodesAction(action: action, nodes: nodes, sender: sender)
@@ -131,7 +131,7 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
     }
 }
 
-//MARK: - BrowserViewControllerDelegate and ContatctsViewControllerDelegate
+// MARK: - BrowserViewControllerDelegate and ContatctsViewControllerDelegate
 extension PhotosViewController: BrowserViewControllerDelegate, ContatctsViewControllerDelegate {
     public func nodeEditCompleted(_ complete: Bool) {
         toggleEditing()

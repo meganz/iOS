@@ -98,7 +98,7 @@ final class PSAViewModelTests: XCTestCase {
         XCTAssertTrue(router.psaViewShown)
     }
 
-    //MARK:- Private methods
+    // MARK: - Private methods
 
     private func mocPSAEntity() -> PSAEntity {
         return PSAEntity(identifier: 400,

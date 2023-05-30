@@ -34,7 +34,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         self.megaStore = megaStore
     }
     
-    //MARK: - Private functions
+    // MARK: - Private functions
     private func playableChildren(of parent: HandleEntity) -> [MEGANode]? {
         guard let parentNode = sdk.node(forHandle: parent) else { return nil }
         
@@ -67,7 +67,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         return sortType
     }
     
-    //MARK: - Public functions
+    // MARK: - Public functions
     func node(fromHandle: HandleEntity) -> MEGANode? { sdk.node(forHandle: fromHandle) }
     func folderNode(fromHandle: HandleEntity) -> MEGANode? { folderSDK.node(forHandle: fromHandle) }
     func folderAuthNode(fromNode: MEGANode) -> MEGANode? { folderSDK.authorizeNode(fromNode) }

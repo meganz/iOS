@@ -196,7 +196,7 @@ extension FavouritesExplorerGridSource: UICollectionViewDataSource {
     }
 }
 
-//MARK: - Manage CollectionViewCells size
+// MARK: - Manage CollectionViewCells size
 extension FavouritesExplorerGridSource: DynamicTypeCollectionViewSizing {
     func provideSizingCell(for indexPath: IndexPath) -> UICollectionViewCell? {
         guard let node = getNode(at: indexPath) else { return nil }
@@ -209,7 +209,7 @@ extension FavouritesExplorerGridSource: DynamicTypeCollectionViewSizing {
     }
 }
 
-//MARK: - NodeCollectionViewCellDelegate
+// MARK: - NodeCollectionViewCellDelegate
 extension FavouritesExplorerGridSource: NodeCollectionViewCellDelegate {
     func showMoreMenu(for node: MEGANode, from sender: UIButton) {
         guard !collectionView.allowsMultipleSelection else { return }

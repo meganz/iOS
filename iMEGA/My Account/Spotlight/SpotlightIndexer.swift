@@ -78,7 +78,7 @@ final class SpotlightIndexer: NSObject {
         favouritesIndexed = false
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func index(node: NodeEntity) {
         let item = searchableItem(node: node)

@@ -46,7 +46,7 @@ class NodeInfoViewController: UIViewController {
     private var nodeVersions: [MEGANode] = []
     private var viewModel: NodeInfoViewModel?
     
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
 
     @objc class func instantiate(withViewModel viewModel: NodeInfoViewModel,
                                  delegate: NodeInfoViewControllerDelegate?) -> MEGANavigationController {
@@ -67,7 +67,7 @@ class NodeInfoViewController: UIViewController {
         self.delegate = delegate
     }
 
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,7 +98,7 @@ class NodeInfoViewController: UIViewController {
         }
     }
     
-    //MARK: - Private methods
+    // MARK: - Private methods
 
     private func updateAppearance() {
         view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
@@ -271,7 +271,7 @@ class NodeInfoViewController: UIViewController {
         return outShares.filter({ !$0.isPending })
     }
     
-    //MARK: - TableView Data Source
+    // MARK: - TableView Data Source
 
     private func sections() -> [NodeInfoTableViewSection] {
         var sections = [NodeInfoTableViewSection]()
@@ -335,7 +335,7 @@ class NodeInfoViewController: UIViewController {
         return detailRows
     }
     
-    //MARK: - TableView cells
+    // MARK: - TableView cells
     
     private func previewCell(forIndexPath indexPath: IndexPath) -> NodeInfoPreviewTableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "nodeInfoPreviewCell", for: indexPath) as? NodeInfoPreviewTableViewCell else {

@@ -20,7 +20,7 @@ final class FeatureFlagViewModel: ObservableObject {
     }
 }
 
-//MARK: - Feature Flag List
+// MARK: - Feature Flag List
 extension FeatureFlagViewModel {
 
     private func syncUpFeatureFlags() {

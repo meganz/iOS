@@ -637,7 +637,7 @@ extension ProfileViewController: UITableViewDelegate {
     }
 }
 
-//MARK: - MEGARequestDelegate
+// MARK: - MEGARequestDelegate
 
 extension ProfileViewController: MEGARequestDelegate {
     

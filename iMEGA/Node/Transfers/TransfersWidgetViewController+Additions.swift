@@ -127,7 +127,7 @@ extension TransfersWidgetViewController {
         !transfer.path.hasPrefix(FileManager.default.temporaryDirectory.path) || transfer.appData != nil
     }
     
-    //MARK: - NavigationBarButtons
+    // MARK: - NavigationBarButtons
     @objc func updateNavBarButtonAppearance() {
         let barButtons = [navigationItem.rightBarButtonItems,
                           navigationItem.leftBarButtonItems].compactMap { $0 }.flatMap{ $0 }
@@ -138,7 +138,7 @@ extension TransfersWidgetViewController {
         }
     }
     
-    //MARK: - Register TableViewCell Nibs
+    // MARK: - Register TableViewCell Nibs
     @objc func registerNib(name: String, identifier: String) {
         let nib = UINib(nibName: name, bundle: nil)
         self.tableView?.register(nib, forCellReuseIdentifier: identifier)

@@ -12,7 +12,7 @@ class ContactsGroupsViewController: UIViewController {
     var groupChats = [MEGAChatListItem]()
     var searchingGroupChats = [MEGAChatListItem]()
     
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class ContactsGroupsViewController: UIViewController {
         }
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func updateAppearance() {
         view.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)

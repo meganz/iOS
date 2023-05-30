@@ -80,7 +80,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
                                                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
     }
     
-    //MARK: - ChatMenuDelegate functions
+    // MARK: - ChatMenuDelegate functions
     func chatStatusMenu(didSelect action: ChatStatusEntity) {
         switch action {
         case .online:

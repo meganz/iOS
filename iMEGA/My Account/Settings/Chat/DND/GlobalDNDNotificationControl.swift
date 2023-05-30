@@ -3,7 +3,7 @@ import MEGADomain
 
 class GlobalDNDNotificationControl: PushNotificationControl {
     
-    // MARK:- Interface variables and methods.
+    // MARK: - Interface variables and methods.
     
     @objc var timeRemainingToDeactiveDND: String? {
         guard let settings = pushNotificationSettings,
@@ -77,7 +77,7 @@ extension GlobalDNDNotificationControl {
 }
 
 
-// MARK:- DNDTurnOnAlertControllerAction extension
+// MARK: - DNDTurnOnAlertControllerAction extension
 
 extension GlobalDNDNotificationControl: DNDTurnOnAlertControllerAction {
     var cancelAction: ((UIAlertAction) -> Void)? {
