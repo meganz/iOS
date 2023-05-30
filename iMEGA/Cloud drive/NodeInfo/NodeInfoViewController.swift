@@ -42,7 +42,7 @@ class NodeInfoViewController: UIViewController {
     
     private var node = MEGANode()
     private var folderInfo : MEGAFolderInfo?
-    private weak var delegate: NodeInfoViewControllerDelegate?
+    private var delegate: NodeInfoViewControllerDelegate?
     private var nodeVersions: [MEGANode] = []
     private var viewModel: NodeInfoViewModel?
     
