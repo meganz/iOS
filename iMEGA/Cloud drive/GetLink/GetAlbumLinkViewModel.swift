@@ -45,6 +45,8 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
             copyLinkToPasteBoard()
         case .copyKey:
             copyKeyToPasteBoard()
+        default:
+            break
         }
     }
     

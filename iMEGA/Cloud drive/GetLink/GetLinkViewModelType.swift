@@ -4,10 +4,12 @@ import MEGADomain
 
 enum GetLinkAction: ActionType {
     case onViewReady
+    case onViewWillDisappear
     case switchToggled(indexPath: IndexPath, isOn: Bool)
     case shareLink(sender: UIBarButtonItem)
     case copyLink
     case copyKey
+    case didSelectRow(indexPath: IndexPath)
 }
 
 enum GetLinkViewModelCommand: CommandType, Equatable {
@@ -19,6 +21,7 @@ enum GetLinkViewModelCommand: CommandType, Equatable {
     case insertSections(IndexSet)
     case configureToolbar(isDecryptionKeySeperate: Bool)
     case showHud(_ messageType: MessageType)
+    case dismissHud
     case addToPasteBoard(String)
     case showShareActivity(sender: UIBarButtonItem, link: String, key: String?)
     

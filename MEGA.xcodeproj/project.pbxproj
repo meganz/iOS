@@ -24,6 +24,7 @@
 		0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */; };
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
 		0E2A4EE829D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2A4EE729D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift */; };
+		0E2FD9DD2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */; };
 		0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */; };
 		0E32FFB2293E896A004BB11D /* NodeUpdateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */; };
 		0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */; };
@@ -43,6 +44,8 @@
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
 		0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */; };
+		0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */; };
+		0EDE0DDD2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */; };
 		0EE7A9CA29ED192F003DBC43 /* AlbumFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE7A9C929ED192F003DBC43 /* AlbumFeatureFlagProvider.swift */; };
 		0EE7A9CB29ED192F003DBC43 /* AlbumFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE7A9C929ED192F003DBC43 /* AlbumFeatureFlagProvider.swift */; };
 		0EE7A9CE29ED1A7F003DBC43 /* AlbumFeatureFlagProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE7A9CD29ED1A7F003DBC43 /* AlbumFeatureFlagProviderTests.swift */; };
@@ -2434,6 +2437,7 @@
 		0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewBaseDataSource.swift; sourceTree = "<group>"; };
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
 		0E2A4EE729D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPublisherTests.swift; sourceTree = "<group>"; };
+		0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinkViewModelTests.swift; sourceTree = "<group>"; };
 		0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepositoryTests.swift; sourceTree = "<group>"; };
 		0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepository.swift; sourceTree = "<group>"; };
 		0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAlbumInfoCellViewModel.swift; sourceTree = "<group>"; };
@@ -2453,6 +2457,8 @@
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
 		0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchCellViewConfiguration.swift; sourceTree = "<group>"; };
+		0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewModel.swift; sourceTree = "<group>"; };
+		0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlbumsLinkInitialSections.swift; sourceTree = "<group>"; };
 		0EE7A9C929ED192F003DBC43 /* AlbumFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumFeatureFlagProvider.swift; sourceTree = "<group>"; };
 		0EE7A9CD29ED1A7F003DBC43 /* AlbumFeatureFlagProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumFeatureFlagProviderTests.swift; sourceTree = "<group>"; };
 		12084047286120020079127B /* SearchOperation+Initialize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchOperation+Initialize.swift"; sourceTree = "<group>"; };
@@ -5097,6 +5103,7 @@
 			children = (
 				0E3B1A372A1D918300EC5859 /* Cells */,
 				0E3E07A22A1EA6C600A2A71B /* GetAlbumLinkViewModelTests.swift */,
+				0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */,
 			);
 			path = GetLink;
 			sourceTree = "<group>";
@@ -8305,12 +8312,14 @@
 				A86F05722567E65500437985 /* Cells */,
 				837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */,
 				0E3E07A02A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift */,
+				0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */,
 				837EE204253DB8540083D927 /* GetLink.storyboard */,
 				0E3B1A532A1DCDF100EC5859 /* GetLinkSectionViewModel.swift */,
 				837EE20E253DBABD0083D927 /* GetLinkViewController.swift */,
 				0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */,
 				837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */,
 				0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */,
+				0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */,
 			);
 			path = GetLink;
 			sourceTree = "<group>";
@@ -13128,6 +13137,7 @@
 				5B947A9E267A2A3400715B0C /* GenericNodeTableViewCell.swift in Sources */,
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
 				0E3E07A12A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift in Sources */,
+				0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */,
 				0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */,
 				0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */,
 				837DC7A8256D196400CA289E /* GetLinkDatePickerTableViewCell.swift in Sources */,
@@ -13875,6 +13885,7 @@
 				5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */,
 				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
 				0E3E07A92A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift in Sources */,
+				0EDE0DDD2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift in Sources */,
 				946E783529C0F79800BB3FE6 /* SharedItemsSearchOperation.swift in Sources */,
 				A8BB95202816A006002449D7 /* SharedItemsTableViewCell.swift in Sources */,
 				94485B5B29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift in Sources */,
@@ -14519,6 +14530,7 @@
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
 				0E3E07A32A1EA6C700A2A71B /* GetAlbumLinkViewModelTests.swift in Sources */,
+				0E2FD9DD2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift in Sources */,
 				0E3B1A392A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift in Sources */,
 				0E3B1A502A1DC0EF00EC5859 /* GetLinkStringTableViewCellTests.swift in Sources */,
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,
