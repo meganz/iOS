@@ -704,7 +704,6 @@
 		7794AEDF231E54120039C1D2 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		7794AEE4231E65570039C1D2 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEE3231E65570039C1D2 /* libKarere.a */; };
-		7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
 		7794AF16231FDE0A0039C1D2 /* MEGAReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 418072791AA5BBA00078D950 /* MEGAReachabilityManager.m */; };
 		7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7794AF1F2320F52F0039C1D2 /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
@@ -1301,7 +1300,6 @@
 		A8399F63296C43F90062B6BC /* MEGAPicker.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A8399F59296C43F80062B6BC /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A8399F71296C53180062B6BC /* Strings+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7827430F3E00312B35 /* Strings+Generated.swift */; };
 		A8399F72296C54A30062B6BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
-		A8399F93296D72A90062B6BC /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7794AEEA231E6C330039C1D2 /* libc++.tbd */; };
 		A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FB8296DD5A70062B6BC /* SAMKeychain */; };
 		A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FBA296DD5F10062B6BC /* MEGADomain */; };
 		A83BB99E28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */; };
@@ -4936,7 +4934,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */,
-				7794AEEB231E6C330039C1D2 /* libc++.tbd in Frameworks */,
 				7794AEE4231E65570039C1D2 /* libKarere.a in Frameworks */,
 				A85ED2062A20C12E0036C0E5 /* libnative_api.xcframework in Frameworks */,
 				A85ED2072A20C12E0036C0E5 /* libnative_video.xcframework in Frameworks */,
@@ -5010,7 +5007,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8399F93296D72A90062B6BC /* libc++.tbd in Frameworks */,
 				A8D68A8929E8261300F27204 /* MEGAData in Frameworks */,
 				A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */,
 				A891E8AB29C1E0C40020072A /* MEGASdk in Frameworks */,
@@ -5409,10 +5405,10 @@
 		12F23A5A284EB7C6007B9821 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				0EA150D629B810D2005C6486 /* AlbumType.swift */,
-				12F23A57284EA35D007B9821 /* PhotoAlbum.swift */,
 				32051E652A1F760A008CFAC4 /* AlbumAlertType.swift */,
 				32B813AB2A244AA6002A6635 /* AlbumHudMessage.swift */,
+				0EA150D629B810D2005C6486 /* AlbumType.swift */,
+				12F23A57284EA35D007B9821 /* PhotoAlbum.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -12619,6 +12615,7 @@
 				9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */,
 				5D568207252FEA8C00FE7F9C /* Aggregatable.swift in Sources */,
 				BFAB114C23CEA5C300BCE72D /* Album.swift in Sources */,
+				32051E662A1F760A008CFAC4 /* AlbumAlertType.swift in Sources */,
 				12397E1D2820C47100A30CCC /* AlbumCell.swift in Sources */,
 				12397E1F2820C47E00A30CCC /* AlbumCellViewModel.swift in Sources */,
 				12BDD4DD28285EDD00009D73 /* AlbumContainerWrapper.swift in Sources */,
@@ -12637,6 +12634,7 @@
 				32EC27FF29B987E300D1D18D /* AlbumCoverPickerViewModel.swift in Sources */,
 				6D4AF9AD2934298A00A1C2D3 /* AlbumElementRequestDelegate.swift in Sources */,
 				0EE7A9CA29ED192F003DBC43 /* AlbumFeatureFlagProvider.swift in Sources */,
+				32B813AC2A244AA6002A6635 /* AlbumHudMessage.swift in Sources */,
 				12397E212820C4A600A30CCC /* AlbumListView.swift in Sources */,
 				12397E232820C4BC00A30CCC /* AlbumListViewModel.swift in Sources */,
 				127053A42822216800D64C21 /* AlbumListViewRouter.swift in Sources */,
@@ -13329,7 +13327,6 @@
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */,
 				A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
-				32473EEB2A1E16F60020012C /* SharedLinkView.swift in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */,
@@ -13898,6 +13895,7 @@
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */,
 				B5CC2AA52995F15200A966A0 /* SharedItemsViewRouter.swift in Sources */,
+				32473EEB2A1E16F60020012C /* SharedLinkView.swift in Sources */,
 				B58F7BFA298A6DAD0046F0FA /* SharedSecureFingerprintManager.swift in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
@@ -13976,7 +13974,6 @@
 				83DBDDE329D730C800CF433B /* TextFieldView.swift in Sources */,
 				1246682E275DBE0500C94335 /* TextFile.swift in Sources */,
 				5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */,
-				32051E662A1F760A008CFAC4 /* AlbumAlertType.swift in Sources */,
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,
 				5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */,
 				5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */,
@@ -13987,7 +13984,6 @@
 				B68ED09327D05F9F00713850 /* ThumbnailUseCase+Additions.swift in Sources */,
 				5B16A738220D6E0A00085F61 /* ThumbnailViewerTableViewCell.m in Sources */,
 				BF943E9223554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
-				32B813AC2A244AA6002A6635 /* AlbumHudMessage.swift in Sources */,
 				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
 				8358A6E82925460800EE197C /* ToogleView.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
