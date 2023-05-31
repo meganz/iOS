@@ -429,9 +429,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>People you have shared this link with, will no longer be able to access it</string>
+        <string>People you have shared this link with will no longer be able to access it.</string>
         <key>other</key>
-        <string>People you have shared these links with, will no longer be able to access them</string>
+        <string>People you have shared these links with will no longer be able to access them.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -877,9 +877,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>People you shared this link with, will lose access to the album.</string>
+        <string>People you shared this link with will lose access to the album.</string>
         <key>other</key>
-        <string>People you shared these links with, will lose access to the albums.</string>
+        <string>People you shared these links with will lose access to the albums.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>

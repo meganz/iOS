@@ -12,8 +12,6 @@
 "upload"="อัปโหลด";
 /*  */
 "error"="ผิดพลาด";
-/*  */
-"name"="ชื่อ";
 /* Caption of a button to edit the files that are selected */
 "edit"="แก้ไข";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="ออกจากระบบ";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="ลบรูปภาพ";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="เปลี่ยนรูปภาพ";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="เพิ่มรูปภาพ";
 /* Button title that allows the user change his name */
 "changeName"="เปลี่ยนชื่อ";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="บันทึกวิดีโอในรูปภาพ";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="รูปภาพและวิดีโอที่ดาวน์โหลดจะถูกเก็บไว้ในไลบรารีสื่อของอุปกรณ์ ไม่ใช่ส่วนออฟไลน์";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="กล้อง";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="บันทึกในรูปภาพ";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="การแจ้งเตือนจะถูกปิดเสียงจนถึงพรุ่งนี้ เวลา %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="การแจ้งเตือนจะถูกปิดเสียงจนถึง %@";
+"Notifications will be silenced until %@"="Notifications will be muted until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="แจ้งเตือนแชท";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="เยี่ยมชม AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="นี่เป็นขั้นตอนสุดท้ายในการลบบัญชีของคุณ ทั้งบัญชีและการสมัครใช้งานของคุณจะถูกลบด้วย พร้อมทั้งคุณจะสูญเสียข้อมูลทั้งหมดที่จัดเก็บไว้ในระบบคลาวด์อย่างถาวร กรุณากรอกรหัสผ่านของคุณด้านล่าง";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Upload photo";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="อยู่ระหว่างดำเนินการโทรอีก กรุณาวางสายปัจจุบันของคุณก่อนที่จะโทรออกอีกครั้ง";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="รายสัปดาห์";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="รายเดือน";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Some months don’t have 29 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="กล้อง";

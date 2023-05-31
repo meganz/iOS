@@ -12,8 +12,6 @@
 "upload"="Hochladen";
 /*  */
 "error"="Fehler";
-/*  */
-"name"="Name";
 /* Caption of a button to edit the files that are selected */
 "edit"="Bearbeiten";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -639,7 +637,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="Möchten Sie diese Freigabe wirklich entfernen? (freigegeben für %d Kontakte)";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="Freigaben stornieren? (Betroffene Kontakte: %d)";
+"removeMultipleSharesMultipleContactsMessage"="Möchten Sie diese Freigaben wirklich entfernen? (freigegeben für %d Kontakte)";
 /* Message shown when a share have been removed */
 "shareRemoved"="Freigabe entfernt";
 /* Message shown when some shares have been removed */
@@ -747,7 +745,7 @@
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="Speicherformat für HEIC-Fotos";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="Wir empfehlen aus Kompatibilitätsgründen JPG.";
+"We recommend JPG, as its the most compatible format for photos."="Wir empfehlen JPG, da es das kompatibelste Format für Fotos ist.";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="Speicherformat für HEVC-Videos";
 /* Footer for HEVC format section */
@@ -1079,7 +1077,7 @@
 /* Add your phone number title */
 "Add Your Phone Number"="Telefonnummer hinzufügen";
 /* Choose Your Region title */
-"Choose Your Region"="Region wählen";
+"Choose Your Region"="Wählen Sie Ihre Region";
 /* Used on scheduling chat history clearing by month e.g. 3 months, 6 months. */
 "months"="Monate";
 /*  */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Logge aus";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Foto entfernen";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Foto ändern";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Foto hinzufügen";
 /* Button title that allows the user change his name */
 "changeName"="Namen ändern";
 /* Success message when changing profile information. */
@@ -1109,7 +1103,7 @@
 /* title of the My Account screen */
 "accountType"="Account Typ:";
 /* Label to indicate that the current user has a Free account. */
-"Free"="Kostenlos";
+"Free"="Free";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="gültig bis %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Videos in Fotos speichern";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Heruntergeladene Bilder und Videos werden in den Mediendateien anstatt Offline gespeichert.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="In Fotos speichern";
@@ -2191,7 +2185,7 @@
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
 "[S]Please verify your email[/S] and follow its steps to unlock your account."="Zur Entsperrung Ihres Accounts befolgen Sie bitte die in der [S]Bestätigungs-E-Mail[/S] beschriebenen Schritte.";
 /* Text for button to open an helping view */
-"Why am I seeing this?"="Details";
+"Why am I seeing this?"="Warum wird mir das angezeigt?";
 /* Text to notify user an email has been sent */
 "Email sent"="E-Mail versandt";
 /* Title of a helping view about locked accounts */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Zur AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Dies ist der letzte Schritt, bevor Ihr Account gelöscht wird. Sowohl Ihr Account als auch Ihr Abonnement werden gelöscht und Sie verlieren unwiderruflich alle in der Cloud gespeicherten Daten. Bitte geben Sie unten Ihr Passwort ein.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Foto hochladen";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Ein anderer Anruf ist aktiv. Bitte beenden Sie Ihren aktuellen Anruf, bevor Sie einen neuen Anruf starten.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3345,9 +3341,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Beschreibung hinzufügen";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Maximal 30 Zeichen eingeben";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="Maximal 3.000 Zeichen eingeben";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Abbrechen";
 /* Schedule meeting create button */
@@ -3379,13 +3375,13 @@
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="keine";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Täglich";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Wöchentlich";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Monatlich";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Custom";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Benutzerdefiniert";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="Wiederholungen";
 /* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Wöchentlich";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="monatlich";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Manche Monate sind kürzer als 29 Tage. In diesen Monaten wird das Meeting auf den letzten Tag des Monats gelegt.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Manche Monate sind kürzer als 30 Tage. In diesen Monaten wird das Meeting auf den letzten Tag des Monats gelegt.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Manche Monate sind kürzer als 31 Tage. In diesen Monaten wird das Meeting auf den letzten Tag des Monats gelegt.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Kamera";

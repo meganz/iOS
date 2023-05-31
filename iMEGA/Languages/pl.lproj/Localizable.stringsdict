@@ -333,9 +333,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item</string>
+        <string>%d element</string>
+        <key>few</key>
+        <string>%d elementów</string>
+        <key>many</key>
+        <string>%d elementów</string>
         <key>other</key>
-        <string>%d items</string>
+        <string>%d elementów</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
@@ -529,13 +533,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Osoby, którym udostępniłeś ten link, nie będą miały już do niego dostępu</string>
-        <key>few</key>
-        <string>Osoby, którym udostępniłeś te linki, nie będą miały już do nich dostępu</string>
-        <key>many</key>
-        <string>Osoby, którym udostępniłeś te linki, nie będą miały już do nich dostępu</string>
+        <string>People you have shared this link with will no longer be able to access it.</string>
         <key>other</key>
-        <string>Osoby, którym udostępniłeś te linki, nie będą miały już do nich dostępu</string>
+        <string>People you have shared these links with will no longer be able to access them.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -1036,6 +1036,82 @@
         <string>Usunięto %d elementów z &quot;[A]&quot;</string>
         <key>other</key>
         <string>Usunięto %d elementów z &quot;[A]&quot;</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Usunąć link?</string>
+        <key>few</key>
+        <string>Usunąć linki?</string>
+        <key>many</key>
+        <string>Usunąć linki?</string>
+        <key>other</key>
+        <string>Usunąć linki?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Usuń link</string>
+        <key>few</key>
+        <string>Usuń linki</string>
+        <key>many</key>
+        <string>Usuń linki</string>
+        <key>other</key>
+        <string>Usuń linki</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>People you shared this link with will lose access to the album.</string>
+        <key>other</key>
+        <string>People you shared these links with will lose access to the albums.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link usunięty</string>
+        <key>few</key>
+        <string>Linki usunięte</string>
+        <key>many</key>
+        <string>Linki usunięte</string>
+        <key>other</key>
+        <string>Linki usunięte</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

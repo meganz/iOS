@@ -12,8 +12,6 @@
 "upload"="Téléverser";
 /*  */
 "error"="Erreur";
-/*  */
-"name"="Nom";
 /* Caption of a button to edit the files that are selected */
 "edit"="Modifier";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Déconnexion";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Supprimer la photo";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Changer la photo";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Ajouter une photo";
 /* Button title that allows the user change his name */
 "changeName"="Modifier le nom";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Enregistrer les vidéos dans Photos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Les images et vidéos téléchargées seront enregistrées dans la photothèque de l’appareil au lieu de la section Hors ligne.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Appareil photo";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Enregistrer dans Photos";
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Accéder à l’AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Ceci est la dernière étape pour supprimer votre compte. Votre compte et votre abonnement seront tous deux supprimés et vous perdrez irrémédiablement toutes les données stockées dans le nuage. Veuillez saisir votre mot de passe ci-dessous.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Téléverser une photo";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un autre appel est en cours. Veuillez mettre fin à cet appel avant d’en faire un autre.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Hebdomadaire";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensuelle";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Certains mois ne comportent pas 29 jours. Pour ces mois, l’occurrence sera planifiée le dernier jour du mois.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Certains mois ne comportent pas 30 jours. Pour ces mois, l’occurrence sera planifiée le dernier jour du mois.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Certains mois ne comportent pas 31 jours. Pour ces mois, l’occurrence sera planifiée le dernier jour du mois.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Caméra";

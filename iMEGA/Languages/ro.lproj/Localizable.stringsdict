@@ -479,11 +479,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Persoanele cu care ai partajat acest link nu vor mai putea să îl acceseze</string>
-        <key>few</key>
-        <string>Persoanele cu care ai partajat aceste linkuri nu vor mai putea să le acceseze</string>
+        <string>People you have shared this link with will no longer be able to access it.</string>
         <key>other</key>
-        <string>Persoanele cu care ai partajat aceste linkuri nu vor mai putea să le acceseze</string>
+        <string>People you have shared these links with will no longer be able to access them.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -930,6 +928,76 @@
         <string>%d elemente eliminate din „[A]”</string>
         <key>other</key>
         <string>%d de elemente eliminate din „[A]”</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Elimini linkul?</string>
+        <key>few</key>
+        <string>Elimini linkurile?</string>
+        <key>other</key>
+        <string>Elimini linkurile?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Elimină linkul</string>
+        <key>few</key>
+        <string>Elimină linkurile</string>
+        <key>other</key>
+        <string>Elimină linkurile</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>People you shared this link with will lose access to the album.</string>
+        <key>other</key>
+        <string>People you shared these links with will lose access to the albums.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link eliminat</string>
+        <key>few</key>
+        <string>Linkuri eliminate</string>
+        <key>other</key>
+        <string>Linkuri eliminate</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

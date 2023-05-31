@@ -481,11 +481,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>As pessoas com as quais você compartilhou este link já não poderão acessá-lo</string>
+        <string>As pessoas com as quais você compartilhou este link já não poderão acessá-lo.</string>
         <key>many</key>
-        <string>As pessoas com as quais você compartilhou estes links já não poderão acessá-los</string>
+        <string>As pessoas com as quais você compartilhou estes links já não poderão acessá-los.</string>
         <key>other</key>
-        <string>As pessoas com as quais você compartilhou estes links já não poderão acessá-los</string>
+        <string>As pessoas com as quais você compartilhou estes links já não poderão acessá-los.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -936,6 +936,78 @@
         <string>%d de itens foram eliminados de “[A]”</string>
         <key>other</key>
         <string>%d itens foram eliminados de “[A]”</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Remover o link?</string>
+        <key>many</key>
+        <string>Remover os links?</string>
+        <key>other</key>
+        <string>Remover os links?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Remover link</string>
+        <key>many</key>
+        <string>Remover links</string>
+        <key>other</key>
+        <string>Remover links</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>As pessoas com as quais você compartilhou esse link perderão o acesso ao álbum.</string>
+        <key>many</key>
+        <string>As pessoas com as quais você compartilhou esses links perderão o acesso aos álbuns.</string>
+        <key>other</key>
+        <string>As pessoas com as quais você compartilhou esses links perderão o acesso aos álbuns.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link removido</string>
+        <key>many</key>
+        <string>Links removidos</string>
+        <key>other</key>
+        <string>Links removidos</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

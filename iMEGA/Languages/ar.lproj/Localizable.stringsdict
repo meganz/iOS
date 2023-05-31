@@ -396,10 +396,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d عنصر</string>
         <key>one</key>
-        <string>%d item</string>
+        <string>%d عنصر</string>
+        <key>two</key>
+        <string>%d عنصرين</string>
+        <key>few</key>
+        <string>%d عناصر</string>
+        <key>many</key>
+        <string>%d عنصراً</string>
         <key>other</key>
-        <string>%d items</string>
+        <string>%d عنصر</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
@@ -628,18 +636,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>zero</key>
-        <string>لن يتمكن الأشخاص الذين شاركت معهم هذا الرابط من الوصول إليه بعد الآن</string>
         <key>one</key>
-        <string>لن يتمكن الأشخاص الذين شاركت معهم هذا الرابط من الوصول إليه بعد الآن</string>
-        <key>two</key>
-        <string>لن يتمكن الأشخاص الذين شاركت معهم هذه الروابط من الوصول إليها بعد الآن</string>
-        <key>few</key>
-        <string>لن يتمكن الأشخاص الذين شاركت معهم هذه الروابط من الوصول إليها بعد الآن</string>
-        <key>many</key>
-        <string>لن يتمكن الأشخاص الذين شاركت معهم هذه الروابط من الوصول إليها بعد الآن</string>
+        <string>People you have shared this link with will no longer be able to access it.</string>
         <key>other</key>
-        <string>لن يتمكن الأشخاص الذين شاركت معهم هذه الروابط من الوصول إليها بعد الآن</string>
+        <string>People you have shared these links with will no longer be able to access them.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -1240,6 +1240,94 @@
         <string>تم إزالة %d عنصراً من ”[A]“</string>
         <key>other</key>
         <string>تم إزالة %d عنصر من ”[A]“</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>إزالة الرابط؟</string>
+        <key>one</key>
+        <string>إزالة الرابط؟</string>
+        <key>two</key>
+        <string>إزالة الروابط؟</string>
+        <key>few</key>
+        <string>إزالة الروابط؟</string>
+        <key>many</key>
+        <string>إزالة الروابط؟</string>
+        <key>other</key>
+        <string>إزالة الروابط؟</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>إزالة الرابط</string>
+        <key>one</key>
+        <string>إزالة الرابط</string>
+        <key>two</key>
+        <string>إزالة الروابط</string>
+        <key>few</key>
+        <string>إزالة الروابط</string>
+        <key>many</key>
+        <string>إزالة الروابط</string>
+        <key>other</key>
+        <string>إزالة الروابط</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>People you shared this link with will lose access to the album.</string>
+        <key>other</key>
+        <string>People you shared these links with will lose access to the albums.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تمت إزالة الرابط</string>
+        <key>one</key>
+        <string>تمت إزالة الرابط</string>
+        <key>two</key>
+        <string>تمت إزالة الروابط</string>
+        <key>few</key>
+        <string>تمت إزالة الروابط</string>
+        <key>many</key>
+        <string>تمت إزالة الروابط</string>
+        <key>other</key>
+        <string>تمت إزالة الروابط</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

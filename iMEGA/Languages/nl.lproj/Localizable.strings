@@ -12,8 +12,6 @@
 "upload"="Uploaden";
 /*  */
 "error"="Fout";
-/*  */
-"name"="Naam";
 /* Caption of a button to edit the files that are selected */
 "edit"="Bewerken";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Log Uit";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Foto Verwijderen";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Foto wijzigen";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Foto Toevoegen";
 /* Button title that allows the user change his name */
 "changeName"="Wijzig Naam";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Video's opslaan in Foto's";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Afbeeldingen of video's die gedownload zijn worden opgeslagen in de media bibliotheek van het apparaat in plaats van de Offline sectie.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Camera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Opslaan in Foto's";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Meldingen worden gedempt tot en met morgen, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Meldingen worden gedempt gebracht tot %@";
+"Notifications will be silenced until %@"="Meldingen worden gedempt tot en met %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Gesprekmeldingen";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Bezoek App Gallerij";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Dit is de laatste stap om uw account te verwijderen. Zowel uw account als uw abonnement worden verwijderd en u verliest permanent alle gegevens die in de cloud zijn opgeslagen. Voer hieronder uw wachtwoord in.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Foto uploaden";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Een andere oproep is in behandeling. Beëindig uw huidige oproep voordat u een andere maakt.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Wekelijks";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Maandelijks";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Sommige maanden hebben geen 29 dagen. Voor deze maanden wordt de gebeurtenis gepland op de laatste dag van de maand.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Sommige maanden hebben geen 30 dagen. Voor deze maanden wordt de gebeurtenis gepland op de laatste dag van de maand.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Sommige maanden hebben geen 31 dagen. Voor deze maanden wordt de gebeurtenis gepland op de laatste dag van de maand.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Camera";

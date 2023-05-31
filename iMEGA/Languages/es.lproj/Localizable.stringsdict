@@ -481,11 +481,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Las personas con quien hayas compartido este enlace perderán acceso a él.</string>
-        <key>many</key>
-        <string>Las personas con quien hayas compartido estos enlaces perderán acceso a ellos.</string>
+        <string>People you have shared this link with will no longer be able to access it.</string>
         <key>other</key>
-        <string>Las personas con quien hayas compartido estos enlaces perderán acceso a ellos.</string>
+        <string>People you have shared these links with will no longer be able to access them.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -936,6 +934,76 @@
         <string>Se han eliminado %d de elementos de “[A]”</string>
         <key>other</key>
         <string>Se han eliminado %d elementos de “[A]”</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>¿Eliminar enlace?</string>
+        <key>many</key>
+        <string>¿Eliminar enlaces?</string>
+        <key>other</key>
+        <string>¿Eliminar enlaces?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Eliminar enlace</string>
+        <key>many</key>
+        <string>Eliminar enlaces</string>
+        <key>other</key>
+        <string>Eliminar enlaces</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>People you shared this link with will lose access to the album.</string>
+        <key>other</key>
+        <string>People you shared these links with will lose access to the albums.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Enlace eliminado</string>
+        <key>many</key>
+        <string>Enlaces eliminados</string>
+        <key>other</key>
+        <string>Enlaces eliminados</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

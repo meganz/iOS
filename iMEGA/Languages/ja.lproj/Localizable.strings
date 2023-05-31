@@ -12,8 +12,6 @@
 "upload"="アップロード";
 /*  */
 "error"="エラー";
-/*  */
-"name"="名前";
 /* Caption of a button to edit the files that are selected */
 "edit"="編集";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -477,7 +475,7 @@
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1個のファイルをごみ箱に移動しました";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
-"filesMovedToRubbishBinMessage"="ゴミ箱にファイル%dこ、移動しました。";
+"filesMovedToRubbishBinMessage"="%d個のファイルをごみ箱に移動しました";
 /* Success message shown when you have moved 1 folder to the rubbish bin */
 "folderMovedToRubbishBinMessage"="1個のフォルダをごみ箱に移動しました";
 /* Success message shown when you have moved {1+} folders to the rubbish bin */
@@ -1090,10 +1088,6 @@
 "loggingOut"="ログアウト中";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="写真を削除";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="写真を変更";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="写真を追加";
 /* Button title that allows the user change his name */
 "changeName"="名前の変更";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="動画を写真に保存";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="ダウンロードした画像や動画は、オフラインセクションではなく、端末のメディアライブラリに保存されます。";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="カメラ";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="写真に保存";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="通知は明日%@までミュートされます";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="通知は%@までサイレントになります";
+"Notifications will be silenced until %@"="通知は %@までミュートされます";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="チャット通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="AppGalleryにアクセス";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="これがアカウント削除の最後のステップです。アカウントとサブスクリプションの両方が削除され、クラウドに保存されているすべてのデータを恒久的に失うことになります。以下にパスワードを入力してください。";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="写真をアップロード";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="別の電話がかかってきました。次の電話をかける前に、現在の通話を終えてください。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3179,9 +3175,9 @@
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="共有フォルダにアクセスするには、あなたと共有した人もあなたを承認する必要があります。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
-"verifyCredentials.yourCredentials.title"="あなたの資格情報";
+"verifyCredentials.yourCredentials.title"="あなたの認証情報";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
-"sharedItems.tab.incoming.undecryptedFolderName"="[未復号フォルダ]";
+"sharedItems.tab.incoming.undecryptedFolderName"="[ 未復号フォルダ ]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
 "sharedItems.tab.outgoing.sharedToContact"="%@さんと共有";
 /* Chat Listing - row description for the created meeting */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="毎週";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="月間";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="29日ない月もあります。これらの月については、その月の最終日に開催がスケジュールされます。";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="30日ない月もあります。これらの月については、その月の最終日に開催がスケジュールされます。";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="31日ない月もあります。これらの月については、その月の最終日に開催がスケジュールされます。";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="カメラ";

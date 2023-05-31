@@ -135,8 +135,6 @@ public enum Strings {
     public static let addContactsCreateANetworkColaborateMakeVoiceAndVideoCallsWithoutEverLeavingMEGA = Strings.tr("Localizable", "Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA")
     /// Add phone number
     public static let addPhoneNumber = Strings.tr("Localizable", "Add Phone Number")
-    /// Add photo
-    public static let addPhoto = Strings.tr("Localizable", "Add Photo")
     /// Add your phone number
     public static let addYourPhoneNumber = Strings.tr("Localizable", "Add Your Phone Number")
     /// Add contact
@@ -359,8 +357,6 @@ public enum Strings {
     public static let changeEmail = Strings.tr("Localizable", "Change Email")
     /// Change launch tab
     public static let changeLaunchTab = Strings.tr("Localizable", "Change Launch Tab")
-    /// Change photo
-    public static let changePhoto = Strings.tr("Localizable", "Change Photo")
     /// Change setting
     public static let changeSetting = Strings.tr("Localizable", "Change Setting")
     /// Change to a test server?
@@ -1223,8 +1219,6 @@ public enum Strings {
     public static let myCredentials = Strings.tr("Localizable", "My credentials")
     /// My QR code
     public static let myQRCode = Strings.tr("Localizable", "My QR code")
-    /// Name
-    public static let name = Strings.tr("Localizable", "name")
     /// Name (ascending)
     public static let nameAscending = Strings.tr("Localizable", "nameAscending")
     /// Name (descending)
@@ -1323,7 +1317,7 @@ public enum Strings {
     public static let notifications = Strings.tr("Localizable", "notifications")
     /// Notifications muted
     public static let notificationsMuted = Strings.tr("Localizable", "Notifications muted")
-    /// Notifications will be silenced until %@
+    /// Notifications will be muted until %@
     public static func notificationsWillBeSilencedUntil(_ p1: Any) -> String {
       return Strings.tr("Localizable", "Notifications will be silenced until %@", String(describing: p1))
     }
