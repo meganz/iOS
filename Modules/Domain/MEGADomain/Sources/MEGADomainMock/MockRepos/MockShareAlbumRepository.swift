@@ -2,22 +2,25 @@ import MEGADomain
 
 public struct MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
     public static let newRepo = MockShareAlbumRepository()
-    private let shareAlbumResult: Result<String?, Error>
+    private let shareAlbumResults: [HandleEntity: Result<String?, Error>]
     private let disableAlbumShareResult: Result<Void, Error>
     private let publicAlbumContentsResult: Result<SharedAlbumEntity, Error>
     
     public init(
-        shareAlbumResult: Result<String?, Error> = .failure(GenericErrorEntity()),
+        shareAlbumResults: [HandleEntity: Result<String?, Error>] = [:],
         disableAlbumShareResult: Result<Void, Error> = .failure(GenericErrorEntity()),
         publicAlbumContentsResult: Result<SharedAlbumEntity, Error> = .failure(GenericErrorEntity())
     ) {
-        self.shareAlbumResult = shareAlbumResult
+        self.shareAlbumResults = shareAlbumResults
         self.disableAlbumShareResult = disableAlbumShareResult
         self.publicAlbumContentsResult = publicAlbumContentsResult
     }
     
     public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
-        try await withCheckedThrowingContinuation {
+        guard let shareAlbumResult = shareAlbumResults.first(where: { $0.key == album.id })?.value else {
+            return nil
+        }
+        return try await withCheckedThrowingContinuation {
             $0.resume(with: shareAlbumResult)
         }
     }

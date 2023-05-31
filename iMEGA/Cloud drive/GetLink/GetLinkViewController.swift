@@ -146,6 +146,10 @@ class GetLinkViewController: UIViewController {
             removeDelegates()
         }
         
+        if let getLinkViewModel {
+            getLinkViewModel.dispatch(.onViewWillDisappear)
+        }
+        
         NotificationCenter.default.post(name: Notification.Name.MEGAShareCreated, object: nil)
     }
     
@@ -691,6 +695,8 @@ class GetLinkViewController: UIViewController {
             case .custom(let image, let status):
                 SVProgressHUD.show(image, status: status)
             }
+        case .dismissHud:
+            SVProgressHUD.dismiss()
         case .addToPasteBoard(let value):
             UIPasteboard.general.string = value
         case .showShareActivity(let sender, let link, let key):
@@ -713,6 +719,13 @@ class GetLinkViewController: UIViewController {
         } else {
             tableView.isUserInteractionEnabled = false
         }
+    }
+    
+    private func sectionType(forSection section: Int) -> GetLinkTableViewSection? {
+        if let getLinkViewModel {
+            return getLinkViewModel.sectionType(forSection: section)
+        }
+        return sections()[safe: section]
     }
 }
 
@@ -820,17 +833,15 @@ extension GetLinkViewController: UITableViewDelegate {
         
 
         var isMultiLink = getLinkVM.multilink
-        var sectionType: GetLinkTableViewSection? = sections()[section]
         if let getLinkViewModel {
             isMultiLink = getLinkViewModel.isMultiLink
-            sectionType = getLinkViewModel.sectionType(forSection: section)
         }
         
         if isMultiLink {
             header.titleLabel.textAlignment = .left
             header.configure(title: Strings.Localizable.link, topDistance: section == 0 ? 17.0 : 25.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         } else {
-            switch sectionType {
+            switch sectionType(forSection: section) {
             case .link:
                 header.configure(title: Strings.Localizable.link, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             case .key:
@@ -856,17 +867,15 @@ extension GetLinkViewController: UITableViewDelegate {
         
         footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         var isMultiLink = getLinkVM.multilink
-        var sectionType: GetLinkTableViewSection? = sections()[section]
         if let getLinkViewModel {
             isMultiLink = getLinkViewModel.isMultiLink
-            sectionType = getLinkViewModel.sectionType(forSection: section)
         }
         
         if isMultiLink {
             footer.titleLabel.textAlignment = .center
             footer.configure(title: Strings.Localizable.tapToCopy, topDistance: 4, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
         } else {
-            switch sectionType {
+            switch sectionType(forSection: section) {
             case .decryptKeySeparate:
                 let attributedString = NSMutableAttributedString(string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately)
                 let learnMoreString = NSAttributedString(string: " " + Strings.Localizable.learnMore, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
@@ -893,6 +902,10 @@ extension GetLinkViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let getLinkViewModel {
+            getLinkViewModel.dispatch(.didSelectRow(indexPath: indexPath))
+            return
+        }
         if getLinkVM.multilink {
             if indexPath.row == 1 {
                 copyLinkToPasteboard(atIndex: indexPath.section)
