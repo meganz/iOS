@@ -14,6 +14,13 @@ struct AlbumCell: View {
                 PhotoCellImage(container: viewModel.thumbnailContainer, bgColor: Color(Colors.General.Gray.ebebeb.color))
                     .cornerRadius(6)
                 
+                GeometryReader { geo in
+                    LinearGradient(colors: [.black, .clear], startPoint: .top, endPoint: .bottom)
+                        .frame(height: geo.size.height / 2)
+                        .cornerRadius(5, corners: [.topLeft, .topRight])
+                        .opacity(viewModel.isLinkShared ? 0.4 : 0.0)
+                }
+                
                 ProgressView()
                     .opacity(viewModel.isLoading ? 1.0 : 0.0)
                 
