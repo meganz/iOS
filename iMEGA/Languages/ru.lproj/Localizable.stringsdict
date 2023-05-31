@@ -533,13 +533,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Люди, с которыми вы поделились этой ссылкой, больше не смогут получить к ней доступ</string>
+        <string>Люди, с которыми вы поделились этой ссылкой, больше не смогут получить к ней доступ.</string>
         <key>few</key>
-        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ</string>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ.</string>
         <key>many</key>
-        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ</string>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ.</string>
         <key>other</key>
-        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ</string>
+        <string>Люди, с которыми вы поделились этими ссылками, больше не смогут получить к ним доступ.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -1040,6 +1040,86 @@
         <string>Из «[A]» удалено %d элементов</string>
         <key>other</key>
         <string>Из «[A]» удалено %d элемента</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Удалить ссылку?</string>
+        <key>few</key>
+        <string>Удалить ссылки?</string>
+        <key>many</key>
+        <string>Удалить ссылки?</string>
+        <key>other</key>
+        <string>Удалить ссылки?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Удалить ссылку</string>
+        <key>few</key>
+        <string>Удалить ссылки</string>
+        <key>many</key>
+        <string>Удалить ссылки</string>
+        <key>other</key>
+        <string>Удалить ссылки</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Люди, с которыми вы поделились этой ссылкой, потеряют доступ к альбому.</string>
+        <key>few</key>
+        <string>Люди, с которыми вы поделились этими ссылками, потеряют доступ к альбомам.</string>
+        <key>many</key>
+        <string>Люди, с которыми вы поделились этими ссылками, потеряют доступ к альбомам.</string>
+        <key>other</key>
+        <string>Люди, с которыми вы поделились этими ссылками, потеряют доступ к альбомам.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ссылка удалена</string>
+        <key>few</key>
+        <string>Ссылки удалены</string>
+        <key>many</key>
+        <string>Ссылки удалены</string>
+        <key>other</key>
+        <string>Ссылки удалены</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

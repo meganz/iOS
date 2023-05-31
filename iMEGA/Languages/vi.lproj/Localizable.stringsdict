@@ -377,7 +377,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Tất cả những người bạn đã chia sẻ các đường liên kết này sẽ không thể truy cập vào được nữa</string>
+        <string>Tất cả những người bạn đã chia sẻ các đường liên kết này sẽ không thể truy cập vào được nữa.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -728,6 +728,62 @@
         <string>d</string>
         <key>other</key>
         <string>Đã loại bỏ %d mục khỏi “[A]”</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Loại bỏ các đường liên kết?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Loại bỏ liên kết</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Tất cả những người bạn đã chia sẻ các đường liên kết này sẽ không thể truy cập vào album được nữa</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Các đường liên kết đã được loại bỏ</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

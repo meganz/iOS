@@ -481,11 +481,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Les personnes avec qui vous avez partagé ce lien ne pourront plus y accéder</string>
+        <string>Les personnes avec qui vous avez partagé ce lien ne pourront plus y accéder.</string>
         <key>many</key>
-        <string>Les personnes avec qui vous avez partagé ces liens ne pourront plus y accéder</string>
+        <string>Les personnes avec qui vous avez partagé ces liens ne pourront plus y accéder.</string>
         <key>other</key>
-        <string>Les personnes avec qui vous avez partagé ces liens ne pourront plus y accéder</string>
+        <string>Les personnes avec qui vous avez partagé ces liens ne pourront plus y accéder.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -936,6 +936,78 @@
         <string>%d d’éléments ont été supprimés de « [A] »</string>
         <key>other</key>
         <string>%d éléments ont été supprimés de « [A] »</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Supprimer le lien ?</string>
+        <key>many</key>
+        <string>Supprimer les liens ?</string>
+        <key>other</key>
+        <string>Supprimer les liens ?</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Supprimer le lien</string>
+        <key>many</key>
+        <string>Supprimer les liens</string>
+        <key>other</key>
+        <string>Supprimer les liens</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Les personnes avec qui vous avez partagé ce lien perdront l’accès à l’album.</string>
+        <key>many</key>
+        <string>Les personnes avec qui vous avez partagé ces liens perdront l’accès aux albums.</string>
+        <key>other</key>
+        <string>Les personnes avec qui vous avez partagé ces liens perdront l’accès aux albums.</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Le lien a été supprimé</string>
+        <key>many</key>
+        <string>Les liens ont été supprimés</string>
+        <key>other</key>
+        <string>Les liens ont été supprimés</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

@@ -12,8 +12,6 @@
 "upload"="上傳";
 /*  */
 "error"="錯誤";
-/*  */
-"name"="名稱";
 /* Caption of a button to edit the files that are selected */
 "edit"="編輯";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -231,7 +229,7 @@
 /* Slideshow Preference Setting include subFolders */
 "slideshow.preferenceSetting.slideshowOptions.subFolders"="包含子資料夾";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="沒有任何可離線存取檔案";
+"offlineEmptyState_title"="沒有任何可離線使用的檔案";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="沒有聯絡人";
 /* Title shown when there's no incoming Shared Items */
@@ -703,7 +701,7 @@
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="照片";
 /* Photo view is empty */
-"photo.empty.title"="未找到相片";
+"photo.empty.title"="未找到照片";
 /* Title of Photo's Years tab */
 "media.photoLibrary.category.years.title"="年";
 /* Title of Photo's Months tab */
@@ -745,9 +743,9 @@
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="（推薦的）";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
-"SAVE HEIC PHOTOS AS"="將HEIC相片儲存為";
+"SAVE HEIC PHOTOS AS"="將HEIC照片儲存為";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="我們建議使用JPG，因為它是最相容的相片格式。";
+"We recommend JPG, as its the most compatible format for photos."="我們建議您使用相容性最好的JPG照片格式。";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
 "SAVE HEVC VIDEOS AS"="將HEVC影片儲存為";
 /* Footer for HEVC format section */
@@ -789,11 +787,11 @@
 /* Footer description when upload videos for Live Photos is enabled */
 "The video and the photo in each Live Photo will be uploaded."="將上傳每張原況照片的相片與影片版本。";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="只會上傳每張原況照片的相片版本。";
+"Only the photo in each Live Photo will be uploaded."="只會上傳每張原況照片的照片版本。";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="將上傳您連拍相片系列的所有相片。";
+"All the photos from your burst photo sequences will be uploaded."="將上傳您連拍照片的所有照片。";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您連拍相片系列中最愛的相片。";
+"Only the representative photos from your burst photo sequences will be uploaded."="只會上傳您連拍照片中最愛的照片。";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隱藏相簿是您裝置的照片應用程式中隱藏相片或影片的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
@@ -831,9 +829,9 @@
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="在您的裝置上";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="清除可離線存取檔案";
+"clearOfflineFiles"="清除可離線使用的檔案";
 /* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
-"settings.fileManagement.alert.clearAllOfflineFiles"="清除所有離線存取檔案？";
+"settings.fileManagement.alert.clearAllOfflineFiles"="清除所有離線使用的檔案？";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="清除快取";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -1089,11 +1087,7 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
-"Remove Photo"="移除相片";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="更改相片";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="加入相片";
+"Remove Photo"="移除照片";
 /* Button title that allows the user change his name */
 "changeName"="更改名稱";
 /* Success message when changing profile information. */
@@ -1197,11 +1191,11 @@
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="關閉除錯模式";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="系統日誌檔（MEGAiOS.log）將從離線存取區刪除。";
+"disableDebugMode_message"="系統日誌檔（MEGAiOS.log）將從離線使用中刪除。";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="您確定要從離線存取中刪除這個項目？";
+"removeItemFromOffline"="您確定要從離線使用裡刪除這個項目？";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="您確定要從離線存取中刪除這些項目？";
+"removeItemsFromOffline"="您確定要從離線使用裡刪除這些項目？";
 /* Giphy section header */
 "Send GIF"="發送GIF";
 /* This is the placeholder text for GIPHY search */
@@ -1639,7 +1633,7 @@
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="不支援的檔案";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="您可以將其儲存為可離線存取並在相容的應用程式中開啟它。";
+"message_fileNotSupported"="您可以將其儲存為可離線使用並在相容的應用程式中開啟。";
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="轉寄";
 /* Success message shown after forwarding messages to other chats */
@@ -1696,12 +1690,12 @@
 "Save Videos in Photos"="儲存影片至照片";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下載的圖片或影片將儲存在裝置的媒體庫，而非離線存取區。";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="相機";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="儲存於照片";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
-"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="將MEGA應用程式中拍攝的圖片和影片備份儲存至裝置的媒體庫中。";
+"Save a copy of the images and videos taken from the MEGA app in your device’s media library."="將MEGA應用程式中拍攝的照片和影片的備份保存在您裝置的媒體庫中。";
 /* Title of the Spotlight Search section */
 "Search"="搜尋";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
@@ -1729,7 +1723,7 @@
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%2之%1";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="允許存取相片";
+"Allow Access to Photos"="允許存取照片";
 /* Detailed explanation of why the user should give permission to access to the photos */
 "Please give the MEGA App permission to access Photos to share photos and videos."="請允許MEGA存取照片的權限以進行相片和影片的共享。";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
@@ -2153,7 +2147,7 @@
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="取消選取";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
-"No Photos or Videos"="無相片或影片";
+"No Photos or Videos"="無照片或影片";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="在資料夾中檢視";
 /* Error message shown when opening a link with an account that not corresponds to the link */
@@ -2279,7 +2273,7 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="當您登出時，正在進行中的傳輸將取消。";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="當您登出時，您裝置中可離線存取的檔案將會被刪除。";
+"When you logout, files from your Offline section will be deleted from your device."="當您登出時，您裝置中可離線使用的檔案將會被刪除。";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="當您登出時，您裝置上可離線存取的檔案將會被刪除，而且正在進行中的傳輸將被取消。";
 /* Default title of an empty chat. */
@@ -2529,13 +2523,13 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="快速存取";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="快速存取在近期的、收藏的、或離線存取的檔案";
+"Quickly access files on Recents, Favourites, or Offline section"="快速存取在近期的、收藏的、或離線使用中的檔案";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="從您的收藏快速存取檔案";
 /* Text description for the Recents QuickAccess widget */
 "Quickly access files on Recents section"="從近期活動快速存取檔案";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="從離線存取快速存取檔案";
+"Quickly access files on Offline section"="從離線使用中快速存取檔案";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="裝置沒有足夠的空間好讓MEGA正確的運行。";
 /* Dialog description for the no enough device storage screen */
@@ -2561,7 +2555,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="更改設定";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="登出會刪除您的離線內容。";
+"offline.logOut.warning.message"="登出會刪除您可離線使用的內容。";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="共享擁有者超出其空間配額。";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="造訪華為應用程式商店";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="這是刪除帳戶最後一個步驟。您的帳戶和訂閱都將被刪除，而且您將永久遺失所有儲存在雲端空間的資料。請在下方輸入您的密碼。";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="上傳照片";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="另一個通話正在進行中。請先結束目前通話才能撥打另一通。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3061,7 +3057,7 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通話將於%@後結束";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="離線存取";
+"general.downloadToOffline"="下載離線使用";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
 "general.fileIsBeingDownloaded"="檔案已在下載中";
 /* Button and title text that ends the meeting for all */
@@ -3345,9 +3341,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="加入描述";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="輸入最多30 個字元（15個中文字）";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="輸入最多3，000 個字元（1500個中文字）";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="取消";
 /* Schedule meeting create button */
@@ -3379,11 +3375,11 @@
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="從不";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="每日";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="每周";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="每月";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="自訂";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="每週";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="每月";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="有些月份沒有29天。對於這些月份，事件將安排在該月的最後一天。";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="有些月份沒有30天。對於這些月份，事件將安排在該月的最後一天。";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="有些月份沒有31天。對於這些月份，事件將安排在該月的最後一天。";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="相機";

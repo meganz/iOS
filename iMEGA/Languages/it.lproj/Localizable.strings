@@ -12,8 +12,6 @@
 "upload"="Carica";
 /*  */
 "error"="Errore";
-/*  */
-"name"="Nome";
 /* Caption of a button to edit the files that are selected */
 "edit"="Modifica";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -399,7 +397,7 @@
 /* Title shown under the action that allows you to open a file in another app */
 "openIn"="Apri con…";
 /*  */
-"uploadToMega"="Upload";
+"uploadToMega"="Carica su MEGA";
 /* Footer shown in the Share Extension telling that a file can be renamed if tapped */
 "tapFileToRename"="Tocca file per rinominare";
 /* Title for a button to send a file to a chat */
@@ -471,7 +469,7 @@
 /* Rename file confirmation confirm button title */
 "rename.confirmationAlert.ok"="Cambia lo stesso";
 /* Rename file no extension warning text */
-"rename.fileWithoutExtension"="File without extension .%@";
+"rename.fileWithoutExtension"="File senza estensione .%@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Sostituisci";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Sto uscendo";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Rimuovi foto";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Cambia foto";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Aggiungi foto";
 /* Button title that allows the user change his name */
 "changeName"="Cambia nome";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Salva video in Foto";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Le immagini e video scaricati saranno archiviati nella Galleria del dispositivo invece della sezione Offline.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Fotocamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Salva in Foto";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Le notifiche verranno silenziate fino a domani, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Le notifiche saranno silenziate fino alle %@";
+"Notifications will be silenced until %@"="Notifications will be muted until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifiche della chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Visita AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Questo è l'ultimo step per eliminare il tuo account. Sia il tuo account che il tuo abbonamento verranno eliminati e perderai permanentemente tutti i dati archiviati nel cloud. Per favore, inserisci la tua password qui sotto.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Upload photo";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un'altra chiamata in corso. Per favore, termina la chiamata corrente prima di iniziarne un'altra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2885,7 +2881,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="Compressione Stuffit X";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL statements";
+"general.filetype.sql"="Comandi SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Immagine Sony RAW";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3063,7 +3059,7 @@
 /* Text for the action of downloading an item to the offline section */
 "general.downloadToOffline"="Rendi disponibile offline";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
-"general.fileIsBeingDownloaded"="File is already being downloaded";
+"general.fileIsBeingDownloaded"="Il download di questo file è già in corso";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Termina la chiamata per tutti i partecipanti";
 /* Title of the popup that ends the meeting for all */
@@ -3359,7 +3355,7 @@
 /* Schedule meeting discard changes cancellation */
 "meetings.scheduleMeeting.discardChanges.cancel"="Continua a modificare";
 /* Schedule meeting creation complete */
-"meetings.scheduleMeeting.meetingCreated"="Meeting created";
+"meetings.scheduleMeeting.meetingCreated"="Meeting creato";
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Riprendere il video?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
@@ -3379,11 +3375,11 @@
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="Mai";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Ogni giorno";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Ogni settimana";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Ogni mese";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Personalizzato";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Settimanalmente";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensilmente";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Some months don’t have 29 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Fotocamera";

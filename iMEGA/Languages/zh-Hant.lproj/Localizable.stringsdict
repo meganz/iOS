@@ -377,7 +377,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>擁有您這些共享連結的人將無法再存取它們</string>
+        <string>您與之共享這些連結的人將無法再存取它們。</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -728,6 +728,62 @@
         <string>d</string>
         <key>other</key>
         <string>已從「[A]」移除%d個項目</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>移除連結？</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertConfirmButtonTitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>移除連結</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkAlertMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>您與之共享這些連結的人將失去這些相簿的存取權限。</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>連結已移除</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>

@@ -12,8 +12,6 @@
 "upload"="رفع";
 /*  */
 "error"="خطأ";
-/*  */
-"name"="الاسم";
 /* Caption of a button to edit the files that are selected */
 "edit"="تعديل";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="جاري تسجيل الخروج";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="إزالة الصورة";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="تغيير الصورة";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="إضافة صورة";
 /* Button title that allows the user change his name */
 "changeName"="تغيير الاسم";
 /* Success message when changing profile information. */
@@ -1615,7 +1609,7 @@
 /* A label for the Restart button to relaunch MEGAsync. */
 "restart"="إعادة تشغيل";
 /*  */
-"resume"="اعادة";
+"resume"="استئناف";
 /* Title to preview document */
 "previewContent"="استعراض المحتوى";
 /* Title of the notification for a missed call */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="حفظ مقاطع الفيديو في تطبيق الصور";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="سيتم تخزين الصور أو مقاطع الفيديو التي تم تنزيلها في مكتبة الوسائط المتعددة بالجهاز بدلاً من قسم غير متصل بالانترنت.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="الكاميرا";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="احفظ في تطبيق الصور";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="ستكون الإشعارات صامتة حتى الغد، %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="الإشعارات ستكون صامتة حتى %@";
+"Notifications will be silenced until %@"="Notifications will be muted until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="إشعارات المحادثة";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="قم بزيارة متجر التطبيقات AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="هذه هي الخطوة الأخيرة لحذف حسابك. سيتم حذف كل من حسابك واشتراكك وستفقد جميع البيانات المخزنة في السحابة بشكل دائم. الرجاء إدخال كلمة المرور الخاصة بك أدناه.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="ترفيع صورة";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="مكالمة أخرى جارية. يرجى إنهاء مكالمتك الحالية قبل إجراء أخرى.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2885,7 +2881,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="ملف مضغوط اكس X";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL statements";
+"general.filetype.sql"="تعليمات SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="صورة Sony RAW";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3345,9 +3341,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="إضافة وصف";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="أدخل ما يصل إلى 30 محرفًا";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="أدخل ما يصل إلى 3000 محرفًا";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="إلغاء";
 /* Schedule meeting create button */
@@ -3373,17 +3369,17 @@
 /* Push notification message to be shown when the meeting is about to start in 15 min. */
 "meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="يبدأ الاجتماع خلال 15 دقيقة";
 /* Push notification: Button title to be shown when the meeting is about to start. */
-"meetings.scheduleMeeting.notification.meetingStarts.button.join"="الانضمام";
+"meetings.scheduleMeeting.notification.meetingStarts.button.join"="انضمام";
 /* Push notification: Button title to be shown when the meeting is about to start. */
 "meetings.scheduleMeeting.notification.meetingStarts.button.message"="رسالة";
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="أبداً";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="كل يوم";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="كل أسبوع";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="كل شهر";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="تخصيص";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="أسبوعياً";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="شهرياً";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="بعض الأشهر ليس لديها 29 يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="بعض الأشهر ليس لديها 30 يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="بعض الأشهر ليس لديها 31 يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="الكاميرا";

@@ -12,8 +12,6 @@
 "upload"="Загрузить";
 /*  */
 "error"="Ошибка";
-/*  */
-"name"="Имя";
 /* Caption of a button to edit the files that are selected */
 "edit"="Редактировать";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -749,7 +747,7 @@
 /* Footer for HEIC format section */
 "We recommend JPG, as its the most compatible format for photos."="Мы рекомендуем JPG, так как это самый совместимый формат для фото.";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
-"SAVE HEVC VIDEOS AS"="Сохранять HEIC-видео как";
+"SAVE HEVC VIDEOS AS"="Сохранять HEVC-видео как";
 /* Footer for HEVC format section */
 "We recommend H.264, as its the most compatible format for videos."="Мы рекомендуем H.264, так как это самый совместимый формат для видео.";
 /* Footer for video compression quality */
@@ -1019,7 +1017,7 @@
 /*  */
 "howItWorks"="Как это работает";
 /*  */
-"howItWorksMain"="Вашему другу нужно зарегистрироваться в MEGA и [S]установить хотя бы одно приложение MEGA[/S] (для ПК или мобильных устройств)";
+"howItWorksMain"="Вашему другу нужно зарегистрироваться в MEGA и [S]установить хотя бы одно приложение MEGA[/S] (для настольных ПК или мобильных устройств)";
 /*  */
 "howItWorksSecondary"="Вы можете пригласить друга любым способом. Вы получите квоту, введя адрес электронной почты друга здесь до его регистрации с этим адресом.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Выход";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Удалить фото";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Изменить фото";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Добавить фото";
 /* Button title that allows the user change his name */
 "changeName"="Сменить имя";
 /* Success message when changing profile information. */
@@ -1249,7 +1243,7 @@
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Голосовые и видеозвонки";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="Использовать данные мобильного устройства";
+"useMobileData"="Использовать мобильные данные";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
 "Use Mobile Data for Videos"="Использовать мобильные данные для видео";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Сохранять видео в «Фото»";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Скачанные изображения и видео будут сохранены в медиабиблиотеке устройства, а не в локальном разделе.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Камера";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Сохранять в «Фото»";
@@ -2111,9 +2105,9 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Отключить уведомления чата на";
 /* Chat Notifications DND: Remaining time left if until tomorrow */
-"Notifications will be silenced until tomorrow, %@"="Уведомления будут отключены до завтра, %@";
+"Notifications will be silenced until tomorrow, %@"="Уведомления будут беззвучными до завтра, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Уведомления будут отключены до %@";
+"Notifications will be silenced until %@"="Уведомления будут беззвучными до %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Уведомления чата";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2141,7 +2135,7 @@
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
 "Role:"="Роль:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include Location Tags"="Включить метки местоположения";
+"Include Location Tags"="Включать метки местоположения";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Если включено, информация о местоположении будет добавлена к вашим фотографиям. Пожалуйста, будьте осторожны, когда делитесь ими.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
@@ -2153,7 +2147,7 @@
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Снять выбор";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
-"No Photos or Videos"="Нет фотографий или видео";
+"No Photos or Videos"="Нет фото или видео";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
 "View in Folder"="Посмотреть в папке";
 /* Error message shown when opening a link with an account that not corresponds to the link */
@@ -2445,7 +2439,7 @@
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Искать в файлах";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="Папка Загрузок из камеры MEGA";
+"MEGA CAMERA UPLOADS FOLDER"="Папка MEGA «Загрузки из камеры»";
 /* Action button text of folder selection screen for camera uploads */
 "Select Folder"="Выбрать папку";
 /* Section header of Audio Player playlist that contains playing track */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Открыть AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Остался один шаг перед удалением аккаунта. Ваш аккаунт и подписка будут удалены, и вы навсегда потеряете все данные, хранящиеся в облаке. Пожалуйста, введите пароль.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Загрузить фото";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Идёт ещё один звонок. Пожалуйста, завершите первый звонок, прежде чем сделать следующий.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Еженедельно";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Ежемесячно";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="В некоторых месяцах меньше 29 дней. Для них повторение будет запланировано на последний день месяца.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="В некоторых месяцах меньше 30 дней. Для них повторение будет запланировано на последний день месяца.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="В некоторых месяцах меньше 31 дня. Для них повторение будет запланировано на последний день месяца.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Камера";

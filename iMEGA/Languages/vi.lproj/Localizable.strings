@@ -12,8 +12,6 @@
 "upload"="Tải lên";
 /*  */
 "error"="Lỗi";
-/*  */
-"name"="Tên";
 /* Caption of a button to edit the files that are selected */
 "edit"="Sửa";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Đang đăng xuất";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Xóa Ảnh";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Đổi ảnh";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Thêm Ảnh";
 /* Button title that allows the user change his name */
 "changeName"="Đổi Tên";
 /* Success message when changing profile information. */
@@ -1583,7 +1577,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Bạn có còn nhớ mật khẩu của mình không?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="Vì dạng thức thuật toán bảo mật của MEGA, mất Mã Phục Hồi và không có mật khẩu sẽ làm toàn bộ dữ liệu không thể lấy lại được. Xin hãy nhớ mật khẩu của chính mình.";
+"remindPasswordText"="Vì công nghệ mô hình mã hóa của MEGA, bạn sẽ không thể đặt lại mật khẩu của mình mà không bị mất dữ liệu. Xin hãy chắc chắn nhớ mật khẩu của mình.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Trước khi tiến hành đăng xuất, chúng tôi khuyên nên lưu lại Chìa Khóa Phục Hồi ở một nơi an toàn dễ nhớ. Chú ý rằng, quên mật khẩu và không có chìa khóa sẽ không lấy lại được tài khoản.";
 /* Text next to a toggle that if enabled won't appear again */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Lưu videos vào Ảnh";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Các hình ảnh và videos tải về sẽ được lưu thẳng vào thư viện phương tiện số của máy thay vì vào mục Ngoại Tuyến.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Camêra";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Lưu vào Ảnh";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Tất cả các thông báo sẽ im lặng cho đến ngày mai, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Tất cả các thông báo sẽ im lặng cho tới %@";
+"Notifications will be silenced until %@"="Tất cả các thông báo sẽ tắt tiếng cho đến %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Âm báo chát";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Truy cập trang AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Tất cả dữ liệu bạn đã lưu trên ổ mây MEGA sẽ bị xóa và gói đăng ký dịch vụ mà quý khách đã mua sẽ bị hủy bỏ hoàn toàn. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Tải lên ảnh đại diện";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Đang có một cuộc gọi đang giang dở. Xin chấm dứt cuộc gọi đó trước khi tham gia vào cuộc khác.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2753,15 +2749,15 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Ứng dụng Android";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Ứng dụng Mac OS X";
+"general.filetype.app"="Ứng dụng macOS";
 /* File extension: .ascii. Commercial names should be stay on English */
-"general.filetype.ascii"="Tệp văn bản ASCII";
+"general.filetype.ascii"="Văn bản ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
-"general.filetype.asf"="Streaming Video";
+"general.filetype.asf"="Video truyền phát";
 /* File extension: .asx. Is not a commercial name, but a file format name. */
-"general.filetype.asx"="Phát trực tuyến nâng cao";
+"general.filetype.asx"="Truyền phát nâng cao";
 /* File extension: .avi. Name of a multimedia container format */
-"general.filetype.avi"="Âm thanh/Video xen kẽ";
+"general.filetype.avi"="Âm/Video xen kẽ";
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
 "general.filetype.bat"="Tệp hàng loạt DOS";
 /* File extension: .bay. Commercial names should be stay on English */
@@ -2769,9 +2765,9 @@
 /* File extension: .bmp. Commercial names should be stay on English */
 "general.filetype.bmp"="Ảnh Bitmap";
 /* File extension: .bz2. Commercial names should be stay on English */
-"general.filetype.bz2"="UNIX Nén";
+"general.filetype.bz2"="UNIX nén";
 /* File extension: .c. Commercial names should be stay on English */
-"general.filetype.c"="Mã Nguồn C/C++";
+"general.filetype.c"="Mã nguồn C/C++";
 /* File extensions: .cc, .cpp and .cxx. Commercial names should be stay on English */
 "general.filetype.cpp"="Mã nguồn C++";
 /* File extension. Commercial names should be stay on English */
@@ -2779,13 +2775,13 @@
 /* File extension: .cgi. Is not a commercial name, but the name of an interface specification. "script" is common noun. */
 "general.filetype.cgi"="Tập lệnh CGI";
 /* File extension: .class. Commercial names should be stay on English */
-"general.filetype.class"="Java Class";
+"general.filetype.class"="Java class";
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="Lệnh DOS";
 /* File extension: .css. Commercial names should be stay on English */
 "general.filetype.css"="Bảng dạng CSS";
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
-"general.filetype.dhtml"="HTML Động";
+"general.filetype.dhtml"="HTML động";
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
 "general.filetype.dll"="Thư viện liên kết động";
 /* File extension: .dotx. Commercial names should be stay on English */
@@ -2813,9 +2809,9 @@
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
 "general.filetype.spreadsheet"="Bảng tính";
 /* File extension: .gz. Commercial names should be stay on English */
-"general.filetype.gz"="GNU Nén";
+"general.filetype.gz"="GNU nén";
 /* File extensions: .h and .hpp. Commercial names should be stay on English */
-"general.filetype.header"="Header C++";
+"general.filetype.header"="Tiêu đề C++";
 /* File extensions: .htm and .html. Commercial names should be stay on English */
 "general.filetype.htmlDocument"="Tài liệu HTML";
 /* File extension: .iff. Commercial names should be stay on English */
@@ -2823,7 +2819,7 @@
 /* File extension: .iso. Commercial names should be stay on English */
 "general.filetype.iso"="Ảnh đĩa ISO";
 /* File extension: .jar. Commercial names should be stay on English */
-"general.filetype.jar"="Java Archive";
+"general.filetype.jar"="Java archive";
 /* File extension: .java. Commercial names should be stay on English */
 "general.filetype.java"="Mã Java";
 /* File extensions: .jpg and .jpeg. Commercial names should be stay on English */
@@ -2831,7 +2827,7 @@
 /* File extension: .log. Commercial names should be stay on English */
 "general.filetype.log"="Log";
 /* File extension: .3mu. Commercial names should be stay on English */
-"general.filetype.m3u"="Danh sách phát Phương tiện số";
+"general.filetype.m3u"="Danh sách phát phương tiện số";
 /* File extension: .m4a. Commercial names should be stay on English */
 "general.filetype.m4a"="Âm thanh MPEG-4";
 /* File extension: .max. Commercial names should be stay on English */
@@ -2875,11 +2871,11 @@
 /* File extension: .rar. Commercial names should be stay on English */
 "general.filetype.rar"="Tệp nén RAR";
 /* File extension: .rtf. Commercial names should be stay on English */
-"general.filetype.rtf"="Văn bản Đa dạng";
+"general.filetype.rtf"="Văn bản đa dạng";
 /* File extension: .rw2. Commercial names should be stay on English */
 "general.filetype.rw2"="Ảnh RAW của Panasonic";
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
-"general.filetype.sh"="Lệnh Bash Shell";
+"general.filetype.sh"="Bash shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
 "general.filetype.shtml"="HTML Máy chủ";
 /* File extension: .sitx. Commercial names should be stay on English */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Hằng tháng";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Hàng tháng";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Với những tháng không có 29 ngày. Thời điểm tái diễn cuộc họp sẽ được lên lịch vào ngày cuối cùng của tháng đó.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Với những tháng không có 30 ngày. Thời điểm tái diễn cuộc họp sẽ được lên lịch vào ngày cuối cùng của tháng đó.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Với những tháng không có 31 ngày. Thời điểm tái diễn cuộc họp sẽ được lên lịch vào ngày cuối cùng của tháng đó.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Camêra";

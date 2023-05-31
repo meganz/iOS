@@ -12,8 +12,6 @@
 "upload"="Wgraj";
 /*  */
 "error"="Błąd";
-/*  */
-"name"="Nazwa";
 /* Caption of a button to edit the files that are selected */
 "edit"="Edytuj";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Wylogowuję";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Usuń zdjęcie";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Zmień zdjęcie";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Dodaj zdjęcie";
 /* Button title that allows the user change his name */
 "changeName"="Zmień imię";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Zapisz wideo w Zdjęciach";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji Offline.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Zapisz w Zdjęciach";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Powiadomienia będą wyciszone do jutra, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Powiadomienia będą wyciszane do %@";
+"Notifications will be silenced until %@"="Notifications will be muted until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Powiadomienia czatu";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Odwiedź AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Jest to ostatni krok do usunięcia konta. Zarówno Twoje konto, jak i subskrypcja zostaną usunięte, a Ty trwale utracisz wszystkie dane przechowywane w chmurze. Wprowadź swoje hasło poniżej.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Upload photo";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Trwa inne połączenie. Proszę zakończyć bieżące połączenie przed nawiązaniem kolejnego.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2885,7 +2881,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X Compressed";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL statements";
+"general.filetype.sql"="Polecenia SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Sony RAW Image";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3345,9 +3341,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Dodaj opis";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Wprowadź do 30 znaków";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="Wprowadź do 3000 znaków";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Anuluj";
 /* Schedule meeting create button */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Tygodniowo";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Miesięcznie";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Some months don’t have 29 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Kamera";

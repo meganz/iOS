@@ -12,8 +12,6 @@
 "upload"="Upload";
 /*  */
 "error"="Error";
-/*  */
-"name"="Name";
 /* Caption of a button to edit the files that are selected */
 "edit"="Edit";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Logging out";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Remove photo";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Change photo";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Add photo";
 /* Button title that allows the user change his name */
 "changeName"="Change name";
 /* Success message when changing profile information. */
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Notifications will be muted until tomorrow, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be silenced until %@";
+"Notifications will be silenced until %@"="Notifications will be muted until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat notifications";
 /* Chat settings: This text appears with the Do Not Disturb switch */

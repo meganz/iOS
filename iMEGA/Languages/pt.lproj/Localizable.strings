@@ -12,8 +12,6 @@
 "upload"="Upload";
 /*  */
 "error"="Erro";
-/*  */
-"name"="Nome";
 /* Caption of a button to edit the files that are selected */
 "edit"="Editar";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -755,7 +753,7 @@
 /* Footer for video compression quality */
 "Compression quality when to transcode HEVC videos to H.264 format."="Qualidade de compressão quando os vídeos HEVC são transcodificados ao formato H.264.";
 /* Option title to enable upload videos with Camera Uploads */
-"uploadVideosLabel"="Upload de vídeos";
+"uploadVideosLabel"="Fazer upload de vídeos";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Ao ativar, será feito o upload de fotos.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Deslogando";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Remover foto";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Alterar foto";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Adicionar foto";
 /* Button title that allows the user change his name */
 "changeName"="Alterar nome";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Salvar vídeos em Fotos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Imagens e vídeos baixados serão armazenados na biblioteca multimídia do seu dispositivo, em vez da seção Offline.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Câmera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Salvar em Fotos";
@@ -2453,7 +2447,7 @@
 /* Message when to move Camera Uploads folder to Rubbish Bin */
 "Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Você tem certeza de que quer mover a pasta dos Uploads da câmera para a Lixeira? Ao fazer isso, será gerada automaticamente uma nova pasta para os Uploads da câmera.";
 /* Text to indicate the action of uploading a file to the cloud drive */
-"Upload File"="Enviar arquivo";
+"Upload File"="Fazer upload de arquivo";
 /* Text title for shortcuts, ie in the widget */
 "Shortcuts"="Atalhos";
 /* Text description leading the user to perform an action, ie the shortcuts widget */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Visite AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Este é o último passo para excluir a sua conta. Tanto a sua conta quanto a sua assinatura serão excluídos e você perderá permanentemente todos os dados armazenados na nuvem. Por favor, digite a sua senha abaixo.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Fazer o upload de uma foto";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Há outra chamada em andamento. Finalize a sua chamada atual antes de fazer outra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Semanal";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensal";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Alguns meses não têm dia 29. Nestes meses, o agendamento será no último dia do mês.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Alguns meses não têm dia 30. Nestes meses, o agendamento será no último dia do mês.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Alguns meses não têm dia 31. Nestes meses, o agendamento será no último dia do mês.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Câmera";

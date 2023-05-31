@@ -12,8 +12,6 @@
 "upload"="Subir";
 /*  */
 "error"="Error";
-/*  */
-"name"="Nombre";
 /* Caption of a button to edit the files that are selected */
 "edit"="Editar";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -231,13 +229,13 @@
 /* Slideshow Preference Setting include subFolders */
 "slideshow.preferenceSetting.slideshowOptions.subFolders"="Incluir subcarpetas";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="No tienes archivos en Sin conexión";
+"offlineEmptyState_title"="No hay archivos en Sin conexión";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="No tienes contactos";
+"contactsEmptyState_title"="No hay contactos";
 /* Title shown when there's no incoming Shared Items */
-"noIncomingSharedItemsEmptyState_text"="No tienes carpetas compartidas entrantes";
+"noIncomingSharedItemsEmptyState_text"="No hay carpetas compartidas entrantes";
 /* Title shown when there's no outgoing Shared Items */
-"noOutgoingSharedItemsEmptyState_text"="No tienes carpetas compartidas salientes";
+"noOutgoingSharedItemsEmptyState_text"="No hay carpetas compartidas salientes";
 /* Title of Contacts requests section */
 "contactRequests"="Solicitudes de contacto";
 /* Button title shown in empty views when you can 'Add contacts' */
@@ -1045,13 +1043,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonos por invitación";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Instala la aplicación de escritorio";
+"account.achievement.desktopApp.title"="Instalar la aplicación de escritorio";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="Has obtenido %@de espacio de almacenamiento por instalar la aplicación de escritorio de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="Al instalar la aplicación de escritorio de MEGA, obtienes %@de almacenamiento adicional válido durante 365 días. La aplicación de escritorio está disponible para Windows, macOS y la mayoría de las distribuciones de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Instala la aplicación móvil de MEGA";
+"account.achievement.mobileApp.title"="Instalar la aplicación móvil de MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="Has obtenido %@de espacio de almacenamiento por instalar la aplicación móvil de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1063,7 +1061,7 @@
 /* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
 "account.achievement.complete.valid.detail.subtitle"="El bono caducará en %@ días.";
 /* Add Phone Number title */
-"Add Phone Number"="Añade el número de teléfono";
+"Add Phone Number"="Añadir el número de teléfono";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.complete.explaination.label"="Has obtenido%@ de espacio de almacenamiento por verificar tu número de teléfono.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Cerrando sesión";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Eliminar foto";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Cambiar foto";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Añadir foto";
 /* Button title that allows the user change his name */
 "changeName"="Cambiar nombre";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Guardar vídeos en Fotos";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Las imágenes y los videos descargados se almacenarán en la galería del dispositivo en lugar de la sección Sin conexión.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Cámara";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Guardar en Fotos";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Las notificaciones se silenciarán hasta mañana, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Las notificaciones estarán silenciadas hasta las %@";
+"Notifications will be silenced until %@"="Notifications will be muted until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificaciones del chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2587,11 +2581,11 @@
 /* Over Disk Quota paywall final title. */
 "dialog.storage.paywall.final.title"="¡Tus datos están en riesgo!";
 /* Over Disk Quota paywall not final detail message. */
-"dialog.storage.paywall.notFinal.detail"="<paragraph>Lamentablemente no ha realizado ninguna acción en los últimos <b>%@</b>desde que te avisamos por correo electrónico a la dirección <b>%@</b>, el <b>%@</b>. Todavía estás usando <b>%@</b> de almacenamiento, y estás por encima de tu límite gratuito. Consulta los correos electrónicos que te enviamos para obtener más información sobre lo que debes hacer.</paragraph>";
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Lamentablemente no has realizado ninguna acción en los últimos <b>%@</b> desde que te avisamos por correo electrónico a la dirección <b>%@</b>, el <b>%@</b>. Todavía estás usando <b>%@</b> de almacenamiento, y estás por encima de tu límite gratuito. Consulta los correos electrónicos que te enviamos para obtener más información sobre lo que debes hacer.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
 "dialog.storage.paywall.final.detail"="<paragraph>Lamentablemente aún no has ampliado tu cuenta. Si no lo haces ya, mañana eliminaremos tus datos. Consulta los correos electrónicos que te enviamos para obtener más información sobre lo que debes hacer.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Amplia tu cuenta dentro de <warn>%@</warn>para evitar que tus datos sean eliminados.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Amplia tu cuenta dentro de <warn>%@</warn> para evitar que tus datos sean eliminados.</body>";
 /* Over Disk Quota paywall, final warning label. */
 "dialog.storage.paywall.final.warning"="<body><warn>Amplía tu cuenta hoy si quieres conservar tus datos.</warn><body>";
 /* Button title to see the available bonus */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Ir a AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Este es el último paso para eliminar tu cuenta. Tu suscripción se eliminará junto con tu cuenta y perderás de forma permanente todos los datos almacenados en la nube. Por favor, introduce tu contraseña a continuación.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Upload photo";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Hay otra llamada en curso. Termina esa llamada para hacer otra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3129,7 +3125,7 @@
 /* Menu option from the `Add` section that allows the user to share files from scanning */
 "chat.addToChatMenu.scan"="Escanear";
 /* Contacts selection screen: Alert title shown when no contacts are available to be added to the chatRoom */
-"meetings.addContacts.zeroContactsAvailable.title"="No tienes contactos";
+"meetings.addContacts.zeroContactsAvailable.title"="No hay contactos";
 /* Contacts selection screen: Alert message shown when no contacts are available to be added to the chatRoom */
 "meetings.addContacts.zeroContactsAvailable.description"="Ya has añadido todos sus contactos a este chat. Si quieres añadir más participantes, primero invítalos a tu lista de contactos.";
 /* Text title showed when users share the contact link */
@@ -3379,11 +3375,11 @@
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="Nunca";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Todos los días";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Todas las semanas";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Todos los meses";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Personalizar";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Semanal";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensual";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Some months don’t have 29 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Cámara";

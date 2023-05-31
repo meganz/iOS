@@ -12,8 +12,6 @@
 "upload"="Unggah";
 /*  */
 "error"="Error";
-/*  */
-"name"="Nama";
 /* Caption of a button to edit the files that are selected */
 "edit"="Edit";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="Sedang keluar";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="Hapus Foto";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Ubah foto";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Tambahkan Foto";
 /* Button title that allows the user change his name */
 "changeName"="Ganti Nama";
 /* Success message when changing profile information. */
@@ -1257,7 +1251,7 @@
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
 "autoAway.footerDescription"="Tetapkan status sebagai Pergi setelah [X]tidak aktif.";
 /* Label title to enable/disable the feature of the chat status that mantains your chosen status even if you don't have connected devices */
-"statusPersistence"="Status persistence";
+"statusPersistence"="Persistensi status";
 /* Footer text to explain the meaning of the functionaly 'Status Persistence' of your chat status. */
 "maintainMyChosenStatusAppearance"="Tetapkan tampilan status yang saya pilih bahkan saat saya tidak mempunyai perangkat yang tersambung.";
 /* A log message in a chat to indicate that the message has been edited by the user. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="Simpan Video di Foto";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Gambar dan video yang diunduh akan disimpan di pustaka media perangkat, bukan bagian Offline.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="Simpan dalam Foto";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Pemberitahuan akan dibungkam hingga besok, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Pemberitahuan akan dibungkam hingga %@";
+"Notifications will be silenced until %@"="Notifikasi akan dimatikan sampai %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Pemberitahuan obrolan";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2451,7 +2445,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Bermain";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Apakah anda yakin ingin memindahkan folder Unggahan kamera ke Tong Sampah? Jika demikian, folder baru akan dibuat secara otomatis untuk Unggahan kamera.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Apakah anda yakin ingin memindahkan folder Unggahan kamera ke Tempat Sampah? Jika demikian, folder baru akan dibuat secara otomatis untuk Unggahan kamera.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Unggah File";
 /* Text title for shortcuts, ie in the widget */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="Kunjungi AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Ini adalah langkah terakhir untuk menghapus akun anda. Akun dan langganan anda akan dihapus dan anda akan kehilangan semua data yang tersimpan di cloud secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="Unggah foto";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Panggilan lain sedang berlangsung. Harap akhiri panggilan anda saat ini sebelum melakukan panggilan lain.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2885,7 +2881,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X Compressed";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL statements";
+"general.filetype.sql"="Statement SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Gambar Sony RAW";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3345,9 +3341,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Tambah deskripsi";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Masukan hingga 30 karakter";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="Masukan hingga 3.000 karakter";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Batal";
 /* Schedule meeting create button */
@@ -3379,11 +3375,11 @@
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="Tidak pernah";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Setiap hari";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Setiap minggu";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Setiap bulan";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Kustom";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Mingguan";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Bulanan";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Beberapa bulan tidak memiliki 29 hari. Untuk bulan-bulan ini, kemunculannya akan dijadwalkan pada hari terakhir bulan itu.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Beberapa bulan tidak memiliki 30 hari. Untuk bulan-bulan ini, kemunculannya akan dijadwalkan pada hari terakhir bulan itu.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Beberapa bulan tidak memiliki 31 hari. Untuk bulan-bulan ini, kemunculannya akan dijadwalkan pada hari terakhir bulan itu.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="Kamera";

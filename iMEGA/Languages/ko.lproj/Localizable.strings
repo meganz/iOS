@@ -12,8 +12,6 @@
 "upload"="업로드";
 /*  */
 "error"="오류";
-/*  */
-"name"="이름";
 /* Caption of a button to edit the files that are selected */
 "edit"="수정";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="로그아웃중";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="사진 삭제";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="사진 변경";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="사진 추가";
 /* Button title that allows the user change his name */
 "changeName"="이름 변경";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="사진에 동영상 저장";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="다운로드한 이미지와 동영상은 오프라인 영역 대신 기기의 미디어 라이브러리에 저장됩니다.";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="카메라";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="사진에 저장";
@@ -2113,7 +2107,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="알림을 내일, %@까지 알리지 않습니다";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="%@까지 알림을 울리지 않기";
+"Notifications will be silenced until %@"="Notifications will be muted until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="AppGallery 방문";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="계정을 삭제하는 마지막 단계입니다. 당신의 계정과 구독 모두 삭제되며 클라우드에 저장된 모든 데이터를 영구적으로 잃게 됩니다. 아래에 암호를 입력하세요.";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="사진 업로드";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="다른 통화가 진행 중입니다. 다른 통화를 하기 전에 현재 통화를 종료하세요.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2885,7 +2881,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X 압축";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL statements";
+"general.filetype.sql"="SQL 문";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Sony RAW 이미지";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -3345,9 +3341,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="설명 추가";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="30자 이하로 입력하세요";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="3,000자 이하로 입력하세요";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="취소";
 /* Schedule meeting create button */
@@ -3379,11 +3375,11 @@
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="절대 안함";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="매일";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="매주";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="매달";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="이용자 지정";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="매주";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="월간";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="몇몇 달은 29일이 없습니다. 이러한 달은 되풀이 항목이 그 달의 마지막 날로 예약됩니다.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="몇몇 달은 30일이 없습니다. 이러한 달은 되풀이 항목이 그 달의 마지막 날로 예약됩니다.";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="몇몇 달은 31일이 없습니다. 이러한 달은 되풀이 항목이 그 달의 마지막 날로 예약됩니다.";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="카메라";

@@ -12,8 +12,6 @@
 "upload"="上传";
 /*  */
 "error"="错误";
-/*  */
-"name"="名称";
 /* Caption of a button to edit the files that are selected */
 "edit"="编辑";
 /* State shown if something is 'Saved' (String as short as possible). */
@@ -1090,10 +1088,6 @@
 "loggingOut"="正在登出";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
 "Remove Photo"="移除照片";
-/* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="更改照片";
-/* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="添加照片";
 /* Button title that allows the user change his name */
 "changeName"="更改名称";
 /* Success message when changing profile information. */
@@ -1696,7 +1690,7 @@
 "Save Videos in Photos"="保存视频到照片";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
 "Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="已下载的图像或视频将存储在设备的媒体库中，而非离线存取区。";
-/* Setting associated with the 'Camera' of the device */
+/* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="相机";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
 "Save in Photos"="保存到照片";
@@ -2730,6 +2724,8 @@
 "account.delete.subscription.huaweiAppGallery.visit"="访问华为应用商店";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="这是删除帐户的最后一步。您的帐户和订阅都将被删除，您将永久丢失存储在云盘中的所有数据。请在下方输入您的密码。";
+/* Button that allows the user to upload a photo, e.g. his avatar photo */
+"account.profile.avatar.uploadPhoto"="上传照片";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="另一个通话正在进行中。请先结束您的当前通话后才能加入另一个。";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -3396,3 +3392,11 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="每周";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="每月";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="有些月份没有第29天。对于这些月份，事件将安排在该月的最后一天。";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="有些月份没有第30天。对于这些月份，事件将安排在该月的最后一天。";
+/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="有些月份没有第31天。对于这些月份，事件将安排在该月的最后一天。";
+/* Camera button title to toggle camera on calls. */
+"chat.call.quickAction.camera"="相机";
