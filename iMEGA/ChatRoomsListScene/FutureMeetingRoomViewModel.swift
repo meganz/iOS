@@ -3,7 +3,7 @@ import Combine
 
 final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let scheduledMeeting: ScheduledMeetingEntity
-    let nextOccurrenceDate: Date
+    let nextOccurrence: ScheduledMeetingOccurrenceEntity?
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     private let chatRoomUseCase: ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
@@ -13,7 +13,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private let audioSessionUseCase: AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
     private let megaHandleUseCase: MEGAHandleUseCaseProtocol
-    private var searchString = ""
+    private var searchString: String?
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
     private var subscriptions = Set<AnyCancellable>()
@@ -26,13 +26,10 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         scheduledMeeting.title
     }
     
-    var time: String {
-        let dateFormatter = DateFormatter.timeShort()
-        let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
-        let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
-        return "\(start) - \(end)"
-    }
-    
+    lazy var time: String = {
+        return time(for: scheduledMeeting, nextOccurrence: nextOccurrence)
+    }()
+
     var recurrence: String {
         switch scheduledMeeting.rules.frequency {
         case .invalid:
@@ -72,7 +69,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     @Published var totalCallDuration: TimeInterval = 0
     
     init(scheduledMeeting: ScheduledMeetingEntity,
-         nextOccurrenceDate: Date,
+         nextOccurrence: ScheduledMeetingOccurrenceEntity?,
          router: ChatRoomsListRouting,
          chatRoomUseCase: ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
@@ -86,7 +83,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
-        self.nextOccurrenceDate = nextOccurrenceDate
+        self.nextOccurrence = nextOccurrence
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
@@ -127,7 +124,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     }
     
     func contains(searchText: String) -> Bool {
-        searchString.localizedCaseInsensitiveContains(searchText)
+        searchString?.localizedCaseInsensitiveContains(searchText) ?? false
     }
     
     func dndTurnOnOptions() -> [DNDTurnOnOption] {
@@ -315,10 +312,40 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private func showOccurrences() {
         router.showMeetingOccurrences(for: scheduledMeeting)
     }
+    
+    private func time(for scheduledMeeting: ScheduledMeetingEntity, nextOccurrence: ScheduledMeetingOccurrenceEntity?) -> String {
+        guard let nextOccurrence else {
+            return time(forStartDate: scheduledMeeting.startDate, endDate: scheduledMeeting.endDate)
+        }
+        
+        return time(forStartDate: nextOccurrence.startDate, endDate: nextOccurrence.endDate)
+    }
+    
+    private func time(forStartDate startDate: Date, endDate: Date) -> String {
+        let formatter = timeFormatter()
+        let start = formatter.localisedString(from: startDate)
+        let end = formatter.localisedString(from: endDate)
+        return "\(start) - \(end)"
+    }
+    
+    private func timeFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = .none
+        formatter.timeStyle = .short
+        return formatter
+    }
 }
 
 extension FutureMeetingRoomViewModel: Equatable {
     static func == (lhs: FutureMeetingRoomViewModel, rhs: FutureMeetingRoomViewModel) -> Bool {
         lhs.scheduledMeeting.scheduledId == rhs.scheduledMeeting.scheduledId
+    }
+}
+
+extension FutureMeetingRoomViewModel: Comparable {
+    static func < (lhs: FutureMeetingRoomViewModel, rhs: FutureMeetingRoomViewModel) -> Bool {
+        let lhsDate = lhs.nextOccurrence?.startDate ?? lhs.scheduledMeeting.startDate
+        let rhsDate = rhs.nextOccurrence?.startDate ?? rhs.scheduledMeeting.startDate
+        return lhsDate < rhsDate
     }
 }

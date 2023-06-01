@@ -7,7 +7,7 @@ public protocol ScheduledMeetingUseCaseProtocol {
     func scheduledMeeting(for scheduledMeetingId: ChatIdEntity, chatId: ChatIdEntity) -> ScheduledMeetingEntity?
     func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity) async throws -> [ScheduledMeetingOccurrenceEntity]
     func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity, since: Date) async throws -> [ScheduledMeetingOccurrenceEntity]
-    func recurringMeetingsNextDates(_ meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity:Date]
+    func upcomingOccurrences(forScheduledMeetings meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity : ScheduledMeetingOccurrenceEntity]
     func createScheduleMeeting(_ meeting: CreateScheduleMeetingEntity) async throws -> ScheduledMeetingEntity
 }
 
@@ -42,13 +42,13 @@ public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: Sc
         try await repository.scheduledMeetingOccurrencesByChat(chatId: chatId, since: since)
     }
     
-    public func recurringMeetingsNextDates(_ meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity:Date] {
-        var futureMeetingDates = [ChatIdEntity:Date]()
+    public func upcomingOccurrences(forScheduledMeetings meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity : ScheduledMeetingOccurrenceEntity] {
+        var futureMeetingDates = [ChatIdEntity : ScheduledMeetingOccurrenceEntity]()
         
         for meeting in meetings where meeting.rules.frequency != .invalid {
-            let occurrences = try await scheduledMeetingOccurrencesByChat(chatId: meeting.chatId)
+            let occurrences = try await scheduledMeetingOccurrencesByChat(chatId: meeting.chatId, since: Date())
             if let nextOccurrence = occurrences.first(where: { !$0.cancelled }) {
-                futureMeetingDates[meeting.scheduledId] = nextOccurrence.startDate
+                futureMeetingDates[meeting.scheduledId] = nextOccurrence
             }
         }
             

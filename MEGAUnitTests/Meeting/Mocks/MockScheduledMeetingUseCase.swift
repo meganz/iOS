@@ -4,7 +4,7 @@ import MEGADomain
 final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     var scheduledMeetingsList: [ScheduledMeetingEntity]
     var scheduledMeetingsOccurrences: [ScheduledMeetingOccurrenceEntity]
-    var recurringMeetingsNextDates: [ChatIdEntity:Date]
+    var upcomingOccurrences: [ChatIdEntity : ScheduledMeetingOccurrenceEntity]
     var createdScheduledMeeting: ScheduledMeetingEntity
     var createdScheduledMeetingError: ScheduleMeetingErrorEntity?
     var createScheduleMeetingEntity: CreateScheduleMeetingEntity?
@@ -12,14 +12,14 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     init(
         scheduledMeetingsList: [ScheduledMeetingEntity] = [],
         scheduledMeetingsOccurrences: [ScheduledMeetingOccurrenceEntity] = [],
-        recurringMeetingsNextDates: [ChatIdEntity:Date] = [:],
+        upcomingOccurrences: [ChatIdEntity : ScheduledMeetingOccurrenceEntity] = [:],
         createdScheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
         createdScheduledMeetingError: ScheduleMeetingErrorEntity? = nil,
         createScheduleMeetingEntity: CreateScheduleMeetingEntity? = nil
     ) {
         self.scheduledMeetingsList = scheduledMeetingsList
         self.scheduledMeetingsOccurrences = scheduledMeetingsOccurrences
-        self.recurringMeetingsNextDates = recurringMeetingsNextDates
+        self.upcomingOccurrences = upcomingOccurrences
         self.createdScheduledMeeting = createdScheduledMeeting
         self.createdScheduledMeetingError = createdScheduledMeetingError
         self.createScheduleMeetingEntity = createScheduleMeetingEntity
@@ -49,8 +49,8 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
         scheduledMeetingsOccurrences
     }
     
-    func recurringMeetingsNextDates(_ meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity:Date] {
-        recurringMeetingsNextDates
+    func upcomingOccurrences(forScheduledMeetings meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity : ScheduledMeetingOccurrenceEntity] {
+        upcomingOccurrences
     }
     
     func createScheduleMeeting(_ meeting: CreateScheduleMeetingEntity) async throws -> ScheduledMeetingEntity {

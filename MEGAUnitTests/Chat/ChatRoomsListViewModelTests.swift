@@ -119,6 +119,37 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssert(viewModel.displayChatRooms == nil)
     }
     
+    func testDisplayFutureMeetings_whenEmpty_shouldMatch() throws {
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let yesterday = try XCTUnwrap(futureDate(byAddingDays: -1))
+        let scheduleMeeting = ScheduledMeetingEntity(chatId: 1, endDate: yesterday)
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeeting])
+        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
+        viewModel.loadChatRoomsIfNeeded()
+        
+        let predicate = NSPredicate { _, _ in
+            viewModel.displayFutureMeetings != nil && viewModel.displayFutureMeetings != []
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        exception.isInverted = true
+        wait(for: [exception], timeout: 5)
+    }
+    
+    func testDisplayFutureMeetings_containsMultipleSections_shouldMatch() throws {
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let tomorrow = try XCTUnwrap(futureDate(byAddingDays: 1))
+        let scheduleMeeting = ScheduledMeetingEntity(chatId: 1, endDate: tomorrow)
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeeting])
+        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
+        viewModel.loadChatRoomsIfNeeded()
+        
+        let predicate = NSPredicate { _, _ in
+            viewModel.displayFutureMeetings?.first?.items.first?.scheduledMeeting.chatId == 1
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [exception], timeout: 10)
+    }
+    
     // MARK: - Private methods
     
     private func assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: Bool, description: String, line: UInt = #line) {
@@ -138,6 +169,10 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         viewModel.selectChatMode(.chats)
         wait(for: [expectation], timeout: 10)
         XCTAssertEqual(viewModel.contactsOnMegaViewState?.description, description, line: line)
+    }
+    
+    private func futureDate(byAddingDays numberOfDays: Int) -> Date? {
+        Calendar.current.date(byAdding: .day, value: numberOfDays, to: Date())
     }
 }
 

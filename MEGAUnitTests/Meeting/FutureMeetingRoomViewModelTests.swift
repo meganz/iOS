@@ -17,20 +17,6 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssert(viewModel.title == title)
     }
     
-    func testComputedProperty_time() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        guard let startDate = dateFormatter.date(from: "2015-04-01T11:42:00") else {
-            return
-        }
-
-        let endDate = startDate.advanced(by: 3600)
-        
-        let scheduledMeeting = ScheduledMeetingEntity(startDate: startDate, endDate: endDate)
-        let viewModel = FutureMeetingRoomViewModel(scheduledMeeting: scheduledMeeting)
-        XCTAssertTrue(viewModel.time == "11:42 AM - 12:42 PM" || viewModel.time == "11:42 - 12:42")
-    }
-    
     func testComputedProperty_unreadChatsCount() {
         let unreadMessagesCount = 10
         let chatRoomEntity = ChatRoomEntity(unreadCount: unreadMessagesCount)
@@ -190,5 +176,59 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         viewModel.startOrJoinCall()
         
         XCTAssertTrue(router.showCallError_calledTimes == 1)
+    }
+    
+    func testTime_forOneOffMeeting_shouldMatch() throws {
+        let dateSet = try randomDateSet()
+        let scheduledMeeting = ScheduledMeetingEntity(startDate: dateSet.startDate, endDate: dateSet.endDate)
+        let viewModel = FutureMeetingRoomViewModel(scheduledMeeting: scheduledMeeting)
+        shouldMatch(time: time(for: dateSet), inFutureMeetingRoomViewModel: viewModel)
+    }
+    
+    func testTime_forRecurringMeeting_shouldMatch() throws {
+        let dateSet = try randomDateSet()
+        let nextOccurrence = ScheduledMeetingOccurrenceEntity(startDate: dateSet.startDate, endDate: dateSet.endDate)
+        let viewModel = FutureMeetingRoomViewModel(nextOccurrence: nextOccurrence)
+        shouldMatch(time: time(for: dateSet), inFutureMeetingRoomViewModel: viewModel)
+    }
+    
+    // MARK: - Private methods
+    
+    private func shouldMatch(time: String, inFutureMeetingRoomViewModel futureMeetingRoomViewModel: FutureMeetingRoomViewModel) {
+        let predicate = NSPredicate { _, _ in
+            futureMeetingRoomViewModel.time == time
+        }
+        
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [expectation], timeout: 10)
+    }
+    
+    private func randomDateSet() throws -> (startDate: Date, endDate: Date) {
+        let randomDay = UInt.random(in: 1...31)
+        let startDate = try XCTUnwrap(SampleDate(day: randomDay, hour: 09, minute: 10))
+        let endDate = try XCTUnwrap(SampleDate(day: randomDay, hour: 10, minute: 10))
+        return (startDate, endDate)
+    }
+    
+    private func time(for dateSet: (startDate: Date, endDate: Date) ) -> String {
+        "\(self.time(for: dateSet.startDate)) - \(self.time(for: dateSet.endDate))"
+    }
+    
+    private func SampleDate(day: UInt, hour: UInt, minute: UInt) -> Date? {
+        guard day > 0, day <= 31, hour <= 24, minute <= 60 else { return nil }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        let dayString = String(format: "%02d", day)
+        let hourString = String(format: "%02d", hour)
+        let minuteString = String(format: "%02d", minute)
+        return dateFormatter.date(from: "\(dayString)/05/2023 \(hourString):\(minuteString)")
+    }
+    
+    private func time(for date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .none
+        dateFormatter.timeStyle = .short
+        return dateFormatter.string(from: date)
     }
 }
