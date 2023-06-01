@@ -5,7 +5,7 @@ import MEGADomainMock
 extension FutureMeetingRoomViewModel {
     convenience init(
         scheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
-        nextOccurrenceDate: Date = Date(),
+        nextOccurrence: ScheduledMeetingOccurrenceEntity? = nil,
         router: ChatRoomsListRouting = MockChatRoomsListRouter(),
         chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
@@ -21,7 +21,7 @@ extension FutureMeetingRoomViewModel {
     ) {
         self.init(
             scheduledMeeting: scheduledMeeting,
-            nextOccurrenceDate: nextOccurrenceDate,
+            nextOccurrence: nextOccurrence,
             router: router,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,

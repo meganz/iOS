@@ -346,8 +346,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
         
         Task {
-            let recurringMeetingsNextDates = try await scheduledMeetingUseCase.recurringMeetingsNextDates(futureScheduledMeetings)
-            populateFutureMeetings(futureScheduledMeetings, recurringMeetingsNextDates: recurringMeetingsNextDates)
+            let upcomingOccurrences = try await scheduledMeetingUseCase.upcomingOccurrences(forScheduledMeetings: futureScheduledMeetings)
+            await populateFutureMeetings(from: futureScheduledMeetings, withUpcomingOccurrences: upcomingOccurrences)
         }
     }
     
@@ -375,42 +375,81 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func populateFutureMeetings(_ meetings: [ScheduledMeetingEntity], recurringMeetingsNextDates: [ChatIdEntity:Date]) {
-        DispatchQueue.main.async {
-            let futureMeetingsTemp = meetings.reduce([FutureMeetingSection]()) { partialResult, meeting in
-                let date: Date
-                
-                if meeting.rules.frequency == .invalid {
-                    date = meeting.startDate
-                } else {
-                    date = recurringMeetingsNextDates[meeting.scheduledId] ?? meeting.startDate
-                }
-                
-                let key = self.formatedDateString(date)
-                
-                var result = partialResult
-                let futureMeetingViewModel = self.constructFutureMeetingViewModel(forScheduledMeetingEntity: meeting, nextOccurrenceDate: date)
-                
-                if let index = result.firstIndex(where: { $0.title == key }) {
-                    let futureMeetingSection = result[index]
-                    var futureMeetingsViewModel = futureMeetingSection.items + [futureMeetingViewModel]
-                    futureMeetingsViewModel = futureMeetingsViewModel.sorted { $0.nextOccurrenceDate < $1.nextOccurrenceDate }
-                    result[index] = FutureMeetingSection(
-                        title: futureMeetingSection.title,
-                        date: futureMeetingSection.date,
-                        items: futureMeetingsViewModel
-                    )
-                } else {
-                    result.append(FutureMeetingSection(title: key, date: date, items: [futureMeetingViewModel]))
-                }
-                return result
-            }
-            self.futureMeetings = futureMeetingsTemp.sorted { $0.date < $1.date }
-            self.filterMeetings()
-            if self.isFirstMeetingsLoad {
-                self.isFirstMeetingsLoad.toggle()
-            }
+    @MainActor
+    private func populateFutureMeetings(
+        from meetings: [ScheduledMeetingEntity],
+        withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity : ScheduledMeetingOccurrenceEntity]
+    ) {
+        let filteredFutureMeetings = meetings.reduce([FutureMeetingSection]()) { futureMeetingSections, meeting in
+            merge(
+                scheduledMeeting: meeting,
+                intoFutureMeetingSections: futureMeetingSections,
+                withUpcomingOccurrences: upcomingOccurrences
+            )
         }
+        
+       populate(futureMeetingSection: filteredFutureMeetings)
+    }
+    
+    private func merge(
+        scheduledMeeting: ScheduledMeetingEntity,
+        intoFutureMeetingSections futureMeetingSections: [FutureMeetingSection],
+        withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity : ScheduledMeetingOccurrenceEntity]
+    ) -> [FutureMeetingSection] {
+        let nextOccurrence = upcomingOccurrences[scheduledMeeting.scheduledId]
+        let date = startDate(for: scheduledMeeting, nextOccurrence: nextOccurrence)
+        let key = formatedDateString(date)
+        let futureMeetingViewModel = constructFutureMeetingViewModel(for: scheduledMeeting, nextOccurrence: nextOccurrence)
+        return merge(
+            futureMeetingViewModel: futureMeetingViewModel,
+            intoFutureMeetingSections: futureMeetingSections,
+            matchingKey: key,
+            forDate: date
+        )
+    }
+    
+    private func merge(
+        futureMeetingViewModel: FutureMeetingRoomViewModel,
+        intoFutureMeetingSections futureMeetingSections: [FutureMeetingSection],
+        matchingKey key: String,
+        forDate date: Date
+    ) -> [FutureMeetingSection] {
+        var result = futureMeetingSections
+        
+        if let index = result.firstIndex(where: { $0.title == key }) {
+            var futureMeetingSection = result[index]
+            futureMeetingSection.insert(futureMeetingViewModel)
+            result[index] = futureMeetingSection
+        } else {
+            result.append(FutureMeetingSection(title: key, date: date, items: [futureMeetingViewModel]))
+        }
+        
+        return result
+    }
+    
+    @MainActor
+    private func populate(futureMeetingSection: [FutureMeetingSection]) {
+        futureMeetings = futureMeetingSection.sorted(by: <)
+        filterMeetings()
+        setFirstMeetingsLoad()
+    }
+    
+    @MainActor
+    private func setFirstMeetingsLoad() {
+        if isFirstMeetingsLoad {
+            isFirstMeetingsLoad.toggle()
+        }
+    }
+    
+    private func startDate(for meeting: ScheduledMeetingEntity, nextOccurrence: ScheduledMeetingOccurrenceEntity?) -> Date {
+        let date: Date
+        if let nextOccurrence {
+            date = nextOccurrence.startDate
+        } else {
+            date = meeting.startDate
+        }
+        
+        return date
     }
     
     private func formatedDateString(_ date: Date) -> String {
@@ -450,7 +489,10 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
-    private func constructFutureMeetingViewModel(forScheduledMeetingEntity scheduledMeetingEntity: ScheduledMeetingEntity, nextOccurrenceDate: Date) -> FutureMeetingRoomViewModel {
+    private func constructFutureMeetingViewModel(
+        for scheduledMeetingEntity: ScheduledMeetingEntity,
+        nextOccurrence: ScheduledMeetingOccurrenceEntity?
+    ) -> FutureMeetingRoomViewModel {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
@@ -464,7 +506,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         
         return FutureMeetingRoomViewModel(
             scheduledMeeting: scheduledMeetingEntity,
-            nextOccurrenceDate: nextOccurrenceDate,
+            nextOccurrence: nextOccurrence,
             router: router,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,

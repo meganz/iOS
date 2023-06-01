@@ -33,7 +33,8 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
         chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus, Never> = PassthroughSubject<ChatConnectionStatus, Never>(),
         chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity, Never> = PassthroughSubject<ChatRoomEntity, Never>(),
-        items: [ChatListItemEntity]? = []
+        items: [ChatListItemEntity]? = [],
+        currentChatConnectionStatus: ChatConnectionStatus = .invalid
     ) {
         self.userHandle = myUserHandle
         self.guestAccount = isGuestAccount
@@ -47,6 +48,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.chatConnectionStatusUpdatePublisher = chatConnectionStatusUpdatePublisher
         self.chatPrivateModeUpdatePublisher = chatPrivateModeUpdatePublisher
         self.items = items
+        self.currentChatConnectionStatus = currentChatConnectionStatus
     }
     
     public func myUserHandle() -> HandleEntity {

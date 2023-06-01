@@ -2115,6 +2115,7 @@
 		BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */; };
 		BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933F024A5864C00BC2A75 /* SingleTapView.swift */; };
 		BFC9685B278CDA080098C523 /* TestingAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */; };
+		BFC9B6B72A282151009AA403 /* FutureMeetingSectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC9B6B62A282151009AA403 /* FutureMeetingSectionTests.swift */; };
 		BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCA9A1A25ABA33900D1F4E0 /* PSAView.swift */; };
 		BFCA9A1D25ABA33900D1F4E0 /* PSAView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */; };
 		BFCB32B62A0239A60013409C /* ScheduleMeetingPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */; };
@@ -4628,6 +4629,7 @@
 		BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapHandlerProtocol.swift; sourceTree = "<group>"; };
 		BFC933F024A5864C00BC2A75 /* SingleTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapView.swift; sourceTree = "<group>"; };
 		BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingAppDelegate.swift; sourceTree = "<group>"; };
+		BFC9B6B62A282151009AA403 /* FutureMeetingSectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingSectionTests.swift; sourceTree = "<group>"; };
 		BFCA9A1A25ABA33900D1F4E0 /* PSAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAView.swift; sourceTree = "<group>"; };
 		BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PSAView.xib; sourceTree = "<group>"; };
 		BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingPushNotifications.swift; sourceTree = "<group>"; };
@@ -11248,6 +11250,7 @@
 				BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */,
 				BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */,
 				BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */,
+				BFC9B6B62A282151009AA403 /* FutureMeetingSectionTests.swift */,
 				BF66CA7628B83ACF00DB686E /* HangOrEndCallViewModelTests.swift */,
 				BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */,
 				2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */,
@@ -14525,6 +14528,7 @@
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
+				BFC9B6B72A282151009AA403 /* FutureMeetingSectionTests.swift in Sources */,
 				0E3E07A32A1EA6C700A2A71B /* GetAlbumLinkViewModelTests.swift in Sources */,
 				0E2FD9DD2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift in Sources */,
 				0E3B1A392A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift in Sources */,
