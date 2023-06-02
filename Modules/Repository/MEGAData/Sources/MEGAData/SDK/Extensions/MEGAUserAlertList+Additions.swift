@@ -2,7 +2,7 @@ import MEGASdk
 
 @objc public extension MEGAUserAlertList {
     var relevantUserAlertsArray: [MEGAUserAlert] {
-        userAlerts(where: { $0.isRelevant })
+        userAlerts(where: { $0.isRelevant }).reversed()
     }
     
     var relevantUnseenCount: UInt {
