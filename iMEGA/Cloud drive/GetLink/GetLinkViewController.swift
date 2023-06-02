@@ -62,6 +62,7 @@ class GetLinkViewController: UIViewController {
     @IBOutlet weak var multilinkDescriptionLabel: UILabel!
     @IBOutlet weak var multilinkDescriptionView: UIView!
     @IBOutlet weak var multilinkDescriptionStackView: UIStackView!
+    @IBOutlet weak var snackBarContainer: UIView!
     @IBOutlet private var shareBarButton: UIBarButtonItem!
     @IBOutlet private var copyLinkBarButton: UIBarButtonItem!
     @IBOutlet private var copyKeyBarButton: UIBarButtonItem!
@@ -121,7 +122,13 @@ class GetLinkViewController: UIViewController {
             tableView.sectionHeaderTopPadding = 0
         }
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        configureSnackBarPresenter()
+        copyLinkToPasteboard()
+    }
+
     private func loadNodes() {
         if !MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
             MEGASdkManager.sharedMEGASdk().add(self as MEGARequestDelegate)
@@ -132,7 +139,7 @@ class GetLinkViewController: UIViewController {
         
         configureNavigation()
         configureMultiLink(isMultiLink: getLinkVM.multilink)
-        
+
         processNodes()
         
         shareBarButton.title = Strings.Localizable.General.MenuAction.ShareLink.title(nodesToExportCount)
@@ -149,6 +156,8 @@ class GetLinkViewController: UIViewController {
         if let getLinkViewModel {
             getLinkViewModel.dispatch(.onViewWillDisappear)
         }
+
+        removeSnackBarPresenter()
         
         NotificationCenter.default.post(name: Notification.Name.MEGAShareCreated, object: nil)
     }
@@ -208,17 +217,17 @@ class GetLinkViewController: UIViewController {
     
     private func copyKeyToPasteBoard() {
         UIPasteboard.general.string = getLinkVM.key
-        SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.keyCopiedToClipboard)
+        showCopySuccessSnackBar(with: Strings.Localizable.keyCopiedToClipboard)
     }
     
-    private func copyLinkToPasteboard(atIndex index: Int?) {
+    private func copyLinkToPasteboard(atIndex index: Int? = nil) {
         if getLinkVM.multilink {
             if let index = index, let link = nodes[safe: index]?.publicLink {
                 UIPasteboard.general.string = link
-                SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.linkCopiedToClipboard)
+                showCopySuccessSnackBar(with: Strings.Localizable.linkCopiedToClipboard)
             } else {
                 UIPasteboard.general.string = nodes.compactMap { $0.publicLink }.joined(separator: " ")
-                SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.linksCopiedToClipboard)
+                showCopySuccessSnackBar(with: Strings.Localizable.linksCopiedToClipboard)
             }
         } else {
             if getLinkVM.separateKey {
@@ -226,13 +235,17 @@ class GetLinkViewController: UIViewController {
             } else {
                 UIPasteboard.general.string = getLinkVM.link
             }
-            SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.linkCopiedToClipboard)
+            showCopySuccessSnackBar(with: Strings.Localizable.linkCopiedToClipboard)
         }
     }
     
     private func copyPasswordToPasteboard() {
         UIPasteboard.general.string = getLinkVM.password
-        SVProgressHUD.show(Asset.Images.NodeActions.copy.image, status: Strings.Localizable.passwordCopiedToClipboard)
+        showCopySuccessSnackBar(with: Strings.Localizable.passwordCopiedToClipboard)
+    }
+
+    private func showCopySuccessSnackBar(with message: String) {
+        SnackBarRouter.shared.present(snackBar: SnackBar(message: message))
     }
     
     private func updateModel(forNode node: MEGANode) {
@@ -940,7 +953,7 @@ extension GetLinkViewController: UITableViewDelegate {
             case .link:
                 switch linkRows()[indexPath.row] {
                 case .link:
-                    copyLinkToPasteboard(atIndex: nil)
+                    copyLinkToPasteboard()
                 case .password:
                     copyPasswordToPasteboard()
                 case .removePassword:

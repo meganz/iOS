@@ -1144,6 +1144,7 @@
 		943092FA291440010092B99A /* NodeValidationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F9291440010092B99A /* NodeValidationRepository.swift */; };
 		94312E5029352329005F0F1C /* AudioSessionUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */; };
 		9433A72328DB7D720041F0DB /* ContactLinkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9433A72228DB7D720041F0DB /* ContactLinkCollectionViewCell.swift */; };
+		94361BB72A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */; };
 		9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */; };
 		943AFB59283E43DC00C1F1FD /* MEGAChatError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943AFB58283E43DC00C1F1FD /* MEGAChatError+Mapper.swift */; };
 		943E4AFF28D1C09800903A78 /* ContextMenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943E4AFE28D1C09800903A78 /* ContextMenuDataModel.swift */; };
@@ -3642,6 +3643,7 @@
 		943229321EDD86C3007DB542 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9432293A1EDD88E3007DB542 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		9433A72228DB7D720041F0DB /* ContactLinkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkCollectionViewCell.swift; sourceTree = "<group>"; };
+		94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GetLinkViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		9437B93D1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAPasswordLinkRequestDelegate.h; path = API/Requests/MEGAPasswordLinkRequestDelegate.h; sourceTree = "<group>"; };
 		9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAPasswordLinkRequestDelegate.m; path = API/Requests/MEGAPasswordLinkRequestDelegate.m; sourceTree = "<group>"; };
 		943AFB58283E43DC00C1F1FD /* MEGAChatError+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatError+Mapper.swift"; sourceTree = "<group>"; };
@@ -8351,6 +8353,7 @@
 				837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */,
 				0E3E07A82A1EB67B00A2A71B /* ShareAlbumLinkInitialSections.swift */,
 				0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */,
+				94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */,
 			);
 			path = GetLink;
 			sourceTree = "<group>";
@@ -14005,6 +14008,7 @@
 				BF33EF7424451A4700CD35AC /* TapAndHoldMessageView.swift in Sources */,
 				5BCF7E552631733200BE769B /* TermsAndPoliciesRouter.swift in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
+				94361BB72A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift in Sources */,
 				83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */,
 				12466831275DBE0500C94335 /* TextEditorModel.swift in Sources */,
 				12466830275DBE0500C94335 /* TextEditorViewController.swift in Sources */,
