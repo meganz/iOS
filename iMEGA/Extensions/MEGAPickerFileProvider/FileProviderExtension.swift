@@ -1,6 +1,7 @@
 import FileProvider
 import MEGADomain
 import MEGAData
+import MEGAPresentation
 
 final class FileProviderExtension: NSFileProviderExtension {
     private let semaphore = DispatchSemaphore(value: 0)

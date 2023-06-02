@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol AuthRepositoryProtocol {
+public protocol AuthRepositoryProtocol: RepositoryProtocol {
     func logout()
     func login(sessionId: String) async throws
 }
