@@ -1,5 +1,5 @@
 
-public enum AppConfigurationEntity {
+public enum AppConfigurationEntity: CaseIterable {
     case debug
     case qa
     case testFlight

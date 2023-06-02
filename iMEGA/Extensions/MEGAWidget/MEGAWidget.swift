@@ -6,6 +6,7 @@ import Firebase
 @main
 struct MEGAWidgetsBundle: SwiftUI.WidgetBundle {
     init() {
+        AppEnvironmentConfigurator.configAppEnvironment()
         FirebaseApp.configure()
         UncaughtExceptionHandler.registerHandler()
     }
