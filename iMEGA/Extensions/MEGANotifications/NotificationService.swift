@@ -27,6 +27,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     override init() {
         super.init()
+        AppEnvironmentConfigurator.configAppEnvironment()
         FirebaseApp.configure()
         UncaughtExceptionHandler.registerHandler()
         NotificationService.setupLogging()

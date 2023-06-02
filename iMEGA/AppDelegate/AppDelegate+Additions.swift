@@ -246,7 +246,7 @@ extension AppDelegate {
 // MARK: - Logger
 extension AppDelegate {
     @objc func enableLogsIfNeeded() {
-        let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appConfigurationRepository: AppConfigurationRepository.newRepo)
+        let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appEnvironment: AppEnvironmentUseCase.shared)
         if logUseCase.shouldEnableLogs() {
             enableLogs()
         }
@@ -260,7 +260,7 @@ extension AppDelegate {
     }
     
     @objc func removeSDKLoggerWhenInitChatIfNeeded() {
-        let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appConfigurationRepository: AppConfigurationRepository.newRepo)
+        let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appEnvironment: AppEnvironmentUseCase.shared)
 
         if logUseCase.shouldEnableLogs() {
             MEGASdkManager.sharedMEGASdk().remove(Logger.shared())

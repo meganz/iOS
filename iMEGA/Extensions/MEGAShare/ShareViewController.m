@@ -68,6 +68,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        [AppEnvironmentConfigurator configAppEnvironment];
         [FIRApp configure];
         [UncaughtExceptionHandler registerHandler];
     }

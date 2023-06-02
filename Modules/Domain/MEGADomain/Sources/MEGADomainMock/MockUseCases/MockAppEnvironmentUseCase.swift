@@ -1,0 +1,13 @@
+import MEGADomain
+
+public final class MockAppEnvironmentUseCase: AppEnvironmentUseCaseProtocol {
+    public var configuration: AppConfigurationEntity
+    
+    public init(configuration: AppConfigurationEntity = .debug) {
+        self.configuration = configuration
+    }
+    
+    public func config(_ configuration: AppConfigurationEntity) {
+        self.configuration = configuration
+    }
+}

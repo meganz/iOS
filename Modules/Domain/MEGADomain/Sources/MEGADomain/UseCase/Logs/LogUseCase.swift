@@ -4,17 +4,17 @@ public protocol LogUseCaseProtocol {
     func shouldEnableLogs() -> Bool
 }
 
-public struct LogUseCase<T: PreferenceUseCaseProtocol, U: AppConfigurationRepositoryProtocol>: LogUseCaseProtocol {
+public struct LogUseCase<T: PreferenceUseCaseProtocol, U: AppEnvironmentUseCaseProtocol>: LogUseCaseProtocol {
     @PreferenceWrapper(key: .logging, defaultValue: false)
     private var isLoggingEnabled: Bool
-    private var appConfigurationRepository: U
+    private var appEnvironment: U
     
-    public init(preferenceUseCase: T, appConfigurationRepository: U) {
-        self.appConfigurationRepository = appConfigurationRepository
+    public init(preferenceUseCase: T, appEnvironment: U) {
+        self.appEnvironment = appEnvironment
         $isLoggingEnabled.useCase = preferenceUseCase
     }
     
     public func shouldEnableLogs() -> Bool {
-        isLoggingEnabled || appConfigurationRepository.configuration == .testFlight || appConfigurationRepository.configuration == .qa
+        isLoggingEnabled || appEnvironment.configuration == .testFlight || appEnvironment.configuration == .qa
     }
 }

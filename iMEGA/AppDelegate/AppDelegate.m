@@ -99,6 +99,8 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [AppEnvironmentConfigurator configAppEnvironment];
+    
 #if defined(DEBUG) || defined(QA_CONFIG)
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];

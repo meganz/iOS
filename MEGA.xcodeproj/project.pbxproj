@@ -1560,6 +1560,9 @@
 		B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B6048912223CDA8400BA91F9 /* AssetFetchResult.m */; };
 		B6061FEC2897928D0094087E /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = B6061FEB2897928D0094087E /* MEGADomain */; };
+		B60C7B2D2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */; };
+		B60C7B2E2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */; };
+		B60C7B2F2A29CD5500AAA21F /* AppEnvironmentConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */; };
 		B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60D531A25FA940A003E9829 /* DiskFullBlockingViewController.swift */; };
 		B60DDC1621A7A7930097E4A3 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		B60F05E92514C022005133C2 /* XCTestCase+ActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */; };
@@ -1573,6 +1576,8 @@
 		B616D808254DFBA300712012 /* CameraUploadNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616D807254DFBA300712012 /* CameraUploadNodeAccess.swift */; };
 		B616D8342550C16700712012 /* NodeHandle+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616D8332550C16700712012 /* NodeHandle+Additions.swift */; };
 		B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6187807230FA42E006733D4 /* SingleCodeTextField.swift */; };
+		B619FA992A29D5FB008D7335 /* AppEnvironmentConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */; };
+		B619FA9A2A29D5FC008D7335 /* AppEnvironmentConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */; };
 		B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B61B815722D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m */; };
 		B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = B61F01C5220D37A400F4A917 /* DiskSpaceDetector.m */; };
 		B620C05E2845BB9A003CEEE7 /* PHAsset+CU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C9CB0C27FBC2220073BA1A /* PHAsset+CU.swift */; };
@@ -4054,6 +4059,7 @@
 		B6048911223CDA8400BA91F9 /* AssetFetchResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AssetFetchResult.h; sourceTree = "<group>"; };
 		B6048912223CDA8400BA91F9 /* AssetFetchResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AssetFetchResult.m; sourceTree = "<group>"; };
 		B6061FE82897909C0094087E /* MEGADomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGADomain; sourceTree = "<group>"; };
+		B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentConfigurator.swift; sourceTree = "<group>"; };
 		B60D531A25FA940A003E9829 /* DiskFullBlockingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskFullBlockingViewController.swift; sourceTree = "<group>"; };
 		B60DDC1421A7A7930097E4A3 /* MEGAConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAConstants.h; sourceTree = "<group>"; };
 		B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAConstants.m; sourceTree = "<group>"; };
@@ -9648,6 +9654,7 @@
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
 				A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */,
+				B60C7B2C2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -13119,6 +13126,7 @@
 				BF5E33912558D2890055395E /* FileExplorerGridCell.swift in Sources */,
 				BF5E33A02558D3EB0055395E /* FileExplorerGridCellViewModel.swift in Sources */,
 				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
+				B60C7B2D2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
 				837B179928815F7400A4D01B /* FileLinkViewController+Additions.swift in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				9D3563CE28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift in Sources */,
@@ -14141,6 +14149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B60C7B2F2A29CD5500AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
 				BFBFFD652A04692F00E4EB23 /* ChatConnectionStatus+Mapper.swift in Sources */,
 				BFBFFD682A046ED600E4EB23 /* ChatStateListener.swift in Sources */,
 				B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */,
@@ -14217,6 +14226,7 @@
 				83655A7A25938495001A0846 /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,
 				A8BAFCAC28B6381200ED4259 /* OfflineFileEntity+Mapper.swift in Sources */,
+				B619FA9A2A29D5FC008D7335 /* AppEnvironmentConfigurator.swift in Sources */,
 				A882983D29F186AE00DEDE98 /* OfflineFileFetcherRepository.swift in Sources */,
 				8375B77A25EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift in Sources */,
 				8375B77B25EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift in Sources */,
@@ -14344,6 +14354,7 @@
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				5BE689952417CC4F00462134 /* MEGANavigationController.m in Sources */,
+				B60C7B2E2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
 				BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */,
 				B6A6E1C1287CDE6600179806 /* MEGANode+Array.swift in Sources */,
 				C4C6A49A27A4632600873165 /* MegaNode+Display.swift in Sources */,
@@ -14486,6 +14497,7 @@
 				A86FB61B297AF30A00561DF8 /* TransferEntity+Mapper.swift in Sources */,
 				A86FB61D297AF3D500561DF8 /* TransferErrorEntity+Mapper.swift in Sources */,
 				A8C4754D299A66AF0074511F /* TransferRepository.swift in Sources */,
+				B619FA992A29D5FB008D7335 /* AppEnvironmentConfigurator.swift in Sources */,
 				A86FB61F297AF40500561DF8 /* TransferStageEntity+Mapper.swift in Sources */,
 				A86FB61E297AF3FE00561DF8 /* TransferStateEntity+Mapper.swift in Sources */,
 				A86FB61C297AF3AA00561DF8 /* TransferTypeEntity+Mapper.swift in Sources */,
@@ -15468,7 +15480,6 @@
 				);
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAShare/Supporting Files/MEGAShare-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
 					"SV_APP_EXTENSIONS=1",
 					"LTH_IS_APP_EXTENSION=1",
@@ -15971,6 +15982,7 @@
 				EXCLUDED_SOURCE_FILE_NAMES = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "QA_CONFIG=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -16017,7 +16029,6 @@
 					"$(inherited)",
 					MAIN_APP_TARGET,
 					"FLEXLAYOUT_SWIFT_PACKAGE=1",
-					"QA_CONFIG=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

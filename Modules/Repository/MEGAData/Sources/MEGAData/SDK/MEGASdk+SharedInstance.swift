@@ -1,13 +1,26 @@
 import MEGASdk
+import MEGADomain
 
 public extension MEGASdk {
 
     private enum Constants {
         static let appKey = "EVtjzb7R"
         static let MaximumNOFILE = 20000
-        static let userAgent = "MEGAiOS/\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "1")"
         static let MEGAGroupIdentifier = "group.mega.ios"
         static let MEGANotificationServiceExtensionCacheFolder =  "Library/Caches/NSE"
+        static var userAgent: String {
+            var agent = "MEGAiOS/\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") ?? "1")"
+            switch AppEnvironmentUseCase.shared.configuration {
+            case .debug:
+                agent.append(" MEGAEnv/Dev")
+            case .qa:
+                agent.append(" MEGAEnv/QA")
+            default:
+                break
+            }
+            
+            return agent
+        }
     }
     
     static let sharedSdk: MEGASdk = {

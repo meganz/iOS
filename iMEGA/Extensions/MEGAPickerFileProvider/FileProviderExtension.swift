@@ -14,6 +14,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     
     override init() {
         super.init()
+        AppEnvironmentConfigurator.configAppEnvironment()
 #if DEBUG
         MEGASdk.setLogLevel(.max)
 #endif
