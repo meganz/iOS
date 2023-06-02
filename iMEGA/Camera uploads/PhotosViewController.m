@@ -91,7 +91,7 @@
         self.editBarButtonItem.enabled = NO;
     }
     
-    [self.viewModel loadAllPhotos];
+    [self.viewModel loadAllPhotosWithSavedFilters];
     [self refreshMyAvatar];
     
     [self updateLimitedAccessBannerVisibility];

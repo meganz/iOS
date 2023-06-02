@@ -3009,6 +3009,8 @@ public enum Strings {
         public enum Filter {
           /// Choose type
           public static let chooseType = Strings.tr("Localizable", "cameraUploads.timeline.filter.chooseType")
+          /// Remember preferences
+          public static let rememberPreferences = Strings.tr("Localizable", "cameraUploads.timeline.filter.rememberPreferences")
           /// Show items from:
           public static let showItemsFrom = Strings.tr("Localizable", "cameraUploads.timeline.filter.showItemsFrom")
           public enum Location {

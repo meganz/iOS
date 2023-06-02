@@ -15,7 +15,7 @@ final class PhotosViewModelTests: XCTestCase {
         let usecase = MockPhotoLibraryUseCase(allPhotos: allPhotos,
                                               allPhotosFromCloudDriveOnly: allPhotosForCloudDrive,
                                               allPhotosFromCameraUpload: allPhotosForCameraUploads)
-        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase)
+        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase, userAttributeUseCase: MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .images, location: .cloudDrive, usePreference: true)))))
     }
     
     func testLoadSortOrderType() throws {
@@ -55,7 +55,7 @@ final class PhotosViewModelTests: XCTestCase {
         let usecase = MockPhotoLibraryUseCase(allPhotos: photos,
                                               allPhotosFromCloudDriveOnly: [],
                                               allPhotosFromCameraUpload: [])
-        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase)
+        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase, userAttributeUseCase: MockUserAttributeUseCase())
         
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
@@ -138,6 +138,25 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isSelectHidden)
     }
     
+    func testFilterType_whenCheckingSavedFilter_shouldReturnRightValues() {
+        XCTAssertEqual(PhotosFilterOptions.images, sut.filterType(from: .images))
+        XCTAssertEqual(PhotosFilterOptions.videos, sut.filterType(from: .videos))
+        XCTAssertEqual(PhotosFilterOptions.allMedia, sut.filterType(from: .allMedia))
+    }
+    
+    func testFilterLocation_whenCheckingSavedFilter_shouldReturnRightValues() {
+        XCTAssertEqual(PhotosFilterOptions.cloudDrive, sut.filterLocation(from: .cloudDrive))
+        XCTAssertEqual(PhotosFilterOptions.cameraUploads, sut.filterLocation(from: .cameraUploads))
+        XCTAssertEqual(PhotosFilterOptions.allLocations, sut.filterLocation(from: .allLocations))
+    }
+    
+    func testLoadAllPhotosWithSavedFilters_whenTheScreenAppear_shouldLoadTheExistingFilters() async {
+        sut.loadAllPhotosWithSavedFilters()
+        await sut.contentConsumptionAttributeLoadingTask?.value
+        XCTAssertEqual(sut.filterType, .images)
+        XCTAssertEqual(sut.filterLocation, .cloudDrive)
+    }
+    
     private func sampleNodesForAllLocations() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 0, hasThumbnail: true)
         let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
@@ -175,7 +194,7 @@ final class PhotosViewModelTests: XCTestCase {
                                               allPhotosFromCloudDriveOnly: [],
                                               allPhotosFromCameraUpload: [])
         return PhotosViewModel(photoUpdatePublisher: publisher,
-                               photoLibraryUseCase: usecase,
+                               photoLibraryUseCase: usecase, userAttributeUseCase: MockUserAttributeUseCase(),
                                featureFlagProvider: provider)
     }
 }

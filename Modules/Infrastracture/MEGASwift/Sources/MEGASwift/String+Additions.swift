@@ -10,8 +10,12 @@ public extension String {
         data(using: .utf8)?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
     }
     
+    var base64DecodedData: Data? {
+        Data(base64Encoded: addPaddingIfNecessaryForBase64String())
+    }
+    
     var base64Decoded: String? {
-        guard let data = Data(base64Encoded: addPaddingIfNecessaryForBase64String()) else { return nil }
+        guard let data = base64DecodedData else { return nil }
         return String(data: data, encoding: .utf8)
     }
 

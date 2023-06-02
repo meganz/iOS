@@ -29,4 +29,6 @@ public enum UserAttributeEntity: Sendable {
     case jsonSyncConfigData
     case drivesName
     case noCallKit
+    case appsPreferences
+    case contentConsumptionPreferences
 }

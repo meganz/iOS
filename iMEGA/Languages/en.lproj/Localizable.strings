@@ -578,6 +578,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="Cloud drive";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Camera uploads";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="Remember preferences";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Video uploads";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
