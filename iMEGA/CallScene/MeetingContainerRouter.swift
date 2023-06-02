@@ -64,10 +64,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func build() -> UIViewController {
-        let authUseCase = AuthUseCase(
-            repo: AuthRepository(sdk: MEGASdkManager.sharedMEGASdk()),
-            credentialRepo: CredentialRepository.newRepo
-        )
         let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
         let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
@@ -77,7 +73,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   callCoordinatorUseCase: CallCoordinatorUseCase(),
                                                   accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                                                  authUseCase: authUseCase,
+                                                  authUseCase: DIContainer.authUseCase,
                                                   noUserJoinedUseCase: meetingNoUserJoinedUseCase,
                                                   analyticsEventUseCase: analyticsEventUseCase,
                                                   megaHandleUseCase: megaHandleUseCase)

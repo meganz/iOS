@@ -42,7 +42,7 @@ struct UserAttributeRepository: UserAttributeRepositoryProtocol {
                     continuation.resume(throwing: CancellationError())
                     return
                 }
-                continuation.resume(with: result.map{_ in })
+                continuation.resume(with: result.map { _ in })
             })
         }
     }

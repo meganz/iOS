@@ -3,6 +3,10 @@ import MEGADomain
 import MEGASdk
 
 public struct AuthRepository: AuthRepositoryProtocol {
+    public static var newRepo: AuthRepository {
+        AuthRepository(sdk: MEGASdk.sharedSdk)
+    }
+    
     private let sdk: MEGASdk
     
     public init(sdk: MEGASdk) {

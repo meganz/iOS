@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAData
+import MEGAPresentation
 
 @objc enum SMSVerificationType: Int {
     case unblockAccount
@@ -32,7 +33,7 @@ final class SMSVerificationViewRouter: NSObject, SMSVerificationViewRouting {
         let vm = SMSVerificationViewModel(router: self,
                                           smsUseCase: smsUseCase,
                                           achievementUseCase: AchievementUseCase(repo: AchievementRepository.newRepo),
-                                          authUseCase: AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository.newRepo),
+                                          authUseCase: DIContainer.authUseCase,
                                           verificationType: verificationType)
         
         let vc = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "SMSVerificationViewControllerID") as! SMSVerificationViewController
