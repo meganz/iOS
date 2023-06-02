@@ -63,6 +63,31 @@ platform :ios do
     end
   end
 
+  desc "download device id's from firebase"
+  lane :download_device_ids_from_firebase do
+    firebase_app_distribution_get_udids(
+      service_credentials_file: "service_credentials_file.json",
+      app: "1:195061878697:ios:ab4f504247d0522a203eb8",
+      output_file: "./devices.txt"
+    ) 
+  end
+
+  desc "upload device id's to Apple developer portal"
+  lane :upload_device_ids_to_developer_portal do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+      is_key_content_base64: true,
+      in_house: false
+    )
+
+    register_devices(
+      api_key: api_key,
+      devices_file: "./devices.txt"
+    )
+  end
+
   desc "creates temporary keychain"
   lane :create_temporary_keychain do
     delete_keychain(

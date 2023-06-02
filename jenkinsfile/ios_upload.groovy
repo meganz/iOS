@@ -152,6 +152,26 @@ pipeline {
                         }
                     }
                 }
+
+                stage('Download device ids from firebase and upload it to developer portal') {
+                    when { 
+                        anyOf {
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices' 
+                        }
+                    }
+                    steps {
+                        gitlabCommitStatus(name: 'Download device ids from firebase and upload it to developer portal') {
+                            injectEnvironments({
+                                withCredentials([file(credentialsId: 'ios_firebase_credentials', variable: 'firebase_credentials')]) {
+                                    sh "cp \$firebase_credentials service_credentials_file.json"
+                                    sh "bundle exec fastlane download_device_ids_from_firebase"
+                                    sh "bundle exec fastlane upload_device_ids_to_developer_portal"
+                                    sh "rm service_credentials_file.json"
+                                } 
+                            })
+                        }
+                    }  
+                }
             }
         }
         
