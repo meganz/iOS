@@ -31,6 +31,22 @@ Upload symbols to crashlytics after running the gym
 
 Upload symbols to crashlytics with dsym path as parameter
 
+### ios download_device_ids_from_firebase
+
+```sh
+[bundle exec] fastlane ios download_device_ids_from_firebase
+```
+
+download device id's from firebase
+
+### ios upload_device_ids_to_developer_portal
+
+```sh
+[bundle exec] fastlane ios upload_device_ids_to_developer_portal
+```
+
+upload device id's to Apple developer portal
+
 ### ios create_temporary_keychain
 
 ```sh
@@ -142,14 +158,6 @@ Run unit tests for main app
 ```
 
 Generate code coverage for main app
-
-### ios module_coverage
-
-```sh
-[bundle exec] fastlane ios module_coverage
-```
-
-
 
 ### ios download_metadata
 
