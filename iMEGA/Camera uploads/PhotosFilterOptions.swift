@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 struct PhotosFilterOptionKeys {
     static let cameraUploadTimeline = "cameraUploadTimeline"
@@ -20,6 +21,24 @@ enum PhotosFilterType: CaseIterable {
     }
 }
 
+extension PhotosFilterType {
+    func toContentConsumptionMediaType() -> ContentConsumptionMediaType {
+        switch self {
+        case .allMedia: return .allMedia
+        case .images: return .images
+        case .videos: return .videos
+        }
+    }
+    
+    static func toFilterType(from contentConsumptionMediaType: ContentConsumptionMediaType) -> PhotosFilterType {
+        switch contentConsumptionMediaType {
+        case .allMedia: return .allMedia
+        case .images: return .images
+        case .videos: return .videos
+        }
+    }
+}
+
 enum PhotosFilterLocation: CaseIterable {
     case allLocations
     case cloudDrive
@@ -33,6 +52,24 @@ enum PhotosFilterLocation: CaseIterable {
         case .cameraUploads: location = Strings.Localizable.CameraUploads.Timeline.Filter.Location.cameraUploads
         }
         return location
+    }
+}
+
+extension PhotosFilterLocation {
+    func toContentConsumptionMediaLocation() -> ContentConsumptionMediaLocation {
+        switch self {
+        case .allLocations: return .allLocations
+        case .cloudDrive: return .cloudDrive
+        case .cameraUploads: return .cameraUploads
+        }
+    }
+    
+    static func toFilterLocation(from contentConsumptionMediaLocation: ContentConsumptionMediaLocation) -> PhotosFilterLocation {
+        switch contentConsumptionMediaLocation {
+        case .allLocations: return .allLocations
+        case .cloudDrive: return .cloudDrive
+        case .cameraUploads: return .cameraUploads
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import MEGADomain
 
 @objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published var library: PhotoLibrary
@@ -13,7 +14,10 @@ import SwiftUI
     let contentConfig: PhotoLibraryContentConfig?
     
     lazy var selection = PhotoSelection(selectLimit: contentConfig?.selectLimit)
-    lazy var filterViewModel = PhotoLibraryFilterViewModel(contentMode: contentMode)
+    lazy var filterViewModel = PhotoLibraryFilterViewModel(
+        contentMode: contentMode,
+        userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo)
+    )
     
     // MARK: - Init
     init(library: PhotoLibrary, contentMode: PhotoLibraryContentMode = .library, contentConfig: PhotoLibraryContentConfig? = nil) {

@@ -22,6 +22,7 @@ struct PhotoLibraryFilterView: View {
         )
         
         viewModel.applyFilters()
+        Task { await viewModel.saveFilters() }
         isPresented.toggle()
     }
     
@@ -78,6 +79,18 @@ struct PhotoLibraryFilterView: View {
         }
     }
     
+    var rememberPreferenceView: some View {
+        HStack {
+            Toggle(Strings.Localizable.CameraUploads.Timeline.Filter.rememberPreferences, isOn: $viewModel.selectedSavePreferences)
+                .toggleStyle(SwitchToggleStyle(tint: Color(Colors.Photos.filterTypeSelectionBackground.color)))
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .foregroundColor(Color(Colors.Photos.filterLocationItemForeground.color))
+        .background(Color(Colors.Photos.filterLocationItemBackground.color))
+        .cornerRadius(8)
+    }
+    
     var body: some View {
         GeometryReader { geo in
             VStack(spacing: 35) {
@@ -85,6 +98,8 @@ struct PhotoLibraryFilterView: View {
                 VStack(spacing: 20) {
                     typeView(geo)
                     locationView
+                    rememberPreferenceView
+                        .padding(.top, 12)
                 }
                 .padding(.horizontal, 5)
                 Spacer()
@@ -96,6 +111,7 @@ struct PhotoLibraryFilterView: View {
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             viewModel.setSelectedFiltersToAppliedFiltersIfRequired()
+            Task { await viewModel.applySavedFilters() }
         }
     }
 }

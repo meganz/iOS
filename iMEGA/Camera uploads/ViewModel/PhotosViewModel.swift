@@ -12,6 +12,9 @@ final class PhotosViewModel: NSObject {
     private var featureFlagProvider: FeatureFlagProviderProtocol
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: PhotoLibraryUseCaseProtocol
+    private let userAttributeUseCase: UserAttributeUseCaseProtocol
+    
+    var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
     
     var cameraUploadExplorerSortOrderType: SortOrderType = .newest {
         didSet {
@@ -38,10 +41,12 @@ final class PhotosViewModel: NSObject {
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
+        userAttributeUseCase: UserAttributeUseCaseProtocol,
         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
+        self.userAttributeUseCase = userAttributeUseCase
         self.featureFlagProvider = featureFlagProvider
         super.init()
         cameraUploadExplorerSortOrderType = sortOrderType(forKey: .cameraUploadExplorerFeed)
@@ -54,6 +59,23 @@ final class PhotosViewModel: NSObject {
                 guard self?.shouldProcessOnNodesUpdate(nodeList: nodeList, container: container) == true else { return }
                 await self?.loadPhotos()
             }
+        }
+    }
+    
+    @objc func loadAllPhotosWithSavedFilters() {
+        contentConsumptionAttributeLoadingTask = Task { [weak self] in
+            guard let self = self else { return }
+            
+            do {
+                if let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
+                    filterType = filterType(from: timelineFilters.filterType)
+                    filterLocation = filterLocation(from: timelineFilters.filterLocation)
+                }
+            } catch {
+                MEGALogError("[Timeline Filter] when to load saved filters \(error.localizedDescription)")
+            }
+
+            loadAllPhotos()
         }
     }
     
@@ -80,6 +102,22 @@ final class PhotosViewModel: NSObject {
         self.filterType = filterType
         self.filterLocation = filterLocation
         loadAllPhotos()
+    }
+    
+    func filterType(from type: PhotosFilterType) -> PhotosFilterOptions {
+        switch type {
+        case .images: return .images
+        case .videos: return .videos
+        default: return .allMedia
+        }
+    }
+    
+    func filterLocation(from location: PhotosFilterLocation) -> PhotosFilterOptions {
+        switch location {
+        case .cloudDrive: return .cloudDrive
+        case .cameraUploads: return .cameraUploads
+        default: return .allLocations
+        }
     }
     
     // MARK: - Private
@@ -118,10 +156,6 @@ final class PhotosViewModel: NSObject {
         }
         
         return false
-    }
-    
-    private func loadSortOrderType() {
-
     }
 }
 

@@ -38,6 +38,8 @@ final class UserAttributeEntityMappingTests: XCTestCase {
             case .jsonSyncConfigData: XCTAssertEqual(type.toMEGAUserAttribute(), .jsonSyncConfigData)
             case .drivesName: XCTAssertEqual(type.toMEGAUserAttribute(), .drivesName)
             case .noCallKit: XCTAssertEqual(type.toMEGAUserAttribute(), .noCallKit)
+            case .appsPreferences: XCTAssertEqual(type.toMEGAUserAttribute(), .appsPreferences)
+            case .contentConsumptionPreferences: XCTAssertEqual(type.toMEGAUserAttribute(), .contentConsumptionPreferences)
             }
         }
     }

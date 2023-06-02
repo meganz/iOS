@@ -139,7 +139,8 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
             let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
             let viewModel = PhotosViewModel(
                 photoUpdatePublisher: photoUpdatePublisher,
-                photoLibraryUseCase: photoLibraryUseCase
+                photoLibraryUseCase: photoLibraryUseCase,
+                userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo)
             )
             photoViewController.viewModel = viewModel
             photoViewController.photoUpdatePublisher = photoUpdatePublisher

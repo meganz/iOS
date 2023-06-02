@@ -32,6 +32,8 @@ extension UserAttributeEntity {
         case .jsonSyncConfigData: return MEGAUserAttribute.jsonSyncConfigData
         case .drivesName: return MEGAUserAttribute.drivesName
         case .noCallKit: return MEGAUserAttribute.noCallKit
+        case .appsPreferences: return MEGAUserAttribute.appsPreferences
+        case .contentConsumptionPreferences: return MEGAUserAttribute.contentConsumptionPreferences
         }
     }
 }
