@@ -1,6 +1,6 @@
 import UIKit
 
-/// A protocol that traces application's trait enviroment updating.
+/// A protocol that traces application's trait environment updating.
 public protocol TraitEnviromentAware {
 
     /// Handles TraitCollection updating.
