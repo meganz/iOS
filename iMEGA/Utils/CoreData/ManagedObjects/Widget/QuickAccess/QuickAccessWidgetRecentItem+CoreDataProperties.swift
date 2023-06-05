@@ -2,7 +2,6 @@
 import Foundation
 import CoreData
 
-
 extension QuickAccessWidgetRecentItem {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<QuickAccessWidgetRecentItem> {

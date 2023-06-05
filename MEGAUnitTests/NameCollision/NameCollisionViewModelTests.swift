@@ -12,7 +12,6 @@ final class NameCollisionViewModelTests: XCTestCase {
         NameCollisionEntity(parentHandle: parentHandle, name: "Node3", isFile: Bool.random())
     ]
     
-    
     func testAcion_cancel() {
         let router = MockNameCollisionRouter()
         let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: MockNameCollisionUseCase(), fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: [], collisionType: .upload)

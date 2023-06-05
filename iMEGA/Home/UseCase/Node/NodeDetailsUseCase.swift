@@ -29,7 +29,6 @@ final class NodeDetailUseCase: NodeDetailUseCaseProtocol {
         sdkNodeClient.findOwnerNode(node)?.toNodeEntity()
     }
 
-    
     func loadThumbnail(
         of node: HandleEntity,
         completion: @escaping (UIImage?) -> Void

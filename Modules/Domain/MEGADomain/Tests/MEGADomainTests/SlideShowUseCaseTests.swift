@@ -30,8 +30,7 @@ final class SlideShowUseCaseTests: XCTestCase {
         
         try XCTUnwrap(sut.saveConfiguration(config: newConfig1, forUser: HandleEntity(1)))
         try XCTUnwrap(sut.saveConfiguration(config: newConfig2, forUser: HandleEntity(2)))
-        
-        
+          
         let loadNewConfig1 = try XCTUnwrap(sut.loadConfiguration(forUser: HandleEntity(1)))
         let loadNewConfig2 = try XCTUnwrap(sut.loadConfiguration(forUser: HandleEntity(2)))
         

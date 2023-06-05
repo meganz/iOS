@@ -13,7 +13,6 @@ final class WarningViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.warningType.description, Strings.Localizable.CameraUploads.Warning.limitedAccessToPhotoMessage)
     }
     
-    
     func test_limitedPhotoAccess_tapAction() {
         let mockRouter = MockWarningViewRouter()
         let viewModel = WarningViewModel(warningType: .limitedPhotoAccess, router: mockRouter)

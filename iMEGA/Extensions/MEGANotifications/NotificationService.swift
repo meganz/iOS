@@ -156,7 +156,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 return readyToPost
             }
 
-            
             MEGASdk.sharedNSE.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
                 if let base64Handle = node.base64Handle,
                    let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier:base64Handle) {

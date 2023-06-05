@@ -22,7 +22,6 @@ final class TransferDelegate: NSObject, MEGATransferDelegate {
         self.completion = completion
     }
 
-
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
         if let start = start {
             start(transfer.toTransferEntity())

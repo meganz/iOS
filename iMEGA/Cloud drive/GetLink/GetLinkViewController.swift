@@ -844,7 +844,6 @@ extension GetLinkViewController: UITableViewDelegate {
         
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
-
         var isMultiLink = getLinkVM.multilink
         if let getLinkViewModel {
             isMultiLink = getLinkViewModel.isMultiLink

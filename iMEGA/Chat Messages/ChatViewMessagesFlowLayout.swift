@@ -42,7 +42,6 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             return super.layoutAttributesForElements(in: rect)
         }
         
-        
         var editingAttributesinRect: [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
         
         for attributes in attributesArray where attributes.representedElementCategory == .cell {
@@ -103,8 +102,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         }
         return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
     }
-    
-    
+     
     override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         if isSectionReservedForTypingIndicator(indexPath.section) {
             return typingIndicatorSizeCalculator

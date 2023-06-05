@@ -110,7 +110,6 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
             return
         }
         
-        
         completion(defaultFolderImage(forNode: node))
     }
 

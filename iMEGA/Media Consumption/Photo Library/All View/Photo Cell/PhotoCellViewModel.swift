@@ -152,7 +152,6 @@ class PhotoCellViewModel: ObservableObject {
             .assign(to: &$thumbnailContainer)
     }
     
-    
     private func isShowingThumbnail(_ container: some ImageContaining) -> Bool {
         thumbnailContainer.isEqual(container)
     }

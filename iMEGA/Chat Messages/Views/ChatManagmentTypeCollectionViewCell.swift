@@ -13,7 +13,6 @@ class ChatManagmentTypeCollectionViewCell: TextMessageCell {
     }
 }
 
-
 open class ChatManagmentTypeCollectionViewSizeCalculator: TextMessageSizeCalculator {
    
     open override func messageContainerSize(for message: MessageType) -> CGSize {

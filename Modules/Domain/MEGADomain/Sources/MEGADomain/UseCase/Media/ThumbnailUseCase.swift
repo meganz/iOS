@@ -34,13 +34,11 @@ public protocol ThumbnailUseCaseProtocol {
     /// - Returns: A `Future` publisher of the url of the cached thumbnail in thumbnail repository. Or it fails with `ThumbnailErrorEntity` error.
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, ThumbnailErrorEntity>
     
-    
     /// Request high quality preview of a node. It will publish values multiple times until the high quality preview URL is published.
     /// For example, it may publish this value flow: "thumbnail URL" -> "Preview URL"
     /// - Parameter node: The node entity for which the preview to be loaded
     /// - Returns: A publisher to publish preview URL, and it will publish any low quality thumbnail URL first if they are available
     func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, ThumbnailErrorEntity>
-    
     
     /// Request thumbnail and preview of a node. It will publish values multiple times until both thumbnail and preview are loaded.
     /// For example, it may publish this value flow: "(nil, nil)" -> "(thumbnail URL, nil)" -> "(thumbnail URL, Preview URL)".

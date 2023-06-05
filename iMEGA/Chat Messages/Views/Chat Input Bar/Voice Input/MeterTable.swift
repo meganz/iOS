@@ -1,5 +1,4 @@
 
-
 /*
 File: MeterTable.h
 Abstract: Class for handling conversion from linear scale to dB

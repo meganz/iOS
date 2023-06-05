@@ -625,7 +625,6 @@ class ChatViewController: MessagesViewController {
             return false
         }
         
-        
         return messages[safe: indexPath.section]?.sentDate.isSameDay(date: previousMessageDate) ?? false
     }
     

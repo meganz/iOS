@@ -41,7 +41,6 @@ final class AccountRepositoryTests: XCTestCase {
         assert(whenUserEmail: "any-email@mega.com", isGuestShouldBe: false)
     }
     
-    
     func testIsLoggedIn() {
         XCTAssertTrue(makeSUT(sdk: MockSdk(isLoggedIn: 1)).isLoggedIn())
         XCTAssertFalse(makeSUT(sdk: MockSdk(isLoggedIn: 0)).isLoggedIn())

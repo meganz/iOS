@@ -113,7 +113,6 @@ class ExplorerToolbarConfigurator {
             return enable(false, barButtonItems: barButtonItems)
         }
         
-                
         switch lowestAccessLevel(forNodes: nodes) {
         case .accessRead, .accessReadWrite:
             return enable(true, barButtonItems: [downloadItem, flexibleItem, copyItem])

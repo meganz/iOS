@@ -16,7 +16,6 @@ class TransferActionViewController: NodeActionViewController {
         }
     }
     
-
     func configureTransferHeaderView() {
         guard let transfer = transfer else {
             return

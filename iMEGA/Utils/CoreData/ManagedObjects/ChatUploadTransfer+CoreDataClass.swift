@@ -1,8 +1,6 @@
 
-
 import Foundation
 import CoreData
-
 
 public class ChatUploadTransfer: NSManagedObject {
     

@@ -545,7 +545,6 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
-        
         let exp = expectation(description: "Should update navigation title")
         sut.invokeCommand = {
             switch $0 {
@@ -700,7 +699,6 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
-
         let message = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
             .replacingOccurrences(of: "[A]", with: album.name)
         

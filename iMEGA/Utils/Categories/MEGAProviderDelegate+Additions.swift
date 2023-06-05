@@ -10,7 +10,6 @@ extension MEGAProviderDelegate {
         ).start()
     }
     
-    
     @objc func configureAudioSession() {
         RTCDispatcher.dispatchAsync(on: RTCDispatcherQueueType.typeAudioSession) {
             let audioSession = RTCAudioSession.sharedInstance()

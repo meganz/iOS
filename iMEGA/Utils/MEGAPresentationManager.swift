@@ -4,7 +4,6 @@ import PureLayout
 /// The current custom animation has a dimmed view as background and the view controller is presented from the bottom. In future designs could be needed more animations and should adapt the code.
 /// The use is simple, configure presentationStyle to UIModalPresentationCustom and save a strong reference of MEGAPresentationManager and assign as view controller transitioningDelegate.
 
-
 class MEGAPresentationManager: NSObject, UIViewControllerTransitioningDelegate {
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController ) -> UIPresentationController? {

@@ -111,7 +111,6 @@ final class PSAView: UIView, ViewType {
         viewModel.dispatch(.dimiss(psaView: self, psaEntity: psaEntity))
     }
     
-    
     @IBAction func rightButtonTapped(_ sender: UIButton) {
         guard let psaEntity = psaEntity else {
             MEGALogDebug("PSA Entity was nil")
@@ -121,7 +120,6 @@ final class PSAView: UIView, ViewType {
         viewModel.dispatch(.dimiss(psaView: self, psaEntity: psaEntity))
     }
 }
-
 
 // MARK: - TraitEnviromentAware
 

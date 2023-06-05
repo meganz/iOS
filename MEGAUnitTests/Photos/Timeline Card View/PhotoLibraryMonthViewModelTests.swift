@@ -63,8 +63,7 @@ final class PhotoLibraryMonthViewModelTests: XCTestCase {
                 didFinishPhotoCardScrollPositionCalculationNotificationCount += 1
             }
             .store(in: &subscriptions)
-        
-        
+         
         sut.libraryViewModel.selectedMode = .all
         XCTAssertNil(sut.libraryViewModel.cardScrollPosition)
         XCTAssertNil(sut.libraryViewModel.photoScrollPosition)

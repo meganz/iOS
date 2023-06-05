@@ -24,7 +24,6 @@ extension Reader where
     }
 }
 
-
 private func identity<Item>(_ type: Item.Type) -> Reader<[Item], [Item]> {
     Reader { $0 }
 }

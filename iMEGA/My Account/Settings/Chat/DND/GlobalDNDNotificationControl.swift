@@ -76,7 +76,6 @@ extension GlobalDNDNotificationControl {
     }
 }
 
-
 // MARK: - DNDTurnOnAlertControllerAction extension
 
 extension GlobalDNDNotificationControl: DNDTurnOnAlertControllerAction {

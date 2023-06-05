@@ -30,7 +30,6 @@ struct ChatRoomUserRepository: ChatRoomUserRepositoryProtocol {
                 continuation.resume(returning: name)
             }
             
-            
             MEGALogDebug("Load user name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
             sdk.loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate, queueType: .globalBackground)
         }

@@ -1,5 +1,4 @@
 
-
 import UIKit
 import simd
 
@@ -194,7 +193,6 @@ class ChatInputBar: UIView {
         return messageInputBar.isTextViewTheFirstResponder()
     }
 
-    
     // MARK: - Interface methods.
     
     func set(text: String, showKeyboard: Bool = true) {
@@ -433,7 +431,6 @@ extension ChatInputBar: UIGestureRecognizerDelegate {
         return true
     }
 }
-
 
 extension ChatInputBar: MessageInputBarDelegate {
     func didPasteImage(_ image: UIImage) {

@@ -2,7 +2,6 @@
 import Foundation
 import CoreData
 
-
 public class QuickAccessWidgetRecentItem: NSManagedObject {
 
     static func createInstance(withContext context: NSManagedObjectContext) -> QuickAccessWidgetRecentItem {

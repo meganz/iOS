@@ -117,7 +117,6 @@ final class ReportIssueViewModelTests: XCTestCase {
     }
 }
 
-
 final class MockReportIssueViewRouter: ReportIssueViewRouting {
     var dismiss_calledTimes = 0
 

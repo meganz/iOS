@@ -1,5 +1,4 @@
 
-
 @objc class ChatUploader: NSObject {
     @objc static let sharedInstance = ChatUploader()
     

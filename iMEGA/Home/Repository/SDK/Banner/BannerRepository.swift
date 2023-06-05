@@ -27,7 +27,6 @@ struct BannerRepository: BannerRepositoryProtocol {
             }
         }
 
-
         func mapValue(request: MEGARequest) -> [BannerEntity] {
             request.bannerList.bannerEntities
         }

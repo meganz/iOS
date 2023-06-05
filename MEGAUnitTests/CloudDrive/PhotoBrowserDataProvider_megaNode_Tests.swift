@@ -7,7 +7,6 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
         let currentPhoto = MockNode(handle: 1)
         let allPhotos = [MockNode(handle: 2), MockNode(handle: 3), MockNode(handle: 1)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.currentIndex, 2)
         XCTAssertEqual(sut.count, 3)
@@ -58,7 +57,6 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
         let currentPhoto = MockNode(handle: 1)
         let allPhotos = [MockNode(handle: 2), MockNode(handle: 3), MockNode(handle: 1)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertFalse(sut.shouldUpdateCurrentIndex(toIndex: 3))
         XCTAssertFalse(sut.shouldUpdateCurrentIndex(toIndex: -1))
@@ -68,7 +66,6 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
     func test_shouldUpdateCurrentIndex_inRange() {
         let currentPhoto = MockNode(handle: 3)
         let allPhotos = [MockNode(handle: 2), MockNode(handle: 3), MockNode(handle: 1)]
-        
         
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertFalse(sut.shouldUpdateCurrentIndex(toIndex: 1))
@@ -82,13 +79,11 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                     MockNode(handle: 9, changeType: .parent),
@@ -107,13 +102,11 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 8),
                          MockNode(handle: 7)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 4)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .attributes),
                                                     MockNode(handle: 9, changeType: .publicLink),
@@ -131,14 +124,12 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
         let allPhotos = [MockNode(handle: 10),
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
-        
-        
+         
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .publicLink),
                                                     MockNode(handle: 9, changeType: .parent),
@@ -157,14 +148,12 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
-        
+                
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                     MockNode(handle: 9, changeType: .owner),
                                                     MockNode(handle: 8, changeType: .name)])
@@ -181,14 +170,12 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
-        
+         
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .publicLink),
                                                     MockNode(handle: 9, changeType: .name),
                                                     MockNode(handle: 8, changeType: .parent)])
@@ -206,13 +193,11 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 4)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 2)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                     MockNode(handle: 9, changeType: .removed),
@@ -230,13 +215,11 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                     MockNode(handle: 9, changeType: .removed),
@@ -255,14 +238,12 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9),
                          MockNode(handle: 8),
                          MockNode(handle: 7)]
-        
-        
+         
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 5)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 2)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .name),
                                                     MockNode(handle: 9, changeType: .removed),
@@ -280,13 +261,11 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let removingNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .name),
                                                     MockNode(handle: 9, changeType: .parent),
@@ -304,13 +283,11 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let updateNodeList = MockNodeList(nodes: [MockNode(handle: 10, changeType: .removed),
                                                   MockNode(handle: 9, changeType: .name),
@@ -328,13 +305,11 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
                          MockNode(handle: 9, name: "9"),
                          MockNode(handle: 8, name: "8")]
         
-        
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
-        
         
         let updateNodeList = MockNodeList(nodes: [MockNode(handle: 10, name: "10-update", changeType: .attributes),
                                                   MockNode(handle: 9, name: "9-update", changeType: .name),
@@ -356,7 +331,6 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
         let allPhotos = [MockNode(handle: 10),
                          MockNode(handle: 9),
                          MockNode(handle: 8)]
-        
         
         let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
         XCTAssertEqual(sut.count, 3)

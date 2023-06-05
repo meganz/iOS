@@ -69,7 +69,6 @@ extension PhotosViewController {
         UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(toggleEditing))
     }
     
-    
     @objc func toggleEditing() {
         setEditing(!isEditing, animated: true)
         setupNavigationBarButtons()

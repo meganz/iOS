@@ -28,7 +28,6 @@ struct DarkColorThemeFactory: ColorFactory {
         }
     }
 
-
     func tintColor(_ style: MEGAColor.Tint) -> ThemeColor {
         switch style {
         case .primary: return ThemeColor(red: 209, green: 209, blue: 209)

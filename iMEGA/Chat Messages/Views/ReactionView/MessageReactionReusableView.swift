@@ -49,7 +49,6 @@ extension MessageReactionReusableView: ReactionEmojiViewDelegate {
         delegate.addMorePressed(chatMessage: chatMessage, sender:sender)
     }
     
-    
     func emojiLongPressed(_ emoji: String, sender: UIView) {
         guard let delegate = delegate, let chatMessage = chatMessage else {
             return

@@ -19,8 +19,6 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
                                                                highlightedAttributes: [.foregroundColor: UIColor.mnz_label(),
                                                                                        .font: UIFont.preferredFont(style: .body, weight: .semibold)])
         
-        
-        
         avatarImageView.mnz_setImage(forUserHandle: user.handle, name: userDisplayName)
         
         onlineStatusView.backgroundColor = UIColor.mnz_color(for: MEGASdkManager.sharedMEGAChatSdk().userOnlineStatus(user.handle))

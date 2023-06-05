@@ -20,7 +20,6 @@ final class SpotlightIndexer: NSObject {
         return queue
     }()
     
-    
     private enum Constants {
         static let favouritesId = "favourites"
     }

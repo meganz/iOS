@@ -33,7 +33,6 @@ enum MEGAPlanUpgradeAdvice {
     }
 }
 
-
 private struct QueryConstraint {
     var run: ([MEGAPlan]) -> [MEGAPlan]
 

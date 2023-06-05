@@ -111,7 +111,6 @@ class FeatureFlagViewModelTests: XCTestCase {
         sut.featureFlagList = featureListWithRemovedFeatures
         sut.cleanSavedFeatureFlags()
         
-        
         XCTAssertEqual(Set(mockUseCase.savedFeatureList), Set(featureListWithRemovedFeatures))
     }
 }

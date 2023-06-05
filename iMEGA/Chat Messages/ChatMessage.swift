@@ -20,7 +20,6 @@ struct ChatMessage {
         self.chatRoom = chatRoom
     }
     
- 
 }
 
 extension ChatMessage: MessageType {

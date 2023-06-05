@@ -31,7 +31,6 @@ import MEGADomain
 
     private override init() { super.init() }
 
-    
     @objc func startCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
         self.chatOnlineListener = ChatOnlineListener(
             chatId: chatId,
@@ -301,7 +300,6 @@ extension CallAvailabilityListener: MEGAChatCallDelegate {
         }
     }
 }
-
 
 private final class CallInProgressListener: NSObject {
     private let chatId: UInt64

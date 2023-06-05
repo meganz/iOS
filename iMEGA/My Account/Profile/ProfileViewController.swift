@@ -398,7 +398,6 @@ enum SessionSectionRow: Int {
     }
 }
 
-
 // MARK: - UITableViewDataSource
 
 extension ProfileViewController: UITableViewDataSource {

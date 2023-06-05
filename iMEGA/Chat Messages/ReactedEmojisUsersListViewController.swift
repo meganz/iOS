@@ -68,7 +68,6 @@ class ReactedEmojisUsersListViewController: UIViewController {
         add(viewController: reactedUsersListPageViewController)
     }
     
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0, animated: false)
@@ -187,7 +186,6 @@ extension ReactedEmojisUsersListViewController: PanModalPresentable {
     var shortFormHeight: PanModalHeight {
         return isShortFormEnabled ? .contentHeight(300) : longFormHeight
     }
-    
     
     var longFormHeight: PanModalHeight {
         return .contentHeight(view.bounds.height)

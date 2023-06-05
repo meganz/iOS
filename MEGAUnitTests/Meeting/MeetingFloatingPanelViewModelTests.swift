@@ -565,7 +565,6 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         
     }
     
-    
     func testAction_turnCameraOffCamera() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let callUseCase = MockCallUseCase(call: CallEntity())

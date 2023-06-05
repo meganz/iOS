@@ -118,8 +118,7 @@ final class SMSVerificationViewModelTests: XCTestCase {
         test(viewModel: sut,
              action: SMSVerificationAction.sendCodeToPhoneNumber("+64273142791", regionCode: "NZ"),
              expectedCommands: [.startLoading, .finishLoading])
-        
-        
+            
         let routerExpectation = expectation(description: "goToVerificationCode")
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
             routerExpectation.fulfill()

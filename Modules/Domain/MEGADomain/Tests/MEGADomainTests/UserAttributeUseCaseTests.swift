@@ -2,7 +2,6 @@ import XCTest
 import MEGADomain
 import MEGADomainMock
 
-
 final class UserAttributeUseCaseTest: XCTestCase {
     func testUserAttribute_UpdateUserName() async throws {
         let repo = MockUserAttributeRepository()

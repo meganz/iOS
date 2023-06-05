@@ -73,7 +73,6 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         )
         viewModel.loadChatRoomsIfNeeded()
 
-        
         let expectation = expectation(description: "Compare the past meetings")
         subscription = viewModel
             .$displayChatRooms

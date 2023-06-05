@@ -590,7 +590,6 @@ extension ChatViewController: ChatInputBarDelegate {
     }
 }
 
-
 extension ChatViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,
@@ -610,7 +609,6 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
         return AddToChatViewAnimator(type: .dismiss)
     }
 }
-
 
 extension ChatViewController: AddToChatViewControllerDelegate {
     func showScanDoc() {

@@ -44,5 +44,4 @@ class MessageOptionItemTableCell: UITableViewCell {
         contentView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
     }
     
-    
 }

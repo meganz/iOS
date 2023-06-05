@@ -13,7 +13,6 @@ public struct MockCookieSettingsUseCase: CookieSettingsUseCaseProtocol {
         self.setCookieSettings = setCookieSettings
     }
     
-    
     public func cookieBannerEnabled() -> Bool {
         cookieBannerEnable
     }

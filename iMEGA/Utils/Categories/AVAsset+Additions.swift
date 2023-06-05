@@ -3,7 +3,6 @@ public enum DynamicAttribute: String {
     case metadata
 }
 
-
 public extension AVAsset {
 
     private func loadAttributeAsynchronously(_ attribute: DynamicAttribute, completion: (() -> Void)?) {

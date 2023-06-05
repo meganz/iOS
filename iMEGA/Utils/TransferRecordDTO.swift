@@ -1,5 +1,4 @@
 
-
 @objc class TransferRecordDTO: NSObject {
     @objc let localIdentifier: String
     @objc let parentNodeHandle: NSNumber

@@ -94,7 +94,6 @@ class AppearanceManager: NSObject {
         }
     }
     
-    
     @objc class func setupTabbar(_ tabBar: UITabBar, traitCollection: UITraitCollection) {
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)

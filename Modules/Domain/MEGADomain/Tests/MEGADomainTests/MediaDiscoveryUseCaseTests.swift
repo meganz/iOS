@@ -31,7 +31,6 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
             results.append($0)
         }).store(in: &subscriptions)
         
-        
         useCase.nodeUpdatesPublisher.sink { _ in
             
         }.store(in: &subscriptions)
