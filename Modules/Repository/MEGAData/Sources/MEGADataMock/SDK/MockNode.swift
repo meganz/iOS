@@ -12,6 +12,7 @@ public final class MockNode: MEGANode {
     private let isNodeDecrypted: Bool
     private let isNodeExported: Bool
     private let videoDuration: Int
+    private let _isFavourite: Bool
     let nodePath: String?
     
     public init(handle: MEGAHandle,
@@ -24,7 +25,8 @@ public final class MockNode: MEGANode {
                 nodePath: String? = nil,
                 isNodeDecrypted: Bool = false,
                 isNodeExported: Bool = false,
-                duration: Int = 0) {
+                duration: Int = 0,
+                isFavourite: Bool = false) {
         nodeHandle = handle
         nodeName = name
         self.nodeType = nodeType
@@ -36,6 +38,7 @@ public final class MockNode: MEGANode {
         self.isNodeDecrypted = isNodeDecrypted
         self.isNodeExported = isNodeExported
         self.videoDuration = duration
+        _isFavourite = isFavourite
         super.init()
     }
     
@@ -64,5 +67,6 @@ public final class MockNode: MEGANode {
     public override func hasThumbnail() -> Bool { _hasThumbnail }
     
     public override func isExported() -> Bool { isNodeExported }
-    
+        
+    public override var isFavourite: Bool { _isFavourite }
 }
