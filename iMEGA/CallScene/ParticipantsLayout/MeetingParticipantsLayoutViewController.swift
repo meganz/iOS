@@ -60,7 +60,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             queue: OperationQueue.main
         ) { [weak self] _ in
             guard let self = self else { return }
-            self.callCollectionView.layoutIfNeeded()
+            if let callCollectionView = self.callCollectionView {
+                self.callCollectionView.layoutIfNeeded()
+            }
             self.viewModel.dispatch(.onViewReady)
         }
     }
