@@ -46,4 +46,34 @@ final class VideoExplorerTableCellViewModel {
     func moreButtonTapped(cell: UIView) {
         moreButtonTapHandler(node, cell)
     }
+    
+    func createAttributedTitle() -> NSAttributedString? {
+        let attributedTitle = NSMutableAttributedString(string: title)
+        
+        if node.isFavourite {
+            let space = createSpace()
+            let favouriteIcon = createFavouriteIcon()
+            attributedTitle.append(space)
+            attributedTitle.append(favouriteIcon)
+        }
+        
+        return attributedTitle.copy() as? NSAttributedString
+    }
+    
+    // MARK: - Private
+    
+    private func createSpace(_ width: Double = 4) -> NSAttributedString {
+        let spaceAttachment = NSTextAttachment()
+        spaceAttachment.bounds = CGRect(x:0, y: 0, width: width, height: 0)
+        let space = NSAttributedString(attachment: spaceAttachment)
+        return space
+    }
+    
+    private func createFavouriteIcon() -> NSAttributedString {
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = Asset.Images.Labels.favouriteSmall.image
+        imageAttachment.bounds = CGRect(x: 0, y: 0, width: 12, height: 12)
+        let favouriteIcon = NSAttributedString(attachment: imageAttachment)
+        return favouriteIcon
+    }
 }

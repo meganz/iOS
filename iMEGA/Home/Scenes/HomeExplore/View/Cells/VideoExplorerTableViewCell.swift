@@ -1,8 +1,7 @@
-
 import UIKit
+import MEGAUIKit
 
 class VideoExplorerTableViewCell: UITableViewCell {
-
     @IBOutlet private weak var videoThumbnailImageView: UIImageView!
     @IBOutlet private weak var placeholderImageView: UIImageView!
     @IBOutlet private weak var videoTitleLabel: UILabel!
@@ -17,6 +16,7 @@ class VideoExplorerTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         moreButtonDefaultWidth = moreButtonWidthConstraint.constant
+        videoTitleLabel.lineBreakMode = .byTruncatingMiddle
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -46,7 +46,7 @@ class VideoExplorerTableViewCell: UITableViewCell {
                 }
             }
             
-            videoTitleLabel.text = viewModel.title
+            videoTitleLabel.attributedText = viewModel.createAttributedTitle()
             durationLabel.text = viewModel.duration
             parentFolderNameLabel.text = viewModel.parentFolderName
         }
@@ -61,4 +61,23 @@ class VideoExplorerTableViewCell: UITableViewCell {
         viewModel = nil
     }
     
+    // MARK: - Private
+    
+    private func updateAppearance(with trait: UITraitCollection) {
+        guard let viewModel = viewModel else { return }
+        videoTitleLabel.attributedText = viewModel.createAttributedTitle()
+    }
+}
+
+// MARK: - TraitEnviromentAware
+
+extension VideoExplorerTableViewCell: TraitEnviromentAware {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    }
+    
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        updateAppearance(with: currentTrait)
+    }
 }
