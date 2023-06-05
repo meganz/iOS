@@ -215,9 +215,9 @@
     GenericHeaderFooterView *sectionHeader = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
     if (section == 0) {
-        [sectionHeader configureWithTitle:NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").localizedUppercaseString topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+        [sectionHeader configureWithTitle:NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     } else {
-        [sectionHeader configureWithTitle:NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file").localizedUppercaseString detail:[NSString memoryStyleStringFromByteCount:self.node.mnz_versionsSize] topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+        [sectionHeader configureWithTitle:NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file") detail:[NSString memoryStyleStringFromByteCount:self.node.mnz_versionsSize] topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
     return sectionHeader;
 }

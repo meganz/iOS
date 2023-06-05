@@ -732,7 +732,7 @@
             
         case GroupChatDetailsSectionParticipants:
             headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium];
-            [headerView configureWithTitle:NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").localizedUppercaseString topDistance:4.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+            [headerView configureWithTitle:NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat") topDistance:4.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
             break;
             
         case GroupChatDetailsSectionAllowNonHostToAddParticipants:

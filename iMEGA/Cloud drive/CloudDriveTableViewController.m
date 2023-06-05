@@ -73,9 +73,9 @@
     
     NSString *dateString;
     if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
-        dateString = NSLocalizedString(@"Today", @"").localizedUppercaseString;
+        dateString = NSLocalizedString(@"Today", @"");
     } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
-        dateString = NSLocalizedString(@"Yesterday", @"").localizedUppercaseString;
+        dateString = NSLocalizedString(@"Yesterday", @"");
     } else {
         dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
     }

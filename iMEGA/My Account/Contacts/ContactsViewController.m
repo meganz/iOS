@@ -1598,7 +1598,7 @@
         if (section == 0) {
             if (self.recentlyAddedUsersArray.count > 0) {
                 headerView.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-                [headerView configureWithTitle:NSLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts").localizedUppercaseString topDistance:17.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+                [headerView configureWithTitle:NSLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts") topDistance:17.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
                 
                 return headerView;
             }
@@ -1615,10 +1615,10 @@
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         if (section == 0) {
-            [headerView configureWithTitle:NSLocalizedString(@"sharedWith", @"Title of the view where you see with who you have shared a folder").localizedUppercaseString topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+            [headerView configureWithTitle:NSLocalizedString(@"sharedWith", @"Title of the view where you see with who you have shared a folder") topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
             
         } else if (section == 1 && self.pendingShareUsersArray.count > 0) {
-            [headerView configureWithTitle:NSLocalizedString(@"pending", @"Label shown when a contact request is pending").localizedUppercaseString topDistance:self.pendingShareUsersArray.count > 0 ? 30.0 : 1.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+            [headerView configureWithTitle:NSLocalizedString(@"pending", @"Label shown when a contact request is pending") topDistance:self.pendingShareUsersArray.count > 0 ? 30.0 : 1.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
         } else {
             [headerView configureWithTitle:nil topDistance:1.00 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
         }
@@ -1630,12 +1630,12 @@
             || self.contactsMode == ContactsModeInviteParticipants
             || self.contactsMode == ContactsModeScheduleMeeting)) {
         headerView.contentView.backgroundColor = UIColor.mnz_background;
-        [headerView configureWithTitle:NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").localizedUppercaseString topDistance:14.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:NSLocalizedString(@"contactsTitle", @"Title of the Contacts section") topDistance:14.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
         
         return headerView;
     }
     if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
-        [headerView configureWithTitle:NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").localizedUppercaseString topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat") topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
         headerView.marginViewHeightConstraint.constant = 0.0;
         return headerView;
     }
@@ -1644,11 +1644,11 @@
         return headerView;
     }
     if (section == 1 && self.contactsMode == ContactsModeChatStartConversation) {
-        [headerView configureWithTitle:NSLocalizedString(@"Recents", @"Title for the recents section").localizedUppercaseString topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:NSLocalizedString(@"Recents", @"Title for the recents section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
         return headerView;
     }
     if ((section == 2 && self.contactsMode == ContactsModeChatStartConversation) || (section == 1 && self.contactsMode > ContactsModeChatStartConversation)) {
-        [headerView configureWithTitle:NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").localizedUppercaseString topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:NSLocalizedString(@"contactsTitle", @"Title of the Contacts section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
         return headerView;
     }
     

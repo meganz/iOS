@@ -763,7 +763,7 @@
     
     NSString *fileType = [fileTypesForExtension objectForKey:self.name.pathExtension];
     if (fileType.length == 0) {
-        fileType = [NSString stringWithFormat:@"%@ %@", self.name.pathExtension.localizedUppercaseString, NSLocalizedString(@"file", @"Label to desing a file matching").localizedCapitalizedString];
+        fileType = [NSString stringWithFormat:@"%@ %@", self.name.pathExtension, NSLocalizedString(@"chat.match.file", @"Label to desing a file matching")];
     } else {
         if ([fileType containsString:@"general.filetype"]) {
             NSString *localizedFiletype = NSLocalizedString(fileType, nil);

@@ -96,7 +96,7 @@
         case MEGAUserAlertTypeUpdatePendingContactIncomingDenied:
         case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted:
         case MEGAUserAlertTypeUpdatePendingContactOutgoingDenied:
-            typeLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section").localizedUppercaseString;
+            typeLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section");
             typeLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             break;
             
@@ -104,28 +104,28 @@
         case MEGAUserAlertTypeDeletedShare:
         case MEGAUserAlertTypeNewShareNodes:
         case MEGAUserAlertTypeRemovedSharesNodes:
-            typeLabel.text = NSLocalizedString(@"shared", @"Title of the tab bar item for the Shared Items section").localizedUppercaseString;
+            typeLabel.text = NSLocalizedString(@"shared", @"Title of the tab bar item for the Shared Items section");
             typeLabel.textColor = UIColor.systemOrangeColor;
             break;
             
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
-            typeLabel.text = NSLocalizedString(@"Payment info", @"The header of a notification related to payments").localizedUppercaseString;
+            typeLabel.text = NSLocalizedString(@"Payment info", @"The header of a notification related to payments");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypePaymentReminder:
-            typeLabel.text = NSLocalizedString(@"PRO membership plan expiring soon", @"A title for a notification saying the user’s pricing plan will expire soon.").localizedUppercaseString;
+            typeLabel.text = NSLocalizedString(@"PRO membership plan expiring soon", @"A title for a notification saying the user’s pricing plan will expire soon.");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedown:
-            typeLabel.text = NSLocalizedString(@"Takedown notice", @"The header of a notification indicating that a file or folder has been taken down due to infringement or other reason.").localizedUppercaseString;
+            typeLabel.text = NSLocalizedString(@"Takedown notice", @"The header of a notification indicating that a file or folder has been taken down due to infringement or other reason.");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedownReinstated:
-            typeLabel.text = NSLocalizedString(@"Takedown reinstated", @"The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice.").localizedUppercaseString;
+            typeLabel.text = NSLocalizedString(@"Takedown reinstated", @"The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice.");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             

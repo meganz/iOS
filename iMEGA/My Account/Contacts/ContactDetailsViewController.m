@@ -960,7 +960,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (section == 0) {
         [headerView configureWithTitle:nil topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     } else if ([self isSharedFolderSection:section]) {
-        [headerView configureWithTitle:NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.").localizedUppercaseString topDistance:4.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+        [headerView configureWithTitle:NSLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") topDistance:4.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     } else {
         [headerView configureWithTitle:nil topDistance:0.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
