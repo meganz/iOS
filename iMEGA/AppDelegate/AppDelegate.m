@@ -565,10 +565,11 @@
             [self endBackgroundTaskWithName:name];
         }];
         
-        if (name) {
-            NSString *message = [NSString stringWithFormat:@"Can't begin background task with name %@.", name];
+        if (name && backgroundTaskIdentifier != UIBackgroundTaskInvalid) {
+            NSNumber *backgroundTaskIdentifierNumber = [NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier];
+            NSString *message = [NSString stringWithFormat:@"Begin background task with name %@, bg identifier %@.", name, backgroundTaskIdentifierNumber];
             [CrashlyticsLogger log:message];
-            [self.backgroundTaskMutableDictionary setObject:name forKey:[NSNumber numberWithUnsignedInteger:backgroundTaskIdentifier]];
+            [self.backgroundTaskMutableDictionary setObject:name forKey:backgroundTaskIdentifierNumber];
         }
     } @catch (NSException *exception) {
         MEGALogDebug(@"Can't begin background task with name %@ and with exception %@", name, exception);
