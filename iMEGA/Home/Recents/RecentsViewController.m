@@ -186,9 +186,9 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     }
     
     if (recentActionBucket.timestamp.isToday) {
-        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Today", @"").localizedUppercaseString;
+        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Today", @"");
     } else if (recentActionBucket.timestamp.isYesterday) {
-        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Yesterday", @"").localizedUppercaseString;
+        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Yesterday", @"");
     } else {
         NSString *dateString = [self.dateFormatter stringFromDate:recentActionBucket.timestamp];
         recentsTVHFV.dateLabel.text = dateString.uppercaseString;

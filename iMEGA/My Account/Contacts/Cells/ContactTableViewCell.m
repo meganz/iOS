@@ -117,7 +117,7 @@
     
     if (newUser) {
         self.contactNewView.hidden = NO;
-        self.contactNewLabel.text = NSLocalizedString(@"New", @"Label shown inside an unseen notification").localizedUppercaseString;
+        self.contactNewLabel.text = NSLocalizedString(@"New", @"Label shown inside an unseen notification");
         self.contactNewLabel.textColor = UIColor.whiteColor;
         self.contactNewLabelView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     } else {
