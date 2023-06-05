@@ -121,7 +121,6 @@ final class HomeScreenFactory: NSObject {
                 }
             )
 
-
         homeSearchResultViewController.hintTableViewDataSource = TableViewProxy<HomeSearchHintViewModel>(
             cellIdentifier: "SearchHint",
             emptyStateConfiguration: .searchHints,

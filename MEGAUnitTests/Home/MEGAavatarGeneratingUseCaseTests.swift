@@ -20,7 +20,6 @@ class MEGAavatarGeneratingUseCase: XCTestCase {
         XCTAssertNil(backgroundColor)
     }
 
-
     func testUnableGenerateAvatarImage_WhenStoreUserIsNil() {
         let useCaseUT = MEGAAavatarGeneratingUseCase(
             storeUserClient: .foundNil,

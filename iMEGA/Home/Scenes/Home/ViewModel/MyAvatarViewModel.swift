@@ -82,11 +82,9 @@ extension MyAvatarViewModel {
         loadRemoteAvatarImage()
     }
 
-    
     private func cachedAvatarImage() -> UIImage? {
         return megaAvatarUseCase.getCachedAvatarImage()
     }
-
 
     private func loadAvatarImage() {
         if let cachedAvatarImage = cachedAvatarImage() {
@@ -102,7 +100,6 @@ extension MyAvatarViewModel {
         
         loadRemoteAvatarImage()
     }
-    
     
     private func loadRemoteAvatarImage() {
         megaAvatarUseCase.loadRemoteAvatarImage { [weak self] image in

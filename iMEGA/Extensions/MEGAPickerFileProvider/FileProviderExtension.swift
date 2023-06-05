@@ -147,7 +147,6 @@ final class FileProviderExtension: NSFileProviderExtension {
         MEGALogDebug("[Picker] stopProvidingItem at \(url)")
     }
     
-    
     // MARK: - Handling Actions
     
     override func createDirectory(withName directoryName: String, inParentItemIdentifier parentItemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
@@ -229,7 +228,6 @@ final class FileProviderExtension: NSFileProviderExtension {
         
         return FileProviderItem(node: node.toNodeEntity())
     }
-    
     
     // MARK: - Accesing thumbnails
     

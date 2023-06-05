@@ -164,8 +164,6 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 if chatMessage.message.isDeletable, chatViewController?.editMessage?.message.messageId != chatMessage.message.messageId {
                     actions.append(contentsOf: [deleteAction])
                 }
-                
-                
             }
             
         case .containsMeta:

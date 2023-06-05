@@ -144,8 +144,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
 }
 
 open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
-    
-    
     lazy var calculateDurationLabel: UILabel = {
         let titleLabel = UILabel()
         return titleLabel

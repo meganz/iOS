@@ -2,7 +2,6 @@
 import Foundation
 import CoreData
 
-
 public class QuickAccessWidgetFavouriteItem: NSManagedObject {
 
     static func createInstance(withContext context: NSManagedObjectContext) -> QuickAccessWidgetFavouriteItem {

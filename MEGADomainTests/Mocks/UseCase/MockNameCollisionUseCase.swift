@@ -11,7 +11,6 @@ struct MockNameCollisionUseCase: NameCollisionUseCaseProtocol {
     var nodeRename: String?
     var node: NodeEntity?
     
-    
     func resolveNameCollisions(for collisions: [NameCollisionEntity]) -> [NameCollisionEntity] {
         nameCollisions ?? []
     }

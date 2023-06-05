@@ -2,7 +2,6 @@
 import Foundation
 import CoreData
 
-
 extension AppearancePreference {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<AppearancePreference> {

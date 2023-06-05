@@ -4,7 +4,6 @@ import MEGASwift
 
 class StorageFullModalAlertViewController: CustomModalAlertViewController {
     
-    
     private let limitedSpace = 100 * 1024 * 1024
     private let duration = 2
     

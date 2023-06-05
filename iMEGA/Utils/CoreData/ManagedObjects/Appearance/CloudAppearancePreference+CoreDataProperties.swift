@@ -2,7 +2,6 @@
 import Foundation
 import CoreData
 
-
 extension CloudAppearancePreference {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CloudAppearancePreference> {

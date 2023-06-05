@@ -1,6 +1,5 @@
 import UIKit
 
-
 class ChatImageQualityTableViewController: UITableViewController {
 
     // MARK: - Lifecycle

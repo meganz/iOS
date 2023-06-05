@@ -17,8 +17,7 @@ public struct MEGAClientRepository: MEGAClientRepositoryProtocol {
     init(fileManager: FileManager) {
         self.fileManager = fileManager
     }
-    
-    
+        
     public func doesExistNodesOnDemandDatabase(for session: String) -> Bool {
         let applicationSupportDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
         let cacheSessionName = session.dropFirst(Int(Constants.dropFirstCharactersFromSession))

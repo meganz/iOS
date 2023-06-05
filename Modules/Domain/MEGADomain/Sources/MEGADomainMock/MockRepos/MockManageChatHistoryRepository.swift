@@ -25,5 +25,4 @@ public struct MockManageChatHistoryRepository: ManageChatHistoryRepositoryProtoc
         completion(clearChatHistory)
     }
     
-    
 }

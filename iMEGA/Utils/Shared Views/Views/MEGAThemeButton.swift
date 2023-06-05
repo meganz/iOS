@@ -42,8 +42,6 @@ final class MEGAThemeButton: UIButton, ButtonBackgroundStateAware, DynamicTypeCo
         applyFontSizes()
     }
 
-    
-
     override var isHighlighted: Bool {
         didSet {
             let color = isHighlighted ? statedColor[.highlighted] : statedColor[.normal]

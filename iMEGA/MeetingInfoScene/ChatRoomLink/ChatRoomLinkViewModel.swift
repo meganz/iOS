@@ -19,7 +19,6 @@ final class ChatRoomLinkViewModel: ObservableObject {
 
     var meetingLink: String?
 
-    
     init(router: MeetingInfoRouting,
          chatRoom: ChatRoomEntity,
          scheduledMeeting: ScheduledMeetingEntity,

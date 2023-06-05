@@ -34,7 +34,6 @@ final class ChatStateListener: NSObject, MEGAChatDelegate {
             return
         }
         
-        
         if chatId == self.chatId, newConnectionState == connectionState {
             continuation?.resume()
             return

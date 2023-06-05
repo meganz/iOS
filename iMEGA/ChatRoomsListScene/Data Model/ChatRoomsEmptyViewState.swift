@@ -13,7 +13,6 @@ struct ChatRoomsEmptyViewState {
     let bottomButtonMenus: [ChatRoomsEmptyBottomButtonMenu]?
 }
 
-
 struct ChatRoomsEmptyBottomButtonMenu {
     let name: String
     let image: ImageAsset

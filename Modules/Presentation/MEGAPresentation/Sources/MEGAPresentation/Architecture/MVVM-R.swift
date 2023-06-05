@@ -18,7 +18,6 @@ You usually define actions with `Enum` type.
 */
 public protocol ActionType { }
 
-
 /**
 Defines commands to be invoked by a `ViewModelType` and executed by a `ViewType`.
 
@@ -36,7 +35,6 @@ Defines commands to be invoked by a `ViewModelType` and executed by a `ViewType`
 You usually define commands with `Enum` type.
 */
 public protocol CommandType { }
-
 
 /**
 Defines a view model to manage the inputs and outputs through `ActionType` and `CommandType`.
@@ -61,7 +59,6 @@ public protocol ViewModelType {
     
     func dispatch(_ action: Action)
 }
-
 
 /**
 Defines a view which subscribes `CommandType` and executes `CommandType` when it gets invoked from `ViewModelType`.
@@ -88,7 +85,6 @@ public protocol ViewType {
     
     func executeCommand(_ command: Command)
 }
-
 
 /**
  Defines a router with the ability to build a view controller and start a navigation flow

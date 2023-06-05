@@ -316,8 +316,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
             isExportFile = appData.contains(NSString().mnz_appDataToExportFile())
             isSaveToPhotos = appData.contains(NSString().mnz_appDataToSaveInPhotosApp())
         }
-        
-        
+         
         guard transfer.path?.hasPrefix(transferInventoryUseCase.documentsDirectory().path) ?? false ||
                 transfer.type == .upload ||
                 isExportFile || isSaveToPhotos else {

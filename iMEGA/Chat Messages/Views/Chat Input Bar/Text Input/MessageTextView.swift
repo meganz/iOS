@@ -39,7 +39,6 @@ class MessageTextView: UITextView {
         return CGFloat(numberOfLinesBeforeScroll) * font.lineHeight
     }
     
-    
     private lazy var placeholderTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = #colorLiteral(red: 0.5176470588, green: 0.5176470588, blue: 0.5176470588, alpha: 1)

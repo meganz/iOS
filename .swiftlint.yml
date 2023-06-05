@@ -90,6 +90,7 @@ only_rules:
       - trailing_comma
       - mark
       - opening_brace
+      - vertical_whitespace
 
     # Small fixes or small-moderate amount of issues (<100) that are easy to fix
       # - xctfail_message (16 issues)
@@ -99,7 +100,6 @@ only_rules:
       # - type_name (91 issues) - complex because we need to rename stuff
       # - cyclomatic_complexity (132 issues)
         # A somewhat complex fix, because we need extract functions into smaller functions to avoid overly complex logic, but I think this should be enabled in the future so that we can refactor our code to make sure our functions are small, simple, and adhere to the SOLID principles.
-      # - vertical_whitespace (232 issues)
       # - comment_spacing (293 issues)
       # - leading_whitespace (398 issues)
       # - identifier_name (427 issues)

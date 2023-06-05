@@ -179,7 +179,6 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         + authenticityImageView.bounds.height
         + authenticityLabelSize.height
         
-        
         return topConstraint.constant
         + height
         + mainStackView.spacing

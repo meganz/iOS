@@ -167,8 +167,7 @@ extension ChatViewController {
         
         present(viewController: sendToNC)
     }
-    
-    
+     
     @objc func exportSelectedMessages(sender: UIBarButtonItem) {
         var megaMessages = selectedMessages.map { $0.message.toChatMessageEntity() }
         megaMessages = megaMessages.sorted(by: { (obj1, obj2) -> Bool in

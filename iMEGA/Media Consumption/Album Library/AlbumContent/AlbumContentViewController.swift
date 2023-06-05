@@ -147,7 +147,6 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         }
     }
     
-    
     // MARK: - Private
     
     private func buildNavigationBar() {

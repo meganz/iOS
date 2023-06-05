@@ -76,7 +76,6 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
 
 extension ExploreViewStack: TraitEnviromentAware {
 
-
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)

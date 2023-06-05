@@ -23,8 +23,7 @@ public struct AchievementDetailsEntity: Sendable {
     public let rewardStoragesByAwardId: [Int64]
     public let rewardTransfersByAwardId: [Int64]
     public let rewardExpireByAwardId: [Int]
-
-
+    
     public init(
         baseStorage: Int64,
         currentStorage: Int64,

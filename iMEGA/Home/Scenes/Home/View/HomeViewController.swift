@@ -230,7 +230,6 @@ final class HomeViewController: UIViewController {
         static let slidePanelRoundCornerHeight: CGFloat = 20 // This value need to be same as `constraintToTopPosition`
     }
 
-
     // MARK: - View Setup
 
     private func setupView() {
@@ -247,7 +246,6 @@ final class HomeViewController: UIViewController {
 
         addContentViewController()
     }
-
 
     private func setTitle(with text: String) {
         navigationItem.title = text

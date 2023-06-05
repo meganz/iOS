@@ -73,8 +73,6 @@ class ChatTitleView: UIView {
                     subtitleLabel.text = NSString.chatStatusString(status)
                 }
             }
-            
-         
         }
     }
     

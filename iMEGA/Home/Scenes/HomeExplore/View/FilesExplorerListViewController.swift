@@ -1,5 +1,4 @@
 
-
 import UIKit
 
 class FilesExplorerListViewController: FilesExplorerViewController {
@@ -141,7 +140,6 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         tableView.autoPinEdgesToSuperviewEdges()
     }
 }
-
 
 // MARK: - FilesExplorerListSourceDelegate
 extension FilesExplorerListViewController: FilesExplorerListSourceDelegate {

@@ -2,7 +2,6 @@
 import Foundation
 import CoreData
 
-
 extension QuickAccessWidgetFavouriteItem {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<QuickAccessWidgetFavouriteItem> {

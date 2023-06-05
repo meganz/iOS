@@ -19,7 +19,6 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
     private var allPhotos: [NodeEntity]
     private var allVideos: [NodeEntity]
     
-    
     public init(isURLVideo: Bool = false,
                 isURLImage: Bool = false,
                 isStringVideo: Bool = false,

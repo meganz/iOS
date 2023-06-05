@@ -2,7 +2,6 @@
 import Foundation
 import CoreData
 
-
 extension ChatUploadTransfer {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ChatUploadTransfer> {

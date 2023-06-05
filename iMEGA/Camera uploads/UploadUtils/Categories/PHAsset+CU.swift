@@ -26,7 +26,6 @@ extension PHAsset {
         return nil
     }
     
-    
     /// Check if the current asset is a raw image or not
     @objc var mnz_isRawImage: Bool {
         guard let resource = searchResource(by: [.photo, .alternatePhoto]) else {

@@ -144,7 +144,6 @@ class RichPreviewDialogView: UIView {
         pin.bottom().horizontally().height(of: rootFlexContainer)
     }
     
-    
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         // 1) Set the contentView's width to the specified size parameter
         rootFlexContainer.pin.width(size.width)

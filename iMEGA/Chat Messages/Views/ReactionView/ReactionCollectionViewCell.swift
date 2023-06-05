@@ -34,8 +34,6 @@ class ReactionCollectionViewCell: UILabel {
         reactionButton.setTitle("\(emoji) \(count)", for: .normal)
     }
     
-
-    
     @IBAction func buttonTapped(_ sender: UIButton) {
         guard let delegate = delegate, let emoji = emoji else {
             return

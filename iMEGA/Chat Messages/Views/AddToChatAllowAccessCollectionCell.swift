@@ -13,7 +13,6 @@ class AddToChatAllowAccessCollectionCell: UICollectionViewCell {
         updateAppearance()
     }
     
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         

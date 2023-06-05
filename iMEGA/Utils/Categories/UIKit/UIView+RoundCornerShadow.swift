@@ -20,7 +20,6 @@ struct RoundCornerShadowConfiguration: Equatable {
     let shadow: Shadow
 }
 
-
 private typealias CALayerTransformer = (CALayer) -> CALayer
 
 private let roundingCorner: (RoundCornerShadowConfiguration) -> (CAShapeLayer) -> (CAShapeLayer) = { config in

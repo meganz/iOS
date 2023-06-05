@@ -144,7 +144,6 @@ extension MEGASearchBarView: TraitEnviromentAware {
     func contentSizeCategoryDidChange(to contentSizeCategory: UIContentSizeCategory) {}
 }
 
-
 // MARK: - UITextFieldDelegate
 
 extension MEGASearchBarView: UITextFieldDelegate {

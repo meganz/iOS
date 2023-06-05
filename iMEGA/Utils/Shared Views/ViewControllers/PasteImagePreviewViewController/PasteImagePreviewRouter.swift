@@ -5,7 +5,6 @@ final class PasteImagePreviewRouter: PasteImagePreviewRouting {
     private weak var viewControllerToPresent: UIViewController?
     private let chatRoom: MEGAChatRoom
 
-    
     init(viewControllerToPresent: UIViewController, chatRoom: MEGAChatRoom) {
         self.viewControllerToPresent = viewControllerToPresent
         self.chatRoom = chatRoom
@@ -33,5 +32,4 @@ final class PasteImagePreviewRouter: PasteImagePreviewRouting {
         baseViewController?.dismiss(animated: true)
     }
     
-
 }

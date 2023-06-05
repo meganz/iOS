@@ -131,7 +131,6 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedVideos)
     }
     
-    
     func testIsSelectHidden_onToggle_changesInitialFalseValueToTrue() {
         XCTAssertFalse(sut.isSelectHidden)
         sut.isSelectHidden.toggle()

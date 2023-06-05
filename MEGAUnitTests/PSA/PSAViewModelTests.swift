@@ -123,7 +123,6 @@ final class PSAViewModelTests: XCTestCase {
     }
 }
 
-
 final class MockPSAViewRouter: PSAViewRouting {
     
     var psaViewShown = false

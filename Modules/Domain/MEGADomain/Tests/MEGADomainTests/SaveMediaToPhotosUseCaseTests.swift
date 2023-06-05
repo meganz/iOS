@@ -15,7 +15,6 @@ final class SaveMediaToPhotosUseCaseTests: XCTestCase {
         mockNodeRepo = MockNodeRepository(node: nodeEntity)
     }
     
-    
     func testSaveToPhotos_single_succeeded() async throws {
         mockDownloadFileRepo = MockDownloadFileRepository(completionResult: .success(mockTransferEntity))
         

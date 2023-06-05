@@ -381,7 +381,6 @@ final class ScheduleMeetingCreationRecurrenceOptionsViewModelTests: XCTestCase {
         XCTAssert(inputRules == outputRules)
     }
     
-    
     // MARK: - Private methods.
     
     private func sampleDate() -> Date? {

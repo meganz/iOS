@@ -55,7 +55,6 @@ final class AudioPlaylistViewModel: ViewModelType {
         invokeCommand?(.title(title: configEntity.parentNode?.name ?? ""))
     }
 
-    
     private func addSelected(_ item: AudioPlayerItem) {
         if selectedItems == nil {
             selectedItems = [AudioPlayerItem]()

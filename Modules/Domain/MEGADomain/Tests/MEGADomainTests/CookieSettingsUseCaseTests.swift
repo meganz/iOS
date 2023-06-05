@@ -59,7 +59,6 @@ final class CookieSettingsUseCaseTests: XCTestCase {
         }
     }
     
-    
     func testCookieSetting_success() {
         let mockSucess: Int = 10
         let repo = MockCookieSettingsRepository(cookieSettings:.success(mockSucess))

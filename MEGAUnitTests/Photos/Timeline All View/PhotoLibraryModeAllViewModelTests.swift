@@ -94,7 +94,6 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         XCTAssertEqual(sut.position, PhotoScrollPosition(handle: 0, date: try "2022-09-01T22:01:04Z".date))
     }
 
-    
     func testZoomState_zoomInTwoTimes_daySection() throws {
         sut.zoomState.zoom(.in)
         try testZoomState_zoomInOneTime_daySection()

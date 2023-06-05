@@ -45,7 +45,6 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
                                                         target: self,
                                                         action: #selector(deleteAlbumButtonPressed))
     
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         

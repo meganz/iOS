@@ -222,7 +222,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             return
         }
         
-        
         let excludedHandles = recentlyAddedHandles
         recentlyAddedHandles = []
                         
@@ -474,7 +473,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         invokeCommand?(.updateAllowNonHostToAddParticipants(enabled: enabled))
     }
 }
-
 
 extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {

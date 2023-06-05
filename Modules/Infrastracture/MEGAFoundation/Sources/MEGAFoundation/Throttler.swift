@@ -18,7 +18,6 @@ import Foundation
         self.dispatchQueue = dispatchQueue
     }
     
-
     @objc public func start(action: @escaping () -> Void) {
         workQueue.async {
             self.dispatchWork?.cancel()

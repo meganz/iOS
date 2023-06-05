@@ -2,7 +2,6 @@ import XCTest
 import MEGADomain
 import MEGADomainMock
 
-
 final class FilesSearchUseCaseTests: XCTestCase {
     
     func testSearchAllPhotos_shouldReturnAllPhotosNodes() {

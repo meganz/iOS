@@ -25,7 +25,6 @@ extension MEGASdk {
         return accountDetails.storageUsed.int64Value > accountDetails.storageMax.int64Value
     }
     
-    
     // MARK: Account types
     @objc func isAccountType(_ accountType: MEGAAccountType) -> Bool {
         guard let accountDetails = mnz_accountDetails else {

@@ -75,7 +75,6 @@ extension VideoExplorerListSource {
     }
 }
 
-
 extension VideoExplorerListSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         toggleSelection(at: indexPath)

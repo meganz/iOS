@@ -8,7 +8,6 @@ enum Corner {
     case bottomRight
 }
 
-
 class LocalUserView: UIView {
     @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var videoImageView: UIImageView!

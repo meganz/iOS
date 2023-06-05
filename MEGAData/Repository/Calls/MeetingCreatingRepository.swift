@@ -55,7 +55,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 }
             }
             
-          
             self.callActionManager.startCall(chatId: chatroom.chatId, enableVideo: startCall.enableVideo, enableAudio: startCall.enableAudio, delegate: startCallDelegate)
         }
         

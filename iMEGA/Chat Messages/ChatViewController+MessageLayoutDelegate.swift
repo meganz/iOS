@@ -17,7 +17,6 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         return !chatMessage.message.isManagementMessage
     }
     
-
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         guard !(message is ChatNotificationMessage) && !indexPath.isEmpty else {
             return 0.0
@@ -55,8 +54,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     }
     
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        
-        
+          
         guard let message = messages[section] as? ChatMessage else {
             return .zero
         }

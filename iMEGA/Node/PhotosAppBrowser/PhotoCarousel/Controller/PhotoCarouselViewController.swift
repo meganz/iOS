@@ -93,7 +93,6 @@ final class PhotoCarouselViewController: UIViewController {
         collectionView?.register(PhotoCarouselCell.nib,
                                  forCellWithReuseIdentifier: PhotoCarouselCell.reuseIdentifier)
         
-        
         collectionViewDataSource = PhotoCarouselDataSource(album: album,
                                                            collectionView: collectionView,
                                                            selectedAssets: selectedAssets) { [weak self] (asset, indexPath, _, _) in
@@ -105,8 +104,7 @@ final class PhotoCarouselViewController: UIViewController {
                                                             weakself.selectedAssets = weakself.collectionViewDataSource?.selectedAssets ?? []
                                                             weakself.delegate?.selected(assets: weakself.selectedAssets)
                                                             weakself.updateSelectDeselectButtonTitle(withSelectedAsset: asset)
-                                                            
-                                                            
+            
         }
         
         collectionViewDelegate = PhotoCarouselDelegate(viewController: self,
@@ -267,7 +265,6 @@ extension PhotoCarouselViewController: AlbumDelegate {
         collectionView.reloadData()
     }
 
-    
     func didChange(removedIndexPaths: [IndexPath]?,
                    insertedIndexPaths: [IndexPath]?,
                    changedIndexPaths: [IndexPath]?) {

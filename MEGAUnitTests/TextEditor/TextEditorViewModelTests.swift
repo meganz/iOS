@@ -915,8 +915,7 @@ final class TextEditorViewModelTests: XCTestCase {
         let mockBackupsUC = MockBackupsUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
         let mockNodeDataUC = MockNodeDataUseCase(nodeAccessLevelVariable: nodeAccessLevel)
-        
-        
+         
         let mockNode = NodeEntity(handle: 123, isFile: true)
 
         let viewModel = TextEditorViewModel(

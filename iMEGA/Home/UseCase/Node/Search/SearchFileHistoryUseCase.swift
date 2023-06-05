@@ -143,7 +143,6 @@ extension SearchEntryUpdating {
     }
 }
 
-
 @objc(SearchFileUseCase)
 final class SearchFileHistoryUseCaseOCCompatible: NSObject {
 
