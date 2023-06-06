@@ -5,7 +5,7 @@ import MEGASwiftUI
 }
 
 @objc enum MyAccountMegaSection: Int, CaseIterable {
-    case plan = 0, storage, contacts, backups, notifications, achievements, transfers, offline, rubbishBin
+    case plan = 0, storage, contacts, backups, notifications, achievements, transfers, deviceCenter, offline, rubbishBin
 }
 
 @objc enum MyAccountOtherSection: Int, CaseIterable {
@@ -97,6 +97,13 @@ extension MyAccountHallViewController: UITableViewDataSource {
                               isPendingViewVisible: true)
     }
     
+    // MARK: - Device center row setup data
+    private func makeDeviceCenterCellData() -> MyAccountHallCellData {
+        MyAccountHallCellData(sectionText: Strings.Localizable.Device.Center.title,
+                              icon: Asset.Images.Backup.pc.image.imageFlippedForRightToLeftLayoutDirection(),
+                              isPendingViewVisible: true)
+    }
+    
     // MARK: - Offline row setup data
     private func offlineSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.offline,
@@ -166,6 +173,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         case .notifications: cell.setup(data: notificationsSetupData(existsPendingView: cell.pendingView != nil))
         case .achievements: cell.setup(data: achievementsSetupData())
         case .transfers: cell.setup(data: transfersSetupData())
+        case .deviceCenter: cell.setup(data: makeDeviceCenterCellData())
         case .offline: cell.setup(data: offlineSetupData())
         case .rubbishBin: cell.setup(data: rubbishBinSetupData())
         default: break

@@ -18,6 +18,8 @@ extension MyAccountHallViewController: UITableViewDelegate {
             shouldShowCell = MEGASdk.shared.isAchievementsEnabled
         case .backups:
             shouldShowCell = isBackupSectionVisible
+        case .deviceCenter:
+            shouldShowCell = viewModel.isDeviceCenterEnabled()
         default: break
         }
         
@@ -67,6 +69,9 @@ extension MyAccountHallViewController: UITableViewDelegate {
         case MyAccountMegaSection.transfers.rawValue:
             let transferVC = UIStoryboard(name: "Transfers", bundle: nil).instantiateViewController(withIdentifier: "TransfersWidgetViewControllerID")
             navigationController?.pushViewController(transferVC, animated: true)
+            
+        case MyAccountMegaSection.deviceCenter.rawValue:
+            break
             
         case MyAccountMegaSection.offline.rawValue:
             let offlineVC = UIStoryboard(name: "Offline", bundle: nil).instantiateViewController(withIdentifier: "OfflineViewControllerID")

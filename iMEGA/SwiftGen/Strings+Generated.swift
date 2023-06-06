@@ -3270,6 +3270,12 @@ public enum Strings {
         public static let message = Strings.tr("Localizable", "contact.invite.message")
       }
     }
+    public enum Device {
+      public enum Center {
+        /// Device Center
+        public static let title = Strings.tr("Localizable", "device.center.title")
+      }
+    }
     public enum Dialog {
       public enum Add {
         public enum Items {

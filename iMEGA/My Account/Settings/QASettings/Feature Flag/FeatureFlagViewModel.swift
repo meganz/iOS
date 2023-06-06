@@ -7,6 +7,7 @@ enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case albumContextMenu = "Enable Album Context Menu"
     case newUpgradeAccountPlanUI = "New Upgrade Account Plan UI"
     case albumShareLink = "Album Share Link"
+    case deviceCenter = "Device Center"
     case timelinePreferenceSaving = "Timeline Filter Preference Saving"
 }
 
