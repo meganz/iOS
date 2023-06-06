@@ -3402,3 +3402,5 @@
 "meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Camera";
+/* Device Center title */
+"device.center.title"="Device Center";

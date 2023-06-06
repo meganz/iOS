@@ -35,6 +35,10 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         featureFlagProvider.isFeatureFlagEnabled(for: .newUpgradeAccountPlanUI)
     }
     
+    func isDeviceCenterEnabled() -> Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .deviceCenter)
+    }
+    
     // MARK: - Dispatch actions
     
     func dispatch(_ action: AccountHallAction) {

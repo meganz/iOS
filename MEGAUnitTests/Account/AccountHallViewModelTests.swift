@@ -23,13 +23,23 @@ final class AccountHallViewModelTests: XCTestCase {
         test(viewModel: sut, actions: [AccountHallAction.didTapUpgradeButton], expectedCommands: [])
     }
     
-    func testIsFeatureFlagEnabled_onNewUpgradeAccountPlanUI_shouldBeEnabled() {
+    func testIsFeatureFlagEnabled_onNewUpgradeAccountPlanEnabled_shouldBeEnabled() {
         let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, featureFlagProvider: MockFeatureFlagProvider(list: [.newUpgradeAccountPlanUI: true]))
         XCTAssertTrue(sut.isNewUpgradeAccountPlanEnabled())
     }
 
-    func testIsFeatureFlagEnabled_onOtherToggles_shouldBeTurnedOff() {
+    func testIsFeatureFlagEnabled_onNewUpgradeAccountPlanDisabled_shouldBeTurnedOff() {
         let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, featureFlagProvider: MockFeatureFlagProvider(list: [.newUpgradeAccountPlanUI: false]))
         XCTAssertFalse(sut.isNewUpgradeAccountPlanEnabled())
+    }
+    
+    func testIsFeatureFlagEnabled_onDeviceCenterUIEnabled_shouldBeEnabled() {
+        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, featureFlagProvider: MockFeatureFlagProvider(list: [.deviceCenter: true]))
+        XCTAssertTrue(sut.isDeviceCenterEnabled())
+    }
+
+    func testIsFeatureFlagEnabled_onDeviceCenterUIDisabled_shouldBeTurnedOff() {
+        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, featureFlagProvider: MockFeatureFlagProvider(list: [.deviceCenter: false]))
+        XCTAssertFalse(sut.isDeviceCenterEnabled())
     }
 }
