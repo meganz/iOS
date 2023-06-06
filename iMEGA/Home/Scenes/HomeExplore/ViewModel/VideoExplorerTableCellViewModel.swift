@@ -50,10 +50,16 @@ final class VideoExplorerTableCellViewModel {
     func createAttributedTitle() -> NSAttributedString? {
         let attributedTitle = NSMutableAttributedString(string: title)
         
-        if node.isFavourite {
-            let space = createSpace()
-            let favouriteIcon = createFavouriteIcon()
-            attributedTitle.append(space)
+        // Check if there is label for the video
+        if node.label != .unknown,
+           let labelName = MEGANode.string(for: node.label)?.appending("Small"),
+           let labelImage = UIImage(named: labelName),
+           let label = createImageAttachmentWithPadding(by: labelImage) {
+            attributedTitle.append(label)
+        }
+        
+        if node.isFavourite,
+           let favouriteIcon = createImageAttachmentWithPadding(by: Asset.Images.Labels.favouriteSmall.image) {
             attributedTitle.append(favouriteIcon)
         }
         
@@ -62,6 +68,17 @@ final class VideoExplorerTableCellViewModel {
     
     // MARK: - Private
     
+    private func createImageAttachmentWithPadding(by image: UIImage, leadingPadding: Double = 4) -> NSAttributedString? {
+        let attchmentString = NSMutableAttributedString()
+        if leadingPadding > 0 {
+            let space = createSpace(leadingPadding)
+            attchmentString.append(space)
+        }
+        let imageAttachment = createImageAttachment(by: image)
+        attchmentString.append(imageAttachment)
+        return attchmentString.copy() as? NSAttributedString
+    }
+    
     private func createSpace(_ width: Double = 4) -> NSAttributedString {
         let spaceAttachment = NSTextAttachment()
         spaceAttachment.bounds = CGRect(x:0, y: 0, width: width, height: 0)
@@ -69,11 +86,11 @@ final class VideoExplorerTableCellViewModel {
         return space
     }
     
-    private func createFavouriteIcon() -> NSAttributedString {
+    private func createImageAttachment(by image: UIImage) -> NSAttributedString {
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = Asset.Images.Labels.favouriteSmall.image
+        imageAttachment.image = image
         imageAttachment.bounds = CGRect(x: 0, y: 0, width: 12, height: 12)
-        let favouriteIcon = NSAttributedString(attachment: imageAttachment)
-        return favouriteIcon
+        let attchmentString = NSAttributedString(attachment: imageAttachment)
+        return attchmentString
     }
 }
