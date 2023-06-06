@@ -12,9 +12,14 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     private let contentMode: PhotoLibraryContentMode
     private let userAttributeUseCase: UserAttributeUseCaseProtocol
     
-    init(contentMode: PhotoLibraryContentMode = .library, userAttributeUseCase: UserAttributeUseCaseProtocol) {
+    let isRememberPreferencesFeatureFlagEnabled: Bool
+    
+    init(contentMode: PhotoLibraryContentMode = .library,
+         userAttributeUseCase: UserAttributeUseCaseProtocol,
+         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
         self.contentMode = contentMode
         self.userAttributeUseCase = userAttributeUseCase
+        isRememberPreferencesFeatureFlagEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelinePreferenceSaving)
     }
     
     var shouldShowMediaTypeFilter: Bool {
@@ -35,6 +40,8 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     
     @MainActor
     func applySavedFilters() async {
+        guard isRememberPreferencesFeatureFlagEnabled else { return }
+        
         do {
             if let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
                 selectedMediaType = timelineFilters.filterType
@@ -136,6 +143,8 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     }
     
     func saveFilters() async {
+        guard isRememberPreferencesFeatureFlagEnabled else { return }
+        
         do {
             let timeline = ContentConsumptionTimeline(
                 mediaType: appliedMediaTypeFilter.toContentConsumptionMediaType(),

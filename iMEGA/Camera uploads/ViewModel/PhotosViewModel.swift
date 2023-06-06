@@ -67,7 +67,8 @@ final class PhotosViewModel: NSObject {
             guard let self = self else { return }
             
             do {
-                if let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
+                if featureFlagProvider.isFeatureFlagEnabled(for: .timelinePreferenceSaving),
+                   let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
                     filterType = filterType(from: timelineFilters.filterType)
                     filterLocation = filterLocation(from: timelineFilters.filterLocation)
                 }

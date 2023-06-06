@@ -54,11 +54,13 @@ public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttr
     }
     
     private func jsonStringForPreference(timeline: ContentConsumptionTimeline) async throws -> String {
-        if let contentConsumptionJson = try await retrieveContentConsumptionJSONData() {
-            return try jsonStringForExistingPreference(timeline: timeline, jsonData: contentConsumptionJson)
-        } else {
+        guard let contentConsumptionJson = try? await retrieveContentConsumptionJSONData(),
+              let existingJson = try? jsonStringForExistingPreference(timeline: timeline, jsonData: contentConsumptionJson)
+        else {
             return try jsonStringForNonExistingPreference(timeline)
         }
+        
+        return existingJson
     }
     
     private func jsonStringForExistingPreference(timeline: ContentConsumptionTimeline, jsonData: Data) throws -> String {

@@ -120,27 +120,40 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     
     func testSaveFilters_onApplyingFilters_shouldChangeTypeAndLocation() async throws {
         let useCase = MockUserAttributeUseCase()
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase)
+        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving : true]))
         sut.appliedMediaTypeFilter = .images
         sut.appliedFilterLocation = .cloudDrive
+        
         await sut.saveFilters()
         
-        XCTAssertEqual(useCase.userAttributeContainer[.appsPreferences]?[ContentConsumptionKeysEntity.key], "\(ContentConsumptionMediaType.images.rawValue)-\(ContentConsumptionMediaLocation.cloudDrive.rawValue)")
+        XCTAssertEqual(useCase.userAttributeContainer[.contentConsumptionPreferences]?[ContentConsumptionKeysEntity.key], "\(ContentConsumptionMediaType.images.rawValue)-\(ContentConsumptionMediaLocation.cloudDrive.rawValue)")
     }
     
     func testApplySavedFilters_whenFilterScreenLoaded_shouldApplyPreviousSavedFilters() async {
         let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase)
+        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]))
         await sut.applySavedFilters()
         XCTAssertEqual(sut.selectedMediaType, .videos)
         XCTAssertEqual(sut.selectedLocation, .cloudDrive)
         XCTAssertTrue(sut.selectedSavePreferences)
     }
     
+    func testApplySavedFilters_whenFilterScreenLoadedAndFeatureFlagIsDisabled_shouldNotApplySavedFilters() async {
+        let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
+        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving : false]))
+        
+        await sut.applySavedFilters()
+        
+        XCTAssertFalse(sut.isRememberPreferencesFeatureFlagEnabled)
+        XCTAssertEqual(sut.selectedMediaType, .allMedia)
+        XCTAssertEqual(sut.selectedLocation, .allLocations)
+    }
+    
     private func photoLibraryFilterViewModel(
         contentMode: PhotoLibraryContentMode = .library,
-        userAttributeUseCase: UserAttributeUseCaseProtocol = MockUserAttributeUseCase()
+        userAttributeUseCase: UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
+        featureFlagProvider: FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> PhotoLibraryFilterViewModel {
-        PhotoLibraryFilterViewModel(contentMode: contentMode, userAttributeUseCase: userAttributeUseCase)
+        PhotoLibraryFilterViewModel(contentMode: contentMode, userAttributeUseCase: userAttributeUseCase, featureFlagProvider: featureFlagProvider)
     }
 }

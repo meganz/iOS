@@ -150,10 +150,26 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     func testLoadAllPhotosWithSavedFilters_whenTheScreenAppear_shouldLoadTheExistingFilters() async {
+        let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
+        let sut = photosViewModelForFeatureFlag(provider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving : true]), userAttributeUseCase: useCase)
+        
         sut.loadAllPhotosWithSavedFilters()
         await sut.contentConsumptionAttributeLoadingTask?.value
-        XCTAssertEqual(sut.filterType, .images)
+        
+        XCTAssertEqual(sut.filterType, .videos)
         XCTAssertEqual(sut.filterLocation, .cloudDrive)
+    }
+    
+    func testLoadAllPhotosWithSavedFilters_whenFeatureFlagIsDisabled_shouldNotApplySavedFilters() async {
+        let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
+        
+        let sut = photosViewModelForFeatureFlag(provider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: false] ), userAttributeUseCase: useCase)
+        
+        sut.loadAllPhotosWithSavedFilters()
+        await sut.contentConsumptionAttributeLoadingTask?.value
+        
+        XCTAssertEqual(sut.filterType, .allMedia)
+        XCTAssertEqual(sut.filterLocation, .allLocations)
     }
     
     private func sampleNodesForAllLocations() -> [NodeEntity] {
@@ -187,13 +203,15 @@ final class PhotosViewModelTests: XCTestCase {
         return [node1, node2, node3, node4]
     }
     
-    private func photosViewModelForFeatureFlag(provider: FeatureFlagProviderProtocol) -> PhotosViewModel {
+    private func photosViewModelForFeatureFlag(provider: FeatureFlagProviderProtocol,
+                                               userAttributeUseCase: UserAttributeUseCaseProtocol = MockUserAttributeUseCase()) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let usecase = MockPhotoLibraryUseCase(allPhotos: [],
                                               allPhotosFromCloudDriveOnly: [],
                                               allPhotosFromCameraUpload: [])
         return PhotosViewModel(photoUpdatePublisher: publisher,
-                               photoLibraryUseCase: usecase, userAttributeUseCase: MockUserAttributeUseCase(),
+                               photoLibraryUseCase: usecase,
+                               userAttributeUseCase: userAttributeUseCase,
                                featureFlagProvider: provider)
     }
 }
