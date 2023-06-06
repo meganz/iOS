@@ -121,9 +121,10 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
     }
     
     private func allSortedThumbnailPhotosAndVideos() async throws -> [NodeEntity] {
-        async let allPhotos = try await allPhotos()
-        async let allVideos = try await allVideos()
-        var allThumbnailPhotosAndVideos = try await [allPhotos, allVideos]
+        let allPhotos = try await allPhotos()
+        let allVideos = try await allVideos()
+        
+        var allThumbnailPhotosAndVideos = [allPhotos, allVideos]
             .flatMap { $0 }
             .filter { $0.hasThumbnail && $0.mediaType != nil }
         allThumbnailPhotosAndVideos.sort {
@@ -188,11 +189,13 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
     }
     
     public func hasNoPhotosAndVideos() async -> Bool {
-        async let allPhotos = try await allPhotos()
-        async let allVideos = try await allVideos()
-        let allPhotosAndVideos = try? await [allPhotos, allVideos]
-            .flatMap { $0 }
+        let allPhotos = try? await allPhotos()
+        let allVideos = try? await allVideos()
+        
+        let allPhotosAndVideos = [allPhotos, allVideos]
+            .flatMap { $0 ?? [] }
             .filter { $0.hasThumbnail }
-        return allPhotosAndVideos?.isEmpty ?? true
+        
+        return allPhotosAndVideos.isEmpty
     }
 }
