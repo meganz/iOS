@@ -19,14 +19,20 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     var relevantUnseenUserAlertsCount: UInt = 0
     
     private var accountDetails: AccountDetailsEntity?
+    private var featureFlagProvider: FeatureFlagProviderProtocol
     @Published private(set) var currentPlanName: String = ""
     
     private let accountHallUsecase: AccountHallUseCaseProtocol
     
     // MARK: - Init
     
-    init(accountHallUsecase: AccountHallUseCaseProtocol) {
+    init(accountHallUsecase: AccountHallUseCaseProtocol, featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
         self.accountHallUsecase = accountHallUsecase
+        self.featureFlagProvider = featureFlagProvider
+    }
+    
+    func isNewUpgradeAccountPlanEnabled() -> Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .newUpgradeAccountPlanUI)
     }
     
     // MARK: - Dispatch actions
