@@ -95,13 +95,18 @@ struct PhotoLibraryFilterView: View {
         GeometryReader { geo in
             VStack(spacing: 35) {
                 navigationBar
-                VStack(spacing: 20) {
-                    typeView(geo)
-                    locationView
-                    rememberPreferenceView
-                        .padding(.top, 12)
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 20) {
+                        typeView(geo)
+                        locationView
+                        rememberPreferenceView
+                            .padding(.top, 12)
+                            .opacity(viewModel.isRememberPreferencesFeatureFlagEnabled ? 1.0: 0.0)
+                    }
+                    .padding(.horizontal, 5)
+                    .padding(.bottom, 50)
                 }
-                .padding(.horizontal, 5)
+                .frame(height: geo.size.height)
                 Spacer()
             }
         }
