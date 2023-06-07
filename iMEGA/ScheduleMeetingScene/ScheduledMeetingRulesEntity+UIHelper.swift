@@ -53,7 +53,7 @@ extension ScheduledMeetingRulesEntity {
             )
         }
     }
-    
+        
     // MARK: - Private methods.
     
     private mutating func updateFrequency(frequency: Frequency) {

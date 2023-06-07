@@ -3408,3 +3408,10 @@
 "chat.call.quickAction.camera"="Camera";
 /* Device Center title */
 "device.center.title"="Device Center";
+"chat.call.quickAction.camera"="Camera";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="On date";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="Never";

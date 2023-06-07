@@ -991,6 +991,7 @@
 		838A849D2631C987004804A4 /* MegaChatResultRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A849C2631C987004804A4 /* MegaChatResultRequestDelegate.swift */; };
 		838B976826B1615F000E480E /* CallParticipantEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */; };
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
+		838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */; };
 		838F63CE2836778A009B41D6 /* DuplicatedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F63CD2836778A009B41D6 /* DuplicatedItem.swift */; };
 		838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F63CD2836778A009B41D6 /* DuplicatedItem.swift */; };
 		838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
@@ -1054,6 +1055,10 @@
 		83C7C84827EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C7C84727EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift */; };
 		83C7C85227EDE81F00CFB5E6 /* PhotosLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C7C85127EDE81F00CFB5E6 /* PhotosLibraryRepository.swift */; };
 		83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */; };
+		83C9CE772A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE762A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift */; };
+		83C9CE7D2A278F750009549B /* RecurrenceOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE7C2A278F750009549B /* RecurrenceOptionView.swift */; };
+		83C9CE7F2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE7E2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift */; };
+		83C9CE812A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE802A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift */; };
 		83CBA3E127A81A85005F0FD5 /* CancellableTransferRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3D2795954E00B90EF2 /* CancellableTransferRouter.swift */; };
 		83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */; };
 		83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */; };
@@ -3514,6 +3519,7 @@
 		838A849C2631C987004804A4 /* MegaChatResultRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaChatResultRequestDelegate.swift; sourceTree = "<group>"; };
 		838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallParticipantEntity+Mapping.swift"; sourceTree = "<group>"; };
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
+		838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		838F63CD2836778A009B41D6 /* DuplicatedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatedItem.swift; sourceTree = "<group>"; };
 		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
 		8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModelTests.swift; sourceTree = "<group>"; };
@@ -3569,6 +3575,10 @@
 		83C7C84727EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMediaUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		83C7C85127EDE81F00CFB5E6 /* PhotosLibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosLibraryRepository.swift; sourceTree = "<group>"; };
 		83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouterOCWrapper.swift; sourceTree = "<group>"; };
+		83C9CE762A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsView.swift; sourceTree = "<group>"; };
+		83C9CE7C2A278F750009549B /* RecurrenceOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceOptionView.swift; sourceTree = "<group>"; };
+		83C9CE7E2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModel.swift; sourceTree = "<group>"; };
+		83C9CE802A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsRouter.swift; sourceTree = "<group>"; };
 		83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferControllerWrapper.swift; sourceTree = "<group>"; };
 		83CCBC3D2795954E00B90EF2 /* CancellableTransferRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouter.swift; sourceTree = "<group>"; };
 		83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferViewModel.swift; sourceTree = "<group>"; };
@@ -7806,6 +7816,7 @@
 		77D9A5692023538600B48470 /* Photo browser */ = {
 			isa = PBXGroup;
 			children = (
+				271FC4202A27EA4400E35924 /* ElementStore.swift */,
 				77C544FD2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.h */,
 				77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */,
 				77CAAAE1202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.h */,
@@ -7818,7 +7829,6 @@
 				77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */,
 				77D9A56D202355F800B48470 /* PhotoBrowser.storyboard */,
 				B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */,
-				271FC4202A27EA4400E35924 /* ElementStore.swift */,
 			);
 			path = "Photo browser";
 			sourceTree = "<group>";
@@ -8364,8 +8374,8 @@
 		837B9C0824781B1600D409B4 /* NodeActions */ = {
 			isa = PBXGroup;
 			children = (
-				837B9C0924781B1600D409B4 /* NodeActionBuilderTests.swift */,
 				274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */,
+				837B9C0924781B1600D409B4 /* NodeActionBuilderTests.swift */,
 			);
 			path = NodeActions;
 			sourceTree = "<group>";
@@ -8693,6 +8703,9 @@
 				BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */,
 				BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */,
 				BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */,
+				83C9CE802A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift */,
+				83C9CE762A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift */,
+				83C9CE7E2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift */,
 				BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */,
 				83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */,
 				83DBDDEA29D7312E00CF433B /* ScheduleMeetingView.swift */,
@@ -8708,6 +8721,7 @@
 				83DBDDE829D7310500CF433B /* DatePickerView.swift */,
 				83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */,
 				83DBDDE629D730EC00CF433B /* ErrorView.swift */,
+				83C9CE7C2A278F750009549B /* RecurrenceOptionView.swift */,
 				BF085C9C29E66A9A001E6AB7 /* ScheduleMeetingCreationDateAndRecurrenceView.swift */,
 				BF085C9E29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift */,
 				BF085CA229E66B38001E6AB7 /* ScheduleMeetingCreationInvitationView.swift */,
@@ -9236,6 +9250,7 @@
 		A86F05722567E65500437985 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */,
 				0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */,
 				0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */,
 				837DC7A2256D196200CA289E /* GetLinkDatePickerTableViewCell.swift */,
@@ -9247,7 +9262,6 @@
 				0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */,
 				0E3B1A472A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift */,
 				837DC7A4256D196300CA289E /* GetLinkSwitchOptionTableViewCell.swift */,
-				9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -11353,6 +11367,7 @@
 				BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */,
 				BF4989762A0DD694005C9ABD /* ScheduleMeetingCreationRecurrenceOptionsViewModelTests.swift */,
 				BF121D7A2A0B5C5300DA3633 /* ScheduleMeetingCreationRecurrenceOptionTests.swift */,
+				838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */,
 				83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */,
 			);
 			path = Meeting;
@@ -13124,6 +13139,7 @@
 				838F63CE2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
 				C46D2A80270F1B5E00DA26D0 /* DynamicTypeCollectionManager.swift in Sources */,
 				C467AD5026A8656000AFE4D2 /* DynamicTypeComponentProtocol.swift in Sources */,
+				271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */,
 				BF99A3F524AC445C0035A183 /* Emoji.swift in Sources */,
 				BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */,
 				BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */,
@@ -13235,6 +13251,7 @@
 				0E3E07A12A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift in Sources */,
 				0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */,
 				0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */,
+				9444859C2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift in Sources */,
 				0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */,
 				0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */,
 				837DC7A8256D196400CA289E /* GetLinkDatePickerTableViewCell.swift in Sources */,
@@ -13845,7 +13862,6 @@
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
 				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
-				271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */,
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
@@ -13886,6 +13902,7 @@
 				B52B8C68297FE9A400981F47 /* RecentsViewController+Additions.swift in Sources */,
 				A88E7FEC2549FD8A001B0A66 /* RecentsViewController.m in Sources */,
 				A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */,
+				83C9CE7D2A278F750009549B /* RecurrenceOptionView.swift in Sources */,
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
 				B662B89124FC40090089376A /* RegionListIndexedSource.swift in Sources */,
 				B662B88F24FC3FFE0089376A /* RegionListSearchSource.swift in Sources */,
@@ -13931,6 +13948,9 @@
 				BF6C83D92A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift in Sources */,
 				BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */,
 				BF6C83D72A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift in Sources */,
+				83C9CE812A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift in Sources */,
+				83C9CE772A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift in Sources */,
+				83C9CE7F2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift in Sources */,
 				BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */,
 				83DE6D1F2989410E000503CC /* ScheduleMeetingOccurence.swift in Sources */,
 				BF0D5125298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift in Sources */,
@@ -14058,7 +14078,6 @@
 				BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */,
 				BFD2144728FCFAB70057150E /* SwipeLeftActionModifier.swift in Sources */,
 				0D30D86225BFA14A00C26367 /* Tab.swift in Sources */,
-				9444859C2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift in Sources */,
 				5D876543252CAAE200E6CB91 /* TableDataSourceConfiguration.swift in Sources */,
 				5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */,
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,
@@ -14623,6 +14642,7 @@
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
+				274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
 				0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */,
 				6D0CA0ED2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift in Sources */,
@@ -14634,7 +14654,6 @@
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
-				274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
 				BFC9B6B72A282151009AA403 /* FutureMeetingSectionTests.swift in Sources */,
 				0E3E07A32A1EA6C700A2A71B /* GetAlbumLinkViewModelTests.swift in Sources */,
@@ -14743,6 +14762,7 @@
 				BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */,
 				BF4989772A0DD694005C9ABD /* ScheduleMeetingCreationRecurrenceOptionsViewModelTests.swift in Sources */,
 				BF121D7B2A0B5C5300DA3633 /* ScheduleMeetingCreationRecurrenceOptionTests.swift in Sources */,
+				838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */,
 				BFB889932A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift in Sources */,
 				83751C5429E572DC0030310B /* ScheduleMeetingViewModelTests.swift in Sources */,
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,

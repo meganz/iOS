@@ -8,6 +8,7 @@ protocol ScheduleMeetingRouting {
     func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void))
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
     func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
+    func showEndRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
 }
 
 final class ScheduleMeetingViewModel: ObservableObject {
@@ -154,6 +155,20 @@ final class ScheduleMeetingViewModel: ObservableObject {
             return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.weekly
         case .monthly:
             return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.monthly
+        }
+    }
+    
+    func showEndRecurrenceOptionsView() {
+        router
+            .showEndRecurrenceOptionsView(rules: rules)?
+            .assign(to: &$rules)
+    }
+    
+    func endRecurrenceDetailText() -> String {
+        if let untilDate = rules.until {
+            return dateFormatter.localisedString(from: untilDate)
+        } else {
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.never
         }
     }
     

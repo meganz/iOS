@@ -198,6 +198,17 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
+    func testEndRecurrenceDetailText_untilDateIsNotSet_shouldShowNever() {
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [1]))
+        XCTAssertEqual(viewModel.endRecurrenceDetailText(), Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.never)
+    }
+    
+    func testEndRecurrenceDetailText_untilDateIsSet_shouldShowDate() throws {
+        let date = try XCTUnwrap(sampleDate(withDay: 31))
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(until: date))
+        XCTAssertEqual(viewModel.endRecurrenceDetailText(), viewModel.dateFormatter.localisedString(from: date))
+    }
+
     // MARK: - Private methods.
     
     private func sampleDate(withDay day: Int = 16) -> Date? {
@@ -221,7 +232,8 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     var discardChanges_calledTimes = 0
     var showAddParticipants_calledTimes = 0
     var scheduleMettingRulesEntityPublisher: PassthroughSubject<ScheduledMeetingRulesEntity, Never>?
-    
+    var endRecurrenceScheduleMettingRulesEntityPublisher: PassthroughSubject<ScheduledMeetingRulesEntity, Never>?
+
     func showSpinner() {
         showSpinner_calledTimes += 1
     }
@@ -244,5 +256,9 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     
     func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
         scheduleMettingRulesEntityPublisher?.eraseToAnyPublisher()
+    }
+    
+    func showEndRecurrenceOptionsView(rules: MEGADomain.ScheduledMeetingRulesEntity) -> AnyPublisher<MEGADomain.ScheduledMeetingRulesEntity, Never>? {
+        endRecurrenceScheduleMettingRulesEntityPublisher?.eraseToAnyPublisher()
     }
 }

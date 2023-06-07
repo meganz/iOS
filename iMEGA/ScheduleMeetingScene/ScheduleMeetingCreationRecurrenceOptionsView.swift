@@ -20,20 +20,3 @@ struct ScheduleMeetingCreationRecurrenceOptionsView: View {
         .navigationTitle(Strings.Localizable.Meetings.ScheduleMeeting.Create.RecurrenceOptionScreen.navigationTitle)
     }
 }
-
-private struct RecurrenceOptionView: View {
-    let name: String
-    let isSelected: Bool
-    
-    var body: some View {
-        HStack {
-            Text(name)
-            Spacer()
-            if isSelected {
-                Image(systemName: "checkmark")
-                    .foregroundColor(Color(Colors.Chat.Meeting.frequencySelectionTickMark.color))
-                    .font(.system(.footnote).bold())
-            }
-        }
-    }
-}
