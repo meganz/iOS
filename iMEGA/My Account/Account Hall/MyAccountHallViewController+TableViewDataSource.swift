@@ -100,7 +100,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
     // MARK: - Device center row setup data
     private func makeDeviceCenterCellData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.Device.Center.title,
-                              icon: Asset.Images.Backup.pc.image.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: Asset.Images.Backup.deviceCenter.image.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
