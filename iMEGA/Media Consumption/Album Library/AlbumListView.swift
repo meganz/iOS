@@ -44,6 +44,9 @@ struct AlbumListView: View {
         }, content: {
             albumContentAdditionView($0)
         })
+        .sheet(isPresented: $viewModel.showShareAlbumLinks) {
+            router.shareLinks(forAlbums: viewModel.selectedUserAlbums)
+        }
         .padding([.top, .bottom], 10)
         .onAppear {
             viewModel.loadAlbums()

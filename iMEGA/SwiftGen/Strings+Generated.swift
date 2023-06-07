@@ -3737,6 +3737,10 @@ public enum Strings {
           public static func folder(_ p1: Int) -> String {
             return Strings.tr("Localizable", "general.format.count.folder", p1)
           }
+          /// Plural format key: "%#@item@"
+          public static func items(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "general.format.count.items", p1)
+          }
           public enum FolderAndFile {
             /// Plural format key: "%#@file@"
             public static func file(_ p1: Int) -> String {

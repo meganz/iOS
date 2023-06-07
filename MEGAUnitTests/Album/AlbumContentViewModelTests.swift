@@ -769,6 +769,18 @@ final class AlbumContentViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func testDispatch_onShareLink_shouldCallRouterToShareLink() {
+        let userAlbum = AlbumEntity(id: 1, type: .user)
+        let sut = AlbumContentViewModel(album: userAlbum,
+                                        albumContentsUseCase: MockAlbumContentUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        router: router,
+                                        alertViewModel: alertViewModel())
+        sut.dispatch(.shareLink)
+        XCTAssertEqual(router.showShareLinkCalled, 1)
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title, placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder, affirmativeButtonTitle: Strings.Localizable.rename, message: nil)
     }
@@ -790,6 +802,7 @@ private final class MockAlbumContentRouting: AlbumContentRouting {
     var showAlbumContentPickerCalled = 0
     var showAlbumCoverPickerCalled = 0
     var albumCoverPickerPhotoCellCalled = 0
+    var showShareLinkCalled = 0
     
     init(album: AlbumEntity? = nil,
          albumPhoto: AlbumPhotoEntity? = nil,
@@ -823,5 +836,9 @@ private final class MockAlbumContentRouting: AlbumContentRouting {
                 mediaUseCase: MockMediaUseCase()
             )
         )
+    }
+    
+    func showShareLink(album: AlbumEntity) {
+        showShareLinkCalled += 1
     }
 }

@@ -5,7 +5,9 @@ public struct MockShareUseCase: ShareUseCaseProtocol {
     private let shares: [ShareEntity]
     private let sharedNodeHandles: [HandleEntity]
     
-    public init(nodes: [NodeEntity], shares: [ShareEntity], sharedNodeHandles: [HandleEntity] = []) {
+    public init(nodes: [NodeEntity] = [],
+                shares: [ShareEntity] = [],
+                sharedNodeHandles: [HandleEntity] = []) {
         self.nodes = nodes
         self.shares = shares
         self.sharedNodeHandles = sharedNodeHandles

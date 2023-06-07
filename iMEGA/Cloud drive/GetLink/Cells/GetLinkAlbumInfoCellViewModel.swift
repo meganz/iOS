@@ -28,7 +28,7 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
         switch action {
         case .onViewReady:
             invokeCommand?(.setLabels(title: album.name,
-                                      subtitle: "\(album.count) items"))
+                                      subtitle: Strings.Localizable.General.Format.Count.items(album.count)))
             loadThumbnail()
         }
     }

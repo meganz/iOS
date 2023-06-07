@@ -18,7 +18,8 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
                                                 thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: localURL, type: .thumbnail))))
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .setLabels(title: albumName, subtitle: "\(albumCount) items"),
+            .setLabels(title: albumName,
+                       subtitle: Strings.Localizable.General.Format.Count.items(albumCount)),
             .setThumbnail(path: localURL.path)
         ])
     }
@@ -31,7 +32,8 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
                                                 thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .failure(ThumbnailErrorEntity.generic)))
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .setLabels(title: albumName, subtitle: "\(albumCount) items"),
+            .setLabels(title: albumName,
+                       subtitle: Strings.Localizable.General.Format.Count.items(albumCount)),
             .setPlaceholderThumbnail
         ])
     }
@@ -44,7 +46,8 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
                                                 thumbnailUseCase: MockThumbnailUseCase())
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .setLabels(title: albumName, subtitle: "\(albumCount) items"),
+            .setLabels(title: albumName,
+                       subtitle: Strings.Localizable.General.Format.Count.items(albumCount)),
             .setPlaceholderThumbnail
         ])
     }

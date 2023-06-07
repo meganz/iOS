@@ -71,6 +71,8 @@ extension AlbumContentViewController: QuickActionsMenuDelegate {
         if action == .rename {
             viewModel.updateAlertViewModel()
             present(UIAlertController(alert: viewModel.alertViewModel), animated: true)
+        } else if action == .shareLink || action == .manageLink {
+            viewModel.dispatch(.shareLink)
         }
     }
 }

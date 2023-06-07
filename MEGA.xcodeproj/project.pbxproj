@@ -40,8 +40,12 @@
 		0E3E07AD2A1EBEDF00A2A71B /* GetLinkViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */; };
 		0E45ACB429BEB72600541278 /* NodeEntityMapppingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */; };
 		0E6F57B4299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */; };
+		0E72E1262A2841CE00C900F9 /* EnforceCopyrightWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */; };
+		0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */; };
+		0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */; };
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
+		0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */; };
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
 		0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */; };
 		0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */; };
@@ -2467,8 +2471,12 @@
 		0E3E07AC2A1EBEDF00A2A71B /* GetLinkViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkViewModelType.swift; sourceTree = "<group>"; };
 		0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeEntityMapppingTests.swift; sourceTree = "<group>"; };
 		0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepositoryTests.swift; sourceTree = "<group>"; };
+		0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningView.swift; sourceTree = "<group>"; };
+		0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModel.swift; sourceTree = "<group>"; };
+		0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModelTests.swift; sourceTree = "<group>"; };
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
+		0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewWrapper.swift; sourceTree = "<group>"; };
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
 		0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchCellViewConfiguration.swift; sourceTree = "<group>"; };
 		0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewModel.swift; sourceTree = "<group>"; };
@@ -5142,6 +5150,23 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		0E72E11F2A27EC8D00C900F9 /* CopyrightWarning */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */,
+				0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */,
+			);
+			path = CopyrightWarning;
+			sourceTree = "<group>";
+		};
+		0E72E1222A27ECED00C900F9 /* CopyrightWarning */ = {
+			isa = PBXGroup;
+			children = (
+				0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */,
+			);
+			path = CopyrightWarning;
+			sourceTree = "<group>";
+		};
 		0EE7A9CC29ED1A45003DBC43 /* FeatureFlags */ = {
 			isa = PBXGroup;
 			children = (
@@ -5268,6 +5293,7 @@
 		1240A49E27DD544B00627262 /* CloudDrive */ = {
 			isa = PBXGroup;
 			children = (
+				0E72E1222A27ECED00C900F9 /* CopyrightWarning */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
 				B5FC636529E92FE400EE4C8E /* Node */,
@@ -5843,6 +5869,7 @@
 			children = (
 				E8F791731BC5754A00C58676 /* Activities */,
 				832E102C202CB21700BDD30F /* Cells */,
+				0E72E11F2A27EC8D00C900F9 /* CopyrightWarning */,
 				837EE1F3253DB7E50083D927 /* GetLink */,
 				12647CD027D7F7AA002033AF /* MediaDiscovery */,
 				834EFDBC24D9AB9C004BFECA /* NodeInfo */,
@@ -8357,6 +8384,7 @@
 				837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */,
 				0E3E07A02A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift */,
 				0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */,
+				0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */,
 				837EE204253DB8540083D927 /* GetLink.storyboard */,
 				0E3B1A532A1DCDF100EC5859 /* GetLinkSectionViewModel.swift */,
 				94361BB62A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift */,
@@ -13111,6 +13139,8 @@
 				BFB33D90263B922F006E203D /* EndMeetingOptionsRouter.swift in Sources */,
 				BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */,
 				BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */,
+				0E72E1262A2841CE00C900F9 /* EnforceCopyrightWarningView.swift in Sources */,
+				0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */,
 				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
 				8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */,
 				A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */,
@@ -13201,6 +13231,7 @@
 				2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */,
 				0E3E07A12A1EA5D200A2A71B /* GetAlbumLinkViewModel.swift in Sources */,
 				0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */,
+				0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */,
 				0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */,
 				0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */,
 				837DC7A8256D196400CA289E /* GetLinkDatePickerTableViewCell.swift in Sources */,
@@ -14589,6 +14620,7 @@
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
+				0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */,
 				6D0CA0ED2981D15200CBE9E4 /* ExplorerTypeEntityMappingTests.swift in Sources */,
 				5BBC13DE26CE62D10010115B /* FavouritesViewModelTests.swift in Sources */,
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
