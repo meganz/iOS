@@ -2,7 +2,7 @@ import XCTest
 @testable import MEGA
 
 class AlbumToolbarConfiguratorTest: XCTestCase {
-    func testToolbarItems_forGifAndRawAlbumAndIsCreateDisabled_shouldReturnCorrectItems() {
+    func testToolbarItems_forGifAndRawAlbum_shouldReturnCorrectItems() {
         [AlbumType.gif, .raw].forEach {
             let sut = AlbumToolbarConfigurator(downloadAction: { _ in },
                                                shareLinkAction: { _ in },
@@ -14,64 +14,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
                                                exportAction: { _ in },
                                                sendToChatAction: { _ in },
                                                moreAction: { _ in },
-                                               albumType: $0,
-                                               isCreateAlbumFeatureFlagEnabled: false)
-            let buttonItems = sut.toolbarItems(forNodes: nil)
-            XCTAssertEqual(buttonItems, [
-                sut.downloadItem,
-                sut.flexibleItem,
-                sut.shareLinkItem,
-                sut.flexibleItem,
-                sut.moveItem,
-                sut.flexibleItem,
-                sut.exportItem,
-                sut.flexibleItem,
-                sut.moreItem
-            ])
-        }
-    }
-    
-    func testToolbarItems_forFavouriteAlbumIsCreateDisabled_shouldReturnCorrectItems() {
-        let sut = AlbumToolbarConfigurator(downloadAction: { _ in },
-                                           shareLinkAction: { _ in },
-                                           moveAction: { _ in },
-                                           copyAction: { _ in },
-                                           deleteAction: { _ in },
-                                           favouriteAction: { _ in },
-                                           removeToRubbishBinAction: { _ in },
-                                           exportAction: { _ in },
-                                           sendToChatAction: { _ in },
-                                           moreAction: { _ in },
-                                           albumType: .favourite,
-                                           isCreateAlbumFeatureFlagEnabled: false)
-        let buttonItems = sut.toolbarItems(forNodes: nil)
-        XCTAssertEqual(buttonItems, [
-            sut.downloadItem,
-            sut.flexibleItem,
-            sut.shareLinkItem,
-            sut.flexibleItem,
-            sut.favouriteItem,
-            sut.flexibleItem,
-            sut.removeToRubbishBinItem,
-            sut.flexibleItem,
-            sut.moreItem
-        ])
-    }
-    
-    func testToolbarItems_forGifAndRawAlbumAndIsCreateEnabled_shouldReturnCorrectItems() {
-        [AlbumType.gif, .raw].forEach {
-            let sut = AlbumToolbarConfigurator(downloadAction: { _ in },
-                                               shareLinkAction: { _ in },
-                                               moveAction: { _ in },
-                                               copyAction: { _ in },
-                                               deleteAction: { _ in },
-                                               favouriteAction: { _ in },
-                                               removeToRubbishBinAction: { _ in },
-                                               exportAction: { _ in },
-                                               sendToChatAction: { _ in },
-                                               moreAction: { _ in },
-                                               albumType: $0,
-                                               isCreateAlbumFeatureFlagEnabled: true)
+                                               albumType: $0)
             let buttonItems = sut.toolbarItems(forNodes: nil)
             XCTAssertEqual(buttonItems, [
                 sut.downloadItem,
@@ -85,7 +28,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
         }
     }
     
-    func testToolbarItems_forFavouriteAlbumIsCreateEnabled_shouldReturnCorrectItems() {
+    func testToolbarItems_forFavouriteAlbum_shouldReturnCorrectItems() {
         let sut = AlbumToolbarConfigurator(downloadAction: { _ in },
                                            shareLinkAction: { _ in },
                                            moveAction: { _ in },
@@ -96,8 +39,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
                                            exportAction: { _ in },
                                            sendToChatAction: { _ in },
                                            moreAction: { _ in },
-                                           albumType: .favourite,
-                                           isCreateAlbumFeatureFlagEnabled: true)
+                                           albumType: .favourite)
         let buttonItems = sut.toolbarItems(forNodes: nil)
         XCTAssertEqual(buttonItems, [
             sut.downloadItem,
@@ -112,7 +54,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
         ])
     }
     
-    func testToolbarItems_forUserAlbumIsCreateEnabled_shouldReturnCorrectItems() {
+    func testToolbarItems_forUserAlbum_shouldReturnCorrectItems() {
         let sut = AlbumToolbarConfigurator(downloadAction: { _ in },
                                            shareLinkAction: { _ in },
                                            moveAction: { _ in },
@@ -123,8 +65,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
                                            exportAction: { _ in },
                                            sendToChatAction: { _ in },
                                            moreAction: { _ in },
-                                           albumType: .user,
-                                           isCreateAlbumFeatureFlagEnabled: true)
+                                           albumType: .user)
         let buttonItems = sut.toolbarItems(forNodes: nil)
         XCTAssertEqual(buttonItems, [
             sut.downloadItem,
@@ -151,8 +92,7 @@ class AlbumToolbarConfiguratorTest: XCTestCase {
                                            exportAction: { _ in XCTFail("Unexpected action") },
                                            sendToChatAction: { _ in exp.fulfill() },
                                            moreAction: { _ in XCTFail("Unexpected action") },
-                                           albumType: .user,
-                                           isCreateAlbumFeatureFlagEnabled: true)
+                                           albumType: .user)
         sut.buttonPressed(sut.sendToChatItem)
         wait(for: [exp], timeout: 1.0)
     }

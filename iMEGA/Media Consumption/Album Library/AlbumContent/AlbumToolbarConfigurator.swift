@@ -5,7 +5,6 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     let exportAction: ButtonAction
     let sendToChatAction: ButtonAction
     let albumType: AlbumType
-    let isCreateAlbumFeatureFlagEnabled: Bool
     
     private var favouriteItemImage: ImageAsset {
         albumType == .favourite ? Asset.Images.NodeActions.removeFavourite :
@@ -33,23 +32,6 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         action: #selector(buttonPressed(_:))
     )
     
-    lazy var favouriteBarButtonItems: [UIBarButtonItem] = {
-        if isCreateAlbumFeatureFlagEnabled {
-            return [
-                flexibleItem,
-                favouriteItem
-            ]
-        } else {
-            return [
-                favouriteItem,
-                flexibleItem,
-                removeToRubbishBinItem,
-                flexibleItem,
-                moreItem
-            ]
-        }
-    }()
-    
     init(
         downloadAction: @escaping ButtonAction,
         shareLinkAction: @escaping ButtonAction,
@@ -61,15 +43,13 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
         exportAction: @escaping ButtonAction,
         sendToChatAction: @escaping ButtonAction,
         moreAction: @escaping ButtonAction,
-        albumType: AlbumType,
-        isCreateAlbumFeatureFlagEnabled: Bool
+        albumType: AlbumType
     ) {
         self.favouriteAction = favouriteAction
         self.removeToRubbishBinAction = removeToRubbishBinAction
         self.exportAction = exportAction
         self.sendToChatAction = sendToChatAction
         self.albumType = albumType
-        self.isCreateAlbumFeatureFlagEnabled = isCreateAlbumFeatureFlagEnabled
         
         super.init(
             downloadAction: downloadAction,
@@ -107,29 +87,17 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             downloadItem,
             flexibleItem,
             shareLinkItem,
-            flexibleItem
+            flexibleItem,
+            exportItem,
+            flexibleItem,
+            sendToChatItem
         ]
-        if isCreateAlbumFeatureFlagEnabled {
+        if albumType == .favourite {
             barButtonItems.append(contentsOf: [
-                exportItem,
                 flexibleItem,
-                sendToChatItem
+                favouriteItem
             ])
-        }
-        switch albumType {
-        case .raw, .gif:
-            if !isCreateAlbumFeatureFlagEnabled {
-                barButtonItems.append(contentsOf: [
-                    moveItem,
-                    flexibleItem,
-                    exportItem,
-                    flexibleItem,
-                    moreItem
-                ])
-            }
-        case .favourite:
-            barButtonItems.append(contentsOf: favouriteBarButtonItems)
-        case .user:
+        } else if albumType == .user {
             barButtonItems.append(contentsOf: [
                 flexibleItem,
                 removeToRubbishBinItem

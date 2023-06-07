@@ -13,11 +13,10 @@ struct AlbumListView: View {
         VStack(spacing: 0) {
             ScrollView {
                 LazyVGrid(columns: viewModel.columns(horizontalSizeClass: horizontalSizeClass), spacing: 10) {
-                    if viewModel.isCreateAlbumFeatureFlagEnabled {
-                        CreateAlbumCell(viewModel: createAlbumCellViewModel)
-                            .opacity($editMode.wrappedValue.isEditing ? 0.5 : 1)
-                            .onTapGesture { viewModel.onCreateAlbum() }
-                    }
+                    CreateAlbumCell(viewModel: createAlbumCellViewModel)
+                        .opacity($editMode.wrappedValue.isEditing ? 0.5 : 1)
+                        .onTapGesture { viewModel.onCreateAlbum() }
+                    
                     ForEach(viewModel.albums, id: \.self) { album in
                         router.cell(album: album, selection: viewModel.selection)
                         .clipped()
