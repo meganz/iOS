@@ -1347,13 +1347,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (nodeList) {
-        [self.dataProvider removePhotosIn:nodeList];
-        if (self.dataProvider.count == 0) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            [self.dataProvider updatePhotosIn:nodeList];
-            [self reloadUI];
-        }
+        __weak typeof(self) weakSelf = self;
+        [self.dataProvider removePhotosIn:nodeList completionHandler:^{
+            if (weakSelf.dataProvider.count == 0) {
+                [weakSelf dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                [weakSelf.dataProvider updatePhotosIn:nodeList];
+                [weakSelf reloadUI];
+            }
+        }];
     } else {
         [self reloadUI];
     }

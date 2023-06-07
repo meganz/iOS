@@ -8,6 +8,7 @@ protocol PhotoBrowserDataProviderProtocol {
 }
 
 final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol {
+    private var nodeStore: ElementStore<MEGANode, UInt64>
     private var megaNodes: [MEGANode]?
     private var nodeEntities: [NodeEntity]?
     private let sdk: MEGASdk
@@ -16,6 +17,7 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
     
     @objc init(currentPhoto: MEGANode, allPhotos: [MEGANode], sdk: MEGASdk) {
         megaNodes = allPhotos
+        nodeStore = .init(currentIndex: allPhotos.firstIndex(of: currentPhoto), elements: allPhotos, elementsIdentifiedBy: \.handle)
         self.sdk = sdk
         if let index = allPhotos.firstIndex(of: currentPhoto) {
             currentIndex = index
@@ -26,6 +28,7 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
     
     @objc init(currentIndex: Int, allPhotos: [MEGANode], sdk: MEGASdk) {
         megaNodes = allPhotos
+        nodeStore = .init(currentIndex: currentIndex, elements: allPhotos, elementsIdentifiedBy: \.handle)
         self.sdk = sdk
         if allPhotos.indices ~= currentIndex {
             self.currentIndex = currentIndex
@@ -36,6 +39,7 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
     
     init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk) {
         nodeEntities = allPhotos
+        nodeStore = .init(elementsIdentifiedBy: \.handle)
         self.sdk = sdk
         if let index = allPhotos.firstIndex(of: currentPhoto) {
             currentIndex = index
@@ -111,6 +115,12 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
         } else {
             removePhotosForNodeEntities(by: nodeList)
         }
+    }
+    
+    @MainActor
+    @objc func removePhotos(in nodeList: MEGANodeList?) async {
+        guard let nodeList else { return }
+        self.megaNodes = await nodeStore.remove(nodeList.toNodeArray().removedChangeTypeNodes())
     }
     
     @objc func updatePhotos(in nodeList: MEGANodeList) {
