@@ -380,6 +380,10 @@
 "linkWithoutKey"="Link without key";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Link with key";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link */
+"sharedItems.link.accessInfo" = "Anyone with this link can view and download your data";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected" = "Only people with the password can open the link";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(Pro only)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */

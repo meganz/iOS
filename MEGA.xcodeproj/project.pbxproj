@@ -1171,6 +1171,7 @@
 		9441FC1828DE148600DADFDD /* ContactLinkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441FC1728DE148600DADFDD /* ContactLinkRepository.swift */; };
 		9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */; };
 		9442009F2982EAA6005521C2 /* LogSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009E2982EAA6005521C2 /* LogSettingRepository.swift */; };
+		9444859C2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */; };
 		9444D0DD28C74B2D001F681C /* AudioPlayerConfigEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9444D0DC28C74B2D001F681C /* AudioPlayerConfigEntity.swift */; };
 		94485B5429B9F8BE006B919E /* SearchNodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */; };
 		94485B5B29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94485B5A29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift */; };
@@ -3678,6 +3679,7 @@
 		9441FC1728DE148600DADFDD /* ContactLinkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkRepository.swift; sourceTree = "<group>"; };
 		9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironmentRepository.swift; sourceTree = "<group>"; };
 		9442009E2982EAA6005521C2 /* LogSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSettingRepository.swift; sourceTree = "<group>"; };
+		9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAccessInfoTableViewCell.swift; sourceTree = "<group>"; };
 		9444D0DC28C74B2D001F681C /* AudioPlayerConfigEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntity.swift; sourceTree = "<group>"; };
 		94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNodeRepository.swift; sourceTree = "<group>"; };
 		94485B5529B9F8EC006B919E /* SearchNodeRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNodeRepositoryTests.swift; sourceTree = "<group>"; };
@@ -9245,6 +9247,7 @@
 				0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */,
 				0E3B1A472A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift */,
 				837DC7A4256D196300CA289E /* GetLinkSwitchOptionTableViewCell.swift */,
+				9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -14055,6 +14058,7 @@
 				BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */,
 				BFD2144728FCFAB70057150E /* SwipeLeftActionModifier.swift in Sources */,
 				0D30D86225BFA14A00C26367 /* Tab.swift in Sources */,
+				9444859C2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift in Sources */,
 				5D876543252CAAE200E6CB91 /* TableDataSourceConfiguration.swift in Sources */,
 				5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */,
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,

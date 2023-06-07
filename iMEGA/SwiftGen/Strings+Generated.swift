@@ -5218,6 +5218,12 @@ public enum Strings {
           }
         }
       }
+      public enum Link {
+        /// Anyone with this link can view and download your data
+        public static let accessInfo = Strings.tr("Localizable", "sharedItems.link.accessInfo")
+        /// Only people with the password can open the link
+        public static let accessInfoPasswordProtected = Strings.tr("Localizable", "sharedItems.link.accessInfoPasswordProtected")
+      }
       public enum Menu {
         public enum Slideshow {
           /// Slideshow

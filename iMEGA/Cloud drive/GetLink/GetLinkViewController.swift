@@ -2,6 +2,7 @@ import UIKit
 
 enum GetLinkTableViewSection: Int {
     case info
+    case linkAccessInfo
     case decryptKeySeparate
     case expiryDate
     case passwordProtection
@@ -323,6 +324,7 @@ class GetLinkViewController: UIViewController {
         var sections = [GetLinkTableViewSection]()
         
         sections.append(.info)
+        sections.append(.linkAccessInfo)
         sections.append(.decryptKeySeparate)
         sections.append(.expiryDate)
         sections.append(.passwordProtection)
@@ -555,6 +557,16 @@ class GetLinkViewController: UIViewController {
         
         return cell
     }
+
+    private func linkAccessInfoCell(forIndexPath indexPath: IndexPath) -> GetLinkAccessInfoTableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkAccessInfoTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkAccessInfoTableViewCell else {
+            fatalError("Could not get GetLinkAccessInfoTableViewCell")
+        }
+
+        cell.configure(isPasswordSet: getLinkVM.passwordProtect)
+
+        return cell
+    }
     
     private func decryptKeySeparateCell(forIndexPath indexPath: IndexPath) -> GetLinkSwitchOptionTableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkSwitchOptionTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkSwitchOptionTableViewCell else {
@@ -765,7 +777,7 @@ extension GetLinkViewController: UITableViewDataSource {
             return 2
         } else {
             switch sections()[section] {
-            case .info, .decryptKeySeparate:
+            case .info, .decryptKeySeparate, .linkAccessInfo:
                 return 1
             case .expiryDate:
                 return expireDateRows().count
@@ -803,6 +815,8 @@ extension GetLinkViewController: UITableViewDataSource {
             switch sections()[indexPath.section] {
             case .info:
                 return infoCell(forIndexPath: indexPath)
+            case .linkAccessInfo:
+                return linkAccessInfoCell(forIndexPath: indexPath)
             case .decryptKeySeparate:
                 return decryptKeySeparateCell(forIndexPath: indexPath)
             case .expiryDate:
@@ -865,6 +879,8 @@ extension GetLinkViewController: UITableViewDelegate {
                 header.configure(title: nil, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             case .passwordProtection:
                 header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            case .linkAccessInfo:
+                header.configure(title: nil, topDistance: 16.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             default:
                 header.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
             }
@@ -905,7 +921,7 @@ extension GetLinkViewController: UITableViewDelegate {
                 } else {
                     footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
                 }
-            case .link, .key, .info, .passwordProtection:
+            case .link, .key, .info, .passwordProtection, .linkAccessInfo:
                 footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
             default:
                 return footer
@@ -925,7 +941,7 @@ extension GetLinkViewController: UITableViewDelegate {
             }
         } else {
             switch sections()[indexPath.section] {
-            case .info, .decryptKeySeparate:
+            case .info, .decryptKeySeparate, .linkAccessInfo:
                 break
             case .expiryDate:
                 switch expireDateRows()[indexPath.row] {
