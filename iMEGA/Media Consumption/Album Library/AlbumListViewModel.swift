@@ -25,10 +25,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     var createAlbumTask: Task<Void, Never>?
     var deleteAlbumTask: Task<Void, Never>?
     var albumRemoveShareLinkTask: Task<Void, Never>?
-    
-    var isCreateAlbumFeatureFlagEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .createAlbum)
-    }
     var newAlbumContent: (AlbumEntity, [NodeEntity]?)?
     
     var albumNames: [String] {
@@ -43,7 +39,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let albumModificationUseCase: AlbumModificationUseCaseProtocol
     private let shareAlbumUseCase: ShareAlbumUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
-    private let featureFlagProvider: FeatureFlagProviderProtocol
     private var subscriptions = Set<AnyCancellable>()
     
     private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
@@ -52,14 +47,12 @@ final class AlbumListViewModel: NSObject, ObservableObject {
          albumModificationUseCase: AlbumModificationUseCaseProtocol,
          shareAlbumUseCase: ShareAlbumUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
-         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil,
-         featureFlagProvider: FeatureFlagProviderProtocol = AlbumFeatureFlagProvider()) {
+         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
         self.shareAlbumUseCase = shareAlbumUseCase
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
-        self.featureFlagProvider = featureFlagProvider
         super.init()
         setupSubscription()
         self.alertViewModel.action = { [weak self] newAlbumName in
@@ -72,8 +65,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
-        guard isCreateAlbumFeatureFlagEnabled,
-              let horizontalSizeClass else {
+        guard let horizontalSizeClass else {
             return Array(
                 repeating: .init(.flexible(), spacing: 10),
                 count: 3
@@ -88,12 +80,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     func loadAlbums() {
         albumLoadingTask = Task {
             async let systemAlbums = systemAlbums()
-            if isCreateAlbumFeatureFlagEnabled {
-                async let userAlbums = userAlbums()
-                albums = await systemAlbums + userAlbums
-            } else {
-                albums = await systemAlbums
-            }
+            async let userAlbums = userAlbums()
+            albums = await systemAlbums + userAlbums
             shouldLoad = false
         }
     }

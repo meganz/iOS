@@ -61,8 +61,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                 exportAction: didPressedExportFile,
                 sendToChatAction: didPressedSendToChat,
                 moreAction: moreButtonPressed,
-                albumType: albumType,
-                isCreateAlbumFeatureFlagEnabled: isCreateAlbumFeatureFlagEnabled
+                albumType: albumType
             )
         }
         
@@ -111,11 +110,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
               !selectedNodes.isEmpty else {
             return
         }
-        if isCreateAlbumFeatureFlagEnabled {
-            deleteAlbumPhotos(selectedNodes.toNodeEntities())
-        } else {
-            movePhotosToRubbishBin(photos: selectedNodes)
-        }
+        deleteAlbumPhotos(selectedNodes.toNodeEntities())
     }
     
     func moreButtonPressed(_ button: UIBarButtonItem) {
@@ -228,24 +223,6 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         })
         alertController.popoverPresentationController?.barButtonItem = albumToolbarConfigurator?.removeToRubbishBinItem
         present(alertController, animated: true)
-    }
-    
-    private func movePhotosToRubbishBin(photos: [MEGANode]) {
-        guard let rubbishBinNode = MEGASdkManager.sharedMEGASdk().rubbishNode else {
-            return
-        }
-        let moveRequestDelegate = MEGAMoveRequestDelegate(
-            toMoveToTheRubbishBinWithFiles: UInt(photos.count),
-            folders: 0) { [weak self] in
-                self?.endEditingMode()
-            }
-        
-        photos.forEach {
-            MEGASdkManager.sharedMEGASdk().move(
-                $0,
-                newParent: rubbishBinNode,
-                delegate: moveRequestDelegate
-            ) }
     }
     
     private func openBrowserViewController(withAction action: BrowserAction) {

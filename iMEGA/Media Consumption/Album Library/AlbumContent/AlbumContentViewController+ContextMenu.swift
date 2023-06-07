@@ -29,18 +29,14 @@ extension AlbumContentViewController {
             cancelBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
         } else {
-            if shouldUseAlbumContextMenu {
-                var rightBarButtonItems = [UIBarButtonItem]()
-                if let contextMenuBarButton = makeContextMenuBarButton() {
-                    rightBarButtonItems.append(contextMenuBarButton)
-                }
-                if viewModel.canAddPhotosToAlbum {
-                    rightBarButtonItems.append(addToAlbumBarButtonItem)
-                }
-                navigationItem.rightBarButtonItems = rightBarButtonItems
-            } else {
-                navigationItem.rightBarButtonItem = viewModel.isPhotoSelectionHidden ? nil : rightBarButtonItem
+            var rightBarButtonItems = [UIBarButtonItem]()
+            if let contextMenuBarButton = makeContextMenuBarButton() {
+                rightBarButtonItems.append(contextMenuBarButton)
             }
+            if viewModel.canAddPhotosToAlbum {
+                rightBarButtonItems.append(addToAlbumBarButtonItem)
+            }
+            navigationItem.rightBarButtonItems = rightBarButtonItems
         }
     }
 }
