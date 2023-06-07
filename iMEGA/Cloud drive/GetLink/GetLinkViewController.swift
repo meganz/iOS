@@ -125,6 +125,7 @@ class GetLinkViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        guard getLinkViewModel == nil else { return }
         configureSnackBarPresenter()
         copyLinkToPasteboard()
     }

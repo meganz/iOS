@@ -11,6 +11,7 @@ enum AlbumContentAction: ActionType {
     case deletePhotos([NodeEntity])
     case deleteAlbum
     case configureContextMenu(isSelectHidden: Bool)
+    case shareLink
 }
 
 final class AlbumContentViewModel: ViewModelType {
@@ -110,6 +111,8 @@ final class AlbumContentViewModel: ViewModelType {
         case .configureContextMenu(let isSelectHidden):
             isPhotoSelectionHidden = isSelectHidden
             invokeCommand?(.rebuildContextMenu)
+        case .shareLink:
+            router.showShareLink(album: album)
         }
     }
     

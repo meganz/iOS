@@ -2,11 +2,13 @@ import UIKit
 import SwiftUI
 import MEGADomain
 import MEGAPresentation
+import MEGAData
 
 protocol AlbumContentRouting: Routing {
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void)
     func showAlbumCoverPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void)
     func albumCoverPickerPhotoCell(albumPhoto: AlbumPhotoEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell
+    func showShareLink(album: AlbumEntity)
 }
 
 struct AlbumContentRouter: AlbumContentRouting {
@@ -101,6 +103,16 @@ struct AlbumContentRouter: AlbumContentRouting {
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo))
         
         return AlbumCoverPickerPhotoCell(viewModel: vm)
+    }
+    
+    @MainActor
+    func showShareLink(album: AlbumEntity) {
+        let viewModel = EnforceCopyrightWarningViewModel(preferenceUseCase: PreferenceUseCase.default,
+                                                         shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+        let view = EnforceCopyrightWarningView(viewModel: viewModel) {
+            GetAlbumsLinksViewWrapper(albums: [album])
+        }
+        navigationController?.present(UIHostingController(rootView: view), animated: true)
     }
     
     func start() {}

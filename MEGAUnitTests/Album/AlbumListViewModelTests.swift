@@ -520,6 +520,23 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
+    func testShowAlbumLinks_onShowShareAlbumsFired_shouldTrigger() {
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        XCTAssertFalse(sut.showShareAlbumLinks)
+        photoAlbumContainerViewModel.showShareAlbumLinks = true
+        XCTAssertTrue(sut.showShareAlbumLinks)
+    }
+    
+    func testSelectedUserAlbums_onAlbumsSelected_shouldOnlyReturnUseAlbums() {
+        let sut = albumListViewModel()
+        XCTAssertTrue(sut.selectedUserAlbums.isEmpty)
+        
+        let userAlbum = AlbumEntity(id: 5, type: .user)
+        sut.selection.setSelectedAlbums([AlbumEntity(id: 7, type: .favourite), userAlbum])
+        XCTAssertEqual(sut.selectedUserAlbums, [userAlbum])
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                    placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,

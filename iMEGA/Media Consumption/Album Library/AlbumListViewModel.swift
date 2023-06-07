@@ -11,13 +11,13 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     @Published var newlyAddedAlbum: AlbumEntity?
     @Published var albumHudMessage: AlbumHudMessage?
     @Published var albumAlertType: AlbumAlertType?
-
     @Published var showCreateAlbumAlert = false {
         willSet {
             self.alertViewModel.placeholderText = newAlbumName()
         }
     }
-    
+    @Published var showShareAlbumLinks = false
+   
     lazy var selection = AlbumSelection()
     
     var albumCreationAlertMsg: String?
@@ -33,6 +33,10 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     var albumNames: [String] {
         albums.map { $0.name }
+    }
+    
+    var selectedUserAlbums: [AlbumEntity] {
+        selection.albums.values.filter { $0.type == .user }
     }
     
     private let usecase: AlbumListUseCaseProtocol
@@ -64,6 +68,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         
         assignAlbumNameValidator()
         subscribeToEditMode()
+        subscibeToShareAlbumLinks()
     }
     
     func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
@@ -337,5 +342,12 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private func cancelAlbumRemoveShareLinkTask() {
         albumRemoveShareLinkTask?.cancel()
         albumRemoveShareLinkTask = nil
+    }
+    
+    private func subscibeToShareAlbumLinks() {
+        guard let photoAlbumContainerViewModel else { return }
+        photoAlbumContainerViewModel.$showShareAlbumLinks
+            .dropFirst()
+            .assign(to: &$showShareAlbumLinks)
     }
 }

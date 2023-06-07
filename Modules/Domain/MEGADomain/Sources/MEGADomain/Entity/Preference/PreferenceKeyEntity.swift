@@ -27,4 +27,5 @@ public enum PreferenceKeyEntity: String {
     case lastMoveActionTargetDate
     case lastCopyActionTargetPath
     case lastCopyActionTargetDate
+    case agreedCopywriteWarning
 }
