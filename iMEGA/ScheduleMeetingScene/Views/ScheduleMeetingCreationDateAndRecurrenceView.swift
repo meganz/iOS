@@ -32,6 +32,16 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
                     detail: viewModel.recurrenceOptionText(),
                     action: viewModel.showRecurrenceOptionsView
                 )
+                
+                if viewModel.rules.frequency != .invalid {
+                    Divider()
+                        .padding(.leading)
+                    DetailDisclosureView(
+                        text: Strings.Localizable.Meetings.ScheduleMeeting.Create.EndRecurrence.title,
+                        detail: viewModel.endRecurrenceDetailText(),
+                        action: viewModel.showEndRecurrenceOptionsView
+                    )
+                }
 
                 Divider()
                     .padding(.leading)

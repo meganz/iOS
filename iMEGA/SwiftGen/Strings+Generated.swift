@@ -4426,6 +4426,16 @@ public enum Strings {
         /// Schedule meeting
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
         public enum Create {
+          public enum EndRecurrence {
+            /// End recurrence
+            public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.create.endRecurrence.title")
+            public enum Option {
+              /// Never
+              public static let never = Strings.tr("Localizable", "meetings.scheduleMeeting.create.endRecurrence.option.never")
+              /// On date
+              public static let onDate = Strings.tr("Localizable", "meetings.scheduleMeeting.create.endRecurrence.option.onDate")
+            }
+          }
           public enum MonthlyRecurrenceOption {
             public enum DayThirtyFirstSelected {
               /// Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.

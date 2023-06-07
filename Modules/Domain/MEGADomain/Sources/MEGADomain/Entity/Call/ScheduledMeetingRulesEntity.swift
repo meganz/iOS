@@ -10,7 +10,7 @@ public struct ScheduledMeetingRulesEntity: Sendable, Equatable {
     
     public let frequency: Frequency
     public let interval: Int
-    public let until: Date?
+    public var until: Date?
     public let monthDayList: [Int]?
     public let weekDayList: [Int]?
     public let monthWeekDayList: [[Int]]?
