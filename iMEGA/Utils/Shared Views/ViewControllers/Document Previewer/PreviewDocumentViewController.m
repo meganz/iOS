@@ -92,7 +92,7 @@
         self.nodeFilePath = [nodeFolderPath stringByAppendingPathComponent:self.node.name];
         
         if ([[NSFileManager defaultManager] createDirectoryAtPath:nodeFolderPath withIntermediateDirectories:YES attributes:nil error:&error]) {
-            [MEGASdkManager.sharedMEGASdk startDownloadNode:self.node localPath:self.nodeFilePath fileName:nil appData:nil startFirst:NO cancelToken:nil delegate:self];
+            [MEGASdkManager.sharedMEGASdk startDownloadNode:self.node localPath:self.nodeFilePath fileName:nil appData:nil startFirst:YES cancelToken:nil delegate:self];
         } else {
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
