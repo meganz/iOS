@@ -10,8 +10,8 @@ fi
 
 echo "${PWD}"
 
-file="AENVGYjC"
-key="HhUgIOBY69zVZZtOa4e6vdySpHefnUo4GcoQYElmEo4"
+file="IAMjTJxB"
+key="fGxYIA1YhrXmcFZ9h6VEUNGSuX0uLRIog4X10XqEjZQ"
 fileLinkUrl="https://mega.nz/#!${file}!${key}"
 downloadFilePath="./../download_3rdparty/${file}"
 unzipPath="./Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty"
