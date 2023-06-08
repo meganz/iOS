@@ -14,8 +14,8 @@ public struct MockChatRoomUserUseCase: ChatRoomUserUseCaseProtocol {
     public init(userFullNamesResult: Result<[String], Error> = .failure(GenericErrorEntity()),
                 userDisplayNameForPeerResult: Result<String, Error> = .failure(GenericErrorEntity()),
                 userDisplayNamesForPeersResult: Result<[(HandleEntity, String)], Error> = .failure(GenericErrorEntity()),
-                userNickNames: [HandleEntity : String] = [:],
-                userEmails: [HandleEntity : String] = [:],
+                userNickNames: [HandleEntity: String] = [:],
+                userEmails: [HandleEntity: String] = [:],
                 contactEmail: String? = nil,
                 chatRoomUsersDescriptionResult: Result<String, Error> = .failure(GenericErrorEntity()),
                 userEmail: Result<String, Error> = .failure(GenericErrorEntity())

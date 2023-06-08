@@ -12,7 +12,7 @@ public struct HistoryRetentionUseCase<T: ManageChatHistoryRepositoryProtocol>: H
     }
     
     public func chatRetentionTime(for chatId: ChatIdEntity, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {
-        repository.chatRetentionTime(for:chatId, completion: completion)
+        repository.chatRetentionTime(for: chatId, completion: completion)
     }
     
     public func setChatRetentionTime(for chatId: ChatIdEntity, period: UInt, completion: @escaping (Result<UInt, ManageChatHistoryErrorEntity>) -> Void) {

@@ -23,7 +23,7 @@ extension SharedItemsViewController {
     
     @objc func createNodeInfoViewModel(withNode node: MEGANode,
                                        isNodeUndecryptedFolder: Bool) -> NodeInfoViewModel {
-        return NodeInfoViewModel(withNode:node,
+        return NodeInfoViewModel(withNode: node,
                                  shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
                                  isNodeUndecryptedFolder: isNodeUndecryptedFolder)
     }

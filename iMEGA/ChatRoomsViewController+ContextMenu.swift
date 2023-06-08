@@ -86,7 +86,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         case .online:
             changeTo(onlineStatus: .online)
         case .away:
-            changeTo(onlineStatus:.away)
+            changeTo(onlineStatus: .away)
         case .busy:
             changeTo(onlineStatus: .busy)
         case .offline:

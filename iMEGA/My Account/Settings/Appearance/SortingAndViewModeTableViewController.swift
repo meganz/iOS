@@ -92,7 +92,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         selectedViewModePreferenceCell.redCheckmarkImageView.isHidden = false
     }
     
-    @objc func processSortingPreferenceNotification(_ notification:Notification) {
+    @objc func processSortingPreferenceNotification(_ notification: Notification) {
         let selectedSortingPreference = notification.userInfo?[MEGASortingPreference] as! Int
         if selectedSortingPreference == SortingPreference.sameForAll.rawValue && sortingPreference != selectedSortingPreference {
             let previousSelectedViewModePreferenceCell = tableView.cellForRow(at: IndexPath.init(row: sortingPreference, section: SortingAndViewSection.sortingPreference.rawValue)) as! SelectableTableViewCell
@@ -103,7 +103,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         setupSortingPreferenceSameForAllDetailLabel(orderType: UserDefaults.standard.integer(forKey: MEGASortingPreferenceType))
     }
     
-    @objc func processViewModePreferenceNotification(_ notification:Notification) {
+    @objc func processViewModePreferenceNotification(_ notification: Notification) {
         let previousSelectedViewModePreferenceCell = tableView.cellForRow(at: IndexPath.init(row: viewModePreference, section: SortingAndViewSection.viewModePreference.rawValue)) as! SelectableTableViewCell
         previousSelectedViewModePreferenceCell.redCheckmarkImageView.isHidden = true
         
@@ -196,22 +196,22 @@ class SortingAndViewModeTableViewController: UITableViewController {
                 let sortType = Helper.sortType(for: nil)
                 let checkmarkImageView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
     
-                actions.append(ActionSheetAction(title: Strings.Localizable.nameAscending, detail:nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.ascending.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.nameAscending, detail: nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.ascending.image, style: .default) {
                     Helper.save(.defaultAsc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.nameDescending, detail:nil, accessoryView: sortType == .defaultDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.descending.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.nameDescending, detail: nil, accessoryView: sortType == .defaultDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.descending.image, style: .default) {
                     Helper.save(.defaultDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.largest, detail:nil, accessoryView: sortType == .sizeDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.largest.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.largest, detail: nil, accessoryView: sortType == .sizeDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.largest.image, style: .default) {
                     Helper.save(.sizeDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.smallest, detail:nil, accessoryView: sortType == .sizeAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.smallest.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.smallest, detail: nil, accessoryView: sortType == .sizeAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.smallest.image, style: .default) {
                     Helper.save(.sizeAsc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.newest, detail:nil, accessoryView: sortType == .modificationDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.newest.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.newest, detail: nil, accessoryView: sortType == .modificationDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.newest.image, style: .default) {
                     Helper.save(.modificationDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.oldest, detail:nil, accessoryView: sortType == .modificationAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.oldest.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.oldest, detail: nil, accessoryView: sortType == .modificationAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.oldest.image, style: .default) {
                     Helper.save(.modificationAsc, for: nil)
                 })
                 
@@ -226,7 +226,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
             
             UserDefaults.standard.set(indexPath.row, forKey: MEGAViewModePreference)
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: MEGAViewModePreference), object: nil, userInfo: [MEGAViewModePreference : indexPath.row])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: MEGAViewModePreference), object: nil, userInfo: [MEGAViewModePreference: indexPath.row])
             
         default:
             return

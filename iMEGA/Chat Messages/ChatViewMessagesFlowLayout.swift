@@ -21,7 +21,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
     lazy var chatAttributedTextMessageSizeCalculator  = ChatTextMessageSizeCalculator(layout: self)
     lazy var chatUnreadMessagesLabelCollectionCellSizeCalculator = ChatUnreadMessagesLabelCollectionCellSizeCalculator(layout: self)
-    lazy var chatRichPreviewDialogCollectionViewSizeCalculator = ChatRichPreviewDialogCollectionViewSizeCalculator(layout:self)
+    lazy var chatRichPreviewDialogCollectionViewSizeCalculator = ChatRichPreviewDialogCollectionViewSizeCalculator(layout: self)
     var editing = false {
         didSet {
             invalidateLayout()
@@ -60,17 +60,17 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
 
     }
     
-    func configureMessageCellLayoutAttributes(_ layoutAttributes : UICollectionViewLayoutAttributes) {
+    func configureMessageCellLayoutAttributes(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         guard let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? ChatViewMessagesLayoutDelegate, chatLayoutDelegate.collectionView(messagesCollectionView, layout: self, shouldEditItemAt: layoutAttributes.indexPath) else {
             return
         }
 
         let offset = chatLayoutDelegate.collectionView(messagesCollectionView, layout: self, editingOffsetForCellAt: layoutAttributes.indexPath)
-        layoutAttributes.frame = layoutAttributes.frame.offsetBy(dx:offset, dy: 0)
+        layoutAttributes.frame = layoutAttributes.frame.offsetBy(dx: offset, dy: 0)
 
     }
     
-    func createEditingOverlayAttributesForCellAttributes(_ layoutAttributes : UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+    func createEditingOverlayAttributesForCellAttributes(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
         let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay", with: layoutAttributes.indexPath)
         attributes.zIndex = layoutAttributes.zIndex + 1
@@ -78,12 +78,12 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         let dataSource = messagesDataSource
         
         if !messagesCollectionView.isTypingIndicatorHidden && (layoutAttributes.indexPath.section == dataSource.numberOfSections(in: messagesCollectionView)) {
-            attributes.frame = layoutAttributes.frame.offsetBy(dx:-50, dy: 0)
+            attributes.frame = layoutAttributes.frame.offsetBy(dx: -50, dy: 0)
             return attributes
         }
         let message = dataSource.messageForItem(at: layoutAttributes.indexPath, in: messagesCollectionView)
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
-        attributes.frame = layoutAttributes.frame.offsetBy(dx:isFromCurrentSender ? 0 : -50, dy: 0)
+        attributes.frame = layoutAttributes.frame.offsetBy(dx: isFromCurrentSender ? 0 : -50, dy: 0)
 
         return attributes
     }

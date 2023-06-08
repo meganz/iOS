@@ -1,6 +1,6 @@
 import Foundation
 
-final class TableViewProxy<CellItem> :
+final class TableViewProxy<CellItem>:
     NSObject,
     UITableViewDataSource,
     UITableViewDelegate,

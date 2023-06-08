@@ -18,7 +18,7 @@ extension UIAlertController {
     }
     
     private func discardChangesAlert(withConfirmAction action: @escaping (() -> Void)) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message:nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: Strings.Localizable.discardChanges, style: .destructive) { _ in
             action()
         })

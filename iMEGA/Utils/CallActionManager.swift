@@ -191,7 +191,7 @@ import MEGADomain
         return megaCallManager.callId(for: uuid) != 0
     }
     
-    private func isOneToOneChatRoom(forChatId chatId:UInt64) -> Bool {
+    private func isOneToOneChatRoom(forChatId chatId: UInt64) -> Bool {
         guard let megaChatRoom = chatSdk.chatRoom(forChatId: chatId) else { return false }
         return megaChatRoom.toChatRoomEntity().chatType == .oneToOne
     }

@@ -171,7 +171,7 @@ extension AppDelegate {
                 return
             }
             
-            let alert = UIAlertController(title: Strings.Localizable.error, message:message, preferredStyle: .alert)
+            let alert = UIAlertController(title: Strings.Localizable.error, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel) { _ in
                 MEGASdkManager.sharedMEGASdk().logout()
             })
@@ -237,7 +237,7 @@ extension AppDelegate {
     @objc func showLaunchViewController() {
         let launchViewContrller = UIStoryboard(name: "Launch", bundle: nil).instantiateViewController(identifier: "LaunchViewControllerID")
         UIView.transition(with: window, duration: 0.5,
-                          options:[.transitionCrossDissolve, .allowAnimatedContent]) { [weak self] in
+                          options: [.transitionCrossDissolve, .allowAnimatedContent]) { [weak self] in
             self?.window.rootViewController = launchViewContrller
         }
     }

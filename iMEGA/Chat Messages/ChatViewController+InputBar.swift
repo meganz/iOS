@@ -107,7 +107,7 @@ extension ChatViewController {
         MEGAStore.shareInstance().insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : (chatInputBar.text ?? ""))
     }
     
-    func presentShareLocation(editing:Bool = false) {
+    func presentShareLocation(editing: Bool = false) {
         let storyboard = UIStoryboard(name: "Chat", bundle: nil)
         guard let shareLocationViewController = storyboard.instantiateViewController(withIdentifier: "ShareLocationViewControllerID") as? ShareLocationViewController else {
             fatalError("ChatViewController: could not create an instance of ShareLocationViewController")

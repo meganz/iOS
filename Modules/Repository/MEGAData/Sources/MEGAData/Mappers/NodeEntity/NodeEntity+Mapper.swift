@@ -30,6 +30,7 @@ extension MEGANode {
 fileprivate extension NodeEntity {
     init(node: MEGANode) {
         self.init(
+            // swiftlint:disable colon
             // MARK: - Types
             changeTypes                        : ChangeTypeEntity(rawValue: node.getChanges().rawValue),
             nodeType                           : NodeTypeEntity(nodeType: node.type),
@@ -85,6 +86,7 @@ fileprivate extension NodeEntity {
             
             // MARK: - Backup
             deviceId                           : node.deviceId
+            // swiftlint:enable colon
         )
     }
 }

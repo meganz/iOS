@@ -1,7 +1,7 @@
 import Foundation
 
 public struct ScheduledMeetingRulesEntity: Sendable, Equatable {
-    public enum Frequency : Sendable {
+    public enum Frequency: Sendable {
         case invalid
         case daily
         case weekly

@@ -11,7 +11,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     )
     
     lazy var leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.CloudDrive.MediaDiscovery.exit,
-                                                 style:.plain,
+                                                 style: .plain,
                                                  target: self,
                                                  action: #selector(exitButtonTapped(_:))
     )

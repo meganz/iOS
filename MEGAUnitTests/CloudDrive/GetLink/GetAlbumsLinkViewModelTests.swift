@@ -86,7 +86,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         let expectedRowReloads = sections.indices.map {
             IndexPath(row: 0, section: $0)
         }
-        let links = [firstAlbum.id: "link1", secondAlbum.id : "link2"]
+        let links = [firstAlbum.id: "link1", secondAlbum.id: "link2"]
         let sut = GetAlbumsLinkViewModel(albums: albums,
                                          shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
                                          sectionViewModels: sections)

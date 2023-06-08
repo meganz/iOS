@@ -41,7 +41,7 @@ final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
         let title = Strings.Localizable.deleteAllOlderVersionsOfMyFiles
         let message = Strings.Localizable.YouAreAboutToDeleteTheVersionHistoriesOfAllFiles.AnyFileVersionSharedToYouFromAContactWillNeedToBeDeletedByThem.brBrPleaseNoteThatTheCurrentFilesWillNotBeDeleted.replacingOccurrences(of: "\n\n", with: "\n")
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.no, style: .cancel, handler:nil))
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.no, style: .cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: Strings.Localizable.yes, style: .default, handler: {_ in
             completion(true)
         }))

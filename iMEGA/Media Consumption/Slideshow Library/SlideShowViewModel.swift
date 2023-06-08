@@ -102,7 +102,7 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     func mediaEntity(at indexPath: IndexPath) -> SlideShowMediaEntity? {
-        photos[safe:indexPath.row]
+        photos[safe: indexPath.row]
     }
     
     func dispatch(_ action: SlideShowAction) {

@@ -7,7 +7,7 @@ extension FileManager {
         var files = 0
         if let dc = try? self.contentsOfDirectory(atPath: pathForItem) {
             for file in dc {
-                var isDirectory:ObjCBool = false
+                var isDirectory: ObjCBool = false
                 let path = pathForItem.append(pathComponent: file)
                 if path.lowercased() != "mega" {
                     self.fileExists(atPath: path, isDirectory: &isDirectory)

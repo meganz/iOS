@@ -80,7 +80,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             return
         }
         
-        ExportFileRouter.init(presenter: presenter, sender: self.sender).export(messages: [chatMessage.message.toChatMessageEntity()], chatId:chatMessage.chatRoom.chatId)
+        ExportFileRouter.init(presenter: presenter, sender: self.sender).export(messages: [chatMessage.message.toChatMessageEntity()], chatId: chatMessage.chatRoom.chatId)
     }
     
     lazy var selectAction = ActionSheetAction(title: Strings.Localizable.select, detail: nil, image: UIImage(named: "select"), style: .default) {

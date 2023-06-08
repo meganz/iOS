@@ -26,7 +26,7 @@ class RichPreviewContentView: UIView {
         updateAppearance()
     }
     
-    var message : MEGAChatMessage? {
+    var message: MEGAChatMessage? {
         didSet {
             configureView()
         }

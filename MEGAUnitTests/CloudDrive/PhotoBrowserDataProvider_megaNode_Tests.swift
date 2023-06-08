@@ -206,7 +206,7 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 2)
         XCTAssertEqual(sut.currentPhoto, MockNode(handle: 11))
         XCTAssertEqual(sut.currentIndex, 0)
-        XCTAssertEqual(sut.allPhotos, [MockNode(handle:11), MockNode(handle: 8)])
+        XCTAssertEqual(sut.allPhotos, [MockNode(handle: 11), MockNode(handle: 8)])
     }
     
     func test_removePhotos_removeCurrentAndAllPhotosBeforeCurrent() {

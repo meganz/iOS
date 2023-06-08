@@ -73,7 +73,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         }
         
         guard !credentialUseCase.isPasscodeEnabled() else {
-            throw NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue, userInfo: [PickerConstant.passcodeEnabled : true])
+            throw NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue, userInfo: [PickerConstant.passcodeEnabled: true])
         }
         
         if MEGASdk.shared.isLoggedIn() == 0 {
@@ -254,7 +254,7 @@ final class FileProviderExtension: NSFileProviderExtension {
                         return
                     }
                     
-                    data = try Data(contentsOf:thumbnailEntity.url, options: Data.ReadingOptions.alwaysMapped)
+                    data = try Data(contentsOf: thumbnailEntity.url, options: Data.ReadingOptions.alwaysMapped)
                 } catch let mappingError {
                     error = mappingError
                 }

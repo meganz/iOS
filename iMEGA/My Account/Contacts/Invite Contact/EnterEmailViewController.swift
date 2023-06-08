@@ -105,7 +105,7 @@ class EnterEmailViewController: UIViewController {
         inviteContactsButton.mnz_setupPrimary_disabled(traitCollection)
     }
     
-    private func updateBottomConstraint(_ newValue:CGFloat) {
+    private func updateBottomConstraint(_ newValue: CGFloat) {
         inviteContactsButtonBottomConstraint.constant = newValue
         view.layoutIfNeeded()
     }

@@ -290,7 +290,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 })
                 alert.addAction(mediumAlertAction)
                 
-                let lowAlertAction = UIAlertAction(title:  DocScanQuality.low.description, style: .default, handler: { _ in
+                let lowAlertAction = UIAlertAction(title: DocScanQuality.low.description, style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanQuality.low.rawValue, forKey: keys.docScanQualityKey)
                     tableView.reloadRows(at: [indexPath], with: .none)
                 })

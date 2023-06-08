@@ -93,17 +93,17 @@ final class MediaUseCaseTests: XCTestCase {
     // MARK: - Private
     
     private func photoNodes() -> [NodeEntity] {
-        [NodeEntity(name:"1.raw", handle:1),
-         NodeEntity(name:"2.nef", handle:2),
-         NodeEntity(name:"3.cr2", handle:3),
-         NodeEntity(name:"4.dng", handle:4),
-         NodeEntity(name:"5.gif", handle:5)
+        [NodeEntity(name: "1.raw", handle: 1),
+         NodeEntity(name: "2.nef", handle: 2),
+         NodeEntity(name: "3.cr2", handle: 3),
+         NodeEntity(name: "4.dng", handle: 4),
+         NodeEntity(name: "5.gif", handle: 5)
         ]
     }
     
     private func videoNodes() -> [NodeEntity] {
-        [NodeEntity(name:"1.mp4", handle:1),
-         NodeEntity(name:"2.mov", handle:2)
+        [NodeEntity(name: "1.mp4", handle: 1),
+         NodeEntity(name: "2.mov", handle: 2)
         ]
     }
 }

@@ -6,7 +6,7 @@ struct ChatTabsSelectorView: View {
     var action: (ChatViewMode) -> Void
     
     var body: some View {
-        HStack(spacing:0) {
+        HStack(spacing: 0) {
             VStack {
                 Spacer()
                 Button(action: {

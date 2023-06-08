@@ -25,7 +25,7 @@ class GiphyGifsRequestModel: RequestModel {
         return path + "/trending"
     }
     
-    override var parameters: [String : Any?] {
+    override var parameters: [String: Any?] {
         return [
             "q": searchKey,
             "offset": String(offset)

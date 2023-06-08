@@ -12,7 +12,7 @@ import MEGAData
         transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdk()))
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {
-        saveNodeUseCase.saveNode(from:transfer.toTransferEntity()) { result in
+        saveNodeUseCase.saveNode(from: transfer.toTransferEntity()) { result in
             switch result {
             case .success(let savedToPhotos):
                 let transferInventoryUseCase = TransferInventoryUseCase(

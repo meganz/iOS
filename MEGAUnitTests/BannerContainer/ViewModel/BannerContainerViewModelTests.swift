@@ -48,7 +48,7 @@ final class BannerContainerViewModelTests: XCTestCase {
                 .configureView(message: "Banner message example",
                                backgroundColor: BannerType.warning.bgColor,
                                textColor: BannerType.warning.textColor,
-                               actionIcon:BannerType.warning.actionIcon)])
+                               actionIcon: BannerType.warning.actionIcon)])
     }
     
     func testAction_onClose() {

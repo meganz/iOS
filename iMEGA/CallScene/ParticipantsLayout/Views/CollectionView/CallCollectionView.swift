@@ -14,7 +14,7 @@ class CallCollectionView: UICollectionView {
     private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
     
-    private lazy var blurEffectView : UIVisualEffectView = {
+    private lazy var blurEffectView: UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
         blurEffectView.frame = bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -139,7 +139,7 @@ extension CallCollectionView: UICollectionViewDelegate {
         guard layoutMode == .speaker, let selectedParticipant = callParticipants[safe: indexPath.item] else {
             return
         }
-        callCollectionViewDelegate?.collectionViewDidSelectParticipant(participant:selectedParticipant, at: indexPath)
+        callCollectionViewDelegate?.collectionViewDidSelectParticipant(participant: selectedParticipant, at: indexPath)
     }
 }
 

@@ -3,12 +3,12 @@ import CoreGraphics
 
 public extension UIImage {
     static func drawImage(
-        forInitials initials:String,
-        size imageSize:CGSize,
-        backgroundColor:UIColor,
-        backgroundGradientColor:UIColor?,
-        textColor:UIColor,
-        font:UIFont,
+        forInitials initials: String,
+        size imageSize: CGSize,
+        backgroundColor: UIColor,
+        backgroundGradientColor: UIColor?,
+        textColor: UIColor,
+        font: UIFont,
         isRightToLeftLanguage: Bool
     ) -> UIImage? {
         
@@ -30,7 +30,7 @@ public extension UIImage {
         if let backgroundGradientColor {
             let colorSpace = CGColorSpaceCreateDeviceRGB()
             
-            var colorComponents:[CGFloat] = []
+            var colorComponents: [CGFloat] = []
             var red: CGFloat = 0
             var green: CGFloat = 0
             var blue: CGFloat = 0
@@ -49,7 +49,7 @@ public extension UIImage {
             context.fill(CGRect(x: 0, y: 0, width: width, height: height))
         }
         
-        let dict: [NSAttributedString.Key : Any] = [
+        let dict: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.font: font,
             NSAttributedString.Key.foregroundColor: textColor
         ]

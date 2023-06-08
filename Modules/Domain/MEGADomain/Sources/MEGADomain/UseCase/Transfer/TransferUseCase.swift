@@ -14,7 +14,7 @@ public struct TransferUseCase<T: TransferRepositoryProtocol>: TransferUseCasePro
     }
     
     public func download(node: NodeEntity, to localUrl: URL, startHandler: ((TransferEntity) -> Void)? = nil, progressHandler: ((TransferEntity) -> Void)? = nil) async throws -> TransferEntity {
-        try await repo.download(node: node, to: localUrl, startHandler:startHandler, progressHandler: progressHandler)
+        try await repo.download(node: node, to: localUrl, startHandler: startHandler, progressHandler: progressHandler)
     }
     
     public func uploadFile(at fileUrl: URL, to parent: NodeEntity, startHandler: ((TransferEntity) -> Void)? = nil, progressHandler: ((TransferEntity) -> Void)? = nil) async throws -> TransferEntity {

@@ -3,7 +3,7 @@ import MEGADomain
 extension SortOrderType {
     func toSortOrderEntity() -> SortOrderEntity {
         switch self {
-        case .nameAscending :
+        case .nameAscending:
             return .defaultAsc
         case .nameDescending:
             return .defaultDesc

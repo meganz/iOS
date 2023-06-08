@@ -62,7 +62,7 @@ final class HistoryRetentionUseCaseTests: XCTestCase {
     
     func test_setChatRetentionTime_error_chatIdInvalid() {
         let mockError: ManageChatHistoryErrorEntity = .chatIdInvalid
-        let repo = MockManageChatHistoryRepository(setChatRetentionTime:.failure(.chatIdInvalid))
+        let repo = MockManageChatHistoryRepository(setChatRetentionTime: .failure(.chatIdInvalid))
         let sut = HistoryRetentionUseCase(repository: repo)
         sut.setChatRetentionTime(for: 123, period: 6) { result in
             switch result {
@@ -76,7 +76,7 @@ final class HistoryRetentionUseCaseTests: XCTestCase {
     
     func test_setChatRetentionTime_error_notEnoughPrivileges() {
         let mockError: ManageChatHistoryErrorEntity = .notEnoughPrivileges
-        let repo = MockManageChatHistoryRepository(setChatRetentionTime:.failure(.notEnoughPrivileges))
+        let repo = MockManageChatHistoryRepository(setChatRetentionTime: .failure(.notEnoughPrivileges))
         let sut = HistoryRetentionUseCase(repository: repo)
         sut.setChatRetentionTime(for: 123, period: 6) { result in
             switch result {

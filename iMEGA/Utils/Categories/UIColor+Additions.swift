@@ -353,7 +353,7 @@ extension UIColor {
         return Colors.PROAccount.redProIII.color
     }
     
-    @objc class func mnz_color(proLevel : MEGAAccountType) -> UIColor? {
+    @objc class func mnz_color(proLevel: MEGAAccountType) -> UIColor? {
         var proLevelColor: UIColor?
         switch proLevel {
         case MEGAAccountType.free:
@@ -378,7 +378,7 @@ extension UIColor {
         return proLevelColor
     }
     
-    @objc class func mnz_colorForPriceLabel(proLevel : MEGAAccountType, traitCollection :UITraitCollection) -> UIColor? {
+    @objc class func mnz_colorForPriceLabel(proLevel: MEGAAccountType, traitCollection: UITraitCollection) -> UIColor? {
         var proLevelColor: UIColor?
         switch proLevel {
         case MEGAAccountType.free:

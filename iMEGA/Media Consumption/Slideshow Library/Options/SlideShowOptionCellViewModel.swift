@@ -7,7 +7,7 @@ final class SlideShowOptionCellViewModel: Identifiable, ObservableObject {
     let type: OptionType
     
     @Published var detail = ""
-    @Published var children:[SlideShowOptionDetailCellViewModel]
+    @Published var children: [SlideShowOptionDetailCellViewModel]
     @Published var isOn = false
     
     enum OptionType {

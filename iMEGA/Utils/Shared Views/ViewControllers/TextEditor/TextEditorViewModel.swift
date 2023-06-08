@@ -132,7 +132,7 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     // MARK: - Private functions
-    private func setupView(shallUpdateContent:Bool) {
+    private func setupView(shallUpdateContent: Bool) {
         var isNodeInRubbishBin = false
         if let nodeHandle = nodeEntity?.handle {
             isNodeInRubbishBin = nodeUseCase.isInRubbishBin(nodeHandle: nodeHandle)

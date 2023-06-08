@@ -1,6 +1,6 @@
 import MEGADomain
 
-public struct MockMEGAHandleUseCase : MEGAHandleUseCaseProtocol {
+public struct MockMEGAHandleUseCase: MEGAHandleUseCaseProtocol {
     private let base64Handle: Base64HandleEntity?
     private let userHandle: HandleEntity?
     

@@ -2,7 +2,7 @@ import MEGADomain
 
 extension Array where Element: PhotoDateSection {
     func photo(at indexPath: IndexPath) -> NodeEntity? {
-        self[safe:indexPath.section]?.contentList[safe:indexPath.item]
+        self[safe: indexPath.section]?.contentList[safe: indexPath.item]
     }
     
     var allPhotos: [NodeEntity] {

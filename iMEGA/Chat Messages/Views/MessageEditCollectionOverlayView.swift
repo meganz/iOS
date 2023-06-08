@@ -1,10 +1,10 @@
 import MessageKit
 
-protocol MessagesEditCollectionOverlayViewDelegate : AnyObject {
+protocol MessagesEditCollectionOverlayViewDelegate: AnyObject {
     func editOverlayView(_ editOverlayView: MessageEditCollectionOverlayView, activated: Bool)
 }
 
-class MessageEditCollectionOverlayView : MessageReusableView {
+class MessageEditCollectionOverlayView: MessageReusableView {
     @IBOutlet weak var centerConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftIconView: UIImageView!
     open weak var delegate: MessagesEditCollectionOverlayViewDelegate?

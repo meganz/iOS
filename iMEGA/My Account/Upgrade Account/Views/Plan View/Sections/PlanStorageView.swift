@@ -48,7 +48,7 @@ struct LabelTextWithAttributedString: UIViewRepresentable {
     private var detailAttributedText: NSAttributedString {
         let attributedString = NSMutableAttributedString(
             string: title,
-            attributes: [.font : UIFont.preferredFont(forTextStyle: .subheadline),
+            attributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline),
                          .foregroundColor: Colors.UpgradeAccount.secondaryText.color]
         )
         

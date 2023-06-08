@@ -94,7 +94,7 @@ class InviteContactViewController: UIViewController {
         }
         
         let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(withContactKeys: [CNContactPhoneNumbersKey], delegate: self))
-        present(contactsPickerNavigation, animated: true, completion:nil)
+        present(contactsPickerNavigation, animated: true, completion: nil)
     }
 
     @IBAction func enterEmailButtonTapped(_ sender: Any) {

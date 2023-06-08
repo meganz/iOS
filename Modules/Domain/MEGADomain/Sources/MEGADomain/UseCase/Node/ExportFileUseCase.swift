@@ -7,7 +7,7 @@ public protocol ExportFileNodeUseCaseProtocol {
 }
 
 public protocol ExportFileChatMessageUseCaseProtocol {
-    func export(messages: [ChatMessageEntity], chatId: HandleEntity, completion:  @escaping ([URL]) -> Void)
+    func export(messages: [ChatMessageEntity], chatId: HandleEntity, completion: @escaping ([URL]) -> Void)
     func exportNode(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void)
 }
 
@@ -88,7 +88,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     }
     
     private func importNodeToDownload(_ node: NodeEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<URL, ExportFileErrorEntity>) -> Void) {
-        importNodeRepository.importChatNode(node, messageId:messageId, chatId:chatId) { result in
+        importNodeRepository.importChatNode(node, messageId: messageId, chatId: chatId) { result in
             switch result {
             case .success(let node):
                 downloadNode(node, completion: completion)
@@ -172,7 +172,7 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
                 completion(.failure(.nonExportableMessage))
                 return
             }
-            exportNode(node, messageId:message.messageId, chatId: chatId, completion: completion)
+            exportNode(node, messageId: message.messageId, chatId: chatId, completion: completion)
             
         default:
             print("Failed to export a non compatible message type \(message.type)")

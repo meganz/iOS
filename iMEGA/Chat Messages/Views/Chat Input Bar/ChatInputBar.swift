@@ -17,7 +17,7 @@ class ChatInputBar: UIView {
     // MARK: - Gestures properties
 
     private lazy var longPressGesture: UILongPressGestureRecognizer = {
-        let recognizer = UILongPressGestureRecognizer(target: self, action:#selector(longPress))
+        let recognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress))
         recognizer.minimumPressDuration = 0.4
         recognizer.delegate = self
         recognizer.cancelsTouchesInView = false
@@ -25,7 +25,7 @@ class ChatInputBar: UIView {
     }()
     
     private lazy var panGesture: UIPanGestureRecognizer = {
-        let recognizer = UIPanGestureRecognizer(target: self, action:#selector(pan))
+        let recognizer = UIPanGestureRecognizer(target: self, action: #selector(pan))
         recognizer.delegate = self
         recognizer.cancelsTouchesInView = false
         return recognizer

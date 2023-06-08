@@ -16,7 +16,7 @@ final class RubbishBinRepositoryTests: XCTestCase {
                                         MockNode(handle: 7, name: "SyncDebris2Child", nodeType: .folder, parentHandle: 3, nodePath: "//bin/SyncDebris"),
                                         MockNode(handle: 8, name: "SyncDebris3Child", nodeType: .folder, parentHandle: 4, nodePath: "//bin/SyncDebris"),
                                         MockNode(handle: 9, name: "SyncDebris3Child", nodeType: .folder, parentHandle: 8, nodePath: "//bin/SyncDebris"),
-                                        MockNode(handle: 10, name: "SyncDebris3Child", nodeType: .folder, parentHandle:9, nodePath: "//bin/SyncDebris")]
+                                        MockNode(handle: 10, name: "SyncDebris3Child", nodeType: .folder, parentHandle: 9, nodePath: "//bin/SyncDebris")]
         
     override func setUpWithError() throws {
         var testNodesArray = syncDebrisNodes

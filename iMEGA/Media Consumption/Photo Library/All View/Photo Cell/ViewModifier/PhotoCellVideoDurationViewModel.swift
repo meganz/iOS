@@ -14,7 +14,7 @@ struct PhotoCellVideoDurationViewModel {
     }
     
     private let fontSizeMapping: [PhotoLibraryZoomState.ScaleFactor: CGFloat] = [
-        .one : 16, .three : 12, .five : 8, .thirteen : 5
+        .one: 16, .three: 12, .five: 8, .thirteen: 5
     ]
     
     var fontSize: CGFloat {
@@ -22,7 +22,7 @@ struct PhotoCellVideoDurationViewModel {
     }
     
     private let playIconSizeMapping: [PhotoLibraryZoomState.ScaleFactor: CGFloat] = [
-        .one : 26, .three : 22, .five : 14, .thirteen : 10
+        .one: 26, .three: 22, .five: 14, .thirteen: 10
     ]
     
     var iconSize: CGFloat {
@@ -30,7 +30,7 @@ struct PhotoCellVideoDurationViewModel {
     }
     
     private let playIconOriginYMapping: [PhotoLibraryZoomState.ScaleFactor: CGFloat] = [
-        .one : -6, .three : -5, .five : -2, .thirteen : 0
+        .one: -6, .three: -5, .five: -2, .thirteen: 0
     ]
     
     var iconOriginY: CGFloat {

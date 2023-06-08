@@ -53,7 +53,7 @@ enum SessionSectionRow: Int {
     private var avatarExpandedPosition: CGFloat = 0.0
     private var avatarCollapsedPosition: CGFloat = 0.0
     
-    private var twoFactorAuthStatus:TwoFactorAuthStatus = .unknown
+    private var twoFactorAuthStatus: TwoFactorAuthStatus = .unknown
     
     @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
@@ -139,7 +139,7 @@ enum SessionSectionRow: Int {
         let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ??  ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
-            let panAvatar = UIPanGestureRecognizer(target: self, action:#selector(handlePan(recognizer:)))
+            let panAvatar = UIPanGestureRecognizer(target: self, action: #selector(handlePan(recognizer:)))
             avatarImageView.addGestureRecognizer(panAvatar)
             guard let enumerated = avatarImageView.gestureRecognizers?.enumerated() else {
                 return
@@ -591,7 +591,7 @@ extension ProfileViewController: UITableViewDelegate {
                 guard let cell = tableView.cellForRow(at: indexPath) else {
                     return
                 }
-                presentChangeAvatarController(tableView:tableView, cell: cell)
+                presentChangeAvatarController(tableView: tableView, cell: cell)
             case .changeEmail:
                 presentChangeViewController(changeType: .email, indexPath: indexPath)
             case .phoneNumber:

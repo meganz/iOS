@@ -57,7 +57,7 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
 
     func imagePickerController(
         _ picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
         guard let mediaType = info[InfoKey.mediaType] as? String else { return }
 
@@ -113,7 +113,7 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
             }
 
             let videoName = modificationDate.mnz_formattedDefaultNameForMedia().appending(".mov")
-            guard let localFilePath = FileManager.default.uploadsDirectory()?.append(pathComponent:videoName) else {
+            guard let localFilePath = FileManager.default.uploadsDirectory()?.append(pathComponent: videoName) else {
                 completion?(.failure(.failedCreateTemporaryData))
                 return
             }

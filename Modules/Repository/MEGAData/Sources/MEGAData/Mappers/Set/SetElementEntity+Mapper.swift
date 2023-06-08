@@ -15,13 +15,14 @@ extension Array where Element: MEGASetElement {
 
 fileprivate extension SetElementEntity {
     init(setElement: MEGASetElement) {
-        self.init(handle            : setElement.handle,
-                  ownerId           : setElement.ownerId,
-                  order             : setElement.order,
-                  nodeId            : setElement.nodeId,
-                  modificationTime  : setElement.timestamp,
-                  name              : setElement.name ?? "",
-                  changeTypes       : setElement.changes().toChangeTypeEntity()
+        self.init(
+            handle: setElement.handle,
+            ownerId: setElement.ownerId,
+            order: setElement.order,
+            nodeId: setElement.nodeId,
+            modificationTime: setElement.timestamp,
+            name: setElement.name ?? "",
+            changeTypes: setElement.changes().toChangeTypeEntity()
         )
     }
 }

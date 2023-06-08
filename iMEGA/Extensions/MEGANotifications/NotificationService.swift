@@ -158,7 +158,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
 
             MEGASdk.sharedNSE.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, _ in
                 if let base64Handle = node.base64Handle,
-                   let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier:base64Handle) {
+                   let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier: base64Handle) {
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
                     self?.waitingForThumbnail = false
                     if !(self?.waitingForUserAttributes ?? true) {
@@ -233,7 +233,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     private func processNotification() {
         MEGALogDebug("Process notification")
-        guard let megadataDictionary = bestAttemptContent?.userInfo["megadata"] as? [String : String],
+        guard let megadataDictionary = bestAttemptContent?.userInfo["megadata"] as? [String: String],
             let chatIdBase64 = megadataDictionary["chatid"],
             let msgIdBase64 = megadataDictionary["msgid"]
             else {

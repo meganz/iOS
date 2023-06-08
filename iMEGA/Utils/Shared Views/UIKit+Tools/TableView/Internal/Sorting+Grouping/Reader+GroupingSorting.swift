@@ -71,7 +71,7 @@ private func sortingStrategy<Item>(
     sectionAsc: Bool,
     itemsAsc: Bool
 ) -> Reader<[Item], [ItemGroup<Item>]> where Item.Key: Comparable, Item: Aggregatable & Comparable {
-    identity(type) <|> grouping(asc:itemsAsc) <|> sorting(asc: sectionAsc)
+    identity(type) <|> grouping(asc: itemsAsc) <|> sorting(asc: sectionAsc)
 }
 
 private func grouping<Item>(

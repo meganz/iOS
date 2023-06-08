@@ -11,7 +11,7 @@ public extension AVAsset {
     }
 
     private func loadedAttributeValue<T>(for attribute: DynamicAttribute) -> T? {
-        var error : NSError?
+        var error: NSError?
         let status = statusOfValue(forKey: attribute.rawValue, error: &error)
  
         guard error == nil, (status == .loaded) else { return nil }

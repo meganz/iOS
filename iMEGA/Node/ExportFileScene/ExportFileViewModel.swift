@@ -69,7 +69,7 @@ final class ExportFileViewModel: ViewModelType {
                 }
             }
         case .exportFileFromMessageNode(let node, let messageId, let chatId):
-            exportFileUseCase.exportNode(node.toNodeEntity(), messageId:messageId, chatId:chatId) { result in
+            exportFileUseCase.exportNode(node.toNodeEntity(), messageId: messageId, chatId: chatId) { result in
                 if case let .success(url) = result {
                     self.analyticsEventUseCase.sendAnalyticsEvent(.download(.exportFile))
                     self.router.exportedFiles(urls: [url])

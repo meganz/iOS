@@ -21,14 +21,14 @@ public struct ShareAlbumUseCase: ShareAlbumUseCaseProtocol {
         return try await shareAlbumRepository.shareAlbumLink(album)
     }
     
-    public func shareLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity : String] {
+    public func shareLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity: String] {
         await withTaskGroup(of: (HandleEntity, String?).self) { group in
             albums.forEach { album in
                 group.addTask {
                     return (album.id, try? await shareAlbumLink(album))
                 }
             }
-            return await group.reduce(into: [HandleEntity : String](), {
+            return await group.reduce(into: [HandleEntity: String](), {
                 $0[$1.0] = $1.1
             })
         }

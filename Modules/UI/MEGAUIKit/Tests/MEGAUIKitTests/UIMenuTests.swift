@@ -13,8 +13,8 @@ final class UIMenuTests: XCTestCase {
     }
     
     func testCompareMenuWhere_EitherAreNil() {
-        let menuItemA:UIMenu? = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [])
-        let menuItemB:UIMenu? = nil
+        let menuItemA: UIMenu? = UIMenu(title: "UIMenu.ItemA", image: nil, options: .displayInline, children: [])
+        let menuItemB: UIMenu? = nil
         XCTAssertFalse(menuItemA ~~ menuItemB)
         XCTAssertFalse(menuItemB ~~ menuItemA)
     }

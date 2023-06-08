@@ -9,7 +9,7 @@ protocol AddToChatMediaCollectionSourceDelegate: AnyObject {
 class AddToChatMediaCollectionSource: NSObject {
     private let collectionView: UICollectionView
     private let maxNumberOfAssetsFetched = 16
-    private var lastSelectedIndexPath:IndexPath?
+    private var lastSelectedIndexPath: IndexPath?
     private weak var delegate: AddToChatMediaCollectionSourceDelegate?
     private var fetchResult: PHFetchResult<PHAsset>?
     

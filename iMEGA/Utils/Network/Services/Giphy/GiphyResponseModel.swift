@@ -27,7 +27,7 @@ struct GiphyResponseModel: Decodable {
     init(from decoder: Decoder) throws {
         let keyedContainer = try decoder.container(keyedBy: CodingKeys.self)
         title = (try? keyedContainer.decode(String.self, forKey: CodingKeys.title)) ?? ""
-        let images = try? keyedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey:  CodingKeys.images)
+        let images = try? keyedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: CodingKeys.images)
         let fixedHeight = try? images?.nestedContainer(keyedBy: CodingKeys.self, forKey: CodingKeys.fixed_height)
         url = (try? fixedHeight?.decode(String.self, forKey: CodingKeys.url)) ?? ""
         webp = (try? fixedHeight?.decode(String.self, forKey: CodingKeys.webp)) ?? ""

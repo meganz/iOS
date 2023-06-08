@@ -5,7 +5,7 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
     let imageScrollView = ImageScrollView()
     private var slideshowInteraction: SlideShowInteraction?
     
-    required init(coder aDecoder:NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         addSubview(imageScrollView)
         imageScrollView.translatesAutoresizingMaskIntoConstraints = false

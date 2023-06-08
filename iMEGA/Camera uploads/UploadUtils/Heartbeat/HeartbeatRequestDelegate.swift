@@ -4,8 +4,8 @@ extension MEGAError {
     func toHeartbeatError(backupIdBase64String: String) -> NSError {
         NSError(domain: "nz.mega.heartbeat",
                 code: type.rawValue,
-                userInfo: [NSLocalizedFailureReasonErrorKey : name ?? "",
-                           "BackupId" : backupIdBase64String])
+                userInfo: [NSLocalizedFailureReasonErrorKey: name ?? "",
+                           "BackupId": backupIdBase64String])
     }
 }
 

@@ -75,7 +75,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let expectedSetElements = [MockMEGASetElement(handle: 43),
                                    MockMEGASetElement(handle: 89)]
         let sdk = MockSdk(megaSets: [expectedSet], megaSetElements: expectedSetElements)
-        let sut = ShareAlbumRepository(sdk:sdk)
+        let sut = ShareAlbumRepository(sdk: sdk)
         let result = try await sut.publicAlbumContents(forLink: "public_link")
         XCTAssertEqual(result.set, expectedSet.toSetEntity())
         XCTAssertEqual(result.setElements, expectedSetElements.toSetElementsEntities())

@@ -29,7 +29,7 @@ class BaseAction: NSObject {
 }
 
 class ActionSheetAction: BaseAction {
-    var actionHandler : () -> Void
+    var actionHandler: () -> Void
 
     @objc init(title: String?, detail: String?, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
         self.actionHandler = actionHandler

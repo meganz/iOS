@@ -19,12 +19,12 @@ final class PhotoCardViewModelTests: XCTestCase {
     func testLoadThumbnail_nonPlaceholder_doNotLoadLocalCacheAndDoNotLoadRemoteThumbnail() throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
         XCTAssertTrue(isLocalFileCreated)
         
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
+        let isRemoteFileCreated = FileManager.default.createFile(atPath: remoteURL.path, contents: remoteImage.pngData())
         XCTAssertTrue(isRemoteFileCreated)
         
         let sut = PhotoCardViewModel(
@@ -43,12 +43,12 @@ final class PhotoCardViewModelTests: XCTestCase {
     func testLoadThumbnail_placeholderAndHasLocalCache_useLocalCache() throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
         XCTAssertTrue(isLocalFileCreated)
         
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
+        let isRemoteFileCreated = FileManager.default.createFile(atPath: remoteURL.path, contents: remoteImage.pngData())
         XCTAssertTrue(isRemoteFileCreated)
         
         let sut = PhotoCardViewModel(
@@ -66,7 +66,7 @@ final class PhotoCardViewModelTests: XCTestCase {
     func testLoadThumbnail_placeholderAndNoLocalCache_loadRemoteThumbnail() throws {
         let remoteImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let remoteURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemoteFileCreated = FileManager.default.createFile(atPath:remoteURL.path, contents: remoteImage.pngData())
+        let isRemoteFileCreated = FileManager.default.createFile(atPath: remoteURL.path, contents: remoteImage.pngData())
         XCTAssertTrue(isRemoteFileCreated)
         
         let sut = PhotoCardViewModel(
@@ -94,12 +94,12 @@ final class PhotoCardViewModelTests: XCTestCase {
     func testLoadThumbnail_noLocalCacheAndHasRemoteThumbnailAndPreview_loadBothThumbnailAndPreview() throws {
         let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath: remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
         XCTAssertTrue(isRemoteThumbnailFileCreated)
         
         let remotePreviewImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remotePreviewImage.pngData())
+        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath: remotePreviewURL.path, contents: remotePreviewImage.pngData())
         XCTAssertTrue(isRemotePreviewFileCreated)
         
         let sut = PhotoCardViewModel(
@@ -133,17 +133,17 @@ final class PhotoCardViewModelTests: XCTestCase {
     func testLoadThumbnail_hasCachedThumbnailAndHasDifferentRemoteThumbnailAndPreview_loadBothThumbnailAndPreview() throws {
         let localThumbnailImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let localThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalThumbnailFileCreated = FileManager.default.createFile(atPath:localThumbnailURL.path, contents: localThumbnailImage.pngData())
+        let isLocalThumbnailFileCreated = FileManager.default.createFile(atPath: localThumbnailURL.path, contents: localThumbnailImage.pngData())
         XCTAssertTrue(isLocalThumbnailFileCreated)
         
         let remoteThumbnailImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let remoteThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath:remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
+        let isRemoteThumbnailFileCreated = FileManager.default.createFile(atPath: remoteThumbnailURL.path, contents: remoteThumbnailImage.pngData())
         XCTAssertTrue(isRemoteThumbnailFileCreated)
         
         let remotePreviewImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remotePreviewImage.pngData())
+        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath: remotePreviewURL.path, contents: remotePreviewImage.pngData())
         XCTAssertTrue(isRemotePreviewFileCreated)
         
         let sut = PhotoCardViewModel(
@@ -179,12 +179,12 @@ final class PhotoCardViewModelTests: XCTestCase {
     func testLoadThumbnail_hasCachedThumbnailAndHasSameRemoteThumbnailAndPreview_onlyLoadPreview() throws {
         let localThumbnailImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let localThumbnailURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalThumbnailFileCreated = FileManager.default.createFile(atPath:localThumbnailURL.path, contents: localThumbnailImage.pngData())
+        let isLocalThumbnailFileCreated = FileManager.default.createFile(atPath: localThumbnailURL.path, contents: localThumbnailImage.pngData())
         XCTAssertTrue(isLocalThumbnailFileCreated)
         
         let remotePreviewImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let remotePreviewURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath:remotePreviewURL.path, contents: remotePreviewImage.pngData())
+        let isRemotePreviewFileCreated = FileManager.default.createFile(atPath: remotePreviewURL.path, contents: remotePreviewImage.pngData())
         XCTAssertTrue(isRemotePreviewFileCreated)
         
         let sut = PhotoCardViewModel(

@@ -33,7 +33,7 @@ final class CookieSettingsUseCaseTests: XCTestCase {
     
     func testCookieSetting_error_InvalidBitmap() {
         let mockError: CookieSettingsErrorEntity = .invalidBitmap
-        let repo = MockCookieSettingsRepository(cookieSettings:.failure(.invalidBitmap))
+        let repo = MockCookieSettingsRepository(cookieSettings: .failure(.invalidBitmap))
         let sut = CookieSettingsUseCase(repository: repo)
         sut.cookieSettings { result in
             switch result {
@@ -47,7 +47,7 @@ final class CookieSettingsUseCaseTests: XCTestCase {
     
     func testCookieSetting_error_BitmapNotSet() {
         let mockError: CookieSettingsErrorEntity = .bitmapNotSet
-        let repo = MockCookieSettingsRepository(cookieSettings:.failure(.bitmapNotSet))
+        let repo = MockCookieSettingsRepository(cookieSettings: .failure(.bitmapNotSet))
         let sut = CookieSettingsUseCase(repository: repo)
         sut.cookieSettings { result in
             switch result {
@@ -61,7 +61,7 @@ final class CookieSettingsUseCaseTests: XCTestCase {
     
     func testCookieSetting_success() {
         let mockSucess: Int = 10
-        let repo = MockCookieSettingsRepository(cookieSettings:.success(mockSucess))
+        let repo = MockCookieSettingsRepository(cookieSettings: .success(mockSucess))
         let sut = CookieSettingsUseCase(repository: repo)
         sut.cookieSettings { result in
             switch result {
@@ -89,7 +89,7 @@ final class CookieSettingsUseCaseTests: XCTestCase {
     
     func testSetCookieSetting_success() {
         let setting: Int = 10
-        let repo = MockCookieSettingsRepository(setCookieSettings:.success(setting))
+        let repo = MockCookieSettingsRepository(setCookieSettings: .success(setting))
         let sut = CookieSettingsUseCase(repository: repo)
         sut.setCookieSettings(with: setting) { result in
             switch result {

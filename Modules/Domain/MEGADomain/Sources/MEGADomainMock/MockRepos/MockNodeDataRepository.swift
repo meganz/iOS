@@ -4,7 +4,7 @@ import Foundation
 public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
     public static var newRepo: MockNodeDataRepository = MockNodeDataRepository()
     
-    private let nodeAccessLevel:NodeAccessTypeEntity
+    private let nodeAccessLevel: NodeAccessTypeEntity
     private let labelString: String
     private let filesAndFoldersCount: (Int, Int)
     private let name: String?

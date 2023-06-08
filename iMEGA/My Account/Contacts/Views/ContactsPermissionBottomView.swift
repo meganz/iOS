@@ -10,7 +10,7 @@ class ContactsPermissionBottomView: UITableViewHeaderFooterView {
     @IBOutlet weak var enableButton: UIButton!
     @IBOutlet weak var containerStackView: UIStackView!
     
-    var enableButtonAction : (() -> Void)?
+    var enableButtonAction: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()

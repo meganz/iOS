@@ -22,7 +22,7 @@ public struct MockShareAlbumUseCase: ShareAlbumUseCaseProtocol {
         }
     }
     
-    public func shareLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity : String] {
+    public func shareLink(forAlbums albums: [AlbumEntity]) async -> [HandleEntity: String] {
         shareAlbumsLinks
     }
     
