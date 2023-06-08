@@ -174,7 +174,15 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
                 
                 downloadGifIcon.isHidden = true
             } else if node.size?.doubleValue ?? 0 < autoDownloadThresholdSize {
-                MEGASdkManager.sharedMEGASdk().startDownloadNode(node, localPath: originalImagePath, fileName: nil, appData: nil, startFirst: true, cancelToken: nil)
+                MEGASdk.shared.startDownloadNode(
+                    node,
+                    localPath: originalImagePath,
+                    fileName: nil,
+                    appData: nil,
+                    startFirst: true, cancelToken: nil,
+                    collisionCheck: CollisionCheck.fingerprint,
+                    collisionResolution: CollisionResolution.newWithN
+                )
                 downloadGifIcon.isHidden = true
             } else {
                 downloadGifIcon.isHidden = !loadingIndicator.isHidden

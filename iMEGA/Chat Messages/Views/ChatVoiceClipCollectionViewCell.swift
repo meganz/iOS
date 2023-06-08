@@ -122,7 +122,16 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
             let nodePath = currentNode.mnz_voiceCachePath()
             if !FileManager.default.fileExists(atPath: nodePath) {
                 let appData = NSString().mnz_appDataToDownloadAttach(toMessageID: megaMessage.messageId)
-                MEGASdkManager.sharedMEGASdk().startDownloadNode(currentNode, localPath: nodePath, fileName: nil, appData: appData, startFirst: true, cancelToken: nil)
+                MEGASdk.shared.startDownloadNode(
+                    currentNode,
+                    localPath: nodePath,
+                    fileName: nil,
+                    appData: appData,
+                    startFirst: true,
+                    cancelToken: nil,
+                    collisionCheck: CollisionCheck.fingerprint,
+                    collisionResolution: CollisionResolution.newWithN
+                )
                 configureLoadingView()
             } else {
                 configureLoadedView()
