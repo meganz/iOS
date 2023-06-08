@@ -156,6 +156,10 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         }
     }
     
+    func setEditModeToInactive() {
+        photoAlbumContainerViewModel?.editMode = .inactive
+    }
+    
     // MARK: - Private
     private func systemAlbums() async -> [AlbumEntity] {
         do {

@@ -2,8 +2,7 @@ import SwiftUI
 
 struct EnforceCopyrightWarningView<T: View>: View {
     @Environment(\.presentationMode) private var presentationMode
-    @ObservedObject var viewModel: EnforceCopyrightWarningViewModel
-    
+    @StateObject var viewModel: EnforceCopyrightWarningViewModel
     let termsAgreedView: () -> T
     
     var body: some View {

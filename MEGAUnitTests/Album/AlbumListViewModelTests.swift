@@ -513,6 +513,15 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedUserAlbums, [userAlbum])
     }
     
+    func testSetEditModeToInactive_onCalled_shouldSetContainerViewModelEditModeToInactive() {
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        photoAlbumContainerViewModel.editMode = .active
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        sut.setEditModeToInactive()
+        XCTAssertEqual(photoAlbumContainerViewModel.editMode, .inactive)
+    }
+    
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                    placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
