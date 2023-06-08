@@ -112,6 +112,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                          shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
         let view = EnforceCopyrightWarningView(viewModel: viewModel) {
             GetAlbumsLinksViewWrapper(albums: [album])
+                .ignoresSafeArea(edges: .bottom)
         }
         navigationController?.present(UIHostingController(rootView: view), animated: true)
     }
