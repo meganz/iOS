@@ -30,7 +30,7 @@ final class OfflineInfoRepository: OfflineInfoRepositoryProtocol {
                 let nodeFolderPath = NSTemporaryDirectory().append(pathComponent: base64Handle)
                 let tmpFilePath = nodeFolderPath.append(pathComponent: name)
             
-                url = fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath:tmpFilePath) : nil
+                url = fileManager.fileExists(atPath: tmpFilePath) ? URL(fileURLWithPath: tmpFilePath) : nil
             }
         }
         return url

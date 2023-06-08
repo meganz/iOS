@@ -134,11 +134,11 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let title = (string as NSString).mnz_stringBetweenString("[S]", andString: "[/S]")!
         let description = (string as NSString).replacingOccurrences(of: String(format: "[S]%@[/S]", title), with: "")
         
-        let titleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .subheadline),
+        let titleAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline),
                                                                NSAttributedString.Key.foregroundColor: UIColor.mnz_red(for: traitCollection)]
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
         
-        let descriptionAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: .subheadline),
+        let descriptionAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline),
                                                                      NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
         let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: descriptionAttributes)
         

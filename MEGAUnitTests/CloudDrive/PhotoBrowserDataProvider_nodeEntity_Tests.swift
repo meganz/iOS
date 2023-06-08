@@ -221,7 +221,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 2)
         XCTAssertEqual(sut.currentPhoto, NodeEntity(handle: 11).toMEGANode(in: sdk))
         XCTAssertEqual(sut.currentIndex, 0)
-        XCTAssertEqual(sut.allPhotos, [NodeEntity(handle:11), NodeEntity(handle: 8)].toMEGANodes(in: sdk))
+        XCTAssertEqual(sut.allPhotos, [NodeEntity(handle: 11), NodeEntity(handle: 8)].toMEGANodes(in: sdk))
     }
     
     func test_removePhotos_removeCurrentAndAllPhotosBeforeCurrent() {

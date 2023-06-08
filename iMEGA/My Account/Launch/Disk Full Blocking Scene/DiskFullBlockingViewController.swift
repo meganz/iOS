@@ -116,9 +116,9 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
         let attributedString =
             NSMutableAttributedString(string: blockingModel.description,
                                       attributes:
-                                        [.font : UIFont.preferredFont(forTextStyle: .subheadline)])
+                                        [.font: UIFont.preferredFont(forTextStyle: .subheadline)])
         let range = NSString(string: blockingModel.description).range(of: blockingModel.highlightedText)
-        attributedString.addAttributes([.font : UIFont.preferredFont(forTextStyle: .subheadline).bold()],
+        attributedString.addAttributes([.font: UIFont.preferredFont(forTextStyle: .subheadline).bold()],
                                        range: range)
         return attributedString.copy() as! NSAttributedString
     }

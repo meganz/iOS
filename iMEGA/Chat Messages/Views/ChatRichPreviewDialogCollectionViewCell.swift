@@ -4,7 +4,7 @@ import MessageKit
 class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
     open var richPreviewDialogView: RichPreviewDialogView = RichPreviewDialogView()
     var megaMessage: MEGAChatMessage?
-    var indexPath:IndexPath?
+    var indexPath: IndexPath?
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         

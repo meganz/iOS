@@ -54,8 +54,8 @@ extension CustomModalAlertViewController {
         detailText = detailText.mnz_removeWebclientFormatters() as NSString
         
         let cookiePolicyRange = detailText.range(of: cookiePolicy ?? "")
-        let detailTextAttributedString = NSMutableAttributedString(string: detailText as String, attributes: [NSAttributedString.Key.font : UIFont.preferredFont(style: .footnote, weight: .medium), NSAttributedString.Key.foregroundColor : UIColor.mnz_subtitles(for: traitCollection)])
-        detailTextAttributedString.addAttributes([NSAttributedString.Key.foregroundColor : UIColor.mnz_turquoise(for: traitCollection)], range: cookiePolicyRange)
+        let detailTextAttributedString = NSMutableAttributedString(string: detailText as String, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(style: .footnote, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.mnz_subtitles(for: traitCollection)])
+        detailTextAttributedString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection)], range: cookiePolicyRange)
         
         return detailTextAttributedString
     }

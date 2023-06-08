@@ -38,7 +38,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             router: self,
             type: type,
             meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), sdk: MEGASdkManager.sharedMEGASdk(), callActionManager: CallActionManager.shared)),
-            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository:audioSessionRepository),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             devicePermissionUseCase: DevicePermissionCheckingProtocol.live,

@@ -7,7 +7,7 @@ struct Emoji: Codable {
         return ":\(name.replacingOccurrences(of: "_", with: " ")):"
     }
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case category = "c"
         case representation = "u"
         case name = "n"

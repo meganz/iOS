@@ -591,7 +591,7 @@ struct ScheduledMeetingDateBuilder {
         if #available(iOS 16.0, *) {
             formattedString.replace(boldTagRegex(), with: "", maxReplacements: 2)
         } else {
-            if let range = formattedString.range(of:  #"\[.{2}\]"#, options: [.regularExpression, .backwards]) {
+            if let range = formattedString.range(of: #"\[.{2}\]"#, options: [.regularExpression, .backwards]) {
                 formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression, range: formattedString.startIndex..<range.upperBound)
             }
         }
@@ -606,7 +606,7 @@ struct ScheduledMeetingDateBuilder {
                 formattedString.replaceSubrange(range, with: "")
             }
         } else {
-            if let range = formattedString.range(of:  #"\[.{2}\]"#, options: [.regularExpression, .backwards]) {
+            if let range = formattedString.range(of: #"\[.{2}\]"#, options: [.regularExpression, .backwards]) {
                 formattedString = formattedString.replacingOccurrences(of: #"\[.{1,2}\]"#, with: "", options: .regularExpression, range: range.upperBound..<formattedString.endIndex)
             }
         }

@@ -8,7 +8,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
     func testDispatch_onViewReadyWithAlbumCover_shouldSetLabelsAndUpdateThumbnail() throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
         XCTAssertTrue(isLocalFileCreated)
         
         let albumName = "Fruit"

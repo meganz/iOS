@@ -9,7 +9,7 @@ final class MediaDiscoveryRepositoryTests: XCTestCase {
     func testLoadingNodes_onMediaDiscovery_shouldReturnTrue() async throws {
         let childrenNodes = sampleNodes()
         let sdk = MockSdk(nodes: childrenNodes)
-        let repo = MediaDiscoveryRepository(sdk:sdk)
+        let repo = MediaDiscoveryRepository(sdk: sdk)
         let parentNode = NodeEntity(handle: 0)
         let nodes = try await repo.loadNodes(forParent: parentNode)
         
@@ -18,7 +18,7 @@ final class MediaDiscoveryRepositoryTests: XCTestCase {
     
     func testAddingDelegate_onMediaDiscovery_shouldReturnTrue() async throws {
         let sdk = MockSdk()
-        let repo = MediaDiscoveryRepository(sdk:sdk)
+        let repo = MediaDiscoveryRepository(sdk: sdk)
         
         repo.startMonitoringNodesUpdate()
         
@@ -28,7 +28,7 @@ final class MediaDiscoveryRepositoryTests: XCTestCase {
     func testAddingDelegate_onMediaDiscovery_shouldReturnFalse() async throws {
         let sdk = MockSdk()
         sdk.hasGlobalDelegate = true
-        let repo = MediaDiscoveryRepository(sdk:sdk)
+        let repo = MediaDiscoveryRepository(sdk: sdk)
         
         repo.stopMonitoringNodesUpdate()
         

@@ -31,7 +31,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     }
     
     public func search(string: String?,
-                       parent node:NodeEntity?,
+                       parent node: NodeEntity?,
                        supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity,

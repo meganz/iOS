@@ -4,7 +4,7 @@ import MEGADomain
 final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     var scheduledMeetingsList: [ScheduledMeetingEntity]
     var scheduledMeetingsOccurrences: [ScheduledMeetingOccurrenceEntity]
-    var upcomingOccurrences: [ChatIdEntity : ScheduledMeetingOccurrenceEntity]
+    var upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
     var createdScheduledMeeting: ScheduledMeetingEntity
     var createdScheduledMeetingError: ScheduleMeetingErrorEntity?
     var createScheduleMeetingEntity: CreateScheduleMeetingEntity?
@@ -12,7 +12,7 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     init(
         scheduledMeetingsList: [ScheduledMeetingEntity] = [],
         scheduledMeetingsOccurrences: [ScheduledMeetingOccurrenceEntity] = [],
-        upcomingOccurrences: [ChatIdEntity : ScheduledMeetingOccurrenceEntity] = [:],
+        upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity] = [:],
         createdScheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
         createdScheduledMeetingError: ScheduleMeetingErrorEntity? = nil,
         createScheduleMeetingEntity: CreateScheduleMeetingEntity? = nil
@@ -49,7 +49,7 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
         scheduledMeetingsOccurrences
     }
     
-    func upcomingOccurrences(forScheduledMeetings meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity : ScheduledMeetingOccurrenceEntity] {
+    func upcomingOccurrences(forScheduledMeetings meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity: ScheduledMeetingOccurrenceEntity] {
         upcomingOccurrences
     }
     

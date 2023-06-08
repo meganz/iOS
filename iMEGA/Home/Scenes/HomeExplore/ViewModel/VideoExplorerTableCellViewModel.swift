@@ -81,7 +81,7 @@ final class VideoExplorerTableCellViewModel {
     
     private func createSpace(_ width: Double = 4) -> NSAttributedString {
         let spaceAttachment = NSTextAttachment()
-        spaceAttachment.bounds = CGRect(x:0, y: 0, width: width, height: 0)
+        spaceAttachment.bounds = CGRect(x: 0, y: 0, width: width, height: 0)
         let space = NSAttributedString(attachment: spaceAttachment)
         return space
     }

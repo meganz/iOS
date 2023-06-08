@@ -25,7 +25,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
     )
     
     lazy var leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close,
-                                                 style:.plain,
+                                                 style: .plain,
                                                  target: self,
                                                  action: #selector(exitButtonTapped(_:))
     )

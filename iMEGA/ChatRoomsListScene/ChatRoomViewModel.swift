@@ -226,7 +226,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     // MARK: - Private methods
     
     private func formattedLastMessageSentDate() -> String? {
-        guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to:Date()) else { return nil }
+        guard let seventhDayPriorDate = Calendar.autoupdatingCurrent.date(byAdding: .day, value: -7, to: Date()) else { return nil }
         
         if Calendar.autoupdatingCurrent.isDateInToday(chatListItem.lastMessageDate) {
             return chatListItem.lastMessageDate.string(withDateFormat: "HH:mm")

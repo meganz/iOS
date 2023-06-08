@@ -6,10 +6,10 @@ class ReactionEmojiButton: UIButton {
     let emoji: String
     let emojiSelected: Bool
 
-    var buttonPressed:((String, UIView) -> Void)?
-    var buttonLongPress:((String, UIView) -> Void)?
+    var buttonPressed: ((String, UIView) -> Void)?
+    var buttonLongPress: ((String, UIView) -> Void)?
     
-    init(count:Int, emoji:String, emojiSelected: Bool) {
+    init(count: Int, emoji: String, emojiSelected: Bool) {
         self.count = count
         self.emoji = emoji
         self.emojiSelected = emojiSelected
@@ -31,7 +31,7 @@ class ReactionEmojiButton: UIButton {
         
         let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont(name: "Apple color emoji", size: 22) as Any])
         let attributedCount = NSAttributedString(string: " \(count)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                                                                                   NSAttributedString.Key.baselineOffset:3
+                                                                                   NSAttributedString.Key.baselineOffset: 3
                                                                                   
         ])
         setTitleColor(.mnz_label(), for: .normal)

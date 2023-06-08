@@ -100,17 +100,17 @@ class AppearanceManager: NSObject {
         
         appearance.stackedLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
         appearance.stackedLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+        appearance.stackedLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_red(for: traitCollection)]
         appearance.stackedLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
         
         appearance.inlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
         appearance.inlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+        appearance.inlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_red(for: traitCollection)]
         appearance.inlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
         
         appearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.mnz_primaryGray(for: traitCollection)
         appearance.compactInlineLayoutAppearance.normal.badgeBackgroundColor = .clear
-        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor : UIColor.mnz_red(for: traitCollection)]
+        appearance.compactInlineLayoutAppearance.normal.badgeTextAttributes = [.foregroundColor: UIColor.mnz_red(for: traitCollection)]
         appearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.mnz_red(for: traitCollection)
         
         tabBar.standardAppearance = appearance

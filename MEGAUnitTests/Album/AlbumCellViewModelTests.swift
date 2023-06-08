@@ -85,7 +85,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     func testThumbnailContainer_cachedThumbnail_setThumbnailContainerWithoutPlaceholder() throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder"))
         let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
         XCTAssertTrue(isLocalFileCreated)
         
         let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)]),
@@ -108,7 +108,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     func testLoadAlbumThumbnail_cachedThumbnail_shouldNotLoadThumbnailAgain() throws {
         let localImage = try XCTUnwrap(UIImage(systemName: "folder.fill"))
         let localURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: false)
-        let isLocalFileCreated = FileManager.default.createFile(atPath:localURL.path, contents: localImage.pngData())
+        let isLocalFileCreated = FileManager.default.createFile(atPath: localURL.path, contents: localImage.pngData())
         XCTAssertTrue(isLocalFileCreated)
         
         let sut = AlbumCellViewModel(thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)]),
@@ -264,7 +264,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testFeatureFlagForShowingShareIconOnAlbum_whenTurnedOff_shouldNotShowShareLink() {
-        let featureFlagProvider =  MockFeatureFlagProvider(list: [.albumShareLink : true])
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumShareLink: true])
         
         let sut = AlbumCellViewModel(
             thumbnailUseCase: MockThumbnailUseCase(),
@@ -277,7 +277,7 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testFeatureFlagForShowingShareIconOnAlbum_whenTurnedOn_shouldShowShareLink() {
-        let featureFlagProvider =  MockFeatureFlagProvider(list: [.albumShareLink : false])
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumShareLink: false])
         
         let sut = AlbumCellViewModel(
             thumbnailUseCase: MockThumbnailUseCase(),

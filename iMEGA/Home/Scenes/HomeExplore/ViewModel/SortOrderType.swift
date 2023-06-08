@@ -77,7 +77,7 @@ enum SortOrderType: String, CaseIterable {
     
     var megaSortOrderType: MEGASortOrderType {
         switch self {
-        case .nameAscending :
+        case .nameAscending:
             return .defaultAsc
         case .nameDescending:
             return .defaultDesc

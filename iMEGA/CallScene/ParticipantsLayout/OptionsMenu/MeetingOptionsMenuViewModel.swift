@@ -9,7 +9,7 @@ enum MeetingOptionsMenuAction: ActionType {
 }
 
 struct MeetingOptionsMenuViewModel: ViewModelType {
-    enum Command:CommandType, Equatable {
+    enum Command: CommandType, Equatable {
         case configView(actions: [ActionSheetAction])
     }
     

@@ -30,7 +30,7 @@ fileprivate extension ChatRoomEntity {
             isPreview: chatRoom.isPreview,
             isactive: chatRoom.isActive,
             isArchived: chatRoom.isArchived,
-            chatType:  chatRoom.isMeeting ? .meeting : chatRoom.isGroup ? .group : .oneToOne,
+            chatType: chatRoom.isMeeting ? .meeting : chatRoom.isGroup ? .group : .oneToOne,
             peers: (0..<chatRoom.peerCount).map { Peer(chatRoom: chatRoom, index: $0) },
             userHandle: chatRoom.userHandle,
             isOpenInviteEnabled: chatRoom.isOpenInviteEnabled)

@@ -104,8 +104,8 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 
                 switch result {
                 case .success(let result):
-                    let entity = AlbumElementsResultEntity(success:result.0, failure: result.1)
-                    continuation.resume(returning:entity)
+                    let entity = AlbumElementsResultEntity(success: result.0, failure: result.1)
+                    continuation.resume(returning: entity)
                 case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }
@@ -156,8 +156,8 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 
                 switch result {
                 case .success(let result):
-                    let entity = AlbumElementsResultEntity(success:result.0, failure: result.1)
-                    continuation.resume(returning:entity)
+                    let entity = AlbumElementsResultEntity(success: result.0, failure: result.1)
+                    continuation.resume(returning: entity)
                 case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }

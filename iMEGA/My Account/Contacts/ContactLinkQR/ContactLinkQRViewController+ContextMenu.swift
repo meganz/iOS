@@ -4,7 +4,7 @@ import MEGAData
 extension ContactLinkQRViewController: QRMenuDelegate {
     private func contextMenuConfiguration() -> CMConfigEntity {
         CMConfigEntity(menuType: .menu(type: .qr),
-                       isShareAvailable:!(contactLinkLabel?.text?.isEmpty ?? true))
+                       isShareAvailable: !(contactLinkLabel?.text?.isEmpty ?? true))
     }
     
     @objc func setMoreButtonAction() {

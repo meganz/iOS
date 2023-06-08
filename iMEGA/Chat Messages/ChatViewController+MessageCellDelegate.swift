@@ -204,7 +204,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                         return node
                     }
                     
-                    let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes:  NSMutableArray(array: mediaNodesArray),
+                    let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: mediaNodesArray),
                                                                                      api: MEGASdkManager.sharedMEGASdk(),
                                                                                      displayMode: .chatAttachment,
                                                                                      preferredIndex: UInt(foundIndex ?? 0))

@@ -832,7 +832,7 @@ class ChatViewController: MessagesViewController {
         
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.setMessageOutgoingAvatarSize(.zero)
-            layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets:  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
+            layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
             
         }
     }
@@ -1087,10 +1087,10 @@ class ChatViewController: MessagesViewController {
         }
         
         preapareAudioForCall()
-        CallActionManager.shared.startCall(chatId:chatRoom.chatId,
-                                           enableVideo:isVideoEnabled,
-                                           enableAudio:!chatRoom.isMeeting,
-                                           delegate:startCallDelegate)
+        CallActionManager.shared.startCall(chatId: chatRoom.chatId,
+                                           enableVideo: isVideoEnabled,
+                                           enableAudio: !chatRoom.isMeeting,
+                                           delegate: startCallDelegate)
     }
     
     private func answerCall(isVideoEnabled: Bool) {
@@ -1100,10 +1100,10 @@ class ChatViewController: MessagesViewController {
         }
         
         preapareAudioForCall()
-        CallActionManager.shared.answerCall(chatId:chatRoom.chatId,
-                                            enableVideo:isVideoEnabled,
-                                            enableAudio:!chatRoom.isMeeting,
-                                            delegate:delegate)
+        CallActionManager.shared.answerCall(chatId: chatRoom.chatId,
+                                            enableVideo: isVideoEnabled,
+                                            enableAudio: !chatRoom.isMeeting,
+                                            delegate: delegate)
     }
     
     private func joinActiveCall(isVideoEnabled: Bool) {

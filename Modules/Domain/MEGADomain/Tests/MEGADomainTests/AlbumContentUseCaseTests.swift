@@ -95,7 +95,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
         let node1 = NodeEntity(name: name1, handle: handle1, hasThumbnail: true, mediaType: .image)
         let node2 = NodeEntity(name: name2, handle: handle2, hasThumbnail: true, mediaType: .video)
         
-        let userAlbumRepo = MockUserAlbumRepository(albums: [set], albumContent: [1 : [element1, element2]])
+        let userAlbumRepo = MockUserAlbumRepository(albums: [set], albumContent: [1: [element1, element2]])
         
         let sut = AlbumContentsUseCase(
             albumContentsRepo: albumContentsRepo,

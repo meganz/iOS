@@ -51,7 +51,7 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let json = """
             {"ios":{"timeline":{"mediaType":"images","location":"cloudDrive"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences : [ContentConsumptionKeysEntity.key : try XCTUnwrap(json.base64Encoded)]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         let contentConsumption = try await sut.retrieveContentConsumptionAttribute()
@@ -65,7 +65,7 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":true}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences : [ContentConsumptionKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))
@@ -79,7 +79,7 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive"}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences : [ContentConsumptionKeysEntity.key : try XCTUnwrap(json.base64Encoded)]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: nil))
@@ -95,7 +95,7 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"images","location":"cameraUploads","usePreference":false}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences : [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json).base64Encoded)]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json).base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .images, location: .cameraUploads, usePreference: false))
@@ -111,7 +111,7 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences : [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json).base64Encoded)]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json).base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: nil))

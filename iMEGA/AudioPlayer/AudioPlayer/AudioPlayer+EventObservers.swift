@@ -3,7 +3,7 @@ import Foundation
 extension AudioPlayer {
     func registerAudioPlayerEvents() {
         audioQueueObserver = queuePlayer?.observe(\.currentItem, options: [.new, .old], changeHandler: audio(player:didChangeItem:))
-        audioQueueStatusObserver = queuePlayer?.currentItem?.observe(\.status, options:  [.new, .old], changeHandler: audio(playerItem:didChangeCurrentItemStatus:))
+        audioQueueStatusObserver = queuePlayer?.currentItem?.observe(\.status, options: [.new, .old], changeHandler: audio(playerItem:didChangeCurrentItemStatus:))
         audioQueueNewItemObserver = queuePlayer?.observe(\.currentItem, options: .initial, changeHandler: audio(player:didStartPlayingCurrentItem:))
         audioQueueRateObserver = queuePlayer?.observe(\.rate, options: .new, changeHandler: audio(player:didChangePlayerRate:))
         audioQueueStallObserver = queuePlayer?.observe(\.timeControlStatus, options: .new, changeHandler: audio(player:didChangeTimeControlStatus:))

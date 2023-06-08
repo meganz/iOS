@@ -2,7 +2,7 @@ import MEGADomain
 
 struct NodeDataRepository: NodeDataRepositoryProtocol {
     static var newRepo: NodeDataRepository {
-        NodeDataRepository(sdk: MEGASdk.shared, sharedFolderSdk:  MEGASdk.sharedFolderLink, nodeRepository: NodeRepository.newRepo)
+        NodeDataRepository(sdk: MEGASdk.shared, sharedFolderSdk: MEGASdk.sharedFolderLink, nodeRepository: NodeRepository.newRepo)
     }
     
     private let sdk: MEGASdk

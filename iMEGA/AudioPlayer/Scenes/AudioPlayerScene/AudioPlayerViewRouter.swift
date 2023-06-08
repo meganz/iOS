@@ -6,7 +6,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private weak var presenter: UIViewController?
     private var configEntity: AudioPlayerConfigEntity
     private var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
-    private var fileLinkActionViewControllerDelegate : FileLinkActionViewControllerDelegate?
+    private var fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate?
     
     init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController) {
         self.configEntity = configEntity

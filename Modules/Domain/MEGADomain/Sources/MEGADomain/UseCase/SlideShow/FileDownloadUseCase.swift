@@ -5,9 +5,11 @@ public protocol FileDownloadUseCaseProtocol {
     func downloadNode(_ node: NodeEntity) async throws -> URL
 }
 
-public struct FileDownloadUseCase<T:DownloadFileRepositoryProtocol,
-                              U:FileSystemRepositoryProtocol,
-                              V:FileCacheRepositoryProtocol> {
+public struct FileDownloadUseCase<
+    T: DownloadFileRepositoryProtocol,
+    U: FileSystemRepositoryProtocol,
+    V: FileCacheRepositoryProtocol
+> {
     
     public let fileCacheRepository: V
     public let fileSystemRepository: U

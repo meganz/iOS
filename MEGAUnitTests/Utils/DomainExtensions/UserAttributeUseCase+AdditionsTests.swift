@@ -10,7 +10,7 @@ final class UserAttributeUseCaseAdditionsTests: XCTestCase {
         let json = """
             {"ios":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences : [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json))]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json))]])
         let sut = UserAttributeUseCase(repo: repo)
         
         let timelineFilter = try await sut.timelineFilter()
@@ -22,7 +22,7 @@ final class UserAttributeUseCaseAdditionsTests: XCTestCase {
         let json = """
             {"iOS":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences : [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json?.base64Encoded))]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json?.base64Encoded))]])
         let sut = UserAttributeUseCase(repo: repo)
         
         await XCTAssertThrowsError(try await sut.timelineFilter())
@@ -32,7 +32,7 @@ final class UserAttributeUseCaseAdditionsTests: XCTestCase {
         let json = """
             {"ios":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences : [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json?.base64Encoded))]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json?.base64Encoded))]])
         let sut = UserAttributeUseCase(repo: repo)
         
         let timelineFilter = try await sut.timelineFilter()

@@ -37,7 +37,7 @@ extension MEGAStore {
         let fetchRequest = NSFetchRequest<OfflineAppearancePreference>(entityName: "OfflineAppearancePreference")
         fetchRequest.predicate = NSPredicate(format: "localPath == %@", path)
         
-        var offlineAppearancePreferencesArray : [OfflineAppearancePreference]
+        var offlineAppearancePreferencesArray: [OfflineAppearancePreference]
         do {
             offlineAppearancePreferencesArray = try context.fetch(fetchRequest)
             
@@ -58,7 +58,7 @@ extension MEGAStore {
         
         let fetchRequest = NSFetchRequest<OfflineAppearancePreference>(entityName: "OfflineAppearancePreference")
         
-        var offlineAppearancePreferencesArray : [OfflineAppearancePreference]
+        var offlineAppearancePreferencesArray: [OfflineAppearancePreference]
         do {
             offlineAppearancePreferencesArray = try context.fetch(fetchRequest)
             
@@ -70,7 +70,7 @@ extension MEGAStore {
         }
     }
     
-    @objc func deleteOfflineAppearancePreference(path : String) {
+    @objc func deleteOfflineAppearancePreference(path: String) {
         guard let context = stack.viewContext else { return }
         
         if let offlineAppearancePreference = fetchOfflineAppearancePreference(path: path) {

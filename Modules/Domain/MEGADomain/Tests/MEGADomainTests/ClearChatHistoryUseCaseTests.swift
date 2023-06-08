@@ -33,7 +33,7 @@ final class ClearChatHistoryUseCaseTests: XCTestCase {
     
     func test_clearChatHistory_error_chatIdInvalid () {
         let mockError: ManageChatHistoryErrorEntity = .chatIdInvalid
-        let repo = MockManageChatHistoryRepository(clearChatHistory:.failure(.chatIdInvalid))
+        let repo = MockManageChatHistoryRepository(clearChatHistory: .failure(.chatIdInvalid))
         let sut = ClearChatHistoryUseCase(repository: repo)
         sut.clearChatHistory(for: 123) { result in
             switch result {
@@ -47,7 +47,7 @@ final class ClearChatHistoryUseCaseTests: XCTestCase {
     
     func test_clearChatHistory_error_chatIdDoesNotExist () {
         let mockError: ManageChatHistoryErrorEntity = .chatIdDoesNotExist
-        let repo = MockManageChatHistoryRepository(clearChatHistory:.failure(.chatIdDoesNotExist))
+        let repo = MockManageChatHistoryRepository(clearChatHistory: .failure(.chatIdDoesNotExist))
         let sut = ClearChatHistoryUseCase(repository: repo)
         sut.clearChatHistory(for: 123) { result in
             switch result {
@@ -61,7 +61,7 @@ final class ClearChatHistoryUseCaseTests: XCTestCase {
     
     func test_clearChatHistory_error_notEnoughPrivileges () {
         let mockError: ManageChatHistoryErrorEntity = .notEnoughPrivileges
-        let repo = MockManageChatHistoryRepository(clearChatHistory:.failure(.notEnoughPrivileges))
+        let repo = MockManageChatHistoryRepository(clearChatHistory: .failure(.notEnoughPrivileges))
         let sut = ClearChatHistoryUseCase(repository: repo)
         sut.clearChatHistory(for: 123) { result in
             switch result {

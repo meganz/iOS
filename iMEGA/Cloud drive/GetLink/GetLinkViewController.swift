@@ -583,7 +583,7 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkSwitchOptionTableViewCell")
         }
         
-        cell.configureActivateExpiryDateCell(isOn: getLinkVM.expiryDate, isPro:MEGASdkManager.sharedMEGASdk().mnz_isProAccount, justUpgraded:justUpgradedToProAccount)
+        cell.configureActivateExpiryDateCell(isOn: getLinkVM.expiryDate, isPro: MEGASdkManager.sharedMEGASdk().mnz_isProAccount, justUpgraded: justUpgradedToProAccount)
         
         return cell
     }
@@ -613,7 +613,7 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkDetailTableViewCell")
         }
         
-        cell.configurePasswordCell(passwordActive: getLinkVM.passwordProtect, isPro:MEGASdkManager.sharedMEGASdk().mnz_isProAccount, justUpgraded:justUpgradedToProAccount)
+        cell.configurePasswordCell(passwordActive: getLinkVM.passwordProtect, isPro: MEGASdkManager.sharedMEGASdk().mnz_isProAccount, justUpgraded: justUpgradedToProAccount)
         
         return cell
     }

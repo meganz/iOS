@@ -378,7 +378,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @MainActor
     private func populateFutureMeetings(
         from meetings: [ScheduledMeetingEntity],
-        withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity : ScheduledMeetingOccurrenceEntity]
+        withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
     ) {
         let filteredFutureMeetings = meetings.reduce([FutureMeetingSection]()) { futureMeetingSections, meeting in
             merge(
@@ -394,7 +394,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func merge(
         scheduledMeeting: ScheduledMeetingEntity,
         intoFutureMeetingSections futureMeetingSections: [FutureMeetingSection],
-        withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity : ScheduledMeetingOccurrenceEntity]
+        withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
     ) -> [FutureMeetingSection] {
         let nextOccurrence = upcomingOccurrences[scheduledMeeting.scheduledId]
         let date = startDate(for: scheduledMeeting, nextOccurrence: nextOccurrence)
@@ -720,7 +720,7 @@ extension ChatRoomsListViewModel: MyAvatarPresenterProtocol {
 }
 
 // MARK: - PushNotificationControlProtocol
-extension ChatRoomsListViewModel :PushNotificationControlProtocol {
+extension ChatRoomsListViewModel: PushNotificationControlProtocol {
     func presentAlertController(_ alert: UIAlertController) {
         router.present(alert: alert, animated: true)
     }

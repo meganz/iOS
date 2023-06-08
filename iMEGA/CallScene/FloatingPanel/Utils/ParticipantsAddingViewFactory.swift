@@ -84,7 +84,7 @@ struct ParticipantsAddingViewFactory {
     private func alert(withTitle title: String, message: String, inviteAction: @escaping () -> Void) -> UIAlertController {
         let inviteButtonTitle = Strings.Localizable.Meetings.AddContacts.AllContactsAdded.confirmationButtonTitle
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler:nil))
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
         let inviteAction = UIAlertAction(title: inviteButtonTitle, style: .default) { _ in
             inviteAction()
         }

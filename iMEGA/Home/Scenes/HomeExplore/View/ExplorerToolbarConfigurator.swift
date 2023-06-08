@@ -1,7 +1,7 @@
 
 class ExplorerToolbarConfigurator {
     typealias ButtonAction = (UIBarButtonItem) -> Void
-    let downloadAction : ButtonAction
+    let downloadAction: ButtonAction
     let shareLinkAction: ButtonAction
     let moveAction: ButtonAction
     let copyAction: ButtonAction

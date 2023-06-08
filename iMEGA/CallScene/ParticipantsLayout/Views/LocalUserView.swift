@@ -24,7 +24,7 @@ class LocalUserView: UIView {
         static let iPhoneXOffset: CGFloat = 30.0
     }
     
-    private lazy var blurEffectView : UIVisualEffectView = {
+    private lazy var blurEffectView: UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         blurEffectView.layer.cornerRadius = Constants.cornerRadius
         blurEffectView.clipsToBounds = true

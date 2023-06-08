@@ -68,7 +68,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testSelectChatsMode_inputAsChats_viewModelesShouldMatch() {
         let mockList = chatsListMock
         let viewModel = ChatRoomsListViewModel(
-            chatUseCase:  MockChatUseCase(items: mockList),
+            chatUseCase: MockChatUseCase(items: mockList),
             chatViewMode: .meetings
         )
         viewModel.loadChatRoomsIfNeeded()
@@ -89,7 +89,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testSelectChatsMode_inputAsMeeting_viewModelsShouldMatch() {
         let mockList = meetingsListMock
         let viewModel = ChatRoomsListViewModel(
-            chatUseCase:  MockChatUseCase(items: mockList),
+            chatUseCase: MockChatUseCase(items: mockList),
             chatViewMode: .chats
         )
         viewModel.loadChatRoomsIfNeeded()

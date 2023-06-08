@@ -153,7 +153,7 @@ extension TextEditorViewController: ViewType {
                 target: self,
                 action: #selector(saveTapped)
             )
-            let attribute: [NSAttributedString.Key : Any] = [.font: UIFont.preferredFont(style: .callout, weight: .bold)]
+            let attribute: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(style: .callout, weight: .bold)]
             saveButton.setTitleTextAttributes(attribute, for: .normal)
             
             navigationItem.rightBarButtonItem = saveButton
@@ -381,8 +381,8 @@ extension TextEditorViewController: ViewType {
     }
     
     func registerForNotifications() {
-        NotificationCenter.default.addObserver(self, selector:#selector(keyboardDidChangeFrame(notification:)), name:UIResponder.keyboardDidChangeFrameNotification, object:nil)
-        NotificationCenter.default.addObserver(self, selector:#selector(keyboardDidHide(notification:)), name:UIResponder.keyboardDidHideNotification, object:nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidChangeFrame(notification:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
     @objc func keyboardDidChangeFrame(notification: NSNotification) {

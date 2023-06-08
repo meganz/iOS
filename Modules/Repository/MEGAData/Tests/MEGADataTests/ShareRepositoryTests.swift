@@ -24,7 +24,7 @@ final class ShareRepositoryTests: XCTestCase {
     func testCreateShareKey_shouldReturnSameNodeHandle() async throws {
         let mockNode = MockNode(handle: 1)
         let sharedFolderNodeEntity = mockNode.toNodeEntity()
-        let repo = ShareRepository(sdk: MockSdk(nodes:[mockNode]))
+        let repo = ShareRepository(sdk: MockSdk(nodes: [mockNode]))
         let nodeEntityHandle = try await repo.createShareKey(forNode: sharedFolderNodeEntity)
         XCTAssertTrue(nodeEntityHandle == sharedFolderNodeEntity.handle)
     }

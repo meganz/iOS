@@ -320,11 +320,11 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
     }
     
     private func makeSamplePhotoNodes() throws -> [NodeEntity] {
-        let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle:1, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:01:04Z".date)
-        let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:02:04Z".date)
-        let node3 = NodeEntity(nodeType: .file, name: "TestImage3.png", handle:3, parentHandle: 1, hasThumbnail: false, modificationTime: try "2022-08-18T22:03:04Z".date)
-        let node4 = NodeEntity(nodeType: .file, name: "TestImage4.png", handle:4, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:04:04Z".date)
-        let node5 = NodeEntity(nodeType: .file, name: "TestVideo.mp4", handle:5, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:05:04Z".date)
+        let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:01:04Z".date)
+        let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:02:04Z".date)
+        let node3 = NodeEntity(nodeType: .file, name: "TestImage3.png", handle: 3, parentHandle: 1, hasThumbnail: false, modificationTime: try "2022-08-18T22:03:04Z".date)
+        let node4 = NodeEntity(nodeType: .file, name: "TestImage4.png", handle: 4, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:04:04Z".date)
+        let node5 = NodeEntity(nodeType: .file, name: "TestVideo.mp4", handle: 5, parentHandle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:05:04Z".date)
         
         return [node1, node2, node3, node4, node5]
     }

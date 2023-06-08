@@ -120,7 +120,7 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     
     func testSaveFilters_onApplyingFilters_shouldChangeTypeAndLocation() async throws {
         let useCase = MockUserAttributeUseCase()
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving : true]))
+        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]))
         sut.appliedMediaTypeFilter = .images
         sut.appliedFilterLocation = .cloudDrive
         
@@ -140,7 +140,7 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     
     func testApplySavedFilters_whenFilterScreenLoadedAndFeatureFlagIsDisabled_shouldNotApplySavedFilters() async {
         let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving : false]))
+        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: false]))
         
         await sut.applySavedFilters()
         

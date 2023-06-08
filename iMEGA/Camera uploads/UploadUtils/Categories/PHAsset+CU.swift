@@ -39,7 +39,7 @@ extension PHAsset {
         mediaType == .image && mediaSubtypes.contains(.photoLive)
     }
     
-    @objc func mnz_fileExtension(fromAssetInfo info: [AnyHashable : Any]?, uniformTypeIdentifier uti: String?) -> FileExtension {
+    @objc func mnz_fileExtension(fromAssetInfo info: [AnyHashable: Any]?, uniformTypeIdentifier uti: String?) -> FileExtension {
         let urlString = info?["PHImageFileURLKey"] as? String
         let url = urlString.flatMap { URL(string: $0) }
         

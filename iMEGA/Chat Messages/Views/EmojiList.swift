@@ -21,7 +21,7 @@ struct Emoji: Codable {
     let representation: String
     let name: String
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case category = "c"
         case representation = "u"
         case name = "n"

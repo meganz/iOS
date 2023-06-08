@@ -44,11 +44,11 @@ final class PhotosViewModelTests: XCTestCase {
     
     func testLoadingPhotos_withAllMediaAllLocations_shouldExcludeThumbnailLessPhotos() async throws {
         let photos = [
-            NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 0, hasThumbnail: true),
-            NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true),
-            NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 2, hasThumbnail: false),
-            NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 3, hasThumbnail: false),
-            NodeEntity(nodeType:.file, name:"TestImage1.png", handle:5, parentHandle: 4, hasThumbnail: true)
+            NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 0, hasThumbnail: true),
+            NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true),
+            NodeEntity(nodeType: .file, name: "TestVideo1.mp4", handle: 3, parentHandle: 2, hasThumbnail: false),
+            NodeEntity(nodeType: .file, name: "TestVideo2.mp4", handle: 4, parentHandle: 3, hasThumbnail: false),
+            NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 5, parentHandle: 4, hasThumbnail: true)
         ]
         
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
@@ -151,7 +151,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     func testLoadAllPhotosWithSavedFilters_whenTheScreenAppear_shouldLoadTheExistingFilters() async {
         let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
-        let sut = photosViewModelForFeatureFlag(provider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving : true]), userAttributeUseCase: useCase)
+        let sut = photosViewModelForFeatureFlag(provider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]), userAttributeUseCase: useCase)
         
         sut.loadAllPhotosWithSavedFilters()
         await sut.contentConsumptionAttributeLoadingTask?.value
@@ -173,32 +173,32 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     private func sampleNodesForAllLocations() -> [NodeEntity] {
-        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 0, hasThumbnail: true)
-        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
-        let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 2, hasThumbnail: true)
-        let node4 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 3, hasThumbnail: true)
-        let node5 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:5, parentHandle: 4, hasThumbnail: true)
-        let node6 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:6, parentHandle: 5, hasThumbnail: true)
-        let node7 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:7, parentHandle: 6, hasThumbnail: true)
-        let node8 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:8, parentHandle: 7, hasThumbnail: true)
+        let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 0, hasThumbnail: true)
+        let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true)
+        let node3 = NodeEntity(nodeType: .file, name: "TestVideo1.mp4", handle: 3, parentHandle: 2, hasThumbnail: true)
+        let node4 = NodeEntity(nodeType: .file, name: "TestVideo2.mp4", handle: 4, parentHandle: 3, hasThumbnail: true)
+        let node5 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 5, parentHandle: 4, hasThumbnail: true)
+        let node6 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 6, parentHandle: 5, hasThumbnail: true)
+        let node7 = NodeEntity(nodeType: .file, name: "TestVideo1.mp4", handle: 7, parentHandle: 6, hasThumbnail: true)
+        let node8 = NodeEntity(nodeType: .file, name: "TestVideo2.mp4", handle: 8, parentHandle: 7, hasThumbnail: true)
         
         return [node1, node2, node3, node4, node5, node6, node7, node8]
     }
     
     private func sampleNodesForCloudDriveOnly() -> [NodeEntity] {
-        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 1, hasThumbnail: true)
-        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
-        let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 1, hasThumbnail: true)
-        let node4 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 1, hasThumbnail: true)
+        let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 1, hasThumbnail: true)
+        let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true)
+        let node3 = NodeEntity(nodeType: .file, name: "TestVideo1.mp4", handle: 3, parentHandle: 1, hasThumbnail: true)
+        let node4 = NodeEntity(nodeType: .file, name: "TestVideo2.mp4", handle: 4, parentHandle: 1, hasThumbnail: true)
         
         return [node1, node2, node3, node4]
     }
     
     private func sampleNodesForCameraUploads() -> [NodeEntity] {
-        let node1 = NodeEntity(nodeType:.file, name:"TestImage1.png", handle:1, parentHandle: 1, hasThumbnail: true)
-        let node2 = NodeEntity(nodeType:.file, name:"TestImage2.png", handle:2, parentHandle: 1, hasThumbnail: true)
-        let node3 = NodeEntity(nodeType:.file, name:"TestVideo1.mp4", handle:3, parentHandle: 1, hasThumbnail: true)
-        let node4 = NodeEntity(nodeType:.file, name:"TestVideo2.mp4", handle:4, parentHandle: 1, hasThumbnail: true)
+        let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 1, hasThumbnail: true)
+        let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true)
+        let node3 = NodeEntity(nodeType: .file, name: "TestVideo1.mp4", handle: 3, parentHandle: 1, hasThumbnail: true)
+        let node4 = NodeEntity(nodeType: .file, name: "TestVideo2.mp4", handle: 4, parentHandle: 1, hasThumbnail: true)
         
         return [node1, node2, node3, node4]
     }

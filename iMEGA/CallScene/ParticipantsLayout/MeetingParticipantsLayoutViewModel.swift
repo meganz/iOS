@@ -683,7 +683,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         avatarRefetchTasks?.forEach { $0.cancel() }
         
         avatarChangeSubscription = userImageUseCase
-            .requestAvatarChangeNotification(forUserHandles:participants.map(\.participantId))
+            .requestAvatarChangeNotification(forUserHandles: participants.map(\.participantId))
             .sink { error in
                 MEGALogDebug("error fetching the changed avatar \(error)")
             } receiveValue: { [weak self] handles in

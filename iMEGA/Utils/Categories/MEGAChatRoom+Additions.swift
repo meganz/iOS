@@ -137,7 +137,7 @@ extension MEGAChatRoom {
         return participantsNames
     }
     
-    func participantName(atIndex index:UInt) -> String? {
+    func participantName(atIndex index: UInt) -> String? {
         return participantName(forUserHandle: peerHandle(at: index))
     }
     

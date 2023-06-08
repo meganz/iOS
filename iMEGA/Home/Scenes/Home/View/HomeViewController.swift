@@ -196,7 +196,7 @@ final class HomeViewController: UIViewController {
             self.bannerCollectionView.isHidden = !isOn
         }, completion: { _ in
             if !RecentsPreferenceManager.showRecents() {
-                NotificationCenter.default.post(name: NSNotification.Name.init(NSNotification.Name.MEGABannerChangedHomeHeight.rawValue), object: nil, userInfo: [NSNotification.Name.MEGAHomeChangedHeight.rawValue : isOn])
+                NotificationCenter.default.post(name: NSNotification.Name.init(NSNotification.Name.MEGABannerChangedHomeHeight.rawValue), object: nil, userInfo: [NSNotification.Name.MEGAHomeChangedHeight.rawValue: isOn])
             }
         })
     }
@@ -402,7 +402,7 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
         self.constraintToTopPosition.isActive = true
         self.view.layoutIfNeeded()
         
-        NotificationCenter.default.post(name: NSNotification.Name.init(NSNotification.Name.MEGAHomeChangedHeight.rawValue), object: nil, userInfo: [NSNotification.Name.MEGAHomeChangedHeight.rawValue : false])
+        NotificationCenter.default.post(name: NSNotification.Name.init(NSNotification.Name.MEGAHomeChangedHeight.rawValue), object: nil, userInfo: [NSNotification.Name.MEGAHomeChangedHeight.rawValue: false])
     }
 
     func animateToBottomPosition() {
@@ -411,7 +411,7 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
         self.view.layoutIfNeeded()
         
         let notificationName = bannerCollectionView.isHidden ? NSNotification.Name.MEGAHomeChangedHeight.rawValue : NSNotification.Name.MEGABannerChangedHomeHeight.rawValue
-        NotificationCenter.default.post(name: NSNotification.Name.init(notificationName), object: nil, userInfo: [notificationName : slidePanelAnimator.isInTopDockingPosition()])
+        NotificationCenter.default.post(name: NSNotification.Name.init(notificationName), object: nil, userInfo: [notificationName: slidePanelAnimator.isInTopDockingPosition()])
     }
 }
 

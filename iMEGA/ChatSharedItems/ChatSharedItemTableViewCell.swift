@@ -29,7 +29,7 @@ class ChatSharedItemTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(for node:MEGANode, ownerHandle: UInt64, chatRoom: MEGAChatRoom) {
+    func configure(for node: MEGANode, ownerHandle: UInt64, chatRoom: MEGAChatRoom) {
         nameLabel.text = node.name
         ownerNameLabel.text = chatRoom.userDisplayName(forUserHandle: ownerHandle)
         ownerNameLabel.textColor = .mnz_subtitles(for: traitCollection)

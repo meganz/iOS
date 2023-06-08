@@ -57,7 +57,7 @@ extension SDKNodeClient {
             guard let parentHandle = sdk.node(forHandle: nodeHandle)?.parentHandle else {
                 return nil
             }
-            return sdk.node(forHandle:parentHandle)
+            return sdk.node(forHandle: parentHandle)
         },
 
         findChatFolderNode: { completion in

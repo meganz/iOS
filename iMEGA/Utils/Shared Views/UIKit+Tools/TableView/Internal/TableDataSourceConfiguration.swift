@@ -5,7 +5,7 @@ struct TableDataSourceConfiguration<Item> {
     let numberOfSections: () -> Int
 
     let numberOfRows: (
-        _ inSection : Int
+        _ inSection: Int
     ) -> Int
 
     let itemAtIndexPath: (

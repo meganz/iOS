@@ -47,7 +47,7 @@ extension MEGAStore {
         performBatchInsertRequest(batchInsert, completion: completion)
     }
     
-    private func buildBatchInsertRequest(for items:[RecentItemEntity]) -> NSBatchInsertRequest {
+    private func buildBatchInsertRequest(for items: [RecentItemEntity]) -> NSBatchInsertRequest {
         var insertIndex = 0
         let batchInsert = NSBatchInsertRequest(entity: QuickAccessWidgetRecentItem.entity()) { (managedObject: NSManagedObject) -> Bool in
             guard insertIndex < items.count else { return true }

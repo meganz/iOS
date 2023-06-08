@@ -4,7 +4,7 @@ import MEGADomain
 protocol ActionSheetFactoryProtocol {
 
     func nodeLabelColorView(forNode nodeHandle: HandleEntity,
-                            completion:((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?)
+                            completion: ((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?)
 }
 
 struct ActionSheetFactory: ActionSheetFactoryProtocol {
@@ -13,13 +13,13 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
 
     init(
         nodeLabelActionUseCase: NodeLabelActionUseCaseProtocol
-            = NodeLabelActionUseCase(nodeLabelActionRepository:NodeLabelActionRepository())
+            = NodeLabelActionUseCase(nodeLabelActionRepository: NodeLabelActionRepository())
     ) {
         self.nodeLabelActionUseCase = nodeLabelActionUseCase
     }
 
     func nodeLabelColorView(forNode nodeHandle: HandleEntity,
-                            completion:((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?) {
+                            completion: ((Result<ActionSheetViewController, NodeLabelActionDomainError>) -> Void)?) {
         nodeLabelColorActions(forNode: nodeHandle) { (actionsResult) in
             let viewControllerResult = actionsResult.map {
                 ActionSheetViewController(actions: $0, headerTitle: nil, dismissCompletion: nil, sender: nil)
@@ -30,7 +30,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
 
     private func nodeLabelColorActions(
         forNode nodeHandle: HandleEntity,
-        completion:((Result<[BaseAction], NodeLabelActionDomainError>) -> Void)?
+        completion: ((Result<[BaseAction], NodeLabelActionDomainError>) -> Void)?
     ) {
         nodeLabelActionUseCase.nodeLabelColor(forNode: nodeHandle) { (colorResult) in
             switch colorResult {

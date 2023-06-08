@@ -11,7 +11,7 @@ final class AudioPlayer: NSObject {
     
     // MARK: - Internal properties
     var observers = [UIViewController]()
-    var queuePlayer : AVQueuePlayer?
+    var queuePlayer: AVQueuePlayer?
     var tracks: [AudioPlayerItem] = []
     var audioQueueObserver: NSKeyValueObservation?
     var audioQueueStatusObserver: NSKeyValueObservation?

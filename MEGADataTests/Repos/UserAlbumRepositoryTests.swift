@@ -9,7 +9,7 @@ final class UserAlbumRepositoryTests: XCTestCase {
     
     func testLoadingAlbums_onRetrieved_shouldReturnAlbums() async throws {
         let megaSets = sampleSets()
-        let sdk = MockSdk(megaSets:megaSets)
+        let sdk = MockSdk(megaSets: megaSets)
         let repo = UserAlbumRepository(sdk: sdk)
         
         let sets = await repo.albums()

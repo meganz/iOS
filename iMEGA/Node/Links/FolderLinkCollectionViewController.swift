@@ -105,7 +105,7 @@ class FolderLinkCollectionViewController: UIViewController {
         
         if MEGAReachabilityManager.isReachable(), !isEmpty {
             removeErrorViewIfRequired()
-            diffableDataSource.load(data: [.folder : folderList, .file : fileList], keys: [.folder, .file])
+            diffableDataSource.load(data: [.folder: folderList, .file: fileList], keys: [.folder, .file])
         } else {
             diffableDataSource.load(data: [:], keys: [])
             showErrorViewIfRequired()

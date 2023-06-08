@@ -47,7 +47,7 @@ class RichPreviewDialogView: UIView {
         return button
     }()
     
-    var message : MEGAChatMessage? {
+    var message: MEGAChatMessage? {
         didSet {
             configureView()
             layout()

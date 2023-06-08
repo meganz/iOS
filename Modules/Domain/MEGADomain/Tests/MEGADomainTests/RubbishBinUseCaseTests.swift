@@ -17,7 +17,7 @@ final class RubbishBinUseCaseTests: XCTestCase {
     func testRubbishBin_isSyncDebrisChild() {
         let syncDebrisChild = NodeEntity(name: "childNode1", handle: 1)
         let sut = RubbishBinUseCase(rubbishBinRepository:
-                                            MockRubbishBinRepository(syncDebrisChildNodes:[syncDebrisChild]))
+                                            MockRubbishBinRepository(syncDebrisChildNodes: [syncDebrisChild]))
         let isSyncDebrisChild = sut.isSyncDebrisNode(syncDebrisChild)
         XCTAssertTrue(isSyncDebrisChild)
         let isNotSyncDebrisChild = sut.isSyncDebrisNode(NodeEntity())

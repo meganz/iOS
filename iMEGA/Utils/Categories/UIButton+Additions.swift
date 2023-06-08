@@ -11,7 +11,7 @@
 
 extension UIButton {
     
-    @objc func mnz_setup(_ style : MEGACustomButtonStyle, traitCollection: UITraitCollection) {
+    @objc func mnz_setup(_ style: MEGACustomButtonStyle, traitCollection: UITraitCollection) {
         switch style {
         case .basic:
             mnz_setupBasic(traitCollection)

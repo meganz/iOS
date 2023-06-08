@@ -21,7 +21,7 @@ struct ContactOnMega: Codable {
     var deviceContactsChunked = [[[String: String]]]()
     var contactsOnMegaDictionary = [UInt64: String]()
 
-    var completionWhenReady : (() -> Void)?
+    var completionWhenReady: (() -> Void)?
 
     private var deviceContactsOperation: DeviceContactsOperation?
 
@@ -108,7 +108,7 @@ struct ContactOnMega: Codable {
                     return
                 }
                 
-                let deviceContacts = deviceContactsOperation.fetchedContacts.map({ [$0.contactDetail:$0.name] })
+                let deviceContacts = deviceContactsOperation.fetchedContacts.map({ [$0.contactDetail: $0.name] })
                 if deviceContacts.isEmpty {
                     self.contactsFetched()
                 } else {

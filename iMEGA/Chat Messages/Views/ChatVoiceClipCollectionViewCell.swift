@@ -83,7 +83,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         messageContainerView.tintColor = textColor
         durationLabel.textColor = textColor
         progressView.trackTintColor = .lightGray
-        var imageData:[UIImage] = []
+        var imageData: [UIImage] = []
         for i in 0...59 {
             let name = "waveform_000\(i)"
             guard let data = UIImage(named: name)?.withRenderingMode(.alwaysTemplate).withTintColor(textColor) else {
@@ -162,7 +162,7 @@ open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
         super.init(layout: layout)
         configureAccessoryView()
         outgoingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
-        incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets:  UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 0))
+        incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 0))
     }
     
     open override func messageContainerSize(for message: MessageType) -> CGSize {
