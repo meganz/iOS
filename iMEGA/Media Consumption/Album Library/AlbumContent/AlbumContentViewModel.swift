@@ -12,6 +12,7 @@ enum AlbumContentAction: ActionType {
     case deleteAlbum
     case configureContextMenu(isSelectHidden: Bool)
     case shareLink
+    case removeLink
 }
 
 final class AlbumContentViewModel: ViewModelType {
@@ -37,6 +38,7 @@ final class AlbumContentViewModel: ViewModelType {
     private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
     private let router: AlbumContentRouting
     private let featureFlagProvider: FeatureFlagProviderProtocol
+    private let shareAlbumUseCase: ShareAlbumUseCaseProtocol
     
     private var loadingTask: Task<Void, Never>?
     private var photos = [AlbumPhotoEntity]()
@@ -67,6 +69,7 @@ final class AlbumContentViewModel: ViewModelType {
         albumContentsUseCase: AlbumContentsUseCaseProtocol,
         albumModificationUseCase: AlbumModificationUseCaseProtocol,
         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
+        shareAlbumUseCase: ShareAlbumUseCaseProtocol,
         router: AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel,
@@ -77,6 +80,7 @@ final class AlbumContentViewModel: ViewModelType {
         self.albumContentsUseCase = albumContentsUseCase
         self.albumModificationUseCase = albumModificationUseCase
         self.photoLibraryUseCase = photoLibraryUseCase
+        self.shareAlbumUseCase = shareAlbumUseCase
         self.router = router
         self.alertViewModel = alertViewModel
         self.featureFlagProvider = featureFlagProvider
@@ -113,6 +117,8 @@ final class AlbumContentViewModel: ViewModelType {
             invokeCommand?(.rebuildContextMenu)
         case .shareLink:
             router.showShareLink(album: album)
+        case .removeLink:
+            removeSharedLink()
         }
     }
     
@@ -397,6 +403,10 @@ final class AlbumContentViewModel: ViewModelType {
         if setEntity.changeTypes.contains(.cover) {
             retriveNewUserAlbumCover(photoId: setEntity.coverId)
         }
+        if setEntity.changeTypes.contains(.exported) {
+            album.sharedLinkStatus = .exported(setEntity.isExported)
+            invokeCommand?(.rebuildContextMenu)
+        }
     }
 
     private func retriveNewUserAlbumCover(photoId: HandleEntity) {
@@ -404,6 +414,18 @@ final class AlbumContentViewModel: ViewModelType {
             guard let self else { return }
             if let newCover = await albumContentsUseCase.userAlbumCoverPhoto(in: album, forPhotoId: photoId) {
                 album.coverNode = newCover
+            }
+        }
+    }
+    
+    private func removeSharedLink() {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                try await shareAlbumUseCase.removeSharedLink(forAlbum: album)
+                invokeCommand?(.showHud(.success(Strings.Localizable.General.MenuAction.RemoveLink.title(1))))
+            } catch {
+                MEGALogError("Error removing album link for album: \(album.id)")
             }
         }
     }

@@ -15,7 +15,7 @@ public struct AlbumEntity: Identifiable, Hashable, Sendable {
     public let type: AlbumEntityType
     public let creationTime: Date?
     public let modificationTime: Date?
-    public let sharedLinkStatus: SharedLinkStatusEntity
+    public var sharedLinkStatus: SharedLinkStatusEntity
     
     public init(id: HandleEntity, name: String, coverNode: NodeEntity?, count: Int, type: AlbumEntityType, creationTime: Date? = nil, modificationTime: Date? = nil,
                 sharedLinkStatus: SharedLinkStatusEntity = .unavailable) {
