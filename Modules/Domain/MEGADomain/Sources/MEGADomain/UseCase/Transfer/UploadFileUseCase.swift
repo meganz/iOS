@@ -38,7 +38,7 @@ public struct UploadFileUseCase<T: UploadFileRepositoryProtocol, U: FileSystemRe
         let name = fileName ?? url.lastPathComponent
         let uploadUrl = fileCacheRepository.tempUploadURL(for: name)
         
-        guard fileSystemRepository.moveFile(at: url, to: uploadUrl, name: name) else {
+        guard fileSystemRepository.moveFile(at: url, to: uploadUrl) else {
             completion?(.failure(.moveFileToUploadsFolderFailed))
             return
         }

@@ -54,7 +54,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
                 let tempUrl = tempURL(for: node)
                 if fileSystemRepository.fileExists(at: tempUrl) {
                     let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
-                    if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl, name: node.name) {
+                    if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl) {
                         offlineFilesRepository.createOfflineFile(name: node.name, for: handle)
                         completion?(.failure(.copiedFromTempFolder))
                         return
@@ -99,7 +99,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
             let tempUrl = tempURL(for: node)
             if fileSystemRepository.fileExists(at: tempUrl) {
                 let offlineUrl = fileCacheRepository.offlineFileURL(name: node.name)
-                if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl, name: node.name) {
+                if fileSystemRepository.copyFile(at: tempUrl, to: offlineUrl) {
                     offlineFilesRepository.createOfflineFile(name: node.name, for: handle)
                     completion?(.failure(.copiedFromTempFolder))
                     return

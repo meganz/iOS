@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 @objc class SaveNodeUseCaseOCWrapper: NSObject {
     let saveNodeUseCase = SaveNodeUseCase(

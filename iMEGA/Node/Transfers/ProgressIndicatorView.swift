@@ -1,6 +1,7 @@
 import UIKit
 import MEGAFoundation
 import MEGADomain
+import MEGAData
 
 class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     var backgroundLayer: CAShapeLayer?

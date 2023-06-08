@@ -1,11 +1,11 @@
+import Foundation
 
-extension URL {
+public extension URL {
     var attributes: [FileAttributeKey : Any]? {
         do {
             return try FileManager.default.attributesOfItem(atPath: path)
-        } catch let error as NSError {
-            MEGALogError("FileAttribute error: \(error)")
+        } catch {
+            return nil
         }
-        return nil
     }
 }

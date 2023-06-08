@@ -1,7 +1,7 @@
 import Foundation
 
-struct AppGroupContainer {
-    enum Directory: String, CaseIterable {
+public struct AppGroupContainer {
+    public enum Directory: String, CaseIterable {
         case cache = "Library/Caches"
         case shareExtension = "Share Extension Storage"
         case fileExtension = "File Provider Storage"
@@ -13,14 +13,14 @@ struct AppGroupContainer {
     
     static let identifier = "group.mega.ios"
     
-    let url: URL
+    public let url: URL
     
-    init(fileManager: FileManager) {
+    public init(fileManager: FileManager) {
         self.fileManager = fileManager
         url = fileManager.containerURL(forSecurityApplicationGroupIdentifier: Self.identifier)!
     }
     
-    func url(for directory: Directory) -> URL {
+    public func url(for directory: Directory) -> URL {
         url.appendingPathComponent(directory.rawValue, isDirectory: true)
     }
 }
