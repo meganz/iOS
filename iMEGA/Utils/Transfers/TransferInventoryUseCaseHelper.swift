@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAData
 
 @objc final class TransferInventoryUseCaseHelper: NSObject {
     private let transferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileSystemRepository: FileSystemRepository.newRepo)

@@ -40,11 +40,11 @@ public struct MockFileSystemRepository: FileSystemRepositoryProtocol {
         sizeAvailability
     }
     
-    public func moveFile(at sourceURL: URL, to destinationURL: URL, name: String) -> Bool {
+    public func moveFile(at sourceURL: URL, to destinationURL: URL) -> Bool {
         movedNode
     }
     
-    public func copyFile(at sourceURL: URL, to destinationURL: URL, name: String) -> Bool {
+    public func copyFile(at sourceURL: URL, to destinationURL: URL) -> Bool {
         copiedNode
     }
     
