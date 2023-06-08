@@ -34,7 +34,17 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             megaNode = node
         }
         
-        sdk.startDownloadNode(megaNode, localPath: url.path, fileName: nil, appData: metaData?.rawValue, startFirst: true, cancelToken: self.cancelToken, delegate: TransferDelegate(completion: completion))
+        sdk.startDownloadNode(
+            megaNode,
+            localPath: url.path,
+            fileName: nil,
+            appData: metaData?.rawValue,
+            startFirst: true,
+            cancelToken: cancelToken,
+            collisionCheck: CollisionCheck.fingerprint,
+            collisionResolution: CollisionResolution.newWithN,
+            delegate: TransferDelegate(completion: completion)
+        )
     }
     
     func downloadChat(nodeHandle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
@@ -43,7 +53,17 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             return
         }
         
-        sdk.startDownloadNode(node, localPath: url.path, fileName: nil, appData: metaData?.rawValue, startFirst: true, cancelToken: self.cancelToken, delegate: TransferDelegate(completion: completion))
+        sdk.startDownloadNode(
+            node,
+            localPath: url.path,
+            fileName: nil,
+            appData: metaData?.rawValue,
+            startFirst: true,
+            cancelToken: cancelToken,
+            collisionCheck: CollisionCheck.fingerprint,
+            collisionResolution: CollisionResolution.newWithN,
+            delegate: TransferDelegate(completion: completion)
+        )
     }
 
     func downloadTo(_ url: URL, nodeHandle: HandleEntity, appData: String?, progress: ((TransferEntity) -> Void)?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
@@ -70,7 +90,17 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             } else {
                 transferDelegate = TransferDelegate(completion: completion)
             }
-            sdk.startDownloadNode(node, localPath: nodeFilePath, fileName: nil, appData: appData, startFirst: true, cancelToken: self.cancelToken, delegate: transferDelegate)
+            sdk.startDownloadNode(
+                node,
+                localPath: nodeFilePath,
+                fileName: nil,
+                appData: appData,
+                startFirst: true,
+                cancelToken: cancelToken,
+                collisionCheck: CollisionCheck.fingerprint,
+                collisionResolution: CollisionResolution.newWithN,
+                delegate: transferDelegate
+            )
         } catch let error as NSError {
             completion(.failure(.createDirectory))
             MEGALogError("Create directory at path failed with error: \(error)")
@@ -143,9 +173,28 @@ struct DownloadFileRepository: DownloadFileRepositoryProtocol {
             if let folderUpdate = folderUpdate {
                 transferDelegate.folderUpdate = folderUpdate
             }
-            sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: cancelToken, delegate: transferDelegate)
+            sdk.startDownloadNode(
+                node,
+                localPath: filePath,
+                fileName: filename,
+                appData: appdata,
+                startFirst: startFirst,
+                cancelToken: cancelToken,
+                collisionCheck: CollisionCheck.fingerprint,
+                collisionResolution: CollisionResolution.newWithN,
+                delegate: transferDelegate
+            )
         } else {
-            sdk.startDownloadNode(node, localPath: filePath, fileName: filename, appData: appdata, startFirst: startFirst, cancelToken: self.cancelToken)
+            sdk.startDownloadNode(
+                node,
+                localPath: filePath,
+                fileName: filename,
+                appData: appdata,
+                startFirst: startFirst,
+                cancelToken: cancelToken,
+                collisionCheck: CollisionCheck.fingerprint,
+                collisionResolution: CollisionResolution.newWithN
+            )
         }
     }
 }

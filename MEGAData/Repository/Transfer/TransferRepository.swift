@@ -20,18 +20,27 @@ struct TransferRepository: TransferRepositoryProtocol {
                 continuation.resume(throwing: CancellationError())
                 return
             }
-            sdk.startDownloadNode(megaNode, localPath: localUrl.path, fileName: nil, appData: nil, startFirst: true, cancelToken: nil, delegate: TransferDelegate(start: startHandler, progress: progressHandler) { result in
-                guard Task.isCancelled == false else {
-                    continuation.resume(throwing: CancellationError())
-                    return
-                }
-                switch result {
-                case .success(let transfer):
-                    continuation.resume(returning: transfer)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            })
+            sdk.startDownloadNode(
+                megaNode,
+                localPath: localUrl.path,
+                fileName: nil,
+                appData: nil,
+                startFirst: true,
+                cancelToken: nil,
+                collisionCheck: CollisionCheck.fingerprint,
+                collisionResolution: CollisionResolution.newWithN,
+                delegate: TransferDelegate(start: startHandler, progress: progressHandler) { result in
+                    guard Task.isCancelled == false else {
+                        continuation.resume(throwing: CancellationError())
+                        return
+                    }
+                    switch result {
+                    case .success(let transfer):
+                        continuation.resume(returning: transfer)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                })
         }
     }
     
