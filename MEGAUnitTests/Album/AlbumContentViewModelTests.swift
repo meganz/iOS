@@ -17,6 +17,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
     }
@@ -30,6 +31,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
     }
@@ -39,6 +41,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest)])
         XCTAssertNil(sut.contextMenuConfiguration)
@@ -49,6 +52,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.dismissAlbum])
     }
@@ -61,6 +65,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: nodesToAdd.toAlbumPhotoEntities()),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router,
                                         newAlbumPhotosToAdd: nodesToAdd, alertViewModel: alertViewModel())
         
@@ -82,6 +87,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: useCase,
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let exp = expectation(description: "show album nodes after update publisher triggered")
         sut.invokeCommand = { command in
@@ -104,6 +110,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         XCTAssertTrue(sut.isFavouriteAlbum)
     }
@@ -116,6 +123,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
@@ -131,6 +139,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: images.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: images, sortOrder: .newest)])
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
@@ -145,6 +154,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: videos.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: videos, sortOrder: .newest)])
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
@@ -161,6 +171,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: [image, video], sortOrder: .newest)])
 
@@ -177,6 +188,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
@@ -192,6 +204,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady,
              expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
@@ -210,6 +223,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedImages.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedImages, sortOrder: .newest)])
 
@@ -231,6 +245,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedVideos.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
         test(viewModel: sut, action: .onViewReady,
@@ -250,6 +265,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router,
                                         alertViewModel: alertViewModel(),
                                         featureFlagProvider: MockFeatureFlagProvider(list: [.albumShareLink: false]))
@@ -264,6 +280,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router,
                                         alertViewModel: alertViewModel(),
                                         featureFlagProvider: MockFeatureFlagProvider(list: [.albumShareLink: true]))
@@ -277,6 +294,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
         XCTAssertEqual(config.sortType, .modificationDesc)
@@ -295,6 +313,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
         XCTAssertEqual(config.sortType, .modificationDesc)
@@ -312,6 +331,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedNodes.toAlbumPhotoEntities()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
         XCTAssertEqual(config.sortType, .modificationDesc)
@@ -345,6 +365,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
         XCTAssertEqual(config.filterType, .allMedia)
@@ -374,6 +395,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: loadedImages + loadedVideos),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
         XCTAssertEqual(config.filterType, .allMedia)
@@ -405,6 +427,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(allPhotos: [NodeEntity(name: "photo 1.jpg", handle: 1)]),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
         test(viewModel: sut, action: .onViewReady,
@@ -417,6 +440,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
         test(viewModel: sut, action: .onViewReady,
@@ -429,6 +453,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         sut.showAlbumContentPicker()
         XCTAssertEqual(router.showAlbumContentPickerCalled, 1)
@@ -444,6 +469,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedAddedPhotos.toAlbumPhotoEntities()),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
         let exp = expectation(description: "Should show completion message after items added")
@@ -481,6 +507,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: expectedAddedPhotos.toAlbumPhotoEntities()),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
         test(viewModel: sut, action: .onViewReady,
@@ -511,6 +538,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
         test(viewModel: sut, action: .onViewReady,
@@ -543,6 +571,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         
         let exp = expectation(description: "Should update navigation title")
@@ -574,6 +603,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: photo.toAlbumPhotoEntities()),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: albumContentRouter,
                                         alertViewModel: alertViewModel)
         
@@ -604,6 +634,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: photos.map {AlbumPhotoEntity(photo: $0)}),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .showAlbumCoverPicker,
              expectedCommands: [.showHud(.success(Strings.Localizable.CameraUploads.Albums.albumCoverUpdated))])
@@ -620,6 +651,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady,
              expectedCommands: [.showAlbumPhotos(photos: nodesToRemove, sortOrder: .newest)])
@@ -639,6 +671,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(photos: []),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .onViewReady,
              expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest)])
@@ -664,6 +697,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: albumContentsUseCase,
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
         test(viewModel: sut, action: .onViewReady,
@@ -697,6 +731,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(),
                                         albumModificationUseCase: albumModificationUseCase,
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router, alertViewModel: alertViewModel())
         
         let message = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
@@ -715,6 +750,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router,
                                         alertViewModel: alertViewModel())
         let expectedContextConfigurationSelectHidden = true
@@ -730,6 +766,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(albumUpdatedPublisher: albumUpdatedPublisher.eraseToAnyPublisher()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router,
                                         alertViewModel: alertViewModel())
         let exp = expectation(description: "album dismissal")
@@ -752,6 +789,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(albumUpdatedPublisher: albumUpdatedPublisher.eraseToAnyPublisher()),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router,
                                         alertViewModel: alertViewModel())
         let expectedNewName = "The new name"
@@ -775,10 +813,55 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         albumContentsUseCase: MockAlbumContentUseCase(),
                                         albumModificationUseCase: MockAlbumModificationUseCase(),
                                         photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: router,
                                         alertViewModel: alertViewModel())
         sut.dispatch(.shareLink)
         XCTAssertEqual(router.showShareLinkCalled, 1)
+    }
+    
+    func testAction_removeLink_shouldShowSuccessAfterRemoved() {
+        let userAlbum = AlbumEntity(id: 1, type: .user)
+        let sut = AlbumContentViewModel(album: userAlbum,
+                                        albumContentsUseCase: MockAlbumContentUseCase(),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(removeSharedAlbumLinkResult: .success),
+                                        router: router,
+                                        alertViewModel: alertViewModel())
+        
+        test(viewModel: sut, action: .removeLink, expectedCommands: [
+            .showHud(.success(Strings.Localizable.General.MenuAction.RemoveLink.title(1)))
+        ])
+    }
+    
+    func testSubscription_onUserAlbumPublisherEmission_shouldUpdateContextMenuIfAlbumContainsExportedChangeType() throws {
+        let userAlbum = AlbumEntity(id: 1, type: .user)
+        let albumUpdatedPublisher = PassthroughSubject<SetEntity, Never>()
+        let sut = AlbumContentViewModel(album: userAlbum,
+                                        albumContentsUseCase: MockAlbumContentUseCase(albumUpdatedPublisher: albumUpdatedPublisher.eraseToAnyPublisher()),
+                                        albumModificationUseCase: MockAlbumModificationUseCase(),
+                                        photoLibraryUseCase: MockPhotoLibraryUseCase(),
+                                        shareAlbumUseCase: MockShareAlbumUseCase(),
+                                        router: router,
+                                        alertViewModel: alertViewModel(),
+                                        featureFlagProvider: MockFeatureFlagProvider(list: [.albumShareLink: true]))
+        
+        let exp = expectation(description: "context menu should rebuild")
+        sut.invokeCommand = {
+            switch $0 {
+            case .rebuildContextMenu:
+                exp.fulfill()
+            default:
+                XCTFail("Unexpected command returned")
+            }
+        }
+        let isExported = true
+        albumUpdatedPublisher.send(SetEntity(handle: albumEntity.id, isExported: isExported, changeTypes: .exported))
+        wait(for: [exp], timeout: 1.0)
+        
+        let config = try XCTUnwrap(sut.contextMenuConfiguration)
+        XCTAssertEqual(config.sharedLinkStatus, .exported(isExported))
     }
     
     private func alertViewModel() -> TextFieldAlertViewModel {

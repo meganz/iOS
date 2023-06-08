@@ -51,6 +51,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumContentsUseCase: albumContentsUseCase,
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             photoLibraryUseCase: photoLibraryUseCase,
+            shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
             router: self,
             newAlbumPhotosToAdd: newAlbumPhotos,
             alertViewModel: alertViewModel)
