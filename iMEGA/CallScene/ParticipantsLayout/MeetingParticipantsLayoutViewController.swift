@@ -1,6 +1,7 @@
 import MEGADomain
 import Foundation
 import MEGAPresentation
+import Combine
 
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     private enum Constants {
@@ -24,7 +25,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private var reconncectingNotificationView: CallNotificationView?
     private var poorConnectionNotificationView: CallNotificationView?
     private var waitingForOthersNotificationView: CallNotificationView?
-    private var appBecomeActiveObserver: NSObjectProtocol?
     private var callEndTimerNotificationView: CallNotificationView?
 
     // MARK: - Internal properties
@@ -47,32 +47,16 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private var isUserAGuest: Bool?
     private var emptyMeetingMessageView: EmptyMeetingMessageView?
+    private var subscriptions = Set<AnyCancellable>()
     
     init(viewModel: MeetingParticipantsLayoutViewModel) {
         self.viewModel = viewModel
         self.titleView = CallTitleView.instanceFromNib
         super.init(nibName: nil, bundle: nil)
-
-        // When answering with device locked and opening MEGA from CallKit, onViewDidAppear is not called, so it is needed to notify viewModel about view had appeared.
-        self.appBecomeActiveObserver = NotificationCenter.default.addObserver(
-            forName: UIApplication.didBecomeActiveNotification,
-            object: nil,
-            queue: OperationQueue.main
-        ) { [weak self] _ in
-            guard let self else { return }
-            callCollectionView.layoutIfNeeded()
-            viewModel.dispatch(.onViewReady)
-        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        if let appBecomeActiveObserver = appBecomeActiveObserver {
-            NotificationCenter.default.removeObserver(appBecomeActiveObserver)
-        }
     }
     
     // MARK: - View lifecycle
@@ -92,6 +76,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         navigationItem.titleView = titleView
         
         viewModel.dispatch(.onViewLoaded)
+        
+        bindToSubscriptions()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -125,6 +111,18 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     override var prefersStatusBarHidden: Bool {
         statusBarHidden
+    }
+    
+    private func bindToSubscriptions() {
+        // When answering with device locked and opening MEGA from CallKit, onViewDidAppear is not called, so it is needed to notify viewModel about view had appeared.
+        NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                callCollectionView.layoutIfNeeded()
+                viewModel.dispatch(.onViewReady)
+            }
+            .store(in: &subscriptions)
     }
     
     // MARK: - Execute command
