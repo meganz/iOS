@@ -1069,7 +1069,7 @@ public enum Strings {
     public static let lineCodeWithCamera = Strings.tr("Localizable", "lineCodeWithCamera")
     /// Link
     public static let link = Strings.tr("Localizable", "LINK")
-    /// Copied link to clipboard
+    /// Link copied to clipboard
     public static let linkCopiedToClipboard = Strings.tr("Localizable", "Link Copied to Clipboard")
     /// Link creation
     public static let linkCreation = Strings.tr("Localizable", "Link Creation")
@@ -1085,7 +1085,7 @@ public enum Strings {
     public static let linkNotValid = Strings.tr("Localizable", "linkNotValid")
     /// Links
     public static let links = Strings.tr("Localizable", "Links")
-    /// Copied links to clipboard
+    /// Links copied to clipboard
     public static let linksCopiedToClipboard = Strings.tr("Localizable", "Links Copied to Clipboard")
     /// Copied links
     public static let linksCopied = Strings.tr("Localizable", "linksCopied")
@@ -5232,6 +5232,16 @@ public enum Strings {
               public static let message = Strings.tr("Localizable", "sharedItems.contactVerification.section.verifyContact.receiver.message")
             }
           }
+        }
+      }
+      public enum GetLink {
+        /// Plural format key: "%#@count@"
+        public static func linkCopied(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "sharedItems.getLink.linkCopied", p1)
+        }
+        /// Plural format key: "%#@count@"
+        public static func linkCreatedAndCopied(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "sharedItems.getLink.linkCreatedAndCopied", p1)
         }
       }
       public enum Link {

@@ -2389,9 +2389,9 @@
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Options such as Send decryption key separately, Set expiry date or Set password are only available for single items.";
 /* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="Copied link to clipboard";
+"Link Copied to Clipboard"="Link copied to clipboard";
 /* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Copied links to clipboard";
+"Links Copied to Clipboard"="Links copied to clipboard";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Key copied to clipboard";
 /* Message shown when the password has been copied to the Clipboard */

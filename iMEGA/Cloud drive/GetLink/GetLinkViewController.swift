@@ -63,17 +63,19 @@ class GetLinkViewController: UIViewController {
     @IBOutlet weak var multilinkDescriptionLabel: UILabel!
     @IBOutlet weak var multilinkDescriptionView: UIView!
     @IBOutlet weak var multilinkDescriptionStackView: UIStackView!
-    @IBOutlet weak var snackBarContainer: UIView!
     @IBOutlet private var shareBarButton: UIBarButtonItem!
     @IBOutlet private var copyLinkBarButton: UIBarButtonItem!
     @IBOutlet private var copyKeyBarButton: UIBarButtonItem!
     
     let flexibleBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    
+
+    var snackBarContainer: UIView?
     private var nodes = [MEGANode]()
     private var getLinkVM = GetNodeLinkViewModel()
     private var nodesToExportCount = 0
+    private var totalInitallyUnexportedNodesCount = 0
     private var justUpgradedToProAccount = false
+    private var isLinkAlreadyCreated = false
     private var defaultDateStored = false
     
     private var getLinkViewModel: (any GetLinkViewModelType)?
@@ -226,10 +228,8 @@ class GetLinkViewController: UIViewController {
         if getLinkVM.multilink {
             if let index = index, let link = nodes[safe: index]?.publicLink {
                 UIPasteboard.general.string = link
-                showCopySuccessSnackBar(with: Strings.Localizable.linkCopiedToClipboard)
             } else {
                 UIPasteboard.general.string = nodes.compactMap { $0.publicLink }.joined(separator: " ")
-                showCopySuccessSnackBar(with: Strings.Localizable.linksCopiedToClipboard)
             }
         } else {
             if getLinkVM.separateKey {
@@ -237,7 +237,13 @@ class GetLinkViewController: UIViewController {
             } else {
                 UIPasteboard.general.string = getLinkVM.link
             }
-            showCopySuccessSnackBar(with: Strings.Localizable.linkCopiedToClipboard)
+        }
+
+        if isLinkAlreadyCreated {
+            showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCopied(totalInitallyUnexportedNodesCount))
+        } else {
+            showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCreatedAndCopied(totalInitallyUnexportedNodesCount))
+            isLinkAlreadyCreated = true
         }
     }
     
@@ -286,6 +292,8 @@ class GetLinkViewController: UIViewController {
     
     private func processNodes() {
         nodesToExportCount = nodes.filter { !$0.isExported() }.count
+        totalInitallyUnexportedNodesCount = nodesToExportCount
+        isLinkAlreadyCreated = nodesToExportCount == 0
         nodes.forEach { (node) in
             if node.isExported() {
                 updateModel(forNode: node)
