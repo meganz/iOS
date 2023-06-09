@@ -5069,6 +5069,12 @@ public enum Strings {
         }
       }
       public enum Section {
+        public enum MultipleFile {
+          /// Plural format key: "%#@file@"
+          public static func title(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "recents.section.multipleFile.title", p1)
+          }
+        }
         public enum Thumbnail {
           public enum Count {
             /// Plural format key: "%#@image@"
