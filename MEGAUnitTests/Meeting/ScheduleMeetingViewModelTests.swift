@@ -206,7 +206,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testEndRecurrenceDetailText_untilDateIsSet_shouldShowDate() throws {
         let date = try XCTUnwrap(sampleDate(withDay: 31))
         let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(until: date))
-        XCTAssertEqual(viewModel.endRecurrenceDetailText(), viewModel.dateFormatter.localisedString(from: date))
+        XCTAssertEqual(viewModel.endRecurrenceDetailText(), viewModel.dateFormatter.localisedString(from: try XCTUnwrap(viewModel.rules.until)))
     }
 
     // MARK: - Private methods.
@@ -258,7 +258,7 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
         scheduleMettingRulesEntityPublisher?.eraseToAnyPublisher()
     }
     
-    func showEndRecurrenceOptionsView(rules: MEGADomain.ScheduledMeetingRulesEntity) -> AnyPublisher<MEGADomain.ScheduledMeetingRulesEntity, Never>? {
+    func showEndRecurrenceOptionsView(rules: MEGADomain.ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<MEGADomain.ScheduledMeetingRulesEntity, Never>? {
         endRecurrenceScheduleMettingRulesEntityPublisher?.eraseToAnyPublisher()
     }
 }
