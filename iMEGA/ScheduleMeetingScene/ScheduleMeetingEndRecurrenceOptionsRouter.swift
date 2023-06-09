@@ -6,15 +6,17 @@ final class ScheduleMeetingEndRecurrenceOptionsRouter {
 
     @Published
     var rules: ScheduledMeetingRulesEntity
-
-    init(presenter: UINavigationController, rules: ScheduledMeetingRulesEntity) {
+    let startDate: Date
+    
+    init(presenter: UINavigationController, rules: ScheduledMeetingRulesEntity, startDate: Date) {
         self.presenter = presenter
         self.rules = rules
+        self.startDate = startDate
     }
     
     @discardableResult
     func start() -> ScheduleMeetingEndRecurrenceOptionsViewModel {
-        let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(router: self)
+        let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(router: self, startDate: startDate)
         
         viewModel
             .$rules

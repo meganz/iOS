@@ -4,12 +4,15 @@ import MEGADomain
 
 final class ScheduleMeetingEndRecurrenceOptionsViewModelTests: XCTestCase {
     func testEndRecurrenceOptions_initialValue_shouldBeSixMonths() throws {
-        let defaultEndDate = try XCTUnwrap(sixMonthsInAdvaceDate())
+        let startDate = try XCTUnwrap(randomFutureDate())
+        let defaultEndDate = try XCTUnwrap(addSixMonthsToDate(startDate))
         let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(
             router: ScheduleMeetingEndRecurrenceOptionsRouter(
                 presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity()
-            )
+                rules: ScheduledMeetingRulesEntity(),
+                startDate: startDate
+            ),
+            startDate: startDate
         )
         
         let dateFormatter = DateFormatter()
@@ -23,8 +26,10 @@ final class ScheduleMeetingEndRecurrenceOptionsViewModelTests: XCTestCase {
         let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(
             router: ScheduleMeetingEndRecurrenceOptionsRouter(
                 presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity(until: endDate)
-            )
+                rules: ScheduledMeetingRulesEntity(until: endDate),
+                startDate: Date()
+            ),
+            startDate: Date()
         )
         viewModel.endRecurrenceNeverSelected()
         
@@ -36,8 +41,10 @@ final class ScheduleMeetingEndRecurrenceOptionsViewModelTests: XCTestCase {
         let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(
             router: ScheduleMeetingEndRecurrenceOptionsRouter(
                 presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity()
-            )
+                rules: ScheduledMeetingRulesEntity(),
+                startDate: Date()
+            ),
+            startDate: Date()
         )
         viewModel.endRecurrenceDate = endDate
         viewModel.endRecurrenceSelected()
@@ -50,7 +57,7 @@ final class ScheduleMeetingEndRecurrenceOptionsViewModelTests: XCTestCase {
         Date(timeIntervalSinceNow: TimeInterval.random(in: 1...100000))
     }
     
-    private func sixMonthsInAdvaceDate() -> Date? {
-        Calendar.autoupdatingCurrent.date(byAdding: .month, value: 6, to: Date())
+    private func addSixMonthsToDate(_ date: Date) -> Date? {
+        Calendar.autoupdatingCurrent.date(byAdding: .month, value: 6, to: date)
     }
 }

@@ -78,9 +78,9 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
     }
     
     @MainActor
-    func showEndRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
+    func showEndRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>? {
         guard let baseViewController else { return nil }
-        let router = ScheduleMeetingEndRecurrenceOptionsRouter(presenter: baseViewController, rules: rules)
+        let router = ScheduleMeetingEndRecurrenceOptionsRouter(presenter: baseViewController, rules: rules, startDate: startDate)
         router.start()
         return router.$rules.eraseToAnyPublisher()
     }

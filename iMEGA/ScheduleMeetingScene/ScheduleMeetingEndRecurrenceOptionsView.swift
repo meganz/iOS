@@ -17,14 +17,18 @@ struct ScheduleMeetingEndRecurrenceOptionsView: View {
                         viewModel.endRecurrenceSelected()
                     }
                 if viewModel.rules.until != nil {
-                    DatePicker(
-                        "",
-                        selection: $viewModel.endRecurrenceDate,
-                        in: Date()...,
-                        displayedComponents: [.date]
-                    )
-                    .labelsHidden()
-                    .datePickerStyle(.wheel)
+                    HStack {
+                        Spacer()
+                        DatePicker(
+                            "",
+                            selection: $viewModel.endRecurrenceDate,
+                            in: viewModel.startDate...,
+                            displayedComponents: [.date]
+                        )
+                        .labelsHidden()
+                        .datePickerStyle(.wheel)
+                        Spacer()
+                    }
                 }
             }
         }

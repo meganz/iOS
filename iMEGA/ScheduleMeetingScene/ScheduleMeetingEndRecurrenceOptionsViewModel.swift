@@ -12,11 +12,13 @@ final class ScheduleMeetingEndRecurrenceOptionsViewModel: ObservableObject {
     
     @Published
     private(set) var rules: ScheduledMeetingRulesEntity
-    
-    init(router: ScheduleMeetingEndRecurrenceOptionsRouter) {
+    let startDate: Date
+
+    init(router: ScheduleMeetingEndRecurrenceOptionsRouter, startDate: Date) {
         self.router = router
         self.rules = router.rules
-        self.endRecurrenceDate = router.rules.until ?? Calendar.autoupdatingCurrent.date(byAdding: .month, value: 6, to: Date()) ?? Date()
+        self.startDate = startDate
+        self.endRecurrenceDate = router.rules.until ?? Calendar.autoupdatingCurrent.date(byAdding: .month, value: 6, to: startDate) ?? Date()
     }
     
     func endRecurrenceNeverSelected() {
