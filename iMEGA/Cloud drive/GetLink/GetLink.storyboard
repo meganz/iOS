@@ -423,30 +423,16 @@
                                     <outlet property="delegate" destination="GrW-Oc-E4x" id="Fkr-zF-Yit"/>
                                 </connections>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKF-c2-9i1">
-                                <rect key="frame" x="16" y="796" width="382" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="JnA-mr-DYX"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VEe-jo-xLl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="8Zw-pY-1gz" firstAttribute="leading" secondItem="VEe-jo-xLl" secondAttribute="leading" id="3Ms-SU-CWF"/>
-                            <constraint firstItem="VEe-jo-xLl" firstAttribute="bottom" secondItem="fKF-c2-9i1" secondAttribute="bottom" constant="16" id="4N2-QA-QFq"/>
                             <constraint firstItem="8Zw-pY-1gz" firstAttribute="trailing" secondItem="VEe-jo-xLl" secondAttribute="trailing" id="CDw-LO-p0a"/>
                             <constraint firstItem="sh8-B7-lNE" firstAttribute="leading" secondItem="VEe-jo-xLl" secondAttribute="leading" id="Sva-TU-Dq4"/>
                             <constraint firstItem="sh8-B7-lNE" firstAttribute="top" secondItem="VEe-jo-xLl" secondAttribute="top" id="cSf-tS-fL1"/>
                             <constraint firstItem="VEe-jo-xLl" firstAttribute="bottom" secondItem="8Zw-pY-1gz" secondAttribute="bottom" id="gLB-0x-jVl"/>
-                            <constraint firstItem="fKF-c2-9i1" firstAttribute="leading" secondItem="VEe-jo-xLl" secondAttribute="leading" constant="16" id="iyj-po-ref"/>
                             <constraint firstAttribute="trailing" secondItem="sh8-B7-lNE" secondAttribute="trailing" id="p80-P8-She"/>
-                            <constraint firstItem="VEe-jo-xLl" firstAttribute="trailing" secondItem="fKF-c2-9i1" secondAttribute="trailing" constant="16" id="tZD-77-SVG"/>
                             <constraint firstItem="8Zw-pY-1gz" firstAttribute="top" secondItem="sh8-B7-lNE" secondAttribute="bottom" id="uCR-LH-X0U"/>
                         </constraints>
                     </view>
@@ -477,7 +463,6 @@
                         <outlet property="multilinkDescriptionStackView" destination="sh8-B7-lNE" id="4o7-4o-Q9U"/>
                         <outlet property="multilinkDescriptionView" destination="Q28-08-Wo4" id="djX-iF-6QO"/>
                         <outlet property="shareBarButton" destination="qeI-Aa-uDb" id="lMB-5H-MRs"/>
-                        <outlet property="snackBarContainer" destination="fKF-c2-9i1" id="ffR-OD-zHq"/>
                         <outlet property="tableView" destination="8Zw-pY-1gz" id="c6A-Dr-rhZ"/>
                     </connections>
                 </viewController>
@@ -799,7 +784,7 @@
         <image name="link" width="28" height="28"/>
         <image name="linked" width="12" height="12"/>
         <image name="padlock" width="24" height="24"/>
-        <image name="photoshop" width="110" height="110"/>
+        <image name="photoshop" width="72" height="72"/>
         <image name="proLabel" width="23.5" height="13"/>
         <namedColor name="secondaryText">
             <color red="0.49799999594688416" green="0.49799999594688416" blue="0.49799999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
