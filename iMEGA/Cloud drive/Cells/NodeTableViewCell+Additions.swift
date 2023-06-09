@@ -19,7 +19,8 @@ extension NodeTableViewCell {
         }
         
         let firstNodeName = firstNode.name ?? ""
-        nameLabel.text = nodes.count == 1 ? firstNodeName : Strings.Localizable.Home.Recent.multipleFileTitle(firstNodeName, String(nodes.count - 1))
+        let nodesCount = nodes.count
+        nameLabel.text = nodesCount == 1 ? firstNodeName : Strings.Localizable.Recents.Section.MultipleFile.title(nodesCount - 1).replacingOccurrences(of: "[A]", with: firstNodeName)
 
         let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: recentActionBucket.parentHandle)
         let parentNodeName = parentNode?.name ?? ""

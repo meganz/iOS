@@ -354,6 +354,22 @@
         <string>and %d videos</string>
       </dict>
     </dict>
+    <key>recents.section.multipleFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” and %d more</string>
+        <key>other</key>
+        <string>“[A]” and %d more</string>
+      </dict>
+    </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
