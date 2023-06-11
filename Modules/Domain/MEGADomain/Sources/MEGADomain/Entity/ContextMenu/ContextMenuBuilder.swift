@@ -499,29 +499,17 @@ public final class ContextMenuBuilder {
         albumType != nil
     }
     
-    private func userAlbumMenu() -> CMEntity {
-        var children = [CMElement]()
-        if case let .exported(isLinkExported) = sharedLinkStatus {
-            children.append(contentsOf: isLinkExported ? [manageLink, removeLink] : [shareLink])
-        }
-        children.append(contentsOf: [rename, selectAlbumCover])
-        if !isSelectHidden {
-            children.append(contentsOf: selectMenu().children)
-        }
-        
-        return CMEntity(displayInline: true, children: children)
-    }
-    
     private func albumMenu() -> CMEntity {
         guard let albumType else { return CMEntity(displayInline: true, children: []) }
         var displayActionsMenuChildren = [CMElement]()
         
         if albumType == .user && isEmptyState {
+            var children = [CMElement]()
+            children.append(contentsOf: userAlbumLinkMenuItems())
+            children.append(contentsOf: [rename, CMEntity(displayInline: true, children: [delete])])
             return CMEntity(displayInline: true,
-                            children: [rename, CMEntity(displayInline: true, children: [delete])])
+                            children: children)
         }
-        
-        displayActionsMenuChildren = []
         
         if albumType == .user {
             displayActionsMenuChildren.append(userAlbumMenu())
@@ -541,6 +529,24 @@ public final class ContextMenuBuilder {
         }
         
         return CMEntity(displayInline: true, children: displayActionsMenuChildren)
+    }
+    
+    private func userAlbumMenu() -> CMEntity {
+        var children = [CMElement]()
+        children.append(contentsOf: userAlbumLinkMenuItems())
+        children.append(contentsOf: [rename, selectAlbumCover])
+        if !isSelectHidden {
+            children.append(contentsOf: selectMenu().children)
+        }
+        
+        return CMEntity(displayInline: true, children: children)
+    }
+    
+    private func userAlbumLinkMenuItems() -> [CMElement] {
+        if case let .exported(isLinkExported) = sharedLinkStatus {
+            return isLinkExported ? [manageLink, removeLink] : [shareLink]
+        }
+        return []
     }
     
     private func timelineMenu() -> CMEntity {
