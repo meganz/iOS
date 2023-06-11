@@ -570,4 +570,34 @@ final class ContextMenuActionsTests: XCTestCase {
         let actions = decomposeMenuIntoActions(menu: menuEntity)
         XCTAssertTrue(filterQuickActions(from: actions).contains(.shareLink))
     }
+    
+    func testAlbumMenu_onEmptyAlbumSharedLinkExportedState_showsCorrectLinkActions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+            .setType(.menu(type: .album))
+            .setAlbumType(.user)
+            .setIsEmptyState(true)
+            .setSharedLinkStatus(.exported(true))
+            .build())
+        
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        
+        XCTAssertEqual(filterQuickActions(from: actions),
+                       [.manageLink, .removeLink, .rename])
+        XCTAssertEqual(filterAlbumActions(from: actions), [.delete])
+    }
+    
+    func testAlbumMenu_onEmptyAlbumSharedLinkExportedStateFalse_showsCorrectLinkActions() throws {
+        let menuEntity = try XCTUnwrap(ContextMenuBuilder()
+            .setType(.menu(type: .album))
+            .setAlbumType(.user)
+            .setIsEmptyState(true)
+            .setSharedLinkStatus(.exported(false))
+            .build())
+        
+        let actions = decomposeMenuIntoActions(menu: menuEntity)
+        
+        XCTAssertEqual(filterQuickActions(from: actions),
+                       [.shareLink, .rename])
+        XCTAssertEqual(filterAlbumActions(from: actions), [.delete])
+    }
 }
