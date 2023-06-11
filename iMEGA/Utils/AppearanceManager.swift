@@ -4,8 +4,6 @@ import Foundation
 class AppearanceManager: NSObject {
     
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
-        guard UIApplication.shared.applicationState == .active else { return }
-        
         setupNavigationBarAppearance(traitCollection)
         
         UISearchBar.appearance().isTranslucent = false
