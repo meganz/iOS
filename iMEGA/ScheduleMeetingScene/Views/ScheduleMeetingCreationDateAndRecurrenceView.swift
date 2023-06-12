@@ -29,7 +29,7 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
                 }
                 DetailDisclosureView(
                     text: Strings.Localizable.Meetings.ScheduleMeeting.recurrence,
-                    detail: viewModel.recurrenceOptionText(),
+                    detail: viewModel.selectedFrequencyDetails(),
                     action: viewModel.showRecurrenceOptionsView
                 )
                 

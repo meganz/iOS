@@ -2,7 +2,7 @@ import MEGADomain
 import SwiftUI
 import Combine
 
-final class ScheduleMeetingCreationRecurrenceOptionsRouter {
+final class ScheduleMeetingCreationRecurrenceOptionsRouter: ScheduleMeetingCreationRecurrenceOptionsRouting {
     private let presenter: UINavigationController
 
     @Published
@@ -27,6 +27,18 @@ final class ScheduleMeetingCreationRecurrenceOptionsRouter {
         let view = ScheduleMeetingCreationRecurrenceOptionsView(viewModel: viewModel)
         presenter.pushViewController(UIHostingController(rootView: view), animated: true)
         return viewModel
+    }
+    
+    func navigateToCustomOptionsScreen() {
+        let scheduleMeetingCreationCustomOptionsRouter = ScheduleMeetingCreationCustomOptionsRouter(
+            presenter: presenter,
+            rules: rules,
+            startDate: startDate
+        )
+        scheduleMeetingCreationCustomOptionsRouter
+            .$rules
+            .assign(to: &$rules)
+        scheduleMeetingCreationCustomOptionsRouter.start()
     }
     
     func dismiss() {

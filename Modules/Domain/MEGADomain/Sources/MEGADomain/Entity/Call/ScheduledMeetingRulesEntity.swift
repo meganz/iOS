@@ -8,12 +8,12 @@ public struct ScheduledMeetingRulesEntity: Sendable, Equatable {
         case monthly
     }
     
-    public let frequency: Frequency
-    public let interval: Int
+    public var frequency: Frequency
+    public var interval: Int
     public var until: Date?
-    public let monthDayList: [Int]?
-    public let weekDayList: [Int]?
-    public let monthWeekDayList: [[Int]]?
+    public var monthDayList: [Int]?
+    public var weekDayList: [Int]?
+    public var monthWeekDayList: [[Int]]?
     
     public init(
         frequency: Frequency,
