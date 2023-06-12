@@ -6,16 +6,18 @@ struct ScheduleMeetingEndRecurrenceOptionsView: View {
     var body: some View {
         List {
             Section {
-                RecurrenceOptionView(name: Strings.Localizable.Meetings.ScheduleMeeting.Create.EndRecurrence.Option.never, isSelected: viewModel.rules.until == nil)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.endRecurrenceNeverSelected()
-                    }
-                RecurrenceOptionView(name: Strings.Localizable.Meetings.ScheduleMeeting.Create.EndRecurrence.Option.onDate, isSelected: viewModel.rules.until != nil)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.endRecurrenceSelected()
-                    }
+                RecurrenceOptionView(
+                    name: Strings.Localizable.Meetings.ScheduleMeeting.Create.EndRecurrence.Option.never,
+                    isSelected: viewModel.rules.until == nil
+                ) {
+                    viewModel.endRecurrenceNeverSelected()
+                }
+                RecurrenceOptionView(
+                    name: Strings.Localizable.Meetings.ScheduleMeeting.Create.EndRecurrence.Option.onDate,
+                    isSelected: viewModel.rules.until != nil
+                ) {
+                    viewModel.endRecurrenceSelected()
+                }
                 if viewModel.rules.until != nil {
                     HStack {
                         Spacer()

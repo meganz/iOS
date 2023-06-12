@@ -1,9 +1,8 @@
 import SwiftUI
 
-struct RecurrenceOptionView: View {
+struct ScheduleMeetingCreationOptionSelectionView: View {
     let name: String
     let isSelected: Bool
-    let action: () -> Void
     
     var body: some View {
         HStack {
@@ -12,9 +11,7 @@ struct RecurrenceOptionView: View {
             Image(systemName: "checkmark")
                 .foregroundColor(Color(Colors.Chat.Meeting.frequencySelectionTickMark.color))
                 .font(.system(.footnote).bold())
-                .opacity(isSelected ? 1 : 0)
+                .opacity(isSelected ? 1.0 : 0.0)
         }
-        .contentShape(Rectangle())
-        .onTapGesture(perform: action)
     }
 }

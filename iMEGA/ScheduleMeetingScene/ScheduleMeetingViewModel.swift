@@ -40,7 +40,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     @Published var endDatePickerVisible = false
     lazy var endDateFormatted = formatDate(endDate)
     var minimunEndDate = Date()
-
+    
     @Published var meetingName = "" {
         didSet {
             meetingNameTooLong = meetingName.count > Constants.meetingNameMaxLenght
@@ -48,7 +48,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         }
     }
     @Published var meetingNameTooLong = false
-
+    
     @Published var meetingDescription = "" {
         didSet {
             meetingDescriptionTooLong = meetingDescription.count > Constants.meetingDescriptionMaxLenght
@@ -60,10 +60,10 @@ final class ScheduleMeetingViewModel: ObservableObject {
     @Published var meetingLinkEnabled = false
     @Published var calendarInviteEnabled = false
     @Published var allowNonHostsToAddParticipantsEnabled = true
-
+    
     @Published var showDiscardAlert = false
     @Published var createButtonEnabled = false
-
+    
     let timeFormatter = DateFormatter.timeShort()
     let dateFormatter = DateFormatter.dateMedium()
     
@@ -73,7 +73,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         }
     }
     @Published var participantsCount = 0
-
+    
     @Published
     private(set) var rules: ScheduledMeetingRulesEntity
     
@@ -91,7 +91,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
             return nil
         }
     }
-
+    
     init(router: ScheduleMeetingRouting,
          rules: ScheduledMeetingRulesEntity,
          scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
@@ -145,17 +145,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
             .assign(to: &$rules)
     }
     
-    func recurrenceOptionText() -> String {
-        switch rules.frequency {
-        case .invalid:
-            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.never
-        case .daily:
-            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.daily
-        case .weekly:
-            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.weekly
-        case .monthly:
-            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.monthly
-        }
+    func selectedFrequencyDetails() -> String {
+        ScheduleMeetingSelectedFrequencyDetails(rules: rules, startDate: startDate).string
     }
     
     func showEndRecurrenceOptionsView() {
@@ -230,7 +221,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
                 router.hideSpinner()
                 MEGALogDebug("Failed to create scheduled meeting with \(error)")
             }
-         }
+        }
     }
     
     private func createLinkIfNeeded(chatId: ChatIdEntity) async {

@@ -1923,6 +1923,13 @@
 		BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFC9268D366E00460DB3 /* CallActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFC8268D366D00460DB3 /* CallActionManager.swift */; };
+		BF2675D32A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */; };
+		BF2675D52A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D42A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift */; };
+		BF2675D72A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D62A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift */; };
+		BF2675D92A32988A00736759 /* ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D82A32988A00736759 /* ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift */; };
+		BF2675DB2A32A3F300736759 /* WeekDaysInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675DA2A32A3F300736759 /* WeekDaysInformation.swift */; };
+		BF2675DD2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675DC2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift */; };
+		BF2675E92A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675E82A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift */; };
 		BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */; };
 		BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */; };
 		BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */; };
@@ -1983,6 +1990,8 @@
 		BF67C527264CB0A7003CE3C6 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */; };
 		BF68244725E84D9F00A7740C /* MeetingFloatingPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */; };
 		BF68244825E84D9F00A7740C /* MeetingFloatingPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */; };
+		BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */; };
+		BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BF6C83D72A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */; };
 		BF6C83D92A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */; };
@@ -2049,6 +2058,9 @@
 		BF99A42224B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A42124B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift */; };
 		BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */; };
 		BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */; };
+		BF9DBB652A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9DBB642A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift */; };
+		BF9DBB692A398F8000C5821F /* ScheduleMeetingCreationIntervalFooterNoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9DBB682A398F8000C5821F /* ScheduleMeetingCreationIntervalFooterNoteTests.swift */; };
+		BF9DBB6D2A399C1300C5821F /* ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9DBB6C2A399C1300C5821F /* ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests.swift */; };
 		BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */ = {isa = PBXBuildFile; productRef = BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */; };
 		BFA275E727ED317600E15B92 /* SDAVAssetExportSession in Frameworks */ = {isa = PBXBuildFile; productRef = BFA275E627ED317600E15B92 /* SDAVAssetExportSession */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
@@ -2087,6 +2099,17 @@
 		BFAB115323CEA5C300BCE72D /* AlbumsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB113723CEA5C300BCE72D /* AlbumsTableViewDataSource.swift */; };
 		BFAC873925FEF26C009CA3F6 /* AudioSessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC873825FEF26C009CA3F6 /* AudioSessionRepository.swift */; };
 		BFAC87972600041C009CA3F6 /* CaptureDeviceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC87962600041C009CA3F6 /* CaptureDeviceRepository.swift */; };
+		BFAD0F982A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F972A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift */; };
+		BFAD0F9A2A297DEA003F5F83 /* ScheduleMeetingCreationCustomOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F992A297DEA003F5F83 /* ScheduleMeetingCreationCustomOptionsView.swift */; };
+		BFAD0F9C2A297DF3003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F9B2A297DF3003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModel.swift */; };
+		BFAD0F9E2A29904B003F5F83 /* ScheduleMeetingCreationCustomOptionsFrequencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F9D2A29904B003F5F83 /* ScheduleMeetingCreationCustomOptionsFrequencyView.swift */; };
+		BFAD0FA02A299067003F5F83 /* ScheduleMeetingCreationCustomOptionsRepetitionRulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F9F2A299067003F5F83 /* ScheduleMeetingCreationCustomOptionsRepetitionRulesView.swift */; };
+		BFAD0FA42A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FA32A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift */; };
+		BFAD0FA62A2992A6003F5F83 /* ScheduleMeetingCreationMonthlyCustomOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FA52A2992A6003F5F83 /* ScheduleMeetingCreationMonthlyCustomOptionsView.swift */; };
+		BFAD0FA82A2EBA2B003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FA72A2EBA2B003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModelTests.swift */; };
+		BFAD0FAB2A2EF4C8003F5F83 /* ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FA92A2EF415003F5F83 /* ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift */; };
+		BFAD0FAE2A2F0DE4003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FAC2A2F0DD6003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift */; };
+		BFAD0FB02A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FAF2A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift */; };
 		BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */; };
 		BFAD513E260BE26C00DFBD1B /* MeetingParticpiantInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD513D260BE26B00DFBD1B /* MeetingParticpiantInfoViewModel.swift */; };
 		BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAD882826911E7100CA592F /* EncourageGuestUserToJoinMegaViewController.xib */; };
@@ -4472,6 +4495,13 @@
 		BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRecordDTO.swift; sourceTree = "<group>"; };
 		BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOUploadTransfer+Mapper.swift"; sourceTree = "<group>"; };
 		BF22BFC8268D366D00460DB3 /* CallActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionManager.swift; sourceTree = "<group>"; };
+		BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyDatePickerView.swift; sourceTree = "<group>"; };
+		BF2675D42A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationIntervalFooterNote.swift; sourceTree = "<group>"; };
+		BF2675D62A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift; sourceTree = "<group>"; };
+		BF2675D82A32988A00736759 /* ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift; sourceTree = "<group>"; };
+		BF2675DA2A32A3F300736759 /* WeekDaysInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDaysInformation.swift; sourceTree = "<group>"; };
+		BF2675DC2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationFrequencyOption.swift; sourceTree = "<group>"; };
+		BF2675E82A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingSelectedFrequencyDetails.swift; sourceTree = "<group>"; };
 		BF2A7FF929DE454300AAC203 /* CallInProgressTimeReporting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInProgressTimeReporting.swift; sourceTree = "<group>"; };
 		BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingFloatingPanelViewModel+Additions.swift"; sourceTree = "<group>"; };
@@ -4530,6 +4560,8 @@
 		BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewController.swift; sourceTree = "<group>"; };
 		BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFloatingPanelViewController.xib; sourceTree = "<group>"; };
+		BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift; sourceTree = "<group>"; };
+		BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingSelectedFrequencyDetailsTests.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsViewModel.swift; sourceTree = "<group>"; };
 		BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsRouter.swift; sourceTree = "<group>"; };
@@ -4591,6 +4623,9 @@
 		BF99A42124B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+ChatUploadTransfer.swift"; sourceTree = "<group>"; };
 		BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatAllowAccessCollectionCell.swift; sourceTree = "<group>"; };
 		BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatAllowAccessCollectionCell.xib; sourceTree = "<group>"; };
+		BF9DBB642A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationFrequencyOptionTests.swift; sourceTree = "<group>"; };
+		BF9DBB682A398F8000C5821F /* ScheduleMeetingCreationIntervalFooterNoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationIntervalFooterNoteTests.swift; sourceTree = "<group>"; };
+		BF9DBB6C2A399C1300C5821F /* ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
 		BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewModelTests.swift; sourceTree = "<group>"; };
 		BFAAF70E252E6D170053A9BF /* VideoExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerListSource.swift; sourceTree = "<group>"; };
@@ -4627,6 +4662,17 @@
 		BFAB113723CEA5C300BCE72D /* AlbumsTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewDataSource.swift; sourceTree = "<group>"; };
 		BFAC873825FEF26C009CA3F6 /* AudioSessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionRepository.swift; sourceTree = "<group>"; };
 		BFAC87962600041C009CA3F6 /* CaptureDeviceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureDeviceRepository.swift; sourceTree = "<group>"; };
+		BFAD0F972A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsRouter.swift; sourceTree = "<group>"; };
+		BFAD0F992A297DEA003F5F83 /* ScheduleMeetingCreationCustomOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsView.swift; sourceTree = "<group>"; };
+		BFAD0F9B2A297DF3003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsViewModel.swift; sourceTree = "<group>"; };
+		BFAD0F9D2A29904B003F5F83 /* ScheduleMeetingCreationCustomOptionsFrequencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsFrequencyView.swift; sourceTree = "<group>"; };
+		BFAD0F9F2A299067003F5F83 /* ScheduleMeetingCreationCustomOptionsRepetitionRulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsRepetitionRulesView.swift; sourceTree = "<group>"; };
+		BFAD0FA32A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWeeklyCustomOptionsView.swift; sourceTree = "<group>"; };
+		BFAD0FA52A2992A6003F5F83 /* ScheduleMeetingCreationMonthlyCustomOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyCustomOptionsView.swift; sourceTree = "<group>"; };
+		BFAD0FA72A2EBA2B003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsViewModelTests.swift; sourceTree = "<group>"; };
+		BFAD0FA92A2EF415003F5F83 /* ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift; sourceTree = "<group>"; };
+		BFAD0FAC2A2F0DD6003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsWheelPickerView.swift; sourceTree = "<group>"; };
+		BFAD0FAF2A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationOptionSelectionView.swift; sourceTree = "<group>"; };
 		BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewRouter.swift; sourceTree = "<group>"; };
 		BFAD513D260BE26B00DFBD1B /* MeetingParticpiantInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewModel.swift; sourceTree = "<group>"; };
 		BFAD882826911E7100CA592F /* EncourageGuestUserToJoinMegaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EncourageGuestUserToJoinMegaViewController.xib; sourceTree = "<group>"; };
@@ -8680,18 +8726,27 @@
 			children = (
 				83DBDDDF29D726A300CF433B /* Views */,
 				BFB889782A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift */,
+				BFAD0F972A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift */,
+				BFAD0F992A297DEA003F5F83 /* ScheduleMeetingCreationCustomOptionsView.swift */,
+				BFAD0F9B2A297DF3003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModel.swift */,
+				BF2675DC2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift */,
+				BF2675D42A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift */,
+				BF2675D62A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift */,
 				BF121D782A0B566900DA3633 /* ScheduleMeetingCreationRecurrenceOption.swift */,
 				BF6C83D82A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift */,
 				BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */,
 				BF6C83D62A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift */,
+				BF2675D82A32988A00736759 /* ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift */,
 				83C9CE802A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift */,
 				83C9CE762A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift */,
 				83C9CE7E2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift */,
 				BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */,
 				83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */,
+				BF2675E82A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift */,
 				83DBDDEA29D7312E00CF433B /* ScheduleMeetingView.swift */,
 				83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */,
 				83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */,
+				BF2675DA2A32A3F300736759 /* WeekDaysInformation.swift */,
 			);
 			path = ScheduleMeetingScene;
 			sourceTree = "<group>";
@@ -8703,13 +8758,21 @@
 				83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */,
 				83DBDDE629D730EC00CF433B /* ErrorView.swift */,
 				83C9CE7C2A278F750009549B /* RecurrenceOptionView.swift */,
+				BFAD0F9D2A29904B003F5F83 /* ScheduleMeetingCreationCustomOptionsFrequencyView.swift */,
+				BFAD0F9F2A299067003F5F83 /* ScheduleMeetingCreationCustomOptionsRepetitionRulesView.swift */,
+				BFAD0FA92A2EF415003F5F83 /* ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift */,
+				BFAD0FAC2A2F0DD6003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift */,
 				BF085C9C29E66A9A001E6AB7 /* ScheduleMeetingCreationDateAndRecurrenceView.swift */,
 				BF085C9E29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift */,
 				BF085CA229E66B38001E6AB7 /* ScheduleMeetingCreationInvitationView.swift */,
 				BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift */,
+				BFAD0FA52A2992A6003F5F83 /* ScheduleMeetingCreationMonthlyCustomOptionsView.swift */,
+				BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */,
 				BF085CA429E66BE9001E6AB7 /* ScheduleMeetingCreationNameView.swift */,
 				BF085CA029E66B11001E6AB7 /* ScheduleMeetingCreationOpenInviteView.swift */,
+				BFAD0FAF2A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift */,
 				BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */,
+				BFAD0FA32A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift */,
 				BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */,
 				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
 				83DBDDE229D730C800CF433B /* TextFieldView.swift */,
@@ -11347,9 +11410,15 @@
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
 				BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */,
 				BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */,
+				BFAD0FA72A2EBA2B003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModelTests.swift */,
+				BF9DBB642A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift */,
+				BF9DBB682A398F8000C5821F /* ScheduleMeetingCreationIntervalFooterNoteTests.swift */,
+				BF9DBB6C2A399C1300C5821F /* ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests.swift */,
 				BF4989762A0DD694005C9ABD /* ScheduleMeetingCreationRecurrenceOptionsViewModelTests.swift */,
 				BF121D7A2A0B5C5300DA3633 /* ScheduleMeetingCreationRecurrenceOptionTests.swift */,
+				BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */,
 				838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */,
+				BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */,
 				83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */,
 			);
 			path = Meeting;
@@ -13906,17 +13975,32 @@
 				836A04DE29813E62009C9405 /* ScheduledMeetingRepository.swift in Sources */,
 				BF7D2FB329669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift in Sources */,
 				BFB889792A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift in Sources */,
+				BFAD0F9E2A29904B003F5F83 /* ScheduleMeetingCreationCustomOptionsFrequencyView.swift in Sources */,
+				BFAD0FA02A299067003F5F83 /* ScheduleMeetingCreationCustomOptionsRepetitionRulesView.swift in Sources */,
+				BFAD0F982A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift in Sources */,
+				BFAD0FAB2A2EF4C8003F5F83 /* ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift in Sources */,
+				BFAD0F9A2A297DEA003F5F83 /* ScheduleMeetingCreationCustomOptionsView.swift in Sources */,
+				BFAD0F9C2A297DF3003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModel.swift in Sources */,
+				BFAD0FAE2A2F0DE4003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift in Sources */,
 				BF085C9D29E66A9A001E6AB7 /* ScheduleMeetingCreationDateAndRecurrenceView.swift in Sources */,
 				BF085C9F29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift in Sources */,
+				BF2675DD2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift in Sources */,
+				BF2675D52A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift in Sources */,
 				BF085CA329E66B38001E6AB7 /* ScheduleMeetingCreationInvitationView.swift in Sources */,
 				BF085C9B29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift in Sources */,
+				BFAD0FA62A2992A6003F5F83 /* ScheduleMeetingCreationMonthlyCustomOptionsView.swift in Sources */,
+				BF2675D72A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift in Sources */,
+				BF2675D32A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift in Sources */,
 				BF085CA529E66BE9001E6AB7 /* ScheduleMeetingCreationNameView.swift in Sources */,
 				BF085CA129E66B11001E6AB7 /* ScheduleMeetingCreationOpenInviteView.swift in Sources */,
+				BFAD0FB02A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift in Sources */,
 				BF085C9929E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift in Sources */,
 				BF121D792A0B566900DA3633 /* ScheduleMeetingCreationRecurrenceOption.swift in Sources */,
 				BF6C83D92A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift in Sources */,
 				BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */,
 				BF6C83D72A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift in Sources */,
+				BFAD0FA42A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift in Sources */,
+				BF2675D92A32988A00736759 /* ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift in Sources */,
 				83C9CE812A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift in Sources */,
 				83C9CE772A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift in Sources */,
 				83C9CE7F2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift in Sources */,
@@ -13925,6 +14009,7 @@
 				BF0D5125298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift in Sources */,
 				BFCB32B62A0239A60013409C /* ScheduleMeetingPushNotifications.swift in Sources */,
 				83DBDDDC29D723B300CF433B /* ScheduleMeetingRouter.swift in Sources */,
+				BF2675E92A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift in Sources */,
 				83DBDDEB29D7312E00CF433B /* ScheduleMeetingView.swift in Sources */,
 				83DBDDD429D2DA7B00CF433B /* ScheduleMeetingViewController.swift in Sources */,
 				83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */,
@@ -14188,6 +14273,7 @@
 				B63995362898CBEB00EA88F1 /* WarningView.swift in Sources */,
 				B63995382898CBEB00EA88F1 /* WarningViewModel.swift in Sources */,
 				B63995372898CBEB00EA88F1 /* WarningViewRouter.swift in Sources */,
+				BF2675DB2A32A3F300736759 /* WeekDaysInformation.swift in Sources */,
 				120B4A7B27430F5E00312B35 /* XCAssets+Generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14722,9 +14808,15 @@
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
 				94417EAF296D825B007C9230 /* RubbishBinRepositoryTests.swift in Sources */,
 				BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */,
+				BFAD0FA82A2EBA2B003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModelTests.swift in Sources */,
+				BF9DBB652A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift in Sources */,
+				BF9DBB692A398F8000C5821F /* ScheduleMeetingCreationIntervalFooterNoteTests.swift in Sources */,
+				BF9DBB6D2A399C1300C5821F /* ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests.swift in Sources */,
 				BF4989772A0DD694005C9ABD /* ScheduleMeetingCreationRecurrenceOptionsViewModelTests.swift in Sources */,
 				BF121D7B2A0B5C5300DA3633 /* ScheduleMeetingCreationRecurrenceOptionTests.swift in Sources */,
+				BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */,
 				838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */,
+				BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */,
 				BFB889932A1598DB00FC456A /* ScheduleMeetingViewModel+Init.swift in Sources */,
 				83751C5429E572DC0030310B /* ScheduleMeetingViewModelTests.swift in Sources */,
 				C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */,

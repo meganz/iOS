@@ -6,387 +6,104 @@ import Combine
 final class ScheduleMeetingCreationRecurrenceOptionsViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
 
-    func testRecurrenceOptions_forSectionZero_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let viewModel = ScheduleMeetingCreationRecurrenceOptionsViewModel(
-            router: ScheduleMeetingCreationRecurrenceOptionsRouter(
-                presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity(frequency: .invalid),
-                startDate: date
-            )
-        )
-        
-        XCTAssert(viewModel.recurrenceOptions(forSection: 0) == [.never, .daily, .weekly, .monthly])
+    func testRecurrenceOptions_forNonCustomizedOptions_shouldMatch() {
+        XCTAssertEqual(try makeViewModel().nonCustomizedOptions(), [.never, .daily, .weekly, .monthly])
     }
     
-    func testRecurrenceOptions_forSectionOne_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let viewModel = ScheduleMeetingCreationRecurrenceOptionsViewModel(
-            router: ScheduleMeetingCreationRecurrenceOptionsRouter(
-                presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity(frequency: .invalid),
-                startDate: date
-            )
-        )
-        
-        XCTAssert(viewModel.recurrenceOptions(forSection: 1) == [.custom])
+    func testRecurrenceOptions_forCustomizedOption_shouldMatch() {
+        XCTAssertEqual(try makeViewModel().customizedOption(), .custom)
     }
     
-    func testRecurrenceOptions_forSectionInvalidEntry_shouldBeEmpty() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let viewModel = ScheduleMeetingCreationRecurrenceOptionsViewModel(
-            router: ScheduleMeetingCreationRecurrenceOptionsRouter(
-                presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity(frequency: .invalid),
-                startDate: date
-            )
-        )
-        
-        XCTAssert(viewModel.recurrenceOptions(forSection: 2) == [])
+    func testCustomOptionFooterNote_withDailyOption_shouldBeNil() throws {
+        let viewModel = try makeViewModel(frequency: .daily, weekDayList: Array(1...7))
+        XCTAssertNil(viewModel.customOptionFooterNote())
     }
     
-    func testRuleChangeNotificaton_fromNeverToDailyRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .invalid),
-                          ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7))]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from never to daily")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-        
-        viewModel.selectedOption = .daily
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
+    func testCustomOptionFooterNote_withCustomOption_shouldNotBeNil() throws {
+        let viewModel = try makeViewModel(frequency: .daily, weekDayList: [1, 2])
+        XCTAssertNotNil(viewModel.customOptionFooterNote())
     }
     
-    func testRuleChangeNotificaton_fromNeverToWeeklyRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .invalid),
-                          ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [2])]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from never to weekly")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-
-        viewModel.selectedOption = .weekly
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
+    func testNavigateToCustomOptionsScreen_shouldMatch() {
+        let router = MockScheduleMeetingCreationRecurrenceOptionsRouter()
+        let viewModel = ScheduleMeetingCreationRecurrenceOptionsViewModel(router: router)
+        viewModel.navigateToCustomOptionsScreen()
+        XCTAssert(router.navigateToCustomOptionsScreen_CalledTimes == 1)
     }
     
-    func testRuleChangeNotificaton_fromNeverToMonthlyRecurrence_shouldMatch() throws {
-        let day = try XCTUnwrap(Calendar.current.dateComponents([.day], from: Date()).day)
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .invalid),
-                          ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [day])]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: Date.now
-        )
-        
-        let expectation = expectation(description: "Selection updated from never to monthly")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-
-        viewModel.selectedOption = .monthly
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
+    func testupdateSelection_toWeekly_shouldMatch() throws {
+        let viewModel = try makeViewModel()
+        viewModel.updateSelection(withRecurrenceOption: .daily)
+        XCTAssertEqual(viewModel.rules.frequency, .daily)
+        XCTAssertEqual(viewModel.rules.weekDayList, Array(1...7))
+        XCTAssertEqual(viewModel.rules.interval, 1)
     }
     
-    func testRuleChangeNotificaton_fromDialyToNeverRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7)),
-                          ScheduledMeetingRulesEntity(frequency: .invalid)]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated to daily to never")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-        
-        viewModel.selectedOption = .never
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
+    func testupdateSelection_toMonthly_shouldMatch() throws {
+        let viewModel = try makeViewModel()
+        viewModel.updateSelection(withRecurrenceOption: .monthly)
+        XCTAssertEqual(viewModel.rules.frequency, .monthly)
+        XCTAssertEqual(viewModel.rules.monthDayList, [16])
+        XCTAssertEqual(viewModel.rules.interval, 1)
     }
     
-    func testRuleChangeNotificaton_fromDailyToWeeklyRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7)),
-                          ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [2])]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from daily to weekly")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-
-        viewModel.selectedOption = .weekly
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
-    }
-    
-    func testRuleChangeNotificaton_fromDailyToMonthlyRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7)),
-                          ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [16])]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from daily to monthly")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-
-        viewModel.selectedOption = .monthly
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
-    }
-    
-    func testRuleChangeNotificaton_fromWeeklyToNeverRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [2]),
-                          ScheduledMeetingRulesEntity(frequency: .invalid)]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from weekly to never")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-        
-        viewModel.selectedOption = .never
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
-    }
-    
-    func testRuleChangeNotificaton_fromWeeklyToDailyRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [2]),
-                          ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7))]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from weekly to daily")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-
-        viewModel.selectedOption = .daily
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
-    }
-    
-    func testRuleChangeNotificaton_fromWeeklyToMonthlyRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [2]),
-                          ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [16])]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from weekly to monthly")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-
-        viewModel.selectedOption = .monthly
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
-    }
-    
-    func testRuleChangeNotificaton_fromMonthlyToNeverRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .monthly, weekDayList: [2]),
-                          ScheduledMeetingRulesEntity(frequency: .invalid)]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from monthly to never")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-
-        viewModel.selectedOption = .never
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
-    }
-    
-    func testRuleChangeNotificaton_fromMonthlyToDailyRecurrence_shouldMatch() throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .monthly, weekDayList: [2]),
-                          ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7))]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from monthly to daily")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-        
-        viewModel.selectedOption = .daily
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
-    }
-    
-    func testRuleChangeNotificaton_fromMonthlyToWeeklyRecurrence_shouldMatch()  throws {
-        let date = try XCTUnwrap(sampleDate())
-        let inputRules = [ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [16]),
-                          ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [2])]
-        var outputRules: [ScheduledMeetingRulesEntity] = []
-        let router = ScheduleMeetingCreationRecurrenceOptionsRouter(
-            presenter: UINavigationController(),
-            rules: inputRules[0],
-            startDate: date
-        )
-        
-        let expectation = expectation(description: "Selection updated from monthly to weekly")
-        let viewModel = router.start()
-
-        router.$rules.sink { rules in
-            outputRules.append(rules)
-            if outputRules.count == 2 {
-                expectation.fulfill()
-            }
-        }
-        .store(in: &subscriptions)
-        
-        viewModel.selectedOption = .weekly
-        wait(for: [expectation], timeout: 3)
-        
-        XCTAssert(inputRules == outputRules)
+    func testDismiss_shouldMatch() {
+        let router = MockScheduleMeetingCreationRecurrenceOptionsRouter()
+        let viewModel = ScheduleMeetingCreationRecurrenceOptionsViewModel(router: router)
+        viewModel.dismiss()
+        XCTAssert(router.dismiss_CalledTimes == 1)
     }
     
     // MARK: - Private methods.
+    
+    private func makeViewModel(
+        rules: ScheduledMeetingRulesEntity = ScheduledMeetingRulesEntity(frequency: .invalid),
+        startDate: Date? = nil
+    ) throws -> ScheduleMeetingCreationRecurrenceOptionsViewModel {
+        let sampleDate = try XCTUnwrap(sampleDate())
+        return ScheduleMeetingCreationRecurrenceOptionsViewModel(
+            router: MockScheduleMeetingCreationRecurrenceOptionsRouter(rules: rules, startDate: startDate ?? sampleDate)
+        )
+    }
+    
+    private func makeViewModel(
+        frequency: ScheduledMeetingRulesEntity.Frequency = .invalid,
+        weekDayList: [Int]
+    ) throws -> ScheduleMeetingCreationRecurrenceOptionsViewModel {
+        let rules = ScheduledMeetingRulesEntity(frequency: frequency, interval: 1, weekDayList: weekDayList)
+        return try makeViewModel(rules: rules)
+    }
     
     private func sampleDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.date(from: "16/05/2023")
     }
+}
 
+final class MockScheduleMeetingCreationRecurrenceOptionsRouter: ScheduleMeetingCreationRecurrenceOptionsRouting {
+    var rules: ScheduledMeetingRulesEntity
+    var startDate: Date
+    var navigateToCustomOptionsScreen_CalledTimes = 0
+    var dismiss_CalledTimes = 0
+    
+    init(
+        rules: ScheduledMeetingRulesEntity = ScheduledMeetingRulesEntity(frequency: .invalid),
+        startDate: Date = Date()
+    ) {
+        self.rules = rules
+        self.startDate = startDate
+    }
+    
+    func start() -> ScheduleMeetingCreationRecurrenceOptionsViewModel {
+        ScheduleMeetingCreationRecurrenceOptionsViewModel(router: self)
+    }
+    
+    func navigateToCustomOptionsScreen() {
+        navigateToCustomOptionsScreen_CalledTimes += 1
+    }
+    
+    func dismiss() {
+        dismiss_CalledTimes += 1
+    }
 }

@@ -1,45 +1,67 @@
 import MEGADomain
 
+protocol ScheduleMeetingCreationRecurrenceOptionsRouting {
+    var rules: ScheduledMeetingRulesEntity { get }
+    var startDate: Date { get }
+    @discardableResult
+    func start() -> ScheduleMeetingCreationRecurrenceOptionsViewModel
+    func navigateToCustomOptionsScreen()
+    func dismiss()
+}
+
 final class ScheduleMeetingCreationRecurrenceOptionsViewModel: ObservableObject {
-    private let router: ScheduleMeetingCreationRecurrenceOptionsRouter
-    
+    private let router: ScheduleMeetingCreationRecurrenceOptionsRouting
+    private let startDate: Date
+
     @Published
     private(set) var rules: ScheduledMeetingRulesEntity
     
-    private let startDate: Date
-        
-    lazy var selectedOption: ScheduleMeetingCreationRecurrenceOption = ScheduleMeetingCreationRecurrenceOption(rules: rules) {
-        didSet {
-            updateSelection(withRecurrenceOption: selectedOption)
-        }
-    }
+    @Published
+    private(set) var selectedOption: ScheduleMeetingCreationRecurrenceOption
     
-    init(router: ScheduleMeetingCreationRecurrenceOptionsRouter) {
+    init(router: ScheduleMeetingCreationRecurrenceOptionsRouting) {
         self.router = router
-        self.rules = router.rules
         self.startDate = router.startDate
+        self.rules = router.rules
+        self.selectedOption = ScheduleMeetingCreationRecurrenceOption(rules: router.rules, startDate: startDate)
     }
     
-    func recurrenceOptions(forSection section: Int) -> [ScheduleMeetingCreationRecurrenceOption] {
-        switch section {
-        case 0:
-            return [.never, .daily, .weekly, .monthly]
-        case 1:
-            return [.custom]
-        default:
-            return []
-        }
+    func nonCustomizedOptions() -> [ScheduleMeetingCreationRecurrenceOption] {
+        return [.never, .daily, .weekly, .monthly]
+    }
+    
+    func customizedOption() -> ScheduleMeetingCreationRecurrenceOption {
+        .custom
+    }
+    
+    func customOptionFooterNote() -> String? {
+        guard selectedOption == .custom else { return nil }
+        return ScheduleMeetingCreationIntervalFooterNote(rules: rules).string
+    }
+    
+    func updateUI() {
+        self.rules = router.rules
+        self.selectedOption = ScheduleMeetingCreationRecurrenceOption(rules: router.rules, startDate: startDate)
+    }
+    
+    func navigateToCustomOptionsScreen() {
+        router.navigateToCustomOptionsScreen()
     }
 
-    private func updateSelection(withRecurrenceOption recurrenceOption: ScheduleMeetingCreationRecurrenceOption) {
+    func updateSelection(withRecurrenceOption recurrenceOption: ScheduleMeetingCreationRecurrenceOption) {
         guard recurrenceOption != .custom else {
             return
         }
                  
         let frequency = revelantFrequencey(forRecurrenceOption: recurrenceOption)
         rules.reset(toFrequency: frequency, usingStartDate: startDate)
+    }
+    
+    func dismiss() {
         router.dismiss()
     }
+    
+    // MARK: - Private methods
     
     private func revelantFrequencey(forRecurrenceOption recurrenceOption: ScheduleMeetingCreationRecurrenceOption) -> ScheduledMeetingRulesEntity.Frequency {
         let frequency: ScheduledMeetingRulesEntity.Frequency

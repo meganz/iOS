@@ -24,16 +24,30 @@ enum ScheduleMeetingCreationRecurrenceOption: Identifiable {
         }
     }
     
-    init(rules: ScheduledMeetingRulesEntity) {
-        switch rules.frequency {
-        case .invalid:
+    init(rules: ScheduledMeetingRulesEntity, startDate: Date) {
+        guard rules.frequency != .invalid else {
             self = .never
-        case .daily:
-            self = rules.weekDayList == Array(1...7) ? .daily : .custom
-        case .weekly:
-            self = rules.weekDayList?.count == 1 ? .weekly : .custom
-        case .monthly:
-            self = rules.monthDayList?.count == 1 ? .monthly : .custom
+            return
+        }
+        
+        guard rules.interval == 1 else {
+            self = .custom
+            return
+        }
+
+        if rules.frequency == .daily, rules.weekDayList == Array(1...7) {
+            self = .daily
+        } else if rules.frequency == .weekly,
+                  let weekDayList = rules.weekDayList,
+                  weekDayList.count == 1,
+                  (weekDayList[0] - 1) == WeekDaysInformation().weekDay(forStartDate: startDate) {
+            self = .weekly
+        } else if rules.frequency == .monthly,
+                  rules.monthDayList?.count == 1,
+                  Calendar.current.dateComponents([.day], from: startDate).day == rules.monthDayList?.first {
+            self = .monthly
+        } else {
+            self = .custom
         }
     }
 }

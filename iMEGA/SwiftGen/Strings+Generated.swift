@@ -4440,6 +4440,10 @@ public enum Strings {
         /// Schedule meeting
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
         public enum Create {
+          public enum Daily {
+            /// Daily
+            public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.daily.optionTitle")
+          }
           public enum EndRecurrence {
             /// End recurrence
             public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.create.endRecurrence.title")
@@ -4448,6 +4452,46 @@ public enum Strings {
               public static let never = Strings.tr("Localizable", "meetings.scheduleMeeting.create.endRecurrence.option.never")
               /// On date
               public static let onDate = Strings.tr("Localizable", "meetings.scheduleMeeting.create.endRecurrence.option.onDate")
+            }
+          }
+          public enum Frequency {
+            /// Frequency
+            public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.frequency.optionTitle")
+            public enum Picker {
+              /// Please choose a frequency
+              public static let accessibilityLabel = Strings.tr("Localizable", "meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel")
+            }
+          }
+          public enum Interval {
+            /// Every
+            public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.interval.optionTitle")
+            public enum Picker {
+              /// Please select an interval
+              public static let accessibilityLabel = Strings.tr("Localizable", "meetings.scheduleMeeting.create.interval.picker.accessibilityLabel")
+            }
+          }
+          public enum Monthly {
+            /// Monthly
+            public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.optionTitle")
+            public enum Calendar {
+              /// On the…
+              public static let headerTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.calendar.headerTitle")
+            }
+            public enum WeekNumber {
+              /// fifth
+              public static let fifth = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.weekNumber.fifth")
+              /// first
+              public static let first = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.weekNumber.first")
+              /// fourth
+              public static let fourth = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.weekNumber.fourth")
+              /// second
+              public static let second = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.weekNumber.second")
+              /// third
+              public static let third = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.weekNumber.third")
+            }
+            public enum WeekNumberAndWeekDay {
+              /// Each
+              public static let headerTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle")
             }
           }
           public enum MonthlyRecurrenceOption {
@@ -4478,6 +4522,14 @@ public enum Strings {
             /// Every week
             public static let weekly = Strings.tr("Localizable", "meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly")
           }
+          public enum SelectedRecurrence {
+            public enum Daily {
+              /// Plural format key: "%#@count@"
+              public static func customInterval(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval", p1)
+              }
+            }
+          }
           public enum SelectedRecurrenceOption {
             /// Daily
             public static let daily = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrenceOption.daily")
@@ -4487,6 +4539,22 @@ public enum Strings {
             public static let never = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrenceOption.never")
             /// Weekly
             public static let weekly = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly")
+          }
+          public enum WeekDay {
+            public enum Picker {
+              /// Choose a day of the week
+              public static let accessibilityLabel = Strings.tr("Localizable", "meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel")
+            }
+          }
+          public enum WeekNumber {
+            public enum Picker {
+              /// Pick a specific week number
+              public static let accessibilityLabel = Strings.tr("Localizable", "meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel")
+            }
+          }
+          public enum Weekly {
+            /// Weekly
+            public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.weekly.optionTitle")
           }
         }
         public enum Description {
@@ -4546,6 +4614,74 @@ public enum Strings {
           public static let occurrences = Strings.tr("Localizable", "meetings.scheduled.contextMenu.occurrences")
           /// Start
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.startMeeting")
+        }
+        public enum Create {
+          public enum Daily {
+            /// Plural format key: "%#@count@"
+            public static func footerNote(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.create.daily.footerNote", p1)
+            }
+            /// Plural format key: "%#@day@"
+            public static func interval(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.create.daily.interval", p1)
+            }
+          }
+          public enum Monthly {
+            /// Plural format key: "%#@month@"
+            public static func interval(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.create.monthly.interval", p1)
+            }
+            public enum MultipleDays {
+              /// Plural format key: "%#@count@"
+              public static func footerNote(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.monthly.multipleDays.footerNote", p1)
+              }
+            }
+            public enum SingleDay {
+              /// Plural format key: "%#@count@"
+              public static func footerNote(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.monthly.singleDay.footerNote", p1)
+              }
+            }
+            public enum WeekDay {
+              /// Plural format key: "%#@count@"
+              public static func selectedFrequency(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.monthly.weekDay.selectedFrequency", p1)
+              }
+            }
+            public enum WeekNumberAndWeekDay {
+              /// Plural format key: "%#@count@"
+              public static func footerNote(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote", p1)
+              }
+              /// Plural format key: "%#@count@"
+              public static func selectedFrequency(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency", p1)
+              }
+            }
+          }
+          public enum Weekly {
+            /// Plural format key: "%#@week@"
+            public static func interval(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.create.weekly.interval", p1)
+            }
+            /// Plural format key: "%#@count@"
+            public static func selectedFrequency(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.create.weekly.selectedFrequency", p1)
+            }
+            public enum MultipleDays {
+              /// Plural format key: "%#@count@"
+              public static func footerNote(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.weekly.multipleDays.footerNote", p1)
+              }
+            }
+            public enum SingleDay {
+              /// Plural format key: "%#@count@"
+              public static func footerNote(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.weekly.singleDay.footerNote", p1)
+              }
+            }
+          }
         }
         public enum Listing {
           public enum InProgress {
