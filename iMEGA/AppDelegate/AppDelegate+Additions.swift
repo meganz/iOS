@@ -12,7 +12,7 @@ extension AppDelegate {
 
         MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdk.currentUserEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, _) in
             if request.flag {
-                return //Two Factor Authentication Enabled
+                return // Two Factor Authentication Enabled
             }
 
             if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController ||
@@ -56,7 +56,7 @@ extension AppDelegate {
         if cookieSettingsUseCase.cookieBannerEnabled() {
             cookieSettingsUseCase.cookieSettings { [weak self] in
                 switch $0 {
-                case .success: break //Cookie settings already set
+                case .success: break // Cookie settings already set
                     
                 case .failure(let error):
                     switch error {

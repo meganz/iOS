@@ -48,7 +48,7 @@ import UIKit
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        //Fix to avoid ContactsPermissionBottomView button not being rendered correctly in small screens and iOS10
+        // Fix to avoid ContactsPermissionBottomView button not being rendered correctly in small screens and iOS10
         if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized {
             tableView.reloadData()
         }

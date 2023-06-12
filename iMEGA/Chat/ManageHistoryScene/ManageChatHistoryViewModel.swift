@@ -225,7 +225,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
             self.invokeCommand?(Command.showOrHideCustomHistoryRetentionCell(showOrHide))
             
         case .showOrHideHistoryRetentionPicker(let isHidden):
-            //Since this action is dispatched only from the 'didSelectRowAt' from the VC, the picker has to be to be configured to its current value
+            // Since this action is dispatched only from the 'didSelectRowAt' from the VC, the picker has to be to be configured to its current value
             self.invokeCommand?(Command.configHistoryRetentionPicker(self.historyRetentionValue))
             
             self.invokeCommand?(Command.showOrHideHistoryRetentionPicker(isHidden))

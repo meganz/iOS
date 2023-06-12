@@ -51,7 +51,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    private var cookiesConfigArray: [Bool] = [true, false, false, false, false] //[essential, preference, analytics, ads, thirdparty]
+    private var cookiesConfigArray: [Bool] = [true, false, false, false, false] // [essential, preference, analytics, ads, thirdparty]
     private var currentCookiesConfigArray: [Bool] = [true, false, false, false, false]
     private var cookieSettingsSet: Bool = true
     

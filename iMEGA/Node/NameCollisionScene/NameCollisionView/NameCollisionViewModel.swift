@@ -57,7 +57,7 @@ final class NameCollisionViewModel: ObservableObject {
                 self?.isVersioningEnabled = enabled
             case .failure(let error):
                 if error == .optionNeverSet {
-                    self?.isVersioningEnabled = true //default value
+                    self?.isVersioningEnabled = true // default value
                 }
             }
         })

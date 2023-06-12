@@ -29,7 +29,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveSuccess_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
     
@@ -42,7 +42,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveError_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
     
@@ -60,7 +60,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showNameCollisionsView_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
     
@@ -73,7 +73,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveSuccess_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
     
@@ -86,7 +86,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveError_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
     
@@ -99,7 +99,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.resolvedUploadCollisions_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
 }

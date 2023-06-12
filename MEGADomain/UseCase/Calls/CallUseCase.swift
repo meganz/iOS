@@ -39,7 +39,7 @@ protocol CallCallbacksUseCaseProtocol: AnyObject {
     func outgoingRingingStopReceived()
 }
 
-//Default implementation for optional callbacks
+// Default implementation for optional callbacks
 extension CallCallbacksUseCaseProtocol {
     func remoteVideoResolutionChanged(for attende: CallParticipantEntity) { }
     func highResolutionChanged(for participant: CallParticipantEntity) { }

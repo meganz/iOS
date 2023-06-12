@@ -70,7 +70,7 @@ final class FavouritesExplorerGridSource: NSObject {
         let isValidSort = [SortOrderType.nameDescending,
                            SortOrderType.nameAscending,
                            SortOrderType.label].contains(sortOrder)
-        //Folder can't be sorted by size
+        // Folder can't be sorted by size
         let folderSortOrder = isValidSort ? sortOrder : .nameAscending
         folderNodes = allNodes.folderNodeList().sort(by: folderSortOrder)
         fileNodes = allNodes.fileNodeList().sort(by: sortOrder)

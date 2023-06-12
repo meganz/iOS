@@ -489,7 +489,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                     XCTFail("Invalid message type")
                 }
             default:
-                XCTFail()
+                XCTFail("Invoked unexpected command: \($0)")
             }
         }
         sut.showAlbumContentPicker()
@@ -520,7 +520,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             case .showHud:
                 exp.fulfill()
             default:
-                XCTFail()
+                XCTFail("Invoked unexpected command: \($0)")
             }
         }
         sut.showAlbumContentPicker()
@@ -553,7 +553,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             case .finishLoading:
                 exp.fulfill()
             default:
-                XCTFail()
+                XCTFail("Invoked unexpected command: \($0)")
             }
         }
         sut.showAlbumContentPicker()
@@ -580,7 +580,7 @@ final class AlbumContentViewModelTests: XCTestCase {
             case .updateNavigationTitle:
                 exp.fulfill()
             default:
-                XCTFail()
+                XCTFail("Invoked unexpected command: \($0)")
             }
         }
         
@@ -615,7 +615,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                 sut.updateAlertViewModel()
                 exp.fulfill()
             default:
-                XCTFail()
+                XCTFail("Invoked unexpected command: \($0)")
             }
         }
         sut.renameAlbum(with: expectedName)

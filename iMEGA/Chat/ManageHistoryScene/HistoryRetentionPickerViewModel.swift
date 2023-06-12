@@ -41,8 +41,8 @@ final class HistoryRetentionPickerViewModel: NSObject, ViewModelType {
         case updateMeasurementPickerComponent
     }
     
-    var unitsValuesArray: [String] = UnitsComponentValues().hours //Default to values for hours, default measurament component
-    var measuramentsValuesArray: [String] = MeasurementsComponent.singular.values() //Default to singular, when the picker is shown the default position is '1 hour'
+    var unitsValuesArray: [String] = UnitsComponentValues().hours // Default to values for hours, default measurament component
+    var measuramentsValuesArray: [String] = MeasurementsComponent.singular.values() // Default to singular, when the picker is shown the default position is '1 hour'
     
     var invokeCommand: ((Command) -> Void)?
         
@@ -146,7 +146,7 @@ extension HistoryRetentionPickerViewModel: UIPickerViewDelegate {
                 pickerView.reloadComponent(PickerComponent.measurements.rawValue)
             }
         } else if component == PickerComponent.measurements.rawValue {
-            //If the first unit component is selected we have to update the measuments values array to singular
+            // If the first unit component is selected we have to update the measuments values array to singular
             if pickerView.selectedRow(inComponent: PickerComponent.units.rawValue) == 0 {
                 measuramentsValuesArray = MeasurementsComponent.singular.values()
                 pickerView.reloadComponent(PickerComponent.measurements.rawValue)

@@ -57,7 +57,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssertTrue(router.showMeetingInfo_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
     
@@ -70,7 +70,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssertTrue(router.hideSpinner_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
     

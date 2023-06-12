@@ -16,7 +16,7 @@ final class ActiveCallViewModelTests: XCTestCase {
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.openCallView_calledTimes == 1)
         } else {
-            XCTFail()
+            XCTFail("Expected to time out!")
         }
     }
     

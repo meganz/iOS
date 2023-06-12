@@ -10,7 +10,7 @@ class AudioWavesView: UIView {
     }
     
     func updateView() {
-        //Width of each view and spacing is 4.0
+        // Width of each view and spacing is 4.0
         let eachViewAndSpacingWidth: CGFloat = 4.0
         let totalWidthAvailable = bounds.width + eachViewAndSpacingWidth
         let eachBlockWidth = eachViewAndSpacingWidth * CGFloat(2.0)
