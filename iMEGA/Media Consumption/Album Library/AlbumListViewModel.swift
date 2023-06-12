@@ -25,7 +25,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     var createAlbumTask: Task<Void, Never>?
     var deleteAlbumTask: Task<Void, Never>?
     var albumRemoveShareLinkTask: Task<Void, Never>?
-    var newAlbumContent: (AlbumEntity, [NodeEntity]?)?
+    var newAlbumContent: AlbumContent?
     
     var albumNames: [String] {
         albums.map { $0.name }
@@ -272,11 +272,13 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func onNewAlbumContentAdded(_ album: AlbumEntity, photos: [NodeEntity]) {
-        newAlbumContent = (album, photos)
+        newAlbumContent = AlbumContent(album: album, photos: photos)
     }
     
     func navigateToNewAlbum() {
-        album = newAlbumContent?.0
+        album = newAlbumContent?.album
+        album?.count = newAlbumContent?.photos?.count ?? 0
+        album?.coverNode = newAlbumContent?.photos?.sorted { $0.modificationTime > $1.modificationTime }.first
     }
     
     @MainActor

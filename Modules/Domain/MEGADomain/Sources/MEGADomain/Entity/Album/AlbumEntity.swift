@@ -11,7 +11,7 @@ public struct AlbumEntity: Identifiable, Hashable, Sendable {
     public let id: HandleEntity
     public let name: String
     public var coverNode: NodeEntity?
-    public let count: Int
+    public var count: Int
     public let type: AlbumEntityType
     public let creationTime: Date?
     public let modificationTime: Date?
