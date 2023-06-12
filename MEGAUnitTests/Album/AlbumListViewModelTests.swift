@@ -238,8 +238,8 @@ final class AlbumListViewModelTests: XCTestCase {
         let nodes = [NodeEntity(handle: 1)]
         sut.onNewAlbumContentAdded(sampleAlbum, photos: nodes)
         
-        XCTAssertEqual(sut.newAlbumContent?.0, sampleAlbum)
-        XCTAssertEqual(sut.newAlbumContent?.1, nodes)
+        XCTAssertEqual(sut.newAlbumContent?.album, sampleAlbum)
+        XCTAssertEqual(sut.newAlbumContent?.photos, nodes)
     }
     
     func testValidateAlbum_withSystemAlbumNames_returnsErrorMessage() {
@@ -264,12 +264,18 @@ final class AlbumListViewModelTests: XCTestCase {
     func testNavigateToNewAlbum_onNewAlbumContentAdded_shouldNavigateToAlbumContentIfSet() {
         let sut = albumListViewModel()
         let userAlbum = AlbumEntity(id: 1, name: "User", coverNode: nil, count: 0, type: .user)
-        let newAlbumPhotos = [NodeEntity(name: "a.jpg", handle: 1),
-                              NodeEntity(name: "b.jpg", handle: 2)]
+        let newAlbumPhotos = [NodeEntity(name: "a.jpg", handle: 1, modificationTime: Date.distantFuture),
+                              NodeEntity(name: "b.jpg", handle: 2, modificationTime: Date.distantPast)]
+        
+        let modifiedAlbum = AlbumEntity(id: 1, name: "User", coverNode: newAlbumPhotos.first, count: 2, type: .user)
+        
         sut.onNewAlbumContentAdded(userAlbum, photos: newAlbumPhotos)
         sut.navigateToNewAlbum()
-        XCTAssertEqual(sut.album, userAlbum)
-        XCTAssertEqual(sut.newAlbumContent?.1, newAlbumPhotos)
+        
+        XCTAssertEqual(sut.album, modifiedAlbum)
+        XCTAssertEqual(sut.newAlbumContent?.photos, newAlbumPhotos)
+        XCTAssertEqual(sut.album?.count, newAlbumPhotos.count)
+        XCTAssertEqual(sut.album?.coverNode, newAlbumPhotos.first)
     }
     
     func testNavigateToNewAlbum_onNewAlbumContentAddedNotCalled_shouldNotNavigate() {
