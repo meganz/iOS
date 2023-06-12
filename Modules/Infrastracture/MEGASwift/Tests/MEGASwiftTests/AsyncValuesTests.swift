@@ -21,7 +21,7 @@ final class AsyncValuesTests: XCTestCase {
             }
             task.cancel()
             try await task.value
-            XCTFail()
+            XCTFail("Did not throw error! Expected to catch cancellation error")
         } catch let error as CancellationError {
             XCTAssertNotNil(error)
         } catch {

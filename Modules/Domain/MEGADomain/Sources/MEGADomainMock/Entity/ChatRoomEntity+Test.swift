@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 
 public extension ChatRoomEntity {
-    ///Init method with default values (0, false, nil, [], ...)
+    /// Init method with default values (0, false, nil, [], ...)
     init(chatId: HandleEntity = .invalid,
          ownPrivilege: ChatRoomPrivilegeEntity = .unknown,
          changeType: ChangeType = .status,

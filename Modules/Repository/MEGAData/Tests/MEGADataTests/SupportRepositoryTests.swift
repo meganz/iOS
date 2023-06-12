@@ -18,7 +18,7 @@ final class SupportRepositoryTests: XCTestCase {
             sdk = MockSdk(createSupportTicketError: .apiETooMany)
             repo = SupportRepository(sdk: sdk)
             try await repo.createSupportTicket(withMessage: "This is a test")
-            XCTFail()
+            XCTFail("Did not throw error! Expected to catch GenericErrorEntity.")
         } catch let error as GenericErrorEntity {
             XCTAssertNotNil(error)
         } catch {

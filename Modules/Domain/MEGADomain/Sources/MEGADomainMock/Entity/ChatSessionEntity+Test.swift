@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 
 public extension ChatSessionEntity {
-    ///Init method with default values (0, false, nil, [], ...)
+    /// Init method with default values (0, false, nil, [], ...)
     init(statusType: StatusType = .invalid,
          hasAudio: Bool = false,
          hasVideo: Bool = false,

@@ -30,7 +30,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
         calculateCellHeight(at: indexPath)
     }
     
-    //To remove the space between the table view and the profile view or the add phone number view
+    // To remove the space between the table view and the profile view or the add phone number view
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         0.01
     }

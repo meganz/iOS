@@ -621,10 +621,10 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
             if nodeUpdated.hasChangedType(.parent) {
                 if nodeUpdated.handle == node.handle {
                     guard let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.parentHandle) else { return }
-                    if parentNode.isFolder() { //Node moved
+                    if parentNode.isFolder() { // Node moved
                         guard let newNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.handle) else { return }
                         node = newNode
-                    } else { //Node versioned
+                    } else { // Node versioned
                         guard let newNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.parentHandle) else { return }
                         node = newNode
                     }

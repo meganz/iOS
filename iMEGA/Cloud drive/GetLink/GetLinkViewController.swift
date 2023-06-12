@@ -473,7 +473,7 @@ class GetLinkViewController: UIViewController {
             configureDecryptKeySeparate(isOn: sender.isOn)
         case .expiryDate:
             if justUpgradedToProAccount {
-                //Activity indicators are shown until the updated account details are received
+                // Activity indicators are shown until the updated account details are received
                 return
             }
             
@@ -966,7 +966,7 @@ extension GetLinkViewController: UITableViewDelegate {
                 switch passwordProtectionRows()[indexPath.row] {
                 case .configurePasword:
                     if justUpgradedToProAccount {
-                        //Activity indicators are shown until the updated account details are received
+                        // Activity indicators are shown until the updated account details are received
                         return
                     }
                     
@@ -1004,7 +1004,7 @@ extension GetLinkViewController: MEGARequestDelegate {
         if request.type == .MEGARequestTypeAccountDetails {
             if error.type == .apiOk {
                 if justUpgradedToProAccount {
-                    //Reset temporal flag when the account details are received to allow using the PRO features
+                    // Reset temporal flag when the account details are received to allow using the PRO features
                     justUpgradedToProAccount = false
                     reloadProSections()
                     

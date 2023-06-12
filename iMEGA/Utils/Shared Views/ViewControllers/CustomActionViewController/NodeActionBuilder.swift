@@ -472,7 +472,7 @@ final class NodeActionBuilder {
             return previewDocumentNodeActions()
         case .textEditor:
             return textEditorActions()
-        default: //.unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents
+        default: // .unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents
             switch accessLevel {
             case .accessUnknown:
                 return unknownAccessLevelNodeActions()

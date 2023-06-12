@@ -49,13 +49,13 @@ struct ContactOnMega: Codable {
         var contactsOnMegaFiltered = [ContactOnMega]()
         var contactEmailsToFilter = [String]()
 
-        //Get all outgoing contact request emails
+        // Get all outgoing contact request emails
         let outgoingContactRequestList = MEGASdkManager.sharedMEGASdk().outgoingContactRequests()
         for i in 0 ..< outgoingContactRequestList.size.intValue {
             contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail?.lowercased() ?? "")
         }
 
-        //Get all visible contacts emails
+        // Get all visible contacts emails
         let userContacts = MEGASdkManager.sharedMEGASdk().contacts()
         for j in 0 ..< userContacts.size.intValue {
             if let user = userContacts.user(at: j) {
@@ -65,7 +65,7 @@ struct ContactOnMega: Codable {
             }
         }
 
-        //Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
+        // Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
         if contactEmailsToFilter.isNotEmpty {
             for contact in contactsOnMega where contactEmailsToFilter.notContains(where: { $0 == contact.email.lowercased() }) {
                 contactsOnMegaFiltered.append(contact)
@@ -132,7 +132,7 @@ struct ContactOnMega: Codable {
                     let userHandle = MEGASdk.handle(forBase64UserHandle: contactOnMega[1])
                     guard let deviceContacts = self.deviceContactsChunked.first else { return }
                     for deviceContact in deviceContacts {
-                        if let contactName = deviceContact[contactOnMega[0]] { //Get contactOnMega device name and save it to fetch email later
+                        if let contactName = deviceContact[contactOnMega[0]] { // Get contactOnMega device name and save it to fetch email later
                             self.contactsOnMegaDictionary[userHandle] = contactName
                             break
                         }

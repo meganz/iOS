@@ -6,7 +6,7 @@ class ExtensionAppearanceManager: NSObject {
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
         setupNavigationBarAppearance(traitCollection)
         
-        //To tint the color of the prompt.
+        // To tint the color of the prompt.
         UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).textColor = UIColor.mnz_label()
         
         UISearchBar.appearance().isTranslucent = false

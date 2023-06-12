@@ -46,7 +46,7 @@ extension Array where Element == MEGANode {
                                                  MEGANodeLabel.yellow: [], MEGANodeLabel.green: [],
                                                  MEGANodeLabel.blue: [], MEGANodeLabel.purple: [],
                                                  MEGANodeLabel.grey: [], MEGANodeLabel.unknown: []]
-        //Add node to assigned label color
+        // Add node to assigned label color
         for node in self {
             switch node.label {
             case .red: list[.red]?.append(node)
@@ -60,7 +60,7 @@ extension Array where Element == MEGANode {
             }
         }
         
-        //Sort each list and flatten list
+        // Sort each list and flatten list
         let nodeList = [list[.red], list[.orange], list[.yellow],
                         list[.green], list[.blue], list[.purple],
                         list[.grey], list[.unknown]]

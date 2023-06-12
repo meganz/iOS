@@ -154,9 +154,9 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         case .invalid, .revokeAttachment:
             actions = []
         case .normal:
-            //All messages
+            // All messages
             actions = [forwardAction, copyAction, selectAction]
-            //Your messages
+            // Your messages
             if isFromCurrentSender(message: chatMessage) {
                 if chatMessage.message.isEditable {
                     actions.append(contentsOf: [editAction])
@@ -167,7 +167,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             }
             
         case .containsMeta:
-            //All messages
+            // All messages
             actions = [forwardAction, selectAction]
             if chatMessage.message.containsMeta?.type != .geolocation && chatMessage.message.containsMeta?.type != .giphy {
                 actions.append(contentsOf: [copyAction])
@@ -177,7 +177,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 actions.append(contentsOf: [exportMessagesAction])
             }
             
-            //Your messages
+            // Your messages
             if isFromCurrentSender(message: chatMessage) {
                
                 if chatMessage.message.isEditable {
@@ -196,7 +196,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             }
             
         case .alterParticipants, .truncate, .privilegeChange, .chatTitle:
-            //All messages
+            // All messages
             actions = [copyAction]
             
         case .attachment:
@@ -210,7 +210,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 }
             }
             
-            //Your messages
+            // Your messages
             if isFromCurrentSender(message: chatMessage) {
                 if chatMessage.message.isDeletable {
                     actions.append(contentsOf: [deleteAction])
@@ -223,7 +223,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             if (chatMessage.message.richNumber) != nil {
                 actions.append(forwardAction)
             }
-            //Your messages
+            // Your messages
             if isFromCurrentSender(message: chatMessage) {
                 if chatMessage.message.isDeletable {
                     actions.append(contentsOf: [deleteAction])
@@ -247,7 +247,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 }
             }
             
-            //Your messages
+            // Your messages
             if isFromCurrentSender(message: chatMessage) {
                 if chatMessage.message.isDeletable {
                     actions.append(contentsOf: [deleteAction])

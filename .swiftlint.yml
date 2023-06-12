@@ -92,19 +92,14 @@ only_rules:
       - opening_brace
       - vertical_whitespace
       - colon
-
-    # Small fixes or small-moderate amount of issues (<100) that are easy to fix
-      # - xctfail_message (16 issues)
+      - comment_spacing
+      - xctfail_message
 
     # Complex fixes or a ton of issues (>100 issues)
 
       # - type_name (91 issues) - complex because we need to rename stuff
       # - cyclomatic_complexity (132 issues)
         # A somewhat complex fix, because we need extract functions into smaller functions to avoid overly complex logic, but I think this should be enabled in the future so that we can refactor our code to make sure our functions are small, simple, and adhere to the SOLID principles.
-      # - comment_spacing (293 issues)
-      # - leading_whitespace (398 issues)
-      # - identifier_name (427 issues)
-      # - trailing_whitespace (17200 issues, mindblown)
 
     # Not sure if we should implement
 
@@ -129,6 +124,11 @@ only_rules:
       # - function_body_length (43 issues, max 50 lines)
       # - function_parameter_count (68 issues, max 5 parameters)
       # - line_length (4202 issues, max of 120 characters)
+      
+    # We don't want to implement (not necessary, I think)
+      # - trailing_whitespace (17200 issues, mindblown)
+      # - leading_whitespace (398 issues)
+      # - identifier_name (427 issues)
 
 
 # Path Configurations

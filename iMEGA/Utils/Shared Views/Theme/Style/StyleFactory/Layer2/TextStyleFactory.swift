@@ -8,10 +8,10 @@ extension InterfaceStyle {
 }
 
 enum MEGATextStyle: Hashable {
-    case headline //Semi-bold by default
+    case headline // Semi-bold by default
     case headlineBold
     
-    case subheadline //Regular by default
+    case subheadline // Regular by default
     case subheadlineMedium
     case subheadlineBold
     case subheadlineSemibold
@@ -19,12 +19,12 @@ enum MEGATextStyle: Hashable {
     case footnoteBold
     case footnoteSemibold
     
-    case caption //Regular by default
+    case caption // Regular by default
     case captionSemibold
     
-    case caption2 //Regular by default
+    case caption2 // Regular by default
     
-    case body //Regular by default
+    case body // Regular by default
     case bodySemibold
 }
 

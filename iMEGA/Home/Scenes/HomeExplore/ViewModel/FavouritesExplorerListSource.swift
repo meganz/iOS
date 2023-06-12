@@ -61,7 +61,7 @@ final class FavouritesExplorerListSource: NSObject, FilesExplorerListSourceProto
             let isValidSort = [SortOrderType.nameDescending,
                                SortOrderType.nameAscending,
                                SortOrderType.label].contains(sortOrder)
-            //Folder can't be sorted by size and modificationTime
+            // Folder can't be sorted by size and modificationTime
             let folderSortOrder = isValidSort ? sortOrder : .nameAscending
             sortedNodes.append(contentsOf: folderNodes.sort(by: folderSortOrder))
         }
