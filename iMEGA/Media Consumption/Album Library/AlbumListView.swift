@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGAData
 import MEGADomain
 
 struct AlbumListView: View {
@@ -46,8 +47,7 @@ struct AlbumListView: View {
         .sheet(isPresented: $viewModel.showShareAlbumLinks, onDismiss: {
             viewModel.setEditModeToInactive()
         }, content: {
-            router.shareLinks(forAlbums: viewModel.selectedUserAlbums)
-                .ignoresSafeArea(edges: .bottom)
+            shareLinksView(forAlbums: viewModel.selectedUserAlbums)
         })
         .padding([.top, .bottom], 10)
         .onAppear {
@@ -81,5 +81,15 @@ struct AlbumListView: View {
                 scaleFactor: UIDevice().iPadDevice ? .five : .three)
             )
         )
+    }
+    
+    private func shareLinksView(forAlbums albums: [AlbumEntity]) -> some View {
+        EnforceCopyrightWarningView(viewModel: EnforceCopyrightWarningViewModel(
+            preferenceUseCase: PreferenceUseCase.default,
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))) {
+                GetAlbumsLinksViewWrapper(albums: albums)
+                    .ignoresSafeArea(edges: .bottom)
+                    .navigationBarHidden(true)
+            }
     }
 }

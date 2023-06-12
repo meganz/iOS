@@ -113,6 +113,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         let view = EnforceCopyrightWarningView(viewModel: viewModel) {
             GetAlbumsLinksViewWrapper(albums: [album])
                 .ignoresSafeArea(edges: .bottom)
+                .navigationBarHidden(true)
         }
         navigationController?.present(UIHostingController(rootView: view), animated: true)
     }

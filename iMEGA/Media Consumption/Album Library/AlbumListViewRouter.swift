@@ -7,7 +7,6 @@ import Combine
 protocol AlbumListViewRouting {
     func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell
     func albumContainer(album: AlbumEntity, newAlbumPhotosToAdd: [NodeEntity]?, existingAlbumNames: @escaping () -> [String]) -> AlbumContainerWrapper
-    func shareLinks(forAlbums albums: [AlbumEntity]) -> EnforceCopyrightWarningView<GetAlbumsLinksViewWrapper>
 }
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
@@ -58,15 +57,6 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
                                     router: self)
         
         return UIHostingController(rootView: content)
-    }
-    
-    @MainActor
-    func shareLinks(forAlbums albums: [AlbumEntity]) -> EnforceCopyrightWarningView<GetAlbumsLinksViewWrapper> {
-        let viewModel = EnforceCopyrightWarningViewModel(preferenceUseCase: PreferenceUseCase.default,
-                                                         shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
-        return EnforceCopyrightWarningView(viewModel: viewModel) {
-            GetAlbumsLinksViewWrapper(albums: albums)
-        }
     }
     
     func start() {}

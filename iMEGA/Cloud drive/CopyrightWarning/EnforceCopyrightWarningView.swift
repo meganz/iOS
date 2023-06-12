@@ -1,4 +1,5 @@
 import SwiftUI
+import MEGASwiftUI
 
 struct EnforceCopyrightWarningView<T: View>: View {
     @Environment(\.presentationMode) private var presentationMode
@@ -6,21 +7,24 @@ struct EnforceCopyrightWarningView<T: View>: View {
     let termsAgreedView: () -> T
     
     var body: some View {
-        ZStack {
-            switch viewModel.viewStatus {
-            case .agreed:
-                termsAgreedView()
-            case .declined:
-                CopyrightWarningView(copyrightMessage: viewModel.copyrightMessage,
-                                     isTermsAgreed: $viewModel.isTermsAggreed)
-            case .unknown:
-                ProgressView()
+        NavigationStackView {
+            ZStack {
+                switch viewModel.viewStatus {
+                case .agreed:
+                    termsAgreedView()
+                case .declined:
+                    CopyrightWarningView(copyrightMessage: viewModel.copyrightMessage,
+                                         isTermsAgreed: $viewModel.isTermsAggreed)
+                case .unknown:
+                    ProgressView()
+                }
+            }.onAppear {
+                viewModel.determineViewState()
+            }.onReceive(viewModel.$isTermsAggreed.dropFirst()) {
+                guard !$0 else { return }
+                presentationMode.wrappedValue.dismiss()
             }
-        }.onAppear {
-            viewModel.determineViewState()
-        }.onReceive(viewModel.$isTermsAggreed.dropFirst()) {
-            guard !$0 else { return }
-            presentationMode.wrappedValue.dismiss()
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -32,25 +36,23 @@ private struct CopyrightWarningView: View {
     @Binding var isTermsAgreed: Bool
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                    Text("©")
-                        .font(Font.system(size: 145, weight: .bold, design: .default))
-                        .fontWeight(.light)
-                        .frame(width: 120, height: 120)
-                        .padding(.bottom, 24)
-                    
-                    Text(Strings.Localizable.copyrightWarningToAll)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.bottom, 24)
-                    
-                    Text(copyrightMessage)
-                        .font(.body)
-                }
-                .padding([.top, .horizontal], 16)
+        ScrollView {
+            VStack {
+                Text("©")
+                    .font(Font.system(size: 145, weight: .bold, design: .default))
+                    .fontWeight(.light)
+                    .frame(width: 120, height: 120)
+                    .padding(.bottom, 24)
+                
+                Text(Strings.Localizable.copyrightWarningToAll)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 24)
+                
+                Text(copyrightMessage)
+                    .font(.body)
             }
+            .padding([.top, .horizontal], 16)
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Button {
@@ -70,9 +72,7 @@ private struct CopyrightWarningView: View {
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(Strings.Localizable.copyrightWarning)
-            .navigationViewStyle(.stack)
         }
     }
     
