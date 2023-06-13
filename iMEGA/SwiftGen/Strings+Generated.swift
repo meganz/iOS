@@ -5251,10 +5251,14 @@ public enum Strings {
         }
       }
       public enum Link {
-        /// Anyone with this link can view and download your data
-        public static let accessInfo = Strings.tr("Localizable", "sharedItems.link.accessInfo")
+        /// Plural format key: "%#@count@"
+        public static func accessInfo(_ p1: Int) -> String {
+          return Strings.tr("Localizable", "sharedItems.link.accessInfo", p1)
+        }
         /// Only people with the password can open the link
         public static let accessInfoPasswordProtected = Strings.tr("Localizable", "sharedItems.link.accessInfoPasswordProtected")
+        /// Link updated. Copy again
+        public static let linkUpdated = Strings.tr("Localizable", "sharedItems.link.linkUpdated")
       }
       public enum Menu {
         public enum Slideshow {
