@@ -3,7 +3,7 @@
 
 #import <Photos/Photos.h>
 
-#import "DevicePermissionsHelper.h"
+
 #import "Helper.h"
 #import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
@@ -106,12 +106,13 @@
 }
 
 - (void)checkPhotosPermissionForUserDefaultSetting:(NSString *)userDefaultSetting settingSwitch:(UISwitch *)settingSwitch {
-    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+    [handler photosPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
         if (granted) {
             [settingSwitch setOn:!settingSwitch.isOn animated:YES];
         } else {
             [settingSwitch setOn:NO animated:YES];
-            [DevicePermissionsHelper alertPhotosPermission];
+            [handler alertPhotosPermission];
         }
         
         [NSUserDefaults.standardUserDefaults setBool:settingSwitch.isOn forKey:userDefaultSetting];

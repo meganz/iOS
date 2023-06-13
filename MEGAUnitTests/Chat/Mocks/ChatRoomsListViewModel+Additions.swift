@@ -2,6 +2,7 @@
 import MEGADomainMock
 import MEGADomain
 
+
 extension ChatRoomsListViewModel {
     
     convenience init(
@@ -15,6 +16,7 @@ extension ChatRoomsListViewModel {
         notificationCenter: NotificationCenter = NotificationCenter.default,
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,
+        permissionHandler: DevicePermissionsHandling = MockDevicePermissionHandler(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -27,7 +29,8 @@ extension ChatRoomsListViewModel {
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             notificationCenter: notificationCenter,
             chatType: chatType,
-            chatViewMode: chatViewMode
+            chatViewMode: chatViewMode,
+            permissionHandler: permissionHandler
         )
     }
 }

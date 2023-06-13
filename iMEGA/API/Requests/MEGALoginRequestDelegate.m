@@ -1,13 +1,11 @@
-
 #import "MEGALoginRequestDelegate.h"
-
 #import "SVProgressHUD.h"
-
-#import "DevicePermissionsHelper.h"
+#import "MEGA-Swift.h"
 #import "InitialLaunchViewController.h"
 #import "Helper.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
+
 @import SAMKeychain;
 
 @interface MEGALoginRequestDelegate ()
@@ -122,18 +120,26 @@
     if (!self.hasSession) {
         NSString *session = [api dumpSession];
         [SAMKeychain setPassword:session forService:@"MEGA" account:@"sessionV3"];
-        
-        LaunchViewController *launchVC;
-        if (DevicePermissionsHelper.shouldSetupPermissions) {
-            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"InitialLaunchViewControllerID"];
-        } else {
-            launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
-        }
-        
-        launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
-        UIWindow *window = UIApplication.sharedApplication.delegate.window;
-        window.rootViewController = launchVC;
+        DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+        [handler shouldSetupPermissionsWithCompletion:^(BOOL shouldSetupPermissions) {
+            [MEGALoginRequestDelegate presentLaunchViewController:shouldSetupPermissions];
+        }];
     }
+}
+
++ (void)presentLaunchViewController:(BOOL)shouldSetupPermissions{
+    NSAssert([NSThread isMainThread], @"must be called on main thread");
+    
+    LaunchViewController *launchVC;
+    if (shouldSetupPermissions) {
+        launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"InitialLaunchViewControllerID"];
+    } else {
+        launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
+    }
+    
+    launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
+    UIWindow *window = UIApplication.sharedApplication.delegate.window;
+    window.rootViewController = launchVC;
 }
 
 @end

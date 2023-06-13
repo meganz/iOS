@@ -6,7 +6,7 @@
 
 #import "LTHPasscodeViewController.h"
 
-#import "DevicePermissionsHelper.h"
+
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 

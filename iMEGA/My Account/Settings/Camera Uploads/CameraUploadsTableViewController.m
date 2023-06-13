@@ -4,7 +4,7 @@
 #import "MEGATransfer+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "CameraUploadManager+Settings.h"
-#import "DevicePermissionsHelper.h"
+
 #import "Helper.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGASdkManager.h"
@@ -252,7 +252,8 @@
             [self showAccountExpiredAlert];
             [sender setOn:NO];
         } else {
-            [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+            DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+            [handler photosPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
                 if (granted) {
                     if ([MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness] &&
                         !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
@@ -270,7 +271,7 @@
                         [CameraUploadManager.shared enableCameraUpload];
                     }
                 } else {
-                    [DevicePermissionsHelper alertPhotosPermission];
+                    [handler alertPhotosPermission];
                 }
                 if (self.cameraUploadSettingChanged != nil) {
                     self.cameraUploadSettingChanged();

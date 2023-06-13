@@ -13,6 +13,7 @@ import UIKit
     @IBOutlet weak var searchFixedView: UIView!
     @IBOutlet var contactsOnMegaHeader: UIView!
     @IBOutlet weak var contactsOnMegaHeaderTitle: UILabel!
+    let permissionHandler = DevicePermissionsHandler()
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -179,15 +180,17 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        switch CNContactStore.authorizationStatus(for: CNEntityType.contacts) {
+        switch permissionHandler.contactsAuthorizationStatus {
         case .notDetermined:
             guard let bottomView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier()) as? ContactsPermissionBottomView else {
                 return UIView(frame: .zero)
             }
-            bottomView.configureForRequestingPermission( action: {
-                DevicePermissionsHelper.contactsPermission { (granted) in
+            bottomView.configureForRequestingPermission( action: {[weak self] in
+                self?.permissionHandler.contactsPermissionWithCompletionHandler { granted in
+                    guard let self else { return }
                     if granted {
-                        ContactsOnMegaManager.shared.configureContactsOnMega(completion: {
+                        ContactsOnMegaManager.shared.configureContactsOnMega(completion: {[weak self] in
+                            guard let self else { return }
                             self.contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
                             tableView.reloadData()
                             self.showSearch()
@@ -220,7 +223,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        switch CNContactStore.authorizationStatus(for: CNEntityType.contacts) {
+        switch permissionHandler.contactsAuthorizationStatus {
         case .notDetermined, .restricted, .denied:
             return tableView.frame.height * 0.95
             

@@ -46,6 +46,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     var callDurationTotal: TimeInterval?
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
+    let permissionHandler: DevicePermissionsHandling
     
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
@@ -59,6 +60,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
          audioSessionUseCase: any AudioSessionUseCaseProtocol,
          scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl,
+         permissionHandler: DevicePermissionsHandling,
          notificationCenter: NotificationCenter = .default) {
         self.chatListItem = chatListItem
         self.router = router
@@ -70,6 +72,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatNotificationControl = chatNotificationControl
+        self.permissionHandler = permissionHandler
         self.notificationCenter = notificationCenter
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         self.shouldShowUnreadCount = chatListItem.unreadCount != 0
@@ -740,13 +743,14 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     }
     
     private func startOrJoinMeetingTapped() {
-        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { [weak self] granted in
+        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
+            guard let self else { return }
             guard granted else {
-                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+                permissionHandler.alertAudioPermission(incomingCall: false)
                 return
             }
             
-            self?.startOrJoinCall()
+            startOrJoinCall()
         }
     }
     

@@ -16,7 +16,7 @@
 #import "ConfirmAccountViewController.h"
 #import "ContactRequestsViewController.h"
 #import "CustomModalAlertViewController.h"
-#import "DevicePermissionsHelper.h"
+
 #import "FileLinkViewController.h"
 #import "FolderLinkViewController.h"
 #import "Helper.h"
@@ -182,31 +182,16 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 MEGAChatGenericRequestDelegate *autojoinOrRejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (!error.type) {
                         [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
-                        NSString *identifier = [MEGASdk base64HandleForUserHandle:chatId];
-                        NSString *notificationText = [NSString stringWithFormat:NSLocalizedString(@"You have joined %@", @"Text shown in a notification to let the user know that has joined a public chat room after login or account creation"), chatTitle];
-                        if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
-                            [SVProgressHUD showSuccessWithStatus:notificationText];
-                        } else {
-                            [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                                if (granted) {
-                                    [self createChatAndShow:chatId publicChatLink:chatLink];
-                                    
-                                    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                    content.body = notificationText;
-                                    content.sound = UNNotificationSound.defaultSound;
-                                    content.userInfo = @{@"chatId" : @(chatId)};
-                                    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                                    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-                                    [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                                        if (error) {
-                                            [SVProgressHUD showSuccessWithStatus:notificationText];
-                                        }
-                                    }];
-                                } else {
-                                    [SVProgressHUD showSuccessWithStatus:notificationText];
-                                }
-                            }];
-                        }
+                        
+                        DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+                        
+                        [handler shouldAskForNotificationsPermissionsWithHandler:^(BOOL shouldAsk) {
+                            [self continueWithChatId:chatId
+                                           chatTitle:chatTitle
+                                            chatLink:chatLink
+                shouldAskForNotificationsPermissions:shouldAsk
+                                   permissionHandler:handler];
+                        }];
                     }
                 }];
                 MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];

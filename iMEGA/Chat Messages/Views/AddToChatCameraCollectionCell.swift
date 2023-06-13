@@ -15,6 +15,8 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         case captureDeviceInputInstantiationFailed
     }
     
+    let permissionHandler = DevicePermissionsHandler()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -22,7 +24,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     }
     
     func prepareToShowLivefeed() {
-        guard DevicePermissionsHelper.isVideoPermissionAuthorized() else {
+        guard permissionHandler.isVideoPermissionAuthorized else {
             return
         }
         
@@ -30,7 +32,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     }
     
     func showLiveFeed() throws {
-        if DevicePermissionsHelper.shouldAskForVideoPermissions() {
+        if permissionHandler.shouldAskForVideoPermissions {
             updateCameraIconImageView()
             throw LiveFeedError.askForPermission
         }
@@ -120,7 +122,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     }
     
     private func updateCameraIconImageView() {
-        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? #imageLiteral(resourceName: "cameraIconWhite") : (DevicePermissionsHelper.isVideoPermissionAuthorized() ? Asset.Images.Chat.cameraIconWhite.image : Asset.Images.Chat.cameraIcon.image)
+        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? #imageLiteral(resourceName: "cameraIconWhite") : (permissionHandler.isVideoPermissionAuthorized ? Asset.Images.Chat.cameraIconWhite.image : Asset.Images.Chat.cameraIcon.image)
     }
     
     private func updateAppearance() {

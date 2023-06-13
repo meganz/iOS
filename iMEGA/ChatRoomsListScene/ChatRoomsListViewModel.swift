@@ -81,7 +81,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     private var pastMeetings: [ChatRoomViewModel]?
     private var futureMeetings: [FutureMeetingSection]?
-    
+    private let permissionHandler: DevicePermissionsHandling
     private var subscriptions = Set<AnyCancellable>()
     private var isViewOnScreen = false
     
@@ -96,7 +96,8 @@ final class ChatRoomsListViewModel: ObservableObject {
          scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular,
-         chatViewMode: ChatViewMode = .chats
+         chatViewMode: ChatViewMode = .chats,
+         permissionHandler: DevicePermissionsHandling
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -110,10 +111,20 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.chatViewMode = chatViewMode
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
         self.searchText = ""
+        self.permissionHandler = permissionHandler
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         
         configureTitle()
+    }
+    
+    func askForNotificationsPermissionsIfNeeded() {
+        permissionHandler.shouldAskForNotificationsPermissions {[weak self] shouldAsk in
+            guard let self else { return }
+            if shouldAsk {
+                permissionHandler.presentModalNotificationsPermissionPrompt()
+            }
+        }
     }
     
     func loadChatRoomsIfNeeded() {
@@ -485,7 +496,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             megaHandleUseCase: megaHandleUseCase,
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)), scheduledMeetingUseCase: scheduledMeetingUseCase,
-            chatNotificationControl: chatNotificationControl
+            chatNotificationControl: chatNotificationControl, permissionHandler: permissionHandler
         )
     }
     
@@ -517,6 +528,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             megaHandleUseCase: megaHandleUseCase,
+            permissionHandler: permissionHandler,
             chatNotificationControl: chatNotificationControl
         )
     }

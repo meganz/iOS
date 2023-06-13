@@ -15,7 +15,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-#import "DevicePermissionsHelper.h"
+
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
@@ -476,15 +476,16 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
+    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
-        [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        [handler photosPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
             if (granted) {
                 [self loadPhotoAlbumBrowser];
             } else {
-                [DevicePermissionsHelper alertPhotosPermission];
+                [handler alertPhotosPermission];
             }
         }];
     }

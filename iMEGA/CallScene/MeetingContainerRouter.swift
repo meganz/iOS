@@ -268,10 +268,13 @@ final class MeetingContainerRouter: MeetingContainerRouting {
               let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatRoom.chatId) else {
             return
         }
-        let floatingPanelRouter = MeetingFloatingPanelRouter(presenter: baseViewController,
-                                                             containerViewModel: containerViewModel,
-                                                             chatRoom: chatRoom,
-                                                             isSpeakerEnabled: isSpeakerEnabled)
+        let floatingPanelRouter = MeetingFloatingPanelRouter(
+            presenter: baseViewController,
+            containerViewModel: containerViewModel,
+            chatRoom: chatRoom,
+            isSpeakerEnabled: isSpeakerEnabled,
+            permissionHandler: DevicePermissionsHandler()
+        )
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter
     }

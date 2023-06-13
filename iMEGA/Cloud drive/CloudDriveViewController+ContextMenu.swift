@@ -203,17 +203,20 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .chooseFromPhotos:
             showImagePicker(for: .photoLibrary)
         case .capture:
-            DevicePermissionsHelper.videoPermission { [weak self] granted in
-                if granted {
-                    DevicePermissionsHelper.photosPermission { granted in
-                        if !granted {
+            let permissionHandler = DevicePermissionsHandler()
+            permissionHandler.videoPermissionWithCompletionHandler {[weak self] videoPermissionGranted in
+                guard let self else { return }
+                if videoPermissionGranted {
+                    permissionHandler.photosPermissionWithCompletionHandler {[weak self] photosPermissionGranted in
+                        guard let self else { return }
+                        if !photosPermissionGranted {
                             UserDefaults.standard.set(false, forKey: "isSaveMediaCapturedToGalleryEnabled")
                         }
                         
-                        self?.showImagePicker(for: .camera)
+                        showImagePicker(for: .camera)
                     }
                 } else {
-                    DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+                    permissionHandler.alertVideoPermissionWith(handler: {})
                 }
             }
         case .importFrom:

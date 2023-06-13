@@ -13,19 +13,19 @@ extension DevicePermissionAlerting {
 
     func showVideoAccessAlert(withCompletion completion: (() -> Void)? = nil) {
         asyncOnMain {
-            DevicePermissionsHelper.alertVideoPermission(completionHandler: completion)
+            DevicePermissionsHandler().alertVideoPermissionWith(handler: completion ?? {})
         }
     }
 
     func showAudioAccessAlert(forIncomingCall incomingCall: Bool) {
         asyncOnMain {
-            DevicePermissionsHelper.alertAudioPermission(forIncomingCall: incomingCall)
+            DevicePermissionsHandler().alertAudioPermission(incomingCall: incomingCall)
         }
     }
 
     func showPhotoAccessAlert() {
         asyncOnMain {
-            DevicePermissionsHelper.alertPhotosPermission()
+            DevicePermissionsHandler().alertPhotosPermission()
         }
     }
 }

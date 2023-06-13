@@ -18,7 +18,7 @@
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactTableViewCell.h"
-#import "DevicePermissionsHelper.h"
+
 #import "DisplayMode.h"
 #import "GradientView.h"
 #import "VerifyCredentialsViewController.h"
@@ -840,24 +840,28 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (IBAction)startAudioVideoCallTouchUpInside:(UIButton *)sender {
+    // audio call button has tag == 0 in the XIB
+    // video call button has tag == 1 in the XIB
+    BOOL videoCall = sender.tag > 0;
     if (!MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         self.callButton.enabled = self.videoCallButton.enabled = NO;
-        [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
-            if (granted) {
-                if (sender.tag) {
-                    [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-                        if (granted) {
-                            [self performCallWithVideo:sender.tag];
+        DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+        [handler audioPermissionWithModal:YES incomingCall:NO completion:^(BOOL audioGranted) {
+            if (audioGranted) {
+                if (videoCall) {
+                    [handler videoPermissionWithCompletionHandlerWithHandler:^(BOOL videoGranted) {
+                        if (videoGranted) {
+                            [self performCallWithVideo:videoCall];
                         } else {
-                            [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+                            [handler alertVideoPermissionWithHandler:^{}];
                             [self updateCallButtonsState];
                         }
                     }];
                 } else {
-                    [self performCallWithVideo:sender.tag];
+                    [self performCallWithVideo:videoCall];
                 }
             } else {
-                [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+                [handler alertAudioPermissionWithIncomingCall:NO];
                 [self updateCallButtonsState];
             }
         }];

@@ -780,12 +780,13 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     private func isAudioPermissionAuthorized() -> Bool {
-        switch DevicePermissionsHelper.audioPermissionAuthorizationStatus() {
+        let permissionHandler = DevicePermissionsHandler()
+        switch permissionHandler.audioPermissionAuthorizationStatus {
         case .notDetermined:
-            DevicePermissionsHelper.audioPermissionModal(false, forIncomingCall: false, withCompletionHandler: nil)
+                permissionHandler.audioPermission(modal: false, incomingCall: false, completion: { _ in })
             return false
         case .restricted, .denied:
-            DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+                permissionHandler.alertAudioPermission(incomingCall: false)
             UINotificationFeedbackGenerator().notificationOccurred(.error)
             return false
         default:

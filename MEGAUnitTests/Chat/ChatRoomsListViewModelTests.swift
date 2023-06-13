@@ -149,6 +149,28 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         wait(for: [exception], timeout: 10)
     }
     
+    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsTrue_asksForNotificaitonPermissions() {
+        let permissionHandler = MockDevicePermissionHandler()
+        permissionHandler.shouldAskForNotificaitonPermissionsValueToReturn = true
+        let viewModel = ChatRoomsListViewModel(
+            permissionHandler: permissionHandler
+        )
+        viewModel.askForNotificationsPermissionsIfNeeded()
+        XCTAssertEqual(permissionHandler.shouldAskForNotificaitonPermissionsCallCounter, 1)
+        XCTAssertEqual(permissionHandler.presentModalNotificationsPermissionPromptCallCount, 1)
+    }
+    
+    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsFalse_doesNotAskForNotificaitonPermissions() {
+        let permissionHandler = MockDevicePermissionHandler()
+        permissionHandler.shouldAskForNotificaitonPermissionsValueToReturn = false
+        let viewModel = ChatRoomsListViewModel(
+            permissionHandler: permissionHandler
+        )
+        viewModel.askForNotificationsPermissionsIfNeeded()
+        XCTAssertEqual(permissionHandler.shouldAskForNotificaitonPermissionsCallCounter, 1)
+        XCTAssertEqual(permissionHandler.presentModalNotificationsPermissionPromptCallCount, 0)
+    }
+    
     // MARK: - Private methods
     
     private func assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: Bool, description: String, line: UInt = #line) {

@@ -1,11 +1,7 @@
 #import "ChatRoomsViewController.h"
-
 #import <Contacts/Contacts.h>
-
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
-
-#import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAChatChangeGroupNameRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
@@ -17,7 +13,6 @@
 #import "MEGA-Swift.h"
 #import "UITableView+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
-
 #import "ChatRoomCell.h"
 #import "ChatSettingsTableViewController.h"
 #import "ContactDetailsViewController.h"
@@ -25,7 +20,6 @@
 #import "EmptyStateView.h"
 #import "GroupChatDetailsViewController.h"
 #import "TransfersWidgetViewController.h"
-#import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
 @import MEGAUIKit;
@@ -190,10 +184,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
-    if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
-        [DevicePermissionsHelper modalNotificationsPermission];
-    }
+    
+    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+    
+    [handler shouldAskForNotificationsPermissionsWithHandler:^(BOOL shouldAsk) {
+        if (shouldAsk) {
+            [handler presentModalNotificationsPermissionPrompt];
+        }
+    }];
     
     self.navigationController.toolbarHidden = true;
     
@@ -901,12 +899,14 @@
 #pragma mark - IBActions
 
 - (IBAction)joinActiveCall:(id)sender {
-    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+    
+    [handler audioPermissionWithModal:YES incomingCall:NO completion:^(BOOL granted) {
         if (granted) {
             [self.timer invalidate];
             [self joinActiveCallWithChatRoom:self.chatRoomOnGoingCall];
         } else {
-            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+            [handler alertAudioPermissionWithIncomingCall:NO];
         }
     }];
 }

@@ -1,4 +1,7 @@
 import MEGADomain
+import MEGASdk
+import MEGAPresentation
+import UserNotifications
 
 extension MEGALinkManager {
     @objc class func downloadFileLinkAfterLogin() {
@@ -24,4 +27,66 @@ extension MEGALinkManager {
     class func nodesFromLinkToDownloadAfterLogin(nodes: [NodeEntity]) {
         MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes.toMEGANodes(in: MEGASdkManager.sharedMEGASdkFolder()))
     }
+    
+    @objc
+    class func continueWith(
+        chatId: UInt64,
+        chatTitle: String,
+        chatLink: URL,
+        shouldAskForNotificationsPermissions: Bool,
+        permissionHandler: DevicePermissionsHandler
+    ) {
+        guard let identifier = MEGASdk.base64Handle(forHandle: chatId) else {
+            // does it make sense to handle this error apart from early return?
+            return
+        }
+        let notificationText = String(format: NSLocalizedString("You have joined %@", comment: "Text shown in a notification to let the user know that has joined a public chat room after login or account creation"), chatTitle)
+        
+        if shouldAskForNotificationsPermissions {
+            SVProgressHUD.showSuccess(withStatus: notificationText)
+            return
+        }
+        
+        permissionHandler.notificationsPermission {granted in
+            if !granted {
+                SVProgressHUD.showSuccess(withStatus: notificationText)
+            }
+            
+            MEGALinkManager.createChatAndShow(chatId, publicChatLink: chatLink)
+            
+            addNotficiation(
+                notificationText: notificationText,
+                chatId: chatId,
+                identifier: identifier
+            )
+        }
+    }
+    
+    static func addNotficiation(
+        notificationText: String,
+        chatId: UInt64,
+        identifier: String
+    ) {
+        
+        let content = UNMutableNotificationContent()
+        content.body = notificationText
+        content.sound = .default
+        content.userInfo = ["chatId" : chatId]
+        
+        let trigger = UNTimeIntervalNotificationTrigger(
+            timeInterval: 1,
+            repeats: false
+        )
+        
+        let request = UNNotificationRequest(
+            identifier: identifier,
+            content: content,
+            trigger: trigger
+        )
+        
+        UNUserNotificationCenter.current().add(request) { _ in
+            SVProgressHUD.showSuccess(withStatus: notificationText)
+        }
+    }
 }
+
