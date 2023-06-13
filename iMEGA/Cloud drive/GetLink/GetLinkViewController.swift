@@ -742,6 +742,8 @@ class GetLinkViewController: UIViewController {
                     }
                 }
             }
+        case .hideMultiLinkDescription:
+            multilinkDescriptionView.isHidden = true
         }
     }
     

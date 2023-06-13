@@ -67,6 +67,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         invokeCommand?(.configureView(title: title,
                                       isMultilink: isMultiLink,
                                       shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(itemCount)))
+        invokeCommand?(.hideMultiLinkDescription)
     }
     
     private func loadLinksForAlbums() {
