@@ -16,9 +16,13 @@ struct EnforceCopyrightWarningView<T: View>: View {
                     CopyrightWarningView(copyrightMessage: viewModel.copyrightMessage,
                                          isTermsAgreed: $viewModel.isTermsAggreed)
                 case .unknown:
-                    ProgressView()
+                    EmptyView()
                 }
-            }.onAppear {
+                ProgressView()
+                    .scaleEffect(1.5)
+                    .opacity(viewModel.viewStatus == .unknown ? 1.0 : 0.0)
+            }
+            .onAppear {
                 viewModel.determineViewState()
             }.onReceive(viewModel.$isTermsAggreed.dropFirst()) {
                 guard !$0 else { return }
