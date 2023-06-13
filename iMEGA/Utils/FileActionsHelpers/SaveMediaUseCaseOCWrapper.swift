@@ -4,8 +4,9 @@ import MEGAData
 @objc final class SaveMediaToPhotosUseCaseOCWrapper: NSObject {
     @objc func saveToPhotos(node: MEGANode, isFolderLink: Bool = false) {
         let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: isFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let permissionHandler = DevicePermissionsHandler()
         
-        DevicePermissionsHelper.photosPermission { granted in
+        permissionHandler.photosPermissionWithCompletionHandler { granted in
             if granted {
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
                 Task { @MainActor in
@@ -22,7 +23,7 @@ import MEGAData
                     }
                 }
             } else {
-                DevicePermissionsHelper.alertPhotosPermission()
+                permissionHandler.alertPhotosPermission()
             }
         }
     }

@@ -108,12 +108,14 @@ extension ChatViewController {
     }
     
     private func joinCall() {
-        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { granted in
+        let permissionHandler = DevicePermissionsHandler()
+        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
+            guard let self else { return }
             if granted {
-                self.timer?.invalidate()
-                self.openCallViewWithVideo(videoCall: false)
+                timer?.invalidate()
+                openCallViewWithVideo(videoCall: false)
             } else {
-                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+                permissionHandler.alertAudioPermission(incomingCall: false)
             }
         }
     }

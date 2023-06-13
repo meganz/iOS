@@ -6,7 +6,7 @@
 #import "SVProgressHUD.h"
 
 #import "CustomModalAlertViewController.h"
-#import "DevicePermissionsHelper.h"
+
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGASdkManager.h"
@@ -207,7 +207,8 @@ typedef NS_ENUM(NSInteger, QRSection) {
             } else {
                 sender.selectedSegmentIndex = QRSectionMyCode;
                 [self valueChangedAtSegmentedControl:sender];
-                [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+                DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+                [handler alertVideoPermissionWithHandler:^{}];
             }
             
             break;

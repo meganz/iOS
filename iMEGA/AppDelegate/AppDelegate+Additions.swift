@@ -178,6 +178,21 @@ extension AppDelegate {
             UIApplication.mnz_presentingViewController().present(alert, animated: true, completion: nil)
         }
     }
+
+    @objc func registerForNotifications() {
+        permissionsHandler.shouldAskForNotificationsPermissions { shouldAsk in
+            // this code here seems to work on assumption that,
+            // we were granted authorization in the past
+            // and we can progress with registering for remote notifications
+            if !shouldAsk {
+                self.permissionsHandler.notificationsPermission(with: { granted in
+                    if granted {
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
+                })
+            }
+        }
+    }
 }
 
 // MARK: - Config Cookie Settings

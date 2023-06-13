@@ -86,10 +86,10 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     }
     
     func showVideoPermissionError() {
-        DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+        DevicePermissionsHandler().alertVideoPermissionWith(handler: {})
     }
     
     func showAudioPermissionError() {
-        DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+        DevicePermissionsHandler().alertAudioPermission(incomingCall: false)
     }
 }

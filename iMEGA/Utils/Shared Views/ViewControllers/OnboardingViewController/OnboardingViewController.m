@@ -1,7 +1,5 @@
 
 #import "OnboardingViewController.h"
-
-#import "DevicePermissionsHelper.h"
 #import "OnboardingView.h"
 #import "MEGA-Swift.h"
 
@@ -40,6 +38,8 @@
     self.primaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.secondaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     
+    DevicePermissionsHandler *permissionHandler = [[DevicePermissionsHandler alloc] init];
+    
     switch (self.type) {
         case OnboardingTypeDefault:
             [self.pageControl addTarget:self action:@selector(pageControlValueChanged) forControlEvents:UIControlEventValueChanged];
@@ -71,8 +71,9 @@
             self.tertiaryButton.hidden = YES;
             [self.primaryButton setTitle:NSLocalizedString(@"continue", @"'Next' button in a dialog") forState:UIControlStateNormal];
             
+            
             int nextIndex = 0;
-            if (DevicePermissionsHelper.shouldAskForPhotosPermissions) {
+            if ([permissionHandler shouldAskForPhotosPermissions]) {
                 OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
                 onboardingView.type = OnboardingViewTypePhotosPermission;
                 nextIndex++;
@@ -80,7 +81,7 @@
                 [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
             }
             
-            if (DevicePermissionsHelper.shouldAskForContactsPermissions) {
+            if ([permissionHandler shouldAskForContactsPermissions]) {
                 OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
                 onboardingView.type = OnboardingViewTypeContactsPermission;
                 nextIndex++;
@@ -88,7 +89,7 @@
                 [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
             }
             
-            if (DevicePermissionsHelper.shouldAskForAudioPermissions || DevicePermissionsHelper.shouldAskForVideoPermissions) {
+            if ([permissionHandler shouldAskForAudioPermissions] || [permissionHandler shouldAskForVideoPermissions ]) {
                 OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
                 onboardingView.type = OnboardingViewTypeMicrophoneAndCameraPermissions;
                 nextIndex++;
@@ -96,19 +97,23 @@
                 [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
             }
             
-            if (DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
-                OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
-                onboardingView.type = OnboardingViewTypeNotificationsPermission;
-                nextIndex++;
-            } else {
-                [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
-            }
-            
+            // shouldAskForNotificationsPermissionsWithHandler calls handler on the main thread
+            __weak __typeof__(self) weakSelf = self;
+            [permissionHandler shouldAskForNotificationsPermissionsWithHandler:^(BOOL shouldAskForNotificationPermission) {
+                if (shouldAskForNotificationPermission) {
+                    OnboardingView *onboardingView = weakSelf.scrollView.subviews.firstObject.subviews[nextIndex];
+                    onboardingView.type = OnboardingViewTypeNotificationsPermission;
+                    // no need to increment nextIndex as this is last check in the scope
+                } else {
+                    [weakSelf.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
+                }
+                weakSelf.pageControl.numberOfPages = weakSelf.scrollView.subviews.firstObject.subviews.count;
+            }];
             break;
     }
     
     self.scrollView.delegate = self;
-    self.pageControl.numberOfPages = self.scrollView.subviews.firstObject.subviews.count;
+    
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -190,6 +195,7 @@
 #pragma mark - IBActions
 
 - (IBAction)primaryButtonTapped:(UIButton *)sender {
+    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
     switch (self.type) {
         case OnboardingTypeDefault: {
             UINavigationController *createAccountNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
@@ -206,22 +212,24 @@
             OnboardingView *currentView = self.scrollView.subviews.firstObject.subviews[self.pageControl.currentPage];
             switch (currentView.type) {
                 case OnboardingViewTypePhotosPermission: {
-                    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+                    [handler photosPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
                         [self nextPageOrDismiss];
                     }];
                     break;
                 }
                     
                 case OnboardingViewTypeContactsPermission: {
-                    [DevicePermissionsHelper contactsPermissionWithCompletionHandler:^(BOOL granted) {
+                    [handler contactsPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
                         [self nextPageOrDismiss];
                     }];
                     break;
                 }
                     
                 case OnboardingViewTypeMicrophoneAndCameraPermissions: {
-                    [DevicePermissionsHelper audioPermissionModal:NO forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
-                        [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
+                    [handler audioPermissionWithModal:NO
+                                        incomingCall:NO
+                                          completion:^(BOOL granted) {
+                        [handler videoPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
                             [self nextPageOrDismiss];
                         }];
                     }];
@@ -229,7 +237,7 @@
                 }
                     
                 case OnboardingViewTypeNotificationsPermission: {
-                    [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+                    [handler notificationsPermissionWith:^(BOOL granted) {
                         if (granted) {
                             [UIApplication.sharedApplication registerForRemoteNotifications];
                         }

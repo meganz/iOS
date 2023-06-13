@@ -35,9 +35,7 @@ final class ChatRoomsListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         AudioPlayerManager.shared.addDelegate(self)
-        if DevicePermissionsHelper.shouldAskForNotificationsPermissions() {
-            DevicePermissionsHelper.modalNotificationsPermission()
-        }
+        viewModel.askForNotificationsPermissionsIfNeeded()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

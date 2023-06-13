@@ -67,6 +67,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
     @Published var totalCallDuration: TimeInterval = 0
+    private let permissionHandler: DevicePermissionsHandling
     
     init(scheduledMeeting: ScheduledMeetingEntity,
          nextOccurrence: ScheduledMeetingOccurrenceEntity?,
@@ -80,6 +81,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
          audioSessionUseCase: any AudioSessionUseCaseProtocol,
          scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          megaHandleUseCase: any MEGAHandleUseCaseProtocol,
+         permissionHandler: DevicePermissionsHandling,
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
@@ -92,6 +94,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.permissionHandler = permissionHandler
         self.chatNotificationControl = chatNotificationControl
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
         self.isRecurring = scheduledMeeting.rules.frequency != .invalid
@@ -242,13 +245,14 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     }
     
     private func startOrJoinMeetingTapped() {
-        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { [weak self] granted in
+        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
+            guard let self else { return }
             guard granted else {
-                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+                permissionHandler.alertAudioPermission(incomingCall: false)
                 return
             }
             
-            self?.startOrJoinCall()
+            startOrJoinCall()
         }
     }
     

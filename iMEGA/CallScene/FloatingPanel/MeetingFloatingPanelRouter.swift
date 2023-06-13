@@ -37,12 +37,20 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private let isSpeakerEnabled: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
     private var inviteToMegaNavigationController: MEGANavigationController?
+    private let permissionHandler: DevicePermissionsHandling
     
-    init(presenter: UINavigationController, containerViewModel: MeetingContainerViewModel, chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool) {
+    init(
+        presenter: UINavigationController,
+        containerViewModel: MeetingContainerViewModel,
+        chatRoom: ChatRoomEntity,
+        isSpeakerEnabled: Bool,
+        permissionHandler: DevicePermissionsHandling
+    ) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
         self.isSpeakerEnabled = isSpeakerEnabled
+        self.permissionHandler = permissionHandler
     }
     
     func build() -> UIViewController {
@@ -160,11 +168,11 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func showVideoPermissionError() {
-        DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+        permissionHandler.alertVideoPermissionWith(handler: {})
     }
     
     func showAudioPermissionError() {
-        DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+        permissionHandler.alertAudioPermission(incomingCall: false)
     }
     
     // MARK: - Private methods.

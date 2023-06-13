@@ -86,6 +86,8 @@ class ChatViewController: MessagesViewController {
     var timer: Timer?
     var initDuration: TimeInterval?
     
+    let permissionHandler = DevicePermissionsHandler()
+    
     lazy var startOrJoinCallButton: UIButton = {
         let button = UIButton()
         let textColor = traitCollection.userInterfaceStyle == .dark ? Colors.General.Black._000000.color : Colors.General.White.ffffff.color
@@ -1006,28 +1008,32 @@ class ChatViewController: MessagesViewController {
     // MARK: - Bar Button actions
     
     @objc func startAudioCall() {
-        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
+        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
+            guard let self else { return }
             if granted {
-                self.openCallViewWithVideo(videoCall: false)
+                openCallViewWithVideo(videoCall: false)
             } else {
-                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+                permissionHandler.alertAudioPermission(incomingCall: false)
             }
         }
     }
     
     @objc func startVideoCall() {
-        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
-            if granted {
-                DevicePermissionsHelper.videoPermission { (videoPermission) in
-                    if videoPermission {
-                        self.openCallViewWithVideo(videoCall: true)
+        
+        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] audioPermissionGranted in
+            guard let self else { return }
+            if audioPermissionGranted {
+                permissionHandler.videoPermissionWithCompletionHandler {[weak self] videoPermissionGranted in
+                    guard let self else { return }
+                    if videoPermissionGranted {
+                        openCallViewWithVideo(videoCall: true)
                     } else {
-                        DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+                        permissionHandler.alertVideoPermissionWith {}
                     }
                 }
                 
             } else {
-                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+                permissionHandler.alertAudioPermission(incomingCall: false)
             }
         }
     }

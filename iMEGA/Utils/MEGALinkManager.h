@@ -47,4 +47,6 @@
 
 @property (class, nonatomic, readonly) NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
++ (void)createChatAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink;
+
 @end

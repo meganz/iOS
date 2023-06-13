@@ -45,7 +45,8 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func saveToPhotos(node: MEGANode) {
-        DevicePermissionsHelper.photosPermission { granted in
+        let permissionHandler = DevicePermissionsHandler()
+        permissionHandler.photosPermissionWithCompletionHandler { granted in
             if granted {
                 let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: self.displayMode == .nodeInsideFolderLink ? self.api : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
                 let completionBlock: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
@@ -57,33 +58,33 @@ extension MEGAPhotoBrowserViewController {
                         )
                     }
                 }
-
+                
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-
+                
                 switch self.displayMode {
-                case .chatAttachment, .chatSharedFiles:
-                    saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId, completion: completionBlock)
-                case .fileLink:
-                    guard let linkUrl = URL(string: self.publicLink) else { return }
-                    let fileLink = FileLinkEntity(linkURL: linkUrl)
-                    saveMediaUseCase.saveToPhotos(fileLink: fileLink, completion: completionBlock)
-                default:
-                    Task { @MainActor in
-                        do {
-                            try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
-                        } catch {
-                            if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                                await SVProgressHUD.dismiss()
-                                SVProgressHUD.show(
-                                    Asset.Images.NodeActions.saveToPhotos.image,
-                                    status: error.localizedDescription
-                                )
+                    case .chatAttachment, .chatSharedFiles:
+                        saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId, completion: completionBlock)
+                    case .fileLink:
+                        guard let linkUrl = URL(string: self.publicLink) else { return }
+                        let fileLink = FileLinkEntity(linkURL: linkUrl)
+                        saveMediaUseCase.saveToPhotos(fileLink: fileLink, completion: completionBlock)
+                    default:
+                        Task { @MainActor in
+                            do {
+                                try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+                            } catch {
+                                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                                    await SVProgressHUD.dismiss()
+                                    SVProgressHUD.show(
+                                        Asset.Images.NodeActions.saveToPhotos.image,
+                                        status: error.localizedDescription
+                                    )
+                                }
                             }
                         }
-                    }
                 }
             } else {
-                DevicePermissionsHelper.alertPhotosPermission()
+                permissionHandler.alertPhotosPermission()
             }
         }
     }

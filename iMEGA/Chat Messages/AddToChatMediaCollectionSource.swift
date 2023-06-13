@@ -16,9 +16,7 @@ class AddToChatMediaCollectionSource: NSObject {
     private let minimumLineSpacing: CGFloat = 2.0
     private let cellDefaultWidth: CGFloat = 100.0
 
-    private var hasAuthorizedAccessToPhotoAlbum: Bool {
-        return PHPhotoLibrary.authorizationStatus() == .authorized
-    }
+    private let permissionHandler = DevicePermissionsHandler()
     
     private lazy var fetchOptions: PHFetchOptions = {
         let fetchOptions = PHFetchOptions()
@@ -31,7 +29,7 @@ class AddToChatMediaCollectionSource: NSObject {
         didSet {
             if showLiveFeedIfRequired,
                 let cameraCell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? AddToChatCameraCollectionCell,
-                DevicePermissionsHelper.isVideoPermissionAuthorized(),
+               permissionHandler.isVideoPermissionAuthorized,
                 !cameraCell.isCurrentShowingLiveFeed {
                 do {
                     try cameraCell.showLiveFeed()
@@ -58,6 +56,10 @@ class AddToChatMediaCollectionSource: NSObject {
                                 forCellWithReuseIdentifier: AddToChatAllowAccessCollectionCell.reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+    
+    private var hasAuthorizedAccessToPhotoAlbum: Bool {
+        permissionHandler.hasAuthorizedAccessToPhotoAlbum
     }
     
     private func updateFetchResult() {
@@ -174,28 +176,32 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                 imageCell.toggleSelection()
             }
         } else if cell is AddToChatAllowAccessCollectionCell {
-            DevicePermissionsHelper.photosPermission { granted in
+            permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
+                guard let self else { return }
                 if granted {
                     self.collectionView.reloadData()
                 } else {
                     if UIDevice.current.iPad { self.delegate?.dismissView() }
-                    DevicePermissionsHelper.alertPhotosPermission()
+                    permissionHandler.alertPhotosPermission()
                 }
             }
         } else if cell is AddToChatCameraCollectionCell {
-            DevicePermissionsHelper.videoPermission { videoPermissionGranted in
+            permissionHandler.videoPermissionWithCompletionHandler {[weak self] videoPermissionGranted in
+                guard let self else { return }
+                
                 if videoPermissionGranted {
-                    DevicePermissionsHelper.photosPermission { photosPermissionGranted in
+                    permissionHandler.photosPermissionWithCompletionHandler {[weak self] photosPermissionGranted in
+                        guard let self else { return }
                         if photosPermissionGranted {
-                            self.delegate?.showCamera()
+                            delegate?.showCamera()
                         } else {
                             if UIDevice.current.iPad { self.delegate?.dismissView() }
-                            DevicePermissionsHelper.alertPhotosPermission()
+                            permissionHandler.alertPhotosPermission()
                         }
                     }
                 } else {
                     if UIDevice.current.iPad { self.delegate?.dismissView() }
-                    DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+                    permissionHandler.alertVideoPermissionWith {}
                 }
             }
         }

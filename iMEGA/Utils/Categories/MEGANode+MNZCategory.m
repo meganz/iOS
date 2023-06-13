@@ -6,7 +6,7 @@
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
 
-#import "DevicePermissionsHelper.h"
+
 #import "Helper.h"
 #import "MEGAExportRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"

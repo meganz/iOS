@@ -11,6 +11,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 };
 
 @class MainTabBarController;
+@class DevicePermissionsHandler;
 
 @interface AppDelegate : UIResponder 
 
@@ -20,6 +21,7 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;
 @property (nonatomic, weak, readonly) MainTabBarController *mainTBC;
 @property (nonatomic) NSNumber *openChatLater;
+@property (nonatomic, strong) DevicePermissionsHandler *permissionsHandler;
 
 - (void)showMainTabBar;
 - (void)showOnboardingWithCompletion:(nullable void (^)(void))completion;

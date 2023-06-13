@@ -12,7 +12,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "DevicePermissionsHelper.h"
+
 #import "MEGALinkManager.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -180,6 +180,7 @@
     [MEGALinkManager resetLinkAndURLType];
     isFetchNodesDone = NO;
     _presentInviteContactVCLater = NO;
+    _permissionsHandler = [[DevicePermissionsHandler alloc] init];
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (sessionV3) {
@@ -438,21 +439,21 @@
                             MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                             MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                             if (chatConnection == MEGAChatConnectionOnline) {
-                                [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
-                                    if (granted) {
+                                [self.permissionsHandler audioPermissionWithModal:YES incomingCall:YES completion:^(BOOL audioGranted) {
+                                    if (audioGranted) {
                                         if (self.videoCall) {
-                                            [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-                                                if (granted) {
+                                            [self.permissionsHandler videoPermissionWithCompletionHandlerWithHandler:^(BOOL videoGranted) {
+                                                if (videoGranted) {
                                                     [self performCall];
                                                 } else {
-                                                    [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+                                                    [self.permissionsHandler alertVideoPermissionWithHandler:^{}];
                                                 }
                                             }];
                                         } else {
                                             [self performCall];
                                         }
                                     } else {
-                                        [DevicePermissionsHelper alertAudioPermissionForIncomingCall:YES];
+                                        [self.permissionsHandler alertAudioPermissionWithIncomingCall:YES];
                                     }
                                 }];
                             }
@@ -486,21 +487,21 @@
                     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                     MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                     if (chatConnection == MEGAChatConnectionOnline) {
-                        [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
-                            if (granted) {
+                        [self.permissionsHandler audioPermissionWithModal:YES incomingCall:YES completion:^(BOOL audioGranted) {
+                            if (audioGranted) {
                                 if (self.videoCall) {
-                                    [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-                                        if (granted) {
+                                    [self.permissionsHandler videoPermissionWithCompletionHandlerWithHandler:^(BOOL videoGranted) {
+                                        if (videoGranted) {
                                             [self performCall];
                                         } else {
-                                            [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
+                                            [self.permissionsHandler alertVideoPermissionWithHandler:^{}];
                                         }
                                     }];
                                 } else {
                                     [self performCall];
                                 }
                             } else {
-                                [DevicePermissionsHelper alertAudioPermissionForIncomingCall:YES];
+                                [self.permissionsHandler alertAudioPermissionWithIncomingCall:YES];
                             }
                         }];
                     }
@@ -827,16 +828,6 @@
     PKPushRegistry *voipRegistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
     voipRegistry.delegate = self;
     voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
-}
-
-- (void)registerForNotifications {
-    if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
-        [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-            if (granted) {
-                [[UIApplication sharedApplication] registerForRemoteNotifications];
-            }
-        }];
-    }
 }
 
 - (void)migrateLocalCachesLocation {

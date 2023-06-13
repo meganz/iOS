@@ -58,6 +58,8 @@ enum SessionSectionRow: Int {
     @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
     
+    private let permissionHandler = DevicePermissionsHandler()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -224,33 +226,42 @@ enum SessionSectionRow: Int {
         let changeAvatarAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         changeAvatarAlertController.addAction(UIAlertAction.init(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
         
-        let fromPhotosAlertAction = UIAlertAction.init(title: Strings.Localizable.choosePhotoVideo, style: .default) { _ in
-            DevicePermissionsHelper.photosPermission(completionHandler: { (granted) in
+        let fromPhotosAlertAction = UIAlertAction.init(title: Strings.Localizable.choosePhotoVideo, style: .default) {[weak self] _ in
+            guard let self else { return }
+            permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
+                guard let self else { return }
                 if granted {
-                    self.showImagePicker(sourceType: .photoLibrary)
+                    showImagePicker(sourceType: .photoLibrary)
                 } else {
-                    DevicePermissionsHelper.alertPhotosPermission()
+                    permissionHandler.alertPhotosPermission()
                 }
-            })
+            }
         }
         changeAvatarAlertController.addAction(fromPhotosAlertAction)
         
-        let captureAlertAction = UIAlertAction.init(title: Strings.Localizable.capturePhotoVideo, style: .default) { _ in
-            DevicePermissionsHelper.videoPermission(completionHandler: { (granted) in
+        let captureAlertAction = UIAlertAction.init(title: Strings.Localizable.capturePhotoVideo, style: .default) {[weak self] _ in
+            guard let self else { return }
+            permissionHandler.videoPermissionWithCompletionHandler {[weak self] granted in
+                guard let self else { return }
                 if granted {
-                    DevicePermissionsHelper.photosPermission(completionHandler: { (granted) in
-                        if granted {
+                    permissionHandler.photosPermissionWithCompletionHandler {[weak self] photoPermisisonGranted in
+                        guard let self else { return }
+                        // we show the camera screen regardless of value `photoPermisisonGranted`
+                        // if we do not have photos access we will not be able
+                        // to save the photo we make or browse existing images
+                        // from within camera capture screen?
+                        if photoPermisisonGranted {
                             self.showImagePicker(sourceType: .camera)
                         } else {
                             UserDefaults.standard.set(true, forKey: "isSaveMediaCapturedToGalleryEnabled")
                             UserDefaults.standard.synchronize()
                             self.showImagePicker(sourceType: .camera)
                         }
-                    })
+                    }
                 } else {
-                    DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+                    permissionHandler.alertVideoPermissionWith {}
                 }
-            })
+            }
         }
         changeAvatarAlertController.addAction(captureAlertAction)
         
