@@ -73,7 +73,6 @@ class GetLinkViewController: UIViewController {
     private var nodes = [MEGANode]()
     private var getLinkVM = GetNodeLinkViewModel()
     private var nodesToExportCount = 0
-    private var totalInitallyUnexportedNodesCount = 0
     private var justUpgradedToProAccount = false
     private var isLinkAlreadyCreated = false
     private var defaultDateStored = false
@@ -240,9 +239,9 @@ class GetLinkViewController: UIViewController {
         }
 
         if isLinkAlreadyCreated {
-            showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCopied(totalInitallyUnexportedNodesCount))
+            showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCopied(nodes.count))
         } else {
-            showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCreatedAndCopied(totalInitallyUnexportedNodesCount))
+            showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCreatedAndCopied(nodes.count))
             isLinkAlreadyCreated = true
         }
     }
@@ -292,7 +291,6 @@ class GetLinkViewController: UIViewController {
     
     private func processNodes() {
         nodesToExportCount = nodes.filter { !$0.isExported() }.count
-        totalInitallyUnexportedNodesCount = nodesToExportCount
         isLinkAlreadyCreated = nodesToExportCount == 0
         nodes.forEach { (node) in
             if node.isExported() {
@@ -560,7 +558,8 @@ class GetLinkViewController: UIViewController {
         if let cellViewModel {
             cell.viewModel = cellViewModel
         } else {
-            cell.configure(forNode: nodes[indexPath.section])
+            let sectionIndex = getLinkVM.multilink ? indexPath.section - 1 : indexPath.section
+            cell.configure(forNode: nodes[sectionIndex])
         }
         
         return cell
@@ -571,7 +570,7 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkAccessInfoTableViewCell")
         }
 
-        cell.configure(isPasswordSet: getLinkVM.passwordProtect)
+        cell.configure(nodesCount: nodes.count, isPasswordSet: getLinkVM.passwordProtect)
 
         return cell
     }
@@ -637,7 +636,7 @@ class GetLinkViewController: UIViewController {
         }
         
         if getLinkVM.multilink {
-            let node = nodes[indexPath.section]
+            let node = nodes[indexPath.section-1]
             let publicLink = node.publicLink ?? ""
             cell.configureLinkCell(link: node.isExported() ? publicLink : "")
         } else {
@@ -773,7 +772,7 @@ extension GetLinkViewController: UITableViewDataSource {
             return getLinkViewModel.numberOfSections
         }
         if getLinkVM.multilink {
-            return nodes.count
+            return nodes.count + 1
         } else {
             return sections().count
         }
@@ -784,7 +783,7 @@ extension GetLinkViewController: UITableViewDataSource {
             return getLinkViewModel.numberOfRowsInSection(section)
         }
         if getLinkVM.multilink {
-            return 2
+            return section == 0 ? 1 : 2
         } else {
             switch sections()[section] {
             case .info, .decryptKeySeparate, .linkAccessInfo:
@@ -816,10 +815,14 @@ extension GetLinkViewController: UITableViewDataSource {
         }
         
         if getLinkVM.multilink {
-            if indexPath.row == 0 {
-                return infoCell(forIndexPath: indexPath)
+            if indexPath.section == 0 && indexPath.row == 0 {
+                return linkAccessInfoCell(forIndexPath: indexPath)
             } else {
-                return linkCell(forIndexPath: indexPath)
+                if indexPath.row == 0 {
+                    return infoCell(forIndexPath: indexPath)
+                } else {
+                    return linkCell(forIndexPath: indexPath)
+                }
             }
         } else {
             switch sections()[indexPath.section] {
@@ -875,8 +878,16 @@ extension GetLinkViewController: UITableViewDelegate {
         }
         
         if isMultiLink {
+            guard section > 0 else {
+                return nil
+            }
+
             header.titleLabel.textAlignment = .left
-            header.configure(title: Strings.Localizable.link, topDistance: section == 0 ? 17.0 : 25.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+            header.configure(
+                title: Strings.Localizable.link,
+                topDistance: section == 1 ? 17.0 : 25.0, isTopSeparatorVisible: false,
+                isBottomSeparatorVisible: true
+            )
         } else {
             switch sectionType(forSection: section) {
             case .link:
@@ -911,8 +922,17 @@ extension GetLinkViewController: UITableViewDelegate {
         }
         
         if isMultiLink {
+            guard section > 0 else {
+                return nil
+            }
+
             footer.titleLabel.textAlignment = .center
-            footer.configure(title: Strings.Localizable.tapToCopy, topDistance: 4, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+            footer.configure(
+                title: Strings.Localizable.tapToCopy,
+                topDistance: 4,
+                isTopSeparatorVisible: true,
+                isBottomSeparatorVisible: false
+            )
         } else {
             switch sectionType(forSection: section) {
             case .decryptKeySeparate:
@@ -1020,6 +1040,7 @@ extension GetLinkViewController: MEGARequestDelegate {
 extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
     func setLinkPassword(_ setLinkPassword: SetLinkPasswordViewController, password: String) {
         setLinkPassword.dismissView()
+        showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.Link.linkUpdated)
         if let publicLink = nodes[0].publicLink {
             encrypt(link: publicLink, with: password)
         }
