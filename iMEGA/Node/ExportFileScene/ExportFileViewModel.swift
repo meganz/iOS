@@ -21,16 +21,16 @@ final class ExportFileViewModel: ViewModelType {
     
     // MARK: - Private properties
     private let router: ExportFileViewRouting
-    private let exportFileUseCase: ExportFileUseCaseProtocol
-    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
+    private let exportFileUseCase: any ExportFileUseCaseProtocol
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
     init(router: ExportFileViewRouting,
-         analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
-         exportFileUseCase: ExportFileUseCaseProtocol) {
+         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
+         exportFileUseCase: any ExportFileUseCaseProtocol) {
         self.router = router
         self.analyticsEventUseCase = analyticsEventUseCase
         self.exportFileUseCase = exportFileUseCase

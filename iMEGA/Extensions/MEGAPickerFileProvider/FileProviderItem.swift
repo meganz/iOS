@@ -5,7 +5,7 @@ import MEGASwift
 
 final class FileProviderItem: NSObject, NSFileProviderItem {
     private let node: NodeEntity
-    private let nodeAttributeUseCase: NodeAttributeUseCaseProtocol
+    private let nodeAttributeUseCase: any NodeAttributeUseCaseProtocol
     
     init(node: NodeEntity) {
         self.node = node

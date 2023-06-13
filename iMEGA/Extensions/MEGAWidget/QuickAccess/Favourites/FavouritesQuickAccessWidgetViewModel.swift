@@ -11,14 +11,16 @@ final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     }
 
     // MARK: - Private properties
-    private let credentialUseCase: CredentialUseCaseProtocol
-    private let copyDataBasesUseCase: CopyDataBasesUseCaseProtocol
-    private let favouriteItemsUseCase: FavouriteItemsUseCaseProtocol
+    private let credentialUseCase: any CredentialUseCaseProtocol
+    private let copyDataBasesUseCase: any CopyDataBasesUseCaseProtocol
+    private let favouriteItemsUseCase: any FavouriteItemsUseCaseProtocol
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
 
-    init(credentialUseCase: CredentialUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, favouriteItemsUseCase: FavouriteItemsUseCaseProtocol) {
+    init(credentialUseCase: any CredentialUseCaseProtocol,
+         copyDataBasesUseCase: any CopyDataBasesUseCaseProtocol,
+         favouriteItemsUseCase: any FavouriteItemsUseCaseProtocol) {
         self.credentialUseCase = credentialUseCase
         self.copyDataBasesUseCase = copyDataBasesUseCase
         self.favouriteItemsUseCase = favouriteItemsUseCase

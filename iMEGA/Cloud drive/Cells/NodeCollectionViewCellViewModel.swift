@@ -1,9 +1,9 @@
 import MEGADomain
 
 @objc class NodeCollectionViewCellViewModel: NSObject {
-    private let mediaUseCase: MediaUseCaseProtocol
+    private let mediaUseCase: any MediaUseCaseProtocol
     
-    init(mediaUseCase: MediaUseCaseProtocol) {
+    init(mediaUseCase: any MediaUseCaseProtocol) {
         self.mediaUseCase = mediaUseCase
     }
     

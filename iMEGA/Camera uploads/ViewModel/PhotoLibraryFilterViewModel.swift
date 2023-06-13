@@ -10,12 +10,12 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     @Published var appliedSavePreferences = false
    
     private let contentMode: PhotoLibraryContentMode
-    private let userAttributeUseCase: UserAttributeUseCaseProtocol
+    private let userAttributeUseCase: any UserAttributeUseCaseProtocol
     
     let isRememberPreferencesFeatureFlagEnabled: Bool
     
     init(contentMode: PhotoLibraryContentMode = .library,
-         userAttributeUseCase: UserAttributeUseCaseProtocol,
+         userAttributeUseCase: any UserAttributeUseCaseProtocol,
          featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
         self.contentMode = contentMode
         self.userAttributeUseCase = userAttributeUseCase

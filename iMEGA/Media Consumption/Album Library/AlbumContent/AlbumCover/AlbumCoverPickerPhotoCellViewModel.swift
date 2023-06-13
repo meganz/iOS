@@ -11,8 +11,8 @@ final class AlbumCoverPickerPhotoCellViewModel: PhotoCellViewModel {
     init(albumPhoto: AlbumPhotoEntity,
          photoSelection: AlbumCoverPickerPhotoSelection,
          viewModel: PhotoLibraryModeAllViewModel,
-         thumbnailUseCase: ThumbnailUseCaseProtocol,
-         mediaUseCase: MediaUseCaseProtocol) {
+         thumbnailUseCase: any ThumbnailUseCaseProtocol,
+         mediaUseCase: any MediaUseCaseProtocol) {
         self.albumPhoto = albumPhoto
         self.photoSelection = photoSelection
         

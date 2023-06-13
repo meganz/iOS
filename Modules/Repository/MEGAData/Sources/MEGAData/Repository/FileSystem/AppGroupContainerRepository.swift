@@ -8,10 +8,10 @@ public struct AppGroupContainerRepository: AppGroupContainerRepositoryProtocol {
     }
     
     private let container: AppGroupContainer
-    private let fileSystemRepository: FileSystemRepositoryProtocol
+    private let fileSystemRepository: any FileSystemRepositoryProtocol
     
     public init(fileManager: FileManager,
-                fileSystemRepository: FileSystemRepositoryProtocol
+                fileSystemRepository: any FileSystemRepositoryProtocol
     ) {
         self.fileSystemRepository = fileSystemRepository
         container = AppGroupContainer(fileManager: fileManager)

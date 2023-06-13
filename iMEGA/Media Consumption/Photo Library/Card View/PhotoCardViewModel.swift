@@ -7,12 +7,12 @@ import MEGASwift
 
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private var placeholderImageContainer = ImageContainer(image: Image("photoCardPlaceholder"), type: .placeholder)
     
     @Published var thumbnailContainer: any ImageContaining
     
-    init(coverPhoto: NodeEntity?, thumbnailUseCase: ThumbnailUseCaseProtocol) {
+    init(coverPhoto: NodeEntity?, thumbnailUseCase: any ThumbnailUseCaseProtocol) {
         self.coverPhoto = coverPhoto
         self.thumbnailUseCase = thumbnailUseCase
         thumbnailContainer = placeholderImageContainer

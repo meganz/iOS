@@ -2,13 +2,13 @@ import Combine
 import MEGADomain
 
 final class BackupNodesValidator {
-    private let backupsUseCase: BackupsUseCaseProtocol
+    private let backupsUseCase: any BackupsUseCaseProtocol
     private let nodes: [NodeEntity]
     private let presenter: UIViewController
     private var inProgress = false
     private var inProgressSubscription: AnyCancellable?
     
-    init(presenter: UIViewController, backupsUseCase: BackupsUseCaseProtocol = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [NodeEntity]) {
+    init(presenter: UIViewController, backupsUseCase: any BackupsUseCaseProtocol = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo), nodes: [NodeEntity]) {
         self.presenter = presenter
         self.backupsUseCase = backupsUseCase
         self.nodes = nodes

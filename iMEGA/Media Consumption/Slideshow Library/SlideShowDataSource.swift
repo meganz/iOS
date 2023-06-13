@@ -27,10 +27,10 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     
     var thumbnailLoadingTask: Task<Void, Never>?
     var initialPhotoDownloadCallback: (() -> Void)?
-    private let fileExistenceUseCase: FileExistUseCaseProtocol
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    private let fileDownloadUseCase: FileDownloadUseCaseProtocol
-    private let mediaUseCase: MediaUseCaseProtocol
+    private let fileExistenceUseCase: any FileExistUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let fileDownloadUseCase: any FileDownloadUseCaseProtocol
+    private let mediaUseCase: any MediaUseCaseProtocol
     private let advanceNumberOfPhotosToLoad: Int
     private let numberOfUnusedPhotosBuffer: Int
     private var sortByShuffleOrder = false
@@ -48,10 +48,10 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
     init(
         currentPhoto: NodeEntity?,
         nodeEntities: [NodeEntity],
-        thumbnailUseCase: ThumbnailUseCaseProtocol,
-        fileDownloadUseCase: FileDownloadUseCaseProtocol,
-        mediaUseCase: MediaUseCaseProtocol,
-        fileExistenceUseCase: FileExistUseCaseProtocol,
+        thumbnailUseCase: any ThumbnailUseCaseProtocol,
+        fileDownloadUseCase: any FileDownloadUseCaseProtocol,
+        mediaUseCase: any MediaUseCaseProtocol,
+        fileExistenceUseCase: any FileExistUseCaseProtocol,
         advanceNumberOfPhotosToLoad: Int,
         numberOfUnusedPhotosBuffer: Int
     ) {

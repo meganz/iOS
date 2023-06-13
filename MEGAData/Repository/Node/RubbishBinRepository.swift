@@ -2,7 +2,7 @@ import MEGADomain
 
 public struct RubbishBinRepository: RubbishBinRepositoryProtocol {
     private let sdk: MEGASdk
-    private let nodeValidationRepository: NodeValidationRepositoryProtocol
+    private let nodeValidationRepository: any NodeValidationRepositoryProtocol
     
     public static var newRepo: RubbishBinRepository {
         RubbishBinRepository(sdk: MEGASdkManager.sharedMEGASdk(), nodeValidationRepository: NodeValidationRepository.newRepo)
@@ -13,7 +13,7 @@ public struct RubbishBinRepository: RubbishBinRepositoryProtocol {
         static let syncDebrisNodePath = "//bin/SyncDebris"
     }
     
-    public init(sdk: MEGASdk, nodeValidationRepository: NodeValidationRepositoryProtocol) {
+    public init(sdk: MEGASdk, nodeValidationRepository: any NodeValidationRepositoryProtocol) {
         self.sdk = sdk
         self.nodeValidationRepository = nodeValidationRepository
     }

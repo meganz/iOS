@@ -17,15 +17,15 @@ public struct TransferMoment: RatingRequestMoment {
 }
 
 public struct ShareMoment: RatingRequestMoment {
-    public let shareUseCase: ShareUseCaseProtocol
+    public let shareUseCase: any ShareUseCaseProtocol
     
-    public init(shareUseCase: ShareUseCaseProtocol) {
+    public init(shareUseCase: any ShareUseCaseProtocol) {
         self.shareUseCase = shareUseCase
     }
 }
 
 public struct RatingRequesting<M: RatingRequestMoment> {
-    public var shouldRequestRating: (M, RatingRequestBaseConditionsUseCaseProtocol) -> Bool
+    public var shouldRequestRating: (M, any RatingRequestBaseConditionsUseCaseProtocol) -> Bool
 }
 
 public extension RatingRequesting where M == TransferMoment {

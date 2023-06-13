@@ -3,7 +3,7 @@ import MEGAPresentation
 
 final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     
-    private let uploadFileUseCase: UploadFileUseCaseProtocol
+    private let uploadFileUseCase: any UploadFileUseCaseProtocol
     
     private let transfers: [CancellableTransfer]
     private let fileTransfers: [CancellableTransfer]
@@ -23,7 +23,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     
     // MARK: - Init
     init(router: CancellableTransferRouting,
-         uploadFileUseCase: UploadFileUseCaseProtocol,
+         uploadFileUseCase: any UploadFileUseCaseProtocol,
          transfers: [CancellableTransfer]) {
         self.router = router
         self.uploadFileUseCase = uploadFileUseCase

@@ -1,8 +1,8 @@
 import MEGADomain
 
 struct ParticipantsAddingViewFactory {
-    let accountUseCase: AccountUseCaseProtocol
-    let chatRoomUseCase: ChatRoomUseCaseProtocol
+    let accountUseCase: any AccountUseCaseProtocol
+    let chatRoomUseCase: any ChatRoomUseCaseProtocol
     let chatRoom: ChatRoomEntity
     
     var hasVisibleContacts: Bool {

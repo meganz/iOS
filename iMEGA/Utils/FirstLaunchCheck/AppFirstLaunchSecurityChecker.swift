@@ -3,10 +3,11 @@ import MEGADomain
 import MEGAData
 
 final class AppFirstLaunchSecurityChecker: NSObject {
-    private let appFirstLaunchUseCase: AppFirstLaunchUseCaseProcotol
-    private let accountCleanerUseCase: AccountCleanerUseCaseProcotol
+    private let appFirstLaunchUseCase: any AppFirstLaunchUseCaseProcotol
+    private let accountCleanerUseCase: any AccountCleanerUseCaseProcotol
     
-    init(appFirstLaunchUseCase: AppFirstLaunchUseCaseProcotol, accountCleanerUseCase: AccountCleanerUseCaseProcotol) {
+    init(appFirstLaunchUseCase: any AppFirstLaunchUseCaseProcotol,
+         accountCleanerUseCase: any AccountCleanerUseCaseProcotol) {
         self.appFirstLaunchUseCase = appFirstLaunchUseCase
         self.accountCleanerUseCase = accountCleanerUseCase
         

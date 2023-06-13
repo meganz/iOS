@@ -6,7 +6,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     var invokeCommand: ((GetLinkViewModelCommand) -> Void)?
     
     private let albums: [AlbumEntity]
-    private let shareAlbumUseCase: ShareAlbumUseCaseProtocol
+    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     private var sectionViewModels = [GetLinkSectionViewModel]()
     private var albumLinks: [HandleEntity: String]?
     private var loadingTask: Task<Void, Never>?
@@ -17,7 +17,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         sectionViewModels.count
     }
     
-    init(albums: [AlbumEntity], shareAlbumUseCase: ShareAlbumUseCaseProtocol,
+    init(albums: [AlbumEntity], shareAlbumUseCase: any ShareAlbumUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel]) {
         self.albums = albums
         self.shareAlbumUseCase = shareAlbumUseCase

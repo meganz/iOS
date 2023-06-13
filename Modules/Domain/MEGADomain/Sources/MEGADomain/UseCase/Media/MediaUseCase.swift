@@ -17,10 +17,10 @@ public protocol MediaUseCaseProtocol {
 }
 
 public struct MediaUseCase: MediaUseCaseProtocol {
-    private let fileSearchRepo: FilesSearchRepositoryProtocol
-    private let videoMediaUseCase: VideoMediaUseCaseProtocol?
+    private let fileSearchRepo: any FilesSearchRepositoryProtocol
+    private let videoMediaUseCase: (any VideoMediaUseCaseProtocol)?
     
-    public init(fileSearchRepo: FilesSearchRepositoryProtocol, videoMediaUseCase: VideoMediaUseCaseProtocol? = nil) {
+    public init(fileSearchRepo: any FilesSearchRepositoryProtocol, videoMediaUseCase: (any VideoMediaUseCaseProtocol)? = nil) {
         self.fileSearchRepo = fileSearchRepo
         self.videoMediaUseCase = videoMediaUseCase
     }

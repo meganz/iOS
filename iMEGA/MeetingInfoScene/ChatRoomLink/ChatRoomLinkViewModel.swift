@@ -3,7 +3,7 @@ import MEGADomain
 import Combine
 
 final class ChatRoomLinkViewModel: ObservableObject {
-    private var chatLinkUseCase: ChatLinkUseCaseProtocol
+    private var chatLinkUseCase: any ChatLinkUseCaseProtocol
     private let router: MeetingInfoRouting
 
     private var chatRoom: ChatRoomEntity
@@ -22,7 +22,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
     init(router: MeetingInfoRouting,
          chatRoom: ChatRoomEntity,
          scheduledMeeting: ScheduledMeetingEntity,
-         chatLinkUseCase: ChatLinkUseCaseProtocol,
+         chatLinkUseCase: any ChatLinkUseCaseProtocol,
          subtitle: String) {
         self.router = router
         self.chatRoom = chatRoom

@@ -26,8 +26,8 @@ struct VerificationCodeViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private let checkSMSUseCase: CheckSMSUseCaseProtocol
-    private let authUseCase: AuthUseCaseProtocol
+    private let checkSMSUseCase: any CheckSMSUseCaseProtocol
+    private let authUseCase: any AuthUseCaseProtocol
     private let verificationType: SMSVerificationType
     private let router: VerificationCodeViewRouting
     private let regionCode: RegionCode
@@ -46,8 +46,8 @@ struct VerificationCodeViewModel: ViewModelType {
     
     // MARK: - Init
     init(router: VerificationCodeViewRouting,
-         checkSMSUseCase: CheckSMSUseCaseProtocol,
-         authUseCase: AuthUseCaseProtocol,
+         checkSMSUseCase: any CheckSMSUseCaseProtocol,
+         authUseCase: any AuthUseCaseProtocol,
          verificationType: SMSVerificationType,
          phoneNumber: String,
          regionCode: RegionCode) {

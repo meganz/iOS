@@ -3,10 +3,10 @@ import MEGADomain
 
 struct ShareAlbumsLinkInitialSections {
     private let albums: [AlbumEntity]
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     
     init(albums: [AlbumEntity],
-         thumbnailUseCase: ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
         self.albums = albums
         self.thumbnailUseCase = thumbnailUseCase
     }

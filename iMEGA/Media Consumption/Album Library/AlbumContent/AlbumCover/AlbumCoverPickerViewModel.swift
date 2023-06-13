@@ -12,13 +12,13 @@ final class AlbumCoverPickerViewModel: ObservableObject {
     let router: AlbumContentRouting
     
     private let album: AlbumEntity
-    private let albumContentsUseCase: AlbumContentsUseCaseProtocol
+    private let albumContentsUseCase: any AlbumContentsUseCaseProtocol
     private let completion: (AlbumEntity, AlbumPhotoEntity) -> Void
     private var subscriptions = Set<AnyCancellable>()
     var loadingTask: Task<Void, Never>?
     
     init(album: AlbumEntity,
-         albumContentsUseCase: AlbumContentsUseCaseProtocol,
+         albumContentsUseCase: any AlbumContentsUseCaseProtocol,
          router: AlbumContentRouting,
          completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void) {
         self.album = album

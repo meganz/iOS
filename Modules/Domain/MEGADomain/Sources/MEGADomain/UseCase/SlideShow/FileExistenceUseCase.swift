@@ -5,9 +5,9 @@ public protocol FileExistUseCaseProtocol {
 }
 
 public struct FileExistUseCase: FileExistUseCaseProtocol {
-    private let fileSystemRepository: FileSystemRepositoryProtocol
+    private let fileSystemRepository: any FileSystemRepositoryProtocol
     
-    public init(fileSystemRepository: FileSystemRepositoryProtocol) {
+    public init(fileSystemRepository: any FileSystemRepositoryProtocol) {
         self.fileSystemRepository = fileSystemRepository
     }
     

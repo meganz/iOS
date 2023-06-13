@@ -11,8 +11,8 @@ final class PhotosViewModel: NSObject {
     
     private var featureFlagProvider: FeatureFlagProviderProtocol
     private var photoUpdatePublisher: PhotoUpdatePublisher
-    private var photoLibraryUseCase: PhotoLibraryUseCaseProtocol
-    private let userAttributeUseCase: UserAttributeUseCaseProtocol
+    private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
+    private let userAttributeUseCase: any UserAttributeUseCaseProtocol
     
     var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
     
@@ -40,8 +40,8 @@ final class PhotosViewModel: NSObject {
     
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
-        photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
-        userAttributeUseCase: UserAttributeUseCaseProtocol,
+        photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
+        userAttributeUseCase: any UserAttributeUseCaseProtocol,
         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher

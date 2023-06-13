@@ -5,11 +5,13 @@ import MEGAData
 @objc final class SharedItemsViewModel: NSObject {
     
     private let router = SharedItemsViewRouter()
-    private let shareUseCase: ShareUseCaseProtocol
-    private let mediaUseCase: MediaUseCaseProtocol
-    private let saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol
+    private let shareUseCase: any ShareUseCaseProtocol
+    private let mediaUseCase: any MediaUseCaseProtocol
+    private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     
-    init(shareUseCase: ShareUseCaseProtocol, mediaUseCase: MediaUseCaseProtocol, saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol) {
+    init(shareUseCase: any ShareUseCaseProtocol,
+         mediaUseCase: any MediaUseCaseProtocol,
+         saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol) {
         self.shareUseCase = shareUseCase
         self.mediaUseCase = mediaUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase

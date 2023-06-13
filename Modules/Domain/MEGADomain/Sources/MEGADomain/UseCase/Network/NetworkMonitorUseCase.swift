@@ -5,9 +5,9 @@ public protocol NetworkMonitorUseCaseProtocol {
 }
 
 public struct NetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
-    private let repo: NetworkMonitorRepositoryProtocol
+    private let repo: any NetworkMonitorRepositoryProtocol
     
-    public init(repo: NetworkMonitorRepositoryProtocol) {
+    public init(repo: any NetworkMonitorRepositoryProtocol) {
         self.repo = repo
     }
     

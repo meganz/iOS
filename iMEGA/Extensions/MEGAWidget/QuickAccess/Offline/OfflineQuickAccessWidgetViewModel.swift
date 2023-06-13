@@ -11,14 +11,16 @@ final class OfflineQuickAccessWidgetViewModel: ViewModelType {
     }
 
     // MARK: - Private properties
-    private let credentialUseCase: CredentialUseCaseProtocol
-    private let copyDataBasesUseCase: CopyDataBasesUseCaseProtocol
-    private let offlineFilesUseCase: OfflineFilesUseCaseProtocol
+    private let credentialUseCase: any CredentialUseCaseProtocol
+    private let copyDataBasesUseCase:  any CopyDataBasesUseCaseProtocol
+    private let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
 
-    init(credentialUseCase: CredentialUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, offlineFilesBasesUseCase: OfflineFilesUseCaseProtocol) {
+    init(credentialUseCase: any CredentialUseCaseProtocol,
+         copyDataBasesUseCase: any CopyDataBasesUseCaseProtocol,
+         offlineFilesBasesUseCase: any OfflineFilesUseCaseProtocol) {
         self.credentialUseCase = credentialUseCase
         self.copyDataBasesUseCase = copyDataBasesUseCase
         self.offlineFilesUseCase = offlineFilesBasesUseCase

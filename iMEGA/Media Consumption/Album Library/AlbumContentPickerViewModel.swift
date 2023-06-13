@@ -5,7 +5,7 @@ import Combine
 final class AlbumContentPickerViewModel: ObservableObject {
    
     private let album: AlbumEntity
-    private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
+    private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let completion: (AlbumEntity, [NodeEntity]) -> Void
     private var subscriptions = Set<AnyCancellable>()
     var photosLoadingTask: Task<Void, Never>?
@@ -26,7 +26,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     
     @MainActor
     init(album: AlbumEntity,
-         photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
+         photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
          completion: @escaping (AlbumEntity, [NodeEntity]) -> Void,
          isNewAlbum: Bool = false,
          contentConfig: PhotoLibraryContentConfig? = nil) {

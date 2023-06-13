@@ -6,15 +6,15 @@ import MEGAUI
 
 final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let chatListItem: ChatListItemEntity
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
-    private let chatUseCase: ChatUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private let callUseCase: CallUseCaseProtocol
-    private let audioSessionUseCase: AudioSessionUseCaseProtocol
-    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private let callUseCase: any CallUseCaseProtocol
+    private let audioSessionUseCase: any AudioSessionUseCaseProtocol
+    private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     
-    private let router: ChatRoomsListRouting
+    private let router: any ChatRoomsListRouting
     private var chatNotificationControl: ChatNotificationControl
     private let notificationCenter: NotificationCenter
     
@@ -49,15 +49,15 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
-         userImageUseCase: UserImageUseCaseProtocol,
-         chatUseCase: ChatUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol,
-         callUseCase: CallUseCaseProtocol,
-         audioSessionUseCase: AudioSessionUseCaseProtocol,
-         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
+         userImageUseCase: any UserImageUseCaseProtocol,
+         chatUseCase: any ChatUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
+         callUseCase: any CallUseCaseProtocol,
+         audioSessionUseCase: any AudioSessionUseCaseProtocol,
+         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl,
          notificationCenter: NotificationCenter = .default) {
         self.chatListItem = chatListItem

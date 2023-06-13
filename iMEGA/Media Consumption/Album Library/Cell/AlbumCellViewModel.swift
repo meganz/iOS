@@ -27,7 +27,7 @@ final class AlbumCellViewModel: ObservableObject {
     @Published var opacity: Double = 1.0
     
     let album: AlbumEntity
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     
     private var loadingTask: Task<Void, Never>?
     
@@ -42,7 +42,7 @@ final class AlbumCellViewModel: ObservableObject {
     let isLinkShared: Bool
     
     init(
-        thumbnailUseCase: ThumbnailUseCaseProtocol,
+        thumbnailUseCase: any ThumbnailUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()

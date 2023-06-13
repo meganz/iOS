@@ -14,12 +14,12 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
 
     private var sdkNodeClient: SDKNodeClient
     private var fileSystemClient: FileSystemImageCacheClient
-    private var thumbnailRepo: ThumbnailRepositoryProtocol
+    private var thumbnailRepo: any ThumbnailRepositoryProtocol
 
     init(
         sdkNodeClient: SDKNodeClient,
         fileSystemClient: FileSystemImageCacheClient,
-        thumbnailRepo: ThumbnailRepositoryProtocol
+        thumbnailRepo: any ThumbnailRepositoryProtocol
     ) {
         self.sdkNodeClient = sdkNodeClient
         self.fileSystemClient = fileSystemClient

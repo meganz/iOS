@@ -22,13 +22,13 @@ protocol MeetingInfoRouting {
 
 final class MeetingInfoViewModel: ObservableObject {
     private let scheduledMeeting: ScheduledMeetingEntity
-    private var chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
+    private var chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
-    private let chatUseCase: ChatUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private var chatLinkUseCase: ChatLinkUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private var chatLinkUseCase: any ChatLinkUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let router: MeetingInfoRouting
     @Published var isAllowNonHostToAddParticipantsOn = true
     @Published var isPublicChat = true
@@ -57,13 +57,13 @@ final class MeetingInfoViewModel: ObservableObject {
     
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: MeetingInfoRouting,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
-         chatUseCase: ChatUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
-         chatLinkUseCase: ChatLinkUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol
+         chatUseCase: any ChatUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
+         chatLinkUseCase: any ChatLinkUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol
     ) {
         self.scheduledMeeting = scheduledMeeting
         self.router = router

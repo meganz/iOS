@@ -24,8 +24,8 @@ public final class CallParticipantEntity {
     public var isVideoLowRes: Bool
     public var canReceiveVideoHiRes: Bool
     public var canReceiveVideoLowRes: Bool
-    public weak var videoDataDelegate: CallParticipantVideoDelegate?
-    public weak var speakerVideoDataDelegate: CallParticipantVideoDelegate?
+    public weak var videoDataDelegate: (any CallParticipantVideoDelegate)?
+    public weak var speakerVideoDataDelegate: (any CallParticipantVideoDelegate)?
     public var isSpeakerPinned: Bool
     public var sessionRecoverable: Bool
     

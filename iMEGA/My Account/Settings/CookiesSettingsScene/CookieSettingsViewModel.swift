@@ -46,7 +46,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         }
     }
     
-    private let cookieSettingsUseCase: CookieSettingsUseCaseProtocol
+    private let cookieSettingsUseCase: any CookieSettingsUseCaseProtocol
     private let router: CookieSettingsRouting
     
     var invokeCommand: ((Command) -> Void)?
@@ -57,7 +57,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     // MARK: - Init
     
-    init(cookieSettingsUseCase: CookieSettingsUseCaseProtocol, router: CookieSettingsRouting) {
+    init(cookieSettingsUseCase: any CookieSettingsUseCaseProtocol, router: CookieSettingsRouting) {
         self.cookieSettingsUseCase = cookieSettingsUseCase
         self.router = router
     }

@@ -3,13 +3,13 @@ import Combine
 import MEGAData
 
 final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
-    private var chatRoomUseCase: ChatRoomUseCaseProtocol
-    private var chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
+    private var chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private var chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let router: MeetingInfoRouting
     
     private var chatParticipantId: HandleEntity
     private var chatRoom: ChatRoomEntity
-    private let chatUseCase: ChatUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
     private var subscriptions = Set<AnyCancellable>()
 
     @Published var name: String = ""
@@ -22,9 +22,9 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     let userAvatarViewModel: UserAvatarViewModel
 
     init(router: MeetingInfoRouting,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
-         chatUseCase: ChatUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
+         chatUseCase: any ChatUseCaseProtocol,
          chatParticipantId: MEGAHandle,
          chatRoom: ChatRoomEntity) {
         self.router = router

@@ -5,9 +5,9 @@ public protocol CreateContextMenuUseCaseProtocol {
 }
 
 public struct CreateContextMenuUseCase: CreateContextMenuUseCaseProtocol {
-    private let repo: CreateContextMenuRepositoryProtocol
+    private let repo: any CreateContextMenuRepositoryProtocol
     
-    public init(repo: CreateContextMenuRepositoryProtocol) {
+    public init(repo: any CreateContextMenuRepositoryProtocol) {
         self.repo = repo
     }
     

@@ -27,8 +27,8 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     private var dataSource: SlideShowDataSourceProtocol
-    private let slideShowUseCase: SlideShowUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
+    private let slideShowUseCase: any SlideShowUseCaseProtocol
+    private let accountUseCase:  any AccountUseCaseProtocol
     
     var configuration: SlideShowConfigurationEntity
     
@@ -55,8 +55,8 @@ final class SlideShowViewModel: ViewModelType {
     }
     
     init(dataSource: SlideShowDataSourceProtocol,
-         slideShowUseCase: SlideShowUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol) {
+         slideShowUseCase: any SlideShowUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol) {
         
         self.dataSource = dataSource
         self.slideShowUseCase = slideShowUseCase

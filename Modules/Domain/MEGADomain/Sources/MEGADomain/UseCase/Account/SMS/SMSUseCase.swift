@@ -1,9 +1,9 @@
 
 public struct SMSUseCase {
-    public let getSMSUseCase: GetSMSUseCaseProtocol
-    public let checkSMSUseCase: CheckSMSUseCaseProtocol
+    public let getSMSUseCase: any GetSMSUseCaseProtocol
+    public let checkSMSUseCase: any CheckSMSUseCaseProtocol
     
-    public init(getSMSUseCase: GetSMSUseCaseProtocol, checkSMSUseCase: CheckSMSUseCaseProtocol) {
+    public init(getSMSUseCase: any GetSMSUseCaseProtocol, checkSMSUseCase: any CheckSMSUseCaseProtocol) {
         self.getSMSUseCase = getSMSUseCase
         self.checkSMSUseCase = checkSMSUseCase
     }

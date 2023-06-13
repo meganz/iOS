@@ -4,11 +4,11 @@ import Combine
 final class UserAvatarViewModel: ObservableObject {
     private let userId: MEGAHandle
     private let chatId: MEGAHandle
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
-    private let chatUseCase: ChatUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private var isRightToLeftLanguage: Bool?
 
     @Published private(set) var primaryAvatar: UIImage?
@@ -20,11 +20,11 @@ final class UserAvatarViewModel: ObservableObject {
     
     init(userId: MEGAHandle,
          chatId: MEGAHandle,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
-         chatUseCase: ChatUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol) {
+         chatUseCase: any ChatUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol) {
         self.userId = userId
         self.chatId = chatId
         self.chatRoomUseCase = chatRoomUseCase

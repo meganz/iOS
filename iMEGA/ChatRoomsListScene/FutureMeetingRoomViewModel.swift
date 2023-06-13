@@ -5,14 +5,14 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     let scheduledMeeting: ScheduledMeetingEntity
     let nextOccurrence: ScheduledMeetingOccurrenceEntity?
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
-    private let chatUseCase: ChatUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
     private var chatNotificationControl: ChatNotificationControl
     private let callUseCase: CallUseCaseProtocol
-    private let audioSessionUseCase: AudioSessionUseCaseProtocol
-    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let audioSessionUseCase: any AudioSessionUseCaseProtocol
+    private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private var searchString: String?
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
@@ -71,15 +71,15 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     init(scheduledMeeting: ScheduledMeetingEntity,
          nextOccurrence: ScheduledMeetingOccurrenceEntity?,
          router: ChatRoomsListRouting,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
-         chatUseCase: ChatUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
+         chatUseCase: any ChatUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
-         audioSessionUseCase: AudioSessionUseCaseProtocol,
-         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol,
+         audioSessionUseCase: any AudioSessionUseCaseProtocol,
+         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting

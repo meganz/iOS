@@ -5,12 +5,12 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     let title: String
     let peerHandle: HandleEntity
     let chatRoomEntity: ChatRoomEntity
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
-    private let chatUseCase: ChatUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private var isRightToLeftLanguage: Bool?
     
     @Published private(set) var primaryAvatar: UIImage?
@@ -25,12 +25,12 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         title: String,
         peerHandle: HandleEntity,
         chatRoomEntity: ChatRoomEntity,
-        chatRoomUseCase: ChatRoomUseCaseProtocol,
-        chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
+        chatRoomUseCase: any ChatRoomUseCaseProtocol,
+        chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
         userImageUseCase: UserImageUseCaseProtocol,
-        chatUseCase: ChatUseCaseProtocol,
-        accountUseCase: AccountUseCaseProtocol,
-        megaHandleUseCase: MEGAHandleUseCaseProtocol
+        chatUseCase: any ChatUseCaseProtocol,
+        accountUseCase: any AccountUseCaseProtocol,
+        megaHandleUseCase: any MEGAHandleUseCaseProtocol
     ) {
         self.title = title
         self.peerHandle = peerHandle

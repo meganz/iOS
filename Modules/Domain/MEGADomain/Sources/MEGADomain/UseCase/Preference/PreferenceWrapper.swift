@@ -5,9 +5,9 @@ public final class PreferenceWrapper<T> {
     private let key: PreferenceKeyEntity
     private let defaultValue: T
     
-    public var useCase: PreferenceUseCaseProtocol
+    public var useCase: any PreferenceUseCaseProtocol
     
-    public init(key: PreferenceKeyEntity, defaultValue: T, useCase: PreferenceUseCaseProtocol = PreferenceUseCase.empty) {
+    public init(key: PreferenceKeyEntity, defaultValue: T, useCase: any PreferenceUseCaseProtocol = PreferenceUseCase.empty) {
         self.key = key
         self.defaultValue = defaultValue
         self.useCase = useCase

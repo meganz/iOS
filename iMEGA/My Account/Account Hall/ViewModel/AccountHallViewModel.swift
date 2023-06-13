@@ -22,11 +22,11 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     private var featureFlagProvider: FeatureFlagProviderProtocol
     @Published private(set) var currentPlanName: String = ""
     
-    private let accountHallUsecase: AccountHallUseCaseProtocol
+    private let accountHallUsecase: any AccountHallUseCaseProtocol
     
     // MARK: - Init
     
-    init(accountHallUsecase: AccountHallUseCaseProtocol, featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
+    init(accountHallUsecase: any AccountHallUseCaseProtocol, featureFlagProvider: any FeatureFlagProviderProtocol = FeatureFlagProvider()) {
         self.accountHallUsecase = accountHallUsecase
         self.featureFlagProvider = featureFlagProvider
     }

@@ -3,9 +3,9 @@ public protocol ContactLinkUseCaseProtocol {
 }
 
 public struct ContactLinkUseCase: ContactLinkUseCaseProtocol {
-    private let repo: ContactLinkRepositoryProtocol
+    private let repo: any ContactLinkRepositoryProtocol
     
-    public init(repo: ContactLinkRepositoryProtocol) {
+    public init(repo: any ContactLinkRepositoryProtocol) {
         self.repo = repo
     }
     

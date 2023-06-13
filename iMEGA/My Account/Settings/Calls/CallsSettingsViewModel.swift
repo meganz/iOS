@@ -13,10 +13,10 @@ final class CallsSettingsViewModel {
         }
     }
     
-    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     
-    init(preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         analyticsEventUseCase: AnalyticsEventUseCaseProtocol) {
+    init(preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default,
+         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol) {
         self.analyticsEventUseCase = analyticsEventUseCase
         $callsSoundNotificationPreference.useCase = preferenceUseCase
     }

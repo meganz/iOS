@@ -1,4 +1,4 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 5.8
 
 import PackageDescription
 
@@ -22,12 +22,15 @@ let package = Package(
     targets: [
         .target(
             name: "MEGADomain",
-            dependencies: ["MEGASwift", "MEGAFoundation"]),
+            dependencies: ["MEGASwift", "MEGAFoundation"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .target(
             name: "MEGADomainMock",
-            dependencies: ["MEGADomain"]),
+            dependencies: ["MEGADomain"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGADomainTests",
-            dependencies: ["MEGADomain", "MEGADomainMock"])
+            dependencies: ["MEGADomain", "MEGADomainMock"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
     ]
 )

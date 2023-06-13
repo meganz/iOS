@@ -2,9 +2,9 @@ import MEGADomain
 
 @objc final class CloudDriveViewModel: NSObject {
     private let router = SharedItemsViewRouter()
-    private let shareUseCase: ShareUseCaseProtocol?
+    private let shareUseCase: (any ShareUseCaseProtocol)?
     
-    init(shareUseCase: ShareUseCaseProtocol) {
+    init(shareUseCase: any ShareUseCaseProtocol) {
         self.shareUseCase = shareUseCase
     }
     

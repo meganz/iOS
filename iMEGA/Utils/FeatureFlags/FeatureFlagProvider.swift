@@ -6,9 +6,9 @@ protocol FeatureFlagProviderProtocol {
 }
 
 final class FeatureFlagProvider: FeatureFlagProviderProtocol {
-    private var useCase: FeatureFlagUseCaseProtocol
+    private var useCase: any FeatureFlagUseCaseProtocol
 
-    init(useCase: FeatureFlagUseCaseProtocol = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)) {
+    init(useCase: any FeatureFlagUseCaseProtocol = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)) {
         self.useCase = useCase
     }
     

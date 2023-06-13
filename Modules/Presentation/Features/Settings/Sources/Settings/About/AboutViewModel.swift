@@ -9,13 +9,16 @@ public final class AboutViewModel: ObservableObject {
     @Published var showChangeApiEnvironmentAlert = false
     @Published var showApiEnvironmentChangedAlert = false
     
-    private var apiEnvironmentUseCase: APIEnvironmentUseCaseProtocol
-    private var manageLogsUseCase: ManageLogsUseCaseProtocol
+    private var apiEnvironmentUseCase: any APIEnvironmentUseCaseProtocol
+    private var manageLogsUseCase: any ManageLogsUseCaseProtocol
     
     @PreferenceWrapper(key: .logging, defaultValue: false)
     private var isLoggingEnabled: Bool
     
-    public init(preferenceUC: PreferenceUseCaseProtocol, apiEnvironmentUC: APIEnvironmentUseCaseProtocol, manageLogsUC: ManageLogsUseCaseProtocol, aboutSetting: AboutSetting) {
+    public init(preferenceUC: any PreferenceUseCaseProtocol,
+                apiEnvironmentUC: any APIEnvironmentUseCaseProtocol,
+                manageLogsUC: any ManageLogsUseCaseProtocol,
+                aboutSetting: AboutSetting) {
         apiEnvironmentUseCase = apiEnvironmentUC
         manageLogsUseCase = manageLogsUC
         self.aboutSetting = aboutSetting

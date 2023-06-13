@@ -64,10 +64,10 @@ final class TextEditorViewModel: ViewModelType {
     private var textEditorMode: TextEditorMode
     private var parentHandle: HandleEntity?
     private var nodeEntity: NodeEntity?
-    private var uploadFileUseCase: UploadFileUseCaseProtocol
-    private var downloadNodeUseCase: DownloadNodeUseCaseProtocol
-    private var nodeUseCase: NodeUseCaseProtocol
-    private var backupsUseCase: BackupsUseCaseProtocol
+    private var uploadFileUseCase: any UploadFileUseCaseProtocol
+    private var downloadNodeUseCase: any DownloadNodeUseCaseProtocol
+    private var nodeUseCase: any NodeUseCaseProtocol
+    private var backupsUseCase: any BackupsUseCaseProtocol
     private var shouldEditAfterOpen: Bool = false
     private var showErrorWhenToSetupView: Command?
     private var isBackupNode: Bool = false
@@ -76,10 +76,10 @@ final class TextEditorViewModel: ViewModelType {
         router: TextEditorViewRouting,
         textFile: TextFile,
         textEditorMode: TextEditorMode,
-        uploadFileUseCase: UploadFileUseCaseProtocol,
-        downloadNodeUseCase: DownloadNodeUseCaseProtocol,
-        nodeUseCase: NodeUseCaseProtocol,
-        backupsUseCase: BackupsUseCaseProtocol,
+        uploadFileUseCase: any UploadFileUseCaseProtocol,
+        downloadNodeUseCase: any DownloadNodeUseCaseProtocol,
+        nodeUseCase: any NodeUseCaseProtocol,
+        backupsUseCase: any BackupsUseCaseProtocol,
         parentHandle: HandleEntity? = nil,
         nodeEntity: NodeEntity? = nil
     ) {

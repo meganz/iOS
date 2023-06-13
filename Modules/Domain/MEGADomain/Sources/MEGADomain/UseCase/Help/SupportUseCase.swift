@@ -3,9 +3,9 @@ public protocol SupportUseCaseProtocol {
 }
 
 public struct SupportUseCase: SupportUseCaseProtocol {
-    private let repo: SupportRepositoryProtocol
+    private let repo: any SupportRepositoryProtocol
     
-    public init(repo: SupportRepositoryProtocol) {
+    public init(repo: any SupportRepositoryProtocol) {
         self.repo = repo
     }
     

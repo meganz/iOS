@@ -15,14 +15,14 @@ protocol FileVersioningViewRouting: Routing {
 
 final class FileVersioningViewModel: ViewModelType {
     
-    private let fileVersionsUseCase: FileVersionsUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
+    private let fileVersionsUseCase: any FileVersionsUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     
     enum Command: CommandType, Equatable {
         case updateSwitch(Bool)
         case updateFileVersions(Int64)
         case updateFileVersionsSize(Int64)
-    }
+    } 
     // MARK: - Private properties
     private let router: FileVersioningViewRouting
     
@@ -30,8 +30,8 @@ final class FileVersioningViewModel: ViewModelType {
     
     // MARK: - Init
     init(router: FileVersioningViewRouting,
-         fileVersionsUseCase: FileVersionsUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol) {
+         fileVersionsUseCase: any FileVersionsUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol) {
         self.router = router
         self.fileVersionsUseCase = fileVersionsUseCase
         self.accountUseCase = accountUseCase

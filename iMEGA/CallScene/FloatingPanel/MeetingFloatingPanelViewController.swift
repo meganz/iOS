@@ -43,17 +43,17 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private var callParticipants: [CallParticipantEntity] = []
     private let viewModel: MeetingFloatingPanelViewModel
     private let userImageUseCase: UserImageUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     
     init(viewModel: MeetingFloatingPanelViewModel,
          userImageUseCase: UserImageUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol) {
+         accountUseCase: any AccountUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol) {
         self.viewModel = viewModel
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase

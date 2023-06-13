@@ -14,12 +14,12 @@ final class MEGAAavatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol {
 
     private let meagAvatarClient: SDKAvatarClient
 
-    private let accountUseCase: AccountUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
 
     init(
         storeUserClient: StoreUserClient,
         megaAvatarClient: SDKAvatarClient,
-        accountUseCase: AccountUseCaseProtocol
+        accountUseCase: any AccountUseCaseProtocol
     ) {
         self.storeUserClient = storeUserClient
         self.meagAvatarClient = megaAvatarClient

@@ -13,11 +13,11 @@ final class MockSlideShowDataSource: SlideShowDataSourceProtocol {
     
     var nodeEntities: [NodeEntity]
     var initialPhotoDownloadCallback: (() -> Void)?
-    var thumbnailUseCase: ThumbnailUseCaseProtocol
+    var thumbnailUseCase: any ThumbnailUseCaseProtocol
     
     init(
         nodeEntities: [NodeEntity],
-        thumbnailUseCase: ThumbnailUseCaseProtocol
+        thumbnailUseCase: any ThumbnailUseCaseProtocol
     ) {
         self.nodeEntities = nodeEntities
         self.thumbnailUseCase = thumbnailUseCase

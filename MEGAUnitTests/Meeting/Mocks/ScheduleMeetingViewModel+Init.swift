@@ -5,9 +5,9 @@ extension ScheduleMeetingViewModel {
     convenience init(
         router: ScheduleMeetingRouting = MockScheduleMeetingRouter(),
         rules: ScheduledMeetingRulesEntity = ScheduledMeetingRulesEntity(frequency: .invalid),
-        scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
-        chatLinkUseCase: ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
-        chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
+        chatLinkUseCase: any ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
+        chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         isTesting: Bool = true
     ) {
         self.init(router: router, rules: rules, scheduledMeetingUseCase: scheduledMeetingUseCase, chatLinkUseCase: chatLinkUseCase, chatRoomUseCase: chatRoomUseCase)

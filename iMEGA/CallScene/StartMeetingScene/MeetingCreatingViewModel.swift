@@ -47,13 +47,13 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let link: String?
     
     private let meetingUseCase: MeetingCreatingUseCaseProtocol
-    private let audioSessionUseCase: AudioSessionUseCaseProtocol
+    private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
-    private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
+    private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
     private let userImageUseCase: UserImageUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
 
     private var isVideoEnabled = false
     private var isSpeakerEnabled = true
@@ -79,13 +79,13 @@ final class MeetingCreatingViewModel: ViewModelType {
     init(router: MeetingCreatingViewRouting,
          type: MeetingConfigurationType,
          meetingUseCase: MeetingCreatingUseCaseProtocol,
-         audioSessionUseCase: AudioSessionUseCaseProtocol,
+         audioSessionUseCase: any AudioSessionUseCaseProtocol,
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
-         captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
+         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
          link: String?,
          userHandle: UInt64) {
         self.router = router

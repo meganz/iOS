@@ -33,11 +33,11 @@ final class FilesExplorerViewModel {
     }
     
     private let router: FilesExplorerRouter
-    private let useCase: FilesSearchUseCaseProtocol?
-    private let favouritesUseCase: FavouriteNodesUseCaseProtocol?
+    private let useCase: (any FilesSearchUseCaseProtocol)?
+    private let favouritesUseCase: (any FavouriteNodesUseCaseProtocol)?
     private let filesDownloadUseCase: FilesDownloadUseCase
     private let nodeClipboardOperationUseCase: NodeClipboardOperationUseCase
-    private let createContextMenuUseCase: CreateContextMenuUseCaseProtocol
+    private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let explorerType: ExplorerTypeEntity
     private var contextMenuManager: ContextMenuManager?
     private var viewConfiguration: FilesExplorerViewConfiguration {
@@ -66,11 +66,11 @@ final class FilesExplorerViewModel {
     // MARK: - Initializer
     required init(explorerType: ExplorerTypeEntity,
                   router: FilesExplorerRouter,
-                  useCase: FilesSearchUseCaseProtocol?,
-                  favouritesUseCase: FavouriteNodesUseCaseProtocol?,
+                  useCase: (any FilesSearchUseCaseProtocol)?,
+                  favouritesUseCase: (any FavouriteNodesUseCaseProtocol)?,
                   filesDownloadUseCase: FilesDownloadUseCase,
                   nodeClipboardOperationUseCase: NodeClipboardOperationUseCase,
-                  createContextMenuUseCase: CreateContextMenuUseCaseProtocol) {
+                  createContextMenuUseCase: any CreateContextMenuUseCaseProtocol) {
         self.explorerType = explorerType
         self.router = router
         self.useCase = useCase

@@ -8,9 +8,9 @@ public protocol ShareAlbumUseCaseProtocol {
 }
 
 public struct ShareAlbumUseCase: ShareAlbumUseCaseProtocol {
-    private let shareAlbumRepository: ShareAlbumRepositoryProtocol
+    private let shareAlbumRepository: any ShareAlbumRepositoryProtocol
     
-    public init(shareAlbumRepository: ShareAlbumRepositoryProtocol) {
+    public init(shareAlbumRepository: any ShareAlbumRepositoryProtocol) {
         self.shareAlbumRepository = shareAlbumRepository
     }
     

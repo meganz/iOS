@@ -132,15 +132,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private weak var containerViewModel: MeetingContainerViewModel?
 
     private let callUseCase: CallUseCaseProtocol
-    private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
+    private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let remoteVideoUseCase: CallRemoteVideoUseCaseProtocol
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
-    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
 
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
     private var callsSoundNotificationPreference: Bool
@@ -174,18 +174,18 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     init(router: MeetingParticipantsLayoutRouting,
          containerViewModel: MeetingContainerViewModel,
          callUseCase: CallUseCaseProtocol,
-         captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
+         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
          remoteVideoUseCase: CallRemoteVideoUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
          userImageUseCase: UserImageUseCaseProtocol,
-         analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol,
+         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
          chatRoom: ChatRoomEntity,
          call: CallEntity,
-         preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+         preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         
         self.router = router
         self.containerViewModel = containerViewModel

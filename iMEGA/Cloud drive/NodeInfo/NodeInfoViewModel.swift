@@ -2,13 +2,13 @@ import MEGADomain
 
 @objc final class NodeInfoViewModel: NSObject {
     private let router = SharedItemsViewRouter()
-    private let shareUseCase: ShareUseCaseProtocol?
+    private let shareUseCase: (any ShareUseCaseProtocol)?
     
     var node: MEGANode
     var isNodeUndecryptedFolder: Bool
     
     init(withNode node: MEGANode,
-         shareUseCase: ShareUseCaseProtocol? = nil,
+         shareUseCase: (any ShareUseCaseProtocol)? = nil,
          isNodeUndecryptedFolder: Bool = false) {
         self.shareUseCase = shareUseCase
         self.node = node

@@ -15,12 +15,12 @@ enum ChatViewType {
 
 final class ChatRoomsListViewModel: ObservableObject {
     let router: ChatRoomsListRouting
-    private let chatUseCase: ChatUseCaseProtocol
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let contactsUseCase: ContactsUseCaseProtocol
-    private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let contactsUseCase: any ContactsUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let notificationCenter: NotificationCenter
     private let chatViewType: ChatViewType
     
@@ -88,12 +88,12 @@ final class ChatRoomsListViewModel: ObservableObject {
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
 
     init(router: ChatRoomsListRouting,
-         chatUseCase: ChatUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         contactsUseCase: ContactsUseCaseProtocol,
-         networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
-         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
+         chatUseCase: any ChatUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         contactsUseCase: any ContactsUseCaseProtocol,
+         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
+         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular,
          chatViewMode: ChatViewMode = .chats

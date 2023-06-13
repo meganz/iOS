@@ -1,9 +1,9 @@
 import MEGADomain
 
 @objc final class HomeViewModel: NSObject {
-    private let shareUseCase: ShareUseCaseProtocol
+    private let shareUseCase: any ShareUseCaseProtocol
     
-    init(shareUseCase: ShareUseCaseProtocol) {
+    init(shareUseCase: any ShareUseCaseProtocol) {
         self.shareUseCase = shareUseCase
     }
     

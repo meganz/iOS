@@ -12,7 +12,7 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
     @Published var viewStatus: CopyrightWarningViewStatus = .unknown
     @Published var isTermsAggreed: Bool = false
     
-    private let shareUseCase: ShareUseCaseProtocol
+    private let shareUseCase: any ShareUseCaseProtocol
     @PreferenceWrapper(key: .agreedCopywriteWarning, defaultValue: false)
     private var agreedCopywriteWarning: Bool
     private var subscriptions = Set<AnyCancellable>()
@@ -21,8 +21,8 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
         "\(Strings.Localizable.copyrightMessagePart1)\n\n\(Strings.Localizable.copyrightMessagePart2)"
     }
     
-    init(preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         shareUseCase: ShareUseCaseProtocol) {
+    init(preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default,
+         shareUseCase: any ShareUseCaseProtocol) {
         self.shareUseCase = shareUseCase
         $agreedCopywriteWarning.useCase = preferenceUseCase
         subscribeToTermsAggreed()

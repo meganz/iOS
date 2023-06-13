@@ -13,7 +13,7 @@ enum PSAViewAction: ActionType {
 final class PSAViewModel: NSObject, ViewModelType {
     
     private let router: PSAViewRouting
-    private let useCase: PSAUseCaseProtocol
+    private let useCase: any PSAUseCaseProtocol
     private var psaEntity: PSAEntity?
     
     @PreferenceWrapper(key: .lastPSARequestTimestamp, defaultValue: -1.0)
@@ -26,8 +26,8 @@ final class PSAViewModel: NSObject, ViewModelType {
     var invokeCommand: ((Command) -> Void)?
         
     init(router: PSAViewRouting,
-         useCase: PSAUseCaseProtocol,
-         preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+         useCase: any PSAUseCaseProtocol,
+         preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         self.router = router
         self.useCase = useCase
         super.init()

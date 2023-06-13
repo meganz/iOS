@@ -5,10 +5,10 @@ import MEGAFoundation
 import MEGADomain
 
 class QuickAccessWidgetManager: NSObject {
-    private let recentItemsUseCase: RecentItemsUseCaseProtocol
-    private let recentNodesUseCase: RecentNodesUseCaseProtocol
-    private let favouriteItemsUseCase: FavouriteItemsUseCaseProtocol
-    private let favouriteNodesUseCase: FavouriteNodesUseCaseProtocol
+    private let recentItemsUseCase: any RecentItemsUseCaseProtocol
+    private let recentNodesUseCase: any RecentNodesUseCaseProtocol
+    private let favouriteItemsUseCase: any FavouriteItemsUseCaseProtocol
+    private let favouriteNodesUseCase: any FavouriteNodesUseCaseProtocol
     
     private let debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .background))
 

@@ -9,7 +9,7 @@ struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
     private let sdk: MEGASdk
     private let folderSdk: MEGASdk
     private let chatSdk: MEGAChatSdk
-    private let credentialRepository: CredentialRepositoryProtocol
+    private let credentialRepository: any CredentialRepositoryProtocol
     
     @PreferenceWrapper(key: .apiEnvironment, defaultValue: 0, useCase: PreferenceUseCase.default)
     private var apiEnvironment: Int
@@ -21,7 +21,7 @@ struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
         static let sandbox3SDKUrl = "https://api-sandbox3.developers.mega.co.nz/"
     }
     
-    init(sdk: MEGASdk, folderSdk: MEGASdk, chatSdk: MEGAChatSdk, credentialRepository: CredentialRepositoryProtocol) {
+    init(sdk: MEGASdk, folderSdk: MEGASdk, chatSdk: MEGAChatSdk, credentialRepository: any CredentialRepositoryProtocol) {
         self.sdk = sdk
         self.folderSdk = folderSdk
         self.chatSdk = chatSdk

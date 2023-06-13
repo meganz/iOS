@@ -33,12 +33,12 @@ final class AlbumContentViewModel: ViewModelType {
     }
     
     private var album: AlbumEntity
-    private let albumContentsUseCase: AlbumContentsUseCaseProtocol
-    private let albumModificationUseCase: AlbumModificationUseCaseProtocol
-    private let photoLibraryUseCase: PhotoLibraryUseCaseProtocol
+    private let albumContentsUseCase: any AlbumContentsUseCaseProtocol
+    private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
+    private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let router: AlbumContentRouting
-    private let featureFlagProvider: FeatureFlagProviderProtocol
-    private let shareAlbumUseCase: ShareAlbumUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     
     private var loadingTask: Task<Void, Never>?
     private var photos = [AlbumPhotoEntity]()
@@ -66,10 +66,10 @@ final class AlbumContentViewModel: ViewModelType {
     
     init(
         album: AlbumEntity,
-        albumContentsUseCase: AlbumContentsUseCaseProtocol,
-        albumModificationUseCase: AlbumModificationUseCaseProtocol,
-        photoLibraryUseCase: PhotoLibraryUseCaseProtocol,
-        shareAlbumUseCase: ShareAlbumUseCaseProtocol,
+        albumContentsUseCase: any AlbumContentsUseCaseProtocol,
+        albumModificationUseCase: any AlbumModificationUseCaseProtocol,
+        photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
+        shareAlbumUseCase: any ShareAlbumUseCaseProtocol,
         router: AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel,

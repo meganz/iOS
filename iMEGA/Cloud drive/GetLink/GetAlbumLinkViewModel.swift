@@ -6,7 +6,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     var invokeCommand: ((GetLinkViewModelCommand) -> Void)?
     
     private let album: AlbumEntity
-    private let shareAlbumUseCase: ShareAlbumUseCaseProtocol
+    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     private var sectionViewModels = [GetLinkSectionViewModel]()
     private var shareLink: String?
     
@@ -23,7 +23,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         return decryptCellViewModel.isSwitchOn
     }
     
-    init(album: AlbumEntity, shareAlbumUseCase: ShareAlbumUseCaseProtocol,
+    init(album: AlbumEntity, shareAlbumUseCase: any ShareAlbumUseCaseProtocol,
          sectionViewModels: [GetLinkSectionViewModel]) {
         self.album = album
         self.shareAlbumUseCase = shareAlbumUseCase
