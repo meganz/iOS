@@ -9,15 +9,15 @@ public protocol FilesSearchUseCaseProtocol {
 }
 
 public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
-    private let repo: FilesSearchRepositoryProtocol
+    private let repo: any FilesSearchRepositoryProtocol
     private let nodeFormat: NodeFormatEntity
-    private var nodesUpdateListenerRepo: NodesUpdateListenerProtocol
+    private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
     private var nodesUpdateHandler: (([NodeEntity]) -> Void)?
     
     public init(
-        repo: FilesSearchRepositoryProtocol,
+        repo: any FilesSearchRepositoryProtocol,
         nodeFormat: NodeFormatEntity,
-        nodesUpdateListenerRepo: NodesUpdateListenerProtocol
+        nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
     ) {
         self.repo = repo
         self.nodeFormat = nodeFormat

@@ -7,7 +7,7 @@ public protocol SlideShowUseCaseProtocol {
 }
 
 public final class SlideShowUseCase: SlideShowUseCaseProtocol {
-    private var preferenceRepo: PreferenceRepositoryProtocol
+    private var preferenceRepo: any PreferenceRepositoryProtocol
     
     public let defaultConfig = SlideShowConfigurationEntity(
         playingOrder: .shuffled,
@@ -16,7 +16,7 @@ public final class SlideShowUseCase: SlideShowUseCaseProtocol {
         includeSubfolders: false
     )
 
-    public init(preferenceRepo: PreferenceRepositoryProtocol) {
+    public init(preferenceRepo: any PreferenceRepositoryProtocol) {
         self.preferenceRepo = preferenceRepo
     }
     

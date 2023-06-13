@@ -21,7 +21,7 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
     }
     
     init(photoByDay: PhotoByDay,
-         thumbnailUseCase: ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
         self.photoByDay = photoByDay
         title = DateFormatter.dateLong().localisedString(from: photoByDay.categoryDate)
         

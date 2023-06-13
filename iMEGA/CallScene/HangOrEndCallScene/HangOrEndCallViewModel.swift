@@ -11,9 +11,9 @@ struct HangOrEndCallViewModel: ViewModelType {
     }
     
     private let router: HangOrEndCallRouting
-    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     
-    init(router: HangOrEndCallRouting, analyticsEventUseCase: AnalyticsEventUseCaseProtocol) {
+    init(router: HangOrEndCallRouting, analyticsEventUseCase: any AnalyticsEventUseCaseProtocol) {
         self.router = router
         self.analyticsEventUseCase = analyticsEventUseCase
     }

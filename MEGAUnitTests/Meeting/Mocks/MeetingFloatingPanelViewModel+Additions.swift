@@ -10,13 +10,13 @@ extension MeetingFloatingPanelViewModel {
         isSpeakerEnabled: Bool = false,
         callCoordinatorUseCase: CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(),
-        audioSessionUseCase: AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
+        audioSessionUseCase: any AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         devicePermissionUseCase: DevicePermissionCheckingProtocol = DevicePermissionCheckingProtocol.mock(),
-        captureDeviceUseCase: CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
+        captureDeviceUseCase: any CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
         localVideoUseCase: CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
-        accountUseCase: AccountUseCaseProtocol = MockAccountUseCase(),
-        chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        megaHandleUseCase: MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
+        chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        megaHandleUseCase: any MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         isTesting: Bool = true
     ) {
         self.init(

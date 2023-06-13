@@ -17,9 +17,9 @@ final class GetLinkAlbumInfoCellViewModel: ViewModelType, GetLinkCellViewModelTy
     let type: GetLinkCellType = .info
     
     private let album: AlbumEntity
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     
-    init(album: AlbumEntity, thumbnailUseCase: ThumbnailUseCaseProtocol) {
+    init(album: AlbumEntity, thumbnailUseCase: any ThumbnailUseCaseProtocol) {
         self.album = album
         self.thumbnailUseCase = thumbnailUseCase
     }

@@ -1,9 +1,9 @@
 import MEGADomain
 
 final class UpgradeAccountViewModel: NSObject {
-    private var accountPlanAnalyticsUsecase: AccountPlanAnalyticsUseCaseProtocol
+    private var accountPlanAnalyticsUsecase: any AccountPlanAnalyticsUseCaseProtocol
     
-    init(accountPlanAnalyticsUsecase: AccountPlanAnalyticsUseCaseProtocol) {
+    init(accountPlanAnalyticsUsecase: any AccountPlanAnalyticsUseCaseProtocol) {
         self.accountPlanAnalyticsUsecase = accountPlanAnalyticsUsecase
     }
     

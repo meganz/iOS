@@ -9,11 +9,11 @@ import MEGAData
     private let debouncer = Debouncer(delay: 0.7, dispatchQueue: .global(qos: .utility))
     
     private lazy var currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-    private lazy var baseConditionUseCase: RatingRequestBaseConditionsUseCaseProtocol
+    private lazy var baseConditionUseCase: any RatingRequestBaseConditionsUseCaseProtocol
         = RatingRequestBaseConditionsUseCase(preferenceUserCase: PreferenceUseCase.default,
                                              accountRepo: AccountRepository(sdk: sdk),
                                              currentAppVersion: currentAppVersion)
-    private lazy var shareUseCase: ShareUseCaseProtocol = ShareUseCase(repo: ShareRepository(sdk: sdk))
+    private lazy var shareUseCase: any ShareUseCaseProtocol = ShareUseCase(repo: ShareRepository(sdk: sdk))
     
     @objc init(sdk: MEGASdk) {
         self.sdk = sdk

@@ -12,14 +12,16 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
     }
 
     // MARK: - Private properties
-    private let credentialUseCase: CredentialUseCaseProtocol
-    private let copyDataBasesUseCase: CopyDataBasesUseCaseProtocol
-    private let recentItemsUseCase: RecentItemsUseCaseProtocol
+    private let credentialUseCase: any CredentialUseCaseProtocol
+    private let copyDataBasesUseCase: any CopyDataBasesUseCaseProtocol
+    private let recentItemsUseCase: any RecentItemsUseCaseProtocol
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
 
-    init(credentialUseCase: CredentialUseCaseProtocol, copyDataBasesUseCase: CopyDataBasesUseCaseProtocol, recentItemsUseCase: RecentItemsUseCaseProtocol) {
+    init(credentialUseCase: any CredentialUseCaseProtocol,
+         copyDataBasesUseCase: any CopyDataBasesUseCaseProtocol,
+         recentItemsUseCase: any RecentItemsUseCaseProtocol) {
         self.credentialUseCase = credentialUseCase
         self.copyDataBasesUseCase = copyDataBasesUseCase
         self.recentItemsUseCase = recentItemsUseCase

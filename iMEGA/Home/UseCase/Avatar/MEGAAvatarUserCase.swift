@@ -14,16 +14,16 @@ final class MEGAavatarUseCase: MEGAAvatarUseCaseProtocol {
 
     private let avatarRepository: SDKAvatarClient
     private let avatarFileSystemClient: FileSystemImageCacheClient
-    private let accountUseCase: AccountUseCaseProtocol
-    private let thumbnailRepo: ThumbnailRepositoryProtocol
-    private let handleUseCase: MEGAHandleUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private let thumbnailRepo: any ThumbnailRepositoryProtocol
+    private let handleUseCase: any MEGAHandleUseCaseProtocol
     
     init(
         megaAvatarClient: SDKAvatarClient,
         avatarFileSystemClient: FileSystemImageCacheClient,
-        accountUseCase: AccountUseCaseProtocol,
-        thumbnailRepo: ThumbnailRepositoryProtocol,
-        handleUseCase: MEGAHandleUseCaseProtocol
+        accountUseCase: any AccountUseCaseProtocol,
+        thumbnailRepo: any ThumbnailRepositoryProtocol,
+        handleUseCase: any MEGAHandleUseCaseProtocol
     ) {
         self.avatarRepository = megaAvatarClient
         self.avatarFileSystemClient = avatarFileSystemClient

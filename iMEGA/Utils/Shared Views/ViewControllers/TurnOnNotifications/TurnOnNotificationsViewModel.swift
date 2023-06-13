@@ -27,14 +27,14 @@ final class TurnOnNotificationsViewModel: ViewModelType {
     @PreferenceWrapper(key: .timesTurnOnNotificationsShowed, defaultValue: 0)
     private var timesTurnOnNotificationsShowedPreference: Int
     
-    private let accountUseCase: AccountUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
         
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
     init(router: TurnOnNotificationsViewRouting,
-         preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         accountUseCase: AccountUseCaseProtocol) {
+         preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default,
+         accountUseCase: any AccountUseCaseProtocol) {
         self.router = router
         self.accountUseCase = accountUseCase
         $lastDateTurnOnNotificationsShowedPreference.useCase = preferenceUseCase

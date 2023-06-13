@@ -10,9 +10,9 @@ public protocol UploadPhotoAssetsUseCaseProtocol {
 
 public final class UploadPhotoAssetsUseCase: UploadPhotoAssetsUseCaseProtocol {
 
-    private let uploadFromAlbumRepository: UploadPhotoAssetsRepositoryProtocol
+    private let uploadFromAlbumRepository: any UploadPhotoAssetsRepositoryProtocol
 
-    public init(uploadPhotoAssetsRepository: UploadPhotoAssetsRepositoryProtocol) {
+    public init(uploadPhotoAssetsRepository: any UploadPhotoAssetsRepositoryProtocol) {
         self.uploadFromAlbumRepository = uploadPhotoAssetsRepository
     }
     

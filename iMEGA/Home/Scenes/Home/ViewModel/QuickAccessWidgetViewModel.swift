@@ -22,13 +22,13 @@ final class QuickAccessWidgetViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private let offlineFilesUseCase: OfflineFilesUseCaseProtocol
+    private let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
     private var pendingQuickAccessWidgetAction: QuickAccessWidgetAction?
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    init(offlineFilesUseCase: OfflineFilesUseCaseProtocol) {
+    init(offlineFilesUseCase: any OfflineFilesUseCaseProtocol) {
         self.offlineFilesUseCase = offlineFilesUseCase
     }
     

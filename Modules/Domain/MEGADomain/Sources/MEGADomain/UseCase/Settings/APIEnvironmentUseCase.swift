@@ -4,9 +4,9 @@ public protocol APIEnvironmentUseCaseProtocol {
 }
 
 public struct APIEnvironmentUseCase: APIEnvironmentUseCaseProtocol {
-    private var repository: APIEnvironmentRepositoryProtocol
+    private var repository: any APIEnvironmentRepositoryProtocol
     
-    public init(repository: APIEnvironmentRepositoryProtocol) {
+    public init(repository: any APIEnvironmentRepositoryProtocol) {
         self.repository = repository
     }
     

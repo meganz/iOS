@@ -18,8 +18,8 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     private let parentNode: NodeEntity
     private var nodes: [NodeEntity] = []
     private let router: MediaDiscoveryRouter
-    private let analyticsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol
-    private let mediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol
+    private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
+    private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
     
     private var loadingTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
@@ -30,8 +30,8 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     // MARK: - Init
     
     init(parentNode: NodeEntity, router: MediaDiscoveryRouter,
-         analyticsUseCase: MediaDiscoveryAnalyticsUseCaseProtocol,
-         mediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol) {
+         analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol,
+         mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol) {
         self.parentNode = parentNode
         self.router = router
         self.analyticsUseCase = analyticsUseCase

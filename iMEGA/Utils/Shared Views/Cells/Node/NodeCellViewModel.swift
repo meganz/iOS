@@ -28,12 +28,12 @@ final class NodeCellViewModel: ViewModelType {
     
     private let nodeOpener: NodeOpener
     private var nodeModel: NodeEntity
-    private var nodeUseCase: NodeUseCaseProtocol
-    private var nodeThumbnailUseCase: ThumbnailUseCaseProtocol
-    private var accountUseCase: AccountUseCaseProtocol
+    private var nodeUseCase: any NodeUseCaseProtocol
+    private var nodeThumbnailUseCase: any ThumbnailUseCaseProtocol
+    private var accountUseCase: any AccountUseCaseProtocol
     private var loadingTask: Task<Void, Never>?
     
-    init(nodeOpener: NodeOpener, nodeModel: NodeEntity, nodeUseCase: NodeUseCaseProtocol, nodeThumbnailUseCase: ThumbnailUseCaseProtocol, accountUseCase: AccountUseCaseProtocol) {
+    init(nodeOpener: NodeOpener, nodeModel: NodeEntity, nodeUseCase: any NodeUseCaseProtocol, nodeThumbnailUseCase: any ThumbnailUseCaseProtocol, accountUseCase: any AccountUseCaseProtocol) {
         self.nodeOpener = nodeOpener
         self.nodeModel = nodeModel
         self.nodeUseCase = nodeUseCase

@@ -36,8 +36,8 @@ final class SMSVerificationViewModel: ViewModelType {
     // MARK: - Private properties
     private let verificationType: SMSVerificationType
     private let smsUseCase: SMSUseCase
-    private let achievementUseCase: AchievementUseCaseProtocol
-    private let authUseCase: AuthUseCaseProtocol
+    private let achievementUseCase: any AchievementUseCaseProtocol
+    private let authUseCase: any AuthUseCaseProtocol
     private var regionList = [SMSRegion]()
     var selectedRegion: SMSRegion?
     private let router: SMSVerificationViewRouting
@@ -48,8 +48,8 @@ final class SMSVerificationViewModel: ViewModelType {
     // MARK: - Init
     init(router: SMSVerificationViewRouting,
          smsUseCase: SMSUseCase,
-         achievementUseCase: AchievementUseCaseProtocol,
-         authUseCase: AuthUseCaseProtocol,
+         achievementUseCase: any AchievementUseCaseProtocol,
+         authUseCase: any AuthUseCaseProtocol,
          verificationType: SMSVerificationType = .unblockAccount) {
         self.router = router
         self.smsUseCase = smsUseCase

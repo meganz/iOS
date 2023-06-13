@@ -6,12 +6,12 @@ extension ChatRoomsListViewModel {
     
     convenience init(
         router: ChatRoomsListRouting = MockChatRoomsListRouter(),
-        chatUseCase: ChatUseCaseProtocol = MockChatUseCase(),
-        contactsUseCase: ContactsUseCaseProtocol = MockContactsUseCase(),
-        networkMonitorUseCase: NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
-        accountUseCase: AccountUseCaseProtocol = MockAccountUseCase(),
-        chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
+        chatUseCase: any ChatUseCaseProtocol = MockChatUseCase(),
+        contactsUseCase: any ContactsUseCaseProtocol = MockContactsUseCase(),
+        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
+        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
+        chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         notificationCenter: NotificationCenter = NotificationCenter.default,
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,

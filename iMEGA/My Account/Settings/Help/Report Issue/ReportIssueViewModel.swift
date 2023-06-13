@@ -3,13 +3,13 @@ import MEGADomain
 
 final class ReportIssueViewModel: ObservableObject {
     private let router: ReportIssueViewRouting
-    private let uploadFileUseCase: UploadFileUseCaseProtocol
-    private let supportUseCase: SupportUseCaseProtocol
+    private let uploadFileUseCase: any UploadFileUseCaseProtocol
+    private let supportUseCase: any SupportUseCaseProtocol
     private var transfer: TransferEntity?
     private var sourceUrl: URL?
     private var detailsPlaceholder = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
     private var subscriptions: AnyCancellable?
-    private let monitorUseCase: NetworkMonitorUseCaseProtocol
+    private let monitorUseCase: any NetworkMonitorUseCaseProtocol
     private var reportAlertType: ReportIssueAlertTypeModel = .none
     var areLogsEnabled: Bool
     var shouldDisableSendButton: Bool {
@@ -34,9 +34,9 @@ final class ReportIssueViewModel: ObservableObject {
     var isSendLogFileToggleOn = true
     
     init(router: ReportIssueViewRouting,
-         uploadFileUseCase: UploadFileUseCaseProtocol,
-         supportUseCase: SupportUseCaseProtocol,
-         monitorUseCase: NetworkMonitorUseCaseProtocol,
+         uploadFileUseCase: any UploadFileUseCaseProtocol,
+         supportUseCase: any SupportUseCaseProtocol,
+         monitorUseCase: any NetworkMonitorUseCaseProtocol,
          areLogsEnabled: Bool = false,
          sourceUrl: URL?) {
         self.router = router

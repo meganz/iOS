@@ -3,9 +3,9 @@ import Combine
 
 final class ActiveCallViewModel: ObservableObject {
     private var call: CallEntity
-    private let router: ChatRoomsListRouting
-    private let activeCallUseCase: ActiveCallUseCaseProtocol
-    private var chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let router: any ChatRoomsListRouting
+    private let activeCallUseCase: any ActiveCallUseCaseProtocol
+    private var chatRoomUseCase: any ChatRoomUseCaseProtocol
 
     @Published private(set) var muted: UIImage?
     @Published private(set) var video: UIImage?
@@ -21,9 +21,9 @@ final class ActiveCallViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
 
     init(call: CallEntity,
-         router: ChatRoomsListRouting,
-         activeCallUseCase: ActiveCallUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol
+         router: any ChatRoomsListRouting,
+         activeCallUseCase: any ActiveCallUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol
     ) {
         self.call = call
         self.router = router

@@ -38,12 +38,12 @@ final class MeetingContainerViewModel: ViewModelType {
     private let chatRoom: ChatRoomEntity
     private let callUseCase: CallUseCaseProtocol
     private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private let chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let authUseCase: AuthUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let authUseCase: any AuthUseCaseProtocol
     private let noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
-    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
     private var muteUnmuteFailedNotificationsSubscription: AnyCancellable?
@@ -59,13 +59,13 @@ final class MeetingContainerViewModel: ViewModelType {
     init(router: MeetingContainerRouting,
          chatRoom: ChatRoomEntity,
          callUseCase: CallUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
          callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
-         authUseCase: AuthUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
+         authUseCase: any AuthUseCaseProtocol,
          noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol,
-         analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol) {
+         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase

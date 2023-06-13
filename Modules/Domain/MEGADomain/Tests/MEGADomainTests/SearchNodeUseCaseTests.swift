@@ -3,7 +3,7 @@ import MEGADomain
 import MEGADomainMock
 
 final class SearchNodeUseCaseTests: XCTestCase {
-    var searchNodeUC: SearchNodeUseCaseProtocol!
+    var searchNodeUC: (any SearchNodeUseCaseProtocol)!
     var searchNodeRepo: MockSearchNodeRepository!
     var searchText: String!
     var searchNodes: [NodeEntity]!

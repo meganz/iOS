@@ -50,13 +50,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
     private let callUseCase: CallUseCaseProtocol
-    private let audioSessionUseCase: AudioSessionUseCaseProtocol
+    private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
-    private let captureDeviceUseCase: CaptureDeviceUseCaseProtocol
-    private let localVideoUseCase: CallLocalVideoUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private var chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
+    private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private var chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var updateAllowNonHostToAddParticipantsTask: Task<Void, Never>?
@@ -86,13 +86,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          isSpeakerEnabled: Bool,
          callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
-         audioSessionUseCase: AudioSessionUseCaseProtocol,
+         audioSessionUseCase: any AudioSessionUseCaseProtocol,
          devicePermissionUseCase: DevicePermissionCheckingProtocol,
-         captureDeviceUseCase: CaptureDeviceUseCaseProtocol,
+         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol) {
+         accountUseCase: any AccountUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom

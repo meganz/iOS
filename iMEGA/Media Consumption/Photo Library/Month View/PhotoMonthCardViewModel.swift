@@ -17,7 +17,7 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
     }
 
     init(photoByMonth: PhotoByMonth,
-         thumbnailUseCase: ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
         self.photoByMonth = photoByMonth
         title = DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate)
         

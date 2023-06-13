@@ -4,12 +4,13 @@ public protocol ManageLogsUseCaseProtocol {
 }
 
 public struct ManageLogsUseCase: ManageLogsUseCaseProtocol {
-    private var repository: LogSettingRepositoryProtocol
+    private var repository: any LogSettingRepositoryProtocol
     
     @PreferenceWrapper(key: .logging, defaultValue: false)
     private var isLoggingEnabled: Bool
     
-    public init(repository: LogSettingRepositoryProtocol, preferenceUseCase: PreferenceUseCaseProtocol) {
+    public init(repository: any LogSettingRepositoryProtocol,
+                preferenceUseCase: any PreferenceUseCaseProtocol) {
         self.repository = repository
         $isLoggingEnabled.useCase = preferenceUseCase
     }

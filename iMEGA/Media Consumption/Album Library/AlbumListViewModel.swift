@@ -35,17 +35,17 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         selection.albums.values.filter { $0.type == .user }
     }
     
-    private let usecase: AlbumListUseCaseProtocol
-    private let albumModificationUseCase: AlbumModificationUseCaseProtocol
-    private let shareAlbumUseCase: ShareAlbumUseCaseProtocol
+    private let usecase: any AlbumListUseCaseProtocol
+    private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
+    private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     private var subscriptions = Set<AnyCancellable>()
     
     private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
-    init(usecase: AlbumListUseCaseProtocol,
-         albumModificationUseCase: AlbumModificationUseCaseProtocol,
-         shareAlbumUseCase: ShareAlbumUseCaseProtocol,
+    init(usecase: any AlbumListUseCaseProtocol,
+         albumModificationUseCase: any AlbumModificationUseCaseProtocol,
+         shareAlbumUseCase: any ShareAlbumUseCaseProtocol,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil) {
         self.usecase = usecase

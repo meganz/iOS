@@ -8,13 +8,13 @@ extension MeetingContainerViewModel {
         router: MeetingContainerRouting = MockMeetingContainerRouter(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(call: CallEntity()),
-        chatRoomUseCase: ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         callCoordinatorUseCase: CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
-        accountUseCase: AccountUseCaseProtocol = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-        authUseCase: AuthUseCaseProtocol = MockAuthUseCase(),
+        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+        authUseCase: any AuthUseCaseProtocol = MockAuthUseCase(),
         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
-        analyticsEventUseCase: AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
-        megaHandleUseCase: MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        analyticsEventUseCase: any AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
+        megaHandleUseCase: any MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         isTesting: Bool = true
     ) {
         self.init(

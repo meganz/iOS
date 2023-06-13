@@ -29,11 +29,11 @@ final class StartConversationViewModel: ViewModelType {
     
     // MARK: - Properties
     
-    private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let router: NewChatRouter
 
     init(
-        networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
+        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
         router: NewChatRouter
     ) {
         self.networkMonitorUseCase = networkMonitorUseCase

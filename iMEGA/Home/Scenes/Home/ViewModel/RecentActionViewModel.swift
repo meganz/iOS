@@ -88,14 +88,14 @@ final class HomeRecentActionViewModel:
 
     private let devicePermissionUseCase: DevicePermissionCheckingProtocol
 
-    private let nodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol
+    private let nodeFavouriteActionUseCase: any NodeFavouriteActionUseCaseProtocol
 
-    private let saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol
+    private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
 
     init(
         devicePermissionUseCase: DevicePermissionCheckingProtocol,
-        nodeFavouriteActionUseCase: NodeFavouriteActionUseCaseProtocol,
-        saveMediaToPhotosUseCase: SaveMediaToPhotosUseCaseProtocol
+        nodeFavouriteActionUseCase: any NodeFavouriteActionUseCaseProtocol,
+        saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     ) {
         self.devicePermissionUseCase = devicePermissionUseCase
         self.nodeFavouriteActionUseCase = nodeFavouriteActionUseCase

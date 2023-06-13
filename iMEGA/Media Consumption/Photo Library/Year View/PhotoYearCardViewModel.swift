@@ -8,7 +8,7 @@ final class PhotoYearCardViewModel: PhotoCardViewModel {
     let title: String
     
     init(photoByYear: PhotoByYear,
-         thumbnailUseCase: ThumbnailUseCaseProtocol) {
+         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
         self.photoByYear = photoByYear
         
         if #available(iOS 15.0, *) {

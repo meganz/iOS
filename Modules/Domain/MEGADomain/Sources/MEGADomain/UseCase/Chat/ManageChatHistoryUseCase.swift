@@ -1,10 +1,12 @@
 
 public struct ManageChatHistoryUseCase {
-    public let retentionValueUseCase: HistoryRetentionUseCaseProtocol
-    public let historyRetentionUseCase: HistoryRetentionUseCaseProtocol
-    public let clearChatHistoryUseCase: ClearChatHistoryUseCaseProtocol
+    public let retentionValueUseCase: any HistoryRetentionUseCaseProtocol
+    public let historyRetentionUseCase: any HistoryRetentionUseCaseProtocol
+    public let clearChatHistoryUseCase: any ClearChatHistoryUseCaseProtocol
     
-    public init(retentionValueUseCase: HistoryRetentionUseCaseProtocol, historyRetentionUseCase: HistoryRetentionUseCaseProtocol, clearChatHistoryUseCase: ClearChatHistoryUseCaseProtocol) {
+    public init(retentionValueUseCase: any HistoryRetentionUseCaseProtocol,
+                historyRetentionUseCase: any HistoryRetentionUseCaseProtocol,
+                clearChatHistoryUseCase: any ClearChatHistoryUseCaseProtocol) {
         self.retentionValueUseCase = retentionValueUseCase
         self.historyRetentionUseCase = historyRetentionUseCase
         self.clearChatHistoryUseCase = clearChatHistoryUseCase

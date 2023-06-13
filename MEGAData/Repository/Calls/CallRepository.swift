@@ -5,7 +5,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
 
     private let chatSdk: MEGAChatSdk
     private let callActionManager: CallActionManager
-    private var callbacksDelegate: CallCallbacksRepositoryProtocol?
+    private var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
 
     private var callId: HandleEntity?
     private var call: CallEntity?
@@ -17,7 +17,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         self.callActionManager = callActionManager
     }
     
-    func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: CallCallbacksRepositoryProtocol) {
+    func startListeningForCallInChat(_ chatId: HandleEntity, callbacksDelegate: any CallCallbacksRepositoryProtocol) {
         if let call = chatSdk.chatCall(forChatId: chatId) {
             self.call = call.toCallEntity()
             self.callId = call.callId

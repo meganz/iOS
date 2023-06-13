@@ -29,7 +29,7 @@ final class BannerContainerViewModel: ViewModelType {
     init(router: BannerContainerViewRouting,
          message: String,
          type: BannerType,
-         preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+         preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         self.router = router
         self.message = message
         self.type = type

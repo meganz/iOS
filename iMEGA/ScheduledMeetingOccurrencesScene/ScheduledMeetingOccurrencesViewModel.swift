@@ -2,7 +2,7 @@ import MEGADomain
 
 final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private let scheduledMeeting: ScheduledMeetingEntity
-    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
+    private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
     private var occurrences: [ScheduledMeetingOccurrenceEntity] = []
@@ -18,7 +18,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private let maxOccurrencesBatchCount = 20
     
     init(scheduledMeeting: ScheduledMeetingEntity,
-         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
+         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          chatRoomAvatarViewModel: ChatRoomAvatarViewModel?) {
         self.scheduledMeeting = scheduledMeeting
         self.scheduledMeetingUseCase = scheduledMeetingUseCase

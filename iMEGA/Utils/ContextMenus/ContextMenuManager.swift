@@ -54,7 +54,7 @@ final class ContextMenuManager: NSObject {
     weak var filterMenuDelegate: FilterMenuDelegate?
     weak var albumMenuDelegate: AlbumMenuDelegate?
     
-    private let createContextMenuUC: CreateContextMenuUseCaseProtocol
+    private let createContextMenuUC: any CreateContextMenuUseCaseProtocol
     
     init(displayMenuDelegate: DisplayMenuDelegate? = nil,
          quickActionsMenuDelegate: QuickActionsMenuDelegate? = nil,
@@ -64,7 +64,7 @@ final class ContextMenuManager: NSObject {
          qrMenuDelegate: QRMenuDelegate? = nil,
          meetingContextMenuDelegate: MeetingContextMenuDelegate? = nil,
          filterMenuDelegate: FilterMenuDelegate? = nil,
-         createContextMenuUseCase: CreateContextMenuUseCaseProtocol,
+         createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
          albumMenuDelegate: AlbumMenuDelegate? = nil) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickActionsMenuDelegate = quickActionsMenuDelegate

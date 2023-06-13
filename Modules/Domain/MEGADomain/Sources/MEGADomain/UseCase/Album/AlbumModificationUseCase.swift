@@ -9,9 +9,9 @@ public protocol AlbumModificationUseCaseProtocol {
 }
 
 public struct AlbumModificationUseCase: AlbumModificationUseCaseProtocol {
-    private let userAlbumRepo: UserAlbumRepositoryProtocol
+    private let userAlbumRepo: any UserAlbumRepositoryProtocol
 
-    public init(userAlbumRepo: UserAlbumRepositoryProtocol) {
+    public init(userAlbumRepo: any UserAlbumRepositoryProtocol) {
         self.userAlbumRepo = userAlbumRepo
     }
     

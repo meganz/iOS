@@ -9,15 +9,15 @@ public protocol AlbumContentsUseCaseProtocol {
 }
 
 public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
-    private let albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol
-    private let mediaUseCase: MediaUseCaseProtocol
-    private let fileSearchRepo: FilesSearchRepositoryProtocol
-    private let userAlbumRepo: UserAlbumRepositoryProtocol
+    private let albumContentsRepo: any AlbumContentsUpdateNotifierRepositoryProtocol
+    private let mediaUseCase: any MediaUseCaseProtocol
+    private let fileSearchRepo: any FilesSearchRepositoryProtocol
+    private let userAlbumRepo: any UserAlbumRepositoryProtocol
     
-    public init(albumContentsRepo: AlbumContentsUpdateNotifierRepositoryProtocol,
-                mediaUseCase: MediaUseCaseProtocol,
-                fileSearchRepo: FilesSearchRepositoryProtocol,
-                userAlbumRepo: UserAlbumRepositoryProtocol) {
+    public init(albumContentsRepo: any AlbumContentsUpdateNotifierRepositoryProtocol,
+                mediaUseCase: any MediaUseCaseProtocol,
+                fileSearchRepo: any FilesSearchRepositoryProtocol,
+                userAlbumRepo: any UserAlbumRepositoryProtocol) {
         self.albumContentsRepo = albumContentsRepo
         self.mediaUseCase = mediaUseCase
         self.fileSearchRepo = fileSearchRepo

@@ -22,8 +22,8 @@ final class AddPhoneNumberViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private let router: AddPhoneNumberRouting
-    private let achievementUseCase: AchievementUseCaseProtocol
+    private let router: any AddPhoneNumberRouting
+    private let achievementUseCase: any AchievementUseCaseProtocol
     private let hideDontShowAgain: Bool
 
     @PreferenceWrapper(key: .dontShowAgainAddPhoneNumber, defaultValue: false)
@@ -34,8 +34,8 @@ final class AddPhoneNumberViewModel: ViewModelType {
     
     // MARK: - Init
     init(router: AddPhoneNumberRouting,
-         achievementUseCase: AchievementUseCaseProtocol,
-         preferenceUseCase: PreferenceUseCaseProtocol = PreferenceUseCase.default,
+         achievementUseCase: any AchievementUseCaseProtocol,
+         preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default,
          hideDontShowAgain: Bool) {
         self.router = router
         self.achievementUseCase = achievementUseCase

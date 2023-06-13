@@ -4,7 +4,7 @@ import MEGASdk
 import MEGASwift
 
 final class UpgradeAccountPlanViewModel: ObservableObject {
-    private let purchaseUseCase: AccountPlanPurchaseUseCaseProtocol
+    private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
     
@@ -20,7 +20,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         }
     }
     
-    init(accountDetails: AccountDetailsEntity, purchaseUseCase: AccountPlanPurchaseUseCaseProtocol) {
+    init(accountDetails: AccountDetailsEntity, purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol) {
         self.purchaseUseCase = purchaseUseCase
         self.accountDetails = accountDetails
         setupPlans()

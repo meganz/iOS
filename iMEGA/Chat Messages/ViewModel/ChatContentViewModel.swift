@@ -36,11 +36,11 @@ final class ChatContentViewModel: ViewModelType {
         chatUseCase.myUserHandle()
     }()
     
-    private let chatUseCase: ChatUseCaseProtocol
-    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
+    private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let chatRoom: ChatRoomEntity
     
-    init(chatRoom: ChatRoomEntity, chatUseCase: ChatUseCaseProtocol, scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol) {
+    init(chatRoom: ChatRoomEntity, chatUseCase: any ChatUseCaseProtocol, scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol) {
         self.chatRoom = chatRoom
         self.chatUseCase = chatUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase

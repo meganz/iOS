@@ -21,9 +21,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     private let router: ScheduleMeetingRouting
-    private let scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol
-    private var chatLinkUseCase: ChatLinkUseCaseProtocol
-    private var chatRoomUseCase: ChatRoomUseCaseProtocol
+    private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private var chatLinkUseCase: any ChatLinkUseCaseProtocol
+    private var chatRoomUseCase: any ChatRoomUseCaseProtocol
 
     @Published var startDate = Date() {
         didSet {
@@ -94,9 +94,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
 
     init(router: ScheduleMeetingRouting,
          rules: ScheduledMeetingRulesEntity,
-         scheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol,
-         chatLinkUseCase: ChatLinkUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol) {
+         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
+         chatLinkUseCase: any ChatLinkUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol) {
         self.router = router
         self.rules = rules
         self.scheduledMeetingUseCase = scheduledMeetingUseCase

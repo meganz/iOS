@@ -7,8 +7,8 @@ import MEGASwift
 
 class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
-    private let thumbnailUseCase: ThumbnailUseCaseProtocol
-    private let mediaUseCase: MediaUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private let mediaUseCase: any MediaUseCaseProtocol
     private let selection: PhotoSelection
     private var subscriptions = Set<AnyCancellable>()
     
@@ -51,8 +51,8 @@ class PhotoCellViewModel: ObservableObject {
     
     init(photo: NodeEntity,
          viewModel: PhotoLibraryModeAllViewModel,
-         thumbnailUseCase: ThumbnailUseCaseProtocol,
-         mediaUseCase: MediaUseCaseProtocol) {
+         thumbnailUseCase: any ThumbnailUseCaseProtocol,
+         mediaUseCase: any MediaUseCaseProtocol) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailUseCase = thumbnailUseCase

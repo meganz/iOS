@@ -151,7 +151,7 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     
     private func photoLibraryFilterViewModel(
         contentMode: PhotoLibraryContentMode = .library,
-        userAttributeUseCase: UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
+        userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
         featureFlagProvider: FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> PhotoLibraryFilterViewModel {
         PhotoLibraryFilterViewModel(contentMode: contentMode, userAttributeUseCase: userAttributeUseCase, featureFlagProvider: featureFlagProvider)

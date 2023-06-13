@@ -7,9 +7,9 @@ struct NodeDataRepository: NodeDataRepositoryProtocol {
     
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
-    private let nodeRepository: NodeRepositoryProtocol
+    private let nodeRepository: any NodeRepositoryProtocol
     
-    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk, nodeRepository: NodeRepositoryProtocol) {
+    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk, nodeRepository: any NodeRepositoryProtocol) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
         self.nodeRepository = nodeRepository

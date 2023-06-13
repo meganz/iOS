@@ -3,7 +3,7 @@ import MEGAData
 import MEGASwift
 
 final class SendFeedbackViewModel: NSObject {
-    private let accountUseCase: AccountUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let bundle: Bundle
     private let device: UIDevice
     private let locale: NSLocale
@@ -11,7 +11,7 @@ final class SendFeedbackViewModel: NSObject {
     private var accountDetails: AccountDetailsEntity?
     private var userEmail: String?
     
-    init(accountUseCase: AccountUseCaseProtocol,
+    init(accountUseCase: any AccountUseCaseProtocol,
          bundle: Bundle = .main,
          device: UIDevice = .current,
          locale: NSLocale = NSLocale.current as NSLocale,

@@ -9,10 +9,10 @@ protocol TransferWidgetRouting: Routing {
 final class CancellableTransferViewModel: ViewModelType {
     typealias routingProtocols = CancellableTransferRouting & TransferWidgetRouting
 
-    private let uploadFileUseCase: UploadFileUseCaseProtocol
-    private let downloadNodeUseCase: DownloadNodeUseCaseProtocol
-    private let mediaUseCase: MediaUseCaseProtocol
-    private let analyticsEventUseCase: AnalyticsEventUseCaseProtocol
+    private let uploadFileUseCase: any UploadFileUseCaseProtocol
+    private let downloadNodeUseCase: any DownloadNodeUseCaseProtocol
+    private let mediaUseCase: any MediaUseCaseProtocol
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
 
     private let transfers: [CancellableTransfer]
     private let fileTransfers: [CancellableTransfer]
@@ -36,10 +36,10 @@ final class CancellableTransferViewModel: ViewModelType {
     
     // MARK: - Init
     init(router: routingProtocols,
-         uploadFileUseCase: UploadFileUseCaseProtocol,
-         downloadNodeUseCase: DownloadNodeUseCaseProtocol,
-         mediaUseCase: MediaUseCaseProtocol,
-         analyticsEventUseCase: AnalyticsEventUseCaseProtocol,
+         uploadFileUseCase: any UploadFileUseCaseProtocol,
+         downloadNodeUseCase: any DownloadNodeUseCaseProtocol,
+         mediaUseCase: any MediaUseCaseProtocol,
+         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
          transfers: [CancellableTransfer],
          transferType: CancellableTransferType) {
         self.router = router

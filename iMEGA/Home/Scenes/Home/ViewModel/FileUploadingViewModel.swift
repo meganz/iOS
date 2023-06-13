@@ -130,21 +130,21 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     // MARK: - Use Cases
 
-    private let uploadPhotoAssetsUseCase: UploadPhotoAssetsUseCaseProtocol
+    private let uploadPhotoAssetsUseCase: any UploadPhotoAssetsUseCaseProtocol
 
     private let devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol
 
-    private let networkMonitorUseCase: NetworkMonitorUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     
-    private let createContextMenuUseCase: CreateContextMenuUseCaseProtocol
+    private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     
     private var contextMenuManager: ContextMenuManager?
 
     init(
-        uploadFilesUseCase: UploadPhotoAssetsUseCaseProtocol,
+        uploadFilesUseCase: any UploadPhotoAssetsUseCaseProtocol,
         devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol,
-        networkMonitorUseCase: NetworkMonitorUseCaseProtocol,
-        createContextMenuUseCase: CreateContextMenuUseCaseProtocol,
+        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
+        createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
         router: FileUploadingRouter
     ) {
         self.uploadPhotoAssetsUseCase = uploadFilesUseCase

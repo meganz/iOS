@@ -17,10 +17,10 @@ final class MeetingParticipantViewModel: ViewModelType {
     
     private let participant: CallParticipantEntity
     private var userImageUseCase: UserImageUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
-    private var chatRoomUseCase: ChatRoomUseCaseProtocol
-    private var chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
-    private let megaHandleUseCase: MEGAHandleUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
+    private var chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private var chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
+    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let contextMenuTappedHandler: (CallParticipantEntity, UIButton) -> Void
     
     private var subscriptions = Set<AnyCancellable>()
@@ -47,10 +47,10 @@ final class MeetingParticipantViewModel: ViewModelType {
     
     init(participant: CallParticipantEntity,
          userImageUseCase: UserImageUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
-         megaHandleUseCase: MEGAHandleUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
          contextMenuTappedHandler: @escaping (CallParticipantEntity, UIButton) -> Void) {
         self.participant = participant
         self.userImageUseCase = userImageUseCase

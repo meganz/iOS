@@ -5,10 +5,10 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     
     private let initialParticipantsLoad: Int = 4
     
-    private var chatRoomUseCase: ChatRoomUseCaseProtocol
-    private let chatRoomUserUseCase: ChatRoomUserUseCaseProtocol
-    private var chatUseCase: ChatUseCaseProtocol
-    private let accountUseCase: AccountUseCaseProtocol
+    private var chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
+    private var chatUseCase: any ChatUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let router: MeetingInfoRouting
     private var chatRoom: ChatRoomEntity
     private var subscriptions = Set<AnyCancellable>()
@@ -21,10 +21,10 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     @Published var listExpanded = false
 
     init(router: MeetingInfoRouting,
-         chatRoomUseCase: ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: ChatRoomUserUseCaseProtocol,
-         chatUseCase: ChatUseCaseProtocol,
-         accountUseCase: AccountUseCaseProtocol,
+         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
+         chatUseCase: any ChatUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
          chatRoom: ChatRoomEntity) {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase

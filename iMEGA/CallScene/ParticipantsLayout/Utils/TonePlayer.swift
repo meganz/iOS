@@ -15,7 +15,7 @@ final class TonePlayer: NSObject {
     }
     
     private var audioPlayer: AVAudioPlayer?
-    private var audioSessionUseCase: AudioSessionUseCaseProtocol?
+    private var audioSessionUseCase: (any AudioSessionUseCaseProtocol)?
     
     func play(tone: ToneType) {
         guard let toneURL = tone.fileURL else {

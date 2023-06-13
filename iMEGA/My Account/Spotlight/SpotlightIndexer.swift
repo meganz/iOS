@@ -5,7 +5,7 @@ import MEGADomain
 
 final class SpotlightIndexer: NSObject {
     private let sdk: MEGASdk
-    private let favouritesUseCase: FavouriteNodesUseCaseProtocol
+    private let favouritesUseCase: any FavouriteNodesUseCaseProtocol
     private let preferenceUseCase = PreferenceUseCase.default
     
     @PreferenceWrapper(key: .favouritesIndexed, defaultValue: false)
