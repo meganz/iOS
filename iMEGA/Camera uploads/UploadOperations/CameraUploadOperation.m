@@ -23,7 +23,6 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 
 @interface CameraUploadOperation ()
 
-@property (strong, nonatomic, nullable) MEGASdk *sdk;
 @property (strong, nonatomic) FileEncrypter *fileEncrypter;
 
 @end
@@ -43,14 +42,6 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
 }
 
 #pragma mark - properties
-
-- (MEGASdk *)sdk {
-    if (_sdk == nil) {
-        _sdk = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:nil];
-    }
-    
-    return _sdk;
-}
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@ %@ %@", NSStringFromClass(self.class), [self.uploadInfo.asset.creationDate mnz_formattedDefaultNameForMedia], self.uploadInfo.savedLocalIdentifier];
@@ -110,21 +101,21 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return NO;
     }
     
-    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
+    BOOL thumbnailCreated = [MEGASdk.shared createThumbnail:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
     if (!thumbnailCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create thumbnail", self);
+        return NO;
     }
     
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return NO;
     }
-    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.previewURL.path];
+    BOOL previewCreated = [MEGASdk.shared createPreview:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.previewURL.path];
     if (!previewCreated) {
         MEGALogError(@"[Camera Upload] %@ error when to create preview", self);
     }
     
-    self.sdk = nil;
     return thumbnailCreated && previewCreated;
 }
 
