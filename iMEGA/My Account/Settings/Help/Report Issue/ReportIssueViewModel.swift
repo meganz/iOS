@@ -5,12 +5,14 @@ final class ReportIssueViewModel: ObservableObject {
     private let router: ReportIssueViewRouting
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
     private let supportUseCase: any SupportUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private var transfer: TransferEntity?
     private var sourceUrl: URL?
     private var detailsPlaceholder = Strings.Localizable.Help.ReportIssue.DescribeIssue.placeholder
     private var subscriptions: AnyCancellable?
     private let monitorUseCase: any NetworkMonitorUseCaseProtocol
     private var reportAlertType: ReportIssueAlertTypeModel = .none
+    
     var areLogsEnabled: Bool
     var shouldDisableSendButton: Bool {
         details.isEmpty || details == detailsPlaceholder || !isConnected
@@ -37,14 +39,17 @@ final class ReportIssueViewModel: ObservableObject {
          uploadFileUseCase: any UploadFileUseCaseProtocol,
          supportUseCase: any SupportUseCaseProtocol,
          monitorUseCase: any NetworkMonitorUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
          areLogsEnabled: Bool = false,
-         sourceUrl: URL?) {
+         sourceUrl: URL?
+    ) {
         self.router = router
         self.uploadFileUseCase = uploadFileUseCase
         self.sourceUrl = sourceUrl
         self.areLogsEnabled = areLogsEnabled
         self.supportUseCase = supportUseCase
         self.monitorUseCase = monitorUseCase
+        self.accountUseCase = accountUseCase
         self.monitorUseCase.networkPathChanged(completion: { [weak self] (isConnected) in
             self?.isConnected = isConnected
         })
@@ -81,19 +86,22 @@ final class ReportIssueViewModel: ObservableObject {
     
     private func createTicketForSupport(filename: String? = nil) {
         Task { @MainActor in
-            let message = """
-            \(details)
-            
-            Report filename: \(filename ?? "No log file")
-            """
             do {
-                try await supportUseCase.createSupportTicket(withMessage: message)
+                try await supportUseCase.createSupportTicket(withMessage: getFormattedReportIssueMessage(details, filename: filename))
                 reportAlertType = .createSupportTicketFinished
             } catch {
                 reportAlertType = .createSupportTicketFailure
             }
             showingReportIssueAlert = true
         }
+    }
+    
+    @MainActor
+    private func getFormattedReportIssueMessage(_ message: String, filename: String? = nil) async -> String {
+        let appMetaDataFactory = AppMetaDataFactory(bundle: .main)
+        let deviceMetaDataFactory = DeviceMetaDataFactory(bundle: .main, locale: NSLocale.current as NSLocale)
+        let messageViewModel = ReportIssueMessageViewModel(accountUseCase: accountUseCase, appMetaData: appMetaDataFactory.make(), deviceMetaData: deviceMetaDataFactory.make())
+        return await messageViewModel.generateReportIssueMessage(message: message, filename: filename ?? "No log file")
     }
     
     func createTicket() {
