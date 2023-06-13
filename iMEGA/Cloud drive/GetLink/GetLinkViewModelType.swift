@@ -24,6 +24,7 @@ enum GetLinkViewModelCommand: CommandType, Equatable {
     case dismissHud
     case addToPasteBoard(String)
     case showShareActivity(sender: UIBarButtonItem, link: String, key: String?)
+    case hideMultiLinkDescription
     
     enum MessageType: Equatable {
         case status(String)

@@ -69,6 +69,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .configureView(title: expectedTitle,
                            isMultilink: true,
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
+            .hideMultiLinkDescription,
             .showHud(.status(Strings.Localizable.generatingLinks)),
             .dismissHud
         ])
@@ -90,15 +91,8 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         let sut = GetAlbumsLinkViewModel(albums: albums,
                                          shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
                                          sectionViewModels: sections)
-        test(viewModel: sut, action: .onViewReady, expectedCommands: [
-            .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count),
-                           isMultilink: true,
-                           shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
-            .showHud(.status(Strings.Localizable.generatingLinks)),
-            .reloadRows(expectedRowReloads),
-            .enableLinkActions,
-            .dismissHud
-        ])
+        expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
+        
         try expectedRowReloads.forEach { index in
             let cellViewModel = try XCTUnwrap(sut.cellViewModel(indexPath: index) as? GetLinkStringCellViewModel)
             XCTAssertEqual(cellViewModel.type, .link)
@@ -185,6 +179,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count),
                            isMultilink: true,
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)),
+            .hideMultiLinkDescription,
             .showHud(.status(Strings.Localizable.generatingLinks)),
             .reloadRows(expectedRowReload),
             .enableLinkActions,
