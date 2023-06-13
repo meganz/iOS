@@ -124,9 +124,15 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		167845552A173EF500568FBE /* XCTestCase+AsyncAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */; };
+		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
+		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
 		245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */; };
 		245386002A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385FF2A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift */; };
+		245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A72A32DDFD005F6527 /* AppMetaData.swift */; };
+		245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */; };
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
+		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
+		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
 		271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271FC4202A27EA4400E35924 /* ElementStore.swift */; };
 		274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
@@ -2550,9 +2556,15 @@
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AsyncAssertions.swift"; sourceTree = "<group>"; };
+		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
+		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
 		245385FF2A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		245CB1A72A32DDFD005F6527 /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
+		245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaData.swift; sourceTree = "<group>"; };
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
+		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
+		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
 		271FC4202A27EA4400E35924 /* ElementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStore.swift; sourceTree = "<group>"; };
 		274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStoreTests.swift; sourceTree = "<group>"; };
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
@@ -9286,8 +9298,13 @@
 			children = (
 				A89D72702795C5F500284BFC /* ReportIssueView.swift */,
 				A8EC8D7627A0258900A9ED13 /* ReportIssueViewModel.swift */,
+				240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */,
 				A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */,
 				A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */,
+				245CB1A72A32DDFD005F6527 /* AppMetaData.swift */,
+				24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */,
+				245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */,
+				24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */,
 			);
 			path = "Report Issue";
 			sourceTree = "<group>";
@@ -9431,6 +9448,7 @@
 			isa = PBXGroup;
 			children = (
 				A8EE47A927DFAEF000D37685 /* ReportIssueViewModelTests.swift */,
+				240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */,
 			);
 			path = "Report Issue";
 			sourceTree = "<group>";
@@ -12657,6 +12675,7 @@
 				8340CAFA284E4F0C007C3B39 /* ActionViewModel.swift in Sources */,
 				9470003929B77BCF00827E04 /* ActionWarningViewRouter.swift in Sources */,
 				8348A8D82901902B00B66463 /* ActiveCallViewModel.swift in Sources */,
+				245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */,
 				835833332948DB0A00394F1A /* AddParticipantsView.swift in Sources */,
 				B662B85B24ECC7A30089376A /* AddPhoneNumberRouter.swift in Sources */,
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
@@ -12683,6 +12702,7 @@
 				12BDD4DD28285EDD00009D73 /* AlbumContainerWrapper.swift in Sources */,
 				12BDD4DF282865CC00009D73 /* AlbumContent+PhotoLibrary.swift in Sources */,
 				9D4B25322964D5A20017E51A /* AlbumContentPickerView.swift in Sources */,
+				24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */,
 				9D94AF6C296532EE00C7FBAA /* AlbumContentPickerViewModel.swift in Sources */,
 				12BDD4D628285BA900009D73 /* AlbumContentRouter.swift in Sources */,
 				32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */,
@@ -12751,6 +12771,7 @@
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */,
+				24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */,
 				C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */,
 				C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */,
 				C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */,
@@ -13976,6 +13997,7 @@
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */,
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
+				240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */,
 				5DD6B16B24D67E7C00F14515 /* SlidePanelView.swift in Sources */,
 				328A913D28A9DB8A0058C645 /* SlideShowCollectionView.swift in Sources */,
 				328A913E28A9DB8A0058C645 /* SlideShowCollectionViewCell.swift in Sources */,
@@ -14139,6 +14161,7 @@
 				83139149293511F300E20170 /* UserAvatarViewModel.swift in Sources */,
 				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
 				83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */,
+				245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */,
 				BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */,
 				BF90C7802603FD4A006061F8 /* UserImageRepository.swift in Sources */,
 				BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */,
@@ -14668,6 +14691,7 @@
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
+				240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
 				BFC060F628A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift in Sources */,
 				B64A71CB287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift in Sources */,

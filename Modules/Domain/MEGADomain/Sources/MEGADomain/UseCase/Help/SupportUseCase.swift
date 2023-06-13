@@ -1,3 +1,5 @@
+import Foundation
+
 public protocol SupportUseCaseProtocol {
     func createSupportTicket(withMessage message: String) async throws
 }

@@ -12,6 +12,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.details = ""
@@ -24,6 +25,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.details = "Describe the issue"
@@ -36,6 +38,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.details = ""
@@ -47,6 +50,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.details = "Describe the issue"
@@ -58,6 +62,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.isConnected = false
@@ -69,6 +74,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.isUploadingLog = true
@@ -82,6 +88,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.isUploadingLog = true
@@ -95,6 +102,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.isUploadingLog = false
@@ -108,6 +116,7 @@ final class ReportIssueViewModelTests: XCTestCase {
                                        uploadFileUseCase: MockUploadFileUseCase(),
                                        supportUseCase: MockSupportUseCase(),
                                        monitorUseCase: MockNetworkMonitorUseCase(),
+                                       accountUseCase: MockAccountUseCase(),
                                        areLogsEnabled: false,
                                        sourceUrl: nil)
         sut.isUploadingLog = true

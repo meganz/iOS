@@ -30,14 +30,16 @@ protocol ReportIssueViewRouting: Routing {
         
         let uploadRepo = UploadFileRepository(sdk: sdk)
         let uploadUseCase = UploadFileUseCase(uploadFileRepository: uploadRepo, fileSystemRepository: FileSystemRepository.newRepo, nodeRepository: NodeRepository.newRepo, fileCacheRepository: FileCacheRepository.newRepo)
-        let supportRepo = SupportRepository(sdk: sdk)
-        let supportUseCase = SupportUseCase(repo: supportRepo)
         let monitorRepo = NetworkMonitorRepository()
         let monitorUseCase = NetworkMonitorUseCase(repo: monitorRepo)
+        let accountRepository = AccountRepository(sdk: sdk)
+        let accountUseCase = AccountUseCase(repository: accountRepository)
+        let supportUseCase = makeSupportUseCase(sdk: sdk, accountUseCase: accountUseCase)
         let viewModel = ReportIssueViewModel(router: self,
                                              uploadFileUseCase: uploadUseCase,
                                              supportUseCase: supportUseCase,
                                              monitorUseCase: monitorUseCase,
+                                             accountUseCase: accountUseCase,
                                              areLogsEnabled: areLogsEnabled,
                                              sourceUrl: zippedLogsUrl)
         let reportIssueView = ReportIssueView(viewModel: viewModel)
@@ -47,6 +49,12 @@ protocol ReportIssueViewRouting: Routing {
         baseViewController = hostingController
         
         return hostingController
+    }
+    
+    private func makeSupportUseCase(sdk: MEGASdk, accountUseCase: any AccountUseCaseProtocol) -> any SupportUseCaseProtocol {
+        let supportRepo = SupportRepository.newRepo
+        let supportUseCase = SupportUseCase(repo: supportRepo)
+        return supportUseCase
     }
     
     @objc func start() {
