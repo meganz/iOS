@@ -1,9 +1,26 @@
 
 import Foundation
+import MEGASwift
 
 class AppearanceManager: NSObject {
+    private static let shared = AppearanceManager()
+    private var pendingTraitCollection: UITraitCollection?
+    
+    private override init() {
+        super.init()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+    }
     
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
+        guard UIApplication.shared.applicationState == .active else {
+            shared.pendingTraitCollection = traitCollection
+            return
+        }
         setupNavigationBarAppearance(traitCollection)
         
         UISearchBar.appearance().isTranslucent = false
@@ -157,5 +174,10 @@ class AppearanceManager: NSObject {
         if #available(iOS 15.0, *) {
             UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
         }
+    }
+    
+    @objc private func appDidBecomeActive() {
+        guard let pendingTraitChange = pendingTraitCollection else { return }
+        AppearanceManager.setupAppearance(pendingTraitChange)
     }
 }
