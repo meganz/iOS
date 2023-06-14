@@ -79,7 +79,7 @@
 /* Error message when a user attempts to change their email without an active login session. */
 "needToBeLoggedInToCompleteYourEmailChange"="Você precisa estar logado para completar a sua mudança de e-mail. Por favor, faça login novamente com o seu endereço de e-mail atual e, em seguida, toque novamente no link de confirmação.";
 /* Button title which triggers the action to login in your MEGA account */
-"login"="Entrar";
+"login"="Fazer login";
 /* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Já possui uma conta?";
 /* Button title which triggers the action to create a MEGA account */
@@ -380,6 +380,10 @@
 "linkWithoutKey"="Link sem chave";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Link com chave";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="Somente quem tiver a senha poderá acessar o link";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="Link atualizado - copie novamente.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(SOMENTE PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="Nuvem de arquivos";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Uploads da câmera";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="Salvar as preferências";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Uploads de vídeo";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1017,7 +1023,7 @@
 /*  */
 "howItWorks"="Como funciona";
 /*  */
-"howItWorksMain"="O seu amigo precisa criar uma conta gratuita no MEGA e [S]instalar pelo menos um aplicativo do MEGA[/S] (pode ser o Aplicativo do MEGA para desktop ou um dos nossos aplicativos móveis)";
+"howItWorksMain"="O seu amigo precisa criar uma conta gratuita no MEGA e [S]instalar pelo menos um aplicativo do MEGA[/S] (pode ser o aplicativo do MEGA para desktop ou um dos nossos aplicativos móveis)";
 /*  */
 "howItWorksSecondary"="Você pode notificar o seu amigo através de qualquer método. Você receberá a cota se você digitou o email do seu amigo aqui antes dele se registrar com esse email.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="Mostrar atividade";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Alterado por %@";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s e mais %2$s";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Criado por %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2434,8 +2440,8 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] alterou o tempo de eliminação de mensagens para[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] desativou a eliminação de mensagens.[/B]";
-/*  */
-"day"="dia";
+/* Label for User Interface app icon "Day" in app settings */
+"day"="Dia";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Pesquisar nos seus arquivos";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="App para Android";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Aplicativo para Mac OS X";
+"general.filetype.app"="Aplicativo para macOS";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="Texto ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Gráfico Targa";
+"general.filetype.tga"="Gráfico TARGA";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="Imagem TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Enviar convite";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="A remoção do arquivo “%@” foi revogada.";
+"notifications.message.takenDownReinstated.file"="A remoção do arquivo “%@” foi revogada";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="A remoção da pasta “%@” foi revogada.";
+"notifications.message.takenDownReinstated.folder"="A remoção da pasta “%@” foi revogada";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
 "notifications.message.takenDownPubliclyShared.file"="O seu arquivo compartilhado “%@” foi removido";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="A sua pasta compartilhada “%@” foi removida.";
+"notifications.message.takenDownPubliclyShared.folder"="A sua pasta compartilhada “%@” foi removida";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Permitir adicionar participantes a usuários que não forem anfitriões";
 /* Start conversation: Schedule meeting context menu */
@@ -3400,3 +3406,11 @@
 "meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Alguns meses não têm dia 31. Nestes meses, o agendamento será no último dia do mês.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Câmera";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="Deixar de repetir";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="No dia";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="Nunca";

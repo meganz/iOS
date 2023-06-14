@@ -2,6 +2,52 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>sharedItems.link.accessInfo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Anyone with this link can view and download your data</string>
+        <key>other</key>
+        <string>Anyone with these links can view and download your data</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>링크가 클립보드에 복사되었습니다</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCreatedAndCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link created and copied to your clipboard</string>
+        <key>other</key>
+        <string>Links created and copied to your clipboard</string>
+      </dict>
+    </dict>
     <key>nameCollision.applyToAll</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -212,6 +258,20 @@
         <string>• 파일 %d개</string>
       </dict>
     </dict>
+    <key>general.format.count.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@item@</string>
+      <key>item</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d개의 항목</string>
+      </dict>
+    </dict>
     <key>general.format.rubbishBin.days</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -296,6 +356,20 @@
         <string>그리고 동영상 %d개</string>
       </dict>
     </dict>
+    <key>recents.section.multipleFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>“[A]” 그리고 %d개 더</string>
+      </dict>
+    </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -376,10 +450,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>People you have shared this link with will no longer be able to access it.</string>
         <key>other</key>
-        <string>People you have shared these links with will no longer be able to access them.</string>
+        <string>이 링크를 공유 받은 사람들이 더 이상 접근할 수 없게 됩니다.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -770,10 +842,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>People you shared this link with will lose access to the album.</string>
         <key>other</key>
-        <string>People you shared these links with will lose access to the albums.</string>
+        <string>이 링크를 공유 받은 사람들이 사진첩에 접근하지 못 하게 됩니다.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
@@ -1880,6 +1950,22 @@
         <string>d</string>
         <key>other</key>
         <string>다음의 폴더를 공유하고 있습니다: [A]</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validDays.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d day left</string>
+        <key>other</key>
+        <string>%d days left</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>

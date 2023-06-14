@@ -2,6 +2,54 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>sharedItems.link.accessInfo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Anyone with this link can view and download your data</string>
+        <key>other</key>
+        <string>Anyone with these links can view and download your data</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Koppeling gekopieerd naar klembord</string>
+        <key>other</key>
+        <string>Koppelingen gekopieerd naar klembord</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCreatedAndCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link created and copied to your clipboard</string>
+        <key>other</key>
+        <string>Links created and copied to your clipboard</string>
+      </dict>
+    </dict>
     <key>nameCollision.applyToAll</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -242,6 +290,22 @@
         <string>• %d bestanden</string>
       </dict>
     </dict>
+    <key>general.format.count.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@item@</string>
+      <key>item</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item</string>
+        <key>other</key>
+        <string>%d items</string>
+      </dict>
+    </dict>
     <key>general.format.rubbishBin.days</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -336,6 +400,22 @@
         <string>en %d video</string>
         <key>other</key>
         <string>en %d video's</string>
+      </dict>
+    </dict>
+    <key>recents.section.multipleFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” en %d andere</string>
+        <key>other</key>
+        <string>“[A]” en %d andere</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -2144,6 +2224,22 @@
         <string>U bent de volgende map aan het delen: [A]</string>
         <key>other</key>
         <string>U bent de volgende mappen aan het delen: [A]</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validDays.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d day left</string>
+        <key>other</key>
+        <string>%d days left</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>

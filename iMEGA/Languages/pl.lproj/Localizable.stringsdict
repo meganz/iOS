@@ -2,6 +2,58 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>sharedItems.link.accessInfo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Anyone with this link can view and download your data</string>
+        <key>other</key>
+        <string>Anyone with these links can view and download your data</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link skopiowany do schowka</string>
+        <key>few</key>
+        <string>Linki skopiowane do schowka</string>
+        <key>many</key>
+        <string>Linki skopiowane do schowka</string>
+        <key>other</key>
+        <string>Linki skopiowane do schowka</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCreatedAndCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link created and copied to your clipboard</string>
+        <key>other</key>
+        <string>Links created and copied to your clipboard</string>
+      </dict>
+    </dict>
     <key>nameCollision.applyToAll</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -302,6 +354,26 @@
         <string>• %d plików</string>
       </dict>
     </dict>
+    <key>general.format.count.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@item@</string>
+      <key>item</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element</string>
+        <key>few</key>
+        <string>%d elementów</string>
+        <key>many</key>
+        <string>%d elementów</string>
+        <key>other</key>
+        <string>%d elementów</string>
+      </dict>
+    </dict>
     <key>general.format.rubbishBin.days</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -422,6 +494,26 @@
         <string>i %d filmy</string>
       </dict>
     </dict>
+    <key>recents.section.multipleFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>&quot;[A]&quot; i %d więcej</string>
+        <key>few</key>
+        <string>&quot;[A]&quot; i %d więcej</string>
+        <key>many</key>
+        <string>&quot;[A]&quot; i %d więcej</string>
+        <key>other</key>
+        <string>&quot;[A]&quot; i %d więcej</string>
+      </dict>
+    </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -533,9 +625,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>People you have shared this link with will no longer be able to access it.</string>
+        <string>Osoby, którym udostępniłeś ten link, nie będą już mogły uzyskać do niego dostępu.</string>
+        <key>few</key>
+        <string>Osoby, którym udostępniłeś te linki, nie będą już mogły uzyskać do nich dostępu.</string>
+        <key>many</key>
+        <string>Osoby, którym udostępniłeś te linki, nie będą już mogły uzyskać do nich dostępu.</string>
         <key>other</key>
-        <string>People you have shared these links with will no longer be able to access them.</string>
+        <string>Osoby, którym udostępniłeś te linki, nie będą już mogły uzyskać do nich dostępu.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -1089,9 +1185,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>People you shared this link with will lose access to the album.</string>
+        <string>Osoby, którym udostępniłeś ten link, stracą dostęp do alnumu.</string>
+        <key>few</key>
+        <string>Osoby, którym udostępniłeś te linki, stracą dostęp do albumów.</string>
+        <key>many</key>
+        <string>Osoby, którym udostępniłeś te linki, stracą dostęp do albumów.</string>
         <key>other</key>
-        <string>People you shared these links with will lose access to the albums.</string>
+        <string>Osoby, którym udostępniłeś te linki, stracą dostęp do albumów.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
@@ -2672,6 +2772,22 @@
         <string>Obecnie udostępniasz następujące katalogi: [A]</string>
         <key>other</key>
         <string>Obecnie udostępniasz następujące katalogi: [A]</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validDays.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d day left</string>
+        <key>other</key>
+        <string>%d days left</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>

@@ -2,54 +2,54 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-  <key>sharedItems.link.accessInfo</key>
-  <dict>
-    <key>NSStringLocalizedFormatKey</key>
-    <string>%#@count@</string>
-    <key>count</key>
+    <key>sharedItems.link.accessInfo</key>
     <dict>
-      <key>NSStringFormatSpecTypeKey</key>
-      <string>NSStringPluralRuleType</string>
-      <key>NSStringFormatValueTypeKey</key>
-      <string>d</string>
-      <key>one</key>
-      <string>Anyone with this link can view and download your data</string>
-      <key>other</key>
-      <string>Anyone with these links can view and download your data</string>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Anyone with this link can view and download your data</string>
+        <key>other</key>
+        <string>Anyone with these links can view and download your data</string>
+      </dict>
     </dict>
-  </dict>
-  <key>sharedItems.getLink.linkCopied</key>
-  <dict>
-    <key>NSStringLocalizedFormatKey</key>
-    <string>%#@count@</string>
-    <key>count</key>
+    <key>sharedItems.getLink.linkCopied</key>
     <dict>
-      <key>NSStringFormatSpecTypeKey</key>
-      <string>NSStringPluralRuleType</string>
-      <key>NSStringFormatValueTypeKey</key>
-      <string>d</string>
-      <key>one</key>
-      <string>Link copied to clipboard</string>
-      <key>other</key>
-      <string>Links copied to clipboard</string>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link copied to clipboard</string>
+        <key>other</key>
+        <string>Links copied to clipboard</string>
+      </dict>
     </dict>
-  </dict>
-  <key>sharedItems.getLink.linkCreatedAndCopied</key>
-  <dict>
-    <key>NSStringLocalizedFormatKey</key>
-    <string>%#@count@</string>
-    <key>count</key>
+    <key>sharedItems.getLink.linkCreatedAndCopied</key>
     <dict>
-      <key>NSStringFormatSpecTypeKey</key>
-      <string>NSStringPluralRuleType</string>
-      <key>NSStringFormatValueTypeKey</key>
-      <string>d</string>
-      <key>one</key>
-      <string>Link created and copied to clipboard</string>
-      <key>other</key>
-      <string>Links created and copied to clipboard</string>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link created and copied to your clipboard</string>
+        <key>other</key>
+        <string>Links created and copied to your clipboard</string>
+      </dict>
     </dict>
-  </dict>
     <key>nameCollision.applyToAll</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

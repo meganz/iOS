@@ -380,6 +380,10 @@
 "linkWithoutKey"="키 없는 링크";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="키가 있는 링크";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="비밀번호가 있는 사람만 링크를 열 수 있습니다";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="링크가 업데이트 되었습니다. 다시 복사하세요.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(PRO 전용)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="클라우드 드라이브";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="카메라 업로드";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="설정 기억하기";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="비디오 업로드";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="활동 보기";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@님이 수정";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s 그리고 %2$s개 더";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="%@님이 생성";
 /* Message shown when the user has not recent activity in their account. */
@@ -2107,7 +2113,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="알림을 내일, %@까지 알리지 않습니다";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be muted until %@";
+"Notifications will be silenced until %@"="%@까지 알림 울리지 않기";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2434,7 +2440,7 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]님이 메시지 삭제 시간을[/B][A] %2$s[/A][B]로 변경하였습니다.[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]님이 메시지 삭제를 해제하였습니다.[/B]";
-/*  */
+/* Label for User Interface app icon "Day" in app settings */
 "day"="일";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="파일 찾기";
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Android 앱";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS X 앱";
+"general.filetype.app"="macOS 앱";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ASCII 텍스트";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="압축";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa 그래픽";
+"general.filetype.tga"="TARGA 그래픽";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF 이미지";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="초대 발송";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="게시 중단된 파일 “%@”이/가 재게시 되었습니다.";
+"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="게시 중단된 폴더 “%@”이/가 재게시 되었습니다.";
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="당신의 공개 공유 파일 “%@”이/가 게시중단 되었습니다";
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="당신의 공개 공유 폴더 “%@”이/가 게시중단 되었습니다";
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="주최자가 아닌 사람이 참여자를 추가하는 것을 허용";
 /* Start conversation: Schedule meeting context menu */
@@ -3400,3 +3406,11 @@
 "meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="몇몇 달은 31일이 없습니다. 이러한 달은 되풀이 항목이 그 달의 마지막 날로 예약됩니다.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="카메라";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="되풀이 종료";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="다음의 날짜에";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="절대 안 함";

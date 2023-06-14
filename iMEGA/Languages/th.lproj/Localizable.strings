@@ -380,6 +380,10 @@
 "linkWithoutKey"="ลิงก์ไม่รวมคีย์";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="ลิงก์รวมคีย์ด้วย";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="Only people with the password can open the link";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="Link updated. Copy again.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(PRO เท่านั้น)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="คลาวด์ไดรฟ์";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="อัปโหลดจากกล้อง";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="จำตัวเลือกการตั้งค่านี้ไว้";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="อัปโหลดวิดีโอ";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="แสดงกิจกรรม";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="ปรับเปลี่ยนโดย %@";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s และอื่น ๆ อีก %2$s รายการ";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="สร้างโดย %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2107,7 +2113,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="การแจ้งเตือนจะถูกปิดเสียงจนถึงพรุ่งนี้ เวลา %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be muted until %@";
+"Notifications will be silenced until %@"="การแจ้งเตือนจะถูกปิดเสียงจนถึง %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="แจ้งเตือนแชท";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2434,7 +2440,7 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] เปลี่ยนเวลาล้างข้อความเป็น[/B][A] %2$s[/A][B][/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] ปิดใช้งานการล้างข้อความ[/B]";
-/*  */
+/* Label for User Interface app icon "Day" in app settings */
 "day"="วัน";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="ค้นหาไฟล์ของคุณ";
@@ -2725,7 +2731,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="นี่เป็นขั้นตอนสุดท้ายในการลบบัญชีของคุณ ทั้งบัญชีและการสมัครใช้งานของคุณจะถูกลบด้วย พร้อมทั้งคุณจะสูญเสียข้อมูลทั้งหมดที่จัดเก็บไว้ในระบบคลาวด์อย่างถาวร กรุณากรอกรหัสผ่านของคุณด้านล่าง";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Upload photo";
+"account.profile.avatar.uploadPhoto"="อัปโหลดรูปถ่าย";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="อยู่ระหว่างดำเนินการโทรอีก กรุณาวางสายปัจจุบันของคุณก่อนที่จะโทรออกอีกครั้ง";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="แอป Android";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="แอป Mac OS X";
+"general.filetype.app"="แอป macOS";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ข้อความ ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2793,7 +2799,7 @@
 /* File extension: .exe. Commercial names should be stay on English */
 "general.filetype.exe"="ไฟล์ปฏิบัติการ";
 /* File extension: .flac. Commercial names should be stay on English */
-"general.filetype.flac"="เสียง Lossless";
+"general.filetype.flac"="เสียงที่ไม่สูญเสีย";
 /* File extension: .flv. Commercial names should be stay on English */
 "general.filetype.flv"="วิดีโอ Flash";
 /* File extension: .fnt. Commercial names should be stay on English */
@@ -2827,7 +2833,7 @@
 /* File extension: .log. Commercial names should be stay on English */
 "general.filetype.log"="ไฟล์บันทึก";
 /* File extension: .3mu. Commercial names should be stay on English */
-"general.filetype.m3u"="Media Playlist";
+"general.filetype.m3u"="เพลย์ลิสต์สื่อ";
 /* File extension: .m4a. Commercial names should be stay on English */
 "general.filetype.m4a"="เสียง MPEG-4";
 /* File extension: .max. Commercial names should be stay on English */
@@ -2837,7 +2843,7 @@
 /* File extensions: .mid and .midi. Commercial names should be stay on English */
 "general.filetype.mid"="เสียง MIDI";
 /* File extension: .mkv. Commercial names should be stay on English */
-"general.filetype.mkv"="MKV Video";
+"general.filetype.mkv"="วิดีโอ MKV";
 /* File extension: .mov. Commercial names should be stay on English */
 "general.filetype.mov"="QuickTime Movie";
 /* File extension: .mp3. Commercial names should be stay on English */
@@ -2877,11 +2883,11 @@
 /* File extension: .sh. Is not a commercial name. "shell" is a common noun */
 "general.filetype.sh"="ชุดคำสั่ง Shell";
 /* File extension: .shmtl. Commercial names should be stay on English */
-"general.filetype.shtml"="Server HTML";
+"general.filetype.shtml"="เซิร์ฟเวอร์ HTML";
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="X Compressed";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL statements";
+"general.filetype.sql"="คำสั่ง SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="ภาพ Sony RAW";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="กราฟิก Targa";
+"general.filetype.tga"="กราฟิก TARGA";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="ภาพ TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="ส่งคำเชิญ";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="ไฟล์ “%@” ของคุณที่ถูกลบออก ได้รับการคืนสถานะแล้ว";
+"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="โฟลเดอร์ “%@” ของคุณที่ถูกลบออก ได้รับการคืนสถานะแล้ว";
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="ไฟล์ “%@” ที่แชร์แบบสาธารณะของคุณถูกลบออกแล้ว";
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="โฟลเดอร์ “%@” ที่แชร์แบบสาธารณะของคุณถูกลบออกแล้ว";
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="อนุญาตให้ผู้ที่ไม่ใช่ผู้จัดการประชุมเพิ่มผู้เข้าร่วมได้";
 /* Start conversation: Schedule meeting context menu */
@@ -3341,9 +3347,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="เพิ่มคำอธิบาย";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="กรอกได้สูงสุด 30 ตัว";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="กรอกได้สูงสุด 3,000 ตัว";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="ยกเลิก";
 /* Schedule meeting create button */
@@ -3375,11 +3381,11 @@
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="ไม่เคยมี";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="ทุกวัน";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="ทุกสัปดาห์";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="ทุกเดือน";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="กำหนดเอง";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
@@ -3393,10 +3399,18 @@
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="รายเดือน";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Some months don’t have 29 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="บางเดือนจะไม่มี 29 วัน แต่สำหรับเดือนนี้ เหตุการณ์จะจัดขึ้นในวันสุดท้ายของเดือนแทน";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="บางเดือนจะไม่มี 30 วัน แต่สำหรับเดือนนี้ เหตุการณ์จะจัดขึ้นในวันสุดท้ายของเดือนแทน";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="บางเดือนจะไม่มี 31 วัน แต่สำหรับเดือนนี้ เหตุการณ์จะจัดขึ้นในวันสุดท้ายของเดือนแทน";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="กล้อง";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="On date";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="ไม่เคยมี";

@@ -380,6 +380,10 @@
 "linkWithoutKey"="Link ohne Schlüssel";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Link mit Schlüssel";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="Den Link können nur Personen öffnen, die das Passwort kennen";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="Link aktualisiert. Kopieren Sie ihn erneut.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(NUR PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="Cloud Drive";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Kamera Uploads";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="Einstellungen merken";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Video-Uploads";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1069,7 +1075,7 @@
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Sie erhalten %@ als kostenlosen Bonus, wenn Sie Ihre Telefonnummer hinzufügen. Dadurch erleichtern Sie es Ihren Freunden und Bekannten, Sie auf MEGA zu finden.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
-"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Erleichtern Sie es Ihren Freunden und Bekannten, Sie auf MEGA zu finden! Erweitern Sie Ihren MEGA-Account um Ihre Mobilnummer.";
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Speichern Sie ihre Telefonnummer in Ihrem MEGA-Account, damit Ihre Kontakte Sie leichter auf MEGA finden können.";
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Ihr Account wurde wegen Missbrauchsverdachts vorübergehend gesperrt. Bitte bestätigen Sie zum Entsperren Ihre Telefonnummer.";
 /* Verify your account title */
@@ -1083,7 +1089,7 @@
 /*  */
 "days"="Tage";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Ausloggen";
+"logoutLabel"="Abmelden";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logge aus";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
@@ -1587,7 +1593,7 @@
 /* Label for recovery key button */
 "backupRecoveryKey"="Rettungsschlüssel sichern";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
-"testPasswordText"="Ihr MEGA-Passwort kann nicht einfach zurückgesetzt werden (es sei denn, Sie haben Ihren [A]Rettungsschlüsel exportiert[/A])! Passwortverlust bedeutet Datenverlust. Bitte geben Sie zur Erinnerung Ihr Passwort ein.";
+"testPasswordText"="Bitte testen Sie unten Ihr Passwort, um sicherzustellen, dass Sie es sich richtig gemerkt haben. Wenn Sie Ihr Passwort verlieren, können Sie nicht mehr auf Ihre bei MEGA gespeicherten Daten zugreifen. [A]Mehr erfahren[/A]";
 /* Title text for the account confirmation. */
 "confirm"="Bestätigung";
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
@@ -1783,7 +1789,7 @@
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Eine Konferenz ist aktiv. Zum Teilnehmen antippen.";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="Konferenzgespräch läuft. Teilnehmen…";
+"There is an active call. Tap to join."="Konferenzgespräch läuft. Zum Teilnehmen antippen.";
 /* Message shown in a chat room for a one on one call */
 "Tap to return to call"="Zum Gespräch zurückkehren";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1927,7 +1933,7 @@
 /* Shown when viewing a 1on1 chat (at least for now), if the user is offline. */
 "Last seen %s"="Zuletzt online: %s";
 /* Text to inform the user the 'Last seen' time of a contact is a long time ago (>= 65535 minutes) */
-"Last seen a long time ago"="Zuletzt online: Vor langer Zeit";
+"Last seen a long time ago"="Zuletzt online: vor längerer Zeit";
 /*  */
 "Today"="Heute";
 /*  */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="Aktivitäten anzeigen";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Geändert durch %@";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s und %2$s weitere";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Erstellt von %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2047,7 +2053,7 @@
 /* Title of the section about the plan in the storage tab in My Account Section */
 "Plan"="Pro-Stufe";
 /*  */
-"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Ohne Passwort und ohne Rettungsschlüssel [B]verlieren Sie den Zugang zu allen Ihren Dateien, Ordnern und Nachrichten. Selbst MEGA kann Ihnen dann nicht helfen![/B]";
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Wenn Sie diesen Rettungsschlüssel verlieren und Ihr Passwort vergessen, [B]verlieren Sie den Zugang zu allen Ihren Dateien, Ordnern und Nachrichten. Selbst MEGA kann Ihnen dann nicht helfen.[/B]";
 /*  */
 "Business"="Business";
 /*  */
@@ -2434,7 +2440,7 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] hat die Lebensdauer von Chatnachrichten auf [/B][A] %2$s[/A][B] geändert.[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] hat eine unbegrenzte Nachrichtenlebensdauer eingestellt.[/B]";
-/*  */
+/* Label for User Interface app icon "Day" in app settings */
 "day"="Tag";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Ihre Dateien durchsuchen";
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Android-App";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="MacOS X App";
+"general.filetype.app"="macOS App";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ASCII-Text";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Komprimierte Daten";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa-Grafik";
+"general.filetype.tga"="TARGA-Grafik";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF-Bild";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Einladung senden";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Die Löschung Ihrer Datei „%@“ wurde rückgängig gemacht.";
+"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Die Löschung Ihres Ordners „%@“ wurde rückgängig gemacht.";
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Ihre öffentliche Dateifreigabe „%@“ wurde gelöscht.";
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Ihre öffentliche Ordnerfreigabe „%@“ wurde gelöscht.";
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Nicht-Gastgebern erlauben, Teilnehmer hinzuzufügen";
 /* Start conversation: Schedule meeting context menu */
@@ -3400,3 +3406,11 @@
 "meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Manche Monate sind kürzer als 31 Tage. In diesen Monaten wird das Meeting auf den letzten Tag des Monats gelegt.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Kamera";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="Wiederholung beenden";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="An einem Datum";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="Nie";

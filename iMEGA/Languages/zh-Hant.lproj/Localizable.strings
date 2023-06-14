@@ -380,6 +380,10 @@
 "linkWithoutKey"="連結不包含金鑰";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="連結包含金鑰";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="只有擁有密碼的人才能開啟連結";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="連結已更新。請再複製一次。";
 /* An alert dialog for the Get Link feature */
 "proOnly"="（Pro會員限定）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="雲端硬碟";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="相機上傳";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="記住偏好設定";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="影片上傳";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="顯示活動";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="由%@修改";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s和另外%2$s個";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="由%@建立";
 /* Message shown when the user has not recent activity in their account. */
@@ -2434,7 +2440,7 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]將訊息刪除時間改為[/B][A]%2$s[/A][B]。[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]停用訊息刪除功能。[/B]";
-/*  */
+/* Label for User Interface app icon "Day" in app settings */
 "day"="天";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="搜尋您的檔案";
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Android應用程式";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS X應用程式";
+"general.filetype.app"="macOS應用程式";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ASCII文字";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="壓縮文件";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa影像";
+"general.filetype.tga"="TARGA影像";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF圖像";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3045,7 +3051,7 @@
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="檔案將更新為新版本。";
 /* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="套用至所有%@個重複項目";
+"nameCollision.applyToAll"="套用至所有%@個重複的項目";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="這裡只有你一人";
 /* Meetings end call dialog description */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="發送邀請";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="您被下架的檔案「%@」已經復原。";
+"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="您被下架的資料夾「%@」已經復原。";
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="您公開共享的檔案「%@」已被下架。";
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="您公開共享的資料夾「%@」已被下架。";
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="允許非主持人新增參與者";
 /* Start conversation: Schedule meeting context menu */
@@ -3385,7 +3391,7 @@
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="重複";
 /* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
-"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="從不";
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="永不";
 /* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="每日";
 /* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
@@ -3400,3 +3406,11 @@
 "meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="有些月份沒有31天。對於這些月份，事件將安排在該月的最後一天。";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="相機";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="結束重複";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="結束日期";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="永不";

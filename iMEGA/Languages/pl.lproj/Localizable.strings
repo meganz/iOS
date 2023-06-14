@@ -380,6 +380,10 @@
 "linkWithoutKey"="Link bez klucza";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Link z kluczem";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="Tylko osoby posiadające hasło mogą otworzyć łącze";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="Link zaktualizowany. Kopiuj ponownie.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(TYLKO PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="Dysk w chmurze";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Przesyłanie z kamery";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="Zapamiętaj preferencje";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Przesyłanie filmów";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="Pokaż aktywność";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Zmodyfikowane przez %@";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s i %2$s więcej";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Utworzone przez %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2107,7 +2113,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Powiadomienia będą wyciszone do jutra, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be muted until %@";
+"Notifications will be silenced until %@"="Powiadomienia zostaną wyciszone do momentu %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Powiadomienia czatu";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2434,8 +2440,8 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] zmienił czas usuwania komunikatu na[/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] wyłączone usuwanie komunikatów.[/B]";
-/*  */
-"day"="dzień";
+/* Label for User Interface app icon "Day" in app settings */
+"day"="Dzień";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Przeszukuj swoje pliki";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2725,7 +2731,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Jest to ostatni krok do usunięcia konta. Zarówno Twoje konto, jak i subskrypcja zostaną usunięte, a Ty trwale utracisz wszystkie dane przechowywane w chmurze. Wprowadź swoje hasło poniżej.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Upload photo";
+"account.profile.avatar.uploadPhoto"="Prześlij zdjęcie";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Trwa inne połączenie. Proszę zakończyć bieżące połączenie przed nawiązaniem kolejnego.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Aplikacja na Android";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS X App";
+"general.filetype.app"="macOS App";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ASCII Text";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Compressed";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa Graphic";
+"general.filetype.tga"="TARGA graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF Image";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Wyślij zaproszenie";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Twój zdjęty plik “%@” został przywrócony.";
+"notifications.message.takenDownReinstated.file"="Usunięty plik \"%@\" został przywrócony";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Twój zdjęty katalog “%@” został przywrócony.";
+"notifications.message.takenDownReinstated.folder"="Usunięty folder \"%@\" został przywrócony";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Twój publicznie udostępniony plik “%@” został zdjęty.";
+"notifications.message.takenDownPubliclyShared.file"="Twój publicznie udostępniony plik \"%@\" został usunięty";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Twój publicznie udostępniony katalog “%@” został zdjęty.";
+"notifications.message.takenDownPubliclyShared.folder"="Twój publicznie udostępniony folder \"%@\" został usunięty";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Umożliwienie dodawania uczestników przez osoby niebędące gospodarzami";
 /* Start conversation: Schedule meeting context menu */
@@ -3393,10 +3399,18 @@
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Miesięcznie";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Some months don’t have 29 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Niektóre miesiące nie mają 29 dni. W przypadku tych miesięcy zdarzenie zostanie zaplanowane na ostatni dzień miesiąca.";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Niektóre miesiące nie mają 30 dni. W przypadku tych miesięcy zdarzenie zostanie zaplanowane na ostatni dzień miesiąca.";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Niektóre miesiące nie mają 31 dni. W przypadku tych miesięcy zdarzenie zostanie zaplanowane na ostatni dzień miesiąca.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Kamera";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="Zakończ powtarzanie";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="W dniu";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="Nigdy";

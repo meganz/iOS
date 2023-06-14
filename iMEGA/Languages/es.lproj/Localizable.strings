@@ -380,6 +380,10 @@
 "linkWithoutKey"="Enlace sin clave";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Enlace con clave";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="Solo quien tenga la contraseña podrá acceder al enlace";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="Enlace actualizado. Copiar de nuevo.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(SOLO PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="Nube";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Subidas de la cámara";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="Recordar preferencias";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="Subida de vídeos";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1017,7 +1023,7 @@
 /*  */
 "howItWorks"="Cómo funciona";
 /*  */
-"howItWorksMain"="Tu amigo tiene que registrarse para obtener una cuenta gratuita en MEGA e [S]instalar al menos una aplicación de MEGA[/S] (ya sea la app de sincronización o una de nuestras aplicaciones móviles)";
+"howItWorksMain"="Tu amigo tiene que registrarse para obtener una cuenta gratuita en MEGA e [S]instalar al menos una aplicación de MEGA[/S] (ya sea la aplicación de escritorio de MEGA o una de nuestras aplicaciones móviles)";
 /*  */
 "howItWorksSecondary"="Puedes invitar amigos de varias formas. Obtendrás la cuota si has introducido el correo electrónico de tu amigo aquí antes de que se registre con esa dirección.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="Mostrar actividad";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modificado por %@";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s y %2$s más";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Creado por %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2107,7 +2113,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Las notificaciones se silenciarán hasta mañana, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be muted until %@";
+"Notifications will be silenced until %@"="Las notificaciones estarán silenciadas hasta las %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificaciones del chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2434,8 +2440,8 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B] ha cambiado el tiempo de limpieza de mensajes a [/B][A] %2$s[/A][B].[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B] ha desactivado la limpieza de mensajes.[/B]";
-/*  */
-"day"="día";
+/* Label for User Interface app icon "Day" in app settings */
+"day"="Día";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="Buscar tus archivos";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2725,7 +2731,7 @@
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Este es el último paso para eliminar tu cuenta. Tu suscripción se eliminará junto con tu cuenta y perderás de forma permanente todos los datos almacenados en la nube. Por favor, introduce tu contraseña a continuación.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Upload photo";
+"account.profile.avatar.uploadPhoto"="Subir foto";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Hay otra llamada en curso. Termina esa llamada para hacer otra.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Aplicación para Android";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS X App";
+"general.filetype.app"="macOS app";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="Texto ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Comprimido";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa Graphic";
+"general.filetype.tga"="TARGA graphic";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="Imagen TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Enviar invitación ";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="La retirada del archivo “%@” ha sido revocada.";
+"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="La retirada de la carpeta “%@” ha sido revocada.";
+"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Tu archivo “%@” que has compartido públicamente ha sido retirado.";
+"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Tu carpeta “%@” que has compartido públicamente ha sido retirada.";
+"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Permitir a los no anfitriones añadir participantes";
 /* Start conversation: Schedule meeting context menu */
@@ -3393,10 +3399,18 @@
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensual";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Some months don’t have 29 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Algunos meses no tienen 29 días. Para estos meses, el evento se programará para el último día del mes.";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Algunos meses no tienen 30 días. Para estos meses, el evento se programará para el último día del mes.";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Algunos meses no tienen 31 días. Para estos meses, el evento se programará para el último día del mes.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Cámara";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="Dejar de repetir";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="El día";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="Nunca";
