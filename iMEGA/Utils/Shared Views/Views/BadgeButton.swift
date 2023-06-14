@@ -38,6 +38,11 @@ final class BadgeButton: UIButton {
             badgeLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: calculateWidthThatFits(label: badgeLabel)).isActive = true
         }
     }
+    
+    func setAvatarImage(_ avatarImage: UIImage) {
+        setImage(avatarImage, for: .normal)
+        setBackgroundImage(nil, for: .normal)
+    }
 
     // MARK: - Privates
 
