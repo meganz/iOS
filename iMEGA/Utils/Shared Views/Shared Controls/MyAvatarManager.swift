@@ -79,7 +79,7 @@ import MEGAData
             asyncOnMain {
                 if let badgeButton = self.badgeButton {
                     badgeButton.setBadgeText(output.notificationNumber)
-                    badgeButton.setImage(resizedImage, for: .normal)
+                    badgeButton.setAvatarImage(resizedImage)
                 }
             }
         }
