@@ -37,12 +37,10 @@ class VideoExplorerTableViewCell: UITableViewCell {
             }
             
             if viewModel.hasThumbnail {
-                viewModel.loadThumbnail {  [weak self] image, nodeHandle in
-                    asyncOnMain {
-                        guard let self = self, nodeHandle == self.viewModel?.nodeHandle else { return }
-                        self.placeholderImageView.isHidden = true
-                        self.videoThumbnailImageView.image = image
-                    }
+                viewModel.loadThumbnail { [weak self] image, nodeHandle in
+                    guard let self = self, nodeHandle == self.viewModel?.nodeHandle else { return }
+                    self.placeholderImageView.isHidden = true
+                    self.videoThumbnailImageView.image = image
                 }
             }
             
