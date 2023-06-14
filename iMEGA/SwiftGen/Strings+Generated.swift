@@ -2633,6 +2633,12 @@ public enum Strings {
               }
             }
           }
+          public enum ValidDays {
+            /// Plural format key: "%#@days@"
+            public static func subtitle(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "account.achievement.complete.validDays.subtitle", p1)
+            }
+          }
         }
         public enum DesktopApp {
           /// Install the MEGA Desktop App

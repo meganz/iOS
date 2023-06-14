@@ -2210,6 +2210,22 @@
         <string>You’re currently sharing the following folders: [A]</string>
       </dict>
     </dict>
+    <key>account.achievement.complete.validDays.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d day left</string>
+        <key>other</key>
+        <string>%d days left</string>
+      </dict>
+    </dict>
     <key>share.message.uploadedToDestinationFolder</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
