@@ -380,6 +380,10 @@
 "linkWithoutKey"="キーなしのリンク";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="キーを含むリンク";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="パスワードを知っている人だけがリンクを開けます";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="リンクが更新されました。もう一度コピーしてください。";
 /* An alert dialog for the Get Link feature */
 "proOnly"="（PROのみ）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="クラウドドライブ";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="カメラアップロード";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="設定を記憶する";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="動画アップロード";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="アクティビティを表示";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@さんが変更しました";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$sとさらに%2$s個";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="%@さんが作成しました";
 /* Message shown when the user has not recent activity in their account. */
@@ -2434,7 +2440,7 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]さんがメッセージクリア時間を[/B][A]%2$s[/A][B]に変更しました。[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]さんがメッセージのクリアを無効にしました。[/B]";
-/*  */
+/* Label for User Interface app icon "Day" in app settings */
 "day"="日";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="あなたのファイルを検索";
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Androidアプリ";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS Xアプリ";
+"general.filetype.app"="macOSアプリ";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ASCIIテキスト";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="圧縮";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targaグラフィック";
+"general.filetype.tga"="TARGAグラフィック";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIFイメージ";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="招待状を送る";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="あなたの削除されたファイル“%@”は復活しました。";
+"notifications.message.takenDownReinstated.file"="あなたの削除されたファイル「%@」は復活しました";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="あなたの削除されたフォルダ“%@”は復活しました。";
+"notifications.message.takenDownReinstated.folder"="あなたの削除されたフォルダ「%@」は復活しました";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="あなたの公開共有ファイル“%@”は削除されました。";
+"notifications.message.takenDownPubliclyShared.file"="あなたの公開共有ファイル「%@」は削除されました";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="あなたの公開共有フォルダ“%@”は削除されました。";
+"notifications.message.takenDownPubliclyShared.folder"="あなたの公開共有フォルダ「%@」は削除されました";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="主催者以外が参加者を追加できるようにします";
 /* Start conversation: Schedule meeting context menu */
@@ -3400,3 +3406,11 @@
 "meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="31日ない月もあります。これらの月については、その月の最終日に開催がスケジュールされます。";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="カメラ";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="定期開催を終了する";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="終了日";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="絶対しない";

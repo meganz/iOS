@@ -2,6 +2,60 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>sharedItems.link.accessInfo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Qualquer pessoa com este link pode ver e fazer o download dos dados</string>
+        <key>many</key>
+        <string>Qualquer pessoa com estes links pode ver e fazer o download dos dados</string>
+        <key>other</key>
+        <string>Qualquer pessoa com estes links pode ver e fazer o download dos dados</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link copiado para a área de transferência</string>
+        <key>many</key>
+        <string>Links copiados para a área de transferência</string>
+        <key>other</key>
+        <string>Links copiados para a área de transferência</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCreatedAndCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Link criado e copiado para a área de transferência</string>
+        <key>many</key>
+        <string>Links criados e copiados para a área de transferência</string>
+        <key>other</key>
+        <string>Links criados e copiados para a área de transferência</string>
+      </dict>
+    </dict>
     <key>nameCollision.applyToAll</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -272,6 +326,24 @@
         <string>• %d arquivos</string>
       </dict>
     </dict>
+    <key>general.format.count.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@item@</string>
+      <key>item</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item</string>
+        <key>many</key>
+        <string>%d itens</string>
+        <key>other</key>
+        <string>%d itens</string>
+      </dict>
+    </dict>
     <key>general.format.rubbishBin.days</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -378,6 +450,24 @@
         <string>e %d de vídeos</string>
         <key>other</key>
         <string>e %d vídeos</string>
+      </dict>
+    </dict>
+    <key>recents.section.multipleFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>“[A]” e mais %d</string>
+        <key>many</key>
+        <string>“[A]” e mais %d</string>
+        <key>other</key>
+        <string>“[A]” e mais %d</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -2412,6 +2502,24 @@
         <string>Você está compartilhando as seguintes pastas: [A]</string>
         <key>other</key>
         <string>Você está compartilhando as seguintes pastas: [A]</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validDays.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d dia restante</string>
+        <key>many</key>
+        <string>%d de dias restantes</string>
+        <key>other</key>
+        <string>%d dias restantes</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>

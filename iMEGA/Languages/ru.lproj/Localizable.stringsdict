@@ -2,6 +2,66 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>sharedItems.link.accessInfo</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Любой человек, у которого есть ссылка, может просматривать и скачивать эти данные</string>
+        <key>few</key>
+        <string>Любой человек, у которого есть ссылки, может просматривать и скачивать эти данные</string>
+        <key>many</key>
+        <string>Любой человек, у которого есть ссылки, может просматривать и скачивать эти данные</string>
+        <key>other</key>
+        <string>Любой человек, у которого есть ссылки, может просматривать и скачивать эти данные</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ссылка скопирована в буфер обмена</string>
+        <key>few</key>
+        <string>Ссылки скопированы в буфер обмена</string>
+        <key>many</key>
+        <string>Ссылки скопированы в буфер обмена</string>
+        <key>other</key>
+        <string>Ссылки скопированы в буфер обмена</string>
+      </dict>
+    </dict>
+    <key>sharedItems.getLink.linkCreatedAndCopied</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ссылка создана и скопирована в буфер обмена</string>
+        <key>few</key>
+        <string>Ссылки созданы и скопированы в буфер обмена</string>
+        <key>many</key>
+        <string>Ссылки созданы и скопированы в буфер обмена</string>
+        <key>other</key>
+        <string>Ссылки созданы и скопированы в буфер обмена</string>
+      </dict>
+    </dict>
     <key>nameCollision.applyToAll</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -19,7 +79,7 @@
         <key>many</key>
         <string>Применить ко всем %d дубликатам</string>
         <key>other</key>
-        <string>Применить ко всем %d дубликатам</string>
+        <string>Применить ко всем %d дубликата</string>
       </dict>
     </dict>
     <key>chat.manageHistory.clearing.custom.option.hour</key>
@@ -302,6 +362,26 @@
         <string>• %d файла</string>
       </dict>
     </dict>
+    <key>general.format.count.items</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@item@</string>
+      <key>item</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d элемент</string>
+        <key>few</key>
+        <string>%d элемента</string>
+        <key>many</key>
+        <string>%d элементов</string>
+        <key>other</key>
+        <string>%d элемента</string>
+      </dict>
+    </dict>
     <key>general.format.rubbishBin.days</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -420,6 +500,26 @@
         <string>и %d видео</string>
         <key>other</key>
         <string>и %d видео</string>
+      </dict>
+    </dict>
+    <key>recents.section.multipleFile.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@file@</string>
+      <key>file</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>«[A]» и ещё %d</string>
+        <key>few</key>
+        <string>«[A]» и ещё %d</string>
+        <key>many</key>
+        <string>«[A]» и ещё %d</string>
+        <key>other</key>
+        <string>«[A]» и ещё %d</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -2680,6 +2780,26 @@
         <string>В настоящее время у вас открыт доступ к следующим папкам: [A]</string>
         <key>other</key>
         <string>В настоящее время у вас открыт доступ к следующим папкам: [A]</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validDays.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Остался %d день</string>
+        <key>few</key>
+        <string>Осталось %d дня</string>
+        <key>many</key>
+        <string>Осталось %d дней</string>
+        <key>other</key>
+        <string>Осталось %d дня</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>

@@ -380,6 +380,10 @@
 "linkWithoutKey"="链接不包含密钥";
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="链接包含密钥";
+/* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
+"sharedItems.link.accessInfoPasswordProtected"="只有拥有密码的人才能打开链接";
+/* This is a text of a banner which will be displayed user does an action which updates the shared link */
+"sharedItems.link.linkUpdated"="链接已更新。请再次复制。";
 /* An alert dialog for the Get Link feature */
 "proOnly"="（仅限Pro会员）";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -578,6 +582,8 @@
 "cameraUploads.timeline.filter.location.cloudDrive"="云盘";
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="相机上传";
+/* Filter UI remember preferences option */
+"cameraUploads.timeline.filter.rememberPreferences"="记住偏好设置";
 /* Video Uploads title */
 "cameraUploads.videoUploads.title"="视频上传";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
@@ -1984,8 +1990,8 @@
 "recents.emptyState.activityHidden.button"="显示动态";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="由%@修改";
-/* Title for a recent action bucket with multiple files. %1$s will be replaced by the filename of the first file in the bucket. %2$s will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="%1$s和另外%2$s个";
+/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
+"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="由%@创建";
 /* Message shown when the user has not recent activity in their account. */
@@ -2434,7 +2440,7 @@
 "[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]"="[A]%1$s[/A][B]将消息清除时间更改为[/B][A] %2$s[/A][B]。[/B]";
 /* System message that is shown to all chat participants upon disabling the Retention history. */
 "[A]%1$s[/A][B] disabled message clearing.[/B]"="[A]%1$s[/A][B]已禁用消息清除。[/B]";
-/*  */
+/* Label for User Interface app icon "Day" in app settings */
 "day"="日";
 /* Search placeholder text in search bar on home screen */
 "Search Your Files"="搜索您的文件";
@@ -2749,7 +2755,7 @@
 /* File extension: .apk. Commercial names should be stay on English */
 "general.filetype.apk"="Android应用程序";
 /* File extension: .app. Commercial names should be stay on English */
-"general.filetype.app"="Mac OS X应用程序";
+"general.filetype.app"="macOS X应用程序";
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="ASCII文本";
 /* File extension: .asf. Commercial names should be stay on English */
@@ -2895,7 +2901,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="压缩文件";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="Targa图形文件";
+"general.filetype.tga"="TARGA图形文件";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="TIF图像";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -3131,13 +3137,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="发送邀请";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="您被删除的文件“%@”已恢复。";
+"notifications.message.takenDownReinstated.file"="您被删除的文件“%@”已恢复";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="您被删除的文件夹“%@”已恢复。";
+"notifications.message.takenDownReinstated.folder"="您被删除的文件夹“%@”已恢复";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="您公开分享的文件“%@”已被删除。";
+"notifications.message.takenDownPubliclyShared.file"="您公开分享的文件“%@”已被删除";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="您公开分享的文件夹“%@”已被删除。";
+"notifications.message.takenDownPubliclyShared.folder"="您公开分享的文件夹“%@”已被删除";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="允许非主持人添加参与者";
 /* Start conversation: Schedule meeting context menu */
@@ -3400,3 +3406,11 @@
 "meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="有些月份没有第31天。对于这些月份，事件将安排在该月的最后一天。";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="相机";
+/* Device Center title */
+"device.center.title"="";
+/* End Recurrence option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.title"="结束重复";
+/* End Recurrence on date option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="结束日期";
+/* End Recurrence never option title in creating schedule meeting screen. */
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="从不";

@@ -6056,8 +6056,8 @@
 				BF22BFC8268D366D00460DB3 /* CallActionManager.swift */,
 				8315F20B22C2202400EA40CC /* ContactsOnMegaManager.swift */,
 				C473097426FC93BB00DC9D55 /* CrashlyticsLogger.swift */,
-				9492A1422A2F6DB10073CAEC /* DevicePermissionsHandling.swift */,
 				9492A1572A330ECD0073CAEC /* DevicePermissionsHandler.swift */,
+				9492A1422A2F6DB10073CAEC /* DevicePermissionsHandling.swift */,
 				B6D0B356283CE48C0020C64D /* Helper+Additions.swift */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
 				415226881A692ECC00EC7BB6 /* Helper.m */,
@@ -9309,15 +9309,15 @@
 		A89D726F2795C27400284BFC /* Report Issue */ = {
 			isa = PBXGroup;
 			children = (
-				A89D72702795C5F500284BFC /* ReportIssueView.swift */,
-				A8EC8D7627A0258900A9ED13 /* ReportIssueViewModel.swift */,
-				240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */,
-				A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */,
-				A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */,
 				245CB1A72A32DDFD005F6527 /* AppMetaData.swift */,
 				24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */,
 				245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */,
 				24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */,
+				240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */,
+				A89D72702795C5F500284BFC /* ReportIssueView.swift */,
+				A8EC8D7627A0258900A9ED13 /* ReportIssueViewModel.swift */,
+				A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */,
+				A889B2E627E20DB7002B4E7F /* UploadLogFileView.swift */,
 			);
 			path = "Report Issue";
 			sourceTree = "<group>";
@@ -9460,8 +9460,8 @@
 		A8EE47AB27DFAEF600D37685 /* Report Issue */ = {
 			isa = PBXGroup;
 			children = (
-				A8EE47A927DFAEF000D37685 /* ReportIssueViewModelTests.swift */,
 				240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */,
+				A8EE47A927DFAEF000D37685 /* ReportIssueViewModelTests.swift */,
 			);
 			path = "Report Issue";
 			sourceTree = "<group>";
@@ -12690,7 +12690,6 @@
 				8340CAFA284E4F0C007C3B39 /* ActionViewModel.swift in Sources */,
 				9470003929B77BCF00827E04 /* ActionWarningViewRouter.swift in Sources */,
 				8348A8D82901902B00B66463 /* ActiveCallViewModel.swift in Sources */,
-				245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */,
 				835833332948DB0A00394F1A /* AddParticipantsView.swift in Sources */,
 				B662B85B24ECC7A30089376A /* AddPhoneNumberRouter.swift in Sources */,
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
@@ -12717,7 +12716,6 @@
 				12BDD4DF282865CC00009D73 /* AlbumContent+PhotoLibrary.swift in Sources */,
 				328C152F2A370DC7002499CE /* AlbumContent.swift in Sources */,
 				9D4B25322964D5A20017E51A /* AlbumContentPickerView.swift in Sources */,
-				24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */,
 				9D94AF6C296532EE00C7FBAA /* AlbumContentPickerViewModel.swift in Sources */,
 				12BDD4D628285BA900009D73 /* AlbumContentRouter.swift in Sources */,
 				32F9E67C28348AF90002132D /* AlbumContentsUpdateNotifierRepository.swift in Sources */,
@@ -12760,6 +12758,8 @@
 				B60C7B2D2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
 				A873E84426E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */,
 				834D865C2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */,
+				245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */,
+				24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */,
 				BFAB113F23CEA5C300BCE72D /* AssetDownloader.swift in Sources */,
 				B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */,
 				B68BAEC3221DEA7600FF6FCD /* AssetIdentifierInfo.m in Sources */,
@@ -12786,7 +12786,6 @@
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */,
-				24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */,
 				C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */,
 				C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */,
 				C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */,
@@ -13097,10 +13096,14 @@
 				83DBDDE129D730AE00CF433B /* DetailDisclosureView.swift in Sources */,
 				835AD14924A0F438009BC85A /* DeviceContactsManager.swift in Sources */,
 				834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */,
+				245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */,
+				24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */,
 				5DC016DE24F286FE00BE309A /* DevicePermission.swift in Sources */,
 				5D31674B24FCA9330032492F /* DevicePermissionAlerting.swift in Sources */,
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
 				5D6D0F5325270357002A777D /* DevicePermissionRequestUseCaseProtocol.swift in Sources */,
+				9492A1582A330ECD0073CAEC /* DevicePermissionsHandler.swift in Sources */,
+				9492A1432A2F6DB10073CAEC /* DevicePermissionsHandling.swift in Sources */,
 				5D6D0F5425270357002A777D /* DevicePermissionUseCase.swift in Sources */,
 				8358A6EA2925461C00EE197C /* DisclosureView.swift in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
@@ -13159,7 +13162,6 @@
 				BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */,
 				6D6FCBF4297E2B360051EB4A /* ExplorerTypeEntity+Mapper.swift in Sources */,
 				5DC4DE0D24DBC27900D9AD16 /* ExploreViewStack.swift in Sources */,
-				9492A1432A2F6DB10073CAEC /* DevicePermissionsHandling.swift in Sources */,
 				5DC4DE1124DBE20F00D9AD16 /* ExploreViewStyleFactory.swift in Sources */,
 				5B98BE1327AA9FF800426B97 /* ExportChatMessagesRepository.swift in Sources */,
 				839A1C9F27CCF694004A387B /* ExportFileRouter.swift in Sources */,
@@ -13542,7 +13544,6 @@
 				BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */,
 				BF7EBD1C244D354A0015255F /* MeterTable.swift in Sources */,
 				C45D79252593AD5600EB6C2F /* MiniPlayerDataSource.swift in Sources */,
-				9492A1582A330ECD0073CAEC /* DevicePermissionsHandler.swift in Sources */,
 				C45D792F2593AEBA00EB6C2F /* MiniPlayerDelegate.swift in Sources */,
 				C45D79092593A8C700EB6C2F /* MiniPlayerItemCollectionViewCell.swift in Sources */,
 				C45D791B2593AAB100EB6C2F /* MiniPlayerSource.swift in Sources */,
@@ -13896,6 +13897,7 @@
 				B662B88524F8DA600089376A /* RegionListViewRouter.swift in Sources */,
 				9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */,
 				9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */,
+				240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */,
 				A89D72712795C5F500284BFC /* ReportIssueView.swift in Sources */,
 				A8EC8D7727A0258900A9ED13 /* ReportIssueViewModel.swift in Sources */,
 				A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */,
@@ -14013,7 +14015,6 @@
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */,
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
-				240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */,
 				5DD6B16B24D67E7C00F14515 /* SlidePanelView.swift in Sources */,
 				328A913D28A9DB8A0058C645 /* SlideShowCollectionView.swift in Sources */,
 				328A913E28A9DB8A0058C645 /* SlideShowCollectionViewCell.swift in Sources */,
@@ -14177,7 +14178,6 @@
 				83139149293511F300E20170 /* UserAvatarViewModel.swift in Sources */,
 				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
 				83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */,
-				245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */,
 				BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */,
 				BF90C7802603FD4A006061F8 /* UserImageRepository.swift in Sources */,
 				BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */,
@@ -14627,7 +14627,6 @@
 				5BBC13DE26CE62D10010115B /* FavouritesViewModelTests.swift in Sources */,
 				B5E9D41528ACF8CE00504F1F /* FeatureFlagViewModelTests.swift in Sources */,
 				B6D0B36A283DF5B50020C64D /* FileCacheRepositoryTests.swift in Sources */,
-				9492A1482A2F79980073CAEC /* MockDevicePermissionsHandler.swift in Sources */,
 				328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */,
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
@@ -14670,6 +14669,7 @@
 				B6A6E19F287BCEA700179806 /* MockChatRoom.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
 				B6A6E19D287BCE8300179806 /* MockChatSdk.swift in Sources */,
+				9492A1482A2F79980073CAEC /* MockDevicePermissionsHandler.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
@@ -14709,7 +14709,6 @@
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
-				240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
 				BFC060F628A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift in Sources */,
 				B64A71CB287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift in Sources */,
@@ -14736,6 +14735,7 @@
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
+				240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */,
 				A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
 				94417EAF296D825B007C9230 /* RubbishBinRepositoryTests.swift in Sources */,
@@ -15127,7 +15127,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -15189,7 +15189,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -15250,7 +15250,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -15312,7 +15312,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -15372,7 +15372,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAWidget;
@@ -15430,7 +15430,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15473,7 +15473,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAIntent;
@@ -15514,7 +15514,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15567,7 +15567,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15628,7 +15628,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15670,7 +15670,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -15715,7 +15715,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
@@ -15759,7 +15759,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPickerFileProvider;
@@ -15799,7 +15799,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPicker;
@@ -15839,7 +15839,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15878,7 +15878,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16107,7 +16107,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -16174,7 +16174,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16230,7 +16230,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -16346,7 +16346,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16390,7 +16390,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.3;
+				MARKETING_VERSION = 10.4;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
