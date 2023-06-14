@@ -5,10 +5,8 @@ final class VideoExplorerTableCellViewModel {
     private let node: MEGANode
     typealias MoreButtonTapHandler = (MEGANode, UIView) -> Void
     private let moreButtonTapHandler: MoreButtonTapHandler
-    private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
-        return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
-                                        fileSystemClient: .live,
-                                        thumbnailRepo: ThumbnailRepository.newRepo)
+    private lazy var thumbnailUseCase: any ThumbnailUseCaseProtocol = {
+        return ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
     }()
     
     var title: String {
@@ -37,9 +35,21 @@ final class VideoExplorerTableCellViewModel {
     }
     
     func loadThumbnail(completionBlock: @escaping (UIImage?, UInt64) -> Void) {
-        nodeThumbnailHomeUseCase.loadThumbnail(of: node.handle) { [weak self] image in
-            guard let self = self else { return }
+        let nodeEntity = node.toNodeEntity()
+        if let cachedThumbnail = thumbnailUseCase.cachedThumbnail(for: nodeEntity, type: .thumbnail) {
+            let image = UIImage(contentsOfFile: cachedThumbnail.url.path)
             completionBlock(image, self.node.handle)
+        } else {
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                do {
+                    let thumbnail = try await thumbnailUseCase.loadThumbnail(for: nodeEntity, type: .thumbnail)
+                    let image = UIImage(contentsOfFile: thumbnail.url.path)
+                    completionBlock(image, self.node.handle)
+                } catch {
+                    MEGALogError("Error loading video cover thumbnail: \(error.localizedDescription)")
+                }
+            }
         }
     }
     
