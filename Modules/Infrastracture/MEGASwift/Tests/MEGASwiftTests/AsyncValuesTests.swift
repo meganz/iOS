@@ -14,7 +14,7 @@ final class AsyncValuesTests: XCTestCase {
         do {
             let task = Task {
                 try await withAsyncThrowingValue { completion in
-                    DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
                         completion(.success)
                     }
                 }
