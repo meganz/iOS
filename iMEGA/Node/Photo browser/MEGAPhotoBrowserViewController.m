@@ -663,7 +663,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             }
         }
                         completion:nil];
-        [self reloadUI];
         [self removeActivityIndicatorsFromView:imageView];
         [self startLiveTextAnalysisFor:imageView in:index];
     };
