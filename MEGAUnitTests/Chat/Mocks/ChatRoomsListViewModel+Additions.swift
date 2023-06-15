@@ -2,7 +2,6 @@
 import MEGADomainMock
 import MEGADomain
 
-
 extension ChatRoomsListViewModel {
     
     convenience init(
