@@ -162,7 +162,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         }
         
         invokeCommand?(.showHud(.custom(Asset.Images.NodeActions.copy.image,
-                                        Strings.Localizable.linkCopiedToClipboard)))
+                                        Strings.Localizable.SharedItems.GetLink.linkCopied(1))))
     }
     
     private func copyKeyToPasteBoard() {
