@@ -101,7 +101,7 @@ extension AchievementsDetailsViewController {
             subtitleLabel?.textColor = UIColor.mnz_red(for: self.traitCollection)
             subtitleView?.layer.borderColor = UIColor.mnz_red(for: self.traitCollection).cgColor
         } else {
-            bonusExpiresIn = Strings.Localizable.Account.Achievement.Complete.Valid.Detail.subtitle(daysUntilExpiration)
+            bonusExpiresIn = Strings.Localizable.Account.Achievement.Complete.ValidBonusExpiry.Detail.subtitle(daysUntilExpiration)
             subtitleView?.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.14).cgColor
         }
 

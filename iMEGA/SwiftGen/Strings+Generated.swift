@@ -2633,6 +2633,14 @@ public enum Strings {
               }
             }
           }
+          public enum ValidBonusExpiry {
+            public enum Detail {
+              /// Plural format key: "%#@days@"
+              public static func subtitle(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "account.achievement.complete.validBonusExpiry.detail.subtitle", p1)
+              }
+            }
+          }
           public enum ValidDays {
             /// Plural format key: "%#@days@"
             public static func subtitle(_ p1: Int) -> String {
