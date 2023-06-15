@@ -168,7 +168,7 @@ platform :ios do
 
   desc "Upload to iTunesConnect"
   lane :upload_to_itunesconnect do |options|
-    # Get the 20 latest commints from the current branch.
+    # Get the 20 latest commits from the current branch.
     changelog_from_git_commits(
       commits_count: 20,
       pretty: "- %s",
@@ -370,7 +370,7 @@ platform :ios do
 
   desc "Upload build to Firebase"
   lane :upload_build_to_firebase do |options|
-    # Get the 20 latest commints from the current branch.
+    # Get the 20 latest commits from the current branch.
     changelog_from_git_commits(
       commits_count: 20,
       pretty: "- %s",
