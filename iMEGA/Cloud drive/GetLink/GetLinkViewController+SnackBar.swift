@@ -12,12 +12,12 @@ extension GetLinkViewController: SnackBarPresenting {
         }
 
         snackBarView.translatesAutoresizingMaskIntoConstraints = false
-
         let toolbarHeight = navigationController?.toolbar.frame.height ?? 0
+        let bottomOffset: CGFloat = UIApplication.shared.windows[0].safeAreaInsets.bottom > 0 ? 32 : 0
 
         [snackBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
          snackBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-         snackBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -toolbarHeight)].activate()
+         snackBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -toolbarHeight - bottomOffset)].activate()
     }
 
     func snackBarContainerView() -> UIView? {
