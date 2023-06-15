@@ -557,7 +557,7 @@ public enum Strings {
     public static let custom = Strings.tr("Localizable", "Custom...")
     /// Data protection regulation
     public static let dataProtectionRegulationLabel = Strings.tr("Localizable", "dataProtectionRegulationLabel")
-    /// day
+    /// Day
     public static let day = Strings.tr("Localizable", "day")
     /// days
     public static let days = Strings.tr("Localizable", "days")
@@ -1069,7 +1069,7 @@ public enum Strings {
     public static let lineCodeWithCamera = Strings.tr("Localizable", "lineCodeWithCamera")
     /// Link
     public static let link = Strings.tr("Localizable", "LINK")
-    /// Link copied to clipboard
+    /// Copied link to clipboard
     public static let linkCopiedToClipboard = Strings.tr("Localizable", "Link Copied to Clipboard")
     /// Link creation
     public static let linkCreation = Strings.tr("Localizable", "Link Creation")
@@ -1085,7 +1085,7 @@ public enum Strings {
     public static let linkNotValid = Strings.tr("Localizable", "linkNotValid")
     /// Links
     public static let links = Strings.tr("Localizable", "Links")
-    /// Links copied to clipboard
+    /// Copied links to clipboard
     public static let linksCopiedToClipboard = Strings.tr("Localizable", "Links Copied to Clipboard")
     /// Copied links
     public static let linksCopied = Strings.tr("Localizable", "linksCopied")
@@ -3716,7 +3716,7 @@ public enum Strings {
         public static let tar = Strings.tr("Localizable", "general.filetype.tar")
         /// Text document
         public static let textDocument = Strings.tr("Localizable", "general.filetype.textDocument")
-        /// Targa graphic
+        /// TARGA graphic
         public static let tga = Strings.tr("Localizable", "general.filetype.tga")
         /// TIF image
         public static let tif = Strings.tr("Localizable", "general.filetype.tif")
@@ -3930,9 +3930,9 @@ public enum Strings {
         public static func modifiedByLabel(_ p1: Any) -> String {
           return Strings.tr("Localizable", "home.recent.modifiedByLabel", String(describing: p1))
         }
-        /// %1$s and %2$s more
-        public static func multipleFileTitle(_ p1: UnsafePointer<CChar>, _ p2: UnsafePointer<CChar>) -> String {
-          return Strings.tr("Localizable", "home.recent.multipleFileTitle", p1, p2)
+        /// “%@” and %ld more
+        public static func multipleFileTitle(_ p1: Any, _ p2: Int) -> String {
+          return Strings.tr("Localizable", "home.recent.multipleFileTitle", String(describing: p1), p2)
         }
       }
     }
@@ -5024,21 +5024,21 @@ public enum Strings {
     public enum Notifications {
       public enum Message {
         public enum TakenDownPubliclyShared {
-          /// Your publicly shared file “%@” has been taken down.
+          /// Your publicly shared file “%@” has been taken down
           public static func file(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.file", String(describing: p1))
           }
-          /// Your publicly shared folder “%@” has been taken down.
+          /// Your publicly shared folder “%@” has been taken down
           public static func folder(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownPubliclyShared.folder", String(describing: p1))
           }
         }
         public enum TakenDownReinstated {
-          /// Your taken-down file “%@” has been reinstated.
+          /// Your taken-down file “%@” has been reinstated
           public static func file(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownReinstated.file", String(describing: p1))
           }
-          /// Your taken-down folder “%@” has been reinstated.
+          /// Your taken-down folder “%@” has been reinstated
           public static func folder(_ p1: Any) -> String {
             return Strings.tr("Localizable", "notifications.message.takenDownReinstated.folder", String(describing: p1))
           }
@@ -5265,7 +5265,7 @@ public enum Strings {
         }
         /// Only people with the password can open the link
         public static let accessInfoPasswordProtected = Strings.tr("Localizable", "sharedItems.link.accessInfoPasswordProtected")
-        /// Link updated. Copy again
+        /// Link updated. Copy again.
         public static let linkUpdated = Strings.tr("Localizable", "sharedItems.link.linkUpdated")
       }
       public enum Menu {
