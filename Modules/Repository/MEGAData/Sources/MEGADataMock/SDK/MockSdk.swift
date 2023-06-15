@@ -8,6 +8,7 @@ public final class MockSdk: MEGASdk {
     private let myContacts: MEGAUserList
     public var _myUser: MEGAUser?
     public var _isLoggedIn: Int
+    public var _isMasterBusinessAccount: Bool
     private let email: String?
     private var statsEventType: Int?
     private var statsEventMessage: String?
@@ -32,6 +33,7 @@ public final class MockSdk: MEGASdk {
     private let _accountDetails: (MEGASdk, MEGARequestDelegate) -> Void
     
     public var hasGlobalDelegate = false
+    public var hasRequestDelegate = false
     public var apiURL: String?
     public var disablepkp: Bool?
     public var shareAccessLevel: MEGAShareType = .accessUnknown
@@ -45,6 +47,7 @@ public final class MockSdk: MEGASdk {
                 myContacts: MEGAUserList = MEGAUserList(),
                 myUser: MEGAUser? = nil,
                 isLoggedIn: Int = 0,
+                isMasterBusinessAccount: Bool = false,
                 myEmail: String? = nil,
                 megaSets: [MEGASet] = [],
                 megaSetElements: [MEGASetElement] = [],
@@ -69,6 +72,7 @@ public final class MockSdk: MEGASdk {
         self.myContacts = myContacts
         _myUser = myUser
         _isLoggedIn = isLoggedIn
+        _isMasterBusinessAccount = isMasterBusinessAccount
         email = myEmail
         sets = megaSets
         setElements = megaSetElements
@@ -143,6 +147,14 @@ public final class MockSdk: MEGASdk {
     
     public override func remove(_ delegate: MEGAGlobalDelegate) {
         hasGlobalDelegate = false
+    }
+    
+    public override func add(_ delegate: MEGARequestDelegate) {
+        hasRequestDelegate = true
+    }
+    
+    public override func remove(_ delegate: MEGARequestDelegate) {
+        hasRequestDelegate = false
     }
     
     public override var rootNode: MEGANode? { megaRootNode }
@@ -350,6 +362,8 @@ public final class MockSdk: MEGASdk {
     }
     
     // MARK: - Account Management
+    
+    public override var isMasterBusinessAccount: Bool { _isMasterBusinessAccount }
     
     public override func getAccountDetails(with delegate: MEGARequestDelegate) {
         _accountDetails(self, delegate)

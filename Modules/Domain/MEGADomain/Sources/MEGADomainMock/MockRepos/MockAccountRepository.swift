@@ -1,14 +1,20 @@
+import Combine
 import MEGADomain
 
-public struct MockAccountRepository: AccountRepositoryProtocol {
+public final class MockAccountRepository: AccountRepositoryProtocol {
     private let nodesCount: UInt
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
     private let isUpgradeSecuritySuccess: Bool
     private let _isLoggedIn: Bool
+    private let _isMasterBusinessAccount: Bool
     private let _contacts: [UserEntity]
     private let contactsRequestsCount: Int
     private let unseenUserAlertsCount: UInt
+    public let requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never>
+    
+    public var registerMEGARequestDelegateCalled = 0
+    public var deRegisterMEGARequestDelegateCalled = 0
     
     let currentUser: UserEntity?
     public let isGuest: Bool
@@ -16,16 +22,19 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
     public init(currentUser: UserEntity? = nil,
                 isGuest: Bool = false,
                 isLoggedIn: Bool = true,
+                isMasterBusinessAccount: Bool = false,
                 contacts: [UserEntity] = [],
                 nodesCount: UInt = 0,
                 contactsRequestsCount: Int = 0,
                 unseenUserAlertsCount: UInt = 0,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 accountDetails: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
+                requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> = Empty().eraseToAnyPublisher(),
                 isUpgradeSecuritySuccess: Bool = false) {
         self.currentUser = currentUser
         self.isGuest = isGuest
         self._isLoggedIn = isLoggedIn
+        self._isMasterBusinessAccount = isMasterBusinessAccount
         self._contacts = contacts
         self.nodesCount = nodesCount
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
@@ -33,6 +42,7 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
         self.contactsRequestsCount = contactsRequestsCount
         self.unseenUserAlertsCount = unseenUserAlertsCount
+        self.requestResultPublisher = requestResultPublisher
     }
     
     public var currentUserHandle: HandleEntity? {
@@ -45,6 +55,10 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
     
     public func isLoggedIn() -> Bool {
         _isLoggedIn
+    }
+    
+    public var isMasterBusinessAccount: Bool {
+        _isMasterBusinessAccount
     }
     
     public func contacts() -> [UserEntity] {
@@ -79,4 +93,13 @@ public struct MockAccountRepository: AccountRepositoryProtocol {
     public func relevantUnseenUserAlertsCount() -> UInt {
         unseenUserAlertsCount
     }
+    
+    public func registerMEGARequestDelegate() async {
+        registerMEGARequestDelegateCalled += 1
+    }
+    
+    public func deRegisterMEGARequestDelegate() {
+        deRegisterMEGARequestDelegateCalled += 1
+    }
+    
 }

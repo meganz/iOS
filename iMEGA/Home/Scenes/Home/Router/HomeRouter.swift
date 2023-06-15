@@ -201,7 +201,8 @@ final class HomeRouter: HomeRouterProtocol {
             return
         }
         
-        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo))
+        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo),
+                                             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo))
         myAccountViewController.viewModel = viewModel
         
         navigationController?.pushViewController(myAccountViewController, animated: true)
@@ -228,7 +229,8 @@ final class HomeRouter: HomeRouterProtocol {
             return
         }
         
-        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo))
+        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo),
+                                             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo))
         myAccountViewController.viewModel = viewModel
         
         navigationController?.pushViewController(myAccountViewController, animated: true)

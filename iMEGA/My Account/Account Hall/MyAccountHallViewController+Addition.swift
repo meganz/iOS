@@ -8,26 +8,6 @@ extension MyAccountHallViewController {
         settingRouter.start()
     }
     
-    @objc func configNavigationItem() {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
-            buyPROBarButtonItem?.title = Strings.Localizable.upgrade
-            accountTypeLabel?.text = ""
-            return
-        }
-        
-        switch accountDetails.type {
-        case .business:
-            navigationItem.rightBarButtonItem = nil
-            accountTypeLabel?.text = Strings.Localizable.business
-        case .proFlexi:
-            navigationItem.rightBarButtonItem = nil
-            accountTypeLabel?.text = MEGAAccountDetails.string(for: accountDetails.type)
-        default:
-            buyPROBarButtonItem?.title = Strings.Localizable.upgrade
-            accountTypeLabel?.text = ""
-        }
-    }
-    
     @objc func setupNavigationBarColor(with trait: UITraitCollection) {
         let color: UIColor
         switch trait.theme {
@@ -55,8 +35,19 @@ extension MyAccountHallViewController {
         }
     }
     
-    @objc func reloadContent() {
-        viewModel.dispatch(.onViewAppear)
+    @objc func loadContent() {
+        viewModel.dispatch(.reloadUI)
+        viewModel.dispatch(.load(.planList))
+        viewModel.dispatch(.load(.accountDetails))
+        viewModel.dispatch(.load(.contentCounts))
+    }
+    
+    @objc func addSubscriptions() {
+        viewModel.dispatch(.addSubscriptions)
+    }
+    
+    @objc func removeSubscriptions() {
+        viewModel.dispatch(.removeSubscriptions)
     }
     
     // MARK: - Feature flag
@@ -90,8 +81,68 @@ extension MyAccountHallViewController {
     
     private func excuteCommand(_ command: AccountHallViewModel.Command) {
         switch command {
-        case .reload:
+        case .reloadCounts:
             tableView?.reloadData()
+        case .reloadUIContent:
+            configNavigationBar()
+            configPlanDisplay()
+            configTableFooterView()
+            setUserAvatar()
+            setUserFullName()
+            tableView?.reloadData()
+        case .setUserAvatar:
+            setUserAvatar()
+        case .setName:
+            setUserFullName()
+        case .configPlanDisplay:
+            configPlanDisplay()
         }
+    }
+    
+    private func setUserAvatar() {
+        guard let userHandle = viewModel.currentUserHandle else { return }
+        avatarImageView?.mnz_setImage(forUserHandle: userHandle)
+    }
+    
+    private func setUserFullName() {
+        nameLabel?.text = viewModel.userFullName
+    }
+    
+    private func configPlanDisplay() {
+        accountTypeLabel?.text = ""
+        buyPROBarButtonItem?.title = nil
+        buyPROBarButtonItem?.isEnabled = false
+
+        guard !viewModel.isNewUpgradeAccountPlanEnabled(),
+              let accountDetails = viewModel.accountDetails else {
+            return
+        }
+        
+        switch accountDetails.proLevel {
+        case .business, .proFlexi:
+            navigationItem.rightBarButtonItem = nil
+            accountTypeLabel?.text = accountDetails.proLevel.toAccountTypeDisplayName()
+            buyPROBarButtonItem?.title = nil
+            buyPROBarButtonItem?.isEnabled = false
+        default:
+            accountTypeLabel?.text = ""
+            buyPROBarButtonItem?.title = Strings.Localizable.upgrade
+            buyPROBarButtonItem?.isEnabled = !viewModel.planList.isEmpty
+        }
+    }
+    
+    private func configNavigationBar() {
+        if let navigationController, navigationController.isNavigationBarHidden {
+            navigationController.setNavigationBarHidden(false, animated: true)
+        }
+    }
+    
+    private func configTableFooterView() {
+        guard viewModel.isMasterBusinessAccount else {
+            tableView?.tableFooterView = UIView(frame: .zero)
+            return
+        }
+        tableFooterLabel?.text = Strings.Localizable.userManagementIsOnlyAvailableFromADesktopWebBrowser
+        tableView?.tableFooterView = tableFooterView
     }
 }

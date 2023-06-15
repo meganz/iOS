@@ -14,6 +14,15 @@ extension MEGARequest {
         )
     }
     
+    public func toAccountRequestEntity() -> AccountRequestEntity {
+        AccountRequestEntity(
+            type: type.toRequestTypeEntity(),
+            file: file,
+            userAttribute: UserAttributeEntity(rawValue: paramType),
+            email: email
+        )
+    }
+    
     public func toFileURL() -> URL? {
         guard let path = file else {
             return nil

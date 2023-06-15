@@ -43,3 +43,9 @@ public struct AccountDetailsEntity {
         self.numberUsageItems = numberUsageItems
     }
 }
+
+extension AccountDetailsEntity: Equatable {
+    public static func == (lhs: AccountDetailsEntity, rhs: AccountDetailsEntity) -> Bool {
+        return lhs.proLevel == rhs.proLevel
+    }
+}

@@ -1369,6 +1369,7 @@
             
         case EventStorageSumChanged:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
+            [self postSetShouldRequestAccountDetailsNotification:YES];
             break;
             
         case EventReloading: {
@@ -1619,6 +1620,10 @@
         case MEGARequestTypeAccountDetails:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:NO];
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
+            
+            [self postDidFinishFetchAccountDetailsNotificationWithAccountDetails:[request megaAccountDetails]];
+            [self postSetShouldRequestAccountDetailsNotification:NO];
+            
             [OverDiskQuotaService.sharedService updateUserStorageUsed:MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed];
             break;
             

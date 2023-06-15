@@ -45,4 +45,12 @@ extension AppDelegate {
     @objc func postDidFinishFetchNodesNotification() {
         NotificationCenter.default.post(name: .accountDidFinishFetchNodes, object: nil)
     }
+    
+    @objc func postSetShouldRequestAccountDetailsNotification(_ shouldRequest: Bool) {
+        NotificationCenter.default.post(name: .setShouldRefreshAccountDetails, object: shouldRequest)
+    }
+    
+    @objc func postDidFinishFetchAccountDetailsNotification(accountDetails: Bool) {
+        NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: accountDetails)
+    }
 }

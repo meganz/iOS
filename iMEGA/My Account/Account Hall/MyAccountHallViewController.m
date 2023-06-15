@@ -33,14 +33,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *addPhoneNumberActivityIndicator;
-
-@property (weak, nonatomic) IBOutlet MEGALabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *qrCodeImageView;
 
-@property (weak, nonatomic) IBOutlet UIView *tableFooterView;
 @property (weak, nonatomic) IBOutlet UIView *tableFooterContainerView;
-@property (weak, nonatomic) IBOutlet UILabel *tableFooterLabel;
 
 @end
 
@@ -83,26 +78,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+
+    [self addSubscriptions];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    if (MEGASdkManager.sharedMEGASdk.mnz_shouldRequestAccountDetails) {
-        [MEGASdkManager.sharedMEGASdk getAccountDetails];
-    }
-    [self reloadUI];
-    [self reloadContent];
-    
-    if ([self isNewUpgradeAccountPlanFeatureFlagEnabled]) {
-        self.buyPROBarButtonItem.title = nil;
-        self.buyPROBarButtonItem.enabled = false;
-    } else {
-        self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
-    }
-    
-    if (self.navigationController.isNavigationBarHidden) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-    }
+    [self loadContent];
     
     [self configAddPhoneNumberView];
     
@@ -112,7 +92,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
+    [self removeSubscriptions];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
     
     if (self.isMovingFromParentViewController) {
@@ -212,16 +192,6 @@
     }
 }
 
-- (void)reloadUI {
-    [self configNavigationItem];
-    [self configTableFooterView];
-    
-    self.nameLabel.text = [MEGAUser mnz_fullName:MEGASdk.currentUserHandle.unsignedLongLongValue];
-    [self setUserAvatar];
-    
-    [self.tableView reloadData];
-}
-
 - (void)avatarTapped:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"ContactLinkQR" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
@@ -229,19 +199,6 @@
         contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
         
         [self presentViewController:contactLinkVC animated:YES completion:nil];
-    }
-}
-
-- (void)setUserAvatar {
-    [self.avatarImageView mnz_setImageForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
-}
-
-- (void)configTableFooterView {
-    if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        self.tableFooterLabel.text = NSLocalizedString(@"User management is only available from a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
-        self.tableView.tableFooterView = self.tableFooterView;
-    } else {
-        self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     }
 }
 
@@ -285,38 +242,6 @@
 - (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
     NSIndexPath *notificationsIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionNotifications inSection:MyAccountSectionMega];
     [self.tableView reloadRowsAtIndexPaths:@[notificationsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-}
-
-#pragma mark - MEGARequestDelegate
-
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    switch (request.type) {
-        case MEGARequestTypeAccountDetails:
-            if (error.type) {
-                return;
-            }
-            [self reloadUI];
-            
-            break;
-            
-        case MEGARequestTypeGetAttrUser: {
-            if (error.type) {
-                return;
-            }
-            
-            if (request.file) {
-                [self setUserAvatar];
-            }
-            
-            if ((request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) && request.email == nil) {
-                self.nameLabel.text = [MEGAUser mnz_fullName:MEGASdk.currentUserHandle.unsignedLongLongValue];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 #pragma mark - AudioPlayer
