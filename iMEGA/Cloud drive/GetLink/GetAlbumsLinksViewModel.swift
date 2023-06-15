@@ -125,7 +125,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         let joinedLinks = albumLinks.values.joined(separator: " ")
         invokeCommand?(.addToPasteBoard(joinedLinks))
         invokeCommand?(.showHud(.custom(Asset.Images.NodeActions.copy.image,
-                                        Strings.Localizable.linksCopiedToClipboard)))
+                                        Strings.Localizable.SharedItems.GetLink.linkCopied(albumLinks.count))))
     }
     
     private func copyLinkToPasteBoard(at indexPath: IndexPath) {
@@ -136,6 +136,6 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         }
         invokeCommand?(.addToPasteBoard(link))
         invokeCommand?(.showHud(.custom(Asset.Images.NodeActions.copy.image,
-                                        Strings.Localizable.linkCopiedToClipboard)))
+                                        Strings.Localizable.SharedItems.GetLink.linkCopied(1))))
     }
 }

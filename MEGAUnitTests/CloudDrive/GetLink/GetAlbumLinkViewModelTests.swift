@@ -225,7 +225,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
              expectedCommands: [
                 .addToPasteBoard(link),
                 .showHud(.custom(Asset.Images.NodeActions.copy.image,
-                                                Strings.Localizable.linkCopiedToClipboard))
+                                 Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
              ])
     }
     
@@ -254,7 +254,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
              expectedCommands: [
                 .addToPasteBoard(linkOnly),
                 .showHud(.custom(Asset.Images.NodeActions.copy.image,
-                                                Strings.Localizable.linkCopiedToClipboard))
+                                 Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
              ])
     }
     
