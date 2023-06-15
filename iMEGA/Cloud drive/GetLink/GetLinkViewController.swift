@@ -105,6 +105,8 @@ class GetLinkViewController: UIViewController {
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         
         copyKeyBarButton.title = Strings.Localizable.copyKey
+
+        configureSnackBarPresenter()
         
         if var getLinkViewModel {
             let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
@@ -123,13 +125,6 @@ class GetLinkViewController: UIViewController {
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        guard getLinkViewModel == nil else { return }
-        configureSnackBarPresenter()
-        copyLinkToPasteboard()
     }
 
     private func loadNodes() {
@@ -295,6 +290,7 @@ class GetLinkViewController: UIViewController {
         nodes.forEach { (node) in
             if node.isExported() {
                 updateModel(forNode: node)
+                copyLinkToPasteboard()
             } else {
                 exportNode(node: node)
             }
@@ -311,6 +307,7 @@ class GetLinkViewController: UIViewController {
                 return
             }
             self?.updateModel(forNode: nodeUpdated)
+            self?.copyLinkToPasteboard()
             }, multipleLinks: nodesToExportCount > 1))
     }
     
