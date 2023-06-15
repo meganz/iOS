@@ -60,7 +60,7 @@ extension MEGAPhotoBrowserViewController {
                 }
                 
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                
+                // swiftlint:disable switch_case_alignment
                 switch self.displayMode {
                     case .chatAttachment, .chatSharedFiles:
                         saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId, completion: completionBlock)
@@ -83,6 +83,7 @@ extension MEGAPhotoBrowserViewController {
                             }
                         }
                 }
+                // swiftlint:enable switch_case_alignment
             } else {
                 permissionHandler.alertPhotosPermission()
             }

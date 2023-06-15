@@ -28,7 +28,7 @@ final class SlideShowViewModel: ViewModelType {
     
     private var dataSource: SlideShowDataSourceProtocol
     private let slideShowUseCase: any SlideShowUseCaseProtocol
-    private let accountUseCase:  any AccountUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     
     var configuration: SlideShowConfigurationEntity
     

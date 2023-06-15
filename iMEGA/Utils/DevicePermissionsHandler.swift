@@ -119,8 +119,8 @@ final class DevicePermissionsHandler: NSObject, DevicePermissionsHandling {
         
         permissionsModal.image = UIImage(named: "groupChat")
         permissionsModal.viewTitle = incomingCall ? NSLocalizedString("Incoming call", comment: "") : NSLocalizedString("Enable Microphone and Camera", comment: "Title label that explains that the user is going to be asked for the microphone and camera permission")
-        permissionsModal.detail = NSLocalizedString("To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone", comment:  "Detailed explanation of why the user should give permission to access to the camera and the microphone")
-        permissionsModal.firstButtonTitle = NSLocalizedString("Allow Access", comment:  "Button which triggers a request for a specific permission, that have been explained to the user beforehand")
+        permissionsModal.detail = NSLocalizedString("To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone", comment: "Detailed explanation of why the user should give permission to access to the camera and the microphone")
+        permissionsModal.firstButtonTitle = NSLocalizedString("Allow Access", comment: "Button which triggers a request for a specific permission, that have been explained to the user beforehand")
         permissionsModal.dismissButtonTitle = NSLocalizedString("notNow", comment: "")
         
         permissionsModal.firstCompletion = { [weak permissionsModal] in
@@ -136,7 +136,7 @@ final class DevicePermissionsHandler: NSObject, DevicePermissionsHandling {
     
         let permissionsModal = CustomModalAlertViewController()
     
-        permissionsModal.image = UIImage(named:"micAndCamPermission")
+        permissionsModal.image = UIImage(named: "micAndCamPermission")
         permissionsModal.viewTitle = NSLocalizedString("Enable Notifications", comment: "Title label that explains that the user is going to be asked for the notifications permission")
         permissionsModal.detail = NSLocalizedString("We would like to send you notifications so you receive new messages on your device instantly.", comment: "Detailed explanation of why the user should give permission to deliver notifications")
         permissionsModal.firstButtonTitle = NSLocalizedString("continue", comment: "'Next' button in a dialog")

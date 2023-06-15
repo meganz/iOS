@@ -71,7 +71,7 @@ extension MEGALinkManager {
         let content = UNMutableNotificationContent()
         content.body = notificationText
         content.sound = .default
-        content.userInfo = ["chatId" : chatId]
+        content.userInfo = ["chatId": chatId]
         
         let trigger = UNTimeIntervalNotificationTrigger(
             timeInterval: 1,
@@ -89,4 +89,3 @@ extension MEGALinkManager {
         }
     }
 }
-

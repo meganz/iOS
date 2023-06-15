@@ -12,7 +12,7 @@ final class OfflineQuickAccessWidgetViewModel: ViewModelType {
 
     // MARK: - Private properties
     private let credentialUseCase: any CredentialUseCaseProtocol
-    private let copyDataBasesUseCase:  any CopyDataBasesUseCaseProtocol
+    private let copyDataBasesUseCase: any CopyDataBasesUseCaseProtocol
     private let offlineFilesUseCase: any OfflineFilesUseCaseProtocol
 
     // MARK: - Internal properties
