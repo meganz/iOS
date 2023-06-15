@@ -1,4 +1,5 @@
 import XCTest
+import Combine
 import MEGAData
 import MEGADataMock
 import MEGADomain
@@ -8,6 +9,7 @@ import MEGADomainMock
 @testable import MEGA
 
 final class AccountRepositoryTests: XCTestCase {
+    private var subscriptions = Set<AnyCancellable>()
     
     func testCurrentUserHandle() {
         let expectedHandle = HandleEntity.random()
@@ -44,6 +46,11 @@ final class AccountRepositoryTests: XCTestCase {
     func testIsLoggedIn() {
         XCTAssertTrue(makeSUT(sdk: MockSdk(isLoggedIn: 1)).isLoggedIn())
         XCTAssertFalse(makeSUT(sdk: MockSdk(isLoggedIn: 0)).isLoggedIn())
+    }
+    
+    func testIsMasterBusinessAccount() {
+        XCTAssertTrue(makeSUT(sdk: MockSdk(isMasterBusinessAccount: true)).isMasterBusinessAccount)
+        XCTAssertFalse(makeSUT(sdk: MockSdk(isMasterBusinessAccount: false)).isMasterBusinessAccount)
     }
     
     func testContacts_shouldMapSdkContacts() {
@@ -177,6 +184,69 @@ final class AccountRepositoryTests: XCTestCase {
         }
     }
     
+    func testRequestResultPublisher_onRequestFinish_whenApiOk_sendsSuccessResult() {
+        let apiOk = MockError(errorType: .apiOk)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        
+        let exp = expectation(description: "Should receive success AccountRequestEntity")
+        let megaRequest = MEGARequest()
+        sut.requestResultPublisher
+            .sink { request in
+                switch request {
+                case .success(let result):
+                    XCTAssertEqual(result, megaRequest.toAccountRequestEntity())
+                case .failure:
+                    XCTFail("Request error is not expected.")
+                }
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        sut.onRequestFinish(mockSdk, request: megaRequest, error: apiOk)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testRequestResultPublisher_onRequestFinish_withError_sendsError() {
+        let apiError = MockError.failingError
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        
+        let exp = expectation(description: "Should receive success AccountRequestEntity")
+        sut.requestResultPublisher
+            .sink { request in
+                switch request {
+                case .success:
+                    XCTFail("Expecting an error but got a success.")
+                case .failure(let error):
+                    guard let err = error as? MEGAError else {
+                        XCTFail("Error can't cast as MEGAError")
+                        return
+                    }
+                    XCTAssertEqual(err.type, apiError.type)
+                }
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        sut.onRequestFinish(mockSdk, request: MEGARequest(), error: apiError)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testOnRequestResultFinish_addDelegate_delegateShouldExist() async {
+        let sdk = MockSdk()
+        let repo = AccountRepository(sdk: sdk)
+        await repo.registerMEGARequestDelegate()
+        
+        XCTAssertTrue(sdk.hasRequestDelegate)
+    }
+    
+    func testOnRequestResultFinish_removeDelegate_delegateShouldNotExist() async {
+        let sdk = MockSdk()
+        sdk.hasRequestDelegate = true
+        
+        let repo = AccountRepository(sdk: sdk)
+        await repo.deRegisterMEGARequestDelegate()
+        
+        XCTAssertFalse(sdk.hasRequestDelegate)
+    }
+
     // MARK: - Helpers
     
     private func makeSUT(sdk: MEGASdk) -> AccountRepository {

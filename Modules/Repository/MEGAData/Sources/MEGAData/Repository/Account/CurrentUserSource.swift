@@ -22,6 +22,9 @@ public final class CurrentUserSource {
     public private(set) var currentUserEmail: String?
     public private(set) var isLoggedIn: Bool
     
+    public private(set) var shouldRefreshAccountDetails: Bool = false
+    public private(set) var accountDetails: AccountDetailsEntity?
+    
     public var isGuest: Bool {
         currentUserEmail?.isEmpty != false
     }
@@ -75,5 +78,31 @@ public final class CurrentUserSource {
                 self?.currentUserEmail = $0.email
             }
             .store(in: &subscriptions)
+        
+        NotificationCenter
+            .default
+            .publisher(for: .setShouldRefreshAccountDetails)
+            .compactMap { $0.object as? Bool }
+            .sink { [weak self] shouldRefresh in
+                self?.setShouldRefreshAccountDetails(shouldRefresh)
+            }
+            .store(in: &subscriptions)
+        
+        NotificationCenter
+            .default
+            .publisher(for: .accountDidFinishFetchAccountDetails)
+            .compactMap { $0.object as? AccountDetailsEntity }
+            .sink { [weak self] accountDetails in
+                self?.setAccountDetails(accountDetails)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    public func setShouldRefreshAccountDetails(_ shouldRefresh: Bool) {
+        shouldRefreshAccountDetails = shouldRefresh
+    }
+    
+    public func setAccountDetails(_ userAccountDetails: AccountDetailsEntity) {
+        accountDetails = userAccountDetails
     }
 }

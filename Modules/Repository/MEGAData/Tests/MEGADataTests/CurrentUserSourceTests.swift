@@ -2,6 +2,7 @@ import XCTest
 import MEGASdk
 import MEGADataMock
 import MEGAData
+import MEGADomain
 
 final class CurrentUserSourceTests: XCTestCase {
     func testUserFields_init_empty() {
@@ -106,5 +107,49 @@ final class CurrentUserSourceTests: XCTestCase {
         XCTAssertEqual(source.currentUserEmail, "5@mega.nz")
         XCTAssertEqual(source.currentUserHandle, 5)
         XCTAssertFalse(source.isGuest)
+    }
+    
+    func testAccountDetails_shouldRefreshAccountDetailsNotif_setToTrue() {
+        let source = CurrentUserSource(sdk: MockSdk())
+        NotificationCenter.default.post(name: .setShouldRefreshAccountDetails, object: true)
+        let exp = expectation(description: "shouldRefreshAccountDetails from notif")
+        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        XCTAssertTrue(source.shouldRefreshAccountDetails)
+    }
+    
+    func testAccountDetails_shouldRefreshAccountDetailsNotif_setToFalse() {
+        let source = CurrentUserSource(sdk: MockSdk())
+        NotificationCenter.default.post(name: .setShouldRefreshAccountDetails, object: false)
+        let exp = expectation(description: "shouldRefreshAccountDetails from notif")
+        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        XCTAssertFalse(source.shouldRefreshAccountDetails)
+    }
+    
+    func testAccountDetails_shouldRefreshAccountDetails_setToTrue() {
+        let source = CurrentUserSource(sdk: MockSdk())
+        source.setShouldRefreshAccountDetails(true)
+        XCTAssertTrue(source.shouldRefreshAccountDetails)
+    }
+    
+    func testAccountDetails_shouldRefreshAccountDetails_setToFalse() {
+        let source = CurrentUserSource(sdk: MockSdk())
+        source.setShouldRefreshAccountDetails(false)
+        XCTAssertFalse(source.shouldRefreshAccountDetails)
+    }
+    
+    func testAccountDetails_fetchAccountDetailsNotif_shouldUpdate() {
+        let source = CurrentUserSource(sdk: MockSdk())
+        let accountDetails = AccountDetailsEntity(proLevel: .proI)
+        NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: accountDetails)
+        let exp = expectation(description: "accountDetails from notif")
+        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(accountDetails, source.accountDetails)
+    }
+    
+    func testAccountDetails_fetchAccountDetails_shouldUpdate() {
+        let source = CurrentUserSource(sdk: MockSdk())
+        let accountDetails = AccountDetailsEntity(proLevel: .proI)
+        source.setAccountDetails(accountDetails)
+        XCTAssertEqual(accountDetails, source.accountDetails)
     }
 }

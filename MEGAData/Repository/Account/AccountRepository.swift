@@ -2,8 +2,10 @@ import Foundation
 import MEGADomain
 import MEGAData
 import MEGASwift
+import Combine
 
-struct AccountRepository: AccountRepositoryProtocol {
+final class AccountRepository: NSObject, AccountRepositoryProtocol {
+    
     static var newRepo: AccountRepository {
         AccountRepository(sdk: MEGASdk.shared)
     }
@@ -11,11 +13,25 @@ struct AccountRepository: AccountRepositoryProtocol {
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
     
-    init(sdk: MEGASdk, currentUserSource: CurrentUserSource = .shared) {
-        self.sdk = sdk
-        self.currentUserSource =  currentUserSource
+    private let requestResultSourcePublisher = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>()
+    
+    var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> {
+        requestResultSourcePublisher.eraseToAnyPublisher()
     }
     
+    init(sdk: MEGASdk, currentUserSource: CurrentUserSource = .shared) {
+        self.sdk = sdk
+        self.currentUserSource = currentUserSource
+    }
+
+    func registerMEGARequestDelegate() async {
+        sdk.add(self as MEGARequestDelegate)
+    }
+    
+    func deRegisterMEGARequestDelegate() async {
+        sdk.remove(self as MEGARequestDelegate)
+    }
+
     var currentUserHandle: HandleEntity? {
         currentUserSource.currentUserHandle
     }
@@ -26,6 +42,10 @@ struct AccountRepository: AccountRepositoryProtocol {
     
     var isGuest: Bool {
         currentUserSource.isGuest
+    }
+    
+    var isMasterBusinessAccount: Bool {
+        sdk.isMasterBusinessAccount
     }
     
     func isLoggedIn() -> Bool {
@@ -60,11 +80,20 @@ struct AccountRepository: AccountRepositoryProtocol {
     }
     
     func accountDetails() async throws -> AccountDetailsEntity {
-        try await withAsyncThrowingValue(in: { completion in
-            sdk.getAccountDetails(with: RequestDelegate { (result) in
+        if let userAccountDetails = currentUserSource.accountDetails,
+           !currentUserSource.shouldRefreshAccountDetails {
+            return userAccountDetails
+        }
+        
+        return try await withAsyncThrowingValue(in: { completion in
+            sdk.getAccountDetails(with: RequestDelegate { [weak self] result in
+                guard let self else { return }
                 switch result {
                 case .success(let request):
-                    completion(.success(request.megaAccountDetails.toAccountDetailsEntity()))
+                    let userAccountDetails = request.megaAccountDetails.toAccountDetailsEntity()
+                    currentUserSource.setAccountDetails(userAccountDetails)
+                    currentUserSource.setShouldRefreshAccountDetails(false)
+                    completion(.success(userAccountDetails))
                 case .failure:
                     completion(.failure(AccountDetailsErrorEntity.generic))
                 }
@@ -92,5 +121,16 @@ struct AccountRepository: AccountRepositoryProtocol {
                 }
             })
         }
+    }
+}
+
+// MARK: - MEGARequestDelegate
+extension AccountRepository: MEGARequestDelegate {
+    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        guard error.type == .apiOk else {
+            requestResultSourcePublisher.send(.failure(error))
+            return
+        }
+        requestResultSourcePublisher.send(.success(request.toAccountRequestEntity()))
     }
 }
