@@ -114,7 +114,7 @@ platform :ios do
   desc "fetch the version number and write to file named version_number.txt"
   lane :fetch_version_number do
     get_version_number(target: "MEGA")
-    File.write("version_number.txt", lane_context[SharedValues::VERSION_NUMBER]) 
+    File.write("version_number.txt", lane_context[SharedValues::VERSION_NUMBER])
   end
 
   desc "build app for simulator"
@@ -157,12 +157,12 @@ platform :ios do
         }
       }
     )
-    
-    File.write("archive_path.txt", lane_context[SharedValues::XCODEBUILD_ARCHIVE]) 
+
+    File.write("archive_path.txt", lane_context[SharedValues::XCODEBUILD_ARCHIVE])
   end
 
   desc "Delete the temporary created keychain"
-  lane :delete_temporary_keychain do 
+  lane :delete_temporary_keychain do
     delete_keychain(name: TEMP_KEYCHAIN_NAME)
   end
 
@@ -170,7 +170,7 @@ platform :ios do
   lane :upload_to_itunesconnect do |options|
     # Get the 20 latest commints from the current branch.
     changelog_from_git_commits(
-      commits_count: 20,  
+      commits_count: 20,
       pretty: "- %s",
       date_format: "short",
       match_lightweight_tag: false,
@@ -203,7 +203,7 @@ platform :ios do
   desc "Sync development signing certificates"
   lane :cert_dev do |options|
     match(
-      readonly: options[:readonly],  
+      readonly: options[:readonly],
       type: "development",
       app_identifier: app_identifier(type: "development")
     )
@@ -231,32 +231,32 @@ platform :ios do
     case options[:type]
     when "adhoc"
       [
-        "mega.ios.qa", 
-        "mega.ios.qa.MEGAPicker", 
-        "mega.ios.qa.MEGAPickerFileProvider", 
-        "mega.ios.qa.MEGAShare", 
-        "mega.ios.qa.MEGANotifications", 
-        "mega.ios.qa.MEGAWidget", 
+        "mega.ios.qa",
+        "mega.ios.qa.MEGAPicker",
+        "mega.ios.qa.MEGAPickerFileProvider",
+        "mega.ios.qa.MEGAShare",
+        "mega.ios.qa.MEGANotifications",
+        "mega.ios.qa.MEGAWidget",
         "mega.ios.qa.MEGAIntent"
       ]
     when "appstore"
       [
-        "mega.ios", 
-        "mega.ios.MEGAPicker", 
-        "mega.ios.MEGAPickerFileProvider", 
-        "mega.ios.MEGAShare", 
-        "mega.ios.MEGANotifications", 
-        "mega.ios.MEGAWidget", 
+        "mega.ios",
+        "mega.ios.MEGAPicker",
+        "mega.ios.MEGAPickerFileProvider",
+        "mega.ios.MEGAShare",
+        "mega.ios.MEGANotifications",
+        "mega.ios.MEGAWidget",
         "mega.ios.MEGAIntent"
       ]
-    else 
+    else
       [
-        "mega.ios.dev", 
-        "mega.ios.dev.MEGAPicker", 
-        "mega.ios.dev.MEGAPickerFileProvider", 
-        "mega.ios.dev.MEGAShare", 
-        "mega.ios.dev.MEGANotifications", 
-        "mega.ios.dev.MEGAWidget", 
+        "mega.ios.dev",
+        "mega.ios.dev.MEGAPicker",
+        "mega.ios.dev.MEGAPickerFileProvider",
+        "mega.ios.dev.MEGAShare",
+        "mega.ios.dev.MEGANotifications",
+        "mega.ios.dev.MEGAWidget",
         "mega.ios.dev.MEGAIntent"
       ]
     end
@@ -286,7 +286,7 @@ platform :ios do
       derived_data_path: "derivedData",
       include_targets: "MEGA.app,MEGAIntent.appex,MEGANotifications.appex,MEGAPicker.appex,MEGAPickerFileProvider.appex,MEGAShare.appex,MEGAWidgetExtension.appex",
       json_report: true
-    ) 
+    )
 
     mainapp_report_json = read_json(json_path: "xcov_output/report.json")
     complete_report_json = {}
@@ -308,7 +308,7 @@ platform :ios do
       "key_id": ENV['APP_STORE_CONNECT_KEY_ID'],
       "issuer_id": ENV['APP_STORE_CONNECT_ISSUER_ID'],
       "key": final_api_key_value,
-      "in_house": false 
+      "in_house": false
     }
 
     File.write("api_key_path.json", JSON.dump(api_key_json))
@@ -317,7 +317,7 @@ platform :ios do
 
   desc "Uploads metadata to app store connect"
   lane :upload_metadata_to_appstore_connect do
-    
+
     api_key = app_store_connect_api_key(
       key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
       issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
@@ -372,15 +372,15 @@ platform :ios do
   lane :upload_build_to_firebase do |options|
     # Get the 20 latest commints from the current branch.
     changelog_from_git_commits(
-      commits_count: 20,  
+      commits_count: 20,
       pretty: "- %s",
       date_format: "short",
       match_lightweight_tag: false,
       merge_commit_filtering: "include_merges"
     )
-    
+
     google_app_id = get_info_plist_value(
-      path: gsp_path(configuration: options[:configuration]), 
+      path: gsp_path(configuration: options[:configuration]),
       key: 'GOOGLE_APP_ID'
     )
 
