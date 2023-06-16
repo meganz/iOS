@@ -26,6 +26,7 @@ final class NodeActionBuilder {
     private var areMediaFiles = false
     private var sharedFolderContact: MEGAUser = MEGAUser()
     private var sharedFolderReceiverDetail = ""
+    private var containsOnlyMediaFiles = false
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -152,6 +153,11 @@ final class NodeActionBuilder {
         return self
     }
     
+    func setContainsOnlyMediaFiles(_ containsOnlyMediaFiles: Bool) -> NodeActionBuilder {
+        self.containsOnlyMediaFiles = containsOnlyMediaFiles
+        return self
+    }
+    
     func build() -> [NodeAction] {
         var nodeActions = [NodeAction]()
         
@@ -212,7 +218,9 @@ final class NodeActionBuilder {
             .sendToChatAction(),
             .sortAction()
         ]
-        
+        if containsOnlyMediaFiles {
+            nodeActions.append(.mediaDiscoveryAction())
+        }
         if viewMode == .list {
             nodeActions.append(.thumbnailAction())
         } else {

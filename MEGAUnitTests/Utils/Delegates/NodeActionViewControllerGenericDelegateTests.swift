@@ -26,7 +26,8 @@ final class NodeActionViewControllerGenericDelegateTests: XCTestCase {
     }
     
     private func anyNodeActionViewController() -> NodeActionViewController {
-        NodeActionViewController(node: anyMegaNode(), delegate: MockNodeActionViewController(), displayMode: .nodeInfo, viewMode: .thumbnail, isBackupNode: false, sender: anySender())
+        NodeActionViewController(node: anyMegaNode(), delegate: MockNodeActionViewController(), displayMode: .nodeInfo,
+                                 viewMode: .thumbnail, isBackupNode: false, containsOnlyMediaFiles: false, sender: anySender())
     }
     
     private func anySender() -> Any {

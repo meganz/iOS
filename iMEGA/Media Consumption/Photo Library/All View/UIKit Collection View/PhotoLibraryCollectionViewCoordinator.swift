@@ -7,7 +7,7 @@ import MEGADomain
 @available(iOS 16.0, *)
 final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var subscriptions = Set<AnyCancellable>()
-    private let router = PhotoLibraryContentViewRouter()
+    private let router: PhotoLibraryContentViewRouter
     
     private let representer: PhotoLibraryCollectionViewRepresenter
     private var photoSections = [PhotoDateSection]()
@@ -18,6 +18,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     
     init(_ representer: PhotoLibraryCollectionViewRepresenter) {
         self.representer = representer
+        router = PhotoLibraryContentViewRouter(contentMode: representer.contentMode)
         super.init()
         subscribeToPhotoCategoryList()
         subscribeToZoomState()
@@ -41,7 +42,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
             let viewModel = PhotoCellViewModel(
                 photo: photo,
                 viewModel: representer.viewModel,
-                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+                thumbnailUseCase: ThumbnailUseCase.makeThumbnailUseCase(mode: representer.contentMode),
                 mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo)
             )
             cell.viewModel = viewModel

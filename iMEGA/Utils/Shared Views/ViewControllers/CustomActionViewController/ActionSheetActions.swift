@@ -269,4 +269,9 @@ extension NodeAction {
     class func restoreBackupAction() -> NodeAction {
         NodeAction(title: Strings.Localizable.restore, detail: nil, image: Asset.Images.NodeActions.restore.image, type: .restoreBackup)
     }
+    
+    class func mediaDiscoveryAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title, detail: nil,
+                   image: Asset.Images.ActionSheetIcons.mediaDiscovery.image, type: .mediaDiscovery)
+    }
 }

@@ -20,7 +20,8 @@ import MEGADomain
     )
     
     // MARK: - Init
-    init(library: PhotoLibrary, contentMode: PhotoLibraryContentMode = .library, contentConfig: PhotoLibraryContentConfig? = nil) {
+    init(library: PhotoLibrary, contentMode: PhotoLibraryContentMode = .library,
+         contentConfig: PhotoLibraryContentConfig? = nil) {
         self.library = library
         self.contentMode = contentMode
         self.contentConfig = contentConfig

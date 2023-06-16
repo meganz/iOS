@@ -60,30 +60,29 @@ extension MEGAPhotoBrowserViewController {
                 }
                 
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                // swiftlint:disable switch_case_alignment
+                
                 switch self.displayMode {
-                    case .chatAttachment, .chatSharedFiles:
-                        saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId, completion: completionBlock)
-                    case .fileLink:
-                        guard let linkUrl = URL(string: self.publicLink) else { return }
-                        let fileLink = FileLinkEntity(linkURL: linkUrl)
-                        saveMediaUseCase.saveToPhotos(fileLink: fileLink, completion: completionBlock)
-                    default:
-                        Task { @MainActor in
-                            do {
-                                try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
-                            } catch {
-                                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                                    await SVProgressHUD.dismiss()
-                                    SVProgressHUD.show(
-                                        Asset.Images.NodeActions.saveToPhotos.image,
-                                        status: error.localizedDescription
-                                    )
-                                }
+                case .chatAttachment, .chatSharedFiles:
+                    saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId, completion: completionBlock)
+                case .fileLink:
+                    guard let linkUrl = URL(string: self.publicLink) else { return }
+                    let fileLink = FileLinkEntity(linkURL: linkUrl)
+                    saveMediaUseCase.saveToPhotos(fileLink: fileLink, completion: completionBlock)
+                default:
+                    Task { @MainActor in
+                        do {
+                            try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+                        } catch {
+                            if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                                await SVProgressHUD.dismiss()
+                                SVProgressHUD.show(
+                                    Asset.Images.NodeActions.saveToPhotos.image,
+                                    status: error.localizedDescription
+                                )
                             }
                         }
+                    }
                 }
-                // swiftlint:enable switch_case_alignment
             } else {
                 permissionHandler.alertPhotosPermission()
             }
@@ -184,12 +183,13 @@ extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
 }
 
 extension MEGAPhotoBrowserViewController {
-    static func photoBrowser(currentPhoto: NodeEntity, allPhotos: [NodeEntity]) -> MEGAPhotoBrowserViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
+    static func photoBrowser(currentPhoto: NodeEntity, allPhotos: [NodeEntity],
+                             displayMode: DisplayMode = .cloudDrive) -> MEGAPhotoBrowserViewController {
+        let sdk = displayMode == .nodeInsideFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared
         let browser = MEGAPhotoBrowserViewController.photoBrowser(
             with: PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: sdk),
             api: sdk,
-            displayMode: .cloudDrive
+            displayMode: displayMode
         )
         browser.needsReload = true
         return browser

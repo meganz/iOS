@@ -4,4 +4,5 @@ enum PhotoLibraryContentMode {
     case library
     case album
     case mediaDiscovery
+    case mediaDiscoveryFolderLink
 }

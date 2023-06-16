@@ -580,7 +580,7 @@
     
     if (self.parentNode.name) {
         BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:self.parentNode];
-        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference isBackupNode:isBackupNode sender:sender];
+        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference isBackupNode:isBackupNode containsOnlyMediaFiles: [self containsOnlyMediaFiles] sender:sender];
         [self presentViewController:nodeActions animated:YES completion:nil];
     }
 }
@@ -1056,7 +1056,9 @@
         case MegaNodeActionTypeSort:
             [self presentSortByActionSheet];
             break;
-            
+        case MegaNodeActionTypeMediaDiscovery:
+            [self showMediaDiscovery];
+            break;
         default:
             break;
     }

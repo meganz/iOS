@@ -1,7 +1,9 @@
 import UIKit
 
 final class MediaDiscoveryViewController: ExplorerBaseViewController {
+    private let viewModel: MediaDiscoveryViewModel
     private let folderName: String
+    private let contentMode: PhotoLibraryContentMode
     
     lazy var rightBarButtonItem = UIBarButtonItem(
         image: Asset.Images.NavigationBar.selectAll.image,
@@ -16,19 +18,19 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                                                  action: #selector(exitButtonTapped(_:))
     )
     
-    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: .mediaDiscovery)
+    lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: contentMode)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
     lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
-    
-    private let viewModel: MediaDiscoveryViewModel
     
     private lazy var emptyView = EmptyStateView.create(for: .photos)
     
     // MARK: - Init
     
-    @objc init(viewModel: MediaDiscoveryViewModel, folderName: String) {
+    init(viewModel: MediaDiscoveryViewModel, folderName: String,
+         contentMode: PhotoLibraryContentMode = .mediaDiscovery) {
         self.viewModel = viewModel
         self.folderName = folderName
+        self.contentMode = contentMode
         
         super.init(nibName: nil, bundle: nil)
     }

@@ -24,3 +24,10 @@ struct PhotoLibraryCollectionViewRepresenter: UIViewRepresentable {
         // So, we manage view updates and collection view reload in our coordinator.
     }
 }
+
+@available(iOS 16.0, *)
+extension PhotoLibraryCollectionViewRepresenter {
+    var contentMode: PhotoLibraryContentMode {
+        viewModel.contentMode
+    }
+}
