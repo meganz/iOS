@@ -11817,11 +11817,11 @@
 				942254FF1EDC03150074C51A /* Embed Foundation Extensions */,
 				2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */,
 				B67FFF9329D530F500E830FA /* Run Script: Copy GoogleService-Info */,
-				1637D1072A0A4B28001D66CF /* Run Script: SwiftLint */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				160811422A3BF5C10014BCD8 /* PBXTargetDependency */,
 				943F8B191EF26E9C00AFD89F /* PBXTargetDependency */,
 				7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */,
 				83199F1D25556CDE00344531 /* PBXTargetDependency */,
@@ -12181,6 +12181,7 @@
 				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
 				A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */,
 				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1608113E2A3BF3400014BCD8 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -12470,25 +12471,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1637D1072A0A4B28001D66CF /* Run Script: SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script: SwiftLint";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftlint \"$SRCROOT\" --config ../.swiftlint.yml ../iOS_dev\n";
-		};
 		2FCB996A24CA8CA10040E825 /* Run Script: Automatically sets SDK and chat SDK commit hashes */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -14782,6 +14764,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		160811422A3BF5C10014BCD8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 160811412A3BF5C10014BCD8 /* SwiftLintPlugin */;
+		};
 		7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7794AED3231E4E0A0039C1D2 /* MEGANotifications */;
@@ -16496,6 +16482,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1608113E2A3BF3400014BCD8 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.52.2;
+			};
+		};
 		A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -16659,6 +16653,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		160811412A3BF5C10014BCD8 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1608113E2A3BF3400014BCD8 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
 		3241349629FB712B006E5310 /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASdk;
