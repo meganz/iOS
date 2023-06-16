@@ -104,6 +104,9 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
             ])
         }
 
-        return enable(nodes?.isNotEmpty == true, barButtonItems: barButtonItems)
+        return enable(
+            nodes?.isNotEmpty == true,
+            hasDisputedNodes: nodes?.contains(where: { $0.isTakenDown() }) == true,
+            barButtonItems: barButtonItems)
     }
 }

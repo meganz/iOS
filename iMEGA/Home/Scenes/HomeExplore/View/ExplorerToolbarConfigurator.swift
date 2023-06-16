@@ -97,6 +97,8 @@ class ExplorerToolbarConfigurator {
     }
     
     func toolbarItems(forNodes nodes: [MEGANode]?) -> [UIBarButtonItem] {
+        let hasDisputedNodes = nodes?.contains(where: { $0.isTakenDown() }) ?? false
+
         guard let nodes = nodes, !nodes.isEmpty else {
             let barButtonItems = [
                 downloadItem,
@@ -110,15 +112,20 @@ class ExplorerToolbarConfigurator {
                 moreItem
             ]
             
-            return enable(false, barButtonItems: barButtonItems)
+            return enable(false, hasDisputedNodes: hasDisputedNodes, barButtonItems: barButtonItems)
         }
         
         switch lowestAccessLevel(forNodes: nodes) {
         case .accessRead, .accessReadWrite:
-            return enable(true, barButtonItems: [downloadItem, flexibleItem, copyItem])
+            return enable(
+                true,
+                hasDisputedNodes: hasDisputedNodes,
+                barButtonItems: [downloadItem, flexibleItem, copyItem]
+            )
         case .accessFull:
             return enable(
                 true,
+                hasDisputedNodes: hasDisputedNodes,
                 barButtonItems: [
                     downloadItem,
                     flexibleItem,
@@ -131,6 +138,7 @@ class ExplorerToolbarConfigurator {
         case .accessOwner:
             return enable(
                 true,
+                hasDisputedNodes: hasDisputedNodes,
                 barButtonItems: [
                     downloadItem,
                     flexibleItem,
@@ -168,9 +176,21 @@ class ExplorerToolbarConfigurator {
         
         return lowestAccessLevel
     }
-    
+
+    private func adjustToolbarItems(
+        isToolbarEnabled: Bool,
+        hasDisputedNodes: Bool
+    ) {
+        downloadItem.isEnabled = isToolbarEnabled && !hasDisputedNodes
+        shareLinkItem.isEnabled = isToolbarEnabled && !hasDisputedNodes
+        moveItem.isEnabled = isToolbarEnabled && !hasDisputedNodes
+        copyItem.isEnabled = isToolbarEnabled && !hasDisputedNodes
+        exportItem.isEnabled = isToolbarEnabled && !hasDisputedNodes
+    }
+
     func enable(
         _ enable: Bool,
+        hasDisputedNodes: Bool,
         barButtonItems: [UIBarButtonItem],
         excludeBarButtonItems: [UIBarButtonItem] = []
     ) -> [UIBarButtonItem] {
@@ -179,6 +199,7 @@ class ExplorerToolbarConfigurator {
                 $0.isEnabled = enable
             }
         }
+        adjustToolbarItems(isToolbarEnabled: enable, hasDisputedNodes: hasDisputedNodes)
         return barButtonItems
     }
 }

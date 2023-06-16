@@ -171,4 +171,23 @@ extension CloudDriveViewController {
         
         navigationItem.title = navigationTitle
     }
+
+    @objc func updateToolbarButtonsEnabled(_ enabled: Bool, selectedNodesArray: [MEGANode]) {
+        let enableIfNotDisputed = !selectedNodesArray.contains(where: { $0.isTakenDown() }) && enabled
+        
+        downloadBarButtonItem?.isEnabled = enableIfNotDisputed
+        shareLinkBarButtonItem?.isEnabled = enableIfNotDisputed
+        moveBarButtonItem?.isEnabled = enableIfNotDisputed
+        carbonCopyBarButtonItem?.isEnabled = enableIfNotDisputed
+        deleteBarButtonItem?.isEnabled = enabled
+        restoreBarButtonItem?.isEnabled = enableIfNotDisputed
+        actionsBarButtonItem?.isEnabled = enabled
+
+        if self.displayMode == DisplayMode.rubbishBin && enabled {
+            for node in selectedNodesArray where !node.mnz_isRestorable() {
+                restoreBarButtonItem?.isEnabled = false
+                break
+            }
+        }
+    }
 }
