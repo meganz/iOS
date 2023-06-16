@@ -39,6 +39,8 @@ extension MEGAChatCallStatus {
             return .initial
         case .userNoPresent:
             return .userNoPresent
+        case .waitingRoom:
+            return .waitingRoom
         case .connecting:
             return .connecting
         case .joining:
