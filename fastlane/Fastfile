@@ -168,6 +168,7 @@ platform :ios do
       disable_package_automatic_updates: true,
       derived_data_path: "derivedData",
       archive_path: "archive",
+      xcargs: '-skipPackagePluginValidation',
       export_options: {
         iCloudContainerEnvironment: "Production",
         signingStyle: "manual",
@@ -299,6 +300,7 @@ platform :ios do
       output_directory: ".",
       derived_data_path: "derivedData",
       code_coverage: true,
+      xcargs: '-skipPackagePluginValidation'
     )
   end
 
@@ -377,6 +379,7 @@ platform :ios do
       disable_package_automatic_updates: true,
       derived_data_path: "derivedData",
       archive_path: "archive",
+      xcargs: '-skipPackagePluginValidation',
       export_options: {
         iCloudContainerEnvironment: "Production",
         signingStyle: "manual",
