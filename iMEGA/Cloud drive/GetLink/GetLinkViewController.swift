@@ -254,7 +254,7 @@ class GetLinkViewController: UIViewController {
         guard let index = nodes.firstIndex(where: { $0.handle == node.handle }) else { return }
         nodes[index] = node
         if getLinkVM.multilink {
-            tableView.reloadSections([index], with: .automatic)
+            tableView.reloadSections([index+1], with: .automatic)
         } else {
             var sectionsToReload = IndexSet()
             
