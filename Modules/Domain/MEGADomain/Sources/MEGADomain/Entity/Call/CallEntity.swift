@@ -5,6 +5,7 @@ public struct CallEntity: Sendable {
         case undefined
         case initial
         case userNoPresent
+        case waitingRoom
         case connecting
         case joining
         case inProgress
