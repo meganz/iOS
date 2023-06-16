@@ -321,6 +321,8 @@ extension CallRepository: MEGAChatCallDelegate {
             callbacksDelegate?.callTerminated(call.toCallEntity())
         case .userNoPresent:
             break
+        case .waitingRoom:
+            break
         @unknown default:
             fatalError("Call status has an unkown status")
         }
