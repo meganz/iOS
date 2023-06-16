@@ -68,13 +68,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *restoreBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionsBarButtonItem;
 
 @property (nonatomic, strong) NSArray *nodesArray;
 
@@ -527,22 +520,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
-    self.downloadBarButtonItem.enabled = boolValue;
-    self.shareLinkBarButtonItem.enabled = boolValue;
-    self.moveBarButtonItem.enabled = boolValue;
-    self.carbonCopyBarButtonItem.enabled = boolValue;
-    self.deleteBarButtonItem.enabled = boolValue;
-    self.restoreBarButtonItem.enabled = boolValue;
-    self.actionsBarButtonItem.enabled = boolValue;
-    
-    if ((self.displayMode == DisplayModeRubbishBin) && boolValue) {
-        for (MEGANode *n in self.selectedNodesArray) {
-            if (!n.mnz_isRestorable) {
-                self.restoreBarButtonItem.enabled = NO;
-                break;
-            }
-        }
-    }
+    [self updateToolbarButtonsEnabled:boolValue selectedNodesArray:self.selectedNodesArray];
 }
 
 - (void)internetConnectionChanged {

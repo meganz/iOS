@@ -44,6 +44,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) UIBarButtonItem *contextBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *uploadAddBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moveBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *restoreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionsBarButtonItem;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 
 @property (strong, nonatomic) CloudDriveViewModel *viewModel;

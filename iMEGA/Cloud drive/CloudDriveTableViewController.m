@@ -252,9 +252,7 @@
         if (self.cloudDrive.selectedNodesArray.count == 0) {
             [self.cloudDrive setToolbarActionsEnabled:NO];
         } else {
-            if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
-                [self.cloudDrive setToolbarActionsEnabled:YES];
-            }
+            [self.cloudDrive setToolbarActionsEnabled:YES];
         }
         
         self.cloudDrive.allNodesSelected = NO;
