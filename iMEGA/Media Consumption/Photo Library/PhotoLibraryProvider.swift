@@ -19,7 +19,7 @@ extension PhotoLibraryProvider {
     func configPhotoLibraryView(in container: UIView, onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)? = nil) {
         let content = PhotoLibraryContentView(
             viewModel: photoLibraryContentViewModel,
-            router: PhotoLibraryContentViewRouter(),
+            router: PhotoLibraryContentViewRouter(contentMode: photoLibraryContentViewModel.contentMode),
             onFilterUpdate: onFilterUpdate
         )
         

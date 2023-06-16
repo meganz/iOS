@@ -2,7 +2,10 @@ import SwiftUI
 import MEGADomain
 
 final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel {
+    let contentMode: PhotoLibraryContentMode
+    
     override init(libraryViewModel: PhotoLibraryContentViewModel) {
+        self.contentMode = libraryViewModel.contentMode
         super.init(libraryViewModel: libraryViewModel)
         zoomState = PhotoLibraryZoomState(
             scaleFactor: libraryViewModel.contentConfig?.scaleFactor ?? zoomState.scaleFactor,

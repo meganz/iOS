@@ -7,6 +7,7 @@ enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case albumShareLink = "Album Share Link"
     case deviceCenter = "Device Center"
     case timelinePreferenceSaving = "Timeline Filter Preference Saving"
+    case folderLinkMediaDiscovery = "Folder Link Media Discovery"
 }
 
 final class FeatureFlagViewModel: ObservableObject {

@@ -557,6 +557,15 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat, .sort, .thumbnail]))
     }
     
+    func testFolderLinkMediaDiscovery() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.folderLink)
+            .setContainsOnlyMediaFiles(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download, .select, .shareLink, .sendToChat, .sort, .mediaDiscovery, .thumbnail]))
+    }
+    
     func testFolderLinkChildMediaFile() {
         actions = NodeActionBuilder()
             .setDisplayMode(.nodeInsideFolderLink)

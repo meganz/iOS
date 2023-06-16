@@ -43,6 +43,7 @@
 		0E72E1262A2841CE00C900F9 /* EnforceCopyrightWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */; };
 		0E72E1282A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */; };
 		0E72E12A2A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */; };
+		0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */; };
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */; };
@@ -2476,6 +2477,7 @@
 		0E72E1252A2841CE00C900F9 /* EnforceCopyrightWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningView.swift; sourceTree = "<group>"; };
 		0E72E1272A2841F600C900F9 /* EnforceCopyrightWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModel.swift; sourceTree = "<group>"; };
 		0E72E1292A285CDD00C900F9 /* EnforceCopyrightWarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnforceCopyrightWarningViewModelTests.swift; sourceTree = "<group>"; };
+		0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+Additions.swift"; sourceTree = "<group>"; };
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewWrapper.swift; sourceTree = "<group>"; };
@@ -11674,6 +11676,7 @@
 				83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */,
 				BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */,
 				83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */,
+				0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */,
 				C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */,
 				6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */,
 				9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */,
@@ -13220,6 +13223,7 @@
 				83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */,
 				BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */,
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
+				0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */,
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
 				6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */,
 				9425DF662931329200AD3156 /* FolderLinkViewController+SnackBar.swift in Sources */,

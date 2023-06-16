@@ -6,22 +6,26 @@ import MEGAData
 @objc final class MediaDiscoveryRouter: NSObject, Routing {
     private weak var presenter: UIViewController?
     private let parentNode: MEGANode
+    private let isFolderLink: Bool
     
-    @objc init(viewController: UIViewController?, parentNode: MEGANode) {
+    @objc init(viewController: UIViewController?, parentNode: MEGANode, isFolderLink: Bool = false) {
         self.presenter = viewController
         self.parentNode = parentNode
+        self.isFolderLink = isFolderLink
         
         super.init()
     }
     
     func build() -> UIViewController {
         let parentNode = parentNode.toNodeEntity()
+        let sdk = isFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared
         let analyticsUseCase = MediaDiscoveryAnalyticsUseCase(repository: AnalyticsRepository.newRepo)
-        let mediaDiscoveryUseCase = MediaDiscoveryUseCase(mediaDiscoveryRepository: MediaDiscoveryRepository.newRepo,
-                                                          nodeUpdateRepository: NodeUpdateRepository.newRepo)
+        let mediaDiscoveryUseCase = MediaDiscoveryUseCase(mediaDiscoveryRepository: MediaDiscoveryRepository(sdk: sdk),
+                                                          nodeUpdateRepository: NodeUpdateRepository(sdk: sdk))
         let viewModel = MediaDiscoveryViewModel(parentNode: parentNode, router: self, analyticsUseCase: analyticsUseCase,
                                                 mediaDiscoveryUseCase: mediaDiscoveryUseCase)
-        return MediaDiscoveryViewController(viewModel: viewModel, folderName: parentNode.name)
+        return MediaDiscoveryViewController(viewModel: viewModel, folderName: parentNode.name,
+                                            contentMode: isFolderLink ? .mediaDiscoveryFolderLink : .mediaDiscovery)
     }
     
     func start() {

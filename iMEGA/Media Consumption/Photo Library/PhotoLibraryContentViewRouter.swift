@@ -12,11 +12,17 @@ protocol PhotoLibraryContentViewRouting {
 }
 
 struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
+    private let contentMode: PhotoLibraryContentMode
+    
+    init(contentMode: PhotoLibraryContentMode = .library) {
+        self.contentMode = contentMode
+    }
+    
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard {
         return PhotoYearCard(
             viewModel: PhotoYearCardViewModel(
                 photoByYear: photoByYear,
-                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+                thumbnailUseCase: makeThumnailUseCase()
             )
         )
     }
@@ -25,7 +31,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoMonthCard(
             viewModel: PhotoMonthCardViewModel(
                 photoByMonth: photoByMonth,
-                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+                thumbnailUseCase: makeThumnailUseCase()
             )
         )
     }
@@ -34,7 +40,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoDayCard(
             viewModel: PhotoDayCardViewModel(
                 photoByDay: photoByDay,
-                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
+                thumbnailUseCase: makeThumnailUseCase()
             )
         )
     }
@@ -44,7 +50,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
             viewModel: PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
-                thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+                thumbnailUseCase: makeThumnailUseCase(),
                 mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo)
             )
         )
@@ -58,10 +64,16 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         }
         
         if topController.definesPresentationContext == false && topController.children.isEmpty { return }
-        
-        let photoBrowser = MEGAPhotoBrowserViewController.photoBrowser(currentPhoto: photo, allPhotos: allPhotos)
+        let isFolderLink = contentMode == .mediaDiscoveryFolderLink
+        let displayMode: DisplayMode = isFolderLink ? .nodeInsideFolderLink : .cloudDrive
+        let photoBrowser = MEGAPhotoBrowserViewController.photoBrowser(currentPhoto: photo, allPhotos: allPhotos,
+                                                                       displayMode: displayMode)
         
         topController.modalPresentationStyle = .popover
         topController.present(photoBrowser, animated: true)
+    }
+    
+    private func makeThumnailUseCase() -> some ThumbnailUseCaseProtocol {
+        return ThumbnailUseCase.makeThumbnailUseCase(mode: contentMode)
     }
 }
