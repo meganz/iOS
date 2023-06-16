@@ -34,7 +34,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         if let fileLink = configEntity.fileLink {
             self.fileLinkActionViewControllerDelegate = FileLinkActionViewControllerDelegate(link: fileLink, viewController: vc)
         } else {
-            self.nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(viewController: vc)
+            self.nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(viewController: vc, isNodeFromFolderLink: configEntity.isFolderLink)
         }
         
         return configEntity.fileLink != nil ? MEGANavigationController(rootViewController: vc) : vc
