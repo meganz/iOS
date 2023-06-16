@@ -1,8 +1,9 @@
 import Foundation
+import MEGADomain
 
 protocol MEGANotificationUseCaseProtocol {
 
-    func relevantAndNotSeenAlerts() -> [UserAlert]?
+    func relevantAndNotSeenAlerts() -> [UserAlertEntity]?
 
     func incomingContactRequest() -> [ContactRequest]
 
@@ -19,7 +20,7 @@ final class MEGANotificationUseCase: MEGANotificationUseCaseProtocol {
         self.userAlertsClient = userAlertsClient
     }
     
-    func relevantAndNotSeenAlerts() -> [UserAlert]? {
+    func relevantAndNotSeenAlerts() -> [UserAlertEntity]? {
         return userAlertsClient.notification()?.filter {
             $0.isRelevant && !$0.isSeen
         }

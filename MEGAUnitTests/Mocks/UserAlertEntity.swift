@@ -1,12 +1,13 @@
 @testable import MEGA
+import MEGADomain
 
-extension UserAlert {
+extension UserAlertEntity {
 
     static var random: Self {
         return .init(identifier: .random(in: 0...1),
                      isSeen: .random(),
                      isRelevant: .random(),
-                     alertType: AlertType(rawValue: Int.random(in: 0..<21)),
+                     alertType: UserAlertTypeEntity.allCases.randomElement() ?? .unknown,
                      alertTypeString: "",
                      userHandle: nil,
                      nodeHandle: nil,

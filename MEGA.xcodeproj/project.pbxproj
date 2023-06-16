@@ -542,7 +542,7 @@
 		5D48593C2526C3F1007BF705 /* MyAvatarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D48593B2526C3F1007BF705 /* MyAvatarViewModel.swift */; };
 		5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D48593D2526CD5F007BF705 /* NewChatRouter.swift */; };
 		5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4ACA072533259600935FC9 /* TableDataSourceConfigurationFactory.swift */; };
-		5D52C747250C4F0200286A43 /* UserAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52C746250C4F0200286A43 /* UserAlert.swift */; };
+		5D52C747250C4F0200286A43 /* UserAlertEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52C746250C4F0200286A43 /* UserAlertEntity.swift */; };
 		5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52C749250C4F4100286A43 /* mock-function.swift */; };
 		5D52C74C250C4FA700286A43 /* ContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52C74B250C4FA700286A43 /* ContactRequest.swift */; };
 		5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D568204252E8C3B00FE7F9C /* ItemGrouping.swift */; };
@@ -607,7 +607,6 @@
 		5D9DE5C4254BE9F600FA69C8 /* MEGASearchBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D9DE5C3254BE9F600FA69C8 /* MEGASearchBarView.xib */; };
 		5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */; };
 		5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */; };
-		5DA32DC124EA923D0075B613 /* UserAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA32DC024EA923D0075B613 /* UserAlert.swift */; };
 		5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */; };
 		5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */; };
 		5DAB28F324875269004B5D5A /* OverDiskQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */; };
@@ -3060,7 +3059,7 @@
 		5D48593B2526C3F1007BF705 /* MyAvatarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAvatarViewModel.swift; sourceTree = "<group>"; };
 		5D48593D2526CD5F007BF705 /* NewChatRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewChatRouter.swift; sourceTree = "<group>"; };
 		5D4ACA072533259600935FC9 /* TableDataSourceConfigurationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDataSourceConfigurationFactory.swift; sourceTree = "<group>"; };
-		5D52C746250C4F0200286A43 /* UserAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlert.swift; sourceTree = "<group>"; };
+		5D52C746250C4F0200286A43 /* UserAlertEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlertEntity.swift; sourceTree = "<group>"; };
 		5D52C749250C4F4100286A43 /* mock-function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "mock-function.swift"; sourceTree = "<group>"; };
 		5D52C74B250C4FA700286A43 /* ContactRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRequest.swift; sourceTree = "<group>"; };
 		5D568204252E8C3B00FE7F9C /* ItemGrouping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGrouping.swift; sourceTree = "<group>"; };
@@ -3125,7 +3124,6 @@
 		5D9DE5C3254BE9F600FA69C8 /* MEGASearchBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGASearchBarView.xib; sourceTree = "<group>"; };
 		5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenFactory.swift; sourceTree = "<group>"; };
 		5DA32DBD24EA92160075B613 /* SDKUserAlertsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKUserAlertsClient.swift; sourceTree = "<group>"; };
-		5DA32DC024EA923D0075B613 /* UserAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAlert.swift; sourceTree = "<group>"; };
 		5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowStyleFactory.swift; sourceTree = "<group>"; };
 		5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewController.swift; sourceTree = "<group>"; };
 		5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDiskQuotaViewController.xib; sourceTree = "<group>"; };
@@ -7185,7 +7183,7 @@
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
 				5D33D673250DBA3900D74666 /* StoreUser.swift */,
 				5D33D675250DBAAB00D74666 /* StoreUserClient.swift */,
-				5D52C746250C4F0200286A43 /* UserAlert.swift */,
+				5D52C746250C4F0200286A43 /* UserAlertEntity.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -7507,7 +7505,6 @@
 				5D8303E6256270800082CA18 /* BannerEntity.swift */,
 				5D44BDC42508669200F24069 /* ContactRequest.swift */,
 				5D667EEB24ECF9400092474D /* StoreUser.swift */,
-				5DA32DC024EA923D0075B613 /* UserAlert.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -14174,7 +14171,6 @@
 				B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				6DB6D420292444B9005182CA /* UserAlbumRepository.swift in Sources */,
-				5DA32DC124EA923D0075B613 /* UserAlert.swift in Sources */,
 				9450A391299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift in Sources */,
 				9450A38F299E62620031BBEB /* UserAttributeRepository.swift in Sources */,
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCase+Additions.swift in Sources */,
@@ -14770,7 +14766,7 @@
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,
 				6DD04A34292AFFDC00B7E797 /* UserAlbumRepositoryTests.swift in Sources */,
-				5D52C747250C4F0200286A43 /* UserAlert.swift in Sources */,
+				5D52C747250C4F0200286A43 /* UserAlertEntity.swift in Sources */,
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* UserAttributeUseCase+AdditionsTests.swift in Sources */,
 				B6FB5F8629A437CE0023BA6A /* UserEntityMapperTests.swift in Sources */,

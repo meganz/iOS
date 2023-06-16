@@ -1,8 +1,9 @@
 import Foundation
+import MEGADomain
 
 struct SDKUserAlertsClient {
 
-    var notification: () -> [UserAlert]?
+    var notification: () -> [UserAlertEntity]?
 
     var contactRequest: () -> [ContactRequest]
 
@@ -25,9 +26,9 @@ extension SDKUserAlertsClient {
         api.add(globalUserAlertsAndContactRequestDelegate)
 
         return Self(
-            notification: { () -> [UserAlert]? in
+            notification: { () -> [UserAlertEntity]? in
                 let alerts = api.userAlertList()
-                return convert(alerts)
+                return alerts.toUserAlertEntities()
             },
 
             contactRequest: { () -> [ContactRequest] in
@@ -62,12 +63,6 @@ extension SDKUserAlertsClient {
         func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
             onUserIncomingContactRequestCallback?()
         }
-    }
-}
-
-private func convert(_ megaUserAlertList: MEGAUserAlertList) -> [UserAlert] {
-    return (0..<megaUserAlertList.size).compactMap { index in
-        UserAlert(withMEGAAlert: megaUserAlertList.usertAlert(at: index))
     }
 }
 

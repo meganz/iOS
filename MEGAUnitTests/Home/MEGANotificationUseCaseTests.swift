@@ -1,5 +1,6 @@
 import XCTest
 @testable import MEGA
+import MEGADomain
 
 class MEGANotificationUseCaseTests: XCTestCase {
 
@@ -32,11 +33,11 @@ extension SDKUserAlertsClient {
 
     static var foundAlerts: Self {
 
-        return Self.init(notification: { () -> [UserAlert]? in
-            let setRelevant = set(\UserAlert.isRelevant, true)
-            let setIrrelevant = set(\UserAlert.isRelevant, false)
-            let setNotSeen = set(\UserAlert.isSeen, false)
-            let setSeen = set(\UserAlert.isSeen, true)
+        return Self.init(notification: { () -> [UserAlertEntity]? in
+            let setRelevant = set(\UserAlertEntity.isRelevant, true)
+            let setIrrelevant = set(\UserAlertEntity.isRelevant, false)
+            let setNotSeen = set(\UserAlertEntity.isSeen, false)
+            let setSeen = set(\UserAlertEntity.isSeen, true)
 
             return [
                 setRelevant(setNotSeen(.random)),

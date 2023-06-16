@@ -1,0 +1,29 @@
+public enum UserAlertTypeEntity: CaseIterable {
+    case incomingPendingContactRequest
+    case incomingPendingContactCancelled
+    case incomingPendingContactReminder
+    case contactChangeDeletedYou
+    case contactChangeContactEstablished
+    case contactChangeAccountDeleted
+    case contactChangeBlockedYou
+    case updatePendingContactIncomingIgnored
+    case updatePendingContactIncomingAccepted
+    case updatePendingContactIncomingDenied
+    case updatePendingContactOutgoingAccepted
+    case updatePendingContactOutgoingDenied
+    case newShare
+    case deletedShare
+    case newShareNodes
+    case removedSharesNodes
+    case updatedSharedNodes
+    case paymentSucceeded
+    case paymentFailed
+    case paymentReminder
+    case takedown
+    case takedownReinstated
+    case scheduledMeetingNew
+    case scheduledMeetingDeleted
+    case scheduledMeetingUpdated
+    case total
+    case unknown
+}
