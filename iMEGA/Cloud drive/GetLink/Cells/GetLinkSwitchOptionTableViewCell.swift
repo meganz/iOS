@@ -19,8 +19,10 @@ class GetLinkSwitchOptionTableViewCell: UITableViewCell {
     
     func configureActivateExpiryDateCell(isOn: Bool, isPro: Bool, justUpgraded: Bool) {
         nameLabel.text = Strings.Localizable.expiryDate
+        nameLabel.alpha = 1.0
         proImageView.isHidden = justUpgraded ? true: isPro
         selectorSwitch.isHidden = justUpgraded
+        selectorSwitch.isEnabled = true
         selectorSwitch.isOn = isOn
         activityIndicatorContainerView.isHidden = !justUpgraded
     }
