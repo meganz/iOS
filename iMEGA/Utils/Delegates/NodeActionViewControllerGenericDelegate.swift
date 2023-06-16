@@ -5,11 +5,13 @@ import MEGAData
 final class NodeActionViewControllerGenericDelegate:
     NodeActionViewControllerDelegate {
     private weak var viewController: UIViewController?
+    private let isNodeFromFolderLink: Bool
 
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
 
-    init(viewController: UIViewController) {
+    init(viewController: UIViewController, isNodeFromFolderLink: Bool = false) {
         self.viewController = viewController
+        self.isNodeFromFolderLink = isNodeFromFolderLink
     }
     
     deinit {
@@ -23,7 +25,7 @@ final class NodeActionViewControllerGenericDelegate:
             showEditTextFile(for: node)
             
         case .download:
-            download(node)
+            download(node, isNodeFromFolderLink: isNodeFromFolderLink)
         
         case .copy, .move:
             showBrowserViewController(node: node, action: (action == .copy) ? .copy : .move)
@@ -168,12 +170,12 @@ final class NodeActionViewControllerGenericDelegate:
         }
     }
     
-    private func download(_ node: MEGANode) {
+    private func download(_ node: MEGANode, isNodeFromFolderLink: Bool) {
         guard let viewController = viewController else {
             return
         }
         let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
-        CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download).start()
+        CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download, isFolderLink: isNodeFromFolderLink).start()
     }
     
     private func openShareFolderDialog(_ node: MEGANode, viewController: UIViewController) {
