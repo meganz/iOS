@@ -29,15 +29,15 @@ final class AlbumContentPickerViewModel: ObservableObject {
          photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
          completion: @escaping (AlbumEntity, [NodeEntity]) -> Void,
          isNewAlbum: Bool = false,
-         contentConfig: PhotoLibraryContentConfig? = nil) {
+         configuration: PhotoLibraryContentConfiguration? = nil) {
         self.album = album
         self.photoLibraryUseCase = photoLibraryUseCase
         self.completion = completion
-        self.selectLimit = contentConfig?.selectLimit ?? 150
+        self.selectLimit = configuration?.selectLimit ?? 150
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .album,
-                                                                    contentConfig: contentConfig)
+                                                                    configuration: configuration)
         navigationTitle = normalNavigationTitle
         isDoneButtonDisabled = !isNewAlbum
         setupSubscriptions(isNewAlbum: isNewAlbum)

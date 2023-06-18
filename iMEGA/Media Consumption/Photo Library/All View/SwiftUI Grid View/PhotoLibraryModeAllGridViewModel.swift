@@ -24,7 +24,7 @@ final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
     override init(libraryViewModel: PhotoLibraryContentViewModel) {
         super.init(libraryViewModel: libraryViewModel)
         
-        zoomState.scaleFactor = libraryViewModel.contentConfig?.scaleFactor ?? zoomState.scaleFactor
+        zoomState.scaleFactor = libraryViewModel.configuration?.scaleFactor ?? zoomState.scaleFactor
         
         subscribeToLibraryChange()
         subscribeToSelectedModeChange()

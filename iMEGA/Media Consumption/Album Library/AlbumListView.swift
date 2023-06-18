@@ -77,7 +77,7 @@ struct AlbumListView: View {
                 viewModel.onNewAlbumContentAdded(album, photos: selectedPhotos)
             },
             isNewAlbum: true,
-            contentConfig: PhotoLibraryContentConfig(
+            configuration: PhotoLibraryContentConfiguration(
                 scaleFactor: UIDevice().iPadDevice ? .five : .three)
             )
         )

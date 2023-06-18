@@ -11,9 +11,9 @@ import MEGADomain
     var cardScrollPosition: PhotoScrollPosition?
     var photoScrollPosition: PhotoScrollPosition?
     let contentMode: PhotoLibraryContentMode
-    let contentConfig: PhotoLibraryContentConfig?
+    let configuration: PhotoLibraryContentConfiguration?
     
-    lazy var selection = PhotoSelection(selectLimit: contentConfig?.selectLimit)
+    lazy var selection = PhotoSelection(selectLimit: configuration?.selectLimit)
     lazy var filterViewModel = PhotoLibraryFilterViewModel(
         contentMode: contentMode,
         userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo)
@@ -21,10 +21,10 @@ import MEGADomain
     
     // MARK: - Init
     init(library: PhotoLibrary, contentMode: PhotoLibraryContentMode = .library,
-         contentConfig: PhotoLibraryContentConfig? = nil) {
+         configuration: PhotoLibraryContentConfiguration? = nil) {
         self.library = library
         self.contentMode = contentMode
-        self.contentConfig = contentConfig
+        self.configuration = configuration
         
         super.init()
     }

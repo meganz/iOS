@@ -15,8 +15,7 @@ final class AlbumCoverPickerPhotoCellViewModelTests: XCTestCase {
             albumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: 1)),
             photoSelection: AlbumCoverPickerPhotoSelection(),
             viewModel: viewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         
         XCTAssertFalse(sut.isSelected)
