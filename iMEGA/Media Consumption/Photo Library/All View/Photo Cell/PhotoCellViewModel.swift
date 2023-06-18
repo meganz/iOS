@@ -8,7 +8,6 @@ import MEGASwift
 class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
-    private let mediaUseCase: any MediaUseCaseProtocol
     private let selection: PhotoSelection
     private var subscriptions = Set<AnyCancellable>()
     
@@ -51,15 +50,13 @@ class PhotoCellViewModel: ObservableObject {
     
     init(photo: NodeEntity,
          viewModel: PhotoLibraryModeAllViewModel,
-         thumbnailUseCase: any ThumbnailUseCaseProtocol,
-         mediaUseCase: any MediaUseCaseProtocol) {
+         thumbnailUseCase: any ThumbnailUseCaseProtocol) {
         self.photo = photo
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailUseCase = thumbnailUseCase
-        self.mediaUseCase = mediaUseCase
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
         
-        isVideo = mediaUseCase.isVideo(photo.name)
+        isVideo = photo.mediaType == .video
         isFavorite = photo.isFavourite
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
         

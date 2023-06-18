@@ -14,7 +14,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
     }
     
     func testInit_selectionLimit_isSetTo200() {
-        let sut = makeAlbumContentPickerViewModel(contentConfig: PhotoLibraryContentConfig(selectLimit: 200))
+        let sut = makeAlbumContentPickerViewModel(configuration: PhotoLibraryContentConfiguration(selectLimit: 200))
         XCTAssertEqual(sut.selectLimit, 200)
     }
     
@@ -307,7 +307,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                                  allPhotosFromCloudDriveOnly: [NodeEntity] = [],
                                                  allPhotosFromCameraUpload: [NodeEntity] = [],
                                                  completion: @escaping ((AlbumEntity, [NodeEntity]) -> Void) = {_, _ in },
-                                                 contentConfig: PhotoLibraryContentConfig = PhotoLibraryContentConfig()) -> AlbumContentPickerViewModel {
+                                                 configuration: PhotoLibraryContentConfiguration = PhotoLibraryContentConfiguration()) -> AlbumContentPickerViewModel {
         let album = AlbumEntity(id: 4, name: "Custom Name", coverNode: NodeEntity(handle: 4), count: 0, type: .user)
         return AlbumContentPickerViewModel(album: album,
                                            photoLibraryUseCase:
@@ -316,7 +316,7 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
                                                 allPhotosFromCloudDriveOnly: allPhotosFromCloudDriveOnly,
                                                 allPhotosFromCameraUpload: allPhotosFromCameraUpload),
                                            completion: completion,
-                                           contentConfig: contentConfig)
+                                           configuration: configuration)
     }
     
     private func makeSamplePhotoNodes() throws -> [NodeEntity] {

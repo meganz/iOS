@@ -227,7 +227,7 @@
 		32303CF428657BA1005DF060 /* PhotosViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32303CF328657BA1005DF060 /* PhotosViewController+ContextMenu.swift */; };
 		3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3232AD002900F7A500FF7416 /* SlideshowDataSourceTests.swift */; };
 		3232ADC3290F95C900FF7416 /* FilesSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3232ADC2290F95C900FF7416 /* FilesSearchRepository.swift */; };
-		3234143829F0F6A500A06EFE /* PhotoLibraryContentConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3234143729F0F6A500A06EFE /* PhotoLibraryContentConfig.swift */; };
+		3234143829F0F6A500A06EFE /* PhotoLibraryContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3234143729F0F6A500A06EFE /* PhotoLibraryContentConfiguration.swift */; };
 		3235F2C528C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3235F2C428C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift */; };
 		3241349729FB712B006E5310 /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = 3241349629FB712B006E5310 /* MEGASdk */; };
 		32473EEB2A1E16F60020012C /* SharedLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32473EEA2A1E16F60020012C /* SharedLinkView.swift */; };
@@ -2691,7 +2691,7 @@
 		32303CF328657BA1005DF060 /* PhotosViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		3232AD002900F7A500FF7416 /* SlideshowDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideshowDataSourceTests.swift; sourceTree = "<group>"; };
 		3232ADC2290F95C900FF7416 /* FilesSearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesSearchRepository.swift; sourceTree = "<group>"; };
-		3234143729F0F6A500A06EFE /* PhotoLibraryContentConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentConfig.swift; sourceTree = "<group>"; };
+		3234143729F0F6A500A06EFE /* PhotoLibraryContentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentConfiguration.swift; sourceTree = "<group>"; };
 		3235F2C428C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailRepositoryTests.swift; sourceTree = "<group>"; };
 		32473EEA2A1E16F60020012C /* SharedLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLinkView.swift; sourceTree = "<group>"; };
 		3256C38829A63A74001B0280 /* AlbumSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumSelection.swift; sourceTree = "<group>"; };
@@ -10458,7 +10458,7 @@
 				B6C444D9274A284900268D9A /* Month View */,
 				B6F853452794D22900028D51 /* Photo Selection */,
 				B6C444D8274A284300268D9A /* Year View */,
-				3234143729F0F6A500A06EFE /* PhotoLibraryContentConfig.swift */,
+				3234143729F0F6A500A06EFE /* PhotoLibraryContentConfiguration.swift */,
 				B6FCBFD427121AB600B3599F /* PhotoLibraryContentView.swift */,
 				B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */,
 				B67507B52766BE670034F951 /* PhotoLibraryContentViewRouter.swift */,
@@ -13819,7 +13819,7 @@
 				B6CA26DC28F7FCB5007D5B57 /* PhotoLibraryCollectionViewRepresenter.swift in Sources */,
 				B6E3A9F12936E05900AE897E /* PhotoLibraryCollectionViewScrollTracker.swift in Sources */,
 				B67507B42766BB580034F951 /* PhotoLibraryConstants.swift in Sources */,
-				3234143829F0F6A500A06EFE /* PhotoLibraryContentConfig.swift in Sources */,
+				3234143829F0F6A500A06EFE /* PhotoLibraryContentConfiguration.swift in Sources */,
 				12CC1F9828348A3B00CE3447 /* PhotoLibraryContentMode.swift in Sources */,
 				B6FCBFD527121AB600B3599F /* PhotoLibraryContentView.swift in Sources */,
 				B6C5D09C2718D19B004FB105 /* PhotoLibraryContentViewModel.swift in Sources */,

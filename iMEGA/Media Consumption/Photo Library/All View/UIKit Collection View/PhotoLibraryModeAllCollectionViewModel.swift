@@ -8,7 +8,7 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
         self.contentMode = libraryViewModel.contentMode
         super.init(libraryViewModel: libraryViewModel)
         zoomState = PhotoLibraryZoomState(
-            scaleFactor: libraryViewModel.contentConfig?.scaleFactor ?? zoomState.scaleFactor,
+            scaleFactor: libraryViewModel.configuration?.scaleFactor ?? zoomState.scaleFactor,
             maximumScaleFactor: .thirteen
         )
         

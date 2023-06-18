@@ -38,8 +38,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testInit_defaultValue() throws {
         let sut = PhotoCellViewModel(photo: NodeEntity(name: "0.jpg", handle: 0),
                                      viewModel: allViewModel,
-                                     thumbnailUseCase: MockThumbnailUseCase(),
-                                     mediaUseCase: MockMediaUseCase())
+                                     thumbnailUseCase: MockThumbnailUseCase())
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(FileTypes().fileType(forFileName: "0.jpg")), type: .placeholder)))
         XCTAssertEqual(sut.duration, "00:00")
@@ -48,6 +47,15 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isSelected, false)
         XCTAssertEqual(sut.isFavorite, false)
         XCTAssertNil(sut.thumbnailLoadingTask)
+    }
+    
+    func testInit_videoNode_isVideoIsTrueAndDurationIsApplied() {
+        let duration = 120
+        let sut = PhotoCellViewModel(photo: NodeEntity(name: "0.jpg", handle: 0, duration: duration, mediaType: .video),
+                                     viewModel: allViewModel,
+                                     thumbnailUseCase: MockThumbnailUseCase())
+        XCTAssertEqual(sut.isVideo, true)
+        XCTAssertEqual(sut.duration, "02:00")
     }
     
     func testLoadThumbnail_zoomInAndHasCachedThumbnail_onlyLoadPreview() async throws {
@@ -65,8 +73,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
@@ -102,8 +109,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remoteURL, type: .preview)))
         )
         
         let exp = expectation(description: "thumbnail should not be changed")
@@ -131,8 +137,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: url, type: .thumbnail)]),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: url, type: .thumbnail)])
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: url, type: .thumbnail)))
@@ -147,8 +152,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: remoteURL, type: .thumbnail))),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: remoteURL, type: .thumbnail)))
         )
         
         sut.thumbnailContainer = ImageContainer(image: Image(systemName: "heart"), type: .thumbnail)
@@ -174,8 +178,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
@@ -210,8 +213,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
@@ -247,8 +249,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
@@ -290,8 +291,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
                                                    loadThumbnailResult: .success(ThumbnailEntity(url: localURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
@@ -333,8 +333,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
                                                    loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
@@ -371,8 +370,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
                                                    loadThumbnailResult: .success(ThumbnailEntity(url: localURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
@@ -414,8 +412,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail)],
                                                    loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
@@ -457,8 +454,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail),
                                                                       ThumbnailEntity(url: previewURL, type: .preview)],
                                                    loadThumbnailResult: .success(ThumbnailEntity(url: localURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: previewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: previewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
@@ -506,8 +502,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .thumbnail),
                                                                       ThumbnailEntity(url: localPreviewURL, type: .preview)],
                                                    loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .thumbnail)))
@@ -546,8 +541,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localURL, type: .preview)],
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localURL, type: .preview)))
@@ -589,8 +583,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: newLocalURL, type: .preview)],
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         sut.thumbnailContainer = try XCTUnwrap(URLImageContainer(imageURL: localURL, type: .preview))
@@ -639,8 +632,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailUseCase: MockThumbnailUseCase(cachedThumbnails: [ThumbnailEntity(url: localPreviewURL, type: .preview),
                                                                       ThumbnailEntity(url: localURL, type: .thumbnail)],
                                                    loadThumbnailResult: .success(ThumbnailEntity(url: remoteThumbnailURL, type: .thumbnail)),
-                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview))),
-            mediaUseCase: MockMediaUseCase()
+                                                   loadPreviewResult: .success(ThumbnailEntity(url: remotePreviewURL, type: .preview)))
         )
         
         XCTAssertTrue(sut.thumbnailContainer.isEqual(URLImageContainer(imageURL: localPreviewURL, type: .preview)))
@@ -665,8 +657,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         
         XCTAssertFalse(sut.isSelected)
@@ -684,8 +675,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         XCTAssertFalse(sut.isSelected)
         XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
@@ -700,8 +690,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         XCTAssertTrue(sut.isSelected)
         XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
@@ -716,8 +705,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         XCTAssertTrue(sut.isSelected)
         XCTAssertTrue(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
@@ -732,8 +720,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         
         XCTAssertFalse(sut.isSelected)
@@ -759,8 +746,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         
         allViewModel.libraryViewModel.selection.allSelected = false
@@ -772,8 +758,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         XCTAssertFalse(sut.isFavorite)
         
@@ -796,8 +781,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0, isFavourite: true),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         XCTAssertTrue(sut.isFavorite)
         
@@ -820,8 +804,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: NodeEntity(name: "0.jpg", handle: 0),
             viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         XCTAssertFalse(sut.isFavorite)
         
@@ -843,8 +826,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldShowEditState_editing() {
         let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
                                      viewModel: allViewModel,
-                                     thumbnailUseCase: MockThumbnailUseCase(),
-                                     mediaUseCase: MockMediaUseCase())
+                                     thumbnailUseCase: MockThumbnailUseCase())
         sut.editMode = .active
         
         for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
@@ -856,8 +838,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldShowEditState_notEditing() {
         let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
                                      viewModel: allViewModel,
-                                     thumbnailUseCase: MockThumbnailUseCase(),
-                                     mediaUseCase: MockMediaUseCase())
+                                     thumbnailUseCase: MockThumbnailUseCase())
         sut.editMode = .inactive
         
         for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
@@ -869,8 +850,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldShowFavorite_favourite() {
         let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
                                      viewModel: allViewModel,
-                                     thumbnailUseCase: MockThumbnailUseCase(),
-                                     mediaUseCase: MockMediaUseCase())
+                                     thumbnailUseCase: MockThumbnailUseCase())
         sut.isFavorite = true
         
         for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
@@ -882,8 +862,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldShowFavorite_notFavourite() {
         let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
                                      viewModel: allViewModel,
-                                     thumbnailUseCase: MockThumbnailUseCase(),
-                                     mediaUseCase: MockMediaUseCase())
+                                     thumbnailUseCase: MockThumbnailUseCase())
         sut.isFavorite = false
         
         for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
@@ -895,8 +874,7 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testSelect_onEditModeNoLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {
         let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
                                      viewModel: allViewModel,
-                                     thumbnailUseCase: MockThumbnailUseCase(),
-                                     mediaUseCase: MockMediaUseCase())
+                                     thumbnailUseCase: MockThumbnailUseCase())
         allViewModel.libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
         sut.select()
@@ -905,15 +883,14 @@ final class PhotoCellViewModelTests: XCTestCase {
     
     func testSelect_onEditModeAndLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
-        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentConfig: PhotoLibraryContentConfig(selectLimit: 3))
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, configuration: PhotoLibraryContentConfiguration(selectLimit: 3))
         libraryViewModel.selectedMode = .all
         
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel),
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
@@ -924,15 +901,14 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testSelect_onEditModeItemNotSelectedAndLimitReached_shouldNotChangeIsSelectedOnCellTap() throws {
         let selectionLimit = 3
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
-        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentConfig: PhotoLibraryContentConfig(selectLimit: selectionLimit))
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, configuration: PhotoLibraryContentConfiguration(selectLimit: selectionLimit))
         libraryViewModel.selectedMode = .all
         
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel),
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         libraryViewModel.selection.editMode = .active
         XCTAssertFalse(sut.isSelected)
@@ -953,8 +929,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel),
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         XCTAssertFalse(sut.isSelected)
         sut.select()
@@ -964,15 +939,14 @@ final class PhotoCellViewModelTests: XCTestCase {
     func testShouldApplyContentOpacity_onEditModeItemIsNotSelectedAndLimitReached_shouldChangeContentOpacity() throws {
         let selectionLimit = 3
         let library = try testNodes.toPhotoLibrary(withSortType: .newest, in: .GMT)
-        let libraryViewModel = PhotoLibraryContentViewModel(library: library, contentConfig: PhotoLibraryContentConfig(selectLimit: selectionLimit))
+        let libraryViewModel = PhotoLibraryContentViewModel(library: library, configuration: PhotoLibraryContentConfiguration(selectLimit: selectionLimit))
         libraryViewModel.selectedMode = .all
         
         let photo = NodeEntity(name: "0.jpg", handle: 0)
         let sut = PhotoCellViewModel(
             photo: photo,
             viewModel: PhotoLibraryModeAllGridViewModel(libraryViewModel: libraryViewModel),
-            thumbnailUseCase: MockThumbnailUseCase(),
-            mediaUseCase: MockMediaUseCase()
+            thumbnailUseCase: MockThumbnailUseCase()
         )
         XCTAssertFalse(sut.shouldApplyContentOpacity)
         sut.editMode = .active

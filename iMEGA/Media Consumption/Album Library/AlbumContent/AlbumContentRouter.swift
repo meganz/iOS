@@ -68,7 +68,7 @@ struct AlbumContentRouter: AlbumContentRouting {
         let viewModel = AlbumContentPickerViewModel(album: album,
                                                     photoLibraryUseCase: photoLibraryUseCase,
                                                     completion: completion,
-                                                    contentConfig: PhotoLibraryContentConfig(
+                                                    configuration: PhotoLibraryContentConfiguration(
                                                         selectLimit: 150,
                                                         scaleFactor: UIDevice().iPadDevice ? .five : .three)
                                                     )
@@ -100,8 +100,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumPhoto: albumPhoto,
             photoSelection: photoSelection,
             viewModel: PhotoLibraryModeAllViewModel(libraryViewModel: PhotoLibraryContentViewModel(library: PhotoLibrary())),
-            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
-            mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo))
+            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo))
         
         return AlbumCoverPickerPhotoCell(viewModel: vm)
     }
