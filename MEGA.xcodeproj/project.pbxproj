@@ -134,6 +134,11 @@
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
 		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
 		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
+		2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */; };
+		2562E8C72A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */; };
+		259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */; };
+		259FA4082A3A9CEB00C038B2 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */; };
+		25DB82D32A3C07D100207E72 /* ProfileTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DB82D22A3C07D100207E72 /* ProfileTableViewDataSource.swift */; };
 		271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271FC4202A27EA4400E35924 /* ElementStore.swift */; };
 		274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
@@ -2592,6 +2597,11 @@
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
 		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
 		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
+		2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewDiffableDataSource.swift; sourceTree = "<group>"; };
+		259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
+		259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
+		25DB82D22A3C07D100207E72 /* ProfileTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewDataSource.swift; sourceTree = "<group>"; };
 		271FC4202A27EA4400E35924 /* ElementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStore.swift; sourceTree = "<group>"; };
 		274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStoreTests.swift; sourceTree = "<group>"; };
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
@@ -5603,6 +5613,39 @@
 				2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */,
 			);
 			path = Delegates;
+			sourceTree = "<group>";
+		};
+		259FA4002A3A946500C038B2 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				259FA4012A3A947800C038B2 /* ViewModel */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		259FA4012A3A947800C038B2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		259FA4042A3A9C8B00C038B2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				259FA4072A3A9CA600C038B2 /* DataSource */,
+				2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		259FA4072A3A9CA600C038B2 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */,
+			);
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		2F28019D24455A4900C160D0 /* Products */ = {
@@ -9500,10 +9543,13 @@
 			children = (
 				5B8D209C246AAB45009BD3E9 /* ChangeCredentials */,
 				A86AC4AA26710A9000E8E89A /* ChangeName */,
+				259FA4042A3A9C8B00C038B2 /* ViewModel */,
 				A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */,
 				835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */,
 				A8C93C1322D71C470030CE1B /* Profile.storyboard */,
 				A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */,
+				25DB82D22A3C07D100207E72 /* ProfileTableViewDataSource.swift */,
+				2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */,
 				A8C93C0B22D718030030CE1B /* ProfileViewController.swift */,
 				A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */,
 			);
@@ -10513,6 +10559,7 @@
 				12B1E58128751FAA00D23A58 /* PageStayTimeTracker */,
 				32F03D54287D222800C518A4 /* Photos */,
 				B5000FC32A1E219400E06478 /* Plan */,
+				259FA4002A3A946500C038B2 /* Profile */,
 				BF6E8D1725B53F3C003A125A /* PSA */,
 				A8EE47AB27DFAEF600D37685 /* Report Issue */,
 				5B9FBDE9264925900014B7FD /* Settings */,
@@ -13900,8 +13947,12 @@
 				C4709A9D26B05F52008FB0C8 /* ProductDetailViewController+Additions.swift in Sources */,
 				41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
+				259FA4082A3A9CEB00C038B2 /* ProfileSection.swift in Sources */,
 				A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */,
+				25DB82D32A3C07D100207E72 /* ProfileTableViewDataSource.swift in Sources */,
+				2562E8C72A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift in Sources */,
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
+				2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */,
 				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
 				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
@@ -14800,6 +14851,7 @@
 				32DF91302A1CA54000AEB585 /* PhotosFilterLocationTest.swift in Sources */,
 				32DF912E2A1CA53200AEB585 /* PhotosFilterTypeTest.swift in Sources */,
 				32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */,
+				259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,

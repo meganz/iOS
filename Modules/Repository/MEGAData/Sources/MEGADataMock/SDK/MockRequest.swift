@@ -16,6 +16,7 @@ public final class MockRequest: MEGARequest {
     var megaCoverId: MEGAHandle = .invalidHandle
     var megalink: String?
     var megaSetElements: [MEGASetElement]?
+    var megaFlag: Bool = false
     
     public init(handle: MEGAHandle) {
         self.handle = handle
@@ -30,4 +31,5 @@ public final class MockRequest: MEGARequest {
     public override var elementsInSet: [MEGASetElement] { megaElementInSet }
     public override var number: NSNumber { NSNumber(value: megaSetElementOrder) }
     public override var link: String? { megalink }
+    public override var flag: Bool { megaFlag }
 }

@@ -31,6 +31,7 @@ public final class MockSdk: MEGASdk {
     private let _userAlertList: MEGAUserAlertList
     private let _upgradeSecurity: (MEGASdk, MEGARequestDelegate) -> Void
     private let _accountDetails: (MEGASdk, MEGARequestDelegate) -> Void
+    private let smsState: SMSState
     
     public var hasGlobalDelegate = false
     public var hasRequestDelegate = false
@@ -48,6 +49,7 @@ public final class MockSdk: MEGASdk {
                 myUser: MEGAUser? = nil,
                 isLoggedIn: Int = 0,
                 isMasterBusinessAccount: Bool = false,
+                smsState: SMSState = .notAllowed,
                 myEmail: String? = nil,
                 megaSets: [MEGASet] = [],
                 megaSetElements: [MEGASetElement] = [],
@@ -73,6 +75,7 @@ public final class MockSdk: MEGASdk {
         _myUser = myUser
         _isLoggedIn = isLoggedIn
         _isMasterBusinessAccount = isMasterBusinessAccount
+        self.smsState = smsState
         email = myEmail
         sets = megaSets
         setElements = megaSetElements
@@ -351,6 +354,12 @@ public final class MockSdk: MEGASdk {
     
     public override func isLoggedIn() -> Int { _isLoggedIn }
     
+    public override func multiFactorAuthCheck(withEmail email: String, delegate: MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: 1)
+        mockRequest.megaFlag = true
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
+    }
+    
     // MARK: - File System Inspection
     
     public override func incomingContactRequests() -> MEGAContactRequestList {
@@ -367,6 +376,12 @@ public final class MockSdk: MEGASdk {
     
     public override func getAccountDetails(with delegate: MEGARequestDelegate) {
         _accountDetails(self, delegate)
+    }
+    
+    // MARK: - SMS
+    
+    public override func smsAllowedState() -> SMSState {
+        smsState
     }
 }
 
