@@ -21,6 +21,7 @@ enum DeeplinkPathKey: String {
     case privacyPolicy = "/privacy"
     case cookiePolicy = "/cookie"
     case termsOfService = "/terms"
+    case collection = "/collection"
 }
 
 enum DeeplinkFragmentKey: String {
@@ -197,6 +198,8 @@ extension NSURL {
             return .default
         } else if path.hasPrefix(DeeplinkPathKey.termsOfService.rawValue) {
             return .default
+        } else if path.hasPrefix(DeeplinkPathKey.collection.rawValue) {
+            return .collection
         }
         
         if fragment != nil {

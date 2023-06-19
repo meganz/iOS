@@ -191,6 +191,8 @@ public enum Strings {
     public static let agreeWithLosingPasswordYouLoseData = Strings.tr("Localizable", "agreeWithLosingPasswordYouLoseData")
     /// I agree with the MEGA <a href="terms">Terms of Service</a>
     public static let agreeWithTheMEGATermsOfService = Strings.tr("Localizable", "agreeWithTheMEGATermsOfService")
+    /// Album link
+    public static let albumLink = Strings.tr("Localizable", "albumLink")
     /// Albums
     public static let albums = Strings.tr("Localizable", "Albums")
     /// Alias or nickname
@@ -567,6 +569,8 @@ public enum Strings {
     public static let decryptionKey = Strings.tr("Localizable", "decryptionKey")
     /// To access this folder or file, you will need its decryption key. If you do not have the key, please contact the creator of the link.
     public static let decryptionKeyAlertMessage = Strings.tr("Localizable", "decryptionKeyAlertMessage")
+    /// To access the album, enter the decryption key. If you don't have it, contact the person who shared the link with you.
+    public static let decryptionKeyAlertMessageForAlbum = Strings.tr("Localizable", "decryptionKeyAlertMessageForAlbum")
     /// Enter decryption key
     public static let decryptionKeyAlertTitle = Strings.tr("Localizable", "decryptionKeyAlertTitle")
     /// Invalid decryption key

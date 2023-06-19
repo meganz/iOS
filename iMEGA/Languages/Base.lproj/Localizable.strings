@@ -46,6 +46,8 @@
 "decryptionKeyAlertTitle"="Enter decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="To access this folder or file, you will need its decryption key. If you do not have the key, please contact the creator of the link.";
+/* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessageForAlbum"="To access the album, enter the decryption key. If you don't have it, contact the person who shared the link with you.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decryption key";
 /* Button title to try to decrypt the link */
@@ -178,6 +180,8 @@
 "downloadStarted"="Download started";
 /* Title for the folder link view */
 "folderLink"="Folder link";
+/* Title for the album/collection link view */
+"albumLink"="Album link";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */

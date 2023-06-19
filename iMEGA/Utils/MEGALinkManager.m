@@ -485,6 +485,10 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [UIApplication.sharedApplication openURL:url options:@{} completionHandler:nil];
             }
             break;
+        case URLTypeCollection:
+            [MEGALinkManager showCollectionLinkView];
+            [MEGALinkManager resetLinkAndURLType];
+            break;
             
         default:
             break;
