@@ -60,7 +60,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     }
 
     func showManageChatHistory(for chatRoom: ChatRoomEntity) {
-        ManageChatHistoryViewRouter(chatId: chatRoom.chatId, navigationController: presenter).start()
+        ManageChatHistoryViewRouter(chatId: chatRoom.chatId, isChatTypeMeeting: true, navigationController: presenter).start()
     }
     
     func showEnableKeyRotation(for chatRoom: ChatRoomEntity) {

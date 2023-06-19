@@ -75,7 +75,7 @@ extension GroupChatDetailsViewController {
         if sender.isOn {
             chatNotificationControl.turnOffDND(chatId: ChatIdEntity(chatRoom.chatId))
         } else {
-            chatNotificationControl.turnOnDND(chatId: ChatIdEntity(chatRoom.chatId), sender: sender)
+            chatNotificationControl.turnOnDND(chatId: ChatIdEntity(chatRoom.chatId), isChatTypeMeeting: chatRoom.isMeeting, sender: sender)
         }
     }
     

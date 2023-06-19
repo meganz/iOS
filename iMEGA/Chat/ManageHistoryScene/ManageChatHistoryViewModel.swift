@@ -52,7 +52,17 @@ final class ManageChatHistoryViewModel: ViewModelType {
     // MARK: - Private properties
     // MARK: UI Layer
     private let router: ManageChatHistoryViewRouter
+    private let chatViewMode: ChatViewMode
     
+    private var isChatTypeMeeting: Bool {
+        switch chatViewMode {
+        case .chats:
+            return false
+        case .meetings:
+            return true
+        }
+    }
+        
     // MARK: Domain Layer
     private let manageChatHistoryUseCase: ManageChatHistoryUseCase
     
@@ -65,15 +75,32 @@ final class ManageChatHistoryViewModel: ViewModelType {
     // MARK: - Internal properties
     
     var invokeCommand: ((Command) -> Void)?
+    var navigationTitle: String {
+        return isChatTypeMeeting
+            ? Strings.Localizable.Meetings.Info.manageMeetingHistory
+            : Strings.Localizable.manageChatHistory
+    }
+    var clearHistoryTitle: String {
+        return isChatTypeMeeting
+            ? Strings.Localizable.Meetings.Info.ManageMeetingHistory.clearMeetingHistory
+            : Strings.Localizable.clearChatHistory
+    }
+    var clearHistoryMessage: String {
+        return isChatTypeMeeting
+            ? Strings.Localizable.Meetings.Info.ManageMeetingHistory.clearMeetingHistoryMessage
+            : Strings.Localizable.clearTheFullMessageHistory
+    }
     
     // MARK: - Init
     
     init(router: ManageChatHistoryViewRouter,
          manageChatHistoryUseCase: ManageChatHistoryUseCase,
-         chatId: ChatIdEntity) {
+         chatId: ChatIdEntity,
+         chatViewMode: ChatViewMode) {
         self.router = router
         self.manageChatHistoryUseCase = manageChatHistoryUseCase
         self.chatId = chatId
+        self.chatViewMode = chatViewMode
     }
     
     // MARK: - Private

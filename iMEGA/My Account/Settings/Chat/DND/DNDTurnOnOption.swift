@@ -77,8 +77,11 @@ enum DNDTurnOnOption: String, CaseIterable {
     
     static func alertController(delegate: DNDTurnOnAlertControllerAction,
                                 isGlobalSetting: Bool,
+                                isChatTypeMeeting: Bool,
                                 identifier: ChatIdEntity?) -> UIAlertController {
-        let alertMessage = Strings.Localizable.muteChatNotificationsFor
+        let alertMessage = isChatTypeMeeting
+            ? Strings.Localizable.Meetings.Info.muteMeetingNotificationsFor
+            : Strings.Localizable.muteChatNotificationsFor
 
         let alertController = UIAlertController(title: nil,
                                                 message: alertMessage,

@@ -4261,21 +4261,43 @@ public enum Strings {
         public static let chatNotifications = Strings.tr("Localizable", "meetings.info.chatNotifications")
         /// Description
         public static let descriptionLabel = Strings.tr("Localizable", "meetings.info.descriptionLabel")
+        /// Get meeting link
+        public static let getMeetingLink = Strings.tr("Localizable", "meetings.info.getMeetingLink")
         /// Leave meeting
         public static let leaveMeeting = Strings.tr("Localizable", "meetings.info.leaveMeeting")
         /// Manage chat history
         public static let manageChatHistory = Strings.tr("Localizable", "meetings.info.manageChatHistory")
+        /// Manage meeting history
+        public static let manageMeetingHistory = Strings.tr("Localizable", "meetings.info.manageMeetingHistory")
         /// Meeting link
         public static let meetingLink = Strings.tr("Localizable", "meetings.info.meetingLink")
+        /// Meeting notifications
+        public static let meetingNotifications = Strings.tr("Localizable", "meetings.info.meetingNotifications")
+        /// Mute meeting notifications for
+        public static let muteMeetingNotificationsFor = Strings.tr("Localizable", "meetings.info.muteMeetingNotificationsFor")
+        /// Rename meeting
+        public static let renameMeeting = Strings.tr("Localizable", "meetings.info.renameMeeting")
         /// Share chat link
         public static let shareChatLink = Strings.tr("Localizable", "meetings.info.shareChatLink")
         /// Shared files
         public static let sharedFiles = Strings.tr("Localizable", "meetings.info.sharedFiles")
+        /// Share meeting link
+        public static let shareMeetingLink = Strings.tr("Localizable", "meetings.info.shareMeetingLink")
+        public enum GetMeetingLink {
+          /// Anyone with this link can join the meeting and view the meeting chat
+          public static let explainLink = Strings.tr("Localizable", "meetings.info.getMeetingLink.explainLink")
+        }
         public enum KeyRotation {
           /// Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.
           public static let description = Strings.tr("Localizable", "meetings.info.keyRotation.description")
           /// Enable encryption key rotation
           public static let title = Strings.tr("Localizable", "meetings.info.keyRotation.title")
+        }
+        public enum ManageMeetingHistory {
+          /// Clear meeting history
+          public static let clearMeetingHistory = Strings.tr("Localizable", "meetings.info.manageMeetingHistory.clearMeetingHistory")
+          /// Are you sure you want to clear the full message history of this meeting?
+          public static let clearMeetingHistoryMessage = Strings.tr("Localizable", "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage")
         }
         public enum Participants {
           /// See all

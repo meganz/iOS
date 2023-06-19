@@ -10,9 +10,11 @@ import MEGADomain
 @objc class ChatNotificationControl: PushNotificationControl {
     // MARK: - Interface methods.
 
-    @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: ChatIdEntity) {
+    @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: ChatIdEntity, isMeeting: Bool) {
         
-        cell.nameLabel?.text = Strings.Localizable.chatNotifications
+        cell.nameLabel?.text = isMeeting
+            ? Strings.Localizable.Meetings.Info.meetingNotifications
+            : Strings.Localizable.chatNotifications
         
         cell.controlSwitch?.isEnabled = isNotificationSettingsLoaded()
         cell.controlSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
@@ -27,8 +29,8 @@ import MEGADomain
         return pushNotificationSettings.isChatDndEnabled(forChatId: chatId)
     }
     
-    @objc func turnOnDND(chatId: ChatIdEntity, sender: UIView) {
-        let alertController = DNDTurnOnOption.alertController(delegate: self, isGlobalSetting: false, identifier: chatId)
+    @objc func turnOnDND(chatId: ChatIdEntity, isChatTypeMeeting: Bool, sender: UIView) {
+        let alertController = DNDTurnOnOption.alertController(delegate: self, isGlobalSetting: false, isChatTypeMeeting: isChatTypeMeeting, identifier: chatId)
         show(alertController: alertController, sender: sender)
     }
     

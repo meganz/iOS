@@ -1248,6 +1248,7 @@
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
+		99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */; };
 		9D26F234294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
@@ -3788,6 +3789,7 @@
 		94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsDetailsViewController+Additions.swift"; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
+		99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingLinkActivityItemSource.swift; sourceTree = "<group>"; };
 		9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewWrapper.swift; sourceTree = "<group>"; };
 		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
 		9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouter.swift; sourceTree = "<group>"; };
@@ -5834,10 +5836,10 @@
 		328C15342A3974B2002499CE /* Links */ = {
 			isa = PBXGroup;
 			children = (
-				328C15352A3975C8002499CE /* ImportAlbumView.swift */,
-				328C15372A3975DA002499CE /* ImportAlbumViewModel.swift */,
 				328C153C2A399579002499CE /* AlbumPublicLinkStatus.swift */,
 				328C153E2A39A63B002499CE /* ImportAlbumAlertView.swift */,
+				328C15352A3975C8002499CE /* ImportAlbumView.swift */,
+				328C15372A3975DA002499CE /* ImportAlbumViewModel.swift */,
 			);
 			path = Links;
 			sourceTree = "<group>";
@@ -6487,6 +6489,7 @@
 		41C736BD1DBE6CCE00F1F38A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */,
 				A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */,
 				A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */,
 			);
@@ -10356,8 +10359,8 @@
 		B69A1765270B756F00AAD334 /* Media Consumption */ = {
 			isa = PBXGroup;
 			children = (
-				328C15342A3974B2002499CE /* Links */,
 				12397E1A2820C43E00A30CCC /* Album Library */,
+				328C15342A3974B2002499CE /* Links */,
 				B6C444E0274A28AA00268D9A /* Photo Library */,
 				32B0722728A4E082002BAE34 /* Slideshow Library */,
 			);
@@ -12830,7 +12833,6 @@
 				BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */,
 				BF7EBD46245277EB0015255F /* AddToChatMenuItemsView.swift in Sources */,
 				BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */,
-				328C153F2A39A63B002499CE /* ImportAlbumAlertView.swift in Sources */,
 				BF7EBD4D2452ABE20015255F /* AddToChatMenuView.swift in Sources */,
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
@@ -12863,6 +12865,7 @@
 				12397E232820C4BC00A30CCC /* AlbumListViewModel.swift in Sources */,
 				127053A42822216800D64C21 /* AlbumListViewRouter.swift in Sources */,
 				3282016829AEDEE100C0E841 /* AlbumNameValidator.swift in Sources */,
+				328C153D2A399579002499CE /* AlbumPublicLinkStatus.swift in Sources */,
 				129D51D52821D63E00A4D4D3 /* AlbumRepository.swift in Sources */,
 				BFAB114D23CEA5C300BCE72D /* Albums.swift in Sources */,
 				3256C38929A63A74001B0280 /* AlbumSelection.swift in Sources */,
@@ -13115,7 +13118,6 @@
 				BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */,
 				2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */,
 				2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */,
-				328C15362A3975C8002499CE /* ImportAlbumView.swift in Sources */,
 				2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */,
 				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
 				2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */,
@@ -13164,7 +13166,6 @@
 				8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */,
 				9426B67D283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift in Sources */,
 				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,
-				328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */,
 				9441FC1828DE148600DADFDD /* ContactLinkRepository.swift in Sources */,
 				8315B91622DF52DD000CA232 /* ContactOnMegaTableViewCell.swift in Sources */,
 				5D075CDB25185FB50067D363 /* ContactRequest.swift in Sources */,
@@ -13430,6 +13431,9 @@
 				B65AC8BA21F6A91A0094FF4F /* ImageExportOperation.m in Sources */,
 				5D73F50E24F74F850041D9FB /* ImagePickerViewController.swift in Sources */,
 				9DB88B63290D98BB008CB09E /* ImageScrollView.swift in Sources */,
+				328C153F2A39A63B002499CE /* ImportAlbumAlertView.swift in Sources */,
+				328C15362A3975C8002499CE /* ImportAlbumView.swift in Sources */,
+				328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
@@ -13511,6 +13515,7 @@
 				83BFDBD7291BE84D00FFFEA0 /* MeetingInfoView.swift in Sources */,
 				83BFDBD5291BE6A300FFFEA0 /* MeetingInfoViewController.swift in Sources */,
 				83BFDBD3291BE67900FFFEA0 /* MeetingInfoViewModel.swift in Sources */,
+				99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */,
 				BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */,
 				BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */,
 				BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */,
@@ -14087,7 +14092,6 @@
 				BFAD0FA42A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift in Sources */,
 				BF2675D92A32988A00736759 /* ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift in Sources */,
 				83C9CE812A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift in Sources */,
-				328C153D2A399579002499CE /* AlbumPublicLinkStatus.swift in Sources */,
 				83C9CE772A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift in Sources */,
 				83C9CE7F2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift in Sources */,
 				BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */,
@@ -14795,6 +14799,7 @@
 				0E3B1A4A2A1DBA5500EC5859 /* GetLinkSwitchOptionCellViewModelTests.swift in Sources */,
 				BF66CA7728B83ACF00DB686E /* HangOrEndCallViewModelTests.swift in Sources */,
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
+				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
 				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */,
@@ -14841,7 +14846,6 @@
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
-				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,
