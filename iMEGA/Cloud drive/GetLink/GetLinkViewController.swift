@@ -218,7 +218,10 @@ class GetLinkViewController: UIViewController {
         showCopySuccessSnackBar(with: Strings.Localizable.keyCopiedToClipboard)
     }
     
-    private func copyLinkToPasteboard(atIndex index: Int? = nil) {
+    private func copyLinkToPasteboard(
+        atIndex index: Int? = nil,
+        isFromLinkCellTap: Bool = false
+    ) {
         if getLinkVM.multilink {
             if let index = index, let link = nodes[safe: index]?.publicLink {
                 UIPasteboard.general.string = link
@@ -234,7 +237,7 @@ class GetLinkViewController: UIViewController {
         }
 
         if isLinkAlreadyCreated {
-            showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCopied(nodes.count))
+            showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCopied(isFromLinkCellTap ? 1 : nodes.count))
         } else {
             showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCreatedAndCopied(nodes.count))
             isLinkAlreadyCreated = true
@@ -964,7 +967,7 @@ extension GetLinkViewController: UITableViewDelegate {
         }
         if getLinkVM.multilink {
             if indexPath.row == 1 {
-                copyLinkToPasteboard(atIndex: indexPath.section)
+                copyLinkToPasteboard(atIndex: indexPath.section-1, isFromLinkCellTap: true)
             }
         } else {
             switch sections()[indexPath.section] {
