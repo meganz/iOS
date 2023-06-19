@@ -53,10 +53,10 @@ final class FavouriteExplorerToolbarConfigurator: ExplorerToolbarConfigurator {
             flexibleItem,
             deleteItem
         ]
-
+        
         let hasDisputedNodes = (nodes ?? []).filter { $0.isTakenDown() }.count > 0
         let hasSelectedNodes = nodes?.isNotEmpty == true
-
+        
         let barButtonItem = enable(
             hasSelectedNodes,
             hasDisputedNodes: hasDisputedNodes,
@@ -64,7 +64,7 @@ final class FavouriteExplorerToolbarConfigurator: ExplorerToolbarConfigurator {
         )
         
         favouriteItem.isEnabled = !hasDisputedNodes && hasSelectedNodes
-
+        
         return barButtonItems
     }
 }

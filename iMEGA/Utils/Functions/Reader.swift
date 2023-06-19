@@ -27,10 +27,6 @@ extension Reader {
             f.runReader(r) <| self.runReader(r)
         }
     }
-
-    public static func <*> <R, A, B> (reader: Reader<R, A>, f: Reader<R, (A) -> B>) -> Reader<R, B> {
-        return reader.apply(f)
-    }
 }
 
 // MARK: - Applicative
@@ -59,7 +55,6 @@ infix operator <|: infixr0
 infix operator |>: infixl1
 
 // Apply
-infix operator <*>: infixl4
 infix operator *>: infixl4
 infix operator <*: infixl4
 // Apply (right-associative)

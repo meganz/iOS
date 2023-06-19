@@ -65,7 +65,7 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
         self.repository = repository
     }
     
-    func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
+    func startListeningForCallInChat<S: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: S) {
         repository.startListeningForCallInChat(chatId, callbacksDelegate: self)
         self.callbacksDelegate = callbacksDelegate
     }
