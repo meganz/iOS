@@ -255,6 +255,11 @@
 		328A913F28A9DB8A0058C645 /* SlideShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328A913B28A9DB8A0058C645 /* SlideShowViewController.swift */; };
 		328A914028A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328A913C28A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift */; };
 		328C152F2A370DC7002499CE /* AlbumContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C152E2A370DC7002499CE /* AlbumContent.swift */; };
+		328C15362A3975C8002499CE /* ImportAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C15352A3975C8002499CE /* ImportAlbumView.swift */; };
+		328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C15372A3975DA002499CE /* ImportAlbumViewModel.swift */; };
+		328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C153A2A3989B1002499CE /* ImportAlbumViewModelTests.swift */; };
+		328C153D2A399579002499CE /* AlbumPublicLinkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C153C2A399579002499CE /* AlbumPublicLinkStatus.swift */; };
+		328C153F2A39A63B002499CE /* ImportAlbumAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328C153E2A39A63B002499CE /* ImportAlbumAlertView.swift */; };
 		328FDCF32911FE2100E5990A /* FilesSearchRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328FDCF22911FE2100E5990A /* FilesSearchRepositoryTests.swift */; };
 		328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */; };
 		329110FA288E39D6001324EA /* PhotoLibraryFilterLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329110F9288E39D6001324EA /* PhotoLibraryFilterLocationView.swift */; };
@@ -2721,6 +2726,11 @@
 		328A913B28A9DB8A0058C645 /* SlideShowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideShowViewController.swift; sourceTree = "<group>"; };
 		328A913C28A9DB8A0058C645 /* SlideShowCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideShowCollectionViewLayout.swift; sourceTree = "<group>"; };
 		328C152E2A370DC7002499CE /* AlbumContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumContent.swift; sourceTree = "<group>"; };
+		328C15352A3975C8002499CE /* ImportAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumView.swift; sourceTree = "<group>"; };
+		328C15372A3975DA002499CE /* ImportAlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumViewModel.swift; sourceTree = "<group>"; };
+		328C153A2A3989B1002499CE /* ImportAlbumViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumViewModelTests.swift; sourceTree = "<group>"; };
+		328C153C2A399579002499CE /* AlbumPublicLinkStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPublicLinkStatus.swift; sourceTree = "<group>"; };
+		328C153E2A39A63B002499CE /* ImportAlbumAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumAlertView.swift; sourceTree = "<group>"; };
 		328FDCF22911FE2100E5990A /* FilesSearchRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesSearchRepositoryTests.swift; sourceTree = "<group>"; };
 		328FDCF729121D3700E5990A /* AlbumListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewModelTests.swift; sourceTree = "<group>"; };
 		329110F9288E39D6001324EA /* PhotoLibraryFilterLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryFilterLocationView.swift; sourceTree = "<group>"; };
@@ -5821,9 +5831,29 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		328C15342A3974B2002499CE /* Links */ = {
+			isa = PBXGroup;
+			children = (
+				328C15352A3975C8002499CE /* ImportAlbumView.swift */,
+				328C15372A3975DA002499CE /* ImportAlbumViewModel.swift */,
+				328C153C2A399579002499CE /* AlbumPublicLinkStatus.swift */,
+				328C153E2A39A63B002499CE /* ImportAlbumAlertView.swift */,
+			);
+			path = Links;
+			sourceTree = "<group>";
+		};
+		328C15392A398998002499CE /* Links */ = {
+			isa = PBXGroup;
+			children = (
+				328C153A2A3989B1002499CE /* ImportAlbumViewModelTests.swift */,
+			);
+			path = Links;
+			sourceTree = "<group>";
+		};
 		328FDCF629121D2200E5990A /* Album */ = {
 			isa = PBXGroup;
 			children = (
+				328C15392A398998002499CE /* Links */,
 				3299F055291A20370071FB77 /* AlbumCellViewModelTests.swift */,
 				9D94AF6F29653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift */,
 				3299F053291A20230071FB77 /* AlbumContentViewModelTests.swift */,
@@ -10326,6 +10356,7 @@
 		B69A1765270B756F00AAD334 /* Media Consumption */ = {
 			isa = PBXGroup;
 			children = (
+				328C15342A3974B2002499CE /* Links */,
 				12397E1A2820C43E00A30CCC /* Album Library */,
 				B6C444E0274A28AA00268D9A /* Photo Library */,
 				32B0722728A4E082002BAE34 /* Slideshow Library */,
@@ -12799,6 +12830,7 @@
 				BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */,
 				BF7EBD46245277EB0015255F /* AddToChatMenuItemsView.swift in Sources */,
 				BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */,
+				328C153F2A39A63B002499CE /* ImportAlbumAlertView.swift in Sources */,
 				BF7EBD4D2452ABE20015255F /* AddToChatMenuView.swift in Sources */,
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
@@ -13083,6 +13115,7 @@
 				BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */,
 				2F5DD9A62522DFE4007027F3 /* ChatViewController+Docscan.swift in Sources */,
 				2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */,
+				328C15362A3975C8002499CE /* ImportAlbumView.swift in Sources */,
 				2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */,
 				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
 				2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */,
@@ -13131,6 +13164,7 @@
 				8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */,
 				9426B67D283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift in Sources */,
 				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,
+				328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */,
 				9441FC1828DE148600DADFDD /* ContactLinkRepository.swift in Sources */,
 				8315B91622DF52DD000CA232 /* ContactOnMegaTableViewCell.swift in Sources */,
 				5D075CDB25185FB50067D363 /* ContactRequest.swift in Sources */,
@@ -14053,6 +14087,7 @@
 				BFAD0FA42A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift in Sources */,
 				BF2675D92A32988A00736759 /* ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift in Sources */,
 				83C9CE812A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift in Sources */,
+				328C153D2A399579002499CE /* AlbumPublicLinkStatus.swift in Sources */,
 				83C9CE772A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift in Sources */,
 				83C9CE7F2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift in Sources */,
 				BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */,
@@ -14806,6 +14841,7 @@
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
+				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,

@@ -274,5 +274,10 @@
     XCTAssertEqual([url mnz_type], URLTypeAppSettings);
 }
 
+- (void)testDeepLinkShouldReturnTypeCollection {
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"];
+    XCTAssertEqual([url mnz_type], URLTypeCollection);
+}
+
 
 @end

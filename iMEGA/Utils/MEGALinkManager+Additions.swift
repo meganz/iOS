@@ -1,4 +1,6 @@
+import SwiftUI
 import MEGADomain
+import MEGAData
 import MEGASdk
 import MEGAPresentation
 import UserNotifications
@@ -26,6 +28,18 @@ extension MEGALinkManager {
     
     class func nodesFromLinkToDownloadAfterLogin(nodes: [NodeEntity]) {
         MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes.toMEGANodes(in: MEGASdkManager.sharedMEGASdkFolder()))
+    }
+    
+    @objc class func showCollectionLinkView() {
+        guard FeatureFlagProvider().isFeatureFlagEnabled(for: .albumShareLink) else { return }
+        
+        let vm = ImportAlbumViewModel(
+                    shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
+                    publicLink: MEGALinkManager.linkURL)
+        let viewController = UIHostingController(rootView: ImportAlbumView(viewModel: vm))
+        viewController.modalPresentationStyle = .fullScreen
+        
+        UIApplication.mnz_visibleViewController().present(viewController, animated: true)
     }
     
     @objc

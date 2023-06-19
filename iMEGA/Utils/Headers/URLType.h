@@ -36,5 +36,6 @@ typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeAppSettings,
     URLTypeTotal,
     URLTypeFileRequestLink,
-    URLTypeScheduleChatLink
+    URLTypeScheduleChatLink,
+    URLTypeCollection
 };
