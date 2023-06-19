@@ -9,9 +9,9 @@ public struct AchievementDetailsEntity: Sendable {
     public let awardsCount: UInt
     public let rewardsCount: Int
 
-    public let classStorages: [AchivementDetailsClassStorage]
-    public let classTransfers: [AchivementDetailsClassTransfer]
-    public let classExpires: [AchivementDetailsClassExpire]
+    public let classStorages: [AchievementDetailsClassStorage]
+    public let classTransfers: [AchievementDetailsClassTransfer]
+    public let classExpires: [AchievementDetailsClassExpire]
     public let awardClasses: [Int]
     public let awardIds: [Int]
     public let awardTimestamps: [Date]
@@ -32,9 +32,9 @@ public struct AchievementDetailsEntity: Sendable {
         currentTransferReferrals: Int64,
         awardsCount: UInt,
         rewardsCount: Int,
-        classStorages: [AchivementDetailsClassStorage],
-        classTransfers: [AchivementDetailsClassTransfer],
-        classExpires: [AchivementDetailsClassExpire],
+        classStorages: [AchievementDetailsClassStorage],
+        classTransfers: [AchievementDetailsClassTransfer],
+        classExpires: [AchievementDetailsClassExpire],
         awardClasses: [Int],
         awardIds: [Int],
         awardTimestamps: [Date],
@@ -83,7 +83,7 @@ public struct AchievementDetailsEntity: Sendable {
     }
 }
 
-public struct AchivementDetailsClassStorage: Sendable {
+public struct AchievementDetailsClassStorage: Sendable {
     public let achievementType: AchievementTypeEntity
     public let storage: Int64
 
@@ -93,7 +93,7 @@ public struct AchivementDetailsClassStorage: Sendable {
     }
 }
 
-public struct AchivementDetailsClassTransfer: Sendable {
+public struct AchievementDetailsClassTransfer: Sendable {
     public let achievementType: AchievementTypeEntity
     public let transfer: Int64
 
@@ -103,7 +103,7 @@ public struct AchivementDetailsClassTransfer: Sendable {
     }
 }
 
-public struct AchivementDetailsClassExpire: Sendable {
+public struct AchievementDetailsClassExpire: Sendable {
     public let achievementType: AchievementTypeEntity
     public let expire: Int
 
