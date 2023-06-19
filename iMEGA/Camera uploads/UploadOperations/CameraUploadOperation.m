@@ -103,31 +103,6 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     [[NSFileManager defaultManager] createDirectoryAtURL:directoryURL withIntermediateDirectories:YES attributes:nil error:nil];
     return directoryURL;
 }
-
-- (BOOL)createThumbnailAndPreviewFiles {
-    if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
-        return NO;
-    }
-    
-    BOOL thumbnailCreated = [self.sdk createThumbnail:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.thumbnailURL.path];
-    if (!thumbnailCreated) {
-        MEGALogError(@"[Camera Upload] %@ error when to create thumbnail", self);
-    }
-    
-    if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
-        return NO;
-    }
-    BOOL previewCreated = [self.sdk createPreview:self.uploadInfo.attributeImageURL.path destinatioPath:self.uploadInfo.previewURL.path];
-    if (!previewCreated) {
-        MEGALogError(@"[Camera Upload] %@ error when to create preview", self);
-    }
-    
-    self.sdk = nil;
-    return thumbnailCreated && previewCreated;
-}
-
 - (UploadQueueType)uploadQueueType {
     return UploadQueueTypePhoto;
 }
@@ -159,29 +134,30 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         self.uploadInfo.attributeImageURL = self.uploadInfo.fileURL;
     }
     
-    if (![self createThumbnailAndPreviewFiles]) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
-        return;
-    }
-    
-    MEGABackgroundMediaUpload *mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdkManager.sharedMEGASdk];
-    if (mediaUpload == nil) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
-        return;
-    }
-    
-    self.uploadInfo.mediaUpload = mediaUpload;
-    
-    CLLocation *assetLocation = self.uploadInfo.asset.location;
-    if (assetLocation) {
-        [self.uploadInfo.mediaUpload setCoordinatesWithLatitude:assetLocation.coordinate.latitude longitude:assetLocation.coordinate.longitude isUnshareable:YES];
-    }
-    
-    if (![self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path]) {
-        MEGALogError(@"[Camera Upload] %@ analyse media info failed", self);
-    }
-    
-    [self encryptFile];
+    [self prepareThumbnailAndPreviewFilesWithCompletionHandler:^(BOOL thumbnailAndPreviewCreated) {
+        if (thumbnailAndPreviewCreated) {
+            MEGABackgroundMediaUpload *mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdkManager.sharedMEGASdk];
+            if (mediaUpload == nil) {
+                [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
+                return;
+            }
+            
+            self.uploadInfo.mediaUpload = mediaUpload;
+            
+            CLLocation *assetLocation = self.uploadInfo.asset.location;
+            if (assetLocation) {
+                [self.uploadInfo.mediaUpload setCoordinatesWithLatitude:assetLocation.coordinate.latitude longitude:assetLocation.coordinate.longitude isUnshareable:YES];
+            }
+            
+            if (![self.uploadInfo.mediaUpload analyseMediaInfoForFileAtPath:self.uploadInfo.fileURL.path]) {
+                MEGALogError(@"[Camera Upload] %@ analyse media info failed", self);
+            }
+            
+            [self encryptFile];
+        } else {
+            [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
+        }
+    }];
 }
 
 - (void)encryptFile {
