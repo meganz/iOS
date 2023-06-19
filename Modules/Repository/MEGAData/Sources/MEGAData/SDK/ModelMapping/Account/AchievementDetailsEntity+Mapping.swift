@@ -22,24 +22,9 @@ extension MEGAAchievementsDetails {
             currentTransferReferrals: currentTransferReferrals,
             awardsCount: awardsCount,
             rewardsCount: rewardsCount,
-            classStorages: AchievementTypeEntity.allCases.map {
-                AchivementDetailsClassStorage(
-                    achievementType: $0,
-                    storage: classStorage(forClassId: $0.rawValue)
-                )
-            },
-            classTransfers: AchievementTypeEntity.allCases.map {
-                AchivementDetailsClassTransfer(
-                    achievementType: $0,
-                    transfer: classTransfer(forClassId: $0.rawValue)
-                )
-            },
-            classExpires: AchievementTypeEntity.allCases.map {
-                AchivementDetailsClassExpire(
-                    achievementType: $0,
-                    expire: classExpire(forClassId: $0.rawValue)
-                )
-            },
+            classStorages: AchievementTypeEntity.allCases.map { $0.toAchievementDetails(classStorage: classStorage(forClassId:)) },
+            classTransfers: AchievementTypeEntity.allCases.map { $0.toAchievementDetails(classTransfer: classTransfer(forClassId:)) },
+            classExpires: AchievementTypeEntity.allCases.map { $0.toAchievementDetails(classExpire: classExpire(forClassId:)) },
             awardClasses: awards.map { awardClass(at: $0) },
             awardIds: awards.map { awardId(at: $0) },
             awardTimestamps: awards.map { awardTimestamp(at: $0) },
