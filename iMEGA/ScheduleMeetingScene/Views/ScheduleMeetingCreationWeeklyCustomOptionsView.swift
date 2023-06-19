@@ -8,9 +8,7 @@ struct ScheduleMeetingCreationWeeklyCustomOptionsView: View {
             ScheduleMeetingCreationOptionSelectionView(
                 name: weekSymbol,
                 isSelected: viewModel.selectedWeekDays?.contains(weekSymbol) ?? false
-            )
-            .contentShape(Rectangle())
-            .onTapGesture {
+            ) {
                 viewModel.toggleSelection(forWeekDay: weekSymbol)
             }
         }

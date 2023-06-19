@@ -6,10 +6,10 @@ struct ScheduleMeetingCreationFrequencyOption {
     let intervalOption: [Int]
     let localizedString: (Int) -> String
     
-    func createRules(usingInterval interval: Int) -> ScheduledMeetingRulesEntity {
+    func createRules(usingInterval interval: Int, startDate: Date) -> ScheduledMeetingRulesEntity {
         var rules = ScheduledMeetingRulesEntity(frequency: frequency)
         rules.interval = interval
-        rules.updateDayList(usingStartDate: Date())
+        rules.updateDayList(usingStartDate: startDate)
         return rules
     }
 }

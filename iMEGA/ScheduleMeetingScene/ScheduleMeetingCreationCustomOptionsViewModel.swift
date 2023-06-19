@@ -50,10 +50,16 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
     
     private var subscriptions = Set<AnyCancellable>()
     private let router: ScheduleMeetingCreationCustomOptionsRouting
+    private let startDate: Date
 
-    init(router: ScheduleMeetingCreationCustomOptionsRouting, rules: ScheduledMeetingRulesEntity) {
+    init(
+        router: ScheduleMeetingCreationCustomOptionsRouting,
+        rules: ScheduledMeetingRulesEntity,
+        startDate: Date
+    ) {
         self.router = router
         self.rules = rules
+        self.startDate = startDate
         resetFrequencyToDailyFrequencyIfNeeded()
         updateSelectedFrequencyName()
         instantiateRequiredViewModel(forFrequency: frequency)
@@ -89,7 +95,10 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
             weeklyOptionsViewModel = ScheduleMeetingCreationWeeklyCustomOptionsViewModel(rules: rules)
             weeklyOptionsViewModel?.$rules.assign(to: &$rules)
         case .monthly:
-            monthlyOptionsViewModel = ScheduleMeetingCreationMonthlyCustomOptionsViewModel(rules: rules)
+            monthlyOptionsViewModel = ScheduleMeetingCreationMonthlyCustomOptionsViewModel(
+                rules: rules,
+                startDate: startDate
+            )
             monthlyOptionsViewModel?.$rules.assign(to: &$rules)
         default:
             break
@@ -109,7 +118,7 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
     
     private func resetFrequencyToDailyFrequencyIfNeeded() {
         if rules.frequency == .invalid {
-            rules.reset(toFrequency: .daily, usingStartDate: Date())
+            rules.reset(toFrequency: .daily, usingStartDate: startDate)
         }
     }
     
@@ -125,7 +134,7 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
     
     private func updateFrequency(withName frequencyName: String) {
         let frequencyOption = ScheduleMeetingCreationFrequencyOption.all.first(where: { $0.name == frequencyName })
-        let newRules = frequencyOption?.createRules(usingInterval: rules.interval)
+        let newRules = frequencyOption?.createRules(usingInterval: rules.interval, startDate: startDate)
         rules = newRules ?? rules
     }
 }

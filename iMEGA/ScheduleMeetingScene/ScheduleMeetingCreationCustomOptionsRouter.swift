@@ -15,7 +15,7 @@ final class ScheduleMeetingCreationCustomOptionsRouter: ScheduleMeetingCreationC
     }
     
     func start() {
-        let viewModel = ScheduleMeetingCreationCustomOptionsViewModel(router: self, rules: rules)
+        let viewModel = ScheduleMeetingCreationCustomOptionsViewModel(router: self, rules: rules, startDate: startDate)
         let view = ScheduleMeetingCreationCustomOptionsView(viewModel: viewModel)
         presenter.navigationBar.topItem?.backButtonDisplayMode = .minimal
         presenter.pushViewController(UIHostingController(rootView: view), animated: true)

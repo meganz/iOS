@@ -35,31 +35,31 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests: XCTestCas
     
     func testSelectedCustomOption_withOnEachSelected_shouldMatch() {
         let viewModel = viewModel(forMonthWeekDayList: [[1, 2]])
-        XCTAssertEqual(viewModel.selectedCustomOption(), viewModel.monthlyCustomOptions[0])
+        XCTAssertEqual(viewModel.selectedCustomOption, viewModel.monthlyCustomOptions[0])
     }
     
     func testSelectedCustomOption_withEachSelected_shouldMatch() {
         let viewModel = viewModel(forMonthDayList: [3])
-        XCTAssertEqual(viewModel.selectedCustomOption(), viewModel.monthlyCustomOptions[1])
+        XCTAssertEqual(viewModel.selectedCustomOption, viewModel.monthlyCustomOptions[1])
     }
     
     func testSelectedDates_withSingleDate_shouldMatch() {
         let viewModel = viewModel(forMonthDayList: [3])
-        XCTAssertEqual(viewModel.selectedDates(), Set(["3"]))
+        XCTAssertEqual(viewModel.selectedDays, Set(["3"]))
     }
     
     func testSelectedDates_withMultipleDate_shouldMatch() {
         let viewModel = viewModel(forMonthDayList: [1, 5])
-        XCTAssertEqual(viewModel.selectedDates(), Set(["1", "5"]))
+        XCTAssertEqual(viewModel.selectedDays, Set(["1", "5"]))
     }
     
     func testResetSelection_withMonthDayList_shouldMatch() throws {
-        let viewModel = viewModel(forMonthDayList: [3])
+        let sampleDate = try XCTUnwrap(sampleDate())
+        let viewModel = viewModel(forMonthDayList: [3], startDate: sampleDate)
         viewModel.resetSelection(to: viewModel.monthlyCustomOptions[1])
-        let today = try XCTUnwrap(Calendar.current.dateComponents([.day], from: Date()).day)
         XCTAssertEqual(
             viewModel.rules.monthDayList,
-            [today]
+            [16]
         )
     }
     
@@ -127,27 +127,35 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests: XCTestCas
     }
     
     private func viewModel(
-        forMonthDayList monthDayList: [Int]
+        forMonthDayList monthDayList: [Int],
+        startDate: Date = Date()
     ) -> ScheduleMeetingCreationMonthlyCustomOptionsViewModel {
         let rules = ScheduledMeetingRulesEntity(
             frequency: .monthly,
             monthDayList: monthDayList
         )
-        return ScheduleMeetingCreationMonthlyCustomOptionsViewModel(rules: rules)
+        return ScheduleMeetingCreationMonthlyCustomOptionsViewModel(rules: rules, startDate: startDate)
     }
     
     private func viewModel(
-        forMonthWeekDayList monthWeekDayList: [[Int]]
+        forMonthWeekDayList monthWeekDayList: [[Int]],
+        startDate: Date = Date()
     ) -> ScheduleMeetingCreationMonthlyCustomOptionsViewModel {
         let rules = ScheduledMeetingRulesEntity(
             frequency: .monthly,
             monthWeekDayList: monthWeekDayList
         )
-        return ScheduleMeetingCreationMonthlyCustomOptionsViewModel(rules: rules)
+        return ScheduleMeetingCreationMonthlyCustomOptionsViewModel(rules: rules, startDate: startDate)
     }
     
-    private func viewModel() -> ScheduleMeetingCreationMonthlyCustomOptionsViewModel {
+    private func viewModel(startDate: Date = Date()) -> ScheduleMeetingCreationMonthlyCustomOptionsViewModel {
         let rules = ScheduledMeetingRulesEntity(frequency: .invalid)
-        return ScheduleMeetingCreationMonthlyCustomOptionsViewModel(rules: rules)
+        return ScheduleMeetingCreationMonthlyCustomOptionsViewModel(rules: rules, startDate: startDate)
+    }
+    
+    private func sampleDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return dateFormatter.date(from: "16/05/2023")
     }
 }
