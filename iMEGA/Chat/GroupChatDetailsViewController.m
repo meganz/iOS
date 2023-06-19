@@ -243,7 +243,10 @@
 }
 
 - (void)renameChatGroup {
-    UIAlertController *renameGroupAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.") message:NSLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
+    NSString *title = self.chatRoom.isMeeting
+        ? NSLocalizedString(@"meetings.info.renameMeeting", @"The title of a menu button which allows users to rename a meeting.")
+        : NSLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
+    UIAlertController *renameGroupAlertController = [UIAlertController alertControllerWithTitle:title message:NSLocalizedString(@"renameNodeMessage", @"Hint text to suggest that the user have to write the new name for the file or folder") preferredStyle:UIAlertControllerStyleAlert];
     
     [renameGroupAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.text = self.chatRoom.title;
@@ -294,17 +297,24 @@
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
     customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
-    customModalAlertVC.detail = NSLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
+    customModalAlertVC.detail = self.chatRoom.isMeeting
+        ? NSLocalizedString(@"meetings.info.getMeetingLink.explainLink", @"Text explaining users how the meeting links work.")
+        : NSLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
     customModalAlertVC.firstButtonTitle = NSLocalizedString(@"general.share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
     customModalAlertVC.link = link;
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
         customModalAlertVC.secondButtonTitle = NSLocalizedString(@"delete", nil);
     }
     customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+    NSURL *url = [NSURL URLWithString:link];
+    MeetingLinkPresentationItemSource *itemSource = [[MeetingLinkPresentationItemSource alloc] initWithUrl:url title:self.chatRoom.title];
+    NSArray *activityItems = self.chatRoom.isMeeting
+        ? [NSArray arrayWithObject:itemSource]
+        : [NSArray arrayWithObject:link];
     __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
     customModalAlertVC.firstCompletion = ^{
-        [weakCustom dismissViewControllerAnimated:YES completion:^{            
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
+        [weakCustom dismissViewControllerAnimated:YES completion:^{
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
             if (activityVC.popoverPresentationController != nil) {
                 activityVC.popoverPresentationController.sourceView = self.view;
                 activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, self.view.frame.size.width/2, self.view.frame.size.height/2);
@@ -488,7 +498,8 @@
         case GroupChatDetailsSectionChatNotifications:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsSwitchTypeID" forIndexPath:indexPath];
             [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
-                                                     chatId:self.chatRoom.chatId];
+                                                     chatId:self.chatRoom.chatId
+                                                  isMeeting:self.chatRoom.isMeeting];
             cell.delegate = self;
             break;
             
@@ -500,7 +511,9 @@
         case GroupChatDetailsSectionRenameGroup:
             cell.leftImageView.image = [UIImage imageNamed:@"rename"];
             cell.leftImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-            cell.nameLabel.text = NSLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
+            cell.nameLabel.text = self.chatRoom.isMeeting
+                ? NSLocalizedString(@"meetings.info.renameMeeting", @"The title of a menu button which allows users to rename a meeting.")
+                : NSLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
             break;
             
         case GroupChatDetailsSectionSharedFiles:
@@ -511,13 +524,17 @@
             
         case GroupChatDetailsSectionGetChatLink:
             cell.leftImageView.image = [UIImage imageNamed:@"link"];
-            cell.nameLabel.text = NSLocalizedString(@"Get Chat Link", @"");
+            cell.nameLabel.text = self.chatRoom.isMeeting
+                ? NSLocalizedString(@"meetings.info.getMeetingLink", @"Label in a cell where you can get the meeting link")
+                : NSLocalizedString(@"Get Chat Link", @"");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
         case GroupChatDetailsSectionManageChatHistory:
             cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
-            cell.nameLabel.text = NSLocalizedString(@"Manage Chat History", @"Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.");
+            cell.nameLabel.text = self.chatRoom.isMeeting
+                ? NSLocalizedString(@"meetings.info.manageMeetingHistory", @"Text related with the section where you can manage the meeting history. There you can for example, clear the history or configure the retention setting.")
+                : NSLocalizedString(@"Manage Chat History", @"Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
@@ -528,11 +545,17 @@
             [cell setDestructive:self.chatRoom.isArchived];
             break;
             
-        case GroupChatDetailsSectionLeaveGroup:
+        case GroupChatDetailsSectionLeaveGroup: {
             cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
-            cell.nameLabel.text = self.chatRoom.isPreview ? NSLocalizedString(@"close", nil) : NSLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+            NSString *leaveTitle = self.chatRoom.isMeeting
+                ? NSLocalizedString(@"meetings.info.leaveMeeting", @"The button title that allows the user to leave a ad hoc meeting.")
+                : NSLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
+            cell.nameLabel.text = self.chatRoom.isPreview
+                ? NSLocalizedString(@"close", nil)
+                : leaveTitle;
             [cell setDestructive:YES];
             break;
+        }
         
         case GroupChatDetailsSectionEndCallForAll:
             cell.leftImageView.image = [UIImage imageNamed:@"endCall"];
@@ -877,7 +900,7 @@
             }
                 
             case GroupChatDetailsSectionManageChatHistory:
-                [[ManageChatHistoryViewRouter.alloc initWithChatId:self.chatRoom.chatId navigationController:self.navigationController] start];
+                [[ManageChatHistoryViewRouter.alloc initWithChatId:self.chatRoom.chatId isChatTypeMeeting:self.chatRoom.isMeeting navigationController:self.navigationController] start];
                 break;
                 
             case GroupChatDetailsSectionArchiveChat:

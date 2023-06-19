@@ -46,7 +46,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         
         if dndSwitch.isOn {
             dismiss(animated: true, completion: nil)
-            globalDNDNotificationControl?.turnOnDND(moreBarButtonItem as Any)
+            globalDNDNotificationControl?.turnOnDND(isChatTypeMeeting: chatTypeSelected == .meeting, sender: moreBarButtonItem as Any)
         } else {
             globalDNDNotificationControl?.turnOffDND { [weak self] in
                 self?.refreshContextMenuBarButton()

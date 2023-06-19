@@ -41,7 +41,7 @@ struct MeetingInfoView: View {
                 if viewModel.isModerator {
                     DisclosureView(
                         image: Asset.Images.Meetings.Info.manageChatHistory.name,
-                        text: Strings.Localizable.Meetings.Info.manageChatHistory) {
+                        text: Strings.Localizable.Meetings.Info.manageMeetingHistory) {
                             viewModel.manageChatHistoryViewTapped()
                         }
                         .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)

@@ -244,7 +244,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
     cell.nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
-                                             chatId:self.chatRoom.chatId];
+                                             chatId:self.chatRoom.chatId
+                                          isMeeting:self.chatRoom.isMeeting];
     cell.delegate = self;
     return cell;
 }
@@ -1020,7 +1021,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             break;
             
         case ContactDetailsSectionManageChatHistory:
-           [[ManageChatHistoryViewRouter.alloc initWithChatId:self.chatRoom.chatId navigationController:self.navigationController] start];
+            [[ManageChatHistoryViewRouter.alloc initWithChatId:self.chatRoom.chatId isChatTypeMeeting:NO navigationController:self.navigationController] start];
             break;
             
         case ContactDetailsSectionArchiveChat:
@@ -1194,7 +1195,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (sender.isOn) {
         [self.chatNotificationControl turnOffDNDWithChatId:self.chatRoom.chatId];
     } else {
-        [self.chatNotificationControl turnOnDNDWithChatId:self.chatRoom.chatId sender:sender];
+        [self.chatNotificationControl turnOnDNDWithChatId:self.chatRoom.chatId isChatTypeMeeting:self.chatRoom.isMeeting sender:sender];
     }
 }
 

@@ -183,7 +183,7 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     // MARK: - Private
     
     private func configView() {
-        title = Strings.Localizable.manageChatHistory
+        title = viewModel.navigationTitle
         
         historyRetentionLabel.text = Strings.Localizable.historyClearing
         viewModel.dispatch(.historyRetentionValue)
@@ -193,7 +193,7 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
         historyRetentionPickerView.dataSource = pickerViewModel
         historyRetentionPickerView.delegate = pickerViewModel
         
-        clearAllChatHistoryLabel.text = Strings.Localizable.clearChatHistory
+        clearAllChatHistoryLabel.text = viewModel.clearHistoryTitle
         
         updateAppearance()
     }
@@ -292,7 +292,7 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     }
     
     private func clearChatHistoryAlert() {
-        let alertController = UIAlertController(title: Strings.Localizable.clearChatHistory, message: Strings.Localizable.clearTheFullMessageHistory, preferredStyle: .alert)
+        let alertController = UIAlertController(title: viewModel.clearHistoryTitle, message: viewModel.clearHistoryMessage, preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil)
         

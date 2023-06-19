@@ -3418,6 +3418,26 @@
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="On date";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="Never";
+/* Title for meeting notifications option in meeting info */
+"meetings.info.meetingNotifications"="Meeting notifications";
+/* Title for manage meeting history option in meeting info */
+"meetings.info.manageMeetingHistory"="Manage meeting history";
+/* Meeting Notifications DND: Title bar message for the dnd activate options */
+"meetings.info.muteMeetingNotificationsFor"="Mute meeting notifications for";
+/* Title for share meeting link option in meeting info */
+"meetings.info.shareMeetingLink"="Share meeting link";
+/* The button or alert title to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="Clear meeting history";
+/* The alert message to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Are you sure you want to clear the full message history of this meeting?";
+/* The button title that allows the user to leave a ad hoc meeting. */
+"meetings.info.leaveMeeting"="Leave meeting";
+/* Label in a cell where you can get the meeting link */
+"meetings.info.getMeetingLink"="Get meeting link";
+/* Text explaining users how the meeting links work. */
+"meetings.info.getMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+/* The title of a menu button which allows users to rename a meeting. */
+"meetings.info.renameMeeting"="Rename meeting";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
 "meetings.scheduleMeeting.create.daily.optionTitle"="Daily";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */

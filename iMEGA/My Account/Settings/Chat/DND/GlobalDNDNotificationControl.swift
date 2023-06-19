@@ -27,8 +27,12 @@ class GlobalDNDNotificationControl: PushNotificationControl {
         return (isGlobalDNDEnabled && (pushNotificationSettings.globalChatsDNDTimestamp == 0))
     }
     
-    @objc func turnOnDND(_ sender: Any) {
-        let alertController = DNDTurnOnOption.alertController(delegate: self, isGlobalSetting: true, identifier: nil)
+    /// Show turn on do not disturbe action sheet
+    /// - Parameters:
+    ///   - isChatTypeMeeting: Determins the title of the action sheet
+    ///   - sender: Sender of the action
+    @objc func turnOnDND(isChatTypeMeeting: Bool, sender: Any) {
+        let alertController = DNDTurnOnOption.alertController(delegate: self, isGlobalSetting: true, isChatTypeMeeting: isChatTypeMeeting, identifier: nil)
         show(alertController: alertController, sender: sender)
     }
     

@@ -16,18 +16,23 @@ final class ManageChatHistoryViewRouter: NSObject, ManageChatHistoryProtocol {
     private weak var navigationController: UINavigationController?
     
     private let chatId: ChatIdEntity
+    private let isChatTypeMeeting: Bool
     
-    @objc init(chatId: ChatIdEntity, navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    @objc init(chatId: ChatIdEntity, isChatTypeMeeting: Bool, navigationController: UINavigationController) {
         self.chatId = chatId
-        
+        self.isChatTypeMeeting = isChatTypeMeeting
+        self.navigationController = navigationController
+
         super.init()
     }
     
     func build() -> UIViewController {
         let repository = ManageChatHistoryRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())
         let manageChatHistoryUseCase = ManageChatHistoryUseCase(retentionValueUseCase: HistoryRetentionUseCase(repository: repository), historyRetentionUseCase: HistoryRetentionUseCase(repository: repository), clearChatHistoryUseCase: ClearChatHistoryUseCase(repository: repository))
-        let viewModel = ManageChatHistoryViewModel(router: self, manageChatHistoryUseCase: manageChatHistoryUseCase, chatId: chatId)
+        let viewModel = ManageChatHistoryViewModel(router: self,
+                                                   manageChatHistoryUseCase: manageChatHistoryUseCase,
+                                                   chatId: chatId,
+                                                   chatViewMode: isChatTypeMeeting ? ChatViewMode.meetings : ChatViewMode.chats)
         let pickerViewModel = HistoryRetentionPickerViewModel()
         
         let tableViewController = UIStoryboard(name: "ManageChatHistory", bundle: nil).instantiateViewController(withIdentifier: "ManageChatHistoryTableViewControllerID") as! ManageChatHistoryTableViewController

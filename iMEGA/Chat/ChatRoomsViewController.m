@@ -810,7 +810,7 @@
         [actions addObject:unmuteAction];
     } else {
         ActionSheetAction *muteAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
-            [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+            [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId isChatTypeMeeting:[self isChatTypeMeeting] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
         }];
         [actions addObject:muteAction];
     }
@@ -828,6 +828,10 @@
     ActionSheetViewController *actionSheetVC = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:nil];
     
     [self presentViewController:actionSheetVC animated:YES completion:nil];
+}
+
+- (BOOL)isChatTypeMeeting {
+    return self.chatTypeSelected == MEGAChatTypeMeeting;
 }
 
 #pragma mark - TopBannerButton
@@ -1084,7 +1088,7 @@
                 [menus addObject:unmuteAction];
             } else {
                 UIAction *muteAction = [UIAction actionWithTitle:NSLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-                    [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId sender:[tableView cellForRowAtIndexPath:indexPath]];
+                    [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId isChatTypeMeeting:[self isChatTypeMeeting] sender:[tableView cellForRowAtIndexPath:indexPath]];
                 }];
                 [menus addObject:muteAction];
             }

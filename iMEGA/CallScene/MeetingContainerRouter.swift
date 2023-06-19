@@ -170,8 +170,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             MEGALogDebug("Meeting link Share controller is already presented.")
             return
         }
-        
-        let activityViewController = UIActivityViewController(activityItems: [link], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
+        guard let url = URL(string: link) else {
+            MEGALogDebug("Meeting link url should exist.")
+            return
+        }
+        let itemSource = MeetingLinkPresentationItemSource(url: url, title: self.chatRoom.title ?? "")
+        let activityViewController = UIActivityViewController(activityItems: [itemSource], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
         if let barButtonSender = sender as? UIBarButtonItem {
             activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
         } else if let buttonSender = sender as? UIButton {

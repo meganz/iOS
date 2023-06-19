@@ -10,7 +10,7 @@ struct ChatRoomLinkNonHostView: View {
         VStack {
             DisclosureView(
                 image: Asset.Images.Meetings.Info.meetingLink.name,
-                text: Strings.Localizable.Meetings.Info.shareChatLink) {
+                text: Strings.Localizable.Meetings.Info.shareMeetingLink) {
                     viewModel.shareMeetingLinkTapped()
                 }
                 .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)

@@ -142,7 +142,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
 
 - (IBAction)dndSwitchValueChanged:(UISwitch *)sender {
     if (sender.isOn) {
-        [self.globalDNDNotificationControl turnOnDND:sender];
+        [self.globalDNDNotificationControl turnOnDNDWithIsChatTypeMeeting:NO sender:sender];
     } else {
         [self.globalDNDNotificationControl turnOffDND];
     }
