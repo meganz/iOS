@@ -1,40 +1,47 @@
 import SwiftUI
 
 struct ScheduleMeetingCreationMonthlyCustomOptionsView: View {
+    private struct constants {
+        static let days = (1...31).compactMap(String.init)
+        static let rows = 5
+        static let columns = 7
+        static let columnPadding = 2
+        static let allowsMultipleSelection = false
+    }
+    
     @ObservedObject var viewModel: ScheduleMeetingCreationMonthlyCustomOptionsViewModel
-    @State private var selectedOption = ""
-    @State private var selectedDates: Set<String> = []
-
+    
+    var selectedDays: Binding<Set<String>> {
+        Binding {
+           viewModel.selectedDays
+       } set: {
+           viewModel.updateSelectedMonthDayList($0.compactMap(Int.init))
+       }
+    }
+    
     var body: some View {
         Group {
             ForEach(viewModel.monthlyCustomOptions, id: \.self) { optionName in
-                ScheduleMeetingCreationOptionSelectionView(name: optionName, isSelected: selectedOption == optionName)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        selectedOption = optionName
-                        viewModel.resetSelection(to: selectedOption)
-                    }
+                ScheduleMeetingCreationOptionSelectionView(
+                    name: optionName,
+                    isSelected: viewModel.selectedCustomOption == optionName
+                ) {
+                    viewModel.resetSelection(to: optionName)
+                }
             }
             
-            if selectedOption == viewModel.monthlyCustomOptions.first {
+            if viewModel.selectedCustomOption == viewModel.monthlyCustomOptions.first {
                 ScheduleMeetingCreationMonthlyCustomPickerView(viewModel: viewModel)
             } else {
                 ScheduleMeetingCreationMonthlyDatePickerView(
-                    days: (1...31).map { "\($0)"},
-                    rows: 5,
-                    columns: 7,
-                    columnPadding: 2,
-                    allowsMultipleSelection: false,
-                    selectedDays: $selectedDates
+                    days: constants.days,
+                    rows: constants.rows,
+                    columns: constants.columns,
+                    columnPadding: constants.columnPadding,
+                    allowsMultipleSelection: constants.allowsMultipleSelection,
+                    selectedDays: selectedDays
                 )
-                .onChange(of: selectedDates) { newValue in
-                    viewModel.updateSelectedMonthDayList( newValue.compactMap { Int($0) })
-                }
             }
-        }
-        .onAppear {
-            selectedOption = viewModel.selectedCustomOption()
-            selectedDates = viewModel.selectedDates()
         }
     }
 }

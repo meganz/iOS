@@ -2,8 +2,10 @@ import XCTest
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import Combine
 
 final class ScheduleMeetingCreationCustomOptionsViewModelTests: XCTestCase {
+    var subscriptions = Set<AnyCancellable>()
     
     func testFrequency_whenSelectedFrequencyIsInvalid_shouldMatch() {
         assertFrequency(initialFrequency: .invalid, defaultsToFrequency: .daily)
@@ -165,6 +167,57 @@ final class ScheduleMeetingCreationCustomOptionsViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.expandInterval)
     }
     
+    func testUpdateFrequency_fromDailyToWeekly_shouldMatch() throws {
+        let sampleDate = try XCTUnwrap(sampleDate())
+        let viewModel = makeViewModel(withFrequency: .daily, startDate: sampleDate)
+        
+        let expectation = XCTestExpectation(description: "Convert daily to weekly recurrrence")
+        viewModel
+            .$rules
+            .dropFirst()
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.selectedFrequencyName = viewModel.frequencyNames[1]
+        XCTAssertEqual(viewModel.rules.weekDayList, [3])
+    }
+    
+    func testUpdateFrequency_fromDailyToMonthly_shouldMatch() throws {
+        let sampleDate = try XCTUnwrap(sampleDate())
+        let viewModel = makeViewModel(withFrequency: .daily, startDate: sampleDate)
+        
+        let expectation = XCTestExpectation(description: "Convert daily to monthly recurrrence")
+        viewModel
+            .$rules
+            .dropFirst()
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.selectedFrequencyName = viewModel.frequencyNames[2]
+        XCTAssertEqual(viewModel.rules.monthDayList, [14])
+    }
+    
+    func testUpdateFrequency_fromWeeklyToMonthly_shouldMatch() throws {
+        let sampleDate = try XCTUnwrap(sampleDate())
+        let viewModel = makeViewModel(withFrequency: .weekly, startDate: sampleDate)
+        
+        let expectation = XCTestExpectation(description: "Convert weekly to monthly recurrrence")
+        viewModel
+            .$rules
+            .dropFirst()
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.selectedFrequencyName = viewModel.frequencyNames[2]
+        XCTAssertEqual(viewModel.rules.monthDayList, [14])
+    }
+    
     // MARK: - Private methods
     
     private func assertFrequency(
@@ -182,11 +235,13 @@ final class ScheduleMeetingCreationCustomOptionsViewModelTests: XCTestCase {
     
     private func makeViewModel(
         withFrequency frequency: ScheduledMeetingRulesEntity.Frequency = .invalid,
-        interval: Int = 1
+        interval: Int = 1,
+        startDate: Date = Date()
     ) -> ScheduleMeetingCreationCustomOptionsViewModel {
         ScheduleMeetingCreationCustomOptionsViewModel(
             router: MockScheduleMeetingCreationCustomOptionsRouter(),
-            rules: makeRules(withFrequency: frequency, interval: interval)
+            rules: makeRules(withFrequency: frequency, interval: interval),
+            startDate: startDate
         )
     }
     
@@ -198,6 +253,12 @@ final class ScheduleMeetingCreationCustomOptionsViewModelTests: XCTestCase {
         var rules = ScheduledMeetingRulesEntity(frequency: frequency, interval: interval)
         rules.updateDayList(usingStartDate: startDate)
         return rules
+    }
+    
+    private func sampleDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return dateFormatter.date(from: "14/06/2023")
     }
 }
 

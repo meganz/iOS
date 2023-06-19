@@ -1,4 +1,5 @@
 import MEGADomain
+import SwiftUI
 
 final class ScheduleMeetingCreationMonthlyCustomOptionsViewModel: ObservableObject {
     private let weekDaysInformation = WeekDaysInformation()
@@ -32,27 +33,30 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModel: ObservableObje
         
         return weekDaysInformation.symbols[index - 1]
     }
+    
+    var selectedDays: Set<String> {
+        Set(rules.monthDayList?.compactMap(String.init) ?? [])
+    }
+    
+    var selectedCustomOption: String {
+        rules.monthDayList != nil ? monthlyCustomOptions[1] : monthlyCustomOptions[0]
+    }
         
     @Published
     private(set) var rules: ScheduledMeetingRulesEntity
+    
+    private let startDate: Date
 
-    init(rules: ScheduledMeetingRulesEntity) {
+    init(rules: ScheduledMeetingRulesEntity, startDate: Date) {
         self.rules = rules
-    }
-    
-    func selectedCustomOption() -> String {
-        rules.monthDayList != nil ? monthlyCustomOptions[1] : monthlyCustomOptions[0]
-    }
-    
-    func selectedDates() -> Set<String> {
-        Set(rules.monthDayList?.compactMap(String.init) ?? [])
+        self.startDate = startDate
     }
     
     func resetSelection(to selectedOption: String) {
         if selectedOption == monthlyCustomOptions.first {
             selected(weekNumber: weekNumbers[0], andWeekDay: weekDaysInformation.symbols[0])
         } else {
-            guard let day = Calendar.current.dateComponents([.day], from: Date()).day else { return }
+            guard let day = Calendar.current.dateComponents([.day], from: startDate).day else { return }
             updateSelectedMonthDayList([day])
         }
     }

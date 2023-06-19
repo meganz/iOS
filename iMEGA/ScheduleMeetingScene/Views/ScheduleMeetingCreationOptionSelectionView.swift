@@ -3,6 +3,7 @@ import SwiftUI
 struct ScheduleMeetingCreationOptionSelectionView: View {
     let name: String
     let isSelected: Bool
+    let tapAction: () -> Void
     
     var body: some View {
         HStack {
@@ -12,6 +13,10 @@ struct ScheduleMeetingCreationOptionSelectionView: View {
                 .foregroundColor(Color(Colors.Chat.Meeting.frequencySelectionTickMark.color))
                 .font(.system(.footnote).bold())
                 .opacity(isSelected ? 1.0 : 0.0)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            tapAction()
         }
     }
 }
