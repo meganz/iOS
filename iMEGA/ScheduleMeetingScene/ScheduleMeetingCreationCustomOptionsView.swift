@@ -8,7 +8,7 @@ struct ScheduleMeetingCreationCustomOptionsView: View {
         List {
             Section {
                 ScheduleMeetingCreationCustomOptionsFrequencyView(viewModel: viewModel)
-                ScheduleMeetingCreationCustomOptionsRepetitionRulesView(viewModel: viewModel, selectedInterval: viewModel.interval)
+                ScheduleMeetingCreationCustomOptionsRepetitionRulesView(viewModel: viewModel)
             } footer: {
                 Text(viewModel.intervalFooterNote)
             }

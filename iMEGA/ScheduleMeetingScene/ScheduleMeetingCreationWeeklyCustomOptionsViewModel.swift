@@ -42,7 +42,12 @@ final class ScheduleMeetingCreationWeeklyCustomOptionsViewModel: ObservableObjec
             weekDayList.append(weekDayInt)
         }
         
+        guard weekDayList.isNotEmpty else { return }
         rules.weekDayList = weekDayList.sorted()
+    }
+    
+    func update(interval: Int) {
+        rules.interval = interval
     }
     
     private func convertToWeekDayList(selectedWeekDays: Set<String>) -> [Int] {

@@ -28,7 +28,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
 
     @Published var startDate = Date() {
         didSet {
-            startDateUpdated()
+            startDateUpdated(previouslySelectedDate: oldValue)
         }
     }
     @Published var startDatePickerVisible = false
@@ -183,7 +183,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         return calendar.date(from: components) ?? date
     }
     
-    private func startDateUpdated() {
+    private func startDateUpdated(previouslySelectedDate: Date) {
         if endDate <= startDate {
             endDate = startDate.addingTimeInterval(Constants.defaultDurationHalfHour)
             endDateFormatted = formatDate(endDate)
@@ -193,6 +193,11 @@ final class ScheduleMeetingViewModel: ObservableObject {
         if let untilDate = rules.until, untilDate < startDate {
             rules.until = Calendar.autoupdatingCurrent.date(byAdding: .month, value: 6, to: startDate)
         }
+        
+        guard ScheduleMeetingCreationRecurrenceOption(
+            rules: rules,
+            startDate: previouslySelectedDate
+        ) != .custom else { return }
         rules.updateDayList(usingStartDate: startDate)
     }
     

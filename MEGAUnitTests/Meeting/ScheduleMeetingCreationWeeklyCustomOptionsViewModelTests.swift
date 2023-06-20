@@ -26,10 +26,10 @@ final class ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests: XCTestCase
         XCTAssertEqual(viewModel.rules.weekDayList, Array(1...7))
     }
     
-    func testToogleSelection_weekDayListShouldBeEmpty_shouldMatch() {
+    func testToogleSelection_givenOnlyWeekDaySelectedShouldNotBeRemoved_shouldMatch() {
         let viewModel = makeViewModel(withWeekDayList: [1])
         viewModel.toggleSelection(forWeekDay: WeekDaysInformation().symbols[0])
-        XCTAssertEqual(viewModel.rules.weekDayList, [])
+        XCTAssertEqual(viewModel.rules.weekDayList, [1])
     }
     
     func testToogleSelection_weekDayListShouldAddTheWeekDay_shouldMatch() {
@@ -42,6 +42,12 @@ final class ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests: XCTestCase
         let viewModel = makeViewModel(withWeekDayList: [4])
         viewModel.toggleSelection(forWeekDay: WeekDaysInformation().symbols[1])
         XCTAssertEqual(viewModel.rules.weekDayList, [2, 4])
+    }
+    
+    func testUpdateInterval_changeIntervalToThree_shouldMatch() {
+        let viewModel = makeViewModel(withWeekDayList: [4])
+        viewModel.update(interval: 5)
+        XCTAssertEqual(viewModel.rules.interval, 5)
     }
     
     // MARK: - Private methods

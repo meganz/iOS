@@ -76,6 +76,8 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
     
     func update(interval: Int) {
         rules.interval = interval
+        monthlyOptionsViewModel?.update(interval: interval)
+        weeklyOptionsViewModel?.update(interval: interval)
     }
     
     func update(frequency: ScheduledMeetingRulesEntity.Frequency) {
