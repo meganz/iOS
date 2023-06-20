@@ -3469,9 +3469,9 @@
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
 "meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Please select an interval";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
-"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="Each";
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="On the…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
-"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="On the…";
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Each";
 /* Create Schedule Meeting: Month custom option - first week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.first"="first";
 /* Create Schedule Meeting: Month custom option - second week option text */

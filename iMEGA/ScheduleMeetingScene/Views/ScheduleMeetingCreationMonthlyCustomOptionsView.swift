@@ -31,8 +31,6 @@ struct ScheduleMeetingCreationMonthlyCustomOptionsView: View {
             }
             
             if viewModel.selectedCustomOption == viewModel.monthlyCustomOptions.first {
-                ScheduleMeetingCreationMonthlyCustomPickerView(viewModel: viewModel)
-            } else {
                 ScheduleMeetingCreationMonthlyDatePickerView(
                     days: constants.days,
                     rows: constants.rows,
@@ -41,6 +39,8 @@ struct ScheduleMeetingCreationMonthlyCustomOptionsView: View {
                     allowsMultipleSelection: constants.allowsMultipleSelection,
                     selectedDays: selectedDays
                 )
+            } else {
+                ScheduleMeetingCreationMonthlyCustomPickerView(viewModel: viewModel)
             }
         }
     }

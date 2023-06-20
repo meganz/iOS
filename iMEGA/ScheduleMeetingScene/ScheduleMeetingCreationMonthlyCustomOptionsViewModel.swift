@@ -9,8 +9,8 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModel: ObservableObje
     }
     
     var monthlyCustomOptions: [String] {
-        [Strings.Localizable.Meetings.ScheduleMeeting.Create.Monthly.WeekNumberAndWeekDay.headerTitle,
-         Strings.Localizable.Meetings.ScheduleMeeting.Create.Monthly.Calendar.headerTitle]
+        [Strings.Localizable.Meetings.ScheduleMeeting.Create.Monthly.Calendar.headerTitle,
+         Strings.Localizable.Meetings.ScheduleMeeting.Create.Monthly.WeekNumberAndWeekDay.headerTitle]
     }
     
     var weekNumbers: [String] {
@@ -39,7 +39,7 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModel: ObservableObje
     }
     
     var selectedCustomOption: String {
-        rules.monthDayList != nil ? monthlyCustomOptions[1] : monthlyCustomOptions[0]
+        rules.monthDayList != nil ? monthlyCustomOptions[0] : monthlyCustomOptions[1]
     }
         
     @Published
@@ -54,10 +54,12 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModel: ObservableObje
     
     func resetSelection(to selectedOption: String) {
         if selectedOption == monthlyCustomOptions.first {
-            selected(weekNumber: weekNumbers[0], andWeekDay: weekDaysInformation.symbols[0])
-        } else {
             guard let day = Calendar.current.dateComponents([.day], from: startDate).day else { return }
             updateSelectedMonthDayList([day])
+        } else {
+            let weekDay = weekDaysInformation.weekDay(forStartDate: startDate)
+            let weekNumber = Calendar.current.component(.weekOfMonth, from: startDate)
+            selected(weekNumber: weekNumbers[weekNumber - 1], andWeekDay: weekDaysInformation.symbols[weekDay])
         }
     }
     
@@ -69,6 +71,10 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModel: ObservableObje
     func updateMonthWeekDayList(_ monthWeekDayList: [[Int]]?) {
         rules.monthWeekDayList = monthWeekDayList
         rules.monthDayList = nil
+    }
+    
+    func update(interval: Int) {
+        rules.interval = interval
     }
     
     func selected(weekNumber: String, andWeekDay weekDay: String) {

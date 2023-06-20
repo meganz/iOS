@@ -35,12 +35,12 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests: XCTestCas
     
     func testSelectedCustomOption_withOnEachSelected_shouldMatch() {
         let viewModel = viewModel(forMonthWeekDayList: [[1, 2]])
-        XCTAssertEqual(viewModel.selectedCustomOption, viewModel.monthlyCustomOptions[0])
+        XCTAssertEqual(viewModel.selectedCustomOption, viewModel.monthlyCustomOptions[1])
     }
     
     func testSelectedCustomOption_withEachSelected_shouldMatch() {
         let viewModel = viewModel(forMonthDayList: [3])
-        XCTAssertEqual(viewModel.selectedCustomOption, viewModel.monthlyCustomOptions[1])
+        XCTAssertEqual(viewModel.selectedCustomOption, viewModel.monthlyCustomOptions[0])
     }
     
     func testSelectedDates_withSingleDate_shouldMatch() {
@@ -56,17 +56,18 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests: XCTestCas
     func testResetSelection_withMonthDayList_shouldMatch() throws {
         let sampleDate = try XCTUnwrap(sampleDate())
         let viewModel = viewModel(forMonthDayList: [3], startDate: sampleDate)
-        viewModel.resetSelection(to: viewModel.monthlyCustomOptions[1])
+        viewModel.resetSelection(to: viewModel.monthlyCustomOptions[0])
         XCTAssertEqual(
             viewModel.rules.monthDayList,
             [16]
         )
     }
     
-    func testResetSelection_withMonthWeekDayList_shouldMatch() {
-        let viewModel = viewModel(forMonthWeekDayList: [[1, 5]])
-        viewModel.resetSelection(to: viewModel.monthlyCustomOptions[0])
-        XCTAssertEqual(viewModel.rules.monthWeekDayList, [[1, 1]])
+    func testResetSelection_withMonthWeekDayList_shouldMatch() throws {
+        let startDate = try XCTUnwrap(sampleDate())
+        let viewModel = viewModel(forMonthWeekDayList: [[1, 5]], startDate: startDate)
+        viewModel.resetSelection(to: viewModel.monthlyCustomOptions[1])
+        XCTAssertEqual(viewModel.rules.monthWeekDayList, [[3, 2]])
     }
     
     func testUpdateMonthWeekDayList_shouldMatch() {
@@ -112,6 +113,12 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests: XCTestCas
         XCTAssertEqual(
             viewModel.calendarFooterNote(),
             Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtyFirstSelected.footNote)
+    }
+    
+    func testUpdateInterval_changeIntervalToThree_shouldMatch() {
+        let viewModel = viewModel(forMonthDayList: [31])
+        viewModel.update(interval: 3)
+        XCTAssertEqual(viewModel.rules.interval, 3)
     }
     
     // MARK: - Private methods

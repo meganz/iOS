@@ -2,7 +2,14 @@ import SwiftUI
 
 struct ScheduleMeetingCreationCustomOptionsRepetitionRulesView: View {
     @ObservedObject var viewModel: ScheduleMeetingCreationCustomOptionsViewModel
-    @State var selectedInterval: Int
+    
+    var selectedInterval: Binding<Int> {
+        Binding {
+            viewModel.interval
+        } set: {
+            viewModel.update(interval: $0)
+        }
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -20,12 +27,9 @@ struct ScheduleMeetingCreationCustomOptionsRepetitionRulesView: View {
                 ScheduleMeetingCreationCustomOptionsWheelPickerView(
                     label: Strings.Localizable.Meetings.ScheduleMeeting.Create.Interval.Picker.accessibilityLabel,
                     options: intervalOptions,
-                    selection: $selectedInterval,
+                    selection: selectedInterval,
                     convertOptionToString: { "\(viewModel.string(forInterval: $0) ?? "")" }
                 )
-                .onChange(of: selectedInterval) { updatedInterval in
-                    viewModel.update(interval: updatedInterval)
-                }
             }
         }
     }

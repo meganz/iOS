@@ -4514,7 +4514,7 @@ public enum Strings {
             /// Monthly
             public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.optionTitle")
             public enum Calendar {
-              /// On the…
+              /// Each
               public static let headerTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.calendar.headerTitle")
             }
             public enum WeekNumber {
@@ -4530,7 +4530,7 @@ public enum Strings {
               public static let third = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.weekNumber.third")
             }
             public enum WeekNumberAndWeekDay {
-              /// Each
+              /// On the…
               public static let headerTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle")
             }
           }
