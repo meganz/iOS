@@ -149,6 +149,18 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
         XCTAssertEqual(sut.selectedLocation, .allLocations)
     }
     
+    func testIsRememberPreferenceActive_whenFeatureFlagEnabledAndFilterIsForTimeline_shouldReturnTrue() {
+        let sut = photoLibraryFilterViewModel(featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]))
+        
+        XCTAssertTrue(sut.isRememberPreferenceActive)
+    }
+    
+    func testIsRememberPreferenceActive_whenFeatureFlagEnabledAndFilterIsForAlbum_shouldReturnFalse() {
+        let sut = photoLibraryFilterViewModel(contentMode: .album, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]))
+        
+        XCTAssertFalse(sut.isRememberPreferenceActive)
+    }
+    
     private func photoLibraryFilterViewModel(
         contentMode: PhotoLibraryContentMode = .library,
         userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),

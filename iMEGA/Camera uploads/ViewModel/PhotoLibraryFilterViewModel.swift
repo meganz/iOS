@@ -14,6 +14,10 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     
     let isRememberPreferencesFeatureFlagEnabled: Bool
     
+    var isRememberPreferenceActive: Bool {
+        isRememberPreferencesFeatureFlagEnabled && contentMode != .album
+    }
+    
     init(contentMode: PhotoLibraryContentMode = .library,
          userAttributeUseCase: any UserAttributeUseCaseProtocol,
          featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
@@ -40,7 +44,7 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     
     @MainActor
     func applySavedFilters() async {
-        guard isRememberPreferencesFeatureFlagEnabled else { return }
+        guard isRememberPreferenceActive else { return }
         
         do {
             if let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
@@ -143,7 +147,7 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     }
     
     func saveFilters() async {
-        guard isRememberPreferencesFeatureFlagEnabled else { return }
+        guard isRememberPreferenceActive else { return }
         
         do {
             let timeline = ContentConsumptionTimeline(

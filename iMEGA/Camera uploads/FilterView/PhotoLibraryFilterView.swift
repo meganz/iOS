@@ -101,7 +101,7 @@ struct PhotoLibraryFilterView: View {
                         locationView
                         rememberPreferenceView
                             .padding(.top, 12)
-                            .opacity(viewModel.isRememberPreferencesFeatureFlagEnabled ? 1.0: 0.0)
+                            .opacity(viewModel.isRememberPreferenceActive ? 1.0: 0.0)
                     }
                     .padding(.horizontal, 5)
                     .padding(.bottom, 50)
