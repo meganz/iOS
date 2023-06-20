@@ -5,7 +5,7 @@ protocol MEGANotificationUseCaseProtocol {
 
     func relevantAndNotSeenAlerts() -> [UserAlertEntity]?
 
-    func incomingContactRequest() -> [ContactRequest]
+    func incomingContactRequest() -> [ContactRequestEntity]
 
     func observeUserAlerts(with callback: @escaping () -> Void)
 
@@ -26,7 +26,7 @@ final class MEGANotificationUseCase: MEGANotificationUseCaseProtocol {
         }
     }
 
-    func incomingContactRequest() -> [ContactRequest] {
+    func incomingContactRequest() -> [ContactRequestEntity] {
         userAlertsClient.contactRequest()
     }
 

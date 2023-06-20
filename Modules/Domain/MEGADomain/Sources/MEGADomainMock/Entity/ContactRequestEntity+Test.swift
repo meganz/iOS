@@ -1,9 +1,10 @@
-@testable import MEGA
+import Foundation
+import MEGADomain
 
-extension ContactRequest {
+extension ContactRequestEntity {
     
-    static var random: Self {
-        ContactRequest.init(handle: .random(in: 1...1000),
+    public static var random: Self {
+        ContactRequestEntity(handle: .random(in: 1...1000),
                             sourceEmail: "random",
                             sourceMessage: nil,
                             targetEmail: nil,
