@@ -1,3 +1,4 @@
+import MEGAFoundation
 import UIKit
 
 enum GetLinkTableViewSection: Int {
@@ -57,7 +58,7 @@ struct GetNodeLinkViewModel {
 
 class GetLinkViewController: UIViewController {
     
-    private lazy var dateFormatter = DateFormatter.dateMedium()
+    private lazy var dateFormatter: some DateFormatting = DateFormatter.dateMedium()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var multilinkDescriptionLabel: UILabel!

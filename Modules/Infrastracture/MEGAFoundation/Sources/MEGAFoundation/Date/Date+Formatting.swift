@@ -1,7 +1,7 @@
 import Foundation
 
 public enum DateStyle {
-    public static var dateStyleFactory: DateStyleFactory = DateStyleFactoryImpl()
+    public static var dateStyleFactory: some DateStyleFactory = DateStyleFactoryImpl()
 }
 
 public protocol DateStyleFactory {
@@ -21,13 +21,13 @@ public protocol DateStyleFactory {
         locale: Locale?) -> DateStyle.DateFormatStyle
 }
 
-private struct DateStyleFactoryImpl: DateStyleFactory {
+public struct DateStyleFactoryImpl: DateStyleFactory {
 
-    func templateStyle(fromTemplate template: String, calendar: Calendar?, timeZone: TimeZone?, locale: Locale?) -> DateStyle.StringTemplateStyle {
+    public func templateStyle(fromTemplate template: String, calendar: Calendar?, timeZone: TimeZone?, locale: Locale?) -> DateStyle.StringTemplateStyle {
         DateStyle.StringTemplateStyle(dateFormat: template, calendar: calendar, timeZone: timeZone, locale: locale)
     }
 
-    func systemStyle(ofDateStyle dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style, relativeDateFormatting: Bool?, calendar: Calendar?, timeZone: TimeZone?, locale: Locale?) -> DateStyle.DateFormatStyle {
+    public func systemStyle(ofDateStyle dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style, relativeDateFormatting: Bool?, calendar: Calendar?, timeZone: TimeZone?, locale: Locale?) -> DateStyle.DateFormatStyle {
         DateStyle.DateFormatStyle(dateStyle: dateStyle, timeStyle: timeStyle, relativeDateFormatting: relativeDateFormatting, calendar: calendar, timeZone: timeZone, locale: locale)
     }
 
@@ -59,7 +59,7 @@ public final class DateFormatterPool {
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting template.
     /// - Returns: A date formatter.
-    func dateFormatter(of formattingStyle: DateStyle.StringTemplateStyle) -> DateFormatting {
+    func dateFormatter(of formattingStyle: DateStyle.StringTemplateStyle) -> some DateFormatting {
         if let cachedStyle = stringTemplateFormatterCache[formattingStyle] {
             return cachedStyle
         }
@@ -73,7 +73,7 @@ public final class DateFormatterPool {
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting styles.
     /// - Returns: A date formatter.
-    func dateFormatter(of formattingStyle: DateStyle.DateFormatStyle) -> DateFormatting {
+    func dateFormatter(of formattingStyle: DateStyle.DateFormatStyle) -> some DateFormatting {
         if let cachedStyle = styleFormatterCache[formattingStyle] {
             return cachedStyle
         }

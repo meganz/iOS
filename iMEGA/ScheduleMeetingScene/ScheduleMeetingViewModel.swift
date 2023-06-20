@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAFoundation
 import Combine
 
 protocol ScheduleMeetingRouting {
@@ -64,8 +65,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
     @Published var showDiscardAlert = false
     @Published var createButtonEnabled = false
     
-    let timeFormatter = DateFormatter.timeShort()
-    let dateFormatter = DateFormatter.dateMedium()
+    let timeFormatter: some DateFormatting = DateFormatter.timeShort()
+    let dateFormatter: some DateFormatting = DateFormatter.dateMedium()
     
     private var participants = [UserEntity]() {
         didSet {
