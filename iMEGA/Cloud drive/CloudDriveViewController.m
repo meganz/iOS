@@ -746,37 +746,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction {
-    NSString *alertTitle;
-    NSString *message;
-    if (numFilesAction == 0) {
-        if (numFoldersAction == 1) {
-            message = NSLocalizedString(@"removeFolderToRubbishBinMessage", nil);
-        } else { //folders > 1
-            message = [NSString stringWithFormat:NSLocalizedString(@"removeFoldersToRubbishBinMessage", nil), numFoldersAction];
-        }
-    } else if (numFilesAction == 1) {
-        if (numFoldersAction == 0) {
-            message = NSLocalizedString(@"removeFileToRubbishBinMessage", nil);
-        } else if (numFoldersAction == 1) {
-            message = NSLocalizedString(@"removeFileFolderToRubbishBinMessage", nil);
-        } else {
-            message = [NSString stringWithFormat:NSLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), numFoldersAction];
-        }
-    } else {
-        if (numFoldersAction == 0) {
-            message = [NSString stringWithFormat:NSLocalizedString(@"removeFilesToRubbishBinMessage", nil), numFilesAction];
-        } else if (numFoldersAction == 1) {
-            message = [NSString stringWithFormat:NSLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), numFilesAction];
-        } else {
-            message = NSLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil);
-            NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
-            NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
-            message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-            message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-        }
-        alertTitle = NSLocalizedString(@"removeNodeFromRubbishBinTitle", @"Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account");
-    }
-    
+    NSString *alertTitle = [self.viewModel alertTitleForRemovedFiles:numFilesAction andFolders:numFoldersAction];
+    NSString *message = [self.viewModel alertMessageForRemovedFiles:numFilesAction andFolders:numFoldersAction];
     UIAlertController *removeAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:message preferredStyle:UIAlertControllerStyleAlert];
     [removeAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     

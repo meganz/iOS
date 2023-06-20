@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 
 #import "DisplayMode.h"
+#import "MEGA-Swift.h"
 
 @interface MEGARemoveRequestDelegate ()
 
@@ -49,35 +50,8 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         
         if (self.mode == DisplayModeCloudDrive || self.mode == DisplayModeRubbishBin) {
-            NSString *message;
-            if (self.numberOfFiles == 0) {
-                if (self.numberOfFolders == 1) {
-                    message = NSLocalizedString(@"folderRemovedToRubbishBinMessage", @"Success message shown when 1 folder has been removed from MEGA");
-                } else {
-                    message = [NSString stringWithFormat:NSLocalizedString(@"foldersRemovedToRubbishBinMessage", @"Success message shown when {1+} folders have been removed from MEGA"), self.numberOfFolders];
-                }
-            } else if (self.numberOfFiles == 1) {
-                if (self.numberOfFolders == 0) {
-                    message = NSLocalizedString(@"fileRemovedToRubbishBinMessage", @"Success message shown when 1 file has been removed from MEGA");
-                } else if (self.numberOfFolders == 1) {
-                    message = NSLocalizedString(@"fileFolderRemovedToRubbishBinMessage", @"Success message shown when 1 file and 1 folder have been removed from MEGA");
-                } else {
-                    message = [NSString stringWithFormat:NSLocalizedString(@"fileFoldersRemovedToRubbishBinMessage", @"Success message shown when 1 file and {1+} folders have been removed from MEGA"), self.numberOfFolders];
-                }
-            } else {
-                if (self.numberOfFolders == 0) {
-                    message = [NSString stringWithFormat:NSLocalizedString(@"filesRemovedToRubbishBinMessage", @"Success message shown when {1+} files have been removed from MEGA"), self.numberOfFiles];
-                } else if (self.numberOfFolders == 1) {
-                    message = [NSString stringWithFormat:NSLocalizedString(@"filesFolderRemovedToRubbishBinMessage", @"Success message shown when {1+} files and 1 folder have been removed from MEGA"), self.numberOfFiles];
-                } else {
-                    message = NSLocalizedString(@"filesFoldersRemovedToRubbishBinMessage", @"Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA");
-                    NSString *filesString = [NSString stringWithFormat:@"%tu", self.numberOfFiles];
-                    NSString *foldersString = [NSString stringWithFormat:@"%tu", self.numberOfFolders];
-                    message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-                    message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-                }
-            }
-            
+            NSString *message = [RemovalConfirmationMessageGenerator messageForRemovedFiles:self.numberOfFiles andFolders:self.numberOfFolders];
+
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
         } else if (self.mode == DisplayModeSharedItem) {
             if (self.totalRequests > 1) {

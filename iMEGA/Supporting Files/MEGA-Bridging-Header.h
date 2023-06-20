@@ -105,6 +105,7 @@
 #import "MEGAChatPeerList.h"
 #import "MEGAChatRoom.h"
 #import "MEGARequest.h"
+#import "MEGARemoveRequestDelegate.h"
 #import "MEGAShare.h"
 #import "UpgradeTableViewController.h"
 #import "LoginViewcontroller.h"

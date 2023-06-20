@@ -362,8 +362,7 @@
 - (void)mnz_removeInViewController:(UIViewController *)viewController completion:(void (^)(BOOL shouldRemove))actionCompletion {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *alertTitle = NSLocalizedString(@"general.menuAction.deletePermanently", @"Title for the action that allows to remove a file or folder");
-        NSString *alertMessage = (self.type == MEGANodeTypeFolder) ? NSLocalizedString(@"removeFolderToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 folder'") : NSLocalizedString(@"removeFileToRubbishBinMessage", @"Alert message shown on the Rubbish Bin when you want to remove '1 file'");
-        
+        NSString *alertMessage = [self alertMessageForRemoved:self.type];
         UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
 
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {

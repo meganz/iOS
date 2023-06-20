@@ -21,4 +21,10 @@ extension MEGANode {
         }
         return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
     }
+    
+    @objc func alertMessage(forRemoved nodeType: MEGANodeType) -> String {
+        Strings.Localizable.SharedItems.Rubbish.Warning.message(
+            (nodeType == .folder) ? Strings.Localizable.SharedItems.Rubbish.Warning.folderCount(1) : Strings.Localizable.SharedItems.Rubbish.Warning.fileCount(1)
+        )
+    }
 }

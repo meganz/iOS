@@ -17,6 +17,7 @@
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAConstants.h"
 #import "MEGAGenericRequestDelegate.h"
+#import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAStore.h"

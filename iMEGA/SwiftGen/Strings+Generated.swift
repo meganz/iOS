@@ -5436,6 +5436,36 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "sharedItems.menu.slideshow.title")
         }
       }
+      public enum Rubbish {
+        public enum Confirmation {
+          /// Plural format key: "%#@count@"
+          public static func fileCount(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "sharedItems.rubbish.confirmation.fileCount", p1)
+          }
+          /// Plural format key: "%#@count@"
+          public static func folderCount(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "sharedItems.rubbish.confirmation.folderCount", p1)
+          }
+          /// %@ removed from MEGA
+          public static func message(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "sharedItems.rubbish.confirmation.message", String(describing: p1))
+          }
+        }
+        public enum Warning {
+          /// Plural format key: "%#@count@"
+          public static func fileCount(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "sharedItems.rubbish.warning.fileCount", p1)
+          }
+          /// Plural format key: "%#@count@"
+          public static func folderCount(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "sharedItems.rubbish.warning.folderCount", p1)
+          }
+          /// You are about to permanently remove %@. Would you like to proceed? (You cannot undo this action.)
+          public static func message(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "sharedItems.rubbish.warning.message", String(describing: p1))
+          }
+        }
+      }
       public enum Tab {
         public enum Incoming {
           /// [Undecrypted folder]
