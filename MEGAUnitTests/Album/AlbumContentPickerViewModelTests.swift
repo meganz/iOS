@@ -93,10 +93,12 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
         ])
     }
     
-    func testOnFilter_shouldSetShowFilter() {
+    func testOnFilter_shouldSetShowFilterToTrue() {
         let sut = makeAlbumContentPickerViewModel()
         XCTAssertFalse(sut.photoLibraryContentViewModel.showFilter)
+        
         sut.onFilter()
+        
         XCTAssertTrue(sut.photoLibraryContentViewModel.showFilter)
     }
     
