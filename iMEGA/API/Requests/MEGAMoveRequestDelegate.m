@@ -3,6 +3,12 @@
 
 #import "SVProgressHUD.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @interface MEGAMoveRequestDelegate ()
 
 @property (nonatomic) NSUInteger numberOfFiles;
@@ -71,35 +77,7 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         
         if (self.moveToTheRubbishBin) {
-            NSString *message;
-            if (self.numberOfFiles == 0) {
-                if (self.numberOfFolders == 1) {
-                    message = NSLocalizedString(@"folderMovedToRubbishBinMessage", @"Success message shown when you have moved 1 folder to the rubbish bin");
-                } else {
-                    message = [NSString stringWithFormat:NSLocalizedString(@"foldersMovedToRubbishBinMessage", @"Success message shown when you have moved {1+} folders to the rubbish bin"), self.numberOfFolders];
-                }
-            } else if (self.numberOfFiles == 1) {
-                if (self.numberOfFolders == 0) {
-                    message = NSLocalizedString(@"fileMovedToRubbishBinMessage", @"Success message shown when you have moved 1 file to the rubbish bin");
-                } else if (self.numberOfFolders == 1) {
-                    message = NSLocalizedString(@"fileFolderMovedToRubbishBinMessage", @"Success message shown when you have moved 1 file and 1 folder to the rubbish bin");
-                } else {
-                    message = [NSString stringWithFormat:NSLocalizedString(@"fileFoldersMovedToRubbishBinMessage", @"Success message shown when you have moved 1 file and {1+} folders to the rubbish bin"), self.numberOfFolders];
-                }
-            } else {
-                if (self.numberOfFolders == 0) {
-                    message = [NSString stringWithFormat:NSLocalizedString(@"filesMovedToRubbishBinMessage", @"Success message shown when you have moved {1+} files to the rubbish bin"), self.numberOfFiles];
-                } else if (self.numberOfFolders == 1) {
-                    message = [NSString stringWithFormat:NSLocalizedString(@"filesFolderMovedToRubbishBinMessage", @"Success message shown when you have moved {1+} files and 1 folder to the rubbish bin"), self.numberOfFiles];
-                } else {
-                    message = NSLocalizedString(@"filesFoldersMovedToRubbishBinMessage", @"Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin");
-                    NSString *filesString = [NSString stringWithFormat:@"%tu", self.numberOfFiles];
-                    NSString *foldersString = [NSString stringWithFormat:@"%tu", self.numberOfFolders];
-                    message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-                    message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-                }
-            }
-            
+            NSString *message = [RemovalConfirmationMessageGenerator messageForRemovedFiles:self.numberOfFiles andFolders:self.numberOfFolders];
             [SVProgressHUD showImage:[UIImage imageNamed:@"rubbishBin"] status:message];
         } else {
             if (self.restore) {
