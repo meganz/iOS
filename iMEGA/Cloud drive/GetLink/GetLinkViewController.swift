@@ -304,14 +304,14 @@ class GetLinkViewController: UIViewController {
     private func exportNode(node: MEGANode) {
         MEGASdkManager.sharedMEGASdk().export(node, delegate: MEGAExportRequestDelegate.init(completion: { [weak self] _ in
             (self?.nodesToExportCount -= 1)
-            if self?.nodesToExportCount == 0 {
-                self?.copyLinkToPasteboard()
-                SVProgressHUD.dismiss()
-            }
             guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: node.handle) else {
                 return
             }
             self?.updateModel(forNode: nodeUpdated)
+            if self?.nodesToExportCount == 0 {
+                self?.copyLinkToPasteboard()
+                SVProgressHUD.dismiss()
+            }
             }, multipleLinks: nodesToExportCount > 1))
     }
     
