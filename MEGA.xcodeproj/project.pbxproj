@@ -2596,6 +2596,7 @@
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AsyncAssertions.swift"; sourceTree = "<group>"; };
+		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5612,6 +5613,14 @@
 				BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		167F6A232A41502500D0A6F9 /* BuildTools */ = {
+			isa = PBXGroup;
+			children = (
+				167F6A242A41507D00D0A6F9 /* MEGAPlugins */,
+			);
+			path = BuildTools;
 			sourceTree = "<group>";
 		};
 		245385F82A13C04800208B31 /* NodeInfo */ = {
@@ -9833,6 +9842,7 @@
 		B6061FE528978B040094087E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				167F6A232A41502500D0A6F9 /* BuildTools */,
 				B6FDEF7A2A204E8300276DD6 /* DataSource */,
 				B6FDEF782A204E7700276DD6 /* Domain */,
 				B6FDEF772A204E6700276DD6 /* Infrastracture */,
@@ -11975,7 +11985,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				160811422A3BF5C10014BCD8 /* PBXTargetDependency */,
+				164948672A41586F00AEB736 /* PBXTargetDependency */,
 				943F8B191EF26E9C00AFD89F /* PBXTargetDependency */,
 				7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */,
 				83199F1D25556CDE00344531 /* PBXTargetDependency */,
@@ -12335,7 +12345,6 @@
 				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
 				A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */,
 				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				1608113E2A3BF3400014BCD8 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -14954,9 +14963,9 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		160811422A3BF5C10014BCD8 /* PBXTargetDependency */ = {
+		164948672A41586F00AEB736 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 160811412A3BF5C10014BCD8 /* SwiftLintPlugin */;
+			productRef = 164948662A41586F00AEB736 /* SwiftLint */;
 		};
 		7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -16672,14 +16681,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1608113E2A3BF3400014BCD8 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.52.2;
-			};
-		};
 		A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -16843,10 +16844,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		160811412A3BF5C10014BCD8 /* SwiftLintPlugin */ = {
+		164948662A41586F00AEB736 /* SwiftLint */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1608113E2A3BF3400014BCD8 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
+			productName = "plugin:SwiftLint";
 		};
 		3241349629FB712B006E5310 /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;
