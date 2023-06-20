@@ -22,7 +22,8 @@ extension GroupChatDetailsViewController {
     
     @objc func shouldShowAddParticipants() -> Bool {
         guard let chatRoom = chatRoom else { return false }
-        return (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && !MEGASdk.isGuest
+        let chatRoomPrivilege = chatRoom.ownPrivilege.toOwnPrivilegeEntity()
+        return (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && !MEGASdk.isGuest && chatRoomPrivilege.isUserInChat
     }
     
     @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
