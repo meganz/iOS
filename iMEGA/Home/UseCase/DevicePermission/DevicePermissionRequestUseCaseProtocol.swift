@@ -8,7 +8,7 @@ protocol DevicePermissionRequestUseCaseProtocol {
     /// Request device's `Photos` access to load photos.
     /// - Parameter completion: A completion handler that will handle a result of `PhotoAuthorization` or a
     /// `DevicePermissionDeniedError`.
-    ///  If `.authorized` or `.limited` (iOS 14 +), then the reuslt will be `.success(.authorized)` or `.success(.limited)`
+    ///  If `.authorized` or `.limited`, then the reuslt will be `.success(.authorized)` or `.success(.limited)`
     ///  If denied, the result will be `.failure(.photos)`
     func requestAlbumAccess(completion: @escaping (PhotoAlbumPermissionRequestResult) -> Void)
 
@@ -47,9 +47,7 @@ struct DevicePermissionRequestUseCase: DevicePermissionRequestUseCaseProtocol {
            switch authorizationStatus {
            case .authorized: completion(.success(.authorized))
            case .limited:
-            if #available(iOS 14, *) {
                 completion(.success(.limited))
-            }
            default: completion(.failure(.photos))
            }
        }

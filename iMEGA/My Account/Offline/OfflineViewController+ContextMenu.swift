@@ -32,7 +32,7 @@ extension OfflineViewController: DisplayMenuDelegate {
         default: break
         }
         
-        if #available(iOS 14, *), needToRefreshMenu {
+        if needToRefreshMenu {
             setNavigationBarButtons()
         }
     }
@@ -40,8 +40,6 @@ extension OfflineViewController: DisplayMenuDelegate {
     func sortMenu(didSelect sortType: SortOrderType) {
         Helper.save(sortType.megaSortOrderType, for: currentOfflinePath)
         nodesSortTypeHasChanged()
-        if #available(iOS 14, *) {
-            setNavigationBarButtons()
-        }
+        setNavigationBarButtons()
     }
 }

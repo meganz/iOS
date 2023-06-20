@@ -12,8 +12,7 @@ extension PhotosViewController: PhotosBannerViewProvider {
     }
     
     @objc func updateLimitedAccessBannerVisibility() {
-        guard #available(iOS 14, *),
-              CameraUploadManager.isCameraUploadEnabled,
+        guard CameraUploadManager.isCameraUploadEnabled,
               PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited else {
             showPhotosBannerView(isHidden: true)
             return

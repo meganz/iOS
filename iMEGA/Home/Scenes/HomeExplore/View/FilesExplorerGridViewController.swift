@@ -85,9 +85,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         collectionView.allowsMultipleSelection = editing
         
-        if #available(iOS 14, *) {
-            collectionView.allowsMultipleSelectionDuringEditing = editing
-        }
+        collectionView.allowsMultipleSelectionDuringEditing = editing
         
         collectionView.alwaysBounceVertical = !editing
         gridSource?.allowsMultipleSelection = editing

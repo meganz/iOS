@@ -4,7 +4,7 @@ public enum CMOptions {
     case displayInline
 }
 
-/// Define a group of CMElements. A CMEntity may be composed of more CMEntities or/and actions. It helps us to define grouped Menus for iOS 14+.
+/// Define a group of CMElements. A CMEntity may be composed of more CMEntities or/and actions. It helps us to define grouped Menus.
 ///
 ///  - Parameters:
 ///     - displayInline: An option indicating the entity children is displayed inline with its parent entity instead of displaying as a submenu.

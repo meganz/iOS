@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 14.0, *)
 struct MeetingInfoHeaderView: View {
     @EnvironmentObject private var viewModel: MeetingInfoViewModel
     @Environment(\.layoutDirection) private var layoutDirection
