@@ -1,6 +1,7 @@
 import XCTest
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 class MEGANotificationUseCaseTests: XCTestCase {
 
@@ -50,7 +51,7 @@ extension SDKUserAlertsClient {
                 setIrrelevant(setNotSeen(.random))
             ]
 
-        }, contactRequest: { () -> [ContactRequest] in
+        }, contactRequest: { () -> [ContactRequestEntity] in
             return [
                 .random,
                 .random

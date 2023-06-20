@@ -5,7 +5,7 @@ struct SDKUserAlertsClient {
 
     var notification: () -> [UserAlertEntity]?
 
-    var contactRequest: () -> [ContactRequest]
+    var contactRequest: () -> [ContactRequestEntity]
 
     var userAlertsUpdate: (
         _ alertsUpdateNotifier: @escaping () -> Void
@@ -31,9 +31,9 @@ extension SDKUserAlertsClient {
                 return alerts.toUserAlertEntities()
             },
 
-            contactRequest: { () -> [ContactRequest] in
+            contactRequest: { () -> [ContactRequestEntity] in
                 let incomingContactRequest = api.incomingContactRequests()
-                return convert(incomingContactRequest)
+                return incomingContactRequest.toContactRequestEntities()
             },
 
             userAlertsUpdate: { alertsNotifier in
@@ -63,11 +63,5 @@ extension SDKUserAlertsClient {
         func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
             onUserIncomingContactRequestCallback?()
         }
-    }
-}
-
-private func convert(_ megaContactRequestList: MEGAContactRequestList) -> [ContactRequest] {
-    (0..<megaContactRequestList.size.intValue).compactMap { index in
-        ContactRequest(from: megaContactRequestList.contactRequest(at: index))
     }
 }

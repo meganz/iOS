@@ -1,9 +1,8 @@
-@testable import MEGA
 import MEGADomain
 
 extension UserAlertEntity {
 
-    static var random: Self {
+    public static var random: Self {
         return .init(identifier: .random(in: 0...1),
                      isSeen: .random(),
                      isRelevant: .random(),
