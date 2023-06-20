@@ -98,9 +98,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     
     func chatDoNotDisturbMenu(didSelect option: DNDTurnOnOption) {
         globalDNDNotificationControl?.turnOnDND(dndTurnOnOption: option) { [weak self] in
-            if #available(iOS 14, *) {
-                self?.refreshContextMenuBarButton()
-            }
+            self?.refreshContextMenuBarButton()
         }
     }
     
@@ -108,9 +106,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         guard globalDNDNotificationControl?.isGlobalDNDEnabled ?? false else { return }
         
         globalDNDNotificationControl?.turnOffDND { [weak self] in
-            if #available(iOS 14, *) {
-                self?.refreshContextMenuBarButton()
-            }
+            self?.refreshContextMenuBarButton()
         }
     }
     

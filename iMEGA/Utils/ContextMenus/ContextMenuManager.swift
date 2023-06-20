@@ -211,7 +211,7 @@ final class ContextMenuManager: NSObject {
     ///
     ///  - Parameters:
     ///     - items: Array of CMElement entities that can be CMEntity and CMActionEntity
-    ///  - Returns: Array of UIMenuElements, available elements to create a UIMenu (iOS 14+)
+    ///  - Returns: Array of UIMenuElements, available elements to create a UIMenu
     private func convertToMenuElements(items: [CMElement]) -> [UIMenuElement] {
         items.compactMap {
             if let action = ($0 as? CMActionEntity) {

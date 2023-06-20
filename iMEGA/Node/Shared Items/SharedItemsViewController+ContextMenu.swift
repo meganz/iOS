@@ -72,9 +72,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         sortOrderType = sortType.megaSortOrderType
         UserDefaults.standard.set(sortOrderType.rawValue, forKey: "SharedItemsSortOrderType")
         nodesSortTypeHasChanged()
-        if #available(iOS 14, *) {
-            setNavigationBarButtons()
-        }
+        setNavigationBarButtons()
     }
 
     // MARK: - NodeActionMenu

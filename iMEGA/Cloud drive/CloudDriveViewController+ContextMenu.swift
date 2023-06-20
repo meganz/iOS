@@ -121,14 +121,12 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             
             UIApplication.mnz_visibleViewController().present(alertController, animated: true, completion: nil)
         case .mediaDiscovery:
-            if #available(iOS 14, *) {
-                guard let parentNode = parentNode else { return }
-                MediaDiscoveryRouter(viewController: self, parentNode: parentNode).start()
-            }
+            guard let parentNode = parentNode else { return }
+            MediaDiscoveryRouter(viewController: self, parentNode: parentNode).start()
         default: break
         }
         
-        if #available(iOS 14, *), needToRefreshMenu {
+        if needToRefreshMenu {
             if displayMode == .backup {
                 setBackupNavigationBarButtons()
             } else {
@@ -182,7 +180,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             }).start()
         }
         
-        if #available(iOS 14, *), needToRefreshMenu {
+        if needToRefreshMenu {
             if displayMode == .backup {
                 setBackupNavigationBarButtons()
             } else {
@@ -231,12 +229,10 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     func sortMenu(didSelect sortType: SortOrderType) {
         Helper.save(sortType.megaSortOrderType, for: parentNode)
         nodesSortTypeHasChanged()
-        if #available(iOS 14, *) {
-            if displayMode == .backup {
-                setBackupNavigationBarButtons()
-            } else {
-                setNavigationBarButtons()
-            }
+        if displayMode == .backup {
+            setBackupNavigationBarButtons()
+        } else {
+            setNavigationBarButtons()
         }
     }
     
