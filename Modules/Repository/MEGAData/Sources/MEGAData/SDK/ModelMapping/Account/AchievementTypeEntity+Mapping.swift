@@ -12,15 +12,15 @@ extension AchievementTypeEntity {
         }
     }
     
-    public func toAchievementDetails(classStorage transform: (Int) -> Int64) -> AchievementDetailsClassStorage  {
+    public func toAchievementDetails(classStorage transform: (Int) -> Int64) -> AchievementDetailsClassStorage {
         .init(achievementType: self, storage: transform(identifier))
     }
     
-    public func toAchievementDetails(classTransfer transform: (Int) -> Int64) -> AchievementDetailsClassTransfer  {
+    public func toAchievementDetails(classTransfer transform: (Int) -> Int64) -> AchievementDetailsClassTransfer {
         .init(achievementType: self, transfer: transform(identifier))
     }
     
-    public func toAchievementDetails(classExpire transform: (Int) -> Int) -> AchievementDetailsClassExpire  {
+    public func toAchievementDetails(classExpire transform: (Int) -> Int) -> AchievementDetailsClassExpire {
         .init(achievementType: self, expire: transform(identifier))
     }
 }

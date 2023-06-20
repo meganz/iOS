@@ -14,7 +14,7 @@ final class ScheduleMeetingCreationRecurrenceOptionTests: XCTestCase {
     }
     
     func testScheduleMeetingCreationRecurrenceOptionCustom_withDailyFrequencyAndSixDaysWeekList_shouldMatch() throws {
-        let rules = ScheduledMeetingRulesEntity(frequency: .daily, weekDayList:Array(1...6))
+        let rules = ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...6))
         try assertRecurrenceOption(withRules: rules, expectedOption: .custom)
     }
     
