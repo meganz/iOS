@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
 
 @objc final class AudioPlayerManager: NSObject, AudioPlayerHandlerProtocol {
     @objc static var shared = AudioPlayerManager()
@@ -9,6 +10,12 @@ import MEGADomain
     private var miniPlayerVC: MiniPlayerViewController?
     private var miniPlayerHandlerListenerManager = ListenerManager<AudioMiniPlayerHandlerProtocol>()
     private var nodeInfoUseCase: NodeInfoUseCaseProtocol?
+    private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
+        DIContainer.playbackContinuationUseCase(
+            isFeatureFlagEnabled: {
+                FeatureFlagProvider().isFeatureFlagEnabled(for: .audioPlaybackContinuation)
+            }
+        )
     private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
     
     override private init() {
@@ -78,7 +85,11 @@ import MEGADomain
         return node == currentNode
     }
     
-    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem]) {
+    func setCurrent(
+        player: AudioPlayer?,
+        autoPlayEnabled: Bool,
+        tracks: [AudioPlayerItem]
+    ) {
         if self.player != nil {
             CrashlyticsLogger.log("[AudioPlayer] current instance of the player \(String(describing: player)) need to be closed")
             player?.close { [weak self] in
@@ -92,7 +103,11 @@ import MEGADomain
         }
     }
     
-    private func configure(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem]) {
+    private func configure(
+        player: AudioPlayer?,
+        autoPlayEnabled: Bool,
+        tracks: [AudioPlayerItem]
+    ) {
         CrashlyticsLogger.log("[AudioPlayer] new player being configured: (autoPlayEnabled: \(autoPlayEnabled), tracks: \(tracks)")
         self.player = player
         self.player?.isAutoPlayEnabled = autoPlayEnabled
@@ -141,6 +156,7 @@ import MEGADomain
     }
     
     func playPrevious() {
+        playbackStoppedForCurrentItem()
         player?.blockAudioPlayerInteraction()
         player?.playPrevious { [weak self] in
             self?.player?.unblockAudioPlayerInteraction()
@@ -170,7 +186,13 @@ import MEGADomain
         checkIfCallExist(then: player?.play)
     }
     
+    func playerResumePlayback(from timeInterval: TimeInterval) {
+        player?.setProgressCompleted(timeInterval)
+        playerPlay()
+    }
+    
     func playNext() {
+        playbackStoppedForCurrentItem()
         player?.blockAudioPlayerInteraction()
         player?.playNext { [weak self] in
             self?.player?.unblockAudioPlayerInteraction()
@@ -264,6 +286,7 @@ import MEGADomain
     }
     
     func closePlayer() {
+        playbackStoppedForCurrentItem()
         player?.close { [weak self] in
             self?.audioSessionUseCase.configureCallAudioSession()
         }
@@ -368,5 +391,15 @@ import MEGADomain
             nodeInfoUseCase?.folderLinkLogout()
             miniPlayerRouter?.folderSDKLogout(required: false)
         }
+    }
+    
+    private func playbackStoppedForCurrentItem() {
+        guard let fingerprint = playerCurrentItem()?.node?.fingerprint else { return }
+        
+        playbackContinuationUseCase.playbackStopped(
+            for: fingerprint,
+            on: playerCurrentItemTime(),
+            outOf: player?.duration ?? 0.0
+        )
     }
 }

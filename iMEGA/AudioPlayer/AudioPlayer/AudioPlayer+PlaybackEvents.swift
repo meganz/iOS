@@ -27,10 +27,21 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         let time = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
         guard CMTIME_IS_VALID(time) else {
             MEGALogDebug("[AudioPlayer] setProgressCompleted invalid time: \(time) timeInterval: \(position)")
+            audioSeekFallbackObserver = currentItem.observe(
+                \.duration,
+                 changeHandler: { [weak self] item, _ in
+                     if CMTIME_IS_VALID(
+                        CMTime(seconds: position, preferredTimescale: item.duration.timescale)
+                     ) {
+                         self?.setProgressCompleted(position)
+                     }
+                 }
+            )
             return
         }
         
         currentItem.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: refreshCurrentState)
+        audioSeekFallbackObserver?.invalidate()
     }
     
     func resetPlayerItems() {

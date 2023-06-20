@@ -26,6 +26,7 @@ extension AudioPlayer {
         audioQueueBufferAlmostThereObserver?.invalidate()
         audioQueueBufferFullObserver?.invalidate()
         audioQueueLoadedTimeRangesObserver?.invalidate()
+        audioSeekFallbackObserver?.invalidate()
         metadataQueueFinishAllOperationsObserver?.invalidate()
     }
     
@@ -89,6 +90,7 @@ extension AudioPlayer: AudioPlayerObservedEventsProtocol {
     
     func audio(player: AVQueuePlayer, didStartPlayingCurrentItem value: NSKeyValueObservedChange<AVPlayerItem?>) {
         refreshNowPlayingInfo()
+        notify(aboutStartPlayingNewItem)
     }
     
     func audio(player: AVQueuePlayer, didChangePlayerRate value: NSKeyValueObservedChange<Float>) {

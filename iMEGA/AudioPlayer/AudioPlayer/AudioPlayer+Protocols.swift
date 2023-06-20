@@ -86,6 +86,8 @@ protocol AudioPlayerObservedEventsProtocol {
     @objc optional func audioPlayerDidPausePlayback()
     @objc optional func audioPlayerDidResumePlayback()
     @objc optional func audioPlayerDidFinishBuffering()
+    @objc optional func audioPlayerDidAddTracks()
+    @objc optional func audioDidStartPlayingItem(_ item: AudioPlayerItem?)
 }
 
 // MARK: - Audio Player Notify Observers Functions
@@ -106,6 +108,8 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func aboutAudioPlayerDidResumePlayback(_ observer: AudioPlayerObserversProtocol)
     func aboutAudioPlayerConfiguration(_ observer: AudioPlayerObserversProtocol)
     func aboutAudioPlayerDidFinishBuffering(_ observer: AudioPlayerObserversProtocol)
+    func aboutStartPlayingNewItem(_ observer: AudioPlayerObserversProtocol)
+    func aboutAudioPlayerDidAddTracks(_ observer: AudioPlayerObserversProtocol)
 }
 
 // MARK: - Audio Player Handler
@@ -143,6 +147,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func playerTogglePlay()
     func playerPause()
     func playerPlay()
+    func playerResumePlayback(from timeInterval: TimeInterval)
     func playNext()
     func goForward()
     func play(item: AudioPlayerItem)

@@ -4110,6 +4110,20 @@ public enum Strings {
     }
     public enum Media {
       public enum Audio {
+        public enum PlaybackContinuation {
+          public enum Dialog {
+            /// %@ will resume from %@
+            public static func description(_ p1: Any, _ p2: Any) -> String {
+              return Strings.tr("Localizable", "media.audio.playbackContinuation.dialog.description", String(describing: p1), String(describing: p2))
+            }
+            /// Restart
+            public static let restart = Strings.tr("Localizable", "media.audio.playbackContinuation.dialog.restart")
+            /// Resume
+            public static let resume = Strings.tr("Localizable", "media.audio.playbackContinuation.dialog.resume")
+            /// Resume audio?
+            public static let title = Strings.tr("Localizable", "media.audio.playbackContinuation.dialog.title")
+          }
+        }
         public enum Playlist {
           public enum Section {
             public enum Next {

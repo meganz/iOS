@@ -3000,6 +3000,14 @@
 "transfer.storage.quotaExceeded"="Storage quota exceeded";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Next";
+/* Title of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.title"="Resume audio?";
+/* Description of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.description"="%@ will resume from %@";
+/* Resume option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.resume"="Resume";
+/* Restart option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.restart"="Restart";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ joined";
 /* Meetings: Notification message to be shown when one person leaves the call. */

@@ -93,4 +93,12 @@ extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
     func aboutAudioPlayerDidFinishBuffering(_ observer: AudioPlayerObserversProtocol) {
         observer.audioPlayerDidFinishBuffering?()
     }
+    
+    func aboutStartPlayingNewItem(_ observer: AudioPlayerObserversProtocol) {
+        observer.audioDidStartPlayingItem?(currentItem())
+    }
+    
+    func aboutAudioPlayerDidAddTracks(_ observer: AudioPlayerObserversProtocol) {
+        observer.audioPlayerDidAddTracks?()
+    }
 }

@@ -373,6 +373,32 @@ final class AudioPlayerViewController: UIViewController {
         viewModel.dispatch(.onChangeSpeedModePressed)
     }
     
+    private func presentAudioPlaybackContinuation(fileName: String, playbackTime: TimeInterval) {
+        let alertViewController = UIAlertController(
+            title: Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.title,
+            message: Strings.Localizable.Media.Audio.PlaybackContinuation
+                .Dialog.description(fileName, playbackTime.timeString),
+            preferredStyle: .alert
+        )
+        [
+            UIAlertAction(
+                title: Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.restart,
+                style: .cancel
+            ) { [weak self] _ in
+                self?.viewModel.dispatch(.onSelectRestartPlaybackContinuationDialog)
+            },
+            UIAlertAction(
+                title: Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.resume,
+                style: .default
+            ) { [weak self] _ in
+                self?.viewModel.dispatch(
+                    .onSelectResumePlaybackContinuationDialog(playbackTime: playbackTime)
+                )
+            }
+        ].forEach { alertViewController.addAction($0) }
+        present(alertViewController, animated: true)
+    }
+    
     // MARK: - Execute command
     func executeCommand(_ command: AudioPlayerViewModel.Command) {
         switch command {
@@ -415,6 +441,8 @@ final class AudioPlayerViewController: UIViewController {
         case .nextTrackAction(let enabled):
             nextButton.isEnabled = enabled
             nextButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
+        case .displayPlaybackContinuationDialog(let fileName, let playbackTime):
+            presentAudioPlaybackContinuation(fileName: fileName, playbackTime: playbackTime)
         }
     }
 }
