@@ -24,6 +24,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var playItem_calledTimes = 0
     var changePlayerRate_calledTimes = 0
     
+    private(set) var playerResumePlayback_Calls = [TimeInterval]()
+    
     func isPlayerDefined() -> Bool { false }
     func isPlayerEmpty() -> Bool { false }
     
@@ -31,7 +33,11 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         AudioPlayer()
     }
     
-    func setCurrent(player: AudioPlayer?, autoPlayEnabled: Bool, tracks: [AudioPlayerItem]) {
+    func setCurrent(
+        player: AudioPlayer?,
+        autoPlayEnabled: Bool,
+        tracks: [AudioPlayerItem]
+    ) {
         addPlayer_calledTimes += 1
         addPlayerTracks_calledTimes += 1
     }
@@ -58,6 +64,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     func playerProgressCompleted(percentage: Float) {
         updateProgressCompleted_calledTimes += 1
+    }
+    
+    func playerResumePlayback(from timeInterval: TimeInterval) {
+        playerResumePlayback_Calls.append(timeInterval)
     }
     
     func playerProgressDragEventBegan() {

@@ -1,6 +1,7 @@
 import Foundation
 import MEGAFoundation
 import MEGAPresentation
+import MEGADomain
 
 enum AudioPlayerAction: ActionType {
     case onViewDidLoad
@@ -24,6 +25,8 @@ enum AudioPlayerAction: ActionType {
     case refreshRepeatStatus
     case refreshShuffleStatus
     case showActionsforCurrentNode(sender: Any)
+    case onSelectResumePlaybackContinuationDialog(playbackTime: TimeInterval)
+    case onSelectRestartPlaybackContinuationDialog
     case `deinit`
 }
 
@@ -68,6 +71,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case shuffleAction(enabled: Bool)
         case goToPlaylistAction(enabled: Bool)
         case nextTrackAction(enabled: Bool)
+        case displayPlaybackContinuationDialog(fileName: String, playbackTime: TimeInterval)
     }
     
     // MARK: - Private properties
@@ -76,6 +80,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
+    private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let dispatchQueue: DispatchQueueProtocol
     private var repeatItemsState: RepeatMode {
         didSet {
@@ -104,12 +109,14 @@ final class AudioPlayerViewModel: ViewModelType {
          nodeInfoUseCase: NodeInfoUseCaseProtocol? = nil,
          streamingInfoUseCase: StreamingInfoUseCaseProtocol? = nil,
          offlineInfoUseCase: OfflineFileInfoUseCaseProtocol? = nil,
+         playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
          dispatchQueue: DispatchQueueProtocol = DispatchQueue.global()) {
         self.configEntity = configEntity
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase
         self.streamingInfoUseCase = streamingInfoUseCase
         self.offlineInfoUseCase = offlineInfoUseCase
+        self.playbackContinuationUseCase = playbackContinuationUseCase
         self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
         self.speedModeState = configEntity.playerHandler.currentSpeedMode()
         self.dispatchQueue = dispatchQueue
@@ -150,7 +157,6 @@ final class AudioPlayerViewModel: ViewModelType {
             
             initialize(with: node)
         }
-        configEntity.playerHandler.addPlayer(listener: self)
     }
     
     private func configurePlayer() {
@@ -186,7 +192,9 @@ final class AudioPlayerViewModel: ViewModelType {
         CrashlyticsLogger.log("[AudioPlayer] type: \(configEntity.playerType)")
         
         if !(configEntity.playerHandler.isPlayerDefined()) {
-            configEntity.playerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: !configEntity.isFileLink, tracks: mutableTracks)
+            let audioPlayer = AudioPlayer()
+            audioPlayer.add(listener: self)
+            configEntity.playerHandler.setCurrent(player: audioPlayer, autoPlayEnabled: !configEntity.isFileLink, tracks: mutableTracks)
         } else {
             if shouldInitializePlayer() {
                 configEntity.playerHandler.autoPlay(enable: configEntity.playerType != .fileLink)
@@ -357,6 +365,12 @@ final class AudioPlayerViewModel: ViewModelType {
                     return
                 }
             router.showAction(for: latestNode, sender: sender)
+        case .onSelectResumePlaybackContinuationDialog(let playbackTime):
+            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+            playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
+        case .onSelectRestartPlaybackContinuationDialog:
+            playbackContinuationUseCase.setPreference(to: .restartFromBeginning)
+            configEntity.playerHandler.playerPlay()
         case .deinit:
             configEntity.playerHandler.removePlayer(listener: self)
             if !configEntity.playerHandler.isPlayerDefined() {
@@ -421,6 +435,30 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     func audioPlayerDidFinishBuffering() {
         if configEntity.playerHandler.currentSpeedMode() != speedModeState {
             configEntity.playerHandler.changePlayer(speed: speedModeState)
+        }
+    }
+    
+    func audioPlayerDidAddTracks() {
+        guard let item = configEntity.playerHandler.playerCurrentItem() else { return }
+        
+        audioDidStartPlayingItem(item)
+    }
+    
+    func audioDidStartPlayingItem(_ item: AudioPlayerItem?) {
+        guard let item, let fingerprint = item.node?.toNodeEntity().fingerprint else {
+            return
+        }
+        
+        switch playbackContinuationUseCase.status(for: fingerprint) {
+        case .displayDialog(let playbackTime):
+            invokeCommand?(.displayPlaybackContinuationDialog(
+                fileName: item.name,
+                playbackTime: playbackTime
+            ))
+            configEntity.playerHandler.playerPause()
+        case .resumeSession(let playbackTime):
+            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+        case .startFromBeginning: break
         }
     }
 }

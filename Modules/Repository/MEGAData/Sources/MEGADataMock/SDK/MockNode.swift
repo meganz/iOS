@@ -14,6 +14,7 @@ public final class MockNode: MEGANode {
     private let videoDuration: Int
     private let _label: MEGANodeLabel
     private let _isFavourite: Bool
+    private let _fingerprint: String
     let nodePath: String?
     
     public init(handle: MEGAHandle,
@@ -28,7 +29,9 @@ public final class MockNode: MEGANode {
                 isNodeExported: Bool = false,
                 duration: Int = 0,
                 label: MEGANodeLabel = .unknown,
-                isFavourite: Bool = false) {
+                isFavourite: Bool = false,
+                fingerprint: String = ""
+    ) {
         nodeHandle = handle
         nodeName = name
         self.nodeType = nodeType
@@ -42,6 +45,7 @@ public final class MockNode: MEGANode {
         self.videoDuration = duration
         _label = label
         _isFavourite = isFavourite
+        self._fingerprint = fingerprint
         super.init()
     }
     
@@ -74,4 +78,6 @@ public final class MockNode: MEGANode {
     public override var label: MEGANodeLabel { _label }
     
     public override var isFavourite: Bool { _isFavourite }
+    
+    public override var fingerprint: String? { _fingerprint }
 }

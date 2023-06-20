@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
 
 final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private weak var baseViewController: UIViewController?
@@ -19,14 +20,28 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
             .instantiateViewController(withIdentifier: "AudioPlayerViewControllerID") as! AudioPlayerViewController
         
         if configEntity.playerType == .offline {
-            vc.viewModel = AudioPlayerViewModel(configEntity: configEntity,
-                                                router: self,
-                                                offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()))
+            vc.viewModel = AudioPlayerViewModel(
+                configEntity: configEntity,
+                router: self,
+                offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
+                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase(
+                    isFeatureFlagEnabled: {
+                        FeatureFlagProvider().isFeatureFlagEnabled(for: .audioPlaybackContinuation)
+                    }
+                )
+            )
         } else {
-            vc.viewModel = AudioPlayerViewModel(configEntity: configEntity,
-                                                router: self,
-                                                nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
-                                                streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()))
+            vc.viewModel = AudioPlayerViewModel(
+                configEntity: configEntity,
+                router: self,
+                nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
+                streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
+                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase(
+                    isFeatureFlagEnabled: {
+                        FeatureFlagProvider().isFeatureFlagEnabled(for: .audioPlaybackContinuation)
+                    }
+                )
+            )
         }
 
         baseViewController = vc

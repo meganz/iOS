@@ -23,6 +23,7 @@ final class AudioPlayer: NSObject {
     var audioQueueRateObserver: NSKeyValueObservation?
     var audioQueueNewItemObserver: NSKeyValueObservation?
     var audioQueueLoadedTimeRangesObserver: NSKeyValueObservation?
+    var audioSeekFallbackObserver: NSKeyValueObservation?
     var metadataQueueFinishAllOperationsObserver: NSKeyValueObservation?
     var audioPlayerConfig: [PlayerConfiguration: Any] = [.loop: false, .shuffle: false]
     var listenerManager = ListenerManager<AudioPlayerObserversProtocol>()
@@ -102,12 +103,13 @@ final class AudioPlayer: NSObject {
         (isPlaying || isPaused) && !isCloseRequested
     }
     
-    // MARK: - Private Computed Properties
-    private var duration: Double {
+    var duration: Double {
         guard let currentItem = queuePlayer?.currentItem, currentItem.duration.isValid else { return 0.0 }
         
         return currentItem.duration.value == 0 ? 0.0 : CMTimeGetSeconds(currentItem.duration)
     }
+    
+    // MARK: - Private Computed Properties
     
     private var percentageCompleted: Float {
         currentTime == 0.0 || duration == 0.0 ? 0.0 : Float(currentTime / duration)
@@ -187,7 +189,7 @@ final class AudioPlayer: NSObject {
     }
     
     private func configurePlayer() {
-        isAutoPlayEnabled ? play() : pause()
+        isAutoPlayEnabled && !isPaused ? play() : pause()
         
         opQueue.cancelAllOperations()
         preloadNextTracksMetadata()
@@ -256,6 +258,8 @@ final class AudioPlayer: NSObject {
             setupPlayer()
             MEGALogDebug("[AudioPlayer] Setting up a new audio player")
         }
+        
+        notify(aboutAudioPlayerDidAddTracks)
     }
     
     func update(tracks: [AudioPlayerItem]) {
