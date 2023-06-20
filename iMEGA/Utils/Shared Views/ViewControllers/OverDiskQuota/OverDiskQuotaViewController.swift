@@ -1,6 +1,6 @@
 import UIKit
-import MEGAUIKit
 import MEGAFoundation
+import MEGAUIKit
 
 final class OverDiskQuotaViewController: UIViewController {
 
@@ -8,7 +8,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
         // MARK: - Formatters
 
-        private lazy var dateFormatter = DateFormatter.dateMedium()
+        private lazy var dateFormatter: some DateFormatting = DateFormatter.dateMedium()
 
         private lazy var numberFormatter: NumberFormatter = {
             let numberFormatter = NumberFormatter()
@@ -244,7 +244,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
 fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 
-    func formattedWarningDates(with formatter: DateFormatting) -> String {
+    func formattedWarningDates(with formatter: some DateFormatting) -> String {
         let localizedDates = warningDates.map { date in
             formatter.localisedString(from: date)
         }

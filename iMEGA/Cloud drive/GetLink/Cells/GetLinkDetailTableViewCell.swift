@@ -1,8 +1,9 @@
+import MEGAFoundation
 import UIKit
 
 class GetLinkDetailTableViewCell: UITableViewCell {
 
-    private lazy var dateFormatter = DateFormatter.dateMedium()
+    private lazy var dateFormatter: some DateFormatting = DateFormatter.dateMedium()
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var proImageView: UIImageView!

@@ -6,7 +6,6 @@ import Foundation
 /// `DateFormatter`. For example, instead of returning `DateFormatter` from a dateFormatterFactory, returning the shadow - `DateFormatting`
 /// which end users to alter the formatter while using.
 @objc public protocol DateFormatting {
-
     func localisedString(from date: Date) -> String
 }
 

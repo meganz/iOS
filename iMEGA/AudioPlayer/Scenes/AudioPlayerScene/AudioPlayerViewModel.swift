@@ -81,7 +81,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
-    private let dispatchQueue: DispatchQueueProtocol
+    private let dispatchQueue: any DispatchQueueProtocol
     private var repeatItemsState: RepeatMode {
         didSet {
             invokeCommand?(.updateRepeat(status: repeatItemsState))
@@ -110,7 +110,7 @@ final class AudioPlayerViewModel: ViewModelType {
          streamingInfoUseCase: StreamingInfoUseCaseProtocol? = nil,
          offlineInfoUseCase: OfflineFileInfoUseCaseProtocol? = nil,
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
-         dispatchQueue: DispatchQueueProtocol = DispatchQueue.global()) {
+         dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global()) {
         self.configEntity = configEntity
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase

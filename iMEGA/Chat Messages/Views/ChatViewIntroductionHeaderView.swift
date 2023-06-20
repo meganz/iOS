@@ -1,5 +1,6 @@
 
 import MessageKit
+import MEGAFoundation
 import CoreGraphics
 import MEGADomain
 
@@ -92,7 +93,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     }
     
     private func formattedDateForScheduleMeeting(_ scheduledMeeting: ScheduledMeetingEntity) -> String {
-        var dateFormatter = DateFormatter.timeShort()
+        var dateFormatter: any DateFormatting = DateFormatter.timeShort()
         let start = dateFormatter.localisedString(from: scheduledMeeting.startDate)
         let end = dateFormatter.localisedString(from: scheduledMeeting.endDate)
         dateFormatter = DateFormatter.dateMedium()

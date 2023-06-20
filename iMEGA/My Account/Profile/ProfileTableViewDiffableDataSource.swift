@@ -49,7 +49,7 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
         }
     }
     
-    private func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatting {
+    private func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> any DateFormatting {
         let calendar = Calendar.current
         let startingOfToday = Date().startOfDay(on: calendar)
         guard let daysOfDistance = startingOfToday?.dayDistance(toFutureDate: expiryDate,

@@ -17,9 +17,11 @@ let package = Package(
     targets: [
         .target(
             name: "MEGAFoundation",
-            dependencies: []),
+            dependencies: [],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGAFoundationTests",
-            dependencies: ["MEGAFoundation"])
+            dependencies: ["MEGAFoundation"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
     ]
 )

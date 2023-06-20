@@ -36,7 +36,7 @@ final class MiniPlayerViewModel: ViewModelType {
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
-    private let dispatchQueue: DispatchQueueProtocol
+    private let dispatchQueue: any DispatchQueueProtocol
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -47,7 +47,7 @@ final class MiniPlayerViewModel: ViewModelType {
          nodeInfoUseCase: NodeInfoUseCaseProtocol?,
          streamingInfoUseCase: StreamingInfoUseCaseProtocol?,
          offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?,
-         dispatchQueue: DispatchQueueProtocol = DispatchQueue.global()) {
+         dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global()) {
         self.configEntity = configEntity
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase

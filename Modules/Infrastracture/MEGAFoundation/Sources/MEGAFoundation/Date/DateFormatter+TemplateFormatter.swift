@@ -1,13 +1,13 @@
 import Foundation
 
 public extension DateFormatter {
-
+    
     // MARK: - Formatter Custom Template Style
-
+    
     /// Monday Jun 1, 2020
     @objc static func dateMediumWithWeekday(calendar: Calendar? = nil,
                                             timeZone: TimeZone? = nil,
-                                            locale: Locale? = nil) -> DateFormatting {
+                                            locale: Locale? = nil) -> some DateFormatting {
         return fromTemplate("EEEEMMMddyyyy",
                             calendar: calendar,
                             timeZone: timeZone,
@@ -22,7 +22,7 @@ public extension DateFormatter {
     /// - Returns: A date formatting object to format date to a string like "2021"
     static func yearTemplate(calendar: Calendar? = nil,
                              timeZone: TimeZone? = nil,
-                             locale: Locale? = nil) -> DateFormatting {
+                             locale: Locale? = nil) -> some DateFormatting {
         return fromTemplate("yyyy",
                             calendar: calendar,
                             timeZone: timeZone,
@@ -39,7 +39,7 @@ public extension DateFormatter {
         calendar: Calendar? = nil,
         timeZone: TimeZone? = nil,
         locale: Locale? = nil
-    ) -> DateFormatting {
+    ) -> some DateFormatting {
         return fromTemplate("MMMyyyy",
                             calendar: calendar,
                             timeZone: timeZone,
@@ -56,11 +56,12 @@ public extension DateFormatter {
     @objc static func fromTemplate(_ template: String,
                                    calendar: Calendar? = nil,
                                    timeZone: TimeZone? = nil,
-                                   locale: Locale? = nil) -> DateFormatting {
-        let style = DateStyle.dateStyleFactory.templateStyle(fromTemplate: template,
-                                                             calendar: calendar,
-                                                             timeZone: timeZone,
-                                                             locale: locale)
+                                   locale: Locale? = nil) -> some DateFormatting {
+        let factory = DateStyle.dateStyleFactory
+        let style = factory.templateStyle(fromTemplate: template,
+                                          calendar: calendar,
+                                          timeZone: timeZone,
+                                          locale: locale)
         return DateFormatterPool.shared.dateFormatter(of: style)
     }
 }

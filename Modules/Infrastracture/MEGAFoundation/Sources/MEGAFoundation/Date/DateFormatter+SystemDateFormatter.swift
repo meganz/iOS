@@ -1,13 +1,13 @@
 import Foundation
 
 public extension DateFormatter {
-
+    
     // MARK: - Formatter Style
-
+    
     /// `1/1/70`,       `1/1/70`,     `1970/1/1`
     @objc static func dateShort(calendar: Calendar? = nil,
                                 timeZone: TimeZone? = nil,
-                                locale: Locale? = nil) -> DateFormatting {
+                                locale: Locale? = nil) -> some DateFormatting {
         systemDateFormatter(dateStyle: .short,
                             timeStyle: .none,
                             isRelative: false,
@@ -15,11 +15,11 @@ public extension DateFormatter {
                             timeZone: timeZone,
                             locale: locale)
     }
-
+    
     /// `Jan 1, 1970`,  `1 ene 1970`,   `1970年1月1日`
     @objc static func dateMedium(calendar: Calendar? = nil,
                                  timeZone: TimeZone? = nil,
-                                 locale: Locale? = nil) -> DateFormatting {
+                                 locale: Locale? = nil) -> some DateFormatting {
         systemDateFormatter(dateStyle: .medium,
                             timeStyle: .none,
                             isRelative: false,
@@ -33,7 +33,7 @@ public extension DateFormatter {
         calendar: Calendar? = nil,
         timeZone: TimeZone? = nil,
         locale: Locale? = nil
-    ) -> DateFormatting {
+    ) -> some DateFormatting {
         systemDateFormatter(dateStyle: .medium,
                             timeStyle: .short,
                             isRelative: false,
@@ -41,11 +41,11 @@ public extension DateFormatter {
                             timeZone: timeZone,
                             locale: locale)
     }
-
+    
     /// `January 1, 1970`, `1 de enero de 1970`, `1970年1月1日`
     @objc static func dateLong(calendar: Calendar? = nil,
                                timeZone: TimeZone? = nil,
-                               locale: Locale? = nil) -> DateFormatting {
+                               locale: Locale? = nil) -> some DateFormatting {
         systemDateFormatter(dateStyle: .long,
                             timeStyle: .none,
                             isRelative: false,
@@ -53,11 +53,11 @@ public extension DateFormatter {
                             timeZone: timeZone,
                             locale: locale)
     }
-
+    
     /// `Thursday, January 1, 1970`, `jueves, 1 de enero de 1970`, `1970年1月1日 星期四`
     @objc static func dateFull(calendar: Calendar? = nil,
                                timeZone: TimeZone? = nil,
-                               locale: Locale? = nil) -> DateFormatting {
+                               locale: Locale? = nil) -> some DateFormatting {
         systemDateFormatter(dateStyle: .full,
                             timeStyle: .none,
                             isRelative: false,
@@ -71,7 +71,7 @@ public extension DateFormatter {
         calendar: Calendar? = nil,
         timeZone: TimeZone? = nil,
         locale: Locale? = nil
-    ) -> DateFormatting {
+    ) -> some DateFormatting {
         systemDateFormatter(dateStyle: .none,
                             timeStyle: .short,
                             isRelative: false,
@@ -90,12 +90,13 @@ private func systemDateFormatter(
     calendar: Calendar?,
     timeZone: TimeZone?,
     locale: Locale?
-) -> DateFormatting {
-    let style = DateStyle.dateStyleFactory.systemStyle(ofDateStyle: dateStyle,
-                                                       timeStyle: timeStyle,
-                                                       relativeDateFormatting: isRelative,
-                                                       calendar: calendar,
-                                                       timeZone: timeZone,
-                                                       locale: locale)
+) -> some DateFormatting {
+    let factory = DateStyle.dateStyleFactory
+    let style = factory.systemStyle(ofDateStyle: dateStyle,
+                                    timeStyle: timeStyle,
+                                    relativeDateFormatting: isRelative,
+                                    calendar: calendar,
+                                    timeZone: timeZone,
+                                    locale: locale)
     return DateFormatterPool.shared.dateFormatter(of: style)
 }
