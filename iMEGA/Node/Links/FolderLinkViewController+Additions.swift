@@ -1,12 +1,12 @@
 import Foundation
 
 extension FolderLinkViewController {
-    @objc func containsOnlyMediaFiles() -> Bool {
+    @objc func containsMediaFiles() -> Bool {
         guard FeatureFlagProvider().isFeatureFlagEnabled(for: .folderLinkMediaDiscovery) else {
             return false
         }
-        return nodesArray.toNodeEntities().notContains {
-            $0.mediaType == nil
+        return nodesArray.toNodeEntities().contains {
+            $0.mediaType != nil
         }
     }
     

@@ -151,7 +151,7 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference,
-               isBackupNode: Bool, containsOnlyMediaFiles: Bool, sender: Any) {
+               isBackupNode: Bool, containsMediaFiles: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -166,7 +166,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setDisplayMode(displayMode)
             .setViewMode(viewMode)
             .setIsBackupNode(isBackupNode)
-            .setContainsOnlyMediaFiles(containsOnlyMediaFiles)
+            .setContainsMediaFiles(containsMediaFiles)
             .build()
     }
     
