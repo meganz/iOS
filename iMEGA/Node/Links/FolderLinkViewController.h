@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) UISearchController *searchController;
 
+@property (nonatomic, strong, readonly, nullable) MEGANode *parentNode;
 @property (nonatomic, strong) NSArray<MEGANode *> *nodesArray;
 @property (nonatomic, strong, nullable) NSArray<MEGANode *> *searchNodesArray;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGANode *> *selectedNodesArray;
