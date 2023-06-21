@@ -74,3 +74,10 @@ extension CallParticipantEntity: Equatable {
         lhs.participantId == rhs.participantId && lhs.clientId == rhs.clientId
     }
 }
+
+extension CallParticipantEntity: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(participantId)
+        hasher.combine(clientId)
+    }
+}

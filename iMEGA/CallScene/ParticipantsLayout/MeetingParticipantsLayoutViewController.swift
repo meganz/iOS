@@ -155,10 +155,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             titleView.configure(title: nil, subtitle: duration)
         case .updatePageControl(let count):
             updateNumberOfPageControl(for: count)
-        case .insertParticipant(let participants):
-            callCollectionView.addedParticipant(in: participants)
-        case .deleteParticipantAt(let index, let participants):
-            callCollectionView.deletedParticipant(in: participants, at: index)
+        case .updateParticipants(let participants):
+            callCollectionView.update(participants: participants)
         case .reloadParticipantAt(let index, let participants):
             callCollectionView.reloadParticipant(in: participants, at: index)
         case .updateSpeakerViewFor(let participant):
