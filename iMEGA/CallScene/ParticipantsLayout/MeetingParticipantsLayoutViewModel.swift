@@ -54,8 +54,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updateName(String)
         case updateDuration(String)
         case updatePageControl(Int)
-        case insertParticipant([CallParticipantEntity])
-        case deleteParticipantAt(Int, [CallParticipantEntity])
+        case updateParticipants([CallParticipantEntity])
         case reloadParticipantAt(Int, [CallParticipantEntity])
         case updateSpeakerViewFor(CallParticipantEntity)
         case localVideoFrame(Int, Int, Data)
@@ -753,16 +752,17 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         initTimerIfNeeded(with: Int(call.duration))
         callParticipants.append(participant)
         participantName(for: participant.participantId) { [weak self] in
+            guard let self else { return }
             participant.name = $0
-            self?.invokeCommand?(.insertParticipant(self?.callParticipants ?? []))
-            if self?.callParticipants.count == 1 && self?.layoutMode == .speaker {
-                self?.invokeCommand?(.shouldHideSpeakerView(false))
-                self?.speakerParticipant = self?.callParticipants.first
+            invokeCommand?(.updateParticipants(callParticipants))
+            if callParticipants.count == 1 && layoutMode == .speaker {
+                invokeCommand?(.shouldHideSpeakerView(false))
+                speakerParticipant = callParticipants.first
             }
-            if self?.layoutMode == .grid {
-                self?.invokeCommand?(.updatePageControl(self?.callParticipants.count ?? 0))
+            if layoutMode == .grid {
+                invokeCommand?(.updatePageControl(callParticipants.count))
             }
-            self?.invokeCommand?(.hideEmptyRoomMessage)
+            invokeCommand?(.hideEmptyRoomMessage)
         }
     }
     
@@ -774,7 +774,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 waitForRecoverable1on1Call(participant: participant)
             }
             callParticipants.remove(at: index)
-            invokeCommand?(.deleteParticipantAt(index, callParticipants))
+            invokeCommand?(.updateParticipants(callParticipants))
             stopVideoForParticipant(participant)
             
             if callParticipants.isEmpty {

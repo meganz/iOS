@@ -8,11 +8,15 @@ protocol CallCollectionViewDelegate: AnyObject {
 }
 
 class CallCollectionView: UICollectionView {
+    enum SectionType: Hashable {
+        case main
+    }
     private var callParticipants = [CallParticipantEntity]()
     private var layoutMode: ParticipantsLayoutMode = .grid
     private weak var callCollectionViewDelegate: CallCollectionViewDelegate?
     private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
+    private var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, CallParticipantEntity>?
     
     private lazy var blurEffectView: UIVisualEffectView = {
         let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -31,34 +35,52 @@ class CallCollectionView: UICollectionView {
     }
     
     func configure(with callCollectionViewDelegate: CallCollectionViewDelegate) {
-        dataSource = self
+        
+        diffableDataSource = UICollectionViewDiffableDataSource(
+            collectionView: self,
+            cellProvider: { [unowned self] collectionView, indexPath, _ in
+                // using unowned here since collection view is the owner of the data source
+                // so, collection view will be deallocated together with data source, no chance
+                // of self being nil here
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CallParticipantCell", for: indexPath) as? CallParticipantCell else {
+                    fatalError("Error dequeueReusableCell CallParticipantCell")
+                }
+                
+                let participant = callParticipants[indexPath.item]
+                if let image = avatars[participant.participantId] {
+                    cell.setAvatar(image: image)
+                }
+                callCollectionViewDelegate.fetchAvatar(for: participant)
+                cell.configure(for: participant, in: layoutMode)
+                return cell
+            }
+        )
+        
+        dataSource = diffableDataSource
         delegate = self
         self.callCollectionViewDelegate = callCollectionViewDelegate
         register(CallParticipantCell.nib, forCellWithReuseIdentifier: CallParticipantCell.reuseIdentifier)
         backgroundColor = .black
     }
     
-    func addedParticipant(in participants: [CallParticipantEntity]) {
+    // call this instead of manual calling insert/delete/reload cell
+    private func updateCells(with participants: [CallParticipantEntity]) {
+        
         callParticipants = participants
-        guard participants.count == (numberOfItems(inSection: 0) + 1) else {
-            reloadData()
-            MEGALogDebug("CallCollectionView: Add particpant count reload called instead of insert")
-            return
-        }
-        insertItems(at: [IndexPath(item: callParticipants.count - 1, section: 0)])
-        layoutIfNeeded()
+        // code below does inserts and reloads but we do reloads manually to avoid flashing of cells when reconfiguring
+        
+        var snapshot = NSDiffableDataSourceSnapshot<SectionType, CallParticipantEntity>()
+        snapshot.appendSections([SectionType.main])
+        snapshot.appendItems(participants, toSection: SectionType.main)
+        diffableDataSource?.apply(snapshot, animatingDifferences: true)
     }
     
-    func deletedParticipant(in participants: [CallParticipantEntity], at index: Int) {
-        let cell = cellForItem(at: IndexPath(item: index, section: 0)) as? CallParticipantCell
-        cell?.videoImageView.image = nil
-        callParticipants = participants
-        deleteItems(at: [IndexPath(item: index, section: 0)])
-        layoutIfNeeded()
+    func update(participants: [CallParticipantEntity]) {
+        updateCells(with: participants)
     }
     
     func reloadParticipant(in participants: [CallParticipantEntity], at index: Int) {
-        callParticipants = participants
+        updateCells(with: participants)
         guard let cell = cellForItem(at: IndexPath(item: index, section: 0)) as? CallParticipantCell, let participant = cell.participant else {
             return
         }
@@ -105,41 +127,16 @@ class CallCollectionView: UICollectionView {
     }
 }
 
-extension CallCollectionView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return callParticipants.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CallParticipantCell", for: indexPath) as? CallParticipantCell else {
-            fatalError("Error dequeueReusableCell CallParticipantCell")
-        }
-        
-        let participant = callParticipants[indexPath.item]
-        callCollectionViewDelegate?.fetchAvatar(for: participant)
-        cell.configure(for: participant, in: layoutMode)
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? CallParticipantCell, let participant = cell.participant else { return }
-        
-        if let image = avatars[participant.participantId] {
-            cell.setAvatar(image: image)
-        }
-        
-        callCollectionViewDelegate?.participantCellIsVisible(participant, at: indexPath)
-        cell.configure(for: participant, in: layoutMode)
-    }
-}
-
 extension CallCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard layoutMode == .speaker, let selectedParticipant = callParticipants[safe: indexPath.item] else {
             return
         }
         callCollectionViewDelegate?.collectionViewDidSelectParticipant(participant: selectedParticipant, at: indexPath)
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let participant = callParticipants[indexPath.item]
+        callCollectionViewDelegate?.participantCellIsVisible(participant, at: indexPath)
     }
 }
 
