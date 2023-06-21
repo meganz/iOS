@@ -31,7 +31,7 @@ extension MEGALinkManager {
     }
     
     @objc class func showCollectionLinkView() {
-        guard FeatureFlagProvider().isFeatureFlagEnabled(for: .albumShareLink) else { return }
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink) else { return }
         
         let vm = ImportAlbumViewModel(
                     shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),

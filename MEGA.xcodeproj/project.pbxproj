@@ -1561,7 +1561,6 @@
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
 		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
-		B5CC280C298A911000A966A0 /* FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */; };
 		B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */; };
 		B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */; };
@@ -1569,7 +1568,6 @@
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
 		B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */; };
 		B5D875372A04B501003F9380 /* SendFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */; };
-		B5E411A928AB65A600D05719 /* FeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */; };
 		B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */; };
 		B5E4EBD829795A10009C5578 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4EBD729795A10009C5578 /* HomeViewModel.swift */; };
 		B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */; };
@@ -4120,7 +4118,6 @@
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+MenuActions.swift"; sourceTree = "<group>"; };
 		B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModel.swift; sourceTree = "<group>"; };
-		B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagProvider.swift; sourceTree = "<group>"; };
 		B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFeatureFlagProvider.swift; sourceTree = "<group>"; };
 		B5E4EBD729795A10009C5578 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		B5E719B7290B716A0076FEA3 /* AppDelegate+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Account.swift"; sourceTree = "<group>"; };
@@ -6143,7 +6140,6 @@
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
 				C45C2FA425C94D5800315369 /* Delegates */,
 				B68ED09127D05F8700713850 /* DomainExtensions */,
-				B5E411A528AB658600D05719 /* FeatureFlags */,
 				83D0E56427C78D16003BEC2E /* FileActionsHelpers */,
 				A873E84226E117A400CBB174 /* FirstLaunchCheck */,
 				B695E57E23275A3800D12B9E /* Functions */,
@@ -9757,14 +9753,6 @@
 			path = "Account Hall";
 			sourceTree = "<group>";
 		};
-		B5E411A528AB658600D05719 /* FeatureFlags */ = {
-			isa = PBXGroup;
-			children = (
-				B5E411A828AB65A600D05719 /* FeatureFlagProvider.swift */,
-			);
-			path = FeatureFlags;
-			sourceTree = "<group>";
-		};
 		B5E9D3F928ACEACD00504F1F /* Feature Flag */ = {
 			isa = PBXGroup;
 			children = (
@@ -13302,7 +13290,6 @@
 				5B33F0FA26601E4100E5F0F4 /* FavouritesRouter.swift in Sources */,
 				5B33F0FD2660202F00E5F0F4 /* FavouritesViewController.swift in Sources */,
 				5B33F0FB26601E4100E5F0F4 /* FavouritesViewModel.swift in Sources */,
-				B5E411A928AB65A600D05719 /* FeatureFlagProvider.swift in Sources */,
 				B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */,
 				B5E9D3FC28ACEB0800504F1F /* FeatureFlagView.swift in Sources */,
 				B5E9D3FD28ACEB0800504F1F /* FeatureFlagViewModel.swift in Sources */,
@@ -14523,7 +14510,6 @@
 				12FF88F02846F03300D99BED /* EmptyStateView+Timeline.swift in Sources */,
 				12FF88E12846E2CC00D99BED /* EmptyStateView.m in Sources */,
 				5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */,
-				B5CC280C298A911000A966A0 /* FeatureFlagProvider.swift in Sources */,
 				B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */,
 				8327EE21283391D400068856 /* FileVersionsRepository.swift in Sources */,
 				C43817B92746925E00EA82A8 /* FontStyle.swift in Sources */,

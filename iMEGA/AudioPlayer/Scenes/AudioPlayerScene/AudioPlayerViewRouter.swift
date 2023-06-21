@@ -24,11 +24,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 configEntity: configEntity,
                 router: self,
                 offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
-                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase(
-                    isFeatureFlagEnabled: {
-                        FeatureFlagProvider().isFeatureFlagEnabled(for: .audioPlaybackContinuation)
-                    }
-                )
+                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
             )
         } else {
             vc.viewModel = AudioPlayerViewModel(
@@ -36,11 +32,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 router: self,
                 nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
                 streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
-                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase(
-                    isFeatureFlagEnabled: {
-                        FeatureFlagProvider().isFeatureFlagEnabled(for: .audioPlaybackContinuation)
-                    }
-                )
+                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
             )
         }
 

@@ -11,11 +11,7 @@ import MEGAPresentation
     private var miniPlayerHandlerListenerManager = ListenerManager<AudioMiniPlayerHandlerProtocol>()
     private var nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
-        DIContainer.playbackContinuationUseCase(
-            isFeatureFlagEnabled: {
-                FeatureFlagProvider().isFeatureFlagEnabled(for: .audioPlaybackContinuation)
-            }
-        )
+        DIContainer.playbackContinuationUseCase
     private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
     
     override private init() {

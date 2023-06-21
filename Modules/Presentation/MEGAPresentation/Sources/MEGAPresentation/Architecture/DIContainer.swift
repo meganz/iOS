@@ -8,17 +8,25 @@ public enum DIContainer {
             credentialRepo: CredentialRepository.newRepo
         )
     }
+    
+    public static var featureFlagProvider: any FeatureFlagProviderProtocol {
+        FeatureFlagProvider(
+            useCase: FeatureFlagUseCase(
+                repository: FeatureFlagRepository.newRepo
+            )
+        )
+    }
 }
 
 // MARK: - Audio Playback Continuation
 
 public extension DIContainer {
-    static func playbackContinuationUseCase(
-        isFeatureFlagEnabled: @escaping () -> Bool
-    ) -> any PlaybackContinuationUseCaseProtocol {
+    static var playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol {
         PlaybackContinuationUseCaseFeatureFlagProxy(
             useCase: PlaybackContinuationUseCase.shared,
-            isFeatureFlagEnabled: isFeatureFlagEnabled
+            isFeatureFlagEnabled: {
+                featureFlagProvider.isFeatureFlagEnabled(for: .audioPlaybackContinuation)
+            }
         )
     }
 }

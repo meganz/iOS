@@ -1,6 +1,7 @@
 import Foundation
 import MEGAData
 import MEGADomain
+import MEGAPresentation
 import Combine
 
 enum ChatViewMode {
@@ -237,7 +238,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                     self.addChatButtonTapped()
                 }
             },
-            bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? (FeatureFlagProvider().isFeatureFlagEnabled(for: .scheduleMeeting) ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : [startMeetingMenu(), joinMeetingMenu()]) : nil
+            bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? (DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting) ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : [startMeetingMenu(), joinMeetingMenu()]) : nil
         )
     }
     

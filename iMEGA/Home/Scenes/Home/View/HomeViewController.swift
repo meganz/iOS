@@ -1,6 +1,7 @@
 import UIKit
 import MEGAUIKit
 import MEGADomain
+import MEGAPresentation
 
 @objc(HomeRouting)
 protocol HomeRouting: NSObjectProtocol {
@@ -36,7 +37,7 @@ final class HomeViewController: UIViewController {
     
     var homeViewModel: HomeViewModel!
     
-    private var featureFlagProvider = FeatureFlagProvider()
+    private var featureFlagProvider = DIContainer.featureFlagProvider
     
     // MARK: - Router
 

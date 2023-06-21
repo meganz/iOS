@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 
 @MainActor
 final class PhotosViewModel: NSObject {
@@ -42,7 +43,7 @@ final class PhotosViewModel: NSObject {
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
         userAttributeUseCase: any UserAttributeUseCaseProtocol,
-        featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
+        featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase

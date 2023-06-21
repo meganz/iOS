@@ -2,6 +2,7 @@ import Foundation
 import SafariServices
 import MEGADomain
 import MEGAData
+import MEGAPresentation
 import Combine
 
 extension AppDelegate {
@@ -376,6 +377,12 @@ extension AppDelegate {
     
     @objc func registerCustomActionsForStartScheduledMeetingNotification() {
         ScheduleMeetingPushNotifications.registerCustomActions()
+    }
+    
+    @objc func toggleFeatureFlags() {
+        #if QA_CONFIG
+            FeatureFlagProvider.disableFeatureFlags = false
+        #endif
     }
         
     private func startCallWithNoRinging(forChatRoom chatRoom: MEGAChatRoom) async throws {

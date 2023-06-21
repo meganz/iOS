@@ -44,7 +44,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     
     init(accountHallUsecase: any AccountHallUseCaseProtocol,
          purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol,
-         featureFlagProvider: any FeatureFlagProviderProtocol = FeatureFlagProvider()) {
+         featureFlagProvider: any FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.accountHallUsecase = accountHallUsecase
         self.purchaseUseCase = purchaseUseCase
         self.featureFlagProvider = featureFlagProvider

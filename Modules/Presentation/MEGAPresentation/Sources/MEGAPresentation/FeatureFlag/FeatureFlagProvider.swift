@@ -1,22 +1,21 @@
 import MEGADomain
 import MEGAData
 
-protocol FeatureFlagProviderProtocol {
+public protocol FeatureFlagProviderProtocol {
     func isFeatureFlagEnabled(for: FeatureFlagKey) -> Bool
 }
 
-final class FeatureFlagProvider: FeatureFlagProviderProtocol {
+public struct FeatureFlagProvider: FeatureFlagProviderProtocol {
+    public static var disableFeatureFlags: Bool = true
     private var useCase: any FeatureFlagUseCaseProtocol
 
     init(useCase: any FeatureFlagUseCaseProtocol = FeatureFlagUseCase(repository: FeatureFlagRepository.newRepo)) {
         self.useCase = useCase
     }
     
-    func isFeatureFlagEnabled(for key: FeatureFlagKey) -> Bool {
-#if QA_CONFIG
+    public func isFeatureFlagEnabled(for key: FeatureFlagKey) -> Bool {
+        guard !Self.disableFeatureFlags else { return false }
+        
         return useCase.isFeatureFlagEnabled(for: key.rawValue)
-#else
-        false
-#endif
     }
 }
