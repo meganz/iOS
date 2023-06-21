@@ -22,6 +22,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 @property (nonatomic, assign, getter=isEndPlaying) BOOL endPlaying;
 @property (nonatomic, strong) MEGASdk *apiForStreaming;
 @property (nonatomic, assign, getter=isViewDidAppearFirstTime) BOOL viewDidAppearFirstTime;
+@property (nonatomic, strong) NSMutableSet *subscriptions;
 
 @end
 
@@ -34,6 +35,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         _fileUrl    = fileUrl;
         _node       = nil;
         _folderLink = NO;
+        _subscriptions = [[NSMutableSet alloc] init];
     }
     
     return self;
@@ -54,34 +56,22 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(movieFinishedCallback:)
-                                                 name:AVPlayerItemDidPlayToEndTimeNotification
-                                               object:self.player.currentItem];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground:)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(checkNetworkChanges)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(checkNetworkChanges)
-                                                 name:kReachabilityChangedNotification
-                                               object:nil];
-    
+        
     [AudioSessionUseCaseOCWrapper.alloc.init configureVideoAudioSession];
     
     if ([AudioPlayerManager.shared isPlayerAlive]) {
         [AudioPlayerManager.shared audioInterruptionDidStart];
     }
-    
+
     self.viewDidAppearFirstTime = YES;
+    
+    [_subscriptions unionSet:[self bindToSubscriptionsWithMovieFinised:^{
+        [self movieFinishedCallback];
+    } checkNetworkChanges:^{
+        [self checkNetworkChanges];
+    } applicationDidEnterBackground:^{
+        [self applicationDidEnterBackground];
+    }]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -116,35 +106,25 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         }
     }
     
+    [[AVPlayerManager shared] assignDelegateTo:self];
+    
     self.viewDidAppearFirstTime = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:AVPlayerItemDidPlayToEndTimeNotification
-                                                  object:self.player.currentItem];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationDidEnterBackgroundNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationWillEnterForegroundNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kReachabilityChangedNotification
-                                                  object:nil];
+    if ([[AVPlayerManager shared] isPIPModeActiveFor:self]) {
+        return;
+    }
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         [self stopStreaming];
-            
+
         if (![AudioPlayerManager.shared isPlayerAlive]) {
             [AudioSessionUseCaseOCWrapper.alloc.init configureDefaultAudioSession];
         }
-    
+
         if ([AudioPlayerManager.shared isPlayerAlive]) {
             [AudioPlayerManager.shared audioInterruptionDidEndNeedToResume:YES];
         }
@@ -160,6 +140,10 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    if ([[AVPlayerManager shared] isPIPModeActiveFor:self]) {
+        return;
+    }
 
     CMTime mediaTime = CMTimeMake(self.player.currentTime.value, self.player.currentTime.timescale);
     Float64 second = CMTimeGetSeconds(mediaTime);
@@ -183,7 +167,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     }
     
     self.player = [AVPlayer playerWithURL:self.fileUrl];
-    self.delegate = self;
     
     if (mediaDestination) {
         CMTime time = CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue);
@@ -239,12 +222,12 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 #pragma mark - Notifications
 
-- (void)movieFinishedCallback:(NSNotification*)aNotification {
+- (void)movieFinishedCallback {
     self.endPlaying = YES;
     [self replayVideo];
 }
 
-- (void)applicationDidEnterBackground:(NSNotification*)aNotification {
+- (void)applicationDidEnterBackground {
     if (![NSStringFromClass([UIApplication sharedApplication].windows.firstObject.class) isEqualToString:@"UIWindow"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
     }
@@ -265,12 +248,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
             [self.player seekToTime:currentTime];
         }
     }
-}
-
-#pragma mark - AVPlayerViewControllerDelegate
-
-- (BOOL)playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart:(AVPlayerViewController *)playerViewController {
-    return NO;
 }
 
 @end

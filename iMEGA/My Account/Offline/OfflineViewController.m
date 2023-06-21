@@ -745,8 +745,8 @@ static NSString *kisDirectory = @"kisDirectory";
         
         if (asset.playable) {
             if ([asset tracksWithMediaType:AVMediaTypeVideo].count > 0) {
-                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:[NSURL fileURLWithPath:self.previewDocumentPath]];
-                            [self presentViewController:megaAVViewController animated:YES completion:nil];
+                AVPlayerViewController *megaAVViewController = [[AVPlayerManager shared] makePlayerControllerFor:[NSURL fileURLWithPath:self.previewDocumentPath]];
+                [self presentViewController:megaAVViewController animated:YES completion:nil];
             } else {
                 if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
                     [AudioPlayerManager.shared initMiniPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
