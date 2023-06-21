@@ -11,7 +11,13 @@ extension FolderLinkViewController {
     }
     
     @objc func showMediaDiscovery() {
-        guard let parentNode = MEGASdk.sharedFolderLinkSdk.rootNode else { return }
-        MediaDiscoveryRouter(viewController: self, parentNode: parentNode, isFolderLink: true).start()
+        var link = publicLinkString
+        if let linkEncryptedString {
+            link = linkEncryptedString
+        }
+        guard let parentNode = MEGASdk.sharedFolderLinkSdk.rootNode,
+              let link else { return }
+        
+        MediaDiscoveryRouter(viewController: self, parentNode: parentNode, folderLink: link).start()
     }
 }

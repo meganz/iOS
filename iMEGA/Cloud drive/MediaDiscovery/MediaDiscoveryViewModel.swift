@@ -8,18 +8,25 @@ enum MediaDiscoveryAction: ActionType {
     case onViewReady
     case onViewDidAppear
     case onViewWillDisAppear
+    case downloadSelectedPhotos([NodeEntity])
+    case saveToPhotos([NodeEntity])
+    case importPhotos([NodeEntity])
+    case shareLink(UIBarButtonItem?)
 }
 
 final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtocol {
     enum Command: Equatable, CommandType {
         case loadMedia(nodes: [NodeEntity])
+        case showSaveToPhotosError(String)
+        case endEditingMode
     }
     
     private let parentNode: NodeEntity
     private var nodes: [NodeEntity] = []
-    private let router: MediaDiscoveryRouter
+    private let router: MediaDiscoveryRouting
     private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
+    private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
     
     private var loadingTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
@@ -29,13 +36,17 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     
     // MARK: - Init
     
-    init(parentNode: NodeEntity, router: MediaDiscoveryRouter,
-         analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol,
-         mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol) {
+    init(parentNode: NodeEntity,
+         folderLink: String? = nil,
+         router: MediaDiscoveryRouting,
+         analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
+         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
+         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol) {
         self.parentNode = parentNode
         self.router = router
         self.analyticsUseCase = analyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
+        self.saveMediaUseCase = saveMediaUseCase
         
         super.init()
         initSubscriptions()
@@ -54,6 +65,15 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
             endTracking()
             sendPageStayStats()
             cancelLoading()
+        case .downloadSelectedPhotos(let photos):
+            downloadSelectedPhotos(photos)
+        case .saveToPhotos(let photos):
+            saveToPhotos(photos)
+        case .importPhotos(let photos):
+            importPhotos(photos)
+        case .shareLink(let sender):
+            invokeCommand?(.endEditingMode)
+            router.showShareLink(sender: sender)
         }
     }
     
@@ -102,5 +122,33 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
         let duration = Int(pageStayTimeTracker.duration)
         
         analyticsUseCase.sendPageStayStats(with: duration)
+    }
+    
+    private func downloadSelectedPhotos(_ photos: [NodeEntity]) {
+        guard photos.isNotEmpty else { return }
+        invokeCommand?(.endEditingMode)
+        router.showDownload(photos: photos)
+    }
+    
+    private func saveToPhotos(_ photos: [NodeEntity]) {
+        guard photos.isNotEmpty else { return }
+        invokeCommand?(.endEditingMode)
+        Task { @MainActor in
+            do {
+                try await saveMediaUseCase.saveToPhotos(nodes: photos)
+            } catch let error as SaveMediaToPhotosErrorEntity {
+                if error != .cancelled {
+                    invokeCommand?(.showSaveToPhotosError(error.localizedDescription))
+                }
+            } catch {
+                MEGALogError("Error saving photos: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func importPhotos(_ photos: [NodeEntity]) {
+        guard photos.isNotEmpty else { return }
+        invokeCommand?(.endEditingMode)
+        router.showImportLocation(photos: photos)
     }
 }
