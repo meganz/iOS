@@ -39,6 +39,10 @@ struct ScheduleMeetingSelectedFrequencyDetails {
     
     private func weeklyString() -> String {
         guard let weekDayList = rules.weekDayList else { return "" }
+        guard Set(weekDayList) != Set(1...7) || rules.interval > 1 else {
+            return Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrence.Weekly.everyDay
+        }
+        
         let string = Strings.Localizable.Meetings.Scheduled.Create.Weekly.selectedFrequency(rules.interval)
 
         var weekDayNames = ""

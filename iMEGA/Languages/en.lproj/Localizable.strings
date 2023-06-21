@@ -3482,3 +3482,7 @@
 "meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="fourth";
 /* Create Schedule Meeting: Month custom option - fifth week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="fifth";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
+"meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Every day";

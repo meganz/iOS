@@ -13,12 +13,20 @@ struct DetailDisclosureView: View {
     let text: String
     let detail: String?
     let requiresPadding: Bool
+    let verticalAlignment: VerticalAlignment
     let action: (() -> Void)
     
-    init(text: String, detail: String? = nil, requiresPadding: Bool = true, action: @escaping (() -> Void)) {
+    init(
+        text: String,
+        detail: String? = nil,
+        requiresPadding: Bool = true,
+        verticalAlignment: VerticalAlignment = .center,
+        action: @escaping (() -> Void)
+    ) {
         self.text = text
         self.detail = detail
         self.requiresPadding = requiresPadding
+        self.verticalAlignment = verticalAlignment
         self.action = action
     }
 
@@ -38,7 +46,7 @@ struct DetailDisclosureView: View {
     }
     
     private func content() -> some View {
-        HStack {
+        HStack(alignment: verticalAlignment) {
             Text(text)
                 .font(.body)
             Spacer()

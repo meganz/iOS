@@ -6,7 +6,8 @@ struct WeekDaysInformation {
     
     // Week day starts with Monday and index starts with 0
     func weekDay(forStartDate startDate: Date) -> Int {
-        let index = ((Calendar.current.component(.weekday, from: startDate) - Calendar.current.firstWeekday + 7) % 7)
-        return index == -1 ? 6 : index // Sunday - 6
+        let calendar = Calendar.current
+        let weekDaySymbol = calendar.weekdaySymbols[calendar.component(.weekday, from: startDate) - 1]
+        return symbols.firstIndex(of: weekDaySymbol) ?? 0
     }
 }

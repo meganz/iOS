@@ -4569,6 +4569,10 @@ public enum Strings {
                 return Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval", p1)
               }
             }
+            public enum Weekly {
+              /// Every day
+              public static let everyDay = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay")
+            }
           }
           public enum SelectedRecurrenceOption {
             /// Daily
@@ -4708,6 +4712,10 @@ public enum Strings {
             /// Plural format key: "%#@count@"
             public static func selectedFrequency(_ p1: Int) -> String {
               return Strings.tr("Localizable", "meetings.scheduled.create.weekly.selectedFrequency", p1)
+            }
+            public enum EveryDay {
+              /// Meeting will occur every day.
+              public static let footerNote = Strings.tr("Localizable", "meetings.scheduled.create.weekly.everyDay.footerNote")
             }
             public enum MultipleDays {
               /// Plural format key: "%#@count@"
