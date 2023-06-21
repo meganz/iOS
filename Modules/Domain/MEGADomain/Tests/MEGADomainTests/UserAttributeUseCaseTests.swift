@@ -95,7 +95,7 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"images","location":"cameraUploads","usePreference":false}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json).base64Encoded)]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json?.base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .images, location: .cameraUploads, usePreference: false))
@@ -111,13 +111,30 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive"}},"android":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
         """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json).base64Encoded)]])
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json?.base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: nil))
         
         XCTAssertNotNil(repo.userAttributesContainer[.contentConsumptionPreferences])
-        let updatedJsonData = try XCTUnwrap(try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences])[ContentConsumptionKeysEntity.key]).sorted()
+        let updatedJsonData = try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences]?[ContentConsumptionKeysEntity.key]).sorted()
+        XCTAssertEqual(updatedJsonData, try XCTUnwrap(targetJson).sorted())
+    }
+    
+    func testSaveTimelineFilter_withOnlyHavingCrossPlatformData_shouldAddiOSBlockCorrectlyWithOtherPlatformData() async throws {
+        let json = """
+            {"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}}}
+        """.trim
+        let targetJson = """
+            {"web":{"timeline":{"mediaType":"images","location":"cameraUploads"}},"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive"}}}
+        """.trim
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json?.base64Encoded)]])
+        let sut = UserAttributeUseCase(repo: repo)
+        
+        try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: nil))
+        
+        XCTAssertNotNil(repo.userAttributesContainer[.contentConsumptionPreferences])
+        let updatedJsonData = try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences]?[ContentConsumptionKeysEntity.key]).sorted()
         XCTAssertEqual(updatedJsonData, try XCTUnwrap(targetJson).sorted())
     }
 }

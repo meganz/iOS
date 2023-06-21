@@ -54,13 +54,14 @@ public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttr
     }
     
     private func jsonStringForPreference(timeline: ContentConsumptionTimeline) async throws -> String {
-        guard let contentConsumptionJson = try? await retrieveContentConsumptionJSONData(),
-              let existingJson = try? jsonStringForExistingPreference(timeline: timeline, jsonData: contentConsumptionJson)
-        else {
-            return try jsonStringForNonExistingPreference(timeline)
-        }
+        let allPlatformCCJsonData = try? await retrieveContentConsumptionJSONData()
         
-        return existingJson
+        if let allPlatformCCJsonData, let existingJson = try? jsonStringForExistingPreference(timeline: timeline, jsonData: allPlatformCCJsonData) {
+            return existingJson
+        }
+        else {
+            return try jsonStringForNonExistingPreference(timeline, jsonData: allPlatformCCJsonData)
+        }
     }
     
     private func jsonStringForExistingPreference(timeline: ContentConsumptionTimeline, jsonData: Data) throws -> String {
@@ -74,13 +75,21 @@ public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttr
         dictionary[ContentConsumptionKeysEntity.ios] = timeline
         
         guard let dictionaryJson = try? JSONSerialization.data(withJSONObject: dictionary) else { throw JSONCodingErrorEntity.encoding }
-       return String(decoding: dictionaryJson, as: UTF8.self)
+        return String(decoding: dictionaryJson, as: UTF8.self)
     }
     
-    private func jsonStringForNonExistingPreference(_ timeline: ContentConsumptionTimeline) throws -> String {
+    private func jsonStringForNonExistingPreference(_ timeline: ContentConsumptionTimeline, jsonData: Data?) throws -> String {
         let contentConsumption = ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: timeline))
         
         guard let contentConsumptionIosData = try? JSONEncoder().encode(contentConsumption) else { throw JSONCodingErrorEntity.encoding }
-        return String(decoding: contentConsumptionIosData, as: UTF8.self)
+        
+        let iosJsonString = String(decoding: contentConsumptionIosData, as: UTF8.self)
+        
+        if let otherPlatformPreferenceJsonData = jsonData {
+            let result = String(decoding: otherPlatformPreferenceJsonData, as: UTF8.self).dropLast() + "," + iosJsonString.dropFirst()
+            return String(result)
+        } else {
+            return iosJsonString
+        }
     }
 }
