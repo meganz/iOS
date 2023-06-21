@@ -56,7 +56,8 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     
     @objc func configure(attributedTitle: NSAttributedString, topDistance: CGFloat, isTopSeparatorVisible: Bool, isBottomSeparatorVisible: Bool) {
         configure(topDistance: topDistance, isTopSeparatorVisible: isTopSeparatorVisible, isBottomSeparatorVisible: isBottomSeparatorVisible)
-        
+
+        titleLabel.isHidden = false
         titleLabel.attributedText = attributedTitle
     }
     
