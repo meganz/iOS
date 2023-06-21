@@ -54,6 +54,8 @@ public final class CurrentUserSource {
                 currentUserHandle = nil
                 currentUserEmail = nil
                 isLoggedIn = false
+                shouldRefreshAccountDetails = false
+                accountDetails = nil
             }
             .store(in: &subscriptions)
         
