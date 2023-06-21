@@ -16,9 +16,7 @@ extension FolderLinkViewController {
         if let linkEncryptedString {
             link = linkEncryptedString
         }
-        guard let parentNode = MEGASdk.sharedFolderLinkSdk.rootNode,
-              let link else { return }
-        
+        guard let parentNode, let link else { return }
         MediaDiscoveryRouter(viewController: self, parentNode: parentNode, folderLink: link).start()
     }
 }

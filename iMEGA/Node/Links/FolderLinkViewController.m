@@ -46,7 +46,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
-@property (nonatomic, strong) MEGANode *parentNode;
+@property (nonatomic, strong, nullable) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
