@@ -2,6 +2,7 @@ import XCTest
 import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 @testable import MEGA
 
 final class PhotoLibraryFilterViewModelTest: XCTestCase {

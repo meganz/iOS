@@ -73,7 +73,7 @@ final class AlbumContentViewModel: ViewModelType {
         router: AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel,
-        featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
+        featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.album = album
         self.newAlbumPhotosToAdd = newAlbumPhotosToAdd

@@ -2,6 +2,7 @@ import Combine
 import SwiftUI
 import MEGASwiftUI
 import MEGADomain
+import MEGAPresentation
 
 final class AlbumCellViewModel: ObservableObject {
     @Published var numberOfNodes: Int = 0
@@ -45,7 +46,7 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailUseCase: any ThumbnailUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
-        featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
+        featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.thumbnailUseCase = thumbnailUseCase
         self.album = album

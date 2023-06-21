@@ -1,8 +1,9 @@
 import Foundation
+import MEGAPresentation
 
 extension FolderLinkViewController {
     @objc func containsMediaFiles() -> Bool {
-        guard FeatureFlagProvider().isFeatureFlagEnabled(for: .folderLinkMediaDiscovery) else {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .folderLinkMediaDiscovery) else {
             return false
         }
         return nodesArray.toNodeEntities().contains {

@@ -3,6 +3,7 @@ import SwiftUI
 import Combine
 import MEGADomain
 import MEGAUIKit
+import MEGAPresentation
 
 final class PhotoAlbumContainerViewController: UIViewController, TraitEnviromentAware {
     var photoViewController: PhotosViewController?
@@ -24,7 +25,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
     
     let pageTabViewModel = PagerTabViewModel()
     let viewModel = PhotoAlbumContainerViewModel()
-    let featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()
+    let featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?

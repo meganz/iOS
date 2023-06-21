@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 
 final class PhotoLibraryFilterViewModel: ObservableObject {
     @Published var selectedMediaType = PhotosFilterType.allMedia
@@ -20,7 +21,7 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     
     init(contentMode: PhotoLibraryContentMode = .library,
          userAttributeUseCase: any UserAttributeUseCaseProtocol,
-         featureFlagProvider: FeatureFlagProviderProtocol = FeatureFlagProvider()) {
+         featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.contentMode = contentMode
         self.userAttributeUseCase = userAttributeUseCase
         isRememberPreferencesFeatureFlagEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelinePreferenceSaving)

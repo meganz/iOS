@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 
 extension ChatRoomsListViewController {
     private func setEmptyViewButtonWithMeetingsOptions(button: UIButton) {
@@ -14,7 +15,7 @@ extension ChatRoomsListViewController {
         addBarButtonItem.menu = viewModel.contextMenuManager.contextMenu(
             with: CMConfigEntity(
                 menuType: .menu(type: .meeting),
-                shouldScheduleMeeting: FeatureFlagProvider().isFeatureFlagEnabled(for: .scheduleMeeting)
+                shouldScheduleMeeting: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting)
             )
         )
         addBarButtonItem.target = nil
