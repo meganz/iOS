@@ -70,6 +70,13 @@ final class ScheduleMeetingSelectedFrequencyDetailsTests: XCTestCase {
     func testString_givenFrequencyOptionCustomMonthlyWithMonthWeekDayListAndIntervalOtherThanOne_shouldMatch() throws {
         try assertCustomMonthlyWeekDayList(withInterval: 7)
     }
+    
+    func testString_givenFrequencyOptionWeeklyAndAllDaysSelected_shouldMatch() throws {
+        var rules = try makeRules(forFrequency: .weekly)
+        rules.weekDayList = Array(1...7)
+        let frequencyDetails = try makeFrequencyDetails(rules: rules)
+        XCTAssertEqual(frequencyDetails.string, Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrence.Weekly.everyDay)
+    }
 
     // MARK: - Private methods
     

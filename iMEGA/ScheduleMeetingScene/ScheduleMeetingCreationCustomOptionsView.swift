@@ -22,9 +22,7 @@ struct ScheduleMeetingCreationCustomOptionsView: View {
                     ScheduleMeetingCreationWeeklyCustomOptionsView(viewModel: weeklyOptionsViewModel)
                 }
             } footer: {
-                if let footerNote = monthlyOptionsViewModel?.calendarFooterNote() {
-                    Text(footerNote)
-                }
+                Text(monthlyOptionsViewModel?.calendarFooterNote() ?? "")
             }
         }
         .listStyle(.grouped)

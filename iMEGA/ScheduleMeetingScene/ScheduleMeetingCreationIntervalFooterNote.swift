@@ -22,7 +22,9 @@ struct ScheduleMeetingCreationIntervalFooterNote {
         var footerNote = ""
         
         if let weekDaysList = rules.weekDayList {
-            if weekDaysList.count == 1 {
+            if Set(weekDaysList) == Set(1...7) && rules.interval == 1 {
+                footerNote = Strings.Localizable.Meetings.Scheduled.Create.Weekly.EveryDay.footerNote
+            } else if weekDaysList.count == 1 {
                 footerNote = weeklyFooterNote(withWeekDayInt: weekDaysList[0])
             } else if weekDaysList.count > 1 {
                 footerNote = weeklyFooterNote(withWeekDaysList: weekDaysList)

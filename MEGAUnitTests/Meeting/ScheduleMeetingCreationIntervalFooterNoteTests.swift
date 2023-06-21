@@ -61,6 +61,16 @@ final class ScheduleMeetingCreationIntervalFooterNoteTests: XCTestCase {
         try assertMonthlyFrequencyWithWeekNumberAndDaySelected(interval: 3)
     }
     
+    func testString_withFrequencyWeeklyWithIntervalOneAndAllDaysSelected_shouldMatch() throws {
+        var rules = try makeRules(withFrequency: .weekly, interval: 1)
+        rules.weekDayList = Array(1...7)
+        try assert(
+            withFrequency: .weekly,
+            rules: rules,
+            matchingString: Strings.Localizable.Meetings.Scheduled.Create.Weekly.EveryDay.footerNote
+        )
+    }
+    
     // MARK: - Private methods
     
     private func assertDaily(withInterval interval: Int) throws {

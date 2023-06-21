@@ -30,6 +30,7 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
                 DetailDisclosureView(
                     text: Strings.Localizable.Meetings.ScheduleMeeting.recurrence,
                     detail: viewModel.selectedFrequencyDetails(),
+                    verticalAlignment: .top,
                     action: viewModel.showRecurrenceOptionsView
                 )
                 
