@@ -4275,8 +4275,6 @@ public enum Strings {
         public static let chatNotifications = Strings.tr("Localizable", "meetings.info.chatNotifications")
         /// Description
         public static let descriptionLabel = Strings.tr("Localizable", "meetings.info.descriptionLabel")
-        /// Get meeting link
-        public static let getMeetingLink = Strings.tr("Localizable", "meetings.info.getMeetingLink")
         /// Leave meeting
         public static let leaveMeeting = Strings.tr("Localizable", "meetings.info.leaveMeeting")
         /// Manage chat history
@@ -4297,10 +4295,6 @@ public enum Strings {
         public static let sharedFiles = Strings.tr("Localizable", "meetings.info.sharedFiles")
         /// Share meeting link
         public static let shareMeetingLink = Strings.tr("Localizable", "meetings.info.shareMeetingLink")
-        public enum GetMeetingLink {
-          /// Anyone with this link can join the meeting and view the meeting chat
-          public static let explainLink = Strings.tr("Localizable", "meetings.info.getMeetingLink.explainLink")
-        }
         public enum KeyRotation {
           /// Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.
           public static let description = Strings.tr("Localizable", "meetings.info.keyRotation.description")
@@ -4312,6 +4306,8 @@ public enum Strings {
           public static let clearMeetingHistory = Strings.tr("Localizable", "meetings.info.manageMeetingHistory.clearMeetingHistory")
           /// Are you sure you want to clear the full message history of this meeting?
           public static let clearMeetingHistoryMessage = Strings.tr("Localizable", "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage")
+          /// Meeting history has been cleared
+          public static let meetingHistoryHasBeenCleared = Strings.tr("Localizable", "meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared")
         }
         public enum Participants {
           /// See all
@@ -4320,6 +4316,10 @@ public enum Strings {
           public static let seeLess = Strings.tr("Localizable", "meetings.info.participants.seeLess")
           /// See more
           public static let seeMore = Strings.tr("Localizable", "meetings.info.participants.seeMore")
+        }
+        public enum ShareMeetingLink {
+          /// Anyone with this link can join the meeting and view the meeting chat
+          public static let explainLink = Strings.tr("Localizable", "meetings.info.shareMeetingLink.explainLink")
         }
         public enum ShareOptions {
           /// Send to chat

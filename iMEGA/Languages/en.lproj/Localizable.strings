@@ -3440,14 +3440,14 @@
 "meetings.info.shareMeetingLink"="Share meeting link";
 /* The button or alert title to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistory"="Clear meeting history";
+/* Message show when the history of a meeting has been successfully deleted */
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history has been cleared";
 /* The alert message to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Are you sure you want to clear the full message history of this meeting?";
 /* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="Leave meeting";
-/* Label in a cell where you can get the meeting link */
-"meetings.info.getMeetingLink"="Get meeting link";
 /* Text explaining users how the meeting links work. */
-"meetings.info.getMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+"meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
 /* The title of a menu button which allows users to rename a meeting. */
 "meetings.info.renameMeeting"="Rename meeting";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */

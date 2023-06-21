@@ -298,7 +298,7 @@
     customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
     customModalAlertVC.detail = self.chatRoom.isMeeting
-        ? NSLocalizedString(@"meetings.info.getMeetingLink.explainLink", @"Text explaining users how the meeting links work.")
+        ? NSLocalizedString(@"meetings.info.shareMeetingLink.explainLink", @"Text explaining users how the meeting links work.")
         : NSLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
     customModalAlertVC.firstButtonTitle = NSLocalizedString(@"general.share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
     customModalAlertVC.link = link;
@@ -525,7 +525,7 @@
         case GroupChatDetailsSectionGetChatLink:
             cell.leftImageView.image = [UIImage imageNamed:@"link"];
             cell.nameLabel.text = self.chatRoom.isMeeting
-                ? NSLocalizedString(@"meetings.info.getMeetingLink", @"Label in a cell where you can get the meeting link")
+                ? NSLocalizedString(@"meetings.info.shareMeetingLink", @"Label in a cell where you can share the meeting link")
                 : NSLocalizedString(@"Get Chat Link", @"");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
@@ -1020,7 +1020,10 @@
         }
             
         case MEGAChatRequestTypeTruncateHistory: {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:NSLocalizedString(@"Chat History has Been Cleared", @"Message show when the history of a chat has been successfully deleted")];
+            NSString *message = self.chatRoom.isMeeting
+                ? NSLocalizedString(@"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared", @"Message show when the history of a meeting has been successfully deleted")
+                : NSLocalizedString(@"Chat History has Been Cleared", @"Message show when the history of a chat has been successfully deleted");
+            [SVProgressHUD showImage:[UIImage imageNamed:@"clearChatHistory"] status:message];
             break;
         }
             

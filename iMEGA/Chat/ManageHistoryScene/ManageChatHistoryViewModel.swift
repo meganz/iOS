@@ -279,12 +279,16 @@ final class ManageChatHistoryViewModel: ViewModelType {
         
         case .clearChatHistoryConfirmed:
             manageChatHistoryUseCase.clearChatHistoryUseCase.clearChatHistory(for: chatId) { [weak self] in
+                guard let self else { return }
                 switch $0 {
                 case .success:
-                    self?.invokeCommand?(.showResult(.content(Asset.Images.Chat.ContactDetails.clearChatHistory.image, Strings.Localizable.chatHistoryHasBeenCleared)))
+                    let message = self.isChatTypeMeeting
+                        ? Strings.Localizable.Meetings.Info.ManageMeetingHistory.meetingHistoryHasBeenCleared
+                        : Strings.Localizable.chatHistoryHasBeenCleared
+                    self.invokeCommand?(.showResult(.content(Asset.Images.Chat.ContactDetails.clearChatHistory.image, message)))
                     
                 case .failure:
-                    self?.invokeCommand?(.showResult(.error(Strings.Localizable.AnErrorHasOccurred.theChatHistoryHasNotBeenSuccessfullyCleared)))
+                    self.invokeCommand?(.showResult(.error(Strings.Localizable.AnErrorHasOccurred.theChatHistoryHasNotBeenSuccessfullyCleared)))
                 }
             }
             
