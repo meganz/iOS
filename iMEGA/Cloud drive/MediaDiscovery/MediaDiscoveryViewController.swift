@@ -1,4 +1,5 @@
 import UIKit
+import MEGADomain
 
 final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private let viewModel: MediaDiscoveryViewModel
@@ -20,9 +21,10 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: contentMode)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
-    lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
+    lazy var selection = PhotoSelectionAdapter(sdk: contentMode == .mediaDiscoveryFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared)
     
     private lazy var emptyView = EmptyStateView.create(for: .photos)
+    private var mediaDiscoveryFolderLinkToolbarConfigurator: MediaDiscoveryFolderLinkToolbarConfigurator?
     
     // MARK: - Init
     
@@ -138,6 +140,11 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 rightBarButtonItem.isEnabled = true
                 emptyView.removeFromSuperview()
             }
+        case .showSaveToPhotosError(let error):
+            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image,
+                               status: error)
+        case .endEditingMode:
+            endEditingMode()
         }
     }
     
@@ -203,5 +210,47 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     @objc private func selectAllButtonPressed(_ barButtonItem: UIBarButtonItem) {
         configPhotoLibrarySelectAll()
         configureToolbarButtons()
+    }
+    
+    override func configureToolbarButtons() {
+        if contentMode == .mediaDiscoveryFolderLink {
+            if mediaDiscoveryFolderLinkToolbarConfigurator == nil {
+                mediaDiscoveryFolderLinkToolbarConfigurator = MediaDiscoveryFolderLinkToolbarConfigurator(
+                    importAction: importBarButtonPressed,
+                    downloadAction: downloadBarButtonPressed,
+                    saveToPhotosAction: saveToPhotosBarButtonPressed,
+                    shareLinkAction: shareLinkBarButtonPressed
+                )
+            }
+            toolbar.items = mediaDiscoveryFolderLinkToolbarConfigurator?.toolbarItems(forNodes: selectedNodes())
+        } else {
+            super.configureToolbarButtons()
+        }
+    }
+    
+    private func importBarButtonPressed(_ button: UIBarButtonItem) {
+        viewModel.dispatch(.importPhotos(selection.nodes.toNodeEntities()))
+    }
+    
+    private func downloadBarButtonPressed(_ button: UIBarButtonItem) {
+        viewModel.dispatch(.downloadSelectedPhotos(selection.nodes.toNodeEntities()))
+    }
+    
+    private func saveToPhotosBarButtonPressed(_ button: UIBarButtonItem) {
+        let permissionHandler = DevicePermissionsHandler()
+        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+            guard let self else { return }
+            if granted {
+                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+                
+                viewModel.dispatch(.saveToPhotos(selection.nodes.toNodeEntities()))
+            } else {
+                permissionHandler.alertPhotosPermission()
+            }
+        }
+    }
+    
+    private func shareLinkBarButtonPressed(_ button: UIBarButtonItem) {
+        viewModel.dispatch(.shareLink(button))
     }
 }

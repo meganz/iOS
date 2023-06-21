@@ -47,6 +47,7 @@
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		0EBFFE192A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */; };
+		0EC5A64F2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */; };
 		0ECDCD4E2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */; };
 		0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */; };
 		0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */; };
@@ -2516,6 +2517,7 @@
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		0EBFFE182A29A39300FAB142 /* GetAlbumsLinksViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewWrapper.swift; sourceTree = "<group>"; };
+		0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryFolderLinkToolbarConfigurator.swift; sourceTree = "<group>"; };
 		0ECDCD4D2A1DDBA100FBEFE7 /* GetLinkCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkCellViewModelType.swift; sourceTree = "<group>"; };
 		0ECDCD4F2A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchCellViewConfiguration.swift; sourceTree = "<group>"; };
 		0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewModel.swift; sourceTree = "<group>"; };
@@ -5283,14 +5285,6 @@
 			path = SwiftGen;
 			sourceTree = "<group>";
 		};
-		122977DA27DA97610048F381 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		1230503527F83098007E0826 /* ViewModifier */ = {
 			isa = PBXGroup;
 			children = (
@@ -5386,23 +5380,6 @@
 			path = MediaDiscovery;
 			sourceTree = "<group>";
 		};
-		124306D227E1601E003286C8 /* Router */ = {
-			isa = PBXGroup;
-			children = (
-				124306D627E16048003286C8 /* MediaDiscoveryRouter.swift */,
-			);
-			path = Router;
-			sourceTree = "<group>";
-		};
-		124306D527E16024003286C8 /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				12647CD527D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift */,
-				12647CD327D7F7C2002033AF /* MediaDiscoveryViewController.swift */,
-			);
-			path = ViewController;
-			sourceTree = "<group>";
-		};
 		124667EA275DB81F00C94335 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -5449,9 +5426,11 @@
 		12647CD027D7F7AA002033AF /* MediaDiscovery */ = {
 			isa = PBXGroup;
 			children = (
-				124306D227E1601E003286C8 /* Router */,
-				124306D527E16024003286C8 /* ViewController */,
-				122977DA27DA97610048F381 /* ViewModel */,
+				12647CD527D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift */,
+				0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */,
+				124306D627E16048003286C8 /* MediaDiscoveryRouter.swift */,
+				12647CD327D7F7C2002033AF /* MediaDiscoveryViewController.swift */,
+				122977DD27DA976F0048F381 /* MediaDiscoveryViewModel.swift */,
 			);
 			path = MediaDiscovery;
 			sourceTree = "<group>";
@@ -13504,6 +13483,7 @@
 				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				12647CD627D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift in Sources */,
+				0EC5A64F2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift in Sources */,
 				124306D727E16048003286C8 /* MediaDiscoveryRouter.swift in Sources */,
 				12647CD427D7F7C3002033AF /* MediaDiscoveryViewController.swift in Sources */,
 				122977DE27DA976F0048F381 /* MediaDiscoveryViewModel.swift in Sources */,
