@@ -170,12 +170,10 @@
             AVURLAsset *asset = [AVURLAsset assetWithURL:path];
             
             if (asset.playable) {
-                MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithURL:path];
-                return megaAVViewController;
+                return [[AVPlayerManager shared] makePlayerControllerFor:path];
             } else {
                 MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
                 previewController.currentPreviewItemIndex = 0;
-                
                 return previewController;
             }
         } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && self.name.mnz_isEditableTextFilePathExtension) {
@@ -199,8 +197,7 @@
         
     } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:NO port:4443]) {
         if (self.mnz_isPlayable) {
-            MEGAAVViewController *megaAVViewController = [[MEGAAVViewController alloc] initWithNode:self folderLink:isFolderLink apiForStreaming:apiForStreaming];
-            return megaAVViewController;
+            return [[AVPlayerManager shared] makePlayerControllerFor:self folderLink:isFolderLink sdk:apiForStreaming];
         } else {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"fileNotSupported", @"Alert title shown when users try to stream an unsupported audio/video file") message:NSLocalizedString(@"message_fileNotSupported", @"Alert message shown when users try to stream an unsupported audio/video file") preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];

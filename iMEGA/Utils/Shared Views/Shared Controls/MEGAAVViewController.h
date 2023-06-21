@@ -9,5 +9,6 @@
 
 - (instancetype)initWithURL:(NSURL *)fileUrl;
 - (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink apiForStreaming:(MEGASdk *)apiForStreaming;
+- (NSString *)fileFingerprint;
 
 @end
