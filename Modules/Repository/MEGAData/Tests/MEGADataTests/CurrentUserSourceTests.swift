@@ -79,6 +79,8 @@ final class CurrentUserSourceTests: XCTestCase {
         XCTAssertNil(source.currentUserEmail)
         XCTAssertTrue(source.isGuest)
         XCTAssertFalse(source.isLoggedIn)
+        XCTAssertFalse(source.shouldRefreshAccountDetails)
+        XCTAssertNil(source.accountDetails)
     }
     
     func testChangeEmail_notCurrentUser_noEmailChange() {
