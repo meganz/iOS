@@ -17,9 +17,11 @@ let package = Package(
     targets: [
         .target(
             name: "MEGASwift",
-            dependencies: []),
+            dependencies: [],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGASwiftTests",
-            dependencies: ["MEGASwift"])
+            dependencies: ["MEGASwift"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
     ]
 )
