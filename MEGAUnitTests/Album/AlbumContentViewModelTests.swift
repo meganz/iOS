@@ -72,7 +72,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: [], sortOrder: .newest),
                                                                       .startLoading,
                                                                       .finishLoading,
-                                                                      .showHud(.success("Added 2 items to “\(self.albumEntity.name)”")),
+                                                                      .showResultMessage(.success("Added 2 items to “\(self.albumEntity.name)”")),
                                                                       .showAlbumPhotos(photos: nodesToAdd, sortOrder: .newest)])
         
         XCTAssertEqual(albumModificationUseCase.addedPhotosToAlbum, nodesToAdd)
@@ -480,7 +480,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                 exp.fulfill()
             case .finishLoading:
                 exp.fulfill()
-            case .showHud(let iconTypeMessage):
+            case .showResultMessage(let iconTypeMessage):
                 switch iconTypeMessage {
                 case .success(let message):
                     XCTAssertEqual(message, "Added 1 item to “\(album.name)”")
@@ -517,7 +517,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         exp.isInverted = true
         sut.invokeCommand = {
             switch $0 {
-            case .showHud:
+            case .showResultMessage:
                 exp.fulfill()
             default:
                 XCTFail("Invoked unexpected command: \($0)")
@@ -637,7 +637,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         shareAlbumUseCase: MockShareAlbumUseCase(),
                                         router: albumContentRouter, alertViewModel: alertViewModel())
         test(viewModel: sut, action: .showAlbumCoverPicker,
-             expectedCommands: [.showHud(.success(Strings.Localizable.CameraUploads.Albums.albumCoverUpdated))])
+             expectedCommands: [.showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.albumCoverUpdated))])
     }
     
     func testDispatchDeletePhotos_onSuccessfulRemovalOfPhotos_shouldShowHudOfNumberOfRemovedItems() {
@@ -659,7 +659,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(resultEntity.success))
             .replacingOccurrences(of: "[A]", with: "\(album.name)")
         test(viewModel: sut, action: .deletePhotos(nodesToRemove),
-             expectedCommands: [.showHud(.custom(Asset.Images.Hud.hudMinus.image, message))])
+             expectedCommands: [.showResultMessage(.custom(Asset.Images.Hud.hudMinus.image, message))])
         XCTAssertEqual(albumModificationUseCase.deletedPhotos, albumPhotos)
     }
     
@@ -739,7 +739,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .deleteAlbum, expectedCommands: [
             .dismissAlbum,
-            .showHud(.custom(Asset.Images.Hud.hudMinus.image, message))
+            .showResultMessage(.custom(Asset.Images.Hud.hudMinus.image, message))
         ])
         
         XCTAssertEqual(albumModificationUseCase.deletedAlbumsIds, [album.id])
@@ -831,7 +831,7 @@ final class AlbumContentViewModelTests: XCTestCase {
                                         alertViewModel: alertViewModel())
         
         test(viewModel: sut, action: .removeLink, expectedCommands: [
-            .showHud(.success(Strings.Localizable.General.MenuAction.RemoveLink.title(1)))
+            .showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1)))
         ])
     }
     
