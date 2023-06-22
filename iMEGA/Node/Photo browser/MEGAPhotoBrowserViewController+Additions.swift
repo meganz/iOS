@@ -202,3 +202,36 @@ extension MEGAPhotoBrowserViewController {
         }
     }
 }
+
+// MARK: - OnNodesUpdate
+extension MEGAPhotoBrowserViewController {
+    @objc func handleNodeUpdates(fromNodes nodeList: MEGANodeList?) {
+        guard let nodeList, shouldUpdateNodes(nodes: nodeList) else { return }
+        
+        Task { [weak self] in
+            guard let self else { return }
+            let remainingNodesToUpdateCount = await dataProvider.removePhotos(in: nodeList)
+            
+            if remainingNodesToUpdateCount == 0 {
+                guard let currentNode = dataProvider.currentPhoto else { return }
+                let removedNodes = nodeList.toNodeEntities().removedChangeTypeNodes()
+                
+                guard removedNodes.isNotEmpty,
+                      removedNodes.first(where: { $0.handle == currentNode.handle }) != nil else { return }
+                dismiss(animated: true)
+            } else {
+                dataProvider.updatePhotos(in: nodeList)
+                reloadUI()
+            }
+        }
+    }
+    
+    private func shouldUpdateNodes(nodes: MEGANodeList) -> Bool {
+        let nodeEntities = nodes.toNodeEntities()
+        guard nodeEntities.isNotEmpty else { return false }
+        return nodeEntities.removedChangeTypeNodes().isNotEmpty ||
+                nodeEntities.hasModifiedAttributes() ||
+                nodeEntities.hasModifiedPublicLink() ||
+                nodeEntities.hasModifiedFavourites()
+    }
+}

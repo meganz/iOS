@@ -118,9 +118,15 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
     }
     
     @MainActor
-    @objc func removePhotos(in nodeList: MEGANodeList?) async {
-        guard let nodeList else { return }
-        self.megaNodes = await nodeStore.remove(nodeList.toNodeArray().removedChangeTypeNodes())
+    @objc func removePhotos(in nodeList: MEGANodeList?) async -> Int {
+        guard let nodeList else { return .zero }
+        if megaNodes != nil {
+            self.megaNodes = await nodeStore.remove(nodeList.toNodeArray().removedChangeTypeNodes())
+            return await nodeStore.count
+        } else {
+            removePhotosForNodeEntities(by: nodeList)
+            return self.count
+        }
     }
     
     @objc func updatePhotos(in nodeList: MEGANodeList) {
