@@ -45,6 +45,8 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 
 @property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
 
+- (void)reloadUI;
+
 @end
 
 NS_ASSUME_NONNULL_END
