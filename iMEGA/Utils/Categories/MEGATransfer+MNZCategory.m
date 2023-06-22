@@ -7,6 +7,7 @@
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @implementation MEGATransfer (MNZCategory)
 
@@ -15,7 +16,8 @@
 - (void)mnz_createThumbnailAndPreview {
     NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:self.path];
     NSString *imageFilePath;
-    if (self.fileName.mnz_isImagePathExtension) {
+    
+    if ([StringFileExtensionGroupOCWrapper verify:self.fileName isMemberOf:@"image"]) {
         imageFilePath = transferAbsolutePath;
     } else if (self.fileName.mnz_isVideoPathExtension) {
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:transferAbsolutePath] options:nil];

@@ -10,62 +10,20 @@
 #import "MEGAUser+MNZCategory.h"
 #import <CoreMedia/CoreMedia.h>
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_NOTIFICATION_EXTENSION
+#import "MEGANotifications-Swift.h"
+#elif MNZ_WIDGET_EXTENSION
+#import "MEGAWidgetExtension-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 static NSString* const A = @"[A]";
 static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
-
-- (BOOL)mnz_isImagePathExtension {
-    NSArray<NSString *> *supportedExtensions = @[@"3fr",
-                                                 @"arw",
-                                                 @"bmp",
-                                                 @"cr2",
-                                                 @"crw",
-                                                 @"ciff",
-                                                 @"cur",
-                                                 @"cs1",
-                                                 @"dcr",
-                                                 @"dng",
-                                                 @"erf",
-                                                 @"gif",
-                                                 @"heic",
-                                                 @"ico",
-                                                 @"iiq",
-                                                 @"j2c",
-                                                 @"jp2",
-                                                 @"jpf",
-                                                 @"jpeg",
-                                                 @"jpg",
-                                                 @"k25",
-                                                 @"kdc",
-                                                 @"mef",
-                                                 @"mos",
-                                                 @"mrw",
-                                                 @"nef",
-                                                 @"nrw",
-                                                 @"orf",
-                                                 @"pbm",
-                                                 @"pef",
-                                                 @"pgm",
-                                                 @"png",
-                                                 @"pnm",
-                                                 @"ppm",
-                                                 @"psd",
-                                                 @"raf",
-                                                 @"raw",
-                                                 @"rw2",
-                                                 @"rwl",
-                                                 @"sr2",
-                                                 @"srf",
-                                                 @"srw",
-                                                 @"tga",
-                                                 @"tif",
-                                                 @"tiff",
-                                                 @"webp",
-                                                 @"x3f"];
-    
-    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
-}
 
 - (BOOL)mnz_isVideoPathExtension {
     NSArray<NSString *> *supportedExtensions = @[@"3g2",
@@ -98,7 +56,8 @@ static NSString* const B = @"[B]";
 }
 
 - (BOOL)mnz_isVisualMediaPathExtension {
-    return self.mnz_isImagePathExtension || self.mnz_isVideoPathExtension;
+    
+    return [StringFileExtensionGroupOCWrapper verify:self isMemberOf: @"image"] || self.mnz_isVideoPathExtension;
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
@@ -822,7 +781,8 @@ static NSString* const B = @"[B]";
 }
 
 - (NSString * _Nullable)mnz_coordinatesOfPhotoOrVideo {
-    if (self.mnz_isImagePathExtension) {
+    
+    if ([StringFileExtensionGroupOCWrapper verify:self isMemberOf:@"image"]) {
         NSURL *fileURL;
         if ([self containsString:@"/tmp/"]) {
             fileURL = [NSURL fileURLWithPath:self];

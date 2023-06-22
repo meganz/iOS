@@ -65,7 +65,7 @@
     NSUInteger numberOfVideos = 0;
     for (NSUInteger i = 0; i < nodesArray.count; i++) {
         MEGANode *node = [nodesArray objectAtIndex:i];
-        if (node.name.mnz_imagePathExtension) {
+        if ([StringFileExtensionGroupOCWrapper verify:node.name isMemberOf:@"image"]) {
             numberOfPhotos++;
         } else if (node.name.mnz_isVideoPathExtension) {
             numberOfVideos++;

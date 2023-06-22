@@ -147,10 +147,9 @@ final class PhotosViewModel: NSObject {
         container: PhotoLibraryContainerEntity
     ) -> Bool {
         if filterLocation == .allLocations || filterLocation == .cloudDrive {
-            return nodeList.toNodeEntities()
-                .contains(where: {
-                    ($0.name.mnz_isImagePathExtension || $0.name.mnz_isVideoPathExtension) && $0.hasThumbnail
-                })
+            return nodeList.toNodeEntities().contains {
+                String.fileExtensionGroup(verify: $0.name, \.isVisualMedia) && $0.hasThumbnail
+            }
         } else if filterLocation == .cameraUploads {
             return shouldProcessOnNodeEntitiesUpdate(with: nodeList,
                                                      childNodes: mediaNodes,

@@ -14,5 +14,6 @@
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "MEGALocalNotificationManager.h"
 
 #endif /* MEGANotifications_Bridging_Header_h */

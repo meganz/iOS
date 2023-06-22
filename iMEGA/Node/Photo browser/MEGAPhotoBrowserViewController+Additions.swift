@@ -107,7 +107,7 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func isSlideShowEnabled() -> Bool {
         (displayMode == .cloudDrive || displayMode == .sharedItem) &&
-        dataProvider.currentPhoto?.name?.mnz_isImagePathExtension == true
+        String.fileExtensionGroup(verify: dataProvider.currentPhoto?.name, \.isImage)
     }
     
     @objc func activateSlideShowButton() {

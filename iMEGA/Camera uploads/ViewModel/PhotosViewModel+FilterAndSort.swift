@@ -15,9 +15,9 @@ extension PhotosViewModel {
         if type == .allMedia {
             nodes = nodes.filter { $0.hasThumbnail }
         } else if type == .images {
-            nodes = nodes.filter({ $0.name.mnz_isImagePathExtension && $0.hasThumbnail })
+            nodes = nodes.filter { String.fileExtensionGroup(verify: $0.name, \.isImage) && $0.hasThumbnail }
         } else if type == .videos {
-            nodes = nodes.filter({ $0.name.mnz_isVideoPathExtension && $0.hasThumbnail })
+            nodes = nodes.filter { String.fileExtensionGroup(verify: $0.name, \.isVideo) && $0.hasThumbnail }
         }
     }
     

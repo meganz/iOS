@@ -53,6 +53,7 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGANavigationController.h"
+#import "MEGALocalNotificationManager.h"
 #import "MegaNodeActionType.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAPasswordLinkRequestDelegate.h"

@@ -13,6 +13,13 @@
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
+#ifdef MNZ_NOTIFICATION_EXTENSION
+#import "MEGANotifications-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
+
 @interface MEGALocalNotificationManager ()
 
 @property (nonatomic) MEGAChatMessage *message;
@@ -144,10 +151,11 @@
             if (nodeList) {
                 if (nodeList.size.integerValue == 1) {
                     MEGANode *node = [nodeList nodeAtIndex:0];
+                    
                     if (node.hasThumbnail) {
                         if (node.name.mnz_isVideoPathExtension) {
                             body = [NSString stringWithFormat:@"📹 %@", node.name];
-                        } else if (node.name.mnz_isImagePathExtension) {
+                        } else if ([StringFileExtensionGroupOCWrapper verify:node.name isMemberOf:@"image"]) {
                             body = [NSString stringWithFormat:@"📷 %@", node.name];
                         } else {
                             body = [NSString stringWithFormat:@"📄 %@", node.name];
