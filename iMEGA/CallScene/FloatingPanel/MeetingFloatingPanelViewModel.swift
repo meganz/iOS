@@ -40,7 +40,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case updateAllowNonHostToAddParticipants(enabled: Bool)
     }
     
-    private let router: MeetingFloatingPanelRouting
+    private let router: any MeetingFloatingPanelRouting
     private var chatRoom: ChatRoomEntity
     private var recentlyAddedHandles = [HandleEntity]()
     private var chatRoomParticipantsUpdatedTask: Task<Void, Never>?
@@ -80,7 +80,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
 
-    init(router: MeetingFloatingPanelRouting,
+    init(router: some MeetingFloatingPanelRouting,
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
          isSpeakerEnabled: Bool,

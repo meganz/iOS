@@ -7,11 +7,11 @@ class SettingCellViewModel: ViewModelType {
     let title: String
     var displayValue: String
     let isDestructive: Bool
-    var router: Routing?
+    var router: (any Routing)?
     
     var invokeCommand: ((SettingsCommand) -> Void)?
     
-    init(image: ImageAsset?, title: String, isDestructive: Bool = false, displayValue: String = "", router: Routing? = nil) {
+    init(image: ImageAsset?, title: String, isDestructive: Bool = false, displayValue: String = "", router: (any Routing)? = nil) {
         self.image = image
         self.title = title
         self.router = router
@@ -26,7 +26,7 @@ class SettingCellViewModel: ViewModelType {
         invokeCommand?(.reloadData)
     }
     
-    func updateRouter(router: Routing?) {
+    func updateRouter(router: (some Routing)?) {
         self.router = router
     }
 }

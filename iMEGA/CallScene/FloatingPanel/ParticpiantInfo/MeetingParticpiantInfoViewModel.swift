@@ -26,7 +26,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private let userInviteUseCase: any UserInviteUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let isMyselfModerator: Bool
-    private let router: MeetingParticpiantInfoViewRouting
+    private let router: any MeetingParticpiantInfoViewRouting
     
     init(participant: CallParticipantEntity,
          userImageUseCase: UserImageUseCaseProtocol,
@@ -35,7 +35,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
          userInviteUseCase: any UserInviteUseCaseProtocol,
          megaHandleUseCase: any MEGAHandleUseCaseProtocol,
          isMyselfModerator: Bool,
-         router: MeetingParticpiantInfoViewRouting) {
+         router: some MeetingParticpiantInfoViewRouting) {
         self.participant = participant
         self.userImageUseCase = userImageUseCase
         self.chatRoomUseCase = chatRoomUseCase

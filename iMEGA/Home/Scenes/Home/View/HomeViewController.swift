@@ -37,7 +37,7 @@ final class HomeViewController: UIViewController {
     
     var homeViewModel: HomeViewModel!
     
-    private var featureFlagProvider = DIContainer.featureFlagProvider
+    private var featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     
     // MARK: - Router
 

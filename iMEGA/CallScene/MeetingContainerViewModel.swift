@@ -34,7 +34,7 @@ final class MeetingContainerViewModel: ViewModelType {
         static let muteMicTimerDuration = 60 // 1 minute
     }
     
-    private let router: MeetingContainerRouting
+    private let router: any MeetingContainerRouting
     private let chatRoom: ChatRoomEntity
     private let callUseCase: CallUseCaseProtocol
     private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
@@ -56,7 +56,7 @@ final class MeetingContainerViewModel: ViewModelType {
         chatRoomUseCase.chatRoom(forChatId: chatRoom.chatId)?.chatType == .oneToOne
     }
 
-    init(router: MeetingContainerRouting,
+    init(router: some MeetingContainerRouting,
          chatRoom: ChatRoomEntity,
          callUseCase: CallUseCaseProtocol,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,

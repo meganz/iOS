@@ -15,7 +15,7 @@ final class NameCollisionViewModel: ObservableObject {
     private let nameCollisionUseCase: any NameCollisionUseCaseProtocol
     private var fileVersionsUseCase: any FileVersionsUseCaseProtocol
 
-    private let router: NameCollisionViewRouting
+    private let router: any NameCollisionViewRouting
     private var transfers: [CancellableTransfer]?
     private var nodes: [NodeEntity]?
     private var collisions: [NameCollisionEntity]
@@ -32,7 +32,7 @@ final class NameCollisionViewModel: ObservableObject {
     @Published var applyToAllEnabled: Bool = false
     @Published var remainingCollisionsCount: Int = 0
     
-    init(router: NameCollisionViewRouting,
+    init(router: some NameCollisionViewRouting,
          thumbnailUseCase: any ThumbnailUseCaseProtocol,
          nameCollisionUseCase: any NameCollisionUseCaseProtocol,
          fileVersionsUseCase: any FileVersionsUseCaseProtocol,

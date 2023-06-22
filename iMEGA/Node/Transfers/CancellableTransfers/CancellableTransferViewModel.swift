@@ -30,12 +30,12 @@ final class CancellableTransferViewModel: ViewModelType {
     private var alertPresented = false
 
     // MARK: - Private properties
-    private let router: routingProtocols
+    private let router: any routingProtocols
     // MARK: - Internel properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: routingProtocols,
+    init(router: some routingProtocols,
          uploadFileUseCase: any UploadFileUseCaseProtocol,
          downloadNodeUseCase: any DownloadNodeUseCaseProtocol,
          mediaUseCase: any MediaUseCaseProtocol,

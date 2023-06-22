@@ -30,9 +30,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private let call: CallEntity
     private var isSpeakerEnabled: Bool
     private weak var baseViewController: UINavigationController?
-    private weak var floatingPanelRouter: MeetingFloatingPanelRouting?
+    private weak var floatingPanelRouter: (any MeetingFloatingPanelRouting)?
     private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
-    private weak var hangOrEndCallRouter: HangOrEndCallRouting?
+    private weak var hangOrEndCallRouter: (any HangOrEndCallRouting)?
     private var appDidBecomeActiveSubscription: AnyCancellable?
     private weak var containerViewModel: MeetingContainerViewModel?
     private var endCallDialog: EndCallDialog?

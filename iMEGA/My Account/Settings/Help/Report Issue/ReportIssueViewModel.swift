@@ -2,7 +2,7 @@ import Combine
 import MEGADomain
 
 final class ReportIssueViewModel: ObservableObject {
-    private let router: ReportIssueViewRouting
+    private let router: any ReportIssueViewRouting
     private let uploadFileUseCase: any UploadFileUseCaseProtocol
     private let supportUseCase: any SupportUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
@@ -35,7 +35,7 @@ final class ReportIssueViewModel: ObservableObject {
     
     var isSendLogFileToggleOn = true
     
-    init(router: ReportIssueViewRouting,
+    init(router: some ReportIssueViewRouting,
          uploadFileUseCase: any UploadFileUseCaseProtocol,
          supportUseCase: any SupportUseCaseProtocol,
          monitorUseCase: any NetworkMonitorUseCaseProtocol,

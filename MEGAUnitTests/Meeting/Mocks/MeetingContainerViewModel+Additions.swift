@@ -5,7 +5,7 @@ import MEGADomainMock
 extension MeetingContainerViewModel {
     
     convenience init(
-        router: MeetingContainerRouting = MockMeetingContainerRouter(),
+        router: some MeetingContainerRouting = MockMeetingContainerRouter(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(call: CallEntity()),
         chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),

@@ -19,14 +19,14 @@ final class BannerContainerViewModel: ViewModelType {
     }
     
     var invokeCommand: ((Command) -> Void)?
-    private var router: BannerContainerViewRouting
+    private var router: any BannerContainerViewRouting
     private var message: String
     private var type: BannerType
     
     @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
     
-    init(router: BannerContainerViewRouting,
+    init(router: some BannerContainerViewRouting,
          message: String,
          type: BannerType,
          preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default) {

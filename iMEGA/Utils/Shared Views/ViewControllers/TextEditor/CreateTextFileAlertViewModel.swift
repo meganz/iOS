@@ -9,9 +9,9 @@ protocol CreateTextFileAlertViewRouting: Routing {
 }
 
 final class CreateTextFileAlertViewModel {
-    private var router: CreateTextFileAlertViewRouting
+    private var router: any CreateTextFileAlertViewRouting
     
-    init(router: CreateTextFileAlertViewRouting) {
+    init(router: some CreateTextFileAlertViewRouting) {
         self.router = router
     }
     

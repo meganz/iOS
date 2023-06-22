@@ -33,7 +33,7 @@ final class AddPhoneNumberViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: AddPhoneNumberRouting,
+    init(router: some AddPhoneNumberRouting,
          achievementUseCase: any AchievementUseCaseProtocol,
          preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default,
          hideDontShowAgain: Bool) {

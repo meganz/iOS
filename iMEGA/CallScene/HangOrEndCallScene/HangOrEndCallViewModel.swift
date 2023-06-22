@@ -10,10 +10,10 @@ struct HangOrEndCallViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
     }
     
-    private let router: HangOrEndCallRouting
+    private let router: any HangOrEndCallRouting
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     
-    init(router: HangOrEndCallRouting, analyticsEventUseCase: any AnalyticsEventUseCaseProtocol) {
+    init(router: some HangOrEndCallRouting, analyticsEventUseCase: any AnalyticsEventUseCaseProtocol) {
         self.router = router
         self.analyticsEventUseCase = analyticsEventUseCase
     }

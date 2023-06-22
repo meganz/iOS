@@ -65,8 +65,8 @@ class SettingViewRouter: Routing {
     
     private func createCameraUploadCellViewModel() -> SettingCellViewModel {
         let vm = SettingCellViewModel(image: Asset.Images.Settings.cameraUploadsSettings,
-                             title: Strings.Localizable.cameraUploadsLabel,
-                                      displayValue: CameraUploadManager.getCameraUploadStatus())
+                                      title: Strings.Localizable.cameraUploadsLabel,
+                                      displayValue: CameraUploadManager.getCameraUploadStatus(), router: nil)
         let router = CameraUploadsSettingsViewRouter(presenter: presenter, closure: { [weak vm] in
             vm?.updateDisplayValue(CameraUploadManager.getCameraUploadStatus())
         })
@@ -84,7 +84,7 @@ extension SettingViewRouter {
             SettingCellViewModel(image: Asset.Images.Settings.chatSettings,
                                  title: Strings.Localizable.chat,
                                  router: ChatSettingsViewRouter(presenter: presenter))
-                
+            
             SettingCellViewModel(image: Asset.Images.Settings.callsSettings,
                                  title: Strings.Localizable.Settings.Section.Calls.title,
                                  router: CallsSettingsViewRouter(presenter: presenter))

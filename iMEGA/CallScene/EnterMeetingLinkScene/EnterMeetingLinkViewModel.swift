@@ -9,12 +9,12 @@ final class EnterMeetingLinkViewModel: ViewModelType {
     enum Command: CommandType { }
     
     // MARK: - Private properties
-    private let router: EnterMeetingLinkRouting
+    private let router: any EnterMeetingLinkRouting
     // MARK: - Internel properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: EnterMeetingLinkRouting) {
+    init(router: some EnterMeetingLinkRouting) {
         self.router = router
     }
     

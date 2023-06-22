@@ -76,7 +76,7 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Private properties
     private var configEntity: AudioPlayerConfigEntity
-    private let router: AudioPlayerViewRouting
+    private let router: any AudioPlayerViewRouting
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
@@ -105,7 +105,7 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
-         router: AudioPlayerViewRouting,
+         router: some AudioPlayerViewRouting,
          nodeInfoUseCase: NodeInfoUseCaseProtocol? = nil,
          streamingInfoUseCase: StreamingInfoUseCaseProtocol? = nil,
          offlineInfoUseCase: OfflineFileInfoUseCaseProtocol? = nil,

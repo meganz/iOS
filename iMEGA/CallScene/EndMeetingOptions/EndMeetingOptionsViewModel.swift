@@ -8,10 +8,10 @@ enum EndMeetingOptionsAction: ActionType {
 struct EndMeetingOptionsViewModel: ViewModelType {
     enum Command: CommandType, Equatable {}
     
-    private let router: EndMeetingOptionsRouting
+    private let router: any EndMeetingOptionsRouting
     var invokeCommand: ((Command) -> Void)?
 
-    init(router: EndMeetingOptionsRouting) {
+    init(router: some EndMeetingOptionsRouting) {
         self.router = router
     }
     

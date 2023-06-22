@@ -204,7 +204,7 @@ final class PhotosViewModelTests: XCTestCase {
         return [node1, node2, node3, node4]
     }
     
-    private func photosViewModelForFeatureFlag(provider: FeatureFlagProviderProtocol,
+    private func photosViewModelForFeatureFlag(provider: some FeatureFlagProviderProtocol,
                                                userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase()) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let usecase = MockPhotoLibraryUseCase(allPhotos: [],

@@ -32,7 +32,7 @@ final class MiniPlayerViewModel: ViewModelType {
     // MARK: - Private properties
     private var configEntity: AudioPlayerConfigEntity
     private var shouldInitializePlayer: Bool = false
-    private let router: MiniPlayerViewRouting
+    private let router: any MiniPlayerViewRouting
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
@@ -43,7 +43,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
-         router: MiniPlayerViewRouting,
+         router: some MiniPlayerViewRouting,
          nodeInfoUseCase: NodeInfoUseCaseProtocol?,
          streamingInfoUseCase: StreamingInfoUseCaseProtocol?,
          offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?,

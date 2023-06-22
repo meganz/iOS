@@ -23,7 +23,7 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     
     private let parentNode: NodeEntity
     private var nodes: [NodeEntity] = []
-    private let router: MediaDiscoveryRouting
+    private let router: any MediaDiscoveryRouting
     private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
@@ -38,7 +38,7 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     
     init(parentNode: NodeEntity,
          folderLink: String? = nil,
-         router: MediaDiscoveryRouting,
+         router: some MediaDiscoveryRouting,
          analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
          mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
          saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol) {

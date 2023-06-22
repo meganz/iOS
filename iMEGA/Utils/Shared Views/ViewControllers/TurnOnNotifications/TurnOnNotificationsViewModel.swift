@@ -19,7 +19,7 @@ final class TurnOnNotificationsViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private let router: TurnOnNotificationsViewRouting
+    private let router: any TurnOnNotificationsViewRouting
     
     @PreferenceWrapper(key: .lastDateTurnOnNotificationsShowed, defaultValue: Date.init(timeIntervalSince1970: 0))
     private var lastDateTurnOnNotificationsShowedPreference: Date
@@ -32,7 +32,7 @@ final class TurnOnNotificationsViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: TurnOnNotificationsViewRouting,
+    init(router: some TurnOnNotificationsViewRouting,
          preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default,
          accountUseCase: any AccountUseCaseProtocol) {
         self.router = router

@@ -31,7 +31,7 @@ final class AudioPlaylistViewModel: ViewModelType {
     
     // MARK: - Private properties
     private var configEntity: AudioPlayerConfigEntity
-    private let router: AudioPlaylistViewRouting
+    private let router: any AudioPlaylistViewRouting
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol
     private var selectedItems: [AudioPlayerItem]?
     private var isDataReloadingEnabled = true
@@ -41,7 +41,7 @@ final class AudioPlaylistViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(configEntity: AudioPlayerConfigEntity, router: AudioPlaylistViewRouting, nodeInfoUseCase: NodeInfoUseCaseProtocol) {
+    init(configEntity: AudioPlayerConfigEntity, router: some AudioPlaylistViewRouting, nodeInfoUseCase: NodeInfoUseCaseProtocol) {
         self.configEntity = configEntity
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase

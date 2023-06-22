@@ -59,7 +59,7 @@ final class TextEditorViewModel: ViewModelType {
     }
     
     var invokeCommand: ((Command) -> Void)?
-    private var router: TextEditorViewRouting
+    private var router: any TextEditorViewRouting
     private var textFile: TextFile
     private var textEditorMode: TextEditorMode
     private var parentHandle: HandleEntity?
@@ -73,7 +73,7 @@ final class TextEditorViewModel: ViewModelType {
     private var isBackupNode: Bool = false
     
     init(
-        router: TextEditorViewRouting,
+        router: some TextEditorViewRouting,
         textFile: TextFile,
         textEditorMode: TextEditorMode,
         uploadFileUseCase: any UploadFileUseCaseProtocol,

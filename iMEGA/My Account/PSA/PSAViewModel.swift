@@ -12,7 +12,7 @@ enum PSAViewAction: ActionType {
 @objc
 final class PSAViewModel: NSObject, ViewModelType {
     
-    private let router: PSAViewRouting
+    private let router: any PSAViewRouting
     private let useCase: any PSAUseCaseProtocol
     private var psaEntity: PSAEntity?
     
@@ -25,7 +25,7 @@ final class PSAViewModel: NSObject, ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
         
-    init(router: PSAViewRouting,
+    init(router: some PSAViewRouting,
          useCase: any PSAUseCaseProtocol,
          preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         self.router = router

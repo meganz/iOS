@@ -8,10 +8,10 @@ final class QASettingsViewModel {
         static let updateAlertButtonTitle = "Update"
     }
     
-    private let router: QASettingsRouting
+    private let router: any QASettingsRouting
     private var checkForUpdateTask: Task<Void, Never>?
     
-    init(router: QASettingsRouting) {
+    init(router: some QASettingsRouting) {
         self.router = router
     }
     

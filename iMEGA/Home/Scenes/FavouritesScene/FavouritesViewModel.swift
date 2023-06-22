@@ -14,7 +14,7 @@ protocol FavouritesRouting: Routing {
 
 final class FavouritesViewModel: ViewModelType {
     
-    private var router: FavouritesRouting
+    private var router: any FavouritesRouting
     private var favouritesUseCase: any FavouriteNodesUseCaseProtocol
     
     enum Command: CommandType, Equatable {
@@ -23,8 +23,8 @@ final class FavouritesViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    init(router: FavouritesRouting,
-         favouritesUseCase: any FavouriteNodesUseCaseProtocol) {
+    init(router: some FavouritesRouting,
+         favouritesUseCase: some FavouriteNodesUseCaseProtocol) {
         self.router = router
         self.favouritesUseCase = favouritesUseCase
     }
