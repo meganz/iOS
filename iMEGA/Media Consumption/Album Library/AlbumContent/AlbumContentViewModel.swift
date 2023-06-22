@@ -21,7 +21,7 @@ final class AlbumContentViewModel: ViewModelType {
         case finishLoading
         case showAlbumPhotos(photos: [NodeEntity], sortOrder: SortOrderType)
         case dismissAlbum
-        case showHud(MessageType)
+        case showResultMessage(MessageType)
         case updateNavigationTitle
         case showDeleteAlbumAlert
         case rebuildContextMenu
@@ -263,7 +263,7 @@ final class AlbumContentViewModel: ViewModelType {
             invokeCommand?(.finishLoading)
             if result.success > 0 {
                 let message = self.successMessage(forAlbumName: album.name, withNumberOfItmes: result.success)
-                invokeCommand?(.showHud(.success(message)))
+                invokeCommand?(.showResultMessage(.success(message)))
             }
         } catch {
             invokeCommand?(.finishLoading)
@@ -344,7 +344,7 @@ final class AlbumContentViewModel: ViewModelType {
                 self.album.coverNode = albumPhoto.photo
                 
                 let message = Strings.Localizable.CameraUploads.Albums.albumCoverUpdated
-                self.invokeCommand?(.showHud(.success(message)))
+                self.invokeCommand?(.showResultMessage(.success(message)))
             } catch {
                 MEGALogError("Error updating user album cover: \(error.localizedDescription)")
             }
@@ -368,7 +368,7 @@ final class AlbumContentViewModel: ViewModelType {
             if result.success > 0 {
                 let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(result.success))
                     .replacingOccurrences(of: "[A]", with: "\(albumName)")
-                invokeCommand?(.showHud(.custom(Asset.Images.Hud.hudMinus.image, message)))
+                invokeCommand?(.showResultMessage(.custom(Asset.Images.Hud.hudMinus.image, message)))
             }
         } catch {
             MEGALogError("Error occurred when deleting photos for the album. \(error.localizedDescription)")
@@ -384,7 +384,7 @@ final class AlbumContentViewModel: ViewModelType {
                 let successMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
                     .replacingOccurrences(of: "[A]", with: albumName)
                 invokeCommand?(.dismissAlbum)
-                invokeCommand?(.showHud(.custom(Asset.Images.Hud.hudMinus.image, successMsg)))
+                invokeCommand?(.showResultMessage(.custom(Asset.Images.Hud.hudMinus.image, successMsg)))
             } else {
                 MEGALogError("Error occurred when deleting the album id: \(album.id)")
             }
@@ -423,7 +423,7 @@ final class AlbumContentViewModel: ViewModelType {
             guard let self else { return }
             do {
                 try await shareAlbumUseCase.removeSharedLink(forAlbum: album)
-                invokeCommand?(.showHud(.success(Strings.Localizable.General.MenuAction.RemoveLink.title(1))))
+                invokeCommand?(.showResultMessage(.success(Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1))))
             } catch {
                 MEGALogError("Error removing album link for album: \(album.id)")
             }

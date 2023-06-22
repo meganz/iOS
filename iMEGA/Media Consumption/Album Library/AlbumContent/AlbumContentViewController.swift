@@ -125,7 +125,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
             }
         case .dismissAlbum:
             dismiss(animated: true)
-        case .showHud(let messageType):
+        case .showResultMessage(let messageType):
             SVProgressHUD.dismiss(withDelay: 3)
             switch messageType {
             case .success(let message):
