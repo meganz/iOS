@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, Content: View>: View where Category: PhotoChronologicalCategory {
     @ObservedObject var viewModel: VM

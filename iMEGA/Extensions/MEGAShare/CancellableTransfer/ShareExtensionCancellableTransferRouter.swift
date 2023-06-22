@@ -1,6 +1,6 @@
-import UIKit
-import MEGADomain
 import MEGAData
+import MEGADomain
+import UIKit
 
 final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransferRouting {
     

@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 @objc class NodesOnDemandMigrationCheckerUseCaseOCWrapper: NSObject {
     let useCase = NodesOnDemandMigrationCheckerUseCase(megaclientRepository: MEGAClientRepository.newRepo, analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk())))

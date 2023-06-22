@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public struct MockBackupsUseCase: BackupsUseCaseProtocol {
     private let isBackupsNode: Bool

@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGADataMock
+import XCTest
 
 final class MEGANode_FilePaths_Tests: XCTestCase {
     

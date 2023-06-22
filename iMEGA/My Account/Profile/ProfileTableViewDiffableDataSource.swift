@@ -1,5 +1,5 @@
-import UIKit
 import MEGAFoundation
+import UIKit
 
 final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<ProfileSection, ProfileSectionRow> {
 

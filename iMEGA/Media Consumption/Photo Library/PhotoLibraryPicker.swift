@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct PhotoLibraryPicker: View {
     @Environment(\.editMode) var editMode

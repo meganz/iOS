@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 struct PhotoLibrary {
     let photoByYearList: [PhotoByYear]

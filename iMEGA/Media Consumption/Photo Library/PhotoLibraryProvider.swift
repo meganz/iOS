@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 @MainActor
 protocol PhotoLibraryProvider: UIViewController {

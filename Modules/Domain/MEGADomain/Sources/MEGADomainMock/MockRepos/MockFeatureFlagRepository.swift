@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public final class MockFeatureFlagRepository: FeatureFlagRepositoryProtocol {
     public static var newRepo: MockFeatureFlagRepository {

@@ -1,6 +1,6 @@
-import XCTest
-import MEGASdk
 import MEGADataMock
+import MEGASdk
+import XCTest
 
 final class ContactRequestEntityMapperTests: XCTestCase {
     

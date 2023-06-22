@@ -1,5 +1,5 @@
-import MEGASdk
 import MEGADomain
+import MEGASdk
 
 public struct ShareRepository: ShareRepositoryProtocol {
     public static var newRepo: ShareRepository {

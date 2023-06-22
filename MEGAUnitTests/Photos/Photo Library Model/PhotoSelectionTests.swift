@@ -1,8 +1,8 @@
-import XCTest
-@testable import MEGA
-import SwiftUI
 import Combine
+@testable import MEGA
 import MEGADomain
+import SwiftUI
+import XCTest
 
 class PhotoSelectionTests: XCTestCase {
     private let sut = PhotoSelection()

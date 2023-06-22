@@ -1,7 +1,7 @@
-import UIKit
 import AVFoundation
-import MessageKit
 import MEGADomain
+import MessageKit
+import UIKit
 
 /// The `PlayerState` indicates the current audio controller state
 public enum PlayerState {

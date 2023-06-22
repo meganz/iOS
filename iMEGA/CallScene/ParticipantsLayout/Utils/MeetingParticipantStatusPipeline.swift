@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import MEGADomain
 
 final class MeetingParticipantStatusPipeline {

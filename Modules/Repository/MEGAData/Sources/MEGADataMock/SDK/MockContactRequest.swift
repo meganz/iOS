@@ -1,5 +1,5 @@
-import MEGASdk
 import MEGAData
+import MEGASdk
 
 public final class MockContactRequest: MEGAContactRequest {
     private let _handle: MEGAHandle

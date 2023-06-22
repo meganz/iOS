@@ -1,8 +1,8 @@
-import SwiftUI
+import Combine
+import MEGAData
 import MEGADomain
 import MEGAPresentation
-import MEGAData
-import Combine
+import SwiftUI
 
 protocol AlbumListViewRouting {
     func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell

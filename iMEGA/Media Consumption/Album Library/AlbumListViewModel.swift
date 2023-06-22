@@ -1,6 +1,6 @@
 import Combine
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 @MainActor
 final class AlbumListViewModel: NSObject, ObservableObject {

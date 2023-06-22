@@ -1,5 +1,5 @@
-import XCTest
 import MEGADomain
+import XCTest
 
 final class ContextMenuActionsTests: XCTestCase {
     

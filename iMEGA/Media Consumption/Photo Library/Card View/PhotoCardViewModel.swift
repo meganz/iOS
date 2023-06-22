@@ -1,9 +1,9 @@
-import Foundation
 import Combine
-import SwiftUI
-import MEGASwiftUI
+import Foundation
 import MEGADomain
 import MEGASwift
+import MEGASwiftUI
+import SwiftUI
 
 class PhotoCardViewModel: ObservableObject {
     private let coverPhoto: NodeEntity?

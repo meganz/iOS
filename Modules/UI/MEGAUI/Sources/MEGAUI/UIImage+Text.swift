@@ -1,5 +1,5 @@
-import UIKit
 import CoreGraphics
+import UIKit
 
 public extension UIImage {
     static func drawImage(

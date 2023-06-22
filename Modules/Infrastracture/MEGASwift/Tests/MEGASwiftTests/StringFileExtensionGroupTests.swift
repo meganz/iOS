@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGASwift
+import XCTest
 
 final class StringFileExtensionGroupTests: XCTestCase {
     private static let emptyExtension = ""

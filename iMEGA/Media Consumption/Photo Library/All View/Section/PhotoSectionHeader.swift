@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct PhotoSectionHeader<T: PhotoDateSection>: View {
     let section: T

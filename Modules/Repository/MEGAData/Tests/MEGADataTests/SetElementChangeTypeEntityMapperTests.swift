@@ -1,6 +1,6 @@
-import XCTest
-import MEGASdk
 import MEGADomain
+import MEGASdk
+import XCTest
 
 final class SetElementChangeTypeEntityMapperTests: XCTestCase {
     let sut: [MEGASetElementChangeType] = [

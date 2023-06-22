@@ -1,6 +1,6 @@
 
-import Foundation
 import CoreData
+import Foundation
 
 public class QuickAccessWidgetFavouriteItem: NSManagedObject {
 

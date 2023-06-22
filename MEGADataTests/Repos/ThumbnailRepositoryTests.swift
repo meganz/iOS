@@ -1,7 +1,7 @@
-import XCTest
-import MEGADomain
 @testable import MEGA
+import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class ThumbnailRepositoryTests: XCTestCase {
     private func repo() -> MockThumbnailRepository {

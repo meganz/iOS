@@ -1,5 +1,5 @@
-import UIKit
 import Haptica
+import UIKit
 
 class ChatMessageActionMenuViewController: ActionSheetViewController {
     weak var chatViewController: ChatViewController?

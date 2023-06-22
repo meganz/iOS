@@ -1,7 +1,7 @@
 import Foundation
-import Photos
-import MobileCoreServices
 import MEGADomain
+import MobileCoreServices
+import Photos
 
 extension PHAsset {
     

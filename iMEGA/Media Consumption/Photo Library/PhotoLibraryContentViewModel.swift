@@ -1,7 +1,7 @@
-import Foundation
 import Combine
-import SwiftUI
+import Foundation
 import MEGADomain
+import SwiftUI
 
 @objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
     @Published var library: PhotoLibrary

@@ -1,5 +1,5 @@
-import MEGAFoundation
 import Foundation
+import MEGAFoundation
 
 // MARK: - Use case protocol -
 public protocol AchievementUseCaseProtocol {

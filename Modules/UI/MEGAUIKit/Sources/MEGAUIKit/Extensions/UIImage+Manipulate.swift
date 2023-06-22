@@ -1,5 +1,5 @@
-import UIKit
 import MEGASwift
+import UIKit
 
 public extension UIImage {
     

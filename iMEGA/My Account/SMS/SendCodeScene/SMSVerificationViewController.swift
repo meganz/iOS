@@ -1,5 +1,5 @@
-import UIKit
 import MEGAPresentation
+import UIKit
 
 final class SMSVerificationViewController: UIViewController, ViewType {
     // MARK: - Private properties

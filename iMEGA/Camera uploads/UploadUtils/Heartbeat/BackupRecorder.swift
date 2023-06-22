@@ -1,7 +1,7 @@
-import Foundation
 import FirebaseCrashlytics
-import MEGAFoundation
+import Foundation
 import MEGADomain
+import MEGAFoundation
 
 struct NodeBackupRecord: Codable {
     let date: Date

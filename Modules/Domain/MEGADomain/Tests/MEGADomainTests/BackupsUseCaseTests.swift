@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class BackupsUseCaseTests: XCTestCase {
     let backupNodeEntity = NodeEntity(name: "backup", handle: 1, size: UInt64(1.3))

@@ -1,5 +1,5 @@
-import UIKit
 import MessageKit
+import UIKit
 
 class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
     open var richPreviewDialogView: RichPreviewDialogView = RichPreviewDialogView()

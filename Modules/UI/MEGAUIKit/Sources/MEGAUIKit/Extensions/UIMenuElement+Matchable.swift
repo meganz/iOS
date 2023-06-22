@@ -1,5 +1,5 @@
-import UIKit
 import MEGASwift
+import UIKit
 
 extension UIMenuElement: Matchable {
     public static func ~~ (lhs: UIMenuElement, rhs: UIMenuElement) -> Bool {

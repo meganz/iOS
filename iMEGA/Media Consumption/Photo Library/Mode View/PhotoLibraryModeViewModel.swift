@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 class PhotoLibraryModeViewModel<T: PhotoChronologicalCategory>: PhotoScrollPositioning, ObservableObject {
     var subscriptions = Set<AnyCancellable>()

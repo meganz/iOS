@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public extension NodeEntity {
     init(changeTypes: ChangeTypeEntity = .attributes,

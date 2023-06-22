@@ -1,6 +1,6 @@
-import SwiftUI
-import MEGASwiftUI
 import MEGADomain
+import MEGASwiftUI
+import SwiftUI
 
 struct PhotoLibraryModeAllGridView: View {
     @StateObject var viewModel: PhotoLibraryModeAllGridViewModel

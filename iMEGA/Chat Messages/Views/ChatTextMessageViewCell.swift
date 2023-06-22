@@ -1,5 +1,5 @@
-import MessageKit
 import CoreGraphics
+import MessageKit
 
 class ChatTextMessageViewCell: TextMessageCell {
     override open func setupSubviews() {

@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGA
+import XCTest
 
 final class GetLinkStringTableViewCellTests: XCTestCase {
     func testDispatch_onViewReady_configureViewCorrectly() throws {

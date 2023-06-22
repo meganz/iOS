@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class TransferUseCaseTests: XCTestCase {
     private let sut = TransferUseCase(repo: MockTransferRepository.newRepo)

@@ -1,6 +1,6 @@
 import Foundation
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 extension CustomModalAlertViewController {
     func configureForCookieDialog() {

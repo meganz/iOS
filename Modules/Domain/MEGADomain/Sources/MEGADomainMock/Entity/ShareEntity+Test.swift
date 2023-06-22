@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public extension ShareEntity {
     init(sharedUserEmail: String? = nil,

@@ -1,8 +1,8 @@
-import SwiftUI
-import MEGADomain
 import MEGAData
-import MEGASdk
+import MEGADomain
 import MEGAPresentation
+import MEGASdk
+import SwiftUI
 import UserNotifications
 
 extension MEGALinkManager {

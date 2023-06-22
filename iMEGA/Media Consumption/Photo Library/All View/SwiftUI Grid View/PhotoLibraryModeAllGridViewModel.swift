@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
     private var lastCardPosition: PhotoScrollPosition?

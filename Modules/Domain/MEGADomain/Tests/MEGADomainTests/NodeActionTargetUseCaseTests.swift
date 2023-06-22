@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class NodeActionTargetUseCaseTests: XCTestCase {
     let rootNode = NodeEntity(name: "root", handle: HandleEntity(1))

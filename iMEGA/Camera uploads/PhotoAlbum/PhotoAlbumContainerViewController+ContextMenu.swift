@@ -1,7 +1,7 @@
-import UIKit
-import SwiftUI
 import Combine
 import MEGADomain
+import SwiftUI
+import UIKit
 
 // MARK: - Context Menu
 extension PhotoAlbumContainerViewController {

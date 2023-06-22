@@ -1,5 +1,5 @@
-import SwiftUI
 import Combine
+import SwiftUI
 
 final class ScheduleMeetingViewController: UIViewController {
     lazy var createBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.Meetings.ScheduleMeeting.create, style: .plain, target: self, action: #selector(createButtonItemTapped)

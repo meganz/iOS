@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class SlideShowUseCaseTests: XCTestCase {
     func testSlideShowSaveConfiguration_whenSavingConfiguration_shouldReturnSavedConfig() async throws {

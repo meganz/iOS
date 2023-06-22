@@ -1,7 +1,7 @@
-import XCTest
 import MEGAData
 import MEGADataMock
 import MEGADomain
+import XCTest
 
 final class SupportRepositoryTests: XCTestCase {
     private var sdk: MockSdk!

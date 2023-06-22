@@ -1,6 +1,6 @@
 
-import UIKit
 import PhoneNumberKit
+import UIKit
 
 enum PhoneNumberTableViewSection: Int {
     case registeredPhone

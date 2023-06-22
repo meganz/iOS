@@ -1,6 +1,6 @@
-import XCTest
-import UniformTypeIdentifiers
 import MEGADomain
+import UniformTypeIdentifiers
+import XCTest
 
 class GetFileExtensionUseCaseTests: XCTestCase {
     let sut = GetFileExtensionUseCase()

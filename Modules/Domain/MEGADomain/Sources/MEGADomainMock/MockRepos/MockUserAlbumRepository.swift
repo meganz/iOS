@@ -1,6 +1,6 @@
-import MEGADomain
-import Foundation
 import Combine
+import Foundation
+import MEGADomain
 
 public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     public static var newRepo = MockUserAlbumRepository()

@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 struct ScheduleMeetingCreationIntervalFooterNote {
     let rules: ScheduledMeetingRulesEntity

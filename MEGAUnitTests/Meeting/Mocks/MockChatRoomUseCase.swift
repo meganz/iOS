@@ -1,5 +1,5 @@
-@testable import MEGA
 import Combine
+@testable import MEGA
 import MEGADomain
 
 struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {

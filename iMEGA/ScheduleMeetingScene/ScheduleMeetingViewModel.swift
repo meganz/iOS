@@ -1,6 +1,6 @@
+import Combine
 import MEGADomain
 import MEGAFoundation
-import Combine
 
 protocol ScheduleMeetingRouting {
     func showSpinner()

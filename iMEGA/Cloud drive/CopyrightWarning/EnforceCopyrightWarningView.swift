@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct EnforceCopyrightWarningView<T: View>: View {
     @Environment(\.presentationMode) private var presentationMode

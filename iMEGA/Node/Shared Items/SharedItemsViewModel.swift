@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 @MainActor
 @objc final class SharedItemsViewModel: NSObject {

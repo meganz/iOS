@@ -1,5 +1,5 @@
-import UIKit
 import Photos
+import UIKit
 
 final class PhotoGridViewDiffableDataSource: PhotoGridViewBaseDataSource {
     private enum Section {

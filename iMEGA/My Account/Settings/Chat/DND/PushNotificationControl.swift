@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 /// A protocol to manage PushNotifications based on user preferences
 @objc protocol PushNotificationControlProtocol {

@@ -1,6 +1,6 @@
-import UIKit
-import MEGADomain
 import MEGAData
+import MEGADomain
+import UIKit
 
 extension MEGAPhotoBrowserViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {

@@ -1,8 +1,8 @@
-import XCTest
 import Combine
-import MEGADomainMock
-import MEGADomain
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
+import XCTest
 
 @MainActor
 final class AlbumListViewModelTests: XCTestCase {

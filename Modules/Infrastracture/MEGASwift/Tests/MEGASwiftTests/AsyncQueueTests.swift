@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGASwift
+import XCTest
 
 final class AsyncCircularQueueTests: XCTestCase {
     // MARK: Tests without Overflow behaviour

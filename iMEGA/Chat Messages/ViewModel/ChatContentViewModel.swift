@@ -1,6 +1,6 @@
 import Foundation
-import MEGAPresentation
 import MEGADomain
+import MEGAPresentation
 
 enum ChatContentAction: ActionType {
     case startOrJoinCallCleanUp(_ callInProgress: Bool)

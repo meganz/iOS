@@ -1,6 +1,6 @@
 
-import UIKit
 import Photos
+import UIKit
 
 final class PhotoCarouselDataSource: PhotoGridViewDataSource {
     override func collectionView(_ collectionView: UICollectionView,

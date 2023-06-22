@@ -1,7 +1,7 @@
 import FileProvider
-import UniformTypeIdentifiers
 import MEGADomain
 import MEGASwift
+import UniformTypeIdentifiers
 
 final class FileProviderItem: NSObject, NSFileProviderItem {
     private let node: NodeEntity

@@ -1,6 +1,6 @@
+import MEGAUI
 import SwiftUI
 import UIKit
-import MEGAUI
 
 public extension Image {
     init(_ color: Color, _ size: CGSize = CGSize(width: 1, height: 1)) {

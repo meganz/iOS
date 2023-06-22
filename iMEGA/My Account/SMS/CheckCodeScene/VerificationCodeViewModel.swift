@@ -1,7 +1,7 @@
 import Foundation
-import PhoneNumberKit
 import MEGADomain
 import MEGAPresentation
+import PhoneNumberKit
 
 enum VerificationCodeAction: ActionType {
     case onViewReady

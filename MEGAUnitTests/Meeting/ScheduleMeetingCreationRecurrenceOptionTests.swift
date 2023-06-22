@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGADomain
+import XCTest
 
 final class ScheduleMeetingCreationRecurrenceOptionTests: XCTestCase {
     func testScheduleMeetingCreationRecurrenceOptionNever_withInvalidFrequency_shouldMatch() throws {

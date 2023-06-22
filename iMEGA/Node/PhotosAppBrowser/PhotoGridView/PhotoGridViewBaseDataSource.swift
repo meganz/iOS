@@ -1,5 +1,5 @@
-import UIKit
 import Photos
+import UIKit
 
 class PhotoGridViewBaseDataSource: NSObject {
     weak var collectionView: UICollectionView?

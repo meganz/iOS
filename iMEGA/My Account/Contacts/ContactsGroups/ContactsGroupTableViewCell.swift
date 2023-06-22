@@ -1,6 +1,6 @@
 
-import UIKit
 import MEGAData
+import UIKit
 
 class ContactsGroupTableViewCell: UITableViewCell {
 

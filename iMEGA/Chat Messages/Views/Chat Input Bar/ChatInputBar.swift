@@ -1,6 +1,6 @@
 
-import UIKit
 import simd
+import UIKit
 
 protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)

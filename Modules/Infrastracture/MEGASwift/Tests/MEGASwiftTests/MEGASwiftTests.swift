@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGASwift
+import XCTest
 
 final class MEGASwiftTests: XCTestCase {
     func testBase64Encoded() throws {

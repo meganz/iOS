@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGASwift
+import XCTest
 
 final class AsyncValuesTests: XCTestCase {
     func testWithAsyncThrowingValue_onExecuted_shouldSucceed() async throws {

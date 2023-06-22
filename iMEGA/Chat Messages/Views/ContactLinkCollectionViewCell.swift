@@ -1,8 +1,8 @@
-import UIKit
 import MEGAData
-import MessageKit
 import MEGADomain
 import MEGASwift
+import MessageKit
+import UIKit
 
 class ContactLinkCollectionViewCell: TextMessageCell {
     open var contactLinkContentView: ContactLinkContentView = {

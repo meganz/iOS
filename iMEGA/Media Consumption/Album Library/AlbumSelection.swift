@@ -1,7 +1,7 @@
 
-import SwiftUI
 import Combine
 import MEGADomain
+import SwiftUI
 
 final class AlbumSelection: ObservableObject {
     @Published var editMode: EditMode = .inactive {

@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 
 public final class MockChatUseCase: ChatUseCaseProtocol {
     public var userHandle: HandleEntity

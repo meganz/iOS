@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGA
+import XCTest
 
 class AlbumToolbarConfiguratorTest: XCTestCase {
     func testToolbarItems_forGifAndRawAlbum_shouldReturnCorrectItems() {

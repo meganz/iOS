@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGADomain
+import XCTest
 
 final class NodeInfoUseCaseTests: XCTestCase {
     let nodeInfoSuccessRepository = MockNodeInfoRepository(result: .success(()))

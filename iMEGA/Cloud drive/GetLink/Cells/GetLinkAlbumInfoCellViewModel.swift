@@ -1,6 +1,6 @@
 import Foundation
-import MEGAPresentation
 import MEGADomain
+import MEGAPresentation
 
 enum GetLinkInfoCellAction: ActionType {
     case onViewReady

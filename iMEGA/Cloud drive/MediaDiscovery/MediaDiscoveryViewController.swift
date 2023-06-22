@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private let viewModel: MediaDiscoveryViewModel

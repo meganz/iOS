@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 import MEGASwift
 
 struct UserAttributeRepository: UserAttributeRepositoryProtocol {

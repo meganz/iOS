@@ -1,5 +1,5 @@
-import Foundation
 import CocoaLumberjack
+import Foundation
 
 final class CustomDDLogFormatter: NSObject, DDLogFormatter {
     

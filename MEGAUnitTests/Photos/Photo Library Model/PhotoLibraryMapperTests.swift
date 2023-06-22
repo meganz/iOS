@@ -1,7 +1,7 @@
-import XCTest
 @testable import MEGA
 import MEGADomain
 import MEGAFoundation
+import XCTest
 
 private extension Date {
     var year: Date {

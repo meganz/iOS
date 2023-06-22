@@ -1,7 +1,7 @@
 
-import WidgetKit
-import SwiftUI
 import Firebase
+import SwiftUI
+import WidgetKit
 
 @main
 struct MEGAWidgetsBundle: SwiftUI.WidgetBundle {

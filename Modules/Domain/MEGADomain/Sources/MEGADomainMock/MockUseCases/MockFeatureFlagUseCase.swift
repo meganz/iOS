@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public final class MockFeatureFlagUseCase: FeatureFlagUseCaseProtocol {
     public var savedFeatureList: [FeatureFlagEntity]

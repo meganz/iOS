@@ -1,9 +1,9 @@
-import Foundation
-import SwiftUI
 import Combine
-import MEGASwiftUI
+import Foundation
 import MEGADomain
 import MEGASwift
+import MEGASwiftUI
+import SwiftUI
 
 class PhotoCellViewModel: ObservableObject {
     private let photo: NodeEntity

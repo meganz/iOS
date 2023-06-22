@@ -1,7 +1,7 @@
-import UIKit
-import MEGADomain
 import MEGAData
+import MEGADomain
 import MEGASwift
+import UIKit
 
 @objc protocol NodeActionViewControllerDelegate {
     // Method that handles selected node action for a single node. It may have an action specifically for single nodes. e.g Info, Versions

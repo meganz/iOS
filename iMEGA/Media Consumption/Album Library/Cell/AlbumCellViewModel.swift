@@ -1,8 +1,8 @@
 import Combine
-import SwiftUI
-import MEGASwiftUI
 import MEGADomain
 import MEGAPresentation
+import MEGASwiftUI
+import SwiftUI
 
 final class AlbumCellViewModel: ObservableObject {
     @Published var numberOfNodes: Int = 0

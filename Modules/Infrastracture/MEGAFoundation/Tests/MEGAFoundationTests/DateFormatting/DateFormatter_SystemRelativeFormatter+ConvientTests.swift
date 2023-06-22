@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGAFoundation
+import XCTest
 
 class DateFormatter_SystemRelative_ConvenientTests: XCTestCase {
 

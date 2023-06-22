@@ -1,6 +1,6 @@
-import UIKit
-import PanModal
 import ISEmojiView
+import PanModal
+import UIKit
 
 class ReactionPickerViewController: UIViewController {
     

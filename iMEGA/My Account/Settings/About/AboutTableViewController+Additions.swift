@@ -1,5 +1,5 @@
-import UIKit
 import FirebaseAppDistribution
+import UIKit
 
 extension AboutTableViewController {
     @objc func checkForFirebaseUpdates() {

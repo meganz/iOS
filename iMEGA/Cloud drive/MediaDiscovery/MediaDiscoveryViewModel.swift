@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import MEGADomain
 import MEGAFoundation
 import MEGAPresentation

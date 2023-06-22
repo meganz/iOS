@@ -1,7 +1,7 @@
-import XCTest
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 class MEGAavatarGeneratingUseCase: XCTestCase {
     

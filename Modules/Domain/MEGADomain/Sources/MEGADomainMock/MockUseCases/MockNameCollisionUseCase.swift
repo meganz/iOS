@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public struct MockNameCollisionUseCase: NameCollisionUseCaseProtocol {
     private let nameCollisions: [NameCollisionEntity]?

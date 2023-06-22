@@ -1,5 +1,5 @@
-import XCTest
 import MEGADomain
+import XCTest
 
 final class AppEnvironmentUseCaseTests: XCTestCase {
     func testConfiguration_config() {

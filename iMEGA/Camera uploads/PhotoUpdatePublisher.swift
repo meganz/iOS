@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 @objc final class PhotoUpdatePublisher: NSObject {
     private enum Constants {

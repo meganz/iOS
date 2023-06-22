@@ -1,8 +1,8 @@
 import Foundation
-import SwiftUI
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
+import SwiftUI
 
 final class OfflineQuickAccessWidgetViewModel: ViewModelType {
     

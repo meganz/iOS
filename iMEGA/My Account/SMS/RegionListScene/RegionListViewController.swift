@@ -1,5 +1,5 @@
-import UIKit
 import MEGAPresentation
+import UIKit
 
 final class RegionListViewController: UIViewController, ViewType {
     // MARK: - Private properties

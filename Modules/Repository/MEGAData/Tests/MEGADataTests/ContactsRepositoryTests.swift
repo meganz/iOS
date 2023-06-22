@@ -1,7 +1,7 @@
 
-import XCTest
 import Contacts
 import MEGAData
+import XCTest
 
 final class ContactsRepositoryTests: XCTestCase {
     func testIsAuthorizedToAccessPhoneContacts() {

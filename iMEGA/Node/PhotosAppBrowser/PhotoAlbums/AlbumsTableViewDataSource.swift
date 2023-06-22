@@ -1,6 +1,6 @@
 
-import UIKit
 import Photos
+import UIKit
 
 final class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
     private let albums: Albums

@@ -1,6 +1,6 @@
 import Foundation
-import MEGADomain
 import MEGAData
+import MEGADomain
 import MEGAPresentation
 
 final class VerificationCodeViewRouter: VerificationCodeViewRouting {

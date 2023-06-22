@@ -1,6 +1,6 @@
-import UIKit
-import PanModal
 import MEGADomain
+import PanModal
+import UIKit
 
 final class MeetingFloatingPanelViewController: UIViewController {
     

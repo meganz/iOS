@@ -1,5 +1,5 @@
-import Intents
 import Firebase
+import Intents
 
 final class IntentHandler: INExtension {
     lazy var personProvider = IntentPersonProvider()

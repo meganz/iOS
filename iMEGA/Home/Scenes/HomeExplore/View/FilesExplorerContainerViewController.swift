@@ -1,6 +1,6 @@
-import MEGAUIKit
-import MEGADomain
 import MEGAData
+import MEGADomain
+import MEGAUIKit
 
 class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     // MARK: - Private variables

@@ -1,6 +1,6 @@
+import Foundation
 import MEGADomain
 import MEGAFoundation
-import Foundation
 
 public struct MockAchievementUseCase: AchievementUseCaseProtocol {
     let result: Measurement<UnitDataStorage>?

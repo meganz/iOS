@@ -1,6 +1,6 @@
+import Combine
 import Foundation
 import MEGADomain
-import Combine
 
 public struct MockAlbumContentUseCase: AlbumContentsUseCaseProtocol {
     public var photos: [AlbumPhotoEntity]

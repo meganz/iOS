@@ -1,6 +1,6 @@
-import UIKit
-import MEGAUIKit
 import MEGAPresentation
+import MEGAUIKit
+import UIKit
 
 final class TurnOnNotificationsViewController: UIViewController, ViewType {
     

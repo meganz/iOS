@@ -1,5 +1,5 @@
-import UIKit
 import MEGAUIKit
+import UIKit
 
 class VideoExplorerTableViewCell: UITableViewCell {
     @IBOutlet private weak var videoThumbnailImageView: UIImageView!

@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct AlbumCell: View {
     @StateObject var viewModel: AlbumCellViewModel

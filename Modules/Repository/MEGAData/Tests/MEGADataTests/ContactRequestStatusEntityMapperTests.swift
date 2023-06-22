@@ -1,5 +1,5 @@
-import XCTest
 import MEGASdk
+import XCTest
 
 final class ContactRequestStatusEntityMapperTests: XCTestCase {
     let sut: [MEGAContactRequestStatus] = [

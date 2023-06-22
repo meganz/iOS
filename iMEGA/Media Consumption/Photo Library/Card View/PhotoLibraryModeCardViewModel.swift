@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 class PhotoLibraryModeCardViewModel<T: PhotoChronologicalCategory>: PhotoLibraryModeViewModel<T> {
     private let categoryDateTransformation: (Date) -> Date?

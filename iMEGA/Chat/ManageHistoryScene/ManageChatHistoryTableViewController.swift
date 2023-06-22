@@ -1,5 +1,5 @@
-import UIKit
 import MEGAPresentation
+import UIKit
 
 enum ManageChatHistorySection: Int {
     case historyRetention

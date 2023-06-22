@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
-import PhoneNumberKit
 import MEGAPresentation
+import PhoneNumberKit
 
 enum SMSVerificationAction: ActionType {
     case onViewReady

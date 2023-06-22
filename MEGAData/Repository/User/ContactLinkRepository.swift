@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 
 struct ContactLinkRepository: ContactLinkRepositoryProtocol {
     public static var newRepo: ContactLinkRepository {

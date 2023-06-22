@@ -1,6 +1,6 @@
-import MEGADomain
-import MEGAData
 import Combine
+import MEGAData
+import MEGADomain
 
 public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtocol {
     public static var newRepo: ScheduledMeetingRepository {

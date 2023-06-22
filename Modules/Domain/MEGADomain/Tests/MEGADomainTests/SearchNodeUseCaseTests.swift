@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class SearchNodeUseCaseTests: XCTestCase {
     var searchNodeUC: (any SearchNodeUseCaseProtocol)!

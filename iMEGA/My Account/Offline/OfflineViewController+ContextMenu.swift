@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 extension OfflineViewController: DisplayMenuDelegate {
     // MARK: - Context Menus configuration

@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGA
+import XCTest
 
 final class OfflineFileInfoUseCaseTests: XCTestCase {
     let offlineFileInfoSuccessRepository = MockOfflineInfoRepository(result: .success(()))

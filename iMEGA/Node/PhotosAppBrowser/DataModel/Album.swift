@@ -1,6 +1,6 @@
 
-import UIKit
 import Photos
+import UIKit
 
 protocol AlbumDelegate: AnyObject {
     func didResetFetchResult()

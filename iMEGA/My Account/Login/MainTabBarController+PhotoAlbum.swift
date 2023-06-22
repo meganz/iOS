@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 extension MainTabBarController {
     @objc func photoAlbumViewController() -> MEGANavigationController? {

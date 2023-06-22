@@ -1,6 +1,6 @@
-import MEGAPresentation
 @testable import MEGA
 @testable import MEGADomain
+import MEGAPresentation
 
 final class MockFeatureFlagProvider: FeatureFlagProviderProtocol {
     private var list = [FeatureFlagKey: Bool]()

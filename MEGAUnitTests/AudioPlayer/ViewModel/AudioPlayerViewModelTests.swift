@@ -1,8 +1,8 @@
-import XCTest
+@testable import MEGA
+import MEGADataMock
 import MEGADomain
 import MEGADomainMock
-import MEGADataMock
-@testable import MEGA
+import XCTest
 
 final class AudioPlayerViewModelTests: XCTestCase {
     

@@ -1,7 +1,7 @@
 import Foundation
-import XCTest
 @testable import MEGA
 import MEGADataMock
+import XCTest
 
 class AVPlayerManagerTests: XCTestCase {
 

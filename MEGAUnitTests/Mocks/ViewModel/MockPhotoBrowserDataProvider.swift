@@ -1,6 +1,6 @@
 import Foundation
-import MEGADomain
 @testable import MEGA
+import MEGADomain
 
 final class MockPhotoBrowserDataProvider: PhotoBrowserDataProviderProtocol {
     private var nodeEntities: [NodeEntity]?

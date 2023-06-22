@@ -1,7 +1,7 @@
+import Combine
 import Foundation
 import MEGADomain
 import SwiftUI
-import Combine
 
 public final class AboutViewModel: ObservableObject {
     @Published var aboutSetting: AboutSetting

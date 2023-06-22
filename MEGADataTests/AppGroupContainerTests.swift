@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGAData
+import XCTest
 
 class AppGroupContainerTests: XCTestCase {
     private let url = URL(string: "http://mega.nz")

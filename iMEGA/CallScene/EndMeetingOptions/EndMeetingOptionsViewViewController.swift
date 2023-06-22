@@ -1,5 +1,5 @@
-import UIKit
 import PanModal
+import UIKit
 
 class EndMeetingOptionsViewViewController: UIViewController {
     private let viewModel: EndMeetingOptionsViewModel

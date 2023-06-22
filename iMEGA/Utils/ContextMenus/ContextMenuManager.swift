@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 typealias CloudDriveContextMenuDelegate = DisplayMenuDelegate & QuickActionsMenuDelegate & RubbishBinMenuDelegate & UploadAddMenuDelegate
 

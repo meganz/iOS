@@ -1,7 +1,7 @@
-import UIKit
-import MEGAPresentation
 import MEGADomain
+import MEGAPresentation
 import Settings
+import UIKit
 
 class SettingViewRouter: Routing {
     private weak var presenter: UINavigationController?

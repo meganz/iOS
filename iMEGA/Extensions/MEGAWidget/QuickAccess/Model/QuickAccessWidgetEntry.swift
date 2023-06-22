@@ -1,6 +1,6 @@
 
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 typealias EntryValue = (items: [QuickAccessItemModel], status: WidgetStatus)
 

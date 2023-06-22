@@ -1,8 +1,8 @@
-import XCTest
-import SwiftUI
-import MEGADomainMock
-import MEGADomain
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
+import SwiftUI
+import XCTest
 
 final class AlbumCoverPickerViewModelTests: XCTestCase {
 

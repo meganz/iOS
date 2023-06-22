@@ -1,7 +1,7 @@
-import UIKit
-import PhoneNumberKit
-import MEGAFoundation
 import MEGADomain
+import MEGAFoundation
+import PhoneNumberKit
+import UIKit
 
 final class ProfileTableViewDataSource {
     

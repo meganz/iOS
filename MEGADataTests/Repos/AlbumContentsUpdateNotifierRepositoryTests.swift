@@ -1,9 +1,9 @@
-import XCTest
 import Combine
-import MEGADomain
-import MEGADomainMock
 @testable import MEGA
 import MEGADataMock
+import MEGADomain
+import MEGADomainMock
+import XCTest
 
 final class AlbumContentsUpdateNotifierRepositoryTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()

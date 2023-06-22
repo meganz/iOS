@@ -1,7 +1,7 @@
-import Foundation
 import Combine
-import SwiftUI
+import Foundation
 import MEGADomain
+import SwiftUI
 
 final class PhotoSelection: ObservableObject {
     private let selectLimit: Int?

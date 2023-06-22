@@ -1,7 +1,7 @@
-import MEGAFoundation
-import MEGADomain
-import MEGAPresentation
 import MEGAData
+import MEGADomain
+import MEGAFoundation
+import MEGAPresentation
 
 enum FilesExplorerAction: ActionType {
     case onViewReady

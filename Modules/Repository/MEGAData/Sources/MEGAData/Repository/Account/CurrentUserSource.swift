@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 import MEGASdk
 
 public final class CurrentUserSource {

@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public struct MockOfflineFilesRepository: OfflineFilesRepositoryProtocol {
     public static let newRepo = MockOfflineFilesRepository()

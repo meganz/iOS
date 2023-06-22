@@ -1,5 +1,5 @@
-import MEGASwift
 import MEGADomain
+import MEGASwift
 
 extension ChangeNameViewController: UITextFieldDelegate {
     private enum Constants {

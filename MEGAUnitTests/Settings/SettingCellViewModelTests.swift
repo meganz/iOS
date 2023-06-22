@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGAPresentation
+import XCTest
 
 class SettingCellViewModelTests: XCTestCase {
     var sut: SettingCellViewModel!

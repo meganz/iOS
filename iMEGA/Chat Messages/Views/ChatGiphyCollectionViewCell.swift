@@ -1,5 +1,5 @@
-import MessageKit
 import CoreGraphics
+import MessageKit
 
 class ChatGiphyCollectionViewCell: MessageContentCell {
     open var imageView: UIImageView = {

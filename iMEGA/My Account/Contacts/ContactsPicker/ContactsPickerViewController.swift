@@ -1,6 +1,6 @@
 
-import UIKit
 import MEGAUIKit
+import UIKit
 
 @objc protocol ContactsPickerViewControllerDelegate {
     func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String])

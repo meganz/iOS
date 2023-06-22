@@ -1,7 +1,7 @@
-import UIKit
-import Contacts
 import AVKit
+import Contacts
 import Photos
+import UIKit
 
 @objc
 final class DevicePermissionsHandler: NSObject, DevicePermissionsHandling {

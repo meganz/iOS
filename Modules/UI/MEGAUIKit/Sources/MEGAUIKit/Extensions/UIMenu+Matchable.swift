@@ -1,5 +1,5 @@
-import UIKit
 import MEGASwift
+import UIKit
 
 extension UIMenu {
     public static func ~~ (lhs: UIMenu, rhs: UIMenu) -> Bool {

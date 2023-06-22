@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 struct PlanStorageView: View {
     var plan: AccountPlanEntity

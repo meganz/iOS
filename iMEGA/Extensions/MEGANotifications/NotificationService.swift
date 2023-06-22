@@ -1,8 +1,8 @@
-import UserNotifications
 import Firebase
-import SAMKeychain
-import MEGADomain
 import MEGAData
+import MEGADomain
+import SAMKeychain
+import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?

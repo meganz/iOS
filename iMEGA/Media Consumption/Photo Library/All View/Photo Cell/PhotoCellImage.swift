@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct PhotoCellImage: View {
     let container: any ImageContaining

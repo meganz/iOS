@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 
 struct ChatLinkRepository: ChatLinkRepositoryProtocol {
     static var newRepo = ChatLinkRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())

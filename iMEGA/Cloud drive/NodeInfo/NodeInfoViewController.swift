@@ -1,6 +1,6 @@
 
-import UIKit
 import MEGADomain
+import UIKit
 
 enum NodeInfoTableViewSection: Int {
     case info
