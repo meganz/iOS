@@ -36,7 +36,7 @@ final class AlbumContentViewModel: ViewModelType {
     private let albumContentsUseCase: any AlbumContentsUseCaseProtocol
     private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
-    private let router: AlbumContentRouting
+    private let router: any AlbumContentRouting
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     
@@ -70,10 +70,10 @@ final class AlbumContentViewModel: ViewModelType {
         albumModificationUseCase: any AlbumModificationUseCaseProtocol,
         photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
         shareAlbumUseCase: any ShareAlbumUseCaseProtocol,
-        router: AlbumContentRouting,
+        router: some AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel,
-        featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.album = album
         self.newAlbumPhotosToAdd = newAlbumPhotosToAdd

@@ -38,7 +38,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private let router: MeetingCreatingViewRouting
+    private let router: any MeetingCreatingViewRouting
     private var meetingName = ""
     private var firstName = ""
     private var lastName = ""
@@ -76,7 +76,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     // MARK: - Init
-    init(router: MeetingCreatingViewRouting,
+    init(router: some MeetingCreatingViewRouting,
          type: MeetingConfigurationType,
          meetingUseCase: MeetingCreatingUseCaseProtocol,
          audioSessionUseCase: any AudioSessionUseCaseProtocol,

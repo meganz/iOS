@@ -32,7 +32,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     
     private(set) var planList: [AccountPlanEntity] = []
     private(set) var accountDetails: AccountDetailsEntity?
-    private var featureFlagProvider: FeatureFlagProviderProtocol
+    private var featureFlagProvider: any FeatureFlagProviderProtocol
     @Published private(set) var currentPlanName: String = ""
     
     private let accountHallUsecase: any AccountHallUseCaseProtocol

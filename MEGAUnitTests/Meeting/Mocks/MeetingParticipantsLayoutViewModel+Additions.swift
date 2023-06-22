@@ -4,7 +4,7 @@ import MEGADomainMock
 
 extension MeetingParticipantsLayoutViewModel {
     convenience init(
-        router: MeetingParticipantsLayoutRouting = MockCallViewRouter(),
+        router: some MeetingParticipantsLayoutRouting = MockCallViewRouter(),
         containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(),
         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),

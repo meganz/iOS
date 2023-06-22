@@ -10,7 +10,7 @@ final class PhotosViewModel: NSObject {
         }
     }
     
-    private var featureFlagProvider: FeatureFlagProviderProtocol
+    private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let userAttributeUseCase: any UserAttributeUseCaseProtocol
@@ -43,7 +43,7 @@ final class PhotosViewModel: NSObject {
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
         userAttributeUseCase: any UserAttributeUseCaseProtocol,
-        featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase

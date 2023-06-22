@@ -46,7 +46,7 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailUseCase: any ThumbnailUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
-        featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.thumbnailUseCase = thumbnailUseCase
         self.album = album

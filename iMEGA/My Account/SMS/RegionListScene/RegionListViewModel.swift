@@ -20,7 +20,7 @@ final class RegionListViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private let router: RegionListViewRouting
+    private let router: any RegionListViewRouting
     private let sortedRegions: [SMSRegion]
     private var indexedRegions = [[SMSRegion]]()
     private let collation: UILocalizedIndexedCollation
@@ -29,7 +29,7 @@ final class RegionListViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: RegionListViewRouting,
+    init(router: some RegionListViewRouting,
          regionCodes: [SMSRegion],
          collation: UILocalizedIndexedCollation = .current()) {
         self.router = router

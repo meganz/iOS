@@ -25,7 +25,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
     
     let pageTabViewModel = PagerTabViewModel()
     let viewModel = PhotoAlbumContainerViewModel()
-    let featureFlagProvider: FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    let featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?

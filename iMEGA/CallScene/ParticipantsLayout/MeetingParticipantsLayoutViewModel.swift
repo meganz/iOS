@@ -85,7 +85,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case removeCallEndDurationView
     }
     
-    private let router: MeetingParticipantsLayoutRouting
+    private let router: any MeetingParticipantsLayoutRouting
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity
     private var timer: Timer?
@@ -170,7 +170,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    init(router: MeetingParticipantsLayoutRouting,
+    init(router: some MeetingParticipantsLayoutRouting,
          containerViewModel: MeetingContainerViewModel,
          callUseCase: CallUseCaseProtocol,
          captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,

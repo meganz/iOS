@@ -16,10 +16,10 @@ struct DiskFullBlockingViewModel: ViewModelType {
     }
     
     var invokeCommand: ((Command) -> Void)?
-    private var router: DiskFullBlockingViewRouting
+    private var router: any DiskFullBlockingViewRouting
     private let deviceModel: String
     
-    init(router: DiskFullBlockingViewRouting, deviceModel: String) {
+    init(router: some DiskFullBlockingViewRouting, deviceModel: String) {
         self.router = router
         self.deviceModel = deviceModel
     }

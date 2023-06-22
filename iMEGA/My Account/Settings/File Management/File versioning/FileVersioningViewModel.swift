@@ -24,12 +24,12 @@ final class FileVersioningViewModel: ViewModelType {
         case updateFileVersionsSize(Int64)
     } 
     // MARK: - Private properties
-    private let router: FileVersioningViewRouting
+    private let router: any FileVersioningViewRouting
     
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: FileVersioningViewRouting,
+    init(router: some FileVersioningViewRouting,
          fileVersionsUseCase: any FileVersionsUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol) {
         self.router = router

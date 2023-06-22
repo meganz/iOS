@@ -17,12 +17,12 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     private var alertPresented = false
     
     // MARK: - Private properties
-    private let router: CancellableTransferRouting
+    private let router: any CancellableTransferRouting
     // MARK: - Internel properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: CancellableTransferRouting,
+    init(router: some CancellableTransferRouting,
          uploadFileUseCase: any UploadFileUseCaseProtocol,
          transfers: [CancellableTransfer]) {
         self.router = router

@@ -9,7 +9,7 @@ final class AlbumCoverPickerViewModel: ObservableObject {
     @Published var isDismiss = false
     
     let photoSelection = AlbumCoverPickerPhotoSelection()
-    let router: AlbumContentRouting
+    let router: any AlbumContentRouting
     
     private let album: AlbumEntity
     private let albumContentsUseCase: any AlbumContentsUseCaseProtocol
@@ -19,7 +19,7 @@ final class AlbumCoverPickerViewModel: ObservableObject {
     
     init(album: AlbumEntity,
          albumContentsUseCase: any AlbumContentsUseCaseProtocol,
-         router: AlbumContentRouting,
+         router: some AlbumContentRouting,
          completion: @escaping (AlbumEntity, AlbumPhotoEntity) -> Void) {
         self.album = album
         self.albumContentsUseCase = albumContentsUseCase

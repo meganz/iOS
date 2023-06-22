@@ -40,13 +40,13 @@ final class SMSVerificationViewModel: ViewModelType {
     private let authUseCase: any AuthUseCaseProtocol
     private var regionList = [SMSRegion]()
     var selectedRegion: SMSRegion?
-    private let router: SMSVerificationViewRouting
+    private let router: any SMSVerificationViewRouting
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: SMSVerificationViewRouting,
+    init(router: some SMSVerificationViewRouting,
          smsUseCase: SMSUseCase,
          achievementUseCase: any AchievementUseCaseProtocol,
          authUseCase: any AuthUseCaseProtocol,

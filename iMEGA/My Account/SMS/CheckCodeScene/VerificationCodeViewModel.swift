@@ -29,7 +29,7 @@ struct VerificationCodeViewModel: ViewModelType {
     private let checkSMSUseCase: any CheckSMSUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
     private let verificationType: SMSVerificationType
-    private let router: VerificationCodeViewRouting
+    private let router: any VerificationCodeViewRouting
     private let regionCode: RegionCode
     private let phoneNumber: String
     private var screenTitle: String {
@@ -45,7 +45,7 @@ struct VerificationCodeViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: VerificationCodeViewRouting,
+    init(router: some VerificationCodeViewRouting,
          checkSMSUseCase: any CheckSMSUseCaseProtocol,
          authUseCase: any AuthUseCaseProtocol,
          verificationType: SMSVerificationType,

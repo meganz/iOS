@@ -17,14 +17,14 @@ final class PasteImagePreviewViewModel: ViewModelType {
     }
     
     // MARK: - Private properties
-    private let router: PasteImagePreviewRouting
+    private let router: any PasteImagePreviewRouting
     private let chatRoom: MEGAChatRoom
     
     // MARK: - Internel properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: PasteImagePreviewRouting, chatRoom: MEGAChatRoom) {
+    init(router: some PasteImagePreviewRouting, chatRoom: MEGAChatRoom) {
         self.router = router
         self.chatRoom = chatRoom
     }

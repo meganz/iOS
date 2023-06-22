@@ -11,12 +11,12 @@ struct EncourageGuestUserToJoinMegaViewModel: ViewModelType {
     enum Command: CommandType {}
     
     // MARK: - Private properties
-    private let router: EncourageGuestUserToJoinMegaRouting
+    private let router: any EncourageGuestUserToJoinMegaRouting
     // MARK: - Internel properties
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: EncourageGuestUserToJoinMegaRouting) {
+    init(router: some EncourageGuestUserToJoinMegaRouting) {
         self.router = router
     }
     

@@ -4,7 +4,7 @@ import MEGADomainMock
 
 extension MeetingFloatingPanelViewModel {
     convenience init(
-        router: MeetingFloatingPanelRouting = MockMeetingFloatingPanelRouter(),
+        router: some MeetingFloatingPanelRouting = MockMeetingFloatingPanelRouter(),
         containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         isSpeakerEnabled: Bool = false,

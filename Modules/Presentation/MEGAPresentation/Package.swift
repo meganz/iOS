@@ -19,9 +19,11 @@ let package = Package(
     targets: [
         .target(
             name: "MEGAPresentation",
-            dependencies: ["MEGADomain", "MEGAData"]),
+            dependencies: ["MEGADomain", "MEGAData"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGAPresentationTests",
-            dependencies: ["MEGAPresentation"])
+            dependencies: ["MEGAPresentation"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
     ]
 )

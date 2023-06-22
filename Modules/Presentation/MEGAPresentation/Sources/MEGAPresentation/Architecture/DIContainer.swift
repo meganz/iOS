@@ -9,7 +9,7 @@ public enum DIContainer {
         )
     }
     
-    public static var featureFlagProvider: any FeatureFlagProviderProtocol {
+    public static var featureFlagProvider: some FeatureFlagProviderProtocol {
         FeatureFlagProvider(
             useCase: FeatureFlagUseCase(
                 repository: FeatureFlagRepository.newRepo
