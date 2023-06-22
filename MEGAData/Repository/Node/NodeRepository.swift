@@ -135,7 +135,7 @@ struct NodeRepository: NodeRepositoryProtocol {
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {
         let nodeList = sdk.children(forParent: node)
         let mediaNodes = (nodeList.mnz_mediaNodesMutableArrayFromNodeList() as? [MEGANode]) ?? []
-        let imageNodes = mediaNodes.filter({ $0.name?.mnz_isImagePathExtension == true })
+        let imageNodes = mediaNodes.filter { String.fileExtensionGroup(verify: $0.name, \.isImage) }
         
         return imageNodes.toNodeEntities()
     }

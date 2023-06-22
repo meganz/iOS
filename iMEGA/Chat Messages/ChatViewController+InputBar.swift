@@ -644,10 +644,10 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 let `self` = self else {
                     return
             }
-            
-            if (path as NSString).mnz_isImagePathExtension {
+            let pathGroup = String.makeFileExtensionGroup(from: path)
+            if pathGroup.isImage {
                 self.uploadAsset(withFilePath: path, parentNode: parentNode, localIdentifier: "")
-            } else if (path as NSString).mnz_isVideoPathExtension {
+            } else if pathGroup.isVideo {
                 self.uploadVideo(withFilePath: path, parentNode: parentNode)
             } else {
                 MEGALogDebug("showCamera: Unknown media type found and cannot be uploaded.")

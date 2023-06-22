@@ -15,7 +15,7 @@ extension ChatViewController {
             if megaMessage.nodeList?.size.uintValue == 1,
                let node = megaMessage.nodeList?.node(at: 0),
                let name = node.name,
-               name.mnz_isImagePathExtension {
+               String.fileExtensionGroup(verify: name, \.isImage) {
                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
                 let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
                 if FileManager.default.fileExists(atPath: originalImagePath), let originalImage = UIImage(contentsOfFile: originalImagePath) {

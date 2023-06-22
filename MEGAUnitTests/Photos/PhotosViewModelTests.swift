@@ -65,7 +65,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withImagesAllLocations_shouldReturnTrue() async throws {
-        let expectedImages = sampleNodesForAllLocations().filter({ $0.name.mnz_isImagePathExtension == true })
+        let expectedImages = sampleNodesForAllLocations().filter { String.fileExtensionGroup(verify: $0.name, \.isImage) }
         sut.filterType = .images
         sut.filterLocation = .allLocations
         await sut.loadPhotos()
@@ -91,7 +91,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withImagesFromCloudDrive_shouldReturnTrue() async throws {
-        let expectedImages = sampleNodesForCloudDriveOnly().filter({ $0.name.mnz_isImagePathExtension == true })
+        let expectedImages = sampleNodesForCloudDriveOnly().filter { String.fileExtensionGroup(verify: $0.name, \.isImage) }
         sut.filterType = .images
         sut.filterLocation = .cloudDrive
         await sut.loadPhotos()
@@ -117,7 +117,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withImagesFromCameraUploads_shouldReturnTrue() async throws {
-        let expectedImages = sampleNodesForCameraUploads().filter({ $0.name.mnz_isImagePathExtension == true })
+        let expectedImages = sampleNodesForCameraUploads().filter { String.fileExtensionGroup(verify: $0.name, \.isImage) }
         sut.filterType = .images
         sut.filterLocation = .cameraUploads
         await sut.loadPhotos()

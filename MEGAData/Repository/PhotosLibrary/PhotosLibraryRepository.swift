@@ -14,7 +14,7 @@ struct PhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
     }()
     
     func copyMediaFileToPhotos(at url: URL, completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?) {
-        let type: PHAssetResourceType = url.lastPathComponent.mnz_isImagePathExtension ? .photo : .video
+        let type: PHAssetResourceType = String.fileExtensionGroup(verify: url.lastPathComponent, \.isImage) ? .photo : .video
         PHPhotoLibrary.shared().performChanges {
             PHAssetCreationRequest.forAsset().addResource(with: type, fileURL: url, options: self.options)
         } completionHandler: { success, _ in

@@ -400,13 +400,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (CGFloat)maximumZoomScaleWith:(MEGANode *)node zoomableView:(UIScrollView *)zoomableView imageView:(UIView *)imageView {
-    CGFloat maximumZoomScale;
-    if (node.name.mnz_isImagePathExtension) {
-        maximumZoomScale = FLT_MAX;
-    } else {
-        maximumZoomScale = 1.0f;
-    }
-    return maximumZoomScale;
+    return ([StringFileExtensionGroupOCWrapper verify:node.name isMemberOf:@"image"]) ? FLT_MAX : 1.0f;
 }
 
 - (NSArray *)keyCommands {
@@ -501,7 +495,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     if (scrollView.tag != 1) {
         MEGANode *node = self.dataProvider.currentPhoto;
-        if (node.name.mnz_isImagePathExtension) {
+        if ([StringFileExtensionGroupOCWrapper verify:node.name isMemberOf: @"image"]) {
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view inIndex:self.dataProvider.currentIndex withMode:MEGAPhotoModeOriginal];
@@ -548,8 +542,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             MEGANode *node = self.dataProvider[i];
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
+            BOOL isImageNode = [StringFileExtensionGroupOCWrapper verify:node.name isMemberOf: @"image"];
             
-            if (node.name.mnz_isImagePathExtension && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
+            if (isImageNode && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
                 
                 [imageView sd_setImageWithURL:[NSURL fileURLWithPath: temporaryImagePath]
@@ -567,7 +562,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 }];
             } else {
                 BOOL loadOriginalWithMobileData = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
-                if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData) && node.name.mnz_isImagePathExtension && node.size.longLongValue < MaxSizeToDownloadOriginal) {
+                if (([MEGAReachabilityManager isReachableViaWiFi] || loadOriginalWithMobileData) && isImageNode && node.size.longLongValue < MaxSizeToDownloadOriginal) {
                     [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModeOriginal];
                 }
                 if ([[NSFileManager defaultManager] fileExistsAtPath:previewPath]) {
@@ -585,10 +580,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailPath]) {
                         imageView.image = [UIImage imageWithContentsOfFile:thumbnailPath];
                         [self startLiveTextAnalysisFor:imageView in:index];
-                    } else if (node.hasThumbnail && !node.name.mnz_isImagePathExtension) {
+                    } else if (node.hasThumbnail && !isImageNode) {
                         [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModeThumbnail];
                     }
-                    if (node.name.mnz_isImagePathExtension && ![node.name.pathExtension isEqualToString:@"gif"]) {
+                    if (isImageNode && ![node.name.pathExtension isEqualToString:@"gif"]) {
                         [self setupNode:node forImageView:imageView inIndex:i withMode:MEGAPhotoModeOriginal];
                     }
                 }
@@ -681,13 +676,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
     };
     
+    BOOL isImageNode = [StringFileExtensionGroupOCWrapper verify:node.name isMemberOf:@"image"];
+    
     switch (mode) {
         case MEGAPhotoModeThumbnail:
             if (node.hasThumbnail) {
                 MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:requestCompletion];
                 NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
-            } else if (node.name.mnz_isImagePathExtension) {
+            } else if (isImageNode) {
                 [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
             }
             
@@ -700,7 +697,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 [self.api getPreviewNode:node destinationFilePath:path delegate:delegate];
                 [self addActivityIndicatorToView:imageView];
                 [self activateSlideShowButton];
-            } else if (node.name.mnz_isImagePathExtension) {
+            } else if (isImageNode) {
                 [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
             }
             
