@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGADomain
+import XCTest
 
 final class ScheduleMeetingEndRecurrenceOptionsViewModelTests: XCTestCase {
     func testEndRecurrenceOptions_initialValue_shouldBeSixMonths() throws {

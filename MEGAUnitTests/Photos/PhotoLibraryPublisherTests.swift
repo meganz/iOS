@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGA
+import XCTest
 
 final class PhotoLibraryPublisherTests: XCTestCase {
     func testSubscribeToPhotoSelectionHidden_onSelectionHiddenChange_shouldChangeClosureValue() {

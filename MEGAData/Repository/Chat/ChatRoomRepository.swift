@@ -1,6 +1,6 @@
 import Combine
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     

@@ -1,9 +1,9 @@
-import Foundation
-import SafariServices
-import MEGADomain
-import MEGAData
-import MEGAPresentation
 import Combine
+import Foundation
+import MEGAData
+import MEGADomain
+import MEGAPresentation
+import SafariServices
 
 extension AppDelegate {
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {

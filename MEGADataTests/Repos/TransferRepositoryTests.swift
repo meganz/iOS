@@ -1,5 +1,5 @@
-import MEGADomainMock
 import MEGADomain
+import MEGADomainMock
 import XCTest
 
 final class TransferRepositoryTests: XCTestCase {

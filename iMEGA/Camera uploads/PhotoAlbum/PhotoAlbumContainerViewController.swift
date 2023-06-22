@@ -1,9 +1,9 @@
-import UIKit
-import SwiftUI
 import Combine
 import MEGADomain
-import MEGAUIKit
 import MEGAPresentation
+import MEGAUIKit
+import SwiftUI
+import UIKit
 
 final class PhotoAlbumContainerViewController: UIViewController, TraitEnviromentAware {
     var photoViewController: PhotosViewController?

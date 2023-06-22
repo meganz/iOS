@@ -1,8 +1,8 @@
-import UIKit
-import SwiftUI
+import MEGAData
 import MEGADomain
 import MEGAPresentation
-import MEGAData
+import SwiftUI
+import UIKit
 
 protocol AlbumContentRouting: Routing {
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void)

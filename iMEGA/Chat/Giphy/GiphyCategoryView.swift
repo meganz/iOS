@@ -1,6 +1,6 @@
-import UIKit
 import FlexLayout
 import PinLayout
+import UIKit
 
 @objc enum GiphyCatogory: Int {
     case gifs

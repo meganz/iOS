@@ -1,8 +1,8 @@
 
 import Foundation
-import WidgetKit
-import MEGAFoundation
 import MEGADomain
+import MEGAFoundation
+import WidgetKit
 
 class QuickAccessWidgetManager: NSObject {
     private let recentItemsUseCase: any RecentItemsUseCaseProtocol

@@ -1,6 +1,6 @@
-import SwiftUI
 import Combine
 import MEGASwiftUI
+import SwiftUI
 
 struct PageTabView: View {
     @ObservedObject private var viewModel: PagerTabViewModel

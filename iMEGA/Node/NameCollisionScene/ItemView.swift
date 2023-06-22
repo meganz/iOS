@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct ItemView: View {
     @Environment(\.colorScheme) private var colorScheme

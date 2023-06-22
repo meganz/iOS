@@ -1,6 +1,6 @@
 @testable import MEGA
-import MEGADomainMock
 import MEGADomain
+import MEGADomainMock
 
 extension ChatRoomsListViewModel {
     

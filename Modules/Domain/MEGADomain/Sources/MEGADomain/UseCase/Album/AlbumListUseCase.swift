@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 public protocol AlbumListUseCaseProtocol {
     var albumsUpdatedPublisher: AnyPublisher<Void, Never> { get }

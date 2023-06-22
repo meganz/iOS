@@ -1,7 +1,7 @@
-import UIKit
+import MEGAData
 import MEGADomain
 import MEGASwift
-import MEGAData
+import UIKit
 
 extension PhotosViewController {
     private func contextMenuConfiguration() -> CMConfigEntity? {

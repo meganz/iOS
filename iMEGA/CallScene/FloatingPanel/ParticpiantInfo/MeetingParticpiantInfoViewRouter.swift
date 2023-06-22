@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 import MEGAPresentation
 
 protocol MeetingParticpiantInfoViewRouting: Routing {

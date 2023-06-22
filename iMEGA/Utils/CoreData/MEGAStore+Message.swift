@@ -1,6 +1,6 @@
 
-import Foundation
 import CoreData
+import Foundation
 
 extension MEGAStore {
     /// Fetch message from Core Data

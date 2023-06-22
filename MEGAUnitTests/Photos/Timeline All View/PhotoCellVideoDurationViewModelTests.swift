@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGA
+import XCTest
 
 final class PhotoCellVideoDurationViewModelTests: XCTestCase {
     func testShouldShowDurationView_video() {

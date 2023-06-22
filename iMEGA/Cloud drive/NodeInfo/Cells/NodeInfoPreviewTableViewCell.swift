@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 class NodeInfoPreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var previewImage: UIImageView!

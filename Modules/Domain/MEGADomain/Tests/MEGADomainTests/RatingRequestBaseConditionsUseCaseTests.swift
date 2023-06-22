@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 class RatingRequestBaseConditionsUseCaseTests: XCTestCase {
     func testBaseConditions_met() {

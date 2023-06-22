@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 @testable import MEGADomain
+import XCTest
 
 final class NodeAccessEntity_Mapper_Tests: XCTestCase {
     

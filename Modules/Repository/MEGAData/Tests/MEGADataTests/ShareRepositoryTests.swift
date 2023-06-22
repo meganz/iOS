@@ -1,7 +1,7 @@
-import XCTest
-import MEGADomain
-import MEGADataMock
 import MEGAData
+import MEGADataMock
+import MEGADomain
+import XCTest
 
 final class ShareRepositoryTests: XCTestCase {
     

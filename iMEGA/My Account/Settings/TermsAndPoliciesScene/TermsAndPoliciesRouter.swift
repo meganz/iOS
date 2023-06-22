@@ -1,9 +1,9 @@
 
 import Foundation
-import UIKit
-import SwiftUI
-import Settings
 import MEGAPresentation
+import Settings
+import SwiftUI
+import UIKit
 
 final class TermsAndPoliciesRouter: NSObject, Routing {
     

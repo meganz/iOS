@@ -1,8 +1,8 @@
-import XCTest
-import MEGASdk
 import MEGAData
-import MEGADomain
 import MEGADataMock
+import MEGADomain
+import MEGASdk
+import XCTest
 
 class ShareAlbumRepositoryTests: XCTestCase {
     func testShareAlbumLink_onAlbumThatsNotShared_shouldReturnSharedLink() async throws {

@@ -1,6 +1,6 @@
-import SwiftUI
 import Combine
 import MEGADomain
+import SwiftUI
 
 final class AlbumCoverPickerViewModel: ObservableObject {
     

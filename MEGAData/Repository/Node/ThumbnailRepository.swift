@@ -1,6 +1,6 @@
 import Foundation
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     static var newRepo: ThumbnailRepository {

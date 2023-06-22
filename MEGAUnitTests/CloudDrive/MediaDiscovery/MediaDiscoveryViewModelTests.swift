@@ -1,9 +1,9 @@
-import XCTest
 import Combine
 @testable import MEGA
+import MEGADataMock
 import MEGADomain
 import MEGADomainMock
-import MEGADataMock
+import XCTest
 
 final class MediaDiscoveryViewModelTests: XCTestCase {
     // MARK: - Action Command tests

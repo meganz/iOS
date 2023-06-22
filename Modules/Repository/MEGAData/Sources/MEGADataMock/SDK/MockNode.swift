@@ -1,5 +1,5 @@
-import MEGASdk
 import MEGAData
+import MEGASdk
 
 public final class MockNode: MEGANode {
     private let nodeType: MEGANodeType

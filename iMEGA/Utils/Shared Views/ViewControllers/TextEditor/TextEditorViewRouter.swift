@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 @objc protocol TextFileEditable { }
 

@@ -1,8 +1,8 @@
-import Foundation
-import MessageKit
-import ISEmojiView
-import VisionKit
 import CoreServices
+import Foundation
+import ISEmojiView
+import MessageKit
+import VisionKit
 
 extension ChatViewController {
     

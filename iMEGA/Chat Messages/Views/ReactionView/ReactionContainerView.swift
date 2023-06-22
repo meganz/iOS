@@ -1,7 +1,7 @@
-import UIKit
 import FlexLayout
-import PinLayout
 import Haptica
+import PinLayout
+import UIKit
 
 protocol ReactionEmojiViewDelegate: AnyObject {
     func emojiLongPressed(_ emoji: String, sender: UIView)

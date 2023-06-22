@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class VideoMediaUseCaseTests: XCTestCase {
     let sut = VideoMediaUseCase(videoMediaRepository: MockVideoMediaRepository(supportedFormats: [-1, 1], supportedCodecs: [-1, 15]))

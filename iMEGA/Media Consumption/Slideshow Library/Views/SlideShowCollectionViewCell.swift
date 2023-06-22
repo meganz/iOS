@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 final class SlideShowCollectionViewCell: UICollectionViewCell {
     let imageScrollView = ImageScrollView()

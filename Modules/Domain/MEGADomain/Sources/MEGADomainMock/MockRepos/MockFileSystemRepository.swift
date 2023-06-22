@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public struct MockFileSystemRepository: FileSystemRepositoryProtocol {
     public static let newRepo = MockFileSystemRepository()

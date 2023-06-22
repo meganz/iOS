@@ -1,7 +1,7 @@
-import Foundation
 import Combine
-import MEGAPresentation
+import Foundation
 import MEGADomain
+import MEGAPresentation
 
 enum TwoFactorAuthStatus: Int {
     case unknown

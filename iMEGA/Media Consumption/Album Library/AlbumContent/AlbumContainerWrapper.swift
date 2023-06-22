@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 struct AlbumContainerWrapper: UIViewControllerRepresentable {
     private let album: AlbumEntity

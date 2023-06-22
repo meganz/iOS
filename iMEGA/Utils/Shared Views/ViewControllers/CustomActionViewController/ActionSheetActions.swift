@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 class BaseAction: NSObject {
     var title: String?

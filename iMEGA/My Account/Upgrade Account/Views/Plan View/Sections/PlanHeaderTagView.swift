@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 struct PlanHeaderTagView: View {
     var planTag: AccountPlanTagEntity

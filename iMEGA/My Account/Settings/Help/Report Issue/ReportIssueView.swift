@@ -1,6 +1,6 @@
 
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct ReportIssueView: View {
     @StateObject var viewModel: ReportIssueViewModel

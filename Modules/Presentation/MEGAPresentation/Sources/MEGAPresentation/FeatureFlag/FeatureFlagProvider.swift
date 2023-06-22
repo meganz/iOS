@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 public protocol FeatureFlagProviderProtocol {
     func isFeatureFlagEnabled(for: FeatureFlagKey) -> Bool

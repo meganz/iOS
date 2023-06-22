@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 
 final class ChatRoomNotificationsViewModel: ObservableObject {
     private var chatRoom: ChatRoomEntity

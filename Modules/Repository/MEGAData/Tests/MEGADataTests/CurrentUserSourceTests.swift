@@ -1,8 +1,8 @@
-import XCTest
-import MEGASdk
-import MEGADataMock
 import MEGAData
+import MEGADataMock
 import MEGADomain
+import MEGASdk
+import XCTest
 
 final class CurrentUserSourceTests: XCTestCase {
     func testUserFields_init_empty() {

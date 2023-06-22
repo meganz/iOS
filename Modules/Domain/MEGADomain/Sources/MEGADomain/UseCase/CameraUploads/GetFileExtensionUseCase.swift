@@ -1,7 +1,7 @@
-import Foundation
-import UniformTypeIdentifiers
 import AVFoundation
 import CoreServices
+import Foundation
+import UniformTypeIdentifiers
 
 public protocol GetFileExtensionUseCaseProtocol {
     func fileExtension(for type: MediaTypeEntity, url: URL?, uti: UTType?) -> FileExtension

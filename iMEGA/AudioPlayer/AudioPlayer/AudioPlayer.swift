@@ -1,7 +1,7 @@
-import Foundation
 import AVFoundation
-import MEGAFoundation
+import Foundation
 import MEGADomain
+import MEGAFoundation
 
 enum PlayerConfiguration: String {
     case loop, shuffle, repeatOne

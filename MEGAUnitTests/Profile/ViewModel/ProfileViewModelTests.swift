@@ -1,7 +1,7 @@
-import XCTest
+import Combine
 @testable import MEGA
 import MEGADataMock
-import Combine
+import XCTest
 
 final class ProfileViewModelTests: XCTestCase {
     

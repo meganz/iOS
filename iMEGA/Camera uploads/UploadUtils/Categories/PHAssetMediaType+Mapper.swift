@@ -1,6 +1,6 @@
 import Foundation
-import Photos
 import MEGADomain
+import Photos
 
 extension PHAssetMediaType {
     func toMediaTypeEntity() -> MediaTypeEntity {

@@ -1,7 +1,7 @@
 
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class NodeAttributeUseCaseTests: XCTestCase {
     

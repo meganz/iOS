@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 final class DownloadLinkRouter: DownloadLinkRouterProtocol {
     private weak var baseViewController: UIViewController?

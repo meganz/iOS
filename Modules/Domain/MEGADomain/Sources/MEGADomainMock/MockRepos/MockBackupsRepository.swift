@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public struct MockBackupsRepository: BackupsRepositoryProtocol {
     public static let newRepo = MockBackupsRepository()

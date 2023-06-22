@@ -1,5 +1,5 @@
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct PhotoAutoScrollView: View {
     @StateObject var viewModel: PhotoAutoScrollViewModel

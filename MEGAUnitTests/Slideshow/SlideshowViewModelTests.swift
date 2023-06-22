@@ -1,7 +1,7 @@
-import XCTest
-import MEGADomainMock
-import MEGADomain
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
+import XCTest
 
 class SlideshowViewModelTests: XCTestCase {
     private var nodeEntities: [NodeEntity] {

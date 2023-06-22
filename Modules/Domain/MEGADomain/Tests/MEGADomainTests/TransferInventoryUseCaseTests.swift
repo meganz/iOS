@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class TransferInventoryUseCaseTests: XCTestCase {
     func testTransfers_withoutFilteringUserTransfers() {

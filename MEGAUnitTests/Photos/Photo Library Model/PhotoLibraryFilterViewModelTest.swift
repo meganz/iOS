@@ -1,9 +1,9 @@
-import XCTest
 import Combine
+@testable import MEGA
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
-@testable import MEGA
+import XCTest
 
 final class PhotoLibraryFilterViewModelTest: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()

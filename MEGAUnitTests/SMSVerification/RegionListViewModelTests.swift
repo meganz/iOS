@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGA
+import XCTest
 
 final class RegionListViewModelTests: XCTestCase {
     private let nzRegion = SMSRegion(regionCode: "NZ", displayCallingCode: "+64", displayName: "New Zealand (+64)")

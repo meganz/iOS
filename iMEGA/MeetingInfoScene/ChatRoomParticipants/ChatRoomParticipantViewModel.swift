@@ -1,6 +1,6 @@
-import MEGADomain
 import Combine
 import MEGAData
+import MEGADomain
 
 final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol

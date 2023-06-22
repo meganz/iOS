@@ -1,5 +1,5 @@
-import UIKit
 import MEGAPresentation
+import UIKit
 
 enum SettingsAction: ActionType {
     case didSelect(section: Int, row: Int)

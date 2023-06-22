@@ -1,8 +1,8 @@
-import XCTest
-import MEGADomain
-import MEGADomainMock
 import Combine
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
+import XCTest
 
 final class UpgradeAccountPlanViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()

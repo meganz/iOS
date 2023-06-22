@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 final class PhotoAutoScrollViewModel: ObservableObject, PhotoScrollPositioning {
     private var subscriptions = Set<AnyCancellable>()

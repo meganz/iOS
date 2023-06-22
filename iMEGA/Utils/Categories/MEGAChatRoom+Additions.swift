@@ -1,7 +1,7 @@
 
 import Foundation
-import MEGASwift
 import MEGAFoundation
+import MEGASwift
 
 extension MEGAChatRoom {
     var onlineStatus: MEGAChatStatus? {

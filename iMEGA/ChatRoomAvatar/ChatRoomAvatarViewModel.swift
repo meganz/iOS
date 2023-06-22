@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 
 final class ChatRoomAvatarViewModel: ObservableObject {
     let title: String

@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGAPresentation
+import XCTest
 
 extension XCTestCase {
     func test<T: ViewModelType>(viewModel: T, action: T.Action, expectedCommands: [T.Command], timeout: TimeInterval = 1.0) where T.Command: Equatable {

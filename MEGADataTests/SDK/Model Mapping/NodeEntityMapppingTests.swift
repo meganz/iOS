@@ -1,7 +1,7 @@
-import XCTest
-import MEGADomain
 @testable import MEGA
 import MEGADataMock
+import MEGADomain
+import XCTest
 
 final class NodeEntityMapperTests: XCTestCase {
     func testMediaType_forNodeWithImageExtensionName_shouldReturnImage() {

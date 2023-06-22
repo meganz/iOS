@@ -1,6 +1,6 @@
-import UIKit
-import MEGAUIKit
 import MEGAPresentation
+import MEGAUIKit
+import UIKit
 
 enum FileVersioningSettingsSection: Int {
     case fileVersioning

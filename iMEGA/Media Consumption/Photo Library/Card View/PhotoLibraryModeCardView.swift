@@ -1,6 +1,6 @@
 import Foundation
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct PhotoLibraryModeCardView<Category, VM, Content>: View where Category: PhotoChronologicalCategory, VM: PhotoLibraryModeCardViewModel<Category>, Content: View, Content: Equatable {
     private let cellBuilder: (Category) -> Content

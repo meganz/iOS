@@ -1,6 +1,6 @@
 
-import UIKit
 import MEGAUIKit
+import UIKit
 
 class ContactsGroupsViewController: UIViewController {
 

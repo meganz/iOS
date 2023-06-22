@@ -1,6 +1,6 @@
+import Combine
 import Foundation
 import MEGADomain
-import Combine
 
 final class AlbumContentPickerViewModel: ObservableObject {
    

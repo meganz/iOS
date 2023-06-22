@@ -1,8 +1,8 @@
-import XCTest
-import MEGADomain
-import MEGADomainMock
 @testable import MEGA
 import MEGADataMock
+import MEGADomain
+import MEGADomainMock
+import XCTest
 
 final class FilesSearchRepositoryTests: XCTestCase {
     

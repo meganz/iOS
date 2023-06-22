@@ -1,8 +1,8 @@
-import Foundation
-import SwiftUI
 import Combine
-import UIKit
+import Foundation
 import MEGADomain
+import SwiftUI
+import UIKit
 
 @available(iOS 16.0, *)
 final class PhotoLibraryCollectionViewCoordinator: NSObject {

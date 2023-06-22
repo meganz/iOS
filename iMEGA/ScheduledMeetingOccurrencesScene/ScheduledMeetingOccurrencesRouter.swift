@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 final class ScheduledMeetingOccurrencesRouter: NSObject {
     private(set) var presenter: UINavigationController

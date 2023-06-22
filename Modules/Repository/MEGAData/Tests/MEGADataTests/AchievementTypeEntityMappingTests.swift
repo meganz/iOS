@@ -1,5 +1,5 @@
-import XCTest
 import MEGADomain
+import XCTest
 
 final class AchievementTypeEntityMappingTests: XCTestCase {
     func testAchievementTypeEntity_withClassStorageTransformation_returnsExpectedResults() throws {

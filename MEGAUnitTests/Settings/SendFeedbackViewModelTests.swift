@@ -1,7 +1,7 @@
-import XCTest
 @testable import MEGA
-import MEGADomainMock
 import MEGADomain
+import MEGADomainMock
+import XCTest
 
 final class SendFeedbackViewModelTests: XCTestCase {
 

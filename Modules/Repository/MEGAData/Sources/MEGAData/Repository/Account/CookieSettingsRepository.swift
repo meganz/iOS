@@ -1,6 +1,6 @@
 
-import Foundation
 import FirebaseCrashlytics
+import Foundation
 import MEGADomain
 import MEGASdk
 

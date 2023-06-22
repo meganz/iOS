@@ -1,6 +1,6 @@
 import Foundation
-import SAMKeychain
 import MEGADomain
+import SAMKeychain
 
 public struct CredentialRepository: CredentialRepositoryProtocol {
     public static var newRepo: CredentialRepository {

@@ -1,6 +1,6 @@
 import Foundation
-import MEGAPresentation
 import MEGADomain
+import MEGAPresentation
 
 final class GetAlbumLinkViewModel: GetLinkViewModelType {
     var invokeCommand: ((GetLinkViewModelCommand) -> Void)?

@@ -1,5 +1,5 @@
-import MEGASwift
 import MEGADomain
+import MEGASwift
 
 extension OfflineTableViewViewController {
     @objc func tableView(_ tableView: UITableView,

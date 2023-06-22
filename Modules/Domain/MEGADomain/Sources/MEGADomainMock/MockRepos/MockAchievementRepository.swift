@@ -1,6 +1,6 @@
+import Foundation
 import MEGADomain
 import MEGAFoundation
-import Foundation
 
 public struct MockAchievementRepository: AchievementRepositoryProtocol {
     public static var newRepo: MockAchievementRepository {

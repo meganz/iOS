@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGADataMock
+import XCTest
 
 final class VideoExplorerTableCellViewModelTests: XCTestCase {
     private let videoName = "Video name for test.mp4"

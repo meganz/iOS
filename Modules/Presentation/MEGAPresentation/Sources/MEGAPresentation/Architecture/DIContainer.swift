@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 public enum DIContainer {
     public static var authUseCase: any AuthUseCaseProtocol {

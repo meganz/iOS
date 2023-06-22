@@ -1,5 +1,5 @@
-import UIKit
 import FlexLayout
+import UIKit
 
 class ChatBottomNewMessageIndicatorView: UIView {
     

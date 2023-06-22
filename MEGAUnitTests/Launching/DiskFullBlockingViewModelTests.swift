@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGA
+import XCTest
 
 final class DiskFullBlockingViewModelTests: XCTestCase {
     func testAction_onViewLoaded_configView() {

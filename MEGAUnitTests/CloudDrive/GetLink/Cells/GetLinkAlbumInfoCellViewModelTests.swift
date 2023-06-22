@@ -1,7 +1,7 @@
-import XCTest
+@testable import MEGA
 import MEGADomain
 import MEGADomainMock
-@testable import MEGA
+import XCTest
 
 final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
 

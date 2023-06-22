@@ -1,8 +1,8 @@
+import Combine
 import Foundation
 import MEGAData
 import MEGADomain
 import MEGAPresentation
-import Combine
 
 enum ChatViewMode {
     case chats

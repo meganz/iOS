@@ -1,6 +1,6 @@
 import FileProvider
-import MEGADomain
 import MEGAData
+import MEGADomain
 import MEGAPresentation
 
 final class FileProviderExtension: NSFileProviderExtension {

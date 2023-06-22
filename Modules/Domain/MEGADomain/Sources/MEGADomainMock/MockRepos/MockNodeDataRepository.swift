@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
     public static var newRepo: MockNodeDataRepository = MockNodeDataRepository()

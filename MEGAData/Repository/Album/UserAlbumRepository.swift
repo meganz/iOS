@@ -1,6 +1,6 @@
-import MEGADomain
 import Combine
 import MEGAData
+import MEGADomain
 
 final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     

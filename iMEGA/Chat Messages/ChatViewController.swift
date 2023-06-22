@@ -1,8 +1,8 @@
-import UIKit
-import MessageKit
-import KeyboardLayoutGuide
 import Combine
+import KeyboardLayoutGuide
 import MEGADomain
+import MessageKit
+import UIKit
 
 class ChatViewController: MessagesViewController {
     let spacePadding = "   "

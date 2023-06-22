@@ -1,5 +1,5 @@
-import UIKit
 import MEGAPresentation
+import UIKit
 
 final class VerificationCodeViewController: UIViewController, ViewType {
     // MARK: - Private properties

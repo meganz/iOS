@@ -1,8 +1,8 @@
-import XCTest
+import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import Combine
+import XCTest
 
 final class PhotoLibraryYearViewModelTests: XCTestCase {
     private var sut: PhotoLibraryYearViewModel!

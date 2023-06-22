@@ -1,6 +1,6 @@
+import Photos
 import SwiftUI
 import UIKit
-import Photos
 
 extension PhotosViewController: PhotosBannerViewProvider {
     @objc func createWarningViewModel() -> WarningViewModel {

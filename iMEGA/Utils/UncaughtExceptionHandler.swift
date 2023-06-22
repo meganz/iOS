@@ -1,5 +1,5 @@
-import Foundation
 import FirebaseCrashlytics
+import Foundation
 
 @objc final class UncaughtExceptionHandler: NSObject {
     @objc static func registerHandler() {

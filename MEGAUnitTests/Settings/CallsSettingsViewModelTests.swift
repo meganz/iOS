@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGADomainMock
+import XCTest
 
 class CallsSettingsViewModelTests: XCTestCase {
 

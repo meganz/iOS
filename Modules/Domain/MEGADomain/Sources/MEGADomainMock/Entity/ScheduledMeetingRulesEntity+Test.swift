@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public extension ScheduledMeetingRulesEntity {
     init(

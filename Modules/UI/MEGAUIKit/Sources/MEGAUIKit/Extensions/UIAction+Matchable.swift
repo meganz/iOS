@@ -1,5 +1,5 @@
-import UIKit
 import MEGASwift
+import UIKit
 
 extension UIAction {
     public static func ~~ (lhs: UIAction, rhs: UIAction) -> Bool {

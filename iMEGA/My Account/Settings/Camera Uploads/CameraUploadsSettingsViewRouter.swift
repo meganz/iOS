@@ -1,5 +1,5 @@
-import UIKit
 import MEGAPresentation
+import UIKit
 
 typealias CameraUploadEnabledStateDidChange = () -> Void
 

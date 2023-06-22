@@ -1,5 +1,5 @@
-import UIKit
 import FlexLayout
+import UIKit
 
 class PasteImagePreviewView: UIView {
     private let containerView = UIView()

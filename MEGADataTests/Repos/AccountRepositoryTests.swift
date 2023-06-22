@@ -1,10 +1,10 @@
-import XCTest
 import Combine
 import MEGAData
 import MEGADataMock
 import MEGADomain
-import MEGASwift
 import MEGADomainMock
+import MEGASwift
+import XCTest
 
 @testable import MEGA
 

@@ -1,7 +1,7 @@
-import Foundation
-import Photos
 import FirebaseCrashlytics
+import Foundation
 import MEGADomain
+import Photos
 
 @objc final class RawPhotoUploadOperation: AssetResourceUploadOperation {
     override func start() {

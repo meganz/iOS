@@ -1,6 +1,6 @@
-import UIKit
-import MEGAUIKit
 import MEGADomain
+import MEGAUIKit
+import UIKit
 
 class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     

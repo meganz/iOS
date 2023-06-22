@@ -1,7 +1,7 @@
 import Foundation
+import MEGADomain
 import MEGAFoundation
 import MEGAPresentation
-import MEGADomain
 
 enum AudioPlayerAction: ActionType {
     case onViewDidLoad

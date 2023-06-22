@@ -1,5 +1,5 @@
-import MEGAFoundation
 import Foundation
+import MEGAFoundation
 
 public protocol AchievementRepositoryProtocol: RepositoryProtocol {
     func checkIsAchievementsEnabled() -> Bool

@@ -1,5 +1,5 @@
-import XCTest
 import Foundation
+import XCTest
 
 final class EncodableTests: XCTestCase {
 

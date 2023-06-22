@@ -1,6 +1,6 @@
 
-import UIKit
 import PhoneNumberKit
+import UIKit
 
 protocol DeviceContactProtocol {
     var name: String { get }

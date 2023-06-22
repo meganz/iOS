@@ -1,6 +1,6 @@
-import SwiftUI
-import MEGASwiftUI
 import MEGADomain
+import MEGASwiftUI
+import SwiftUI
 
 extension ThumbnailUseCaseProtocol {
     func cachedThumbnailContainer(for node: NodeEntity, type: ThumbnailTypeEntity) -> (some ImageContaining)? {

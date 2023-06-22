@@ -1,6 +1,6 @@
-import Foundation
 import AVKit
 import Combine
+import Foundation
 
 @objc protocol AVPlayerManagerProtocol {
     

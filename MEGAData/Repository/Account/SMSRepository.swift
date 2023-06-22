@@ -1,6 +1,6 @@
 import Foundation
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 struct SMSRepository: SMSRepositoryProtocol {
     private let sdk: MEGASdk

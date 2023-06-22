@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 
 final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let scheduledMeeting: ScheduledMeetingEntity

@@ -1,5 +1,5 @@
-import MEGADomain
 import Contacts
+import MEGADomain
 
 public struct ContactsRepository: ContactsRepositoryProtocol {
     public var isAuthorizedToAccessPhoneContacts: Bool {

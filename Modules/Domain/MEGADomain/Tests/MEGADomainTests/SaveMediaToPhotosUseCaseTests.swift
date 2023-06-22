@@ -1,6 +1,6 @@
-import XCTest
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class SaveMediaToPhotosUseCaseTests: XCTestCase {
     private let nodeEntity = NodeEntity(name: "nodeName")

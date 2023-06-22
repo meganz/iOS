@@ -1,6 +1,6 @@
 
-import UIKit
 import MEGADomain
+import UIKit
 
 protocol DocScannerFileInfoTableCellDelegate: AnyObject {
     func filenameChanged(_ newFilename: String)

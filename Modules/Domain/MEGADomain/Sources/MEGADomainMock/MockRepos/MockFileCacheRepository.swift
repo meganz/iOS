@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public struct MockFileCacheRepository: FileCacheRepositoryProtocol {
     public static let newRepo = MockFileCacheRepository()

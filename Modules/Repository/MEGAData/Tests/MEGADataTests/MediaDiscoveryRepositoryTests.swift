@@ -1,8 +1,8 @@
-import XCTest
+import MEGAData
+import MEGADataMock
 import MEGADomain
 import MEGADomainMock
-import MEGADataMock
-import MEGAData
+import XCTest
 
 final class MediaDiscoveryRepositoryTests: XCTestCase {
     

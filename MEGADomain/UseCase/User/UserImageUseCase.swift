@@ -1,7 +1,7 @@
 import Combine
-import UIKit
 import MEGADomain
 import MEGAUI
+import UIKit
 
 protocol UserImageUseCaseProtocol {
     func avatarColorHex(forBase64UserHandle handle: Base64HandleEntity) -> String?

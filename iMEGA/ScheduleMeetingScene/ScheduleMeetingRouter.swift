@@ -1,6 +1,6 @@
+import Combine
 import MEGADomain
 import SwiftUI
-import Combine
 
 final class ScheduleMeetingRouter {
     private(set) var presenter: UINavigationController

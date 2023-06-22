@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import UIKit
+import XCTest
 
 final class PhotoLibraryCollectionViewScrollTrackerTests: XCTestCase {
     private let delegate = MockPhotoLibraryCollectionViewScroller()

@@ -1,7 +1,7 @@
-import XCTest
 import Combine
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class AlbumListUseCaseTests: XCTestCase {
     private let photos = [

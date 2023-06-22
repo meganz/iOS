@@ -1,7 +1,7 @@
-import UIKit
+import MEGAData
 import MEGADomain
 import MEGAPresentation
-import MEGAData
+import UIKit
 
 protocol MediaDiscoveryRouting: Routing {
     func showImportLocation(photos: [NodeEntity])

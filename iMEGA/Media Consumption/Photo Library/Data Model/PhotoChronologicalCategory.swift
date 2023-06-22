@@ -1,6 +1,6 @@
 import Foundation
-import MEGASwift
 import MEGADomain
+import MEGASwift
 
 protocol PhotoChronologicalCategory: Identifiable, PhotoScrollPositioning, Equatable, Refreshable, RefreshableWhenVisible {
     associatedtype Content: PhotoChronologicalCategory

@@ -1,5 +1,5 @@
-import SwiftUI
 @preconcurrency import FirebaseAppDistribution
+import SwiftUI
 
 final class QASettingsViewModel {
     private enum Constants {

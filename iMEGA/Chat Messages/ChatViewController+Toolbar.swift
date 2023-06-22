@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 enum ToolbarType {
     case text

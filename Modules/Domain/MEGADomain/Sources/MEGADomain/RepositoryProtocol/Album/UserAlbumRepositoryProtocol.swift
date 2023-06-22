@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     // MARK: - Album Updates

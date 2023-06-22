@@ -1,5 +1,5 @@
-import SwiftUI
 import Combine
+import SwiftUI
 
 final class MeetingInfoViewController: UIViewController {
     lazy var editBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.edit, style: .plain, target: self, action: #selector(editButtonItemTapped)

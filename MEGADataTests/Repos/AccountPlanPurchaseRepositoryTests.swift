@@ -1,6 +1,6 @@
-import XCTest
-import MEGADomain
 @testable import MEGA
+import MEGADomain
+import XCTest
 
 final class AccountPlanPurchaseRepositoryTests: XCTestCase {
 

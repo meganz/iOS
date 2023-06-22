@@ -1,6 +1,6 @@
-import XCTest
 import MEGASwift
 @testable import MEGAUIKit
+import XCTest
 
 final class UIMenuTests: XCTestCase {
     var action1: UIAction!

@@ -1,6 +1,6 @@
 import Combine
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 final class AlbumCoverPickerPhotoCellViewModel: PhotoCellViewModel {
     

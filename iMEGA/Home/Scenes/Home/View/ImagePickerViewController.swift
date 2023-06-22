@@ -1,6 +1,6 @@
-import UIKit
 import CoreServices
 import Photos
+import UIKit
 
 final class UploadImagePickerViewController: UIImagePickerController {
 

@@ -1,8 +1,8 @@
-import XCTest
-import MEGADomainMock
-import MEGAPresentation
 @testable import MEGA
 @testable import MEGADomain
+import MEGADomainMock
+import MEGAPresentation
+import XCTest
 
 @MainActor
 final class PhotosViewModelTests: XCTestCase {

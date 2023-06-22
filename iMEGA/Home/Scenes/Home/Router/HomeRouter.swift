@@ -1,6 +1,6 @@
-import UIKit
 import CoreServices
 import MEGADomain
+import UIKit
 
 protocol HomeRouterProtocol {
 

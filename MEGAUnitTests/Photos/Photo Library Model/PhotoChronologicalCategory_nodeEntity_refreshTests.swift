@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGADomain
+import XCTest
 
 final class PhotoChronologicalCategory_nodeEntity_refreshTests: XCTestCase {
     

@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 @objc protocol ChatNotificationControlCellProtocol {
     weak var nameLabel: UILabel? { get }

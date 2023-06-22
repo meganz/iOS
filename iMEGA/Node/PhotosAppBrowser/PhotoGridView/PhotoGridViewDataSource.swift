@@ -1,6 +1,6 @@
 
-import UIKit
 import Photos
+import UIKit
 
 class PhotoGridViewDataSource: PhotoGridViewBaseDataSource {
     var album: Album

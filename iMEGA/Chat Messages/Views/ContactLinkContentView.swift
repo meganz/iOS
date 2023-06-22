@@ -1,5 +1,5 @@
-import UIKit
 import MEGAUIKit
+import UIKit
 
 class ContactLinkContentView: UIView {
     @IBOutlet weak var imageView: UIImageView!

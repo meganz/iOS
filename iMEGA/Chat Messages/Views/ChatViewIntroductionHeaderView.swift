@@ -1,8 +1,8 @@
 
-import MessageKit
-import MEGAFoundation
 import CoreGraphics
 import MEGADomain
+import MEGAFoundation
+import MessageKit
 
 class ChatViewIntroductionHeaderView: MessageReusableView {
     @IBOutlet weak var mainStackView: UIStackView!

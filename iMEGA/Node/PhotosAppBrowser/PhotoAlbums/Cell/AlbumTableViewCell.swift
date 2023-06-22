@@ -1,6 +1,6 @@
 
-import UIKit
 import Photos
+import UIKit
 
 final class AlbumTableViewCell: UITableViewCell {
     

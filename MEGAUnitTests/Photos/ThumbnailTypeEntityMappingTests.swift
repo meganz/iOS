@@ -1,7 +1,7 @@
-import XCTest
+@testable import MEGA
 import MEGADomain
 import MEGASwiftUI
-@testable import MEGA
+import XCTest
 
 final class ThumbnailTypeEntityMappingTests: XCTestCase {
     func testMapToImageType() {

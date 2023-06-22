@@ -1,6 +1,6 @@
 import Foundation
-import MEGAFoundation
 import MEGADomain
+import MEGAFoundation
 
 enum SearchFileRootPath {
     case root

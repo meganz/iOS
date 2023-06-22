@@ -1,7 +1,7 @@
-import XCTest
+import Combine
 @testable import MEGA
 import MEGADomain
-import Combine
+import XCTest
 
 final class ScheduleMeetingCreationRecurrenceOptionsViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()

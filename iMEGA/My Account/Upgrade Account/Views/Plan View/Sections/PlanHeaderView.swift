@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct PlanHeaderView: View {
     var viewModel: AccountPlanViewModel

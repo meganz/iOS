@@ -1,6 +1,6 @@
-import SwiftUI
 import Combine
 import MEGAUIKit
+import SwiftUI
 
 final class ChatRoomsListViewController: UIViewController {
     lazy var addBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image, style: .plain, target: nil, action: nil)

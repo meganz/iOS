@@ -1,6 +1,6 @@
 
-import MEGADomain
 import Combine
+import MEGADomain
 
 final class ChatRoomLinkViewModel: ObservableObject {
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol

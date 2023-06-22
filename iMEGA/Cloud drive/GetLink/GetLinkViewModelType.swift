@@ -1,6 +1,6 @@
 import Foundation
-import MEGAPresentation
 import MEGADomain
+import MEGAPresentation
 
 enum GetLinkAction: ActionType {
     case onViewReady

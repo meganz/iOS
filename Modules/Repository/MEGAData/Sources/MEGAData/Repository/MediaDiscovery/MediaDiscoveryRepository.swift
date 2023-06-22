@@ -1,6 +1,6 @@
+import Combine
 import MEGADomain
 import MEGASdk
-import Combine
 
 final public class MediaDiscoveryRepository: NSObject, MediaDiscoveryRepositoryProtocol {
     public static var newRepo: MediaDiscoveryRepository {

@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 public protocol MediaDiscoveryUseCaseProtocol {
     var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> { get }

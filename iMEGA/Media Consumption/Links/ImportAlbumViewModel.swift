@@ -1,7 +1,7 @@
-import SwiftUI
 import Combine
 import MEGADomain
 import MEGASwift
+import SwiftUI
 
 final class ImportAlbumViewModel: ObservableObject {
     @Published var publicLink: URL

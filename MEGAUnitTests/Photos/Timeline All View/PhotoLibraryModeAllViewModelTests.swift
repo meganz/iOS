@@ -1,9 +1,9 @@
-import XCTest
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import SwiftUI
 import MEGASwift
+import SwiftUI
+import XCTest
 
 final class PhotoLibraryModeAllViewModelTests: XCTestCase {
     private var sut: PhotoLibraryModeAllGridViewModel!

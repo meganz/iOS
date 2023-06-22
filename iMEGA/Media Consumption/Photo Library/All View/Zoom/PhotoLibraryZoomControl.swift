@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct PhotoLibraryZoomControl: View {
     @Binding var zoomState: PhotoLibraryZoomState

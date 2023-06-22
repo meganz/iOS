@@ -1,5 +1,5 @@
-import MEGASdk
 import MEGAData
+import MEGASdk
 
 public final class MockMEGASet: MEGASet {
     private let setHandle: MEGAHandle

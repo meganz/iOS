@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 final class PhotoScrollTracker {
     private var positionRecordDict = [PhotoScrollPosition?: CGRect]()

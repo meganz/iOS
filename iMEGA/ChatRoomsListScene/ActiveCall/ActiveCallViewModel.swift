@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 
 final class ActiveCallViewModel: ObservableObject {
     private var call: CallEntity

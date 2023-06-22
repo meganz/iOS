@@ -1,5 +1,5 @@
-import MessageKit
 import CoreGraphics
+import MessageKit
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     struct Dimensions {

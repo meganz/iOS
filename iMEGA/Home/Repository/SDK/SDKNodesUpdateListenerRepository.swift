@@ -1,5 +1,5 @@
-import MEGADomain
 import Combine
+import MEGADomain
 
 final class SDKNodesUpdateListenerRepository: NSObject, NodesUpdateListenerProtocol {
     static var newRepo = SDKNodesUpdateListenerRepository(sdk: MEGASdk.shared)

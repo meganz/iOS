@@ -1,7 +1,7 @@
-import XCTest
-import MEGADomainMock
-import MEGADomain
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
+import XCTest
 
 final class GetAlbumsLinkViewModelTests: XCTestCase {
 

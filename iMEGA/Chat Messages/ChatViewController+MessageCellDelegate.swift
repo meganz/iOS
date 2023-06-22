@@ -1,6 +1,6 @@
-import MessageKit
 import MapKit
 import MEGADomain
+import MessageKit
 
 extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, MessageLabelDelegate {
     

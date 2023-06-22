@@ -1,7 +1,7 @@
-import Foundation
-import SwiftUI
 import Combine
+import Foundation
 import MEGADomain
+import SwiftUI
 
 protocol PhotoLibraryContentViewRouting {
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard

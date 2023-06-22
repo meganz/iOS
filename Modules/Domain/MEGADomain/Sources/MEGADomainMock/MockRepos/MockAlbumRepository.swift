@@ -1,5 +1,5 @@
-import MEGADomain
 import Foundation
+import MEGADomain
 
 public final class MockAlbumRepository: AlbumRepositoryProtocol {
     var node: NodeEntity?

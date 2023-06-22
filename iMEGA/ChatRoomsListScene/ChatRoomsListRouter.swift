@@ -1,5 +1,5 @@
-import MEGADomain
 import MEGAData
+import MEGADomain
 
 final class ChatRoomsListRouter: ChatRoomsListRouting {
     private(set) weak var navigationController: UINavigationController?

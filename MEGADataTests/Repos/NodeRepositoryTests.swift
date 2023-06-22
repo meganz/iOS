@@ -1,8 +1,8 @@
-import XCTest
-import MEGADomainMock
-import MEGADomain
 @testable import MEGA
 import MEGADataMock
+import MEGADomain
+import MEGADomainMock
+import XCTest
 
 final class NodeRepositoryTests: XCTestCase {
     let rootNode = MockNode(handle: 1, nodeType: .folder)

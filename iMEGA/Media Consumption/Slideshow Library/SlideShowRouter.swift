@@ -1,7 +1,7 @@
-import UIKit
-import MEGADomain
 import MEGAData
+import MEGADomain
 import MEGAPresentation
+import UIKit
 
 struct SlideShowRouter: Routing {
     private weak var presenter: UIViewController?

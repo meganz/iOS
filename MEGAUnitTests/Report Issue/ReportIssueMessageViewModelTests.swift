@@ -1,7 +1,7 @@
+@testable import MEGA
 import MEGADomain
 import MEGADomainMock
 import XCTest
-@testable import MEGA
 
 final class ReportIssueMessageViewModelTests: XCTestCase {
     

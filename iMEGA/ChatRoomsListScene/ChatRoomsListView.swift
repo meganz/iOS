@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct ChatRoomsListView: View {
     @ObservedObject var viewModel: ChatRoomsListViewModel

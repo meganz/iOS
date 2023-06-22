@@ -1,7 +1,7 @@
-import XCTest
 import Combine
 import MEGADomain
 import MEGADomainMock
+import XCTest
 
 final class AccountHallUseCaseTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()

@@ -1,5 +1,5 @@
-import UIKit
 import Photos
+import UIKit
 
 final class AlbumsTableViewController: UITableViewController {
     private var albumsDataSource: AlbumsTableViewDataSource?

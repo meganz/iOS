@@ -1,5 +1,5 @@
-import UIKit
 import MEGADomain
+import UIKit
 
 extension ChatRoomsViewController {
     @objc func joinActiveCall(withChatRoom chatRoom: MEGAChatRoom) {

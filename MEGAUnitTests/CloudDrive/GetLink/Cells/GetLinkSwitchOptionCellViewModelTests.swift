@@ -1,5 +1,5 @@
-import XCTest
 @testable import MEGA
+import XCTest
 
 final class GetLinkSwitchOptionCellViewModelTests: XCTestCase {
     func testInit_onViewConfiguration_shouldSetupCorrectly() {

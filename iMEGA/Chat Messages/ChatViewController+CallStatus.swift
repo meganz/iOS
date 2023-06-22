@@ -1,7 +1,7 @@
-import UIKit
 import Combine
-import MEGADomain
 import MEGAData
+import MEGADomain
+import UIKit
 
 extension ChatViewController {
     func initTimerForCall(_ call: CallEntity) {

@@ -1,7 +1,7 @@
-import XCTest
 import MEGAData
 import MEGADomain
 import MEGASdk
+import XCTest
 
 final class MEGASDKSharedInstanceTests: XCTestCase {
     func testUserAgent_ProductionAppEnvironment_noQAOrDev() {

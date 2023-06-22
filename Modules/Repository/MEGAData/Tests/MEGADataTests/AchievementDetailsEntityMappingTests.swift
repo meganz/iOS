@@ -1,7 +1,7 @@
-import XCTest
-import MEGADomain
 import MEGADataMock
+import MEGADomain
 import MEGASdk
+import XCTest
 
 final class AchievementsDetailsEntityMappingTests: XCTestCase {
     func testAchievementDetailsEntity_onNoAwards_shouldNotHaveAwardClasses() {

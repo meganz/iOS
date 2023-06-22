@@ -1,6 +1,6 @@
-import SwiftUI
 import MEGAData
 import MEGADomain
+import SwiftUI
 
 struct AlbumListView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?

@@ -1,12 +1,12 @@
-import XCTest
-import SwiftUI
+import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
-import MEGASwiftUI
 import MEGAFoundation
-import Combine
 import MEGASwift
+import MEGASwiftUI
+import SwiftUI
+import XCTest
 
 final class PhotoCardViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()

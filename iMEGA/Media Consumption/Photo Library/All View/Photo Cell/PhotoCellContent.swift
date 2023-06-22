@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGASwiftUI
+import SwiftUI
 
 struct PhotoCellContent: View {
     @ObservedObject var viewModel: PhotoCellViewModel

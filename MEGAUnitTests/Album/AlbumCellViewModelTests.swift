@@ -1,10 +1,10 @@
-import XCTest
 import Combine
-import SwiftUI
-import MEGADomainMock
-import MEGADomain
-import MEGASwiftUI
 @testable import MEGA
+import MEGADomain
+import MEGADomainMock
+import MEGASwiftUI
+import SwiftUI
+import XCTest
 
 final class AlbumCellViewModelTests: XCTestCase {
     private let album = AlbumEntity(id: 1, name: "Test", coverNode: NodeEntity(handle: 1), count: 15, type: .favourite)

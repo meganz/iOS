@@ -1,6 +1,6 @@
-import SwiftUI
-import MEGADomain
 import MEGAData
+import MEGADomain
+import SwiftUI
 
 struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
     private let albums: [AlbumEntity]

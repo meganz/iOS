@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel {
     let contentMode: PhotoLibraryContentMode

@@ -1,5 +1,5 @@
-import Foundation
 import AVFoundation
+import Foundation
 import MediaPlayer
 
 @objc protocol AudioPlayerProtocol: AnyObject {}

@@ -1,7 +1,7 @@
-import MEGADomain
-import Foundation
-import MEGAPresentation
 import Combine
+import Foundation
+import MEGADomain
+import MEGAPresentation
 
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     private enum Constants {

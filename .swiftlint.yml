@@ -94,6 +94,7 @@ only_rules:
       - colon
       - comment_spacing
       - xctfail_message
+      - sorted_imports
 
     # Complex fixes or a ton of issues (>100 issues)
 

@@ -1,6 +1,6 @@
-import XCTest
 @testable import MEGA
 import MEGADomain
+import XCTest
 
 final class FavouritesViewModelTests: XCTestCase {
     
