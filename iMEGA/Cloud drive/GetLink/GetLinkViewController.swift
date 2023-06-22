@@ -757,11 +757,85 @@ class GetLinkViewController: UIViewController {
         }
     }
     
-    private func sectionType(forSection section: Int) -> GetLinkTableViewSection? {
-        if let getLinkViewModel {
-            return getLinkViewModel.sectionType(forSection: section)
+    private func updateHeaderViewForSingleItem(forHeader header: inout GenericHeaderFooterView, forSection sectionType: GetLinkTableViewSection) {
+        switch sectionType {
+        case .link:
+            header.configure(title: Strings.Localizable.link, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        case .key:
+            header.configure(title: Strings.Localizable.key, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        case .decryptKeySeparate:
+            header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        case .expiryDate:
+            header.configure(title: nil, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        case .passwordProtection:
+            header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        case .linkAccessInfo:
+            header.configure(title: nil, topDistance: 16.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
+        default:
+            header.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         }
-        return sections()[safe: section]
+    }
+    
+    private func updateHeaderViewForMultiAlbumlink(forHeader header: inout GenericHeaderFooterView, forSection section: Int) {
+        header.titleLabel.textAlignment = .left
+        header.configure(
+            title: Strings.Localizable.link,
+            topDistance: section == 0 ? 17.0 : 25.0, isTopSeparatorVisible: false,
+            isBottomSeparatorVisible: true
+        )
+    }
+    
+    private func updateHeaderViewForAlbum(forHeader header: inout GenericHeaderFooterView, forSection section: Int) {
+        guard let getLinkViewModel, let sectionType = getLinkViewModel.sectionType(forSection: section) else { return }
+        
+        if getLinkViewModel.isMultiLink {
+            updateHeaderViewForMultiAlbumlink(forHeader: &header, forSection: section)
+        } else {
+            updateHeaderViewForSingleItem(forHeader: &header, forSection: sectionType)
+        }
+    }
+    
+    private func updateFooterViewForSingleItem(forFooter footer: inout GenericHeaderFooterView, forSection sectionType: GetLinkTableViewSection) {
+        switch sectionType {
+        case .decryptKeySeparate:
+            let attributedString = NSMutableAttributedString(string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately)
+            let learnMoreString = NSAttributedString(string: " " + Strings.Localizable.learnMore, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
+            attributedString.append(learnMoreString)
+            footer.titleLabel.numberOfLines = 0
+            footer.titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(learnMoreTapped)))
+            footer.titleLabel.isUserInteractionEnabled = true
+            
+            footer.configure(attributedTitle: attributedString, topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+
+        case .expiryDate:
+            if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
+                footer.configure(title: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+            } else {
+                footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+            }
+        case .link, .key, .info, .passwordProtection, .linkAccessInfo:
+            footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
+        }
+    }
+    
+    private func updateFooterViewForMultiItem(forFooter footer: inout GenericHeaderFooterView, forSection section: Int) {
+        footer.titleLabel.textAlignment = .center
+        footer.configure(
+            title: Strings.Localizable.tapToCopy,
+            topDistance: 4,
+            isTopSeparatorVisible: true,
+            isBottomSeparatorVisible: false
+        )
+    }
+    
+    private func updateFooterViewForAlbum(forFooter footer: inout GenericHeaderFooterView, forSection section: Int) {
+        guard let getLinkViewModel, let sectionType = getLinkViewModel.sectionType(forSection: section) else { return }
+        
+        if getLinkViewModel.isMultiLink {
+            updateFooterViewForMultiItem(forFooter: &footer, forSection: section)
+        } else {
+            updateFooterViewForSingleItem(forFooter: &footer, forSection: sectionType)
+        }
     }
 }
 
@@ -867,18 +941,15 @@ extension GetLinkViewController: UITableViewDataSource {
 
 extension GetLinkViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
+        guard var header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
         
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
-        var isMultiLink = getLinkVM.multilink
         if let getLinkViewModel {
-            isMultiLink = getLinkViewModel.isMultiLink
-        }
-        
-        if isMultiLink {
+            updateHeaderViewForAlbum(forHeader: &header, forSection: section)
+        } else if getLinkVM.multilink {
             guard section > 0 else {
                 return nil
             }
@@ -889,75 +960,32 @@ extension GetLinkViewController: UITableViewDelegate {
                 topDistance: section == 1 ? 17.0 : 25.0, isTopSeparatorVisible: false,
                 isBottomSeparatorVisible: true
             )
-        } else {
-            switch sectionType(forSection: section) {
-            case .link:
-                header.configure(title: Strings.Localizable.link, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
-            case .key:
-                header.configure(title: Strings.Localizable.key, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
-            case .decryptKeySeparate:
-                header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
-            case .expiryDate:
-                header.configure(title: nil, topDistance: 17.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
-            case .passwordProtection:
-                header.configure(title: nil, topDistance: 10.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
-            case .linkAccessInfo:
-                header.configure(title: nil, topDistance: 16.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
-            default:
-                header.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
-            }
+        } else if let sectionType = sections()[safe: section] {
+            updateHeaderViewForSingleItem(forHeader: &header, forSection: sectionType)
         }
         
         return header
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
+        guard var footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
         
         footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        var isMultiLink = getLinkVM.multilink
-        if let getLinkViewModel {
-            isMultiLink = getLinkViewModel.isMultiLink
-        }
         
-        if isMultiLink {
+        if let getLinkViewModel {
+            updateFooterViewForAlbum(forFooter: &footer, forSection: section)
+        } else if getLinkVM.multilink {
             guard section > 0 else {
                 return nil
             }
 
-            footer.titleLabel.textAlignment = .center
-            footer.configure(
-                title: Strings.Localizable.tapToCopy,
-                topDistance: 4,
-                isTopSeparatorVisible: true,
-                isBottomSeparatorVisible: false
-            )
-        } else {
-            switch sectionType(forSection: section) {
-            case .decryptKeySeparate:
-                let attributedString = NSMutableAttributedString(string: Strings.Localizable.exportTheLinkAndDecryptionKeySeparately)
-                let learnMoreString = NSAttributedString(string: " " + Strings.Localizable.learnMore, attributes: [NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection) as Any])
-                attributedString.append(learnMoreString)
-                footer.titleLabel.numberOfLines = 0
-                footer.titleLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(learnMoreTapped)))
-                footer.titleLabel.isUserInteractionEnabled = true
-                
-                footer.configure(attributedTitle: attributedString, topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-
-            case .expiryDate:
-                if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
-                    footer.configure(title: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-                } else {
-                    footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-                }
-            case .link, .key, .info, .passwordProtection, .linkAccessInfo:
-                footer.configure(title: nil, topDistance: 0.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-            default:
-                return footer
-            }
+            updateFooterViewForMultiItem(forFooter: &footer, forSection: section)
+        } else if let sectionType = sections()[safe: section] {
+            updateFooterViewForSingleItem(forFooter: &footer, forSection: sectionType)
         }
+        
         return footer
     }
     
