@@ -17,6 +17,10 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
     }
     
     var parentItemIdentifier: NSFileProviderItemIdentifier {
+        if MEGASdk.shared.rootNode?.handle == node.handle {
+            return itemIdentifier
+        }
+
         guard let parentBase64Handle = MEGASdk.base64Handle(forHandle: node.parentHandle) else {
             assertionFailure("Parent item identifier is needed")
             return NSFileProviderItemIdentifier("")
