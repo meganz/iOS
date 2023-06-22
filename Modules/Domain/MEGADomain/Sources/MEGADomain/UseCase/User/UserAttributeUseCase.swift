@@ -58,8 +58,7 @@ public struct UserAttributeUseCase<T: UserAttributeRepositoryProtocol>: UserAttr
         
         if let allPlatformCCJsonData, let existingJson = try? jsonStringForExistingPreference(timeline: timeline, jsonData: allPlatformCCJsonData) {
             return existingJson
-        }
-        else {
+        } else {
             return try jsonStringForNonExistingPreference(timeline, jsonData: allPlatformCCJsonData)
         }
     }
