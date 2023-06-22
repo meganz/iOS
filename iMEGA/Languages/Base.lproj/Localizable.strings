@@ -2649,7 +2649,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="New meeting";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@ meeting";
+"meetings.createMeeting.defaultMeetingName"="%@'s meeting";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Start meeting";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
