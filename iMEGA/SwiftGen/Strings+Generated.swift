@@ -4223,7 +4223,7 @@ public enum Strings {
         public static let newMeeting = Strings.tr("Localizable", "meetings.create.newMeeting")
       }
       public enum CreateMeeting {
-        /// %@ meeting
+        /// %@'s meeting
         public static func defaultMeetingName(_ p1: Any) -> String {
           return Strings.tr("Localizable", "meetings.createMeeting.defaultMeetingName", String(describing: p1))
         }
