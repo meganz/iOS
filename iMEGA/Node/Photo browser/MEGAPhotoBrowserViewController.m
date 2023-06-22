@@ -1346,19 +1346,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 #pragma mark - MEGADelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (nodeList) {
-        __weak typeof(self) weakSelf = self;
-        [self.dataProvider removePhotosIn:nodeList completionHandler:^{
-            if (weakSelf.dataProvider.count == 0) {
-                [weakSelf dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                [weakSelf.dataProvider updatePhotosIn:nodeList];
-                [weakSelf reloadUI];
-            }
-        }];
-    } else {
-        [self reloadUI];
-    }
+    [self handleNodeUpdatesFromNodes:nodeList];
 }
 
 #pragma mark - Private methods.
