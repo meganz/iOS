@@ -1958,6 +1958,7 @@
 		BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatInputBar.swift */; };
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
+		BF418B7E2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */; };
 		BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B82625AB991F008641BB /* PSAViewModel.swift */; };
 		BF46B83925AB99DE008641BB /* PSAViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF46B83825AB99DE008641BB /* PSAViewRouter.swift */; };
 		BF4989602A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */; };
@@ -4546,6 +4547,7 @@
 		BF33EF8324457A0700CD35AC /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
+		BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilderTests.swift; sourceTree = "<group>"; };
 		BF46B82625AB991F008641BB /* PSAViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModel.swift; sourceTree = "<group>"; };
 		BF46B83825AB99DE008641BB /* PSAViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewRouter.swift; sourceTree = "<group>"; };
 		BF49895F2A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationService+ScheduleMeeting.swift"; sourceTree = "<group>"; };
@@ -11488,6 +11490,7 @@
 				8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */,
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
 				BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */,
+				BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */,
 				BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */,
 				BFAD0FA72A2EBA2B003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModelTests.swift */,
 				BF9DBB642A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift */,
@@ -14901,6 +14904,7 @@
 				A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
 				94417EAF296D825B007C9230 /* RubbishBinRepositoryTests.swift in Sources */,
+				BF418B7E2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift in Sources */,
 				BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */,
 				BFAD0FA82A2EBA2B003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModelTests.swift in Sources */,
 				BF9DBB652A398A1200C5821F /* ScheduleMeetingCreationFrequencyOptionTests.swift in Sources */,

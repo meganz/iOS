@@ -97,7 +97,10 @@ struct ScheduledMeetingDateBuilder {
             MEGALogError("weekDayList not found in rules of a weekly scheduled meeting")
             return ""
         }
-        if weekDaysList.count == 1 {
+        
+        if Set(weekDaysList) == Set(1...7), scheduledMeeting.rules.interval == 1 {
+            return dailyDateString(startDateString, endDateString, startTimeString, endTimeString)
+        } else if weekDaysList.count == 1 {
             if scheduledMeeting.rules.until != nil {
                 let format = NSLocalizedString("meetings.scheduled.recurring.weekly.oneDay.until", comment: "")
                 return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
