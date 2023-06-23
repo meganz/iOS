@@ -783,10 +783,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
             }
             
-            [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
-            [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
-            [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
-            
             [SVProgressHUD dismiss];
         }
     }];
@@ -858,11 +854,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             } else {
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
             }
-            
-            [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
-            [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
-            [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
-            
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if ([MEGASdkManager sharedMEGAChatSdk].myEmail == nil || [MEGASdkManager sharedMEGAChatSdk].myEmail.mnz_isEmpty) {

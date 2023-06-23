@@ -19,13 +19,7 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    if (error.type == MEGAErrorTypeApiOk && self.savePublicHandle && request.publicNode) {
-        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.publicNode.handle] forKey:MEGALastPublicHandleAccessed];
-        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeFileFolder forKey:MEGALastPublicTypeAccessed];
-        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
-    }
-    
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {    
     if (self.completion) {
         self.completion(request, error);
     }
