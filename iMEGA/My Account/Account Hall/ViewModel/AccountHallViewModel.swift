@@ -70,9 +70,9 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         case .didTapUpgradeButton:
             showUpgradeAccountPlanView()
         case .addSubscriptions:
-            registerMEGARequestDelegate()
+            registerRequestDelegates()
         case .removeSubscriptions:
-            deRegisterMEGARequestDelegate()
+            deRegisterRequestDelegates()
         }
     }
     
@@ -154,16 +154,18 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     // MARK: Subscriptions
-    private func registerMEGARequestDelegate() {
+    private func registerRequestDelegates() {
         Task {
             await accountHallUsecase.registerMEGARequestDelegate()
+            await accountHallUsecase.registerMEGAGlobalDelegate()
             setupSubscriptions()
         }
     }
     
-    private func deRegisterMEGARequestDelegate() {
+    private func deRegisterRequestDelegates() {
         Task.detached { [weak self] in
             await self?.accountHallUsecase.deRegisterMEGARequestDelegate()
+            await self?.accountHallUsecase.deRegisterMEGAGlobalDelegate()
         }
     }
     
@@ -172,7 +174,29 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 guard let self else { return }
-                self.handleRequestResult(result)
+                handleRequestResult(result)
+            }
+            .store(in: &subscriptions)
+        
+        accountHallUsecase.contactRequestPublisher()
+            .map { $0.count }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newCount in
+                guard let self else { return }
+                incomingContactRequestsCount = newCount
+                invokeCommand?(.reloadCounts)
+            }
+            .store(in: &subscriptions)
+        
+        accountHallUsecase.userAlertUpdatePublisher()
+            .map { UInt($0.count) }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newCount in
+                guard let self else { return }
+                relevantUnseenUserAlertsCount = newCount
+                invokeCommand?(.reloadCounts)
             }
             .store(in: &subscriptions)
     }

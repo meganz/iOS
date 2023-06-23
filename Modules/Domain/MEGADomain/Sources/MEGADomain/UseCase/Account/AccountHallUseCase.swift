@@ -7,9 +7,13 @@ public protocol AccountHallUseCaseProtocol {
     func relevantUnseenUserAlertsCount() async -> UInt
     func accountDetails() async throws -> AccountDetailsEntity
     func requestResultPublisher() -> AnyPublisher<Result<AccountRequestEntity, Error>, Never>
+    func contactRequestPublisher() -> AnyPublisher<[ContactRequestEntity], Never>
+    func userAlertUpdatePublisher() -> AnyPublisher<[UserAlertEntity], Never>
     
     func registerMEGARequestDelegate() async
     func deRegisterMEGARequestDelegate() async
+    func registerMEGAGlobalDelegate() async
+    func deRegisterMEGAGlobalDelegate() async
 }
 
 public struct AccountHallUseCase<T: AccountRepositoryProtocol>: AccountHallUseCaseProtocol {
@@ -43,11 +47,27 @@ public struct AccountHallUseCase<T: AccountRepositoryProtocol>: AccountHallUseCa
         repository.requestResultPublisher
     }
     
+    public func contactRequestPublisher() -> AnyPublisher<[ContactRequestEntity], Never> {
+        repository.contactRequestPublisher
+    }
+    
+    public func userAlertUpdatePublisher() -> AnyPublisher<[UserAlertEntity], Never> {
+        repository.userAlertUpdatePublisher
+    }
+    
     public func registerMEGARequestDelegate() async {
         await repository.registerMEGARequestDelegate()
     }
     
     public func deRegisterMEGARequestDelegate() async {
         await repository.deRegisterMEGARequestDelegate()
+    }
+    
+    public func registerMEGAGlobalDelegate() async {
+        await repository.registerMEGAGlobalDelegate()
+    }
+    
+    public func deRegisterMEGAGlobalDelegate() async {
+        await repository.deRegisterMEGAGlobalDelegate()
     }
 }

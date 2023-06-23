@@ -1,7 +1,6 @@
 import Combine
 
 public protocol AccountRepositoryProtocol: RepositoryProtocol {
-    var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> { get }
     var currentUserHandle: HandleEntity? { get }
     func currentUser() async -> UserEntity?
     var isGuest: Bool { get }
@@ -15,6 +14,12 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt
     
+    var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> { get }
+    var contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> { get }
+    var userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> { get }
+    
     func registerMEGARequestDelegate() async
     func deRegisterMEGARequestDelegate() async
+    func registerMEGAGlobalDelegate() async
+    func deRegisterMEGAGlobalDelegate() async
 }

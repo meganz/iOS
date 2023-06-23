@@ -80,7 +80,6 @@
     [super viewWillAppear:animated];
 
     [self addSubscriptions];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
     [self loadContent];
     
@@ -93,7 +92,6 @@
     [super viewWillDisappear:animated];
     
     [self removeSubscriptions];
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
     
     if (self.isMovingFromParentViewController) {
         [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
@@ -230,18 +228,6 @@
 - (void)pricingsReady {
     BOOL isEnabled = ![self isNewUpgradeAccountPlanFeatureFlagEnabled];
     self.buyPROBarButtonItem.enabled = isEnabled;
-}
-
-#pragma mark - MEGAGlobalDelegate
-
-- (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    NSIndexPath *contactsIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionContacts inSection:MyAccountSectionMega];
-    [self.tableView reloadRowsAtIndexPaths:@[contactsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-}
-
-- (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
-    NSIndexPath *notificationsIndexPath = [NSIndexPath indexPathForRow:MyAccountMegaSectionNotifications inSection:MyAccountSectionMega];
-    [self.tableView reloadRowsAtIndexPaths:@[notificationsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - AudioPlayer

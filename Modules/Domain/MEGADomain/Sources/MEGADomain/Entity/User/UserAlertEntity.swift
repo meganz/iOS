@@ -6,7 +6,7 @@ public struct UserAlertEntity {
     public var isSeen: Bool
     public var isRelevant: Bool
     public var alertType: UserAlertTypeEntity?
-    public var alertTypeString: String
+    public var alertTypeString: String?
     public var userHandle: HandleEntity?
     public var nodeHandle: HandleEntity?
     public var email: String?
@@ -16,7 +16,7 @@ public struct UserAlertEntity {
     public var title: String?
     public var isOwnChange: Bool
     
-    public init(identifier: UInt, isSeen: Bool, isRelevant: Bool, alertType: UserAlertTypeEntity?, alertTypeString: String, userHandle: HandleEntity?, nodeHandle: HandleEntity?, email: String?, path: String?, name: String?, heading: String?, title: String?, isOwnChange: Bool) {
+    public init(identifier: UInt, isSeen: Bool, isRelevant: Bool, alertType: UserAlertTypeEntity?, alertTypeString: String?, userHandle: HandleEntity?, nodeHandle: HandleEntity?, email: String?, path: String?, name: String?, heading: String?, title: String?, isOwnChange: Bool) {
         self.identifier = identifier
         self.isSeen = isSeen
         self.isRelevant = isRelevant
@@ -30,5 +30,11 @@ public struct UserAlertEntity {
         self.heading = heading
         self.title = title
         self.isOwnChange = isOwnChange
+    }
+}
+
+extension UserAlertEntity: Equatable {
+    public static func == (lhs: UserAlertEntity, rhs: UserAlertEntity) -> Bool {
+        lhs.identifier == rhs.identifier
     }
 }
