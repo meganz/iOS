@@ -125,11 +125,10 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
-		167845552A173EF500568FBE /* XCTestCase+AsyncAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */; };
+		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
 		245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */; };
-		245386002A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385FF2A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift */; };
 		245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A72A32DDFD005F6527 /* AppMetaData.swift */; };
 		245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */; };
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
@@ -2601,12 +2600,11 @@
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AsyncAssertions.swift"; sourceTree = "<group>"; };
+		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
 		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
-		245385FF2A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		245CB1A72A32DDFD005F6527 /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
 		245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaData.swift; sourceTree = "<group>"; };
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
@@ -5152,6 +5150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9933,8 +9932,6 @@
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
 				B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */,
-				167845542A173EF500568FBE /* XCTestCase+AsyncAssertions.swift */,
-				245385FF2A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -10900,6 +10897,7 @@
 		B6FDEF772A204E6700276DD6 /* Infrastracture */ = {
 			isa = PBXGroup;
 			children = (
+				1678D7F02A45474E00336C52 /* MEGATest */,
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
 				B6FCDABA2898A86400319754 /* MEGASwift */,
 			);
@@ -12193,6 +12191,9 @@
 				B6CED49122B8AC70009C4861 /* PBXTargetDependency */,
 			);
 			name = MEGAUnitTests;
+			packageProductDependencies = (
+				1678D7F12A45487E00336C52 /* MEGATest */,
+			);
 			productName = MEGAUnitTests;
 			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -14949,8 +14950,6 @@
 				9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */,
 				B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */,
 				B60F05E92514C022005133C2 /* XCTestCase+ActionCommand.swift in Sources */,
-				167845552A173EF500568FBE /* XCTestCase+AsyncAssertions.swift in Sources */,
-				245386002A13CD1F00208B31 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16841,6 +16840,10 @@
 		164948662A41586F00AEB736 /* SwiftLint */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftLint";
+		};
+		1678D7F12A45487E00336C52 /* MEGATest */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGATest;
 		};
 		3241349629FB712B006E5310 /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;

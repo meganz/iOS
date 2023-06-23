@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADataMock
+import MEGATest
 import XCTest
 
 final class NodeActionViewControllerGenericDelegateTests: XCTestCase {
