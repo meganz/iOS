@@ -947,7 +947,7 @@ extension GetLinkViewController: UITableViewDelegate {
         
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
-        if let getLinkViewModel {
+        if getLinkViewModel != nil {
             updateHeaderViewForAlbum(forHeader: &header, forSection: section)
         } else if getLinkVM.multilink {
             guard section > 0 else {
@@ -974,7 +974,7 @@ extension GetLinkViewController: UITableViewDelegate {
         
         footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
-        if let getLinkViewModel {
+        if getLinkViewModel != nil {
             updateFooterViewForAlbum(forFooter: &footer, forSection: section)
         } else if getLinkVM.multilink {
             guard section > 0 else {
