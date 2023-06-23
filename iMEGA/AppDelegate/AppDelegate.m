@@ -1812,15 +1812,6 @@
         return;
     }
     
-    //Delete transfer from dictionary file even if we get an error
-    MEGANode *node = nil;
-    if ([transfer type] == MEGATransferTypeDownload) {
-        node = [sdk nodeForHandle:transfer.nodeHandle];
-        if (!node) {
-            node = [transfer publicNode];
-        }
-    }
-    
     if (transfer.type == MEGATransferTypeUpload) {
         [transfer mnz_renameOrRemoveThumbnailAndPreview];
         
