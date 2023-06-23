@@ -115,16 +115,61 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     func testOnReceiveAudioPlayerActions_shouldInvokeCorrectCommands() {
-        var invokedCommands =  [AudioPlayerViewModel.Command]()
-        onlineViewModel.invokeCommand = { invokedCommands.append($0) }
-        
         mockPlaybackContinuationUseCase._status = .startFromBeginning
-        onlineViewModel.audioDidStartPlayingItem(testItem)
-        XCTAssertEqual(invokedCommands, [])
         
+        assert(
+            onlineViewModel,
+            when: { viewModel in
+                viewModel.audioDidStartPlayingItem(testItem)
+            },
+            shouldInvokeCommands: []
+        )
+    }
+    
+    func testAudioStartPlayingWithDisplayDialogStatus_shouldDisplayDialog_andPausePlayer_whenAppIsActive() {
+        onlineViewModel.checkAppIsActive = { true }
         mockPlaybackContinuationUseCase._status = .displayDialog(playbackTime: 1234.0)
+        
+        assert(
+            onlineViewModel,
+            when: { viewModel in
+                viewModel.audioDidStartPlayingItem(testItem)
+            },
+            shouldInvokeCommands: [
+                .displayPlaybackContinuationDialog(
+                    fileName: testItem.name,
+                    playbackTime: 1234.0
+                )
+            ]
+        )
+        XCTAssertEqual(playerHandler.pause_calledTimes, 1)
+    }
+    
+    func testAudioStartPlayingWithDisplayDialogStatus_shouldNotDisplayDialog_whenAppIsNotActive() {
+        onlineViewModel.checkAppIsActive = { false }
+        mockPlaybackContinuationUseCase._status = .displayDialog(playbackTime: 1234.0)
+        
+        assert(
+            onlineViewModel,
+            when: { viewModel in
+                viewModel.audioDidStartPlayingItem(testItem)
+            },
+            shouldInvokeCommands: []
+        )
+    }
+    
+    func testAudioStartPlayingWithDisplayDialogStatus_shouldResumePlayback_whenAppIsNotActive() {
+        onlineViewModel.checkAppIsActive = { false }
+        mockPlaybackContinuationUseCase._status = .displayDialog(playbackTime: 1234.0)
+        
         onlineViewModel.audioDidStartPlayingItem(testItem)
-        XCTAssertEqual(invokedCommands, [.displayPlaybackContinuationDialog(fileName: testItem.name, playbackTime: 1234.0)])
+        
+        XCTAssertEqual(playerHandler.pause_calledTimes, 0)
+        XCTAssertEqual(playerHandler.playerResumePlayback_Calls, [1234.0])
+        XCTAssertEqual(
+            mockPlaybackContinuationUseCase.setPreference_Calls,
+            [.resumePreviousSession]
+        )
     }
     
     func testAudioPlaybackContinuation_resumeSession() {
@@ -171,6 +216,20 @@ final class AudioPlayerViewModelTests: XCTestCase {
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
             dispatchQueue: MockDispatchQueue()
         )
+    }
+    
+    private func assert(
+        _ viewModel: AudioPlayerViewModel,
+        when action: (AudioPlayerViewModel) -> Void,
+        shouldInvokeCommands expectedCommands: [AudioPlayerViewModel.Command],
+        line: UInt = #line
+    ) {
+        var invokedCommands =  [AudioPlayerViewModel.Command]()
+        viewModel.invokeCommand = { invokedCommands.append($0) }
+        
+        action(viewModel)
+        
+        XCTAssertEqual(invokedCommands, expectedCommands, line: line)
     }
     
     private var testItem: AudioPlayerItem {

@@ -200,6 +200,7 @@ import MEGAPresentation
     }
     
     func play(item: AudioPlayerItem) {
+        playbackStoppedForCurrentItem()
         player?.blockAudioPlayerInteraction()
         player?.play(item: item) { [weak self] in
             self?.player?.unblockAudioPlayerInteraction()
