@@ -43,6 +43,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         currentPlan = planList.first { plan in
             plan.type == type
         }
+        
+        recommendedPlan = planList.first { plan in
+            plan.type == .proII
+        }
     }
 
     // MARK: - Public

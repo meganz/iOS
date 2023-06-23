@@ -5603,6 +5603,93 @@ public enum Strings {
         }
       }
     }
+    public enum UpgradeAccountPlan {
+      public enum Button {
+        public enum BuyAccountPlan {
+          /// Buy %@
+          public static func title(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "upgradeAccountPlan.button.buyAccountPlan.title", String(describing: p1))
+          }
+        }
+        public enum Restore {
+          /// Restore purchase
+          public static let title = Strings.tr("Localizable", "upgradeAccountPlan.button.restore.title")
+        }
+        public enum TermsAndPolicies {
+          /// Terms and policies
+          public static let title = Strings.tr("Localizable", "upgradeAccountPlan.button.termsAndPolicies.title")
+        }
+      }
+      public enum Header {
+        public enum PlanTermPicker {
+          /// Monthly
+          public static let monthly = Strings.tr("Localizable", "upgradeAccountPlan.header.planTermPicker.monthly")
+          /// Yearly
+          public static let yearly = Strings.tr("Localizable", "upgradeAccountPlan.header.planTermPicker.yearly")
+        }
+        public enum Title {
+          /// Choose the right plan for you
+          public static let choosePlan = Strings.tr("Localizable", "upgradeAccountPlan.header.title.choosePlan")
+          /// Current plan: %@
+          public static func currentPlan(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "upgradeAccountPlan.header.title.currentPlan", String(describing: p1))
+          }
+          /// Features of Pro plans
+          public static let featuresOfProPlan = Strings.tr("Localizable", "upgradeAccountPlan.header.title.featuresOfProPlan")
+          /// Save up to 16%% with yearly billing
+          public static let saveYearlyBilling = Strings.tr("Localizable", "upgradeAccountPlan.header.title.saveYearlyBilling")
+          /// Subscription details
+          public static let subscriptionDetails = Strings.tr("Localizable", "upgradeAccountPlan.header.title.subscriptionDetails")
+        }
+      }
+      public enum Message {
+        public enum Text {
+          /// ∙ Password-protected links
+          /// 
+          /// ∙ Links with expiry dates
+          /// 
+          /// ∙ Transfer quota sharing
+          /// 
+          /// ∙ Automatic backups
+          /// 
+          /// ∙ Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)
+          /// 
+          /// ∙ Schedule rubbish bin clearing between 7 days and 10 years
+          public static let featuresOfProPlan = Strings.tr("Localizable", "upgradeAccountPlan.message.text.featuresOfProPlan")
+          /// Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as  the initial period chosen.
+          /// You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.
+          public static let subscriptionDetails = Strings.tr("Localizable", "upgradeAccountPlan.message.text.subscriptionDetails")
+        }
+      }
+      public enum Plan {
+        public enum Details {
+          /// Storage: %@
+          public static func storage(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "upgradeAccountPlan.plan.details.storage", String(describing: p1))
+          }
+          /// Transfer: %@
+          public static func transfer(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "upgradeAccountPlan.plan.details.transfer", String(describing: p1))
+          }
+          public enum Pricing {
+            /// %@/month
+            public static func localCurrencyPerMonth(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth", String(describing: p1))
+            }
+            /// %@/year
+            public static func localCurrencyPerYear(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear", String(describing: p1))
+            }
+          }
+        }
+        public enum Tag {
+          /// Current plan
+          public static let currentPlan = Strings.tr("Localizable", "upgradeAccountPlan.plan.tag.currentPlan")
+          /// Recommended
+          public static let recommended = Strings.tr("Localizable", "upgradeAccountPlan.plan.tag.recommended")
+        }
+      }
+    }
     public enum VerifyCredentials {
       public enum YourCredentials {
         /// Your credentials

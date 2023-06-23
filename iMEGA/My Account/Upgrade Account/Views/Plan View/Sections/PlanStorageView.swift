@@ -6,9 +6,9 @@ struct PlanStorageView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            PlanStorageDetailView(title: UpgradeStrings.Localizable.UpgradeAccountPlan.Plan.Details.storage(plan.storage),
+            PlanStorageDetailView(title: Strings.Localizable.UpgradeAccountPlan.Plan.Details.storage(plan.storage),
                                   detail: plan.storage)
-            PlanStorageDetailView(title: UpgradeStrings.Localizable.UpgradeAccountPlan.Plan.Details.transfer(plan.transfer),
+            PlanStorageDetailView(title: Strings.Localizable.UpgradeAccountPlan.Plan.Details.transfer(plan.transfer),
                                   detail: plan.transfer)
         }
     }

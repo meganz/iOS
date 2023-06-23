@@ -17,9 +17,9 @@ struct PlanHeaderTagView: View {
     private var planTagName: String {
         switch planTag {
         case .currentPlan:
-            return UpgradeStrings.Localizable.UpgradeAccountPlan.Plan.Tag.currentPlan
+            return Strings.Localizable.UpgradeAccountPlan.Plan.Tag.currentPlan
         case .recommended:
-            return UpgradeStrings.Localizable.UpgradeAccountPlan.Plan.Tag.recommended
+            return Strings.Localizable.UpgradeAccountPlan.Plan.Tag.recommended
         case .none: return ""
         }
     }

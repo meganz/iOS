@@ -6,25 +6,25 @@ struct UpgradeSectionHeaderView: View {
     
     var body: some View {
         Section {
-            Text(UpgradeStrings.Localizable.UpgradeAccountPlan.Header.Title.choosePlan)
+            Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.choosePlan)
                 .font(.title3)
                 .bold()
             
-            Text(UpgradeStrings.Localizable.UpgradeAccountPlan.Header.Title.currentPlan(currentPlanName))
+            Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.currentPlan(currentPlanName))
                 .foregroundColor(.gray)
                 .font(.subheadline)
                 .bold()
                 .padding(.top, 1)
             
             Picker("Account Plan Term", selection: $selectedTermIndex) {
-                Text(UpgradeStrings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.monthly).tag(0)
-                Text(UpgradeStrings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.yearly).tag(1)
+                Text(Strings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.monthly).tag(0)
+                Text(Strings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.yearly).tag(1)
             }
             .pickerStyle(.segmented)
             .frame(width: 200)
             .padding(.top)
             
-            Text(UpgradeStrings.Localizable.UpgradeAccountPlan.Header.Title.saveYearlyBilling)
+            Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.saveYearlyBilling)
                 .font(.caption2)
                 .bold()
                 .padding(.horizontal, 10)

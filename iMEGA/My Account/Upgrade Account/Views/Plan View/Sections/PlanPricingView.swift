@@ -20,9 +20,9 @@ struct PlanPricingView: View {
     private var currencyPerTermString: String {
         switch plan.term {
         case .monthly:
-            return UpgradeStrings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(plan.currency)
+            return Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerMonth(plan.currency)
         case .yearly:
-            return UpgradeStrings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerYear(plan.currency)
+            return Strings.Localizable.UpgradeAccountPlan.Plan.Details.Pricing.localCurrencyPerYear(plan.currency)
         case .none: return ""
         }
     }

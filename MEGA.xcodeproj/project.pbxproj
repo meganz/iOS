@@ -1553,7 +1553,6 @@
 		B59580B22A1478E800E5FC1C /* UpgradeSectionSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AD2A1478E600E5FC1C /* UpgradeSectionSubscriptionView.swift */; };
 		B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */; };
 		B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */; };
-		B59580B72A1478F700E5FC1C /* UpgradeStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580B62A1478F700E5FC1C /* UpgradeStrings.swift */; };
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
 		B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */; };
@@ -4095,7 +4094,6 @@
 		B59580AD2A1478E600E5FC1C /* UpgradeSectionSubscriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionSubscriptionView.swift; sourceTree = "<group>"; };
 		B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionHeaderView.swift; sourceTree = "<group>"; };
 		B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionFeatureOfProView.swift; sourceTree = "<group>"; };
-		B59580B62A1478F700E5FC1C /* UpgradeStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeStrings.swift; sourceTree = "<group>"; };
 		B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModel.swift; sourceTree = "<group>"; };
 		B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModel.swift; sourceTree = "<group>"; };
@@ -9703,7 +9701,6 @@
 			children = (
 				B5000F9C2A1DAFCD00E06478 /* Plan View */,
 				B59580A42A1478C300E5FC1C /* Upgrade Plan View */,
-				B59580B62A1478F700E5FC1C /* UpgradeStrings.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -14326,7 +14323,6 @@
 				B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */,
 				B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */,
 				B59580B22A1478E800E5FC1C /* UpgradeSectionSubscriptionView.swift in Sources */,
-				B59580B72A1478F700E5FC1C /* UpgradeStrings.swift in Sources */,
 				C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */,
