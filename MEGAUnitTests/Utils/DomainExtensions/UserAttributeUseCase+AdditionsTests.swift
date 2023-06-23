@@ -2,6 +2,7 @@
 import MEGADataMock
 import MEGADomain
 import MEGADomainMock
+import MEGATest
 import XCTest
 
 final class UserAttributeUseCaseAdditionsTests: XCTestCase {

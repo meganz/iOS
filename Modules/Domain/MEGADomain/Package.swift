@@ -17,7 +17,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Infrastracture/MEGASwift"),
-        .package(path: "../../Infrastracture/MEGAFoundation")
+        .package(path: "../../Infrastracture/MEGAFoundation"),
+        .package(path: "../../Infrastructure/MEGATest")
     ],
     targets: [
         .target(
@@ -30,7 +31,7 @@ let package = Package(
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGADomainTests",
-            dependencies: ["MEGADomain", "MEGADomainMock"],
+            dependencies: ["MEGADomain", "MEGADomainMock", "MEGATest"],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
     ]
 )

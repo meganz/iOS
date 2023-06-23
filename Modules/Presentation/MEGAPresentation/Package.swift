@@ -14,7 +14,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
-        .package(path: "../../Repository/MEGAData")
+        .package(path: "../../Repository/MEGAData"),
+        .package(path: "../../Infrastructure/MEGATest")
     ],
     targets: [
         .target(
@@ -23,7 +24,7 @@ let package = Package(
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGAPresentationTests",
-            dependencies: ["MEGAPresentation"],
+            dependencies: ["MEGAPresentation", "MEGATest"],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
     ]
 )
