@@ -37,7 +37,7 @@ struct UpgradeAccountPlanView: View {
                     } footer: {
                         if viewModel.isShowBuyButton {
                             VStack {
-                                PrimaryActionButtonView(title: UpgradeStrings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(viewModel.selectedPlanName)) {
+                                PrimaryActionButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(viewModel.selectedPlanName)) {
                                 }
                             }
                             .padding(.vertical)
@@ -49,9 +49,9 @@ struct UpgradeAccountPlanView: View {
                     UpgradeSectionSubscriptionView()
                     
                     VStack(alignment: .leading, spacing: 20) {
-                        PlainFooterButtonView(title: UpgradeStrings.Localizable.UpgradeAccountPlan.Button.Restore.title) {}
+                        PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.Restore.title) {}
                         
-                        PlainFooterButtonView(title: UpgradeStrings.Localizable.UpgradeAccountPlan.Button.TermsAndPolicies.title) {}
+                        PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.TermsAndPolicies.title) {}
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top)
