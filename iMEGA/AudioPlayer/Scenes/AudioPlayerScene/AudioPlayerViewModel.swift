@@ -102,6 +102,9 @@ final class AudioPlayerViewModel: ViewModelType {
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
+    var checkAppIsActive: () -> Bool = {
+        UIApplication.shared.applicationState == .active
+    }
     
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
@@ -451,14 +454,29 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
         
         switch playbackContinuationUseCase.status(for: fingerprint) {
         case .displayDialog(let playbackTime):
-            invokeCommand?(.displayPlaybackContinuationDialog(
+            shouldDisplayPlaybackContinuationDialog(
                 fileName: item.name,
                 playbackTime: playbackTime
-            ))
-            configEntity.playerHandler.playerPause()
+            )
         case .resumeSession(let playbackTime):
             configEntity.playerHandler.playerResumePlayback(from: playbackTime)
         case .startFromBeginning: break
+        }
+    }
+    
+    private func shouldDisplayPlaybackContinuationDialog(
+        fileName: String,
+        playbackTime: TimeInterval
+    ) {
+        if checkAppIsActive() {
+            invokeCommand?(.displayPlaybackContinuationDialog(
+                fileName: fileName,
+                playbackTime: playbackTime
+            ))
+            configEntity.playerHandler.playerPause()
+        } else {
+            playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
+            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
         }
     }
 }

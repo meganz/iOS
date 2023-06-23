@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPresentation
 import UIKit
 
 final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
@@ -17,11 +18,14 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
                 
         folderSDKLogoutRequired = configEntity.isFolderLink
         
-        vc.viewModel = MiniPlayerViewModel(configEntity: configEntity,
-                                           router: self,
-                                           nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
-                                           streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
-                                           offlineInfoUseCase: configEntity.relatedFiles != nil ? OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()) : nil)
+        vc.viewModel = MiniPlayerViewModel(
+            configEntity: configEntity,
+            router: self,
+            nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
+            streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
+            offlineInfoUseCase: configEntity.relatedFiles != nil ? OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()) : nil,
+            playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
+        )
         
         baseViewController = vc
         

@@ -36,6 +36,7 @@ final class MiniPlayerViewModel: ViewModelType {
     private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
     private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
     private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
+    private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let dispatchQueue: any DispatchQueueProtocol
     
     // MARK: - Internal properties
@@ -47,12 +48,14 @@ final class MiniPlayerViewModel: ViewModelType {
          nodeInfoUseCase: NodeInfoUseCaseProtocol?,
          streamingInfoUseCase: StreamingInfoUseCaseProtocol?,
          offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?,
+         playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
          dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global()) {
         self.configEntity = configEntity
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase
         self.streamingInfoUseCase = streamingInfoUseCase
         self.offlineInfoUseCase = offlineInfoUseCase
+        self.playbackContinuationUseCase = playbackContinuationUseCase
         self.dispatchQueue = dispatchQueue
         self.shouldInitializePlayer = configEntity.shouldResetPlayer
     }
@@ -207,6 +210,7 @@ final class MiniPlayerViewModel: ViewModelType {
     }
     
     private func showFullScreenPlayer(_ node: MEGANode?, path: String?) {
+        configEntity.playerHandler.removePlayer(listener: self)
         switch configEntity.playerType {
         case .`default`:
             return router.showPlayer(node: node, filePath: nil)
@@ -297,5 +301,20 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     
     func audioPlayerDidFinishBlockingAction() {
         invokeCommand?(.enableUserInteraction(true))
+    }
+    
+    func audioDidStartPlayingItem(_ item: AudioPlayerItem?) {
+        guard let item, let fingerprint = item.node?.toNodeEntity().fingerprint else {
+            return
+        }
+        
+        switch playbackContinuationUseCase.status(for: fingerprint) {
+        case .displayDialog(let playbackTime):
+            playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
+            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+        case .resumeSession(let playbackTime):
+            configEntity.playerHandler.playerResumePlayback(from: playbackTime)
+        case .startFromBeginning: break
+        }
     }
 }
