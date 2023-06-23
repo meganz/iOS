@@ -14,9 +14,18 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
     private let currentUserSource: CurrentUserSource
     
     private let requestResultSourcePublisher = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>()
-    
     var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> {
         requestResultSourcePublisher.eraseToAnyPublisher()
+    }
+    
+    private let contactRequestSourcePublisher = PassthroughSubject<[ContactRequestEntity], Never>()
+    var contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> {
+        contactRequestSourcePublisher.eraseToAnyPublisher()
+    }
+    
+    private let userAlertUpdateSourcePublisher = PassthroughSubject<[UserAlertEntity], Never>()
+    var userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> {
+        userAlertUpdateSourcePublisher.eraseToAnyPublisher()
     }
     
     init(sdk: MEGASdk, currentUserSource: CurrentUserSource = .shared) {
@@ -30,6 +39,14 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
     
     func deRegisterMEGARequestDelegate() async {
         sdk.remove(self as MEGARequestDelegate)
+    }
+    
+    func registerMEGAGlobalDelegate() async {
+        sdk.add(self as MEGAGlobalDelegate)
+    }
+    
+    func deRegisterMEGAGlobalDelegate() async {
+        sdk.remove(self as MEGAGlobalDelegate)
     }
 
     var currentUserHandle: HandleEntity? {
@@ -132,5 +149,16 @@ extension AccountRepository: MEGARequestDelegate {
             return
         }
         requestResultSourcePublisher.send(.success(request.toAccountRequestEntity()))
+    }
+}
+
+// MARK: - MEGAGlobalDelegate
+extension AccountRepository: MEGAGlobalDelegate {
+    func onUserAlertsUpdate(_ api: MEGASdk, userAlertList: MEGAUserAlertList) {
+        userAlertUpdateSourcePublisher.send(userAlertList.toUserAlertEntities())
+    }
+    
+    func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
+        contactRequestSourcePublisher.send(contactRequestList.toContactRequestEntities())
     }
 }

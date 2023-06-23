@@ -56,6 +56,44 @@ final class AccountHallUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func testContactRequestPublisher_shouldReturnContactRequestEntityList() {
+        let contactRequestPublisher = PassthroughSubject<[ContactRequestEntity], Never>()
+        let mockRepo = MockAccountRepository(
+            contactRequestPublisher: contactRequestPublisher.eraseToAnyPublisher()
+        )
+        let sut = AccountHallUseCase(repository: mockRepo)
+        
+        let expectedList = [ContactRequestEntity.random]
+        let exp = expectation(description: "Should receive ContactRequestEntity list")
+        sut.contactRequestPublisher()
+            .sink { list in
+                XCTAssertEqual(list, expectedList)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        contactRequestPublisher.send(expectedList)
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testUserAlertPublisher_shouldReturnUserAlertEntityList() {
+        let userAlertUpdatePublisher = PassthroughSubject<[UserAlertEntity], Never>()
+        let mockRepo = MockAccountRepository(
+            userAlertUpdatePublisher: userAlertUpdatePublisher.eraseToAnyPublisher()
+        )
+        let sut = AccountHallUseCase(repository: mockRepo)
+        
+        let expectedList = [UserAlertEntity.random]
+        let exp = expectation(description: "Should receive UserAlertEntity list")
+        sut.userAlertUpdatePublisher()
+            .sink { list in
+                XCTAssertEqual(list, expectedList)
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        userAlertUpdatePublisher.send(expectedList)
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     func testRegisterMEGARequestDelegateCalled_shouldReturnTrue() async {
         let mockRepo = MockAccountRepository()
         let sut = AccountHallUseCase(repository: mockRepo)
@@ -68,6 +106,20 @@ final class AccountHallUseCaseTests: XCTestCase {
         let sut = AccountHallUseCase(repository: mockRepo)
         await sut.deRegisterMEGARequestDelegate()
         XCTAssertTrue(mockRepo.deRegisterMEGARequestDelegateCalled == 1)
+    }
+    
+    func testRegisterMEGAGlobalDelegateCalled_shouldReturnTrue() async {
+        let mockRepo = MockAccountRepository()
+        let sut = AccountHallUseCase(repository: mockRepo)
+        await sut.registerMEGAGlobalDelegate()
+        XCTAssertTrue(mockRepo.registerMEGAGlobalDelegateCalled == 1)
+    }
+    
+    func testDeRegisterMEGAGlobalDelegateCalled_shouldReturnTrue() async {
+        let mockRepo = MockAccountRepository()
+        let sut = AccountHallUseCase(repository: mockRepo)
+        await sut.deRegisterMEGAGlobalDelegate()
+        XCTAssertTrue(mockRepo.deRegisterMEGAGlobalDelegateCalled == 1)
     }
     
 }

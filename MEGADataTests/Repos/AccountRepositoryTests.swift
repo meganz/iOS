@@ -229,6 +229,40 @@ final class AccountRepositoryTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
+    func testContactRequestPublisher_onContactRequestsUpdate_sendsContactRequestList() {
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        
+        let exp = expectation(description: "Should receive ContactRequestEntity list")
+        let expectedContactRequest = ContactRequestEntity.random
+        sut.contactRequestPublisher
+            .sink { list in
+                XCTAssertEqual(list, [expectedContactRequest])
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let mockContactRequestList = MockContactRequestList(contactRequests: [MockContactRequest(handle: expectedContactRequest.handle)])
+        sut.onContactRequestsUpdate(mockSdk, contactRequestList: mockContactRequestList)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testUserAlertPublisher_onUserAlertsUpdate_sendsUserAlertList() {
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        
+        let exp = expectation(description: "Should receive UserAlertEntity list")
+        let expectedUserAlert = UserAlertEntity.random
+        sut.userAlertUpdatePublisher
+            .sink { list in
+                XCTAssertEqual(list, [expectedUserAlert])
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let mockUserAlertList = MockUserAlertList(alerts: [MockUserAlert(identifier: expectedUserAlert.identifier)])
+        sut.onUserAlertsUpdate(mockSdk, userAlertList: mockUserAlertList)
+        wait(for: [exp], timeout: 1)
+    }
+    
     func testOnRequestResultFinish_addDelegate_delegateShouldExist() async {
         let sdk = MockSdk()
         let repo = AccountRepository(sdk: sdk)

@@ -21,3 +21,9 @@ public struct ContactRequestEntity {
         self.status = status
     }
 }
+
+extension ContactRequestEntity: Equatable {
+    public static func == (lhs: ContactRequestEntity, rhs: ContactRequestEntity) -> Bool {
+        lhs.handle == rhs.handle
+    }
+}

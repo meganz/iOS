@@ -12,13 +12,16 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     private let contactsRequestsCount: Int
     private let unseenUserAlertsCount: UInt
     public let requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never>
-    
+    public let contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never>
+    public let userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never>
     public var registerMEGARequestDelegateCalled = 0
     public var deRegisterMEGARequestDelegateCalled = 0
+    public var registerMEGAGlobalDelegateCalled = 0
+    public var deRegisterMEGAGlobalDelegateCalled = 0
     
     let currentUser: UserEntity?
     public let isGuest: Bool
-    
+
     public init(currentUser: UserEntity? = nil,
                 isGuest: Bool = false,
                 isLoggedIn: Bool = true,
@@ -30,6 +33,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 accountDetails: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
                 requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> = Empty().eraseToAnyPublisher(),
+                contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> = Empty().eraseToAnyPublisher(),
+                userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> = Empty().eraseToAnyPublisher(),
                 isUpgradeSecuritySuccess: Bool = false) {
         self.currentUser = currentUser
         self.isGuest = isGuest
@@ -43,6 +48,8 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         self.contactsRequestsCount = contactsRequestsCount
         self.unseenUserAlertsCount = unseenUserAlertsCount
         self.requestResultPublisher = requestResultPublisher
+        self.contactRequestPublisher = contactRequestPublisher
+        self.userAlertUpdatePublisher = userAlertUpdatePublisher
     }
     
     public var currentUserHandle: HandleEntity? {
@@ -102,4 +109,11 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         deRegisterMEGARequestDelegateCalled += 1
     }
     
+    public func registerMEGAGlobalDelegate() async {
+        registerMEGAGlobalDelegateCalled += 1
+    }
+    
+    public func deRegisterMEGAGlobalDelegate() async {
+        deRegisterMEGAGlobalDelegateCalled += 1
+    }
 }
