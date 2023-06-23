@@ -644,7 +644,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 let `self` = self else {
                     return
             }
-            let pathGroup = String.makeFileExtensionGroup(from: path)
+            let pathGroup = String.makeFileExtensionGroup(from: path.lastPathComponent)
             if pathGroup.isImage {
                 self.uploadAsset(withFilePath: path, parentNode: parentNode, localIdentifier: "")
             } else if pathGroup.isVideo {

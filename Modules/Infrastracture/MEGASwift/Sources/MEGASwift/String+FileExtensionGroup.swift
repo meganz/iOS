@@ -44,7 +44,10 @@ public extension String {
     /// - Returns: A Boolean value indicating whether the file falls into the file extension group indicated by the `boolPath`.
     static func fileExtensionGroup(verify source: String?, _ boolPath: KeyPath<any FileExtensionGroup, Bool>) -> Bool {
         guard let source else { return false }
-        return FileExtension(source)[keyPath: boolPath]
+        guard !source.isEmpty, let fileExt = source.lastPathComponent.split(separator: ".").last else {
+            return FileExtension(source)[keyPath: boolPath]
+        }
+        return FileExtension(String(fileExt))[keyPath: boolPath]
     }
     
     /// Creates an object conforming to the `FileExtensionGroup` protocol based on the file extension of a source file.
@@ -55,10 +58,14 @@ public extension String {
     /// - Parameter source: The source string which represents the file. Typically this would be the file name or file path.
     /// - Returns: An object conforming to `FileExtensionGroup` that corresponds to the file extension of the source.
     static func makeFileExtensionGroup(from source: String?) -> some FileExtensionGroup {
-        FileExtension(source)
+        guard let source else { return FileExtension(nil) }
+        guard !source.isEmpty, let fileExt = source.lastPathComponent.split(separator: ".").last else {
+            return FileExtension(source)
+        }
+        return FileExtension(String(fileExt))
     }
     
-    private struct FileExtension: FileExtensionGroup, CustomDebugStringConvertible {
+    private struct FileExtension: FileExtensionGroup {
         var isImage: Bool { Group.image.contains(group) }
         var isVideo: Bool { Group.video.contains(group) }
         var isAudio: Bool { Group.audio.contains(group) }
@@ -73,33 +80,12 @@ public extension String {
         
         fileprivate init(_ source: String?) {
             if let source {
-                group = Constant.groupMap[source, default: .unknown]
+                group = Constant.groupMap[source.lowercased(), default: .unknown]
             } else {
                 group = .unknown
             }
         }
-        
-#if DEBUG
-        public var debugDescription: String {
-            var result = [String]()
-            if Group.unknown.contains(group) { result.append("unknown") }
-            if Group.empty.contains(group) { result.append("empty") }
-            if Group.image.contains(group) { result.append("image") }
-            if Group.video.contains(group) { result.append("video") }
-            if Group.audio.contains(group) { result.append("audio") }
-            if Group.visualMedia.contains(group) { result.append("visualMedia") }
-            if Group.multiMedia.contains(group) { result.append("multiMedia") }
-            if Group.text.contains(group) { result.append("text") }
-            if Group.webCode.contains(group) { result.append("webCode") }
-            if Group.editableText.contains(group) { result.append("editableText") }
-            if #available(iOS 15.0, *) {
-                return "FileExtension.Group[\(result.formatted(.list(type: .and, width: .narrow)))]"
-            } else {
-                return "FileExtension.Group[\(result.joined(separator: ", "))]"
-            }
-        }
-#endif
-        
+    
         private struct Group: OptionSet {
             let rawValue: UInt
             
