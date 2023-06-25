@@ -19,25 +19,25 @@ public extension MEGASdk {
         CurrentUserSource.shared.isLoggedIn
     }
     
-    @objc func removeMEGADelegateAsync(_ delegate: MEGADelegate) {
+    @objc func removeMEGADelegateAsync(_ delegate: any MEGADelegate) {
         Task.detached {
             MEGASdk.sharedSdk.remove(delegate)
         }
     }
     
-    @objc func removeMEGARequestDelegateAsync(_ delegate: MEGARequestDelegate) {
+    @objc func removeMEGARequestDelegateAsync(_ delegate: any MEGARequestDelegate) {
         Task.detached {
             MEGASdk.sharedSdk.remove(delegate)
         }
     }
     
-    @objc func removeMEGAGlobalDelegateAsync(_ delegate: MEGAGlobalDelegate) {
+    @objc func removeMEGAGlobalDelegateAsync(_ delegate: any MEGAGlobalDelegate) {
         Task.detached {
             MEGASdk.sharedSdk.remove(delegate)
         }
     }
     
-    @objc func removeMEGATransferDelegateAsync(_ delegate: MEGATransferDelegate) {
+    @objc func removeMEGATransferDelegateAsync(_ delegate: any MEGATransferDelegate) {
         Task.detached {
             MEGASdk.sharedSdk.remove(delegate)
         }
