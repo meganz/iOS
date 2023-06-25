@@ -7,6 +7,7 @@ protocol MediaDiscoveryRouting: Routing {
     func showImportLocation(photos: [NodeEntity])
     func showShareLink(sender: UIBarButtonItem?)
     func showDownload(photos: [NodeEntity])
+    func showOnboarding(linkOption: LinkOption, photos: [NodeEntity])
 }
 
 @objc final class MediaDiscoveryRouter: NSObject, MediaDiscoveryRouting {
@@ -42,9 +43,10 @@ protocol MediaDiscoveryRouting: Routing {
                                                 router: self,
                                                 analyticsUseCase: analyticsUseCase,
                                                 mediaDiscoveryUseCase: mediaDiscoveryUseCase,
-                                                saveMediaUseCase: saveMediaUseCase)
+                                                saveMediaUseCase: saveMediaUseCase,
+                                                credentialUseCase: CredentialUseCase(repo: CredentialRepository.newRepo))
         let vc = MediaDiscoveryViewController(viewModel: viewModel, folderName: parentNode.name,
-                                            contentMode: isFolderLink ? .mediaDiscoveryFolderLink : .mediaDiscovery)
+                                              contentMode: isFolderLink ? .mediaDiscoveryFolderLink : .mediaDiscovery)
         mediaDiscoveryViewController = vc
         return vc
     }
@@ -86,5 +88,16 @@ protocol MediaDiscoveryRouting: Routing {
         }
         CancellableTransferRouter(presenter: mediaDiscoveryViewController, transfers: transfers,
                                   transferType: .download, isFolderLink: isFolderLink).start()
+    }
+    
+    func showOnboarding(linkOption: LinkOption, photos: [NodeEntity]) {
+        guard photos.isNotEmpty else { return }
+        MEGALinkManager.selectedOption = linkOption
+        MEGALinkManager.nodesFromLinkToDownloadAfterLogin(nodes: photos)
+        
+        let onboardingVC = OnboardingViewController.instanciateOnboarding(with: .default)
+        let navigation = MEGANavigationController(rootViewController: onboardingVC)
+        navigation.addRightCancelButton()
+        mediaDiscoveryViewController?.present(navigation, animated: true, completion: nil)
     }
 }
