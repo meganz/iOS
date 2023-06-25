@@ -39,7 +39,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     
     func testAction_downloadPhotos_shouldDownloadTransfersAndSetFolderLinkFlag() {
         let router = MockMediaDiscoveryRouter()
-        let sut = makeMediaDiscoveryViewModel(router: router)
+        let sut = makeMediaDiscoveryViewModel(router: router, credentialUseCase: MockCredentialUseCase(session: true))
         let selectedPhotos = [
             NodeEntity(handle: 3, isFile: true),
             NodeEntity(handle: 4, isFile: true)
@@ -58,6 +58,17 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         }
         sut.dispatch(.downloadSelectedPhotos([]))
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testAction_downloadPhotos_noCurrentSessionShouldShowOnboardingWithImportLinkOption() {
+        let router = MockMediaDiscoveryRouter()
+        let sut = makeMediaDiscoveryViewModel(router: router)
+        let photosToImport = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
+        sut.dispatch(.downloadSelectedPhotos(photosToImport))
+        
+        XCTAssertEqual(router.showOnboardingCalled,
+                       MockMediaDiscoveryRouter.ShowOnboardingResult(linkOption: .downloadFolderOrNodes,
+                                                                           photos: photosToImport))
     }
     
     func testAction_saveToPhotos_shouldSaveSelectedPhotosAndEndEditingMode() {
@@ -91,7 +102,7 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
     
     func testAction_importPhotos_shouldEndEditingModeAndImportPhotosWithCorrectFolderLink() {
         let router = MockMediaDiscoveryRouter()
-        let sut = makeMediaDiscoveryViewModel(router: router)
+        let sut = makeMediaDiscoveryViewModel(router: router, credentialUseCase: MockCredentialUseCase(session: true))
         test(viewModel: sut, action: .importPhotos([NodeEntity(handle: 4)]),
              expectedCommands: [.endEditingMode])
         XCTAssertEqual(router.showImportLocationCalled, 1)
@@ -106,6 +117,17 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
         }
         sut.dispatch(.importPhotos([]))
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testAction_importPhotos_noCurrentSessionShouldShowOnboardingWithImportLinkOption() {
+        let router = MockMediaDiscoveryRouter()
+        let sut = makeMediaDiscoveryViewModel(router: router)
+        let photosToImport = [NodeEntity(handle: 1), NodeEntity(handle: 2)]
+        sut.dispatch(.importPhotos(photosToImport))
+        
+        XCTAssertEqual(router.showOnboardingCalled,
+                       MockMediaDiscoveryRouter.ShowOnboardingResult(linkOption: .importFolderOrNodes,
+                                                                           photos: photosToImport))
     }
     
     func testAction_shareLink_shouldShowShareLinkWithFolderLink() {
@@ -175,20 +197,27 @@ final class MediaDiscoveryViewModelTests: XCTestCase {
                                              router: some MediaDiscoveryRouting = MockMediaDiscoveryRouter(),
                                              analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol = MockMediaDiscoveryAnalyticsUseCase(),
                                              mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol = MockMediaDiscoveryUseCase(),
-                                             saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase()
+                                             saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
+                                             credentialUseCase: some CredentialUseCaseProtocol = MockCredentialUseCase()
     ) -> MediaDiscoveryViewModel {
         MediaDiscoveryViewModel(parentNode: parentNode,
                                 router: router,
                                 analyticsUseCase: analyticsUseCase,
                                 mediaDiscoveryUseCase: mediaDiscoveryUseCase,
-                                saveMediaUseCase: saveMediaUseCase)
+                                saveMediaUseCase: saveMediaUseCase,
+                                credentialUseCase: credentialUseCase)
     }
 }
 
 final class MockMediaDiscoveryRouter: MediaDiscoveryRouting {
+    struct ShowOnboardingResult: Equatable {
+        let linkOption: LinkOption
+        let photos: [NodeEntity]
+    }
     var showImportLocationCalled = 0
     var showShareLinkCalled = 0
     var showDownloadCalled = 0
+    var showOnboardingCalled: ShowOnboardingResult?
     
     func showImportLocation(photos: [NodeEntity]) {
        showImportLocationCalled += 1
@@ -200,5 +229,9 @@ final class MockMediaDiscoveryRouter: MediaDiscoveryRouting {
     
     func showDownload(photos: [NodeEntity]) {
         showDownloadCalled += 1
+    }
+    
+    func showOnboarding(linkOption: LinkOption, photos: [NodeEntity]) {
+        showOnboardingCalled = ShowOnboardingResult(linkOption: linkOption, photos: photos)
     }
 }

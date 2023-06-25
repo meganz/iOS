@@ -27,6 +27,7 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
+    private let credentialUseCase: any CredentialUseCaseProtocol
     
     private var loadingTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
@@ -41,12 +42,14 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
          router: some MediaDiscoveryRouting,
          analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
          mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
-         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol) {
+         saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
+         credentialUseCase: some CredentialUseCaseProtocol) {
         self.parentNode = parentNode
         self.router = router
         self.analyticsUseCase = analyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
         self.saveMediaUseCase = saveMediaUseCase
+        self.credentialUseCase = credentialUseCase
         
         super.init()
         initSubscriptions()
@@ -126,6 +129,10 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     
     private func downloadSelectedPhotos(_ photos: [NodeEntity]) {
         guard photos.isNotEmpty else { return }
+        guard credentialUseCase.hasSession() else {
+            router.showOnboarding(linkOption: .downloadFolderOrNodes, photos: photos)
+            return
+        }
         invokeCommand?(.endEditingMode)
         router.showDownload(photos: photos)
     }
@@ -148,6 +155,10 @@ final class MediaDiscoveryViewModel: NSObject, ViewModelType, NodesUpdateProtoco
     
     private func importPhotos(_ photos: [NodeEntity]) {
         guard photos.isNotEmpty else { return }
+        guard credentialUseCase.hasSession() else {
+            router.showOnboarding(linkOption: .importFolderOrNodes, photos: photos)
+            return
+        }
         invokeCommand?(.endEditingMode)
         router.showImportLocation(photos: photos)
     }
