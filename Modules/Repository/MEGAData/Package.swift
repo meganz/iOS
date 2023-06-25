@@ -26,10 +26,12 @@ let package = Package(
     targets: [
         .target(
             name: "MEGAData",
-            dependencies: ["MEGADomain", "MEGASdk", "SAMKeychain", .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk")]),
+            dependencies: ["MEGADomain", "MEGASdk", "SAMKeychain", .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk")],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .target(
             name: "MEGADataMock",
-            dependencies: ["MEGAData"]
+            dependencies: ["MEGAData"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         ),
         .testTarget(
             name: "MEGADataTests",
@@ -38,7 +40,8 @@ let package = Package(
                 "MEGADataMock",
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 "MEGATest"
-            ]
+            ],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         )
     ]
 )
