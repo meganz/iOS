@@ -73,7 +73,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     func testLoadingVideos_withImagesAllLocations_shouldReturnTrue() async throws {
-        let expectedVideos = sampleNodesForAllLocations().filter({ $0.name.mnz_isVideoPathExtension == true })
+        let expectedVideos = sampleNodesForAllLocations().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
         sut.filterLocation = . allLocations
         await sut.loadPhotos()
@@ -99,7 +99,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withVideosFromCloudDrive_shouldReturnTrue() async throws {
-        let expectedVideos = sampleNodesForCloudDriveOnly().filter({ $0.name.mnz_isVideoPathExtension == true })
+        let expectedVideos = sampleNodesForCloudDriveOnly().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
         sut.filterLocation = .cloudDrive
         await sut.loadPhotos()
@@ -125,7 +125,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     func testLoadingPhotos_withVideosFromCameraUploads_shouldReturnTrue() async throws {
-        let expectedVideos = sampleNodesForCameraUploads().filter({ $0.name.mnz_isVideoPathExtension == true })
+        let expectedVideos = sampleNodesForCameraUploads().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
         sut.filterLocation = .cameraUploads
         await sut.loadPhotos()

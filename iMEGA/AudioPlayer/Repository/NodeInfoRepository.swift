@@ -40,7 +40,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         
         return sdk.children(forParent: parentNode, order: sortType(for: parent)).toNodeArray()
             .filter { $0.name?.mnz_isMultimediaPathExtension == true &&
-                $0.name?.mnz_isVideoPathExtension == false &&
+                $0.name?.fileExtensionGroup.isVideo == false &&
                 $0.mnz_isPlayable() }
     }
     
@@ -49,7 +49,7 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         
         return folderSDK.children(forParent: parentNode, order: sortType(for: parent)).toNodeArray()
             .filter { $0.name?.mnz_isMultimediaPathExtension == true &&
-                $0.name?.mnz_isVideoPathExtension == false &&
+                $0.name?.fileExtensionGroup.isVideo == false &&
                 $0.mnz_isPlayable() }
     }
     

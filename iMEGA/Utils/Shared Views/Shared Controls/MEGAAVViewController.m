@@ -83,7 +83,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         if (fingerprint && ![fingerprint isEqualToString:@""]) {
             MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
             if (mediaDestination.destination.longLongValue > 0 && mediaDestination.timescale.intValue > 0) {
-                if ([self fileName].mnz_isVideoPathExtension) {
+                if ([FileExtensionGroupOCWrapper verifyIsVideo:[self fileName]]) {
                     NSString *infoVideoDestination = NSLocalizedString(@"video.alert.resumeVideo.message", @"Message to show the user info (video name and time) about the resume of the video");
                     infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
                     infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%2$s" withString:[self timeForMediaDestination:mediaDestination]];

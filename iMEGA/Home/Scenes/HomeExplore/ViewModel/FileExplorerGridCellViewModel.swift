@@ -47,7 +47,7 @@ final class FileExplorerGridCellViewModel {
     }
     
     var isVideo: Bool {
-        return (name as NSString).mnz_isVideoPathExtension
+        name.fileExtensionGroup.isVideo
     }
     
     var sizeDescription: String {

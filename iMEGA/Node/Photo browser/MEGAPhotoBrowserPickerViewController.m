@@ -85,7 +85,7 @@
         [self updateCollectionView:collectionView withThumbnailOfNode:node];
     }
     
-    if (node.name.mnz_isVideoPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         cell.videoDurationLabel.text = node.duration > -1 ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
         cell.videoOverlay.hidden = NO;
         cell.playView.hidden = NO;

@@ -81,7 +81,7 @@ final class NodeCellViewModel: ViewModelType {
     }
     
     private func manageThumbnail() {
-        invokeCommand?(.hideVideoIndicator(!(nodeModel.name as NSString).mnz_isVideoPathExtension))
+        invokeCommand?(.hideVideoIndicator(!nodeModel.fileExtensionGroup.isVideo))
         
         loadingTask = Task { [weak self] in
             do {
