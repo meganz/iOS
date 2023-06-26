@@ -751,7 +751,7 @@ static NSString *kisDirectory = @"kisDirectory";
                 if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
                     [AudioPlayerManager.shared initMiniPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
                 } else {
-                    [AudioPlayerManager.shared initFullScreenPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self];
+                    [self initFullScreenPlayerWithNode:nil fileLink:self.previewDocumentPath filePaths:self.offlineMultimediaFiles isFolderLink:NO presenter:self];
                 }
             }
         } else {

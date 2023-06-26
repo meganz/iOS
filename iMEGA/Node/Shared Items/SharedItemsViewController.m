@@ -1035,7 +1035,7 @@
             if (node.name.mnz_isVisualMediaPathExtension) {
                 [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil];
             }
             break;
         }

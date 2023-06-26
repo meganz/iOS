@@ -6,12 +6,16 @@ final class NodeActionViewControllerGenericDelegate:
     NodeActionViewControllerDelegate {
     private weak var viewController: UIViewController?
     private let isNodeFromFolderLink: Bool
-
+    private let messageId: HandleEntity?
+    private let chatId: HandleEntity?
+    
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
 
-    init(viewController: UIViewController, isNodeFromFolderLink: Bool = false) {
+    init(viewController: UIViewController, isNodeFromFolderLink: Bool = false, messageId: HandleEntity? = nil, chatId: HandleEntity? = nil) {
         self.viewController = viewController
         self.isNodeFromFolderLink = isNodeFromFolderLink
+        self.messageId = messageId
+        self.chatId = chatId
     }
     
     deinit {
@@ -25,7 +29,7 @@ final class NodeActionViewControllerGenericDelegate:
             showEditTextFile(for: node)
             
         case .download:
-            download(node, isNodeFromFolderLink: isNodeFromFolderLink)
+            download(node, isNodeFromFolderLink: isNodeFromFolderLink, messageId: messageId, chatId: chatId)
         
         case .copy, .move:
             showBrowserViewController(node: node, action: (action == .copy) ? .copy : .move)
@@ -170,12 +174,23 @@ final class NodeActionViewControllerGenericDelegate:
         }
     }
     
-    private func download(_ node: MEGANode, isNodeFromFolderLink: Bool) {
+    private func download(_ node: MEGANode, isNodeFromFolderLink: Bool, messageId: HandleEntity? = nil, chatId: HandleEntity? = nil) {
         guard let viewController = viewController else {
             return
         }
-        let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
-        CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download, isFolderLink: isNodeFromFolderLink).start()
+        
+        if isNodeFromFolderLink {
+            let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
+            CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download, isFolderLink: isNodeFromFolderLink).start()
+        } else {
+            if let messageId = messageId, let chatId = chatId {
+                let transfer = CancellableTransfer(handle: node.handle, messageId: messageId, chatId: chatId, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat)
+                CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .downloadChat, isFolderLink: isNodeFromFolderLink).start()
+            } else {
+                let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
+                CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download, isFolderLink: isNodeFromFolderLink).start()
+            }
+        }
     }
     
     private func openShareFolderDialog(_ node: MEGANode, viewController: UIViewController) {

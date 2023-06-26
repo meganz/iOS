@@ -182,7 +182,7 @@
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:node];
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil];
         }
     }
 }

@@ -112,7 +112,7 @@
                 
                 [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
-                [self mnz_openNodeInNavigationController:navigationController folderLink:NO fileLink:nil];
+                [self mnz_openNodeInNavigationController:navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil];
             }
             break;
         }
@@ -123,7 +123,7 @@
     }
 }
 
-- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink {
+- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId {
     if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
@@ -132,7 +132,7 @@
             if ([presenterVC conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)] && [AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive] && (isFolderLink || (!isFolderLink && fileLink == nil))) {
                 [AudioPlayerManager.shared initMiniPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
             } else {
-                [AudioPlayerManager.shared initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC];
+                [self initFullScreenPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC messageId:messageId chatId:chatId];
             }
         } else {
             UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink inViewController:navigationController.viewControllers.lastObject];

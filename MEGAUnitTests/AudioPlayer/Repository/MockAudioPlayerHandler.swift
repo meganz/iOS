@@ -1,3 +1,4 @@
+import MEGADomain
 @testable import MEGA
 
 final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
@@ -135,7 +136,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func playerQueueItems() -> [AudioPlayerItem]? { nil }
     func playerPlaylistItems() -> [AudioPlayerItem]? { nil}
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {}
-    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {}
+    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity) {}
     func playerHidden(_ hidden: Bool, presenter: UIViewController) {}
     func closePlayer() {}
     func presentMiniPlayer(_ viewController: UIViewController) {}

@@ -392,7 +392,7 @@
                     if (node.name.mnz_isVisualMediaPathExtension) {
                         [self presentMediaNode:node];
                     } else {
-                        [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil];
+                        [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil messageId:nil chatId:nil];
                     }
                 }
             }
@@ -703,7 +703,7 @@
         if (node.name.mnz_isVisualMediaPathExtension) {
             [self presentMediaNode:node];
         } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil messageId:nil chatId:nil];
         }
     }
 }
@@ -737,7 +737,7 @@
             if (node.name.mnz_isVisualMediaPathExtension) {
                 [self presentMediaNode:node];
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil];
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil messageId:nil chatId:nil];
             }
             break;
         }

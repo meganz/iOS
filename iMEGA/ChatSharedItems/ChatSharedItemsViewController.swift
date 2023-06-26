@@ -420,9 +420,9 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
             } else {
                 if chatRoom.isPreview {
                     guard let authNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(selectedNode, cauth: chatRoom.authorizationToken) else { return }
-                    authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
+                    authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil)
                 } else {
-                    selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
+                    selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil)
                 }
             }
         }

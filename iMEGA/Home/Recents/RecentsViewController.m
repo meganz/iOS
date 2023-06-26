@@ -243,7 +243,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
                 if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
                     [AudioPlayerManager.shared initMiniPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
                 } else {
-                    [AudioPlayerManager.shared initFullScreenPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self];
+                    [self initFullScreenPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self];
                 }
             } else {
                 UIViewController *displayViewController = [self viewControllerForNode:node withFolderLink:NO];

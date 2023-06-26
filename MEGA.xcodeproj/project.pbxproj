@@ -127,6 +127,8 @@
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
+		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
+		243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */; };
 		245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */; };
 		245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A72A32DDFD005F6527 /* AppMetaData.swift */; };
 		245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */; };
@@ -2597,6 +2599,8 @@
 		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
+		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
+		243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+Additions.swift"; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
 		245CB1A72A32DDFD005F6527 /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
 		245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaData.swift; sourceTree = "<group>"; };
@@ -6087,6 +6091,7 @@
 				A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */,
 				837A88C020B44AA8007B55D1 /* OfflineViewController.h */,
 				837A88C120B44AA8007B55D1 /* OfflineViewController.m */,
+				243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */,
 			);
 			path = Offline;
 			sourceTree = "<group>";
@@ -6395,6 +6400,7 @@
 				B6A4A10F21A2544C007E7EEC /* MEGAError+MNZCategory.h */,
 				B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */,
 				C4C6A49527A4632600873165 /* MegaNode+Display.swift */,
+				2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */,
 				B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */,
 				5B5737D41EFBE6410027ECCD /* MEGANode+MNZCategory.h */,
 				5B5737D51EFBE6410027ECCD /* MEGANode+MNZCategory.m */,
@@ -13382,6 +13388,7 @@
 				8340CAEF284E222D007C3B39 /* HeaderView.swift in Sources */,
 				8340CAF2284E28F5007C3B39 /* HeaderViewModel.swift in Sources */,
 				B6472E082581D35D0040B2DB /* HeartbeatRequestDelegate.swift in Sources */,
+				243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */,
 				B6D0B357283CE48C0020C64D /* Helper+Additions.swift in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
 				7288C2C927F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift in Sources */,
@@ -13459,6 +13466,7 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				5BFA9630252E1119003653EB /* ManageChatHistoryRepository.swift in Sources */,
 				B69AF66828A1E5190022B094 /* ManageChatHistoryTableViewController.swift in Sources */,
+				2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */,
 				B69AF66B28A1E5190022B094 /* ManageChatHistoryViewModel.swift in Sources */,
 				B69AF66228A1E5190022B094 /* ManageChatHistoryViewRouter.swift in Sources */,
 				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,

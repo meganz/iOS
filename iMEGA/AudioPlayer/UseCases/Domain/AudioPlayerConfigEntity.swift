@@ -1,3 +1,4 @@
+import MEGADomain
 
 struct AudioPlayerConfigEntity {
     // Nodes, File Links, Folder Links
@@ -5,6 +6,10 @@ struct AudioPlayerConfigEntity {
     var isFolderLink = false
     
     var fileLink: String?
+    
+    /// Assign these two property for download audio file from chat entry point scenario
+    var messageId: HandleEntity?
+    var chatId: HandleEntity?
     
     // Offline Files
     var relatedFiles: [String]?
