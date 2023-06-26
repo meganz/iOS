@@ -1,8 +1,9 @@
+import MEGADomain
 import SwiftUI
 
 struct UpgradeSectionHeaderView: View {
     var currentPlanName: String
-    @Binding var selectedTermIndex: Int
+    @Binding var selectedTermTab: AccountPlanTermEntity
     
     var body: some View {
         Section {
@@ -16,9 +17,11 @@ struct UpgradeSectionHeaderView: View {
                 .bold()
                 .padding(.top, 1)
             
-            Picker("Account Plan Term", selection: $selectedTermIndex) {
-                Text(Strings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.monthly).tag(0)
-                Text(Strings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.yearly).tag(1)
+            Picker("Account Plan Term", selection: $selectedTermTab) {
+                Text(Strings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.monthly)
+                    .tag(AccountPlanTermEntity.monthly)
+                Text(Strings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.yearly)
+                    .tag(AccountPlanTermEntity.yearly)
             }
             .pickerStyle(.segmented)
             .frame(width: 200)

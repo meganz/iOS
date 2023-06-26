@@ -14,6 +14,12 @@ public enum SubscriptionStatusEntity {
     case invalid
 }
 
+public enum SubscriptionCycleEntity {
+    case none
+    case monthly
+    case yearly
+}
+
 public struct AccountDetailsEntity {
     public let storageUsed: UInt64
     public let versionsStorageUsed: Int64
@@ -25,10 +31,10 @@ public struct AccountDetailsEntity {
     public let subscriptionStatus: SubscriptionStatusEntity
     public let subscriptionRenewTime: Int
     public let subscriptionMethod: String?
-    public let subscriptionCycle: String?
+    public let subscriptionCycle: SubscriptionCycleEntity
     public let numberUsageItems: Int
     
-    public init(storageUsed: UInt64, versionsStorageUsed: Int64, storageMax: UInt64, transferOwnUsed: UInt64, transferMax: UInt64, proLevel: AccountTypeEntity, proExpiration: Int, subscriptionStatus: SubscriptionStatusEntity, subscriptionRenewTime: Int, subscriptionMethod: String?, subscriptionCycle: String?, numberUsageItems: Int) {
+    public init(storageUsed: UInt64, versionsStorageUsed: Int64, storageMax: UInt64, transferOwnUsed: UInt64, transferMax: UInt64, proLevel: AccountTypeEntity, proExpiration: Int, subscriptionStatus: SubscriptionStatusEntity, subscriptionRenewTime: Int, subscriptionMethod: String?, subscriptionCycle: SubscriptionCycleEntity, numberUsageItems: Int) {
         self.storageUsed = storageUsed
         self.versionsStorageUsed = versionsStorageUsed
         self.storageMax = storageMax

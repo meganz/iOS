@@ -9,15 +9,15 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private var accountDetails: AccountDetailsEntity
     
     @Published var isDismiss = false
-    @Published var selectedTermIndex = 1
     @Published private(set) var currentPlan: AccountPlanEntity?
     private var recommendedPlan: AccountPlanEntity?
     
     var isShowBuyButton = false
+    @Published var selectedTermTab: AccountPlanTermEntity = .yearly {
+        didSet { toggleBuyButton() }
+    }
     @Published private(set) var selectedPlan: AccountPlanEntity? {
-        didSet {
-            isShowBuyButton = selectedPlan != nil
-        }
+        didSet { toggleBuyButton() }
     }
     
     init(accountDetails: AccountDetailsEntity, purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol) {
@@ -30,23 +30,44 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private func setupPlans() {
         Task {
             planList = await purchaseUseCase.accountPlanProducts()
+            await setDefaultPlanTermTab()
             await setCurrentPlan(type: accountDetails.proLevel)
         }
     }
     
+    private func toggleBuyButton() {
+        guard let selectedPlan else {
+            isShowBuyButton = false
+            return
+        }
+
+        let isSelectedYearlyPlanOnYearlyTab = selectedTermTab == .monthly && selectedPlan.term == .monthly
+        let isSelectedMonthlyPlanOnMonthlyTab = selectedTermTab == .yearly && selectedPlan.term == .yearly
+        isShowBuyButton = isSelectedMonthlyPlanOnMonthlyTab || isSelectedYearlyPlanOnYearlyTab
+    }
+    
+    @MainActor
+    private func setDefaultPlanTermTab() {
+        selectedTermTab = accountDetails.subscriptionCycle == .monthly ? .monthly : .yearly
+    }
+
     @MainActor
     private func setCurrentPlan(type: AccountTypeEntity) {
         guard type != .free else {
             currentPlan = AccountPlanEntity(type: .free, name: AccountTypeEntity.free.toAccountTypeDisplayName())
             return
         }
+
+        let cycle = accountDetails.subscriptionCycle
         currentPlan = planList.first { plan in
-            plan.type == type
+            guard cycle != .none else {
+                return plan.type == type
+            }
+            
+            let term = cycle == .monthly ? AccountPlanTermEntity.monthly : AccountPlanTermEntity.yearly
+            return plan.type == type && plan.term == term
         }
         
-        recommendedPlan = planList.first { plan in
-            plan.type == .proII
-        }
     }
 
     // MARK: - Public
@@ -59,11 +80,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     var filteredPlanList: [AccountPlanEntity] {
-        switch selectedTermIndex {
-        case 0: return planList.filter { $0.term == .monthly }
-        case 1: return planList.filter { $0.term == .yearly }
-        default: return []
-        }
+        planList.filter { $0.term == selectedTermTab }
     }
     
     func createAccountPlanViewModel(_ plan: AccountPlanEntity) -> AccountPlanViewModel {
@@ -71,13 +88,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             plan: plan,
             planTag: planTag(plan),
             isSelected: isPlanSelected(plan),
+            isSelectionEnabled: isSelectionEnabled(forPlan: plan),
             didTapPlan: {
                 self.setSelectedPlan(plan)
             })
     }
     
     func setSelectedPlan(_ plan: AccountPlanEntity) {
-        guard plan != currentPlan else { return }
+        guard isSelectionEnabled(forPlan: plan) else { return }
         guard let selectedPlan else {
             selectedPlan = plan
             return
@@ -87,7 +105,15 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     // MARK: - Private
     private func planTag(_ plan: AccountPlanEntity) -> AccountPlanTagEntity {
-        if let currentPlan, plan == currentPlan { return .currentPlan }
+        guard let currentPlan else { return .none }
+        
+        switch accountDetails.subscriptionCycle {
+        case .none:
+            if currentPlan.type == plan.type { return .currentPlan }
+        default:
+            if plan == currentPlan { return .currentPlan }
+        }
+
         if let recommendedPlan, plan == recommendedPlan { return .recommended }
         return .none
     }
@@ -95,5 +121,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private func isPlanSelected(_ plan: AccountPlanEntity) -> Bool {
         guard let selectedPlan else { return false }
         return selectedPlan == plan
+    }
+    
+    private func isSelectionEnabled(forPlan plan: AccountPlanEntity) -> Bool {
+        guard let currentPlan, accountDetails.subscriptionCycle != .none else {
+            return true
+        }
+        return currentPlan != plan
     }
 }

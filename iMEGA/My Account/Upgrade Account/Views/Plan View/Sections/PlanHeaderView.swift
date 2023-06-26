@@ -13,7 +13,7 @@ struct PlanHeaderView: View {
             
             Spacer()
             
-            if !viewModel.isCurrenPlan {
+            if viewModel.isSelectionEnabled {
                 CheckMarkView(
                     markedSelected: viewModel.isSelected,
                     foregroundColor: viewModel.isSelected ? Color(Colors.Views.turquoise.color) : Color(Colors.UpgradeAccount.Plan.unselectedTint.color),
