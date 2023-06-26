@@ -26,7 +26,12 @@ extension NotificationsTableViewController {
         return NSAttributedString(string: alert.title)
     }
     
-    @objc func contentForUpdatedScheduledMeeting(withAlert alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
+    @objc func contentForUpdatedScheduledMeeting(
+        withAlert alert: MEGAUserAlert,
+        indexPath: IndexPath,
+        checkForOccurrenceChange: Bool,
+        useDefaultMessage: Bool
+    ) -> NSAttributedString? {
         guard let scheduledMeetingEntity = scheduledMeeting(
             withScheduleMeetingId: alert.scheduledMeetingId,
             chatId: alert.nodeHandle
@@ -34,7 +39,7 @@ extension NotificationsTableViewController {
             return nil
         }
         
-        if alert.pendingContactRequestHandle != MEGAInvalidHandle {
+        if alert.pendingContactRequestHandle != MEGAInvalidHandle, checkForOccurrenceChange {
             return occurrenceContent(for: alert, indexPath: indexPath)
         } else if alert.hasScheduledMeetingChangeType(.cancelled) {
             if alert.hasScheduledMeetingChangeType(.rules) {
@@ -94,7 +99,7 @@ extension NotificationsTableViewController {
             }
         }
         
-        return NSAttributedString(string: alert.title)
+        return useDefaultMessage ? NSAttributedString(string: alert.title) : nil
     }
     
     @objc func scheduledMeeting(withScheduleMeetingId meetingId: ChatIdEntity, chatId: ChatIdEntity) -> MEGAChatScheduledMeeting? {
@@ -137,7 +142,10 @@ extension NotificationsTableViewController {
     private func occurrenceContent(for alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
         if let notification = scheduleMeetingOccurrenceNotificationList.filter({ $0.alert.identifier == alert.identifier }).first {
             if let message = notification.message {
-                return createAttributedStringForBoldTags(content: message)
+                return message
+            } else if notification.isMessageLoaded {
+                MEGALogError("Unable to load message for alert with title \(notification.alert.title ?? "")")
+                return nil
             } else {
                 Task {
                     do {
@@ -149,7 +157,14 @@ extension NotificationsTableViewController {
                 }
             }
         } else {
-            let notification = ScheduleMeetingOccurrenceNotification(alert: alert)
+            let notification = ScheduleMeetingOccurrenceNotification(alert: alert) { [weak self] message in
+                guard let self else { return nil }
+                return createAttributedStringForBoldTags(content: message)
+            } alternateMessage: { [weak self] in
+                guard let self else { return nil }
+                return alternativeMessage(for: alert, indexPath: indexPath)
+            }
+            
             scheduleMeetingOccurrenceNotificationList.append(notification)
 
             Task {
@@ -163,6 +178,30 @@ extension NotificationsTableViewController {
         }
         
         return nil
+    }
+    
+    private func alternativeMessage(for alert: MEGAUserAlert, indexPath: IndexPath) -> NSAttributedString? {
+        guard let message = contentForUpdatedScheduledMeeting(
+            withAlert: alert,
+            indexPath: indexPath,
+            checkForOccurrenceChange: false,
+            useDefaultMessage: false
+        ) else {
+            guard let scheduledMeetingEntity = scheduledMeeting(
+                withScheduleMeetingId: alert.scheduledMeetingId,
+                chatId: alert.nodeHandle
+            )?.toScheduledMeetingEntity() else {
+                return nil
+            }
+            
+            return contentForOneOffScheduledMeetingWithMultipleFieldsChanged(
+                scheduledMeeting: scheduledMeetingEntity,
+                chatId: alert.nodeHandle,
+                email: alert.email
+            )
+        }
+        
+        return message
     }
     
     private func contentForScheduledMeetingTitleUpdate(

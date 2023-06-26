@@ -4,61 +4,88 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
     // MARK: - Properties.
 
     let alert: MEGAUserAlert
-    private(set) var message: String?
+    private(set) var message: NSAttributedString?
+    private(set) var isMessageLoaded = false
+    private let createAttributedStringForBoldTags: (String) -> NSAttributedString?
+    private let alternateMessage: () -> NSAttributedString?
     
     // MARK: - Initializer.
     
-    init(alert: MEGAUserAlert) {
+    init(
+        alert: MEGAUserAlert,
+        createAttributedStringForBoldTags: @escaping (String) -> NSAttributedString?,
+        alternateMessage: @escaping () -> NSAttributedString?
+    ) {
         self.alert = alert
+        self.createAttributedStringForBoldTags = createAttributedStringForBoldTags
+        self.alternateMessage = alternateMessage
     }
     
     // MARK: - Interface methods.
     
     func loadMessage() async throws {
+        defer { isMessageLoaded = true }
         let scheduledMeetingUseCase = ScheduledMeetingUseCase(
             repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)
         )
         
+        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeeting(
+            for: alert.scheduledMeetingId,
+            chatId: alert.nodeHandle
+        ) else {
+            throw ScheduleMeetingErrorEntity.scheduledMeetingNotFound
+        }
+        
         if alert.type == .scheduledMeetingUpdated {
-            guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeeting(
-                for: alert.scheduledMeetingId,
-                chatId: alert.nodeHandle
-            ) else {
-                return
-            }
-            
             if alert.hasScheduledMeetingChangeType(.cancelled) {
-                message = occurrenceCancelledMessage(
-                    withStartDate: scheduledMeeting.startDate,
-                    endDate: scheduledMeeting.endDate
+                message = createAttributedStringForBoldTags(
+                    occurrenceCancelledMessage(
+                        withStartDate: scheduledMeeting.startDate,
+                        endDate: scheduledMeeting.endDate
+                    )
                 )
             } else if alert.hasScheduledMeetingChangeType(.startDate)
                         || alert.hasScheduledMeetingChangeType(.endDate) {
-                message = occcurrenceUpdatedMessage(
-                    withStartDate: scheduledMeeting.startDate,
-                    endDate: scheduledMeeting.endDate
+                message = createAttributedStringForBoldTags(
+                    occcurrenceUpdatedMessage(
+                        withStartDate: scheduledMeeting.startDate,
+                        endDate: scheduledMeeting.endDate
+                    )
                 )
             }
             
         } else {
-            let occurrences = try await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(chatId: alert.nodeHandle)
+            let occurrences = try? await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(chatId: alert.nodeHandle)
                             
-            if let occurrence = occurrences.filter({
+            if let occurrence = occurrences?.filter({
                 $0.scheduledId == alert.scheduledMeetingId
                 && $0.parentScheduledId == alert.pendingContactRequestHandle
                 && $0.overrides == alert.number(at: 0)
             }).first {
                 if occurrence.cancelled {
-                    message = occurrenceCancelledMessage(
-                        withStartDate: occurrence.startDate,
-                        endDate: occurrence.endDate
+                    message = createAttributedStringForBoldTags(
+                        occurrenceCancelledMessage(
+                            withStartDate: occurrence.startDate,
+                            endDate: occurrence.endDate
+                        )
                     )
                 } else {
-                    message = occcurrenceUpdatedMessage(
-                        withStartDate: occurrence.startDate,
-                        endDate: occurrence.endDate
+                    message = createAttributedStringForBoldTags(
+                        occcurrenceUpdatedMessage(
+                            withStartDate: occurrence.startDate,
+                            endDate: occurrence.endDate
+                        )
                     )
                 }
+            } else if scheduledMeeting.cancelled {
+                message = createAttributedStringForBoldTags(
+                    occurrenceCancelledMessage(
+                        withStartDate: scheduledMeeting.startDate,
+                        endDate: scheduledMeeting.endDate
+                    )
+                )
+            } else {
+                message = alternateMessage()
             }
         }
     }

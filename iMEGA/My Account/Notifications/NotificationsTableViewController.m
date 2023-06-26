@@ -365,7 +365,10 @@
             break;
             
         case MEGAUserAlertTypeScheduledMeetingUpdated:
-            contentLabel.attributedText = [self contentForUpdatedScheduledMeetingWithAlert:userAlert indexPath:indexPath];
+            contentLabel.attributedText = [self contentForUpdatedScheduledMeetingWithAlert:userAlert
+                                                                                 indexPath:indexPath
+                                                                  checkForOccurrenceChange:YES
+                                                                         useDefaultMessage:YES];
             break;
             
         default:

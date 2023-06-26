@@ -42,20 +42,18 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
         try Task.checkCancellation()
         return try await withCheckedThrowingContinuation { continuation in
             chatSDK
-                .fetchScheduledMeetingOccurrences(byChat: chatId, delegate: MEGAChatGenericRequestDelegate { request, error in
+                .fetchScheduledMeetingOccurrences(byChat: chatId, delegate: ChatRequestDelegate { result in
                     guard Task.isCancelled == false else {
                         continuation.resume(throwing: CancellationError())
                         return
                     }
                     
-                    guard error.type == .MEGAChatErrorTypeOk else {
+                    if case .success(let request) = result {
+                        let occurrences = request.chatScheduledMeetingOccurrences.map { $0.toScheduledMeetingOccurrenceEntity() }
+                        continuation.resume(returning: occurrences)
+                    } else {
                         continuation.resume(throwing: ChatRoomErrorEntity.noChatRoomFound)
-                        return
                     }
-                    
-                    let occurrences = request.chatScheduledMeetingOccurrences.map { $0.toScheduledMeetingOccurrenceEntity() }
-                    
-                    continuation.resume(returning: occurrences)
                 })
         }
     }
@@ -67,20 +65,18 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 return
             }
             chatSDK
-                .fetchScheduledMeetingOccurrences(byChat: chatId, since: UInt64(since.timeIntervalSince1970), delegate: MEGAChatGenericRequestDelegate { request, error in
+                .fetchScheduledMeetingOccurrences(byChat: chatId, since: UInt64(since.timeIntervalSince1970), delegate: ChatRequestDelegate { result in
                     guard Task.isCancelled == false else {
                         continuation.resume(throwing: CancellationError())
                         return
                     }
                     
-                    guard error.type == .MEGAChatErrorTypeOk else {
+                    if case .success(let request) = result {
+                        let occurrences = request.chatScheduledMeetingOccurrences.map { $0.toScheduledMeetingOccurrenceEntity() }
+                        continuation.resume(returning: occurrences)
+                    } else {
                         continuation.resume(throwing: ChatRoomErrorEntity.noChatRoomFound)
-                        return
                     }
-                    
-                    let occurrences = request.chatScheduledMeetingOccurrences.map { $0.toScheduledMeetingOccurrenceEntity() }
-                    
-                    continuation.resume(returning: occurrences)
                 })
         }
     }
@@ -109,23 +105,24 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 flags: MEGAChatScheduledFlags(sendEmails: meeting.calendarInvite),
                 rules: meeting.rules?.toMEGAChatScheduledRules(),
                 attributes: nil,
-                delegate: MEGAChatGenericRequestDelegate { request, error in
+                delegate: ChatRequestDelegate { result in
                     guard Task.isCancelled == false else {
                         continuation.resume(throwing: CancellationError())
                         return
                     }
                     
-                    guard error.type == .MEGAChatErrorTypeOk else {
+                    if case .success(let request) = result {
+                        guard let scheduledMeeting = request.scheduledMeetingList.first?.toScheduledMeetingEntity() else {
+                            continuation.resume(throwing: ScheduleMeetingErrorEntity.scheduledMeetingNotFound)
+                            return
+                        }
+                        
+                        continuation.resume(returning: scheduledMeeting)
+
+                    } else {
                         continuation.resume(throwing: ScheduleMeetingErrorEntity.invalidArguments)
-                        return
+
                     }
-                    
-                    guard let scheduledMeeting = request.scheduledMeetingList.first?.toScheduledMeetingEntity() else {
-                        continuation.resume(throwing: ScheduleMeetingErrorEntity.scheduledMeetingNotFound)
-                        return
-                    }
-                    
-                    continuation.resume(returning: scheduledMeeting)
                 }
             )
         }
