@@ -1,4 +1,6 @@
 import FileProvider
+import MEGAData
+import MEGADomain
 
 final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
     
@@ -14,15 +16,31 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
     }
 
     func enumerateItems(for observer: NSFileProviderEnumerationObserver, startingAt page: NSFileProviderPage) {
-        do {
-            let items = try fetchItems()
-            observer.didEnumerate(items)
-        } catch {
-            observer.finishEnumeratingWithError(error)
-            return
+        Task {
+            do {
+                if MEGASdk.shared.isLoggedIn() == 0 {
+                    let authUseCase = AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository.newRepo)
+                    
+                    guard let sessionId = authUseCase.sessionId() else {
+                        MEGALogError("[Picker] Can't login: no session")
+                        return
+                    }
+                    
+                    try await authUseCase.login(sessionId: sessionId)
+                    
+                    let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+                    
+                    try await nodeActionUseCase.fetchnodes()
+                }
+                
+                let items = try fetchItems()
+                observer.didEnumerate(items)
+                
+                observer.finishEnumerating(upTo: nil)
+            } catch {
+                observer.finishEnumeratingWithError(error)
+            }
         }
-        
-        observer.finishEnumerating(upTo: nil)
     }
     
     // MARK: - Private
