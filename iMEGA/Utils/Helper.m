@@ -587,7 +587,7 @@
     if ([cell isKindOfClass:[NodeTableViewCell class]]) {
         NodeTableViewCell *nodeTableViewCell = cell;
         [nodeTableViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];
-        nodeTableViewCell.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+        nodeTableViewCell.thumbnailPlayImageView.hidden = ![FileExtensionGroupOCWrapper verifyIsVideo:node.name];
     } else if ([cell isKindOfClass:[PhotoCollectionViewCell class]]) {
         PhotoCollectionViewCell *photoCollectionViewCell = cell;
         [photoCollectionViewCell.thumbnailImageView setImage:[UIImage imageWithContentsOfFile:thumbnailFilePath]];

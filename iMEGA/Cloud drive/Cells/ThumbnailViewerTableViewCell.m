@@ -67,7 +67,7 @@
         MEGANode *node = [nodesArray objectAtIndex:i];
         if ([FileExtensionGroupOCWrapper verifyIsImage:node.name]) {
             numberOfPhotos++;
-        } else if (node.name.mnz_isVideoPathExtension) {
+        } else if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
             numberOfVideos++;
         }
     }
@@ -135,9 +135,10 @@
     itemCell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     itemCell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
-    itemCell.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
-    itemCell.videoDurationLabel.text = node.name.mnz_isVideoPathExtension ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
-    itemCell.videoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
+    BOOL isVideoNode = [FileExtensionGroupOCWrapper verifyIsVideo:node.name];
+    itemCell.thumbnailPlayImageView.hidden = node.hasThumbnail ? !isVideoNode : YES;
+    itemCell.videoDurationLabel.text = isVideoNode ? [NSString mnz_stringFromTimeInterval:node.duration] : @"";
+    itemCell.videoOverlayView.hidden = !isVideoNode;
     
     return itemCell;
 }

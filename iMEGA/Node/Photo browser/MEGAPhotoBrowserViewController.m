@@ -348,7 +348,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
     MEGANode *node = self.dataProvider.currentPhoto;
-    if (node.name.mnz_isVideoPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
         if (zoomableView) {
             zoomableView.subviews.lastObject.hidden = transparent;
@@ -512,7 +512,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     if (scrollView.tag != 1) {
         MEGANode *node = self.dataProvider.currentPhoto;
-        if (node.name.mnz_isVideoPathExtension && scale == 1.0f) {
+        if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name] && scale == 1.0f) {
             scrollView.subviews.lastObject.hidden = NO;
         }
         [_imageViewsZoomCache setObject: @(scale) forKey:@(self.dataProvider.currentIndex)];
@@ -604,7 +604,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             NSNumber* cachedZoomValue = [_imageViewsZoomCache objectForKey:@(i)];
             [zoomableView setZoomScale: (cachedZoomValue != nil ? [cachedZoomValue floatValue] : 1.0f)];
 
-            if (node.name.mnz_isVideoPathExtension) {
+            if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
                 UIButton *playButton = [[UIButton alloc] initWithFrame:CGRectMake((zoomableView.frame.size.width - self.playButtonSize) / 2, (zoomableView.frame.size.height - self.playButtonSize) / 2, self.playButtonSize, self.playButtonSize)];
                 if (node.mnz_isPlayable) {
                     [playButton setImage:[UIImage imageNamed:@"blackPlayButton"] forState:UIControlStateNormal];
@@ -983,7 +983,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)doubleTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
     MEGANode *node = self.dataProvider.currentPhoto;
-    if (node.name.mnz_isVideoPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         return;
     }
     UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
@@ -1017,7 +1017,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             }
             [self correctOriginForView:imageView scaledAt:newScale];
         } completion:^(BOOL finished) {
-            if (node.name.mnz_isVideoPathExtension && newScale == 1.0f) {
+            if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name] && newScale == 1.0f) {
                 zoomableView.subviews.lastObject.hidden = NO;
             }
         }];
@@ -1364,7 +1364,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         return nil;
     }
     
-    if (node.name.mnz_isVideoPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         UIImageView *imageview = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, self.playButtonSize, self.playButtonSize)];
         imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
         

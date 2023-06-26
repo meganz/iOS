@@ -3,14 +3,7 @@ import SwiftUI
 
 extension PhotoChronologicalCategory {
     var overlay: Image? {
-        guard let name = coverPhoto?.name else {
-            return nil
-        }
-        
-        if (name as NSString).mnz_isVideoPathExtension {
-            return Image(Asset.Images.Generic.videoList.name)
-        }
-        
-        return nil
+        guard coverPhoto?.name.fileExtensionGroup.isVideo == true else { return nil }
+        return Image(Asset.Images.Generic.videoList.name)
     }
 }

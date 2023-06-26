@@ -85,12 +85,12 @@
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-            self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+            self.thumbnailPlayImageView.hidden = ![FileExtensionGroupOCWrapper verifyIsVideo:node.name];
             self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
         } else {
             MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 if (request.nodeHandle == self.node.handle) {
-                    self.thumbnailPlayImageView.hidden = !node.name.mnz_isVideoPathExtension;
+                    self.thumbnailPlayImageView.hidden = ![FileExtensionGroupOCWrapper verifyIsVideo:node.name];
                     self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
                 }
             }];
@@ -101,7 +101,7 @@
         [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     }
     
-    if (!node.name.mnz_isVideoPathExtension) {
+    if (![FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         self.thumbnailPlayImageView.hidden = YES;
     }
         
@@ -170,7 +170,7 @@
     
     MEGANode *node = nodesArray.firstObject;
     [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
-    self.thumbnailPlayImageView.hidden = node.hasThumbnail ? !node.name.mnz_isVideoPathExtension : YES;
+    self.thumbnailPlayImageView.hidden = node.hasThumbnail ? ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] : YES;
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     

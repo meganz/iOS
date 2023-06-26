@@ -733,7 +733,7 @@
         [cell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     }
     
-    if (!node.name.mnz_isVideoPathExtension) {
+    if (![FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         cell.thumbnailPlayImageView.hidden = YES;
     }
     

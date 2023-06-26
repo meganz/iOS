@@ -82,7 +82,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
 
         viewModel.dispatch(.manageThumbnail)
         
-        if !nodeModel.name.mnz_isVideoPathExtension {
+        if !nodeModel.fileExtensionGroup.isVideo {
             thumbnailPlayImageView.isHidden = true
         }
         

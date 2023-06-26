@@ -239,7 +239,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject];
             [self.delegate showSelectedNodeInViewController:photoBrowserVC];
         } else {
-            if (node.name.mnz_isMultimediaPathExtension && !node.name.mnz_isVideoPathExtension && node.mnz_isPlayable) {
+            if (node.name.mnz_isMultimediaPathExtension && ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] && node.mnz_isPlayable) {
                 if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
                     [AudioPlayerManager.shared initMiniPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
                 } else {

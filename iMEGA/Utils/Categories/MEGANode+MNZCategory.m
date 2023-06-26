@@ -127,7 +127,7 @@
     if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
-        if (self.name.mnz_isMultimediaPathExtension && !self.name.mnz_isVideoPathExtension && self.mnz_isPlayable) {
+        if (self.name.mnz_isMultimediaPathExtension && ![FileExtensionGroupOCWrapper verifyIsVideo:self.name] && self.mnz_isPlayable) {
             UIViewController *presenterVC = [navigationController.viewControllers lastObject];
             if ([presenterVC conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)] && [AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive] && (isFolderLink || (!isFolderLink && fileLink == nil))) {
                 [AudioPlayerManager.shared initMiniPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC shouldReloadPlayerInfo:YES shouldResetPlayer:YES];

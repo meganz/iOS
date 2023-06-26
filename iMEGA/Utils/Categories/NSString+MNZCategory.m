@@ -25,19 +25,6 @@ static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
 
-- (BOOL)mnz_isVideoPathExtension {
-    NSArray<NSString *> *supportedExtensions = @[@"3g2",
-                                                 @"3gp",
-                                                 @"avi",
-                                                 @"m4v",
-                                                 @"mov",
-                                                 @"mp4",
-                                                 @"mqv",
-                                                 @"qt"];
-    
-    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
-}
-
 - (BOOL)mnz_isAudioPathExtension {
     NSArray<NSString *> *supportedExtensions = @[@"aac",
                                                  @"ac3",
@@ -57,11 +44,11 @@ static NSString* const B = @"[B]";
 
 - (BOOL)mnz_isVisualMediaPathExtension {
     
-    return [FileExtensionGroupOCWrapper verifyIsImage:self] || self.mnz_isVideoPathExtension;
+    return [FileExtensionGroupOCWrapper verifyIsImage:self] || [FileExtensionGroupOCWrapper verifyIsVideo:self];
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
-    return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
+    return [FileExtensionGroupOCWrapper verifyIsVideo:self] || self.mnz_isAudioPathExtension;
 }
 
 - (BOOL)mnz_isEditableTextFilePathExtension {
@@ -818,7 +805,7 @@ static NSString* const B = @"[B]";
         }
     }
     
-    if (self.mnz_isVideoPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVideo:self]) {
         AVAsset *asset = [AVAsset assetWithURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:self]]];
         for (AVMetadataItem *item in asset.metadata) {
             if ([item.key isEqual:AVMetadataQuickTimeMetadataKeyLocationISO6709]) {

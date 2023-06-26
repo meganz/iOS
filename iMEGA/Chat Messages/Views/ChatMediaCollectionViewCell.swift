@@ -135,7 +135,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
         guard let node = megaMessage.nodeList?.node(at: 0) else { return }
         currentNode = node
-        let name = (node.name ?? "") as NSString
+        let name = node.toNodeEntity().name
         let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
         let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
         
@@ -187,7 +187,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             } else {
                 downloadGifIcon.isHidden = !loadingIndicator.isHidden
             }
-        } else if name.mnz_isVideoPathExtension {
+        } else if node.toNodeEntity().fileExtensionGroup.isVideo {
             durationLabel.text = TimeInterval(node.duration).timeString
             durationLabel.isHidden = false
             playIconView.isHidden = !loadingIndicator.isHidden

@@ -596,7 +596,7 @@
                 
             case ShareAttachmentTypeFile: {
                 NSURL *url = attachment.content;
-                if (self.isChatDestination && url.path.mnz_isVideoPathExtension) {
+                if (self.isChatDestination && [FileExtensionGroupOCWrapper verifyIsVideo:url.path]) {
                     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
                     ChatVideoUploadQuality videoQuality = [[sharedUserDefaults objectForKey:@"ChatVideoQuality"] unsignedIntegerValue];
                     if (videoQuality < ChatVideoUploadQualityOriginal) {

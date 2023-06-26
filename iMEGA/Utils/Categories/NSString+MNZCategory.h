@@ -8,7 +8,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (MNZCategory)
 
-@property (nonatomic, readonly, getter=mnz_isVideoPathExtension) BOOL mnz_videoPathExtension;
 @property (nonatomic, readonly, getter=mnz_isVisualMediaPathExtension) BOOL mnz_visualMediaPathExtension;
 @property (nonatomic, readonly, getter=mnz_isMultimediaPathExtension) BOOL mnz_multimediaPathExtension;
 @property (nonatomic, readonly, getter=mnz_isEditableTextFilePathExtension) BOOL mnz_isEditableTextFilePathExtension;

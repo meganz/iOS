@@ -19,7 +19,7 @@
     
     if ([FileExtensionGroupOCWrapper verifyIsImage:self.fileName]) {
         imageFilePath = transferAbsolutePath;
-    } else if (self.fileName.mnz_isVideoPathExtension) {
+    } else if ([FileExtensionGroupOCWrapper verifyIsVideo:self.fileName]) {
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:transferAbsolutePath] options:nil];
         AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
         generator.appliesPreferredTrackTransform = YES;
@@ -42,7 +42,7 @@
     [[MEGASdkManager sharedMEGASdk] createThumbnail:imageFilePath destinatioPath:thumbnailFilePath];
     [[MEGASdkManager sharedMEGASdk] createPreview:imageFilePath destinatioPath:previewFilePath];
     
-    if (self.fileName.mnz_isVideoPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVideo:self.fileName]) {
         [NSFileManager.defaultManager mnz_removeItemAtPath:imageFilePath];
     }
 }

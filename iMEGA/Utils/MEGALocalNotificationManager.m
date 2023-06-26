@@ -153,7 +153,7 @@
                     MEGANode *node = [nodeList nodeAtIndex:0];
                     
                     if (node.hasThumbnail) {
-                        if (node.name.mnz_isVideoPathExtension) {
+                        if ([FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
                             body = [NSString stringWithFormat:@"📹 %@", node.name];
                         } else if ([FileExtensionGroupOCWrapper verifyIsImage:node.name]) {
                             body = [NSString stringWithFormat:@"📷 %@", node.name];
