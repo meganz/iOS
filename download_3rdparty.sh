@@ -9,9 +9,8 @@ if ! type "megacmd" > /dev/null; then
 fi
 
 echo "${PWD}"
-
-file="IAMjTJxB"
-key="fGxYIA1YhrXmcFZ9h6VEUNGSuX0uLRIog4X10XqEjZQ"
+file="MctwABZa"
+key="wWoEQLwYV4Vr0i-HxVySkBqVtD8oT5FCnnJXbVqxx2M"
 fileLinkUrl="https://mega.nz/#!${file}!${key}"
 downloadFilePath="./../download_3rdparty/${file}"
 unzipPath="./Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty"

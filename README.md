@@ -33,7 +33,7 @@ git submodule update --init --recursive
 ```
 
 #### Download 3rdparty packages
-1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/IAMjTJxB#fGxYIA1YhrXmcFZ9h6VEUNGSuX0uLRIog4X10XqEjZQ
+1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/MctwABZa#wWoEQLwYV4Vr0i-HxVySkBqVtD8oT5FCnnJXbVqxx2M
 2. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty`.
 
 #### Open and Run the project
