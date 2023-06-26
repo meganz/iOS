@@ -15,25 +15,11 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     private var subscriptions = Set<AnyCancellable>()
     
-    func testLoadCameraUploadNode_whenLoadingFavouriteAlbum_shouldReturnOneRootNode() async throws {
-        let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
-            fileSearchRepository: MockFilesSearchRepository.newRepo,
-            mediaUseCase: MockMediaUseCase(),
-            albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
-            albumContentsUseCase: MockAlbumContentUseCase())
-            
-        let rootNode = try await sut.loadCameraUploadNode()
-        XCTAssertNotNil(rootNode)
-    }
-    
     func testSystemAlbums_whenLoadingRawSystemAlbum_shouldReturnFavouriteAndRawAlbumEntity() async throws {
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: photos),
             mediaUseCase: MockMediaUseCase(isRawImage: true),
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let albums = try await sut.systemAlbums()
@@ -44,10 +30,9 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     func testSystemAlbums_whenLoadingGifSystemAlbum_shouldReturnFavouriteAndGifAlbumEntity() async throws {
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: photos),
             mediaUseCase: MockMediaUseCase(isGifImage: true),
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let albums = try await sut.systemAlbums()
@@ -61,10 +46,9 @@ final class AlbumListUseCaseTests: XCTestCase {
             NodeEntity(name: "1.gif", handle: 2, hasThumbnail: true, isFavourite: true, mediaType: .image)
         ]
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouriteGifPhotos),
             mediaUseCase: MockMediaUseCase(isGifImage: true),
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let albums = try await sut.systemAlbums()
@@ -79,10 +63,9 @@ final class AlbumListUseCaseTests: XCTestCase {
                        modificationTime: try "2022-08-18T22:0\($0):04Z".date, mediaType: .image)
         }
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouriteRawPhotos),
             mediaUseCase: MockMediaUseCase(isRawImage: true),
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let albums = try await sut.systemAlbums()
@@ -106,10 +89,9 @@ final class AlbumListUseCaseTests: XCTestCase {
         ]
         let expectedFavouritesCount = (favouritePhotos + favouriteVideos).filter { $0.hasThumbnail && $0.mediaType != nil && $0.isFavourite }.count
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let albums = try await sut.systemAlbums()
@@ -121,10 +103,9 @@ final class AlbumListUseCaseTests: XCTestCase {
     func testSystemAlbums_onLoad_verifySharedLinkStatusIsUnavailable() async throws {
         let favouriteImage = NodeEntity(handle: 22, hasThumbnail: true, isFavourite: true, mediaType: .image)
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository(),
             fileSearchRepository: MockFilesSearchRepository(photoNodes: [favouriteImage]),
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: MockUserAlbumRepository(),
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let albums = try await sut.systemAlbums()
@@ -145,10 +126,9 @@ final class AlbumListUseCaseTests: XCTestCase {
         let albumPhotos = [AlbumPhotoEntity(photo: expectedAlbumCover, albumPhotoId: albumSetCoverId),
                              AlbumPhotoEntity(photo: NodeEntity(name: "Test.jpg", handle: 50))]
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumElement: albumElement),
             fileSearchRepository: MockFilesSearchRepository(photoNodes: [expectedAlbumCover]),
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums, albumElement: albumElement),
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos))
         let albums = await sut.userAlbums()
@@ -164,10 +144,9 @@ final class AlbumListUseCaseTests: XCTestCase {
                       modificationTime: Date(), name: "Album 1")
         ]
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
             fileSearchRepository: MockFilesSearchRepository(),
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let albums = await sut.userAlbums()
@@ -194,10 +173,9 @@ final class AlbumListUseCaseTests: XCTestCase {
         let userRepo = MockUserAlbumRepository(albums: expectedAlbums,
                                                albumElement: nil)
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: userRepo,
             fileSearchRepository: MockFilesSearchRepository.newRepo,
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: userRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase(photos: albumPhotos))
         let albums = await sut.userAlbums()
@@ -213,10 +191,9 @@ final class AlbumListUseCaseTests: XCTestCase {
             SetEntity(handle: albumId, isExported: expectedIsExported)
         ]
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
             fileSearchRepository: MockFilesSearchRepository(),
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: MockUserAlbumRepository(albums: expectedAlbums),
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let albums = await sut.userAlbums()
@@ -234,10 +211,9 @@ final class AlbumListUseCaseTests: XCTestCase {
             expectedCoverNode
         ]
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         let result = try await sut.createUserAlbum(with: "Custom Album")
@@ -247,8 +223,6 @@ final class AlbumListUseCaseTests: XCTestCase {
     
     func testHasNoPhotosAndVideos_whenCreatingAlbumInFreshNewAccount_shouldReturnEmpty() async throws {
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository(
                 photoNodes: [
                     NodeEntity(name: "0.jpg", handle: 0, hasThumbnail: false, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date),
@@ -256,6 +230,7 @@ final class AlbumListUseCaseTests: XCTestCase {
                 ]
             ),
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         
@@ -267,10 +242,9 @@ final class AlbumListUseCaseTests: XCTestCase {
         let albumReloadPublisher = PassthroughSubject<Void, Never>()
         let albumContentRepo = MockAlbumContentsUpdateNotifierRepository(albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher())
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
             fileSearchRepository: MockFilesSearchRepository.newRepo,
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: MockUserAlbumRepository.newRepo,
             albumContentsUpdateRepository: albumContentRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         
@@ -290,10 +264,9 @@ final class AlbumListUseCaseTests: XCTestCase {
         let userRepo = MockUserAlbumRepository(setsUpdatedPublisher: setsUpdatedPublisher.eraseToAnyPublisher(),
                                                setElemetsUpdatedPublisher: setElementsUpdatedPublisher.eraseToAnyPublisher())
         let sut = AlbumListUseCase(
-            albumRepository: MockAlbumRepository.newRepo,
-            userAlbumRepository: userRepo,
             fileSearchRepository: MockFilesSearchRepository.newRepo,
             mediaUseCase: MockMediaUseCase(),
+            userAlbumRepository: userRepo,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
         

@@ -3,24 +3,24 @@ import Foundation
 
 public protocol AlbumListUseCaseProtocol {
     var albumsUpdatedPublisher: AnyPublisher<Void, Never> { get }
-    func loadCameraUploadNode() async throws -> NodeEntity?
     func systemAlbums() async throws -> [AlbumEntity]
     func userAlbums() async -> [AlbumEntity]
     func createUserAlbum(with name: String?) async throws -> AlbumEntity
     func hasNoPhotosAndVideos() async -> Bool
 }
 
-public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchRepositoryProtocol,
-                               V: MediaUseCaseProtocol, W: UserAlbumRepositoryProtocol,
-                               X: AlbumContentsUpdateNotifierRepositoryProtocol, Y: AlbumContentsUseCaseProtocol>:
+public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
+                               U: MediaUseCaseProtocol,
+                               V: UserAlbumRepositoryProtocol,
+                               W: AlbumContentsUpdateNotifierRepositoryProtocol,
+                               X: AlbumContentsUseCaseProtocol>:
                                 AlbumListUseCaseProtocol {
     
-    private let albumRepository: T
-    private let fileSearchRepository: U
-    private let mediaUseCase: V
-    private let userAlbumRepository: W
-    private let albumContentsUpdateRepository: X
-    private let albumContentsUseCase: Y
+    private let fileSearchRepository: T
+    private let mediaUseCase: U
+    private let userAlbumRepository: V
+    private let albumContentsUpdateRepository: W
+    private let albumContentsUseCase: X
     
     public var albumsUpdatedPublisher: AnyPublisher<Void, Never> {
         userAlbumUpdates
@@ -41,23 +41,17 @@ public struct AlbumListUseCase<T: AlbumRepositoryProtocol, U: FilesSearchReposit
     }
     
     public init(
-        albumRepository: T,
-        userAlbumRepository: W,
-        fileSearchRepository: U,
-        mediaUseCase: V,
-        albumContentsUpdateRepository: X,
-        albumContentsUseCase: Y
+        fileSearchRepository: T,
+        mediaUseCase: U,
+        userAlbumRepository: V,
+        albumContentsUpdateRepository: W,
+        albumContentsUseCase: X
     ) {
-        self.albumRepository = albumRepository
         self.fileSearchRepository = fileSearchRepository
         self.mediaUseCase = mediaUseCase
         self.userAlbumRepository = userAlbumRepository
         self.albumContentsUpdateRepository = albumContentsUpdateRepository
         self.albumContentsUseCase = albumContentsUseCase
-    }
-    
-    public func loadCameraUploadNode() async throws -> NodeEntity? {
-        return try await albumRepository.loadCameraUploadNode()
     }
     
     public func systemAlbums() async throws -> [AlbumEntity] {
