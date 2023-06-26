@@ -30,7 +30,7 @@ final class ReportIssueMessageViewModelTests: XCTestCase {
     }
     
     private func accountDetailsEntity(accountType: AccountTypeEntity) -> AccountDetailsEntity {
-        AccountDetailsEntity(storageUsed: 0, versionsStorageUsed: 0, storageMax: 0, transferOwnUsed: 0, transferMax: 0, proLevel: accountType, proExpiration: 0, subscriptionStatus: .none, subscriptionRenewTime: 0, subscriptionMethod: nil, subscriptionCycle: nil, numberUsageItems: 0)
+        AccountDetailsEntity(storageUsed: 0, versionsStorageUsed: 0, storageMax: 0, transferOwnUsed: 0, transferMax: 0, proLevel: accountType, proExpiration: 0, subscriptionStatus: .none, subscriptionRenewTime: 0, subscriptionMethod: nil, subscriptionCycle: .none, numberUsageItems: 0)
     }
     
     private func mockAppMetaData() -> AppMetaData {

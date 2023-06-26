@@ -23,7 +23,7 @@ struct UpgradeAccountPlanView: View {
             ScrollView {
                 LazyVStack(pinnedViews: .sectionFooters) {
                     UpgradeSectionHeaderView(currentPlanName: viewModel.currentPlanName,
-                                             selectedTermIndex: $viewModel.selectedTermIndex)
+                                             selectedTermTab: $viewModel.selectedTermTab)
                     
                     Section {
                         ForEach(viewModel.filteredPlanList, id: \.self) { plan in

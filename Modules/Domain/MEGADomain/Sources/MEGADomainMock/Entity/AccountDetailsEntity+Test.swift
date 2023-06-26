@@ -11,7 +11,7 @@ public extension AccountDetailsEntity {
          subscriptionStatus: SubscriptionStatusEntity = .none,
          subscriptionRenewTime: Int = 0,
          subscriptionMethod: String? = nil,
-         subscriptionCycle: String? = nil,
+         subscriptionCycle: SubscriptionCycleEntity = .none,
          numberUsageItems: Int = 0,
          isTesting: Bool = true) {
         self.init(storageUsed: storageUsed, versionsStorageUsed: versionsStorageUsed, storageMax: storageMax, transferOwnUsed: transferOwnUsed, transferMax: transferMax, proLevel: proLevel, proExpiration: proExpiration, subscriptionStatus: subscriptionStatus, subscriptionRenewTime: subscriptionRenewTime, subscriptionMethod: subscriptionMethod, subscriptionCycle: subscriptionCycle, numberUsageItems: numberUsageItems)

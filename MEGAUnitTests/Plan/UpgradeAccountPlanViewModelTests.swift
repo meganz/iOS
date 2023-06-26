@@ -8,14 +8,14 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     private let freePlan = AccountPlanEntity(type: .free, name: "Free")
-    private let proLite = AccountPlanEntity(type: .lite, name: "Pro Lite", term: .monthly)
-    private let proI = AccountPlanEntity(type: .proI, name: "Pro I", term: .monthly)
-    private let proII = AccountPlanEntity(type: .proII, name: "Pro II", term: .yearly)
-    private let proIII = AccountPlanEntity(type: .proIII, name: "Pro III", term: .yearly)
+    private let proI_monthly = AccountPlanEntity(type: .proI, name: "Pro I", term: .monthly)
+    private let proI_yearly = AccountPlanEntity(type: .proI, name: "Pro I", term: .yearly)
+    private let proII_monthly = AccountPlanEntity(type: .proII, name: "Pro II", term: .monthly)
+    private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", term: .yearly)
     
     func testCurrentPlanValue_freePlan_shouldBeFreePlan() {
         let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proLite, proI]
+        let planList = [proI_monthly, proI_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
@@ -32,7 +32,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
 
     func testCurrentPlanValue_freePlan_shouldNotBeNil() {
         let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proLite, proI]
+        let planList = [proI_monthly, proI_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
@@ -49,7 +49,7 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     
     func testCurrentPlanName_shouldMatchCurrentPlanName() {
         let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proLite, proI]
+        let planList = [proI_monthly, proI_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
@@ -65,8 +65,8 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     func testCurrentPlanValue_shouldMatchCurrentPlan() {
-        let details = AccountDetailsEntity(proLevel: .lite)
-        let planList = [proLite, proI]
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList = [proI_monthly, proI_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
@@ -78,12 +78,12 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             }.store(in: &subscriptions)
         wait(for: [exp], timeout: 0.5)
         
-        XCTAssertEqual(sut.currentPlan, proLite)
+        XCTAssertEqual(sut.currentPlan, proI_monthly)
     }
     
     func testCurrentPlanValue_notMatched_shouldBeFailed() {
         let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proLite, proI]
+        let planList = [proI_monthly, proI_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
@@ -95,13 +95,31 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             }.store(in: &subscriptions)
         wait(for: [exp], timeout: 0.5)
         
-        XCTAssertNotEqual(sut.currentPlan, proLite)
-        XCTAssertNotEqual(sut.currentPlan, proI)
+        XCTAssertNotEqual(sut.currentPlan, proI_yearly)
+        XCTAssertNotEqual(sut.currentPlan, proI_monthly)
     }
     
     func testSelectedPlanName_shouldMatchSelectedPlanName() {
         let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proLite, proI, proII, proIII]
+        let planList = [proI_monthly, proI_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+
+        let exp = expectation(description: "Setting Current plan")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+        
+        sut.setSelectedPlan(proI_monthly)
+        XCTAssertEqual(sut.selectedPlanName, proI_monthly.name)
+    }
+    
+    func testSelectedPlan_freeAccount_shouldMatchSelectedPlan() {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let planList = [proI_monthly, proI_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
@@ -113,15 +131,15 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
             }.store(in: &subscriptions)
         wait(for: [exp], timeout: 0.5)
         
-        sut.setSelectedPlan(proI)
-        XCTAssertEqual(sut.selectedPlanName, proI.name)
+        sut.setSelectedPlan(proI_monthly)
+        XCTAssertEqual(sut.selectedPlan, proI_monthly)
     }
-    
-    func testSelectedPlan_shouldMatchSelectedPlan() {
-        let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proLite, proI, proII, proIII]
+
+    func testSelectedPlan_recurringPlanAccount_selectCurrentPlan_shouldNotSelectPlan() {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList = [proI_monthly, proI_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
-        
+
         let exp = expectation(description: "Setting Current plan")
         let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
         sut.$currentPlan
@@ -130,16 +148,92 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
                 exp.fulfill()
             }.store(in: &subscriptions)
         wait(for: [exp], timeout: 0.5)
-        
-        sut.setSelectedPlan(proI)
-        XCTAssertEqual(sut.selectedPlan, proI)
+
+        sut.setSelectedPlan(proI_monthly)
+        XCTAssertNotEqual(sut.selectedPlan, proI_monthly)
     }
-    
-    func testSelectedPlan_willSelectCurrentPlan_shouldNotSetSelectedPlan() {
-        let details = AccountDetailsEntity(proLevel: .proI)
-        let planList = [proLite, proI, proII, proIII]
+
+    func testSelectedTermTab_freeAccount_defaultShouldBeYearly() {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let mockUseCase = MockAccountPlanPurchaseUseCase()
+
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        XCTAssertEqual(sut.selectedTermTab, .yearly)
+    }
+
+    func testSelectedTermTab_oneTimePurchaseMonthly_defaultShouldBeYearly() {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .none)
+        let planList = [proI_monthly, proII_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+
+        let exp = expectation(description: "Setting Plan Term Tab")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$selectedTermTab
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+
+        XCTAssertEqual(sut.selectedTermTab, .yearly)
+    }
+
+    func testSelectedTermTab_oneTimePurchaseYearly_defaultShouldBeYearly() {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .none)
+        let planList = [proI_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+
+        let exp = expectation(description: "Setting Plan Term Tab")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$selectedTermTab
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
         
+        XCTAssertEqual(sut.selectedTermTab, .yearly)
+    }
+
+    func testSelectedTermTab_recurringPlanYearly_defaultShouldBeYearly() {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .yearly)
+        let planList = [proI_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+
+        let exp = expectation(description: "Setting Plan Term Tab")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$selectedTermTab
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+
+        XCTAssertEqual(sut.selectedTermTab, .yearly)
+    }
+
+    func testSelectedTermTab_recurringPlanMonthly_defaultShouldBeMonthly() {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList = [proI_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+
+        let exp = expectation(description: "Setting Plan Term Tab")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$selectedTermTab
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+        
+        XCTAssertEqual(sut.selectedTermTab, .monthly)
+    }
+
+    func testIsShowBuyButton_freeAccount_shouldBeTrue() {
+        let details = AccountDetailsEntity(proLevel: .free, subscriptionCycle: .none)
+        let planList = [proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+
         let exp = expectation(description: "Setting Current plan")
         let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
         sut.$currentPlan
@@ -148,80 +242,47 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
                 exp.fulfill()
             }.store(in: &subscriptions)
         wait(for: [exp], timeout: 0.5)
-        
-        sut.setSelectedPlan(proI)
-        XCTAssertNotEqual(sut.selectedPlan, proI)
-    }
-    
-    func testSelectedTermIndex_default_shouldBeYearly() {
-        let details = AccountDetailsEntity(proLevel: .free)
-        let mockUseCase = MockAccountPlanPurchaseUseCase()
-        
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
-        XCTAssertEqual(sut.selectedTermIndex, 1)
-    }
-    
-    func testCreateAccountPlanViewModel_withSelectedPlan_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .free)
-        let mockUseCase = MockAccountPlanPurchaseUseCase()
-        
-        let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
-        sut.$currentPlan
-            .dropFirst()
-            .sink { _ in
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        wait(for: [exp], timeout: 0.5)
-        
-        sut.setSelectedPlan(proLite)
-        let viewModel = sut.createAccountPlanViewModel(proLite)
-        
-        XCTAssertTrue(viewModel.isSelected)
-        XCTAssertEqual(viewModel.plan, proLite)
-        XCTAssertFalse(viewModel.isCurrenPlan)
-        XCTAssertEqual(viewModel.planTag, .none)
-    }
-    
-    func testCreateAccountPlanViewModel_notSelectedPlan_shouldReturnViewModel() {
-        let details = AccountDetailsEntity(proLevel: .free)
-        let mockUseCase = MockAccountPlanPurchaseUseCase()
-        
-        let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
-        sut.$currentPlan
-            .dropFirst()
-            .sink { _ in
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        wait(for: [exp], timeout: 0.5)
-        
-        sut.setSelectedPlan(proI)
-        let viewModel = sut.createAccountPlanViewModel(proLite)
-        
-        XCTAssertFalse(viewModel.isSelected)
-        XCTAssertEqual(viewModel.plan, proLite)
-        XCTAssertFalse(viewModel.isCurrenPlan)
-        XCTAssertEqual(viewModel.planTag, .none)
-    }
-    
-    func testIsShowBuyButton_withSelectedPlan_shouldBeTrue() {
-        let details = AccountDetailsEntity(proLevel: .free)
-        let mockUseCase = MockAccountPlanPurchaseUseCase()
-        
-        let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
-        sut.$currentPlan
-            .dropFirst()
-            .sink { _ in
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        wait(for: [exp], timeout: 0.5)
-        
-        sut.setSelectedPlan(proI)
+
+        sut.setSelectedPlan(proII_yearly)
         XCTAssertTrue(sut.isShowBuyButton)
     }
-    
+
+    func testIsShowBuyButton_selectedPlanTerm_equalToCurrentTermTab_shouldBeTrue() {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList = [proI_monthly, proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+
+        let exp = expectation(description: "Setting Current plan")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+
+        sut.setSelectedPlan(proII_monthly)
+        XCTAssertTrue(sut.isShowBuyButton)
+    }
+
+    func testIsShowBuyButton_selectedPlanTerm_notEqualToCurrentTermTab_shouldBeFalse() {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .yearly)
+        let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+
+        let exp = expectation(description: "Setting Current plan")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+
+        sut.setSelectedPlan(proII_monthly)
+        XCTAssertFalse(sut.isShowBuyButton)
+    }
+
     func testIsShowBuyButton_noSelectedPlan_shouldBeFalse() {
         let details = AccountDetailsEntity(proLevel: .free)
         let mockUseCase = MockAccountPlanPurchaseUseCase()
@@ -232,37 +293,37 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     
     func testFilteredPlanList_monthly_shouldReturnMonthlyPlans() {
         let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proLite, proI, proII, proIII]
+        let planList = [proI_monthly, proII_monthly, proI_yearly, proII_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Set selected plan term")
         let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
-        sut.$selectedTermIndex
+        sut.$currentPlan
             .dropFirst()
             .sink { _ in
                 exp.fulfill()
             }.store(in: &subscriptions)
-        sut.selectedTermIndex = 0
         wait(for: [exp], timeout: 0.5)
 
-        XCTAssertEqual(sut.filteredPlanList, [proLite, proI])
+        sut.selectedTermTab = .monthly
+        XCTAssertEqual(sut.filteredPlanList, [proI_monthly, proII_monthly])
     }
     
     func testFilteredPlanList_yearly_shouldReturnYearlyPlans() {
         let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proLite, proI, proII, proIII]
+        let planList = [proI_monthly, proII_monthly, proI_yearly, proII_yearly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Set selected plan term")
         let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
-        sut.$selectedTermIndex
+        sut.$currentPlan
             .dropFirst()
             .sink { _ in
                 exp.fulfill()
             }.store(in: &subscriptions)
-        sut.selectedTermIndex = 1
         wait(for: [exp], timeout: 0.5)
         
-        XCTAssertEqual(sut.filteredPlanList, [proII, proIII])
+        sut.selectedTermTab = .yearly
+        XCTAssertEqual(sut.filteredPlanList, [proI_yearly, proII_yearly])
     }
 }
