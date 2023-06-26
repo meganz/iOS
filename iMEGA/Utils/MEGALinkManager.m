@@ -596,7 +596,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else if (node.name.mnz_isMultimediaPathExtension && node.mnz_isPlayable) {
-                [AudioPlayerManager.shared initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO presenter:UIApplication.mnz_visibleViewController];
+                [self initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO presenter:UIApplication.mnz_visibleViewController];
             } else {
                 [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];
             }

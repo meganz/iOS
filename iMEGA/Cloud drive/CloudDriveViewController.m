@@ -728,7 +728,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (node.name.mnz_isVisualMediaPathExtension) {
         [self showNode:node];
     } else {
-        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
+        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil];
     }
 }
 

@@ -1,6 +1,7 @@
 import AVFoundation
 import Foundation
 import MediaPlayer
+import MEGADomain
 
 @objc protocol AudioPlayerProtocol: AnyObject {}
 
@@ -169,7 +170,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func removeDelegate(_ delegate: AudioPlayerPresenterProtocol)
     func addMiniPlayerHandler(_ handler: AudioMiniPlayerHandlerProtocol)
     func removeMiniPlayerHandler(_ handler: AudioMiniPlayerHandlerProtocol)
-    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController)
+    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity)
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool)
     func playerHidden(_ hidden: Bool, presenter: UIViewController)
     func closePlayer()

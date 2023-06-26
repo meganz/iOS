@@ -275,7 +275,9 @@
             
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
+            NSNumber *messageId = [NSNumber numberWithUnsignedLongLong:self.message.messageId];
+            NSNumber *chatId = [NSNumber numberWithUnsignedLongLong:self.chatId];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:messageId chatId:chatId];
         }
     }
     

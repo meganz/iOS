@@ -217,7 +217,9 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                         viewController.messageId = megaMessage.messageId
                         navigationController?.present(navController, animated: true)
                     } else {
-                        node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
+                        let messageId = NSNumber(value: megaMessage.messageId)
+                        let chatId = NSNumber(value: chatRoom.chatId)
+                        node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: messageId, chatId: chatId)
                     }
                 }
             } else {
