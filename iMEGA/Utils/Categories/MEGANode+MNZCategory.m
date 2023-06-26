@@ -176,7 +176,7 @@
                 previewController.currentPreviewItemIndex = 0;
                 return previewController;
             }
-        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && self.name.mnz_isEditableTextFilePathExtension) {
+        } else if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name]) {
             NSStringEncoding encode;
             NSString *textContent = [[NSString alloc] initWithContentsOfFile:previewDocumentPath usedEncoding:&encode error:nil];
             if (textContent != nil) {
@@ -205,7 +205,7 @@
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && self.name.mnz_isEditableTextFilePathExtension) {
+            if ([viewController conformsToProtocol:@protocol(TextFileEditable)] && [FileExtensionGroupOCWrapper verifyIsEditableText:self.name]) {
                 TextFile *textFile = [[TextFile alloc] initWithFileName:self.name size: self.size.unsignedIntValue];
                 return [[TextEditorViewRouter.alloc initWithTextFile:textFile textEditorMode:TextEditorModeLoad node:self presenter:viewController.navigationController] build];
             }

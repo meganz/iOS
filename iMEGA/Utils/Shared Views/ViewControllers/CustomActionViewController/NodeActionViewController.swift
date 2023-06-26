@@ -304,7 +304,7 @@ class NodeActionViewController: ActionSheetViewController {
     private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false) {
         let isImageOrVideoFile = node.name?.mnz_isVisualMediaPathExtension == true
         let isMediaFile = node.isFile() && isImageOrVideoFile && node.mnz_isPlayable()
-        let isEditableTextFile = node.isFile() && node.name?.mnz_isEditableTextFilePathExtension == true
+        let isEditableTextFile = node.isFile() && node.name?.fileExtensionGroup.isEditableText == true
         let isTakedown = node.isTakenDown()
         let isVerifyContact = displayMode == .sharedItem &&
                             shouldShowVerifyContact &&

@@ -406,7 +406,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (BOOL)shouldSkipQLPreviewForFile:(NSString *)fileName {
-    return fileName.mnz_isMultimediaPathExtension || fileName.mnz_isEditableTextFilePathExtension || [fileName.pathExtension isEqualToString:@"pdf"];
+    return fileName.mnz_isMultimediaPathExtension || [FileExtensionGroupOCWrapper verifyIsEditableText:fileName] || [fileName.pathExtension isEqualToString:@"pdf"];
 }
 
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName {
@@ -762,7 +762,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self presentViewController:previewController animated:YES completion:nil];
         }
         
-    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || self.previewDocumentPath.mnz_isEditableTextFilePathExtension){
+    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"] || [FileExtensionGroupOCWrapper verifyIsEditableText:self.previewDocumentPath]) {
         [self presentViewController:[self previewDocumentViewControllerForIndexPath:indexPath] animated:YES completion:nil];
     } else {
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
