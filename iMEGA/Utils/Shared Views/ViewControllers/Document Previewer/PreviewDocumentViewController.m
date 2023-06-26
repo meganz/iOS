@@ -161,7 +161,7 @@
     NSURL *url = [self documentUrl];
     self.textContent = [[NSString alloc] initWithContentsOfFile:url.path usedEncoding:nil error:nil];
     if (self.textContent != nil
-        && [url.path mnz_isEditableTextFilePathExtension]) {
+        && [FileExtensionGroupOCWrapper verifyIsEditableText:url.path]) {
         [self loadTextView];
     } else if ([url.pathExtension isEqualToString:@"pdf"]) {
         [self loadPdfKit:url];

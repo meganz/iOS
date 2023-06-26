@@ -51,10 +51,6 @@ static NSString* const B = @"[B]";
     return [FileExtensionGroupOCWrapper verifyIsVideo:self] || self.mnz_isAudioPathExtension;
 }
 
-- (BOOL)mnz_isEditableTextFilePathExtension {
-    return self.mnz_isWebCodePathExtension || self.mnz_isTextPathExtension || self.pathExtension.length == 0;
-}
-
 - (BOOL)mnz_isTextPathExtension {
     NSArray<NSString *> *supportedExtensions = @[@"txt",
                                                  @"ans",

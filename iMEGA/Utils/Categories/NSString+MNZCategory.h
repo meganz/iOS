@@ -10,7 +10,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly, getter=mnz_isVisualMediaPathExtension) BOOL mnz_visualMediaPathExtension;
 @property (nonatomic, readonly, getter=mnz_isMultimediaPathExtension) BOOL mnz_multimediaPathExtension;
-@property (nonatomic, readonly, getter=mnz_isEditableTextFilePathExtension) BOOL mnz_isEditableTextFilePathExtension;
 
 #pragma mark - appData
 
