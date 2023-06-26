@@ -27,7 +27,9 @@ struct ImportAlbumAlertView: UIViewControllerRepresentable {
             textField.placeholder = placeholderText
             textField.delegate = context.coordinator
             textField.addAction(UIAction(handler: { _ in
-                alert.actions.last?.isEnabled = textField.text?.trim?.isNotEmpty ?? false
+                guard let decryptAction = alert.actions.last else { return }
+                decryptAction.isEnabled = textField.text?.trim?.isNotEmpty ?? false
+                decryptAction.titleTextColor = decryptAction.isEnabled ? Colors.MediaConsumption.decryptTitleEnabled.color : Colors.MediaConsumption.decryptTitleDisabled.color
             }), for: .editingChanged)
         }
         
@@ -38,7 +40,7 @@ struct ImportAlbumAlertView: UIViewControllerRepresentable {
             }
         })
         
-        alert.addAction(UIAlertAction(title: decryptButtonText, style: .default) { _ in
+        let decryptAction = UIAlertAction(title: decryptButtonText, style: .default) { _ in
             if let textField = alert.textFields?.first, let text = textField.text {
                 self.textString = text
             }
@@ -47,8 +49,9 @@ struct ImportAlbumAlertView: UIViewControllerRepresentable {
                 self.showingAlert = false
                 self.onTappingDecryptButton?()
             }
-        })
-        
+        }
+        decryptAction.titleTextColor = Colors.MediaConsumption.decryptTitleDisabled.color
+        alert.addAction(decryptAction)
         alert.actions.last?.isEnabled = false
         
         DispatchQueue.main.async {
@@ -78,6 +81,16 @@ struct ImportAlbumAlertView: UIViewControllerRepresentable {
                 self.control.textString = ""
             }
             return true
+        }
+    }
+}
+
+fileprivate extension UIAlertAction {
+    var titleTextColor: UIColor? {
+        get {
+            return self.value(forKey: "titleTextColor") as? UIColor
+        } set {
+            self.setValue(newValue, forKey: "titleTextColor")
         }
     }
 }

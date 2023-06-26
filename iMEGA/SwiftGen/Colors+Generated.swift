@@ -157,6 +157,8 @@ internal enum Colors {
     }
   }
   internal enum MediaConsumption {
+    internal static let decryptTitleDisabled = ColorAsset(name: "decryptTitleDisabled")
+    internal static let decryptTitleEnabled = ColorAsset(name: "decryptTitleEnabled")
     internal static let photoNumbersBackground = ColorAsset(name: "photoNumbersBackground")
     internal static let timelineYMDATabs = ColorAsset(name: "timelineYMDATabs")
     internal static let timelineYMDATabsSelected = ColorAsset(name: "timelineYMDATabsSelected")

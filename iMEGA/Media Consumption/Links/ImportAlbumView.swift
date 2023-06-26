@@ -68,7 +68,7 @@ private extension View {
             showingAlert: isPresented,
             title: Strings.Localizable.decryptionKeyAlertTitle,
             message: Strings.Localizable.decryptionKeyAlertMessageForAlbum,
-            placeholderText: Strings.Localizable.decryptionKey,
+            placeholderText: "",
             cancelButtonText: Strings.Localizable.cancel,
             decryptButtonText: Strings.Localizable.decrypt,
             onTappingCancelButton: onTappingCancel,
