@@ -4,8 +4,6 @@ import MEGADomain
 import MEGAPresentation
 
 final class FileProviderExtension: NSFileProviderExtension {
-    private let semaphore = DispatchSemaphore(value: 0)
-    
     private var credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
     private lazy var nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
     private lazy var transferUseCase = TransferUseCase(repo: TransferRepository.newRepo)
@@ -19,7 +17,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         MEGASdk.setLogLevel(.max)
 #endif
         MEGASdk.setLogToConsole(true)
-        login()
+        copyDatabasesFromMainApp()
     }
     
     // MARK: - Working with items and persistent identifiers
@@ -76,9 +74,6 @@ final class FileProviderExtension: NSFileProviderExtension {
             throw NSError(domain: NSFileProviderErrorDomain, code: NSFileProviderError.notAuthenticated.rawValue, userInfo: [PickerConstant.passcodeEnabled: true])
         }
         
-        if MEGASdk.shared.isLoggedIn() == 0 {
-            semaphore.wait()
-        }
         let enumerator = FileProviderEnumerator(identifier: containerItemIdentifier)
         return enumerator
     }
@@ -271,19 +266,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     
     // MARK: - Private
     
-    private func login() {
-        guard credentialUseCase.hasSession() else {
-            MEGALogError("[Picker] Can't login: no session stored in the keychain")
-            return
-        }
-        
-        let authUseCase = AuthUseCase(repo: AuthRepository(sdk: MEGASdk.shared), credentialRepo: CredentialRepository.newRepo)
-        
-        guard let sessionId = authUseCase.sessionId() else {
-            MEGALogError("[Picker] Can't login: no session")
-            return
-        }
-        
+    private func copyDatabasesFromMainApp() {
         let copyDataBasesUseCase = CopyDataBasesUseCase(repo: CopyDataBasesRepository.newRepo)
         
         copyDataBasesUseCase.copyFromMainApp { (result) in
@@ -293,12 +276,6 @@ final class FileProviderExtension: NSFileProviderExtension {
             case .failure:
                 MEGALogError("[Picker] Error copying databases from main app")
             }
-        }
-        
-        Task {
-            try await authUseCase.login(sessionId: sessionId)
-            try await nodeActionUseCase.fetchnodes()
-            semaphore.signal()
         }
     }
     
