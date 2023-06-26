@@ -33,10 +33,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let userAlbumRepo = UserAlbumRepository.newRepo
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(
-                albumRepository: AlbumRepository.newRepo,
-                userAlbumRepository: userAlbumRepo,
                 fileSearchRepository: filesSearchRepo,
                 mediaUseCase: mediaUseCase,
+                userAlbumRepository: userAlbumRepo,
                 albumContentsUpdateRepository: albumContentsUpdatesRepo,
                 albumContentsUseCase: AlbumContentsUseCase(albumContentsRepo: albumContentsUpdatesRepo,
                                                            mediaUseCase: mediaUseCase,

@@ -1,4 +1,5 @@
 import Foundation
+import MEGASdk
 
 typealias AlbumElementRequestCompletion = (_ result: Result<(UInt, UInt), MEGAError>) -> Void
 

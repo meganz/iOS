@@ -1,17 +1,18 @@
 import Combine
 import MEGADomain
+import MEGASdk
 
-final class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContentsUpdateNotifierRepositoryProtocol {
-    static var newRepo = AlbumContentsUpdateNotifierRepository(sdk: MEGASdk.shared)
+final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContentsUpdateNotifierRepositoryProtocol {
+    public static var newRepo = AlbumContentsUpdateNotifierRepository(sdk: MEGASdk.sharedSdk)
     
     private let albumReloadSourcePublisher = PassthroughSubject<Void, Never>()
     private let sdk: MEGASdk
     
-    var albumReloadPublisher: AnyPublisher<Void, Never> {
+    public var albumReloadPublisher: AnyPublisher<Void, Never> {
         albumReloadSourcePublisher.eraseToAnyPublisher()
     }
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
         super.init()
         sdk.add(self)
@@ -43,7 +44,7 @@ final class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContentsUpdate
 }
 
 extension AlbumContentsUpdateNotifierRepository: MEGAGlobalDelegate {
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         guard let updatedNodes = nodeList?.toNodeEntities(),
         shouldAlbumReload(updatedNodes) else { return }
         albumReloadSourcePublisher.send()

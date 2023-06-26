@@ -1,25 +1,25 @@
 import Combine
-import MEGAData
 import MEGADomain
+import MEGASdk
 
-final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
+final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     
-    static var newRepo: UserAlbumRepository = UserAlbumRepository(sdk: MEGASdk.shared)
+    public static var newRepo: UserAlbumRepository = UserAlbumRepository(sdk: MEGASdk.sharedSdk)
     
     private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
     private let setElemetsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     
     private let sdk: MEGASdk
     
-    var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
+    public var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
         setsUpdatedSourcePublisher.eraseToAnyPublisher()
     }
     
-    var setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> {
+    public var setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> {
         setElemetsUpdatedSourcePublisher.eraseToAnyPublisher()
     }
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
         super.init()
         sdk.add(self)
@@ -30,21 +30,21 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     }
     
     // MARK: - Albums
-    func albums() async -> [SetEntity] {
+    public func albums() async -> [SetEntity] {
         sdk.megaSets().toSetEntities()
     }
     
-    func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
+    public func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
         let megaSetElements = sdk.megaSetElements(bySid: id,
                                                   includeElementsInRubbishBin: includeElementsInRubbishBin)
         return megaSetElements.toSetElementsEntities()
     }
     
-    func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity? {
+    public func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity? {
         return sdk.megaSetElement(bySid: id, eid: elementId)?.toSetElementEntity()
     }
     
-    func createAlbum(_ name: String?) async throws -> SetEntity {
+    public func createAlbum(_ name: String?) async throws -> SetEntity {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.createSet(name, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
@@ -64,7 +64,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
         }
     }
     
-    func updateAlbumName(_ name: String, _ id: HandleEntity) async throws -> String {
+    public func updateAlbumName(_ name: String, _ id: HandleEntity) async throws -> String {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.updateSetName(id, name: name, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
@@ -79,7 +79,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
         }
     }
     
-    func deleteAlbum(by id: HandleEntity) async throws -> HandleEntity {
+    public func deleteAlbum(by id: HandleEntity) async throws -> HandleEntity {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.removeSet(id, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
@@ -95,7 +95,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     }
     
     // MARK: - Album Content
-    func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity {
+    public func addPhotosToAlbum(by id: HandleEntity, nodes: [NodeEntity]) async throws -> AlbumElementsResultEntity {
         guard nodes.isNotEmpty else { return AlbumElementsResultEntity(success: 0, failure: 0) }
         
         return try await withCheckedThrowingContinuation { continuation in
@@ -117,7 +117,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
         }
     }
     
-    func updateAlbumElementName(albumId: HandleEntity, elementId: HandleEntity, name: String) async throws -> String {
+    public func updateAlbumElementName(albumId: HandleEntity, elementId: HandleEntity, name: String) async throws -> String {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.updateSetElement(albumId, eid: elementId, name: name, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
@@ -132,7 +132,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
         }
     }
     
-    func updateAlbumElementOrder(albumId: HandleEntity, elementId: HandleEntity, order: Int64) async throws -> Int64 {
+    public func updateAlbumElementOrder(albumId: HandleEntity, elementId: HandleEntity, order: Int64) async throws -> Int64 {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.updateSetElementOrder(albumId, eid: elementId, order: order, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
@@ -147,7 +147,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
         }
     }
     
-    func deleteAlbumElements(albumId: HandleEntity, elementIds: [HandleEntity]) async throws -> AlbumElementsResultEntity {
+    public func deleteAlbumElements(albumId: HandleEntity, elementIds: [HandleEntity]) async throws -> AlbumElementsResultEntity {
         guard elementIds.isNotEmpty else { return AlbumElementsResultEntity(success: 0, failure: 0) }
         
         return try await withCheckedThrowingContinuation { continuation in
@@ -170,7 +170,7 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     }
     
     // MARK: Album Cover
-    func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
+    public func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.putSetCover(albumId, eid: elementId, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
@@ -187,11 +187,11 @@ final class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
 }
 
 extension UserAlbumRepository: MEGAGlobalDelegate {
-    func onSetsUpdate(_ api: MEGASdk, sets: [MEGASet]) {
+    public func onSetsUpdate(_ api: MEGASdk, sets: [MEGASet]) {
         setsUpdatedSourcePublisher.send(sets.toSetEntities())
     }
     
-    func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]) {
+    public func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]) {
         setElemetsUpdatedSourcePublisher.send(setElements.toSetElementsEntities())
     }
 }

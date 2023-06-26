@@ -1,5 +1,5 @@
 import Combine
-@testable import MEGA
+import MEGAData
 import MEGADataMock
 import MEGADomain
 import XCTest
