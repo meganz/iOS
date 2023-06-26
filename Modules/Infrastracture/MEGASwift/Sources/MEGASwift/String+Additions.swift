@@ -84,3 +84,15 @@ public extension String {
         return byteCountFormatter.string(fromByteCount: byteCount)
     }
 }
+
+// MARK: - FileExtensionGroupDataSource
+extension String: FileExtensionGroupDataSource {
+    private var fileExtensionGroupKeyPath: String {
+        guard isNotEmpty, let fileExt = lastPathComponent.split(separator: ".").last else {
+            return self
+        }
+        return String(fileExt)
+    }
+    
+    public static var fileExtensionPath: KeyPath<String, String> { \.fileExtensionGroupKeyPath }
+}

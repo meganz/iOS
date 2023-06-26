@@ -400,7 +400,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (CGFloat)maximumZoomScaleWith:(MEGANode *)node zoomableView:(UIScrollView *)zoomableView imageView:(UIView *)imageView {
-    return ([StringFileExtensionGroupOCWrapper verify:node.name isMemberOf:@"image"]) ? FLT_MAX : 1.0f;
+    return ([FileExtensionGroupOCWrapper verifyIsImage:node.name]) ? FLT_MAX : 1.0f;
 }
 
 - (NSArray *)keyCommands {
@@ -495,7 +495,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     if (scrollView.tag != 1) {
         MEGANode *node = self.dataProvider.currentPhoto;
-        if ([StringFileExtensionGroupOCWrapper verify:node.name isMemberOf: @"image"]) {
+        if ([FileExtensionGroupOCWrapper verifyIsImage:node.name]) {
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             if (![[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 [self setupNode:node forImageView:(UIImageView *)view inIndex:self.dataProvider.currentIndex withMode:MEGAPhotoModeOriginal];
@@ -542,7 +542,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             MEGANode *node = self.dataProvider[i];
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
             NSString *previewPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
-            BOOL isImageNode = [StringFileExtensionGroupOCWrapper verify:node.name isMemberOf: @"image"];
+            BOOL isImageNode = [FileExtensionGroupOCWrapper verifyIsImage:node.name];
             
             if (isImageNode && [[NSFileManager defaultManager] fileExistsAtPath:temporaryImagePath]) {
                 UIImage *placeHolderImage = [UIImage imageWithContentsOfFile:previewPath];
@@ -676,7 +676,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         }
     };
     
-    BOOL isImageNode = [StringFileExtensionGroupOCWrapper verify:node.name isMemberOf:@"image"];
+    BOOL isImageNode = [FileExtensionGroupOCWrapper verifyIsImage:node.name];
     
     switch (mode) {
         case MEGAPhotoModeThumbnail:

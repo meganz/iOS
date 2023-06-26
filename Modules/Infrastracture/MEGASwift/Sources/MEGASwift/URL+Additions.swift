@@ -9,3 +9,8 @@ public extension URL {
         }
     }
 }
+
+// MARK: - URL + FileExtensionGroupDataSource
+extension URL: FileExtensionGroupDataSource {
+    public static var fileExtensionPath: KeyPath<URL, String> { \.lastPathComponent.pathExtension }
+}

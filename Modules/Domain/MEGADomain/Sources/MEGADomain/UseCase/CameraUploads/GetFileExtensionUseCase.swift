@@ -1,6 +1,7 @@
 import AVFoundation
 import CoreServices
 import Foundation
+import MEGASwift
 import UniformTypeIdentifiers
 
 public protocol GetFileExtensionUseCaseProtocol {
