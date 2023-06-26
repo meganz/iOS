@@ -155,7 +155,7 @@
                     if (node.hasThumbnail) {
                         if (node.name.mnz_isVideoPathExtension) {
                             body = [NSString stringWithFormat:@"📹 %@", node.name];
-                        } else if ([StringFileExtensionGroupOCWrapper verify:node.name isMemberOf:@"image"]) {
+                        } else if ([FileExtensionGroupOCWrapper verifyIsImage:node.name]) {
                             body = [NSString stringWithFormat:@"📷 %@", node.name];
                         } else {
                             body = [NSString stringWithFormat:@"📄 %@", node.name];

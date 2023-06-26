@@ -57,7 +57,7 @@ static NSString* const B = @"[B]";
 
 - (BOOL)mnz_isVisualMediaPathExtension {
     
-    return [StringFileExtensionGroupOCWrapper verify:self isMemberOf: @"image"] || self.mnz_isVideoPathExtension;
+    return [FileExtensionGroupOCWrapper verifyIsImage:self] || self.mnz_isVideoPathExtension;
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
@@ -782,7 +782,7 @@ static NSString* const B = @"[B]";
 
 - (NSString * _Nullable)mnz_coordinatesOfPhotoOrVideo {
     
-    if ([StringFileExtensionGroupOCWrapper verify:self isMemberOf:@"image"]) {
+    if ([FileExtensionGroupOCWrapper verifyIsImage:self]) {
         NSURL *fileURL;
         if ([self containsString:@"/tmp/"]) {
             fileURL = [NSURL fileURLWithPath:self];

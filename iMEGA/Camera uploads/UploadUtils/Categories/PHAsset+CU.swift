@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 import MobileCoreServices
 import Photos
 

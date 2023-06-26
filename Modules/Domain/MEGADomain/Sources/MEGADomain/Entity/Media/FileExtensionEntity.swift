@@ -1,4 +1,4 @@
-public typealias FileExtension = String
+import MEGASwift
 
 public enum FileExtensionEntity: FileExtension {
     case unknown = ""

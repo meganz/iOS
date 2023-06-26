@@ -111,3 +111,7 @@ fileprivate extension String {
         VideoFileExtensionEntity().videoSupportedExtensions.contains(pathExtension)
     }
 }
+
+extension NodeEntity: FileExtensionGroupDataSource {
+    public static var fileExtensionPath: KeyPath<Self, String> { \.name.pathExtension }
+}

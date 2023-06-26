@@ -17,7 +17,7 @@
     NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:self.path];
     NSString *imageFilePath;
     
-    if ([StringFileExtensionGroupOCWrapper verify:self.fileName isMemberOf:@"image"]) {
+    if ([FileExtensionGroupOCWrapper verifyIsImage:self.fileName]) {
         imageFilePath = transferAbsolutePath;
     } else if (self.fileName.mnz_isVideoPathExtension) {
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:transferAbsolutePath] options:nil];

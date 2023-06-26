@@ -1,3 +1,4 @@
+import MEGASwift
 
 public struct ImageFileExtensionEntity {
     public init() {}

@@ -186,270 +186,301 @@ final class StringFileExtensionGroupTests: XCTestCase {
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@%+++++++++++++++++*****+#%+#@@%+*******++*************+@@@@@@@@@@@@@@@@@
     """
     
-    // MARK: - String.fileExtensionGroup(from:)
     func testFileExtensionGroupCreateFrom_withImageExtensions() throws {
         Self.imageExtensions.forEach {
-            let group = String.makeFileExtensionGroup(from: $0)
-            XCTAssertTrue(group.isImage)
-            XCTAssertTrue(group.isVisualMedia)
-            XCTAssertTrue(group.isKnown)
+            XCTAssertTrue($0.fileExtensionGroup.isImage)
+            XCTAssertTrue($0.fileExtensionGroup.isVisualMedia)
+            XCTAssertTrue($0.fileExtensionGroup.isKnown)
             
-            XCTAssertFalse(group.isVideo)
-            XCTAssertFalse(group.isAudio)
-            XCTAssertFalse(group.isMultiMedia)
-            XCTAssertFalse(group.isText)
-            XCTAssertFalse(group.isWebCode)
-            XCTAssertFalse(group.isEditableText)
+            XCTAssertFalse($0.fileExtensionGroup.isVideo)
+            XCTAssertFalse($0.fileExtensionGroup.isAudio)
+            XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isText)
+            XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            XCTAssertFalse($0.fileExtensionGroup.isEditableText)
         }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withImageFileNames() throws {
+        Self.imageExtensions
+            .map { "FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isImage)
+                XCTAssertTrue($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+                XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withImageFilePaths() throws {
+        Self.imageExtensions
+            .map { "/XCImageset.xcasset/FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isImage)
+                XCTAssertTrue($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+                XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            }
     }
     
     func testFileExtensionGroupCreateFrom_withVideoExtensions() throws {
         Self.videoExtensions.forEach {
-            let group = String.makeFileExtensionGroup(from: $0)
-            XCTAssertTrue(group.isVideo)
-            XCTAssertTrue(group.isVisualMedia)
-            XCTAssertTrue(group.isMultiMedia)
-            XCTAssertTrue(group.isKnown)
+            XCTAssertTrue($0.fileExtensionGroup.isVideo)
+            XCTAssertTrue($0.fileExtensionGroup.isVisualMedia)
+            XCTAssertTrue($0.fileExtensionGroup.isMultiMedia)
+            XCTAssertTrue($0.fileExtensionGroup.isKnown)
             
-            XCTAssertFalse(group.isAudio)
-            XCTAssertFalse(group.isText)
-            XCTAssertFalse(group.isWebCode)
-            XCTAssertFalse(group.isEditableText)
+            XCTAssertFalse($0.fileExtensionGroup.isAudio)
+            XCTAssertFalse($0.fileExtensionGroup.isText)
+            XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            XCTAssertFalse($0.fileExtensionGroup.isEditableText)
         }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withVideoFileNames() throws {
+        Self.videoExtensions
+            .map { "FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isVideo)
+                XCTAssertTrue($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertTrue($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+                XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withVideoFilePaths() throws {
+        Self.videoExtensions
+            .map { "/XCImageset.xcasset/FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isVideo)
+                XCTAssertTrue($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertTrue($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+                XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            }
     }
     
     func testFileExtensionGroupCreateFrom_withAudioExtensions() throws {
         Self.audioExtensions.forEach {
-            let group = String.makeFileExtensionGroup(from: $0)
-            XCTAssertTrue(group.isAudio)
-            XCTAssertTrue(group.isMultiMedia)
-            XCTAssertTrue(group.isKnown)
+            XCTAssertTrue($0.fileExtensionGroup.isAudio)
+            XCTAssertTrue($0.fileExtensionGroup.isMultiMedia)
+            XCTAssertTrue($0.fileExtensionGroup.isKnown)
             
-            XCTAssertFalse(group.isImage)
-            XCTAssertFalse(group.isVideo)
-            XCTAssertFalse(group.isVisualMedia)
-            XCTAssertFalse(group.isText)
-            XCTAssertFalse(group.isWebCode)
-            XCTAssertFalse(group.isEditableText)
+            XCTAssertFalse($0.fileExtensionGroup.isImage)
+            XCTAssertFalse($0.fileExtensionGroup.isVideo)
+            XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isText)
+            XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            XCTAssertFalse($0.fileExtensionGroup.isEditableText)
         }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withAudioFileNames() throws {
+        Self.audioExtensions
+            .map { "FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isAudio)
+                XCTAssertTrue($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isImage)
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+                XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withAudioFilePaths() throws {
+        Self.audioExtensions
+            .map { "/XCImageset.xcasset/FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isAudio)
+                XCTAssertTrue($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isImage)
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+                XCTAssertFalse($0.fileExtensionGroup.isEditableText)
+            }
     }
     
     func testFileExtensionGroupCreateFrom_withTextPathExtension() throws {
         Self.textPathExtension.forEach {
-            let group = String.makeFileExtensionGroup(from: $0)
-            XCTAssertTrue(group.isText)
-            XCTAssertTrue(group.isEditableText)
-            XCTAssertTrue(group.isKnown)
+            XCTAssertTrue($0.fileExtensionGroup.isText)
+            XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+            XCTAssertTrue($0.fileExtensionGroup.isKnown)
             
-            XCTAssertFalse(group.isImage)
-            XCTAssertFalse(group.isVideo)
-            XCTAssertFalse(group.isAudio)
-            XCTAssertFalse(group.isVisualMedia)
-            XCTAssertFalse(group.isMultiMedia)
-            XCTAssertFalse(group.isWebCode)
+            XCTAssertFalse($0.fileExtensionGroup.isImage)
+            XCTAssertFalse($0.fileExtensionGroup.isVideo)
+            XCTAssertFalse($0.fileExtensionGroup.isAudio)
+            XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isWebCode)
         }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withTextFileNames() throws {
+        Self.textPathExtension
+            .map { "FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isText)
+                XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isImage)
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withTextFilePaths() throws {
+        Self.textPathExtension
+            .map { "/XCImageset.xcasset/FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isText)
+                XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isImage)
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            }
     }
     
     func testFileExtensionGroupCreateFrom_withWebCodePathExtension() throws {
         Self.webCodePathExtension.forEach {
-            let group = String.makeFileExtensionGroup(from: $0)
-            XCTAssertTrue(group.isWebCode)
-            XCTAssertTrue(group.isEditableText)
-            XCTAssertTrue(group.isKnown)
+            XCTAssertTrue($0.fileExtensionGroup.isWebCode)
+            XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+            XCTAssertTrue($0.fileExtensionGroup.isKnown)
             
-            XCTAssertFalse(group.isImage)
-            XCTAssertFalse(group.isVideo)
-            XCTAssertFalse(group.isAudio)
-            XCTAssertFalse(group.isVisualMedia)
-            XCTAssertFalse(group.isMultiMedia)
-            XCTAssertFalse(group.isText)
+            XCTAssertFalse($0.fileExtensionGroup.isImage)
+            XCTAssertFalse($0.fileExtensionGroup.isVideo)
+            XCTAssertFalse($0.fileExtensionGroup.isAudio)
+            XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isText)
         }
     }
     
+    func testFileExtensionGroupCreateFrom_withWebCodeFileName() throws {
+        Self.webCodePathExtension
+            .map { "FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isWebCode)
+                XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isImage)
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+            }
+    }
+    
+    func testFileExtensionGroupCreateFrom_withWebCodeFilePath() throws {
+        Self.webCodePathExtension
+            .map { "/XCImageset.xcasset/FileName.\($0)" }
+            .forEach {
+                XCTAssertTrue($0.fileExtensionGroup.isWebCode)
+                XCTAssertTrue($0.fileExtensionGroup.isEditableText)
+                XCTAssertTrue($0.fileExtensionGroup.isKnown)
+                
+                XCTAssertFalse($0.fileExtensionGroup.isImage)
+                XCTAssertFalse($0.fileExtensionGroup.isVideo)
+                XCTAssertFalse($0.fileExtensionGroup.isAudio)
+                XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+                XCTAssertFalse($0.fileExtensionGroup.isText)
+            }
+    }
+    
     func testFileExtensionGroupCreateFrom_withEmptyString() throws {
-        let group = String.makeFileExtensionGroup(from: "")
-        XCTAssertTrue(group.isEditableText)
-        XCTAssertTrue(group.isKnown)
+        let str = ""
+        XCTAssertTrue(str.fileExtensionGroup.isEditableText)
+        XCTAssertTrue(str.fileExtensionGroup.isKnown)
         
-        XCTAssertFalse(group.isImage)
-        XCTAssertFalse(group.isVideo)
-        XCTAssertFalse(group.isAudio)
-        XCTAssertFalse(group.isVisualMedia)
-        XCTAssertFalse(group.isMultiMedia)
-        XCTAssertFalse(group.isText)
-        XCTAssertFalse(group.isWebCode)
+        XCTAssertFalse(str.fileExtensionGroup.isImage)
+        XCTAssertFalse(str.fileExtensionGroup.isVideo)
+        XCTAssertFalse(str.fileExtensionGroup.isAudio)
+        XCTAssertFalse(str.fileExtensionGroup.isVisualMedia)
+        XCTAssertFalse(str.fileExtensionGroup.isMultiMedia)
+        XCTAssertFalse(str.fileExtensionGroup.isText)
+        XCTAssertFalse(str.fileExtensionGroup.isWebCode)
     }
     
     func testFileExtensionGroupCreateFrom_withNumericString() throws {
-        let group = String.makeFileExtensionGroup(from: "-0123456789")
-        XCTAssertFalse(group.isKnown)
-        XCTAssertFalse(group.isImage)
-        XCTAssertFalse(group.isVideo)
-        XCTAssertFalse(group.isAudio)
-        XCTAssertFalse(group.isVisualMedia)
-        XCTAssertFalse(group.isMultiMedia)
-        XCTAssertFalse(group.isText)
-        XCTAssertFalse(group.isWebCode)
-        XCTAssertFalse(group.isEditableText)
+        let str = "-0123456789"
+        XCTAssertFalse(str.fileExtensionGroup.isKnown)
+        XCTAssertFalse(str.fileExtensionGroup.isImage)
+        XCTAssertFalse(str.fileExtensionGroup.isVideo)
+        XCTAssertFalse(str.fileExtensionGroup.isAudio)
+        XCTAssertFalse(str.fileExtensionGroup.isVisualMedia)
+        XCTAssertFalse(str.fileExtensionGroup.isMultiMedia)
+        XCTAssertFalse(str.fileExtensionGroup.isText)
+        XCTAssertFalse(str.fileExtensionGroup.isWebCode)
+        XCTAssertFalse(str.fileExtensionGroup.isEditableText)
     }
     
     func testFileExtensionGroupCreateFrom_withEmoji() throws {
         let emojisAndEmoticons = ["😀", "¯\\_(ツ)_/¯"]
         emojisAndEmoticons.forEach {
-            let group = String.makeFileExtensionGroup(from: $0)
-            XCTAssertFalse(group.isKnown)
-            XCTAssertFalse(group.isImage)
-            XCTAssertFalse(group.isVideo)
-            XCTAssertFalse(group.isAudio)
-            XCTAssertFalse(group.isVisualMedia)
-            XCTAssertFalse(group.isMultiMedia)
-            XCTAssertFalse(group.isText)
-            XCTAssertFalse(group.isWebCode)
-            XCTAssertFalse(group.isEditableText)
+            XCTAssertFalse($0.fileExtensionGroup.isKnown)
+            XCTAssertFalse($0.fileExtensionGroup.isImage)
+            XCTAssertFalse($0.fileExtensionGroup.isVideo)
+            XCTAssertFalse($0.fileExtensionGroup.isAudio)
+            XCTAssertFalse($0.fileExtensionGroup.isVisualMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isMultiMedia)
+            XCTAssertFalse($0.fileExtensionGroup.isText)
+            XCTAssertFalse($0.fileExtensionGroup.isWebCode)
+            XCTAssertFalse($0.fileExtensionGroup.isEditableText)
         }
         
     }
     
     func testFileExtensionGroupCreateFrom_withVeryLongString() throws {
-        let group = String.makeFileExtensionGroup(from: Self.maloneyBologna)
-        XCTAssertFalse(group.isKnown)
-        XCTAssertFalse(group.isImage)
-        XCTAssertFalse(group.isVideo)
-        XCTAssertFalse(group.isAudio)
-        XCTAssertFalse(group.isVisualMedia)
-        XCTAssertFalse(group.isMultiMedia)
-        XCTAssertFalse(group.isText)
-        XCTAssertFalse(group.isWebCode)
-        XCTAssertFalse(group.isEditableText)
-    }
-    
-    // MARK: - String.fileExtensionGroup(verify:_:)
-    func testFileExtensionGroupVerify_withImageExtensions() throws {
-        Self.imageExtensions.forEach {
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isImage))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isVisualMedia))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isKnown))
-            
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVideo))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isAudio))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isMultiMedia))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isText))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isWebCode))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isEditableText))
-        }
-    }
-    
-    func testFileExtensionGroupVerify_withVideoExtensions() throws {
-        Self.videoExtensions.forEach {
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isVideo))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isVisualMedia))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isMultiMedia))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isKnown))
-            
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isImage))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isAudio))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isText))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isWebCode))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isEditableText))
-        }
-    }
-    
-    func testFileExtensionGroupVerify_withAudioExtensions() throws {
-        Self.audioExtensions.forEach {
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isAudio))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isMultiMedia))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isKnown))
-            
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isImage))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVideo))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isText))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isWebCode))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isEditableText))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVisualMedia))
-        }
-    }
-    
-    func testFileExtensionGroupVerify_withTextPathExtension() throws {
-        Self.textPathExtension.forEach {
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isText))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isEditableText))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isKnown))
-            
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isImage))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVideo))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isAudio))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isWebCode))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVisualMedia))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isMultiMedia))
-        }
-    }
-    
-    func testFileExtensionGroupVerify_withWebCodePathExtension() throws {
-        Self.webCodePathExtension.forEach {
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isWebCode))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isEditableText))
-            XCTAssertTrue(String.fileExtensionGroup(verify: $0, \.isKnown))
-            
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isImage))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVideo))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isAudio))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isText))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVisualMedia))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isMultiMedia))
-        }
-    }
-    
-    func testFileExtensionGroupVerify_withEmptyString() throws {
-        let str = ""
-        XCTAssertTrue(String.fileExtensionGroup(verify: str, \.isEditableText))
-        XCTAssertTrue(String.fileExtensionGroup(verify: str, \.isKnown))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isImage))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isVideo))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isAudio))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isText))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isWebCode))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isVisualMedia))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isMultiMedia))
-    }
-    
-    func testFileExtensionGroupVerify_withNumericString() throws {
-        let str = "-0123456789"
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isImage))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isVideo))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isAudio))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isText))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isWebCode))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isEditableText))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isVisualMedia))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isMultiMedia))
-        XCTAssertFalse(String.fileExtensionGroup(verify: str, \.isKnown))
-    }
-    
-    func testFileExtensionGroupVerify_withEmoji() throws {
-        let emojisAndEmoticons = ["😀", "¯\\_(ツ)_/¯"]
-        emojisAndEmoticons.forEach {
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isImage))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVideo))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isAudio))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isText))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isWebCode))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isEditableText))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isVisualMedia))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isMultiMedia))
-            XCTAssertFalse(String.fileExtensionGroup(verify: $0, \.isKnown))
-        }
-        
-    }
-    
-    func testFileExtensionGroupVerify_withVeryLongString() throws {
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isImage))
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isVideo))
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isAudio))
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isText))
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isWebCode))
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isEditableText))
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isVisualMedia))
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isMultiMedia))
-        XCTAssertFalse(String.fileExtensionGroup(verify: Self.maloneyBologna, \.isKnown))
+        let str = Self.maloneyBologna
+        XCTAssertFalse(str.fileExtensionGroup.isKnown)
+        XCTAssertFalse(str.fileExtensionGroup.isImage)
+        XCTAssertFalse(str.fileExtensionGroup.isVideo)
+        XCTAssertFalse(str.fileExtensionGroup.isAudio)
+        XCTAssertFalse(str.fileExtensionGroup.isVisualMedia)
+        XCTAssertFalse(str.fileExtensionGroup.isMultiMedia)
+        XCTAssertFalse(str.fileExtensionGroup.isText)
+        XCTAssertFalse(str.fileExtensionGroup.isWebCode)
+        XCTAssertFalse(str.fileExtensionGroup.isEditableText)
     }
 }
