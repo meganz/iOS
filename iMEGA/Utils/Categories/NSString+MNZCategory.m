@@ -25,30 +25,13 @@ static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
 
-- (BOOL)mnz_isAudioPathExtension {
-    NSArray<NSString *> *supportedExtensions = @[@"aac",
-                                                 @"ac3",
-                                                 @"aif",
-                                                 @"aiff",
-                                                 @"au",
-                                                 @"caf",
-                                                 @"eac3",
-                                                 @"ec3",
-                                                 @"flac",
-                                                 @"m4a",
-                                                 @"mp3",
-                                                 @"wav"];
-    
-    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
-}
-
 - (BOOL)mnz_isVisualMediaPathExtension {
     
     return [FileExtensionGroupOCWrapper verifyIsImage:self] || [FileExtensionGroupOCWrapper verifyIsVideo:self];
 }
 
 - (BOOL)mnz_isMultimediaPathExtension {
-    return [FileExtensionGroupOCWrapper verifyIsVideo:self] || self.mnz_isAudioPathExtension;
+    return [FileExtensionGroupOCWrapper verifyIsVideo:self] || [FileExtensionGroupOCWrapper verifyIsAudio:self];
 }
 
 - (BOOL)mnz_isTextPathExtension {
