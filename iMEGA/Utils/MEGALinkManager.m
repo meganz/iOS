@@ -595,7 +595,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 
                 [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
-            } else if (node.name.mnz_isMultimediaPathExtension && node.mnz_isPlayable) {
+            } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && node.mnz_isPlayable) {
                 [self initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO presenter:UIApplication.mnz_visibleViewController];
             } else {
                 [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];
