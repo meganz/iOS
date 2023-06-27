@@ -239,7 +239,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject];
             [self.delegate showSelectedNodeInViewController:photoBrowserVC];
         } else {
-            if (node.name.mnz_isMultimediaPathExtension && ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] && node.mnz_isPlayable) {
+            if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] && node.mnz_isPlayable) {
                 if ([AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive]) {
                     [AudioPlayerManager.shared initMiniPlayerWithNode:node fileLink:nil filePaths:nil isFolderLink:NO presenter:self shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
                 } else {
@@ -271,7 +271,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 }
 
 - (UIViewController *)viewControllerForNode:(MEGANode *)node withFolderLink:(BOOL)isFolderLink {
-    if (node.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         return alertController;

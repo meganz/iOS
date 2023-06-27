@@ -30,10 +30,6 @@ static NSString* const B = @"[B]";
     return [FileExtensionGroupOCWrapper verifyIsImage:self] || [FileExtensionGroupOCWrapper verifyIsVideo:self];
 }
 
-- (BOOL)mnz_isMultimediaPathExtension {
-    return [FileExtensionGroupOCWrapper verifyIsVideo:self] || [FileExtensionGroupOCWrapper verifyIsAudio:self];
-}
-
 - (BOOL)mnz_isTextPathExtension {
     NSArray<NSString *> *supportedExtensions = @[@"txt",
                                                  @"ans",

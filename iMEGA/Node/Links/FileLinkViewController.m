@@ -189,7 +189,7 @@
         }];
     } else {
         [self setNodeInfo];
-        if (self.node.size.longLongValue < MEGAMaxFileLinkAutoOpenSize && !self.node.name.mnz_isMultimediaPathExtension) {
+        if (self.node.size.longLongValue < MEGAMaxFileLinkAutoOpenSize && ![FileExtensionGroupOCWrapper verifyIsMultiMedia:self.node.name]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
                 [UIApplication.mnz_presentingViewController presentViewController:[self.node mnz_viewControllerForNodeInFolderLink:YES fileLink:link] animated:YES completion:nil];

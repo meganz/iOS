@@ -124,10 +124,10 @@
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId {
-    if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
-        if (self.name.mnz_isMultimediaPathExtension && ![FileExtensionGroupOCWrapper verifyIsVideo:self.name] && self.mnz_isPlayable) {
+        if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:self.name] && self.mnz_isPlayable) {
             UIViewController *presenterVC = [navigationController.viewControllers lastObject];
             if ([presenterVC conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)] && [AudioPlayerManager.shared isPlayerDefined] && [AudioPlayerManager.shared isPlayerAlive] && (isFolderLink || (!isFolderLink && fileLink == nil))) {
                 [AudioPlayerManager.shared initMiniPlayerWithNode:self fileLink:fileLink filePaths:nil isFolderLink:isFolderLink presenter:presenterVC shouldReloadPlayerInfo:YES shouldResetPlayer:YES];
@@ -165,7 +165,7 @@
     }
     
     if (previewDocumentPath) {
-        if (self.name.mnz_isMultimediaPathExtension) {
+        if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name]) {
             NSURL *path = [NSURL fileURLWithPath:previewDocumentPath];
             AVURLAsset *asset = [AVURLAsset assetWithURL:path];
             
@@ -195,7 +195,7 @@
         
         return navigationController;
         
-    } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:NO port:4443]) {
+    } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && [apiForStreaming httpServerStart:NO port:4443]) {
         if (self.mnz_isPlayable) {
             return [[AVPlayerManager shared] makePlayerControllerFor:self folderLink:isFolderLink sdk:apiForStreaming];
         } else {

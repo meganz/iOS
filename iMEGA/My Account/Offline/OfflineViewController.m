@@ -387,7 +387,7 @@ static NSString *kisDirectory = @"kisDirectory";
             
             if (!isDirectory) {
                 [self.offlineSortedFileItems addObject:tempDictionary];
-                if (fileName.mnz_isMultimediaPathExtension) {
+                if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:fileName]) {
                     [self.offlineMultimediaFiles addObject:[fileURL path]];
                 } else if (![self shouldSkipQLPreviewForFile:fileName]) {
                     offsetIndex++;
@@ -406,7 +406,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (BOOL)shouldSkipQLPreviewForFile:(NSString *)fileName {
-    return fileName.mnz_isMultimediaPathExtension || [FileExtensionGroupOCWrapper verifyIsEditableText:fileName] || [fileName.pathExtension isEqualToString:@"pdf"];
+    return [FileExtensionGroupOCWrapper verifyIsMultiMedia:fileName] || [FileExtensionGroupOCWrapper verifyIsEditableText:fileName] || [fileName.pathExtension isEqualToString:@"pdf"];
 }
 
 - (NSString *)folderPathFromOffline:(NSString *)absolutePath folder:(NSString *)folderName {
@@ -735,7 +735,7 @@ static NSString *kisDirectory = @"kisDirectory";
         
         [self.navigationController pushViewController:offlineVC animated:YES];
         
-    } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
+    } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.previewDocumentPath]) {
         if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
             return;
