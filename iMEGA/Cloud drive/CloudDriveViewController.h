@@ -72,6 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)nodesSortTypeHasChanged;
 - (void)createNewFolderAction;
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType;
+- (void)reloadUI;
 @end
 
 NS_ASSUME_NONNULL_END

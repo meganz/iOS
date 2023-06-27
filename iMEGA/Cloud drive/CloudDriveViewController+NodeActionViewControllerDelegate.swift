@@ -41,7 +41,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
-        setEditMode(false)
+        resetEditingModeIfNeeded()
         
         switch action {
         case .download:
@@ -112,6 +112,13 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .disputeTakedown:
             NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
         default: break
+        }
+    }
+    
+    private func resetEditingModeIfNeeded() {
+        let isStillInEditingThumbnailState = (!isListViewModeSelected()) && (cdCollectionView?.collectionView?.allowsMultipleSelection == true)
+        if isStillInEditingThumbnailState {
+            setEditMode(false)
         }
     }
     
