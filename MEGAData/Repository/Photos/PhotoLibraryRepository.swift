@@ -22,7 +22,7 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
         )
         
         return nodeList.toNodeArray().filter {
-            $0.name?.mnz_isVisualMediaPathExtension ?? false
+            $0.name?.fileExtensionGroup.isVisualMedia ?? false
         }.toNodeEntities()
     }
     

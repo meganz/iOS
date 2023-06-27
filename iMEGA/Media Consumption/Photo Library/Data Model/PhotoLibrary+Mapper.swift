@@ -26,7 +26,7 @@ extension Array where Element == NodeEntity {
         }
         
         var tempDayDict = [Date: PhotoByDayDataProvider]()
-        for node in photos where NSString(string: node.name).mnz_isVisualMediaPathExtension {
+        for node in photos where node.fileExtensionGroup.isVisualMedia {
             guard let day = node.categoryDate.removeTimestamp(timeZone: timeZone) else { continue }
             if let photoByDay = tempDayDict[day] {
                 photoByDay.photos.append(node)

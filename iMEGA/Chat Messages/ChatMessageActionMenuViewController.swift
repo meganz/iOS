@@ -203,7 +203,8 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             actions = [saveForOfflineAction, forwardAction, exportMessagesAction, selectAction]
             
             if chatMessage.message.nodeList?.size.uintValue == 1,
-               let name = chatMessage.message.nodeList?.node(at: 0)?.name, name.mnz_isVisualMediaPathExtension {
+               let name = chatMessage.message.nodeList?.node(at: 0)?.name,
+               name.fileExtensionGroup.isVisualMedia {
                 actions.append(saveToPhotosAction)
                 if name.fileExtensionGroup.isImage {
                     actions.append(copyAction)

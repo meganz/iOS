@@ -304,7 +304,7 @@ final class NameCollisionViewModel: ObservableObject {
         cancelLoading()
 
         if duplicatedItem.isFile {
-            if duplicatedItem.name.mnz_isVisualMediaPathExtension {
+            if duplicatedItem.name.fileExtensionGroup.isVisualMedia {
                 guard let collision = collision else {
                     return
                 }

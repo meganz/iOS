@@ -93,7 +93,7 @@ extension FilesExplorerListSourceProtocol {
             tableView.deselectRow(at: indexPath, animated: true)
             
             guard explorerType == .favourites,
-                  node.name?.mnz_isVisualMediaPathExtension == true else {
+                  node.name?.fileExtensionGroup.isVisualMedia == true else {
                 delegate?.didSelect(node: node, atIndexPath: indexPath, allNodes: nodes)
                 return
             }
