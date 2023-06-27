@@ -20,6 +20,6 @@ extension Array where Element: MEGANode {
     }
     
     func multiMediaNodeList() -> [MEGANode] {
-        filter { $0.name?.mnz_isVisualMediaPathExtension == true }
+        filter { $0.name?.fileExtensionGroup.isVisualMedia == true }
     }
 }

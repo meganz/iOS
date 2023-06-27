@@ -25,11 +25,6 @@ static NSString* const B = @"[B]";
 
 @implementation NSString (MNZCategory)
 
-- (BOOL)mnz_isVisualMediaPathExtension {
-    
-    return [FileExtensionGroupOCWrapper verifyIsImage:self] || [FileExtensionGroupOCWrapper verifyIsVideo:self];
-}
-
 - (BOOL)mnz_isTextPathExtension {
     NSArray<NSString *> *supportedExtensions = @[@"txt",
                                                  @"ans",

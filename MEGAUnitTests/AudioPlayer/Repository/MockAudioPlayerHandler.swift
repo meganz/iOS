@@ -1,5 +1,5 @@
-import MEGADomain
 @testable import MEGA
+import MEGADomain
 
 final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var goBackward_calledTimes = 0

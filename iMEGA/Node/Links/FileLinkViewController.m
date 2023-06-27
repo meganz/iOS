@@ -180,7 +180,7 @@
     
     self.node = self.request.publicNode;
     
-    if (self.node.name.mnz_isVisualMediaPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:self.node.name]) {
         [self dismissViewControllerAnimated:YES completion:^{
             MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeFileLink presentingNode:self.node];
             photoBrowserVC.publicLink = self.publicLinkString;

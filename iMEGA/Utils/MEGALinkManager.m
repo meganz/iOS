@@ -581,7 +581,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [MEGALinkManager presentFileLinkViewForLink:fileLinkURLString request:request error:error];
         } else {
             MEGANode *node = request.publicNode;
-            if (node.name.mnz_isVisualMediaPathExtension) {
+            if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
                 NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
                 if (![[NSFileManager defaultManager] fileExistsAtPath:previewsDirectory]) {
                     NSError *nserror;

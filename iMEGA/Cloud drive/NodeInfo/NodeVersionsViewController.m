@@ -175,7 +175,7 @@
         }
     
     } else {
-        if (node.name.mnz_isVisualMediaPathExtension) {
+        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [[[MEGASdkManager sharedMEGASdk] versionsForNode:self.node] mnz_mediaNodesMutableArrayFromNodeList];
             
             DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : DisplayModeNodeVersions;

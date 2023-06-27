@@ -154,7 +154,7 @@ final class FavouritesExplorerGridSource: NSObject {
         }
 
         let nodeName = selectedNode.name ?? ""
-        if nodeName.mnz_isVisualMediaPathExtension {
+        if nodeName.fileExtensionGroup.isVisualMedia {
             let multiMediaNodes = fileNodes.multiMediaNodeList()
             result(selectedNode, multiMediaNodes)
         } else {

@@ -48,7 +48,7 @@
 }
 
 - (void)mnz_renameOrRemoveThumbnailAndPreview {
-    if (self.fileName.mnz_isVisualMediaPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:self.fileName]) {
         NSString *transferAbsolutePath = [NSHomeDirectory() stringByAppendingPathComponent:self.path];
         NSString *thumbnailPath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_thumbnail"];
         NSString *previewPath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_preview"];

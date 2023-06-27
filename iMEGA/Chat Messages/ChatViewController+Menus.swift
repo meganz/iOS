@@ -155,8 +155,7 @@ extension ChatViewController {
             guard let nodelist = chatMessage.message.nodeList else { return }
             if nodelist.size.uintValue == 1,
                var node = nodelist.node(at: 0),
-               let name = node.name,
-               (name.mnz_isVisualMediaPathExtension) {
+               node.name?.fileExtensionGroup.isVisualMedia == true {
                 if chatRoom.isPreview,
                    let authorizedNode = sdk.authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
                     node = authorizedNode

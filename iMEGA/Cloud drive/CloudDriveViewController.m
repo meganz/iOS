@@ -651,7 +651,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     NSArray *nodesArray = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList];
     NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodesArray.count];
     for (MEGANode *n in nodesArray) {
-        if (n.name.mnz_isVisualMediaPathExtension) {
+        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:n.name]) {
             [mediaNodesArray addObject:n];
         }
     }
@@ -725,7 +725,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)openFileNode:(MEGANode *)node {
-    if (node.name.mnz_isVisualMediaPathExtension) {
+    if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
         [self showNode:node];
     } else {
         [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil];

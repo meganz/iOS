@@ -8,8 +8,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (MNZCategory)
 
-@property (nonatomic, readonly, getter=mnz_isVisualMediaPathExtension) BOOL mnz_visualMediaPathExtension;
-
 #pragma mark - appData
 
 - (NSString *)mnz_appDataToSaveInPhotosApp;

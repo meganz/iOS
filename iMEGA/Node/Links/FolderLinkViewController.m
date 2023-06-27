@@ -389,7 +389,7 @@
                     [self.navigationController pushViewController:folderLinkVC animated:NO];
 
                 } else {
-                    if (node.name.mnz_isVisualMediaPathExtension) {
+                    if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
                         [self presentMediaNode:node];
                     } else {
                         [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil messageId:nil chatId:nil];
@@ -700,7 +700,7 @@
 
 - (void)openNode:(MEGANode *)node {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        if (node.name.mnz_isVisualMediaPathExtension) {
+        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             [self presentMediaNode:node];
         } else {
             [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil messageId:nil chatId:nil];
@@ -734,7 +734,7 @@
         }
 
         case MEGANodeTypeFile: {
-            if (node.name.mnz_isVisualMediaPathExtension) {
+            if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
                 [self presentMediaNode:node];
             } else {
                 [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil messageId:nil chatId:nil];

@@ -3,6 +3,12 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 #import "MEGASdkManager.h"
 
 @implementation MEGANodeList (MNZCategory)
@@ -65,7 +71,7 @@
     NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {
         MEGANode *node = [self nodeAtIndex:i];
-        if (node.name.mnz_isVisualMediaPathExtension) {
+        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             [mediaNodesMutableArray addObject:node];
         }
     }
@@ -78,7 +84,7 @@
     NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {
         MEGANode *node = [self nodeAtIndex:i];
-        if (node.name.mnz_isVisualMediaPathExtension) {
+        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             [mediaNodesMutableArray addObject:[sdk authorizeNode:node]];
         }
     }

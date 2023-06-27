@@ -390,7 +390,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                 return
             }
             
-            if let selectedNodeName = selectedNode.name, selectedNodeName.mnz_isVisualMediaPathExtension {
+            if let selectedNodeName = selectedNode.name, selectedNodeName.fileExtensionGroup.isVisualMedia {
                 var messagesIdsArray = [HandleEntity]()
                 let nodes = NSMutableArray()
                 messagesArray.forEach { message in
@@ -399,7 +399,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                               return
                           }
                     
-                    if name.mnz_isVisualMediaPathExtension {
+                    if name.fileExtensionGroup.isVisualMedia {
                         if chatRoom.isPreview {
                             guard let authNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken) else { return }
                             nodes.add(authNode)
