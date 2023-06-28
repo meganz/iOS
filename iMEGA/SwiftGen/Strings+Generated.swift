@@ -569,7 +569,7 @@ public enum Strings {
     public static let decryptionKey = Strings.tr("Localizable", "decryptionKey")
     /// To access this folder or file, you will need its decryption key. If you do not have the key, please contact the creator of the link.
     public static let decryptionKeyAlertMessage = Strings.tr("Localizable", "decryptionKeyAlertMessage")
-    /// To access the album, enter the decryption key. If you don't have it, contact the person who shared the link with you.
+    /// To access the album, enter the decryption key. If you don’t have it, contact the person who shared the link with you.
     public static let decryptionKeyAlertMessageForAlbum = Strings.tr("Localizable", "decryptionKeyAlertMessageForAlbum")
     /// Enter decryption key
     public static let decryptionKeyAlertTitle = Strings.tr("Localizable", "decryptionKeyAlertTitle")
@@ -1073,8 +1073,6 @@ public enum Strings {
     public static let lineCodeWithCamera = Strings.tr("Localizable", "lineCodeWithCamera")
     /// Link
     public static let link = Strings.tr("Localizable", "LINK")
-    /// Copied link to clipboard
-    public static let linkCopiedToClipboard = Strings.tr("Localizable", "Link Copied to Clipboard")
     /// Link creation
     public static let linkCreation = Strings.tr("Localizable", "Link Creation")
     /// Link expires %@
@@ -1089,8 +1087,6 @@ public enum Strings {
     public static let linkNotValid = Strings.tr("Localizable", "linkNotValid")
     /// Links
     public static let links = Strings.tr("Localizable", "Links")
-    /// Copied links to clipboard
-    public static let linksCopiedToClipboard = Strings.tr("Localizable", "Links Copied to Clipboard")
     /// Copied links
     public static let linksCopied = Strings.tr("Localizable", "linksCopied")
     /// Unavailable link
@@ -2623,20 +2619,6 @@ public enum Strings {
       }
       public enum Achievement {
         public enum Complete {
-          public enum Valid {
-            public enum Cell {
-              /// %@ days left
-              public static func subtitle(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "account.achievement.complete.valid.cell.subtitle", String(describing: p1))
-              }
-            }
-            public enum Detail {
-              /// Bonus expires in %@ days.
-              public static func subtitle(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "account.achievement.complete.valid.detail.subtitle", String(describing: p1))
-              }
-            }
-          }
           public enum ValidBonusExpiry {
             public enum Detail {
               /// Plural format key: "%#@days@"
@@ -3290,7 +3272,7 @@ public enum Strings {
     }
     public enum Device {
       public enum Center {
-        /// Device Center
+        /// Device centre
         public static let title = Strings.tr("Localizable", "device.center.title")
       }
     }
@@ -4112,7 +4094,7 @@ public enum Strings {
       public enum Audio {
         public enum PlaybackContinuation {
           public enum Dialog {
-            /// %@ will resume from %@
+            /// “%@” will resume from %@.
             public static func description(_ p1: Any, _ p2: Any) -> String {
               return Strings.tr("Localizable", "media.audio.playbackContinuation.dialog.description", String(describing: p1), String(describing: p2))
             }
@@ -4223,7 +4205,7 @@ public enum Strings {
         public static let newMeeting = Strings.tr("Localizable", "meetings.create.newMeeting")
       }
       public enum CreateMeeting {
-        /// %@'s meeting
+        /// %@’s meeting
         public static func defaultMeetingName(_ p1: Any) -> String {
           return Strings.tr("Localizable", "meetings.createMeeting.defaultMeetingName", String(describing: p1))
         }
@@ -4306,7 +4288,7 @@ public enum Strings {
           public static let clearMeetingHistory = Strings.tr("Localizable", "meetings.info.manageMeetingHistory.clearMeetingHistory")
           /// Are you sure you want to clear the full message history of this meeting?
           public static let clearMeetingHistoryMessage = Strings.tr("Localizable", "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage")
-          /// Meeting history has been cleared
+          /// Meeting history cleared
           public static let meetingHistoryHasBeenCleared = Strings.tr("Localizable", "meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared")
         }
         public enum Participants {
@@ -4498,7 +4480,7 @@ public enum Strings {
             /// Frequency
             public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.frequency.optionTitle")
             public enum Picker {
-              /// Please choose a frequency
+              /// Select a frequency
               public static let accessibilityLabel = Strings.tr("Localizable", "meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel")
             }
           }
@@ -4506,7 +4488,7 @@ public enum Strings {
             /// Every
             public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.interval.optionTitle")
             public enum Picker {
-              /// Please select an interval
+              /// Select a monthly interval
               public static let accessibilityLabel = Strings.tr("Localizable", "meetings.scheduleMeeting.create.interval.picker.accessibilityLabel")
             }
           }
@@ -4570,7 +4552,7 @@ public enum Strings {
               }
             }
             public enum Weekly {
-              /// Every day
+              /// Daily
               public static let everyDay = Strings.tr("Localizable", "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay")
             }
           }
@@ -4586,13 +4568,13 @@ public enum Strings {
           }
           public enum WeekDay {
             public enum Picker {
-              /// Choose a day of the week
+              /// Select a day of the week
               public static let accessibilityLabel = Strings.tr("Localizable", "meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel")
             }
           }
           public enum WeekNumber {
             public enum Picker {
-              /// Pick a specific week number
+              /// Select a weekly interval
               public static let accessibilityLabel = Strings.tr("Localizable", "meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel")
             }
           }
@@ -5644,19 +5626,19 @@ public enum Strings {
       }
       public enum Message {
         public enum Text {
-          /// ∙ Password-protected links
+          /// • Password-protected links
           /// 
-          /// ∙ Links with expiry dates
+          /// • Links with expiry dates
           /// 
-          /// ∙ Transfer quota sharing
+          /// • Transfer quota sharing
           /// 
-          /// ∙ Automatic backups
+          /// • Automatic backups
           /// 
-          /// ∙ Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)
+          /// • Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)
           /// 
-          /// ∙ Schedule rubbish bin clearing between 7 days and 10 years
+          /// • Schedule rubbish bin clearing between 7 days and 10 years
           public static let featuresOfProPlan = Strings.tr("Localizable", "upgradeAccountPlan.message.text.featuresOfProPlan")
-          /// Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as  the initial period chosen.
+          /// Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.
           /// You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.
           public static let subscriptionDetails = Strings.tr("Localizable", "upgradeAccountPlan.message.text.subscriptionDetails")
         }

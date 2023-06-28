@@ -46,6 +46,8 @@
 "decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="للوصول إلى هذا المجلد / الملف، ستحتاج إلى مفتاح فك التشفير الخاص به. إذا لم يكن لديك المفتاح، فيرجى الاتصال بمنشئ الرابط.";
+/* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessageForAlbum"="للوصول إلى الألبوم ، أدخل مفتاح فك التشفير. إذا لم يكن لديك، فاتصل بالشخص الذي شارك الرابط معك.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="مفتاح فك التشفير";
 /* Button title to try to decrypt the link */
@@ -178,6 +180,8 @@
 "downloadStarted"="بدء التنزيل";
 /* Title for the folder link view */
 "folderLink"="رابط المجلد";
+/* Title for the album/collection link view */
+"albumLink"="Album link";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="تنزيل";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -383,7 +387,7 @@
 /* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
 "sharedItems.link.accessInfoPasswordProtected"="يمكن فقط للأشخاص الذين لديهم كلمة المرور فتح الرابط";
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
-"sharedItems.link.linkUpdated"="Link updated. Copy again.";
+"sharedItems.link.linkUpdated"="تم تحديث الرابط. نسخ مرة أخرى.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(فقط لمشتركي Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -888,6 +892,8 @@
 "removeFilesFolderToRubbishBinMessage"="أنت على وشك حذف %d ملف و 1 مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="أنت على وشك حذف [A] ملف و [B]مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
+"sharedItems.rubbish.warning.message"="You are about to permanently remove %@. Would you like to proceed? (You cannot undo this action.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="تم إزالة 1 ملف من ميغا MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -904,6 +910,8 @@
 "filesFolderRemovedToRubbishBinMessage"="تم إزالة %d ملف و 1 مجلد من ميغا MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="تم إزالة [A] ملف و [B] مجلد من ميغا MEGA";
+/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
+"sharedItems.rubbish.confirmation.message"="%@ removed from MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="كلمة مرور جديدة";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1062,10 +1070,6 @@
 "account.achievement.mobileApp.incomplete.explaination.label"="عند تثبيت تطبيق ميغا MEGA للهاتف المحمول، تحصل على %@ من مساحة التخزين المجانية صالحة لمدة 365 يومًا. تطبيق ميغا MEGA للهاتف المحمول متاح لنظامي التشغيل أي أو إس iOS و اندرويد Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ من مساحة التخزين. صالحة لمدة 365 يوماً.";
-/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="%@ يوم/أيام متبقية";
-/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="المكافأة تنتهي في %@ يوم/أيام.";
 /* Add Phone Number title */
 "Add Phone Number"="أضف رقم هاتف";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2388,10 +2392,6 @@
 "Copy All"="نسخ الكل";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="خيارات مثل إرسال مفتاح فك التشفير بشكل منفصل أو تعيين تاريخ انتهاء الصلاحية أو كلمات مرور متاحة لعنصر واحد فقط.";
-/* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="تم النسخ الى حافظة النصوص";
-/* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="تم نسخ الرابط الى الحافظة";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="تم نسخ المفتاح إلى الحافظة";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2641,7 +2641,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="اجتماع جديد";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="اجتماع %@";
+"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="ابدأ الاجتماع";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2992,6 +2992,14 @@
 "transfer.storage.quotaExceeded"="تم تجاوز مساحة التخزين المتاحة";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="التالي";
+/* Title of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.title"="Resume audio?";
+/* Description of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.description"="“%@” will resume from %@.";
+/* Resume option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.resume"="استئناف";
+/* Restart option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.restart"="إعادة تشغيل";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ انضم";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -3190,7 +3198,7 @@
 "chat.listing.description.meetingCreated.message"="%@ : قام بإنشاء الاجتماع";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="اظهار الكل";
-/* Button title to leave the meeting in info view */
+/* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="غادر الاجتماع";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="إشعارات المحادثة";
@@ -3407,10 +3415,100 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="الكاميرا";
 /* Device Center title */
-"device.center.title"="";
+"device.center.title"="Device centre";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="إنهاء التكرار";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="بتاريخ";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="أبداً";
+/* Title for meeting notifications option in meeting info */
+"meetings.info.meetingNotifications"="إشعارات الاجتماع";
+/* Title for manage meeting history option in meeting info */
+"meetings.info.manageMeetingHistory"="Manage meeting history";
+/* Meeting Notifications DND: Title bar message for the dnd activate options */
+"meetings.info.muteMeetingNotificationsFor"="كتم صوت إشعارات الاجتماع لمدة";
+/* Title for share meeting link option in meeting info */
+"meetings.info.shareMeetingLink"="مشاركة رابط الاجتماع";
+/* The button or alert title to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="امسح سجل الاجتماع";
+/* Message show when the history of a meeting has been successfully deleted */
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history cleared";
+/* The alert message to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="هل أنت متأكد من أنك تريد مسح كل سجل الرسائل لهذا الاجتماع؟";
+/* Text explaining users how the meeting links work. */
+"meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+/* The title of a menu button which allows users to rename a meeting. */
+"meetings.info.renameMeeting"="إعادة تسمية الاجتماع";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.daily.optionTitle"="يومياً";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.weekly.optionTitle"="أسبوعياً";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.monthly.optionTitle"="شهرياً";
+/* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
+"meetings.scheduleMeeting.create.frequency.optionTitle"="Frequency";
+/* Create Schedule Meeting: The text is shown along with the selected interval. */
+"meetings.scheduleMeeting.create.interval.optionTitle"="Every";
+/* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+/* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+/* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+/* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+/* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="On the…";
+/* Create Schedule Meeting: Month custom option - header title for the calendar */
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Each";
+/* Create Schedule Meeting: Month custom option - first week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.first"="أول";
+/* Create Schedule Meeting: Month custom option - second week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.second"="ثاني";
+/* Create Schedule Meeting: Month custom option - third week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.third"="ثالث";
+/* Create Schedule Meeting: Month custom option - fourth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="رابع";
+/* Create Schedule Meeting: Month custom option - fifth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="الخامس";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
+"meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
+/* On Upgrade Account Plan screen. Button title to restore purchases */
+"upgradeAccountPlan.button.restore.title"="Restore purchase";
+/* On Upgrade Account Plan screen. Button title to show terms and policies */
+"upgradeAccountPlan.button.termsAndPolicies.title"="Terms and policies";
+/* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
+"upgradeAccountPlan.button.buyAccountPlan.title"="Buy %@";
+/* On Upgrade Account Plan screen. Displayed header title text message */
+"upgradeAccountPlan.header.title.choosePlan"="اختر الباقة المناسبة لك";
+/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
+"upgradeAccountPlan.header.title.currentPlan"="Current plan: %@";
+/* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
+"upgradeAccountPlan.header.planTermPicker.monthly"="شهرياً";
+/* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
+"upgradeAccountPlan.header.planTermPicker.yearly"="سنويًا";
+/* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
+"upgradeAccountPlan.header.title.saveYearlyBilling"="Save up to 16%% with yearly billing";
+/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Features of Pro plans";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• مشاركة حجم التراسل المتاح\n\n• النسخ الاحتياطية التلقائية\n\n• الترجيع إلى ما يصل حتى 90 يومًا على برو لايت Pro Lite وما يصل حتى 365 يومًا على برو Pro I و II و III (قريبًا)\n\n• جدولة مسح سلة المحذوفات بين 7 أيام و 10 سنوات";
+/* On Upgrade Account Plan screen. Displayed header title text for subscription details */
+"upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
+/* On Upgrade Account Plan screen. Displayed text body for subscription details */
+"upgradeAccountPlan.message.text.subscriptionDetails"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.";
+/* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
+"upgradeAccountPlan.plan.tag.currentPlan"="الباقة الحالية";
+/* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
+"upgradeAccountPlan.plan.tag.recommended"="موصي به";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/month";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/year";
+/* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
+"upgradeAccountPlan.plan.details.storage"="Storage: %@";
+/* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
+"upgradeAccountPlan.plan.details.transfer"="Transfer: %@";

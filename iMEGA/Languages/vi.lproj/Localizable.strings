@@ -46,6 +46,8 @@
 "decryptionKeyAlertTitle"="Nhập chìa khóa giải mã";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="Để truy cập vào thư mục hay tệp tin này, cần phải có Chìa Khóa Giải Mã. Nếu bạn không có, hãy hỏi tới người chủ của đường liên kết này để giải quyết.";
+/* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessageForAlbum"="Để truy cập vào album, nhập chìa khóa giải mã. Nếu bạn không có, hãy liên hệ với người đã chia sẻ đường liên kết cho bạn.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chìa khóa giải mã";
 /* Button title to try to decrypt the link */
@@ -178,6 +180,8 @@
 "downloadStarted"="Tải xuống được bắt đầu";
 /* Title for the folder link view */
 "folderLink"="Đường liên kết thư mục";
+/* Title for the album/collection link view */
+"albumLink"="Đường liên kết album";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -381,9 +385,9 @@
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Liên kết kèm chìa khóa";
 /* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
-"sharedItems.link.accessInfoPasswordProtected"="Only people with the password can open the link";
+"sharedItems.link.accessInfoPasswordProtected"="Chỉ những người có mật khẩu mới có thể mở đường liên kết";
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
-"sharedItems.link.linkUpdated"="Đường liên kết đã được cập nhật. Xin copy lại.";
+"sharedItems.link.linkUpdated"="Đường liên kết đã được cập nhật. Xin sao chép lại.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(CHỈ CHO HẠNG PRO)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -888,6 +892,8 @@
 "removeFilesFolderToRubbishBinMessage"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn %d tệp tin và 1 thư mục. Bạn có muốn thực hiện không? (Không thể phục hồi sau khi xóa)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Bạn đang chuẩn bị xóa vĩnh viễn [A] tệp tin và [B] thư mục. Bạn có muốn tiến hành không? (Bạn sẽ không thể khôi phục lại việc làm này.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
+"sharedItems.rubbish.warning.message"="Bạn đang chuẩn bị tiến hành xóa vĩnh viễn %@. Bạn có muốn xóa không? (Không thể hồi lại sau khi xóa).";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="Đã xóa 1 tệp tin khỏi MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -904,6 +910,8 @@
 "filesFolderRemovedToRubbishBinMessage"="Đã xóa %d tệp tin và 1 thư mục khỏi MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="Đã xóa [A] tệp tin và [B] thư mục khỏi MEGA";
+/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
+"sharedItems.rubbish.confirmation.message"="Đã xóa %@ khỏi MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Mật khẩu mới";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1062,10 +1070,6 @@
 "account.achievement.mobileApp.incomplete.explaination.label"="Sau khi cài đặt ứng dụng MEGA cho Di Động, bạn sẽ nhận được thêm %@ vào không gian lưu trữ, hạn sử dụng là 365 ngày. App MEGA cho Di Động còn có cho iOS và Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ vào không gian lưu trữ. Hạn dùng là 365 ngày.";
-/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="Còn lại %@ ngày";
-/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="Phần thưởng hết hạn trong %@ ngày.";
 /* Add Phone Number title */
 "Add Phone Number"="Thêm Số Điện Thoại";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2388,10 +2392,6 @@
 "Copy All"="Sao Chép Tất Cả";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Các tùy chọn như Gửi Chìa Khóa Giải Mã Ra Riêng, Chọn Ngày Hết Hạn và Mật Khẩu chỉ áp dụng được có các mục đơn lẻ.";
-/* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="Đã sao chép đường liên kết vào bảng nhớ tạm";
-/* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Đã sao chép các đường liên kết vào bảng nhớ tạm";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Chìa Khóa Được Ghi vào Bảng Nhớ Tạm";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2641,7 +2641,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Cuộc họp mới";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="Họp Mặt %@";
+"meetings.createMeeting.defaultMeetingName"="Cuộc họp của %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Bắt đầu cuộc họp";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2992,6 +2992,14 @@
 "transfer.storage.quotaExceeded"="Vượt mức giới hạn lưu trữ";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Tiếp";
+/* Title of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.title"="Tiếp tục phát âm thanh?";
+/* Description of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.description"="“%@” sẽ tiếp tục phát tại %@.";
+/* Resume option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.resume"="Tiếp tục";
+/* Restart option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.restart"="Phát từ đầu";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ đã tham gia";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -3137,13 +3145,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Gửi lời mời";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
+"notifications.message.takenDownReinstated.file"="Tệp tin “%@” bị gỡ xuống của bạn đã được khôi phục";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
+"notifications.message.takenDownReinstated.folder"="Thư mục “%@” bị gỡ xuống của bạn đã được khôi phục";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.file"="Tệp tin chia sẻ công cộng của bạn mang tên “%@” đã bị gỡ xuống";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.folder"="Thư mục chia sẻ công cộng của bạn mang tên “%@” đã bị gỡ xuống";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Cho phép các thành viên không chủ trì mời thêm người";
 /* Start conversation: Schedule meeting context menu */
@@ -3190,7 +3198,7 @@
 "chat.listing.description.meetingCreated.message"="%@: đã tạo một cuộc họp";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="Xem tất cả";
-/* Button title to leave the meeting in info view */
+/* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="Rời khỏi cuộc meeting";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="Âm báo chát";
@@ -3407,10 +3415,100 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Camêra";
 /* Device Center title */
-"device.center.title"="";
+"device.center.title"="Trung tâm thiết bị";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Ngừng tái diễn";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="Vào ngày";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="Không bao giờ";
+/* Title for meeting notifications option in meeting info */
+"meetings.info.meetingNotifications"="Âm báo cuộc họp";
+/* Title for manage meeting history option in meeting info */
+"meetings.info.manageMeetingHistory"="Quản lý lịch sử cuộc họp";
+/* Meeting Notifications DND: Title bar message for the dnd activate options */
+"meetings.info.muteMeetingNotificationsFor"="Tắt tiếng tất cả các âm báo cuộc họp trong";
+/* Title for share meeting link option in meeting info */
+"meetings.info.shareMeetingLink"="Chia sẻ đường liên kết cuộc họp";
+/* The button or alert title to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="Dọn lịch sử cuộc họp";
+/* Message show when the history of a meeting has been successfully deleted */
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Đã dọn lịch sử cuộc họp";
+/* The alert message to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Bạn có chắc muốn dọn toàn bộ lịch sử các tin nhắn của cuộc họp này không?";
+/* Text explaining users how the meeting links work. */
+"meetings.info.shareMeetingLink.explainLink"="Bất kỳ ai có đường liên kết này đều có thể tham gia cuộc họp và xem tin nhắn của cuộc họp";
+/* The title of a menu button which allows users to rename a meeting. */
+"meetings.info.renameMeeting"="Đổi tên cuộc họp";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.daily.optionTitle"="Hằng ngày";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.weekly.optionTitle"="Hằng tháng";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.monthly.optionTitle"="Hàng tháng";
+/* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
+"meetings.scheduleMeeting.create.frequency.optionTitle"="Tần xuất";
+/* Create Schedule Meeting: The text is shown along with the selected interval. */
+"meetings.scheduleMeeting.create.interval.optionTitle"="Mỗi";
+/* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Chọn một mức độ thường xuyên";
+/* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Chọn khoảng thời gian các tuần";
+/* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Chọn một ngày trong tuần";
+/* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Chọn khoảng thời gian các tháng";
+/* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="Vào…";
+/* Create Schedule Meeting: Month custom option - header title for the calendar */
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Mỗi";
+/* Create Schedule Meeting: Month custom option - first week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.first"="đầu tiên";
+/* Create Schedule Meeting: Month custom option - second week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.second"="lần thứ nhì";
+/* Create Schedule Meeting: Month custom option - third week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.third"="lần thứ ba";
+/* Create Schedule Meeting: Month custom option - fourth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="lần thứ tư";
+/* Create Schedule Meeting: Month custom option - fifth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="lần thứ năm";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
+"meetings.scheduled.create.weekly.everyDay.footerNote"="Cuộc họp sẽ diễn ra mỗi ngày.";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Hằng ngày";
+/* On Upgrade Account Plan screen. Button title to restore purchases */
+"upgradeAccountPlan.button.restore.title"="Khôi phục hàng đã mua";
+/* On Upgrade Account Plan screen. Button title to show terms and policies */
+"upgradeAccountPlan.button.termsAndPolicies.title"="Điều khoản và chính sách";
+/* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
+"upgradeAccountPlan.button.buyAccountPlan.title"="Mua %@";
+/* On Upgrade Account Plan screen. Displayed header title text message */
+"upgradeAccountPlan.header.title.choosePlan"="Chọn gói phù hợp với bạn";
+/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
+"upgradeAccountPlan.header.title.currentPlan"="Gói hiện tại: %@";
+/* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
+"upgradeAccountPlan.header.planTermPicker.monthly"="Hàng tháng";
+/* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
+"upgradeAccountPlan.header.planTermPicker.yearly"="Thường niên";
+/* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
+"upgradeAccountPlan.header.title.saveYearlyBilling"="Tiết kiệm lên đến 16%% khi thanh toán thường niên";
+/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Các tính năng của gói Pro";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Liên kết được bảo vệ bằng mật khẩu\n\n • Liên kết có ngày hết hạn\n\n • Chia sẻ băng thông truyền tải\n\n • Sao lưu tự động\n\n • Tua lại phiên bản tối đa 90 ngày với Pro Lite và 365 ngày với Pro I, II và III (sắp ra mắt)\n\n• Lên lịch dọn rác trong khoảng thời gian từ 7 ngày đến 10 năm";
+/* On Upgrade Account Plan screen. Displayed header title text for subscription details */
+"upgradeAccountPlan.header.title.subscriptionDetails"="Chi tiết gói đăng ký";
+/* On Upgrade Account Plan screen. Displayed text body for subscription details */
+"upgradeAccountPlan.message.text.subscriptionDetails"="Các gói đăng ký được tự động gia hạn cho khoảng thời gian đăng ký kế tiếp có cùng thời lượng và ở cùng mức giá như khoảng thời gian ban đầu đã chọn.\nBạn có thể tắt tự động gia hạn gói đăng ký MEGA Pro của mình không được ít hơn 24 giờ trước khi đến kỳ hạn thanh toán cho gói đăng ký tiếp theo trong trang cài đặt tài khoản iTunes của bạn.";
+/* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
+"upgradeAccountPlan.plan.tag.currentPlan"="Gói hiện tại";
+/* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
+"upgradeAccountPlan.plan.tag.recommended"="Khuyên dùng";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/tháng";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/năm";
+/* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
+"upgradeAccountPlan.plan.details.storage"="Không gian: %@";
+/* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
+"upgradeAccountPlan.plan.details.transfer"="Truyền tải: %@";

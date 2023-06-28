@@ -47,7 +47,7 @@
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="To access this folder or file, you will need its decryption key. If you do not have the key, please contact the creator of the link.";
 /* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessageForAlbum"="To access the album, enter the decryption key. If you don't have it, contact the person who shared the link with you.";
+"decryptionKeyAlertMessageForAlbum"="To access the album, enter the decryption key. If you don’t have it, contact the person who shared the link with you.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decryption key";
 /* Button title to try to decrypt the link */
@@ -1070,10 +1070,6 @@
 "account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, valid for 365 days. The MEGA Mobile App is available for iOS and Android. ";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ of storage. Valid for 365 days.";
-/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="%@ days left";
-/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="Bonus expires in %@ days.";
 /* Add Phone Number title */
 "Add Phone Number"="Add phone number";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2396,10 +2392,6 @@
 "Copy All"="Copy all";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Options such as Send decryption key separately, Set expiry date or Set password are only available for single items.";
-/* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="Copied link to clipboard";
-/* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Copied links to clipboard";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Key copied to clipboard";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2649,7 +2641,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="New meeting";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@'s meeting";
+"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Start meeting";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -3003,7 +2995,7 @@
 /* Title of Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.title"="Resume audio?";
 /* Description of Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.description"="%@ will resume from %@";
+"media.audio.playbackContinuation.dialog.description"="“%@” will resume from %@.";
 /* Resume option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.resume"="Resume";
 /* Restart option for Audio Player dialog for Playback Continuation */
@@ -3206,7 +3198,7 @@
 "chat.listing.description.meetingCreated.message"="%@: created a meeting";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="See all";
-/* Button title to leave the meeting in info view */
+/* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="Leave meeting";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="Chat notifications";
@@ -3423,7 +3415,7 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Camera";
 /* Device Center title */
-"device.center.title"="Device Center";
+"device.center.title"="Device centre";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3441,11 +3433,9 @@
 /* The button or alert title to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistory"="Clear meeting history";
 /* Message show when the history of a meeting has been successfully deleted */
-"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history has been cleared";
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history cleared";
 /* The alert message to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Are you sure you want to clear the full message history of this meeting?";
-/* The button title that allows the user to leave a ad hoc meeting. */
-"meetings.info.leaveMeeting"="Leave meeting";
 /* Text explaining users how the meeting links work. */
 "meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
 /* The title of a menu button which allows users to rename a meeting. */
@@ -3461,13 +3451,13 @@
 /* Create Schedule Meeting: The text is shown along with the selected interval. */
 "meetings.scheduleMeeting.create.interval.optionTitle"="Every";
 /* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
-"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Please choose a frequency";
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
 /* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
-"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Pick a specific week number";
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
 /* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
-"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Choose a day of the week";
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
-"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Please select an interval";
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
 "meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="On the…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
@@ -3485,7 +3475,7 @@
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
 "meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
-"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Every day";
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Restore purchase";
 /* On Upgrade Account Plan screen. Button title to show terms and policies */
@@ -3505,11 +3495,11 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Features of Pro plans";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="∙ Password-protected links\n\n∙ Links with expiry dates\n\n∙ Transfer quota sharing\n\n∙ Automatic backups\n\n∙ Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)\n\n∙ Schedule rubbish bin clearing between 7 days and 10 years";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
-"upgradeAccountPlan.message.text.subscriptionDetails"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as  the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.";
+"upgradeAccountPlan.message.text.subscriptionDetails"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.";
 /* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
 "upgradeAccountPlan.plan.tag.currentPlan"="Current plan";
 /* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */

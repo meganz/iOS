@@ -2,6 +2,86 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>sharedItems.rubbish.warning.fileCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d файл</string>
+        <key>few</key>
+        <string>%d файла</string>
+        <key>many</key>
+        <string>%d файлов</string>
+        <key>other</key>
+        <string>%d файла</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.fileCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d файл</string>
+        <key>few</key>
+        <string>%d файла</string>
+        <key>many</key>
+        <string>%d файлов</string>
+        <key>other</key>
+        <string>%d файла</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.warning.folderCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d папка</string>
+        <key>few</key>
+        <string>%d папки</string>
+        <key>many</key>
+        <string>%d папок</string>
+        <key>other</key>
+        <string>%d папки</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.folderCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d папка</string>
+        <key>few</key>
+        <string>%d папки</string>
+        <key>many</key>
+        <string>%d папок</string>
+        <key>other</key>
+        <string>%d папки</string>
+      </dict>
+    </dict>
     <key>sharedItems.link.accessInfo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2802,6 +2882,26 @@
         <string>Осталось %d дня</string>
       </dict>
     </dict>
+    <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Бонус истекает через %d день.</string>
+        <key>few</key>
+        <string>Бонус истекает через %d дня.</string>
+        <key>many</key>
+        <string>Бонус истекает через %d дней.</string>
+        <key>other</key>
+        <string>Бонус истекает через %d дня.</string>
+      </dict>
+    </dict>
     <key>share.message.uploadedToDestinationFolder</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2880,6 +2980,266 @@
         <string>[A] отправлено во все чаты</string>
         <key>other</key>
         <string>[A] отправлено во все чаты</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.daily.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d день</string>
+        <key>few</key>
+        <string>%d дня</string>
+        <key>many</key>
+        <string>%d дней</string>
+        <key>other</key>
+        <string>%d дня</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d неделя</string>
+        <key>few</key>
+        <string>%d недели</string>
+        <key>many</key>
+        <string>%d недель</string>
+        <key>other</key>
+        <string>%d недели</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d месяц</string>
+        <key>few</key>
+        <string>%d месяца</string>
+        <key>many</key>
+        <string>%d месяцев</string>
+        <key>other</key>
+        <string>%d месяца</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.daily.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Встреча будет проводиться каждый день.</string>
+        <key>few</key>
+        <string>Встреча будет проводиться каждые %d дня.</string>
+        <key>many</key>
+        <string>Встреча будет проводиться каждые %d дней.</string>
+        <key>other</key>
+        <string>Встреча будет проводиться каждые %d дня.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Встреча будет проводиться каждую неделю в [weekDayName].</string>
+        <key>few</key>
+        <string>Встреча будет проводиться каждые %d недели в [weekDayName].</string>
+        <key>many</key>
+        <string>Встреча будет проводиться каждые %d недель в [weekDayName].</string>
+        <key>other</key>
+        <string>Встреча будет проводиться каждые %d недели в [weekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Встреча будет проводиться каждую неделю в [weekDayNames] и [lastWeekDayName].</string>
+        <key>few</key>
+        <string>Встреча будет проводиться каждые %d недели в [weekDayNames] и [lastWeekDayName].</string>
+        <key>many</key>
+        <string>Встреча будет проводиться каждые %d недель в [weekDayNames] и [lastWeekDayName].</string>
+        <key>other</key>
+        <string>Встреча будет проводиться каждые %d недели в [weekDayNames] и [lastWeekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Встреча будет проводиться в [ordinalDay] число каждый месяц.</string>
+        <key>few</key>
+        <string>Встреча будет проводиться в [ordinalDay] число каждые %d месяца.</string>
+        <key>many</key>
+        <string>Встреча будет проводиться в [ordinalDay] число каждые %d месяцев.</string>
+        <key>other</key>
+        <string>Встреча будет проводиться в [ordinalDay] число каждые %d месяца.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждый месяц.</string>
+        <key>few</key>
+        <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждые %d месяца.</string>
+        <key>many</key>
+        <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждые %d месяцев.</string>
+        <key>other</key>
+        <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждые %d месяца.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждый месяц.</string>
+        <key>few</key>
+        <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждые %d месяца.</string>
+        <key>many</key>
+        <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждые %d месяцев.</string>
+        <key>other</key>
+        <string>Встреча будет проводиться в [weekNumber] [weekDayName] каждые %d месяца.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Каждую неделю в [weekDayNames]</string>
+        <key>few</key>
+        <string>Каждые %d недели в [weekDayNames]</string>
+        <key>many</key>
+        <string>Каждые %d недель в [weekDayNames]</string>
+        <key>other</key>
+        <string>Каждые %d недели в [weekDayNames]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>В [ordinalNumber] число каждый месяц</string>
+        <key>few</key>
+        <string>В [ordinalNumber] число каждые %d месяца</string>
+        <key>many</key>
+        <string>В [ordinalNumber] число каждые %d месяцев</string>
+        <key>other</key>
+        <string>В [ordinalNumber] число каждые %d месяца</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Каждый месяц, [ordinalNumber] [weekDayName]</string>
+        <key>few</key>
+        <string>Каждые %d месяца, [ordinalNumber] [weekDayName]</string>
+        <key>many</key>
+        <string>Каждые %d месяцев, [ordinalNumber] [weekDayName]</string>
+        <key>other</key>
+        <string>Каждые %d месяца, [ordinalNumber] [weekDayName]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Каждый день</string>
+        <key>few</key>
+        <string>Каждые %d дня</string>
+        <key>many</key>
+        <string>Каждые %d дней</string>
+        <key>other</key>
+        <string>Каждые %d дня</string>
       </dict>
     </dict>
   </dict>
