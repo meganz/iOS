@@ -77,7 +77,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
     }
     
     // MARK: - Backups row setup data
-    private func backupsSetupData() -> MyAccountHallCellData {
+    private func makeBackupsCellData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.Backups.title,
                               icon: Asset.Images.MyAccount.backups.image.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
@@ -169,7 +169,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         switch MyAccountMegaSection(rawValue: indexPath.row) {
         case .storage: cell.setup(data: isShowStorageUsageCell ? storageBusinessAccountSetupData() : storageSetupData())
         case .contacts: cell.setup(data: contactsSetupData(existsPendingView: cell.pendingView != nil))
-        case .backups: cell.setup(data: backupsSetupData())
+        case .backups: cell.setup(data: makeBackupsCellData())
         case .notifications: cell.setup(data: notificationsSetupData(existsPendingView: cell.pendingView != nil))
         case .achievements: cell.setup(data: achievementsSetupData())
         case .transfers: cell.setup(data: transfersSetupData())
