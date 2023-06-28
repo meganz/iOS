@@ -1,3 +1,5 @@
+import MEGAData
+import MEGADomain
 import MEGAFoundation
 import UIKit
 
@@ -33,7 +35,13 @@ enum KeySectionRow {
 
 struct GetNodeLinkViewModel {
     var link: String = ""
-    var separateKey: Bool = false
+    var separateKey: Bool = false {
+        didSet {
+            if let nodeType = nodeTypes.first, separateKey {
+                getLinkAnalyticsUseCase.sendDecriptionKey(nodeType: nodeType)
+            }
+        }
+    }
     var linkWithoutKey: String {
         if link.contains("file") || link.contains("folder") {
             return link.components(separatedBy: "#")[0]
@@ -49,11 +57,57 @@ struct GetNodeLinkViewModel {
         }
     }
     var expiryDate: Bool = false
-    var date: Date?
+    var date: Date? {
+        didSet {
+            if let nodeType = nodeTypes.first, date != nil {
+                getLinkAnalyticsUseCase.setExpiryDate(nodeType: nodeType)
+            }
+        }
+    }
     var selectDate: Bool = false
     var passwordProtect: Bool = false
     var password: String?
     var multilink: Bool = false
+    var nodeTypes: [NodeTypeEntity] = []
+
+    private let getLinkAnalyticsUseCase = GetLinkAnalyticsUseCase(repository: AnalyticsRepository.newRepo)
+
+    func trackSetPassword() {
+        guard let nodeType = nodeTypes.first else { return }
+
+        if password == nil {
+            getLinkAnalyticsUseCase.setPassword(nodeType: nodeType)
+        } else {
+            getLinkAnalyticsUseCase.resetPassword(nodeType: nodeType)
+        }
+    }
+
+    func trackConfirmPassword() {
+        guard let nodeType = nodeTypes.first else { return }
+        getLinkAnalyticsUseCase.confirmPassword(nodeType: nodeType)
+    }
+    func trackRemovePassword() {
+        guard let nodeType = nodeTypes.first else { return }
+        getLinkAnalyticsUseCase.removePassword(nodeType: nodeType)
+    }
+
+    func trackShareLink() {
+        getLinkAnalyticsUseCase.shareLink(nodeTypes: nodeTypes)
+    }
+
+    func trackGetLink() {
+        getLinkAnalyticsUseCase.getLink(nodeTypes: nodeTypes)
+    }
+
+    func trackProFeatureSeePlans() {
+        guard let nodeType = nodeTypes.first else { return }
+        getLinkAnalyticsUseCase.proFeatureSeePlans(nodeType: nodeType)
+    }
+
+    func trackProFeatureNotNow() {
+        guard let nodeType = nodeTypes.first else { return }
+        getLinkAnalyticsUseCase.proFeatureNotNow(nodeType: nodeType)
+    }
 }
 
 class GetLinkViewController: UIViewController {
@@ -77,7 +131,7 @@ class GetLinkViewController: UIViewController {
     private var justUpgradedToProAccount = false
     private var isLinkAlreadyCreated = false
     private var defaultDateStored = false
-    
+
     private var getLinkViewModel: (any GetLinkViewModelType)?
     
     @objc class func instantiate(withNodes nodes: [MEGANode]) -> MEGANavigationController {
@@ -87,6 +141,7 @@ class GetLinkViewController: UIViewController {
         
         getLinkVC.nodes = nodes
         getLinkVC.getLinkVM.multilink = nodes.count > 1
+        getLinkVC.getLinkVM.nodeTypes = nodes.map { $0.toNodeEntity().nodeType ?? .unknown }
         
         return MEGANavigationController.init(rootViewController: getLinkVC)
     }
@@ -108,7 +163,9 @@ class GetLinkViewController: UIViewController {
         copyKeyBarButton.title = Strings.Localizable.copyKey
 
         configureSnackBarPresenter()
-        
+
+        nodes.notContains { !$0.isExported() } ? getLinkVM.trackGetLink() : getLinkVM.trackShareLink()
+
         if var getLinkViewModel {
             let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
             navigationItem.rightBarButtonItem = doneBarButtonItem
@@ -126,6 +183,7 @@ class GetLinkViewController: UIViewController {
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }
+        
     }
 
     private func loadNodes() {
@@ -429,7 +487,14 @@ class GetLinkViewController: UIViewController {
     
     private func showUpgradeToProCustomModalAlert() {
         let upgradeToProCustomModalAlert = CustomModalAlertViewController()
-        upgradeToProCustomModalAlert.configureUpgradeToPro()
+        upgradeToProCustomModalAlert.configureUpgradeToPro(
+            onConfirm: { [weak self] in
+                self?.getLinkVM.trackProFeatureSeePlans()
+            },
+            onCancel: { [weak self] in
+                self?.getLinkVM.trackProFeatureNotNow()
+            }
+        )
 
         UIApplication.mnz_presentingViewController().present(upgradeToProCustomModalAlert, animated: true, completion: nil)
     }
@@ -460,8 +525,12 @@ class GetLinkViewController: UIViewController {
     // MARK: - IBActions
     
     @IBAction func switchValueChanged(_ sender: UISwitch) {
-        guard let point = sender.superview?.convert(sender.center, to: tableView), let indexPath = tableView.indexPathForRow(at: point) else { return }
-        
+        guard let point = sender.superview?.convert(sender.center, to: tableView),
+              let indexPath = tableView.indexPathForRow(at: point)
+        else {
+            return
+        }
+
         if let getLinkViewModel {
             getLinkViewModel.dispatch(.switchToggled(indexPath: indexPath, isOn: sender.isOn))
             return
@@ -1020,6 +1089,7 @@ extension GetLinkViewController: UITableViewDelegate {
                     }
                     
                     if MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
+                        getLinkVM.trackSetPassword()
                         present(SetLinkPasswordViewController.instantiate(withDelegate: self), animated: true, completion: nil)
                     } else {
                         showUpgradeToProCustomModalAlert()
@@ -1035,6 +1105,7 @@ extension GetLinkViewController: UITableViewDelegate {
                     getLinkVM.passwordProtect = false
                     getLinkVM.password = nil
                     getLinkVM.link = nodes[0].publicLink ?? ""
+                    getLinkVM.trackRemovePassword()
                     tableView.reloadData()
                 }
             case .key:
@@ -1071,6 +1142,7 @@ extension GetLinkViewController: SetLinkPasswordViewControllerDelegate {
         setLinkPassword.dismissView()
         showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.Link.linkUpdated)
         if let publicLink = nodes[0].publicLink {
+            getLinkVM.trackConfirmPassword()
             encrypt(link: publicLink, with: password)
         }
     }
