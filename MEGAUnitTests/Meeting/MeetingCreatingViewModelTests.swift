@@ -6,7 +6,6 @@ import XCTest
 final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_onViewReady_createMeeting() {
         let router = MockMeetingCreateRouter()
-        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
         let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(router: router,
@@ -15,7 +14,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                                                  audioSessionUseCase: audioSession,
                                                  localVideoUseCase: MockCallLocalVideoUseCase(),
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                 devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                 permissionHandler: makeMockDevicePermissions(),
                                                  userImageUseCase: MockUserImageUseCase(),
                                                  accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  megaHandleUseCase: MockMEGAHandleUseCase(),
@@ -32,7 +31,6 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let useCase = MockMeetingCreatingUseCase(userName: "Test Name", chatCallCompletion: .success(chatRoom))
-        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
         let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(router: router,
@@ -41,7 +39,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                                                  audioSessionUseCase: audioSession,
                                                  localVideoUseCase: MockCallLocalVideoUseCase(),
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                 devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                 permissionHandler: makeMockDevicePermissions(),
                                                  userImageUseCase: MockUserImageUseCase(),
                                                  accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  megaHandleUseCase: MockMEGAHandleUseCase(),
@@ -60,7 +58,6 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_updateSpeakerButton() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase(userName: "Test Name")
-        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
         let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(router: router,
@@ -69,7 +66,7 @@ final class MeetingCreatingViewModelTests: XCTestCase {
                                                  audioSessionUseCase: audioSession,
                                                  localVideoUseCase: MockCallLocalVideoUseCase(),
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                 devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                 permissionHandler: makeMockDevicePermissions(),
                                                  userImageUseCase: MockUserImageUseCase(),
                                                  accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  megaHandleUseCase: MockMEGAHandleUseCase(),
@@ -85,15 +82,13 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_didTapCloseButton() {
         let router = MockMeetingCreateRouter()
         let useCase = MockMeetingCreatingUseCase(userName: "Test Name")
-        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
-
         let viewModel = MeetingCreatingViewModel(router: router,
                                                  type: .join,
                                                  meetingUseCase: useCase,
                                                  audioSessionUseCase: MockAudioSessionUseCase(),
                                                  localVideoUseCase: MockCallLocalVideoUseCase(),
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                 devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                 permissionHandler: makeMockDevicePermissions(),
                                                  userImageUseCase: MockUserImageUseCase(),
                                                  accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  megaHandleUseCase: MockMEGAHandleUseCase(),
@@ -108,15 +103,13 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let useCase = MockMeetingCreatingUseCase(userName: "Test Name", chatCallCompletion: .success(chatRoom))
-        let devicePermissonCheckingUseCase = DevicePermissionCheckingProtocol.mock(albumAuthorizationStatus: .authorized, audioAccessAuthorized: false, videoAccessAuthorized: false)
-
         let viewModel = MeetingCreatingViewModel(router: router,
                                                  type: .start,
                                                  meetingUseCase: useCase,
                                                  audioSessionUseCase: MockAudioSessionUseCase(),
                                                  localVideoUseCase: MockCallLocalVideoUseCase(),
                                                  captureDeviceUseCase: MockCaptureDeviceUseCase(),
-                                                 devicePermissionUseCase: devicePermissonCheckingUseCase,
+                                                 permissionHandler: makeMockDevicePermissions(),
                                                  userImageUseCase: MockUserImageUseCase(),
                                                  accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
                                                  megaHandleUseCase: MockMEGAHandleUseCase(),
@@ -127,6 +120,14 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         XCTAssert(router.dismiss_calledTimes == 1)
         XCTAssert(router.goToMeetingRoom_calledTimes == 1)
 
+    }
+    
+    func makeMockDevicePermissions() -> MockDevicePermissionHandler {
+        .init(
+            photoAuthorization: .authorized,
+            audioAuthorized: false,
+            videoAuthorized: false
+        )
     }
     
 }

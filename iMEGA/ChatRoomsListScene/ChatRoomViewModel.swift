@@ -742,11 +742,15 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         description = message
     }
     
+    var permissionRouter: PermissionAlertRouter {
+        .makeRouter(deviceHandler: permissionHandler)
+    }
+    
     private func startOrJoinMeetingTapped() {
-        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
+        permissionRouter.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
             guard let self else { return }
             guard granted else {
-                permissionHandler.alertAudioPermission(incomingCall: false)
+                permissionRouter.alertAudioPermission(incomingCall: false)
                 return
             }
             

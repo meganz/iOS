@@ -11,19 +11,25 @@ extension PhotosViewController: PhotosBannerViewProvider {
         configPhotosBannerView(in: photosBannerView)
     }
     
-    @objc func updateLimitedAccessBannerVisibility() {
-        guard CameraUploadManager.isCameraUploadEnabled,
-              PHPhotoLibrary.authorizationStatus(for: .readWrite) == .limited else {
-            showPhotosBannerView(isHidden: true)
-            return
-        }
-        
-        showPhotosBannerView(isHidden: false)
+    var permissionHandler: DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
     }
     
-    private func showPhotosBannerView(isHidden: Bool) {
+    var shouldShowPhotosBanner: Bool {
+        // we should show banner if we enabled the camera upload
+        // but did not enable access to whole library
+        CameraUploadManager.isCameraUploadEnabled &&
+        permissionHandler.photoLibraryAuthorizationStatus == .limited
+    }
+    
+    @objc
+    func updateLimitedAccessBannerVisibility() {
+        showPhotosBannerView(show: shouldShowPhotosBanner)
+    }
+    
+    private func showPhotosBannerView(show: Bool) {
         UIView.animate(withDuration: 0.25) {
-            self.photosBannerView.isHidden = isHidden
+            self.photosBannerView.isHidden = !show
         }
     }
 

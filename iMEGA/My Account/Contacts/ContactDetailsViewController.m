@@ -846,15 +846,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     BOOL videoCall = sender.tag > 0;
     if (!MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         self.callButton.enabled = self.videoCallButton.enabled = NO;
-        DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+        DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
         [handler audioPermissionWithModal:YES incomingCall:NO completion:^(BOOL audioGranted) {
             if (audioGranted) {
                 if (videoCall) {
-                    [handler videoPermissionWithCompletionHandlerWithHandler:^(BOOL videoGranted) {
+                    [handler requestVideoPermissionWithHandler:^(BOOL videoGranted) {
                         if (videoGranted) {
                             [self performCallWithVideo:videoCall];
                         } else {
-                            [handler alertVideoPermissionWithHandler:^{}];
+                            [handler alertVideoPermission];
                             [self updateCallButtonsState];
                         }
                     }];

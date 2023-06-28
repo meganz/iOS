@@ -39,18 +39,17 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     func didTapUploadFromPhotoAlbum() {
-        devicePermissionUseCase.requestAlbumAccess { [weak self]  photoAlbumPermissionRequestResult in
+        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
             guard let self = self else { return }
-            switch photoAlbumPermissionRequestResult {
-            case .failure(let error):
-                self.error = error
-                self.notifyUpdate?(self.outputs)
-            case .success:
+            if granted {
                 let selectionHandler: (([PHAsset], MEGANode) -> Void) = { [weak self] assets, targetNode in
                     guard let self = self else { return }
                     self.uploadFiles(fromPhotoAssets: assets, to: targetNode)
                 }
                 self.router.upload(from: .album(selectionHandler))
+            } else {
+                self.error = .photos
+                self.notifyUpdate?(self.outputs)
             }
         }
     }
@@ -60,14 +59,14 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     func didTapUploadFromCamera() {
-        devicePermissionUseCase.requestVideoAccess { [weak self]  devicePermissionRequestResult in
+        permissionHandler.requestVideoPermission { [weak self] granted in
             guard let self = self else { return }
-            switch devicePermissionRequestResult {
-            case .failure(let error): self.error = error
-            case .success:
+            if granted {
                 self.router.upload(from: .camera)
+            } else {
+                self.error = .video
+                self.notifyUpdate?(self.outputs)
             }
-            self.notifyUpdate?(self.outputs)
         }
     }
 
@@ -76,15 +75,15 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
     }
 
     func didTapUploadFromDocumentScan() {
-        devicePermissionUseCase.requestVideoAccess {  [weak self] devicePermissionRequestResult in
+        permissionHandler.requestVideoPermission { [weak self] granted in
             guard let self = self else { return }
-            switch devicePermissionRequestResult {
-            case .failure(let error):
-                self.error = error
-                self.notifyUpdate?(self.outputs)
-            case .success:
+            if granted {
                 self.router.upload(from: .documentScan)
+            } else {
+                self.error = .video
+                self.notifyUpdate?(self.outputs)
             }
+        
         }
     }
 
@@ -132,7 +131,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     private let uploadPhotoAssetsUseCase: any UploadPhotoAssetsUseCaseProtocol
 
-    private let devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol
+    private let permissionHandler: DevicePermissionsHandling
 
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     
@@ -142,13 +141,13 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     init(
         uploadFilesUseCase: any UploadPhotoAssetsUseCaseProtocol,
-        devicePermissionUseCase: DevicePermissionRequestUseCaseProtocol,
+        permissionHandler: some DevicePermissionsHandling,
         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
         createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
         router: FileUploadingRouter
     ) {
         self.uploadPhotoAssetsUseCase = uploadFilesUseCase
-        self.devicePermissionUseCase = devicePermissionUseCase
+        self.permissionHandler = permissionHandler
         self.networkMonitorUseCase = networkMonitorUseCase
         self.createContextMenuUseCase = createContextMenuUseCase
         self.router = router

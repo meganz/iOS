@@ -12,7 +12,12 @@ protocol AddToChatViewControllerDelegate: AnyObject {
     func showLocation()
     func showGiphy()
     func showFilesApp()
-    func canRecordAudio() -> Bool
+    
+    var canRecordAudio: Bool { get }
+    func requestOrInformAudioPermissions()
+    
+    var existsActiveCall: Bool { get }
+    func presentActiveCall()
 }
 
 class AddToChatViewController: UIViewController {
@@ -65,8 +70,11 @@ class AddToChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mediaCollectionSource = AddToChatMediaCollectionSource(collectionView: mediaCollectionView,
-                                                               delegate: self)
+        mediaCollectionSource = AddToChatMediaCollectionSource(
+            collectionView: mediaCollectionView,
+            delegate: self,
+            permissionHandler: permissionHandler
+        )
         setUpMenuPageViewController()
         
         if UIDevice.current.iPadDevice == false {
@@ -112,9 +120,14 @@ class AddToChatViewController: UIViewController {
         }
         
         // If the photo collection is not shown the authorization text message cell should fill the collectionView.
-        if PHPhotoLibrary.authorizationStatus() != .authorized {
+        
+        if permissionHandler.photoLibraryAuthorizationStatus != .authorized {
             debounce(#selector(reloadMediaCollectionView), delay: 0.3)
         }
+    }
+    
+    private var permissionHandler: DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
     }
     
     @objc func reloadMediaCollectionView() {
@@ -295,11 +308,22 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     }
     
     func showVoiceClip() {
-        if let delegate = addToChatDelegate,
-            delegate.canRecordAudio() {
-            dismiss {
-                self.addToChatDelegate?.showVoiceClip()
-            }
+        guard let delegate = addToChatDelegate else {
+            return
+        }
+        
+        guard delegate.canRecordAudio else {
+            delegate.requestOrInformAudioPermissions()
+            return
+        }
+        
+        guard !delegate.existsActiveCall else {
+            delegate.presentActiveCall()
+            return
+        }
+        
+        dismiss {
+            self.addToChatDelegate?.showVoiceClip()
         }
     }
     

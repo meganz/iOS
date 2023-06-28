@@ -22,6 +22,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private let permissionHandler: any DevicePermissionsHandling
+    private let permissionAlertRouter: any PermissionAlertRouting
     private let notificationCenter: NotificationCenter
     private let chatViewType: ChatViewType
     
@@ -82,7 +84,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     private var pastMeetings: [ChatRoomViewModel]?
     private var futureMeetings: [FutureMeetingSection]?
-    private let permissionHandler: DevicePermissionsHandling
     private var subscriptions = Set<AnyCancellable>()
     private var isViewOnScreen = false
     
@@ -98,7 +99,8 @@ final class ChatRoomsListViewModel: ObservableObject {
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular,
          chatViewMode: ChatViewMode = .chats,
-         permissionHandler: DevicePermissionsHandling
+         permissionHandler: DevicePermissionsHandling,
+         permissionAlertRouter: PermissionAlertRouting
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -113,18 +115,19 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
         self.searchText = ""
         self.permissionHandler = permissionHandler
+        self.permissionAlertRouter = permissionAlertRouter
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         
         configureTitle()
     }
     
-    func askForNotificationsPermissionsIfNeeded() {
-        permissionHandler.shouldAskForNotificationsPermissions {[weak self] shouldAsk in
-            guard let self else { return }
-            if shouldAsk {
-                permissionHandler.presentModalNotificationsPermissionPrompt()
-            }
+    @MainActor
+    func askForNotificationsPermissionsIfNeeded() async {
+        let shouldAsk = await permissionHandler.shouldAskForNotificationPermission()
+        if shouldAsk {
+            permissionAlertRouter
+                .presentModalNotificationsPermissionPrompt()
         }
     }
     
@@ -529,7 +532,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             megaHandleUseCase: megaHandleUseCase,
-            permissionHandler: permissionHandler,
+            permissionAlertRouter: permissionAlertRouter,
             chatNotificationControl: chatNotificationControl
         )
     }

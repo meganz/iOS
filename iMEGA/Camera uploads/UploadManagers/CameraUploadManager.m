@@ -854,19 +854,4 @@ static const NSUInteger VideoUploadBatchCount = 1;
     [NSFileManager.defaultManager mnz_removeItemAtPath:NSURL.mnz_cameraUploadURL.path];
 }
 
-#pragma mark - photos access permission check
-
-+ (void)disableCameraUploadIfAccessProhibited {
-    switch (PHPhotoLibrary.authorizationStatus) {
-        case PHAuthorizationStatusDenied:
-        case PHAuthorizationStatusRestricted:
-            if (CameraUploadManager.isCameraUploadEnabled) {
-                [CameraUploadManager.shared disableCameraUpload];
-            }
-            break;
-        default:
-            break;
-    }
-}
-
 @end

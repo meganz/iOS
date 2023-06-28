@@ -252,8 +252,8 @@
             [self showAccountExpiredAlert];
             [sender setOn:NO];
         } else {
-            DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
-            [handler photosPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
+            DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
+            [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
                 if (granted) {
                     if ([MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness] &&
                         !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {

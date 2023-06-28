@@ -189,6 +189,14 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
     }
     
+    var permissionHandler: DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
+    var permissionRouter: PermissionAlertRouter {
+        .makeRouter(deviceHandler: permissionHandler)
+    }
+    
     func uploadAddMenu(didSelect action: UploadAddActionEntity) {
         switch action {
         case .scanDocument:
@@ -201,8 +209,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .chooseFromPhotos:
             showImagePicker(for: .photoLibrary)
         case .capture:
-            let permissionHandler = DevicePermissionsHandler()
-            permissionHandler.videoPermissionWithCompletionHandler {[weak self] videoPermissionGranted in
+            permissionHandler.requestVideoPermission { [weak self] videoPermissionGranted in
                 guard let self else { return }
                 if videoPermissionGranted {
                     permissionHandler.photosPermissionWithCompletionHandler {[weak self] photosPermissionGranted in
@@ -214,7 +221,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                         showImagePicker(for: .camera)
                     }
                 } else {
-                    permissionHandler.alertVideoPermissionWith(handler: {})
+                    permissionRouter.alertVideoPermission()
                 }
             }
         case .importFrom:

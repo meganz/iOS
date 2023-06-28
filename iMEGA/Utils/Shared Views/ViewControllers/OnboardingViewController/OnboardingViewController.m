@@ -38,7 +38,7 @@
     self.primaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.secondaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     
-    DevicePermissionsHandler *permissionHandler = [[DevicePermissionsHandler alloc] init];
+    DevicePermissionsHandlerObjC *permissionHandler = [[DevicePermissionsHandlerObjC alloc] init];
     
     switch (self.type) {
         case OnboardingTypeDefault:
@@ -89,7 +89,7 @@
                 [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
             }
             
-            if ([permissionHandler shouldAskForAudioPermissions] || [permissionHandler shouldAskForVideoPermissions ]) {
+            if ([permissionHandler shouldAskForAudioPermissions] || [permissionHandler shouldAskForVideoPermissions]) {
                 OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
                 onboardingView.type = OnboardingViewTypeMicrophoneAndCameraPermissions;
                 nextIndex++;
@@ -195,7 +195,7 @@
 #pragma mark - IBActions
 
 - (IBAction)primaryButtonTapped:(UIButton *)sender {
-    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+    DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
     switch (self.type) {
         case OnboardingTypeDefault: {
             UINavigationController *createAccountNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
@@ -212,24 +212,22 @@
             OnboardingView *currentView = self.scrollView.subviews.firstObject.subviews[self.pageControl.currentPage];
             switch (currentView.type) {
                 case OnboardingViewTypePhotosPermission: {
-                    [handler photosPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
+                    [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
                         [self nextPageOrDismiss];
                     }];
                     break;
                 }
                     
                 case OnboardingViewTypeContactsPermission: {
-                    [handler contactsPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
+                    [handler requestContactsPermissionWithHandler:^(BOOL granted) {
                         [self nextPageOrDismiss];
                     }];
                     break;
                 }
                     
                 case OnboardingViewTypeMicrophoneAndCameraPermissions: {
-                    [handler audioPermissionWithModal:NO
-                                        incomingCall:NO
-                                          completion:^(BOOL granted) {
-                        [handler videoPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
+                    [handler requestAudioPermissionWithHandler:^(BOOL granted) {
+                        [handler requestVideoPermissionWithHandler:^(BOOL granted) {
                             [self nextPageOrDismiss];
                         }];
                     }];

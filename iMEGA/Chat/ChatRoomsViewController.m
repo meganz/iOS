@@ -184,15 +184,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
-    
-    [handler shouldAskForNotificationsPermissionsWithHandler:^(BOOL shouldAsk) {
-        if (shouldAsk) {
-            [handler presentModalNotificationsPermissionPrompt];
-        }
-    }];
-    
+    [self askNotificationPermissionsIfNeeded];
     self.navigationController.toolbarHidden = true;
     
     [AudioPlayerManager.shared addDelegate:self];
@@ -265,7 +257,7 @@
             self.archivedChatEmptyState.hidden = NO;
         }
         if (self.chatRoomsType == ChatRoomsTypeDefault) {
-            if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
+            if ([self hasAuthorizedContacts]) {
                 if (self.contactsOnMegaCount) {//[X] contacts found on MEGA
                     self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? NSLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [NSLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
                 } else {
@@ -753,7 +745,7 @@
 
 - (UITableViewCell *)contactsOnMegaCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"contactsOnMegaCell" forIndexPath:indexPath];
-    if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
+    if ([self hasAuthorizedContacts]) {
         if (self.contactsOnMegaCount == 0) {
             cell.chatTitle.text = NSLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
         } else {
@@ -903,7 +895,7 @@
 #pragma mark - IBActions
 
 - (IBAction)joinActiveCall:(id)sender {
-    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+    DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
     
     [handler audioPermissionWithModal:YES incomingCall:NO completion:^(BOOL granted) {
         if (granted) {
@@ -1000,7 +992,7 @@
 }
 
 - (IBAction)openContactsOnMega:(id)sender {
-    if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized && self.contactsOnMegaCount == 0) {
+    if ([self hasAuthorizedContacts] && self.contactsOnMegaCount == 0) {
         InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
         [self.navigationController pushViewController:inviteContacts animated:YES];
     } else {

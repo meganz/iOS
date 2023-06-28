@@ -4,7 +4,7 @@ import MEGADomain
 @objc final class SaveMediaToPhotosUseCaseOCWrapper: NSObject {
     @objc func saveToPhotos(node: MEGANode, isFolderLink: Bool = false) {
         let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: isFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let permissionHandler = DevicePermissionsHandler()
+        let permissionHandler = DevicePermissionsHandler.makeHandler()
         
         permissionHandler.photosPermissionWithCompletionHandler { granted in
             if granted {
@@ -23,7 +23,9 @@ import MEGADomain
                     }
                 }
             } else {
-                permissionHandler.alertPhotosPermission()
+                PermissionAlertRouter
+                    .makeRouter(deviceHandler: permissionHandler)
+                    .alertPhotosPermission()
             }
         }
     }

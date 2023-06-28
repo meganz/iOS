@@ -11,7 +11,11 @@ extension MeetingFloatingPanelViewModel {
         callCoordinatorUseCase: CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
         callUseCase: CallUseCaseProtocol = MockCallUseCase(),
         audioSessionUseCase: any AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
-        devicePermissionUseCase: DevicePermissionCheckingProtocol = DevicePermissionCheckingProtocol.mock(),
+        permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(
+            photoAuthorization: .denied,
+            audioAuthorized: false,
+            videoAuthorized: false
+        ),
         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
         localVideoUseCase: CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
         accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
@@ -27,7 +31,7 @@ extension MeetingFloatingPanelViewModel {
             callCoordinatorUseCase: callCoordinatorUseCase,
             callUseCase: callUseCase,
             audioSessionUseCase: audioSessionUseCase,
-            devicePermissionUseCase: devicePermissionUseCase,
+            permissionHandler: permissionHandler,
             captureDeviceUseCase: captureDeviceUseCase,
             localVideoUseCase: localVideoUseCase,
             accountUseCase: accountUseCase,
