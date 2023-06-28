@@ -10,7 +10,6 @@ final class PhotosViewModel: NSObject {
         }
     }
     
-    private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let userAttributeUseCase: any UserAttributeUseCaseProtocol
@@ -42,13 +41,11 @@ final class PhotosViewModel: NSObject {
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
-        userAttributeUseCase: any UserAttributeUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        userAttributeUseCase: any UserAttributeUseCaseProtocol
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.userAttributeUseCase = userAttributeUseCase
-        self.featureFlagProvider = featureFlagProvider
         super.init()
         cameraUploadExplorerSortOrderType = sortOrderType(forKey: .cameraUploadExplorerFeed)
     }
@@ -68,8 +65,7 @@ final class PhotosViewModel: NSObject {
             guard let self = self else { return }
             
             do {
-                if featureFlagProvider.isFeatureFlagEnabled(for: .timelinePreferenceSaving),
-                   let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
+                if let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
                     filterType = filterType(from: timelineFilters.filterType)
                     filterLocation = filterLocation(from: timelineFilters.filterLocation)
                 }
