@@ -117,11 +117,7 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         _ nodeName: String,
         completion: @escaping (UIImage?) -> Void
     ) {
-        guard let fileTypeImageName = Helper.fileTypesDictionary()[nodeName.pathExtension] as? String,
-            !fileTypeImageName.isEmpty else {
-            completion(UIImage.mnz_generic())
-            return
-        }
+        let fileTypeImageName = FileTypes().fileType(forFileExtension: nodeName.pathExtension)
         completion(UIImage(named: fileTypeImageName))
     }
 
