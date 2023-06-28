@@ -13,18 +13,14 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
     private let contentMode: PhotoLibraryContentMode
     private let userAttributeUseCase: any UserAttributeUseCaseProtocol
     
-    let isRememberPreferencesFeatureFlagEnabled: Bool
-    
     var isRememberPreferenceActive: Bool {
-        isRememberPreferencesFeatureFlagEnabled && contentMode != .album
+        contentMode != .album
     }
     
     init(contentMode: PhotoLibraryContentMode = .library,
-         userAttributeUseCase: any UserAttributeUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         userAttributeUseCase: any UserAttributeUseCaseProtocol) {
         self.contentMode = contentMode
         self.userAttributeUseCase = userAttributeUseCase
-        isRememberPreferencesFeatureFlagEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelinePreferenceSaving)
     }
     
     var shouldShowMediaTypeFilter: Bool {
