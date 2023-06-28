@@ -15,6 +15,8 @@ extension AnalyticsEventEntity: AnalyticsEventProtocol {
             return downloadAnalyticsEventEntity.code
         case .accountPlans(let accountPlanAnalyticsEventEntity):
             return accountPlanAnalyticsEventEntity.code
+        case .getLink(let getLinkAnalyticsEventEntity):
+            return getLinkAnalyticsEventEntity.code
         }
     }
     
@@ -32,6 +34,8 @@ extension AnalyticsEventEntity: AnalyticsEventProtocol {
                 return downloadAnalyticsEventEntity.description
             case .accountPlans(let accountPlanAnalyticsEventEntity):
                 return accountPlanAnalyticsEventEntity.description
+            case .getLink(let getLinkAnalyticsEventEntity):
+                return getLinkAnalyticsEventEntity.description
             }
     }
 }
