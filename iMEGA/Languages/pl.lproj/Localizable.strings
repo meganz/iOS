@@ -46,6 +46,8 @@
 "decryptionKeyAlertTitle"="Wprowadź klucz deszyfrujący";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego katalogu lub pliku, będziesz potrzebować jego klucza odszyfrowywania. Jeśli nie masz klucza, skontaktuj się z twórcą linku.";
+/* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessageForAlbum"="Aby uzyskać dostęp do albumu, wprowadź klucz deszyfrujący. Jeśli go nie masz, skontaktuj się z osobą, która udostępniła Ci link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Klucz deszyfrowania";
 /* Button title to try to decrypt the link */
@@ -178,6 +180,8 @@
 "downloadStarted"="Pobieranie rozpoczęte";
 /* Title for the folder link view */
 "folderLink"="Link do katalogu";
+/* Title for the album/collection link view */
+"albumLink"="Link do albumu";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Pobierz";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -888,6 +892,8 @@
 "removeFilesFolderToRubbishBinMessage"="Masz zamiar nieodwracalnie usunąć %d plików i 1 katalog. Czy chcesz kontynuować? (Operacja jest nieodwracalna).";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Masz zamiar całkowicie usunąć [A] plików i [B] katalogów. Czy chcesz kontynuować? (Operacja jest nieodwracalna)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
+"sharedItems.rubbish.warning.message"="Zamierzasz trwale usunąć %@. Czy chcesz kontynuować? (Nie można cofnąć tej akcji).";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 plik usunięty z MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -904,6 +910,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d plików i 1 katalog usunięte z MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] plików i [B] katalogów usuniętych z MEGA";
+/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
+"sharedItems.rubbish.confirmation.message"="%@ usunięte z MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Nowe hasło";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1062,10 +1070,6 @@
 "account.achievement.mobileApp.incomplete.explaination.label"="Po zainstalowaniu aplikacji mobilnej MEGA otrzymujesz %@ bezpłatnej przestrzeni dyskowej, ważnej przez 365 dni. Aplikacja mobilna MEGA jest dostępna dla systemów iOS i Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ pamięci do przechowywania danych. Ważne przez 365 dni.";
-/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="Pozostało %@ dni";
-/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="Bonus wygasa za %@ dni.";
 /* Add Phone Number title */
 "Add Phone Number"="Dodaj numer telefonu";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2388,10 +2392,6 @@
 "Copy All"="Skopiuj wszystko";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opcje takie jak Wyślij osobno klucz odszyfrowywania, Ustaw datę ważności lub Hasła są dostępne tylko dla pojedynczych elementów.";
-/* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="Link skopiowany do schowka";
-/* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Linki skopiowane do schowka";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Klucz skopiowany do schowka";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2641,7 +2641,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Nowe spotkanie";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@ spotkanie";
+"meetings.createMeeting.defaultMeetingName"="Spotkanie %@ ";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Rozpocznij spotkanie";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2992,6 +2992,14 @@
 "transfer.storage.quotaExceeded"="Przekroczono limit miejsca";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Dalej";
+/* Title of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.title"="Wznowić dźwięk?";
+/* Description of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.description"="\"%@\" zostanie wznowione od %@.";
+/* Resume option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.resume"="Wznów";
+/* Restart option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.restart"="Zrestartuj";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ dołączył";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -3190,7 +3198,7 @@
 "chat.listing.description.meetingCreated.message"="%@: stworzył spotkanie";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="Zobacz wszystkie";
-/* Button title to leave the meeting in info view */
+/* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="Opuść spotkanie";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="Powiadomienia czatu";
@@ -3407,10 +3415,100 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Kamera";
 /* Device Center title */
-"device.center.title"="";
+"device.center.title"="Centrum urządzeń";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Zakończ powtarzanie";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="W dniu";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="Nigdy";
+/* Title for meeting notifications option in meeting info */
+"meetings.info.meetingNotifications"="Powiadomienia o spotkaniach";
+/* Title for manage meeting history option in meeting info */
+"meetings.info.manageMeetingHistory"="Zarządzanie historią spotkań";
+/* Meeting Notifications DND: Title bar message for the dnd activate options */
+"meetings.info.muteMeetingNotificationsFor"="Wyciszanie powiadomień o spotkaniach dla";
+/* Title for share meeting link option in meeting info */
+"meetings.info.shareMeetingLink"="Udostępnij link do spotkania";
+/* The button or alert title to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="Wyczyść historię spotkań";
+/* Message show when the history of a meeting has been successfully deleted */
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Wyczyszczono historię spotkań";
+/* The alert message to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Czy na pewno chcesz wyczyścić pełną historię wiadomości z tego spotkania?";
+/* Text explaining users how the meeting links work. */
+"meetings.info.shareMeetingLink.explainLink"="Każdy, kto posiada ten link, może dołączyć do spotkania i wyświetlić czat spotkania";
+/* The title of a menu button which allows users to rename a meeting. */
+"meetings.info.renameMeeting"="Zmień nazwę spotkania";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.daily.optionTitle"="Codziennie";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.weekly.optionTitle"="Tygodniowo";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.monthly.optionTitle"="Miesięcznie";
+/* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
+"meetings.scheduleMeeting.create.frequency.optionTitle"="Częstotliwość";
+/* Create Schedule Meeting: The text is shown along with the selected interval. */
+"meetings.scheduleMeeting.create.interval.optionTitle"="Każdego";
+/* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+/* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+/* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+/* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+/* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="W…";
+/* Create Schedule Meeting: Month custom option - header title for the calendar */
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Każdego";
+/* Create Schedule Meeting: Month custom option - first week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.first"="pierwszego";
+/* Create Schedule Meeting: Month custom option - second week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.second"="drugiego";
+/* Create Schedule Meeting: Month custom option - third week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.third"="trzeciego";
+/* Create Schedule Meeting: Month custom option - fourth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="czwartego";
+/* Create Schedule Meeting: Month custom option - fifth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="piątego";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
+"meetings.scheduled.create.weekly.everyDay.footerNote"="Spotkania będą odbywać się codziennie.";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Codziennie";
+/* On Upgrade Account Plan screen. Button title to restore purchases */
+"upgradeAccountPlan.button.restore.title"="Przywróć zakup";
+/* On Upgrade Account Plan screen. Button title to show terms and policies */
+"upgradeAccountPlan.button.termsAndPolicies.title"="Regulamin i zasady";
+/* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
+"upgradeAccountPlan.button.buyAccountPlan.title"="Kup %@";
+/* On Upgrade Account Plan screen. Displayed header title text message */
+"upgradeAccountPlan.header.title.choosePlan"="Wybierz odpowiedni plan dla siebie";
+/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
+"upgradeAccountPlan.header.title.currentPlan"="Aktualny plan: %@";
+/* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
+"upgradeAccountPlan.header.planTermPicker.monthly"="Miesięcznie";
+/* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
+"upgradeAccountPlan.header.planTermPicker.yearly"="Rocznie";
+/* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
+"upgradeAccountPlan.header.title.saveYearlyBilling"="Oszczędność do 16%% przy rozliczeniu rocznym";
+/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Szczegóły planów Pro";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Linki chronione hasłem\n\n• Linki z datą wygaśnięcia\n\n• Współdzielenie limitu transferu\n\n• Automatyczne kopie zapasowe\n\n• Przewijanie do 90 dni w Pro Lite i do 365 dni w Pro I, II i III (wkrótce)\n\n• Zaplanuj czyszczenie kosza na śmieci od 7 dni do 10 lat";
+/* On Upgrade Account Plan screen. Displayed header title text for subscription details */
+"upgradeAccountPlan.header.title.subscriptionDetails"="Szczegóły subskrypcji";
+/* On Upgrade Account Plan screen. Displayed text body for subscription details */
+"upgradeAccountPlan.message.text.subscriptionDetails"="Subskrypcje są odnawiane automatycznie na kolejne okresy subskrypcji o tym samym czasie trwania i w tej samej cenie, co wybrany okres początkowy. \nUżytkownik może wyłączyć automatyczne odnawianie subskrypcji MEGA Pro nie później niż 24 godziny przed terminem płatności kolejnej subskrypcji za pośrednictwem strony ustawień konta iTunes.";
+/* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
+"upgradeAccountPlan.plan.tag.currentPlan"="Obecny plan";
+/* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
+"upgradeAccountPlan.plan.tag.recommended"="Polecam";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/miesiąc";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/rok";
+/* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
+"upgradeAccountPlan.plan.details.storage"="Pamięć: %@";
+/* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
+"upgradeAccountPlan.plan.details.transfer"="Transfer: %@";

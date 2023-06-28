@@ -46,6 +46,8 @@
 "decryptionKeyAlertTitle"="복호화 키를 입력하세요";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="이 폴더/파일에 접근하려면, 복호화 키가 필요합니다. 키가 없다면, 이 링크의 생성자에게 연락하세요.";
+/* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessageForAlbum"="사진첩에 접근하려면, 복호화 키를 입력하세요. 만약 가지고 있지 않다면, 링크를 공유해준 사람에게 연락하세요.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="복호화 키";
 /* Button title to try to decrypt the link */
@@ -178,6 +180,8 @@
 "downloadStarted"="다운로드 시작됨";
 /* Title for the folder link view */
 "folderLink"="폴더 링크";
+/* Title for the album/collection link view */
+"albumLink"="사진첩 링크";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="다운로드";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -888,6 +892,8 @@
 "removeFilesFolderToRubbishBinMessage"="파일 %d개와 폴더 1개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="파일 [A]개와 폴더 [B]개를 완전히 삭제하려고 합니다. 진행하시겠습니까?(이 행동은 되돌릴 수 없습니다.)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
+"sharedItems.rubbish.warning.message"="%@을/를 완전히 삭제하려고 합니다. 진행 하시겠습니까? (이 행동은 되돌릴 수 없습니다.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="MEGA에서 파일 1개 삭제됨";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -904,6 +910,8 @@
 "filesFolderRemovedToRubbishBinMessage"="MEGA에서 파일 %d개와 폴더 1개가 삭제됨";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="MEGA에서 파일 [A]개와 폴더 [B]개가 삭제됨";
+/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
+"sharedItems.rubbish.confirmation.message"="%@이/가 MEGA에서 삭제되었습니다";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="새 암호";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1062,10 +1070,6 @@
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGA 모바일 앱을 설치하면 365일간 이용 가능한 %@의 무료 저장 공간을 받게 됩니다. MEGA 모바일 앱은 iOS와 Android에서 이용 가능합니다.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@의 저장소. 365일간 이용 가능";
-/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="%@일 남음";
-/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="보너스가 %@일 이내에 만료됩니다.";
 /* Add Phone Number title */
 "Add Phone Number"="전화번호 추가";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2388,10 +2392,6 @@
 "Copy All"="모두 복사";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="복호화 키 따로 보내기, 만료일 또는 암호 설정 등의 옵션은 단일 항목에만 설정 가능합니다.";
-/* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="클립보드에 링크 복사됨";
-/* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="클립보드에 링크 복사함";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="키가 클립보드에 복사되었습니다";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2641,7 +2641,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="새 회의";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@의 회의";
+"meetings.createMeeting.defaultMeetingName"="%@ 님의 회의";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="회의 시작";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2992,6 +2992,14 @@
 "transfer.storage.quotaExceeded"="저장소 할당량 초과";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="다음";
+/* Title of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.title"="이어서 들을까요?";
+/* Description of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.description"="“%@”은/는 %@부터 재개됩니다";
+/* Resume option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.resume"="재개";
+/* Restart option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.restart"="재시작";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@님 참여함";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -3137,13 +3145,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="초대 발송";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
+"notifications.message.takenDownReinstated.file"="게시 중단된 파일 “%@”이/가 재게시 되었습니다";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
+"notifications.message.takenDownReinstated.folder"="게시 중단된 폴더 “%@”이/가 재게시 되었습니다";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.file"="당신의 공개 공유 파일 “%@”이/가 게시중단 되었습니다";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.folder"="당신의 공개 공유 폴더 “%@”이/가 게시중단 되었습니다";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="주최자가 아닌 사람이 참여자를 추가하는 것을 허용";
 /* Start conversation: Schedule meeting context menu */
@@ -3190,7 +3198,7 @@
 "chat.listing.description.meetingCreated.message"="%@: 회의 만듦";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="모두 보기";
-/* Button title to leave the meeting in info view */
+/* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="회의 나가기";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="대화 알림";
@@ -3407,10 +3415,100 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="카메라";
 /* Device Center title */
-"device.center.title"="";
+"device.center.title"="장치 센터";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="되풀이 종료";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="다음의 날짜에";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="절대 안 함";
+/* Title for meeting notifications option in meeting info */
+"meetings.info.meetingNotifications"="회의 알림";
+/* Title for manage meeting history option in meeting info */
+"meetings.info.manageMeetingHistory"="회의 기록 관리";
+/* Meeting Notifications DND: Title bar message for the dnd activate options */
+"meetings.info.muteMeetingNotificationsFor"="다음의 기간 동안 회의 알림 끄기";
+/* Title for share meeting link option in meeting info */
+"meetings.info.shareMeetingLink"="회의 링크 공유";
+/* The button or alert title to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="회의 기록 삭제";
+/* Message show when the history of a meeting has been successfully deleted */
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="회의 기록이 삭제되었습니다";
+/* The alert message to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="이 회의의 모든 메시지 기록을 삭제하시겠습니까?";
+/* Text explaining users how the meeting links work. */
+"meetings.info.shareMeetingLink.explainLink"="링크가 있는 누구나 회의에 참여하고 대화를 볼 수 있습니다";
+/* The title of a menu button which allows users to rename a meeting. */
+"meetings.info.renameMeeting"="회의 이름 변경";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.daily.optionTitle"="매일";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.weekly.optionTitle"="매주";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.monthly.optionTitle"="월간";
+/* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
+"meetings.scheduleMeeting.create.frequency.optionTitle"="반복 주기";
+/* Create Schedule Meeting: The text is shown along with the selected interval. */
+"meetings.scheduleMeeting.create.interval.optionTitle"="매";
+/* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="반복 주기를 선택하세요";
+/* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="주 단위 간격을 선택하세요";
+/* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="요일을 선택하세요";
+/* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="월 단위 간격을 선택하세요";
+/* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="다음 날짜에…";
+/* Create Schedule Meeting: Month custom option - header title for the calendar */
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="각";
+/* Create Schedule Meeting: Month custom option - first week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.first"="첫번째";
+/* Create Schedule Meeting: Month custom option - second week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.second"="두번째";
+/* Create Schedule Meeting: Month custom option - third week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.third"="세번째";
+/* Create Schedule Meeting: Month custom option - fourth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="네번째";
+/* Create Schedule Meeting: Month custom option - fifth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="다섯번째";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
+"meetings.scheduled.create.weekly.everyDay.footerNote"="회의가 매일 반복됩니다.";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="매일";
+/* On Upgrade Account Plan screen. Button title to restore purchases */
+"upgradeAccountPlan.button.restore.title"="구매 복원";
+/* On Upgrade Account Plan screen. Button title to show terms and policies */
+"upgradeAccountPlan.button.termsAndPolicies.title"="약관 및 정책";
+/* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
+"upgradeAccountPlan.button.buyAccountPlan.title"="%@ 구매";
+/* On Upgrade Account Plan screen. Displayed header title text message */
+"upgradeAccountPlan.header.title.choosePlan"="당신에게 맞는 요금제를 선택하세요";
+/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
+"upgradeAccountPlan.header.title.currentPlan"="현재 요금제: %@";
+/* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
+"upgradeAccountPlan.header.planTermPicker.monthly"="월간";
+/* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
+"upgradeAccountPlan.header.planTermPicker.yearly"="연간";
+/* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
+"upgradeAccountPlan.header.title.saveYearlyBilling"="연간 결제로 최대 16%% 할인 받으세요";
+/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Pro 요금제의 기능";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• 자동 백업\n\n• Pro Lite는 최대 90일, Pro I, II, 그리고 III은 최대 365일 되돌리기 기능 (출시 예정)\n\n• 7일과 10년 사이의 휴지통 비우기 예약";
+/* On Upgrade Account Plan screen. Displayed header title text for subscription details */
+"upgradeAccountPlan.header.title.subscriptionDetails"="구독 세부정보";
+/* On Upgrade Account Plan screen. Displayed text body for subscription details */
+"upgradeAccountPlan.message.text.subscriptionDetails"="구독은 처음 선택한 기간과 같은 기간 그리고 같은 가격으로 연속적으로 자동 갱신 됩니다.\nMEGA Pro 구독 자동 갱신을 iTunes 계정 설정 페이지를 통해 다음 구독의 결제 24시간 전에 취소할 수 있습니다.";
+/* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
+"upgradeAccountPlan.plan.tag.currentPlan"="현재 요금제";
+/* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
+"upgradeAccountPlan.plan.tag.recommended"="권고됨";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/월";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/년";
+/* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
+"upgradeAccountPlan.plan.details.storage"="저장소: %@";
+/* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
+"upgradeAccountPlan.plan.details.transfer"="전송: %@";

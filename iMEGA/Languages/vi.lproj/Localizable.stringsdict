@@ -2,6 +2,62 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>sharedItems.rubbish.warning.fileCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d tệp tin</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.fileCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d tệp tin</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.warning.folderCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d thư mục</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.folderCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d thư mục</string>
+      </dict>
+    </dict>
     <key>sharedItems.link.accessInfo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -12,10 +68,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Anyone with this link can view and download your data</string>
         <key>other</key>
-        <string>Anyone with these links can view and download your data</string>
+        <string>Bất kỳ ai có các đường liên kết này đều có thể xem và tải xuống dữ liệu của bạn</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -42,10 +96,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Link created and copied to your clipboard</string>
         <key>other</key>
-        <string>Links created and copied to your clipboard</string>
+        <string>Các đường liên kết đã được tạo và ghi vào bảng nhớ tạm</string>
       </dict>
     </dict>
     <key>nameCollision.applyToAll</key>
@@ -366,10 +418,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>“[A]” and %d more</string>
         <key>other</key>
-        <string>“[A]” and %d more</string>
+        <string>“[A]” và %d mục nữa</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -1964,10 +2014,22 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d day left</string>
         <key>other</key>
-        <string>%d days left</string>
+        <string>Còn lại %d ngày</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Phần thưởng hết hạn trong %d ngày.</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2024,6 +2086,188 @@
         <string>d</string>
         <key>other</key>
         <string>Đã gửi [A] tới tất cả cuộc chát</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.daily.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d ngày</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d tuần</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d tháng</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.daily.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc họp sẽ diễn ra mỗi %d ngày.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc họp sẽ diễn ra mỗi %d tuần vào [weekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc họp sẽ diễn ra mỗi %d tuần vào [weekDayNames] và [lastWeekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào [ordinalDay].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào [ordinalDays] và [ordinalLastDay].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào [weekDayName] [weekNumber].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Mỗi %d tuần vào [weekDayNames]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Mỗi %d tháng vào [ordinalNumber]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Mỗi %d tháng, [weekDayName] [ordinalNumber]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Mỗi %d ngày</string>
       </dict>
     </dict>
   </dict>

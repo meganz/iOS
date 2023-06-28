@@ -2,6 +2,86 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
+    <key>sharedItems.rubbish.warning.fileCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d plik</string>
+        <key>few</key>
+        <string>%d plików</string>
+        <key>many</key>
+        <string>%d plików</string>
+        <key>other</key>
+        <string>%d plików</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.fileCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d plik</string>
+        <key>few</key>
+        <string>%d plików</string>
+        <key>many</key>
+        <string>%d plików</string>
+        <key>other</key>
+        <string>%d plików</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.warning.folderCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d katalog</string>
+        <key>few</key>
+        <string>%d katalogów</string>
+        <key>many</key>
+        <string>%d katalogów</string>
+        <key>other</key>
+        <string>%d katalogów</string>
+      </dict>
+    </dict>
+    <key>sharedItems.rubbish.confirmation.folderCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d katalog</string>
+        <key>few</key>
+        <string>%d katalogów</string>
+        <key>many</key>
+        <string>%d katalogów</string>
+        <key>other</key>
+        <string>%d katalogów</string>
+      </dict>
+    </dict>
     <key>sharedItems.link.accessInfo</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -13,9 +93,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Anyone with this link can view and download your data</string>
+        <string>Każdy, kto posiada ten link, może przeglądać i pobierać dane użytkownika</string>
+        <key>few</key>
+        <string>Każdy, kto posiada te linki, może przeglądać i pobierać dane użytkownika</string>
+        <key>many</key>
+        <string>Każdy, kto posiada te linki, może przeglądać i pobierać dane użytkownika</string>
         <key>other</key>
-        <string>Anyone with these links can view and download your data</string>
+        <string>Każdy, kto posiada te linki, może przeglądać i pobierać dane użytkownika</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -49,9 +133,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Link created and copied to your clipboard</string>
+        <string>Link utworzony i skopiowany do schowka</string>
+        <key>few</key>
+        <string>Linki utworzone i skopiowane do schowka</string>
+        <key>many</key>
+        <string>Linki utworzone i skopiowane do schowka</string>
         <key>other</key>
-        <string>Links created and copied to your clipboard</string>
+        <string>Linki utworzone i skopiowane do schowka</string>
       </dict>
     </dict>
     <key>nameCollision.applyToAll</key>
@@ -2785,9 +2873,33 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d day left</string>
+        <string>%d dzień pozostał</string>
+        <key>few</key>
+        <string>%d dni pozostało</string>
+        <key>many</key>
+        <string>%d dni pozostało</string>
         <key>other</key>
-        <string>%d days left</string>
+        <string>%d dni pozostało</string>
+      </dict>
+    </dict>
+    <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@days@</string>
+      <key>days</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Bonus wygasa za %d dzień.</string>
+        <key>few</key>
+        <string>Bonus wygasa za %d dni.</string>
+        <key>many</key>
+        <string>Bonus wygasa za %d dni.</string>
+        <key>other</key>
+        <string>Bonus wygasa za %d dni.</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2868,6 +2980,266 @@
         <string>Wysyłanie [A] do wszystkich czatów</string>
         <key>other</key>
         <string>Wysyłanie [A] do wszystkich czatów</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.daily.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@day@</string>
+      <key>day</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d dzień</string>
+        <key>few</key>
+        <string>%d dni</string>
+        <key>many</key>
+        <string>%d dni</string>
+        <key>other</key>
+        <string>%d dni</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@week@</string>
+      <key>week</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d tydzień</string>
+        <key>few</key>
+        <string>%d tygodnie</string>
+        <key>many</key>
+        <string>%d tygodnie</string>
+        <key>other</key>
+        <string>%d tygodnie</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.interval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@month@</string>
+      <key>month</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d miesiąc</string>
+        <key>few</key>
+        <string>%d miesięcy</string>
+        <key>many</key>
+        <string>%d miesięcy</string>
+        <key>other</key>
+        <string>%d miesięcy</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.daily.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Spotkania będą odbywać się codziennie.</string>
+        <key>few</key>
+        <string>Spotkania będą odbywać się co %d dni.</string>
+        <key>many</key>
+        <string>Spotkania będą odbywać się co %d dni.</string>
+        <key>other</key>
+        <string>Spotkania będą odbywać się co %d dni.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Spotkania będą odbywać się co tydzień w dniu [weekDayName].</string>
+        <key>few</key>
+        <string>Spotkania będą odbywać się co %d tygodni w dniu [weekDayName].</string>
+        <key>many</key>
+        <string>Spotkania będą odbywać się co %d tygodni w dniu [weekDayName].</string>
+        <key>other</key>
+        <string>Spotkania będą odbywać się co %d tygodni w dniu [weekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Spotkania będą odbywać się co tydzień w dniach [weekDayNames] i [lastWeekDayName].</string>
+        <key>few</key>
+        <string>Spotkania będą odbywać się co %d tygodni w dniach [weekDayNames] i [lastWeekDayName].</string>
+        <key>many</key>
+        <string>Spotkania będą odbywać się co %d tygodni w dniach [weekDayNames] i [lastWeekDayName].</string>
+        <key>other</key>
+        <string>Spotkania będą odbywać się co %d tygodni w dniach [weekDayNames] i [lastWeekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Spotkania będą odbywać się co miesiąc w dniu [ordinalDay].</string>
+        <key>few</key>
+        <string>Spotkania będą odbywać się co %d miesięcy w dniu [ordinalDay].</string>
+        <key>many</key>
+        <string>Spotkania będą odbywać się co %d miesięcy w dniu [ordinalDay].</string>
+        <key>other</key>
+        <string>Spotkania będą odbywać się co %d miesięcy w dniu [ordinalDay].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Spotkania będą odbywać się co miesiąc w [ordinalDays] i [ordinalLastDay].</string>
+        <key>few</key>
+        <string>Spotkania będą odbywać się co %d miesięcy w dniach [ordinalDays] i [ordinalLastDay].</string>
+        <key>many</key>
+        <string>Spotkania będą odbywać się co %d miesięcy w dniach [ordinalDays] i [ordinalLastDay].</string>
+        <key>other</key>
+        <string>Spotkania będą odbywać się co %d miesięcy w dniach [ordinalDays] i [ordinalLastDay].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Spotkania będą odbywać się co miesiąc w [weekNumber] [weekDayName].</string>
+        <key>few</key>
+        <string>Spotkanie będzie odbywać się co %d miesięcy w dniu [weekNumber] [weekDayName].</string>
+        <key>many</key>
+        <string>Spotkanie będzie odbywać się co %d miesięcy w dniu [weekNumber] [weekDayName].</string>
+        <key>other</key>
+        <string>Spotkanie będzie odbywać się co %d miesięcy w dniu [weekNumber] [weekDayName].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.weekly.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Co tydzień w [weekDayNames]</string>
+        <key>few</key>
+        <string>Co %d tygodni w [weekDayNames]</string>
+        <key>many</key>
+        <string>Co %d tygodni w [weekDayNames]</string>
+        <key>other</key>
+        <string>Co %d tygodni w [weekDayNames]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Co miesiąc w dniu [ordinalNumber]</string>
+        <key>few</key>
+        <string>Co %d miesięcy na [ordinalNumber]</string>
+        <key>many</key>
+        <string>Co %d miesięcy na [ordinalNumber]</string>
+        <key>other</key>
+        <string>Co %d miesięcy na [ordinalNumber]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Co miesiąc, [ordinalNumber] [weekDayName]</string>
+        <key>few</key>
+        <string>Co %d miesięcy, [ordinalNumber] [weekDayName]</string>
+        <key>many</key>
+        <string>Co %d miesięcy, [ordinalNumber] [weekDayName]</string>
+        <key>other</key>
+        <string>Co %d miesięcy, [ordinalNumber] [weekDayName]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Codziennie</string>
+        <key>few</key>
+        <string>Co %d dni</string>
+        <key>many</key>
+        <string>Co %d dni</string>
+        <key>other</key>
+        <string>Co %d dni</string>
       </dict>
     </dict>
   </dict>

@@ -46,6 +46,8 @@
 "decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัสลับ";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="เพื่อเข้าถึงโฟลเดอร์หรือไฟล์นี้ คุณจะต้องมีคีย์ถอดรหัสลับ หากไม่มี กรุณาติดต่อผู้สร้างลิงก์";
+/* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessageForAlbum"="ในการเข้าถึงอัลบั้มนี้ ให้คุณกรอกคีย์ถอดรหัสลับก่อน หากคุณไม่มี ให้ติดต่อบุคคลที่แชร์ลิงก์นี้ให้กับคุณแทน";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="คีย์ถอดรหัสลับ";
 /* Button title to try to decrypt the link */
@@ -178,6 +180,8 @@
 "downloadStarted"="เริ่มต้นดาวน์โหลด";
 /* Title for the folder link view */
 "folderLink"="ลิงก์โฟลเดอร์";
+/* Title for the album/collection link view */
+"albumLink"="Album link";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="ดาวน์โหลด";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -888,6 +892,8 @@
 "removeFilesFolderToRubbishBinMessage"="คุณกำลังจะลบ %d ไฟล์และ 1 โฟลเดอร์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="คุณกำลังจะลบ [A] ไฟล์และ [B] โฟลเดอร์อย่างถาวร คุณต้องการที่จะดำเนินการต่อไปหรือไม่ (คุณจะไม่สามารถเรียกคืนรายการที่ลบออกไปได้)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
+"sharedItems.rubbish.warning.message"="You are about to permanently remove %@. Would you like to proceed? (You cannot undo this action.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 ไฟล์ถูกลบออกจาก MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -904,6 +910,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกลบออกจาก MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกลบออกจาก MEGA";
+/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
+"sharedItems.rubbish.confirmation.message"="%@ removed from MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="รหัสผ่านใหม่";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1062,10 +1070,6 @@
 "account.achievement.mobileApp.incomplete.explaination.label"="เมื่อคุณติดตั้งแอป MEGA บนมือถือ คุณจะได้รับพื้นที่เก็บข้อมูลฟรี %@ มีอายุการใช้งาน 365 วัน แอป MEGA บนมือถือ สามารถใช้ได้ทั้ง iOS และ Android";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="พื้นที่เก็บข้อมูล %@ มีอายุใช้งาน 365 วัน";
-/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="เหลืออีก %@ วัน";
-/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="โบนัสจะหมดอายุใน %@ วัน";
 /* Add Phone Number title */
 "Add Phone Number"="เพิ่มหมายเลขโทรศัพท์";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2388,10 +2392,6 @@
 "Copy All"="คัดลอกทั้งหมด";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="ตัวเลือกเช่น ส่งคีย์ถอดรหัสแบบแยกต่างหาก ตั้งค่าวันหมดอายุหรือรหัสผ่าน มีให้สำหรับรายการเดียวเท่านั้น";
-/* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="คัดลอกลิงก์ไปไว้ที่คลิปบอร์ดแล้ว";
-/* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="คัดลอกลิงก์ไปไว้ที่คลิปบอร์ดแล้ว";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="คัดลอกคีย์ไปยังคลิปบอร์ดแล้ว";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2641,7 +2641,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="ประชุมใหม่";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="ประชุมกับ %@";
+"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="เริ่มการประชุม";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2992,6 +2992,14 @@
 "transfer.storage.quotaExceeded"="เกินโควต้าพื้นที่จัดเก็บ";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="ต่อไป";
+/* Title of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.title"="Resume audio?";
+/* Description of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.description"="“%@” will resume from %@.";
+/* Resume option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.resume"="ต่อ";
+/* Restart option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.restart"="รีสตาร์ท";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ เข้าร่วมสายแล้ว";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -3190,7 +3198,7 @@
 "chat.listing.description.meetingCreated.message"="%@: สร้างการประชุมแล้ว";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="ดูทั้งหมด";
-/* Button title to leave the meeting in info view */
+/* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="ออกจากการประชุม";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="แจ้งเตือนแชท";
@@ -3407,10 +3415,100 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="กล้อง";
 /* Device Center title */
-"device.center.title"="";
+"device.center.title"="Device centre";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="On date";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="ไม่เคยมี";
+/* Title for meeting notifications option in meeting info */
+"meetings.info.meetingNotifications"="แจ้งเตือนการประชุม";
+/* Title for manage meeting history option in meeting info */
+"meetings.info.manageMeetingHistory"="Manage meeting history";
+/* Meeting Notifications DND: Title bar message for the dnd activate options */
+"meetings.info.muteMeetingNotificationsFor"="ปิดเสียงแจ้งเตือนการประชุมเป็นเวลา";
+/* Title for share meeting link option in meeting info */
+"meetings.info.shareMeetingLink"="แชร์ลิงก์การประชุม";
+/* The button or alert title to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="ล้างประวัติการประชุม";
+/* Message show when the history of a meeting has been successfully deleted */
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history cleared";
+/* The alert message to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="คุณแน่ใจหรือไม่ว่าต้องการล้างประวัติข้อความการประชุมทั้งหมดนี้";
+/* Text explaining users how the meeting links work. */
+"meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+/* The title of a menu button which allows users to rename a meeting. */
+"meetings.info.renameMeeting"="เปลี่ยนชื่อการประชุม";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.daily.optionTitle"="รายวัน";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.weekly.optionTitle"="รายสัปดาห์";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.monthly.optionTitle"="รายเดือน";
+/* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
+"meetings.scheduleMeeting.create.frequency.optionTitle"="Frequency";
+/* Create Schedule Meeting: The text is shown along with the selected interval. */
+"meetings.scheduleMeeting.create.interval.optionTitle"="Every";
+/* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+/* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+/* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+/* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+/* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="On the…";
+/* Create Schedule Meeting: Month custom option - header title for the calendar */
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Each";
+/* Create Schedule Meeting: Month custom option - first week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.first"="แรก";
+/* Create Schedule Meeting: Month custom option - second week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.second"="ที่สอง";
+/* Create Schedule Meeting: Month custom option - third week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.third"="ที่สาม";
+/* Create Schedule Meeting: Month custom option - fourth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="ที่สี่";
+/* Create Schedule Meeting: Month custom option - fifth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="สุดท้าย";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
+"meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
+/* On Upgrade Account Plan screen. Button title to restore purchases */
+"upgradeAccountPlan.button.restore.title"="Restore purchase";
+/* On Upgrade Account Plan screen. Button title to show terms and policies */
+"upgradeAccountPlan.button.termsAndPolicies.title"="Terms and policies";
+/* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
+"upgradeAccountPlan.button.buyAccountPlan.title"="Buy %@";
+/* On Upgrade Account Plan screen. Displayed header title text message */
+"upgradeAccountPlan.header.title.choosePlan"="เลือกแผนบริการที่ตรงกับความต้องการของคุณ";
+/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
+"upgradeAccountPlan.header.title.currentPlan"="Current plan: %@";
+/* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
+"upgradeAccountPlan.header.planTermPicker.monthly"="รายเดือน";
+/* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
+"upgradeAccountPlan.header.planTermPicker.yearly"="รายปี";
+/* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
+"upgradeAccountPlan.header.title.saveYearlyBilling"="Save up to 16%% with yearly billing";
+/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Features of Pro plans";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
+/* On Upgrade Account Plan screen. Displayed header title text for subscription details */
+"upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
+/* On Upgrade Account Plan screen. Displayed text body for subscription details */
+"upgradeAccountPlan.message.text.subscriptionDetails"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.";
+/* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
+"upgradeAccountPlan.plan.tag.currentPlan"="แผนปัจจุบัน";
+/* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
+"upgradeAccountPlan.plan.tag.recommended"="แนะนำ";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/month";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/year";
+/* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
+"upgradeAccountPlan.plan.details.storage"="Storage: %@";
+/* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
+"upgradeAccountPlan.plan.details.transfer"="Transfer: %@";

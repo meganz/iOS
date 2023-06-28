@@ -46,6 +46,8 @@
 "decryptionKeyAlertTitle"="復号化鍵を入力してください";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="このフォルダ/ファイルにアクセスするには、その復号キーが必要です。そのキーをお持ちではない場合、リンクの作成者に尋ねてください。";
+/* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessageForAlbum"="アルバムにアクセスするには、復号化キーを入力します。お持ちでない場合は、リンクを共有した人に連絡してください。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="復号化キー";
 /* Button title to try to decrypt the link */
@@ -178,6 +180,8 @@
 "downloadStarted"="ダウンロード開始";
 /* Title for the folder link view */
 "folderLink"="フォルダリンク";
+/* Title for the album/collection link view */
+"albumLink"="アルバムリンク";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="ダウンロード";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -643,7 +647,7 @@
 /* Alert message shown on the Shared Items section when you want to remove 1 share */
 "removeOneShareMultipleContactsMessage"="この共有を削除してもよろしいですか？（%d件の連絡先と共有済み）";
 /* Alert message shown on the Shared Items section when you want to remove %d shares */
-"removeMultipleSharesMultipleContactsMessage"="この共有を削除してもよろしいですか？（共有相手は%d人）";
+"removeMultipleSharesMultipleContactsMessage"="この共有を削除してもよろしいですか？（%d件の連絡先と共有済み）";
 /* Message shown when a share have been removed */
 "shareRemoved"="共有は削除されました";
 /* Message shown when some shares have been removed */
@@ -888,6 +892,8 @@
 "removeFilesFolderToRubbishBinMessage"="%d個のファイルと1個のフォルダを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="[A]個のファイルと[B]個のフォルダを恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
+"sharedItems.rubbish.warning.message"="%@を恒久的に削除しようとしています。続行しますか？（この操作を元に戻すことはできません）";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="MEGA から1 個のファイルが削除されました";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -904,6 +910,8 @@
 "filesFolderRemovedToRubbishBinMessage"="MEGA から%d個のファイルと1個のフォルダが削除されました";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="MEGA から[A]個のファイルと[B]個のフォルダが削除されました";
+/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
+"sharedItems.rubbish.confirmation.message"="MEGAから%@を削除しました";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="新しいパスワード";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1062,10 +1070,6 @@
 "account.achievement.mobileApp.incomplete.explaination.label"="MEGAモバイルアプリをインストールすると、無料のストレージスペース%@が得られます。これは365日間有効です。MEGAモバイルアプリは、iOSとAndroidに対応しています。";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ストレージ。365日有効。";
-/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="残り%@日";
-/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="ボーナスは%@後に有効期限が切れます。";
 /* Add Phone Number title */
 "Add Phone Number"="電話番号を追加";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -2388,10 +2392,6 @@
 "Copy All"="すべてコピー";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="「復号キーを個別に送信」、「有効期限の設定」、または「パスワードの設定」などのオプションは、単一の項目でのみ使用できます。";
-/* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="リンクをクリップボードにコピーしました";
-/* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="リンクをクリップボードにコピーしました";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="キーがクリップボードにコピーされました";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2641,7 +2641,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="新しいミーティング";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@ミーティング";
+"meetings.createMeeting.defaultMeetingName"="%@さんのミーティング";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="ミーティング開始";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2992,6 +2992,14 @@
 "transfer.storage.quotaExceeded"="ストレージ容量が超過しました";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="次";
+/* Title of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.title"="音声を再開しますか？";
+/* Description of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.description"="「%@」は%@から再開します。";
+/* Resume option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.resume"="再開";
+/* Restart option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.restart"="再起動";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@さんが参加しました";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -3190,7 +3198,7 @@
 "chat.listing.description.meetingCreated.message"="%@：ミーティングを作成しました";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="すべて表示";
-/* Button title to leave the meeting in info view */
+/* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="ミーティングを抜ける";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="チャット通知";
@@ -3407,10 +3415,100 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="カメラ";
 /* Device Center title */
-"device.center.title"="";
+"device.center.title"="デバイスセンター";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="定期開催を終了する";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="終了日";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="絶対しない";
+/* Title for meeting notifications option in meeting info */
+"meetings.info.meetingNotifications"="ミーティングの通知";
+/* Title for manage meeting history option in meeting info */
+"meetings.info.manageMeetingHistory"="ミーティング履歴を管理";
+/* Meeting Notifications DND: Title bar message for the dnd activate options */
+"meetings.info.muteMeetingNotificationsFor"="ミーティング通知をミュートする時間";
+/* Title for share meeting link option in meeting info */
+"meetings.info.shareMeetingLink"="ミーティングリンクの共有";
+/* The button or alert title to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="ミーティング履歴をクリア";
+/* Message show when the history of a meeting has been successfully deleted */
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="ミーティング履歴が消去されました";
+/* The alert message to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="このミーティングの完全なメッセージ履歴をクリアしてもよろしいですか？";
+/* Text explaining users how the meeting links work. */
+"meetings.info.shareMeetingLink.explainLink"="このリンクを知っている人は誰でもミーティングに参加し、ミーティングチャットを表示できます。";
+/* The title of a menu button which allows users to rename a meeting. */
+"meetings.info.renameMeeting"="ミーティング名の変更";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.daily.optionTitle"="毎日";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.weekly.optionTitle"="毎週";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.monthly.optionTitle"="月間";
+/* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
+"meetings.scheduleMeeting.create.frequency.optionTitle"="頻度";
+/* Create Schedule Meeting: The text is shown along with the selected interval. */
+"meetings.scheduleMeeting.create.interval.optionTitle"="毎週";
+/* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="頻度を選択してください";
+/* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="毎週の間隔を選択してください";
+/* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="その週の曜日を選択してください";
+/* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="毎月の間隔を選択してください";
+/* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="週、曜日…";
+/* Create Schedule Meeting: Month custom option - header title for the calendar */
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="毎月";
+/* Create Schedule Meeting: Month custom option - first week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.first"="1";
+/* Create Schedule Meeting: Month custom option - second week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.second"="2";
+/* Create Schedule Meeting: Month custom option - third week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.third"="3";
+/* Create Schedule Meeting: Month custom option - fourth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="4";
+/* Create Schedule Meeting: Month custom option - fifth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="5";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
+"meetings.scheduled.create.weekly.everyDay.footerNote"="ミーティングは毎日開催されます。";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="毎日";
+/* On Upgrade Account Plan screen. Button title to restore purchases */
+"upgradeAccountPlan.button.restore.title"="購入を復元する";
+/* On Upgrade Account Plan screen. Button title to show terms and policies */
+"upgradeAccountPlan.button.termsAndPolicies.title"="規約とポリシー";
+/* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
+"upgradeAccountPlan.button.buyAccountPlan.title"="%@を購入";
+/* On Upgrade Account Plan screen. Displayed header title text message */
+"upgradeAccountPlan.header.title.choosePlan"="お客様にぴったりのプランをお選びください";
+/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
+"upgradeAccountPlan.header.title.currentPlan"="現在のプラン：%@";
+/* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
+"upgradeAccountPlan.header.planTermPicker.monthly"="月間";
+/* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
+"upgradeAccountPlan.header.planTermPicker.yearly"="年間";
+/* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
+"upgradeAccountPlan.header.title.saveYearlyBilling"="年払いで最大16 %%ご節約";
+/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Proプランの各機能";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
+"upgradeAccountPlan.message.text.featuresOfProPlan"="・パスワードで保護されたリンク\n\n・有効期限のあるリンク\n\n・転送容量の共有\n\n・自動バックアップ\n\n・Pro Liteでは最大90日、Pro I、II、IIIでは最大365日の巻き戻し（近日公開予定）\n\n・7日から10年の間でごみ箱を空にするようにスケジュール";
+/* On Upgrade Account Plan screen. Displayed header title text for subscription details */
+"upgradeAccountPlan.header.title.subscriptionDetails"="サブスクリプションの詳細";
+/* On Upgrade Account Plan screen. Displayed text body for subscription details */
+"upgradeAccountPlan.message.text.subscriptionDetails"="サブスクリプションは、最初に選択した期間と同じ期間および同じ価格で、連続するサブスクリプション期間に対して自動的に更新されます。\n次のサブスクリプションのお支払い期日の24時間前までに、MEGA Proサブスクリプションの自動更新をオフに切り替えることができます。これは、iTunesアカウントの設定ページから実行できます。";
+/* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
+"upgradeAccountPlan.plan.tag.currentPlan"="現在のプラン";
+/* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
+"upgradeAccountPlan.plan.tag.recommended"="推奨";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/月";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/年";
+/* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
+"upgradeAccountPlan.plan.details.storage"="ストレージ：%@";
+/* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
+"upgradeAccountPlan.plan.details.transfer"="転送：%@";

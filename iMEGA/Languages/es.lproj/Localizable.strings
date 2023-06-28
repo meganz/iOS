@@ -46,6 +46,8 @@
 "decryptionKeyAlertTitle"="Introducir la clave de descifrado";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="Para acceder a esta carpeta o archivo, necesitas la clave de descifrado. Si no la tienes, contacta con el creador del enlace.";
+/* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
+"decryptionKeyAlertMessageForAlbum"="Para acceder al álbum, introduce la clave de descifrado. Si no la tienes, contacta con la persona que te ha compartido el enlace.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Clave de descifrado";
 /* Button title to try to decrypt the link */
@@ -178,6 +180,8 @@
 "downloadStarted"="Descarga iniciada";
 /* Title for the folder link view */
 "folderLink"="Enlace de la carpeta";
+/* Title for the album/collection link view */
+"albumLink"="Enlace del álbum";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Descargar";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -461,7 +465,7 @@
 /* Title for the action that allows you to rename a file or folder */
 "rename"="Renombrar";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
-"renameNodeMessage"="Introduce el nuevo nombre";
+"renameNodeMessage"="Introducir el nuevo nombre";
 /* Error message shown when trying to rename or create a folder with characters that are not allowed. The %@ will be replaced with the list of invalid characters. For example: The following characters are not allowed: " * / : < > ? \ | */
 "general.error.charactersNotAllowed"="Los siguientes caracteres no están permitidos: %@";
 /* Alert title to ask if user want to rename the file. %@ is a place holder. */
@@ -553,7 +557,7 @@
 /* Used in create album popup album name validation */
 "cameraUploads.albums.create.alert.enterDifferentName"="Introduce un nombre diferente.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Introduce un nombre nuevo.";
+"cameraUploads.albums.create.alert.enterNewName"="Introducir un nombre nuevo.";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Añadir elementos a “%@”";
 /* Used in empty album view. */
@@ -873,7 +877,7 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="Confirmar eliminación";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
+"removeFileToRubbishBinMessage"="Estás a punto de eliminar permanentemente 1 archivo. ¿Seguro que quieres continuar? (Esta acción no se podrá deshacer.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
 "removeFilesToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
@@ -888,6 +892,8 @@
 "removeFilesFolderToRubbishBinMessage"="Estás a punto de eliminar permanentemente %d archivos y 1 carpeta. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Estás a punto de eliminar permanentemente [A] archivos y [B] carpetas. ¿Seguro que quieres continuar? (Está acción no se podrá deshacer)";
+/* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
+"sharedItems.rubbish.warning.message"="Estás a punto de eliminar permanentemente %@. ¿Seguro que quieres continuar? (Esta acción no se podrá deshacer.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 archivo eliminado de MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -904,6 +910,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d archivos y 1 carpeta eliminados de MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] archivos y [B] carpetas eliminados de MEGA";
+/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
+"sharedItems.rubbish.confirmation.message"="%@ eliminados de MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Nueva contraseña";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1062,10 +1070,6 @@
 "account.achievement.mobileApp.incomplete.explaination.label"="Al instalar la aplicación móvil de MEGA, obtienes %@ de espacio de almacenamiento válido durante 365 días. La aplicación móvil está disponible para iOS y Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ de almacenamiento. Válido durante 365 días.";
-/* Cell subtitle of the complete valid achievement, %@ is a placeholder. */
-"account.achievement.complete.valid.cell.subtitle"="%@ días restantes";
-/* Detail subtitle of the complete valid achievement, %@ is a placeholders." */
-"account.achievement.complete.valid.detail.subtitle"="El bono caducará en %@ días.";
 /* Add Phone Number title */
 "Add Phone Number"="Añadir el número de teléfono";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
@@ -1231,7 +1235,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] ha abandonado el grupo";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] se unió al grupo por invitación de [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] se ha unido al chat de grupo por invitación de [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] ha limpiado el historial del chat.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -2231,7 +2235,7 @@
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Tu cuenta ha sido eliminada por tu administrador. Ponte en contacto con el administrador de tu cuenta Business para más información.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
-"Enter group name"="Introduce el nombre del grupo";
+"Enter group name"="Introducir el nombre del grupo";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
 "chat.message.placeholder"="Mensaje…";
 /* Chat: Message shown when the chat link was removed successfully */
@@ -2388,10 +2392,6 @@
 "Copy All"="Copiar todo";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Opciones como “Enviar clave de descifrado por separado”, “Establecer fecha de caducidad” o “Establecer contraseña” solo están disponible al seleccionar un solo elemento.";
-/* Message shown when the link has been copied to the Clipboard */
-"Link Copied to Clipboard"="Enlace copiado al portapapeles";
-/* Message shown when some links have been copied to the Clipboard */
-"Links Copied to Clipboard"="Enlaces copiados al portapapeles";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="Clave copiada al portapapeles";
 /* Message shown when the password has been copied to the Clipboard */
@@ -2641,7 +2641,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Nueva reunión";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="Reunión de %@";
+"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Empezar la reunión";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2992,6 +2992,14 @@
 "transfer.storage.quotaExceeded"="Cuota de almacenamiento agotada";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Siguiente";
+/* Title of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.title"="¿Reanudar audio?";
+/* Description of Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.description"="“⁣%@” se reanudará desde %@.";
+/* Resume option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.resume"="Reanudar";
+/* Restart option for Audio Player dialog for Playback Continuation */
+"media.audio.playbackContinuation.dialog.restart"="Reiniciar";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ se ha unido";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -3137,13 +3145,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Enviar invitación ";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
+"notifications.message.takenDownReinstated.file"="La retirada del archivo “%@” ha sido revocada";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
+"notifications.message.takenDownReinstated.folder"="La retirada de la carpeta “%@” ha sido revocada";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.file"="El archivo “%@” que has compartido públicamente ha sido retirado";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.folder"="La carpeta “%@” que has compartido públicamente ha sido retirada";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Permitir a los no anfitriones añadir participantes";
 /* Start conversation: Schedule meeting context menu */
@@ -3190,7 +3198,7 @@
 "chat.listing.description.meetingCreated.message"="%@: ha creado una reunión";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="Ver todo";
-/* Button title to leave the meeting in info view */
+/* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="Abandonar reunión";
 /* Title for chat notifications option in meeting info */
 "meetings.info.chatNotifications"="Notificaciones del chat";
@@ -3407,10 +3415,100 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Cámara";
 /* Device Center title */
-"device.center.title"="";
+"device.center.title"="Device centre";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Dejar de repetir";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="El día";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="Nunca";
+/* Title for meeting notifications option in meeting info */
+"meetings.info.meetingNotifications"="Notificaciones de la reunión";
+/* Title for manage meeting history option in meeting info */
+"meetings.info.manageMeetingHistory"="Gestionar historial de la reunión";
+/* Meeting Notifications DND: Title bar message for the dnd activate options */
+"meetings.info.muteMeetingNotificationsFor"="Silenciar las notificaciones de la reunión durante";
+/* Title for share meeting link option in meeting info */
+"meetings.info.shareMeetingLink"="Compartir enlace de la reunión";
+/* The button or alert title to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="Limpiar historial de la reunión";
+/* Message show when the history of a meeting has been successfully deleted */
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history cleared";
+/* The alert message to delete the history of a meeting. */
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="¿Confirmas que quieres limpiar el historial de mensajes de esta reunión?";
+/* Text explaining users how the meeting links work. */
+"meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+/* The title of a menu button which allows users to rename a meeting. */
+"meetings.info.renameMeeting"="Renombrar reunión";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.daily.optionTitle"="Diaria";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.weekly.optionTitle"="Semanal";
+/* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
+"meetings.scheduleMeeting.create.monthly.optionTitle"="Mensual";
+/* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
+"meetings.scheduleMeeting.create.frequency.optionTitle"="Frecuencia";
+/* Create Schedule Meeting: The text is shown along with the selected interval. */
+"meetings.scheduleMeeting.create.interval.optionTitle"="Cada";
+/* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+/* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+/* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+/* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+/* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="El…";
+/* Create Schedule Meeting: Month custom option - header title for the calendar */
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Cada";
+/* Create Schedule Meeting: Month custom option - first week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.first"="primer";
+/* Create Schedule Meeting: Month custom option - second week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.second"="segundo";
+/* Create Schedule Meeting: Month custom option - third week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.third"="tercer";
+/* Create Schedule Meeting: Month custom option - fourth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="cuarto";
+/* Create Schedule Meeting: Month custom option - fifth week option text */
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="quinto";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
+"meetings.scheduled.create.weekly.everyDay.footerNote"="La reunión se celebrará cada día.";
+/* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
+/* On Upgrade Account Plan screen. Button title to restore purchases */
+"upgradeAccountPlan.button.restore.title"="Restore purchase";
+/* On Upgrade Account Plan screen. Button title to show terms and policies */
+"upgradeAccountPlan.button.termsAndPolicies.title"="Términos y políticas ";
+/* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
+"upgradeAccountPlan.button.buyAccountPlan.title"="Comprar %@";
+/* On Upgrade Account Plan screen. Displayed header title text message */
+"upgradeAccountPlan.header.title.choosePlan"="Elige el plan adecuado para ti";
+/* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
+"upgradeAccountPlan.header.title.currentPlan"="Plan actual: %@";
+/* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
+"upgradeAccountPlan.header.planTermPicker.monthly"="Mensual";
+/* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
+"upgradeAccountPlan.header.planTermPicker.yearly"="Anual";
+/* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
+"upgradeAccountPlan.header.title.saveYearlyBilling"="Ahorra hasta un 16 %% con el cobro anual";
+/* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Características de los planes Pro";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features */
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Enlaces protegidos con contraseña\n\n• Enlaces con fechas de caducidad\n\n• Posibilidad de compartir cuota de transferencia\n\n• Copias de seguridad automáticas\n\n• Rebobinado hasta 90 días en Pro Lite y hasta 365 días en Pro I, II y III (próximamente)\n\n• Limpieza automática de la papelera entre 7 días y 10 años";
+/* On Upgrade Account Plan screen. Displayed header title text for subscription details */
+"upgradeAccountPlan.header.title.subscriptionDetails"="Información sobre la suscripción";
+/* On Upgrade Account Plan screen. Displayed text body for subscription details */
+"upgradeAccountPlan.message.text.subscriptionDetails"="La suscripción se renueva automáticamente con la misma duración y precio elegidos inicialmente.\nPuedes desactivar la renovación automática de la suscripción a MEGA Pro en la página de ajustes de iTunes hasta 24 horas antes de la renovación programada.";
+/* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
+"upgradeAccountPlan.plan.tag.currentPlan"="Plan actual";
+/* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
+"upgradeAccountPlan.plan.tag.recommended"="Recomendado";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/month";
+/* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/year";
+/* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
+"upgradeAccountPlan.plan.details.storage"="Almacenamiento: %@";
+/* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
+"upgradeAccountPlan.plan.details.transfer"="Transferencia: %@";
