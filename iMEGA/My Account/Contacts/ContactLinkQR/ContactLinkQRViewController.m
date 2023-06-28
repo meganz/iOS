@@ -207,8 +207,8 @@ typedef NS_ENUM(NSInteger, QRSection) {
             } else {
                 sender.selectedSegmentIndex = QRSectionMyCode;
                 [self valueChangedAtSegmentedControl:sender];
-                DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
-                [handler alertVideoPermissionWithHandler:^{}];
+                DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
+                [handler alertVideoPermission];
             }
             
             break;

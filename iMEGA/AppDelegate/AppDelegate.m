@@ -181,7 +181,6 @@
     [MEGALinkManager resetLinkAndURLType];
     isFetchNodesDone = NO;
     _presentInviteContactVCLater = NO;
-    _permissionsHandler = [[DevicePermissionsHandler alloc] init];
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (sessionV3) {
@@ -440,23 +439,7 @@
                             MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                             MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                             if (chatConnection == MEGAChatConnectionOnline) {
-                                [self.permissionsHandler audioPermissionWithModal:YES incomingCall:YES completion:^(BOOL audioGranted) {
-                                    if (audioGranted) {
-                                        if (self.videoCall) {
-                                            [self.permissionsHandler videoPermissionWithCompletionHandlerWithHandler:^(BOOL videoGranted) {
-                                                if (videoGranted) {
-                                                    [self performCall];
-                                                } else {
-                                                    [self.permissionsHandler alertVideoPermissionWithHandler:^{}];
-                                                }
-                                            }];
-                                        } else {
-                                            [self performCall];
-                                        }
-                                    } else {
-                                        [self.permissionsHandler alertAudioPermissionWithIncomingCall:YES];
-                                    }
-                                }];
+                                [self initiateCallAfterAskingForPermissionsWithVideoCall:self.isVideoCall];
                             }
                         }
                     } else {
@@ -488,23 +471,7 @@
                     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                     MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                     if (chatConnection == MEGAChatConnectionOnline) {
-                        [self.permissionsHandler audioPermissionWithModal:YES incomingCall:YES completion:^(BOOL audioGranted) {
-                            if (audioGranted) {
-                                if (self.videoCall) {
-                                    [self.permissionsHandler videoPermissionWithCompletionHandlerWithHandler:^(BOOL videoGranted) {
-                                        if (videoGranted) {
-                                            [self performCall];
-                                        } else {
-                                            [self.permissionsHandler alertVideoPermissionWithHandler:^{}];
-                                        }
-                                    }];
-                                } else {
-                                    [self performCall];
-                                }
-                            } else {
-                                [self.permissionsHandler alertAudioPermissionWithIncomingCall:YES];
-                            }
-                        }];
+                        [self initiateCallAfterAskingForPermissionsWithVideoCall:self.isVideoCall];
                     }
                 }
             }

@@ -30,31 +30,34 @@ final class HomeRecentActionViewModel:
     // MARK: - HomeRecentActionViewModelInputs
 
     func saveToPhotoAlbum(of node: MEGANode) {
-        devicePermissionUseCase.getAlbumAuthorizationStatus { [weak self] photoAuthorization in
-            switch photoAuthorization {
-            case .authorized:
-                guard let self = self else { return }
-                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                Task { @MainActor in
-                    do {
-                        try await self.saveMediaToPhotosUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
-                    } catch {
-                        if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                            AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
-                            await SVProgressHUD.dismiss()
-                            SVProgressHUD.show(
-                                Asset.Images.NodeActions.saveToPhotos.image,
-                                status: error.localizedDescription
-                            )
-                        }
-                    }
-                    
-                }
-            default:
-                guard let self = self else { return }
+        
+        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+            guard let self else { return }
+            if granted {
+                self.handleAuthorized(node: node)
+            } else {
                 self.error = .photos
                 self.notifyUpdate?(self.outputs)
             }
+        }
+    }
+    
+    func handleAuthorized(node: MEGANode) {
+        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+        Task { @MainActor in
+            do {
+                try await self.saveMediaToPhotosUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+            } catch {
+                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+                    AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
+                    await SVProgressHUD.dismiss()
+                    SVProgressHUD.show(
+                        Asset.Images.NodeActions.saveToPhotos.image,
+                        status: error.localizedDescription
+                    )
+                }
+            }
+            
         }
     }
 
@@ -86,18 +89,18 @@ final class HomeRecentActionViewModel:
 
     // MARK: - Use Cases
 
-    private let devicePermissionUseCase: DevicePermissionCheckingProtocol
+    private let permissionHandler: any DevicePermissionsHandling
 
     private let nodeFavouriteActionUseCase: any NodeFavouriteActionUseCaseProtocol
 
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
 
     init(
-        devicePermissionUseCase: DevicePermissionCheckingProtocol,
+        permissionHandler: some DevicePermissionsHandling,
         nodeFavouriteActionUseCase: any NodeFavouriteActionUseCaseProtocol,
         saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
     ) {
-        self.devicePermissionUseCase = devicePermissionUseCase
+        self.permissionHandler = permissionHandler
         self.nodeFavouriteActionUseCase = nodeFavouriteActionUseCase
         self.saveMediaToPhotosUseCase = saveMediaToPhotosUseCase
     }

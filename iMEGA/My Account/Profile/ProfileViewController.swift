@@ -19,7 +19,7 @@ import UIKit
     @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
     
-    private let permissionHandler = DevicePermissionsHandler()
+    private let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
     private let viewModel = ProfileViewModel(sdk: MEGASdkManager.sharedMEGASdk())
     private var dataSource: ProfileTableViewDataSource?
     private var subscriptions: Set<AnyCancellable> = []
@@ -214,6 +214,10 @@ import UIKit
         self.present(imagePickerController, animated: true, completion: nil)
     }
     
+    private var permissionRouter: PermissionAlertRouter {
+        .makeRouter(deviceHandler: permissionHandler)
+    }
+    
     private func presentChangeAvatarController(tableView: UITableView, cell: UITableViewCell) {
         let changeAvatarAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         changeAvatarAlertController.addAction(UIAlertAction.init(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
@@ -225,7 +229,7 @@ import UIKit
                 if granted {
                     showImagePicker(sourceType: .photoLibrary)
                 } else {
-                    permissionHandler.alertPhotosPermission()
+                    permissionRouter.alertPhotosPermission()
                 }
             }
         }
@@ -233,7 +237,7 @@ import UIKit
         
         let captureAlertAction = UIAlertAction.init(title: Strings.Localizable.capturePhotoVideo, style: .default) {[weak self] _ in
             guard let self else { return }
-            permissionHandler.videoPermissionWithCompletionHandler {[weak self] granted in
+            permissionHandler.requestVideoPermission {[weak self] granted in
                 guard let self else { return }
                 if granted {
                     permissionHandler.photosPermissionWithCompletionHandler {[weak self] photoPermisisonGranted in
@@ -251,7 +255,7 @@ import UIKit
                         }
                     }
                 } else {
-                    permissionHandler.alertVideoPermissionWith {}
+                    permissionRouter.alertVideoPermission()
                 }
             }
         }

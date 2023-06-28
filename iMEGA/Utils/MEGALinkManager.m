@@ -183,7 +183,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                     if (!error.type) {
                         [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                         
-                        DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+                        DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
                         
                         [handler shouldAskForNotificationsPermissionsWithHandler:^(BOOL shouldAsk) {
                             [self continueWithChatId:chatId

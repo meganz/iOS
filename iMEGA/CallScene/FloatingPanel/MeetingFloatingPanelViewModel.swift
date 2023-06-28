@@ -51,7 +51,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
     private let callUseCase: CallUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
-    private let devicePermissionUseCase: DevicePermissionCheckingProtocol
+    private let permissionHandler: any DevicePermissionsHandling
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
@@ -87,7 +87,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
          callUseCase: CallUseCaseProtocol,
          audioSessionUseCase: any AudioSessionUseCaseProtocol,
-         devicePermissionUseCase: DevicePermissionCheckingProtocol,
+         permissionHandler: some DevicePermissionsHandling,
          captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol,
@@ -99,7 +99,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.callCoordinatorUseCase = callCoordinatorUseCase
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
-        self.devicePermissionUseCase = devicePermissionUseCase
+        self.permissionHandler = permissionHandler
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.isSpeakerEnabled = isSpeakerEnabled
@@ -280,11 +280,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func checkForVideoPermission(onSuccess completionBlock: @escaping () -> Void) {
-        devicePermissionUseCase.getVideoAuthorizationStatus { [weak self] granted in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.videoPermissionGranted(granted, withCompletionBlock: completionBlock)
-            }
+        permissionHandler.requestVideoPermission { [weak self] granted in
+            self?.videoPermissionGranted(granted, withCompletionBlock: completionBlock)
         }
     }
     
@@ -297,11 +294,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func checkForAudioPermission(forCall call: CallEntity, completionBlock: @escaping (Bool) -> Void) {
-        devicePermissionUseCase.getAudioAuthorizationStatus { [weak self] granted in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.audioPermissionGranted(granted, withCompletionBlock: completionBlock)
-            }
+        permissionHandler.requestAudioPermission { [weak self] granted in
+            self?.audioPermissionGranted(granted, withCompletionBlock: completionBlock)
         }
     }
     

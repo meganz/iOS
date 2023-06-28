@@ -15,7 +15,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         case captureDeviceInputInstantiationFailed
     }
     
-    let permissionHandler = DevicePermissionsHandler()
+    let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
     
     override func awakeFromNib() {
         super.awakeFromNib()

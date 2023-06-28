@@ -28,8 +28,11 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     
     // MARK: - Init
     
-    init(viewModel: MediaDiscoveryViewModel, folderName: String,
-         contentMode: PhotoLibraryContentMode = .mediaDiscovery) {
+    init(
+        viewModel: MediaDiscoveryViewModel,
+        folderName: String,
+        contentMode: PhotoLibraryContentMode = .mediaDiscovery
+    ) {
         self.viewModel = viewModel
         self.folderName = folderName
         self.contentMode = contentMode
@@ -236,8 +239,15 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
         viewModel.dispatch(.downloadSelectedPhotos(selection.nodes.toNodeEntities()))
     }
     
+    private var permissionHandler: DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
+    private var permissionRouter: PermissionAlertRouting {
+        PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
+    }
+    
     private func saveToPhotosBarButtonPressed(_ button: UIBarButtonItem) {
-        let permissionHandler = DevicePermissionsHandler()
         permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
             guard let self else { return }
             if granted {
@@ -245,7 +255,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 
                 viewModel.dispatch(.saveToPhotos(selection.nodes.toNodeEntities()))
             } else {
-                permissionHandler.alertPhotosPermission()
+                permissionRouter.alertPhotosPermission()
             }
         }
     }

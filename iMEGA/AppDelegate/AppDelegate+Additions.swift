@@ -37,16 +37,27 @@ extension AppDelegate {
         }))
     }
     
+    private var permissionHandler: DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
+    // we do not want to present two CustomModals on top of each other, also
+    // do not present modal on top of Account expired
+    var shouldPresentModal: Bool {
+        let visibleViewController = UIApplication.mnz_visibleViewController()
+        return !(
+            visibleViewController is CustomModalAlertViewController ||
+            visibleViewController is AccountExpiredViewController
+        )
+    }
+    
     @objc func showTurnOnNotificationsIfNeeded() {
-        UNUserNotificationCenter.current().getNotificationSettings { permission in
-            if permission.authorizationStatus == .denied {
-                asyncOnMain {
-                    let visibleViewController = UIApplication.mnz_visibleViewController()
-                    if visibleViewController is CustomModalAlertViewController ||
-                        visibleViewController is AccountExpiredViewController { return }
-                    
-                    TurnOnNotificationsViewRouter(presenter: UIApplication.mnz_presentingViewController()).start()
-                }
+        
+        guard shouldPresentModal else { return }
+        
+        permissionHandler.notificationsPermissionsStatusDenied { denied in
+            if denied {
+                TurnOnNotificationsViewRouter(presenter: UIApplication.mnz_presentingViewController()).start()
             }
         }
     }
@@ -80,11 +91,8 @@ extension AppDelegate {
     }
         
     private func showCookieDialog() {
-        let visibleViewController = UIApplication.mnz_visibleViewController()
-        if visibleViewController is CustomModalAlertViewController ||
-           visibleViewController is AccountExpiredViewController {
-            return
-        }
+        
+        guard shouldPresentModal else { return }
         
         let cookieDialogCustomModalAlert = CustomModalAlertViewController()
         cookieDialogCustomModalAlert.configureForCookieDialog()
@@ -107,11 +115,7 @@ extension AppDelegate {
     }
     
     private func showLaunchTabDialog() {
-        let visibleViewController = UIApplication.mnz_visibleViewController()
-        if visibleViewController is CustomModalAlertViewController ||
-           visibleViewController is AccountExpiredViewController {
-            return
-        }
+        guard shouldPresentModal else { return }
         
         let launchTabDialogCustomModalAlert = CustomModalAlertViewController()
         launchTabDialogCustomModalAlert.configureForChangeLaunchTab()
@@ -181,12 +185,12 @@ extension AppDelegate {
     }
 
     @objc func registerForNotifications() {
-        permissionsHandler.shouldAskForNotificationsPermissions { shouldAsk in
+        permissionHandler.shouldAskForNotificationsPermissions { shouldAsk in
             // this code here seems to work on assumption that,
             // we were granted authorization in the past
             // and we can progress with registering for remote notifications
             if !shouldAsk {
-                self.permissionsHandler.notificationsPermission(with: { granted in
+                self.permissionHandler.notificationsPermission(with: { granted in
                     if granted {
                         UIApplication.shared.registerForRemoteNotifications()
                     }
@@ -417,6 +421,16 @@ extension AppDelegate {
         } catch {
             chatStateListener.removeListener()
             throw error
+        }
+    }
+    
+    private var permissionAlertRouter: PermissionAlertRouting {
+        PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
+    }
+    @objc
+    func initiateCallAfterAskingForPermissions(videoCall: Bool) {
+        permissionAlertRouter.requestPermissionsFor(videoCall: videoCall) { [weak self] in
+            self?.performCall()
         }
     }
 }

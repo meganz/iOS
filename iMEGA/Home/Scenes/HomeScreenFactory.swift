@@ -27,15 +27,14 @@ final class HomeScreenFactory: NSObject {
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
             )
         )
+        
+        let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
 
         let uploadViewModel = HomeUploadingViewModel(
             uploadFilesUseCase: UploadPhotoAssetsUseCase(
                 uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
             ),
-            devicePermissionUseCase: DevicePermissionRequestUseCase(
-                photoPermission: .live,
-                devicePermission: .live
-            ),
+            permissionHandler: permissionHandler,
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
             router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController)
@@ -51,7 +50,7 @@ final class HomeScreenFactory: NSObject {
             )
         )
         homeViewController.recentsViewModel = HomeRecentActionViewModel(
-            devicePermissionUseCase: .live,
+            permissionHandler: permissionHandler,
             nodeFavouriteActionUseCase: NodeFavouriteActionUseCase(
                 nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk())
             ),

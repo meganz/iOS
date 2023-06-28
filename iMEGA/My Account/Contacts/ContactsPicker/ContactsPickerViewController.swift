@@ -265,8 +265,12 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
         }
     }
     
+    private var permissionHandler: DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
     func titleForEmptyDataSet() -> String? {
-        if CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized {
+        if permissionHandler.contactsAuthorizationStatus == .authorized {
             if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
                 return Strings.Localizable.noResults
             } else {
@@ -278,7 +282,7 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     }
     
     func buttonTitleForEmptyDataSet() -> String? {
-        if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != .authorized {
+        if permissionHandler.contactsAuthorizationStatus != .authorized {
             return Strings.Localizable.openSettings
         } else {
             return nil

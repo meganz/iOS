@@ -15,7 +15,8 @@ extension ChatRoomsListViewModel {
         notificationCenter: NotificationCenter = NotificationCenter.default,
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,
-        permissionHandler: DevicePermissionsHandling = MockDevicePermissionHandler(),
+        permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -29,7 +30,8 @@ extension ChatRoomsListViewModel {
             notificationCenter: notificationCenter,
             chatType: chatType,
             chatViewMode: chatViewMode,
-            permissionHandler: permissionHandler
+            permissionHandler: permissionHandler,
+            permissionAlertRouter: permissionAlertRouter
         )
     }
 }

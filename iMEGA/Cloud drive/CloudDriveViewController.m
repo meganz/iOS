@@ -469,17 +469,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
-    DevicePermissionsHandler *handler = [[DevicePermissionsHandler alloc] init];
+    DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
         [self presentViewController:imagePickerController animated:YES completion:nil];
     } else {
-        [handler photosPermissionWithCompletionHandlerWithHandler:^(BOOL granted) {
-            if (granted) {
-                [self loadPhotoAlbumBrowser];
-            } else {
-                [handler alertPhotosPermission];
-            }
+        [handler requstPhotoAlbumAccessPermissionsWithGrantedHandler:^{
+            [self loadPhotoAlbumBrowser];
         }];
     }
 }
