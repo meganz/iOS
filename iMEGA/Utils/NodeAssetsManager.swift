@@ -40,14 +40,8 @@ import MEGADomain
         if ext.matches(regex: FileExtensionType.jpg.rawValue) {
             return Asset.Images.Filetypes.image
         } else {
-            let fileTypesDictionary = Helper.fileTypesDictionary()
-        
-            guard let fileTypeImage = fileTypesDictionary[ext] as? String,
-                  !fileTypeImage.isEmpty else {
-                return Asset.Images.Filetypes.generic
-            }
-            
-            return ImageAsset(name: fileTypeImage)
+            let fileTypeImageName = FileTypes().fileType(forFileExtension: ext)
+            return ImageAsset(name: fileTypeImageName)
         }
     }
     
