@@ -1,38 +1,59 @@
 @testable import MEGA
 
 class MockDevicePermissionHandler: DevicePermissionsHandling {
+    init() {
+        
+    }
     
-    func audioPermission(
-        modal: Bool,
-        incomingCall: Bool,
-        completion: @escaping (Bool) -> Void
+    convenience init(
+        photoAuthorization: PHAuthorizationStatus,
+        audioAuthorized: Bool,
+        videoAuthorized: Bool
     ) {
-        
+        self.init()
+        photoLibraryAuthorizationStatus = photoAuthorization
+        requestMediaPermissionValuesToReturn[.audio] = audioAuthorized
+        requestMediaPermissionValuesToReturn[.video] = videoAuthorized
     }
     
-    func alertAudioPermission(incomingCall: Bool) {
-        
+    func notificationPermissionStatus() async -> UNAuthorizationStatus {
+        .denied
     }
     
-    func contactsPermissionWithCompletionHandler(handler: @escaping (Bool) -> Void) {
-        
+    func requestPhotoLibraryAccessPermissions() async -> Bool { false }
+    
+    var requestPermissionsMediaTypes: [AVMediaType] = []
+    var requestMediaPermissionValuesToReturn: [AVMediaType: Bool] = [:]
+    
+    func requestPermission(for mediaType: AVMediaType) async -> Bool {
+        requestPermissionsMediaTypes.append(mediaType)
+        return requestMediaPermissionValuesToReturn[mediaType]!
     }
     
-    var contactsAuthorizationStatus: CNAuthorizationStatus = .authorized
+    func requestContactsPermissions() async -> Bool { false }
     
-    func alertVideoPermissionWith(handler: @escaping () -> Void) {
-        
-    }
+    func requestNotificationsPermission() async -> Bool { false }
     
-    var shouldAskForNotificaitonPermissionsCallCounter = 0
+    var shouldAskForAudioPermissions: Bool = false
+    
+    var shouldAskForVideoPermissions: Bool = false
+    
+    var shouldAskForPhotosPermissions: Bool = false
+    
+    var shouldAskForContactsPermissions: Bool = false
+    
     var shouldAskForNotificaitonPermissionsValueToReturn = false
-    func shouldAskForNotificationsPermissions(handler: @escaping (Bool) -> Void) {
-        shouldAskForNotificaitonPermissionsCallCounter += 1
-        handler(shouldAskForNotificaitonPermissionsValueToReturn)
+    func shouldAskForNotificationPermission() async -> Bool {
+        shouldAskForNotificaitonPermissionsValueToReturn
     }
     
-    var presentModalNotificationsPermissionPromptCallCount = 0
-    func presentModalNotificationsPermissionPrompt() {
-        presentModalNotificationsPermissionPromptCallCount += 1
-    }
+    var hasAuthorizedAccessToPhotoAlbum: Bool = false
+    
+    var contactsAuthorizationStatus: CNAuthorizationStatus = .notDetermined
+    
+    var photoLibraryAuthorizationStatus: PHAuthorizationStatus = .notDetermined
+    
+    var audioPermissionAuthorizationStatus: AVAuthorizationStatus = .notDetermined
+    
+    var isVideoPermissionAuthorized: Bool = false
 }

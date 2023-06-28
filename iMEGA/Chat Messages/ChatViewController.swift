@@ -86,7 +86,7 @@ class ChatViewController: MessagesViewController {
     var timer: Timer?
     var initDuration: TimeInterval?
     
-    let permissionHandler = DevicePermissionsHandler()
+    let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
     
     lazy var startOrJoinCallButton: UIButton = {
         let button = UIButton()
@@ -1007,35 +1007,24 @@ class ChatViewController: MessagesViewController {
     
     // MARK: - Bar Button actions
     
-    @objc func startAudioCall() {
-        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
-            guard let self else { return }
-            if granted {
-                openCallViewWithVideo(videoCall: false)
-            } else {
-                permissionHandler.alertAudioPermission(incomingCall: false)
-            }
+    var permissionRouter: PermissionAlertRouter {
+        .makeRouter(deviceHandler: permissionHandler)
+    }
+    
+    @objc
+    func startAudioCall() {
+        startCall(isVideo: false)
+    }
+    
+    private func startCall(isVideo: Bool) {
+        permissionRouter.requestPermissionsFor(videoCall: isVideo) {[weak self] in
+            self?.openCallViewWithVideo(videoCall: isVideo)
         }
     }
     
-    @objc func startVideoCall() {
-        
-        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] audioPermissionGranted in
-            guard let self else { return }
-            if audioPermissionGranted {
-                permissionHandler.videoPermissionWithCompletionHandler {[weak self] videoPermissionGranted in
-                    guard let self else { return }
-                    if videoPermissionGranted {
-                        openCallViewWithVideo(videoCall: true)
-                    } else {
-                        permissionHandler.alertVideoPermissionWith {}
-                    }
-                }
-                
-            } else {
-                permissionHandler.alertAudioPermission(incomingCall: false)
-            }
-        }
+    @objc
+    func startVideoCall() {
+        startCall(isVideo: true)
     }
     
     @objc func dismissChatRoom() {

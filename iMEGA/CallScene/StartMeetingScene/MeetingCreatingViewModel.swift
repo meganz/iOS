@@ -50,7 +50,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let localVideoUseCase: CallLocalVideoUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
-    private let devicePermissionUseCase: DevicePermissionCheckingProtocol
+    private let permissionHandler: any DevicePermissionsHandling
     private let userImageUseCase: UserImageUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
@@ -82,7 +82,7 @@ final class MeetingCreatingViewModel: ViewModelType {
          audioSessionUseCase: any AudioSessionUseCaseProtocol,
          localVideoUseCase: CallLocalVideoUseCaseProtocol,
          captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
-         devicePermissionUseCase: DevicePermissionCheckingProtocol,
+         permissionHandler: some DevicePermissionsHandling,
          userImageUseCase: UserImageUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol,
          megaHandleUseCase: any MEGAHandleUseCaseProtocol,
@@ -95,7 +95,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.audioSessionUseCase = audioSessionUseCase
         self.localVideoUseCase = localVideoUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
-        self.devicePermissionUseCase = devicePermissionUseCase
+        self.permissionHandler = permissionHandler
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
         self.megaHandleUseCase = megaHandleUseCase
@@ -129,7 +129,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             } else {
                 enableLoudSpeaker(enabled: isSpeakerEnabled)
             }
-            devicePermissionUseCase.getAudioAuthorizationStatus { _ in  }
+            permissionHandler.requestAudioPermission()
             selectFrontCameraIfNeeded()
             switch type {
             case .join, .guestJoin:
@@ -319,25 +319,21 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func checkForVideoPermission(onSuccess completionBlock: @escaping () -> Void) {
-        devicePermissionUseCase.getVideoAuthorizationStatus { [self] granted in
-            DispatchQueue.main.async {
-                if granted {
-                    completionBlock()
-                } else {
-                    self.router.showVideoPermissionError()
-                }
+        permissionHandler.requestVideoPermission { [weak self] granted in
+            if granted {
+                completionBlock()
+            } else {
+                self?.router.showVideoPermissionError()
             }
         }
     }
     
     private func checkForAudioPermission(onSuccess completionBlock: @escaping () -> Void) {
-        devicePermissionUseCase.getAudioAuthorizationStatus { [self] granted in
-            DispatchQueue.main.async {
-                if granted {
-                    completionBlock()
-                } else {
-                    self.router.showAudioPermissionError()
-                }
+        permissionHandler.requestAudioPermission { [weak self] granted in
+            if granted {
+                completionBlock()
+            } else {
+                self?.router.showAudioPermissionError()
             }
         }
     }

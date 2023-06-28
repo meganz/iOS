@@ -34,8 +34,8 @@ class InviteContactViewController: UIViewController {
             self.userLink = String(format: "https://mega.nz/C!%@", base64Handle)
         }
         MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
-        
-        if CNContactStore.authorizationStatus(for: .contacts) == .authorized && ContactsOnMegaManager.shared.contactsOnMegaCount() != 0 {
+        let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
+        if permissionHandler.contactsAuthorizationStatus == .authorized && ContactsOnMegaManager.shared.contactsOnMegaCount() != 0 {
             createContactsOnMegaChild()
         }
         

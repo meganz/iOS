@@ -18,7 +18,7 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
                          isMyselfModerator: Bool,
                          meetingFloatingPanelModel: MeetingFloatingPanelViewModel)
     func showVideoPermissionError()
-    func showAudioPermissionError() 
+    func showAudioPermissionError()
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
 }
@@ -37,7 +37,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private let isSpeakerEnabled: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
     private var inviteToMegaNavigationController: MEGANavigationController?
-    private let permissionHandler: DevicePermissionsHandling
+    private let permissionHandler: any DevicePermissionsHandling
     
     init(
         presenter: UINavigationController,
@@ -61,19 +61,21 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         
-        let viewModel = MeetingFloatingPanelViewModel(router: self,
-                                                      containerViewModel: containerViewModel,
-                                                      chatRoom: chatRoom,
-                                                      isSpeakerEnabled: isSpeakerEnabled,
-                                                      callCoordinatorUseCase: CallCoordinatorUseCase(),
-                                                      callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
-                                                      audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
-                                                      devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
-                                                      captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-                                                      localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
-                                                      accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                                                      chatRoomUseCase: chatRoomUseCase,
-                                                      megaHandleUseCase: megaHandleUseCase)
+        let viewModel = MeetingFloatingPanelViewModel(
+            router: self,
+            containerViewModel: containerViewModel,
+            chatRoom: chatRoom,
+            isSpeakerEnabled: isSpeakerEnabled,
+            callCoordinatorUseCase: CallCoordinatorUseCase(),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
+            permissionHandler: DevicePermissionsHandler.makeHandler(),
+            captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
+            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            chatRoomUseCase: chatRoomUseCase,
+            megaHandleUseCase: megaHandleUseCase
+        )
         
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
@@ -116,7 +118,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             selectedUsersHandler: selectedUsersHandler
         ) else { return }
         
-        contactsNavigationController.overrideUserInterfaceStyle = .dark        
+        contactsNavigationController.overrideUserInterfaceStyle = .dark
         baseViewController?.present(contactsNavigationController, animated: true)
     }
     
@@ -167,12 +169,16 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         viewModel?.dispatch(.didSwitchToGridView)
     }
     
+    var permissionRouter: PermissionAlertRouter {
+        .makeRouter(deviceHandler: permissionHandler)
+    }
+    
     func showVideoPermissionError() {
-        permissionHandler.alertVideoPermissionWith(handler: {})
+        permissionRouter.alertVideoPermission()
     }
     
     func showAudioPermissionError() {
-        permissionHandler.alertAudioPermission(incomingCall: false)
+        permissionRouter.alertAudioPermission(incomingCall: false)
     }
     
     // MARK: - Private methods.

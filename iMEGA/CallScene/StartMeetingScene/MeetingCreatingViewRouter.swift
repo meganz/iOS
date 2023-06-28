@@ -41,7 +41,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-            devicePermissionUseCase: DevicePermissionCheckingProtocol.live,
+            permissionHandler: DevicePermissionsHandler.makeHandler(),
             userImageUseCase: userImageUseCase,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
@@ -85,11 +85,15 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
     
+    var permissionRouter: PermissionAlertRouter {
+        .makeRouter(deviceHandler: DevicePermissionsHandler.makeHandler())
+    }
+    
     func showVideoPermissionError() {
-        DevicePermissionsHandler().alertVideoPermissionWith(handler: {})
+        permissionRouter.alertVideoPermission()
     }
     
     func showAudioPermissionError() {
-        DevicePermissionsHandler().alertAudioPermission(incomingCall: false)
+        permissionRouter.alertAudioPermission(incomingCall: false)
     }
 }

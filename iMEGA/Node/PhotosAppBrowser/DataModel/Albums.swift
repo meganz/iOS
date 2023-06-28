@@ -49,7 +49,8 @@ final class Albums: NSObject {
     // MARK: - Interface methods.
 
     func loadAlbums() {
-        let status = PHPhotoLibrary.authorizationStatus()
+        let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
+        let status = permissionHandler.photoLibraryAuthorizationStatus
         if status == .authorized {
             populateAlbums()
             PHPhotoLibrary.shared().register(self)

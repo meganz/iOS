@@ -277,7 +277,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
             isSpeakerEnabled: isSpeakerEnabled,
-            permissionHandler: DevicePermissionsHandler()
+            permissionHandler: DevicePermissionsHandler.makeHandler()
         )
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter

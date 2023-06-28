@@ -48,7 +48,7 @@ extension MEGALinkManager {
         chatTitle: String,
         chatLink: URL,
         shouldAskForNotificationsPermissions: Bool,
-        permissionHandler: DevicePermissionsHandler
+        permissionHandler: DevicePermissionsHandlerObjC
     ) {
         guard let identifier = MEGASdk.base64Handle(forHandle: chatId) else {
             // does it make sense to handle this error apart from early return?

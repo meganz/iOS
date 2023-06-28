@@ -12,11 +12,9 @@ class AddToChatMediaCollectionSource: NSObject {
     private var lastSelectedIndexPath: IndexPath?
     private weak var delegate: AddToChatMediaCollectionSourceDelegate?
     private var fetchResult: PHFetchResult<PHAsset>?
-    
+    private let permissionHandler: any DevicePermissionsHandling
     private let minimumLineSpacing: CGFloat = 2.0
     private let cellDefaultWidth: CGFloat = 100.0
-
-    private let permissionHandler = DevicePermissionsHandler()
     
     private lazy var fetchOptions: PHFetchOptions = {
         let fetchOptions = PHFetchOptions()
@@ -40,10 +38,14 @@ class AddToChatMediaCollectionSource: NSObject {
         }
     }
     
-    init(collectionView: UICollectionView, delegate: AddToChatMediaCollectionSourceDelegate) {
+    init(
+        collectionView: UICollectionView,
+        delegate: AddToChatMediaCollectionSourceDelegate,
+        permissionHandler: DevicePermissionsHandling
+    ) {
         self.collectionView = collectionView
         self.delegate = delegate
-        
+        self.permissionHandler = permissionHandler
         super.init()
         
         updateFetchResult()
@@ -95,7 +97,7 @@ extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatCameraCollectionCell.reuseIdentifier,
                                                           for: indexPath) as! AddToChatCameraCollectionCell
             
-            if !(AVCaptureDevice.authorizationStatus(for: .video) == .authorized) {
+            if !permissionHandler.isVideoPermissionAuthorized {
                 cell.hideLiveFeedView()
             }
 
@@ -147,10 +149,20 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
         }
     }
     
+    var permissionRouter: PermissionAlertRouting {
+        PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
         let cell = collectionView.cellForItem(at: indexPath)
+        
+        let dismissIfiPad = { [weak self] in
+            if UIDevice.current.iPad {
+                self?.delegate?.dismissView()
+            }
+        }
         
         if let imageCell = cell as? AddToChatImageCell {
             
@@ -181,27 +193,28 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                 if granted {
                     self.collectionView.reloadData()
                 } else {
-                    if UIDevice.current.iPad { self.delegate?.dismissView() }
-                    permissionHandler.alertPhotosPermission()
+                    dismissIfiPad()
+                    permissionRouter.alertPhotosPermission()
                 }
             }
         } else if cell is AddToChatCameraCollectionCell {
-            permissionHandler.videoPermissionWithCompletionHandler {[weak self] videoPermissionGranted in
+            permissionHandler.requestVideoPermission { [weak self] videoPermissionGranted in
                 guard let self else { return }
                 
-                if videoPermissionGranted {
-                    permissionHandler.photosPermissionWithCompletionHandler {[weak self] photosPermissionGranted in
-                        guard let self else { return }
-                        if photosPermissionGranted {
-                            delegate?.showCamera()
-                        } else {
-                            if UIDevice.current.iPad { self.delegate?.dismissView() }
-                            permissionHandler.alertPhotosPermission()
-                        }
+                guard videoPermissionGranted else {
+                    dismissIfiPad()
+                    permissionRouter.alertVideoPermission()
+                    return
+                }
+                
+                permissionHandler.photosPermissionWithCompletionHandler {[weak self] photosPermissionGranted in
+                    guard let self else { return }
+                    if photosPermissionGranted {
+                        delegate?.showCamera()
+                    } else {
+                        dismissIfiPad()
+                        permissionRouter.alertPhotosPermission()
                     }
-                } else {
-                    if UIDevice.current.iPad { self.delegate?.dismissView() }
-                    permissionHandler.alertVideoPermissionWith {}
                 }
             }
         }

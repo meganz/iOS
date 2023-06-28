@@ -24,6 +24,7 @@ struct ContactOnMega: Codable {
     var completionWhenReady: (() -> Void)?
 
     private var deviceContactsOperation: DeviceContactsOperation?
+    private var devicePermissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
 
     @objc static let shared = ContactsOnMegaManager()
 
@@ -90,39 +91,40 @@ struct ContactOnMega: Codable {
     }
 
     @objc func configureContactsOnMega(completion: (() -> Void)?) {
-        if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-            completionWhenReady = completion
-
-            if state == .fetching { return }
-            state = .fetching
-
-            contactsOnMega.removeAll()
-            UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
-
-            NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLogoutNotificaton), name: .MEGALogout, object: nil)
-
-            let deviceContactsOperation = DeviceContactsOperation([CNContactPhoneNumbersKey, CNContactEmailAddressesKey])
-            
-            deviceContactsOperation.completionBlock = {
-                if deviceContactsOperation.isCancelled {
-                    return
-                }
-                
-                let deviceContacts = deviceContactsOperation.fetchedContacts.map({ [$0.contactDetail: $0.name] })
-                if deviceContacts.isEmpty {
-                    self.contactsFetched()
-                } else {
-                    self.deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
-                    self.getContactsOnMega()
-                }
-            }
-    
-            DeviceContactsManager.shared.addGetDeviceContactsOperation(deviceContactsOperation)
-            
-            self.deviceContactsOperation = deviceContactsOperation
-        } else {
+        guard devicePermissionHandler.hasContactsAuthorization else {
             MEGALogDebug("Device Contact Permission not granted")
+            return
         }
+            
+        completionWhenReady = completion
+        
+        if state == .fetching { return }
+        state = .fetching
+        
+        contactsOnMega.removeAll()
+        UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLogoutNotificaton), name: .MEGALogout, object: nil)
+        
+        let deviceContactsOperation = DeviceContactsOperation([CNContactPhoneNumbersKey, CNContactEmailAddressesKey])
+        
+        deviceContactsOperation.completionBlock = {
+            if deviceContactsOperation.isCancelled {
+                return
+            }
+            
+            let deviceContacts = deviceContactsOperation.fetchedContacts.map({ [$0.contactDetail: $0.name] })
+            if deviceContacts.isEmpty {
+                self.contactsFetched()
+            } else {
+                self.deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
+                self.getContactsOnMega()
+            }
+        }
+        
+        DeviceContactsManager.shared.addGetDeviceContactsOperation(deviceContactsOperation)
+        
+        self.deviceContactsOperation = deviceContactsOperation
     }
 
     private func getContactsOnMega() {

@@ -100,7 +100,7 @@
             break;
      
         case OnboardingViewTypeNotificationsPermission:
-            self.imageView.image = [UIImage imageNamed:@"micAndCamPermission"];
+            self.imageView.image = [UIImage imageNamed:@"notificationDevicePermission"];
             self.imageView.contentMode = UIViewContentModeCenter;
             self.titleLabel.text = NSLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
             self.descriptionLabel.text = NSLocalizedString(@"We would like to send you notifications so you receive new messages on your device instantly.", @"Detailed explanation of why the user should give permission to deliver notifications");

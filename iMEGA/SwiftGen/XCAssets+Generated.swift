@@ -622,7 +622,7 @@ internal enum Asset {
     }
     internal enum Onboarding {
       internal static let accessContact = ImageAsset(name: "access contact")
-      internal static let micAndCamPermission = ImageAsset(name: "micAndCamPermission")
+      internal static let notificationDevicePermission = ImageAsset(name: "notificationDevicePermission")
       internal static let onboarding1Encryption = ImageAsset(name: "onboarding1_encryption")
       internal static let onboarding2Chat = ImageAsset(name: "onboarding2_chat")
       internal static let onboarding3Contacts = ImageAsset(name: "onboarding3_contacts")
