@@ -12,10 +12,6 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 
 @interface Helper : NSObject
 
-#pragma mark - Images
-
-+ (NSDictionary *)fileTypesDictionary;
-
 #pragma mark - Paths
 
 + (NSString *)pathForOffline;
