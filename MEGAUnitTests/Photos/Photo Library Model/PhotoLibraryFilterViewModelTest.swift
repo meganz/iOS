@@ -121,7 +121,7 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     
     func testSaveFilters_onApplyingFilters_shouldChangeTypeAndLocation() async throws {
         let useCase = MockUserAttributeUseCase()
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]))
+        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase)
         sut.appliedMediaTypeFilter = .images
         sut.appliedFilterLocation = .cloudDrive
         
@@ -132,41 +132,29 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     
     func testApplySavedFilters_whenFilterScreenLoaded_shouldApplyPreviousSavedFilters() async {
         let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]))
+        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase)
         await sut.applySavedFilters()
         XCTAssertEqual(sut.selectedMediaType, .videos)
         XCTAssertEqual(sut.selectedLocation, .cloudDrive)
         XCTAssertTrue(sut.selectedSavePreferences)
     }
     
-    func testApplySavedFilters_whenFilterScreenLoadedAndFeatureFlagIsDisabled_shouldNotApplySavedFilters() async {
-        let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
-        let sut = photoLibraryFilterViewModel(userAttributeUseCase: useCase, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: false]))
-        
-        await sut.applySavedFilters()
-        
-        XCTAssertFalse(sut.isRememberPreferencesFeatureFlagEnabled)
-        XCTAssertEqual(sut.selectedMediaType, .allMedia)
-        XCTAssertEqual(sut.selectedLocation, .allLocations)
-    }
-    
     func testIsRememberPreferenceActive_whenFeatureFlagEnabledAndFilterIsForTimeline_shouldReturnTrue() {
-        let sut = photoLibraryFilterViewModel(featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]))
+        let sut = photoLibraryFilterViewModel()
         
         XCTAssertTrue(sut.isRememberPreferenceActive)
     }
     
     func testIsRememberPreferenceActive_whenFeatureFlagEnabledAndFilterIsForAlbum_shouldReturnFalse() {
-        let sut = photoLibraryFilterViewModel(contentMode: .album, featureFlagProvider: MockFeatureFlagProvider(list: [.timelinePreferenceSaving: true]))
+        let sut = photoLibraryFilterViewModel(contentMode: .album)
         
         XCTAssertFalse(sut.isRememberPreferenceActive)
     }
     
     private func photoLibraryFilterViewModel(
         contentMode: PhotoLibraryContentMode = .library,
-        userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase()
     ) -> PhotoLibraryFilterViewModel {
-        PhotoLibraryFilterViewModel(contentMode: contentMode, userAttributeUseCase: userAttributeUseCase, featureFlagProvider: featureFlagProvider)
+        PhotoLibraryFilterViewModel(contentMode: contentMode, userAttributeUseCase: userAttributeUseCase)
     }
 }

@@ -3,10 +3,7 @@ import MEGAPresentation
 
 extension FolderLinkViewController {
     @objc func containsMediaFiles() -> Bool {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .folderLinkMediaDiscovery) else {
-            return false
-        }
-        return nodesArray.toNodeEntities().contains {
+        nodesArray.toNodeEntities().contains {
             $0.mediaType != nil
         }
     }
