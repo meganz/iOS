@@ -6,4 +6,5 @@ public enum AnalyticsEventEntity: Equatable {
     case extensions(ExtensionsAnalyticsEventEntity)
     case download(DownloadAnalyticsEventEntity)
     case accountPlans(AccountPlanAnalyticsEventEntity)
+    case getLink(GetLinkAnalyticsEventEntity)
 }
