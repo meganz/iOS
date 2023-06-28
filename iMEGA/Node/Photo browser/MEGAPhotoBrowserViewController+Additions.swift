@@ -44,9 +44,13 @@ extension MEGAPhotoBrowserViewController {
         self.messagesIds = messagesIds
     }
     
+    var permissionHandler: DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
     @objc func saveToPhotos(node: MEGANode) {
-        let permissionHandler = DevicePermissionsHandler()
-        permissionHandler.photosPermissionWithCompletionHandler { granted in
+        permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
+            guard let self else { return }
             if granted {
                 let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: self.displayMode == .nodeInsideFolderLink ? self.api : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
                 let completionBlock: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
@@ -84,7 +88,9 @@ extension MEGAPhotoBrowserViewController {
                     }
                 }
             } else {
-                permissionHandler.alertPhotosPermission()
+                PermissionAlertRouter
+                    .makeRouter(deviceHandler: permissionHandler)
+                    .alertPhotosPermission()
             }
         }
     }

@@ -10,22 +10,26 @@ protocol DevicePermissionAlerting {
 }
 
 extension DevicePermissionAlerting {
+    
+    var permissionRouter: PermissionAlertRouter {
+        .makeRouter(deviceHandler: DevicePermissionsHandler.makeHandler())
+    }
 
     func showVideoAccessAlert(withCompletion completion: (() -> Void)? = nil) {
         asyncOnMain {
-            DevicePermissionsHandler().alertVideoPermissionWith(handler: completion ?? {})
+            permissionRouter.alertVideoPermission()
         }
     }
 
     func showAudioAccessAlert(forIncomingCall incomingCall: Bool) {
         asyncOnMain {
-            DevicePermissionsHandler().alertAudioPermission(incomingCall: incomingCall)
+            permissionRouter.alertAudioPermission(incomingCall: incomingCall)
         }
     }
 
     func showPhotoAccessAlert() {
         asyncOnMain {
-            DevicePermissionsHandler().alertPhotosPermission()
+            permissionRouter.alertPhotosPermission()
         }
     }
 }

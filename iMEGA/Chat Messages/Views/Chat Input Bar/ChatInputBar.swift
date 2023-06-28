@@ -4,12 +4,15 @@ import UIKit
 
 protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
-    func canRecordAudio() -> Bool
     func showTapAndHoldMessage()
     func voiceRecordingStarted()
     func voiceRecordingEnded()
     func clearEditMessage()
     func didPasteImage(_ image: UIImage)
+    var canRecordAudio: Bool { get }
+    func requestOrInformAudioPermissions()
+    var existsActiveCall: Bool { get }
+    func presentActiveCall()
 }
 
 class ChatInputBar: UIView {
@@ -360,12 +363,25 @@ class ChatInputBar: UIView {
         }
 
         let loc = longPressGesture.location(in: longPressGesture.view)
-        if messageInputBar.superview != nil,
+        
+        guard
+            messageInputBar.superview != nil,
             messageInputBar.isMicButtonPresent(atLocation: loc),
-            let delegate = delegate,
-            delegate.canRecordAudio() {
-            textInputToVoiceInputBarSwitch()
+            let delegate = delegate else {
+            return
         }
+            
+        guard delegate.canRecordAudio else {
+            delegate.requestOrInformAudioPermissions()
+            return
+        }
+        
+        guard !delegate.existsActiveCall else {
+            delegate.presentActiveCall()
+            return
+        }
+        
+        textInputToVoiceInputBarSwitch()
     }
     
     @objc func pan(_ panGesture: UIPanGestureRecognizer) {

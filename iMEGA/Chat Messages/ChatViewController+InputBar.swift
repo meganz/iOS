@@ -527,7 +527,7 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func tappedVoiceButton() {
-        if !isAudioPermissionAuthorized() {
+        if !permissionHandler.isAudioPermissionAuthorized {
             return
         }
         
@@ -764,34 +764,34 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         MEGASdkManager.sharedMEGASdk().isGeolocationEnabled(with: genericRequestDelegate)
     }
     
-    func canRecordAudio() -> Bool {
-        if !isAudioPermissionAuthorized() {
-            return false
-        }
-        
-        if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
-            let message = Strings.Localizable.itIsNotPossibleToRecordVoiceMessagesWhileThereIsACallInProgress
-            SVProgressHUD.setDefaultMaskType(.clear)
-            SVProgressHUD.showError(withStatus: message)
-            return false
-        }
-        
-        return true
+    var canRecordAudio: Bool {
+        permissionHandler.isAudioPermissionAuthorized
     }
     
-    private func isAudioPermissionAuthorized() -> Bool {
-        let permissionHandler = DevicePermissionsHandler()
-        switch permissionHandler.audioPermissionAuthorizationStatus {
-        case .notDetermined:
-                permissionHandler.audioPermission(modal: false, incomingCall: false, completion: { _ in })
-            return false
-        case .restricted, .denied:
-                permissionHandler.alertAudioPermission(incomingCall: false)
-            UINotificationFeedbackGenerator().notificationOccurred(.error)
-            return false
-        default:
-            return true
+    var existsActiveCall: Bool {
+        MEGAChatSdk.shared.mnz_existsActiveCall
+    }
+    
+    func requestOrInformAudioPermissions() {
+        if permissionHandler.shouldAskForAudioPermissions {
+            permissionHandler.requestAudioPermission()
+            return
         }
+        
+        if permissionHandler.audioPermissionAuthorizationStatus == .denied {
+            informPermissionsDenied()
+        }
+    }
+    
+    func presentActiveCall() {
+        let message = Strings.Localizable.itIsNotPossibleToRecordVoiceMessagesWhileThereIsACallInProgress
+        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.showError(withStatus: message)
+    }
+    
+    private func informPermissionsDenied() {
+        permissionRouter.alertAudioPermission(incomingCall: false)
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
     }
 }
 

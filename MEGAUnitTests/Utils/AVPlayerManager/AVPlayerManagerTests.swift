@@ -28,7 +28,7 @@ class AVPlayerManagerTests: XCTestCase {
         let controller = try XCTUnwrap(MEGAAVViewController(url: videoURL))
         
         let secondVideoURL = try XCTUnwrap(URL(string: "file://videos/abc2.mp4"))
-        let secondController = try XCTUnwrap(MEGAAVViewController(url: videoURL))
+        let secondController = try XCTUnwrap(MEGAAVViewController(url: secondVideoURL))
 
         // Act
         manager.playerViewControllerWillStartPictureInPicture(controller)

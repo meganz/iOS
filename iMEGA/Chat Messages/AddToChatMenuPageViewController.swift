@@ -23,7 +23,7 @@ class AddToChatMenuPageViewController: UIPageViewController {
         return menuPerRow * numberOfRowsForMenu
     }
     
-    private let permissionHandler = DevicePermissionsHandler()
+    private let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
     
     private var numberOfRowsForMenu = 2
     private var menuPerRow = 4
@@ -155,7 +155,9 @@ extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
                 if granted {
                     menuDelegate?.loadPhotosView()
                 } else {
-                    permissionHandler.alertPhotosPermission()
+                    PermissionAlertRouter
+                        .makeRouter(deviceHandler: permissionHandler)
+                        .alertPhotosPermission()
                 }
             }
         case .file:

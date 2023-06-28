@@ -139,4 +139,21 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
             break
         }
     }
+    
+    @objc
+    func askNotificationPermissionsIfNeeded() {
+        let permissionHandler = DevicePermissionsHandler.makeHandler()
+        permissionHandler.shouldAskForNotificationsPermissions { shouldAsk in
+            guard shouldAsk else { return }
+            PermissionAlertRouter
+                .makeRouter(deviceHandler: permissionHandler)
+                .presentModalNotificationsPermissionPrompt()
+        }
+    }
+    
+    @objc
+    var hasAuthorizedContacts: Bool {
+        DevicePermissionsHandler.makeHandler().hasContactsAuthorization
+    }
+
 }

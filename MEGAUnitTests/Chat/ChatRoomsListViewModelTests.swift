@@ -149,26 +149,30 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         wait(for: [exception], timeout: 10)
     }
     
-    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsTrue_asksForNotificaitonPermissions() {
+    @MainActor
+    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsTrue_asksForNotificaitonPermissions() async {
         let permissionHandler = MockDevicePermissionHandler()
+        let permissionRouter = MockPermissionAlertRouter()
         permissionHandler.shouldAskForNotificaitonPermissionsValueToReturn = true
         let viewModel = ChatRoomsListViewModel(
-            permissionHandler: permissionHandler
+            permissionHandler: permissionHandler,
+            permissionAlertRouter: permissionRouter
         )
-        viewModel.askForNotificationsPermissionsIfNeeded()
-        XCTAssertEqual(permissionHandler.shouldAskForNotificaitonPermissionsCallCounter, 1)
-        XCTAssertEqual(permissionHandler.presentModalNotificationsPermissionPromptCallCount, 1)
+        await viewModel.askForNotificationsPermissionsIfNeeded()
+        XCTAssertEqual(permissionRouter.presentModalNotificationsPermissionPromptCallCount, 1)
     }
     
-    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsFalse_doesNotAskForNotificaitonPermissions() {
+    @MainActor
+    func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsFalse_doesNotAskForNotificaitonPermissions() async {
         let permissionHandler = MockDevicePermissionHandler()
+        let permissionRouter = MockPermissionAlertRouter()
         permissionHandler.shouldAskForNotificaitonPermissionsValueToReturn = false
         let viewModel = ChatRoomsListViewModel(
-            permissionHandler: permissionHandler
+            permissionHandler: permissionHandler,
+            permissionAlertRouter: permissionRouter
         )
-        viewModel.askForNotificationsPermissionsIfNeeded()
-        XCTAssertEqual(permissionHandler.shouldAskForNotificaitonPermissionsCallCounter, 1)
-        XCTAssertEqual(permissionHandler.presentModalNotificationsPermissionPromptCallCount, 0)
+        await viewModel.askForNotificationsPermissionsIfNeeded()
+        XCTAssertEqual(permissionRouter.presentModalNotificationsPermissionPromptCallCount, 0)
     }
     
     // MARK: - Private methods

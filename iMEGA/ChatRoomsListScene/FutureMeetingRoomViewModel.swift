@@ -67,7 +67,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     @Published var showDNDTurnOnOptions = false
     @Published var existsInProgressCallInChatRoom = false
     @Published var totalCallDuration: TimeInterval = 0
-    private let permissionHandler: DevicePermissionsHandling
+    private let permissionAlertRouter: any PermissionAlertRouting
     
     init(scheduledMeeting: ScheduledMeetingEntity,
          nextOccurrence: ScheduledMeetingOccurrenceEntity?,
@@ -81,7 +81,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
          audioSessionUseCase: any AudioSessionUseCaseProtocol,
          scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          megaHandleUseCase: any MEGAHandleUseCaseProtocol,
-         permissionHandler: DevicePermissionsHandling,
+         permissionAlertRouter: some PermissionAlertRouting,
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
@@ -94,7 +94,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.megaHandleUseCase = megaHandleUseCase
-        self.permissionHandler = permissionHandler
+        self.permissionAlertRouter = permissionAlertRouter
         self.chatNotificationControl = chatNotificationControl
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
         self.isRecurring = scheduledMeeting.rules.frequency != .invalid
@@ -245,10 +245,10 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     }
     
     private func startOrJoinMeetingTapped() {
-        permissionHandler.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
+        permissionAlertRouter.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
             guard let self else { return }
             guard granted else {
-                permissionHandler.alertAudioPermission(incomingCall: false)
+                permissionAlertRouter.alertAudioPermission(incomingCall: false)
                 return
             }
             

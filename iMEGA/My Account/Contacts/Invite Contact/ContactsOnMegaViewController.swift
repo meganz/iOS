@@ -13,7 +13,7 @@ import UIKit
     @IBOutlet weak var searchFixedView: UIView!
     @IBOutlet var contactsOnMegaHeader: UIView!
     @IBOutlet weak var contactsOnMegaHeaderTitle: UILabel!
-    let permissionHandler = DevicePermissionsHandler()
+    let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -50,7 +50,8 @@ import UIKit
         super.viewDidAppear(animated)
 
         // Fix to avoid ContactsPermissionBottomView button not being rendered correctly in small screens and iOS10
-        if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized {
+        
+        if permissionHandler.contactsAuthorizationStatus != .authorized {
             tableView.reloadData()
         }
     }
@@ -103,7 +104,11 @@ import UIKit
     }
     
     private func showSearch() {
-        let shouldSearchBarBeHidden = inviteContactView.isHidden || contacts().isEmpty || CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized
+        let shouldSearchBarBeHidden = (
+            inviteContactView.isHidden ||
+            contacts().isEmpty ||
+            permissionHandler.contactsAuthorizationStatus != .authorized
+        )
         searchFixedView?.isHidden = true
         navigationItem.searchController = shouldSearchBarBeHidden ? nil : searchController
     }
@@ -150,7 +155,7 @@ extension ContactsOnMegaViewController: UISearchBarDelegate {
 // MARK: - UITableViewDataSource
 extension ContactsOnMegaViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if CNContactStore.authorizationStatus(for: CNEntityType.contacts) == CNAuthorizationStatus.authorized {
+        if permissionHandler.contactsAuthorizationStatus == .authorized {
             return contacts().count
         } else {
             return 0
