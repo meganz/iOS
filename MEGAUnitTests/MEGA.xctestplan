@@ -119,8 +119,6 @@
   "testTargets" : [
     {
       "skippedTests" : [
-        "ChatRoomViewModelTests\/test_ScheduledMeetingManagementMessage_MeetingCreatedByOthers()",
-        "ChatRoomViewModelTests\/test_ScheduledMeetingManagementMessage_MeetingCreatedMyself()",
         "ChatRoomsListViewModelTests\/testAction_selectChatsMode()",
         "ChatRoomsListViewModelTests\/testAction_selectMeetingsMode()",
         "DownloadLinkViewModelTests\/testDownloadFolderLinkUserNotLogged()",
