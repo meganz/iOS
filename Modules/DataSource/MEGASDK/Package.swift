@@ -47,7 +47,6 @@ let package = Package(
             cxxSettings: [
                 .headerSearchPath("bindings/ios"),
                 .headerSearchPath("include/mega/posix"),
-                .headerSearchPath("bindings/ios/3rdparty/include"),
                 .headerSearchPath("bindings/ios/3rdparty/webrtc/third_party/boringssl/src/include"),
                 .define("ENABLE_CHAT"),
                 .define("HAVE_LIBUV"),
