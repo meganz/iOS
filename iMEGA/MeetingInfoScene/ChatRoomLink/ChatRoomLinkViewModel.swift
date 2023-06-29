@@ -16,8 +16,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
 
     private var isChatLinkFirstQuery = false
     private var subscriptions = Set<AnyCancellable>()
-
-    var meetingLink: String?
+    private var meetingLink: String?
 
     init(router: MeetingInfoRouting,
          chatRoom: ChatRoomEntity,
@@ -32,6 +31,17 @@ final class ChatRoomLinkViewModel: ObservableObject {
 
         initSubscriptions()
         fetchInitialValues()
+        listenToMeetingLinkToggleChange()
+    }
+    
+    private func listenToMeetingLinkToggleChange() {
+        $isMeetingLinkOn
+            .dropFirst()
+            .sink { [weak self] newValue in
+                guard let self, !isChatLinkFirstQuery else { return }
+                update(enableMeetingLinkTo: newValue)
+            }
+            .store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
@@ -47,25 +57,17 @@ final class ChatRoomLinkViewModel: ObservableObject {
                 MEGALogError("error fetching chat link \(error)")
             }, receiveValue: { [weak self] link in
                 guard let self else { return }
-                if self.isChatLinkFirstQuery {
-                    if link == nil {
-                        self.isChatLinkFirstQuery = false
-                    } else {
-                        self.isMeetingLinkOn.toggle()
-                    }
+                if isChatLinkFirstQuery {
+                    isMeetingLinkOn = link != nil
+                    isChatLinkFirstQuery = false
                 }
-                self.meetingLink = link
+                meetingLink = link
             })
             .store(in: &subscriptions)
     }
     
-    func meetingLinkValueChanged(to enabled: Bool) {
-        guard !isChatLinkFirstQuery else {
-            isChatLinkFirstQuery = false
-            return
-        }
-        
-        if meetingLink == nil {
+    private func update(enableMeetingLinkTo isEnabled: Bool) {
+        if isEnabled {
             if chatRoom.hasCustomTitle {
                 chatLinkUseCase.createChatLink(for: chatRoom)
             } else {
@@ -82,7 +84,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
     }
     
     func shareOptions() -> [ShareChatLinkOption] {
-        [.send, .copy, .share]
+        ShareChatLinkOption.allCases
     }
     
     func shareOptionTapped(_ shareOption: ShareChatLinkOption) {

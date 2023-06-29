@@ -7,7 +7,7 @@ struct ChatRoomLinkView: View {
 
     var body: some View {
         VStack {
-            ToogleView(
+            ToggleView(
                 image: nil,
                 text: Strings.Localizable.Meetings.Info.meetingLink,
                 isOn: $viewModel.isMeetingLinkOn)
