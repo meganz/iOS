@@ -24,7 +24,7 @@ struct MeetingInfoView: View {
                 }
                 
                 if viewModel.isModerator {
-                    ToogleView(
+                    ToggleView(
                         image: Asset.Images.Meetings.Info.allowNonHostToAddParticipant.name,
                         text: Strings.Localizable.Meetings.AddContacts.AllowNonHost.message,
                         isOn: $viewModel.isAllowNonHostToAddParticipantsOn)

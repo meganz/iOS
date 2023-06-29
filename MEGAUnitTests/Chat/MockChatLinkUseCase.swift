@@ -33,11 +33,17 @@ struct MockChatLinkUseCase: ChatLinkUseCaseProtocol {
         }
     }
     
-    func queryChatLink(for chatRoom: ChatRoomEntity) {    }
+    func queryChatLink(for chatRoom: ChatRoomEntity) {
+        chatLinkUpdateSubject.send(link)
+    }
     
-    func createChatLink(for chatRoom: ChatRoomEntity) {    }
+    func createChatLink(for chatRoom: ChatRoomEntity) {
+        chatLinkUpdateSubject.send("New chat or meeting link")
+    }
     
-    func removeChatLink(for chatRoom: ChatRoomEntity) {    }
+    func removeChatLink(for chatRoom: ChatRoomEntity) {
+        chatLinkUpdateSubject.send(nil)
+    }
     
     mutating func monitorChatLinkUpdate(for chatRoom: ChatRoomEntity) -> AnyPublisher<String?, Never> {
         chatLinkUpdateSubject.eraseToAnyPublisher()
