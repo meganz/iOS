@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ToogleView: View {
+struct ToggleView: View {
     private enum Constants {
         static let viewHeight: CGFloat = 44
     }
