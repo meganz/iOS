@@ -32,6 +32,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *outgoingLineView;
 @property (weak, nonatomic) IBOutlet UIView *linksLineView;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leaveShareBarButtonItem;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *removeLinkBarButtonItem;
+
 @property (nonatomic, strong, nullable) MEGAShareList *outgoingShareList;
 @property (nonatomic, strong, nullable) MEGAShareList *outgoingUnverifiedShareList;
 @property (nonatomic, strong, nullable) NSMutableArray<MEGAShare *> *outgoingUnverifiedSharesMutableArray;
