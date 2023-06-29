@@ -60,6 +60,15 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
         completion(renameChatRoomCompletion)
     }
     
+    func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String {
+        switch renameChatRoomCompletion {
+        case .success(let newName):
+            return newName
+        case .failure(let failure):
+            throw failure
+        }
+    }
+    
     func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never> {
         participantsUpdatedSubject.eraseToAnyPublisher()
     }

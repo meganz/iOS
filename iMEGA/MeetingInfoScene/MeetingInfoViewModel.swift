@@ -18,10 +18,10 @@ protocol MeetingInfoRouting {
     )
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
     func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
+    func edit(meeting: ScheduledMeetingEntity) -> AnyPublisher<ScheduledMeetingEntity, Never>
 }
 
 final class MeetingInfoViewModel: ObservableObject {
-    private let scheduledMeeting: ScheduledMeetingEntity
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var userImageUseCase: UserImageUseCaseProtocol
@@ -45,15 +45,8 @@ final class MeetingInfoViewModel: ObservableObject {
 
     var meetingLink: String?
     
-    var title: String {
-        scheduledMeeting.title
-    }
-    
     @Published var subtitle: String = ""
-    
-    var description: String {
-        scheduledMeeting.description
-    }
+    @Published var scheduledMeeting: ScheduledMeetingEntity
     
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: MeetingInfoRouting,
@@ -260,6 +253,17 @@ extension MeetingInfoViewModel {
                 self.router.closeMeetingInfoView()
             }
         }
+    }
+    
+    // MARK: - Edit meeting
+    func editTapped() {
+        router
+            .edit(meeting: scheduledMeeting)
+            .sink { [weak self] meeting in
+                guard let self else { return }
+                scheduledMeeting = meeting
+            }
+            .store(in: &subscriptions)
     }
     
     func isChatPreview() -> Bool {

@@ -1,3 +1,4 @@
+import Combine
 import MEGAData
 import MEGADomain
 
@@ -75,5 +76,24 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
             self.presenter.popViewController(animated: true)
             SVProgressHUD.showSuccess(withStatus: message)
         }
+    }
+    
+    func edit(
+        occurrence: ScheduledMeetingOccurrenceEntity
+    ) -> AnyPublisher<ScheduledMeetingOccurrenceEntity, Never> {
+        let viewConfiguration = ScheduleMeetingUpdateOccurrenceViewConfiguration(
+            occurrence: occurrence,
+            scheduledMeeting: scheduledMeeting,
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
+        )
+        
+        let router = ScheduleMeetingRouter(
+            presenter: presenter,
+            viewConfiguration: viewConfiguration
+        )
+        router.start()
+        return router.onOccurrenceUpdate()
     }
 }

@@ -79,7 +79,12 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     
     func presentScheduleMeeting() {
         guard let navigationController else { return }
-        ScheduleMeetingRouter(presenter: navigationController).start()
+        let viewConfiguration = ScheduleMeetingNewViewConfiguration(
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
+        )
+        ScheduleMeetingRouter(presenter: navigationController, viewConfiguration: viewConfiguration).start()
     }
         
     func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int) {
@@ -254,5 +259,16 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     
     func showSuccessMessage(_ message: String) {
         SVProgressHUD.showSuccess(withStatus: message)
+    }
+    
+    func edit(scheduledMeeting: ScheduledMeetingEntity) {
+        guard let navigationController else { return }
+        let viewConfiguration = ScheduleMeetingUpdateViewConfiguration(
+            scheduledMeeting: scheduledMeeting,
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
+        )
+        ScheduleMeetingRouter(presenter: navigationController, viewConfiguration: viewConfiguration).start()
     }
 }

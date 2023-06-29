@@ -33,15 +33,20 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
                     verticalAlignment: .top,
                     action: viewModel.showRecurrenceOptionsView
                 )
+                .opacity(viewModel.shouldAllowEditingRecurrenceOption ? 1.0 : 0.3)
+                .disabled(!viewModel.shouldAllowEditingRecurrenceOption)
                 
                 if viewModel.rules.frequency != .invalid {
                     Divider()
                         .padding(.leading)
+                    
                     DetailDisclosureView(
                         text: Strings.Localizable.Meetings.ScheduleMeeting.Create.EndRecurrence.title,
                         detail: viewModel.endRecurrenceDetailText(),
                         action: viewModel.showEndRecurrenceOptionsView
                     )
+                    .opacity(viewModel.shouldAllowEditingEndRecurrenceOption ? 1.0 : 0.3)
+                    .disabled(!viewModel.shouldAllowEditingEndRecurrenceOption)
                 }
 
                 Divider()
@@ -50,6 +55,8 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
             
             if let monthlyRecurrenceFootnoteViewText = viewModel.monthlyRecurrenceFootnoteViewText {
                 ScheduleMeetingMonthlyRecurrenceFootnoteView(text: monthlyRecurrenceFootnoteViewText)
+                    .opacity(viewModel.shouldAllowEditingRecurrenceOption ? 1.0 : 0.6)
+
                 Divider()
                     .padding(.leading)
             }

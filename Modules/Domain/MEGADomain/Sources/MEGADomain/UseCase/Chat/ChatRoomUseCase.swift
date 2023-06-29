@@ -9,6 +9,7 @@ public protocol ChatRoomUseCaseProtocol {
     func createChatRoom(forUserHandle userHandle: HandleEntity, completion: @escaping (Result<ChatRoomEntity, ChatRoomErrorEntity>) -> Void)
     func fetchPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String
     func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
     func message(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) -> ChatMessageEntity?
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity)
@@ -84,6 +85,10 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
 
     public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         chatRoomRepo.renameChatRoom(chatRoom, title: title, completion: completion)
+    }
+    
+    public func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String {
+        try await chatRoomRepo.renameChatRoom(chatRoom, title: title)
     }
     
     public func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool {

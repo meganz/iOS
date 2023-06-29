@@ -34,7 +34,7 @@ final class MeetingInfoViewController: UIViewController {
     }
     
     @objc func editButtonItemTapped() {
-
+        viewModel.editTapped()
     }
     
     private func addEditButton(isModerator: Bool) {

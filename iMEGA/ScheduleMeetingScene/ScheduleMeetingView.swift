@@ -37,6 +37,9 @@ struct ScheduleMeetingView: View {
         .padding(.vertical)
         .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
         .ignoresSafeArea(.container, edges: [.top, .bottom])
+        .onAppear {
+            viewModel.updateRightBarButtonState()
+        }
         .actionSheet(isPresented: $viewModel.showDiscardAlert) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.title), buttons: discardChangesButtons())
         }

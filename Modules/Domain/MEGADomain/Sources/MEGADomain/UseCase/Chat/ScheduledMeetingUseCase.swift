@@ -8,9 +8,12 @@ public protocol ScheduledMeetingUseCaseProtocol {
     func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity) async throws -> [ScheduledMeetingOccurrenceEntity]
     func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity, since: Date) async throws -> [ScheduledMeetingOccurrenceEntity]
     func upcomingOccurrences(forScheduledMeetings meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
-    func createScheduleMeeting(_ meeting: CreateScheduleMeetingEntity) async throws -> ScheduledMeetingEntity
-    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity, withChanges changes: ScheduledMeetingChangesEntity) async throws -> ScheduledMeetingEntity
-    func updateScheduleMeetingOccurrence(_ occurrence: ScheduledMeetingOccurrenceEntity, inChatRoom chatRoom: ChatRoomEntity, withChanges changes: ScheduledMeetingOccurrenceChangesEntity) async throws -> ScheduledMeetingEntity
+    func createScheduleMeeting(_ meeting: ScheduleMeetingProxyEntity) async throws -> ScheduledMeetingEntity
+    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity
+    func updateOccurrence(
+        _ occurrence: ScheduledMeetingOccurrenceEntity,
+        meeting: ScheduledMeetingEntity
+    ) async throws -> ScheduledMeetingEntity
 }
 
 public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: ScheduledMeetingUseCaseProtocol {
@@ -57,15 +60,18 @@ public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: Sc
         return futureMeetingDates
     }
     
-    public func createScheduleMeeting(_ meeting: CreateScheduleMeetingEntity) async throws -> ScheduledMeetingEntity {
+    public func createScheduleMeeting(_ meeting: ScheduleMeetingProxyEntity) async throws -> ScheduledMeetingEntity {
         try await repository.createScheduleMeeting(meeting)
     }
     
-    public func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity, withChanges changes: ScheduledMeetingChangesEntity) async throws -> ScheduledMeetingEntity {
-        try await repository.updateScheduleMeeting(meeting, withChanges: changes)
+    public func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity {
+        try await repository.updateScheduleMeeting(meeting)
     }
     
-    public func updateScheduleMeetingOccurrence(_ occurrence: ScheduledMeetingOccurrenceEntity, inChatRoom chatRoom: ChatRoomEntity, withChanges changes: ScheduledMeetingOccurrenceChangesEntity) async throws -> ScheduledMeetingEntity {
-        try await repository.updateScheduleMeetingOccurrence(occurrence, inChatRoom: chatRoom, withChanges: changes)
+    public func updateOccurrence(
+        _ occurrence: ScheduledMeetingOccurrenceEntity,
+        meeting: ScheduledMeetingEntity
+    ) async throws -> ScheduledMeetingEntity {
+        try await repository.updateOccurrence(occurrence, meeting: meeting)
     }
 }

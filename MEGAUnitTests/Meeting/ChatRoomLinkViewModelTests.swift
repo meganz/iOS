@@ -14,8 +14,10 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
         let exp = expectation(description: "Should receive meeting link update")
         sut.$isMeetingLinkOn
             .dropFirst()
-            .sink { _ in
+            .sink { [weak self] _ in
+                guard let self else { return }
                 exp.fulfill()
+                subscriptions.removeAll()
             }
             .store(in: &subscriptions)
         wait(for: [exp], timeout: 1)
@@ -30,8 +32,10 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
         let exp = expectation(description: "Should receive meeting link update")
         sut.$isMeetingLinkOn
             .dropFirst()
-            .sink { _ in
+            .sink { [weak self] _ in
+                guard let self else { return }
                 exp.fulfill()
+                subscriptions.removeAll()
             }
             .store(in: &subscriptions)
         wait(for: [exp], timeout: 1)
@@ -98,7 +102,9 @@ final class MockMeetingInfoRouter: MeetingInfoRouting {
     var inviteParticipants_calledTimes = 0
     var showAllContactsAlreadyAddedAlert_calledTimes = 0
     var showNoAvailableContactsAlert_calledTimes = 0
-        
+    var editMeeting_calledTimes = 0
+    var editMeetingPublisher = PassthroughSubject<ScheduledMeetingEntity, Never>()
+    
     func showSharedFiles(for chatRoom: MEGADomain.ChatRoomEntity) {
         showSharedFiles_calledTimes += 1
     }
@@ -145,5 +151,10 @@ final class MockMeetingInfoRouter: MeetingInfoRouting {
     
     func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: MEGA.ParticipantsAddingViewFactory) {
         showNoAvailableContactsAlert_calledTimes += 1
+    }
+    
+    func edit(meeting: ScheduledMeetingEntity) -> AnyPublisher<ScheduledMeetingEntity, Never> {
+        editMeeting_calledTimes += 1
+        return editMeetingPublisher.eraseToAnyPublisher()
     }
 }

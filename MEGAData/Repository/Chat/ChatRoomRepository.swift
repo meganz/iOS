@@ -111,6 +111,19 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         })
     }
     
+    func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String {
+        try await withAsyncThrowingValue { completion in
+            renameChatRoom(chatRoom, title: title) { result in
+                switch result {
+                case .success(let updatedTitle):
+                    completion(.success(updatedTitle))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
     func message(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) -> ChatMessageEntity? {
         sdk.message(forChat: chatRoom.chatId, messageId: messageId)?.toChatMessageEntity()
     }

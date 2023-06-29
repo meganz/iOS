@@ -10,6 +10,7 @@ public protocol ChatRoomRepositoryProtocol {
     func createPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func queryChatLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
+    func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity)
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity) async throws -> Bool
     func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity)

@@ -2141,14 +2141,6 @@ public enum Strings {
     public static let unlockedBonuses = Strings.tr("Localizable", "unlockedBonuses")
     /// Unmute
     public static let unmute = Strings.tr("Localizable", "unmute")
-    /// %lu unread message
-    public static func unreadMessage(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "unreadMessage", p1)
-    }
-    /// %lu unread messages
-    public static func unreadMessages(_ p1: Int) -> String {
-      return Strings.tr("Localizable", "unreadMessages", p1)
-    }
     /// Unselect
     public static let unselect = Strings.tr("Localizable", "Unselect")
     /// Until I turn them back on
@@ -3313,7 +3305,7 @@ public enum Strings {
           }
           public enum Initialising {
             public enum Status {
-              /// Initialising...
+              /// Initialising…
               public static let message = Strings.tr("Localizable", "device.center.backup.initialising.status.message")
             }
           }
@@ -3343,7 +3335,7 @@ public enum Strings {
           }
           public enum Scanning {
             public enum Status {
-              /// Scanning...
+              /// Scanning…
               public static let message = Strings.tr("Localizable", "device.center.backup.scanning.status.message")
             }
           }
@@ -3355,7 +3347,7 @@ public enum Strings {
           }
           public enum Updating {
             public enum Status {
-              /// Updating...
+              /// Updating…
               public static let message = Strings.tr("Localizable", "device.center.backup.updating.status.message")
             }
           }
@@ -4559,6 +4551,8 @@ public enum Strings {
         public static let start = Strings.tr("Localizable", "meetings.scheduleMeeting.start")
         /// Schedule meeting
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
+        /// Update
+        public static let update = Strings.tr("Localizable", "meetings.scheduleMeeting.update")
         public enum Create {
           public enum Daily {
             /// Daily
@@ -4721,6 +4715,16 @@ public enum Strings {
             public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.notification.meetingStartsNow.message")
           }
         }
+        public enum Occurrence {
+          public enum UpdateSuccessfull {
+            /// Meeting occurrence updated
+            public static let popupMessage = Strings.tr("Localizable", "meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage")
+          }
+        }
+        public enum UpdateSuccessfull {
+          /// Meeting updated
+          public static let popupMessage = Strings.tr("Localizable", "meetings.scheduleMeeting.updateSuccessfull.popupMessage")
+        }
       }
       public enum Scheduled {
         /// [B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]
@@ -4732,7 +4736,7 @@ public enum Strings {
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.buttonOverlay.startMeeting")
         }
         public enum CancelAlert {
-          /// Cancel %@?
+          /// Cancel “%@”?
           public static func title(_ p1: Any) -> String {
             return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.title", String(describing: p1))
           }
@@ -4749,7 +4753,7 @@ public enum Strings {
             public static func success(_ p1: Any) -> String {
               return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.success", String(describing: p1))
             }
-            /// Cancel %@ occurrence?
+            /// Cancel the %@ occurrence?
             public static func title(_ p1: Any) -> String {
               return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.title", String(describing: p1))
             }

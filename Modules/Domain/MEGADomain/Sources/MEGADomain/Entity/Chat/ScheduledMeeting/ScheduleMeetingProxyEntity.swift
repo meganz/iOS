@@ -1,11 +1,12 @@
 import Foundation
 
-public struct CreateScheduleMeetingEntity {
+public struct ScheduleMeetingProxyEntity {
     public let title: String
     public let description: String
-    public let participants: [UserEntity]
+    public let participantHandleList: [HandleEntity]
+    public let meetingLinkEnabled: Bool
     public let calendarInvite: Bool
-    public let openInvite: Bool
+    public let allowNonHostsToAddParticipantsEnabled: Bool
     public let startDate: Date
     public let endDate: Date
     public let rules: ScheduledMeetingRulesEntity?
@@ -13,18 +14,20 @@ public struct CreateScheduleMeetingEntity {
     public init(
         title: String,
         description: String,
-        participants: [UserEntity],
+        participantHandleList: [HandleEntity],
+        meetingLinkEnabled: Bool,
         calendarInvite: Bool,
-        openInvite: Bool,
+        allowNonHostsToAddParticipantsEnabled: Bool,
         startDate: Date,
         endDate: Date,
         rules: ScheduledMeetingRulesEntity?
     ) {
         self.title = title
         self.description = description
-        self.participants = participants
+        self.participantHandleList = participantHandleList
         self.calendarInvite = calendarInvite
-        self.openInvite = openInvite
+        self.meetingLinkEnabled = meetingLinkEnabled
+        self.allowNonHostsToAddParticipantsEnabled = allowNonHostsToAddParticipantsEnabled
         self.startDate = startDate
         self.endDate = endDate
         self.rules = rules
