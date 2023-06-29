@@ -258,7 +258,10 @@ typedef NS_ENUM(NSInteger, QRSection) {
         self.videoPreviewLayer.frame = self.cameraView.layer.bounds;
         [self.cameraView.layer addSublayer:self.videoPreviewLayer];
         
-        [self.captureSession startRunning];
+        dispatch_async(qrDispatchQueue, ^{
+            [self.captureSession startRunning];
+        });
+        
         
         return YES;
     } else {
