@@ -32,15 +32,6 @@
     BOOL allNodesSelected;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *carbonCopyBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *leaveShareBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *removeShareBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *removeLinkBarButtonItem;
-
 @property (nonatomic, strong) NSMutableArray *outgoingSharesMutableArray;
 @property (nonatomic, strong) NSMutableArray *selectedSharesMutableArray;
 
@@ -233,15 +224,7 @@
 }
 
 - (void)toolbarItemsSetEnabled:(BOOL)boolValue {
-    [_downloadBarButtonItem setEnabled:boolValue];
-    [_carbonCopyBarButtonItem setEnabled:boolValue];
-    [_leaveShareBarButtonItem setEnabled:boolValue];
-    
-    [self.shareLinkBarButtonItem setEnabled:boolValue];
-    [_shareFolderBarButtonItem setEnabled:boolValue];
-    [_removeShareBarButtonItem setEnabled:boolValue];
-    self.removeLinkBarButtonItem.enabled = boolValue;
-    self.saveToPhotosBarButtonItem.enabled = boolValue;
+    [self updateToolbarButtonsEnabled: boolValue selectedNodesArray:_selectedNodesMutableArray];
 }
 
 - (void)addSearchBar {
