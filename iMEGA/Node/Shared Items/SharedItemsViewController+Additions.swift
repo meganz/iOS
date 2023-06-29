@@ -318,3 +318,23 @@ extension SharedItemsViewController: SharedItemsTableViewCellDelegate {
         showNodeContextMenu(sender)
     }
 }
+
+// MARK: - Update toolbar items selected state
+extension SharedItemsViewController {
+    @objc func updateToolbarButtonsEnabled(_ enabled: Bool, selectedNodesArray: [MEGANode]) {
+        ToolbarButtonsDisabler.disableConditionally(
+            toolbarButtons: [
+                downloadBarButtonItem,
+                carbonCopyBarButtonItem,
+                leaveShareBarButtonItem,
+                shareLinkBarButtonItem,
+                shareFolderBarButtonItem,
+                removeShareBarButtonItem,
+                removeLinkBarButtonItem,
+                saveToPhotosBarButtonItem
+            ],
+            enabled: enabled,
+            selectedNodesArray: selectedNodesArray.map { $0.toNodeEntity() }
+        )
+    }
+}
