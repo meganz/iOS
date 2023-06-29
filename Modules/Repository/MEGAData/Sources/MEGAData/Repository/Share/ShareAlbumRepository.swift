@@ -32,7 +32,7 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
     }
     
     public func removeSharedLink(forAlbumId id: HandleEntity) async throws {
-        try await withAsyncThrowingValue(in: { completion in
+        try await withAsyncThrowingValue { completion in
             sdk.disableExportSet(id, delegate: RequestDelegate { result in
                 switch result {
                 case .success:
@@ -45,11 +45,11 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
                     }
                 }
             })
-        })
+        }
     }
     
     public func publicAlbumContents(forLink link: String) async throws -> SharedAlbumEntity {
-        try await withAsyncThrowingValue(in: { completion in
+        try await withAsyncThrowingValue { completion in
             sdk.fetchPublicSet(link, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
@@ -73,6 +73,28 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
                     completion(.failure(errorEntity))
                 }
             })
-        })
+        }
+    }
+    
+    public func publicPhoto(forPhotoId id: HandleEntity) async throws -> NodeEntity {
+        try await withAsyncThrowingValue { completion in
+            sdk.previewElementNode(id, delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.publicNode.toNodeEntity()))
+                case .failure(let error):
+                    let errorEntity: Error
+                    switch error.type {
+                    case .apiEArgs:
+                        errorEntity = SharedPhotoErrorEntity.photoNotFound
+                    case .apiEAccess:
+                        errorEntity = SharedPhotoErrorEntity.previewModeNotEnabled
+                    default:
+                        errorEntity = GenericErrorEntity()
+                    }
+                    completion(.failure(errorEntity))
+                }
+            })
+        }
     }
 }
