@@ -10,14 +10,22 @@ struct ScheduleMeetingCreationPropertiesView: View {
             VStack {
                 VStack {
                     ScheduleMeetingCreationDateAndRecurrenceView(viewModel: viewModel)
-                    Toggle(Strings.Localizable.Meetings.ScheduleMeeting.link, isOn: $viewModel.meetingLinkEnabled)
-                        .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
-                        .padding(.horizontal)
+                    Toggle(isOn: $viewModel.meetingLinkEnabled) {
+                        Text(Strings.Localizable.Meetings.ScheduleMeeting.link)
+                            .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
+                    .padding(.horizontal)
+                    .disabled(
+                        !viewModel.meetingLinkToggleUIEnabled
+                        || !viewModel.shouldAllowEditingMeetingLink
+                    )
                     Divider()
                 }
                 .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
                 
                 ScheduleMeetingCreationLinkFootnoteView()
+                    .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
             }
             .padding(.vertical)
             

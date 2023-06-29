@@ -5,30 +5,21 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     var scheduledMeetingsList: [ScheduledMeetingEntity]
     var scheduledMeetingsOccurrences: [ScheduledMeetingOccurrenceEntity]
     var upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
-    var createdScheduledMeeting: ScheduledMeetingEntity
-    var createdScheduledMeetingError: ScheduleMeetingErrorEntity?
-    var createScheduleMeetingEntity: CreateScheduleMeetingEntity?
-    var updatedScheduledMeeting: ScheduledMeetingEntity
-    var updatedScheduledMeetingError: ScheduleMeetingErrorEntity?
+    var scheduleMeetingError: ScheduleMeetingErrorEntity?
+    var meetingProxy: ScheduleMeetingProxyEntity?
     
     init(
         scheduledMeetingsList: [ScheduledMeetingEntity] = [],
         scheduledMeetingsOccurrences: [ScheduledMeetingOccurrenceEntity] = [],
         upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity] = [:],
-        createdScheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
-        createdScheduledMeetingError: ScheduleMeetingErrorEntity? = nil,
-        createScheduleMeetingEntity: CreateScheduleMeetingEntity? = nil,
-        updatedScheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
-        updatedScheduledMeetingError: ScheduleMeetingErrorEntity? = nil
+        scheduleMeetingError: ScheduleMeetingErrorEntity? = nil,
+        meetingProxy: ScheduleMeetingProxyEntity? = nil
     ) {
         self.scheduledMeetingsList = scheduledMeetingsList
         self.scheduledMeetingsOccurrences = scheduledMeetingsOccurrences
         self.upcomingOccurrences = upcomingOccurrences
-        self.createdScheduledMeeting = createdScheduledMeeting
-        self.createdScheduledMeetingError = createdScheduledMeetingError
-        self.createScheduleMeetingEntity = createScheduleMeetingEntity
-        self.updatedScheduledMeeting = updatedScheduledMeeting
-        self.updatedScheduledMeetingError = updatedScheduledMeetingError
+        self.scheduleMeetingError = scheduleMeetingError
+        self.meetingProxy = meetingProxy
     }
     
     func scheduledMeetings() -> [ScheduledMeetingEntity] {
@@ -59,28 +50,25 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
         upcomingOccurrences
     }
     
-    func createScheduleMeeting(_ meeting: CreateScheduleMeetingEntity) async throws -> ScheduledMeetingEntity {
-        createScheduleMeetingEntity = meeting
-        if let createdScheduledMeetingError {
-            throw createdScheduledMeetingError
-        } else {
-            return createdScheduledMeeting
-        }
+    func createScheduleMeeting(_ meeting: ScheduleMeetingProxyEntity) async throws -> ScheduledMeetingEntity {
+        try firstMeeting()
     }
     
-    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity, withChanges changes: ScheduledMeetingChangesEntity) async throws -> ScheduledMeetingEntity {
-        if let updatedScheduledMeetingError {
-            throw updatedScheduledMeetingError
-        } else {
-            return updatedScheduledMeeting
-        }
+    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity {
+       try firstMeeting()
     }
     
-    func updateScheduleMeetingOccurrence(_ occurrence: ScheduledMeetingOccurrenceEntity, inChatRoom chatRoom: ChatRoomEntity, withChanges changes: ScheduledMeetingOccurrenceChangesEntity) async throws -> ScheduledMeetingEntity {
-        if let updatedScheduledMeetingError {
-            throw updatedScheduledMeetingError
-        } else {
-            return updatedScheduledMeeting
+    func updateOccurrence(_ occurrence: ScheduledMeetingOccurrenceEntity, meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity {
+       try firstMeeting()
+    }
+    
+    private func firstMeeting() throws -> ScheduledMeetingEntity {
+        if let scheduledMeeting = scheduledMeetingsList.first {
+            return scheduledMeeting
+        } else if let scheduleMeetingError {
+            throw scheduleMeetingError
         }
+        
+        return ScheduledMeetingEntity()
     }
 }

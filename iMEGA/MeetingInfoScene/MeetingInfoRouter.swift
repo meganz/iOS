@@ -1,3 +1,4 @@
+import Combine
 import MEGAData
 import MEGADomain
 
@@ -140,6 +141,19 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     func showNoAvailableContactsAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory) {
         showContactsAlert(withParticipantsAddingViewFactory: participantsAddingViewFactory,
                           action: participantsAddingViewFactory.noAvailableContactsAlert)
+    }
+    
+    func edit(meeting: ScheduledMeetingEntity) -> AnyPublisher<ScheduledMeetingEntity, Never> {
+        let viewConfiguration = ScheduleMeetingUpdateViewConfiguration(
+            scheduledMeeting: meeting,
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
+        )
+        
+        let router = ScheduleMeetingRouter(presenter: presenter, viewConfiguration: viewConfiguration)
+        router.start()
+        return router.onMeetingUpdate()
     }
     
     // MARK: - Private methods.

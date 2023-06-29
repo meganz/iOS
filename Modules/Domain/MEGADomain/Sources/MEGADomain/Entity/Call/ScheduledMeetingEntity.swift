@@ -1,7 +1,7 @@
 import Foundation
 
 public struct ScheduledMeetingEntity: Sendable {
-    public let cancelled: Bool
+    public var cancelled: Bool
     public let new: Bool
     public let deleted: Bool
     public let chatId: ChatIdEntity

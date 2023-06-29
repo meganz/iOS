@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -9,54 +10,48 @@ final class ScheduledMeetingOccurrencesViewModelTests: XCTestCase {
     private let scheduleMeetingOccurence = ScheduleMeetingOccurence(id: "1", date: "2023/6/12", title: "Meeting Title", time: "12:00")
 
     func test_cancelEntiryScheduledMeeting_meetingCancelledSuccess() {
-        let updatedScheduledMeeting = ScheduledMeetingEntity()
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(updatedScheduledMeeting: updatedScheduledMeeting)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
         let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
         viewModel.cancelScheduledMeeting()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
-            XCTAssertTrue(router.showSuccessMessageAndDismiss_calledTimes == 1)
-        } else {
-            XCTFail("Expected to time out!")
-        }
+        
+        evaluate { self.router.showSuccessMessageAndDismiss_calledTimes == 1 }
     }
     
     func test_cancelEntireScheduledMeeting_meetingCancelledError() {
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(updatedScheduledMeetingError: ScheduleMeetingErrorEntity.generic)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduleMeetingError: ScheduleMeetingErrorEntity.generic)
         let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
         viewModel.cancelScheduledMeeting()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
-            XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
-        } else {
-            XCTFail("Expected to time out!")
-        }
+        evaluate { self.router.showErrorMessage_calledTimes == 1 }
     }
     
     func test_cancelScheduledMeetingOccurrence_occurrenceCancelledSuccess() {
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(updatedScheduledMeeting: ScheduledMeetingEntity())
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
         let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(chatId: 100), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
         viewModel.selectedOccurrence = scheduleMeetingOccurence
         viewModel.displayOccurrences = [scheduleMeetingOccurence]
         viewModel.occurrences = [ScheduledMeetingOccurrenceEntity()]
         viewModel.cancelScheduledMeetingOccurrence()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
-            XCTAssertTrue(router.showSuccessMessage_calledTimes == 1)
-        } else {
-            XCTFail("Expected to time out!")
-        }
+        evaluate { self.router.showSuccessMessage_calledTimes == 1 }
     }
     
     func test_cancelScheduledMeetingOccurrence_occurrenceCancelledError() {
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(updatedScheduledMeetingError: ScheduleMeetingErrorEntity.generic)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduleMeetingError: ScheduleMeetingErrorEntity.generic)
         let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
         viewModel.selectedOccurrence = scheduleMeetingOccurence
         viewModel.displayOccurrences = [scheduleMeetingOccurence]
         viewModel.occurrences = [ScheduledMeetingOccurrenceEntity()]
         viewModel.cancelScheduledMeetingOccurrence()
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
-            XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
-        } else {
-            XCTFail("Expected to time out!")
+        evaluate {
+            self.router.showErrorMessage_calledTimes == 1
         }
+    }
+    
+    // MARK: - Private methods
+    
+    private func evaluate(expression: @escaping () -> Bool) {
+        let predicate = NSPredicate { _, _ in expression() }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [expectation], timeout: 5)
     }
 }
 
@@ -64,6 +59,7 @@ final class MockScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRo
     var showErrorMessage_calledTimes = 0
     var showSuccessMessage_calledTimes = 0
     var showSuccessMessageAndDismiss_calledTimes = 0
+    lazy var occurrencePublisher = PassthroughSubject<ScheduledMeetingOccurrenceEntity, Never>()
     
     func showErrorMessage(_ message: String) {
         showErrorMessage_calledTimes += 1
@@ -75,5 +71,9 @@ final class MockScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRo
     
     func showSuccessMessageAndDismiss(_ message: String) {
         showSuccessMessageAndDismiss_calledTimes += 1
+    }
+    
+    func edit(occurrence: ScheduledMeetingOccurrenceEntity) -> AnyPublisher<ScheduledMeetingOccurrenceEntity, Never> {
+        occurrencePublisher.eraseToAnyPublisher()
     }
 }

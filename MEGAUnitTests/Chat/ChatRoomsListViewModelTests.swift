@@ -224,6 +224,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var openChatRoom_calledTimes = 0
     var showErrorMessage_calledTimes = 0
     var showSuccessMessage_calledTimes = 0
+    var editMeeting_calledTimes = 0
 
     var navigationController: UINavigationController?
     
@@ -302,4 +303,9 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     func showSuccessMessage(_ message: String) {
         showSuccessMessage_calledTimes += 1
     }
+    
+    func edit(scheduledMeeting: ScheduledMeetingEntity) {
+        editMeeting_calledTimes += 1
+    }
+    
 }

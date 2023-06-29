@@ -21,7 +21,7 @@ struct MeetingInfoHeaderView: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text(viewModel.title)
+                    Text(viewModel.scheduledMeeting.title)
                         .font(.subheadline)
                     Text(viewModel.subtitle)
                         .font(.caption)

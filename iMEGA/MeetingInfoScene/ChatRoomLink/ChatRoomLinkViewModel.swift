@@ -11,10 +11,10 @@ final class ChatRoomLinkViewModel: ObservableObject {
     private let subtitle: String
 
     @Published var isMeetingLinkOn = false
+    @Published var isMeetingLinkUIEnabled = false
     @Published var showShareMeetingLinkOptions = false
     @Published var showChatLinksMustHaveCustomTitleAlert = false
 
-    private var isChatLinkFirstQuery = false
     private var subscriptions = Set<AnyCancellable>()
     private var meetingLink: String?
 
@@ -38,14 +38,13 @@ final class ChatRoomLinkViewModel: ObservableObject {
         $isMeetingLinkOn
             .dropFirst()
             .sink { [weak self] newValue in
-                guard let self, !isChatLinkFirstQuery else { return }
+                guard let self, isMeetingLinkUIEnabled else { return }
                 update(enableMeetingLinkTo: newValue)
             }
             .store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
-        isChatLinkFirstQuery = true
         chatLinkUseCase.queryChatLink(for: chatRoom)
     }
     
@@ -56,11 +55,15 @@ final class ChatRoomLinkViewModel: ObservableObject {
             .sink(receiveCompletion: { error in
                 MEGALogError("error fetching chat link \(error)")
             }, receiveValue: { [weak self] link in
-                guard let self else { return }
-                if isChatLinkFirstQuery {
-                    isMeetingLinkOn = link != nil
-                    isChatLinkFirstQuery = false
+                guard let self,
+                      isMeetingLinkUIEnabled != true
+                        || isMeetingLinkOn != (link != nil)
+                        || meetingLink != link else {
+                    return
                 }
+                
+                isMeetingLinkUIEnabled = true
+                isMeetingLinkOn = link != nil
                 meetingLink = link
             })
             .store(in: &subscriptions)

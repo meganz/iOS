@@ -27,4 +27,5 @@ protocol ChatRoomsListRouting {
     func openCallView(for call: CallEntity, in chatRoom: ChatRoomEntity)
     func showErrorMessage(_ message: String)
     func showSuccessMessage(_ message: String)
+    func edit(scheduledMeeting: ScheduledMeetingEntity)
 }

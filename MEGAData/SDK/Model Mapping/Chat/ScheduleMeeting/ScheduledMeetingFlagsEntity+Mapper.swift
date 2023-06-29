@@ -11,3 +11,9 @@ extension ScheduledMeetingFlagsEntity {
         MEGAChatScheduledFlags(sendEmails: emailsEnabled)
     }
 }
+
+extension MEGAChatScheduledFlags {
+    func toScheduledMeetingFlagsEntity() -> ScheduledMeetingFlagsEntity {
+        ScheduledMeetingFlagsEntity(with: self)
+    }
+}

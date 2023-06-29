@@ -1,15 +1,18 @@
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 
 extension ScheduleMeetingViewModel {
     convenience init(
         router: ScheduleMeetingRouting = MockScheduleMeetingRouter(),
-        rules: ScheduledMeetingRulesEntity = ScheduledMeetingRulesEntity(frequency: .invalid),
-        scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
-        chatLinkUseCase: any ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
-        chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        isTesting: Bool
+        viewConfiguration: ScheduleMeetingViewConfigurable = MockScheduleMeetingViewConfiguration(),
+        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
+        isTesting: Bool = true
     ) {
-        self.init(router: router, rules: rules, scheduledMeetingUseCase: scheduledMeetingUseCase, chatLinkUseCase: chatLinkUseCase, chatRoomUseCase: chatRoomUseCase)
+        self.init(
+            router: router,
+            viewConfiguration: viewConfiguration,
+            accountUseCase: accountUseCase
+        )
     }
 }

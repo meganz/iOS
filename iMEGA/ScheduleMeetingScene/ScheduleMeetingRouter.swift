@@ -4,19 +4,38 @@ import SwiftUI
 
 final class ScheduleMeetingRouter {
     private(set) var presenter: UINavigationController
-    private(set) var baseViewController: UINavigationController?
+    private(set) weak var baseViewController: UINavigationController?
+    private let viewConfiguration: any ScheduleMeetingViewConfigurable
+    private var occurrenceUpdatePromise: Future<ScheduledMeetingOccurrenceEntity, Never>.Promise?
+    private var meetingUpdatePromise: Future<ScheduledMeetingEntity, Never>.Promise?
 
-    init(presenter: UINavigationController) {
+    init(
+        presenter: UINavigationController,
+        viewConfiguration: any ScheduleMeetingViewConfigurable
+    ) {
         self.presenter = presenter
+        self.viewConfiguration = viewConfiguration
+    }
+    
+    func onOccurrenceUpdate() -> AnyPublisher<ScheduledMeetingOccurrenceEntity, Never> {
+        Future { [weak self] in
+            guard let self else { return }
+            occurrenceUpdatePromise = $0
+        }.eraseToAnyPublisher()
+    }
+    
+    func onMeetingUpdate() -> AnyPublisher<ScheduledMeetingEntity, Never> {
+        Future { [weak self] in
+            guard let self else { return }
+            meetingUpdatePromise = $0
+        }.eraseToAnyPublisher()
     }
     
     func build() -> UINavigationController {
         let viewModel = ScheduleMeetingViewModel(
             router: self,
-            rules: ScheduledMeetingRulesEntity(frequency: .invalid),
-            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)),
-            chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+            viewConfiguration: viewConfiguration,
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
         )
 
         let viewController = ScheduleMeetingViewController(viewModel: viewModel)
@@ -31,7 +50,7 @@ final class ScheduleMeetingRouter {
         presenter.present(build(), animated: true)
     }
 }
-    
+
 extension ScheduleMeetingRouter: ScheduleMeetingRouting {
     func showSpinner() {
         SVProgressHUD.setDefaultMaskType(.clear)
@@ -41,9 +60,41 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
     func hideSpinner() {
         SVProgressHUD.dismiss()
     }
-
-    func discardChanges() {
-        presenter.dismissView()
+    
+    @MainActor
+    func dismiss(animated: Bool) async {
+        await withCheckedContinuation { continuation in
+            presenter.dismiss(animated: true) {
+                continuation.resume()
+            }
+        }
+    }
+    
+    @MainActor
+    func showSuccess(message: String) async {
+        await withCheckedContinuation { continuation in
+            SVProgressHUD.dismiss {
+                continuation.resume()
+            }
+            
+            SVProgressHUD.showSuccess(withStatus: message)
+        }
+    }
+    
+    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {
+        MeetingInfoRouter(presenter: self.presenter, scheduledMeeting: scheduledMeeting).start()
+    }
+    
+    func updated(occurrence: ScheduledMeetingOccurrenceEntity) {
+        guard let occurrenceUpdatePromise else { return }
+        occurrenceUpdatePromise(.success(occurrence))
+        self.occurrenceUpdatePromise = nil
+    }
+    
+    func updated(meeting: ScheduledMeetingEntity) {
+        guard let meetingUpdatePromise else { return }
+        meetingUpdatePromise(.success(meeting))
+        self.meetingUpdatePromise = nil
     }
     
     func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void)) {
@@ -58,14 +109,6 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
         
         baseViewController?.present(contactsNavigationController, animated: true) {
             contactController.selectUsers(alreadySelectedUsers.compactMap { $0.toMEGAUser() })
-        }
-    }
-    
-    func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {
-        SVProgressHUD.dismiss()
-        presenter.dismiss(animated: true) {
-            MeetingInfoRouter(presenter: self.presenter, scheduledMeeting: scheduledMeeting).start()
-            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Meetings.ScheduleMeeting.meetingCreated)
         }
     }
     

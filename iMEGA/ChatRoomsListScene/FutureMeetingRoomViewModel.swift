@@ -180,64 +180,6 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         }
     }
     
-    private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
-        var options: [ChatRoomContextMenuOption] = []
-        
-        options.append(ChatRoomContextMenuOption(
-            title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
-            imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting2.name,
-            action: { [weak self] in
-                self?.startOrJoinMeetingTapped()
-            }))
-        
-        if scheduledMeeting.rules.frequency != .invalid {
-            options.append(ChatRoomContextMenuOption(
-                title: Strings.Localizable.Meetings.Scheduled.ContextMenu.occurrences,
-                imageName: Asset.Images.Meetings.Scheduled.ContextMenu.occurrences.name,
-                action: { [weak self] in
-                    self?.showOccurrences()
-                }))
-        }
-        
-        let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
-        
-        options += [
-            ChatRoomContextMenuOption(
-                title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
-                imageName: Asset.Images.Chat.mutedChat.name,
-                action: { [weak self] in
-                    guard let self else { return }
-                    self.toggleDND()
-                }),
-            ChatRoomContextMenuOption(
-                title: Strings.Localizable.info,
-                imageName: Asset.Images.Generic.info.name,
-                action: { [weak self] in
-                    guard let self else { return }
-                    self.showChatRoomInfo()
-                }),
-            ChatRoomContextMenuOption(
-                title: Strings.Localizable.archiveChat,
-                imageName: Asset.Images.Chat.ContextualMenu.archiveChatMenu.name,
-                action: { [weak self] in
-                    guard let self else { return }
-                    archiveChatRoom()
-                })
-        ]
-        
-        if let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId), chatRoom.ownPrivilege == .moderator {
-            options.append(ChatRoomContextMenuOption(
-                title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
-                imageName: Asset.Images.NodeActions.rubbishBin.name,
-                action: { [weak self] in
-                    guard let self else { return }
-                    cancelMeeting()
-                }))
-        }
-        
-        return options
-    }
-    
     private func showChatRoomInfo() {
         router.showMeetingInfo(for: scheduledMeeting)
     }
@@ -300,8 +242,9 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     func cancelScheduledMeeting() {
         Task {
             do {
-                let changes = ScheduledMeetingChangesEntity(cancelled: true)
-                _ = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting, withChanges: changes)
+                var scheduledMeeting = scheduledMeeting
+                scheduledMeeting.cancelled = true
+                _ = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting)
                 if !chatHasMeesages {
                     archiveChatRoom()
                 } else {
@@ -431,6 +374,100 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         formatter.dateFormat = .none
         formatter.timeStyle = .short
         return formatter
+    }
+}
+
+// Context menu extension
+extension FutureMeetingRoomViewModel {
+    private var startOrJoinMeetingContextMenuOption: ChatRoomContextMenuOption {
+        ChatRoomContextMenuOption(
+            title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
+            imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting2.name
+        ) { [weak self] in
+            guard let self else { return }
+            startOrJoinMeetingTapped()
+        }
+    }
+    
+    private var editContextMenuOption: ChatRoomContextMenuOption {
+        ChatRoomContextMenuOption(
+            title: Strings.Localizable.edit,
+            imageName: Asset.Images.Meetings.editMeeting.name
+        ) { [weak self] in
+            guard let self else { return }
+            router.edit(scheduledMeeting: scheduledMeeting)
+        }
+    }
+    
+    private var occurrenceContextMenuOption: ChatRoomContextMenuOption {
+        return ChatRoomContextMenuOption(
+            title: Strings.Localizable.Meetings.Scheduled.ContextMenu.occurrences,
+            imageName: Asset.Images.Meetings.Scheduled.ContextMenu.occurrences.name
+        ) { [weak self] in
+            guard let self else { return }
+            showOccurrences()
+        }
+    }
+    
+    private var cancelContextMenuOption: ChatRoomContextMenuOption {
+        return ChatRoomContextMenuOption(
+            title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
+            imageName: Asset.Images.NodeActions.rubbishBin.name
+        ) { [weak self] in
+            guard let self else { return }
+            cancelMeeting()
+        }
+    }
+    
+    private var muteContextMenuOption: ChatRoomContextMenuOption {
+        let isDNDEnabled = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
+        return ChatRoomContextMenuOption(
+            title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
+            imageName: Asset.Images.Chat.mutedChat.name
+        ) { [weak self] in
+            guard let self else { return }
+            self.toggleDND()
+        }
+    }
+    
+    private var infoChatContextMenuOption: ChatRoomContextMenuOption {
+        ChatRoomContextMenuOption(
+            title: Strings.Localizable.info,
+            imageName: Asset.Images.Generic.info.name
+        ) { [weak self] in
+            guard let self else { return }
+            self.showChatRoomInfo()
+        }
+    }
+    
+    private var archiveChatContextMenuOption: ChatRoomContextMenuOption {
+        ChatRoomContextMenuOption(
+            title: Strings.Localizable.archiveChat,
+            imageName: Asset.Images.Chat.ContextualMenu.archiveChatMenu.name
+        ) { [weak self] in
+            guard let self else { return }
+            archiveChatRoom()
+        }
+    }
+    
+    private func constructContextMenuOptions() -> [ChatRoomContextMenuOption] {
+        var options = [
+            startOrJoinMeetingContextMenuOption,
+            muteContextMenuOption,
+            infoChatContextMenuOption,
+            archiveChatContextMenuOption
+        ]
+        
+        if scheduledMeeting.rules.frequency != .invalid {
+            options.insert(occurrenceContextMenuOption, at: 1)
+        }
+        
+        if chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)?.ownPrivilege == .moderator {
+            options.insert(editContextMenuOption, at: 1)
+            options.append(cancelContextMenuOption)
+        }
+        
+        return options
     }
 }
 

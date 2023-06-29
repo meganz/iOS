@@ -1,0 +1,78 @@
+@testable import MEGA
+import MEGADomain
+
+final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurable {
+    var type: ScheduleMeetingViewConfigurationType
+    var meetingName: String
+    var startDate: Date
+    var endDate: Date
+    var meetingDescription: String
+    var calendarInviteEnabled: Bool
+    var allowNonHostsToAddParticipantsEnabled: Bool
+    var participantHandleList: [HandleEntity]
+    var rules: ScheduledMeetingRulesEntity
+    var meetingLinkEnabled: Bool
+    var shouldAllowEditingMeetingName: Bool
+    var shouldAllowEditingRecurrenceOption: Bool
+    var shouldAllowEditingEndRecurrenceOption: Bool
+    var shouldAllowEditingMeetingLink: Bool
+    var shouldAllowEditingParticipants: Bool
+    var shouldAllowEditingCalendarInvite: Bool
+    var shouldAllowEditingAllowNonHostsToAddParticipants: Bool
+    var shouldAllowEditingMeetingDescription: Bool
+    var completion: ScheduleMeetingViewConfigurationCompletion
+    var updateMeetingLinkEnabled_calledTimes = 0
+    
+    init(
+        type: ScheduleMeetingViewConfigurationType = .new,
+        meetingName: String = "",
+        startDate: Date = Date(),
+        endDate: Date = Date(),
+        meetingDescription: String = "",
+        calendarInviteEnabled: Bool = false,
+        allowNonHostsToAddParticipantsEnabled: Bool = false,
+        participantHandleList: [HandleEntity] = [],
+        rules: ScheduledMeetingRulesEntity = .init(frequency: .invalid),
+        meetingLinkEnabled: Bool = false,
+        shouldAllowEditingMeetingName: Bool = false,
+        shouldAllowEditingRecurrenceOption: Bool = false,
+        shouldAllowEditingEndRecurrenceOption: Bool = false,
+        shouldAllowEditingMeetingLink: Bool = false,
+        shouldAllowEditingParticipants: Bool = false,
+        shouldAllowEditingCalendarInvite: Bool = false,
+        shouldAllowEditingAllowNonHostsToAddParticipants: Bool = false,
+        shouldAllowEditingMeetingDescription: Bool = false,
+        completion: ScheduleMeetingViewConfigurationCompletion = .showMessageForScheduleMeeting(
+            message: "",
+            scheduledMeeting: ScheduledMeetingEntity()
+        )
+    ) {
+        self.type = type
+        self.meetingName = meetingName
+        self.startDate = startDate
+        self.endDate = endDate
+        self.meetingDescription = meetingDescription
+        self.calendarInviteEnabled = calendarInviteEnabled
+        self.allowNonHostsToAddParticipantsEnabled = allowNonHostsToAddParticipantsEnabled
+        self.participantHandleList = participantHandleList
+        self.rules = rules
+        self.meetingLinkEnabled = meetingLinkEnabled
+        self.shouldAllowEditingMeetingName = shouldAllowEditingMeetingName
+        self.shouldAllowEditingRecurrenceOption = shouldAllowEditingRecurrenceOption
+        self.shouldAllowEditingEndRecurrenceOption = shouldAllowEditingEndRecurrenceOption
+        self.shouldAllowEditingMeetingLink = shouldAllowEditingMeetingLink
+        self.shouldAllowEditingParticipants = shouldAllowEditingParticipants
+        self.shouldAllowEditingCalendarInvite = shouldAllowEditingCalendarInvite
+        self.shouldAllowEditingAllowNonHostsToAddParticipants = shouldAllowEditingAllowNonHostsToAddParticipants
+        self.shouldAllowEditingMeetingDescription = shouldAllowEditingMeetingDescription
+        self.completion = completion
+    }
+    
+    func updateMeetingLinkEnabled() async {
+        updateMeetingLinkEnabled_calledTimes += 1
+    }
+    
+    func submit(meeting: ScheduleMeetingProxyEntity) async throws -> ScheduleMeetingViewConfigurationCompletion {
+        completion
+    }
+}

@@ -547,6 +547,7 @@ internal enum Asset {
       internal static let splashScreenMEGALogo = ImageAsset(name: "splashScreenMEGALogo")
     }
     internal enum Meetings {
+      internal static let editMeeting = ImageAsset(name: "EditMeeting")
       internal enum Info {
         internal static let allowNonHostToAddParticipant = ImageAsset(name: "allowNonHostToAddParticipant")
         internal static let enableChatNotifications = ImageAsset(name: "enableChatNotifications")

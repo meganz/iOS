@@ -202,28 +202,34 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     
     func  test_cancelMeetingWithoutMessagesInChat_stringsShouldMatch() {
         let viewModel = FutureMeetingRoomViewModel()
-        viewModel.chatHasMeesages = true
+        viewModel.chatHasMeesages = false
         let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
         XCTAssertTrue(cancelMeetingAlertData.message == Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withoutMessages)
         XCTAssertTrue(cancelMeetingAlertData.primaryButtonTitle == Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withoutMessages)
     }
     
     func test_cancelScheduledMeeting_meetingCancelledSuccess() {
-        let updatedScheduledMeeting = ScheduledMeetingEntity()
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(updatedScheduledMeeting: updatedScheduledMeeting)
-        let viewModel = FutureMeetingRoomViewModel(router: MockChatRoomsListRouter(), scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
+        let viewModel = FutureMeetingRoomViewModel(router: router, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        viewModel.chatHasMeesages = true
         viewModel.cancelScheduledMeeting()
-        XCTAssertTrue(router.showSuccessMessage_calledTimes == 1)
+        evaluate { self.router.showSuccessMessage_calledTimes == 1 }
     }
     
     func test_cancelScheduledMeeting_meetingCancelledError() {
-        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(updatedScheduledMeetingError: ScheduleMeetingErrorEntity.generic)
-        let viewModel = FutureMeetingRoomViewModel(router: MockChatRoomsListRouter(), scheduledMeetingUseCase: scheduledMeetingUseCase)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduleMeetingError: ScheduleMeetingErrorEntity.generic)
+        let viewModel = FutureMeetingRoomViewModel(router: router, scheduledMeetingUseCase: scheduledMeetingUseCase)
         viewModel.cancelScheduledMeeting()
-        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
+        evaluate { self.router.showErrorMessage_calledTimes == 1 }
     }
     
     // MARK: - Private methods
+    
+    private func evaluate(expression: @escaping () -> Bool) {
+        let predicate = NSPredicate { _, _ in expression() }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [expectation], timeout: 5)
+    }
     
     private func shouldMatch(time: String, inFutureMeetingRoomViewModel futureMeetingRoomViewModel: FutureMeetingRoomViewModel) {
         let predicate = NSPredicate { _, _ in

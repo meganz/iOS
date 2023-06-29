@@ -61,8 +61,8 @@ struct MeetingInfoView: View {
                     ChatRoomParticipantsListView(viewModel: chatRoomParticipantsListViewModel)
                 }
                 
-                if !viewModel.description.isEmpty {
-                    MeetingDescriptionView(description: viewModel.description)
+                if case let description = viewModel.scheduledMeeting.description, !description.isEmpty {
+                    MeetingDescriptionView(description: description)
                 }
                 
                 if viewModel.isUserInChat {

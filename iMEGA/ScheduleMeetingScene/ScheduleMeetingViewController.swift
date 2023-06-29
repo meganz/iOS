@@ -2,7 +2,9 @@ import Combine
 import SwiftUI
 
 final class ScheduleMeetingViewController: UIViewController {
-    lazy var createBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.Meetings.ScheduleMeeting.create, style: .plain, target: self, action: #selector(createButtonItemTapped)
+    lazy var createBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.Meetings.ScheduleMeeting.create, style: .plain, target: self, action: #selector(submitButtonItemTapped)
+    )
+    lazy var updateBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.Meetings.ScheduleMeeting.update, style: .plain, target: self, action: #selector(submitButtonItemTapped)
     )
     lazy var cancelBarButtonItem: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.Meetings.ScheduleMeeting.cancel, style: .plain, target: self, action: #selector(cancelButtonItemTapped)
     )
@@ -25,9 +27,11 @@ final class ScheduleMeetingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubview()
-        initSubscriptions()
         navigationItem.title = Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting
-        navigationItem.rightBarButtonItem = createBarButtonItem
+        updateRightBarButton(
+            viewModel.isNewMeeting ? createBarButtonItem : updateBarButtonItem,
+            enablePublisher: viewModel.$isRightBarButtonEnabled
+        )
         navigationItem.leftBarButtonItem = cancelBarButtonItem
         isModalInPresentation = true
     }
@@ -44,20 +48,12 @@ final class ScheduleMeetingViewController: UIViewController {
         cancelBarButtonItem.setTitleTextAttributes([.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)], for: .normal)
     }
     
-    @objc func createButtonItemTapped() {
-        viewModel.createDidTap()
+    @objc func submitButtonItemTapped() {
+        viewModel.submitButtonTapped()
     }
     
     @objc func cancelButtonItemTapped() {
         viewModel.cancelDidTap()
-    }
-    
-    private func initSubscriptions() {
-        subscriptions = [
-            viewModel.$createButtonEnabled.sink(receiveValue: { [weak self] createButtonEnabled in
-                self?.createBarButtonItem.isEnabled = createButtonEnabled
-            })
-        ]
     }
     
     private func configureSubview() {
@@ -70,5 +66,18 @@ final class ScheduleMeetingViewController: UIViewController {
             hostingView.view.widthAnchor.constraint(equalTo: view.widthAnchor),
             hostingView.view.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
+    }
+    
+    private func updateRightBarButton(_ barButtonItem: UIBarButtonItem, enablePublisher: Published<Bool>.Publisher) {
+        navigationItem.rightBarButtonItem = barButtonItem
+        enablePublisher.sink { [weak self] isEnabled in
+            guard let self,
+                  let barButtonItem = navigationItem.rightBarButtonItem,
+                  barButtonItem.isEnabled != isEnabled else {
+                return
+            }
+            
+            barButtonItem.isEnabled = isEnabled
+        }.store(in: &subscriptions)
     }
 }
