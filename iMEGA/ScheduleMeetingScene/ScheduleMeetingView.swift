@@ -12,7 +12,7 @@ struct ScheduleMeetingView: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                ScheduleMeetingCreationNameView(viewModel: viewModel, appearFocused: true)
+                ScheduleMeetingCreationNameView(viewModel: viewModel, appearFocused: viewModel.meetingName.isEmpty)
                 if viewModel.meetingNameTooLong {
                     ErrorView(error: Strings.Localizable.Meetings.ScheduleMeeting.MeetingName.lenghtError)
                 }

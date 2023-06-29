@@ -8,6 +8,8 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     var createdScheduledMeeting: ScheduledMeetingEntity
     var createdScheduledMeetingError: ScheduleMeetingErrorEntity?
     var createScheduleMeetingEntity: CreateScheduleMeetingEntity?
+    var updatedScheduledMeeting: ScheduledMeetingEntity
+    var updatedScheduledMeetingError: ScheduleMeetingErrorEntity?
     
     init(
         scheduledMeetingsList: [ScheduledMeetingEntity] = [],
@@ -15,7 +17,9 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
         upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity] = [:],
         createdScheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
         createdScheduledMeetingError: ScheduleMeetingErrorEntity? = nil,
-        createScheduleMeetingEntity: CreateScheduleMeetingEntity? = nil
+        createScheduleMeetingEntity: CreateScheduleMeetingEntity? = nil,
+        updatedScheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
+        updatedScheduledMeetingError: ScheduleMeetingErrorEntity? = nil
     ) {
         self.scheduledMeetingsList = scheduledMeetingsList
         self.scheduledMeetingsOccurrences = scheduledMeetingsOccurrences
@@ -23,6 +27,8 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
         self.createdScheduledMeeting = createdScheduledMeeting
         self.createdScheduledMeetingError = createdScheduledMeetingError
         self.createScheduleMeetingEntity = createScheduleMeetingEntity
+        self.updatedScheduledMeeting = updatedScheduledMeeting
+        self.updatedScheduledMeetingError = updatedScheduledMeetingError
     }
     
     func scheduledMeetings() -> [ScheduledMeetingEntity] {
@@ -59,6 +65,22 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
             throw createdScheduledMeetingError
         } else {
             return createdScheduledMeeting
+        }
+    }
+    
+    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity, withChanges changes: ScheduledMeetingChangesEntity) async throws -> ScheduledMeetingEntity {
+        if let updatedScheduledMeetingError {
+            throw updatedScheduledMeetingError
+        } else {
+            return updatedScheduledMeeting
+        }
+    }
+    
+    func updateScheduleMeetingOccurrence(_ occurrence: ScheduledMeetingOccurrenceEntity, inChatRoom chatRoom: ChatRoomEntity, withChanges changes: ScheduledMeetingOccurrenceChangesEntity) async throws -> ScheduledMeetingEntity {
+        if let updatedScheduledMeetingError {
+            throw updatedScheduledMeetingError
+        } else {
+            return updatedScheduledMeeting
         }
     }
 }

@@ -306,6 +306,11 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 break;
             }
                 
+            case MEGAChatMessageTypeScheduledMeeting: {
+                [self attributedTextStringForScheduledMeetingChangeWithUserNameDidAction:fullNameDidAction];
+                break;
+            }
+                
             default:
                 text = @"default";
                 break;

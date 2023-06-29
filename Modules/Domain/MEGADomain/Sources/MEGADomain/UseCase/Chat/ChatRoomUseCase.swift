@@ -12,6 +12,7 @@ public protocol ChatRoomUseCaseProtocol {
     func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
     func message(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) -> ChatMessageEntity?
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity)
+    func archive(_ archive: Bool, chatRoom: ChatRoomEntity) async throws -> Bool
     func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity)
     func base64Handle(forChatRoom chatRoom: ChatRoomEntity) -> String?
     mutating func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never>
@@ -23,6 +24,10 @@ public protocol ChatRoomUseCaseProtocol {
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
     func invite(toChat chat: ChatRoomEntity, userId: HandleEntity)
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity)
+    func loadMessages(for chatRoom: ChatRoomEntity, count: Int) -> ChatSourceEntity
+    func chatMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
+    func closeChatRoom(_ chatRoom: ChatRoomEntity)
+    func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
 }
 
 public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCaseProtocol {
@@ -93,6 +98,10 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         chatRoomRepo.archive(archive, chatRoom: chatRoom)
     }
     
+    public func archive(_ archive: Bool, chatRoom: ChatRoomEntity) async throws -> Bool {
+        try await chatRoomRepo.archive(archive, chatRoom: chatRoom)
+    }
+    
     public func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) {
         chatRoomRepo.setMessageSeenForChat(forChatRoom: chatRoom, messageId: messageId)
     }
@@ -139,5 +148,27 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
     
     public func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) {
         chatRoomRepo.remove(fromChat: chat, userId: userId)
+    }
+    
+    public func chatMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never> {
+        if chatRoomRepo.isChatRoomOpen(chatRoom) == false {
+            try? chatRoomRepo.openChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
+        }
+        
+        return chatRoomRepo.chatRoomMessageLoaded(forChatRoom: chatRoom)
+    }
+    
+    public func loadMessages(for chatRoom: ChatRoomEntity, count: Int) -> ChatSourceEntity {
+        chatRoomRepo.loadMessages(forChat: chatRoom, count: count)
+    }
+    
+    public func closeChatRoom(_ chatRoom: ChatRoomEntity) {
+        if chatRoomRepo.isChatRoomOpen(chatRoom) {
+            chatRoomRepo.closeChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
+        }
+    }
+    
+    public func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool {
+        chatRoomRepo.hasScheduledMeetingChange(change, for: message, inChatRoom: chatRoom)
     }
 }
