@@ -12,6 +12,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var privilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
     var peerPrivilege: ChatRoomPrivilegeEntity = .unknown
     var allowNonHostToAddParticipantsEnabled = false
+    var chatHasBeenArchived = false
     var allowNonHostToAddParticipantsValueChangedSubject = PassthroughSubject<Bool, Never>()
     var userStatusEntity = ChatStatusEntity.invalid
     var message: ChatMessageEntity?
@@ -25,7 +26,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var updatedChatPrivilege: ((HandleEntity, ChatRoomPrivilegeEntity) -> Void)?
     var invitedToChat: ((HandleEntity) -> Void)?
     var removedFromChat: ((HandleEntity) -> Void)?
-
+    var chatSourceEntity: ChatSourceEntity = .error
+    var chatMessageLoadedSubject = PassthroughSubject<ChatMessageEntity?, Never>()
+    var chatMessageScheduledMeetingChange: ChatMessageScheduledMeetingChangeType = .none
+    
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
     }
@@ -70,6 +74,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity) {
         archivedChatId?(chatRoom.chatId, archive)
+    }
+    
+    func archive(_ archive: Bool, chatRoom: ChatRoomEntity) async throws -> Bool {
+        chatHasBeenArchived
     }
     
     func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) {
@@ -118,5 +126,19 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) {
         removedFromChat?(userId)
+    }
+    
+    func loadMessages(for chatRoom: ChatRoomEntity, count: Int) -> ChatSourceEntity {
+        chatSourceEntity
+    }
+    
+    func chatMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never> {
+        chatMessageLoadedSubject.eraseToAnyPublisher()
+    }
+    
+    func closeChatRoom(_ chatRoom: ChatRoomEntity) {    }
+    
+    func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool {
+        change == chatMessageScheduledMeetingChange
     }
 }

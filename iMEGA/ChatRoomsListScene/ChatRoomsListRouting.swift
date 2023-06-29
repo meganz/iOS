@@ -25,5 +25,6 @@ protocol ChatRoomsListRouting {
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String)
     func showArchivedChatRooms()
     func openCallView(for call: CallEntity, in chatRoom: ChatRoomEntity)
-    func showCallError(_ message: String)
+    func showErrorMessage(_ message: String)
+    func showSuccessMessage(_ message: String)
 }

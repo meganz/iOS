@@ -97,6 +97,15 @@ struct FutureMeetingRoomView: View {
         .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
             ActionSheet(title: Text(""), buttons: actionSheetButtons())
         }
+        .alert(isPresented: $viewModel.showCancelMeetingAlert) {
+            let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
+            return Alert(title: Text(cancelMeetingAlertData.title),
+                         message: Text(cancelMeetingAlertData.message),
+                         primaryButton: .cancel(Text(cancelMeetingAlertData.primaryButtonTitle), action: {
+                cancelMeetingAlertData.primaryButtonAction?()
+            }), secondaryButton: .default(Text(cancelMeetingAlertData.secondaryButtonTitle))
+            )
+        }
         .onTapGesture {
             viewModel.showDetails()
         }

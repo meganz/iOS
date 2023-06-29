@@ -1,6 +1,7 @@
 import Combine
 import MEGAData
 import MEGADomain
+import MEGASwift
 
 public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtocol {
     public static var newRepo: ScheduledMeetingRepository {
@@ -121,10 +122,63 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
 
                     } else {
                         continuation.resume(throwing: ScheduleMeetingErrorEntity.invalidArguments)
-
                     }
                 }
             )
         }
+    }
+    
+    public func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity, withChanges changes: ScheduledMeetingChangesEntity) async throws -> ScheduledMeetingEntity {
+        try await withAsyncThrowingValue(in: { completion in
+            chatSDK.updateScheduledMeeting(
+                meeting.chatId,
+                scheduledId: meeting.scheduledId,
+                timezone: changes.timezone ?? meeting.timezone,
+                startDate: Int(changes.startDate?.timeIntervalSince1970 ?? meeting.startDate.timeIntervalSince1970),
+                endDate: Int(changes.endDate?.timeIntervalSince1970 ?? meeting.endDate.timeIntervalSince1970),
+                title: changes.title ?? meeting.title,
+                description: changes.description ?? meeting.description,
+                cancelled: changes.cancelled ?? meeting.cancelled,
+                flags: meeting.flags.toMEGAChatScheduledFlags(),
+                rules: changes.rules?.toMEGAChatScheduledRules() ?? (meeting.rules.frequency == .invalid ? nil : meeting.rules.toMEGAChatScheduledRules()),
+                delegate: ChatRequestDelegate(completion: { result in
+                    switch result {
+                    case .success(let request):
+                        guard let scheduledMeeting = request.scheduledMeetingList.first?.toScheduledMeetingEntity() else {
+                            completion(.failure(ScheduleMeetingErrorEntity.scheduledMeetingNotFound))
+                            return
+                        }
+                        completion(.success(scheduledMeeting))
+                    case .failure:
+                        completion(.failure(ScheduleMeetingErrorEntity.invalidArguments))
+                    }
+                })
+            )
+        })
+    }
+    
+    public func updateScheduleMeetingOccurrence(_ occurrence: ScheduledMeetingOccurrenceEntity, inChatRoom chatRoom: ChatRoomEntity, withChanges changes: ScheduledMeetingOccurrenceChangesEntity) async throws -> ScheduledMeetingEntity {
+        try await withAsyncThrowingValue(in: { completion in
+            chatSDK.updateScheduledMeetingOccurrence(
+                chatRoom.chatId,
+                scheduledId: occurrence.scheduledId,
+                overrides: UInt64(changes.startDate?.timeIntervalSince1970 ?? occurrence.startDate.timeIntervalSince1970),
+                newStartDate: UInt64(occurrence.startDate.timeIntervalSince1970),
+                newEndDate: UInt64(changes.endDate?.timeIntervalSince1970 ?? occurrence.endDate.timeIntervalSince1970),
+                newCancelled: changes.cancelled ?? false,
+                delegate: ChatRequestDelegate(completion: { result in
+                    switch result {
+                    case .success(let request):
+                        guard let scheduledMeeting = request.scheduledMeetingList.first?.toScheduledMeetingEntity() else {
+                            completion(.failure(ScheduleMeetingErrorEntity.scheduledMeetingNotFound))
+                            return
+                        }
+                        completion(.success(scheduledMeeting))
+                    case .failure:
+                        completion(.failure(ScheduleMeetingErrorEntity.invalidArguments))
+                    }
+                })
+            )
+        })
     }
 }

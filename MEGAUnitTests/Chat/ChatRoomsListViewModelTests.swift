@@ -220,8 +220,9 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var showContactDetailsInfo_calledTimes = 0
     var showArchivedChatRooms_calledTimes = 0
     var openChatRoom_calledTimes = 0
-    var showCallError_calledTimes = 0
-    
+    var showErrorMessage_calledTimes = 0
+    var showSuccessMessage_calledTimes = 0
+
     var navigationController: UINavigationController?
     
     func presentStartConversation() {
@@ -292,7 +293,11 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         openCallView_calledTimes += 1
     }
     
-    func showCallError(_ message: String) {
-        showCallError_calledTimes += 1
+    func showErrorMessage(_ message: String) {
+        showErrorMessage_calledTimes += 1
+    }
+    
+    func showSuccessMessage(_ message: String) {
+        showSuccessMessage_calledTimes += 1
     }
 }

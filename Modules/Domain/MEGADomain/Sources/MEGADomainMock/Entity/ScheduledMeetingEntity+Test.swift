@@ -17,6 +17,7 @@ public extension ScheduledMeetingEntity {
         description: String = "",
         attributes: String = "",
         overrides: Date = Date(),
+        flags: ScheduledMeetingFlagsEntity = ScheduledMeetingFlagsEntity(),
         rules: ScheduledMeetingRulesEntity = ScheduledMeetingRulesEntity(),
         isTesting: Bool = true
     ) {
@@ -35,6 +36,7 @@ public extension ScheduledMeetingEntity {
             description: description,
             attributes: attributes,
             overrides: overrides,
+            flags: flags,
             rules: rules
         )
     }

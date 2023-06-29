@@ -11,6 +11,7 @@ public protocol ChatRoomRepositoryProtocol {
     func queryChatLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void)
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity)
+    func archive(_ archive: Bool, chatRoom: ChatRoomEntity) async throws -> Bool
     func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity)
     func base64Handle(forChatRoom chatRoom: ChatRoomEntity) -> String?
     func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
@@ -27,4 +28,7 @@ public protocol ChatRoomRepositoryProtocol {
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
     func invite(toChat chat: ChatRoomEntity, userId: HandleEntity)
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity)
+    func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity
+    func chatRoomMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
+    func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
 }
