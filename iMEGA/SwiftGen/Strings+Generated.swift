@@ -4633,7 +4633,65 @@ public enum Strings {
           /// Start meeting
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.buttonOverlay.startMeeting")
         }
+        public enum CancelAlert {
+          /// Cancel %@?
+          public static func title(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.title", String(describing: p1))
+          }
+          public enum Description {
+            /// This meeting will be placed under Past meetings and all participants will be notified.
+            public static let withMessages = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.description.withMessages")
+            /// This meeting will be archived and all participants will be notified.
+            public static let withoutMessages = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.description.withoutMessages")
+          }
+          public enum Occurrence {
+            /// Only this occurrence will be cancelled. All the other occurrences will go ahead as scheduled.
+            public static let description = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.description")
+            /// %@ occurrence cancelled
+            public static func success(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.success", String(describing: p1))
+            }
+            /// Cancel %@ occurrence?
+            public static func title(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.title", String(describing: p1))
+            }
+            public enum Last {
+              /// Cancel occurrence and meeting?
+              public static let title = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.last.title")
+              public enum WithMessages {
+                /// This is the only occurrence of the recurring meeting. Cancelling this occurrence will cancel the meeting. If cancelled, the meeting will be placed under Past meetings and all participants will be notified.
+                public static let description = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description")
+              }
+              public enum WithoutMessages {
+                /// This is the only occurrence of the recurring meeting. Cancelling this occurrence will cancel the meeting. If cancelled, the meeting will be archived and all participants will be notified.
+                public static let description = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description")
+              }
+            }
+            public enum Option {
+              /// Cancel occurrence
+              public static let confirm = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.option.confirm")
+            }
+          }
+          public enum Option {
+            /// Don’t cancel
+            public static let dontCancel = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.option.dontCancel")
+            public enum Confirm {
+              /// Cancel meeting
+              public static let withMessages = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.option.confirm.withMessages")
+              /// Cancel and archive
+              public static let withoutMessages = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.option.confirm.withoutMessages")
+            }
+          }
+          public enum Success {
+            /// Meeting cancelled
+            public static let withMessages = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.success.withMessages")
+            /// Meeting cancelled and archived
+            public static let withoutMessages = Strings.tr("Localizable", "meetings.scheduled.cancelAlert.success.withoutMessages")
+          }
+        }
         public enum ContextMenu {
+          /// Cancel
+          public static let cancel = Strings.tr("Localizable", "meetings.scheduled.contextMenu.cancel")
           /// Join
           public static let joinMeeting = Strings.tr("Localizable", "meetings.scheduled.contextMenu.joinMeeting")
           /// Occurrences
@@ -4721,6 +4779,12 @@ public enum Strings {
             public static func descriptionWithDuration(_ p1: Any) -> String {
               return Strings.tr("Localizable", "meetings.scheduled.listing.inProgress.descriptionWithDuration", String(describing: p1))
             }
+          }
+        }
+        public enum ManagementMessages {
+          /// %@ cancelled this meeting
+          public static func cancelled(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "meetings.scheduled.managementMessages.cancelled", String(describing: p1))
           }
         }
         public enum Recurring {

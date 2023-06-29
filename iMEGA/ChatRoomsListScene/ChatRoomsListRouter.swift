@@ -247,7 +247,11 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
     
-    func showCallError(_ message: String) {
+    func showErrorMessage(_ message: String) {
         SVProgressHUD.showError(withStatus: message)
+    }
+    
+    func showSuccessMessage(_ message: String) {
+        SVProgressHUD.showSuccess(withStatus: message)
     }
 }

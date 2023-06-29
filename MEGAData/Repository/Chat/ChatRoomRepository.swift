@@ -1,6 +1,7 @@
 import Combine
 import MEGAData
 import MEGADomain
+import MEGASwift
 
 final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
@@ -8,6 +9,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     private let sdk: MEGAChatSdk
     private var chatRoomUpdateListeners = [ChatRoomUpdateListener]()
+    private var chatRoomMessageLoadedListeners = [ChatRoomMessageLoadedListener]()
     private var openChatRooms = Set<HandleEntity>()
     
     private init(sdk: MEGAChatSdk) {
@@ -117,6 +119,22 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         sdk.archiveChat(chatRoom.chatId, archive: archive)
     }
     
+    func archive(_ archive: Bool, chatRoom: ChatRoomEntity) async throws -> Bool {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.archiveChat(chatRoom.chatId,
+                            archive: archive,
+                            delegate: ChatRequestDelegate(completion: { result in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.isFlag))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+            )
+        })
+    }
+                            
     func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) {
         sdk.setMessageSeenForChat(chatRoom.chatId, messageId: messageId)
     }
@@ -200,6 +218,22 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         return chatRoomUpdateListener
     }
     
+    func chatRoomMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never> {
+        chatRoomMessageLoadedListener(forChatId: chatRoom.chatId)
+            .monitor
+            .eraseToAnyPublisher()
+    }
+    
+    private func chatRoomMessageLoadedListener(forChatId chatId: HandleEntity) -> ChatRoomMessageLoadedListener {
+        guard let chatRoomMessageLoadedListener = chatRoomMessageLoadedListeners.filter({ $0.chatId == chatId }).first else {
+            let chatRoomMessageLoadedListener = ChatRoomMessageLoadedListener(sdk: sdk, chatId: chatId)
+            chatRoomMessageLoadedListeners.append(chatRoomMessageLoadedListener)
+            return chatRoomMessageLoadedListener
+        }
+        
+        return chatRoomMessageLoadedListener
+    }
+    
     func isChatRoomOpen(_ chatRoom: ChatRoomEntity) -> Bool {
         openChatRooms.contains(chatRoom.chatId)
     }
@@ -222,10 +256,9 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func closeChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
         openChatRooms.remove(chatId)
-        let listenersForChatId = chatRoomUpdateListeners.filter { $0.chatId == chatId }
-        listenersForChatId.forEach({ listener in
-            chatRoomUpdateListeners.remove(object: listener)
-        })
+        chatRoomUpdateListeners.removeAll { $0.chatId == chatId }
+        chatRoomMessageLoadedListeners.removeAll { $0.chatId == chatId }
+
         sdk.closeChatRoom(chatId, delegate: delegate)
     }
     
@@ -255,6 +288,18 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity) {
         sdk.remove(fromChat: chat.chatId, userHandle: userId)
+    }
+    
+    func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity {
+        sdk.loadMessages(forChat: chat.chatId, count: count).toChatSourceEntity()
+    }
+    
+    func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool {
+        guard let message = sdk.message(forChat: chatRoom.chatId, messageId: message.messageId), let megaChange = change.toMEGAScheduledMeetingChangeType() else {
+            return false
+        }
+
+        return message.hasScheduledMeetingChange(for: megaChange)
     }
 }
 
@@ -295,6 +340,32 @@ private final class ChatRoomUpdateListener: NSObject, MEGAChatRoomDelegate {
     
     func onChatRoomUpdate(_ api: MEGAChatSdk, chat: MEGAChatRoom) {
         source.send(chat.toChatRoomEntity())
+    }
+}
+
+private final class ChatRoomMessageLoadedListener: NSObject, MEGAChatRoomDelegate {
+    private let sdk: MEGAChatSdk
+    let chatId: HandleEntity
+    
+    private let source = PassthroughSubject<ChatMessageEntity?, Never>()
+    
+    var monitor: AnyPublisher<ChatMessageEntity?, Never> {
+        source.eraseToAnyPublisher()
+    }
+        
+    init(sdk: MEGAChatSdk, chatId: HandleEntity) {
+        self.sdk = sdk
+        self.chatId = chatId
+        super.init()
+        sdk.addChatRoomDelegate(chatId, delegate: self)
+    }
+    
+    deinit {
+        sdk.removeChatRoomDelegate(chatId, delegate: self)
+    }
+    
+    func onMessageLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
+        source.send(message?.toChatMessageEntity())
     }
 }
 

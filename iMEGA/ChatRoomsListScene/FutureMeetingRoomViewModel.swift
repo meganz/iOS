@@ -21,7 +21,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     var callDurationTotal: TimeInterval?
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
-
+    private var chatHasMessagesSubscription: AnyCancellable?
+    
     var title: String {
         scheduledMeeting.title
     }
@@ -46,6 +47,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     var shouldShowUnreadCount = false
     var unreadCountString = ""
     var isRecurring: Bool
+    var chatHasMeesages = false
     
     var lastMessageTimestamp: String? {
         let chatListItem = chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)
@@ -65,6 +67,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private let router: ChatRoomsListRouting
     
     @Published var showDNDTurnOnOptions = false
+    @Published var showCancelMeetingAlert = false
     @Published var existsInProgressCallInChatRoom = false
     @Published var totalCallDuration: TimeInterval = 0
     private let permissionAlertRouter: any PermissionAlertRouting
@@ -152,6 +155,15 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         router.showDetails(forChatId: scheduledMeeting.chatId, unreadMessagesCount: chatRoom.unreadCount)
     }
     
+    func cancelMeetingAlertData() -> CancelMeetingAlertDataModel {
+        return CancelMeetingAlertDataModel(
+            title: Strings.Localizable.Meetings.Scheduled.CancelAlert.title(scheduledMeeting.title),
+            message: chatHasMeesages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withMessages : Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withoutMessages,
+            primaryButtonTitle: chatHasMeesages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withMessages : Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withoutMessages,
+            primaryButtonAction: cancelScheduledMeeting,
+            secondaryButtonTitle: Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.dontCancel)
+    }
+    
     // MARK: - Private methods.
     
     private func loadFutureMeetingSearchString() {
@@ -209,9 +221,19 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
                 imageName: Asset.Images.Chat.ContextualMenu.archiveChatMenu.name,
                 action: { [weak self] in
                     guard let self else { return }
-                    self.archiveChat()
+                    archiveChatRoom()
                 })
         ]
+        
+        if let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId), chatRoom.ownPrivilege == .moderator {
+            options.append(ChatRoomContextMenuOption(
+                title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
+                imageName: Asset.Images.NodeActions.rubbishBin.name,
+                action: { [weak self] in
+                    guard let self else { return }
+                    cancelMeeting()
+                }))
+        }
         
         return options
     }
@@ -228,9 +250,81 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         }
     }
     
-    private func archiveChat() {
+    private func cancelMeeting() {
         guard let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else { return }
-        chatRoomUseCase.archive(true, chatRoom: chatRoom)
+        subscribeToMessagesLoaded(in: chatRoom)
+        checkIfChatHasMessages(for: chatRoom)
+    }
+    
+    private func checkIfChatHasMessages(for chatRoom: ChatRoomEntity) {
+        let source = chatRoomUseCase.loadMessages(for: chatRoom, count: 10)
+        if source == .none {
+            chatHasMessages(chatRoom, false)
+        }
+    }
+    
+    private func subscribeToMessagesLoaded(in chatRoom: ChatRoomEntity) {
+        chatHasMessagesSubscription = chatRoomUseCase.chatMessageLoaded(forChatRoom: chatRoom)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { error in
+                MEGALogError("error fetching allow host to add participants with error \(error)")
+            }, receiveValue: { [weak self] message in
+                guard let self else { return }
+                guard let message else {
+                    checkIfChatHasMessages(for: chatRoom)
+                    return
+                }
+                
+                if !message.managementMessage {
+                    chatHasMessages(chatRoom, true)
+                }
+            })
+    }
+    
+    private func chatHasMessages(_ chatRoom: ChatRoomEntity, _ hasMessages: Bool) {
+        cancelChatHasMessageSuscription()
+        closeChat(chatRoom)
+        chatHasMeesages = hasMessages
+        showCancelMeetingAlert = true
+    }
+    
+    private func cancelChatHasMessageSuscription() {
+        chatHasMessagesSubscription?.cancel()
+        chatHasMessagesSubscription = nil
+    }
+    
+    private func closeChat(_ chatRoom: ChatRoomEntity) {
+        chatRoomUseCase.closeChatRoom(chatRoom)
+    }
+    
+    func cancelScheduledMeeting() {
+        Task {
+            do {
+                let changes = ScheduledMeetingChangesEntity(cancelled: true)
+                _ = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting, withChanges: changes)
+                if !chatHasMeesages {
+                    archiveChatRoom()
+                } else {
+                    router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withMessages)
+                }
+            } catch {
+                router.showErrorMessage(Strings.Localizable.somethingWentWrong)
+                MEGALogError("Failed to cancel meeting")
+            }
+        }
+    }
+    
+    private func archiveChatRoom() {
+        Task {
+            do {
+                guard let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else { return }
+                _ = try await chatRoomUseCase.archive(true, chatRoom: chatRoom)
+                router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withoutMessages)
+            } catch {
+                router.showErrorMessage(Strings.Localizable.somethingWentWrong)
+                MEGALogError("Failed to archive chat")
+            }
+        }
     }
     
     private func monitorActiveCallChanges() {
@@ -279,9 +373,9 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
                 case .failure(let error):
                     switch error {
                     case .tooManyParticipants:
-                        self?.router.showCallError(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+                        self?.router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
                     default:
-                        self?.router.showCallError(Strings.Localizable.somethingWentWrong)
+                        self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
                         MEGALogError("Not able to join scheduled meeting call")
                     }
                 }
@@ -299,9 +393,9 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
             case .failure(let error):
                 switch error {
                 case .tooManyParticipants:
-                    self?.router.showCallError(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+                    self?.router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
                 default:
-                    self?.router.showCallError(Strings.Localizable.somethingWentWrong)
+                    self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
                     MEGALogError("Not able to start scheduled meeting call")
                 }
             }

@@ -131,7 +131,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(router.showCallError_calledTimes == 1)
+        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
     }
     
     func testStartOrJoinCallActionTapped_startCallTooManyParticipants() {
@@ -142,7 +142,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(router.showCallError_calledTimes == 1)
+        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
     }
     
     func testStartOrJoinCallActionTapped_joinCall() {
@@ -164,7 +164,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(router.showCallError_calledTimes == 1)
+        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
     }
     
     func testStartOrJoinCallActionTapped_joinCallTooManyParticipants() {
@@ -175,7 +175,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
 
         viewModel.startOrJoinCall()
         
-        XCTAssertTrue(router.showCallError_calledTimes == 1)
+        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
     }
     
     func testTime_forOneOffMeeting_shouldMatch() throws {
@@ -190,6 +190,37 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         let nextOccurrence = ScheduledMeetingOccurrenceEntity(startDate: dateSet.startDate, endDate: dateSet.endDate)
         let viewModel = FutureMeetingRoomViewModel(nextOccurrence: nextOccurrence)
         shouldMatch(time: time(for: dateSet), inFutureMeetingRoomViewModel: viewModel)
+    }
+    
+    func  test_cancelMeetingWithMessagesInChat_stringsShouldMatch() {
+        let viewModel = FutureMeetingRoomViewModel()
+        viewModel.chatHasMeesages = true
+        let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
+        XCTAssertTrue(cancelMeetingAlertData.message == Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withMessages)
+        XCTAssertTrue(cancelMeetingAlertData.primaryButtonTitle == Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withMessages)
+    }
+    
+    func  test_cancelMeetingWithoutMessagesInChat_stringsShouldMatch() {
+        let viewModel = FutureMeetingRoomViewModel()
+        viewModel.chatHasMeesages = true
+        let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
+        XCTAssertTrue(cancelMeetingAlertData.message == Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withoutMessages)
+        XCTAssertTrue(cancelMeetingAlertData.primaryButtonTitle == Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withoutMessages)
+    }
+    
+    func test_cancelScheduledMeeting_meetingCancelledSuccess() {
+        let updatedScheduledMeeting = ScheduledMeetingEntity()
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(updatedScheduledMeeting: updatedScheduledMeeting)
+        let viewModel = FutureMeetingRoomViewModel(router: MockChatRoomsListRouter(), scheduledMeetingUseCase: scheduledMeetingUseCase)
+        viewModel.cancelScheduledMeeting()
+        XCTAssertTrue(router.showSuccessMessage_calledTimes == 1)
+    }
+    
+    func test_cancelScheduledMeeting_meetingCancelledError() {
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(updatedScheduledMeetingError: ScheduleMeetingErrorEntity.generic)
+        let viewModel = FutureMeetingRoomViewModel(router: MockChatRoomsListRouter(), scheduledMeetingUseCase: scheduledMeetingUseCase)
+        viewModel.cancelScheduledMeeting()
+        XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
     }
     
     // MARK: - Private methods

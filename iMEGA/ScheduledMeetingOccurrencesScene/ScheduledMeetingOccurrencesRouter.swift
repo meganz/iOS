@@ -1,7 +1,7 @@
 import MEGAData
 import MEGADomain
 
-final class ScheduledMeetingOccurrencesRouter: NSObject {
+final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRouting {
     private(set) var presenter: UINavigationController
     private let scheduledMeeting: ScheduledMeetingEntity
 
@@ -46,8 +46,10 @@ final class ScheduledMeetingOccurrencesRouter: NSObject {
         }
 
         let viewModel = ScheduledMeetingOccurrencesViewModel(
+            router: self,
             scheduledMeeting: scheduledMeeting,
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk())),
+            chatRoomUseCase: chatRoomUseCase,
             chatRoomAvatarViewModel: chatRoomAvatarViewModel
         )
         
@@ -58,5 +60,20 @@ final class ScheduledMeetingOccurrencesRouter: NSObject {
     
     func start() {
         presenter.pushViewController(build(), animated: true)
+    }
+    
+    func showErrorMessage(_ message: String) {
+        SVProgressHUD.showError(withStatus: message)
+    }
+    
+    func showSuccessMessage(_ message: String) {
+        SVProgressHUD.showSuccess(withStatus: message)
+    }
+    
+    func showSuccessMessageAndDismiss(_ message: String) {
+        DispatchQueue.main.async {
+            self.presenter.popViewController(animated: true)
+            SVProgressHUD.showSuccess(withStatus: message)
+        }
     }
 }

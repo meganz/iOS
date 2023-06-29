@@ -8,7 +8,7 @@ public class ChatRequestDelegate: NSObject, MEGAChatRequestDelegate {
         self.completion = completion
         super.init()
     }
-        
+    
     public func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         if error.type == .MEGAChatErrorTypeOk {
             self.completion(.success(request))
