@@ -200,22 +200,19 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func createSet(_ name: String?, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaSet = MockMEGASet(handle: 1, userId: 0, coverId: 1, name: name ?? "")
+        let mockRequest = MockRequest(handle: 1, set: MockMEGASet(handle: 1, userId: 0, coverId: 1, name: name ?? ""))
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
     public override func updateSetName(_ sid: MEGAHandle, name: String, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaSetName = name
+        let mockRequest = MockRequest(handle: 1, text: name)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
     public override func removeSet(_ sid: MEGAHandle, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaSetHandle = sid
+        let mockRequest = MockRequest(handle: 1, parentHandle: sid)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
@@ -227,31 +224,25 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func updateSetElement(_ sid: MEGAHandle, eid: MEGAHandle, name: String, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaSetElementName = name
-        mockRequest.updateSet = false
+        let mockRequest = MockRequest(handle: 1, text: name)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
     public override func updateSetElementOrder(_ sid: MEGAHandle, eid: MEGAHandle, order: Int64, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaSetElementOrder = order
+        let mockRequest = MockRequest(handle: 1, number: NSNumber(value: order))
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
     public override func removeSetElement(_ sid: MEGAHandle, eid: MEGAHandle, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.updateSet = false
+        let mockRequest = MockRequest(handle: 1, parentHandle: .invalid)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
     
     public override func putSetCover(_ sid: MEGAHandle, eid: MEGAHandle, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaCoverId = eid
-        mockRequest.updateSetCover = true
+        let mockRequest = MockRequest(handle: eid)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
@@ -262,8 +253,7 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func exportSet(_ sid: MEGAHandle, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megalink = link
+        let mockRequest = MockRequest(handle: 1, link: link)
         delegate.onRequestFinish?(self, request: mockRequest,
                                   error: MockError(errorType: megaSetError))
     }
@@ -278,9 +268,15 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func fetchPublicSet(_ publicSetLink: String, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaSet = sets.first
-        mockRequest.megaElementInSet = setElements
+        let mockRequest = MockRequest(handle: 1, set: sets.first, elementInSet: setElements)
+        
+        delegate.onRequestFinish?(self, request: mockRequest,
+                                  error: MockError(errorType: megaSetError))
+    }
+    
+    public override func previewElementNode(_ eid: MEGAHandle, delegate: any MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: 1, publicNode: nodes.first)
+        
         delegate.onRequestFinish?(self, request: mockRequest,
                                   error: MockError(errorType: megaSetError))
     }
@@ -355,8 +351,8 @@ public final class MockSdk: MEGASdk {
     public override func isLoggedIn() -> Int { _isLoggedIn }
     
     public override func multiFactorAuthCheck(withEmail email: String, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1)
-        mockRequest.megaFlag = true
+        let mockRequest = MockRequest(handle: 1, flag: true)
+        
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
     

@@ -121,4 +121,54 @@ class ShareAlbumRepositoryTests: XCTestCase {
             XCTFail("Invalid exception caught")
         }
     }
+    
+    func testPublicPhoto_onSuccessfullResponse_shouldReturnPhotoNode() async throws {
+        let photoId: UInt64 = 5
+        let photo = MockNode(handle: photoId)
+        let sdk = MockSdk(nodes: [photo])
+        let sut = ShareAlbumRepository(sdk: sdk)
+        
+        let result = try await sut.publicPhoto(forPhotoId: photoId)
+        
+        XCTAssertEqual(result, photo.toNodeEntity())
+    }
+    
+    func testPublicPhoto_onSDKNotOkKnownError_shouldThrowCorrectError() async {
+        let testCase = [(MEGAErrorType.apiEArgs, SharedPhotoErrorEntity.photoNotFound),
+                        (.apiEAccess, .previewModeNotEnabled)
+        ]
+        
+        let result = await withTaskGroup(of: Bool.self) { group in
+            testCase.forEach { testCase in
+                group.addTask {
+                    let mockSdk = MockSdk(megaSetError: testCase.0)
+                    let sut = ShareAlbumRepository(sdk: mockSdk)
+                    do {
+                        _ = try await sut.publicPhoto(forPhotoId: HandleEntity(6))
+                        return false
+                    } catch {
+                        return error as? SharedPhotoErrorEntity == testCase.1
+                    }
+                }
+            }
+            return await group.reduce(into: [Bool](), {
+                $0.append($1)
+            })
+        }
+        XCTAssertTrue(result.isNotEmpty)
+        XCTAssertFalse(result.contains(where: { !$0 }))
+    }
+    
+    func testPublicPhoto_onSDKNotOkUnknownError_shouldThrowGenericError() async {
+        let mockSdk = MockSdk(megaSetError: .apiEBlocked)
+        let sut = ShareAlbumRepository(sdk: mockSdk)
+        
+        do {
+            _ = try await sut.publicPhoto(forPhotoId: HandleEntity(6))
+        } catch let error as GenericErrorEntity {
+            XCTAssertNotNil(error)
+        } catch {
+            XCTFail("Invalid exception caught")
+        }
+    }
 }
