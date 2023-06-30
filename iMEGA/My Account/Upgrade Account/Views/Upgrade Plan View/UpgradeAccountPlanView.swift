@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASwiftUI
+import Settings
 import SwiftUI
 
 struct UpgradeAccountPlanView: View {
@@ -49,9 +50,15 @@ struct UpgradeAccountPlanView: View {
                     UpgradeSectionSubscriptionView()
                     
                     VStack(alignment: .leading, spacing: 20) {
-                        PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.Restore.title) {}
+                        PlainFooterButtonView(
+                            title: Strings.Localizable.UpgradeAccountPlan.Button.Restore.title,
+                            didTapButton: $viewModel.isRestoreAccountPlan
+                        )
                         
-                        PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.TermsAndPolicies.title) {}
+                        PlainFooterButtonView(
+                            title: Strings.Localizable.UpgradeAccountPlan.Button.TermsAndPolicies.title,
+                            didTapButton: $viewModel.isTermsAndPoliciesPresented
+                        )
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top)
@@ -66,5 +73,45 @@ struct UpgradeAccountPlanView: View {
                 presentationMode.wrappedValue.dismiss()
             }
         }
+        .modalView(isPresented: $viewModel.isTermsAndPoliciesPresented, content: {
+            termsAndPoliciesView()
+        })
+    }
+    
+    func termsAndPoliciesView() -> some View {
+        @ViewBuilder
+        func contentView() -> some View {
+            if #available(iOS 15.0, *) {
+                TermsAndPoliciesView(
+                    privacyPolicyText: Strings.Localizable.privacyPolicyLabel,
+                    cookiePolicyText: Strings.Localizable.General.cookiePolicy,
+                    termsOfServicesText: Strings.Localizable.termsOfServicesLabel
+                )
+                .interactiveDismissDisabled()
+            } else {
+                TermsAndPoliciesView(
+                    privacyPolicyText: Strings.Localizable.privacyPolicyLabel,
+                    cookiePolicyText: Strings.Localizable.General.cookiePolicy,
+                    termsOfServicesText: Strings.Localizable.termsOfServicesLabel
+                )
+            }
+        }
+        
+        return NavigationStackView(content: {
+            contentView()
+                .navigationTitle(Strings.Localizable.Settings.Section.termsAndPolicies)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarColor(Colors.General.Gray.navigationBgColor.color)
+                .toolbar {
+                    ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                        Button {
+                            viewModel.isTermsAndPoliciesPresented = false
+                        } label: {
+                            Text(Strings.Localizable.close)
+                                .foregroundColor(Color(Colors.UpgradeAccount.primaryGrayText.color))
+                        }
+                    }
+                }
+        })
     }
 }
