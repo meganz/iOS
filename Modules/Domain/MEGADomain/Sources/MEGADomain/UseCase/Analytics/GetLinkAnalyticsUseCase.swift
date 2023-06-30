@@ -86,17 +86,7 @@ public struct GetLinkAnalyticsUseCase<T: AnalyticsRepositoryProtocol>: GetLinkAn
 
     public func shareLink(nodeTypes: [NodeTypeEntity]) {
         guard let nodeType = nodeTypes.first, nodeTypes.count == 1 else {
-            let hasFiles = nodeTypes.contains(where: { $0 == .file })
-            let hasFolders = nodeTypes.contains(where: { $0 == .folder })
-
-            if hasFiles && hasFolders {
-                repo.sendAnalyticsEvent(.getLink(.shareFilesAndFolders))
-            } else if hasFiles {
-                repo.sendAnalyticsEvent(.getLink(.shareFiles))
-            } else if hasFolders {
-                repo.sendAnalyticsEvent(.getLink(.shareFolders))
-            }
-
+            repo.sendAnalyticsEvent(.getLink(.shareMultipleNodes))
             return
         }
 
@@ -109,17 +99,7 @@ public struct GetLinkAnalyticsUseCase<T: AnalyticsRepositoryProtocol>: GetLinkAn
 
     public func getLink(nodeTypes: [NodeTypeEntity]) {
         guard let nodeType = nodeTypes.first, nodeTypes.count == 1 else {
-            let hasFiles = nodeTypes.contains(where: { $0 == .file })
-            let hasFolders = nodeTypes.contains(where: { $0 == .folder })
-
-            if hasFiles && hasFolders {
-                repo.sendAnalyticsEvent(.getLink(.getLinkForFilesAndFolders))
-            } else if hasFiles {
-                repo.sendAnalyticsEvent(.getLink(.getLinkForFiles))
-            } else if hasFolders {
-                repo.sendAnalyticsEvent(.getLink(.getLinkForFolders))
-            }
-
+            repo.sendAnalyticsEvent(.getLink(.getLinkMultipleNodes))
             return
         }
 

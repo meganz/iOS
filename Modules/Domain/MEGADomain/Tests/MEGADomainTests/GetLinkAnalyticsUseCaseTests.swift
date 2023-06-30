@@ -121,15 +121,6 @@ final class GetLinkAnalyticsUseCaseTests: XCTestCase {
         XCTAssertTrue(repo.type == .getLink(.shareFolder))
     }
 
-    func testSendEvent_shareLinkForMultipleFolders_shouldReturnTrue() throws {
-        let repo = MockAnalyticsRepository.newRepo
-        let usecase = GetLinkAnalyticsUseCase(repository: repo)
-
-        usecase.shareLink(nodeTypes: [.folder, .folder])
-
-        XCTAssertTrue(repo.type == .getLink(.shareFolders))
-    }
-
     func testSendEvent_shareLinkForFile_shouldReturnTrue() throws {
         let repo = MockAnalyticsRepository.newRepo
         let usecase = GetLinkAnalyticsUseCase(repository: repo)
@@ -139,22 +130,13 @@ final class GetLinkAnalyticsUseCaseTests: XCTestCase {
         XCTAssertTrue(repo.type == .getLink(.shareFile))
     }
 
-    func testSendEvent_shareLinkForMultipleFiles_shouldReturnTrue() throws {
+    func testSendEvent_shareLinkForMultipleNodes_shouldReturnTrue() throws {
         let repo = MockAnalyticsRepository.newRepo
         let usecase = GetLinkAnalyticsUseCase(repository: repo)
 
-        usecase.shareLink(nodeTypes: [.file, .file])
+        usecase.shareLink(nodeTypes: [.folder, .file])
 
-        XCTAssertTrue(repo.type == .getLink(.shareFiles))
-    }
-
-    func testSendEvent_shareLinkForMultipleFilesAndFolders_shouldReturnTrue() throws {
-        let repo = MockAnalyticsRepository.newRepo
-        let usecase = GetLinkAnalyticsUseCase(repository: repo)
-
-        usecase.shareLink(nodeTypes: [.file, .folder])
-
-        XCTAssertTrue(repo.type == .getLink(.shareFilesAndFolders))
+        XCTAssertTrue(repo.type == .getLink(.shareMultipleNodes))
     }
 
     func testSendEvent_getLinkForFolder_shouldReturnTrue() throws {
@@ -166,15 +148,6 @@ final class GetLinkAnalyticsUseCaseTests: XCTestCase {
         XCTAssertTrue(repo.type == .getLink(.getLinkForFolder))
     }
 
-    func testSendEvent_getLinkForMultipleFolders_shouldReturnTrue() throws {
-        let repo = MockAnalyticsRepository.newRepo
-        let usecase = GetLinkAnalyticsUseCase(repository: repo)
-
-        usecase.getLink(nodeTypes: [.folder, .folder])
-
-        XCTAssertTrue(repo.type == .getLink(.getLinkForFolders))
-    }
-
     func testSendEvent_getLinkForFile_shouldReturnTrue() throws {
         let repo = MockAnalyticsRepository.newRepo
         let usecase = GetLinkAnalyticsUseCase(repository: repo)
@@ -184,22 +157,13 @@ final class GetLinkAnalyticsUseCaseTests: XCTestCase {
         XCTAssertTrue(repo.type == .getLink(.getLinkForFile))
     }
 
-    func testSendEvent_getLinkForMultipleFiles_shouldReturnTrue() throws {
+    func testSendEvent_getLinkForMultipleFolders_shouldReturnTrue() throws {
         let repo = MockAnalyticsRepository.newRepo
         let usecase = GetLinkAnalyticsUseCase(repository: repo)
 
-        usecase.getLink(nodeTypes: [.file, .file])
+        usecase.getLink(nodeTypes: [.folder, .file])
 
-        XCTAssertTrue(repo.type == .getLink(.getLinkForFiles))
-    }
-
-    func testSendEvent_getLinkForMultipleFilesAndFolders_shouldReturnTrue() throws {
-        let repo = MockAnalyticsRepository.newRepo
-        let usecase = GetLinkAnalyticsUseCase(repository: repo)
-
-        usecase.getLink(nodeTypes: [.file, .folder])
-
-        XCTAssertTrue(repo.type == .getLink(.getLinkForFilesAndFolders))
+        XCTAssertTrue(repo.type == .getLink(.getLinkMultipleNodes))
     }
 
     func testSendEvent_proFeatureSeePlansForFolder_shouldReturnTrue() throws {
