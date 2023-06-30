@@ -11,6 +11,7 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
     private var shareLink: String?
     
     let isMultiLink: Bool = false
+    var loadingTask: Task<Void, Never>?
     
     var numberOfSections: Int {
         sectionViewModels.count
@@ -36,7 +37,9 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
         switch action {
         case .onViewReady:
             updateViewConfiguration()
-            loadAlbumLinks()
+            loadAlbumLink()
+        case .onViewWillDisappear:
+            cancelLoadingTask()
         case .switchToggled(indexPath: let indexPath, isOn: let isOn):
             handleSwitchToggled(forIndexPath: indexPath, isOn: isOn)
         case .shareLink(let sender):
@@ -74,11 +77,13 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
                                       shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)))
     }
     
-    private func loadAlbumLinks() {
-        Task { [weak self] in
+    private func loadAlbumLink() {
+        loadingTask = Task { [weak self] in
             guard let self else { return }
+            defer { cancelLoadingTask() }
             do {
-                if let albumLink = try await shareAlbumUseCase.shareAlbumLink(album) {
+                if let albumLink = try await shareAlbumUseCase.shareAlbumLink(album),
+                   !Task.isCancelled {
                     shareLink = albumLink
                     await updateLink(albumLink)
                 }
@@ -86,6 +91,11 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
                 MEGALogError("Error sharing album link: \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func cancelLoadingTask() {
+        loadingTask?.cancel()
+        loadingTask = nil
     }
     
     @MainActor
