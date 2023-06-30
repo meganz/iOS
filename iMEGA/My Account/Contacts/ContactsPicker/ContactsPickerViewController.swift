@@ -1,5 +1,5 @@
-
 import MEGAUIKit
+import MEGAPermissions
 import UIKit
 
 @objc protocol ContactsPickerViewControllerDelegate {
@@ -265,7 +265,7 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
         }
     }
     
-    private var permissionHandler: DevicePermissionsHandling {
+    private var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
     

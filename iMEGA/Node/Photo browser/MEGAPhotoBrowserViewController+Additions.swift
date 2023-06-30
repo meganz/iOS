@@ -1,5 +1,6 @@
 import MEGAData
 import MEGADomain
+import MEGAPermissions
 import UIKit
 
 extension MEGAPhotoBrowserViewController {
@@ -44,7 +45,7 @@ extension MEGAPhotoBrowserViewController {
         self.messagesIds = messagesIds
     }
     
-    var permissionHandler: DevicePermissionsHandling {
+    var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
     

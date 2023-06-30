@@ -3,6 +3,7 @@ import Foundation
 import MEGAData
 import MEGADomain
 import MEGAPresentation
+import MEGAPermissions
 
 enum ChatViewMode {
     case chats
@@ -99,7 +100,7 @@ final class ChatRoomsListViewModel: ObservableObject {
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular,
          chatViewMode: ChatViewMode = .chats,
-         permissionHandler: DevicePermissionsHandling,
+         permissionHandler: some DevicePermissionsHandling,
          permissionAlertRouter: PermissionAlertRouting
     ) {
         self.router = router

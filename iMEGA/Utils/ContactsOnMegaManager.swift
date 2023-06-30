@@ -1,5 +1,6 @@
 import Contacts
 import MEGAData
+import MEGAPermissions
 
 struct ContactOnMega: Codable {
     let handle: UInt64

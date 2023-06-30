@@ -1,3 +1,4 @@
+import MEGAPermissions
 
 extension CameraUploadManager {
     @objc func scheduleCameraUploadBackgroundRefresh() {
@@ -8,7 +9,7 @@ extension CameraUploadManager {
         CameraUploadBGRefreshManager.shared.cancel()
     }
     
-    private class var permissionHandler: DevicePermissionsHandling {
+    private class var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
     

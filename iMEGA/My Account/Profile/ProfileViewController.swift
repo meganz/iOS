@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPermissions
 import UIKit
 
 @objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {

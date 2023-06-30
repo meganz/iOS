@@ -1,4 +1,4 @@
-
+import MEGAPermissions
 import UIKit
 
 class AddToChatCameraCollectionCell: UICollectionViewCell {

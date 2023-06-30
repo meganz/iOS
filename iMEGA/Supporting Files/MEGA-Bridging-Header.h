@@ -140,7 +140,6 @@
 #import "SearchOperation.h"
 #import "CloudDriveViewController.h"
 #import "MEGAMoveRequestDelegate.h"
-#import "GridFlowLayout.h"
 #import "MEGAOperation.h"
 #import "CameraUploadManager+Settings.h"
 #import "CHTCollectionViewWaterfallLayout.h"
