@@ -185,7 +185,9 @@
             if (achievementClass == MEGAAchievementWelcome) {
                 hasWelcomeBonuses = YES;
             }
-            [self.achievementsIndexesMutableDictionary setObject:[NSNumber numberWithInteger:i] forKey:[NSNumber numberWithInteger:achievementClass]];
+            if (achievementClass != MEGAAchievementAddPhone) {
+                [self.achievementsIndexesMutableDictionary setObject:[NSNumber numberWithInteger:i] forKey:[NSNumber numberWithInteger:achievementClass]];
+            }
         }
     }
 
@@ -198,8 +200,7 @@
     }
     [self.displayOrderMutableArray addObjectsFromArray:@[
         [NSNumber numberWithInt:MEGAAchievementDesktopInstall],
-        [NSNumber numberWithInt:MEGAAchievementMobileInstall],
-        [NSNumber numberWithInt:MEGAAchievementAddPhone]
+        [NSNumber numberWithInt:MEGAAchievementMobileInstall]
     ]];
 
     NSString *inviteStorageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
@@ -241,11 +242,6 @@
             
         case MEGAAchievementMobileInstall: {
             cell.titleLabel.text = NSLocalizedString(@"account.achievement.mobileApp.title", nil);
-            break;
-        }
-            
-        case MEGAAchievementAddPhone: {
-            cell.titleLabel.text = NSLocalizedString(@"Add Phone Number", nil);
             break;
         }
             
