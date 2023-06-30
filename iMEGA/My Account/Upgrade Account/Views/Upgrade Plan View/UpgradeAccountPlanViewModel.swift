@@ -8,6 +8,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
     
+    @Published var isRestoreAccountPlan = false
+    @Published var isTermsAndPoliciesPresented = false
     @Published var isDismiss = false
     @Published private(set) var currentPlan: AccountPlanEntity?
     private var recommendedPlan: AccountPlanEntity?
