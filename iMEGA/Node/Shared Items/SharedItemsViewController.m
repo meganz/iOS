@@ -1047,6 +1047,7 @@
             [self toolbarItemsSetEnabled:NO];
         } else {
             [self updateToolbarItemsIfNeeded];
+            [self updateToolbarButtonsEnabled:YES selectedNodesArray:_selectedNodesMutableArray];
         }
         
         allNodesSelected = NO;
