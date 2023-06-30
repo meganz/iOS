@@ -191,7 +191,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
         recentsTVHFV.dateLabel.text = NSLocalizedString(@"Yesterday", @"");
     } else {
         NSString *dateString = [self.dateFormatter stringFromDate:recentActionBucket.timestamp];
-        recentsTVHFV.dateLabel.text = dateString.uppercaseString;
+        recentsTVHFV.dateLabel.text = dateString;
     }
     
     return recentsTVHFV;
