@@ -29,41 +29,33 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
             return 402012
         case .shareFolder:
             return 402013
-        case .shareFolders:
-            return 402014
         case .shareFile:
-            return 402015
-        case .shareFiles:
-            return 402016
-        case .shareFilesAndFolders:
-            return 402017
-        case .getLinkForFolder:
-            return 402018
-        case .getLinkForFolders:
-            return 402019
-        case .getLinkForFile:
-            return 402020
-        case .getLinkForFiles:
-            return 402021
-        case .getLinkForFilesAndFolders:
+            return 402014
+        case .shareMultipleNodes:
             return 402022
+        case .getLinkForFolder:
+            return 402015
+        case .getLinkForFile:
+            return 402016
+        case .getLinkMultipleNodes:
+            return 402021
         case .proFeaturesSeePlansFolder:
-            return 402023
+            return 402017
         case .proFeaturesNotNowFolder:
-            return 402024
+            return 402019
         case .proFeaturesSeePlansFile:
-            return 402025
+            return 402018
         case .proFeaturesNotNowFile:
-            return 402026
+            return 402020
         }
     }
 
     var description: String {
         switch self {
         case .sendDecriptionKeySeparateForFolder:
-            return "Send decription key separate toggled for folder"
+            return "Send decryption key separately folder"
         case .sendDecriptionKeySeparateForFile:
-            return "Send decription key separate toggled for file"
+            return "Send decryption key separately file"
         case .setExpiryDateForFolder:
             return "Set expiry date for folder"
         case .setExpiryDateForFile:
@@ -86,24 +78,16 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
             return "Remove password tapped for file"
         case .shareFolder:
             return "Share link tapped for folder"
-        case .shareFolders:
-            return "Share link tapped multiple folders"
         case .shareFile:
             return "Share link tapped for file"
-        case .shareFiles:
-            return "Share link tapped for multiple files"
-        case .shareFilesAndFolders:
-            return "Share links tapped for multiple files and folders"
+        case .shareMultipleNodes:
+            return "Share link for multiple Nodes"
         case .getLinkForFolder:
             return "Manage link tapped for folder"
-        case .getLinkForFolders:
-            return "Manage link tapped for folders"
         case .getLinkForFile:
             return "Manage link tapped for file"
-        case .getLinkForFiles:
-            return "Manage link tapped for files"
-        case .getLinkForFilesAndFolders:
-            return "Manage link tapped for multiple files and folders"
+        case .getLinkMultipleNodes:
+            return "Manage link for multiple Nodes"
         case .proFeaturesSeePlansFolder:
             return "Pro feature see plans tapped for folder"
         case .proFeaturesNotNowFolder:
