@@ -1,7 +1,7 @@
 import MEGAData
 import MEGADomain
-import MEGAUIKit
 import MEGAPermissions
+import MEGAUIKit
 
 class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     // MARK: - Private variables

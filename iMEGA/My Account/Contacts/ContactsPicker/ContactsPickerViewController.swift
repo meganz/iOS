@@ -1,5 +1,5 @@
-import MEGAUIKit
 import MEGAPermissions
+import MEGAUIKit
 import UIKit
 
 @objc protocol ContactsPickerViewControllerDelegate {
