@@ -148,7 +148,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
              ])
     }
     
-    func testDispatchShareLink_onDecryptSeperateOff_shouldOnlyShareOriginalLink() {
+    func testDispatchShareLink_onDecryptSeperateOff_shouldOnlyShareOriginalLink() async {
         let album = AlbumEntity(id: 1, type: .user)
         let link = "https://mega.nz/collection/link#key"
         let sections = [
@@ -167,14 +167,15 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
                           )
         ])
-        let barButton = UIBarButtonItem()
+        await sut.loadingTask?.value
+        let barButton = await UIBarButtonItem()
         test(viewModel: sut, action: .shareLink(sender: barButton),
              expectedCommands: [
                 .showShareActivity(sender: barButton, link: link, key: nil)
              ])
     }
     
-    func testDispatchShareLink_onDecryptSeperateOn_shouldShareLinkSeperatelyFromKey() {
+    func testDispatchShareLink_onDecryptSeperateOn_shouldShareLinkSeperatelyFromKey() async {
         let album = AlbumEntity(id: 1, type: .user)
         let linkOnly = "https://mega.nz/collection/link"
         let key = "key"
@@ -195,7 +196,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
                           )
         ])
-        let barButton = UIBarButtonItem()
+        await sut.loadingTask?.value
+        let barButton = await UIBarButtonItem()
         test(viewModel: sut, action: .shareLink(sender: barButton),
              expectedCommands: [
                 .showShareActivity(sender: barButton, link: linkOnly, key: key)
