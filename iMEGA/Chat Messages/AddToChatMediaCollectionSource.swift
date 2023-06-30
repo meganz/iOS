@@ -1,3 +1,4 @@
+import MEGAPermissions
 
 protocol AddToChatMediaCollectionSourceDelegate: AnyObject {
     func moreButtonTapped()
@@ -41,7 +42,7 @@ class AddToChatMediaCollectionSource: NSObject {
     init(
         collectionView: UICollectionView,
         delegate: AddToChatMediaCollectionSourceDelegate,
-        permissionHandler: DevicePermissionsHandling
+        permissionHandler: some DevicePermissionsHandling
     ) {
         self.collectionView = collectionView
         self.delegate = delegate

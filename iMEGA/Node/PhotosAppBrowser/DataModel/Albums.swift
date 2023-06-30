@@ -1,5 +1,5 @@
-
 import Foundation
+import MEGAPermissions
 import Photos
 
 protocol AlbumsDelegate: AnyObject {

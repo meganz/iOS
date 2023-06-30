@@ -1,6 +1,8 @@
 // responsible for presenting UIAlerts and Custom Modals
 // in situations related to device permissions such as
 // audio/video/photos/notifications
+import MEGAPermissions
+
 struct PermissionAlertRouter {
     
     static func makeRouter(deviceHandler: some DevicePermissionsHandling) -> PermissionAlertRouter {

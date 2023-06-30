@@ -3,6 +3,7 @@ import Foundation
 import MEGADomain
 import MEGASwift
 import MEGAUI
+import MEGAPermissions
 
 final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let chatListItem: ChatListItemEntity
@@ -46,7 +47,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     var callDurationTotal: TimeInterval?
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
-    let permissionHandler: DevicePermissionsHandling
+    let permissionHandler: any DevicePermissionsHandling
     
     init(chatListItem: ChatListItemEntity,
          router: ChatRoomsListRouting,
@@ -60,7 +61,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
          audioSessionUseCase: any AudioSessionUseCaseProtocol,
          scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl,
-         permissionHandler: DevicePermissionsHandling,
+         permissionHandler: some DevicePermissionsHandling,
          notificationCenter: NotificationCenter = .default) {
         self.chatListItem = chatListItem
         self.router = router

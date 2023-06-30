@@ -1,3 +1,4 @@
+import MEGAPermissions
 import UIKit
 
 protocol AddToChatMenuPageViewControllerDelegate: AnyObject {

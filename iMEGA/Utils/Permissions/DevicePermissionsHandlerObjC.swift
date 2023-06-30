@@ -5,6 +5,7 @@
 // to ObjC, to make it's Swift implementation pure without any knowlege
 // of objC, to make it safe and easy to remove interface ObjC->Swift once ech file and class
 // is converted to Swift.
+import MEGAPermissions
 
 class DevicePermissionsHandlerObjC: NSObject {
     

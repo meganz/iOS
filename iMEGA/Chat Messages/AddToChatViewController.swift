@@ -1,4 +1,4 @@
-
+import MEGAPermissions
 import UIKit
 
 protocol AddToChatViewControllerDelegate: AnyObject {
@@ -126,7 +126,7 @@ class AddToChatViewController: UIViewController {
         }
     }
     
-    private var permissionHandler: DevicePermissionsHandling {
+    private var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
     
