@@ -1,8 +1,8 @@
 import Combine
 import KeyboardLayoutGuide
 import MEGADomain
-import MessageKit
 import MEGAPermissions
+import MessageKit
 import UIKit
 
 class ChatViewController: MessagesViewController {

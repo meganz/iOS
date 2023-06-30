@@ -2,8 +2,8 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGASwift
-import MEGAUI
 import MEGAPermissions
+import MEGAUI
 
 final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let chatListItem: ChatListItemEntity
