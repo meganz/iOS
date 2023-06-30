@@ -1,4 +1,6 @@
 @testable import MEGA
+import MEGAPermissions
+import MEGAPermissionsMock
 import XCTest
 
 final class PermissionAlertRouterTests: XCTestCase {
@@ -50,7 +52,7 @@ final class PermissionAlertRouterTests: XCTestCase {
                 self.settingsOpenedCount += 1
             }
             
-            notificationBlock = {[unowned self] in
+            notificationBlock = { [unowned self] in
                 registerNotificationCallCount += 1
             }
         }

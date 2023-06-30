@@ -1,6 +1,7 @@
 import Foundation
 import MEGAData
 import MEGADomain
+import MEGAPermissions
 
 @objc
 final class HomeScreenFactory: NSObject {

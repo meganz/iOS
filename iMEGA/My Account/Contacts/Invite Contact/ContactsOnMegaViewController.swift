@@ -1,4 +1,5 @@
 import Contacts
+import MEGAPermissions
 import UIKit
 
 @objc class ContactsOnMegaViewController: UIViewController {

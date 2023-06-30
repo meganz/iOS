@@ -1,6 +1,8 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPermissions
+import MEGAPermissionsMock
 
 extension ChatRoomViewModel {
     convenience init(
@@ -16,7 +18,7 @@ extension ChatRoomViewModel {
         audioSessionUseCase: any AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
-        permissionHandler: DevicePermissionsHandling = MockDevicePermissionHandler(),
+        permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         notificationCenter: NotificationCenter = .default,
         isTesting: Bool = true
     ) {

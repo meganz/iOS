@@ -1,3 +1,4 @@
+import MEGAPermissions
 import Photos
 import SwiftUI
 import UIKit
@@ -11,7 +12,7 @@ extension PhotosViewController: PhotosBannerViewProvider {
         configPhotosBannerView(in: photosBannerView)
     }
     
-    var permissionHandler: DevicePermissionsHandling {
+    var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
     

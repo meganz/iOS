@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAPermissions
 
 protocol HomeUploadingViewModelInputs {
 
@@ -131,7 +132,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     private let uploadPhotoAssetsUseCase: any UploadPhotoAssetsUseCaseProtocol
 
-    private let permissionHandler: DevicePermissionsHandling
+    private let permissionHandler: any DevicePermissionsHandling
 
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     
