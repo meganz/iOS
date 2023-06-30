@@ -64,12 +64,6 @@
             achievementImage = [UIImage imageNamed:@"achievementsInstallMobile"];
             break;
         }
-            
-        case MEGAAchievementAddPhone: {
-            self.navigationItem.title = NSLocalizedString(@"Add Phone Number", nil);
-            achievementImage = [UIImage imageNamed:@"addPhoneNumberSmall"];
-            break;
-        }
 
         default:
             break;
