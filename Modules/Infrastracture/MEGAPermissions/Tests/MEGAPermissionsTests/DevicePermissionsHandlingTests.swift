@@ -1,4 +1,4 @@
-@testable import MEGA
+import MEGAPermissionsMock
 import XCTest
 
 // testing protocol extension method, not the mock itself

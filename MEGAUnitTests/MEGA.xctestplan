@@ -212,6 +212,13 @@
         "identifier" : "MEGAPresentationTests",
         "name" : "MEGAPresentationTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Infrastracture\/MEGAPermissions",
+        "identifier" : "MEGAPermissionsTests",
+        "name" : "MEGAPermissionsTests"
+      }
     }
   ],
   "version" : 1

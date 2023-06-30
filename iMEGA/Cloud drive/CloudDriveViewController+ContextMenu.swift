@@ -1,6 +1,7 @@
 import CoreServices
 import MEGAData
 import MEGADomain
+import MEGAPermissions
 import UIKit
 
 extension CloudDriveViewController: CloudDriveContextMenuDelegate {
@@ -189,7 +190,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         }
     }
     
-    var permissionHandler: DevicePermissionsHandling {
+    var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
     

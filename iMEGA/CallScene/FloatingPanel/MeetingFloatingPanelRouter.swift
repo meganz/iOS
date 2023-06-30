@@ -2,6 +2,7 @@ import MEGAData
 import MEGADomain
 import MEGAPresentation
 import PanModal
+import MEGAPermissions
 
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)
@@ -44,7 +45,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         containerViewModel: MeetingContainerViewModel,
         chatRoom: ChatRoomEntity,
         isSpeakerEnabled: Bool,
-        permissionHandler: DevicePermissionsHandling
+        permissionHandler: some DevicePermissionsHandling
     ) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel

@@ -1,4 +1,8 @@
-@testable import MEGA
+import AVFoundation
+import Contacts
+@testable import MEGAPermissions
+import Photos
+import UserNotifications
 import XCTest
 
 final class DevicePermissionsHandlerTests: XCTestCase {

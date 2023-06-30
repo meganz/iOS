@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPermissions
 import UIKit
 
 final class MediaDiscoveryViewController: ExplorerBaseViewController {
@@ -239,7 +240,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
         viewModel.dispatch(.downloadSelectedPhotos(selection.nodes.toNodeEntities()))
     }
     
-    private var permissionHandler: DevicePermissionsHandling {
+    private var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
     

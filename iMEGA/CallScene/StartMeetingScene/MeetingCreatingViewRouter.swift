@@ -2,6 +2,7 @@ import Foundation
 import MEGAData
 import MEGADomain
 import MEGAPresentation
+import MEGAPermissions
 
 protocol MeetingCreatingViewRouting: Routing {
     func dismiss()

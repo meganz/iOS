@@ -1,5 +1,6 @@
 import MEGAData
 import MEGADomain
+import MEGAPermissions
 
 extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate {
     

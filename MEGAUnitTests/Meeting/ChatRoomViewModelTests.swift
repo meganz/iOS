@@ -1,6 +1,8 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPermissions
+import MEGAPermissionsMock
 import XCTest
 
 final class ChatRoomViewModelTests: XCTestCase {

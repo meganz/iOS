@@ -3,6 +3,7 @@ import Foundation
 import MEGAData
 import MEGADomain
 import MEGAPresentation
+import MEGAPermissions
 import SafariServices
 
 extension AppDelegate {
@@ -37,7 +38,7 @@ extension AppDelegate {
         }))
     }
     
-    private var permissionHandler: DevicePermissionsHandling {
+    private var permissionHandler: any DevicePermissionsHandling {
         DevicePermissionsHandler.makeHandler()
     }
     

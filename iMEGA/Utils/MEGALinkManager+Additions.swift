@@ -2,6 +2,7 @@ import MEGAData
 import MEGADomain
 import MEGAPresentation
 import MEGASdk
+import MEGAPermissions
 import SwiftUI
 import UserNotifications
 
