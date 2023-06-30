@@ -1,8 +1,8 @@
 import MEGAData
 import MEGADomain
+import MEGAPermissions
 import MEGAPresentation
 import PanModal
-import MEGAPermissions
 
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)

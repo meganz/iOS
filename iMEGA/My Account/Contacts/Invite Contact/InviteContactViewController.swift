@@ -1,7 +1,7 @@
 import Contacts
 import ContactsUI
-import MessageUI
 import MEGAPermissions
+import MessageUI
 import UIKit
 
 class InviteContactViewController: UIViewController {
