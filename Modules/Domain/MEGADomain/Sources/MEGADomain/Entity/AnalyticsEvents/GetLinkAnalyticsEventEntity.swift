@@ -14,15 +14,11 @@ public enum GetLinkAnalyticsEventEntity {
     case removePasswordForFolder
     case removePasswordForFile
     case shareFolder
-    case shareFolders
     case shareFile
-    case shareFiles
-    case shareFilesAndFolders
+    case shareMultipleNodes
     case getLinkForFolder
-    case getLinkForFolders
     case getLinkForFile
-    case getLinkForFiles
-    case getLinkForFilesAndFolders
+    case getLinkMultipleNodes
     case proFeaturesSeePlansFolder
     case proFeaturesNotNowFolder
     case proFeaturesSeePlansFile
