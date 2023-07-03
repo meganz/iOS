@@ -1147,6 +1147,8 @@
 		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB282A4EE5FB002B0077 /* MEGAPermissions */; };
 		9418DB2B2A4EE611002B0077 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB2A2A4EE611002B0077 /* MEGAPermissionsMock */; };
+		9419E0472A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */; };
+		9419E0482A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */; };
 		9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422494128DB77A2009626E6 /* ContactLinkContentView.swift */; };
 		9422494428DB77B8009626E6 /* ContactLinkContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422494328DB77B8009626E6 /* ContactLinkContentView.xib */; };
 		9422B9F02A41A331007AA5D1 /* PermissionAlertRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422B9EF2A41A331007AA5D1 /* PermissionAlertRouting.swift */; };
@@ -3697,6 +3699,7 @@
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		9418DB272A4EE5E7002B0077 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
+		9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeLoadOperation+NodeAccessConfiguration.swift"; sourceTree = "<group>"; };
 		9422494128DB77A2009626E6 /* ContactLinkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkContentView.swift; sourceTree = "<group>"; };
 		9422494328DB77B8009626E6 /* ContactLinkContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactLinkContentView.xib; sourceTree = "<group>"; };
 		9422B9EF2A41A331007AA5D1 /* PermissionAlertRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouting.swift; sourceTree = "<group>"; };
@@ -9066,13 +9069,6 @@
 			path = SortOrder;
 			sourceTree = "<group>";
 		};
-		946FBE1C297007CF0080FDC3 /* RubbishBin */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RubbishBin;
-			sourceTree = "<group>";
-		};
 		9495818C2A43295F0071573B /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
@@ -11823,8 +11819,8 @@
 				C46050552727FC3B00D67A44 /* Backups */,
 				C473CB962758130A000E633B /* Camera Uploads */,
 				C4D6FAAE276BB9E500773333 /* MyChatFiles */,
-				946FBE1C297007CF0080FDC3 /* RubbishBin */,
 				C4E78E8B272AF59D00DBF926 /* NodeAccess.swift */,
+				9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */,
 				C48CE0132732ECE40081DEC4 /* NodeLoadOperation.swift */,
 				C4E78E9A272B4F9200DBF926 /* NodeLoadOperationProtocol.swift */,
 			);
@@ -14165,6 +14161,7 @@
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
+				9419E0472A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */,
 				BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */,
 				2F9F112A2508A43300896DFF /* ServiceConstant.swift in Sources */,
 				2F9F11152508A3E800896DFF /* ServiceManager.swift in Sources */,
@@ -14694,6 +14691,7 @@
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
 				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
 				B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */,
+				9419E0482A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */,
 				A8F515B127F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift in Sources */,
 				B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */,
 				5B3B0D152684B24800479A68 /* ShareViewController.m in Sources */,
