@@ -31,4 +31,34 @@ final class MEGASwiftTests: XCTestCase {
         let onMegaString = "1 MB"
         XCTAssertEqual(onMegaString, String.memoryStyleString(fromByteCount: oneMegaInBytes))
     }
+    
+    func testSubString_withPlainString_shouldReturnCorrectString() {
+        let sampleString = "This is a [A]test string[/A]"
+        let testString = sampleString.subString(from: "[A]", to: "[/A]")
+        XCTAssertEqual(testString, "test string")
+    }
+    
+    func testSubString_withEmoji_shouldReturnCorrectString() {
+        let sampleString = "This is a [C]🎉test🍏string🍎[/C]"
+        let testString = sampleString.subString(from: "[C]", to: "[/C]")
+        XCTAssertEqual(testString, "🎉test🍏string🍎")
+    }
+    
+    func testSubString_shouldReturnNilString() {
+        let sampleString = "This is a test string."
+        let testString = sampleString.subString(from: "[A]", to: "[/A]")
+        XCTAssertNil(testString)
+    }
+    
+    func testSubString_withStartStringButNoEndString_shouldReturnNilString() {
+        let sampleString = "This is a [A]test string."
+        let testString = sampleString.subString(from: "[A]", to: "[/A]")
+        XCTAssertNil(testString)
+    }
+    
+    func testSubString_withEndStringButNoStartString_shouldReturnNilString() {
+        let sampleString = "This is a test string.[/A]"
+        let testString = sampleString.subString(from: "[A]", to: "[/A]")
+        XCTAssertNil(testString)
+    }
 }

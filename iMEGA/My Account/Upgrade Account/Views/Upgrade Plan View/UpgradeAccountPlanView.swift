@@ -32,6 +32,12 @@ struct UpgradeAccountPlanView: View {
                                 .padding(.bottom, 5)
                         }
                         
+                        if viewModel.recommendedPlanType == nil {
+                            TextWithLinkView(details: viewModel.pricingPageFooterDetails)
+                                .font(.subheadline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        
                         UpgradeSectionFeatureOfProView()
                             .padding(.top, 15)
                         
