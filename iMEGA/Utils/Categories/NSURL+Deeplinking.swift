@@ -154,52 +154,36 @@ extension NSURL {
     }
     
     private func parseUniversalLinkURL() -> URLType {
-        guard let path = path, host?.lowercased().contains("mega") == true else {
+        guard let path, host?.lowercased().contains("mega") == true else {
             return .default
         }
         
-        if path.hasPrefix(DeeplinkPathKey.fileRequest.rawValue) {
-            return .fileRequestLink
-        } else if path.hasPrefix(DeeplinkPathKey.file.rawValue) {
-            return .fileLink
-        } else if path.hasPrefix(DeeplinkPathKey.folder.rawValue) {
-            return .folderLink
-        } else if path.hasPrefix(DeeplinkPathKey.confirmation.rawValue) {
-            return .confirmationLink
-        } else if path.hasPrefix(DeeplinkPathKey.newSignUp.rawValue) {
-            return .newSignUpLink
-        } else if path.hasPrefix(DeeplinkPathKey.backup.rawValue) {
-            return .backupLink
-        } else if path.hasPrefix(DeeplinkPathKey.incomingPendingContacts.rawValue) {
-            return .incomingPendingContactsLink
-        } else if path.hasPrefix(DeeplinkPathKey.changeEmail.rawValue) {
-            return .changeEmailLink
-        } else if path.hasPrefix(DeeplinkPathKey.cancelAccount.rawValue) {
-            return .cancelAccountLink
-        } else if path.hasPrefix(DeeplinkPathKey.recover.rawValue) {
-            return .recoverLink
-        } else if path.hasPrefix(DeeplinkPathKey.contact.rawValue) {
-            return .contactLink
-        } else if path.hasPrefix(DeeplinkPathKey.openChatSection.rawValue) {
-            return .openChatSectionLink
-        } else if path.hasPrefix(DeeplinkPathKey.scheduleChat.rawValue) {
-            return .scheduleChatLink
-        } else if path.hasPrefix(DeeplinkPathKey.publicChat.rawValue) {
-            return .publicChatLink
-        } else if path.hasPrefix(DeeplinkPathKey.loginrequired.rawValue) {
-            return .loginRequiredLink
-        } else if path.hasPrefix(DeeplinkPathKey.achievements.rawValue) {
-            return .achievementsLink
-        } else if path.hasPrefix(DeeplinkPathKey.newTextFile.rawValue) {
-            return .newTextFile
-        } else if path.hasPrefix(DeeplinkPathKey.privacyPolicy.rawValue) {
-            return .default
-        } else if path.hasPrefix(DeeplinkPathKey.cookiePolicy.rawValue) {
-            return .default
-        } else if path.hasPrefix(DeeplinkPathKey.termsOfService.rawValue) {
-            return .default
-        } else if path.hasPrefix(DeeplinkPathKey.collection.rawValue) {
-            return .collection
+        let prefixes: [(key: DeeplinkPathKey, urlType: URLType)] = [
+            (DeeplinkPathKey.fileRequest, .fileRequestLink),
+            (DeeplinkPathKey.file, .fileLink),
+            (DeeplinkPathKey.folder, .folderLink),
+            (DeeplinkPathKey.confirmation, .confirmationLink),
+            (DeeplinkPathKey.newSignUp, .newSignUpLink),
+            (DeeplinkPathKey.backup, .backupLink),
+            (DeeplinkPathKey.incomingPendingContacts, .incomingPendingContactsLink),
+            (DeeplinkPathKey.changeEmail, .changeEmailLink),
+            (DeeplinkPathKey.cancelAccount, .cancelAccountLink),
+            (DeeplinkPathKey.recover, .recoverLink),
+            (DeeplinkPathKey.contact, .contactLink),
+            (DeeplinkPathKey.openChatSection, .openChatSectionLink),
+            (DeeplinkPathKey.scheduleChat, .scheduleChatLink),
+            (DeeplinkPathKey.publicChat, .publicChatLink),
+            (DeeplinkPathKey.loginrequired, .loginRequiredLink),
+            (DeeplinkPathKey.achievements, .achievementsLink),
+            (DeeplinkPathKey.newTextFile, .newTextFile),
+            (DeeplinkPathKey.privacyPolicy, .default),
+            (DeeplinkPathKey.cookiePolicy, .default),
+            (DeeplinkPathKey.termsOfService, .default),
+            (DeeplinkPathKey.collection, .collection)
+        ]
+        
+        if let match = prefixes.first(where: { path.hasPrefix($0.key.rawValue) }) {
+            return match.urlType
         }
         
         if fragment != nil {

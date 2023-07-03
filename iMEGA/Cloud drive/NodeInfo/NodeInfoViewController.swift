@@ -587,49 +587,45 @@ extension NodeInfoViewController: UITableViewDelegate {
 
 extension NodeInfoViewController: MEGAGlobalDelegate {
     func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        guard let nodeList = nodeList else {
-            return
-        }
+        guard let nodeList else { return }
+        
         for nodeIndex in 0..<nodeList.size.intValue {
             guard let nodeUpdated = nodeList.node(at: nodeIndex) else {
                 continue
             }
             
             if nodeUpdated.hasChangedType(.outShare) && nodeUpdated.handle == node.handle {
-                guard let sharingSection = sections().firstIndex(of: .sharing) else { return }
-                if nodeUpdated.outShares().count < tableView.numberOfRows(inSection: sharingSection) - 1 {
-                    if nodeUpdated.outShares().count == 0 {
-                        tableView.reloadData()
-                    } else {
-                        tableView.reloadSections([sharingSection], with: .automatic)
-                    }
+                guard let sharingSection = sections().firstIndex(of: .sharing),
+                      nodeUpdated.outShares().count < tableView.numberOfRows(inSection: sharingSection) - 1 else {
+                    return
+                }
+                
+                if nodeUpdated.outShares().count == 0 {
+                    tableView.reloadData()
+                } else {
+                    tableView.reloadSections([sharingSection], with: .automatic)
                 }
             }
             
             if nodeUpdated.hasChangedType(.removed) {
                 if nodeUpdated.handle == node.handle {
                     currentVersionRemoved()
-                    break
-                } else {
-                    if nodeVersions.contains(where: { $0.handle == nodeUpdated.handle }) {
-                        nodeVersionRemoved()
-                    }
-                    break
+                } else if nodeVersions.contains(where: { $0.handle == nodeUpdated.handle }) {
+                    nodeVersionRemoved()
                 }
+                break
             }
             
-            if nodeUpdated.hasChangedType(.parent) {
-                if nodeUpdated.handle == node.handle {
-                    guard let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.parentHandle) else { return }
-                    if parentNode.isFolder() { // Node moved
-                        guard let newNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.handle) else { return }
-                        node = newNode
-                    } else { // Node versioned
-                        guard let newNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.parentHandle) else { return }
-                        node = newNode
-                    }
-                    tableView.reloadData()
+            if nodeUpdated.hasChangedType(.parent) && nodeUpdated.handle == node.handle {
+                guard let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.parentHandle) else { return }
+                if parentNode.isFolder() { // Node moved
+                    guard let newNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.handle) else { return }
+                    node = newNode
+                } else { // Node versioned
+                    guard let newNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.parentHandle) else { return }
+                    node = newNode
                 }
+                tableView.reloadData()
             }
             
             if nodeUpdated.handle == self.node.handle {

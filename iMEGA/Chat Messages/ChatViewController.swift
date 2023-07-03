@@ -461,100 +461,172 @@ class ChatViewController: MessagesViewController {
         }
         
         if let notificationMessage = message as? ChatNotificationMessage {
-            guard let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatUnreadMessagesLabelCollectionCell.reuseIdentifier,
-                                                                        for: indexPath) as? ChatUnreadMessagesLabelCollectionCell,
-                  case .unreadMessage(let count) = notificationMessage.type else {
-                fatalError("Could not dequeue `ChatUnreadMessagesLabelCollectionCell`")
-            }
-            cell.unreadMessageCount = count
-            return cell
+            return customCell(for: notificationMessage, in: indexPath)
         }
         
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
-        if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
-            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-            return cell
-        } else if chatMessage.transfer?.transferChatMessageType() == .attachment {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
-            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-            return cell
-        } else if chatMessage.message.type == .attachment
-                    || chatMessage.message.type == .contact {
-            if chatMessage.message.nodeList?.size?.intValue ?? 0 == 1 {
-                if let node = chatMessage.message.nodeList?.node(at: 0),
-                   node.name?.fileExtensionGroup.isVisualMedia ?? false {
-                    let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
-                    cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                    return cell
-                }
+        
+        let messageType = chatMessage.message.type
+        let transferMessageType = chatMessage.transfer?.transferChatMessageType()
+        
+        if transferMessageType == .voiceClip {
+            return customCellForTransferMessageTypeVoiceClip(chatMessage, in: indexPath)
+        }
+        
+        if transferMessageType == .attachment {
+            return customCellForTransferMessageTypeAttachment(chatMessage, in: indexPath)
+        }
+        
+        if messageType == .attachment || messageType == .contact {
+            return customCellForMessageTypeAttachmentOrContact(chatMessage, in: indexPath)
+        }
+        
+        if messageType == .normal {
+            return customCellForNormalMessage(chatMessage, in: indexPath)
+        }
+        
+        if messageType == .voiceClip {
+            return customCellForMessageTypeVoiceClip(chatMessage, in: indexPath)
+        }
+        
+        if messageType == .containsMeta {
+            return customCellForMessageTypeContainsMeta(chatMessage, in: indexPath)
+        }
+        
+        if chatMessage.message.isManagementMessage {
+            return customCellForManagementMessage(chatMessage, in: indexPath)
+        }
+        
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
+        cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+        return cell
+    }
+    
+    private func customCell(
+        for notificationMessage: ChatNotificationMessage,
+        in indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = messagesCollectionView.dequeueReusableCell(
+            withReuseIdentifier: ChatUnreadMessagesLabelCollectionCell.reuseIdentifier,
+            for: indexPath
+        ) as? ChatUnreadMessagesLabelCollectionCell, case .unreadMessage(let count) = notificationMessage.type else {
+            fatalError("Could not dequeue `ChatUnreadMessagesLabelCollectionCell`")
+        }
+        cell.unreadMessageCount = count
+        return cell
+    }
+    
+    private func customCellForTransferMessageTypeVoiceClip(
+        _ chatMessage: ChatMessage,
+        in indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
+        cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+        return cell
+    }
+    
+    private func customCellForTransferMessageTypeAttachment(
+        _ chatMessage: ChatMessage,
+        in indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
+        cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+        return cell
+    }
+    
+    private func customCellForMessageTypeAttachmentOrContact(
+        _ chatMessage: ChatMessage,
+        in indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        if chatMessage.message.nodeList?.size?.intValue ?? 0 == 1 {
+            if let node = chatMessage.message.nodeList?.node(at: 0),
+               node.name?.fileExtensionGroup.isVisualMedia ?? false {
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                return cell
             }
-            
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
+        }
+        
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
+        cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+        return cell
+    }
+    
+    private func customCellForNormalMessage(
+        _ chatMessage: ChatMessage,
+        in indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        if chatMessage.message.warningDialog.rawValue > MEGAChatMessageWarningDialog.none.rawValue {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewDialogCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewDialogCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
-        } else if chatMessage.message.type == .normal {
-            if chatMessage.message.warningDialog.rawValue > MEGAChatMessageWarningDialog.none.rawValue {
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewDialogCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewDialogCollectionViewCell
-                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                return cell
-            } else if chatMessage.message.containsMEGALink() {
-                if (chatMessage.message.megaLink as? NSURL)?.mnz_type() == .contactLink {
-                    let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ContactLinkCollectionViewCell.reuseIdentifier, for: indexPath) as! ContactLinkCollectionViewCell
-                    cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                    return cell
-                }
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
+        } else if chatMessage.message.containsMEGALink() {
+            if (chatMessage.message.megaLink as? NSURL)?.mnz_type() == .contactLink {
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ContactLinkCollectionViewCell.reuseIdentifier, for: indexPath) as! ContactLinkCollectionViewCell
                 cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
             }
-            
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
-            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-            return cell
-        } else if chatMessage.message.type == .voiceClip {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
-            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-            return cell
-        } else if chatMessage.message.type == .containsMeta {
-            if chatMessage.message.containsMeta?.type == .geolocation {
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
-                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                return cell
-            } else if chatMessage.message.containsMeta?.type == .richPreview {
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
-                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                return cell
-            } else if chatMessage.message.containsMeta?.type == .giphy {
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatGiphyCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatGiphyCollectionViewCell
-                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                return cell
-            } else {
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
-                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                return cell
-            }
-        } else if chatMessage.message.isManagementMessage {
-            switch chatMessage.message.type {
-            case .callEnded, .callStarted:
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
-                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                return cell
-            case .scheduledMeeting:
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatManagmentTypeCollectionViewCell
-                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                return cell
-            default:
-                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatManagmentTypeCollectionViewCell
-                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                return cell
-            }
-        } else {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
         }
         
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
+        cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+        return cell
+        
+    }
+    
+    private func customCellForMessageTypeVoiceClip(
+        _ chatMessage: ChatMessage,
+        in indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
+        cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+        return cell
+    }
+    
+    private func customCellForMessageTypeContainsMeta(
+        _ chatMessage: ChatMessage,
+        in indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        if chatMessage.message.containsMeta?.type == .geolocation {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        } else if chatMessage.message.containsMeta?.type == .richPreview {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        } else if chatMessage.message.containsMeta?.type == .giphy {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatGiphyCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatGiphyCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        } else {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
+    }
+    
+    private func customCellForManagementMessage(
+        _ chatMessage: ChatMessage,
+        in indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        switch chatMessage.message.type {
+        case .callEnded, .callStarted:
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .scheduledMeeting:
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatManagmentTypeCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        default:
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatManagmentTypeCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
     }
     
     // MARK: - Interface methods

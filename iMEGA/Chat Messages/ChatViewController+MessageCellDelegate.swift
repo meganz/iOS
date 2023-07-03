@@ -139,9 +139,14 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
     func didTapMessage(in cell: MessageCollectionViewCell) {
         guard let indexPath = messagesCollectionView.indexPath(for: cell),
               let messagesDataSource = messagesCollectionView.messagesDataSource,
-              let chatMessage = messagesDataSource.messageForItem(at: indexPath,
-                                                                  in: messagesCollectionView) as? ChatMessage else { return }
-        if let transfer = chatMessage.transfer, transfer.type == .upload {
+              let chatMessage = messagesDataSource.messageForItem(
+                at: indexPath,
+                in: messagesCollectionView
+              ) as? ChatMessage else {
+            return
+        }
+        
+        if chatMessage.transfer?.type == .upload {
             checkTransferPauseStatus()
             if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
                 guard let cell = cell as? AudioMessageCell else {
@@ -156,115 +161,13 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         
         switch megaMessage.type {
         case .voiceClip:
-            guard let cell = cell as? AudioMessageCell else {
-                return
-            }
-            didTapPlayButton(in: cell)
-            
+            didTapVoiceClipTypeMessage(chatMessage, in: cell)
         case .attachment:
-            if megaMessage.nodeList?.size.uintValue == 1 {
-                var node = megaMessage.nodeList?.node(at: 0)
-                if chatRoom.isPreview {
-                    node = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
-                    
-                }
-                
-                if let name = node?.name,
-                   name.fileExtensionGroup.isVisualMedia {
-                    var mediaNodesArrayIndex = 0
-                    var foundIndex: Int?
-                    var mediaMessagesArray = [HandleEntity]()
-                    let mediaNodesArray = messages.compactMap { message -> MEGANode? in
-                        guard let localChatMessage = message as? ChatMessage,
-                              localChatMessage.message.type == .attachment,
-                              localChatMessage.message.nodeList?.size.intValue ?? 0 > 0,
-                              let node = localChatMessage.message.nodeList?.node(at: 0),
-                              name.fileExtensionGroup.isVisualMedia else {
-                                  return nil
-                              }
-                        
-                        if chatRoom.isPreview {
-                            if let authorizedNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
-                                if localChatMessage == chatMessage {
-                                    foundIndex = mediaNodesArrayIndex
-                                }
-                                mediaNodesArrayIndex += 1
-                                mediaMessagesArray.append(localChatMessage.message.messageId)
-                                return authorizedNode
-                            } else {
-                                return nil
-                            }
-                        }
-                        
-                        if localChatMessage == chatMessage {
-                            foundIndex = mediaNodesArrayIndex
-                        }
-                        mediaNodesArrayIndex += 1
-                        mediaMessagesArray.append(localChatMessage.message.messageId)
-                        return node
-                    }
-                    
-                    let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: mediaNodesArray),
-                                                                                     api: MEGASdkManager.sharedMEGASdk(),
-                                                                                     displayMode: .chatAttachment,
-                                                                                     preferredIndex: UInt(foundIndex ?? 0))
-                    photoBrowserVC.delegate = self
-                    photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
-                    present(viewController: photoBrowserVC)
-                } else {
-                    if let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
-                        viewController.chatId = chatRoom.chatId
-                        viewController.messageId = megaMessage.messageId
-                        navigationController?.present(navController, animated: true)
-                    } else {
-                        let messageId = NSNumber(value: megaMessage.messageId)
-                        let chatId = NSNumber(value: chatRoom.chatId)
-                        node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: messageId, chatId: chatId)
-                    }
-                }
-            } else {
-                let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedNodesViewControllerID") as! ChatAttachedNodesViewController
-                chatAttachedNodesVC.message = megaMessage
-                chatAttachedNodesVC.chatId = chatRoom.chatId
-                navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
-            }
-            
+            didTapAttachmentTypeMessage(chatMessage, in: cell)
         case .contact:
-            if megaMessage.usersCount == 1 {
-                let userEmail = megaMessage.userEmail(at: 0)
-                let userName = megaMessage.userName(at: 0)
-                let userHandle = megaMessage.userHandle(at: 0)
-                
-                let contactDetailsVC = UIStoryboard.init(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as! ContactDetailsViewController
-                contactDetailsVC.contactDetailsMode = .default
-                contactDetailsVC.userName = userName
-                contactDetailsVC.userEmail = userEmail
-                contactDetailsVC.userHandle = userHandle
-                navigationController?.pushViewController(contactDetailsVC, animated: true)
-            } else {
-                let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedContactsViewControllerID") as! ChatAttachedContactsViewController
-                chatAttachedNodesVC.message = megaMessage
-                navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
-            }
+            didTapContactTypeMessage(chatMessage, in: cell)
         case .containsMeta:
-            guard let containsMeta = megaMessage.containsMeta else { return }
-            if megaMessage.containsMeta?.type == .richPreview {
-                let url = URL(string: containsMeta.richPreview.url)
-                MEGALinkManager.linkURL = url
-                MEGALinkManager.processLinkURL(url)
-            } else if megaMessage.containsMeta?.type == .geolocation {
-                let geocoder = CLGeocoder()
-                let location = CLLocation(latitude: CLLocationDegrees(containsMeta.geolocation.latitude), longitude: CLLocationDegrees(containsMeta.geolocation.longitude))
-                geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-                    let placemark = MKPlacemark(coordinate: location.coordinate)
-                    let mapItem = MKMapItem(placemark: placemark)
-                    
-                    if error == nil && placemarks?.isNotEmpty == true {
-                        mapItem.name = placemarks?.first?.name
-                    }
-                    mapItem.openInMaps(launchOptions: nil)
-                }
-            }
+            didTapContainsMetaMessage(chatMessage, in: cell)
         default:
             if megaMessage.node != nil {
                 MEGALinkManager.linkURL = megaMessage.megaLink
@@ -273,4 +176,133 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
         }
     }
     
+    private func didTapVoiceClipTypeMessage(
+        _ chatMessage: ChatMessage,
+        in cell: MessageCollectionViewCell
+    ) {
+        guard let cell = cell as? AudioMessageCell else {
+            return
+        }
+        didTapPlayButton(in: cell)
+    }
+    
+    private func didTapAttachmentTypeMessage(
+        _ chatMessage: ChatMessage,
+        in cell: MessageCollectionViewCell
+    ) {
+        let megaMessage = chatMessage.message
+        if megaMessage.nodeList?.size.uintValue == 1 {
+            var node = megaMessage.nodeList?.node(at: 0)
+            if chatRoom.isPreview {
+                node = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
+            }
+            
+            if let name = node?.name,
+               name.fileExtensionGroup.isVisualMedia {
+                var mediaNodesArrayIndex = 0
+                var foundIndex: Int?
+                var mediaMessagesArray = [HandleEntity]()
+                let mediaNodesArray = messages.compactMap { message -> MEGANode? in
+                    guard let localChatMessage = message as? ChatMessage,
+                          localChatMessage.message.type == .attachment,
+                          localChatMessage.message.nodeList?.size.intValue ?? 0 > 0,
+                          let node = localChatMessage.message.nodeList?.node(at: 0),
+                          name.fileExtensionGroup.isVisualMedia else {
+                              return nil
+                          }
+                    
+                    if chatRoom.isPreview {
+                        if let authorizedNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
+                            if localChatMessage == chatMessage {
+                                foundIndex = mediaNodesArrayIndex
+                            }
+                            mediaNodesArrayIndex += 1
+                            mediaMessagesArray.append(localChatMessage.message.messageId)
+                            return authorizedNode
+                        } else {
+                            return nil
+                        }
+                    }
+                    
+                    if localChatMessage == chatMessage {
+                        foundIndex = mediaNodesArrayIndex
+                    }
+                    mediaNodesArrayIndex += 1
+                    mediaMessagesArray.append(localChatMessage.message.messageId)
+                    return node
+                }
+                
+                let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: mediaNodesArray),
+                                                                                 api: MEGASdkManager.sharedMEGASdk(),
+                                                                                 displayMode: .chatAttachment,
+                                                                                 preferredIndex: UInt(foundIndex ?? 0))
+                photoBrowserVC.delegate = self
+                photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
+                present(viewController: photoBrowserVC)
+            } else {
+                if let navController = node?.mnz_viewControllerForNode(inFolderLink: false, fileLink: nil) as? MEGANavigationController, let viewController = navController.topViewController as? PreviewDocumentViewController {
+                    viewController.chatId = chatRoom.chatId
+                    viewController.messageId = megaMessage.messageId
+                    navigationController?.present(navController, animated: true)
+                } else {
+                    let messageId = NSNumber(value: megaMessage.messageId)
+                    let chatId = NSNumber(value: chatRoom.chatId)
+                    node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: messageId, chatId: chatId)
+                }
+            }
+        } else {
+            let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedNodesViewControllerID") as! ChatAttachedNodesViewController
+            chatAttachedNodesVC.message = megaMessage
+            chatAttachedNodesVC.chatId = chatRoom.chatId
+            navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
+        }
+    }
+    
+    private func didTapContactTypeMessage(
+        _ chatMessage: ChatMessage,
+        in cell: MessageCollectionViewCell
+    ) {
+        let megaMessage = chatMessage.message
+        if megaMessage.usersCount == 1 {
+            let userEmail = megaMessage.userEmail(at: 0)
+            let userName = megaMessage.userName(at: 0)
+            let userHandle = megaMessage.userHandle(at: 0)
+            
+            let contactDetailsVC = UIStoryboard.init(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as! ContactDetailsViewController
+            contactDetailsVC.contactDetailsMode = .default
+            contactDetailsVC.userName = userName
+            contactDetailsVC.userEmail = userEmail
+            contactDetailsVC.userHandle = userHandle
+            navigationController?.pushViewController(contactDetailsVC, animated: true)
+        } else {
+            let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedContactsViewControllerID") as! ChatAttachedContactsViewController
+            chatAttachedNodesVC.message = megaMessage
+            navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
+        }
+    }
+    
+    private func didTapContainsMetaMessage(
+        _ chatMessage: ChatMessage,
+        in cell: MessageCollectionViewCell
+    ) {
+        let megaMessage = chatMessage.message
+        guard let containsMeta = megaMessage.containsMeta else { return }
+        if megaMessage.containsMeta?.type == .richPreview {
+            let url = URL(string: containsMeta.richPreview.url)
+            MEGALinkManager.linkURL = url
+            MEGALinkManager.processLinkURL(url)
+        } else if megaMessage.containsMeta?.type == .geolocation {
+            let geocoder = CLGeocoder()
+            let location = CLLocation(latitude: CLLocationDegrees(containsMeta.geolocation.latitude), longitude: CLLocationDegrees(containsMeta.geolocation.longitude))
+            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                let placemark = MKPlacemark(coordinate: location.coordinate)
+                let mapItem = MKMapItem(placemark: placemark)
+                
+                if error == nil && placemarks?.isNotEmpty == true {
+                    mapItem.name = placemarks?.first?.name
+                }
+                mapItem.openInMaps(launchOptions: nil)
+            }
+        }
+    }
 }
