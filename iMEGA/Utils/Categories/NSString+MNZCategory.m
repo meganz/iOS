@@ -801,20 +801,6 @@ static NSString* const B = @"[B]";
 
 #pragma mark - File names and extensions
 
-- (NSString *)mnz_fileNameWithLowercaseExtension {
-    NSString *fileName;
-    NSString *extension;
-    
-    NSMutableArray<NSString *> *fileNameComponents = [[self componentsSeparatedByString:@"."] mutableCopy];
-    if (fileNameComponents.count > 1) {
-        extension = fileNameComponents.lastObject.lowercaseString;
-        [fileNameComponents replaceObjectAtIndex:(fileNameComponents.count - 1) withObject:extension];
-    }
-    fileName = [fileNameComponents componentsJoinedByString:@"."];
-    
-    return fileName;
-}
-
 - (NSString *)mnz_lastExtensionInLowercase {
     NSString *extension;
     NSMutableArray<NSString *> *fileNameComponents = [[self.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];

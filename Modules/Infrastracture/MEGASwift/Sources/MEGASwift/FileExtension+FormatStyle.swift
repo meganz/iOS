@@ -9,7 +9,7 @@ public enum CapitalizationStrategy: Codable, Hashable {
 
 // MARK: - File Extension Components Style
 
-protocol FilePathComponentStylable: Codable, Hashable {
+public protocol FilePathComponentStylable: Codable, Hashable {
     associatedtype FormatInput: Codable, Hashable
     associatedtype FormatOutput: Codable, Hashable
     
@@ -26,7 +26,7 @@ protocol FilePathComponentStylable: Codable, Hashable {
 }
 
 extension FilePathComponentStylable where FormatInput == String, FormatOutput == String {
-    func format(_ input: FormatInput) -> FormatOutput {
+    public func format(_ input: FormatInput) -> FormatOutput {
         var result = ""
         switch capitalization {
         case .verbatim: result = input
@@ -43,7 +43,7 @@ extension FilePathComponentStylable where FormatInput == String, FormatOutput ==
 
 // MARK: - File Extension Style
 
-protocol FilePathStylable: Codable, Hashable {
+public protocol FilePathStylable: Codable, Hashable {
     associatedtype FormatInput: Codable, Hashable
     associatedtype FormatOutput: Codable, Hashable
     associatedtype ComponentNameStyle: FilePathComponentStylable where ComponentNameStyle.FormatInput == FormatInput
@@ -62,7 +62,7 @@ protocol FilePathStylable: Codable, Hashable {
 }
 
 extension FilePathStylable where FormatInput == FileExtension, FormatOutput == String {
-    func name(capitalization: CapitalizationStrategy = .verbatim, removingCharactersIn forbiddenCharacters: CharacterSet? = nil) -> Self {
+    public func name(capitalization: CapitalizationStrategy = .verbatim, removingCharactersIn forbiddenCharacters: CharacterSet? = nil) -> Self {
         .init(
             name: .init(capitalization: capitalization, removingCharactersIn: forbiddenCharacters, locale: locale),
             extensionStyle: pathExtensionStyle,
@@ -70,7 +70,7 @@ extension FilePathStylable where FormatInput == FileExtension, FormatOutput == S
         )
     }
     
-    func pathExtension(capitalization: CapitalizationStrategy = .verbatim, removingCharactersIn forbiddenCharacters: CharacterSet? = nil) -> Self {
+    public func pathExtension(capitalization: CapitalizationStrategy = .verbatim, removingCharactersIn forbiddenCharacters: CharacterSet? = nil) -> Self {
         .init(
             name: nameStyle,
             extensionStyle: .init(capitalization: capitalization, removingCharactersIn: forbiddenCharacters, locale: locale),
@@ -82,24 +82,24 @@ extension FilePathStylable where FormatInput == FileExtension, FormatOutput == S
 // MARK: - File Extension Format Style Implementation
 extension FileExtension {
     
-    struct FormatStyle: FilePathStylable {
-        typealias FormatInput = FileExtension
-        typealias FormatOutput = String
+    public struct FormatStyle: FilePathStylable {
+        public typealias FormatInput = FileExtension
+        public typealias FormatOutput = String
         
-        typealias ComponentNameStyle = FileExtension.Component.FormatStyle<FormatInput, FormatOutput>
-        typealias ComponentExtensionStyle = FileExtension.Component.FormatStyle<FormatInput, FormatOutput>
+        public typealias ComponentNameStyle = FileExtension.Component.FormatStyle<FormatInput, FormatOutput>
+        public typealias ComponentExtensionStyle = FileExtension.Component.FormatStyle<FormatInput, FormatOutput>
         
-        let nameStyle: ComponentNameStyle?
-        let pathExtensionStyle: ComponentExtensionStyle?
-        let locale: Locale
+        public let nameStyle: ComponentNameStyle?
+        public let pathExtensionStyle: ComponentExtensionStyle?
+        public let locale: Locale
         
-        init(name style: ComponentNameStyle? = .verbatim, extensionStyle: ComponentExtensionStyle? = .verbatim, locale: Locale = .autoupdatingCurrent) {
+        public init(name style: ComponentNameStyle? = .verbatim, extensionStyle: ComponentExtensionStyle? = .verbatim, locale: Locale = .autoupdatingCurrent) {
             nameStyle = style
             pathExtensionStyle = extensionStyle
             self.locale = locale
         }
         
-        func format(_ input: FormatInput) -> FormatOutput {
+        public func format(_ input: FormatInput) -> FormatOutput {
             let components = fileNameComponents(for: input)
             var resultElements = [String]()
             
@@ -125,28 +125,28 @@ extension FileExtension {
         }
     }
     
-    enum Component {
-        struct FormatStyle<FormatInput, FormatOutput>: FilePathComponentStylable {
-            typealias FormatInput = String
-            typealias FormatOutput = String
+    public enum Component {
+        public struct FormatStyle<FormatInput, FormatOutput>: FilePathComponentStylable {
+            public typealias FormatInput = String
+            public typealias FormatOutput = String
             
-            static var verbatim: Self { .init() }
+            public static var verbatim: Self { .init() }
             
-            let capitalization: CapitalizationStrategy
-            let allowedCharacters: CharacterSet?
-            let locale: Locale
+            public let capitalization: CapitalizationStrategy
+            public let allowedCharacters: CharacterSet?
+            public let locale: Locale
             
-            init(capitalization: CapitalizationStrategy = .verbatim, removingCharactersIn forbiddenCharacters: CharacterSet? = nil, locale: Locale = .autoupdatingCurrent) {
+            public init(capitalization: CapitalizationStrategy = .verbatim, removingCharactersIn forbiddenCharacters: CharacterSet? = nil, locale: Locale = .autoupdatingCurrent) {
                 self.capitalization = capitalization
                 self.locale = locale
                 allowedCharacters = forbiddenCharacters?.inverted
             }
             
-            func capitalization(_ strategy: CapitalizationStrategy) -> Self {
+            public func capitalization(_ strategy: CapitalizationStrategy) -> Self {
                 .init(capitalization: strategy, removingCharactersIn: allowedCharacters?.inverted, locale: self.locale)
             }
             
-            func remove(charactersIn set: CharacterSet) -> Self {
+            public func remove(charactersIn set: CharacterSet) -> Self {
                 .init(capitalization: capitalization, removingCharactersIn: set, locale: self.locale)
             }
         }
@@ -154,14 +154,14 @@ extension FileExtension {
 }
 
 @available(iOS 15.0, *)
-extension FileExtension {
+public extension FileExtension {
     func formatted<F: Foundation.FormatStyle>(_ style: F) -> F.FormatOutput where F.FormatInput == Self {
         style.format(self)
     }
 }
 
 @available(iOS 15.0, *)
-extension FileExtension.Component {
+public extension FileExtension.Component {
     func formatted<F: Foundation.FormatStyle>(_ style: F) -> F.FormatOutput where F.FormatInput == Self {
         style.format(self)
     }
@@ -169,14 +169,14 @@ extension FileExtension.Component {
 
 @available(iOS 15.0, *)
 extension FileExtension.FormatStyle: Foundation.FormatStyle {
-    func locale(_ locale: Locale) -> Self {
+    public func locale(_ locale: Locale) -> Self {
         .init(name: nameStyle, extensionStyle: pathExtensionStyle, locale: locale)
     }
 }
 
 @available(iOS 15.0, *)
 extension FileExtension.Component.FormatStyle: Foundation.FormatStyle where FormatInput == String, FormatOutput == String {
-    static func component(capitalization: CapitalizationStrategy = .verbatim, removingCharactersIn forbiddenCharacters: CharacterSet? = nil, locale: Locale = .autoupdatingCurrent) -> Self {
+    public static func component(capitalization: CapitalizationStrategy = .verbatim, removingCharactersIn forbiddenCharacters: CharacterSet? = nil, locale: Locale = .autoupdatingCurrent) -> Self {
         .init(capitalization: capitalization, removingCharactersIn: forbiddenCharacters, locale: locale)
     }
 }
@@ -184,7 +184,7 @@ extension FileExtension.Component.FormatStyle: Foundation.FormatStyle where Form
 @available(iOS 15.0, *)
 extension FormatStyle where Self == FileExtension.FormatStyle {
     
-    static func filePath(name style: Self.ComponentNameStyle? = .verbatim, extensionStyle: Self.ComponentExtensionStyle? = .verbatim, locale: Locale = .autoupdatingCurrent) -> Self {
+    public static func filePath(name style: Self.ComponentNameStyle? = .verbatim, extensionStyle: Self.ComponentExtensionStyle? = .verbatim, locale: Locale = .autoupdatingCurrent) -> Self {
         .init(name: style, extensionStyle: extensionStyle, locale: locale)
     }
 }
