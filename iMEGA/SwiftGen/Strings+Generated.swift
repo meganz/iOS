@@ -5666,6 +5666,12 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "upgradeAccountPlan.button.termsAndPolicies.title")
         }
       }
+      public enum Footer {
+        public enum Message {
+          /// You can upgrade your current subscription on our [A]pricing page[/A].
+          public static let pricingPage = Strings.tr("Localizable", "upgradeAccountPlan.footer.message.pricingPage")
+        }
+      }
       public enum Header {
         public enum PlanTermPicker {
           /// Monthly

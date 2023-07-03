@@ -3512,6 +3512,8 @@
 "upgradeAccountPlan.plan.details.storage"="Storage: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="You can upgrade your current subscription on our [A]pricing page[/A].";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Cancel";
 /* Title for alert cancelling an scheduled meeting */
