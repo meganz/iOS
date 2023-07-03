@@ -238,6 +238,8 @@ extension MEGARequestType {
             return .backupRemove
         case .MEGARequestTypeBackupPutHeartbeat:
             return .backupPutHeartbeat
+        case .MEGARequestTypeBackupInfo:
+            return .backupInfo
         case .MEGARequestTypeGetAttrNode:
             return .getAttrNode
         case .MEGARequestTypeLoadExternalDriveBackups:
