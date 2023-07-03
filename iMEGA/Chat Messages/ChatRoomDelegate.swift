@@ -233,138 +233,141 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     func onMessageUpdate(_: MEGAChatSdk, message: MEGAChatMessage) {
         MEGALogInfo("ChatRoomDelegate: onMessageUpdate")
         message.chatId = chatRoom.chatId
-        if message.hasChanged(for: .status) {
-            switch message.status {
-            case .unknown, .sending, .sendingManual:
-                break
-            case .serverReceived:
-                let filteredArray = chatMessages.filter { chatMessage in
-                    guard let localChatMessage = chatMessage as? ChatMessage else {
-                        return false
-                    }
-                    
-                    return localChatMessage.message.temporalId == message.temporalId
-                }
-                
-                if filteredArray.isNotEmpty {
-                    guard let oldMessage = filteredArray.first as? ChatMessage,
-                          let index = chatMessages.firstIndex(where: { message -> Bool in
-                              guard let localChatMessage = message as? ChatMessage else {
-                                  return false
-                              }
-                              
-                              return localChatMessage == oldMessage
-                          }) else {
-                        return
-                    }
-                    message.warningDialog = oldMessage.message.warningDialog
-                    let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                    chatMessages[index] = receivedMessage
-                    
-                    UIView.performWithoutAnimation {
-                        chatViewController?.messagesCollectionView.performBatchUpdates({
-                            chatViewController?.messagesCollectionView.reloadSections([index])
-                        }, completion: { _ in
-                            if index == self.messages.count - 1 {
-                                self.chatViewController?.scrollToBottom()
-                            }
-                        })
-                    }
-                } else {
-                    if message.type == .attachment || message.type == .voiceClip {
-                        let filteredArray = transfers.filter { chatMessage in
-                            guard let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
-                            return node.handle == chatMessage.transfer?.nodeHandle
-                        }
-                        
-                        if filteredArray.isNotEmpty, let oldMessage = filteredArray.first, let index = transfers.firstIndex(of: oldMessage) {
-                            let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                            chatMessages.append(receivedMessage)
-                            transfers.remove(at: index)
-                            if let transfer = oldMessage.transfer, let node = MEGASdk.shared.node(forHandle: transfer.nodeHandle) {
-                                let path = NSHomeDirectory().append(pathComponent: transfer.path)
-                                let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
-                                try? FileManager.default.copyItem(atPath: path, toPath: originalImagePath)
-                            }
-                            
-                            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
-                            chatViewController?.showOrHideJumpToBottom()
-                            return
-                        }
-                    }
-                    
-                    message.chatId = chatRoom.chatId
-                    insertMessage(message)
-                }
-                
-            default:
-                break
-            }
-        }
+        handleStatusChanged(message)
+        handleContentChanged(message)
         
-        if message.hasChanged(for: .content) {
-            if message.isDeleted || message.isEdited {
-                let filteredArray = chatMessages.filter { chatMessage in
-                    guard let localChatMessage = chatMessage as? ChatMessage else {
-                        return false
-                    }
-                    
-                    return localChatMessage.message.messageId == message.messageId
+        chatViewController?.messagesCollectionView.reloadEmptyDataSet()
+    }
+    
+    private func handleStatusChanged(_ message: MEGAChatMessage) {
+        guard message.hasChanged(for: .status) else { return }
+        
+        if case .serverReceived = message.status {
+            let filteredArray = chatMessages.filter { chatMessage in
+                guard let localChatMessage = chatMessage as? ChatMessage else {
+                    return false
                 }
-                if filteredArray.isNotEmpty {
-                    guard let oldMessage = filteredArray.first as? ChatMessage,
-                          let index = chatMessages.firstIndex(where: { chatMessage -> Bool in
-                              guard let localChatMessage = chatMessage as? ChatMessage else {
-                                  return false
-                              }
-                              
-                              return localChatMessage == oldMessage
-                          }) else {
-                        return
-                    }
-                    
-                    let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                    
-                    if message.isEdited {
-                        chatMessages[index] = receivedMessage
-                        chatViewController?.messagesCollectionView.performBatchUpdates({
-                            chatViewController?.messagesCollectionView.reloadSections([index])
-                            if isLastSectionVisible() {
-                                chatViewController?.scrollToBottom()
-                            }
-                        }, completion: nil)
-                    }
-                    
-                    if message.isDeleted {
-                        chatMessages.remove(at: index)
-                        chatViewController?.messagesCollectionView.performBatchUpdates({
-                            chatViewController?.messagesCollectionView.deleteSections([index])
-                        }, completion: nil)
-                        
-                        let unreadNotiMessageIndex = chatMessages.firstIndex { $0 is ChatNotificationMessage }
-                        if let unreadNotiMessageIndex = unreadNotiMessageIndex,
-                           let notificationMessage = chatMessages[unreadNotiMessageIndex] as? ChatNotificationMessage,
-                           case let .unreadMessage(count) = notificationMessage.type {
-                            if unreadNotiMessageIndex < index {
-                                chatMessages[unreadNotiMessageIndex] = ChatNotificationMessage(type: .unreadMessage(count - 1))
-                                chatViewController?.messagesCollectionView.performBatchUpdates({
-                                    chatViewController?.messagesCollectionView.reloadSections([unreadNotiMessageIndex])
-                                }, completion: nil)
-                            }
-                        }
-                    }
-                }
+                
+                return localChatMessage.message.temporalId == message.temporalId
             }
             
-            if message.type == .truncate {
-                updateUnreadMessagesLabel(unreads: 0)
-                chatMessages.removeAll()
-                chatViewController?.messagesCollectionView.reloadData()
+            if filteredArray.isNotEmpty {
+                guard let oldMessage = filteredArray.first as? ChatMessage,
+                      let index = chatMessages
+                        
+                    .firstIndex(where: { message -> Bool in
+                          guard let localChatMessage = message as? ChatMessage else {
+                              return false
+                          }
+                          
+                          return localChatMessage == oldMessage
+                      }) else {
+                    return
+                }
+                message.warningDialog = oldMessage.message.warningDialog
+                let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
+                chatMessages[index] = receivedMessage
                 
+                UIView.performWithoutAnimation {
+                    chatViewController?.messagesCollectionView.performBatchUpdates({
+                        chatViewController?.messagesCollectionView.reloadSections([index])
+                    }, completion: { _ in
+                        if index == self.messages.count - 1 {
+                            self.chatViewController?.scrollToBottom()
+                        }
+                    })
+                }
+            } else {
+                if message.type == .attachment || message.type == .voiceClip {
+                    let filteredArray = transfers.filter { chatMessage in
+                        guard let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
+                        return node.handle == chatMessage.transfer?.nodeHandle
+                    }
+                    
+                    if filteredArray.isNotEmpty, let oldMessage = filteredArray.first, let index = transfers.firstIndex(of: oldMessage) {
+                        let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
+                        chatMessages.append(receivedMessage)
+                        transfers.remove(at: index)
+                        if let transfer = oldMessage.transfer, let node = MEGASdk.shared.node(forHandle: transfer.nodeHandle) {
+                            let path = NSHomeDirectory().append(pathComponent: transfer.path)
+                            let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
+                            try? FileManager.default.copyItem(atPath: path, toPath: originalImagePath)
+                        }
+                        
+                        chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+                        chatViewController?.showOrHideJumpToBottom()
+                        return
+                    }
+                }
+                
+                message.chatId = chatRoom.chatId
                 insertMessage(message)
             }
         }
-        chatViewController?.messagesCollectionView.reloadEmptyDataSet()
+    }
+
+    private func handleContentChanged(_ message: MEGAChatMessage) {
+        guard message.hasChanged(for: .content) else { return }
+        if message.isDeleted || message.isEdited {
+            let filteredArray = chatMessages.filter { chatMessage in
+                guard let localChatMessage = chatMessage as? ChatMessage else {
+                    return false
+                }
+                
+                return localChatMessage.message.messageId == message.messageId
+            }
+            if filteredArray.isNotEmpty {
+                guard let oldMessage = filteredArray.first as? ChatMessage,
+                      let index = chatMessages.firstIndex(where: { chatMessage -> Bool in
+                          guard let localChatMessage = chatMessage as? ChatMessage else {
+                              return false
+                          }
+                          
+                          return localChatMessage == oldMessage
+                      }) else {
+                    return
+                }
+                
+                let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
+                
+                if message.isEdited {
+                    chatMessages[index] = receivedMessage
+                    chatViewController?.messagesCollectionView.performBatchUpdates({
+                        chatViewController?.messagesCollectionView.reloadSections([index])
+                        if isLastSectionVisible() {
+                            chatViewController?.scrollToBottom()
+                        }
+                    }, completion: nil)
+                }
+                
+                if message.isDeleted {
+                    chatMessages.remove(at: index)
+                    chatViewController?.messagesCollectionView.performBatchUpdates({
+                        chatViewController?.messagesCollectionView.deleteSections([index])
+                    }, completion: nil)
+                    
+                    let unreadNotiMessageIndex = chatMessages.firstIndex { $0 is ChatNotificationMessage }
+                    if let unreadNotiMessageIndex = unreadNotiMessageIndex,
+                       let notificationMessage = chatMessages[unreadNotiMessageIndex] as? ChatNotificationMessage,
+                       case let .unreadMessage(count) = notificationMessage.type {
+                        if unreadNotiMessageIndex < index {
+                            chatMessages[unreadNotiMessageIndex] = ChatNotificationMessage(type: .unreadMessage(count - 1))
+                            chatViewController?.messagesCollectionView.performBatchUpdates({
+                                chatViewController?.messagesCollectionView.reloadSections([unreadNotiMessageIndex])
+                            }, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
+        
+        if message.type == .truncate {
+            updateUnreadMessagesLabel(unreads: 0)
+            chatMessages.removeAll()
+            chatViewController?.messagesCollectionView.reloadData()
+            
+            insertMessage(message)
+        }
     }
     
     func onHistoryReloaded(_: MEGAChatSdk, chat _: MEGAChatRoom) {

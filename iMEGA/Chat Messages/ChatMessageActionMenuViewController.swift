@@ -146,118 +146,132 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     private func configureActions() {
-        guard let chatMessage = chatMessage else {
-            return
-        }
+        guard let chatMessage else { return }
         
         switch chatMessage.message.type {
         case .invalid, .revokeAttachment:
             actions = []
         case .normal:
-            // All messages
-            actions = [forwardAction, copyAction, selectAction]
-            // Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if chatMessage.message.isEditable {
-                    actions.append(contentsOf: [editAction])
-                }
-                if chatMessage.message.isDeletable, chatViewController?.editMessage?.message.messageId != chatMessage.message.messageId {
-                    actions.append(contentsOf: [deleteAction])
-                }
-            }
-            
+            configureActionsForNormalMessage(chatMessage)
         case .containsMeta:
-            // All messages
-            actions = [forwardAction, selectAction]
-            if chatMessage.message.containsMeta?.type != .geolocation && chatMessage.message.containsMeta?.type != .giphy {
-                actions.append(contentsOf: [copyAction])
-            }
-            
-            if chatMessage.message.containsMeta?.type != .giphy {
-                actions.append(contentsOf: [exportMessagesAction])
-            }
-            
-            // Your messages
-            if isFromCurrentSender(message: chatMessage) {
-               
-                if chatMessage.message.isEditable {
-                    if chatMessage.message.containsMeta?.type != .giphy {
-                        actions.append(contentsOf: [editAction])
-                    }
-                    
-                    if chatMessage.message.containsMeta?.type != .geolocation, chatMessage.message.containsMeta?.type != .giphy {
-                        actions.append(contentsOf: [removeRichLinkAction])
-                    }
-                }
-                if chatMessage.message.isDeletable, chatViewController?.editMessage?.message.messageId != chatMessage.message.messageId {
-                    actions.append(contentsOf: [deleteAction])
-                }
-                
-            }
-            
+            configureActionsForMessageWithMeta(chatMessage)
         case .alterParticipants, .truncate, .privilegeChange, .chatTitle:
-            // All messages
             actions = [copyAction]
-            
         case .attachment:
-            actions = [saveForOfflineAction, forwardAction, exportMessagesAction, selectAction]
-            
-            if chatMessage.message.nodeList?.size.uintValue == 1,
-               let name = chatMessage.message.nodeList?.node(at: 0)?.name,
-               name.fileExtensionGroup.isVisualMedia {
-                actions.append(saveToPhotosAction)
-                if name.fileExtensionGroup.isImage {
-                    actions.append(copyAction)
-                }
-            }
-            
-            // Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if chatMessage.message.isDeletable {
-                    actions.append(contentsOf: [deleteAction])
-                }
-            } else {
-                actions.append(contentsOf: [importAction])
-            }
+            configureActionsForAttachment(chatMessage)
         case .voiceClip:
-            actions = [saveForOfflineAction, exportMessagesAction, selectAction]
-            if (chatMessage.message.richNumber) != nil {
-                actions.append(forwardAction)
-            }
-            // Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if chatMessage.message.isDeletable {
-                    actions.append(contentsOf: [deleteAction])
-                }
-            } else {
-                actions.append(contentsOf: [importAction])
-            }
+            configureActionsForVoiceClip(chatMessage)
         case .contact:
-            actions = [forwardAction, exportMessagesAction, selectAction]
-         
-            if chatMessage.message.usersCount == 1 {
-                if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
-                    actions.append(contentsOf: [addContactAction])
-                } else {
-                    for index in 0..<chatMessage.message.usersCount {
-                        if let email = chatMessage.message.userEmail(at: index), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
-                            return
-                        }
-                    }
-                    actions.append(contentsOf: [addContactAction])
-                }
-            }
-            
-            // Your messages
-            if isFromCurrentSender(message: chatMessage) {
-                if chatMessage.message.isDeletable {
-                    actions.append(contentsOf: [deleteAction])
-                }
-            }
+            configureActionsForContact(chatMessage)
         default:
             break
         }
         
+    }
+    
+    private func configureActionsForNormalMessage(_ chatMessage: ChatMessage) {
+        // All messages
+        actions = [forwardAction, copyAction, selectAction]
+        // Your messages
+        if isFromCurrentSender(message: chatMessage) {
+            if chatMessage.message.isEditable {
+                actions.append(contentsOf: [editAction])
+            }
+            if chatMessage.message.isDeletable, chatViewController?.editMessage?.message.messageId != chatMessage.message.messageId {
+                actions.append(contentsOf: [deleteAction])
+            }
+        }
+    }
+    
+    private func configureActionsForMessageWithMeta(_ chatMessage: ChatMessage) {
+        // All messages
+        actions = [forwardAction, selectAction]
+        if chatMessage.message.containsMeta?.type != .geolocation && chatMessage.message.containsMeta?.type != .giphy {
+            actions.append(contentsOf: [copyAction])
+        }
+        
+        if chatMessage.message.containsMeta?.type != .giphy {
+            actions.append(contentsOf: [exportMessagesAction])
+        }
+        
+        // Your messages
+        if isFromCurrentSender(message: chatMessage) {
+           
+            if chatMessage.message.isEditable {
+                if chatMessage.message.containsMeta?.type != .giphy {
+                    actions.append(contentsOf: [editAction])
+                }
+                
+                if chatMessage.message.containsMeta?.type != .geolocation, chatMessage.message.containsMeta?.type != .giphy {
+                    actions.append(contentsOf: [removeRichLinkAction])
+                }
+            }
+            if chatMessage.message.isDeletable, chatViewController?.editMessage?.message.messageId != chatMessage.message.messageId {
+                actions.append(contentsOf: [deleteAction])
+            }
+            
+        }
+    }
+    
+    private func configureActionsForAttachment(_ chatMessage: ChatMessage) {
+        actions = [saveForOfflineAction, forwardAction, exportMessagesAction, selectAction]
+        
+        if chatMessage.message.nodeList?.size.uintValue == 1,
+           let name = chatMessage.message.nodeList?.node(at: 0)?.name,
+           name.fileExtensionGroup.isVisualMedia {
+            actions.append(saveToPhotosAction)
+            if name.fileExtensionGroup.isImage {
+                actions.append(copyAction)
+            }
+        }
+        
+        // Your messages
+        if isFromCurrentSender(message: chatMessage) {
+            if chatMessage.message.isDeletable {
+                actions.append(contentsOf: [deleteAction])
+            }
+        } else {
+            actions.append(contentsOf: [importAction])
+        }
+    }
+    
+    private func configureActionsForVoiceClip(_ chatMessage: ChatMessage) {
+        actions = [saveForOfflineAction, exportMessagesAction, selectAction]
+        if (chatMessage.message.richNumber) != nil {
+            actions.append(forwardAction)
+        }
+        // Your messages
+        if isFromCurrentSender(message: chatMessage) {
+            if chatMessage.message.isDeletable {
+                actions.append(contentsOf: [deleteAction])
+            }
+        } else {
+            actions.append(contentsOf: [importAction])
+        }
+    }
+    
+    private func configureActionsForContact(_ chatMessage: ChatMessage) {
+        actions = [forwardAction, exportMessagesAction, selectAction]
+     
+        if chatMessage.message.usersCount == 1 {
+            if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
+                actions.append(contentsOf: [addContactAction])
+            } else {
+                for index in 0..<chatMessage.message.usersCount {
+                    if let email = chatMessage.message.userEmail(at: index), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
+                        return
+                    }
+                }
+                actions.append(contentsOf: [addContactAction])
+            }
+        }
+        
+        // Your messages
+        if isFromCurrentSender(message: chatMessage) {
+            if chatMessage.message.isDeletable {
+                actions.append(contentsOf: [deleteAction])
+            }
+        }
     }
     
     private func configureHeaderView() {
