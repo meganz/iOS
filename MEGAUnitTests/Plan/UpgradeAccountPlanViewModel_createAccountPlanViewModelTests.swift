@@ -11,10 +11,12 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     private let proI_yearly = AccountPlanEntity(type: .proI, name: "Pro I", term: .yearly)
     private let proII_monthly = AccountPlanEntity(type: .proII, name: "Pro II", term: .monthly)
     private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", term: .yearly)
+    private let proIII_monthly = AccountPlanEntity(type: .proII, name: "Pro III", term: .monthly)
+    private let proIII_yearly = AccountPlanEntity(type: .proII, name: "Pro III", term: .yearly)
     
-    func testCreateAccountPlanViewModel_withSelectedPlan_shouldReturnViewModel() {
+    func testCreateAccountPlanViewModel_withSelectedPlanType_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .free)
-        let planList = [proI_monthly, proII_yearly]
+        let planList = [proI_monthly, proIII_monthly]
         let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
@@ -26,11 +28,11 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
             }.store(in: &subscriptions)
         wait(for: [exp], timeout: 0.5)
         
-        sut.setSelectedPlan(proI_monthly)
+        sut.setSelectedPlan(proIII_monthly)
         
-        let viewModel = sut.createAccountPlanViewModel(proI_monthly)
+        let viewModel = sut.createAccountPlanViewModel(proIII_monthly)
         XCTAssertTrue(viewModel.isSelected)
-        XCTAssertEqual(viewModel.plan, proI_monthly)
+        XCTAssertEqual(viewModel.plan, proIII_monthly)
         XCTAssertTrue(viewModel.isSelectionEnabled)
         XCTAssertEqual(viewModel.planTag, .none)
     }
@@ -49,10 +51,10 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
             }.store(in: &subscriptions)
         wait(for: [exp], timeout: 0.5)
 
-        sut.setSelectedPlan(proII_yearly)
-        let viewModel = sut.createAccountPlanViewModel(proI_monthly)
+        sut.setSelectedPlan(proI_monthly)
+        let viewModel = sut.createAccountPlanViewModel(proII_yearly)
         XCTAssertFalse(viewModel.isSelected)
-        XCTAssertEqual(viewModel.plan, proI_monthly)
+        XCTAssertEqual(viewModel.plan, proII_yearly)
         XCTAssertTrue(viewModel.isSelectionEnabled)
         XCTAssertEqual(viewModel.planTag, .none)
     }
@@ -136,5 +138,86 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(yearlyPlanViewModel.plan, proI_yearly)
         XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
         XCTAssertEqual(yearlyPlanViewModel.planTag, .currentPlan)
+    }
+    
+    func testCreateAccountPlanViewModel_withRecommendedPlanType_onRecommendedPlan_shouldReturnViewModel() {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let planList = [proI_monthly, proI_yearly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        
+        let exp = expectation(description: "Setting Current plan")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+        
+        let monthlyPlanViewModel = sut.createAccountPlanViewModel(proI_monthly)
+        XCTAssertTrue(monthlyPlanViewModel.isSelected)
+        XCTAssertEqual(monthlyPlanViewModel.plan, proI_monthly)
+        XCTAssertTrue(monthlyPlanViewModel.isSelectionEnabled)
+        XCTAssertEqual(monthlyPlanViewModel.planTag, .recommended)
+        
+        let yearlyPlanViewModel = sut.createAccountPlanViewModel(proI_yearly)
+        XCTAssertTrue(yearlyPlanViewModel.isSelected)
+        XCTAssertEqual(yearlyPlanViewModel.plan, proI_yearly)
+        XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
+        XCTAssertEqual(yearlyPlanViewModel.planTag, .recommended)
+    }
+    
+    func testCreateAccountPlanViewModel_withRecommendedPlanType_onNotRecommendedPlan_shouldReturnViewModel() {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        
+        let exp = expectation(description: "Setting Current plan")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+        
+        let monthlyPlanViewModel = sut.createAccountPlanViewModel(proII_monthly)
+        XCTAssertFalse(monthlyPlanViewModel.isSelected)
+        XCTAssertEqual(monthlyPlanViewModel.plan, proII_monthly)
+        XCTAssertTrue(monthlyPlanViewModel.isSelectionEnabled)
+        XCTAssertEqual(monthlyPlanViewModel.planTag, .none)
+        
+        let yearlyPlanViewModel = sut.createAccountPlanViewModel(proII_yearly)
+        XCTAssertFalse(yearlyPlanViewModel.isSelected)
+        XCTAssertEqual(yearlyPlanViewModel.plan, proII_yearly)
+        XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
+        XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
+    }
+    
+    func testCreateAccountPlanViewModel_withNoRecommendedPlanType_shouldReturnViewModel() {
+        let details = AccountDetailsEntity(proLevel: .proIII)
+        let planList = [proIII_monthly, proIII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        
+        let exp = expectation(description: "Setting Current plan")
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        sut.$currentPlan
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        wait(for: [exp], timeout: 0.5)
+        
+        let monthlyPlanViewModel = sut.createAccountPlanViewModel(proIII_monthly)
+        XCTAssertFalse(monthlyPlanViewModel.isSelected)
+        XCTAssertEqual(monthlyPlanViewModel.plan, proIII_monthly)
+        XCTAssertTrue(monthlyPlanViewModel.isSelectionEnabled)
+        XCTAssertEqual(monthlyPlanViewModel.planTag, .none)
+        
+        let yearlyPlanViewModel = sut.createAccountPlanViewModel(proIII_yearly)
+        XCTAssertFalse(yearlyPlanViewModel.isSelected)
+        XCTAssertEqual(yearlyPlanViewModel.plan, proIII_yearly)
+        XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
+        XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
     }
 }

@@ -67,6 +67,12 @@ public extension String {
     var lastPathComponent: String {
         NSString(string: self).lastPathComponent
     }
+    
+    func subString(from start: String, to end: String) -> String? {
+        guard let startIndex = (range(of: start)?.upperBound).flatMap({$0}),
+              let endIndex = (range(of: end, range: startIndex..<endIndex)?.lowerBound).map({$0}) else { return nil }
+        return String(self[startIndex..<endIndex])
+    }
 }
 
 public extension String {
