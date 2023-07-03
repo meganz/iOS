@@ -95,12 +95,11 @@ only_rules:
       - comment_spacing
       - xctfail_message
       - sorted_imports
+      - cyclomatic_complexity
 
     # Complex fixes or a ton of issues (>100 issues)
 
       # - type_name (91 issues) - complex because we need to rename stuff
-      # - cyclomatic_complexity (132 issues)
-        # A somewhat complex fix, because we need extract functions into smaller functions to avoid overly complex logic, but I think this should be enabled in the future so that we can refactor our code to make sure our functions are small, simple, and adhere to the SOLID principles.
 
     # Not sure if we should implement
 
@@ -130,6 +129,12 @@ only_rules:
       # - trailing_whitespace (17200 issues, mindblown)
       # - leading_whitespace (398 issues)
       # - identifier_name (427 issues)
+
+# Rule Configurations
+cyclomatic_complexity:
+  warning: 15
+  error: 30
+  ignores_case_statements: true
 
 
 # Path Configurations
