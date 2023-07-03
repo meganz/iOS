@@ -1,7 +1,8 @@
 import UIKit
 
 public extension UISearchController {
-    @objc static func customSearchController(searchResultsUpdaterDelegate: UISearchResultsUpdating, searchBarDelegate: UISearchBarDelegate) -> UISearchController {
+    @objc static func customSearchController(searchResultsUpdaterDelegate: any UISearchResultsUpdating,
+                                             searchBarDelegate: any UISearchBarDelegate) -> UISearchController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = searchResultsUpdaterDelegate
         searchController.searchBar.delegate = searchBarDelegate

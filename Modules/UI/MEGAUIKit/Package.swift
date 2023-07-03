@@ -19,9 +19,11 @@ let package = Package(
     targets: [
         .target(
             name: "MEGAUIKit",
-            dependencies: ["MEGAUI", "MEGASwift"]),
+            dependencies: ["MEGAUI", "MEGASwift"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGAUIKitTests",
-            dependencies: ["MEGAUIKit"])
+            dependencies: ["MEGAUIKit"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
     ]
 )
