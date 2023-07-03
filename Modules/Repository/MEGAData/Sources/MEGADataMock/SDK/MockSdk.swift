@@ -5,6 +5,7 @@ public final class MockSdk: MEGASdk {
     private var nodes: [MEGANode]
     private let rubbishNodes: [MEGANode]
     private let syncDebrisNodes: [MEGANode]
+    private let backupInfoList: [MEGABackupInfo]
     private let myContacts: MEGAUserList
     public var _myUser: MEGAUser?
     public var _isLoggedIn: Int
@@ -32,6 +33,7 @@ public final class MockSdk: MEGASdk {
     private let _upgradeSecurity: (MEGASdk, any MEGARequestDelegate) -> Void
     private let _accountDetails: (MEGASdk, any MEGARequestDelegate) -> Void
     private let smsState: SMSState
+    private let devices: [String: String]
     
     public var hasGlobalDelegate = false
     public var hasRequestDelegate = false
@@ -45,6 +47,7 @@ public final class MockSdk: MEGASdk {
                 incomingNodes: MEGANodeList = MEGANodeList(),
                 outgoingNodes: MEGANodeList = MEGANodeList(),
                 publicLinkNodes: MEGANodeList = MEGANodeList(),
+                backupInfoList: [MEGABackupInfo] = [],
                 myContacts: MEGAUserList = MEGAUserList(),
                 myUser: MEGAUser? = nil,
                 isLoggedIn: Int = 0,
@@ -66,11 +69,13 @@ public final class MockSdk: MEGASdk {
                 incomingContactRequestList: MEGAContactRequestList = MEGAContactRequestList(),
                 userAlertList: MEGAUserAlertList = MEGAUserAlertList(),
                 upgradeSecurity: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
-                accountDetails: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in }
+                accountDetails: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
+                devices: [String: String] = [:]
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
         self.syncDebrisNodes = syncDebrisNodes
+        self.backupInfoList = backupInfoList
         self.myContacts = myContacts
         _myUser = myUser
         _isLoggedIn = isLoggedIn
@@ -96,6 +101,7 @@ public final class MockSdk: MEGASdk {
         _userAlertList = userAlertList
         _upgradeSecurity = upgradeSecurity
         _accountDetails = accountDetails
+        self.devices = devices
         super.init()
     }
     
@@ -378,6 +384,24 @@ public final class MockSdk: MEGASdk {
     
     public override func smsAllowedState() -> SMSState {
         smsState
+    }
+    
+    // MARK: - Backups
+    public override func getBackupInfo(_ delegate: any MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: 1, backupInfoList: backupInfoList)
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
+    }
+    
+    public override func getUserAttributeType(_ type: MEGAUserAttribute, delegate: any MEGARequestDelegate) {
+        var mockRequest: MockRequest?
+        
+        switch type {
+        case .deviceNames:
+            mockRequest = MockRequest(handle: 1, stringDict: devices)
+        default: break
+        }
+        
+        delegate.onRequestFinish?(self, request: mockRequest ?? MockRequest(handle: 1), error: MockError(errorType: megaSetError))
     }
 }
 
