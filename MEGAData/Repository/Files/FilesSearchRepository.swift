@@ -1,11 +1,14 @@
+import Combine
 import MEGADomain
 
 final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
-    
     static var newRepo: FilesSearchRepository {
         FilesSearchRepository(sdk: MEGASdkManager.sharedMEGASdk())
     }
     
+    public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
+    
+    private let updater: PassthroughSubject<[NodeEntity], Never>
     private let sdk: MEGASdk
     private var callback: (([NodeEntity]) -> Void)?
     private var cancelToken = MEGACancelToken()
@@ -18,11 +21,14 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     init(sdk: MEGASdk) {
         self.sdk = sdk
+        
+        updater = PassthroughSubject<[NodeEntity], Never>()
+        nodeUpdatesPublisher = AnyPublisher(updater)
     }
     
     // MARK: - FilesSearchRepositoryProtocol
     
-    func startMonitoringNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
+    func startMonitoringNodesUpdate(callback: (([NodeEntity]) -> Void)?) {
         self.callback = callback
         sdk.add(self)
     }
@@ -122,6 +128,11 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
 
 extension FilesSearchRepository: MEGAGlobalDelegate {
     func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
-        callback?(nodeList?.toNodeEntities() ?? [])
+        guard let callback else {
+            updater.send(nodeList?.toNodeEntities() ?? [])
+            return
+        }
+
+        callback(nodeList?.toNodeEntities() ?? [])
     }
 }
