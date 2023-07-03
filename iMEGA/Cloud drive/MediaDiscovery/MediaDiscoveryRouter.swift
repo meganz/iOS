@@ -32,7 +32,7 @@ protocol MediaDiscoveryRouting: Routing {
         let parentNode = parentNode.toNodeEntity()
         let sdk = isFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared
         let analyticsUseCase = MediaDiscoveryAnalyticsUseCase(repository: AnalyticsRepository.newRepo)
-        let mediaDiscoveryUseCase = MediaDiscoveryUseCase(mediaDiscoveryRepository: MediaDiscoveryRepository(sdk: sdk),
+        let mediaDiscoveryUseCase = MediaDiscoveryUseCase(filesSearchRepository: FilesSearchRepository(sdk: sdk),
                                                           nodeUpdateRepository: NodeUpdateRepository(sdk: sdk))
         let downloadFileRepository = DownloadFileRepository(sdk: MEGASdk.shared,
                                                             sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLink : nil)
