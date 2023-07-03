@@ -149,6 +149,8 @@
 		27547E732A404DE2007789DD /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		27547E752A404FD4007789DD /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
 		275682F92A4015280038E13A /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
+		27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */; };
+		27AFAC562A53739500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */; };
 		27D1DA7B2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
 		27D1DA7D2A432F52008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
 		27D1DA7F2A432F82008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
@@ -2639,6 +2641,7 @@
 		271FC4202A27EA4400E35924 /* ElementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStore.swift; sourceTree = "<group>"; };
 		274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStoreTests.swift; sourceTree = "<group>"; };
 		275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovalConfirmationMessageGenerator.swift; sourceTree = "<group>"; };
+		27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionOCWrapper.swift; sourceTree = "<group>"; };
 		27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensionGroupOCWrapper.swift; sourceTree = "<group>"; };
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
 		2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManagmentTypeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -8141,6 +8144,7 @@
 			children = (
 				944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */,
 				27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */,
+				27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */,
 				A82F364728EF31CE00093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift */,
 				833DF2752804880E00B25B64 /* SaveNodeUseCaseOCWrapper.swift */,
 			);
@@ -13541,6 +13545,7 @@
 				BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */,
 				BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */,
 				BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */,
+				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */,
 				839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */,
 				839999ED264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift in Sources */,
@@ -14674,6 +14679,7 @@
 				B620C0662845BC37003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
+				27AFAC562A53739500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,

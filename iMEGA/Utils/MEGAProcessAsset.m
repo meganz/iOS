@@ -488,7 +488,7 @@ static const float BPS_MEDIUM = 3000000.0f;
         if (self.shareThroughChat && [name.pathExtension.lowercaseString isEqualToString:@"heic"]) {
             name = [[name stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
         } else {
-            name = name.mnz_fileNameWithLowercaseExtension;
+            name = [FileExtensionOCWrapper fileNameWithLowercaseExtensionFrom:name];
         }
         if (!name) {
             NSString *extension = [self extensionWithInfo:info asset:asset];
