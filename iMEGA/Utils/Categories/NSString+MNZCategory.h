@@ -75,8 +75,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket;
 
 #pragma mark - File names and extensions
-
-- (NSString *)mnz_fileNameWithLowercaseExtension;
 - (nullable NSString *)mnz_lastExtensionInLowercase;
 - (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode;
 - (NSString *)mnz_fileNameWithoutExtension;

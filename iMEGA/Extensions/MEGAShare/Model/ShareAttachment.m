@@ -4,6 +4,7 @@
 #import <ContactsUI/ContactsUI.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "MEGAShare-Swift.h"
 #import "NSString+MNZCategory.h"
 
 @implementation ShareAttachment
@@ -118,7 +119,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
 }
 
 + (NSString *)suggestedNameForFileURL:(NSURL *)url {
-    NSString *lastPathComponent = url.path.lastPathComponent.mnz_fileNameWithLowercaseExtension;
+    NSString *lastPathComponent = [FileExtensionOCWrapper fileNameWithLowercaseExtensionFrom:url.lastPathComponent];
     NSString *suggestedName = [ShareAttachment suggestedUniqueNameWithString:lastPathComponent];
     if (!suggestedName) {
         suggestedName = [NSString stringWithFormat:@"%@.%@", [NSUUID UUID].UUIDString, lastPathComponent.mnz_lastExtensionInLowercase];
