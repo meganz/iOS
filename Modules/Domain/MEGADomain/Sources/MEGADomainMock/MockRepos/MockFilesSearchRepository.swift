@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 
@@ -11,17 +12,28 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     public var callback: (([NodeEntity]) -> Void)?
     
-    public init(photoNodes: [NodeEntity] = [], videoNodes: [NodeEntity] = []) {
+    public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
+    
+    public var startMonitoringNodesUpdateCalled = 0
+    public var stopMonitoringNodesUpdateCalled = 0
+    
+    public init(photoNodes: [NodeEntity] = [],
+                videoNodes: [NodeEntity] = [],
+                nodesUpdatePublisher: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher()
+    ) {
         self.photoNodes = photoNodes
         self.videoNodes = videoNodes
+        self.nodeUpdatesPublisher = nodesUpdatePublisher
     }
     
-    public func startMonitoringNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
+    public func startMonitoringNodesUpdate(callback: (([NodeEntity]) -> Void)?) {
         self.callback = callback
+        startMonitoringNodesUpdateCalled += 1
     }
     
     public func stopMonitoringNodesUpdate() {
         self.callback = nil
+        stopMonitoringNodesUpdateCalled += 1
     }
 
     public func node(by id: HandleEntity) async -> NodeEntity? {
@@ -36,7 +48,6 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity,
                        completion: @escaping ([NodeEntity]?, Bool) -> Void) {
-        
     }
     
     public func search(string: String?,
@@ -45,9 +56,9 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         if formatType == .photo {
-            return photoNodes
+            return photoNodes.filter { !$0.isFolder }
         } else if formatType == .video {
-            return videoNodes
+            return videoNodes.filter { !$0.isFolder }
         } else {
             return []
         }

@@ -1,7 +1,9 @@
-import Foundation
+import Combine
 
 public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
-    func startMonitoringNodesUpdate(callback: @escaping ([NodeEntity]) -> Void)
+    var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> { get }
+    
+    func startMonitoringNodesUpdate(callback: (([NodeEntity]) -> Void)?)
     func stopMonitoringNodesUpdate()
     func node(by id: HandleEntity) async -> NodeEntity?
     

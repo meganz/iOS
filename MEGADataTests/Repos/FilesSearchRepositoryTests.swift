@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADataMock
 import MEGADomain
@@ -7,6 +8,7 @@ import XCTest
 final class FilesSearchRepositoryTests: XCTestCase {
     
     private let rootNode = MockNode(handle: 0, name: "root")
+    private var subscriptions = Set<AnyCancellable>()
     
     func testStartMonitoring_onAlbumScreen_shouldSetCallBack() {
         let sdk = MockSdk()
@@ -32,6 +34,43 @@ final class FilesSearchRepositoryTests: XCTestCase {
         let repo = FilesSearchRepository(sdk: MockSdk(nodes: [mockNode]))
         let result = await repo.node(by: handle)
         XCTAssertEqual(result, mockNode.toNodeEntity())
+    }
+    
+    func testOnNodesUpdate_whenCallbackProvided_shouldCallCallback() {
+        let handle = HandleEntity(25)
+        let mockNode = MockNode(handle: handle)
+        let mockNodeList = MockNodeList(nodes: [mockNode])
+        let mockSdk = MockSdk(nodes: [mockNode])
+        let repo = FilesSearchRepository(sdk: mockSdk)
+        
+        let exp = expectation(description: "Calling callback should be successful")
+        
+        repo.startMonitoringNodesUpdate { nodes in
+            XCTAssertEqual([mockNode.toNodeEntity()], nodes)
+            exp.fulfill()
+        }
+        
+        repo.onNodesUpdate(mockSdk, nodeList: mockNodeList)
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testOnNodesUpdate_whenCallbackNotProvided_shouldUsePublisher() {
+        let handle = HandleEntity(25)
+        let mockNode = MockNode(handle: handle)
+        let mockNodeList = MockNodeList(nodes: [mockNode])
+        let mockSdk = MockSdk(nodes: [mockNode])
+        let repo = FilesSearchRepository(sdk: mockSdk)
+        
+        let exp = expectation(description: "Using publisher should be successful")
+        
+        repo.nodeUpdatesPublisher.sink { nodes in
+            XCTAssertEqual([mockNode.toNodeEntity()], nodes)
+            exp.fulfill()
+        }.store(in: &subscriptions)
+        
+        repo.startMonitoringNodesUpdate(callback: nil)
+        repo.onNodesUpdate(mockSdk, nodeList: mockNodeList)
+        wait(for: [exp], timeout: 1.0)
     }
     
     // MARK: Private
