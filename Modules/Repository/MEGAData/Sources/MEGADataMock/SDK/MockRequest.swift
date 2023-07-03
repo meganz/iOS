@@ -11,6 +11,8 @@ public final class MockRequest: MEGARequest {
     private let _link: String?
     private let _flag: Bool
     private let _publicNode: MEGANode?
+    private let _backupInfoList: [MEGABackupInfo]
+    private let stringDict: [String: String]
     
     public init(handle: MEGAHandle,
                 set: MEGASet? = nil,
@@ -20,7 +22,9 @@ public final class MockRequest: MEGARequest {
                 number: NSNumber = 0,
                 link: String? = nil,
                 flag: Bool = false,
-                publicNode: MEGANode? = nil) {
+                publicNode: MEGANode? = nil,
+                backupInfoList: [MEGABackupInfo] = [],
+                stringDict: [String: String] = [:]) {
         self.handle = handle
         _set = set
         _text = text
@@ -30,6 +34,8 @@ public final class MockRequest: MEGARequest {
         _link = link
         _flag = flag
         _publicNode = publicNode
+        _backupInfoList = backupInfoList
+        self.stringDict = stringDict
         super.init()
     }
     
@@ -42,4 +48,6 @@ public final class MockRequest: MEGARequest {
     public override var link: String? { _link }
     public override var flag: Bool { _flag }
     public override var publicNode: MEGANode? { _publicNode }
+    public override var backupInfoList: [MEGABackupInfo] { _backupInfoList }
+    public override var megaStringDictionary: [String: String] { stringDict }
 }

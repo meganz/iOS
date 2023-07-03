@@ -136,6 +136,7 @@ public enum RequestTypeEntity: Sendable {
     case backupPut
     case backupRemove
     case backupPutHeartbeat
+    case backupInfo
     case getAttrNode
     case loadExternalDriveBackups
     case closeExternalDriveBackups

@@ -5061,6 +5061,7 @@
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
 				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
+				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
 				946ACCC5299C0B0000E6C0F5 /* MEGAPresentation in Frameworks */,
 				A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
@@ -5070,7 +5071,6 @@
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
 				BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */,
-				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
 				BF1164C027F6A74D00E5C5A4 /* PureLayout in Frameworks */,
@@ -5178,8 +5178,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
 				9418DB2B2A4EE611002B0077 /* MEGAPermissionsMock in Frameworks */,
+				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6224,8 +6224,8 @@
 				94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */,
 				12E7FEED28723AD6001E4A08 /* PageStayTimeTracker.swift */,
 				5B5C7B26264A92410087200D /* RecentsPreference.swift */,
-				947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */,
 				0D30D86125BFA14A00C26367 /* Tab.swift */,
+				947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */,
 				BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */,
 				B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */,
 			);
@@ -9076,9 +9076,9 @@
 		9495818C2A43295F0071573B /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
-				946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */,
 				943649DE2A4D83DE006CE8B8 /* AlertModel+Equatable.swift */,
 				943649DD2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift */,
+				946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */,
 			);
 			path = Permissions;
 			sourceTree = "<group>";
@@ -9086,13 +9086,13 @@
 		9495DBAB2A40865B00FA22EE /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				943649D62A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift */,
+				943649D72A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift */,
 				9495DBB82A40872E00FA22EE /* DevicePermissionsHandlerObjC.swift */,
 				9495DBB62A40870C00FA22EE /* PermissionAlertRouter.swift */,
 				9422B9EF2A41A331007AA5D1 /* PermissionAlertRouting.swift */,
 				9495DBB02A4086BF00FA22EE /* PermissionModalModel.swift */,
 				9495DBB22A4086DD00FA22EE /* UIAlertController+AlertModel.swift */,
-				943649D62A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift */,
-				943649D72A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift */,
 				9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */,
 			);
 			path = Permissions;
@@ -9953,8 +9953,8 @@
 				99E1A9272A383E9700974FC9 /* Views */,
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
-				B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */,
 				947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */,
+				B60F05E82514C022005133C2 /* XCTestCase+ActionCommand.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -10911,8 +10911,8 @@
 		B6FDEF772A204E6700276DD6 /* Infrastracture */ = {
 			isa = PBXGroup;
 			children = (
-				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
+				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
 				B6FCDABA2898A86400319754 /* MEGASwift */,
 				1678D7F02A45474E00336C52 /* MEGATest */,
 			);
@@ -12897,6 +12897,7 @@
 				32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */,
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
+				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
 				BFBB88D528C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift in Sources */,
 				9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
@@ -13079,7 +13080,6 @@
 				2F2801D32447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift in Sources */,
 				8348A8DA2901909400B66463 /* ChatRoomActiveCallView.swift in Sources */,
 				834D867F29197E8800CECEC0 /* ChatRoomAvatarView.swift in Sources */,
-				947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */,
 				834D868129197EEB00CECEC0 /* ChatRoomAvatarViewModel.swift in Sources */,
 				419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */,
 				BFD2146328FF8BD50057150E /* ChatRoomContextMenuOption.swift in Sources */,
@@ -13116,7 +13116,6 @@
 				BF67C50B264B9A68003CE3C6 /* ChatRoomsViewController.swift in Sources */,
 				B6F2ACCB29AC5305004FC7A3 /* ChatRoomUserRepository.swift in Sources */,
 				83B71A6028F0356600E006C6 /* ChatRoomView.swift in Sources */,
-				943649D92A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift in Sources */,
 				BFD2141128F4D5810057150E /* ChatRoomViewModel.swift in Sources */,
 				BF66E04B2614269000066F35 /* ChatSessionEntity+Mapper.swift in Sources */,
 				E8534D4B1E15231C00911C40 /* ChatSettingsTableViewController.m in Sources */,
@@ -13246,6 +13245,7 @@
 				B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */,
 				124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
+				943649D92A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift in Sources */,
 				C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */,
 				5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */,
 				5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */,
@@ -13261,6 +13261,7 @@
 				24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */,
 				5D31674B24FCA9330032492F /* DevicePermissionAlerting.swift in Sources */,
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
+				943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */,
 				8358A6EA2925461C00EE197C /* DisclosureView.swift in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
 				B60D531B25FA940A003E9829 /* DiskFullBlockingViewController.swift in Sources */,
@@ -13323,7 +13324,6 @@
 				839A1C9F27CCF694004A387B /* ExportFileRouter.swift in Sources */,
 				83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */,
 				839A1CA127CCF694004A387B /* ExportFileViewModel.swift in Sources */,
-				943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */,
 				B5FE693B286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift in Sources */,
 				83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */,
 				830C268125DFC78D00E9B56E /* FavouriteNodesRepository.swift in Sources */,
@@ -13462,7 +13462,6 @@
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
-				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
 				5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */,
 				8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */,
@@ -14288,6 +14287,7 @@
 				32A2AA092A283D85007FC630 /* TimelineFilter.swift in Sources */,
 				8358A6E82925460800EE197C /* ToggleView.swift in Sources */,
 				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
+				947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				0D7E5E3B2631258700C5CB2A /* TransferDelegate.swift in Sources */,
 				0D0B53B626264B3200E9BB16 /* TransferEntity+Mapper.swift in Sources */,
@@ -14787,6 +14787,7 @@
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,
+				943649E02A4D83DE006CE8B8 /* AlertModel+Equatable.swift in Sources */,
 				12B1E57A2874FFEF00D23A58 /* AnalyticsRepositoryTests.swift in Sources */,
 				940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */,
 				B6D54830283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift in Sources */,
@@ -14814,6 +14815,7 @@
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
+				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
@@ -14861,7 +14863,6 @@
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
-				947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */,
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,
 				BF8895E82631213C002A18CA /* MockCallCoordinatorUseCase.swift in Sources */,
 				BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */,
@@ -14905,7 +14906,6 @@
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
 				245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */,
 				94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */,
-				943649E02A4D83DE006CE8B8 /* AlertModel+Equatable.swift in Sources */,
 				0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */,
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
@@ -14951,7 +14951,6 @@
 				BF9DBB6D2A399C1300C5821F /* ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests.swift in Sources */,
 				BF4989772A0DD694005C9ABD /* ScheduleMeetingCreationRecurrenceOptionsViewModelTests.swift in Sources */,
 				BF121D7B2A0B5C5300DA3633 /* ScheduleMeetingCreationRecurrenceOptionTests.swift in Sources */,
-				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */,
 				838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */,
 				BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */,
@@ -14974,6 +14973,7 @@
 				0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */,
 				3235F2C528C1C91F00F8E1CB /* ThumbnailRepositoryTests.swift in Sources */,
 				B622D8AA2966CEF400C265C4 /* ThumbnailTypeEntityMappingTests.swift in Sources */,
+				947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */,
 				A8AC23D8299A5D4E0025C2D3 /* TransferRepositoryTests.swift in Sources */,
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */,
