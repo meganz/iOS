@@ -630,7 +630,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     }
 }
 
-- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView inIndex:(NSUInteger)index withMode:(MEGAPhotoMode)mode {
+- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView inIndex:(NSUInteger)index withMode:(MEGAPhotoMode)mode addIndicators:(BOOL)shouldAddIndicators {
     [self removeActivityIndicatorsFromView:imageView];
     
     void (^requestCompletion)(MEGARequest *request) = ^(MEGARequest *request) {
@@ -658,6 +658,11 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             }
         }
                         completion:nil];
+        
+        self.imageViewsCache = [[NSCache<NSNumber *, UIScrollView *> alloc] init];
+        self.imageViewsCache.countLimit = 1000;
+        [self loadNearbyImagesFromIndex:self.dataProvider.currentIndex];
+        
         [self removeActivityIndicatorsFromView:imageView];
         [self startLiveTextAnalysisFor:imageView in:index];
     };
@@ -685,7 +690,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 [self.api getThumbnailNode:node destinationFilePath:path delegate:delegate];
             } else if (isImageNode) {
-                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal addIndicators:false];
             }
             
             break;
@@ -698,7 +703,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                 [self addActivityIndicatorToView:imageView];
                 [self activateSlideShowButton];
             } else if (isImageNode) {
-                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal];
+                [self setupNode:node forImageView:imageView inIndex:index withMode:MEGAPhotoModeOriginal addIndicators:false];
             }
             
             break;
@@ -706,12 +711,19 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case MEGAPhotoModeOriginal: {
             MEGAStartDownloadTransferDelegate *delegate =[[MEGAStartDownloadTransferDelegate alloc] initWithStart:nil progress:transferProgress completion:transferCompletion onError:nil];
             NSString *temporaryImagePath = [Helper pathWithOriginalNameForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+            if (shouldAddIndicators) {
+                [self addActivityIndicatorToView:imageView];
+            }
             
             [MEGASdk.shared startDownloadNode:node localPath:temporaryImagePath fileName:nil appData:nil startFirst:NO cancelToken:nil collisionCheck: CollisionCheckFingerprint collisionResolution:CollisionResolutionNewWithN delegate:delegate];
             
             break;
         }
     }
+}
+
+- (void)setupNode:(MEGANode *)node forImageView:(UIImageView *)imageView inIndex:(NSUInteger)index withMode:(MEGAPhotoMode)mode {
+    [self setupNode:node forImageView:imageView inIndex:index withMode:mode addIndicators:true];
 }
 
 - (UIActivityIndicatorView *)addActivityIndicatorToView:(UIView *)view {
