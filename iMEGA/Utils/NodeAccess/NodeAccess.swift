@@ -80,21 +80,21 @@ class NodeAccess: NSObject {
         nodeAccessSemaphore.wait()
         
         guard let node = handle?.validNode(in: sdk) else {
-            let operation = NodeLoadOperation(autoCreate: nodeAccessConfiguration.autoCreate,
-                                              loadNodeRequest: nodeAccessConfiguration.loadNodeRequest,
-                                              newNodeName: nodeAccessConfiguration.nodeName,
-                                              createNodeRequest: nodeAccessConfiguration.createNodeRequest,
-                                              setFolderHandleRequest: nodeAccessConfiguration.setNodeRequest) { [weak self] node, error in
+            let operation = NodeLoadOperation(
+                config: nodeAccessConfiguration
+            ) { [weak self] node, error in
                 self?.updateHandle(node, error: error, completion: completion)
             }
-        
+            operation.qualityOfService = .userInitiated
             operation.start()
             nodeLoadOperation = operation
             return
         }
         
         completion?(node, nil)
-        nodeAccessSemaphore.signal()
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.nodeAccessSemaphore.signal()
+        }
     }
     
     private func updateHandle(_ node: MEGANode?, error: Error?, completion: NodeLoadCompletion?) {
