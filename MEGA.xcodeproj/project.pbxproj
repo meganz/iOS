@@ -13792,6 +13792,7 @@
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
 				5D6092A6255D609F005FA3E4 /* NodeLabelActionUseCase.swift in Sources */,
 				5D0B42B6250618070057D49B /* NodeLinkRouter.swift in Sources */,
+				9419E0472A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */,
 				C48CE0142732ECE40081DEC4 /* NodeLoadOperation.swift in Sources */,
 				C4E78E9B272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
 				5D0B42B8250654080057D49B /* NodeManagementRouter.swift in Sources */,
@@ -14161,7 +14162,6 @@
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
-				9419E0472A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */,
 				BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */,
 				2F9F112A2508A43300896DFF /* ServiceConstant.swift in Sources */,
 				2F9F11152508A3E800896DFF /* ServiceManager.swift in Sources */,
@@ -14656,6 +14656,7 @@
 				943092F829143DE60092B99A /* NodeDataRepository.swift in Sources */,
 				6D60254E28F7B9C000FF9767 /* NodeEntity+NodesUpdate.swift in Sources */,
 				C460506B27282D7200D67A44 /* NodeHandle+Additions.swift in Sources */,
+				9419E0482A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */,
 				C42C357A2743D96E004D8BA9 /* NodeLoadOperation.swift in Sources */,
 				C4E78E9D272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
 				83438A6B281AB03E006C9285 /* NodeRepository.swift in Sources */,
@@ -14691,7 +14692,6 @@
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
 				941135561F01004000D33428 /* ShareFolderActivity.m in Sources */,
 				B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */,
-				9419E0482A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */,
 				A8F515B127F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift in Sources */,
 				B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */,
 				5B3B0D152684B24800479A68 /* ShareViewController.m in Sources */,
@@ -15339,10 +15339,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.5;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"$(inherited)",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev;
 				PRODUCT_NAME = MEGA;
@@ -15401,10 +15398,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.5;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"$(inherited)",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -15447,10 +15441,7 @@
 					"MNZ_NOTIFICATION_EXTENSION=1",
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/Import,
-					"$(inherited)",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -15509,10 +15500,7 @@
 					"$(inherited)",
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/Import,
-					"$(inherited)",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -15569,10 +15557,7 @@
 					MNZ_APP_EXTENSION,
 					"MNZ_WIDGET_EXTENSION=1",
 				);
-				HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/Import,
-					"$(inherited)",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -15627,10 +15612,7 @@
 					"MNZ_WIDGET_EXTENSION=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/Import,
-					"$(inherited)",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -15764,9 +15746,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					iMEGA/Vendor/SSKeychain,
-					iMEGA/Vendor/PureLayout/PureLayout,
-					iMEGA/Vendor/Import,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -15825,9 +15804,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					iMEGA/Vendor/SSKeychain,
-					iMEGA/Vendor/PureLayout/PureLayout,
-					iMEGA/Vendor/Import,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -16131,11 +16107,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					iMEGA/Vendor/SSKeychain,
-					iMEGA/Vendor/PureLayout/PureLayout,
-					iMEGA/Vendor/Import,
-					iMEGA/Vendor/FrameAccessor,
-					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
 				);
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -16319,10 +16290,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.5;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"$(inherited)",
-				);
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa;
 				PRODUCT_NAME = MEGA;
@@ -16371,9 +16339,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					iMEGA/Vendor/SSKeychain,
-					iMEGA/Vendor/PureLayout/PureLayout,
-					iMEGA/Vendor/Import,
 				);
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAShare/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -16427,10 +16392,7 @@
 					"$(inherited)",
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/Import,
-					"$(inherited)",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = iMEGA/Extensions/MEGANotifications/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16543,10 +16505,7 @@
 					"MNZ_WIDGET_EXTENSION=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = (
-					iMEGA/Vendor/Import,
-					"$(inherited)",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "iMEGA/Extensions/MEGAWidget/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
