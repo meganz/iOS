@@ -84,11 +84,12 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
-        reload()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) { [weak self] in
-            self?.updateSlideInView()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            collectionView.collectionViewLayout.invalidateLayout()
+            reload()
+            updateSlideInView()
         }
     }
     
@@ -96,7 +97,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             setNavigationAndToolbarColor()
         }
-        
+
         if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
             adjustHeightOfTopAndBottomView()
         }
