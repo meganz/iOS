@@ -45,7 +45,6 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isVideo, false)
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
         XCTAssertEqual(sut.isSelected, false)
-        XCTAssertEqual(sut.isFavorite, false)
         XCTAssertNil(sut.thumbnailLoadingTask)
     }
     
@@ -754,75 +753,6 @@ final class PhotoCellViewModelTests: XCTestCase {
         XCTAssertFalse(allViewModel.libraryViewModel.selection.isPhotoSelected(photo))
     }
     
-    func testIsFavorite_isNotFavoriteAndReceiveFavoriteUpdate_isFavorite() {
-        let sut = PhotoCellViewModel(
-            photo: NodeEntity(name: "0.jpg", handle: 0),
-            viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase()
-        )
-        XCTAssertFalse(sut.isFavorite)
-        
-        let exp = expectation(description: "isFavourite is updated")
-        sut.$isFavorite
-            .dropFirst()
-            .sink { isFavorite in
-                XCTAssertTrue(isFavorite)
-                exp.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        NotificationCenter.default.post(name: .didPhotoFavouritesChange,
-                                        object: [NodeEntity(name: "0.jpg", handle: 0, isFavourite: true)])
-        wait(for: [exp], timeout: 2.0)
-        XCTAssertTrue(sut.isFavorite)
-    }
-    
-    func testIsFavorite_isFavoriteAndReceiveNotFavoriteUpdate_isNotFavorite() {
-        let sut = PhotoCellViewModel(
-            photo: NodeEntity(name: "0.jpg", handle: 0, isFavourite: true),
-            viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase()
-        )
-        XCTAssertTrue(sut.isFavorite)
-        
-        let exp = expectation(description: "isFavourite is updated")
-        sut.$isFavorite
-            .dropFirst()
-            .sink { isFavorite in
-                XCTAssertFalse(isFavorite)
-                exp.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        NotificationCenter.default.post(name: .didPhotoFavouritesChange,
-                                        object: [NodeEntity(name: "0.jpg", handle: 0, isFavourite: false)])
-        wait(for: [exp], timeout: 2.0)
-        XCTAssertFalse(sut.isFavorite)
-    }
-    
-    func testIsFavorite_isNotFavoriteAndReceiveNoUpdates_isNotFavorite() {
-        let sut = PhotoCellViewModel(
-            photo: NodeEntity(name: "0.jpg", handle: 0),
-            viewModel: allViewModel,
-            thumbnailUseCase: MockThumbnailUseCase()
-        )
-        XCTAssertFalse(sut.isFavorite)
-        
-        let exp = expectation(description: "isFavourite should not be updated")
-        exp.isInverted = true
-        
-        sut.$isFavorite
-            .dropFirst()
-            .sink { _ in
-                exp.fulfill()
-            }
-            .store(in: &subscriptions)
-        
-        NotificationCenter.default.post(name: .didPhotoFavouritesChange,
-                                        object: [NodeEntity(name: "00.jpg", handle: 1, isFavourite: true)])
-        wait(for: [exp], timeout: 1.0)
-    }
-    
     func testShouldShowEditState_editing() {
         let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
                                      viewModel: allViewModel,
@@ -847,28 +777,86 @@ final class PhotoCellViewModelTests: XCTestCase {
         }
     }
     
-    func testShouldShowFavorite_favourite() {
-        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
+    func testShouldShowFavorite_whenFavouriteIsTrueAndIncrementalZoomLevelChange_shouldEmitTrueThenFalse() {
+        // Arrange
+        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1, isFavourite: true),
                                      viewModel: allViewModel,
                                      thumbnailUseCase: MockThumbnailUseCase())
-        sut.isFavorite = true
         
-        for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
-            sut.currentZoomScaleFactor = scaleFactor
-            XCTAssertEqual(sut.shouldShowFavorite, scaleFactor != .thirteen)
-        }
+        let exp = expectation(description: "Should emit shouldShowFavorite events")
+        
+        allViewModel.zoomState = PhotoLibraryZoomState(scaleFactor: .one, maximumScaleFactor: .thirteen)
+        
+        let zoomActions: [ZoomType] = [.out, .out, .out]
+        
+        var events: [Bool] = []
+        let subscription = sut
+            .$shouldShowFavorite
+            .dropFirst(1)
+            .sink(receiveValue: { events.append($0) })
+        
+        // Act
+        zoomActions.forEach { allViewModel.zoomState.zoom($0) }
+        
+        _  = XCTWaiter.wait(for: [exp], timeout: 2)
+        
+        subscription.cancel()
+        
+        // Assert
+        let expectedResults = [true, false]
+        XCTAssertEqual(events, expectedResults)
     }
     
-    func testShouldShowFavorite_notFavourite() {
-        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1),
+    func testShouldShowFavorite_whenFavouriteIsTrueAndDecrementalZoomLevelChange_shouldEmitFalseThenTrueThenFalse() {
+        // Arrange
+        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1, isFavourite: true),
                                      viewModel: allViewModel,
                                      thumbnailUseCase: MockThumbnailUseCase())
-        sut.isFavorite = false
         
-        for scaleFactor in PhotoLibraryZoomState.ScaleFactor.allCases {
-            sut.currentZoomScaleFactor = scaleFactor
-            XCTAssertFalse(sut.shouldShowFavorite)
-        }
+        let exp = expectation(description: "Should emit 2 shouldShowFavorite events")
+        allViewModel.zoomState = PhotoLibraryZoomState(scaleFactor: .thirteen, maximumScaleFactor: .thirteen)
+
+        let zoomActions: [ZoomType] = [.in, .in, .in]
+        
+        var events: [Bool] = []
+        let subscription = sut
+            .$shouldShowFavorite
+            .dropFirst(2)
+            .sink(receiveValue: { events.append($0) })
+        
+        // Act
+        zoomActions.forEach { allViewModel.zoomState.zoom($0) }
+        
+        _  = XCTWaiter.wait(for: [exp], timeout: 1)
+
+        subscription.cancel()
+        
+        // Assert"
+        let expectedResults = [false, true]
+        XCTAssertEqual(events, expectedResults)
+    }
+    
+    func testShouldShowFavorite_whenFavouriteIsFalse_shouldEmitFalse() {
+        // Arrange
+        let sut = PhotoCellViewModel(photo: NodeEntity(handle: 1, isFavourite: false),
+                                     viewModel: allViewModel,
+                                     thumbnailUseCase: MockThumbnailUseCase())
+        
+        let exp = expectation(description: "Should emit 1 shouldShowFavorite events")
+        
+        var events: [Bool] = []
+        let subscription = sut
+            .$shouldShowFavorite
+            .dropFirst()
+            .sink(receiveValue: { events.append($0) })
+        
+        // Act
+        _  = XCTWaiter.wait(for: [exp], timeout: 1)
+        subscription.cancel()
+        
+        // Assert"
+        let expectedResults = [false]
+        XCTAssertEqual(events, expectedResults)
     }
     
     func testSelect_onEditModeNoLimitConfigured_shouldChangeIsSelectedOnCellTap() throws {

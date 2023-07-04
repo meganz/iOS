@@ -11,7 +11,8 @@ extension PhotoChronologicalCategory {
         lhs.categoryDate != rhs.categoryDate ||
         lhs.coverPhoto != rhs.coverPhoto ||
         lhs.coverPhoto?.hasThumbnail != rhs.coverPhoto?.hasThumbnail ||
-        lhs.coverPhoto?.hasPreview != rhs.coverPhoto?.hasPreview
+        lhs.coverPhoto?.hasPreview != rhs.coverPhoto?.hasPreview ||
+        lhs.coverPhoto?.isFavourite != rhs.coverPhoto?.isFavourite
     }
 }
 

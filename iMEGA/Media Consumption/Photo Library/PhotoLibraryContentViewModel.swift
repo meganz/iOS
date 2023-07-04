@@ -14,6 +14,7 @@ import SwiftUI
     let configuration: PhotoLibraryContentConfiguration?
     
     lazy var selection = PhotoSelection(selectLimit: configuration?.selectLimit)
+    
     lazy var filterViewModel = PhotoLibraryFilterViewModel(
         contentMode: contentMode,
         userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo)

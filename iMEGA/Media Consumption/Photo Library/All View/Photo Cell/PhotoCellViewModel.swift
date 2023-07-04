@@ -32,7 +32,6 @@ class PhotoCellViewModel: ObservableObject {
         }
     }
     
-    @Published var isFavorite: Bool = false
     @Published var editMode: EditMode = .inactive
     @Published private(set) var isSelectionLimitReached: Bool = false
     
@@ -40,9 +39,7 @@ class PhotoCellViewModel: ObservableObject {
         editMode.isEditing && currentZoomScaleFactor != .thirteen
     }
     
-    var shouldShowFavorite: Bool {
-        isFavorite && currentZoomScaleFactor != .thirteen
-    }
+    @Published private(set) var shouldShowFavorite: Bool = false
     
     var shouldApplyContentOpacity: Bool {
         editMode.isEditing && isSelectionLimitReached && !isSelected
@@ -55,11 +52,8 @@ class PhotoCellViewModel: ObservableObject {
         self.selection = viewModel.libraryViewModel.selection
         self.thumbnailUseCase = thumbnailUseCase
         currentZoomScaleFactor = viewModel.zoomState.scaleFactor
-        
         isVideo = photo.mediaType == .video
-        isFavorite = photo.isFavourite
         duration = photo.duration >= 0 ? TimeInterval(photo.duration).timeString : ""
-        
         let type: ThumbnailTypeEntity = viewModel.zoomState.scaleFactor == .one ? .preview : .thumbnail
         if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: type) {
             thumbnailContainer = container
@@ -68,7 +62,6 @@ class PhotoCellViewModel: ObservableObject {
             let placeholder = ImageContainer(image: Image(placeholderFileType), type: .placeholder)
             thumbnailContainer = placeholder
         }
-        
         configZoomState(with: viewModel)
         configSelection()
         subscribeToPhotoFavouritesChange()
@@ -175,7 +168,6 @@ class PhotoCellViewModel: ObservableObject {
     private func configZoomState(with viewModel: PhotoLibraryModeAllViewModel) {
         viewModel
             .$zoomState
-            .dropFirst()
             .sink { [weak self] in
                 self?.currentZoomScaleFactor = $0.scaleFactor
             }
@@ -183,17 +175,37 @@ class PhotoCellViewModel: ObservableObject {
     }
     
     private func subscribeToPhotoFavouritesChange() {
-        NotificationCenter.default
-            .publisher(for: .didPhotoFavouritesChange)
-            .compactMap { $0.object as? [NodeEntity] }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] updatedNodes in
-                guard let self = self,
-                      let updateNode = updatedNodes.first(where: { $0 == self.photo }) else {
-                    return
+    
+        if #available(iOS 16.0, *) {
+            $currentZoomScaleFactor
+                .compactMap { [weak self] currentZoomScale -> Bool? in
+                    guard let self else { return nil }
+                    return canShowFavorite(photo: photo, atCurrentZoom: currentZoomScale)
                 }
-                self.isFavorite = updateNode.isFavourite
-            }
-            .store(in: &subscriptions)
+                .removeDuplicates()
+                .receive(on: DispatchQueue.main)
+                .assign(to: &$shouldShowFavorite)
+        } else {
+            $currentZoomScaleFactor
+                .combineLatest(NotificationCenter.default.publisher(for: .didPhotoFavouritesChange).compactMap { $0.object as? [NodeEntity] })
+                .sink { [weak self] zoomFactor, updatedNodes in
+                    guard let self,
+                          let updateNode = updatedNodes.first(where: { $0 == self.photo }) else {
+                        return
+                    }
+                    shouldShowFavorite = updateNode.isFavourite && zoomFactor.rawValue < PhotoLibraryZoomState.ScaleFactor.thirteen.rawValue
+                }
+                .store(in: &subscriptions)
+        }
+    }
+    
+    /// Returns wheather or not the given NodeEntity shold indicate if it has been favourited.
+    /// - Parameters:
+    ///   - photo: NodeEntity from which we compare its .isFavourtite to determine if it has been favourited.
+    ///   - scale: The current zoom level for the application feature
+    ///   - scaleLimit: The maximum allowed zoom level, before we do not allow the indicating if it should present any indication of favourtism. This is typically based on the not having enough visual space to present the favourite indicator.
+    /// - Returns: Boolean - Representing if the given photo should present a favourite indicator.
+    private func canShowFavorite(photo: NodeEntity, atCurrentZoom scale: PhotoLibraryZoomState.ScaleFactor, withMaximumZoom scaleLimit: PhotoLibraryZoomState.ScaleFactor = .thirteen) -> Bool {
+        photo.isFavourite && scale.rawValue < scaleLimit.rawValue
     }
 }
