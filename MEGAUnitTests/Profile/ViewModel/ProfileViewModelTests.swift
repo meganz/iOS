@@ -90,7 +90,6 @@ final class ProfileViewModelTests: XCTestCase {
         sut.sectionCellsPublisher
             .dropFirst(1)
             .first()
-            .print("FREED", to: nil)
             .sink { sectionDataSource in
                 result = sectionDataSource
                 expectation.fulfill()
