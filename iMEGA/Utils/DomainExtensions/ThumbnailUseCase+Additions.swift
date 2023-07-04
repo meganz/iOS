@@ -1,3 +1,4 @@
+import MEGAData
 import MEGADomain
 import MEGASwiftUI
 import SwiftUI

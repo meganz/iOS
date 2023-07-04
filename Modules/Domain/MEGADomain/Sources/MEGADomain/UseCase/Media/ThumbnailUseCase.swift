@@ -24,27 +24,27 @@ public protocol ThumbnailUseCaseProtocol {
     ///   - node: The node entity for which the thumbnail to be loaded
     ///   - type: `ThumbnailTypeEntity` thumbnail type
     /// - Returns: The url of the cached thumbnail in thumbnail repository
-    /// - Throws: `ThumbnailErrorEntity` error
+    /// - Throws: `ThumbnailErrorEntity` or `GenericErrorEntity` error.
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> ThumbnailEntity
     
     /// Load thumbnail asynchronously with Combine
     /// - Parameters:
     ///   - node: The node entity for which the thumbnail to be loaded
     ///   - type: `ThumbnailTypeEntity` thumbnail type
-    /// - Returns: A `Future` publisher of the url of the cached thumbnail in thumbnail repository. Or it fails with `ThumbnailErrorEntity` error.
-    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, ThumbnailErrorEntity>
+    /// - Returns: A `Future` publisher of the url of the cached thumbnail in thumbnail repository. Or it fails with `ThumbnailErrorEntity` or `GenericErrorEntity` error.
+    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, Error>
     
     /// Request high quality preview of a node. It will publish values multiple times until the high quality preview URL is published.
     /// For example, it may publish this value flow: "thumbnail URL" -> "Preview URL"
     /// - Parameter node: The node entity for which the preview to be loaded
     /// - Returns: A publisher to publish preview URL, and it will publish any low quality thumbnail URL first if they are available
-    func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, ThumbnailErrorEntity>
+    func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, Error>
     
     /// Request thumbnail and preview of a node. It will publish values multiple times until both thumbnail and preview are loaded.
     /// For example, it may publish this value flow: "(nil, nil)" -> "(thumbnail URL, nil)" -> "(thumbnail URL, Preview URL)".
     /// - Parameter node: The node entity for which the thumbnail and preview to be loaded
     /// - Returns: A publisher to publish thumbnail and preview URL values
-    func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), ThumbnailErrorEntity>
+    func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), Error>
     
     /// Find cached preview or original in thumbnail repository
     /// - Parameters:
@@ -78,15 +78,20 @@ public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCase
                                          type: type)
     }
     
-    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, ThumbnailErrorEntity> {
+    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, Error> {
         Future { promise in
-            repository.loadThumbnail(for: node, type: type) { result in
-                promise(result.map { url in ThumbnailEntity(url: url, type: type) })
+            Task {
+                do {
+                    let url = try await repository.loadThumbnail(for: node, type: type)
+                    promise(.success(ThumbnailEntity(url: url, type: type)))
+                } catch {
+                    promise(.failure(error))
+                }
             }
         }
     }
     
-    public func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, ThumbnailErrorEntity> {
+    public func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, Error> {
         requestThumbnailAndPreview(for: node)
             .combinePrevious((nil, nil))
             .filter { result in
@@ -102,7 +107,7 @@ public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCase
             .eraseToAnyPublisher()
     }
     
-    public func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), ThumbnailErrorEntity> {
+    public func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), Error> {
         loadThumbnail(for: node, type: .thumbnail)
             .map(Optional.some)
             .prepend(nil)

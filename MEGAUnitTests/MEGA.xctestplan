@@ -47,37 +47,42 @@
           "name" : "MEGAIntent"
         },
         {
-          "containerPath" : "container:Modules\/MEGADomain",
-          "identifier" : "MEGADomain",
-          "name" : "MEGADomain"
-        },
-        {
-          "containerPath" : "container:Modules\/MEGAData",
+          "containerPath" : "container:Modules\/Repository\/MEGAData",
           "identifier" : "MEGAData",
           "name" : "MEGAData"
         },
         {
-          "containerPath" : "container:Modules\/MEGAFoundation",
+          "containerPath" : "container:Modules\/Domain\/MEGADomain",
+          "identifier" : "MEGADomain",
+          "name" : "MEGADomain"
+        },
+        {
+          "containerPath" : "container:Modules\/Infrastracture\/MEGAFoundation",
           "identifier" : "MEGAFoundation",
           "name" : "MEGAFoundation"
         },
         {
-          "containerPath" : "container:Modules\/MEGASwift",
+          "containerPath" : "container:Modules\/Presentation\/MEGAPresentation",
+          "identifier" : "MEGAPresentation",
+          "name" : "MEGAPresentation"
+        },
+        {
+          "containerPath" : "container:Modules\/Infrastracture\/MEGASwift",
           "identifier" : "MEGASwift",
           "name" : "MEGASwift"
         },
         {
-          "containerPath" : "container:Modules\/MEGASwiftUI",
+          "containerPath" : "container:Modules\/UI\/MEGASwiftUI",
           "identifier" : "MEGASwiftUI",
           "name" : "MEGASwiftUI"
         },
         {
-          "containerPath" : "container:Modules\/MEGAUI",
+          "containerPath" : "container:Modules\/UI\/MEGAUI",
           "identifier" : "MEGAUI",
           "name" : "MEGAUI"
         },
         {
-          "containerPath" : "container:Modules\/MEGAUIKit",
+          "containerPath" : "container:Modules\/UI\/MEGAUIKit",
           "identifier" : "MEGAUIKit",
           "name" : "MEGAUIKit"
         }

@@ -34,6 +34,7 @@ public final class MockSdk: MEGASdk {
     private let _accountDetails: (MEGASdk, any MEGARequestDelegate) -> Void
     private let smsState: SMSState
     private let devices: [String: String]
+    private let file: String?
     
     public var hasGlobalDelegate = false
     public var hasRequestDelegate = false
@@ -70,7 +71,8 @@ public final class MockSdk: MEGASdk {
                 userAlertList: MEGAUserAlertList = MEGAUserAlertList(),
                 upgradeSecurity: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
                 accountDetails: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
-                devices: [String: String] = [:]
+                devices: [String: String] = [:],
+                file: String? = nil
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -102,6 +104,7 @@ public final class MockSdk: MEGASdk {
         _upgradeSecurity = upgradeSecurity
         _accountDetails = accountDetails
         self.devices = devices
+        self.file = file
         super.init()
     }
     
@@ -402,6 +405,16 @@ public final class MockSdk: MEGASdk {
         }
         
         delegate.onRequestFinish?(self, request: mockRequest ?? MockRequest(handle: 1), error: MockError(errorType: megaSetError))
+    }
+
+    public override func getThumbnailNode(_ node: MEGANode, destinationFilePath: String, delegate: any MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: node.handle, file: file)
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
+    }
+    
+    public override func getPreviewNode(_ node: MEGANode, destinationFilePath: String, delegate: any MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: node.handle, file: file)
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
 }
 
