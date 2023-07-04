@@ -100,6 +100,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.currentEmailInputView.inputTextField.text = self.email;
             self.currentEmailInputView.inputTextField.userInteractionEnabled = NO;
+            self.currentEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
             
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
@@ -107,8 +108,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
             self.confirmPasswordView.passwordTextField.delegate = self;
             self.confirmPasswordView.passwordTextField.tag = ConfirmPasswordTextFieldTag;
-            self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
-            self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+            self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
+            self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
 
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
             
