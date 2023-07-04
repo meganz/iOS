@@ -11,7 +11,7 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
             megaAvatarClient: .foundImage,
             avatarFileSystemClient: .foundNil,
             accountUseCase: MockAccountUseCase(),
-            thumbnailRepo: ThumbnailRepository.newRepo,
+            thumbnailRepo: MockThumbnailRepository(),
             handleUseCase: MockMEGAHandleUseCase()
         )
         
@@ -28,7 +28,7 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
             megaAvatarClient: .foundNil,
             avatarFileSystemClient: .foundNil,
             accountUseCase: MockAccountUseCase(),
-            thumbnailRepo: ThumbnailRepository.newRepo,
+            thumbnailRepo: MockThumbnailRepository(),
             handleUseCase: MockMEGAHandleUseCase()
         )
         
@@ -45,7 +45,7 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
             megaAvatarClient: .foundImage,
             avatarFileSystemClient: .foundNil,
             accountUseCase: MockAccountUseCase(),
-            thumbnailRepo: ThumbnailRepository.newRepo,
+            thumbnailRepo: MockThumbnailRepository(),
             handleUseCase: MockMEGAHandleUseCase()
         )
         

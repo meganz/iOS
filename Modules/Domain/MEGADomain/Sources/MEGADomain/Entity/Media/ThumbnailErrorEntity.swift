@@ -1,5 +1,4 @@
-public enum ThumbnailErrorEntity: Error {
-    case generic
+public enum ThumbnailErrorEntity: Error, Equatable {
     case noThumbnail(ThumbnailTypeEntity)
     case noThumbnails
     case nodeNotFound

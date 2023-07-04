@@ -2,19 +2,21 @@ import Foundation
 import MEGADomain
 
 public struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
+    public static let newRepo = MockThumbnailRepository()
+    
     private let cachedThumbnailURLs: [(ThumbnailTypeEntity, URL?)]
     private let cachedThumbnailURL: URL
     private let cachedPreviewURL: URL
     private let cachedOriginalURL: URL
-    private let loadThumbnailResult: Result<URL, ThumbnailErrorEntity>
-    private let loadPreviewResult: Result<URL, ThumbnailErrorEntity>
+    private let loadThumbnailResult: Result<URL, Error>
+    private let loadPreviewResult: Result<URL, Error>
     
     public init(cachedThumbnailURLs: [(ThumbnailTypeEntity, URL?)] = [],
                 cachedThumbnailURL: URL = URL(string: "https://MEGA.NZ")!,
                 cachedPreviewURL: URL = URL(string: "https://MEGA.NZ")!,
                 cachedOriginalURL: URL = URL(string: "https://MEGA.NZ")!,
-                loadThumbnailResult: Result<URL, ThumbnailErrorEntity> = .failure(.generic),
-                loadPreviewResult: Result<URL, ThumbnailErrorEntity> = .failure(.generic)) {
+                loadThumbnailResult: Result<URL, Error> = .failure(GenericErrorEntity()),
+                loadPreviewResult: Result<URL, Error> = .failure(GenericErrorEntity())) {
         self.cachedThumbnailURLs = cachedThumbnailURLs
         self.cachedThumbnailURL = cachedThumbnailURL
         self.cachedPreviewURL = cachedPreviewURL
@@ -53,18 +55,12 @@ public struct MockThumbnailRepository: ThumbnailRepositoryProtocol {
     
     public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> URL {
         try await withCheckedThrowingContinuation { continuation in
-            loadThumbnail(for: node, type: type) {
-                continuation.resume(with: $0)
+            switch type {
+            case .thumbnail:
+                continuation.resume(with: loadThumbnailResult)
+            case .preview, .original:
+                continuation.resume(with: loadPreviewResult)
             }
-        }
-    }
-    
-    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity, completion: @escaping (Result<URL, ThumbnailErrorEntity>) -> Void) {
-        switch type {
-        case .thumbnail:
-            completion(loadThumbnailResult)
-        case .preview, .original:
-            completion(loadPreviewResult)
         }
     }
     
