@@ -1,4 +1,4 @@
-import Foundation
+import MEGAData
 import MEGADomain
 
 struct ShareAlbumLinkInitialSections {

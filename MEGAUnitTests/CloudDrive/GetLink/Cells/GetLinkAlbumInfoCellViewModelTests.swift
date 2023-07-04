@@ -29,7 +29,7 @@ final class GetLinkAlbumInfoCellViewModelTests: XCTestCase {
         let albumCount = 45
         let album = AlbumEntity(id: 5, name: albumName, coverNode: NodeEntity(handle: 50), count: albumCount, type: .user)
         let sut = GetLinkAlbumInfoCellViewModel(album: album,
-                                                thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .failure(ThumbnailErrorEntity.generic)))
+                                                thumbnailUseCase: MockThumbnailUseCase(loadThumbnailResult: .failure(GenericErrorEntity())))
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .setLabels(title: albumName,

@@ -1,3 +1,4 @@
+import MEGAData
 
 protocol FileExplorerGridCellViewModelDelegate: AnyObject {
     func onUpdateAllowsSelection()

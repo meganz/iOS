@@ -1,4 +1,5 @@
 import Foundation
+import MEGAData
 
 final class AudioPlayerItem: AVPlayerItem {
     var name: String
