@@ -1,10 +1,11 @@
 import Combine
 import Foundation
+import MEGASwift
 
 @objc final class PhotoUpdatePublisher: NSObject {
     private enum Constants {
         static let headerReloadInterval = 1.3
-        static let photoUpdateThrottleInterval = 5.0
+        static let photoUpdateDebounceInterval = 0.5
     }
     
     private let photoLibrarySubject = PassthroughSubject<Void, Never>()
@@ -64,11 +65,8 @@ import Foundation
     
     private func subscribleToPhotoLibraryUpdate() {
         photoLibrarySubject
-            .throttle(for: .seconds(Constants.photoUpdateThrottleInterval), scheduler: DispatchQueue.global(qos: .userInitiated), latest: true)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.photosVC?.reloadPhotos()
-            }
+            .debounceImmediate(for: .seconds(Constants.photoUpdateDebounceInterval), scheduler: DispatchQueue.main)
+            .sink { [weak self] in self?.photosVC?.reloadPhotos() }
             .store(in: &subscriptions)
     }
 }

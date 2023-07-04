@@ -122,7 +122,7 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
         
         let newCategories = [
             NodeEntity(name: "a.jpg", handle: 1, hasThumbnail: true, modificationTime: try "2022-08-18T22:01:04Z".date),
-            NodeEntity(name: "b.jpg", handle: 2, isFavourite: true, modificationTime: try "2022-07-18T22:01:04Z".date),
+            NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2022-07-18T22:01:04Z".date),
             NodeEntity(name: "c.mov", handle: 3, hasPreview: true, modificationTime: try "2022-07-18T20:01:04Z".date),
             NodeEntity(name: "d.mp4", handle: 4, modificationTime: try "2021-08-18T22:01:04Z".date),
             NodeEntity(name: "e.jpg", handle: 5, modificationTime: try "2021-01-18T22:01:04Z".date),
@@ -226,6 +226,33 @@ final class PhotoChronologicalCategory_photoMonthSection_refreshTests: XCTestCas
             NodeEntity(name: "d.mp4", handle: 4, hasPreview: true, modificationTime: try "2022-08-15T22:01:04Z".date),
             NodeEntity(name: "h.jpg", handle: 8, hasThumbnail: true, modificationTime: try "2020-10-17T22:01:04Z".date),
             NodeEntity(name: "j.jpg", handle: 10, hasPreview: true, modificationTime: try "2020-10-12T22:01:04Z".date)
+        ]
+        
+        for node in visibleAndRefreshableNodes {
+            XCTAssertTrue(testCategories.shouldRefresh(to: newCategories, visiblePositions: [node.position: true]))
+        }
+    }
+    
+    func testShouldRefresh_photoMonthSectionAndNodeChangeIsFavourite_refresh() throws {
+        let testCategories = [
+            NodeEntity(name: "a.jpg", handle: 1, modificationTime: try "2022-08-18T22:01:04Z".date),
+            NodeEntity(name: "b.jpg", handle: 2, isFavourite: true, modificationTime: try "2022-07-18T22:01:04Z".date)
+        ]
+            .toPhotoLibrary(withSortType: .newest, in: .GMT)
+            .photoMonthSections
+        
+        let newCategories = [
+            NodeEntity(name: "a.jpg", handle: 1, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date),
+            NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2022-07-18T22:01:04Z".date)
+        ]
+            .toPhotoLibrary(withSortType: .newest, in: .GMT)
+            .photoMonthSections
+        
+        XCTAssertFalse(testCategories.shouldRefresh(to: newCategories, visiblePositions: [:]))
+
+        let visibleAndRefreshableNodes = [
+            NodeEntity(name: "a.jpg", handle: 1, isFavourite: true, modificationTime: try "2022-08-18T22:01:04Z".date),
+            NodeEntity(name: "b.jpg", handle: 2, modificationTime: try "2022-07-18T22:01:04Z".date)
         ]
         
         for node in visibleAndRefreshableNodes {
