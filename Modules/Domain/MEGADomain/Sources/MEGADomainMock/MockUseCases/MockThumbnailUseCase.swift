@@ -5,15 +5,15 @@ import MEGADomain
 public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
     let cachedThumbnails: [ThumbnailEntity]
     let generatedCachingThumbnail: ThumbnailEntity
-    let loadThumbnailResult: Result<ThumbnailEntity, ThumbnailErrorEntity>
-    let loadPreviewResult: Result<ThumbnailEntity, ThumbnailErrorEntity>
-    let loadThumbnailAndPreviewResult: Result<(ThumbnailEntity?, ThumbnailEntity?), ThumbnailErrorEntity>
+    let loadThumbnailResult: Result<ThumbnailEntity, Error>
+    let loadPreviewResult: Result<ThumbnailEntity, Error>
+    let loadThumbnailAndPreviewResult: Result<(ThumbnailEntity?, ThumbnailEntity?), Error>
     
     public init(cachedThumbnails: [ThumbnailEntity] = [],
                 generatedCachingThumbnail: ThumbnailEntity = ThumbnailEntity(url: URL(string: "https://MEGA.NZ")!, type: .thumbnail),
-                loadThumbnailResult: Result<ThumbnailEntity, ThumbnailErrorEntity> = .failure(.generic),
-                loadPreviewResult: Result<ThumbnailEntity, ThumbnailErrorEntity> = .failure(.generic),
-                loadThumbnailAndPreviewResult: Result<(ThumbnailEntity?, ThumbnailEntity?), ThumbnailErrorEntity> = .failure(.generic)) {
+                loadThumbnailResult: Result<ThumbnailEntity, Error> = .failure(GenericErrorEntity()),
+                loadPreviewResult: Result<ThumbnailEntity, Error> = .failure(GenericErrorEntity()),
+                loadThumbnailAndPreviewResult: Result<(ThumbnailEntity?, ThumbnailEntity?), Error> = .failure(GenericErrorEntity())) {
         self.cachedThumbnails = cachedThumbnails
         self.generatedCachingThumbnail = generatedCachingThumbnail
         self.loadThumbnailResult = loadThumbnailResult
@@ -40,7 +40,7 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
         }
     }
     
-    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, ThumbnailErrorEntity> {
+    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, Error> {
         Future { promise in
             switch type {
             case .thumbnail:
@@ -51,7 +51,7 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
         }
     }
     
-    public func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, ThumbnailErrorEntity> {
+    public func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, Error> {
         if case .success = loadThumbnailResult, case .success = loadPreviewResult {
             return loadThumbnailResult
                 .publisher
@@ -64,7 +64,7 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
         }
     }
     
-    public func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), ThumbnailErrorEntity> {
+    public func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), Error> {
         loadThumbnailAndPreviewResult
             .publisher
             .eraseToAnyPublisher()
