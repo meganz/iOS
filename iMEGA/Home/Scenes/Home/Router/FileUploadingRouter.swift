@@ -1,4 +1,5 @@
 import CoreServices
+import MEGADomain
 import Foundation
 import VisionKit
 
@@ -66,7 +67,9 @@ final class FileUploadingRouter {
                             let appData = coordinates.map(NSString().mnz_appData(toSaveCoordinates:))
                             return CancellableTransfer(handle: .invalid, parentHandle: parentNode.handle, localFileURL: $0, name: nil, appData: appData, priority: false, isFile: true, type: .upload)
                         } as [CancellableTransfer]
-                        CancellableTransferRouter.init(presenter: presenter, transfers: transfers, transferType: .upload).start()
+                        
+                        let collisionEntities = transfers.map { NameCollisionEntity(parentHandle: $0.parentHandle, name: $0.localFileURL?.lastPathComponent ?? "", isFile: $0.isFile, fileUrl: $0.localFileURL) }
+                        NameCollisionViewRouter(presenter: presenter, transfers: transfers, nodes: nil, collisions: collisionEntities, collisionType: .upload).start()
                     }
                 }
             }
