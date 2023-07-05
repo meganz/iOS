@@ -188,3 +188,4 @@
 #import "ChangeNameViewController.h"
 
 #import "ItemListModel.h"
+#import "AdvancedTableViewController.h"

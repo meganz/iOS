@@ -60,6 +60,6 @@ final class QASettingsViewModel {
     
     // MARK: - Fingerprint flag
     func fingerprintVerificationFlagStatus() -> String {
-        SharedSecureFingerprintManager().secureFingerprintStatus()
+        SharedSecureFingerprintManager().secureFingerprintStatus().lowercased()
     }
 }
