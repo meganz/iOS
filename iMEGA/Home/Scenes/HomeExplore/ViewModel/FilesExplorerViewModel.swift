@@ -17,7 +17,7 @@ final class FilesExplorerViewModel {
         case reloadNodes(nodes: [MEGANode]?, searchText: String?)
         case onNodesUpdate([MEGANode])
         case reloadData
-        case setViewConfiguration(FilesExplorerViewConfiguration)
+        case setViewConfiguration(any FilesExplorerViewConfiguration)
         case onTransferCompleted(MEGANode)
         case updateContextMenu(UIMenu)
         case updateUploadAddMenu(UIMenu)
@@ -40,7 +40,7 @@ final class FilesExplorerViewModel {
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let explorerType: ExplorerTypeEntity
     private var contextMenuManager: ContextMenuManager?
-    private var viewConfiguration: FilesExplorerViewConfiguration {
+    private var viewConfiguration: any FilesExplorerViewConfiguration {
         switch explorerType {
         case .document:
             return DocumentExplorerViewConfiguration()

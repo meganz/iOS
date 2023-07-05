@@ -73,7 +73,7 @@ extension MEGAChatSdk {
         return [MEGAChatListItem](recentChats[0..<min(max, recentChats.count)])
     }
     
-    @objc func removeMEGAChatRequestDelegateAsync(_ delegate: MEGAChatRequestDelegate) {
+    @objc func removeMEGAChatRequestDelegateAsync(_ delegate: any MEGAChatRequestDelegate) {
         Task.detached {
             MEGAChatSdk.shared.remove(delegate)
         }
@@ -85,7 +85,7 @@ extension MEGAChatSdk {
         }
     }
     
-    @objc func removeMEGACallDelegateAsync(_ delegate: MEGAChatCallDelegate) {
+    @objc func removeMEGACallDelegateAsync(_ delegate: any MEGAChatCallDelegate) {
         Task.detached {
             MEGAChatSdk.shared.remove(delegate)
         }

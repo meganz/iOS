@@ -26,7 +26,7 @@ extension OfflineCollectionViewController {
         return contextMenuConfiguration
     }
     
-    @objc func willPerformPreviewActionForMenuWith(animator: UIContextMenuInteractionCommitAnimating) {
+    @objc func willPerformPreviewActionForMenuWith(animator: any UIContextMenuInteractionCommitAnimating) {
         guard let offlineVC = animator.previewViewController as? OfflineViewController else { return }
         animator.addCompletion {
             self.navigationController?.pushViewController(offlineVC, animated: true)

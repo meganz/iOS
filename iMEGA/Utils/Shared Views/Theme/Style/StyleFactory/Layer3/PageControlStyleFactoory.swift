@@ -1,6 +1,6 @@
 extension InterfaceStyle {
 
-    var pageControlStyleFactory: PageControlStyleFactory {
+    var pageControlStyleFactory: some PageControlStyleFactory {
         PageControlStyleFactoryImpl(
             colorFactory: colorFactory
         )
@@ -21,7 +21,7 @@ protocol PageControlStyleFactory {
 
 private struct PageControlStyleFactoryImpl: PageControlStyleFactory {
 
-    let colorFactory: ColorFactory
+    let colorFactory: any ColorFactory
 
     func styler(of style: MEGAPageControlStyle) -> PageControlStyler {
         switch style {

@@ -59,7 +59,7 @@ extension CallCallbacksUseCaseProtocol {
 final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtocol {
     
     private let repository: T
-    private weak var callbacksDelegate: CallCallbacksUseCaseProtocol?
+    private weak var callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
 
     init(repository: T) {
         self.repository = repository

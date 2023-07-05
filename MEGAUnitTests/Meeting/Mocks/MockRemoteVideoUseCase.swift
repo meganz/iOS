@@ -11,7 +11,7 @@ class MockCallRemoteVideoUseCase: CallRemoteVideoUseCaseProtocol {
     var requestLowResolutionVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
     var stopLowResolutionVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
 
-    func addRemoteVideoListener(_ remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol) {
+    func addRemoteVideoListener(_ remoteVideoListener: some CallRemoteVideoListenerUseCaseProtocol) {
         addRemoteVideoListener_CalledTimes += 1
     }
     

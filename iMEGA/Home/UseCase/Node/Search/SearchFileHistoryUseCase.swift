@@ -146,7 +146,7 @@ extension SearchEntryUpdating {
 @objc(SearchFileUseCase)
 final class SearchFileHistoryUseCaseOCCompatible: NSObject {
 
-    private let searchFileUseCase: SearchFileHistoryUseCaseProtocol = SearchFileHistoryUseCase(
+    private let searchFileUseCase: some SearchFileHistoryUseCaseProtocol = SearchFileHistoryUseCase(
         fileSearchHistoryRepository: .live
     )
 

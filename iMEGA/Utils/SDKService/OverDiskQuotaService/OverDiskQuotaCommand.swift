@@ -7,18 +7,18 @@ import MEGAFoundation
     // MARK: - Typealias
 
     typealias OverDiskQuotaFetchResult =
-        Result<OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>
+        Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>
 
     // MARK: - Properties
 
-    private var completionAction: (OverDiskQuotaInfomationProtocol?) -> Void
+    private var completionAction: ((any OverDiskQuotaInfomationProtocol)?) -> Void
 
     var storageUsed: NSNumber?
 
     // MARK: - Lifecycles
 
     @objc init(storageUsed: NSNumber?,
-               completionAction: @escaping (OverDiskQuotaInfomationProtocol?) -> Void) {
+               completionAction: @escaping ((any OverDiskQuotaInfomationProtocol)?) -> Void) {
         self.completionAction = completionAction
         self.storageUsed = storageUsed
     }
@@ -66,7 +66,7 @@ private final class OverDiskQuotaQueryTask {
 
     func start(
         with api: MEGASdk,
-        completion: @escaping (Result<OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
+        completion: @escaping (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         if let userDataStore = userDataStore,
             let storageUsedStore = storageUsedStore,
@@ -108,7 +108,7 @@ private final class OverDiskQuotaQueryTask {
 
     private func fetchUserData(
         _ api: MEGASdk,
-        _ completion: @escaping (Result<OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
+        _ completion: @escaping (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         api.getUserData(with: MEGAGenericRequestDelegate(completion: { [weak self] (_, error) in
             guard let self = self else {
@@ -143,7 +143,7 @@ private final class OverDiskQuotaQueryTask {
 
     private func fetchMEGAPlans(
         _ api: MEGASdk,
-        _ completion: @escaping (Result<OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
+        _ completion: @escaping (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] result  in
             guard let self = self else {

@@ -13,8 +13,8 @@ final class CameraUploadHeartbeat: NSObject {
     private let sdk: MEGASdk
     private let register: BackupRegister
     private let recorder: BackupRecorder
-    private var activeTimer: DispatchSourceTimer?
-    private var statusTimer: DispatchSourceTimer?
+    private var activeTimer: (any DispatchSourceTimer)?
+    private var statusTimer: (any DispatchSourceTimer)?
     private var lastHeartbeatNodeHandle: HandleEntity?
     
     @objc override init() {

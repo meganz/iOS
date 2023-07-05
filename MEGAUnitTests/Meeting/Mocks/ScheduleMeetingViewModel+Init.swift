@@ -8,7 +8,7 @@ extension ScheduleMeetingViewModel {
         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         chatLinkUseCase: any ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
         chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        isTesting: Bool = true
+        isTesting: Bool
     ) {
         self.init(router: router, rules: rules, scheduledMeetingUseCase: scheduledMeetingUseCase, chatLinkUseCase: chatLinkUseCase, chatRoomUseCase: chatRoomUseCase)
     }

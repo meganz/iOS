@@ -12,7 +12,7 @@ final class SendFeedbackViewRouter: Routing {
     }
     
     func build() -> UIViewController {
-        guard let presenter = presenter as? MFMailComposeViewControllerDelegate else {
+        guard let presenter = presenter as? any MFMailComposeViewControllerDelegate else {
             return UIViewController()
         }
 
@@ -33,7 +33,7 @@ final class SendFeedbackViewRouter: Routing {
         }
     }
     
-    private func createMailComposeController(_ presenter: MFMailComposeViewControllerDelegate) -> MFMailComposeViewController {
+    private func createMailComposeController(_ presenter: some MFMailComposeViewControllerDelegate) -> MFMailComposeViewController {
         let mailComposeVC = MFMailComposeViewController()
         mailComposeVC.mailComposeDelegate = presenter
         mailComposeVC.setToRecipients([feedbackEntity.toEmail])
