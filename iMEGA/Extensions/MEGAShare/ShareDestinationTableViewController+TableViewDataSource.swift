@@ -50,8 +50,9 @@ extension ShareDestinationTableViewController {
     }
     
     // MARK: - UITableView data source
+    
     open override func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        ShareDestinationSection.allCases.count
     }
     
     open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,6 +72,19 @@ extension ShareDestinationTableViewController {
     }
     
     open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        titleForHeader(in: section)
+    }
+    
+    open override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        configureTableViewHeaderStyleWithSentenceCase(view, forSection: section)
+    }
+    
+    private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
+        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
+        tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+    }
+    
+    private func titleForHeader(in section: Int) -> String? {
         switch ShareDestinationSection(rawValue: section) {
         case .destination:
             return Strings.Localizable.selectDestination

@@ -362,6 +362,26 @@ extension ProfileViewController: UITableViewDelegate {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        configureTableViewHeaderStyleWithSentenceCase(view, forSection: section)
+    }
+    
+    private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
+        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
+        tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+    }
+    
+    private func titleForHeader(in section: Int) -> String? {
+        switch viewModel.sectionCells.sectionOrder[section] {
+        case .security:
+            return Strings.Localizable.recoveryKey
+        case .plan:
+            return Strings.Localizable.plan
+        case .profile, .session:
+            return nil
+        }
+    }
 }
 
 // MARK: - MEGARequestDelegate

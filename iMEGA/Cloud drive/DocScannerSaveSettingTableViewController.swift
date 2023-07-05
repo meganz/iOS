@@ -48,10 +48,16 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     var currentFileName: String?
     
     private struct TableViewConfiguration {
-        static let numberOfSections = 3
+        static var numberOfSections: Int { Section.allCases.count }
         static let numberOfRowsInFirstSection = 1
         static let numberOfRowsInSecondSection = 2
         static let numberOfRowsInThirdSection = 2
+        
+        enum Section: Int, CaseIterable {
+            case scannedDocumentPreview
+            case settings
+            case selectDestination
+        }
     }
     
     struct keys {
@@ -167,18 +173,18 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         if chatRoom != nil {
-            return 2
+            return TableViewConfiguration.Section.allCases.dropFirst().count
         }
-        return TableViewConfiguration.numberOfSections
+        return TableViewConfiguration.Section.allCases.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
+        switch TableViewConfiguration.Section(rawValue: section) {
+        case .scannedDocumentPreview:
             return TableViewConfiguration.numberOfRowsInFirstSection
-        case 1:
+        case .settings:
             return TableViewConfiguration.numberOfRowsInSecondSection
-        case 2:
+        case .selectDestination:
             return TableViewConfiguration.numberOfRowsInThirdSection
         default:
             fatalError("please define a constant in struct TableViewConfiguration")
@@ -187,7 +193,8 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
-        if indexPath.section == 0 {
+        let section = TableViewConfiguration.Section(rawValue: indexPath.section)
+        if section == .scannedDocumentPreview {
             if let filenameCell = tableView.dequeueReusableCell(withIdentifier: DocScannerFileNameTableCell.reuseIdentifier, for: indexPath) as? DocScannerFileNameTableCell {
                 let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
                 filenameCell.delegate = self
@@ -200,7 +207,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 let containsInvalidChars = filenameCell.filenameTextField.text?.mnz_containsInvalidChars() ?? false
                 filenameCell.filenameTextField.textColor = containsInvalidChars ? .mnz_redError() : .mnz_label()
             }
-        } else if indexPath.section == 1 {
+        } else if section == .settings {
             if let detailCell = tableView.dequeueReusableCell(withIdentifier: DocScannerDetailTableCell.reuseIdentifier, for: indexPath) as? DocScannerDetailTableCell,
                 let cellType = DocScannerDetailTableCell.CellType(rawValue: indexPath.row) {
                 detailCell.cellType = cellType
@@ -221,8 +228,8 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        switch section {
-        case 0:
+        switch TableViewConfiguration.Section(rawValue: section) {
+        case .scannedDocumentPreview:
             return charactersNotAllowed ? Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters) : Strings.Localizable.tapFileToRename
             
         default:
@@ -231,17 +238,32 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        if section == 0 {
+        let section = TableViewConfiguration.Section(rawValue: section)
+        if section == .scannedDocumentPreview {
             let footer = view as! UITableViewHeaderFooterView
             footer.textLabel?.textAlignment = .center
         }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        titleForHeader(in: section)
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        configureTableViewHeaderStyleWithSentenceCase(view, forSection: section)
+    }
+    
+    private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
+        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
+        tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+    }
+    
+    private func titleForHeader(in section: Int) -> String? {
+        let section = TableViewConfiguration.Section(rawValue: section)
         switch section {
-        case 1:
+        case .settings:
             return Strings.Localizable.settingsTitle
-        case 2:
+        case .selectDestination:
             return Strings.Localizable.selectDestination
         default:
             return nil
@@ -250,7 +272,8 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 1 {
+        let section = TableViewConfiguration.Section(rawValue: indexPath.section)
+        if section == .settings {
             switch indexPath.row {
             case 0:
                 if docs?.count ?? 0 < 2 {
@@ -306,7 +329,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 present(alert, animated: true, completion: nil)
             default: break
             }
-        } else if indexPath.section == 2 {
+        } else if section == .selectDestination {
             guard isValidName() else {
                 return
             }
