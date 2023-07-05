@@ -1,6 +1,7 @@
 import Foundation
 import MEGAData
 import MEGASdk
+import MEGASwift
 
 extension MEGANode {
     
@@ -79,6 +80,12 @@ extension MEGANode {
         
         let newName = textFieldText as NSString
         let isNewNameWithoutExtension = !newName.contains(".") || newName.pathExtension.mnz_isEmpty()
+        var newNameIsEmpty = false
+        if #available(iOS 15.0, *) {
+            newNameIsEmpty = textFieldText.formatted(.filePath(extensionStyle: nil)) == ""
+        } else {
+            newNameIsEmpty = FileExtension.FormatStyle(extensionStyle: nil).format(textFieldText) == ""
+        }
         
         var enableRightButton = false
 
@@ -87,7 +94,7 @@ extension MEGANode {
             enableRightButton = !(newName == "" ||
                                   newName.mnz_isEmpty() ||
                                   containsInvalidCharacters ||
-                                  (self.isFile() && newName.mnz_fileNameWithoutExtension() == "") ||
+                                  (self.isFile() && newNameIsEmpty) ||
                                   (self.isFile() && isNewNameWithoutExtension)
             )
             
