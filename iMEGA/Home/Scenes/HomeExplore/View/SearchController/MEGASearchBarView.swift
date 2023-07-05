@@ -47,9 +47,9 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
 
     private weak var searchIconImageView: UIImageView!
 
-    weak var delegate: MEGASearchBarViewDelegate?
+    weak var delegate: (any MEGASearchBarViewDelegate)?
 
-    weak var edittingDelegate: MEGASearchBarViewEdittingDelegate?
+    weak var edittingDelegate: (any MEGASearchBarViewEdittingDelegate)?
 
     // MARK: - Initialization
 

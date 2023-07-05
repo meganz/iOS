@@ -16,11 +16,11 @@ protocol FilesExplorerViewControllerDelegate: AnyObject {
 
 class FilesExplorerViewController: ExplorerBaseViewController {
     let viewModel: FilesExplorerViewModel
-    var configuration: FilesExplorerViewConfiguration?
-    weak var delegate: FilesExplorerViewControllerDelegate?
+    var configuration: (any FilesExplorerViewConfiguration)?
+    weak var delegate: (any FilesExplorerViewControllerDelegate)?
     
     init(viewModel: FilesExplorerViewModel,
-         delegate: FilesExplorerViewControllerDelegate) {
+         delegate: some FilesExplorerViewControllerDelegate) {
         self.viewModel = viewModel
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)

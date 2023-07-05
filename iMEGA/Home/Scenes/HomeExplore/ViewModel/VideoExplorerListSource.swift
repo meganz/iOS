@@ -5,13 +5,13 @@ final class VideoExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
     var nodes: [MEGANode]?
     var selectedNodes: [MEGANode]?
     unowned var tableView: UITableView
-    weak var delegate: FilesExplorerListSourceDelegate?
+    weak var delegate: (any FilesExplorerListSourceDelegate)?
     
     init(tableView: UITableView,
          nodes: [MEGANode]?,
          selectedNodes: [MEGANode]?,
          explorerType: ExplorerTypeEntity,
-         delegate: FilesExplorerListSourceDelegate?) {
+         delegate: (any FilesExplorerListSourceDelegate)?) {
         self.tableView = tableView
         self.nodes = nodes
         self.selectedNodes = selectedNodes

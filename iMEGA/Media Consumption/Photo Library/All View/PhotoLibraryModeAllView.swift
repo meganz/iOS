@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PhotoLibraryModeAllView: View {
     let viewModel: PhotoLibraryContentViewModel
-    let router: PhotoLibraryContentViewRouting
+    let router: any PhotoLibraryContentViewRouting
     
     var body: some View {
         if #available(iOS 16.0, *) {

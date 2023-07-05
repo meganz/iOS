@@ -5,7 +5,7 @@ import MEGADomain
 typealias ResolutionVideoChangeCompletion = (Result<Void, CallErrorEntity>) -> Void
 
 protocol CallRemoteVideoUseCaseProtocol {
-    func addRemoteVideoListener(_ remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol)
+    func addRemoteVideoListener(_ remoteVideoListener: some CallRemoteVideoListenerUseCaseProtocol)
     func enableRemoteVideo(for participant: CallParticipantEntity)
     func disableRemoteVideo(for participant: CallParticipantEntity)
     func disableAllRemoteVideos()
@@ -30,7 +30,7 @@ final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRe
     }
     
     private let repository: T
-    private weak var remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol?
+    private weak var remoteVideoListener: (any CallRemoteVideoListenerUseCaseProtocol)?
     
     private let videoRequestSubject = PassthroughSubject<VideoRequestType, Never>()
     private let videoReqeustSerialQueue = DispatchQueue(label: "RemoteVideoOperationQueue", qos: .userInitiated)
@@ -68,7 +68,7 @@ final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRe
         }
     }
      
-    func addRemoteVideoListener(_ remoteVideoListener: CallRemoteVideoListenerUseCaseProtocol) {
+    func addRemoteVideoListener(_ remoteVideoListener: some CallRemoteVideoListenerUseCaseProtocol) {
         self.remoteVideoListener = remoteVideoListener
     }
     

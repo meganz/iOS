@@ -23,14 +23,14 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             self.callId = call.callId
         }
 
-        chatSdk.add(self as MEGAChatCallDelegate)
-        chatSdk.add(self as MEGAChatDelegate)
+        chatSdk.add(self as any MEGAChatCallDelegate)
+        chatSdk.add(self as any MEGAChatDelegate)
         self.callbacksDelegate = callbacksDelegate
     }
     
     func stopListeningForCall() {
-        chatSdk.remove(self as MEGAChatCallDelegate)
-        chatSdk.remove(self as MEGAChatDelegate)
+        chatSdk.remove(self as any MEGAChatCallDelegate)
+        chatSdk.remove(self as any MEGAChatDelegate)
         self.call = nil
         self.callId = MEGAInvalidHandle
         self.callbacksDelegate = nil

@@ -32,10 +32,10 @@ class DeviceContactsOperation: Operation {
         
         let contactStore = CNContactStore()
         
-        var fetchKeys = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactThumbnailImageDataKey] as [CNKeyDescriptor]
+        var fetchKeys = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactThumbnailImageDataKey] as [any CNKeyDescriptor]
         
         keys.forEach { (key) in
-            fetchKeys.append(key as CNKeyDescriptor)
+            fetchKeys.append(key as any CNKeyDescriptor)
         }
         
         let predicate = CNContact.predicateForContactsInContainer(withIdentifier: contactStore.defaultContainerIdentifier())

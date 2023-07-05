@@ -6,35 +6,35 @@ import XCTest
 
 final class ScheduleMeetingViewModelTests: XCTestCase {
     func test_configureCreateButton_titleEmpty_buttonShouldBeDisabled() {
-        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.meetingName = ""
         XCTAssertTrue(viewModel.createButtonEnabled == false)
     }
     
     func test_configureCreateButton_titleLenghtExceeded_buttonShouldBeDisabled() {
-        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.meetingName = randomString(length: ScheduleMeetingViewModel.Constants.meetingNameMaxLenght + 1)
         XCTAssertTrue(viewModel.createButtonEnabled == false)
     }
     
     func test_configureCreateButton_descriptionLenghtExceeded_buttonShouldBeDisabled() {
-        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.meetingDescription = randomString(length: ScheduleMeetingViewModel.Constants.meetingDescriptionMaxLenght + 1)
         XCTAssertTrue(viewModel.createButtonEnabled == false)
     }
     
     func test_configureCreateButton_titleNotEmpty_buttonShouldBeDisabled() {
-        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.meetingName = randomString(length: ScheduleMeetingViewModel.Constants.meetingNameMaxLenght - 1)
         XCTAssertTrue(viewModel.createButtonEnabled == true)
     }
     
     func test_configureCreateButton_titleNotEmptyAndDescriptionLenghtExceeded_buttonShouldBeDisabled() {
-        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.meetingName = randomString(length: ScheduleMeetingViewModel.Constants.meetingNameMaxLenght - 1)
         viewModel.meetingDescription = randomString(length: ScheduleMeetingViewModel.Constants.meetingDescriptionMaxLenght + 1)
@@ -42,7 +42,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     }
     
     func test_configureCreateButton_titleNotEmptyAndDescriptionLenghtNotExceeded_buttonShouldBeDisabled() {
-        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.meetingName = randomString(length: ScheduleMeetingViewModel.Constants.meetingNameMaxLenght - 1)
         viewModel.meetingDescription = randomString(length: ScheduleMeetingViewModel.Constants.meetingDescriptionMaxLenght - 1)
@@ -51,7 +51,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     
     func test_scheduleMeetingCreationComplete_completedSuccessfully_viewShouldDismiss() {
         let router = MockScheduleMeetingRouter()
-        let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.createDidTap()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
@@ -64,7 +64,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func test_scheduleMeetingCreationComplete_errorFound_viewShouldDismiss() {
         let router = MockScheduleMeetingRouter()
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase(createdScheduledMeetingError: ScheduleMeetingErrorEntity.invalidArguments)
-        let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: scheduleMeetingUseCase, chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: scheduleMeetingUseCase, chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.createDidTap()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
@@ -75,7 +75,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     }
     
     func test_cancelButton_didTap_confirmDiscardAlertShown() {
-        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.cancelDidTap()
         XCTAssertTrue(viewModel.showDiscardAlert == true)
@@ -83,14 +83,14 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     
     func test_discardButton_confirmDiscardChanges_viewShouldDismiss() {
         let router = MockScheduleMeetingRouter()
-        let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.discardChangesTap()
         XCTAssertTrue(router.discardChanges_calledTimes == 1)
     }
     
     func test_discardButton_keepEditing_confirmDiscardAlertHide() {
-        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: MockScheduleMeetingRouter(), scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.keepEditingTap()
         XCTAssertTrue(viewModel.showDiscardAlert == false)
@@ -98,7 +98,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     
     func test_addParticipantButton__confirmDiscardAlertShown() {
         let router = MockScheduleMeetingRouter()
-        let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase())
+        let viewModel = ScheduleMeetingViewModel(router: router, scheduledMeetingUseCase: MockScheduledMeetingUseCase(), chatLinkUseCase: MockChatLinkUseCase(), chatRoomUseCase: MockChatRoomUseCase(), isTesting: true)
         
         viewModel.addParticipantsTap()
         XCTAssertTrue(router.showAddParticipants_calledTimes == 1)
@@ -106,7 +106,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     
     func testCreateDidTap_neverReccurrence_createScheduleMeetingEntityshouldBeNil() {
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase()
-        let viewModel = ScheduleMeetingViewModel(scheduledMeetingUseCase: scheduleMeetingUseCase)
+        let viewModel = ScheduleMeetingViewModel(scheduledMeetingUseCase: scheduleMeetingUseCase, isTesting: true)
         viewModel.createDidTap()
         XCTAssert(scheduleMeetingUseCase.createScheduleMeetingEntity == nil)
     }
@@ -114,7 +114,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testCreateDidTap_dailyReccurrence_createScheduleMeetingEntityRulesShouldMatch() {
         let rules = ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7))
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase()
-        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase)
+        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase, isTesting: true)
         let predicate = NSPredicate { _, _ in
             scheduleMeetingUseCase.createScheduleMeetingEntity?.rules == rules
         }
@@ -127,7 +127,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let date = try XCTUnwrap(sampleDate())
         let rules = ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [2])
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase()
-        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase)
+        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase, isTesting: true)
         viewModel.startDate = date
         let predicate = NSPredicate { _, _ in
             scheduleMeetingUseCase.createScheduleMeetingEntity?.rules == rules
@@ -141,7 +141,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let date = try XCTUnwrap(sampleDate())
         let rules = ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [16])
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase()
-        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase)
+        let viewModel = ScheduleMeetingViewModel(rules: rules, scheduledMeetingUseCase: scheduleMeetingUseCase, isTesting: true)
         viewModel.startDate = date
         let predicate = NSPredicate { _, _ in
             scheduleMeetingUseCase.createScheduleMeetingEntity?.rules == rules
@@ -154,7 +154,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDayTwentyNine_shouldBeTrue() throws {
         let date = try XCTUnwrap(sampleDate(withDay: 29))
         let rules = ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [29])
-        let viewModel = ScheduleMeetingViewModel(rules: rules)
+        let viewModel = ScheduleMeetingViewModel(rules: rules, isTesting: true)
         viewModel.startDate = date
         XCTAssert(viewModel.monthlyRecurrenceFootnoteViewText == Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayTwentyNineSelected.footNote)
     }
@@ -162,7 +162,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDayThirty_shouldBeTrue() throws {
         let date = try XCTUnwrap(sampleDate(withDay: 30))
         let rules = ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [30])
-        let viewModel = ScheduleMeetingViewModel(rules: rules)
+        let viewModel = ScheduleMeetingViewModel(rules: rules, isTesting: true)
         viewModel.startDate = date
         XCTAssert(viewModel.monthlyRecurrenceFootnoteViewText == Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtySelected.footNote)
     }
@@ -170,7 +170,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDayThirtyOne_shouldBeTrue() throws {
         let date = try XCTUnwrap(sampleDate(withDay: 31))
         let rules = ScheduledMeetingRulesEntity(frequency: .monthly, monthDayList: [31])
-        let viewModel = ScheduleMeetingViewModel(rules: rules)
+        let viewModel = ScheduleMeetingViewModel(rules: rules, isTesting: true)
         viewModel.startDate = date
         XCTAssert(viewModel.monthlyRecurrenceFootnoteViewText == Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtyFirstSelected.footNote)
     }
@@ -178,34 +178,34 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDaySixteen_shouldBeTrue() throws {
         let date = try XCTUnwrap(sampleDate())
         let rules = ScheduledMeetingRulesEntity(frequency: .monthly)
-        let viewModel = ScheduleMeetingViewModel(rules: rules)
+        let viewModel = ScheduleMeetingViewModel(rules: rules, isTesting: true)
         viewModel.startDate = date
         XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionNever_shouldBeFalse() {
-        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .invalid))
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .invalid), isTesting: true)
         XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionDaily_shouldBeFalse() {
-        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7)))
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .daily, weekDayList: Array(1...7)), isTesting: true)
         XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionWeekly_shouldBeFalse() {
-        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [1]))
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [1]), isTesting: true)
         XCTAssertNil(viewModel.monthlyRecurrenceFootnoteViewText)
     }
     
     func testEndRecurrenceDetailText_untilDateIsNotSet_shouldShowNever() {
-        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [1]))
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(frequency: .weekly, weekDayList: [1]), isTesting: true)
         XCTAssertEqual(viewModel.endRecurrenceDetailText(), Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.never)
     }
     
     func testEndRecurrenceDetailText_untilDateIsSet_shouldShowDate() throws {
         let date = try XCTUnwrap(sampleDate(withDay: 31))
-        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(until: date))
+        let viewModel = ScheduleMeetingViewModel(rules: ScheduledMeetingRulesEntity(until: date), isTesting: true)
         XCTAssertEqual(viewModel.endRecurrenceDetailText(), viewModel.dateFormatter.localisedString(from: try XCTUnwrap(viewModel.rules.until)))
     }
 

@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var themeButtonStyle: ThemeButtonStyleFactory {
+    var themeButtonStyle: some ThemeButtonStyleFactory {
         return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory,
                                            cornerStyleFactory: cornerStyleFactory,
                                            shadowStyleFactory: shadowStyleFactory,
@@ -24,10 +24,10 @@ protocol ThemeButtonStyleFactory {
 
 private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
 
-    let colorFactory: ColorFactory
-    let cornerStyleFactory: CornerStyleFactory
-    let shadowStyleFactory: ShadowStyleFactory
-    let textStyleFactory: TextStyleFactory
+    let colorFactory: any ColorFactory
+    let cornerStyleFactory: any CornerStyleFactory
+    let shadowStyleFactory: any ShadowStyleFactory
+    let textStyleFactory: any TextStyleFactory
 
     func styler(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStyler {
         let cornerStyle = cornerStyleFactory.cornerStyle(of: .round)

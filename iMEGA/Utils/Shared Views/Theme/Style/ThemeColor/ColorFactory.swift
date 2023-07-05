@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var colorFactory: ColorFactory {
+    var colorFactory: any ColorFactory {
         switch self {
         case .light: return LightColorThemeFactory()
         case .dark: return DarkColorThemeFactory()
@@ -26,9 +26,9 @@ protocol ColorFactory {
 
     // MARK: - Theme Button Factory
 
-    func themeButtonTextFactory(_ style: MEGAColor.ThemeButton) -> ButtonColorFactory
+    func themeButtonTextFactory(_ style: MEGAColor.ThemeButton) -> any ButtonColorFactory
 
-    func themeButtonBackgroundFactory(_ style: MEGAColor.ThemeButton) -> ButtonColorFactory
+    func themeButtonBackgroundFactory(_ style: MEGAColor.ThemeButton) -> any ButtonColorFactory
 
     // MARK: - Independent
 
