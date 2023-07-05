@@ -11,7 +11,7 @@ final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositoryProtoc
         self.chatSdk = chatSdk
     }
     
-    func enableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol) {
+    func enableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: some CallRemoteVideoListenerRepositoryProtocol) {
         guard remoteVideos.notContains(where: { $0.chatId == chatId && $0.clientId == clientId }) else {
             MEGALogDebug("Video for clientId \(clientId) already enabled")
             return
@@ -122,9 +122,9 @@ final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
     let chatId: HandleEntity
     let clientId: HandleEntity
     var hiRes: Bool = false
-    var remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol?
+    var remoteVideoListener: (any CallRemoteVideoListenerRepositoryProtocol)?
     
-    init(chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol) {
+    init(chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: some CallRemoteVideoListenerRepositoryProtocol) {
         self.chatId = chatId
         self.clientId = clientId
         self.hiRes = hiRes

@@ -57,7 +57,7 @@ class MEGAPresentationController: UIPresentationController {
         presentedView?.frame = frameOfPresentedViewInContainerView
     }
     
-    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+    override func size(forChildContentContainer container: any UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         return parentSize
     }
     

@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var textStyleFactory: TextStyleFactory {
+    var textStyleFactory: some TextStyleFactory {
         TextStyleFactoryImpl()
     }
 }

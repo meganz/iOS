@@ -18,7 +18,7 @@ final class RegionListViewController: UIViewController, ViewType {
         return sc
     }()
     
-    private var listSource: RegionListSource? {
+    private var listSource: (any RegionListSource)? {
         didSet {
             tableView.dataSource = listSource
             tableView.reloadData()

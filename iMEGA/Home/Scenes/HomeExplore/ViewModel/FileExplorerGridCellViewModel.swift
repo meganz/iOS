@@ -11,13 +11,13 @@ final class FileExplorerGridCellViewModel {
     typealias MoreInfoActionBlock = (MEGANode, UIButton) -> Void
     private let moreInfoAction: MoreInfoActionBlock?
     
-    private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
+    private lazy var nodeThumbnailHomeUseCase: some NodeThumbnailHomeUseCaseProtocol = {
         return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
                                         fileSystemClient: .live,
                                         thumbnailRepo: ThumbnailRepository.newRepo)
     }()
     
-    private weak var delegate: FileExplorerGridCellViewModelDelegate?
+    private weak var delegate: (any FileExplorerGridCellViewModelDelegate)?
     
     var allowsSelection: Bool {
         didSet {
@@ -58,7 +58,7 @@ final class FileExplorerGridCellViewModel {
     init(node: MEGANode,
          allowsSelection: Bool = false,
          markSelection: Bool = false,
-         delegate: FileExplorerGridCellViewModelDelegate? = nil,
+         delegate: (any FileExplorerGridCellViewModelDelegate)? = nil,
          moreInfoAction: MoreInfoActionBlock? = nil) {
         self.node = node
         self.allowsSelection = allowsSelection

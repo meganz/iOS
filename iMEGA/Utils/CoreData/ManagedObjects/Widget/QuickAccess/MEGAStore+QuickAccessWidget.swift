@@ -10,7 +10,7 @@ extension MEGAStore {
         }
         
         context.perform {
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuickAccessWidgetRecentItem")
+            let fetchRequest = NSFetchRequest<any NSFetchRequestResult>(entityName: "QuickAccessWidgetRecentItem")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             
             do {
@@ -207,7 +207,7 @@ extension MEGAStore {
     
     func deleteQuickAccessFavouriteItems(completion: @escaping (Result<Void, GetFavouriteNodesErrorEntity>) -> Void) {
         stack.performBackgroundTask { context in
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuickAccessWidgetFavouriteItem")
+            let fetchRequest = NSFetchRequest<any NSFetchRequestResult>(entityName: "QuickAccessWidgetFavouriteItem")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             
             do {

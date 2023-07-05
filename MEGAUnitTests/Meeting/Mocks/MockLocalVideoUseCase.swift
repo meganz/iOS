@@ -20,11 +20,11 @@ class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
         completion(enableDisableVideoCompletion)
     }
     
-    func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
+    func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol) {
         addLocalVideo_CalledTimes += 1
     }
     
-    func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: CallLocalVideoCallbacksUseCaseProtocol) {
+    func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol) {
         removeLocalVideo_CalledTimes += 1
     }
     

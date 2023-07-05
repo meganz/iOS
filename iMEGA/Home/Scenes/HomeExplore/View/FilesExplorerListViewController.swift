@@ -11,7 +11,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
         return tableView
     }()
     
-    var listSource: FilesExplorerListSourceProtocol? {
+    var listSource: (any FilesExplorerListSourceProtocol)? {
         didSet {
             tableView.dataSource = listSource
             tableView.delegate = listSource

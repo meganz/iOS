@@ -1,8 +1,7 @@
 import Foundation
 
 extension InterfaceStyle {
-
-    var paragraphStyleFactory: ParagraphStyleFactory {
+    var paragraphStyleFactory: some ParagraphStyleFactory {
         ParagraphStyleFactoryImpl()
     }
 }

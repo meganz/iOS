@@ -9,7 +9,7 @@ struct VideoExplorerViewConfiguration: FilesExplorerViewConfiguration {
         return .videos
     }
     
-    var listSourceType: FilesExplorerListSourceProtocol.Type {
+    var listSourceType: any FilesExplorerListSourceProtocol.Type {
         return VideoExplorerListSource.self
     }
 }

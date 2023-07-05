@@ -4,7 +4,7 @@ import SwiftUI
 
 struct PhotoLibraryModeAllGridView: View {
     @StateObject var viewModel: PhotoLibraryModeAllGridViewModel
-    let router: PhotoLibraryContentViewRouting
+    let router: any PhotoLibraryContentViewRouting
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
