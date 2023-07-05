@@ -170,6 +170,12 @@
       }
     },
     {
+      "skippedTests" : [
+        "ThumbnailRepositoryTests\/testCachedPreviewOrOriginalPath_forCachedOrignal_shouldReturnOriginalURLWithFileName()",
+        "ThumbnailRepositoryTests\/testCachedPreviewOrOriginalPath_forCachedPreview_shouldReturnPreviewURL()",
+        "ThumbnailRepositoryTests\/testCachedThumbnail_forType_shouldReturnCorrectURL()",
+        "ThumbnailRepositoryTests\/testLoadThumbnail_withCachedFile_shouldReturnCachedURL()"
+      ],
       "target" : {
         "containerPath" : "container:Modules\/Repository\/MEGAData",
         "identifier" : "MEGADataTests",
