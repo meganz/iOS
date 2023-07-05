@@ -3,10 +3,10 @@ import SwiftUI
 struct QASettingsView: View {
     
     enum Constants {
-        static let appUpdatesHeaderText = "APP UPDATES"
-        static let featureListHeaderText = "FEATURE LIST"
+        static let appUpdatesHeaderText = "App updates"
+        static let featureListHeaderText = "Feature list"
         static let checkForUpdateText = "Check for updates"
-        static let fingerprintVerificationHeaderText = "SDK SECURE FLAG"
+        static let fingerprintVerificationHeaderText = "SDK secure flag"
         static let fingerprintVerificationFooterText = "To toggle secure flag: logout user > on onboarding screen > tap 5 times"
         static let fingerprintVerificationText = "Share secure flag: "
         static let cellDarkBackgroundColor = Color(Colors.General.Black._1c1c1e.name)
@@ -18,7 +18,7 @@ struct QASettingsView: View {
 
     var body: some View {
         List {
-            Section(header: Text(Constants.appUpdatesHeaderText)) {
+            Section(header: Text(Constants.appUpdatesHeaderText).textCase(nil)) {
                 Button {
                     viewModel.checkForUpdate()
                 } label: {
@@ -27,12 +27,12 @@ struct QASettingsView: View {
                 .listRowBackground(listRowBackgroundColor)
             }            
             
-            Section(header: Text(Constants.featureListHeaderText)) {
+            Section(header: Text(Constants.featureListHeaderText).textCase(nil)) {
                 FeatureFlagView()
                     .listRowBackground(listRowBackgroundColor)
             }
 
-            Section(header: Text(Constants.fingerprintVerificationHeaderText),
+            Section(header: Text(Constants.fingerprintVerificationHeaderText).textCase(nil),
                     footer: Text(Constants.fingerprintVerificationFooterText)) {
                 Text(Constants.fingerprintVerificationText + viewModel.fingerprintVerificationFlagStatus())
             }

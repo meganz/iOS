@@ -146,15 +146,26 @@ class SortingAndViewModeTableViewController: UITableViewController {
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
     }
     
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        configureTableViewHeaderStyleWithSentenceCase(view, forSection: section)
+    }
+    
+    private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
+        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
+        tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case SortingAndViewSection.sortingPreference.rawValue:
+        titleForHeader(in: section)
+    }
+    
+    private func titleForHeader(in section: Int) -> String? {
+        switch SortingAndViewSection(rawValue: section) {
+        case .sortingPreference:
             return Strings.Localizable.sortingPreference
-            
-        case SortingAndViewSection.viewModePreference.rawValue:
+        case .viewModePreference:
             return Strings.Localizable.viewModePreference
-            
-        default:
+        case nil:
             return nil
         }
     }

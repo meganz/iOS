@@ -186,7 +186,20 @@ class AppearanceTableViewController: UITableViewController {
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
     }
     
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        configureTableViewHeaderStyleWithSentenceCase(view, forSection: section)
+    }
+    
+    private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
+        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
+        tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+       titleForHeader(in: section)
+    }
+    
+    private func titleForHeader(in section: Int) -> String? {
         switch AppearanceSection(rawValue: section) {
         case .launch:
             return Strings.Localizable.launch
