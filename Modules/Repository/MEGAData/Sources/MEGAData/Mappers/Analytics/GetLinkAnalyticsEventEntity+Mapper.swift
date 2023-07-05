@@ -24,9 +24,9 @@ extension GetLinkAnalyticsEventEntity: AnalyticsEventProtocol {
         case .resetPasswordForFile:
             return 402010
         case .removePasswordForFile:
-            return 402011
-        case .removePasswordForFolder:
             return 402012
+        case .removePasswordForFolder:
+            return 402011
         case .shareFolder:
             return 402013
         case .shareFile:
