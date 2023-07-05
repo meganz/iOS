@@ -189,7 +189,7 @@ final class AudioPlayer: NSObject {
     }
     
     private func configurePlayer() {
-        isAutoPlayEnabled && !isPaused ? play() : pause()
+        isAutoPlayEnabled ? play() : pause()
         
         opQueue.cancelAllOperations()
         preloadNextTracksMetadata()
