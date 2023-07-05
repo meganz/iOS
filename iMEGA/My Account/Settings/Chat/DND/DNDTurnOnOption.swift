@@ -75,7 +75,7 @@ enum DNDTurnOnOption: String, CaseIterable {
         [.thirtyMinutes, .oneHour, .sixHours, .twentyFourHours, globalSetting ? .morningEightAM : .forever]
     }
     
-    static func alertController(delegate: DNDTurnOnAlertControllerAction,
+    static func alertController(delegate: some DNDTurnOnAlertControllerAction,
                                 isGlobalSetting: Bool,
                                 isChatTypeMeeting: Bool,
                                 identifier: ChatIdEntity?) -> UIAlertController {
@@ -101,7 +101,7 @@ enum DNDTurnOnOption: String, CaseIterable {
     }
     
     private static func addAction(for alertController: UIAlertController,
-                                  delegate: DNDTurnOnAlertControllerAction,
+                                  delegate: some DNDTurnOnAlertControllerAction,
                                   options: [DNDTurnOnOption],
                                   identifier: ChatIdEntity?) {
         options

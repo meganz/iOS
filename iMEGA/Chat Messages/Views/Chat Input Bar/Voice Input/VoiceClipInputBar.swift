@@ -23,7 +23,7 @@ class VoiceClipInputBar: UIView {
     
     var audioWavesView: AudioWavesView!
     lazy var audioRecorder = AudioRecorder()
-    weak var delegate: VoiceClipInputBarDelegate?
+    weak var delegate: (any VoiceClipInputBarDelegate)?
     
     private var padding: CGFloat = 20.0
     

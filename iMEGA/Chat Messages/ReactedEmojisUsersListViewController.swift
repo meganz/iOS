@@ -22,10 +22,10 @@ class ReactedEmojisUsersListViewController: UIViewController {
     private let messageId: UInt64
     private let emojiList: [String]
     private let localSavedEmojis = EmojiListReader.readFromFile()
-    private weak var delegate: ReactedEmojisUsersListViewControllerDelegate?
+    private weak var delegate: (any ReactedEmojisUsersListViewControllerDelegate)?
     private var isShortFormEnabled = true
 
-    init(delegate: ReactedEmojisUsersListViewControllerDelegate,
+    init(delegate: some ReactedEmojisUsersListViewControllerDelegate,
          emojiList: [String],
          selectedEmoji: String,
          chatRoom: MEGAChatRoom,
@@ -107,7 +107,7 @@ class ReactedEmojisUsersListViewController: UIViewController {
     }
     
     private func userhandleList(forEmoji emoji: String, chatId: UInt64, messageId: UInt64) -> [UInt64] {
-        guard let userHandleList =  MEGASdkManager
+        guard let userHandleList = MEGASdkManager
             .sharedMEGAChatSdk()
             .reactionUsers(forChat: chatId, messageId: messageId, reaction: emoji) else {
                 MEGALogDebug("user handle list for emoji \(emoji) is empty")

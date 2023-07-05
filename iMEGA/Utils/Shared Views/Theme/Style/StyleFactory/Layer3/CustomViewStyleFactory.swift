@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var customViewStyleFactory: CustomViewStyleFactory {
+    var customViewStyleFactory: some CustomViewStyleFactory {
         return CustomViewStyleFactoryImpl(borderStyleFactory: borderStyleFactory,
                                           backgroundStyleFactory: backgroundStyleFactory,
                                           cornerStyleFactory: cornerStyleFactory)
@@ -30,11 +30,11 @@ protocol CustomViewStyleFactory {
 
 private struct CustomViewStyleFactoryImpl: CustomViewStyleFactory {
 
-    let borderStyleFactory: BorderStyleFactory
+    let borderStyleFactory: any BorderStyleFactory
 
-    let backgroundStyleFactory: BackgroundStyleFactory
+    let backgroundStyleFactory: any BackgroundStyleFactory
 
-    let cornerStyleFactory: CornerStyleFactory
+    let cornerStyleFactory: any CornerStyleFactory
 
     func styler(of style: MEGACustomViewStyle) -> ViewStyler {
         let borderStyleFactory = self.borderStyleFactory

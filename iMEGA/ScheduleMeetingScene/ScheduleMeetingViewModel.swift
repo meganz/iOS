@@ -21,7 +21,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         static let defaultDurationHalfHour: TimeInterval = 1800
     }
     
-    private let router: ScheduleMeetingRouting
+    private let router: any ScheduleMeetingRouting
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
@@ -93,7 +93,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         }
     }
     
-    init(router: ScheduleMeetingRouting,
+    init(router: some ScheduleMeetingRouting,
          rules: ScheduledMeetingRulesEntity,
          scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
          chatLinkUseCase: any ChatLinkUseCaseProtocol,

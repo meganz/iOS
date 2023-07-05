@@ -22,7 +22,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
 
     private var nodeSearchClient: NodeSearchRepository
 
-    private var searchFileHistoryUseCase: SearchFileHistoryUseCaseProtocol
+    private var searchFileHistoryUseCase: any SearchFileHistoryUseCaseProtocol
 
     private var cancelAction: (() -> Void)?
 
@@ -36,7 +36,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
 
     init(
         nodeSearchClient: NodeSearchRepository,
-        searchFileHistoryUseCase: SearchFileHistoryUseCaseProtocol
+        searchFileHistoryUseCase: some SearchFileHistoryUseCaseProtocol
     ) {
         self.nodeSearchClient = nodeSearchClient
         self.searchFileHistoryUseCase = searchFileHistoryUseCase

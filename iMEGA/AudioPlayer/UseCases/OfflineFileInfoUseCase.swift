@@ -6,9 +6,9 @@ protocol OfflineFileInfoUseCaseProtocol {
 
 final class OfflineFileInfoUseCase: OfflineFileInfoUseCaseProtocol {
     
-    private var offlineInfoRepository: OfflineInfoRepositoryProtocol
+    private var offlineInfoRepository: any OfflineInfoRepositoryProtocol
     
-    init(offlineInfoRepository: OfflineInfoRepositoryProtocol = OfflineInfoRepository()) {
+    init(offlineInfoRepository: some OfflineInfoRepositoryProtocol = OfflineInfoRepository()) {
         self.offlineInfoRepository = offlineInfoRepository
     }
     

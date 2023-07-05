@@ -1,7 +1,7 @@
 import MEGADomain
 
 protocol CallRemoteVideoRepositoryProtocol {
-    func enableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: CallRemoteVideoListenerRepositoryProtocol)
+    func enableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: some CallRemoteVideoListenerRepositoryProtocol)
     func disableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool)
     func disableAllRemoteVideos()
     func requestHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)

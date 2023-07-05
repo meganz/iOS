@@ -3,7 +3,7 @@ import MEGADomain
 final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol {
     
     private let chatSdk: MEGAChatSdk
-    private var localVideoCallbacksDelegate: CallLocalVideoListenerRepositoryProtocol?
+    private var localVideoCallbacksDelegate: (any CallLocalVideoListenerRepositoryProtocol)?
 
     init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
@@ -29,13 +29,13 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
         }))
     }
     
-    func addLocalVideo(for chatId: HandleEntity, localVideoListener: CallLocalVideoListenerRepositoryProtocol) {
+    func addLocalVideo(for chatId: HandleEntity, localVideoListener: some CallLocalVideoListenerRepositoryProtocol) {
         chatSdk.addChatLocalVideo(chatId, delegate: self)
         chatSdk.add(self)
         localVideoCallbacksDelegate = localVideoListener
     }
     
-    func removeLocalVideo(for chatId: HandleEntity, localVideoListener: CallLocalVideoListenerRepositoryProtocol) {
+    func removeLocalVideo(for chatId: HandleEntity, localVideoListener: some CallLocalVideoListenerRepositoryProtocol) {
         chatSdk.removeChatLocalVideo(chatId, delegate: self)
         chatSdk.remove(self)
         localVideoCallbacksDelegate = nil

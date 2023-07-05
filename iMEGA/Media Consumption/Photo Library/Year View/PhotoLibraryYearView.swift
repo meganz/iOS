@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PhotoLibraryYearView: View {
     @StateObject var viewModel: PhotoLibraryYearViewModel
-    let router: PhotoLibraryContentViewRouting
+    let router: any PhotoLibraryContentViewRouting
     
     var body: some View {
         PhotoLibraryModeCardView(viewModel: viewModel) {

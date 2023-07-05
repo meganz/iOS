@@ -114,7 +114,7 @@ class FilesExplorerGridViewController: FilesExplorerViewController {
         collectionView.autoPinEdgesToSuperviewSafeArea()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate { (_) in
             self.layout.configThumbnailListColumnCount()

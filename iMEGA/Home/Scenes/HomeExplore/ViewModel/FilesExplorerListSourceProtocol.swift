@@ -14,13 +14,13 @@ protocol FilesExplorerListSourceProtocol: UITableViewDataSource, UITableViewDele
     var nodes: [MEGANode]? { get set }
     var selectedNodes: [MEGANode]? { get set }
     var tableView: UITableView { get set }
-    var delegate: FilesExplorerListSourceDelegate? { get set }
+    var delegate: (any FilesExplorerListSourceDelegate)? { get set }
     var explorerType: ExplorerTypeEntity { get set }
     init(tableView: UITableView,
          nodes: [MEGANode]?,
          selectedNodes: [MEGANode]?,
          explorerType: ExplorerTypeEntity,
-         delegate: FilesExplorerListSourceDelegate?)
+         delegate: (any FilesExplorerListSourceDelegate)?)
     func reloadCell(withNode node: MEGANode)
     func updateCells(forNodes nodes: [MEGANode])
     func onTransferCompleted(forNode node: MEGANode)
