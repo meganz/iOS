@@ -77,7 +77,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - File names and extensions
 - (nullable NSString *)mnz_lastExtensionInLowercase;
 - (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode;
-- (NSString *)mnz_fileNameWithoutExtension;
 
 /**
  Remove invalid file characters from a string. So we can use the new string safely as a folder name or file name
