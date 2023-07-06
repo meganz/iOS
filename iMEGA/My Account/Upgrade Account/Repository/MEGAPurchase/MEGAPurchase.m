@@ -232,6 +232,10 @@
             }
         }
     }
+    
+    if ([SVProgressHUD isVisible]) {
+        [SVProgressHUD dismiss];
+    }
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error {
@@ -239,6 +243,9 @@
         if ([restoreDelegate respondsToSelector:@selector(failedRestore:message:)]) {
             [restoreDelegate failedRestore:error.code message:error.localizedDescription];
         }
+    }
+    if ([SVProgressHUD isVisible]) {
+        [SVProgressHUD dismiss];
     }
 }
 
