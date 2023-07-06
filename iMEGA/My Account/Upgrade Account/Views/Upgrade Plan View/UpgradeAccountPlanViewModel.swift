@@ -1,3 +1,4 @@
+import Combine
 import MEGAData
 import MEGADomain
 import MEGASdk
@@ -6,10 +7,17 @@ import MEGASwiftUI
 import SwiftUI
 
 final class UpgradeAccountPlanViewModel: ObservableObject {
+    private var subscriptions = Set<AnyCancellable>()
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
     
+    private(set) var alertType: UpgradeAccountPlanAlertType?
+    @Published var isAlertPresented = false {
+        didSet {
+            if !isAlertPresented { setAlertType(nil) }
+        }
+    }
     @Published var isRestoreAccountPlan = false
     @Published var isTermsAndPoliciesPresented = false
     @Published var isDismiss = false
@@ -24,15 +32,69 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         didSet { toggleBuyButton() }
     }
     
+    private(set) var registerDelegateTask: Task<Void, Never>?
+    private(set) var setUpPlanTask: Task<Void, Never>?
+    
     init(accountDetails: AccountDetailsEntity, purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol) {
         self.purchaseUseCase = purchaseUseCase
         self.accountDetails = accountDetails
+        registerDelegates()
         setupPlans()
     }
     
+    deinit {
+        deRegisterDelegates()
+    }
+    
     // MARK: - Setup
+    private func registerDelegates() {
+        registerDelegateTask = Task {
+            await purchaseUseCase.registerRestoreDelegate()
+            setupSubscriptions()
+        }
+    }
+    
+    private func deRegisterDelegates() {
+        Task.detached { [weak self] in
+            await self?.purchaseUseCase.deRegisterRestoreDelegate()
+        }
+    }
+    
+    private func setupSubscriptions() {
+        $isRestoreAccountPlan
+            .dropFirst()
+            .sink { [weak self] isRestore in
+                guard let self, isRestore else { return }
+                restorePurchase()
+            }.store(in: &subscriptions)
+        
+        purchaseUseCase.successfulRestorePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                setAlertType(.restore(.success))
+            }
+            .store(in: &subscriptions)
+        
+        purchaseUseCase.incompleteRestorePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                setAlertType(.restore(.incomplete))
+            }
+            .store(in: &subscriptions)
+        
+        purchaseUseCase.failedRestorePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                setAlertType(.restore(.failed))
+            }
+            .store(in: &subscriptions)
+    }
+    
     private func setupPlans() {
-        Task {
+        setUpPlanTask = Task {
             planList = await purchaseUseCase.accountPlanProducts()
             setRecommendedPlan()
             await setDefaultPlanTermTab()
@@ -124,6 +186,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         selectedPlanType = plan.type
     }
     
+    func setAlertType(_ type: UpgradeAccountPlanAlertType?) {
+        alertType = type
+        
+        let shouldPresentAlert = type != nil
+        guard shouldPresentAlert != isAlertPresented else { return }
+        isAlertPresented = shouldPresentAlert
+    }
+    
     // MARK: - Private
     private func setRecommendedPlan() {
         switch accountDetails.proLevel {
@@ -169,5 +239,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             return true
         }
         return currentPlan != plan
+    }
+    
+    // MARK: Restore
+    private func restorePurchase() {
+        Task {
+            await purchaseUseCase.restorePurchase()
+        }
     }
 }
