@@ -1529,6 +1529,7 @@
 		B53BDBED27619173001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */; };
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
+		B558B1E42A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */; };
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */; };
@@ -4097,6 +4098,7 @@
 		B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagUseCase+Additions.swift"; sourceTree = "<group>"; };
 		B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+LiveText.swift"; sourceTree = "<group>"; };
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
+		B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanAlertType.swift; sourceTree = "<group>"; };
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
 		B55EC7142A08A515000F19DA /* SendFeedbackViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModelTests.swift; sourceTree = "<group>"; };
@@ -9701,6 +9703,14 @@
 			path = LiveText;
 			sourceTree = "<group>";
 		};
+		B558B1E12A551F1A006FB3A4 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		B5663EDE29F8F3C20080FFDA /* MEGAPurchase */ = {
 			isa = PBXGroup;
 			children = (
@@ -9740,6 +9750,7 @@
 		B59580A42A1478C300E5FC1C /* Upgrade Plan View */ = {
 			isa = PBXGroup;
 			children = (
+				B558B1E12A551F1A006FB3A4 /* Data */,
 				B59580AB2A1478DC00E5FC1C /* Sections */,
 				B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */,
 				B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */,
@@ -13357,6 +13368,7 @@
 				27D1DA7B2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27D1DA7B2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27D1DA7B2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
+				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
 				837B179928815F7400A4D01B /* FileLinkViewController+Additions.swift in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
@@ -13559,7 +13571,6 @@
 				BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */,
 				BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */,
 				BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */,
-				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */,
 				839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */,
 				839999ED264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift in Sources */,
@@ -14361,6 +14372,7 @@
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */,
+				B558B1E42A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift in Sources */,
 				B59580A82A1478D400E5FC1C /* UpgradeAccountPlanRouter.swift in Sources */,
 				B59580AA2A1478D400E5FC1C /* UpgradeAccountPlanView.swift in Sources */,
 				B59580A92A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift in Sources */,
@@ -14586,6 +14598,7 @@
 				27D1DA7F2A432F82008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27D1DA7F2A432F82008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27D1DA7F2A432F82008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
+				27AFAC562A53739500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				8327EE21283391D400068856 /* FileVersionsRepository.swift in Sources */,
 				C43817B92746925E00EA82A8 /* FontStyle.swift in Sources */,
 				5B419EE42473E60C008C3D06 /* GenericHeaderFooterView.swift in Sources */,
@@ -14697,7 +14710,6 @@
 				B620C0662845BC37003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
 				941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */,
-				27AFAC562A53739500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
