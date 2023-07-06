@@ -5,7 +5,9 @@ import MEGASwift
 
 public struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     public static var newRepo: ThumbnailRepository {
-        ThumbnailRepository(sdk: MEGASdk.sharedSdk, fileManager: .default)
+        let sdk = MEGASdk.sharedSdk
+        return ThumbnailRepository(sdk: sdk, fileManager: .default,
+                                   nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
     }
     
     private enum Constants {
@@ -17,11 +19,13 @@ public struct ThumbnailRepository: ThumbnailRepositoryProtocol {
     private let sdk: MEGASdk
     private let fileManager: FileManager
     private let groupContainer: AppGroupContainer
+    private let nodeProvider: any MEGANodeProviderProtocol
     private let appGroupCacheURL: URL
     
-    public init(sdk: MEGASdk, fileManager: FileManager) {
+    public init(sdk: MEGASdk, fileManager: FileManager, nodeProvider: some MEGANodeProviderProtocol) {
         self.sdk = sdk
         self.fileManager = fileManager
+        self.nodeProvider = nodeProvider
         groupContainer = AppGroupContainer(fileManager: fileManager)
         appGroupCacheURL = groupContainer.url(for: .cache)
     }
@@ -80,7 +84,7 @@ extension ThumbnailRepository {
     private func downloadThumbnail(for node: NodeEntity,
                                    type: ThumbnailTypeEntity,
                                    to url: URL) async throws -> URL {
-        guard let node = node.toMEGANode(in: sdk) else {
+        guard let node = await nodeProvider.node(for: node.handle) else {
             throw ThumbnailErrorEntity.nodeNotFound
         }
         

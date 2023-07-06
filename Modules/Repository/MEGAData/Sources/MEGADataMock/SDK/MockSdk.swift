@@ -290,6 +290,10 @@ public final class MockSdk: MEGASdk {
                                   error: MockError(errorType: megaSetError))
     }
     
+    public override func publicSetElementsInPreview() -> [MEGASetElement] {
+        setElements
+    }
+    
     // MARK: - Share
     public override func contact(forEmail: String?) -> MEGAUser? {
         sharedFolderOwner

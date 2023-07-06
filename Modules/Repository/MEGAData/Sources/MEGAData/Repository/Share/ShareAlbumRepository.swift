@@ -3,12 +3,19 @@ import MEGASdk
 import MEGASwift
 
 public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
-    public static var newRepo = ShareAlbumRepository(sdk: MEGASdk.sharedSdk)
+    public static var newRepo: ShareAlbumRepository {
+        let sdk = MEGASdk.sharedSdk
+        return ShareAlbumRepository(sdk: MEGASdk.sharedSdk,
+                             publicAlbumNodeProvider: PublicAlbumNodeProvider(sdk: sdk))
+    }
     
     private let sdk: MEGASdk
+    private let publicAlbumNodeProvider: any PublicAlbumNodeProviderProtocol
     
-    public init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk,
+                publicAlbumNodeProvider: some PublicAlbumNodeProviderProtocol) {
         self.sdk = sdk
+        self.publicAlbumNodeProvider = publicAlbumNodeProvider
     }
     
     public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
@@ -49,7 +56,9 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
     }
     
     public func publicAlbumContents(forLink link: String) async throws -> SharedAlbumEntity {
-        try await withAsyncThrowingValue { completion in
+        await publicAlbumNodeProvider.clearCache()
+        
+        return try await withAsyncThrowingValue { completion in
             sdk.fetchPublicSet(link, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
@@ -96,5 +105,9 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
                 }
             })
         }
+    }
+    
+    public func publicPhoto(_ photo: SetElementEntity) async throws -> NodeEntity? {
+        try await publicAlbumNodeProvider.publicPhotoNode(for: photo)?.toNodeEntity()
     }
 }
