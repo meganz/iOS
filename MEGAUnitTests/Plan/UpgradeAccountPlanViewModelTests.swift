@@ -14,6 +14,67 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", term: .yearly)
     private let proIII_monthly = AccountPlanEntity(type: .proIII, name: "Pro III", term: .monthly)
     
+    func testInit_registerDelegates_shouldRegisterDelegates() async {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let mockUseCase = MockAccountPlanPurchaseUseCase()
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.registerDelegateTask?.value
+        XCTAssertTrue(mockUseCase.registerRestoreDelegateCalled == 1)
+    }
+    
+    func testInit_setUpPlansForFreeAccount_shouldSetupPlanData() async {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let planList = [proI_monthly, proI_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        XCTAssertEqual(sut.selectedTermTab, .yearly)
+        XCTAssertEqual(sut.filteredPlanList, [proI_yearly])
+        XCTAssertEqual(sut.currentPlan?.type, .free)
+        XCTAssertEqual(sut.recommendedPlanType, .proI)
+    }
+    
+    func testInit_setUpPlansForProAccount_recurringMonthly_shouldSetupPlanData() async {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        XCTAssertEqual(sut.selectedTermTab, .monthly)
+        XCTAssertEqual(sut.filteredPlanList, [proI_monthly, proII_monthly])
+        XCTAssertEqual(sut.currentPlan?.type, .proI)
+        XCTAssertEqual(sut.recommendedPlanType, .proII)
+    }
+    
+    func testInit_setUpPlansForProAccount_recurringYearly_shouldSetupPlanData() async {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .yearly)
+        let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        XCTAssertEqual(sut.selectedTermTab, .yearly)
+        XCTAssertEqual(sut.filteredPlanList, [proI_yearly, proII_yearly])
+        XCTAssertEqual(sut.currentPlan?.type, .proI)
+        XCTAssertEqual(sut.recommendedPlanType, .proII)
+    }
+    
+    func testInit_setUpPlansForProAccount_oneTimePurchase_shouldSetupPlanData() async {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .none)
+        let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        XCTAssertEqual(sut.selectedTermTab, .yearly)
+        XCTAssertEqual(sut.filteredPlanList, [proI_yearly, proII_yearly])
+        XCTAssertEqual(sut.currentPlan?.type, .proI)
+        XCTAssertEqual(sut.recommendedPlanType, .proII)
+    }
+    
     func testCurrentPlanValue_freePlan_shouldBeFreePlan() {
         let details = AccountDetailsEntity(proLevel: .free)
         let planList = [proI_monthly, proI_yearly]
@@ -449,5 +510,60 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         
         sut.selectedTermTab = .yearly
         XCTAssertEqual(sut.filteredPlanList, [proI_yearly, proII_yearly])
+    }
+    
+    func testRestorePurchaseAlert_successRestore_shouldShowAlertForSuccessRestore() throws {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: MockAccountPlanPurchaseUseCase())
+        
+        sut.setAlertType(UpgradeAccountPlanAlertType.restore(.success))
+        
+        let newAlertType = try XCTUnwrap(sut.alertType)
+        guard case .restore(let status) = newAlertType else {
+            XCTFail("Alert type mismatched the newly set type - Restore success")
+            return
+        }
+        XCTAssertEqual(status, .success)
+        XCTAssertTrue(sut.isAlertPresented)
+    }
+    
+    func testRestorePurchaseAlert_incompleteRestore_shouldShowAlertForIncompleteRestore() throws {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: MockAccountPlanPurchaseUseCase())
+        
+        sut.setAlertType(UpgradeAccountPlanAlertType.restore(.incomplete))
+        
+        let newAlertType = try XCTUnwrap(sut.alertType)
+        guard case .restore(let status) = newAlertType else {
+            XCTFail("Alert type mismatched the newly set type - Restore incomplete")
+            return
+        }
+        XCTAssertEqual(status, .incomplete)
+        XCTAssertTrue(sut.isAlertPresented)
+    }
+    
+    func testRestorePurchaseAlert_failedRestore_shouldShowAlertForFailedRestore() throws {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: MockAccountPlanPurchaseUseCase())
+        
+        sut.setAlertType(UpgradeAccountPlanAlertType.restore(.failed))
+        
+        let newAlertType = try XCTUnwrap(sut.alertType)
+        guard case .restore(let status) = newAlertType else {
+            XCTFail("Alert type mismatched the newly set type - Restore failed")
+            return
+        }
+        XCTAssertEqual(status, .failed)
+        XCTAssertTrue(sut.isAlertPresented)
+    }
+    
+    func testRestorePurchaseAlert_setNilAlertType_shouldNotShowAnyAlert() {
+        let details = AccountDetailsEntity(proLevel: .free)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: MockAccountPlanPurchaseUseCase())
+        
+        sut.setAlertType(nil)
+        
+        XCTAssertNil(sut.alertType)
+        XCTAssertFalse(sut.isAlertPresented)
     }
 }

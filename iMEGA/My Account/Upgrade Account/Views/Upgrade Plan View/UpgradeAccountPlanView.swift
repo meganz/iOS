@@ -79,6 +79,13 @@ struct UpgradeAccountPlanView: View {
                 presentationMode.wrappedValue.dismiss()
             }
         }
+        .alert(isPresented: $viewModel.isAlertPresented) {
+            Alert(
+                title: Text(viewModel.alertType?.title ?? ""),
+                message: Text(viewModel.alertType?.message ?? ""),
+                dismissButton: .default(Text(Strings.Localizable.ok))
+            )
+        }
         .modalView(isPresented: $viewModel.isTermsAndPoliciesPresented, content: {
             termsAndPoliciesView()
         })
