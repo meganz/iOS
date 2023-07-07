@@ -152,7 +152,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     func onMessageLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
         if let chatMessage = message {
             if !chatMessage.isDeleted {
-                if supportedMessage(chatMessage) {
+                if supportedMessage(chatMessage) && !isDuplicateMessage(chatMessage) {
                     if chatMessage.status == .sending || chatMessage.status == .sendingManual {
                         historyMessages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
                     } else {
@@ -696,6 +696,13 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     @MainActor
     private func reloadEmptyDataSet() {
         chatViewController?.messagesCollectionView.reloadEmptyDataSet()
+    }
+    
+    private func isDuplicateMessage(_ message: MEGAChatMessage) -> Bool {
+        if let lastMessageId = historyMessages.last?.message.messageId {
+            return lastMessageId == message.messageId
+        }
+        return false
     }
 }
 
