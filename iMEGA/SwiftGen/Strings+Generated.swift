@@ -2839,6 +2839,18 @@ public enum Strings {
         }
       }
     }
+    public enum AlbumLink {
+      public enum InvalidAlbum {
+        public enum Alert {
+          /// Ok, got it
+          public static let dissmissButtonTitle = Strings.tr("Localizable", "albumLink.invalidAlbum.alert.dissmissButtonTitle")
+          /// The link to the album has been removed or the album has been deleted. Contact the person who shared the link with you.
+          public static let message = Strings.tr("Localizable", "albumLink.invalidAlbum.alert.message")
+          /// Cannot access album
+          public static let title = Strings.tr("Localizable", "albumLink.invalidAlbum.alert.title")
+        }
+      }
+    }
     public enum AutoAway {
       /// Set status as Away after [X] of inactivity.
       public static let footerDescription = Strings.tr("Localizable", "autoAway.footerDescription")
