@@ -35,8 +35,8 @@ extension MEGALinkManager {
         guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink) else { return }
         
         let vm = ImportAlbumViewModel(
-                    shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
-                    publicLink: MEGALinkManager.linkURL)
+            publicLink: MEGALinkManager.linkURL,
+            publicAlbumUseCase: PublicAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo))
         let viewController = UIHostingController(rootView: ImportAlbumView(viewModel: vm))
         viewController.modalPresentationStyle = .fullScreen
         

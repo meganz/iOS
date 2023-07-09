@@ -182,6 +182,12 @@
 "folderLink"="Folder link";
 /* Title for the album/collection link view */
 "albumLink"="Album link";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Cannot access album";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.message"="The link to the album has been removed or the album has been deleted. Contact the person who shared the link with you.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, got it";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */

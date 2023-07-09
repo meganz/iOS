@@ -22,6 +22,7 @@ extension ThumbnailUseCaseProtocol {
 extension ThumbnailUseCase where T == ThumbnailRepository {
     static func makeThumbnailUseCase(mode: PhotoLibraryContentMode) -> Self {
         let sdk = mode == .mediaDiscoveryFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared
-        return ThumbnailUseCase(repository: ThumbnailRepository(sdk: sdk, fileManager: .default, nodeProvider: DefaultMEGANodeProvider(sdk: sdk)))
+        let provider: any MEGANodeProviderProtocol = mode == .albumLink ? PublicAlbumNodeProvider(sdk: sdk) : DefaultMEGANodeProvider(sdk: sdk)
+        return ThumbnailUseCase(repository: ThumbnailRepository(sdk: sdk, fileManager: .default, nodeProvider: provider))
     }
 }
