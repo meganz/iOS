@@ -85,28 +85,6 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         }
     }
     
-    public func publicPhoto(forPhotoId id: HandleEntity) async throws -> NodeEntity {
-        try await withAsyncThrowingValue { completion in
-            sdk.previewElementNode(id, delegate: RequestDelegate { result in
-                switch result {
-                case .success(let request):
-                    completion(.success(request.publicNode.toNodeEntity()))
-                case .failure(let error):
-                    let errorEntity: Error
-                    switch error.type {
-                    case .apiEArgs:
-                        errorEntity = SharedPhotoErrorEntity.photoNotFound
-                    case .apiEAccess:
-                        errorEntity = SharedPhotoErrorEntity.previewModeNotEnabled
-                    default:
-                        errorEntity = GenericErrorEntity()
-                    }
-                    completion(.failure(errorEntity))
-                }
-            })
-        }
-    }
-    
     public func publicPhoto(_ photo: SetElementEntity) async throws -> NodeEntity? {
         try await publicAlbumNodeProvider.publicPhotoNode(for: photo)?.toNodeEntity()
     }
