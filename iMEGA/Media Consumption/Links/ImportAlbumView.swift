@@ -12,11 +12,28 @@ struct ImportAlbumView: View {
             EmptyView()
                 .decryptionKeyMissingAlert(isPresented: $viewModel.showingDecryptionKeyAlert,
                                            decryptionKey: $viewModel.publicLinkDecryptionKey,
-                                           onTappingCancel: dismissImportAlbumScreen)
+                                           onTappingCancel: dismissImportAlbumScreen,
+                                           onTappingDecryptButton: viewModel.loadWithNewDecryptionKey)
             VStack {
                 navigationBar
+                
+                PhotoLibraryContentView(
+                    viewModel: viewModel.photoLibraryContentViewModel,
+                    router: PhotoLibraryContentViewRouter(),
+                    onFilterUpdate: nil
+                )
+                
                 Spacer()
             }
+        }
+        .alert(isPresented: $viewModel.showCannotAccessAlbumAlert) {
+            Alert(title: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.title),
+                  message: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message),
+                  dismissButton: .default(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
+                                          action: dismissImportAlbumScreen))
+        }
+        .onAppear {
+            viewModel.loadPublicAlbum()
         }
         .onReceive(viewModel.$publicLinkStatus, perform: { status in
             status == .inProgress ? SVProgressHUD.show() : SVProgressHUD.dismiss()
