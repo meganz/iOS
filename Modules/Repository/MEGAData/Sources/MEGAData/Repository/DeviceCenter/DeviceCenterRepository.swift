@@ -13,32 +13,34 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
         self.sdk = sdk
     }
     
-    public func backups() async throws -> [BackupEntity] {
-        let devices = await fetchUserDevices()
-        return try await withAsyncThrowingValue(in: { completion in
+    public func fetchUserDevices() async -> [DeviceEntity] {
+        let devices = await fetchUserDeviceNames()
+        let userBackups = await fetchUserBackups()
+        let userGroupedBackups = Dictionary(grouping: userBackups, by: \.deviceId)
+        
+        return devices.compactMap { device in
+            guard let deviceBackups = userGroupedBackups[device.id],
+                    deviceBackups.isNotEmpty else { return nil }
+            
+            var updatedDevice = device
+            updatedDevice.backups = deviceBackups
+            return updatedDevice
+        }
+    }
+    
+    private func fetchUserBackups() async -> [BackupEntity] {
+        await withAsyncValue(in: { completion in
             sdk.getBackupInfo(RequestDelegate(completion: { result in
-                switch result {
-                case .success(let request):
-                    let backups = request.backupInfoList
-                        .toBackupInfoEntities()
-                        .map { backup in
-                            if let deviceEntity = devices.first(where: { $0.id == backup.deviceId }) {
-                                var updatedBackup = backup
-                                updatedBackup.device = deviceEntity
-                                return updatedBackup
-                            }
-                            return backup
-                        }
-
-                    completion(.success(backups))
-                case .failure:
-                    completion(.failure(GenericErrorEntity()))
+                if case let .success(request) = result {
+                    completion(.success(request.backupInfoList.toBackupInfoEntities()))
+                } else {
+                    completion(.success([]))
                 }
             }))
         })
     }
     
-    private func fetchUserDevices() async -> [DeviceEntity] {
+    private func fetchUserDeviceNames() async -> [DeviceEntity] {
         await withAsyncValue(in: { completion in
             sdk.getUserAttributeType(.deviceNames, delegate: RequestDelegate { (result) in
                 if case let .success(request) = result {
