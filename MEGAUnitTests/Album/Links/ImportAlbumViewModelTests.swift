@@ -127,8 +127,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     private func makePhotos() -> [NodeEntity] {
         [NodeEntity(handle: 1, hasThumbnail: true, mediaType: .image),
-                      NodeEntity(handle: 4, hasThumbnail: true, mediaType: .video),
-                      NodeEntity(handle: 7, hasThumbnail: true, mediaType: .image)
+         NodeEntity(handle: 4, hasThumbnail: true, mediaType: .video),
+         NodeEntity(handle: 7, hasThumbnail: true, mediaType: .image)
         ]
     }
 }
