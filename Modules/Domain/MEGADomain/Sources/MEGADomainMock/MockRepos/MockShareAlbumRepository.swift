@@ -42,7 +42,7 @@ public struct MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
     
     public func publicPhoto(_ element: SetElementEntity) async throws -> NodeEntity? {
         guard let publicPhotoResult = publicPhotoResults.first(where: { $0.key == element.id })?.value else {
-            throw SharedPhotoErrorEntity.photoNotFound
+            return nil
         }
         return try await withCheckedThrowingContinuation {
             $0.resume(with: publicPhotoResult)
