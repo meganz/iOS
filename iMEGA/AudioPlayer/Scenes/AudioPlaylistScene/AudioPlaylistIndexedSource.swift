@@ -6,9 +6,9 @@ protocol AudioPlaylistSourceDelegate: AnyObject {
 
 final class AudioPlaylistIndexedSource: NSObject, AudioPlaylistSource, UITableViewDataSource {
     private var indexedTracks: [[AudioPlayerItem?]?]
-    private weak var delegate: AudioPlaylistSourceDelegate?
+    private weak var delegate: (any AudioPlaylistSourceDelegate)?
     
-    init(currentTrack: AudioPlayerItem?, queue: [AudioPlayerItem]?, delegate: AudioPlaylistSourceDelegate) {
+    init(currentTrack: AudioPlayerItem?, queue: [AudioPlayerItem]?, delegate: some AudioPlaylistSourceDelegate) {
         self.indexedTracks = [[currentTrack], queue]
         self.delegate = delegate
     }

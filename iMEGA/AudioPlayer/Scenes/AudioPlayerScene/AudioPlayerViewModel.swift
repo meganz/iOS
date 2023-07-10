@@ -77,9 +77,9 @@ final class AudioPlayerViewModel: ViewModelType {
     // MARK: - Private properties
     private var configEntity: AudioPlayerConfigEntity
     private let router: any AudioPlayerViewRouting
-    private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
-    private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
-    private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
+    private let nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
+    private let streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?
+    private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let dispatchQueue: any DispatchQueueProtocol
     private var repeatItemsState: RepeatMode {
@@ -109,9 +109,9 @@ final class AudioPlayerViewModel: ViewModelType {
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
          router: some AudioPlayerViewRouting,
-         nodeInfoUseCase: NodeInfoUseCaseProtocol? = nil,
-         streamingInfoUseCase: StreamingInfoUseCaseProtocol? = nil,
-         offlineInfoUseCase: OfflineFileInfoUseCaseProtocol? = nil,
+         nodeInfoUseCase: (any NodeInfoUseCaseProtocol)? = nil,
+         streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
+         offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
          dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global()) {
         self.configEntity = configEntity

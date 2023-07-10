@@ -8,8 +8,8 @@ import MEGAPresentation
     private var player: AudioPlayer?
     private var miniPlayerRouter: MiniPlayerViewRouter?
     private var miniPlayerVC: MiniPlayerViewController?
-    private var miniPlayerHandlerListenerManager = ListenerManager<AudioMiniPlayerHandlerProtocol>()
-    private var nodeInfoUseCase: NodeInfoUseCaseProtocol?
+    private var miniPlayerHandlerListenerManager = ListenerManager<any AudioMiniPlayerHandlerProtocol>()
+    private var nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol =
         DIContainer.playbackContinuationUseCase
     private let audioSessionUseCase = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
@@ -110,11 +110,11 @@ import MEGAPresentation
         self.player?.add(tracks: tracks)
     }
     
-    func addPlayer(listener: AudioPlayerObserversProtocol) {
+    func addPlayer(listener: any AudioPlayerObserversProtocol) {
         player?.add(listener: listener)
     }
     
-    func removePlayer(listener: AudioPlayerObserversProtocol) {
+    func removePlayer(listener: any AudioPlayerObserversProtocol) {
         player?.remove(listener: listener)
     }
     
@@ -274,7 +274,7 @@ import MEGAPresentation
             showMiniPlayer()
         }
         
-        guard let delegate = presenter as? AudioPlayerPresenterProtocol else {
+        guard let delegate = presenter as? any AudioPlayerPresenterProtocol else {
             miniPlayerHandlerListenerManager.notify { $0.hideMiniPlayer() }
             return
         }
@@ -299,7 +299,7 @@ import MEGAPresentation
     }
     
     func playerHidden(_ hidden: Bool, presenter: UIViewController) {
-        guard presenter.conforms(to: AudioPlayerPresenterProtocol.self) else { return }
+        guard presenter.conforms(to: (any AudioPlayerPresenterProtocol).self) else { return }
         
         if hidden {
             miniPlayerHandlerListenerManager.notify { $0.hideMiniPlayer() }
@@ -310,7 +310,7 @@ import MEGAPresentation
         player?.updateContentViews()
     }
     
-    func addDelegate(_ delegate: AudioPlayerPresenterProtocol) {
+    func addDelegate(_ delegate: any AudioPlayerPresenterProtocol) {
         player?.add(presenterListener: delegate)
         
         guard let vc = delegate as? UIViewController else { return }
@@ -318,18 +318,18 @@ import MEGAPresentation
         miniPlayerRouter?.updatePresenter(vc)
     }
     
-    func removeDelegate(_ delegate: AudioPlayerPresenterProtocol) {
+    func removeDelegate(_ delegate: any AudioPlayerPresenterProtocol) {
         guard let vc = delegate as? UIViewController else { return }
         playerHidden(true, presenter: vc)
         
         player?.remove(presenterListener: delegate)
     }
 
-    func addMiniPlayerHandler(_ handler: AudioMiniPlayerHandlerProtocol) {
+    func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {
         miniPlayerHandlerListenerManager.add(handler)
     }
     
-    func removeMiniPlayerHandler(_ handler: AudioMiniPlayerHandlerProtocol) {
+    func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {
         miniPlayerHandlerListenerManager.remove(handler)
         handler.resetMiniPlayerContainer()
     }

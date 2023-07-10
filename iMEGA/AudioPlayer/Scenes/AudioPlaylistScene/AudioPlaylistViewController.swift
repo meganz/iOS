@@ -18,7 +18,7 @@ final class AudioPlaylistViewController: UIViewController {
     @IBOutlet weak var removeButton: UIButton!
     
     // MARK: - Private properties
-    private var playlistSource: AudioPlaylistSource? {
+    private var playlistSource: (any AudioPlaylistSource)? {
         didSet {
             tableView.dataSource = playlistSource
             tableView.reloadData()

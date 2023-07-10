@@ -9,7 +9,7 @@ struct AudioExploreViewConfiguration: FilesExplorerViewConfiguration {
         return .audio
     }
     
-    var listSourceType: FilesExplorerListSourceProtocol.Type {
+    var listSourceType: any FilesExplorerListSourceProtocol.Type {
         return DocAndAudioListSource.self
     }
 }

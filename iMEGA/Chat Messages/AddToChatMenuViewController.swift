@@ -13,7 +13,7 @@ class AddToChatMenuViewController: UIViewController {
         return menuView
     }()
     
-    weak var delegate: AddToChatMenuViewControllerDelegate?
+    weak var delegate: (any AddToChatMenuViewControllerDelegate)?
     
     var menus: [AddToChatMenu]? {
         didSet {

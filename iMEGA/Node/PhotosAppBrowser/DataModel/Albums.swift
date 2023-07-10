@@ -13,7 +13,7 @@ final class Albums: NSObject {
     private var albums: [Album] = []
     private var emptyAlbums: [Album] = []
     
-    weak var delegate: AlbumsDelegate?
+    weak var delegate: (any AlbumsDelegate)?
     
     private lazy var smartAlbumFetchResult: PHFetchResult<PHAssetCollection> = {
         PHAssetCollection.fetchAssetCollections(with: .smartAlbum,

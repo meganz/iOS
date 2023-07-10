@@ -16,7 +16,7 @@ final class AudioPlayerItem: AVPlayerItem {
             "hasProtectedContent"
         ]
     
-    private lazy var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol = {
+    private lazy var nodeThumbnailHomeUseCase: some NodeThumbnailHomeUseCaseProtocol = {
         return NodeThumbnailHomeUseCase(sdkNodeClient: .live,
                                         fileSystemClient: .live,
                                         thumbnailRepo: ThumbnailRepository.newRepo)

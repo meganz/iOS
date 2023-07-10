@@ -26,8 +26,8 @@ final class AudioPlayer: NSObject {
     var audioSeekFallbackObserver: NSKeyValueObservation?
     var metadataQueueFinishAllOperationsObserver: NSKeyValueObservation?
     var audioPlayerConfig: [PlayerConfiguration: Any] = [.loop: false, .shuffle: false]
-    var listenerManager = ListenerManager<AudioPlayerObserversProtocol>()
-    var presenterListenerManager = ListenerManager<AudioPlayerPresenterProtocol>()
+    var listenerManager = ListenerManager<any AudioPlayerObserversProtocol>()
+    var presenterListenerManager = ListenerManager<any AudioPlayerPresenterProtocol>()
     let preloadMetadataMaxItems = 3
     let defaultRewindInterval: TimeInterval = 15.0
     var itemToRepeat: AudioPlayerItem?
@@ -276,21 +276,21 @@ final class AudioPlayer: NSObject {
         return playerItems.filter { $0 != currentItem() }
     }
     
-    @objc func add(listener: AudioPlayerObserversProtocol) {
+    @objc func add(listener: any AudioPlayerObserversProtocol) {
         if listenerManager.listeners.notContains(where: { $0 === listener }) {
             listenerManager.add(listener)
         }
     }
     
-    @objc func remove(listener: AudioPlayerObserversProtocol) {
+    @objc func remove(listener: any AudioPlayerObserversProtocol) {
         listenerManager.remove(listener)
     }
     
-    @objc func add(presenterListener: AudioPlayerPresenterProtocol) {
+    @objc func add(presenterListener: any AudioPlayerPresenterProtocol) {
         presenterListenerManager.add(presenterListener)
     }
     
-    @objc func remove(presenterListener: AudioPlayerPresenterProtocol) {
+    @objc func remove(presenterListener: any AudioPlayerPresenterProtocol) {
         presenterListenerManager.remove(presenterListener)
     }
     

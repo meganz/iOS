@@ -16,7 +16,7 @@ protocol AddToChatMenuPageViewControllerDelegate: AnyObject {
 
 class AddToChatMenuPageViewController: UIPageViewController {
     
-    weak var menuDelegate: AddToChatMenuPageViewControllerDelegate?
+    weak var menuDelegate: (any AddToChatMenuPageViewControllerDelegate)?
     
     private var menuPages = [AddToChatMenuViewController]()
     

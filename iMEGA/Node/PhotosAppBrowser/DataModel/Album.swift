@@ -21,7 +21,7 @@ final class Album: NSObject {
     typealias UpdatedFetchResultsHandler = ((Album) -> Void)
     private let updatedFetchResultsHandler: UpdatedFetchResultsHandler
 
-    weak var delegate: AlbumDelegate?
+    weak var delegate: (any AlbumDelegate)?
     
     // MARK: - Initializer.
 

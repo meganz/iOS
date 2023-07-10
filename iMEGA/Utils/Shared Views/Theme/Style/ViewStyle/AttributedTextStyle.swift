@@ -11,7 +11,7 @@ enum AttributedTextStyle {
     case warning
     
     static func composedStyler(from styles: [AttributedTextStyle],
-                               of attributedTextStyleFactory: AttributedTextStyleFactory
+                               of attributedTextStyleFactory: some AttributedTextStyleFactory
     ) -> AttributedTextStyler {
         return composedStyler(from: styles.map {
             attributedTextStyleFactory.styler(of: $0)

@@ -29,7 +29,7 @@ class AudioRecordingInputBar: UIView {
     
     lazy var audioRecorder = AudioRecorder()
     var player: AVAudioPlayer?
-    weak var delegate: AudioRecordingInputBarDelegate?
+    weak var delegate: (any AudioRecordingInputBarDelegate)?
     
     private lazy var trashedTapGesture: UITapGestureRecognizer = {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(trashTapGesture))
