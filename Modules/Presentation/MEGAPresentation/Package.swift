@@ -14,13 +14,22 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../Domain/MEGAAnalyticsDomain"),
         .package(path: "../../Repository/MEGAData"),
-        .package(path: "../../Infrastructure/MEGATest")
+        .package(path: "../../Infrastracture/MEGATest"),
+        .package(
+            url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios",
+            branch: "main"
+        )
     ],
     targets: [
         .target(
             name: "MEGAPresentation",
-            dependencies: ["MEGADomain", "MEGAData"],
+            dependencies: [
+                "MEGAAnalyticsDomain",
+                "MEGADomain",
+                "MEGAData"
+            ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGAPresentationTests",

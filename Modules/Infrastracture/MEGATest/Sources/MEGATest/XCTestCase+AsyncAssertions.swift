@@ -1,7 +1,7 @@
 import XCTest
 
 public extension XCTestCase {
-    func XCTAssertThrowsError<T>(
+    func XCTAsyncAssertThrowsError<T>(
         _ expression: @autoclosure () async throws -> T,
         _ message: @autoclosure () -> String = "",
         file: StaticString = #filePath,
@@ -16,7 +16,7 @@ public extension XCTestCase {
         }
     }
     
-    func XCTAssertNoThrow<T>(
+    func XCTAsyncAssertNoThrow<T>(
         _ expression: @autoclosure () async throws -> T,
         _ message: @autoclosure () -> String = "",
         file: StaticString = #filePath,
