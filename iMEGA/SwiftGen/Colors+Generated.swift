@@ -80,6 +80,7 @@ internal enum Colors {
       internal static let _2c2c2e = ColorAsset(name: "2c2c2e")
     }
     internal enum Blue {
+      internal static let _007Aff = ColorAsset(name: "007AFF")
       internal static let _0089C7 = ColorAsset(name: "0089C7")
       internal static let _009Ae0 = ColorAsset(name: "009AE0")
       internal static let _059De2 = ColorAsset(name: "059DE2")
@@ -104,6 +105,7 @@ internal enum Colors {
       internal static let _545458 = ColorAsset(name: "545458")
       internal static let _676767 = ColorAsset(name: "676767")
       internal static let _848484 = ColorAsset(name: "848484")
+      internal static let _8E8E93 = ColorAsset(name: "8E8E93")
       internal static let _949494 = ColorAsset(name: "949494")
       internal static let b5B5B5 = ColorAsset(name: "B5B5B5")
       internal static let bababc = ColorAsset(name: "BABABC")
@@ -126,12 +128,17 @@ internal enum Colors {
       internal static let _00C29A = ColorAsset(name: "00C29A")
       internal static let _00E9B9 = ColorAsset(name: "00E9B9")
       internal static let _347467 = ColorAsset(name: "347467")
+      internal static let _34C759 = ColorAsset(name: "34C759")
+    }
+    internal enum Orange {
+      internal static let ff9500 = ColorAsset(name: "FF9500")
     }
     internal enum Red {
       internal static let ce0A11 = ColorAsset(name: "CE0A11")
       internal static let f30C14 = ColorAsset(name: "F30C14")
       internal static let f7363D = ColorAsset(name: "F7363D")
       internal static let f95C61 = ColorAsset(name: "F95C61")
+      internal static let ff3B30 = ColorAsset(name: "FF3B30")
       internal static let ff453A = ColorAsset(name: "FF453A")
     }
     internal enum Shadow {
