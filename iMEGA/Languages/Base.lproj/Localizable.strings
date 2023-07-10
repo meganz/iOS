@@ -3422,6 +3422,34 @@
 "chat.call.quickAction.camera"="Camera";
 /* Device Center title */
 "device.center.title"="Device centre";
+/* Device Center list current device title */
+"device.center.current.device.title"="This device";
+/* Device Center list other devices title*/
+"device.center.other.devices.title"="Other devices";
+/* Device Center backup up to date status*/
+"device.center.backup.upToDate.status.message"="Up to date";
+/* Device Center backup scanning status*/
+"device.center.backup.scanning.status.message"="Scanning...";
+/* Device Center backup initialising status*/
+"device.center.backup.initialising.status.message"="Initialising...";
+/* Device Center backup updating status*/
+"device.center.backup.updating.status.message"="Updating...";
+/* Device Center backup no camera uploads status*/
+"device.center.backup.noCameraUploads.status.message"="No camera uploads";
+/* Device Center backup disabled status*/
+"device.center.backup.disabled.status.message"="Disabled";
+/* Device Center backup offline status*/
+"device.center.backup.offline.status.message"="Offline";
+/* Device Center backup backup stopped status*/
+"device.center.backup.backupStopped.status.message"="Backup stopped";
+/* Device Center backup paused status*/
+"device.center.backup.paused.status.message"="Paused";
+/* Device Center backup out of quota status*/
+"device.center.backup.outOfQuota.status.message"="Out of quota";
+/* Device Center backup error status*/
+"device.center.backup.error.status.message"="Error";
+/* Device Center backup blocked status*/
+"device.center.backup.blocked.status.message"="Blocked";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */

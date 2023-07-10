@@ -5,7 +5,6 @@ public struct BackupEntity: Sendable, Identifiable {
     public let id: Int
     public let name: String
     public let deviceId: String
-    public var device: DeviceEntity?
     
     // MARK: - Handles
     public let rootHandle: HandleEntity

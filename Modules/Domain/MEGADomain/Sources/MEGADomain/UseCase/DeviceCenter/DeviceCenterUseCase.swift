@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol DeviceCenterUseCaseProtocol {
-    func backups() async throws -> [BackupEntity]
+    func fetchUserDevices() async -> [DeviceEntity]
 }
 
 public struct DeviceCenterUseCase<Repository: DeviceCenterRepositoryProtocol>: DeviceCenterUseCaseProtocol {
@@ -11,7 +11,7 @@ public struct DeviceCenterUseCase<Repository: DeviceCenterRepositoryProtocol>: D
         self.repository = deviceCenterRepository
     }
     
-    public func backups() async throws -> [BackupEntity] {
-        try await repository.backups()
+    public func fetchUserDevices() async -> [DeviceEntity] {
+        await repository.fetchUserDevices()
     }
 }

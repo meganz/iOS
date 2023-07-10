@@ -114,11 +114,22 @@ internal enum Asset {
       internal static let deviceCenter = ImageAsset(name: "device_center")
       internal static let drive = ImageAsset(name: "drive")
       internal static let folderSync = ImageAsset(name: "folder_sync")
+      internal static let iphone = ImageAsset(name: "iphone")
       internal static let linux = ImageAsset(name: "linux")
       internal static let mac = ImageAsset(name: "mac")
       internal static let mobile = ImageAsset(name: "mobile")
       internal static let pc = ImageAsset(name: "pc")
       internal static let win = ImageAsset(name: "win")
+    }
+    internal enum BackupStatus {
+      internal static let disabled = ImageAsset(name: "disabled")
+      internal static let error = ImageAsset(name: "error")
+      internal static let noCameraUploads = ImageAsset(name: "noCameraUploads")
+      internal static let offline = ImageAsset(name: "offline")
+      internal static let outOfQuota = ImageAsset(name: "outOfQuota")
+      internal static let paused = ImageAsset(name: "paused")
+      internal static let upToDate = ImageAsset(name: "upToDate")
+      internal static let updating = ImageAsset(name: "updating")
     }
     internal enum Banner {
       internal static let closeCircle = ImageAsset(name: "closeCircle")

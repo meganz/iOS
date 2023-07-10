@@ -3286,6 +3286,92 @@ public enum Strings {
       public enum Center {
         /// Device centre
         public static let title = Strings.tr("Localizable", "device.center.title")
+        public enum Backup {
+          public enum BackupStopped {
+            public enum Status {
+              /// Backup stopped
+              public static let message = Strings.tr("Localizable", "device.center.backup.backupStopped.status.message")
+            }
+          }
+          public enum Blocked {
+            public enum Status {
+              /// Blocked
+              public static let message = Strings.tr("Localizable", "device.center.backup.blocked.status.message")
+            }
+          }
+          public enum Disabled {
+            public enum Status {
+              /// Disabled
+              public static let message = Strings.tr("Localizable", "device.center.backup.disabled.status.message")
+            }
+          }
+          public enum Error {
+            public enum Status {
+              /// Error
+              public static let message = Strings.tr("Localizable", "device.center.backup.error.status.message")
+            }
+          }
+          public enum Initialising {
+            public enum Status {
+              /// Initialising...
+              public static let message = Strings.tr("Localizable", "device.center.backup.initialising.status.message")
+            }
+          }
+          public enum NoCameraUploads {
+            public enum Status {
+              /// No camera uploads
+              public static let message = Strings.tr("Localizable", "device.center.backup.noCameraUploads.status.message")
+            }
+          }
+          public enum Offline {
+            public enum Status {
+              /// Offline
+              public static let message = Strings.tr("Localizable", "device.center.backup.offline.status.message")
+            }
+          }
+          public enum OutOfQuota {
+            public enum Status {
+              /// Out of quota
+              public static let message = Strings.tr("Localizable", "device.center.backup.outOfQuota.status.message")
+            }
+          }
+          public enum Paused {
+            public enum Status {
+              /// Paused
+              public static let message = Strings.tr("Localizable", "device.center.backup.paused.status.message")
+            }
+          }
+          public enum Scanning {
+            public enum Status {
+              /// Scanning...
+              public static let message = Strings.tr("Localizable", "device.center.backup.scanning.status.message")
+            }
+          }
+          public enum UpToDate {
+            public enum Status {
+              /// Up to date
+              public static let message = Strings.tr("Localizable", "device.center.backup.upToDate.status.message")
+            }
+          }
+          public enum Updating {
+            public enum Status {
+              /// Updating...
+              public static let message = Strings.tr("Localizable", "device.center.backup.updating.status.message")
+            }
+          }
+        }
+        public enum Current {
+          public enum Device {
+            /// This device
+            public static let title = Strings.tr("Localizable", "device.center.current.device.title")
+          }
+        }
+        public enum Other {
+          public enum Devices {
+            /// Other devices
+            public static let title = Strings.tr("Localizable", "device.center.other.devices.title")
+          }
+        }
       }
     }
     public enum Dialog {
