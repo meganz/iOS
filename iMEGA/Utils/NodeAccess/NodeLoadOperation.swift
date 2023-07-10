@@ -11,10 +11,10 @@ enum NodeLoadError: Error {
 
 final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     // MARK: - Private properties
-    private let loadNodeRequest: (MEGARequestDelegate) -> Void
+    private let loadNodeRequest: (any MEGARequestDelegate) -> Void
     private let newNodeName: String?
-    private let createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)?
-    private let setFolderHandleRequest: ((HandleEntity, MEGARequestDelegate) -> Void)?
+    private let createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)?
+    private let setFolderHandleRequest: ((HandleEntity, any MEGARequestDelegate) -> Void)?
     private let completion: NodeLoadCompletion
     private let sdk: MEGASdk
     private let autoCreate: (() -> Bool)?
@@ -22,10 +22,10 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     // MARK: - Init
     init(autoCreate: (() -> Bool)?,
          sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
-         loadNodeRequest: @escaping (MEGARequestDelegate) -> Void,
+         loadNodeRequest: @escaping (any MEGARequestDelegate) -> Void,
          newNodeName: String? = nil,
-         createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)? = nil,
-         setFolderHandleRequest: ((HandleEntity, MEGARequestDelegate) -> Void)? = nil,
+         createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)? = nil,
+         setFolderHandleRequest: ((HandleEntity, any MEGARequestDelegate) -> Void)? = nil,
          completion: @escaping NodeLoadCompletion) {
         self.autoCreate = autoCreate
         self.sdk = sdk

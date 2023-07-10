@@ -11,7 +11,7 @@ class AddToChatMediaCollectionSource: NSObject {
     private let collectionView: UICollectionView
     private let maxNumberOfAssetsFetched = 16
     private var lastSelectedIndexPath: IndexPath?
-    private weak var delegate: AddToChatMediaCollectionSourceDelegate?
+    private weak var delegate: (any AddToChatMediaCollectionSourceDelegate)?
     private var fetchResult: PHFetchResult<PHAsset>?
     private let permissionHandler: any DevicePermissionsHandling
     private let minimumLineSpacing: CGFloat = 2.0
@@ -41,7 +41,7 @@ class AddToChatMediaCollectionSource: NSObject {
     
     init(
         collectionView: UICollectionView,
-        delegate: AddToChatMediaCollectionSourceDelegate,
+        delegate: some AddToChatMediaCollectionSourceDelegate,
         permissionHandler: some DevicePermissionsHandling
     ) {
         self.collectionView = collectionView
@@ -150,7 +150,7 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
         }
     }
     
-    var permissionRouter: PermissionAlertRouting {
+    var permissionRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
     

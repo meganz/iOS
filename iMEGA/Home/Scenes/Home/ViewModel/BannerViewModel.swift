@@ -16,20 +16,20 @@ protocol HomeBannerViewModelOutputs {
 
 protocol HomeBannerViewModelType {
 
-    var inputs: HomeBannerViewModelInputs { get }
+    var inputs: any HomeBannerViewModelInputs { get }
 
-    var outputs: HomeBannerViewModelOutputs { get }
+    var outputs: any HomeBannerViewModelOutputs { get }
 
-    var notifyUpdate: ((HomeBannerViewModelOutputs) -> Void)? { get set }
+    var notifyUpdate: ((any HomeBannerViewModelOutputs) -> Void)? { get set }
 }
 
 final class HomeBannerViewModel: HomeBannerViewModelType {
 
-    var inputs: HomeBannerViewModelInputs { self }
+    var inputs: any HomeBannerViewModelInputs { self }
 
-    var outputs: HomeBannerViewModelOutputs { self }
+    var outputs: any HomeBannerViewModelOutputs { self }
 
-    var notifyUpdate: ((HomeBannerViewModelOutputs) -> Void)?
+    var notifyUpdate: ((any HomeBannerViewModelOutputs) -> Void)?
     
     // MARK: - Router
 
@@ -41,9 +41,9 @@ final class HomeBannerViewModel: HomeBannerViewModelType {
     
     // MARK: - Use Case
 
-    private let userBannerUseCase: UserBannerUseCaseProtocol
+    private let userBannerUseCase: any UserBannerUseCaseProtocol
 
-    init(userBannerUseCase: UserBannerUseCaseProtocol, router: HomeBannerRouter) {
+    init(userBannerUseCase: some UserBannerUseCaseProtocol, router: HomeBannerRouter) {
         self.userBannerUseCase = userBannerUseCase
         self.router = router
     }

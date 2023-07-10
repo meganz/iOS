@@ -6,7 +6,7 @@ struct AlbumListView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     @StateObject var viewModel: AlbumListViewModel
     @ObservedObject var createAlbumCellViewModel: CreateAlbumCellViewModel
-    var router: AlbumListViewRouting
+    var router: any AlbumListViewRouting
     
     @State private var editMode: EditMode = .inactive
     

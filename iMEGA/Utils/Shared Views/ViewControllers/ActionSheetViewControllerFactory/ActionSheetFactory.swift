@@ -9,10 +9,10 @@ protocol ActionSheetFactoryProtocol {
 
 struct ActionSheetFactory: ActionSheetFactoryProtocol {
 
-    private let nodeLabelActionUseCase: NodeLabelActionUseCaseProtocol
+    private let nodeLabelActionUseCase: any NodeLabelActionUseCaseProtocol
 
     init(
-        nodeLabelActionUseCase: NodeLabelActionUseCaseProtocol
+        nodeLabelActionUseCase: some NodeLabelActionUseCaseProtocol
             = NodeLabelActionUseCase(nodeLabelActionRepository: NodeLabelActionRepository())
     ) {
         self.nodeLabelActionUseCase = nodeLabelActionUseCase

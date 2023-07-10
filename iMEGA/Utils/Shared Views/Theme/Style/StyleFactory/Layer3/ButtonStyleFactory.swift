@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var buttonStyle: ButtonStyleFactory {
+    var buttonStyle: some ButtonStyleFactory {
         return ButtonStyleFactoryImpl(colorFactory: colorFactory,
                                       textStyleFactory: textStyleFactory)
     }
@@ -20,8 +20,8 @@ protocol ButtonStyleFactory {
 
 private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
 
-    let colorFactory: ColorFactory
-    let textStyleFactory: TextStyleFactory
+    let colorFactory: any ColorFactory
+    let textStyleFactory: any TextStyleFactory
 
     func styler(of buttonStyle: MEGAButtonStyle) -> ButtonStyler {
 

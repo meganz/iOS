@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var borderStyleFactory: BorderStyleFactory {
+    var borderStyleFactory: some BorderStyleFactory {
         BorderStyleFactoryImpl(colorFactory: colorFactory)
     }
 }
@@ -19,7 +19,7 @@ protocol BorderStyleFactory {
 
 private struct BorderStyleFactoryImpl: BorderStyleFactory {
 
-    let colorFactory: ColorFactory
+    let colorFactory: any ColorFactory
 
     func borderStyle(of borderStyle: MEGABorderStyle) -> BorderStyle {
         switch borderStyle {

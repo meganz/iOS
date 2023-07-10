@@ -10,7 +10,7 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     
     @IBOutlet weak var fillEqualStackView: UIStackView!
     @IBOutlet var cards: [ExplorerView]!
-    weak var delegate: ExploreViewStackDelegate?
+    weak var delegate: (any ExploreViewStackDelegate)?
     
     var subscriptions = Set<AnyCancellable>()
     
