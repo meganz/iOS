@@ -17,7 +17,7 @@ class ReactedUsersListPageViewController: UIPageViewController {
         }
     }
     
-    weak var usersListDelegate: ReactedUsersListPageViewControllerDelegate?
+    weak var usersListDelegate: (any ReactedUsersListPageViewControllerDelegate)?
     
     var tableViewController: UITableViewController? {
         guard pages.count > currentIndex else {

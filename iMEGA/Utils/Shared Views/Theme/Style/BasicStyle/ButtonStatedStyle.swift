@@ -58,7 +58,7 @@ extension ButtonStatedStyle where T == BackgroundStyle {
 
     @discardableResult
     func applied<Button: UIButton>(on button: Button) -> Button {
-        if let megaButton = (button as? ButtonBackgroundStateAware) {
+        if let megaButton = (button as? (any ButtonBackgroundStateAware)) {
             for buttonState in ButtonState.allCases {
                 if let backgroundColor = stated[buttonState]?.backgroundColor.uiColor {
                     megaButton.setBackgroundColor(backgroundColor, for: buttonState.uiButtonState)
