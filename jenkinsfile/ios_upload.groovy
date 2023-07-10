@@ -248,12 +248,14 @@ pipeline {
             }
             steps {
                 gitlabCommitStatus(name: 'Archive appstore') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane archive_appstore"
-                        script {
-                            env.MEGA_BUILD_ARCHIVE_PATH = readFile(file: './fastlane/archive_path.txt')
-                        }
-                    })
+                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                        injectEnvironments({
+                            sh "bundle exec fastlane archive_appstore"
+                            script {
+                                env.MEGA_BUILD_ARCHIVE_PATH = readFile(file: './fastlane/archive_path.txt')
+                            }
+                        })
+                    }
                 }
             }
         }
@@ -268,9 +270,11 @@ pipeline {
             }
             steps {
                 gitlabCommitStatus(name: 'Archive adhoc') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane archive_adhoc"
-                    })
+                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                        injectEnvironments({
+                            sh "bundle exec fastlane archive_adhoc"
+                        })
+                    }
                 }
             }
         }

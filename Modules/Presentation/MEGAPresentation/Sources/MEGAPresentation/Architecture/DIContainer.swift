@@ -1,3 +1,5 @@
+import MEGAAnalyticsDomain
+import MEGAAnalyticsiOS
 import MEGAData
 import MEGADomain
 
@@ -37,4 +39,37 @@ extension PlaybackContinuationUseCase where T == PreviousPlaybackSessionReposito
     static var shared = PlaybackContinuationUseCase(
         previousSessionRepo: PreviousPlaybackSessionRepository.newRepo
     )
+}
+
+// MARK: - Analytics
+
+public typealias TrackAnalyticsEvent = (any EventIdentifier) -> Void
+
+public extension DIContainer {
+    static var trackAnalyticsEvent: TrackAnalyticsEvent = {
+        Tracker.shared.trackEvent(eventIdentifier: $0)
+    }
+}
+
+extension Tracker {
+    static var shared: Tracker = {
+        Tracker(
+            viewIdProvider: ViewIdProviderAdapter(
+                viewIdUseCase: DIContainer.viewIDUseCase
+            ),
+            eventSender: EventSenderAdapter(
+                analyticsUseCase: DIContainer.analyticsUseCase
+            )
+        )
+    }()
+}
+
+extension DIContainer {
+    static var analyticsUseCase: some AnalyticsUseCaseProtocol {
+        AnalyticsUseCase(analyticsRepo: AnalyticsRepository.newRepo)
+    }
+    
+    static var viewIDUseCase: some ViewIDUseCaseProtocol {
+        ViewIDUseCase(viewIdRepo: ViewIDRepository.newRepo)
+    }
 }

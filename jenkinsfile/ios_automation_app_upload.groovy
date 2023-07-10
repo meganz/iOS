@@ -83,9 +83,11 @@ pipeline {
         stage('Build app') {
             steps {
                 gitlabCommitStatus(name: 'Build app') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane build_simulator"
-                    })
+                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                        injectEnvironments({
+                            sh "bundle exec fastlane build_simulator"
+                        })
+                    }
                 }
             }
         }
