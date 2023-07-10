@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var attributedTextStyleFactory: AttributedTextStyleFactory {
+    var attributedTextStyleFactory: some AttributedTextStyleFactory {
         return AttributedTextStyleFactoryImpl(
             colorStyleFactory: colorFactory,
             textStyleFactory: textStyleFactory,
@@ -18,11 +18,11 @@ protocol AttributedTextStyleFactory {
 
 private struct AttributedTextStyleFactoryImpl: AttributedTextStyleFactory {
 
-    let colorStyleFactory: ColorFactory
+    let colorStyleFactory: any ColorFactory
 
-    let textStyleFactory: TextStyleFactory
+    let textStyleFactory: any TextStyleFactory
 
-    let paragraphStyleFactory: ParagraphStyleFactory
+    let paragraphStyleFactory: any ParagraphStyleFactory
 
     func styler(of textStyle: AttributedTextStyle) -> AttributedTextStyler {
         let textStyleFactory = self.textStyleFactory

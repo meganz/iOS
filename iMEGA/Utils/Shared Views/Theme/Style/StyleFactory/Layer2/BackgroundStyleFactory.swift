@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var backgroundStyleFactory: BackgroundStyleFactory {
+    var backgroundStyleFactory: some BackgroundStyleFactory {
         BackgroundStyleFactoryImpl(colorFactory: colorFactory)
     }
 }
@@ -23,7 +23,7 @@ protocol BackgroundStyleFactory {
 
 private struct BackgroundStyleFactoryImpl: BackgroundStyleFactory {
 
-    let colorFactory: ColorFactory
+    let colorFactory: any ColorFactory
 
     func backgroundStyle(of backgroundStyle: MEGABackgroundStyle) -> BackgroundStyle {
         switch backgroundStyle {

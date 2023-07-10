@@ -425,7 +425,7 @@ extension AppDelegate {
         }
     }
     
-    private var permissionAlertRouter: PermissionAlertRouting {
+    private var permissionAlertRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
     @objc

@@ -48,7 +48,7 @@ class AddToChatViewController: UIViewController {
     private var mediaCollectionSource: AddToChatMediaCollectionSource?
     private var menuPageViewController: AddToChatMenuPageViewController?
 
-    weak var addToChatDelegate: AddToChatViewControllerDelegate?
+    weak var addToChatDelegate: (any AddToChatViewControllerDelegate)?
     
     private let iPadPopoverWidth: CGFloat = 340.0
     
@@ -195,7 +195,7 @@ class AddToChatViewController: UIViewController {
         }
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(alongsideTransition: { context in            

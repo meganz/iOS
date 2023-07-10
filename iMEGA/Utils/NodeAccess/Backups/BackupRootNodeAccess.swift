@@ -20,7 +20,7 @@ final class BackupRootNodeAccess: NodeAccess {
         BackupRootNodeAccess.shared.loadNode()
     }
     
-    private static func loadRootNode(delegate: MEGARequestDelegate) {
+    private static func loadRootNode(delegate: any MEGARequestDelegate) {
         MEGASdkManager.sharedMEGASdk().getUserAttributeType(.backupsFolder, delegate: delegate)
     }
 }

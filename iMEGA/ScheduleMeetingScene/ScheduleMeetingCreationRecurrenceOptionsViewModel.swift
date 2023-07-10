@@ -10,7 +10,7 @@ protocol ScheduleMeetingCreationRecurrenceOptionsRouting {
 }
 
 final class ScheduleMeetingCreationRecurrenceOptionsViewModel: ObservableObject {
-    private let router: ScheduleMeetingCreationRecurrenceOptionsRouting
+    private let router: any ScheduleMeetingCreationRecurrenceOptionsRouting
     private let startDate: Date
 
     @Published
@@ -19,7 +19,7 @@ final class ScheduleMeetingCreationRecurrenceOptionsViewModel: ObservableObject 
     @Published
     private(set) var selectedOption: ScheduleMeetingCreationRecurrenceOption
     
-    init(router: ScheduleMeetingCreationRecurrenceOptionsRouting) {
+    init(router: some ScheduleMeetingCreationRecurrenceOptionsRouting) {
         self.router = router
         self.startDate = router.startDate
         self.rules = router.rules

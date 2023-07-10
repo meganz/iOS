@@ -18,7 +18,7 @@ struct AudioPlayerConfigEntity {
     var parentNode: MEGANode?
     
     // Common properties
-    var playerHandler: AudioPlayerHandlerProtocol
+    var playerHandler: any AudioPlayerHandlerProtocol
     var shouldResetPlayer = false
     
     lazy var isFileLink: Bool = {

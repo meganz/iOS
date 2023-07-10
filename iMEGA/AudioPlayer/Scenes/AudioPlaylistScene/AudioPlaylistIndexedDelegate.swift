@@ -8,10 +8,10 @@ protocol AudioPlaylistDelegate: AnyObject {
 }
 
 final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate, UITableViewDragDelegate {
-    private weak var delegate: AudioPlaylistDelegate?
+    private weak var delegate: (any AudioPlaylistDelegate)?
     private let traitCollection: UITraitCollection
     
-    init(delegate: AudioPlaylistDelegate, traitCollection: UITraitCollection) {
+    init(delegate: some AudioPlaylistDelegate, traitCollection: UITraitCollection) {
         self.delegate = delegate
         self.traitCollection = traitCollection
     }
@@ -63,15 +63,15 @@ final class AudioPlaylistIndexedDelegate: NSObject, UITableViewDelegate, UITable
         indexPath.section != 0
     }
     
-    func tableView(_ tableView: UITableView, dragSessionWillBegin session: UIDragSession) {
+    func tableView(_ tableView: UITableView, dragSessionWillBegin session: any UIDragSession) {
         delegate?.draggWillBegin()
     }
     
-    func tableView(_ tableView: UITableView, dragSessionDidEnd session: UIDragSession) {
+    func tableView(_ tableView: UITableView, dragSessionDidEnd session: any UIDragSession) {
         delegate?.draggDidEnd()
     }
     
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         []
     }
 }
