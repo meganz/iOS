@@ -16822,7 +16822,7 @@
 			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit.git";
 			requirement = {
 				kind = exactVersion;
-				version = 3.3.0;
+				version = 3.6.6;
 			};
 		};
 		BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
