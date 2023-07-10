@@ -11,8 +11,6 @@ public final class MockSdk: MEGASdk {
     public var _isLoggedIn: Int
     public var _isMasterBusinessAccount: Bool
     private let email: String?
-    private var statsEventType: Int?
-    private var statsEventMessage: String?
     private let megaRootNode: MEGANode?
     private let rubbishBinNode: MEGANode?
     private let sets: [MEGASet]
@@ -35,6 +33,13 @@ public final class MockSdk: MEGASdk {
     private let smsState: SMSState
     private let devices: [String: String]
     private let file: String?
+    
+    public private(set) var sendEvent_Calls = [(
+        eventType: Int,
+        message: String,
+        addJourneyId: Bool,
+        viewId: String?
+    )]()
     
     public var hasGlobalDelegate = false
     public var hasRequestDelegate = false
@@ -144,13 +149,8 @@ public final class MockSdk: MEGASdk {
     
     public override func contacts() -> MEGAUserList { myContacts }
     
-    public override func sendEvent(_ eventType: Int, message: String) {
-        statsEventType = eventType
-        statsEventMessage = message
-    }
-    
-    public func isLastSentEvent(eventType type: Int, message: String) -> Bool {
-        statsEventType == type && statsEventMessage == message
+    public override func sendEvent(_ eventType: Int, message: String, addJourneyId: Bool, viewId: String?) {
+        sendEvent_Calls.append((eventType, message, addJourneyId, viewId))
     }
     
     public override func add(_ delegate: any MEGAGlobalDelegate) {

@@ -1,7 +1,8 @@
+import MEGAAnalyticsDomain
 import MEGADomain
 import MEGASdk
 
-public struct AnalyticsRepository: AnalyticsRepositoryProtocol {
+public struct AnalyticsRepository: MEGADomain.AnalyticsRepositoryProtocol, MEGAAnalyticsDomain.AnalyticsRepositoryProtocol {
     public static var newRepo: AnalyticsRepository {
         AnalyticsRepository(sdk: MEGASdk.sharedSdk)
     }
@@ -13,6 +14,10 @@ public struct AnalyticsRepository: AnalyticsRepositoryProtocol {
     }
     
     public func sendAnalyticsEvent(_ event: AnalyticsEventEntity) {
-        sdk.sendEvent(event.code, message: event.description)
+        sdk.sendEvent(event.code, message: event.description, addJourneyId: false, viewId: nil)
+    }
+    
+    public func sendAnalyticsEvent(_ eventEntity: EventEntity) {
+        sdk.sendEvent(eventEntity.id, message: eventEntity.message, addJourneyId: true, viewId: eventEntity.viewId)
     }
 }
