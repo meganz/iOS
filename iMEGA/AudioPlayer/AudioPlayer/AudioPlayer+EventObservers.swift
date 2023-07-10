@@ -2,17 +2,23 @@ import Foundation
 
 extension AudioPlayer {
     func registerAudioPlayerEvents() {
-        audioQueueObserver = queuePlayer?.observe(\.currentItem, options: [.new, .old], changeHandler: audio(player:didChangeItem:))
-        audioQueueStatusObserver = queuePlayer?.currentItem?.observe(\.status, options: [.new, .old], changeHandler: audio(playerItem:didChangeCurrentItemStatus:))
-        audioQueueNewItemObserver = queuePlayer?.observe(\.currentItem, options: .initial, changeHandler: audio(player:didStartPlayingCurrentItem:))
-        audioQueueRateObserver = queuePlayer?.observe(\.rate, options: .new, changeHandler: audio(player:didChangePlayerRate:))
-        audioQueueStallObserver = queuePlayer?.observe(\.timeControlStatus, options: .new, changeHandler: audio(player:didChangeTimeControlStatus:))
-        audioQueueWaitingObserver = queuePlayer?.observe(\.reasonForWaitingToPlay, options: [.new, .old], changeHandler: audio(player:reasonForWaitingToPlay:))
-        audioQueueBufferEmptyObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferEmpty, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferEmpty:))
-        audioQueueBufferAlmostThereObserver = queuePlayer?.currentItem?.observe(\.isPlaybackLikelyToKeepUp, options: [.new], changeHandler: audio(playerItem:isPlaybackLikelyToKeepUp:))
-        audioQueueBufferFullObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferFull, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferFull:))
-        audioQueueLoadedTimeRangesObserver = queuePlayer?.currentItem?.observe(\.loadedTimeRanges, options: .new, changeHandler: audio(playerItem:didLoadedTimeRanges:))
-        metadataQueueFinishAllOperationsObserver = opQueue.observe(\.operationCount, options: [.new], changeHandler: operation(queue:didFinished:))
+        let label = "\(type(of: AudioPlayer.self))_registerAudioPlayerEvents"
+        let queue = DispatchQueue(label: label, qos: .background)
+        let queuePlayer = self.queuePlayer
+        queue.async { [weak self, weak queuePlayer] in
+            guard let self else { return }
+            self.audioQueueObserver = queuePlayer?.observe(\.currentItem, options: [.new, .old], changeHandler: audio(player:didChangeItem:))
+            self.audioQueueStatusObserver = queuePlayer?.currentItem?.observe(\.status, options: [.new, .old], changeHandler: audio(playerItem:didChangeCurrentItemStatus:))
+            self.audioQueueNewItemObserver = queuePlayer?.observe(\.currentItem, options: .initial, changeHandler: audio(player:didStartPlayingCurrentItem:))
+            self.audioQueueRateObserver = queuePlayer?.observe(\.rate, options: .new, changeHandler: audio(player:didChangePlayerRate:))
+            self.audioQueueStallObserver = queuePlayer?.observe(\.timeControlStatus, options: .new, changeHandler: audio(player:didChangeTimeControlStatus:))
+            self.audioQueueWaitingObserver = queuePlayer?.observe(\.reasonForWaitingToPlay, options: [.new, .old], changeHandler: audio(player:reasonForWaitingToPlay:))
+            self.audioQueueBufferEmptyObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferEmpty, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferEmpty:))
+            self.audioQueueBufferAlmostThereObserver = queuePlayer?.currentItem?.observe(\.isPlaybackLikelyToKeepUp, options: [.new], changeHandler: audio(playerItem:isPlaybackLikelyToKeepUp:))
+            self.audioQueueBufferFullObserver = queuePlayer?.currentItem?.observe(\.isPlaybackBufferFull, options: [.new], changeHandler: audio(playerItem:isPlaybackBufferFull:))
+            self.audioQueueLoadedTimeRangesObserver = queuePlayer?.currentItem?.observe(\.loadedTimeRanges, options: .new, changeHandler: audio(playerItem:didLoadedTimeRanges:))
+            self.metadataQueueFinishAllOperationsObserver = opQueue.observe(\.operationCount, options: [.new], changeHandler: operation(queue:didFinished:))
+        }
     }
     
     func unregisterAudioPlayerEvents() {
