@@ -26,7 +26,7 @@ final class UserAttributeUseCaseAdditionsTests: XCTestCase {
         let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(XCTUnwrap(json?.base64Encoded))]])
         let sut = UserAttributeUseCase(repo: repo)
         
-        await XCTAssertThrowsError(try await sut.timelineFilter())
+        await XCTAsyncAssertThrowsError(try await sut.timelineFilter())
     }
     
     func testTimelineFilter_whenAValidJsonDataWithCorrectiOSKey_shouldGiveTheRightObject() async throws {

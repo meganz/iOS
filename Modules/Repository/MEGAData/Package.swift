@@ -18,15 +18,22 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
+        .package(path: "../../Domain/MEGAAnalyticsDomain"),
         .package(path: "../../MEGASdk"),
-        .package(path: "../../Infrastructure/MEGATest"),
+        .package(path: "../../Infrastracture/MEGATest"),
         .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "9.0.0")
     ],
     targets: [
         .target(
             name: "MEGAData",
-            dependencies: ["MEGADomain", "MEGASdk", "SAMKeychain", .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk")],
+            dependencies: [
+                "MEGAAnalyticsDomain",
+                "MEGADomain",
+                "MEGASdk",
+                "SAMKeychain",
+                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk")
+            ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .target(
             name: "MEGADataMock",

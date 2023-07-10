@@ -230,6 +230,13 @@
         "identifier" : "MEGAPermissionsTests",
         "name" : "MEGAPermissionsTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
+        "identifier" : "MEGAAnalyticsDomainTests",
+        "name" : "MEGAAnalyticsDomainTests"
+      }
     }
   ],
   "version" : 1

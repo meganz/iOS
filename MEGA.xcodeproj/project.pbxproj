@@ -124,6 +124,7 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
+		16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 16405C4A2A56917200DE911F /* MEGAAnalyticsiOS */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
@@ -2620,6 +2621,7 @@
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
 		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
+		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
@@ -5064,6 +5066,7 @@
 				A85ED2052A20C1260036C0E5 /* libnative_api.xcframework in Frameworks */,
 				A85ED2042A20C1260036C0E5 /* libnative_video.xcframework in Frameworks */,
 				A85ED2022A20C1260036C0E5 /* libvideocapture_objc.xcframework in Frameworks */,
+				16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */,
 				A85ED2012A20C1260036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */,
 				A85ED2032A20C1260036C0E5 /* libwebsockets.xcframework in Frameworks */,
 				A89CE55528B7D573002802BC /* MEGAData in Frameworks */,
@@ -10944,6 +10947,7 @@
 		B6FDEF782A204E7700276DD6 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */,
 				B6061FE82897909C0094087E /* MEGADomain */,
 			);
 			path = Domain;
@@ -12059,6 +12063,7 @@
 				A8B51AE827F3565E0030F1EA /* WSTagsField */,
 				B6C2CE0129F9F7D400D98DCD /* MEGADataMock */,
 				9418DB282A4EE5FB002B0077 /* MEGAPermissions */,
+				16405C4A2A56917200DE911F /* MEGAAnalyticsiOS */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -12378,6 +12383,7 @@
 				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
 				A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */,
 				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				16405C492A56917200DE911F /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -16702,6 +16708,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		16405C492A56917200DE911F /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -16865,6 +16879,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		16405C4A2A56917200DE911F /* MEGAAnalyticsiOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 16405C492A56917200DE911F /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */;
+			productName = MEGAAnalyticsiOS;
+		};
 		164948662A41586F00AEB736 /* SwiftLint */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftLint";

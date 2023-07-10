@@ -118,10 +118,12 @@ pipeline {
         stage('main app - Run Unit test and generate code coverage') {
             steps {
                 gitlabCommitStatus(name: 'main app - Run unit tes and generate code coveraget') {
-                    injectEnvironments({
-                        sh "bundle exec fastlane run_tests_app"
-                        sh "bundle exec fastlane code_coverage_main_app"
-                    })
+                    withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                        injectEnvironments({
+                            sh "bundle exec fastlane run_tests_app"
+                            sh "bundle exec fastlane code_coverage_main_app"
+                        })
+                    }
                 }
             }
         }

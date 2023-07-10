@@ -155,7 +155,7 @@ final class AccountRepositoryTests: XCTestCase {
             })
         )
         
-        await XCTAssertThrowsError(try await sut.accountDetails()) { errorThrown in
+        await XCTAsyncAssertThrowsError(try await sut.accountDetails()) { errorThrown in
             XCTAssertEqual(errorThrown as? AccountDetailsErrorEntity, .generic)
         }
     }
@@ -168,7 +168,7 @@ final class AccountRepositoryTests: XCTestCase {
             })
         )
         
-        await XCTAssertNoThrow(try await sut.upgradeSecurity())
+        await XCTAsyncAssertNoThrow(try await sut.upgradeSecurity())
     }
     
     func testUpgradeSecurity_whenFails_shouldThrowGenericError() async {
@@ -179,7 +179,7 @@ final class AccountRepositoryTests: XCTestCase {
             })
         )
         
-        await XCTAssertThrowsError(try await sut.upgradeSecurity()) { errorThrown in
+        await XCTAsyncAssertThrowsError(try await sut.upgradeSecurity()) { errorThrown in
             XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
         }
     }
