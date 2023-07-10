@@ -1136,6 +1136,8 @@
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */; };
 		9405E70E28A3AC43005A16D1 /* BackupNodesValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9405E70D28A3AC43005A16D1 /* BackupNodesValidator.swift */; };
+		940931FC2A56ED5F0093C169 /* DeviceCenter in Frameworks */ = {isa = PBXBuildFile; productRef = 940931FB2A56ED5F0093C169 /* DeviceCenter */; };
+		940931FE2A56ED680093C169 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 940931FD2A56ED680093C169 /* Settings */; };
 		940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
@@ -1394,7 +1396,6 @@
 		A85ED20E2A20C1370036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FC2A20C1250036C0E5 /* libvideoframebuffer_objc.xcframework */; };
 		A85ED20F2A20C1370036C0E5 /* libwebsockets.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */; };
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
-		A863223F29091456004FED9B /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = A863223E29091456004FED9B /* Settings */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		A86FB61A297AF2EC00561DF8 /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
@@ -3831,6 +3832,8 @@
 		94E7180A283D6603000EDDDF /* ChatRoomsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingViewController+Additions.swift"; sourceTree = "<group>"; };
 		94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsDetailsViewController+Additions.swift"; sourceTree = "<group>"; };
+		94F568BD2A56E412005CE9F2 /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
+		94F568C12A56E7A6005CE9F2 /* DeviceCenter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceCenter; sourceTree = "<group>"; };
 		990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModelTests.swift; sourceTree = "<group>"; };
 		990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomLinkViewModel+Additions.swift"; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
@@ -3950,7 +3953,6 @@
 		A85ED1FE2A20C1260036C0E5 /* libwebsockets.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libwebsockets.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libwebsockets.xcframework; sourceTree = "<group>"; };
 		A85ED1FF2A20C1260036C0E5 /* libnative_video.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_video.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_video.xcframework; sourceTree = "<group>"; };
 		A85ED2002A20C1260036C0E5 /* libnative_api.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libnative_api.xcframework; path = Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty/lib/libnative_api.xcframework; sourceTree = "<group>"; };
-		A863223D2909142A004FED9B /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
@@ -5051,6 +5053,7 @@
 			files = (
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
 				BF11648227F6764B00E5C5A4 /* CocoaLumberjackSwift in Frameworks */,
+				940931FC2A56ED5F0093C169 /* DeviceCenter in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */,
 				A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */,
@@ -5066,9 +5069,9 @@
 				A85ED2052A20C1260036C0E5 /* libnative_api.xcframework in Frameworks */,
 				A85ED2042A20C1260036C0E5 /* libnative_video.xcframework in Frameworks */,
 				A85ED2022A20C1260036C0E5 /* libvideocapture_objc.xcframework in Frameworks */,
-				16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */,
 				A85ED2012A20C1260036C0E5 /* libvideoframebuffer_objc.xcframework in Frameworks */,
 				A85ED2032A20C1260036C0E5 /* libwebsockets.xcframework in Frameworks */,
+				16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */,
 				A89CE55528B7D573002802BC /* MEGAData in Frameworks */,
 				B6C2CE0229F9F7D400D98DCD /* MEGADataMock in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
@@ -5090,7 +5093,7 @@
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
-				A863223F29091456004FED9B /* Settings in Frameworks */,
+				940931FE2A56ED680093C169 /* Settings in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5410,10 +5413,10 @@
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
 				B5FC636529E92FE400EE4C8E /* Node */,
 				245385F82A13C04800208B31 /* NodeInfo */,
+				24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */,
+				2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */,
 				B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */,
 				B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */,
-				2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */,
-				24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */,
 			);
 			path = CloudDrive;
 			sourceTree = "<group>";
@@ -9392,7 +9395,8 @@
 		A861B8332907F5DB00AB06D4 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				A863223D2909142A004FED9B /* Settings */,
+				94F568C12A56E7A6005CE9F2 /* DeviceCenter */,
+				94F568BD2A56E412005CE9F2 /* Settings */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -11905,9 +11909,9 @@
 		E87C98321CC411D400E2B9E6 /* Advanced */ = {
 			isa = PBXGroup;
 			children = (
+				246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */,
 				E87C98341CC4CC1000E2B9E6 /* AdvancedTableViewController.h */,
 				E87C98351CC4CC1000E2B9E6 /* AdvancedTableViewController.m */,
-				246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */,
 				9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */,
 			);
 			path = Advanced;
@@ -12059,10 +12063,11 @@
 				BF0CB9352803AEAE00C21F11 /* SAMKeychain */,
 				BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */,
 				BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */,
-				A863223E29091456004FED9B /* Settings */,
 				A8B51AE827F3565E0030F1EA /* WSTagsField */,
 				B6C2CE0129F9F7D400D98DCD /* MEGADataMock */,
 				9418DB282A4EE5FB002B0077 /* MEGAPermissions */,
+				940931FB2A56ED5F0093C169 /* DeviceCenter */,
+				940931FD2A56ED680093C169 /* Settings */,
 				16405C4A2A56917200DE911F /* MEGAAnalyticsiOS */,
 			);
 			productName = iMEGA;
@@ -12889,6 +12894,7 @@
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
 				BF7EBD2E244E916F0015255F /* AddToChatViewController.swift in Sources */,
+				246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */,
 				5D568207252FEA8C00FE7F9C /* Aggregatable.swift in Sources */,
@@ -12998,7 +13004,6 @@
 				944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */,
 				944AD0B128EF039700AB1E59 /* BackupsRepository.swift in Sources */,
 				5D66F8C624E507900088E5FF /* BadgeButton.swift in Sources */,
-				246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */,
 				5DAC09DC24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift in Sources */,
 				C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */,
 				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
@@ -13718,7 +13723,6 @@
 				77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				5B2E918D1F1F454C003C6920 /* MEGAStartUploadTransferDelegate.m in Sources */,
 				B6F2ACCD29AD6E19004FC7A3 /* MEGAStore+Additions.swift in Sources */,
-				275682F92A4015280038E13A /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				BF99A42224B2AFC40035A183 /* MEGAStore+ChatUploadTransfer.swift in Sources */,
 				5B12D03B241273D5006C3907 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				5B51E2E324597CDA009379BA /* MEGAStore+MOUser.swift in Sources */,
@@ -14103,6 +14107,7 @@
 				B6B73E6E22C5713700ACAD48 /* RegionListViewController.swift in Sources */,
 				B662B88324F8D8F60089376A /* RegionListViewModel.swift in Sources */,
 				B662B88524F8DA600089376A /* RegionListViewRouter.swift in Sources */,
+				275682F92A4015280038E13A /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				275682F92A4015280038E13A /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */,
 				9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */,
@@ -14617,7 +14622,6 @@
 				83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
 				8340CAFF284E52F5007C3B39 /* ItemView.swift in Sources */,
-				27547E752A404FD4007789DD /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
@@ -14647,6 +14651,7 @@
 				C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				27547E732A404DE2007789DD /* MEGAMoveRequestDelegate.m in Sources */,
+				27547E732A404DE2007789DD /* MEGAMoveRequestDelegate.m in Sources */,
 				5BE689952417CC4F00462134 /* MEGANavigationController.m in Sources */,
 				BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */,
 				B6A6E1C1287CDE6600179806 /* MEGANode+Array.swift in Sources */,
@@ -14664,7 +14669,6 @@
 				B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */,
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
 				5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */,
-				27547E732A404DE2007789DD /* MEGAMoveRequestDelegate.m in Sources */,
 				2FBBE77E25E4544900B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				5BE6898A2417CB3D00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
@@ -14719,6 +14723,7 @@
 				B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
+				27547E752A404FD4007789DD /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				27547E752A404FD4007789DD /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */,
@@ -14816,6 +14821,8 @@
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
+				244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */,
+				246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */,
 				3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */,
 				9D94AF7029653F8500C7FBAA /* AlbumContentPickerViewModelTests.swift in Sources */,
 				3299F054291A20230071FB77 /* AlbumContentViewModelTests.swift in Sources */,
@@ -14825,12 +14832,10 @@
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,
-				244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */,
 				943649E02A4D83DE006CE8B8 /* AlertModel+Equatable.swift in Sources */,
 				12B1E57A2874FFEF00D23A58 /* AnalyticsRepositoryTests.swift in Sources */,
 				940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */,
 				B6D54830283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift in Sources */,
-				246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */,
 				B6D0B368283DC2AE0020C64D /* AppGroupContainerTests.swift in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
@@ -14858,6 +14863,7 @@
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
+				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
 				274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,
@@ -15018,7 +15024,6 @@
 				B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */,
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
-				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* UserAttributeUseCase+AdditionsTests.swift in Sources */,
 				B6FB5F8629A437CE0023BA6A /* UserEntityMapperTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
@@ -16904,6 +16909,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAData;
 		};
+		940931FB2A56ED5F0093C169 /* DeviceCenter */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DeviceCenter;
+		};
+		940931FD2A56ED680093C169 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
 		9418DB282A4EE5FB002B0077 /* MEGAPermissions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPermissions;
@@ -16978,10 +16991,6 @@
 		A86280BB291E8D510010D6E0 /* MEGADomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGADomain;
-		};
-		A863223E29091456004FED9B /* Settings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Settings;
 		};
 		A891E8A429C1E09D0020072A /* MEGASdk */ = {
 			isa = XCSwiftPackageProductDependency;

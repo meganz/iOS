@@ -6,54 +6,35 @@ import XCTest
 
 final class DeviceCenterRepositoryTests: XCTestCase {
     
-    func testRetrieveBackups_successfullyRetrievedBackupInfo_shouldReturnArrayOfBackups() async throws {
+    func testRetrieveDevices_successfullyRetrievedDevices_shouldReturnArrayOfDevices() async {
+        let id1 = "1234"
+        let id2 = "5678"
+        let encodedName1 = base64Encode(string: "device1")
+        let encodedName2 = base64Encode(string: "device2")
         let mockSdk = MockSdk(
             backupInfoList: [
-                MockBackupInfo(identifier: 1),
-                MockBackupInfo(identifier: 2),
-                MockBackupInfo(identifier: 3)
-            ]
-        )
-        let repository = DeviceCenterRepository(sdk: mockSdk)
-        let backups = try await repository.backups()
-        
-        XCTAssertEqual(backups.count, 3)
-    }
-    
-    func testRetrieveBackups_emptyBackupInfoList_shouldThrowNotFoundError() async {
-        let mockSdk = MockSdk(megaSetError: .apiEInternal)
-        let repository = DeviceCenterRepository(sdk: mockSdk)
-        
-        do {
-            _ = try await repository.backups()
-            XCTFail("Expected error to be thrown.")
-        } catch {
-            XCTAssertTrue(error is GenericErrorEntity)
-        }
-    }
-    
-    func testRetrieveBackups_successfullyRetrievedBackupInfoAndDevicesNames_shouldReturnArrayOfBackups() async throws {
-        let encodedIdentifier = base64Encode(string: "1234")
-        let encodedName = base64Encode(string: "device1")
-        let mockSdk = MockSdk(
-            backupInfoList: [
-                MockBackupInfo(identifier: 1,
-                               deviceIdentifier: encodedIdentifier)
+                MockBackupInfo(identifier: 1, deviceIdentifier: id1),
+                MockBackupInfo(identifier: 2, deviceIdentifier: id1),
+                MockBackupInfo(identifier: 3, deviceIdentifier: id2)
             ],
             devices: [
-                encodedIdentifier: encodedName
+                id1: encodedName1,
+                id2: encodedName2
             ]
         )
+        
         let repository = DeviceCenterRepository(sdk: mockSdk)
-        let backups = try await repository.backups()
+        let devices = await repository.fetchUserDevices()
         
-        XCTAssertEqual(backups.count, 1)
-        
-        let device = backups.first(where: {
-            $0.device?.name == encodedName.base64URLDecoded
-        })
-        
-        XCTAssertNotNil(device)
+        XCTAssertEqual(devices.count, 2)
+    }
+    
+    func testRetrieveDevices_emptyDeviceList_shouldReturnEmptyArray() async {
+        let mockSdk = MockSdk()
+        let repository = DeviceCenterRepository(sdk: mockSdk)
+
+        let devices = await repository.fetchUserDevices()
+        XCTAssertTrue(devices.isEmpty)
     }
     
     private func base64Encode(string: String) -> String {
