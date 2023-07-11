@@ -550,3 +550,9 @@ final class AlbumListViewModelTests: XCTestCase {
         )
     }
 }
+
+extension PhotoAlbumContainerViewModel {
+    convenience init() {
+        self.init(tracker: MockTracker())
+    }
+}
