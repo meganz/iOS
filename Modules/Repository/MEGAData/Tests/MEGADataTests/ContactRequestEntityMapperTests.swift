@@ -25,5 +25,12 @@ final class ContactRequestEntityMapperTests: XCTestCase {
         XCTAssertEqual(mockContactRequest.isOutgoing(), entity.isOutgoing)
         XCTAssertEqual(mockContactRequest.status.toContactRequestStatus(), entity.status)
     }
+    
+    func testContactRequest_mapToContactRequestEntity_countShouldMatch() {
+        let contactRequestList = MockContactRequestList()
+        let contactRequestEntities = contactRequestList.toContactRequestEntities()
+        
+        XCTAssertEqual(contactRequestEntities.count, 0)
+    }
 
 }
