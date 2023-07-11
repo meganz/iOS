@@ -125,7 +125,7 @@ internal enum Asset {
       internal static let disabled = ImageAsset(name: "disabled")
       internal static let error = ImageAsset(name: "error")
       internal static let noCameraUploads = ImageAsset(name: "noCameraUploads")
-      internal static let offline = ImageAsset(name: "offline")
+      internal static let offlineStatus = ImageAsset(name: "offlineStatus")
       internal static let outOfQuota = ImageAsset(name: "outOfQuota")
       internal static let paused = ImageAsset(name: "paused")
       internal static let upToDate = ImageAsset(name: "upToDate")
