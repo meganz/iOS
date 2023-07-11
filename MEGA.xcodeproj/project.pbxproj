@@ -124,6 +124,9 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
+		160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711532A558DED00970A19 /* PagerTabViewModelTests.swift */; };
+		160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */; };
+		160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160CEA822A5BB98E0051541F /* MockAnalyticsTracker.swift */; };
 		16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 16405C4A2A56917200DE911F /* MEGAAnalyticsiOS */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
@@ -2619,6 +2622,9 @@
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		160711532A558DED00970A19 /* PagerTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabViewModelTests.swift; sourceTree = "<group>"; };
+		160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerViewModelTests.swift; sourceTree = "<group>"; };
+		160CEA822A5BB98E0051541F /* MockAnalyticsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsTracker.swift; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
 		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
@@ -5634,6 +5640,22 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		160CEA802A5BB96B0051541F /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				160CEA812A5BB97F0051541F /* TestHelpers */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		160CEA812A5BB97F0051541F /* TestHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				160CEA822A5BB98E0051541F /* MockAnalyticsTracker.swift */,
+			);
+			path = TestHelpers;
+			sourceTree = "<group>";
+		};
 		167F6A232A41502500D0A6F9 /* BuildTools */ = {
 			isa = PBXGroup;
 			children = (
@@ -6670,6 +6692,8 @@
 			children = (
 				B6CED49522B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m */,
 				A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */,
+				160711532A558DED00970A19 /* PagerTabViewModelTests.swift */,
+				160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */,
 			);
 			path = CameraUpload;
 			sourceTree = "<group>";
@@ -10615,6 +10639,7 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				160CEA802A5BB96B0051541F /* Analytics */,
 				B6D5482E283E2AF000D7302F /* Account */,
 				328FDCF629121D2200E5990A /* Album */,
 				C452B66225CD4E550073B22C /* AudioPlayer */,
@@ -14915,6 +14940,7 @@
 				83751C5629E5734D0030310B /* MockChatLinkUseCase.swift in Sources */,
 				B6A6E19F287BCEA700179806 /* MockChatRoom.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
+				160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */,
 				B6A6E19D287BCE8300179806 /* MockChatSdk.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
@@ -14954,6 +14980,7 @@
 				94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */,
 				0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */,
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
+				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
@@ -14980,6 +15007,7 @@
 				32DF91302A1CA54000AEB585 /* PhotosFilterLocationTest.swift in Sources */,
 				32DF912E2A1CA53200AEB585 /* PhotosFilterTypeTest.swift in Sources */,
 				32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */,
+				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */,
