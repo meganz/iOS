@@ -23,8 +23,8 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
         PhotosPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }()
     
-    let pageTabViewModel = PagerTabViewModel()
-    let viewModel = PhotoAlbumContainerViewModel()
+    let pageTabViewModel = PagerTabViewModel(tracker: DIContainer.tracker)
+    let viewModel = PhotoAlbumContainerViewModel(tracker: DIContainer.tracker)
     let featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     
     private var subscriptions = Set<AnyCancellable>()
@@ -73,6 +73,13 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
             self.pageTabViewModel.tabOffset = CGFloat(self.pageController.currentPage.index) * self.pageController.view.bounds.size.width / 2
             self.pageController.canScroll = true
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.didAppear()
+        pageTabViewModel.didAppear()
     }
     
     // MARK: Internal

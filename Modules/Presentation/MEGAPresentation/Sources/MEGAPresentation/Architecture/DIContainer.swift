@@ -43,12 +43,8 @@ extension PlaybackContinuationUseCase where T == PreviousPlaybackSessionReposito
 
 // MARK: - Analytics
 
-public typealias TrackAnalyticsEvent = (any EventIdentifier) -> Void
-
 public extension DIContainer {
-    static var trackAnalyticsEvent: TrackAnalyticsEvent = {
-        Tracker.shared.trackEvent(eventIdentifier: $0)
-    }
+    static var tracker: some AnalyticsTracking = Tracker.shared
 }
 
 extension Tracker {

@@ -1,4 +1,6 @@
 import Combine
+import MEGAAnalyticsiOS
+import MEGAPresentation
 import SwiftUI
 
 final class PhotoAlbumContainerViewModel: ObservableObject {
@@ -12,4 +14,14 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     @Published var showRemoveAlbumLinksAlert = false
     
     var disableSelectBarButton = false
+    
+    private let tracker: any AnalyticsTracking
+    
+    init(tracker: some AnalyticsTracking) {
+        self.tracker = tracker
+    }
+    
+    func didAppear() {
+        tracker.trackAnalyticsEvent(with: PhotoScreenEvent())
+    }
 }
