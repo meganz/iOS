@@ -8,19 +8,19 @@ public enum AccountTypeEntity: Sendable {
     case proFlexi
 }
 
-public enum SubscriptionStatusEntity {
+public enum SubscriptionStatusEntity: Sendable {
     case none
     case valid
     case invalid
 }
 
-public enum SubscriptionCycleEntity {
+public enum SubscriptionCycleEntity: Sendable {
     case none
     case monthly
     case yearly
 }
 
-public struct AccountDetailsEntity {
+public struct AccountDetailsEntity: Sendable {
     public let storageUsed: UInt64
     public let versionsStorageUsed: Int64
     public let storageMax: UInt64
