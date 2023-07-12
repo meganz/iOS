@@ -4888,6 +4888,10 @@ public enum Strings {
           public static func cancelled(_ p1: Any) -> String {
             return Strings.tr("Localizable", "meetings.scheduled.managementMessages.cancelled", String(describing: p1))
           }
+          /// %@ updated the meeting
+          public static func updated(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "meetings.scheduled.managementMessages.updated", String(describing: p1))
+          }
         }
         public enum Recurring {
           /// daily
