@@ -92,7 +92,7 @@ pipeline {
                                     sh "git submodule foreach --recursive git clean -xfd"
                                     sh "git submodule sync --recursive"
                                     sh "git submodule update --init --recursive"
-                                    dir("iMEGA/Vendor/Karere/src/") {
+                                    dir("Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/") {
                                         sh "cmake -P genDbSchema.cmake"
                                     }
                                 })

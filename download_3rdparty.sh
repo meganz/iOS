@@ -38,5 +38,8 @@ else
    echo "Unzipping the 3rd party libraries"
    unzip -o ${downloadFilePath}/3rdparty.zip -d $unzipPath
    echo "Unzip 3rd party libraries complete"
-   exit 0
 fi
+
+sh setup_chatSDK.sh
+   
+exit 0

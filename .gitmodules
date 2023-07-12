@@ -4,9 +4,9 @@
 [submodule "iMEGA/Vendor/LTHPasscodeViewController"]
 	path = iMEGA/Vendor/LTHPasscodeViewController
 	url=https://github.com/meganz/LTHPasscodeViewController.git
-[submodule "iMEGA/Vendor/Karere"]
-	path = iMEGA/Vendor/Karere
-	url = https://code.developers.mega.co.nz/megachat/MEGAchat.git
 [submodule "iMEGA/Vendor/SVProgressHUD"]
 	path = iMEGA/Vendor/SVProgressHUD
 	url = https://github.com/SVProgressHUD/SVProgressHUD.git
+[submodule "Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK"]
+	path = Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK
+	url = https://code.developers.mega.co.nz/megachat/MEGAchat.git
