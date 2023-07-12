@@ -46,6 +46,7 @@ public final class MockSdk: MEGASdk {
     public var apiURL: String?
     public var disablepkp: Bool?
     public var shareAccessLevel: MEGAShareType = .accessUnknown
+    public var stopPublicSetPreviewCalled = 0
     
     public init(nodes: [MEGANode] = [],
                 rubbishNodes: [MEGANode] = [],
@@ -419,6 +420,10 @@ public final class MockSdk: MEGASdk {
     public override func getPreviewNode(_ node: MEGANode, destinationFilePath: String, delegate: any MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: node.handle, file: file)
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
+    }
+    
+    public override func stopPublicSetPreview() {
+        stopPublicSetPreviewCalled += 1
     }
 }
 

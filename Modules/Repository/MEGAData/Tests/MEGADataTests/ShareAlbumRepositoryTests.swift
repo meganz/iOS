@@ -79,6 +79,7 @@ class ShareAlbumRepositoryTests: XCTestCase {
         let result = try await sut.publicAlbumContents(forLink: "public_link")
         XCTAssertEqual(result.set, expectedSet.toSetEntity())
         XCTAssertEqual(result.setElements, expectedSetElements.toSetElementsEntities())
+        XCTAssertEqual(sdk.stopPublicSetPreviewCalled, 1)
     }
     
     func testPublicAlbumContents_onSDKNotOkKnownError_shouldThrowCorrectError() async {
