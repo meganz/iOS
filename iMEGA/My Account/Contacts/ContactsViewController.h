@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 - (void)nodeEditCompleted:(BOOL)complete;
 @end
 
-@class ShareFolderActivity, ItemListModel, UserEntity;
+@class ItemListModel, UserEntity;
 
 @interface ContactsViewController : UIViewController
 
@@ -42,7 +42,6 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 @property (nonatomic, strong) NSMutableArray *selectedUsersArray;
 @property (nonatomic, strong) NSMutableArray<MEGAUser *> *visibleUsersArray;
 @property (strong, nonatomic) UISearchController *searchController;
-@property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
 @property (nonatomic, copy) void(^userSelected)(NSArray<MEGAUser *> *);
 @property (nonatomic, copy) void(^chatSelected)(uint64_t);
