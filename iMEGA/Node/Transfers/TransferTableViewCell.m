@@ -122,7 +122,7 @@
     if ([PHAssetResource assetResourcesForAsset:asset].count > 0) {
         PHAssetResource *assetResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
         if (assetResource.originalFilename) {
-            extension = assetResource.originalFilename.mnz_lastExtensionInLowercase;
+            extension = [FileExtensionOCWrapper lowercasedLastExtensionIn:assetResource.originalFilename];
         }
     }
     

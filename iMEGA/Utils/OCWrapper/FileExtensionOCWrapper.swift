@@ -28,4 +28,16 @@ import MEGASwift
                 .format(fileExtension)
         }
     }
+    
+    @objc public static func lowercasedLastExtension(in fileExtension: FileExtension?) -> String? {
+        guard let fileExtension else { return nil }
+        if #available(iOS 15.0, *) {
+            return fileExtension.formatted(.filePath(name: nil).pathExtension(capitalization: .lowercased))
+        } else {
+            return FileExtension.FormatStyle(name: nil)
+                .pathExtension(capitalization: .lowercased)
+                .format(fileExtension)
+        }
+    }
+    
 }

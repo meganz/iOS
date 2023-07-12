@@ -122,7 +122,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     NSString *lastPathComponent = [FileExtensionOCWrapper fileNameWithLowercaseExtensionFrom:url.lastPathComponent];
     NSString *suggestedName = [ShareAttachment suggestedUniqueNameWithString:lastPathComponent];
     if (!suggestedName) {
-        suggestedName = [NSString stringWithFormat:@"%@.%@", [NSUUID UUID].UUIDString, lastPathComponent.mnz_lastExtensionInLowercase];
+        suggestedName = [NSString stringWithFormat:@"%@.%@", [NSUUID UUID].UUIDString, [FileExtensionOCWrapper lowercasedLastExtensionIn:lastPathComponent]];
     }
     
     return suggestedName;
