@@ -19,7 +19,8 @@ extension MEGARequest {
             type: type.toRequestTypeEntity(),
             file: file,
             userAttribute: UserAttributeEntity(rawValue: paramType),
-            email: email
+            email: email,
+            accountDetails: megaAccountDetails?.toAccountDetailsEntity()
         )
     }
     

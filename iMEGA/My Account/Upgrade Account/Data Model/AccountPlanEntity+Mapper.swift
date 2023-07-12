@@ -28,7 +28,7 @@ fileprivate extension AccountPlanEntity {
          storageLimit: Int,
          transferLimit: Int) {
         
-        self.init()
+        self.init(productIdentifier: product.productIdentifier)
 
         let productIdentifier = product.productIdentifier
         term = AccountPlanTermEntity(productIdentifier: productIdentifier)
