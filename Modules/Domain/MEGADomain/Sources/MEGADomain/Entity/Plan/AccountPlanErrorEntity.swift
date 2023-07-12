@@ -1,4 +1,9 @@
-public struct AccountPlanErrorEntity {
+
+public enum AccountPlanPurchaseErrorEntity {
+    case paymentCancelled, paymentInvalid, paymentNotAllowed, unknown
+}
+
+public struct AccountPlanErrorEntity: Error {
     public let errorCode: Int
     public let errorMessage: String?
     

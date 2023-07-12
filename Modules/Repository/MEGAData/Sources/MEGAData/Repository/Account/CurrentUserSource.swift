@@ -104,7 +104,7 @@ public final class CurrentUserSource {
         shouldRefreshAccountDetails = shouldRefresh
     }
     
-    public func setAccountDetails(_ userAccountDetails: AccountDetailsEntity) {
+    public func setAccountDetails(_ userAccountDetails: AccountDetailsEntity?) {
         accountDetails = userAccountDetails
     }
 }
