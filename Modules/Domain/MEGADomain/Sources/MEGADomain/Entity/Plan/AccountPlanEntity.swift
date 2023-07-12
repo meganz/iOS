@@ -1,5 +1,6 @@
 
 public struct AccountPlanEntity: Sendable {
+    public let productIdentifier: String
     public var type: AccountTypeEntity
     public var name: String
     public var currency: String
@@ -9,7 +10,8 @@ public struct AccountPlanEntity: Sendable {
     public var price: Double
     public var formattedPrice: String
     
-    public init(type: AccountTypeEntity = .free,
+    public init(productIdentifier: String = "",
+                type: AccountTypeEntity = .free,
                 name: String = "",
                 currency: String = "",
                 term: AccountPlanTermEntity = .none,
@@ -17,6 +19,7 @@ public struct AccountPlanEntity: Sendable {
                 transfer: String = "",
                 price: Double = 0,
                 formattedPrice: String = "") {
+        self.productIdentifier = productIdentifier
         self.type = type
         self.name = name
         self.currency = currency
