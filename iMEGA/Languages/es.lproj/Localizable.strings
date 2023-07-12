@@ -182,6 +182,12 @@
 "folderLink"="Enlace de la carpeta";
 /* Title for the album/collection link view */
 "albumLink"="Enlace del álbum";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="No se puede acceder al álbum";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="Se ha eliminado el enlace al álbum o el propio álbum. Ponte en contacto con la persona que te ha compartido el enlace.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Entendido";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Descargar";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1023,7 +1029,7 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referral.title"="Invita a tus amigos";
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
-"account.achievement.referral.subtitle"="%@ de almacenamiento gratuito para cada invitación. \n Válido durante 365 días.";
+"account.achievement.referral.subtitle"="%@ de almacenamiento gratuito para cada invitación. \nVálido durante 365 días.";
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Seleccionar contactos desde el dispositivo o añadir varios correos electrónicos.";
 /*  */
@@ -1059,13 +1065,13 @@
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Instalar la aplicación de escritorio";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="Has obtenido %@de espacio de almacenamiento por instalar la aplicación de escritorio de MEGA.";
+"account.achievement.desktopApp.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento por instalar la aplicación de escritorio de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="Al instalar la aplicación de escritorio de MEGA, obtienes %@de almacenamiento adicional válido durante 365 días. La aplicación de escritorio está disponible para Windows, macOS y la mayoría de las distribuciones de Linux.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Al instalar la aplicación de escritorio de MEGA, obtienes %@ de almacenamiento adicional válido durante 365 días. La aplicación de escritorio está disponible para Windows, macOS y la mayoría de las distribuciones de Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Instalar la aplicación móvil de MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="Has obtenido %@de espacio de almacenamiento por instalar la aplicación móvil de MEGA.";
+"account.achievement.mobileApp.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento por instalar la aplicación móvil de MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.incomplete.explaination.label"="Al instalar la aplicación móvil de MEGA, obtienes %@ de espacio de almacenamiento válido durante 365 días. La aplicación móvil está disponible para iOS y Android.";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
@@ -1073,7 +1079,7 @@
 /* Add Phone Number title */
 "Add Phone Number"="Añadir el número de teléfono";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.complete.explaination.label"="Has obtenido%@ de espacio de almacenamiento por verificar tu número de teléfono.";
+"account.achievement.phoneNumber.complete.explaination.label"="Has obtenido %@ de espacio de almacenamiento por verificar tu número de teléfono.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
 "account.achievement.phoneNumber.incomplete.explaination.label"="Si confirmas tu número de teléfono, obtienes %@ de espacio de almacenamiento gratuito válido durante 365 días.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="Ir al más reciente";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nuevos mensajes";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu mensaje no leído";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu mensajes no leídos";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="La suscripción se renueva automáticamente con la misma duración y precio elegidos inicialmente. Puedes desactivar la renovación automática de la suscripción a MEGA Pro en la página de ajustes de iTunes hasta 24 horas antes de la renovación programada. Para gestionar tu suscripción, simplemente ve a la App Store, inicia sesión con tu Apple ID al final de la página (si aún no lo has hecho) y pulsa en “Ver ID de Apple”. Podrás ver la página con los detalles de tu cuenta, donde puedes gestionar las suscripciones que has contratado. Desde aquí, puedes seleccionar la suscripción a MEGA Pro y ver cuando se renovará, cambiar el tipo de suscripción o desactivar la opción de renovación automática para luego cancelar tu suscripción.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2071,9 +2073,9 @@
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Inmediatamente";
 /* Popup notification text on mouse-over of taken down file. */
-"This file has been the subject of a takedown notice."="Este archivo ha sido sujeto a notificación y retirada.";
+"This file has been the subject of a takedown notice."="Este archivo ha sido sujeto a una solicitud de retirada.";
 /* Popup notification text on mouse-over taken down folder. */
-"This folder has been the subject of a takedown notice."="Esta carpeta ha sido sujeta a notificación y retirada.";
+"This folder has been the subject of a takedown notice."="Esta carpeta ha sido sujeta a una solicitud de retirada.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar la retirada";
 /* Label presented to Admins that full management of the business is only available in a desktop web browser */
@@ -2641,7 +2643,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Nueva reunión";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
+"meetings.createMeeting.defaultMeetingName"="Reunión de %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Empezar la reunión";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -3415,7 +3417,35 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Cámara";
 /* Device Center title */
-"device.center.title"="Device centre";
+"device.center.title"="Centro de dispositivos";
+/* Device Center list current device title */
+"device.center.current.device.title"="This device";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Other devices";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="Actualizado";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Examinando…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Iniciando…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Actualizando…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="No camera uploads";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Desactivado";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Sin conexión";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="Backup detenido";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="En pausa";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Cuota agotada";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Error";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Bloqueado";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Dejar de repetir";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3433,11 +3463,11 @@
 /* The button or alert title to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistory"="Limpiar historial de la reunión";
 /* Message show when the history of a meeting has been successfully deleted */
-"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history cleared";
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Historial de la reunión limpiado";
 /* The alert message to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="¿Confirmas que quieres limpiar el historial de mensajes de esta reunión?";
 /* Text explaining users how the meeting links work. */
-"meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+"meetings.info.shareMeetingLink.explainLink"="Los que tengan este enlace podrán unirse a la reunión y ver el chat de la reunión";
 /* The title of a menu button which allows users to rename a meeting. */
 "meetings.info.renameMeeting"="Renombrar reunión";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
@@ -3451,13 +3481,13 @@
 /* Create Schedule Meeting: The text is shown along with the selected interval. */
 "meetings.scheduleMeeting.create.interval.optionTitle"="Cada";
 /* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
-"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Seleccionar con qué frecuencia";
 /* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
-"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Seleccionar un intervalo semanal";
 /* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
-"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Seleccionar un día de la semana";
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
-"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Seleccionar un intervalo mensual";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
 "meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="El…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
@@ -3475,9 +3505,9 @@
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
 "meetings.scheduled.create.weekly.everyDay.footerNote"="La reunión se celebrará cada día.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
-"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Diaria";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
-"upgradeAccountPlan.button.restore.title"="Restore purchase";
+"upgradeAccountPlan.button.restore.title"="Restaurar compra";
 /* On Upgrade Account Plan screen. Button title to show terms and policies */
 "upgradeAccountPlan.button.termsAndPolicies.title"="Términos y políticas ";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
@@ -3505,10 +3535,46 @@
 /* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
 "upgradeAccountPlan.plan.tag.recommended"="Recomendado";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/month";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/mes";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/year";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/año";
 /* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
 "upgradeAccountPlan.plan.details.storage"="Almacenamiento: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transferencia: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="Puedes ampliar tu suscripción actual en nuestra [A]página de precios[/A].";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Cancelar";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="¿Cancelar “%@”?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="Esta reunión se moverá a Reuniones anteriores y todos los participantes serán notificados.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Esta reunión será archivada y todos los participantes serán notificados.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Cancelar y archivar";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Cancelar reunión";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="No cancelar";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Reunión cancelada y archivada";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Reunión cancelada";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Se cancelará solo este evento. Todos los demás eventos seguirán adelante según lo programado. ";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Cancelar evento";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="%@ eventos cancelados";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="¿Cancelar evento y reunión?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Este es el único evento de la reunión periódica. Cancelar este evento cancelará la reunión. Si lo cancelas, la reunión será archivada y todos los participantes serán notificados.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Este es el único evento de la reunión periódica. Cancelar este evento cancelará la reunión. Si lo cancelas, la reunión se moverá a Reuniones anteriores y todos los participantes serán notificados.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="¿Cancelar el evento del %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ ha cancelado la reunión";

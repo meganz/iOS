@@ -10639,9 +10639,9 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				160CEA802A5BB96B0051541F /* Analytics */,
 				B6D5482E283E2AF000D7302F /* Account */,
 				328FDCF629121D2200E5990A /* Album */,
+				160CEA802A5BB96B0051541F /* Analytics */,
 				C452B66225CD4E550073B22C /* AudioPlayer */,
 				C46D4A7B26557AB900748BD3 /* BannerContainer */,
 				5B076EDA22C251BF00D773B9 /* CameraUpload */,
@@ -14931,6 +14931,7 @@
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
+				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
@@ -14940,7 +14941,6 @@
 				83751C5629E5734D0030310B /* MockChatLinkUseCase.swift in Sources */,
 				B6A6E19F287BCEA700179806 /* MockChatRoom.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
-				160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */,
 				B6A6E19D287BCE8300179806 /* MockChatSdk.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
@@ -14980,12 +14980,13 @@
 				94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */,
 				0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */,
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
-				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
+				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
 				BFC060F628A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift in Sources */,
 				946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */,
+				160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */,
 				B64A71CB287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift in Sources */,
 				B6A6E1A3287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift in Sources */,
 				B60F819128C1B1E700E3C5BF /* PhotoCardViewModelTests.swift in Sources */,
@@ -15007,7 +15008,6 @@
 				32DF91302A1CA54000AEB585 /* PhotosFilterLocationTest.swift in Sources */,
 				32DF912E2A1CA53200AEB585 /* PhotosFilterTypeTest.swift in Sources */,
 				32F03D58287D225100C518A4 /* PhotosViewModelTests.swift in Sources */,
-				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */,
 				BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */,
 				BFE556FF27E183B40028EF1F /* RecentActionBucketEntity+Mapper_Tests.swift in Sources */,
@@ -15413,7 +15413,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev;
@@ -15472,7 +15472,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
@@ -15527,7 +15527,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -15586,7 +15586,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -15643,7 +15643,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAWidget;
@@ -15698,7 +15698,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15741,7 +15741,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAIntent;
@@ -15782,7 +15782,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15832,7 +15832,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15890,7 +15890,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15932,7 +15932,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -15977,7 +15977,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
@@ -16021,7 +16021,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPickerFileProvider;
@@ -16061,7 +16061,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPicker;
@@ -16101,7 +16101,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16140,7 +16140,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16364,7 +16364,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa;
@@ -16425,7 +16425,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16478,7 +16478,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -16591,7 +16591,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16635,7 +16635,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 10.5;
+				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";

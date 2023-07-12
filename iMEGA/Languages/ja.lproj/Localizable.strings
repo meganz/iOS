@@ -182,6 +182,12 @@
 "folderLink"="フォルダリンク";
 /* Title for the album/collection link view */
 "albumLink"="アルバムリンク";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="アルバムにアクセスできません";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="アルバムへのリンクが削除されているか、アルバムが削除されています。リンクを共有した人に連絡してください。";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="はい、わかりました。";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="ダウンロード";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="最新項目にジャンプ";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="新しいメッセージ";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu件の未読メッセージ";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu件の未読メッセージ";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="サブスクリプションは、選択した最初の期間と同じ期間の連続したサブスクリプション期間を対象に、および同じ価格で、自動的に更新されます。あなたのiTunesアカウントの設定ページから、次回のサブスクリプションのお支払い期限が切れる24時間前までに、MEGA Proサブスクリプションの自動更新をオフにすることができます。サブスクリプションを管理するには、携帯端末のApp Storeアイコンをタップし、ページの下部にあるあなたのApple IDでサインインしてから（まだそのように行っていない場合）、「IDの表示」をタップします。すると、アカウントのページに移動し、そこで「アプリサブスクリプションの管理」まで下にスクロールします。そこから、MEGA Proサブスクリプションを選択したり、お客様の予定されている更新日を確認したり、別のサブスクリプションパッケージを選択したり、オン/オフスイッチをオフに切り替えて、サブスクリプションの自動更新を無効にしたりできます。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="カメラ";
 /* Device Center title */
 "device.center.title"="デバイスセンター";
+/* Device Center list current device title */
+"device.center.current.device.title"="この端末";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="他の端末";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="最新版";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="スキャン中…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="初期化中…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="更新中…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="カメラアップロードはありません";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="無効になっています";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="オフライン";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="バックアップが停止しました";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="一時停止中";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="容量不足";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="エラー";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="ブロックされています";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="定期開催を終了する";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="ストレージ：%@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="転送：%@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="現在のお持ちのサブスクリプションは、当社の[A]料金ページ[/A]でアップグレードできます。";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="キャンセル";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="「%@」をキャンセルしますか？";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="このミーティングは過去のミーティングの下に配置され、すべての参加者に通知されます。";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="このミーティングはアーカイブされ、すべての参加者に通知されます。";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="キャンセルしてアーカイブ";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="ミーティングをキャンセル";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="キャンセルしない";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="ミーティングがキャンセルされ、アーカイブされました";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="ミーティングがキャンセルされました";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="この開催のみがキャンセルされます。他のすべての開催は予定どおり進行します。";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="開催をキャンセル";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="%@の開催がキャンセルされました";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="開催とミーティングをキャンセルしますか？";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="これは、定期的なミーティングの唯一の開催です。この開催をキャンセルされると、このミーティングがキャンセルされます。キャンセルされた場合、このミーティングはアーカイブされ、すべての参加者に通知されます。";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="これは、定期的なミーティングの唯一の開催です。この開催をキャンセルされると、このミーティングがキャンセルされます。キャンセルされた場合、このミーティングは過去のミーティングの下に配置され、すべての参加者に通知されます。";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="%@の開催をキャンセルしますか？";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@さんはこの会議をキャンセルしました";

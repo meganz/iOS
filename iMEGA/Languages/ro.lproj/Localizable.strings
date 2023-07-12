@@ -182,6 +182,12 @@
 "folderLink"="Linkul folderului";
 /* Title for the album/collection link view */
 "albumLink"="Album link";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Cannot access album";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="The link to the album has been removed or the album has been deleted. Contact the person who shared the link with you.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, got it";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Descarcă";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="Sari la ultimul element";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Mesaje noi";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu mesaj necitit";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu mesaje necitite";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge pe pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți să selectezi abonamentul MEGA Pro și să vezi data de reînnoire programată, să alegi un alt pachet de abonament sau să setezi comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului tău.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="Cameră";
 /* Device Center title */
 "device.center.title"="Device centre";
+/* Device Center list current device title */
+"device.center.current.device.title"="This device";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Other devices";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="La zi";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Se scanează…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Se inițializează…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Se actualizează…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="No camera uploads";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Dezactivat";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Offline";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="Backup oprit";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="Pus pe pauză";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Out of quota";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Eroare";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Blocat";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Storage: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="You can upgrade your current subscription on our [A]pricing page[/A].";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Anulează";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="Cancel “%@”?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="This meeting will be placed under Past meetings and all participants will be notified.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="This meeting will be archived and all participants will be notified.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Cancel and archive";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Anulează întâlnirea";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="Nu o anula";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Meeting cancelled and archived";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Meeting cancelled";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Only this occurrence will be cancelled. All the other occurrences will go ahead as scheduled.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Cancel occurrence";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="%@ occurrence cancelled";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Cancel occurrence and meeting?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="This is the only occurrence of the recurring meeting. Cancelling this occurrence will cancel the meeting. If cancelled, the meeting will be archived and all participants will be notified.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="This is the only occurrence of the recurring meeting. Cancelling this occurrence will cancel the meeting. If cancelled, the meeting will be placed under Past meetings and all participants will be notified.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Cancel the %@ occurrence?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ cancelled this meeting";

@@ -182,6 +182,12 @@
 "folderLink"="Lien de dossier";
 /* Title for the album/collection link view */
 "albumLink"="Lien de l’album";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Impossible d’accéder à l’album";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="Le lien de l’album ou l’album même a été supprimé. Contactez la personne qui a partagé le lien avec vous.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="D’accord, j’ai compris";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Télécharger";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="Sauter au plus récent";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nouveaux messages";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu message non lu";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu messages non lus";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA Pro, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, touchez simplement l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et touchez Visualiser l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA Pro et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2405,7 +2407,7 @@
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Ce lien n’est pas accessible, car le compte de l’utilisateur a été fermé en raison d’une violation flagrante des [A]Conditions générales d’utilisation[/A] de MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
-"Taken down due to severe violation of our terms of service"="Ce dossier ou fichier a été signalé comme source de contenu répréhensible tel qu’exploitation d’enfants, extrémisme violent ou bestialité. Le compte du créateur du lien a été fermé et ses renseignements complets, dont l’adresse IP, ont été remis aux autorités.";
+"Taken down due to severe violation of our terms of service"="Ce dossier ou fichier a été signalé comme source de contenu répréhensible telle que le contenu sur l’exploitation d’enfants, l’extrémisme violent ou la bestialité. Le compte du créateur du lien a été fermé et ses renseignements complets, dont l’adresse IP, ont été remis aux autorités.";
 /* Text used to show the user that some resource is not available */
 "Unavailable"="Non disponible";
 /* Error text shown when requesting email for email verification within 10 minutes */
@@ -3159,7 +3161,7 @@
 /* Error message when trying to login and the account is blocked due to copyright violation */
 "account.suspension.message.copyright"="Votre compte a été désactivé en raison de violations du droit d’auteur. Nous vous avons envoyé un courriel avec plus de renseignements à ce sujet.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Le compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, tel qu’une violation des droits d’autrui, un partage ou une importation de données illégales, ou un abus du système.";
+"account.suspension.message.nonCopyright"="Le compte a été résilié à la suite d’un non-respect des Conditions générales d’utilisation de MEGA, telle qu’une violation des droits d’autrui, un partage ou une importation de données illégales, ou un abus du système.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Ouvrez l’appli MEGA et connectez-vous afin de poursuivre.";
 /* Account Storage title label of used storage size */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="Caméra";
 /* Device Center title */
 "device.center.title"="Centre des appareils";
+/* Device Center list current device title */
+"device.center.current.device.title"="Cet appareil";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Autres appareils";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="À jour";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Analyse…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Initialisation…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Mise à jour…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="Aucun téléversement de l’appareil photo";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Désactivé";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Hors ligne";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="La sauvegarde est arrêtée";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="En pause";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Quota épuisé";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Erreur";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Bloqué";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Fin de la récurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Espace de stockage : %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transferts : %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="Vous pouvez surclasser votre abonnement actuel sur notre [A]page des prix[/A].";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Annuler";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="Annuler « %@ » ?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="Cette réunion sera déplacée dans Réunions antérieures, ce qui sera signalé à tous les participants.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Cette réunion sera archivée, ce qui sera signalé à tous les participants.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Annuler et archiver";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Annuler la réunion";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="Ne pas annuler";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="La réunion a été annulée et archivée";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="La réunion a été annulée";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Seule cette occurrence sera annulée. Toutes les autres occurrences se poursuivront comme prévu.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Annuler l’occurrence";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="L’occurrence du %@ a été annulée";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Annuler l’occurrence et la réunion ?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Ceci est la seule occurrence de la réunion périodique. Annuler cette occurrence annulera aussi la réunion. En cas d’annulation, la réunion sera archivée, ce qui sera signalé à tous les participants.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Ceci est la seule occurrence de la réunion périodique. Annuler cette occurrence annulera aussi la réunion. En cas d’annulation, la réunion sera déplacée dans les Réunions antérieures, ce qui sera signalé à tous les participants.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Annuler l’occurrence du %@ ?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ a annulé cette réunion";
