@@ -182,6 +182,12 @@
 "folderLink"="Ссылка на папку";
 /* Title for the album/collection link view */
 "albumLink"="Ссылка на альбом";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Альбом недоступен";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="Ссылка на альбом удалена или сам альбом удалён. Свяжитесь с человеком, который поделился с вами ссылкой.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Понятно";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Скачать";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -281,7 +287,7 @@
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="В очереди";
 /* A label to indicate a paused state for a transfer item (upload/download). */
-"paused"="На паузе";
+"paused"="Приостановлено";
 /* Possible state of a transfer. When the transfer was cancelled */
 "Cancelled"="Отменено";
 /* Label for the state of a transfer when is being completing - (String as short as possible). */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="К последнему";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Новые сообщения";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="Не прочитано: %lu";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="Не прочитано: %lu";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Подписки продлеваются автоматически на тот же срок по такой же цене. Вы можете отключить автоматическое продление подписки MEGA Pro не позднее чем за 24 часа до следующего платежа в настройках учётной записи iTunes. Для управления подписками просто нажмите на значок App Store в телефоне, войдите со своим Apple ID внизу страницы (если вы этого ещё не сделали) и нажмите View ID. Вы попадёте на страницу своей учётной записи, прокрутите её вниз до управления подписками приложений. Там вы можете выбрать свою подписку MEGA Pro и посмотреть запланированную дату продления. Выберите другой план подписки или нажмите на переключатель «вкл/выкл» для отключения автоматического продления подписок.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="Камера";
 /* Device Center title */
 "device.center.title"="Центр устройств";
+/* Device Center list current device title */
+"device.center.current.device.title"="Это устройство";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Другие устройства";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="Синхронизировано";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Сканирование…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Инициализация…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Обновление…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="Нет загрузок из камеры";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Отключено";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Не в сети";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="Резервное копирование остановлено";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="Приостановлено";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Превышен лимит";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Ошибка";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Заблокировано";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Заканчивается";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Хранилище: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Передачи: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="Улучшить текущую подписку можно на [A]странице цен[/A]./";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Отмена";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="Отменить «‎%@»?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="Встреча будет помещена в раздел «Прошлые встречи», и все участники будут уведомлены об этом.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Встреча будет архивирована, а все участники будут уведомлены.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Отменить и архивировать";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Отменить встречу";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="Не отменять";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Встреча отменена и архивирована";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Встреча отменена";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Только это событие будет отменено. Все остальные события будут продолжаться, как и запланировано.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Отменить событие";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="Событие %@ отменено";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Отменить событие и встречу?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Это единственное событие регулярной встречи. Если его отменить, встреча также будет отменена. Отменённая встреча будет архивирована, и все участники будут уведомлены об этом.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Это единственное событие регулярной встречи. Если его отменить, встреча также будет отменена. Отменённая встреча будет помещена в раздел «Прошлые встречи», и все участники будут уведомлены об этом.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Отменить событие %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="Пользователь %@ отменил встречу";

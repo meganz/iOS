@@ -182,6 +182,12 @@
 "folderLink"="Map Link";
 /* Title for the album/collection link view */
 "albumLink"="Album link";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Geen toegang tot album";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="De link naar het album is verwijderd of het album is verwijderd. Neem contact op met de persoon die de link met u heeft gedeeld.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, ik snap het";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Downloaden";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="Ga naar de laatste";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nieuwe berichten";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu ongelezen bericht";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu ongelezen berichten";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Abonnementen worden automatisch verlengd voor opeenvolgende abonnementsperioden van dezelfde duur en tegen dezelfde prijs als de gekozen initiële periode. U kunt de automatische verlenging van uw MEGA Pro-abonnement uiterlijk 24 uur voordat uw volgende abonnementsbetaling verschuldigd is, uitschakelen via de instellingenpagina van uw iTunes-account. Om uw abonnementen te beheren, tikt u op de Applicatie Winkel-pictogram op uw mobiele apparaat, logt u in met uw Apple-ID onderaan de pagina (als u dat nog niet hebt gedaan) en tikt u vervolgens op ID bekijken. U wordt naar uw accountpagina geleid waar u naar beneden kunt scrollen naar Applicatie-abonnementen Beheren. Van daaruit kunt u uw MEGA Pro-abonnement selecteren en uw geplande verlengingsdatum bekijken, een ander abonnementspakket kiezen of de aan-uitschakelaar op uit zetten om de automatische verlenging van uw abonnement uit te schakelen.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="Camera";
 /* Device Center title */
 "device.center.title"="Apparaat centrum";
+/* Device Center list current device title */
+"device.center.current.device.title"="Dit apparaat";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Andere apparaten";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="Bijgewerkt";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Scannen…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Initialiseren…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Updaten…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="Geen camera uploads";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Uitgeschakeld";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Offline";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="Back-up gestopt";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="Gepauzeerd";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Buiten tegoed";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Fout";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Geblokkeerd";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Herhaling beëindigen";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Opslag: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Overdracht: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="U kunt uw huidige abonnement upgraden op onze [A]prijzen pagina.[/A]";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Annuleren";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"=" “%@”annuleren?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="Deze vergadering wordt geplaatst onder Eerdere vergaderingen en alle deelnemers worden op de hoogte gebracht.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Deze vergadering wordt gearchiveerd en alle deelnemers worden op de hoogte gebracht.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Annuleren en archiveren";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Vergadering annuleren";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="Niet annuleren";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Vergadering geannuleerd en gearchiveerd";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Vergadering geannuleerd";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Alleen dit evenement wordt geannuleerd. Alle andere evenementen gaan door zoals gepland.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Gebeurtenis annuleren";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="%@ evenement geannuleerd";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Gebeurtenis en vergadering annuleren?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Dit is de enige gebeurtenis van de herhalende vergadering. Als u deze gebeurtenis annuleert, wordt de vergadering geannuleerd. Bij annulering wordt de vergadering geplaatst onder Eerdere vergaderingen en worden alle deelnemers op de hoogte gesteld.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Dit is de enige gebeurtenis van de herhalende vergadering. Als u deze gebeurtenis annuleert, wordt de vergadering geannuleerd. Bij annulering wordt de vergadering geplaatst onder Eerdere vergaderingen en worden alle deelnemers op de hoogte gesteld.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="De %@ gebeurtenis annuleren?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ annuleerde deze vergadering";

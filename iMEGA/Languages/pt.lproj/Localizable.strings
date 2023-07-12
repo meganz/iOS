@@ -182,6 +182,12 @@
 "folderLink"="Link da pasta";
 /* Title for the album/collection link view */
 "albumLink"="Link do álbum";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Não foi possível acessar o álbum";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="O link para o álbum foi removido ou o álbum foi deletado. Entre em contato com a pessoa que compartilhou o link com você.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Entendi";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Fazer download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="Ir ao mais recente";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Novas mensagens";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu mensagem não lida";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu mensagens não lidas";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="As assinaturas são renovadas automaticamente por períodos com a mesma duração e o mesmo preço que o período inicial escolhido. Você pode anular a renovação automática da sua assinatura Pro no MEGA até 24 horas antes do próximo pagamento, por meio da página de configurações da sua conta no iTunes. Para gerenciar as suas assinaturas, basta tocar no ícone da App Store no seu dispositivo, fazer login com o seu Apple ID na parte inferior da página (se você ainda não tiver feito isso), e então selecionar Ver ID. Você será direcionado à página da sua conta, na qual deve ir até a opção Assinaturas. A continuação, você poderá selecionar a sua assinatura Pro do MEGA e ver a data de renovação programada, escolher um pacote de assinatura diferente ou usar o botão ON/OFF para desativar a renovação automática da sua assinatura.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3283,7 +3285,7 @@
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="Está sendo realizado um upgrade de segurança da sua conta. Você deve ver esta mensagem apenas uma vez: se você já a tiver visto, certifique-se de que foi para esta conta e não para outra conta que você tiver no MEGA. \n\nSe você tiver certeza que é a segunda vez que vê esta mensagem para esta conta, deixe de usá-la.";
 /* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.button.title"="OK, entendido";
+"account.upgradeSecurity.button.title"="Entendi";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Descrição";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="Câmera";
 /* Device Center title */
 "device.center.title"="Central de dispositivos";
+/* Device Center list current device title */
+"device.center.current.device.title"="Este dispositivo";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Outros dispositivos";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="Atualizado";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Examinando…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Inicializando…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Atualizando…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="Não há uploads da câmera";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Desativada";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Offline";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="Backup interrompido";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="Pausado";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Cota excedida";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Erro";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Bloqueado";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Deixar de repetir";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Armazenamento: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transferência: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="Você pode fazer o upgrade da sua assinatura na nossa [A]página de preços[/A].";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Cancelar";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="Cancelar a  “%@”?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="Esta reunião será movida a Reuniões anteriores e todos os participantes serão notificados.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Esta reunião será arquivada e todos os participantes serão notificados.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Cancelar e arquivar";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Cancelar reunião";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="Não cancelar";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Reunião cancelada e arquivada";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Reunião cancelada";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Apenas este agendamento será cancelado. Todos os demais agendamentos seguirão conforme programado.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Cancelar o agendamento";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="O agendamento de %@ foi cancelado";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Cancelar o agendamento e a reunião?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Este é o único agendamento da reunião periódica. Cancelar este agendamento cancelará a reunião. Se cancelada, a reunião será arquivada e todos os participantes serão notificados.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Este é o único agendamento da reunião periódica. Cancelar este agendamento cancelará a reunião. Se cancelada, a reunião será colocada em Reuniões passadas e todos os participantes serão notificados.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Cancelar o agendamento de %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ cancelou a reunião";

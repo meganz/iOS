@@ -68,10 +68,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Anyone with this link can view and download your data</string>
         <key>other</key>
-        <string>Anyone with these links can view and download your data</string>
+        <string>任何拥有这些链接的人都可以查看和下载您的数据</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -98,10 +96,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Link created and copied to your clipboard</string>
         <key>other</key>
-        <string>Links created and copied to your clipboard</string>
+        <string>链接已创建并复制到您的剪贴板</string>
       </dict>
     </dict>
     <key>nameCollision.applyToAll</key>
@@ -2018,10 +2014,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d day left</string>
         <key>other</key>
-        <string>%d days left</string>
+        <string>剩余%d天</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -2034,10 +2028,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Bonus expires in %d day.</string>
         <key>other</key>
-        <string>Bonus expires in %d days.</string>
+        <string>奖励将在%d天后到期。</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2148,10 +2140,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every day.</string>
         <key>other</key>
-        <string>Meeting will occur every %d days.</string>
+        <string>会议将每%d天举行一次。</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -2164,10 +2154,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every week on [weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayName].</string>
+        <string>会议将在每%d周的[weekDayName]举行一次。</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
@@ -2180,10 +2168,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every week on [weekDayNames] and [lastWeekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayNames] and [lastWeekDayName].</string>
+        <string>会议将在每%d周的[weekDayNames]和[lastWeekDayName]举行一次。</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
@@ -2196,10 +2182,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDay].</string>
+        <string>会议将在每%d月的[ordinalDay]举行一次。</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
@@ -2212,10 +2196,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDays] and [ordinalLastDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDays] and [ordinalLastDay].</string>
+        <string>会议将在每%d月的[ordinalDays]和[ordinalLastDay]举行一次。</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -2228,10 +2210,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every month on the [weekNumber] [weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [weekNumber] [weekDayName].</string>
+        <string>会议将在每%d月的[weekNumber] [weekDayName]举行一次。</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -2244,10 +2224,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every week on [weekDayNames]</string>
         <key>other</key>
-        <string>Every %d weeks on [weekDayNames]</string>
+        <string>每%d周的[weekDayNames]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
@@ -2260,10 +2238,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every month on the [ordinalNumber]</string>
         <key>other</key>
-        <string>Every %d months on the [ordinalNumber]</string>
+        <string>每%d月的[ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -2276,10 +2252,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every month, [ordinalNumber] [weekDayName]</string>
         <key>other</key>
-        <string>Every %d months, [ordinalNumber] [weekDayName]</string>
+        <string>每%d个月，[ordinalNumber] [weekDayName]</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2292,10 +2266,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Daily</string>
         <key>other</key>
-        <string>Every %d days</string>
+        <string>每%d天</string>
       </dict>
     </dict>
   </dict>

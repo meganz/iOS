@@ -2895,9 +2895,9 @@
         <key>one</key>
         <string>El [ordinalNumber][weekDayName] de cada mes</string>
         <key>many</key>
-        <string>El [ordinalNumber][weekDayName] cada %d meses</string>
+        <string>El [ordinalNumber][weekDayName], cada %d meses</string>
         <key>other</key>
-        <string>El [ordinalNumber][weekDayName] cada %d meses</string>
+        <string>El [ordinalNumber][weekDayName], cada %d meses</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>

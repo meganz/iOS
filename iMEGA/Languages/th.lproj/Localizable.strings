@@ -182,6 +182,12 @@
 "folderLink"="ลิงก์โฟลเดอร์";
 /* Title for the album/collection link view */
 "albumLink"="Album link";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Cannot access album";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="The link to the album has been removed or the album has been deleted. Contact the person who shared the link with you.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, got it";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="ดาวน์โหลด";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="ข้ามไปที่ล่าสุด";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="ข้อความใหม่";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu ข้อความที่ยังไม่ได้อ่าน";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu ข้อความที่ยังไม่ได้อ่าน";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="การสมัครใช้งานของคุณจะต่ออายุโดยอัตโนมัติในราคาเดียวกันและระยะเวลาเดียวกันกับรายละเอียดที่เลือกในตอนแรก คุณสามารถปิดการชำระเงินการสมัครใช้งาน MEGA Pro ของคุณอัตโนมัติได้ในหน้าการตั้งค่าบัญชี iTunes ของคุณ 24 ชั่วโมงก่อนการชำระเงินค่าสมัครครั้งต่อไป ในการจัดการการสมัครใช้งานของคุณ ให้แตะ App Store บนโทรศัพท์ของคุณ เข้าสู่ระบบด้วย Apple ID ของคุณที่ด้านล่างของหน้า (หากยังไม่ได้ดำเนินการ) แล้วแตะดู ID คุณจะเห็นหน้าบัญชีของคุณ ซึ่งจะพาคุณลงไปที่หน้าจัดการการสมัครใช้งานแอป จากที่นั่น คุณสามารถเลือกการสมัครใช้งาน MEGA Pro ดูวันที่ต่ออายุที่กำลังจะมาถึง เลือกแพ็คเกจการสมัครใช้งานอื่น หรือปิดสวิตช์เพื่อปิดการต่ออายุการสมัครโดยอัตโนมัติของคุณ";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="กล้อง";
 /* Device Center title */
 "device.center.title"="Device centre";
+/* Device Center list current device title */
+"device.center.current.device.title"="This device";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Other devices";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="ล่าสุดแล้ว";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="กำลังสแกน…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="กำลังเริ่มต้น…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="กำลังอัปเดต…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="No camera uploads";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="ปิดใช้งาน";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="ออฟไลน์";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="หยุดสำรองข้อมูลแล้ว";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="พักแล้ว";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="หมดโควต้าแล้ว";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="ผิดพลาด";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="บล็อกแล้ว";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Storage: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="You can upgrade your current subscription on our [A]pricing page[/A].";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="ยกเลิก";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="Cancel “%@”?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="การประชุมนี้จะถูกเก็บไว้ในประวัติการประชุมและผู้เข้าร่วมทุกคนจะได้รับการแจ้งเตือน";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="การประชุมนี้จะถูกเก็บถาวรและผู้เข้าร่วมทุกคนจะได้รับการแจ้งเตือน";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="ยกเลิกและจัดเก็บ";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="ยกเลิกการประชุม";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="ไม่ต้องยกเลิก";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Meeting cancelled and archived";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Meeting cancelled";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Only this occurrence will be cancelled. All the other occurrences will go ahead as scheduled.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="ยกเลิกเหตุการณ์";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="%@ occurrence cancelled";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="ยกเลิกเหตุการณ์และการประชุมหรือไม่";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="นี่เป็นการประชุมที่เป็นกิจวัตรเพียงครั้งเดียวที่จัดขึ้น การยกเลิกเหตุการณ์นี้จะทำให้การประชุมถูกยกเลิก หากยกเลิกแล้ว การประชุมจะถูกจัดเก็บไว้และผู้เข้าร่วมทุกคนจะได้รับการแจ้งเตือน";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="นี่เป็นการประชุมที่เป็นกิจวัตรเพียงครั้งเดียวที่จัดขึ้น การยกเลิกเหตุการณ์นี้จะทำให้การประชุมถูกยกเลิก หากยกเลิกแล้ว การประชุมจะถูกเก็บไว้ในประวัติการประชุม และผู้เข้าร่วมทุกคนจะได้รับการแจ้งเตือน";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Cancel the %@ occurrence?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ cancelled this meeting";
