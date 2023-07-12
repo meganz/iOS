@@ -18,11 +18,11 @@ protocol HomeUploadingViewModelOutputs {
 
 protocol HomeUploadingViewModelType {
 
-    var inputs: HomeUploadingViewModelInputs { get }
+    var inputs: any HomeUploadingViewModelInputs { get }
 
-    var outputs: HomeUploadingViewModelOutputs { get }
+    var outputs: any HomeUploadingViewModelOutputs { get }
 
-    var notifyUpdate: ((HomeUploadingViewModelOutputs) -> Void)? { get set }
+    var notifyUpdate: ((any HomeUploadingViewModelOutputs) -> Void)? { get set }
 }
 
 final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingViewModelInputs {
@@ -103,9 +103,9 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     // MARK: - HomeUploadingViewModelType
 
-    var inputs: HomeUploadingViewModelInputs { self }
+    var inputs: any HomeUploadingViewModelInputs { self }
 
-    var outputs: HomeUploadingViewModelOutputs {
+    var outputs: any HomeUploadingViewModelOutputs {
         let networkReachable = networkMonitorUseCase.isConnected()
         let cmConfigEntity = CMConfigEntity(menuType: .menu(type: .uploadAdd), isHome: true)
         if let error = error {
@@ -122,7 +122,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
         )
     }
 
-    var notifyUpdate: ((HomeUploadingViewModelOutputs) -> Void)?
+    var notifyUpdate: ((any HomeUploadingViewModelOutputs) -> Void)?
 
     // MARK: - Router
 

@@ -4,7 +4,7 @@ import MEGADomain
 
 final class ChatRoomLinkViewModel: ObservableObject {
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol
-    private let router: MeetingInfoRouting
+    private let router: any MeetingInfoRouting
 
     private var chatRoom: ChatRoomEntity
     private let scheduledMeeting: ScheduledMeetingEntity
@@ -18,7 +18,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var meetingLink: String?
 
-    init(router: MeetingInfoRouting,
+    init(router: some MeetingInfoRouting,
          chatRoom: ChatRoomEntity,
          scheduledMeeting: ScheduledMeetingEntity,
          chatLinkUseCase: any ChatLinkUseCaseProtocol,

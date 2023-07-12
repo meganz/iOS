@@ -7,7 +7,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     let chatRoomEntity: ChatRoomEntity
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
-    private var userImageUseCase: UserImageUseCaseProtocol
+    private var userImageUseCase: any UserImageUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
@@ -27,10 +27,10 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         chatRoomEntity: ChatRoomEntity,
         chatRoomUseCase: any ChatRoomUseCaseProtocol,
         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-        userImageUseCase: UserImageUseCaseProtocol,
-        chatUseCase: any ChatUseCaseProtocol,
-        accountUseCase: any AccountUseCaseProtocol,
-        megaHandleUseCase: any MEGAHandleUseCaseProtocol
+        userImageUseCase: some UserImageUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol
     ) {
         self.title = title
         self.peerHandle = peerHandle

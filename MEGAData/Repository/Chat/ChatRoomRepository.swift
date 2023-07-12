@@ -259,7 +259,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         closeChatRoom(chatId: chatRoom.chatId, delegate: ChatRoomDelegateDTO(chatId: chatRoom.chatId, chatRoomDelegate: delegate))
     }
     
-    func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) throws {
+    func openChatRoom(chatId: HandleEntity, delegate: some MEGAChatRoomDelegate) throws {
         openChatRooms.insert(chatId)
         
         if !sdk.openChatRoom(chatId, delegate: delegate) {
@@ -267,7 +267,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
     }
     
-    func closeChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
+    func closeChatRoom(chatId: HandleEntity, delegate: some MEGAChatRoomDelegate) {
         openChatRooms.remove(chatId)
         chatRoomUpdateListeners.removeAll { $0.chatId == chatId }
         chatRoomMessageLoadedListeners.removeAll { $0.chatId == chatId }

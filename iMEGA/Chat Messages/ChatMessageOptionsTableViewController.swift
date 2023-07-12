@@ -11,13 +11,13 @@ protocol ChatMessageOptionsTableViewControllerDataSource: AnyObject {
 
 class ChatMessageOptionsTableViewController: UITableViewController {
     
-    weak var chatMessageOptionDataSource: ChatMessageOptionsTableViewControllerDataSource? {
+    weak var chatMessageOptionDataSource: (any ChatMessageOptionsTableViewControllerDataSource)? {
         didSet {
             tableView.reloadData()
         }
     }
     
-    init(chatMessageOptionDataSource: ChatMessageOptionsTableViewControllerDataSource) {
+    init(chatMessageOptionDataSource: some ChatMessageOptionsTableViewControllerDataSource) {
         self.chatMessageOptionDataSource = chatMessageOptionDataSource
         super.init(nibName: nil, bundle: nil)
     }

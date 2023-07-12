@@ -20,7 +20,7 @@ final class ExportFileViewModel: ViewModelType {
     enum Command: CommandType, Equatable { }
     
     // MARK: - Private properties
-    private let router: ExportFileViewRouting
+    private let router: any ExportFileViewRouting
     private let exportFileUseCase: any ExportFileUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
 
@@ -28,7 +28,7 @@ final class ExportFileViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     // MARK: - Init
-    init(router: ExportFileViewRouting,
+    init(router: some ExportFileViewRouting,
          analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
          exportFileUseCase: any ExportFileUseCaseProtocol) {
         self.router = router

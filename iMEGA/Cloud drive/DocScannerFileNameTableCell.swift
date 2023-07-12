@@ -11,7 +11,7 @@ class DocScannerFileNameTableCell: UITableViewCell {
     @IBOutlet weak var fileImageView: UIImageView!
     @IBOutlet weak var filenameTextField: UITextField!
     
-    weak var delegate: DocScannerFileInfoTableCellDelegate?
+    weak var delegate: (any DocScannerFileInfoTableCellDelegate)?
     
     var originalFilename: String? {
         didSet {

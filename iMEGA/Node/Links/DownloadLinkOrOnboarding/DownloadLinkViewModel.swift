@@ -7,15 +7,15 @@ protocol DownloadLinkRouterProtocol {
 }
 
 final class DownloadLinkViewModel {
-    private let router: DownloadLinkRouterProtocol
+    private let router: any DownloadLinkRouterProtocol
     private let credentialUseCase: any CredentialUseCaseProtocol
     
     private let link: URL?
     private let isFolderLink: Bool
     private let nodes: [NodeEntity]?
 
-    init(router: DownloadLinkRouterProtocol,
-         credentialUseCase: any CredentialUseCaseProtocol,
+    init(router: some DownloadLinkRouterProtocol,
+         credentialUseCase: some CredentialUseCaseProtocol,
          link: URL,
          isFolderLink: Bool) {
         self.router = router
@@ -25,8 +25,8 @@ final class DownloadLinkViewModel {
         self.isFolderLink = isFolderLink
     }
     
-    init(router: DownloadLinkRouterProtocol,
-         credentialUseCase: any CredentialUseCaseProtocol,
+    init(router: some DownloadLinkRouterProtocol,
+         credentialUseCase: some CredentialUseCaseProtocol,
          nodes: [NodeEntity],
          isFolderLink: Bool) {
         self.router = router

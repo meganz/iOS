@@ -10,7 +10,7 @@ extension ContactDetailsViewController {
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
     
-    @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
+    @objc func openChatRoom(chatId: HandleEntity, delegate: any MEGAChatRoomDelegate) {
         guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chatId) else { return }
         if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatRoom) {
             ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatId, delegate: delegate)

@@ -4,13 +4,13 @@ import SwiftUI
 
 final class SlideShowOptionRouter: Routing {
     private weak var presenter: UIViewController?
-    private var preference: SlideShowViewModelPreferenceProtocol
+    private var preference: any SlideShowViewModelPreferenceProtocol
     private let currentConfiguration: SlideShowConfigurationEntity
     private var newConfiguration: SlideShowConfigurationEntity
     
     init(
         presenter: UIViewController?,
-        preference: SlideShowViewModelPreferenceProtocol,
+        preference: some SlideShowViewModelPreferenceProtocol,
         currentConfiguration: SlideShowConfigurationEntity
     ) {
         self.presenter = presenter

@@ -14,7 +14,7 @@ class EmojiCarousalView: UIView {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var descriptionLabelBackgroundView: UIView!
     
-    weak var delegate: EmojiCarousalViewDelegate?
+    weak var delegate: (any EmojiCarousalViewDelegate)?
     
     override func awakeFromNib() {
         super.awakeFromNib()

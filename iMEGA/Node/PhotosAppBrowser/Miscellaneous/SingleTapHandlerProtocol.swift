@@ -25,7 +25,7 @@ extension SingleTapHandlerProtocol where Self: UIView {
 
 extension UIView {
     @objc fileprivate func handleSingleTap(_ gesture: UITapGestureRecognizer) {
-        guard let singleTapHandlerSelf = self as? SingleTapHandlerProtocol,
+        guard let singleTapHandlerSelf = self as? (any SingleTapHandlerProtocol),
             let handler = singleTapHandlerSelf.singleTapHandler else {
             return
         }

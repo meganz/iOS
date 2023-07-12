@@ -6,7 +6,7 @@ import UIKit
 
 class SingleCodeTextField: UITextField {
 
-    @IBOutlet weak var singleCodeDelegate: SingleCodeTextFieldDelegate?
+    @IBOutlet weak var singleCodeDelegate: (any SingleCodeTextFieldDelegate)?
 
     override func deleteBackward() {
         super.deleteBackward()

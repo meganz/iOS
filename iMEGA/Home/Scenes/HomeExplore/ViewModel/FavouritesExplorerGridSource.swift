@@ -35,7 +35,7 @@ final class FavouritesExplorerGridSource: NSObject {
     private(set) var selectedNodes: [MEGANode]?
     private var fileNodes: [MEGANode] = []
     private var folderNodes: [MEGANode] = []
-    weak var delegate: FilesExplorerGridSourceDelegate?
+    weak var delegate: (any FilesExplorerGridSourceDelegate)?
     var allowsMultipleSelection: Bool {
         didSet {
             guard oldValue != allowsMultipleSelection else { return }
@@ -49,7 +49,7 @@ final class FavouritesExplorerGridSource: NSObject {
          nodes: [MEGANode]?,
          allowsMultipleSelection: Bool,
          selectedNodes: [MEGANode]?,
-         delegate: FilesExplorerGridSourceDelegate?) {
+         delegate: (any FilesExplorerGridSourceDelegate)?) {
         self.collectionView = collectionView
         self.allNodes = nodes
         self.allowsMultipleSelection = allowsMultipleSelection

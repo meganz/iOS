@@ -2,7 +2,7 @@
 protocol FilesExplorerViewConfiguration {
     var title: String { get }
     var emptyStateType: EmptyStateType { get }
-    var listSourceType: FilesExplorerListSourceProtocol.Type { get }
+    var listSourceType: any FilesExplorerListSourceProtocol.Type { get }
 }
 
 struct DocumentExplorerViewConfiguration: FilesExplorerViewConfiguration {
@@ -14,7 +14,7 @@ struct DocumentExplorerViewConfiguration: FilesExplorerViewConfiguration {
         return .documents
     }
     
-    var listSourceType: FilesExplorerListSourceProtocol.Type {
+    var listSourceType: any FilesExplorerListSourceProtocol.Type {
         return DocAndAudioListSource.self
     }
 }

@@ -236,11 +236,11 @@ private final class ChatOnlineListener: NSObject {
     }
     
     private func addListener() {
-        sdk.add(self as MEGAChatDelegate)
+        sdk.add(self as (any MEGAChatDelegate))
     }
     
     private func removeListener() {
-        sdk.remove(self as MEGAChatDelegate)
+        sdk.remove(self as (any MEGAChatDelegate))
     }
 }
 
@@ -281,11 +281,11 @@ private final class CallAvailabilityListener: NSObject {
     }
     
     private func addListener() {
-        sdk.add(self as MEGAChatCallDelegate)
+        sdk.add(self as (any MEGAChatCallDelegate))
     }
     
     private func removeListener() {
-        sdk.remove(self as MEGAChatCallDelegate)
+        sdk.remove(self as (any MEGAChatCallDelegate))
     }
 }
 
@@ -318,11 +318,11 @@ private final class CallInProgressListener: NSObject {
     }
     
     private func addListener() {
-        sdk.add(self as MEGAChatCallDelegate)
+        sdk.add(self as (any MEGAChatCallDelegate))
     }
     
     private func removeListener() {
-        sdk.remove(self as MEGAChatCallDelegate)
+        sdk.remove(self as (any MEGAChatCallDelegate))
     }
 }
 

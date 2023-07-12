@@ -94,7 +94,7 @@ class AccountExpiredViewController: UIViewController {
                 let rootViewController = UIApplication.mnz_presentingViewController()
                 if rootViewController.isMember(of: LaunchViewController.self) {
                     guard let launchViewController = rootViewController as? LaunchViewController else {return}
-                    if launchViewController.delegate.responds(to: #selector(LaunchViewControllerDelegate.setupFinished)) {
+                    if launchViewController.delegate.responds(to: #selector((any LaunchViewControllerDelegate).setupFinished)) {
                         launchViewController.delegate.setupFinished()
                     }
                 } else if rootViewController.isMember(of: InitialLaunchViewController.self) {

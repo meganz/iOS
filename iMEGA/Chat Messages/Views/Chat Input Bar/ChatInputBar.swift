@@ -50,11 +50,11 @@ class ChatInputBar: UIView {
     private var storedMessageInputBarHeight: CGFloat = 0.0
     private var animationDuration: TimeInterval = 0.4
     private var voiceClipInputBarRegularHeight: CGFloat = 320.0
-    private var keyboardFrameChangeObserver: NSObjectProtocol!
+    private var keyboardFrameChangeObserver: (any NSObjectProtocol)?
 
     // MARK: - Interface properties
 
-    weak var delegate: ChatInputBarDelegate?
+    weak var delegate: (any ChatInputBarDelegate)?
     var editMessage: ChatMessage? {
         didSet {
             messageInputBar.editMessage = editMessage
@@ -319,7 +319,7 @@ class ChatInputBar: UIView {
         voiceInputBarToTextInputSwitch()
     }
     
-    private func keyboardFrameChangedNotification() -> NSObjectProtocol {
+    private func keyboardFrameChangedNotification() -> any NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardWillShowNotification,
             object: nil,

@@ -13,7 +13,7 @@ class CallCollectionView: UICollectionView {
     }
     private var callParticipants = [CallParticipantEntity]()
     private var layoutMode: ParticipantsLayoutMode = .grid
-    private weak var callCollectionViewDelegate: CallCollectionViewDelegate?
+    private weak var callCollectionViewDelegate: (any CallCollectionViewDelegate)?
     private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
     private var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, CallParticipantEntity>?
@@ -34,8 +34,7 @@ class CallCollectionView: UICollectionView {
         blurEffectView.removeFromSuperview()
     }
     
-    func configure(with callCollectionViewDelegate: CallCollectionViewDelegate) {
-        
+    func configure(with callCollectionViewDelegate: some CallCollectionViewDelegate) {
         diffableDataSource = UICollectionViewDiffableDataSource(
             collectionView: self,
             cellProvider: { [unowned self] collectionView, indexPath, _ in

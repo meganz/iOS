@@ -5,7 +5,7 @@ import MEGADomain
 final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private var chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
-    private let router: MeetingInfoRouting
+    private let router: any MeetingInfoRouting
     
     private var chatParticipantId: HandleEntity
     private var chatRoom: ChatRoomEntity
@@ -21,7 +21,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     
     let userAvatarViewModel: UserAvatarViewModel
 
-    init(router: MeetingInfoRouting,
+    init(router: some MeetingInfoRouting,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
          chatUseCase: any ChatUseCaseProtocol,
