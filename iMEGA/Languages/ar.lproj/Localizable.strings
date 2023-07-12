@@ -181,7 +181,13 @@
 /* Title for the folder link view */
 "folderLink"="رابط المجلد";
 /* Title for the album/collection link view */
-"albumLink"="Album link";
+"albumLink"="رابط الألبوم";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="لا يمكن الوصول إلى الألبوم";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="تم حذف رابط الألبوم أو حذف الألبوم. اتصل بالشخص الذي شارك الرابط معك.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="حسنًا، فهمت ذلك";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="تنزيل";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -893,7 +899,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="أنت على وشك حذف [A] ملف و [B]مجلد نهائياً. هل تريد الاستمرار؟ (لا يمكن التراجع عن هذا الإجراء)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
-"sharedItems.rubbish.warning.message"="You are about to permanently remove %@. Would you like to proceed? (You cannot undo this action.)";
+"sharedItems.rubbish.warning.message"="أنت على وشك إزالة %@ بشكل دائم. هل ترغب في المتابعة؟ (لا يمكنك التراجع عن هذا الإجراء.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="تم إزالة 1 ملف من ميغا MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -911,7 +917,7 @@
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="تم إزالة [A] ملف و [B] مجلد من ميغا MEGA";
 /* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="%@ removed from MEGA";
+"sharedItems.rubbish.confirmation.message"="تم إزالة %@ من ميغا MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="كلمة مرور جديدة";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="اذهب للأحدث";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="رسائل جديدة";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu رسالة غير مقروءة";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu رسائل غير مقروءة";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="يتم تجديد الاشتراكات تلقائيًا لفترات اشتراك متتالية لنفس المدة وبنفس سعر الفترة الأولية المختارة. يمكنك إيقاف التجديد التلقائي لاشتراكك ميغا برو MEGA Pro في موعد أقصاه 24 ساعة قبل أن يحين موعد سداد اشتراكك التالي عبر صفحة إعدادات الحساب iTunes اي تيونز الخاص بك. لإدارة الاشتراكات الخاصة بك، ببساطة انقر على أيقونة متجر التطبيقات App Store على الهاتف الخاص بك، قم بتسجيل الدخول باستخدام معرف أبل Apple ID الخاص بك في أسفل الصفحة (إذا لم تكن قد فعلت ذلك بالفعل) ثم انقر فوق عرض المعرف. سيتم نقلك إلى صفحة حسابك حيث يمكنك التمرير لأسفل إلى مدير اشتراكات التطبيقات. من هناك، يمكنك تحديد اشتراك ميغا برو MEGA Pro الخاص بك وعرض تاريخ التجديد المجدول، أو اختيار حزمة اشتراك مختلفة أو تبديل مفتاح التشغيل/الإيقاف إلى إيقاف التشغيل لتعطيل التجديد التلقائي لاشتراكك.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2641,7 +2643,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="اجتماع جديد";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
+"meetings.createMeeting.defaultMeetingName"="اجتماع %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="ابدأ الاجتماع";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -2993,9 +2995,9 @@
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="التالي";
 /* Title of Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.title"="Resume audio?";
+"media.audio.playbackContinuation.dialog.title"="استئناف الملف الصوتي؟";
 /* Description of Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.description"="“%@” will resume from %@.";
+"media.audio.playbackContinuation.dialog.description"="سيتم استئناف ”%@“ من عند %@.";
 /* Resume option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.resume"="استئناف";
 /* Restart option for Audio Player dialog for Playback Continuation */
@@ -3145,13 +3147,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="إرسال دعوة";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
+"notifications.message.takenDownReinstated.file"="تمت إعادة ملفك المزال ”%@“";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
+"notifications.message.takenDownReinstated.folder"="تمت إعادة مجلدك المزال ”%@“";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.file"="تمت إزالة ملفك المشارك ”%@“ بشكل عام";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.folder"="تمت إزالة مجلدك المشارك ”%@“ بشكل عام";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="السماح لغير المضيفين بإضافة مشاركين";
 /* Start conversation: Schedule meeting context menu */
@@ -3415,7 +3417,35 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="الكاميرا";
 /* Device Center title */
-"device.center.title"="Device centre";
+"device.center.title"="مركز الجهاز";
+/* Device Center list current device title */
+"device.center.current.device.title"="هذا الجهاز";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="أجهزة أخرى";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="لا يوجد تحديثات";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="جاري الفحص…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="جاري التهيئة…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="جارٍ التحديث…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="لا يوجد ترفيعات الكاميرا";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="تعطيل";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="غير متصل بالانترنت";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="توقف النسخ الاحتياطي";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="متوقف مؤقتاً";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="تجاوز التخزين المتاح";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="خطأ";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="محظور";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="إنهاء التكرار";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3425,7 +3455,7 @@
 /* Title for meeting notifications option in meeting info */
 "meetings.info.meetingNotifications"="إشعارات الاجتماع";
 /* Title for manage meeting history option in meeting info */
-"meetings.info.manageMeetingHistory"="Manage meeting history";
+"meetings.info.manageMeetingHistory"="إدارة سجل الاجتماع";
 /* Meeting Notifications DND: Title bar message for the dnd activate options */
 "meetings.info.muteMeetingNotificationsFor"="كتم صوت إشعارات الاجتماع لمدة";
 /* Title for share meeting link option in meeting info */
@@ -3433,11 +3463,11 @@
 /* The button or alert title to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistory"="امسح سجل الاجتماع";
 /* Message show when the history of a meeting has been successfully deleted */
-"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history cleared";
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="تم مسح سجل الاجتماع";
 /* The alert message to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="هل أنت متأكد من أنك تريد مسح كل سجل الرسائل لهذا الاجتماع؟";
 /* Text explaining users how the meeting links work. */
-"meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+"meetings.info.shareMeetingLink.explainLink"="يمكن لأي شخص لديه هذا الرابط الانضمام إلى الاجتماع و الاطلاع على محادثة الاجتماع.";
 /* The title of a menu button which allows users to rename a meeting. */
 "meetings.info.renameMeeting"="إعادة تسمية الاجتماع";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
@@ -3447,21 +3477,21 @@
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
 "meetings.scheduleMeeting.create.monthly.optionTitle"="شهرياً";
 /* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
-"meetings.scheduleMeeting.create.frequency.optionTitle"="Frequency";
+"meetings.scheduleMeeting.create.frequency.optionTitle"="تكرار";
 /* Create Schedule Meeting: The text is shown along with the selected interval. */
-"meetings.scheduleMeeting.create.interval.optionTitle"="Every";
+"meetings.scheduleMeeting.create.interval.optionTitle"="كل";
 /* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
-"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="حدد التكرار";
 /* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
-"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="حدد فترة أسبوعية";
 /* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
-"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="حدد يوم من أيام الأسبوع ";
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
-"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="حدد فترة شهرية";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
-"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="On the…";
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="في الـ…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
-"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Each";
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="كل";
 /* Create Schedule Meeting: Month custom option - first week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.first"="أول";
 /* Create Schedule Meeting: Month custom option - second week option text */
@@ -3473,42 +3503,78 @@
 /* Create Schedule Meeting: Month custom option - fifth week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="الخامس";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
-"meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
+"meetings.scheduled.create.weekly.everyDay.footerNote"="سيتكرر  الاجتماع كل يوم.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
-"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="يومياً";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
-"upgradeAccountPlan.button.restore.title"="Restore purchase";
+"upgradeAccountPlan.button.restore.title"="استعادة شراء";
 /* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Terms and policies";
+"upgradeAccountPlan.button.termsAndPolicies.title"="الشروط والسياسات";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
-"upgradeAccountPlan.button.buyAccountPlan.title"="Buy %@";
+"upgradeAccountPlan.button.buyAccountPlan.title"="شراء %@";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="اختر الباقة المناسبة لك";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Current plan: %@";
+"upgradeAccountPlan.header.title.currentPlan"="الباقة الحالية: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="شهرياً";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="سنويًا";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
-"upgradeAccountPlan.header.title.saveYearlyBilling"="Save up to 16%% with yearly billing";
+"upgradeAccountPlan.header.title.saveYearlyBilling"="وفر حتى 16%% مع الفوترة السنوية";
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Features of Pro plans";
+"upgradeAccountPlan.header.title.featuresOfProPlan"="ميزات باقات برو Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• مشاركة حجم التراسل المتاح\n\n• النسخ الاحتياطية التلقائية\n\n• الترجيع إلى ما يصل حتى 90 يومًا على برو لايت Pro Lite وما يصل حتى 365 يومًا على برو Pro I و II و III (قريبًا)\n\n• جدولة مسح سلة المحذوفات بين 7 أيام و 10 سنوات";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
-"upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
+"upgradeAccountPlan.header.title.subscriptionDetails"="تفاصيل الاشتراك";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
-"upgradeAccountPlan.message.text.subscriptionDetails"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.";
+"upgradeAccountPlan.message.text.subscriptionDetails"="يتم تجديد الاشتراكات تلقائيًا لفترات اشتراك متتالية بنفس المدة وبنفس سعر الفترة الأولية المختارة.\nيمكنك إيقاف التجديد التلقائي لاشتراك ميغا برو MEGA Pro الخاص بك قبل  24 ساعة من استحقاق دفع الاشتراك التالي عبر أي تيونز iTunes الخاص بك في صفحة إعدادات الحساب.";
 /* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
 "upgradeAccountPlan.plan.tag.currentPlan"="الباقة الحالية";
 /* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
 "upgradeAccountPlan.plan.tag.recommended"="موصي به";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/month";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/شهر";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/year";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/سنة";
 /* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
-"upgradeAccountPlan.plan.details.storage"="Storage: %@";
+"upgradeAccountPlan.plan.details.storage"="مساحة التخزين: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
-"upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
+"upgradeAccountPlan.plan.details.transfer"="تراسل المعطيات: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="يمكنك ترقية اشتراكك الحالي على [A]صفحة التسعير[/A] الخاصة بنا.";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="إلغاء";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="إلغاء ”%@“؟";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="سيتم وضع هذا الاجتماع تحت الاجتماعات السابقة وسيتم إعلام جميع المشاركين.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="سيتم أرشفة هذا الاجتماع وسيتم إعلام جميع المشاركين.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="إلغاء وأرشفة";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="إلغاء الاجتماع";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="لا تلغي";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="تم إلغاء الاجتماع وأرشفته";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="تم إلغاء الاجتماع";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="سيتم إلغاء هذا التكرار فقط. سيتم المضي قدمًا في جميع التكرارات الأخرى كما هو مقرر.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="إلغاء هذا التكرار";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="تم إلغاء التكرار في %@";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="إلغاء التكرار والاجتماع؟";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="هذا هو التكرار الوحيد للاجتماع المتكرر. إلغاء هذا التكرار سيلغي الاجتماع. في حالة الإلغاء سيتم أرشفة الاجتماع وسيتم إعلام جميع المشاركين.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="هذا هو التكرار الوحيد للاجتماع المتكرر. إلغاء هذا التكرار سيلغي الاجتماع. في حالة الإلغاء سيتم وضع الاجتماع ضمن الاجتماعات الماضية وسيتم إعلام جميع المشاركين.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="إلغاء التكرار في %@؟";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ ألغى هذا الاجتماع";

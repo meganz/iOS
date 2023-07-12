@@ -17,7 +17,7 @@
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="Zapisane";
 /*  */
-"passcode"="kod";
+"passcode"="Kod";
 /* "Size" of the file or folder you are sharing */
 "size"="Rozmiar";
 /* Quality title, used in changing the export quality of scaned doc */
@@ -182,6 +182,12 @@
 "folderLink"="Link do katalogu";
 /* Title for the album/collection link view */
 "albumLink"="Link do albumu";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Nie można uzyskać dostępu do albumu";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="Link do albumu został usunięty lub album został usunięty. Skontaktuj się z osobą, która udostępniła Ci łącze.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, rozumiem";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Pobierz";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1403,7 +1409,7 @@
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Jeśli źle wpisałeś swój adres e-mail, popraw go i stuknij w “Wyślij ponownie”.";
 /* A button to resend the email confirmation. */
-"resend"="Wyślin ponownie";
+"resend"="Wyślij ponownie";
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s jest już Twoim kontaktem.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="Przejdz do ostatniej";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nowe wiadomości";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu nieodczytana wiadomość";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu nieodczytane wiadomości";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subskrypcje są automatycznie odnawiane na kolejne okresy subskrypcji o tym samym czasie trwania i po tej samej cenie, co wybrany okres początkowy. Możesz wyłączyć automatyczne odnawianie subskrypcji MEGA Pro nie później niż 24 godziny przed terminem kolejnej płatności za subskrypcję na stronie ustawień konta iTunes. Aby zarządzać swoją subskrypcją, po prostu stuknij w ikonę App Store na swoim urządzeniu mobilnym, zaloguj się przy użyciu swojego Apple ID na dole strony (jeśli jeszcze tego nie zrobiłeś), a następnie stuknij w Pokaż ID. Zostaniesz przeniesiony na stronę swojego konta, gdzie możesz przewinąć w dół do sekcji Zarządzaj subskrypcjami aplikacji. Stamtąd możesz wybrać swoją subskrypcję MEGA Pro i zobaczyć zaplanowaną datę odnowienia, wybrać inny pakiet subskrypcji lub przełączyć przełącznik on-off na off, aby wyłączyć automatyczne odnawianie subskrypcji.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -2477,7 +2479,7 @@
 /* Title of Favourites explorer view card on Home */
 "home.favourites.title"="Ulubione";
 /* Accessibility label for Home section in tabbar item */
-"Home"="Start";
+"Home"="Strona główna";
 /* Home Screen: Explorer view card title - Documents */
 "Docs"="Dokumenty";
 /* Message shown when a link is shared with separated key */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="Kamera";
 /* Device Center title */
 "device.center.title"="Centrum urządzeń";
+/* Device Center list current device title */
+"device.center.current.device.title"="To urządzenie";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Inne urządzenia";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="Aktualne";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Skanowanie…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Uruchamianie…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Aktualizowanie…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="Brak przesyłania z kamery";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Zablokowane";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Niedostępny";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="Kopia zapasowa zatrzymana";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="Zatrzymane";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Poza limitem";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Błąd";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Zablokowane";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Zakończ powtarzanie";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3451,13 +3481,13 @@
 /* Create Schedule Meeting: The text is shown along with the selected interval. */
 "meetings.scheduleMeeting.create.interval.optionTitle"="Każdego";
 /* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
-"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Wybierz częstotliwość";
 /* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
-"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Wybierz odstęp tygodniowy";
 /* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
-"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Wybierz dzień tygodnia";
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
-"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Wybierz odstęp miesięczny";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
 "meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="W…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Pamięć: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="Aktualną subskrypcję można uaktualnić na naszej stronie [A]cennik[/A].";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Anuluj";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="Anulować \"%@\"?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="Spotkanie to zostanie umieszczone w zakładce Poprzednie spotkania, a wszyscy uczestnicy zostaną o nim powiadomieni.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Spotkanie to zostanie zarchiwizowane, a wszyscy uczestnicy zostaną o tym powiadomieni.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Anuluj i zarchiwizuj";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Anuluj spotkanie";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="Nie anuluj";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Spotkanie odwołane i zarchiwizowane";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Spotkanie odwołane";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Tylko to zdarzenie zostanie anulowane. Wszystkie pozostałe wydarzenia odbędą się zgodnie z planem.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Anuluj zdarzenie";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="%@ zdarzenie anulowane";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Odwołać zdarzenie i spotkanie?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Jest to jedyne wystąpienie powtarzającego się spotkania. Odwołanie tego zdarzenia spowoduje anulowanie spotkania. W przypadku anulowania spotkanie zostanie zarchiwizowane, a wszyscy uczestnicy zostaną o tym powiadomieni.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Jest to jedyne wystąpienie powtarzającego się spotkania. Odwołanie tego zdarzenia spowoduje anulowanie spotkania. W przypadku anulowania spotkanie zostanie umieszczone w kategorii Przeszłe spotkania, a wszyscy uczestnicy zostaną o tym powiadomieni.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Anulować zdarzenie %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ odwołał to spotkanie";

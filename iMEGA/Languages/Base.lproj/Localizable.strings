@@ -1424,10 +1424,6 @@
 "jumpToLatest"="Jump to latest";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="New messages";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu unread message";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu unread messages";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen. You can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page. To manage your subscriptions, simply tap on the App Store icon on your mobile device, sign in with your Apple ID at the bottom of the page (if you haven’t already done so) and then tap View ID. You’ll be taken to your account page where you can scroll down to Manage App Subscriptions. From there, you can select your MEGA Pro subscription and view your scheduled renewal date, choose a different subscription package or toggle the on-off switch to off to disable the auto-renewal of your subscription.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3424,31 +3420,31 @@
 "device.center.title"="Device centre";
 /* Device Center list current device title */
 "device.center.current.device.title"="This device";
-/* Device Center list other devices title*/
+/* Device Center list other devices title */
 "device.center.other.devices.title"="Other devices";
-/* Device Center backup up to date status*/
+/* Device Center backup up to date status */
 "device.center.backup.upToDate.status.message"="Up to date";
-/* Device Center backup scanning status*/
-"device.center.backup.scanning.status.message"="Scanning...";
-/* Device Center backup initialising status*/
-"device.center.backup.initialising.status.message"="Initialising...";
-/* Device Center backup updating status*/
-"device.center.backup.updating.status.message"="Updating...";
-/* Device Center backup no camera uploads status*/
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Scanning…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Initialising…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Updating…";
+/* Device Center backup no camera uploads status */
 "device.center.backup.noCameraUploads.status.message"="No camera uploads";
-/* Device Center backup disabled status*/
+/* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Disabled";
-/* Device Center backup offline status*/
+/* Device Center backup offline status */
 "device.center.backup.offline.status.message"="Offline";
-/* Device Center backup backup stopped status*/
+/* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Backup stopped";
-/* Device Center backup paused status*/
+/* Device Center backup paused status */
 "device.center.backup.paused.status.message"="Paused";
-/* Device Center backup out of quota status*/
+/* Device Center backup out of quota status */
 "device.center.backup.outOfQuota.status.message"="Out of quota";
-/* Device Center backup error status*/
+/* Device Center backup error status */
 "device.center.backup.error.status.message"="Error";
-/* Device Center backup blocked status*/
+/* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blocked";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
@@ -3551,7 +3547,7 @@
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Cancel";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Cancel %@?";
+"meetings.scheduled.cancelAlert.title"="Cancel “%@”?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="This meeting will be placed under Past meetings and all participants will be notified.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3574,11 +3570,11 @@
 "meetings.scheduled.cancelAlert.occurrence.success"="%@ occurrence cancelled";
 /* Title for alert cancelling last occurrence */
 "meetings.scheduled.cancelAlert.occurrence.last.title"="Cancel occurrence and meeting?";
-/* Description for alert cancelling last occurrence without messages in chat room*/
+/* Description for alert cancelling last occurrence without messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="This is the only occurrence of the recurring meeting. Cancelling this occurrence will cancel the meeting. If cancelled, the meeting will be archived and all participants will be notified.";
-/* Description for alert cancelling last occurrence with messages in chat room*/
+/* Description for alert cancelling last occurrence with messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="This is the only occurrence of the recurring meeting. Cancelling this occurrence will cancel the meeting. If cancelled, the meeting will be placed under Past meetings and all participants will be notified.";
 /* Title for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.title"="Cancel %@ occurrence?";
+"meetings.scheduled.cancelAlert.occurrence.title"="Cancel the %@ occurrence?";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="%@ cancelled this meeting";

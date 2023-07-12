@@ -182,6 +182,12 @@
 "folderLink"="Link cartella";
 /* Title for the album/collection link view */
 "albumLink"="Link dell'album";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Impossibile accedere all'album";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="Il link dell'album è stato rimosso o l'album è stato eliminato. Contatta la persona che ha condiviso il link con te.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="OK, capito";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Scarica";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="Salta all'ultimo";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Nuovi messaggi";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu messaggio non letto";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu messaggi non letti";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Gli abbonamenti sono rinnovati automaticamente per periodi successivi della stessa durata e allo stesso prezzo del periodo inizialmente scelto. Puoi disattivare il rinnovo automatico del tuo abbonamento MEGA Pro non oltre 24 ore prima che il tuo prossimo pagamento sia processato tramite la pagina delle impostazioni dell'account iTunes. Per gestire i tuoi abbonamenti, tocca sull'icona dell'App Store sul tuo dispositivo, effettua l'accesso con il tuo Apple ID in fondo alla pagina (se non l'hai già fatto) e poi clicca su Vedi ID. Ti porterà alla pagina del tuo account dove puoi scorrere fino alla Gestione degli abbonamenti. Da lì, puoi selezionare il tuo abbonamento MEGA Pro e vedere la data prevista per il rinnovo, scegliere un diverso abbonamento o disattivare il rinnovo automatico del tuo abbonamento.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3415,9 +3417,37 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Fotocamera";
 /* Device Center title */
-"device.center.title"="Device centre";
+"device.center.title"="Centro dei dispositivi";
+/* Device Center list current device title */
+"device.center.current.device.title"="This device";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Other devices";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="Aggiornato";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Scansione in corso…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Inizializzazione…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Aggiornamento…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="No camera uploads";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Disattivato";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Offline";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="Backup fermato";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="In pausa";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Oltre il limite";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Errore";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Bloccato";
 /* End Recurrence option title in creating schedule meeting screen. */
-"meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
+"meetings.scheduleMeeting.create.endRecurrence.title"="Termina evento";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="On date";
 /* End Recurrence never option title in creating schedule meeting screen. */
@@ -3473,9 +3503,9 @@
 /* Create Schedule Meeting: Month custom option - fifth week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="fifth";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
-"meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
+"meetings.scheduled.create.weekly.everyDay.footerNote"="Il meeting avrà luogo ogni giorno.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
-"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Ogni giorno";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Restore purchase";
 /* On Upgrade Account Plan screen. Button title to show terms and policies */
@@ -3493,7 +3523,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Save up to 16%% with yearly billing";
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Features of Pro plans";
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Caratteristiche dei piani Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Storage: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="Puoi effettuare l'upgrade del tuo abbonamento corrente sulla nostra [A]pagina dei prezzi[/A].";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Annulla";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="Annullare “%@”?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="Questo meeting verrà messo in Meeting passati e tutti i partecipanti saranno notificati.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Questo meeting verrà archiviato e tutti i partecipanti saranno notificati.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Annulla e archivia";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Annulla meeting";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="Non annullare";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Meeting annullato ed archiviato";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Meeting annullato";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Solo questo evento sarà annullato. Tutti gli altri eventi avranno luogo come programmato.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Annulla evento";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="Evento del %@ annullato";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Annullare l'evento e il meeting?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Questo è l'unico evento del meeting ricorrente. Annullando questo evento il meeting intero verrà eliminato. Se eliminato, il meeting verrà archiviato e verrà inviata una notifica a tutti i partecipanti.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Questo è l'unico evento del meeting ricorrente. Annullando questo evento il meeting intero verrà eliminato. Se eliminato, il meeting verrà spostato in Meeting passati e verrà inviata una notifica a tutti i partecipanti.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Annullare l'evento del %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ ha annullato questo meeting";
