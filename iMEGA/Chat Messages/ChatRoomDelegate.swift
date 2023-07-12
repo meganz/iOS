@@ -150,6 +150,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
     
     func onMessageLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
+        // Remove the new meeting management message from chatroom.
+        // This is because the information provided by SDK is interpreted wrongly by the app and hence filtering it for now.
+        guard message?.messageIndex != -1 || message?.type != .scheduledMeeting else {
+            return
+        }
+        
         if let chatMessage = message {
             if !chatMessage.isDeleted {
                 if supportedMessage(chatMessage) && !isDuplicateMessage(chatMessage) {

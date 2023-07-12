@@ -3578,3 +3578,5 @@
 "meetings.scheduled.cancelAlert.occurrence.title"="取消此%@事件？";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="%@已取消此会议";
+/* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
+"meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
