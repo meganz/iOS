@@ -11,7 +11,7 @@ class ContactOnMegaTableViewCell: UITableViewCell {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
 
-    weak var cellDelegate: ContactOnMegaTableViewCellDelegate?
+    weak var cellDelegate: (any ContactOnMegaTableViewCellDelegate)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,7 +32,7 @@ class ContactOnMegaTableViewCell: UITableViewCell {
         addButton.setTitleColor(UIColor.mnz_turquoise(for: traitCollection), for: .normal)
     }
 
-    func configure(for contact: ContactOnMega, delegate: ContactOnMegaTableViewCellDelegate) {
+    func configure(for contact: ContactOnMega, delegate: some ContactOnMegaTableViewCellDelegate) {
         nameLabel.text = contact.name
         emailLabel.text = contact.email
         avatarImageView.mnz_setImage(forUserHandle: contact.handle, name: contact.name)

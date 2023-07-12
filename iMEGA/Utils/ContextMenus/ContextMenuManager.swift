@@ -44,28 +44,28 @@ protocol AlbumMenuDelegate: AnyObject {
 }
 
 final class ContextMenuManager: NSObject {
-    weak var displayMenuDelegate: DisplayMenuDelegate?
-    weak var quickActionsMenuDelegate: QuickActionsMenuDelegate?
-    weak var uploadAddMenuDelegate: UploadAddMenuDelegate?
-    weak var rubbishBinMenuDelegate: RubbishBinMenuDelegate?
-    weak var chatMenuDelegate: ChatMenuDelegate?
-    weak var qrMenuDelegate: QRMenuDelegate?
-    weak var meetingContextMenuDelegate: MeetingContextMenuDelegate?
-    weak var filterMenuDelegate: FilterMenuDelegate?
-    weak var albumMenuDelegate: AlbumMenuDelegate?
+    weak var displayMenuDelegate: (any DisplayMenuDelegate)?
+    weak var quickActionsMenuDelegate: (any QuickActionsMenuDelegate)?
+    weak var uploadAddMenuDelegate: (any UploadAddMenuDelegate)?
+    weak var rubbishBinMenuDelegate: (any RubbishBinMenuDelegate)?
+    weak var chatMenuDelegate: (any ChatMenuDelegate)?
+    weak var qrMenuDelegate: (any QRMenuDelegate)?
+    weak var meetingContextMenuDelegate: (any MeetingContextMenuDelegate)?
+    weak var filterMenuDelegate: (any FilterMenuDelegate)?
+    weak var albumMenuDelegate: (any AlbumMenuDelegate)?
     
     private let createContextMenuUC: any CreateContextMenuUseCaseProtocol
     
-    init(displayMenuDelegate: DisplayMenuDelegate? = nil,
-         quickActionsMenuDelegate: QuickActionsMenuDelegate? = nil,
-         uploadAddMenuDelegate: UploadAddMenuDelegate? = nil,
-         rubbishBinMenuDelegate: RubbishBinMenuDelegate? = nil,
-         chatMenuDelegate: ChatMenuDelegate? = nil,
-         qrMenuDelegate: QRMenuDelegate? = nil,
-         meetingContextMenuDelegate: MeetingContextMenuDelegate? = nil,
-         filterMenuDelegate: FilterMenuDelegate? = nil,
+    init(displayMenuDelegate: (any DisplayMenuDelegate)? = nil,
+         quickActionsMenuDelegate: (any QuickActionsMenuDelegate)? = nil,
+         uploadAddMenuDelegate: (any UploadAddMenuDelegate)? = nil,
+         rubbishBinMenuDelegate: (any RubbishBinMenuDelegate)? = nil,
+         chatMenuDelegate: (any ChatMenuDelegate)? = nil,
+         qrMenuDelegate: (any QRMenuDelegate)? = nil,
+         meetingContextMenuDelegate: (any MeetingContextMenuDelegate)? = nil,
+         filterMenuDelegate: (any FilterMenuDelegate)? = nil,
          createContextMenuUseCase: any CreateContextMenuUseCaseProtocol,
-         albumMenuDelegate: AlbumMenuDelegate? = nil) {
+         albumMenuDelegate: (any AlbumMenuDelegate)? = nil) {
         self.displayMenuDelegate = displayMenuDelegate
         self.quickActionsMenuDelegate = quickActionsMenuDelegate
         self.uploadAddMenuDelegate = uploadAddMenuDelegate

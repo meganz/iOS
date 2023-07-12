@@ -10,7 +10,7 @@ import UIKit
 @objc class ChatNotificationControl: PushNotificationControl {
     // MARK: - Interface methods.
 
-    @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: ChatIdEntity, isMeeting: Bool) {
+    @objc func configure(cell: any ChatNotificationControlCellProtocol, chatId: ChatIdEntity, isMeeting: Bool) {
         
         cell.nameLabel?.text = isMeeting
             ? Strings.Localizable.Meetings.Info.meetingNotifications

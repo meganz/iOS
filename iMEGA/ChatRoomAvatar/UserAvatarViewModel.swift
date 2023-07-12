@@ -6,7 +6,7 @@ final class UserAvatarViewModel: ObservableObject {
     private let chatId: MEGAHandle
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
-    private var userImageUseCase: UserImageUseCaseProtocol
+    private var userImageUseCase: any UserImageUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private var isRightToLeftLanguage: Bool?
@@ -22,7 +22,7 @@ final class UserAvatarViewModel: ObservableObject {
          chatId: MEGAHandle,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         userImageUseCase: UserImageUseCaseProtocol,
+         userImageUseCase: some UserImageUseCaseProtocol,
          chatUseCase: any ChatUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol) {
         self.userId = userId

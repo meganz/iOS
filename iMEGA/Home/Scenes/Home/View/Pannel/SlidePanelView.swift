@@ -85,7 +85,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     
     // MARK: - SlidePanelDelegate
     
-    weak var delegate: SlidePanelDelegate?
+    weak var delegate: (any SlidePanelDelegate)?
     
     // MARK: - Initialization
     

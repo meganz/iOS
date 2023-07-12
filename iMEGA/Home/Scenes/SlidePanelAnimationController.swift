@@ -46,9 +46,9 @@ final class SlidePanelAnimationController {
 
     // MARK: - Delegate
 
-    weak var delegate: SlidePanelAnimationControllerDelegate?
+    weak var delegate: (any SlidePanelAnimationControllerDelegate)?
 
-    init(delegate: SlidePanelAnimationControllerDelegate) {
+    init(delegate: some SlidePanelAnimationControllerDelegate) {
         self.delegate = delegate
     }
 

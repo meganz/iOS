@@ -34,19 +34,19 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
 
     func registerMEGARequestDelegate() async {
-        sdk.add(self as MEGARequestDelegate)
+        sdk.add(self as (any MEGARequestDelegate))
     }
     
     func deRegisterMEGARequestDelegate() async {
-        sdk.remove(self as MEGARequestDelegate)
+        sdk.remove(self as (any MEGARequestDelegate))
     }
     
     func registerMEGAGlobalDelegate() async {
-        sdk.add(self as MEGAGlobalDelegate)
+        sdk.add(self as (any MEGAGlobalDelegate))
     }
     
     func deRegisterMEGAGlobalDelegate() async {
-        sdk.remove(self as MEGAGlobalDelegate)
+        sdk.remove(self as (any MEGAGlobalDelegate))
     }
 
     var currentUserHandle: HandleEntity? {

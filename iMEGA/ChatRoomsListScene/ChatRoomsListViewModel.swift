@@ -16,7 +16,7 @@ enum ChatViewType {
 }
 
 final class ChatRoomsListViewModel: ObservableObject {
-    let router: ChatRoomsListRouting
+    let router: any ChatRoomsListRouting
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let contactsUseCase: any ContactsUseCaseProtocol
@@ -90,7 +90,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
 
-    init(router: ChatRoomsListRouting,
+    init(router: some ChatRoomsListRouting,
          chatUseCase: any ChatUseCaseProtocol,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
          contactsUseCase: any ContactsUseCaseProtocol,
@@ -101,7 +101,7 @@ final class ChatRoomsListViewModel: ObservableObject {
          chatType: ChatViewType = .regular,
          chatViewMode: ChatViewMode = .chats,
          permissionHandler: some DevicePermissionsHandling,
-         permissionAlertRouter: PermissionAlertRouting
+         permissionAlertRouter: some PermissionAlertRouting
     ) {
         self.router = router
         self.chatUseCase = chatUseCase

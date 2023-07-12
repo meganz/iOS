@@ -46,7 +46,7 @@ class EnterEmailViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { (_) in
             self.tagsFieldHeightLayoutConstraint.constant = self.tagsField.frame.height

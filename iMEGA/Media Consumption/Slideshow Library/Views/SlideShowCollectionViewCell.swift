@@ -3,7 +3,7 @@ import UIKit
 
 final class SlideShowCollectionViewCell: UICollectionViewCell {
     let imageScrollView = ImageScrollView()
-    private var slideshowInteraction: SlideShowInteraction?
+    private var slideshowInteraction: (any SlideShowInteraction)?
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
@@ -23,7 +23,7 @@ final class SlideShowCollectionViewCell: UICollectionViewCell {
         addGestureRecognizer(singleTapGesture)
     }
     
-    func update(with mediaEntity: SlideShowMediaEntity, andInteraction slideshowInteraction: SlideShowInteraction) {
+    func update(with mediaEntity: SlideShowMediaEntity, andInteraction slideshowInteraction: some SlideShowInteraction) {
         self.slideshowInteraction = slideshowInteraction
         imageScrollView.setup()
         guard let image = mediaEntity.image else { return }

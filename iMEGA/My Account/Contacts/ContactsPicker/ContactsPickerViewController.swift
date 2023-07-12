@@ -22,7 +22,7 @@ class ContactsPickerViewController: UIViewController {
     private lazy var searchingContacts = [DeviceContact]()
     private lazy var selectedContacts = Set<DeviceContact>()
 
-    private var delegate: ContactsPickerViewControllerDelegate?
+    private var delegate: (any ContactsPickerViewControllerDelegate)?
 
     private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(selectAllTapped)
     )
@@ -30,7 +30,7 @@ class ContactsPickerViewController: UIViewController {
     private lazy var sendBarButton: UIBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(sendTapped)
     )
     
-    @objc class func instantiate(withContactKeys keys: [String], delegate: ContactsPickerViewControllerDelegate) -> ContactsPickerViewController {
+    @objc class func instantiate(withContactKeys keys: [String], delegate: any ContactsPickerViewControllerDelegate) -> ContactsPickerViewController {
         guard let contactsPickerVC = UIStoryboard(name: "ContactsPicker", bundle: nil).instantiateViewController(withIdentifier: "ContactsPickerViewControllerID") as? ContactsPickerViewController else {
             fatalError("Could not instantiate ContactsPickerViewController")
         }

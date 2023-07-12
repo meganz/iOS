@@ -10,7 +10,7 @@ protocol UserBannerUseCaseProtocol {
 
 struct UserBannerUseCase: UserBannerUseCaseProtocol {
 
-    let userBannerRepository: BannerRepositoryProtocol
+    let userBannerRepository: any BannerRepositoryProtocol
 
     // MARK: - UserBannerUseCaseProtocol
 

@@ -50,7 +50,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     let permissionHandler: any DevicePermissionsHandling
     
     init(chatListItem: ChatListItemEntity,
-         router: ChatRoomsListRouting,
+         router: some ChatRoomsListRouting,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
          userImageUseCase: any UserImageUseCaseProtocol,

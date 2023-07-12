@@ -9,7 +9,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var chatUseCase: any ChatUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
-    private let router: MeetingInfoRouting
+    private let router: any MeetingInfoRouting
     private var chatRoom: ChatRoomEntity
     private var subscriptions = Set<AnyCancellable>()
 
@@ -20,7 +20,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
     @Published var showExpandCollapseButton = true
     @Published var listExpanded = false
 
-    init(router: MeetingInfoRouting,
+    init(router: some MeetingInfoRouting,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
          chatUseCase: any ChatUseCaseProtocol,

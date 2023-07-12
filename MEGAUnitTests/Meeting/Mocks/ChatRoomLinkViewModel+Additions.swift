@@ -3,7 +3,7 @@ import MEGADomain
 
 extension ChatRoomLinkViewModel {
     convenience init(
-        router: MeetingInfoRouting = MockMeetingInfoRouter(),
+        router: some MeetingInfoRouting = MockMeetingInfoRouter(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         scheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
         chatLinkUseCase: any ChatLinkUseCaseProtocol = MockChatLinkUseCase(),

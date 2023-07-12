@@ -188,7 +188,7 @@ class GetLinkViewController: UIViewController {
 
     private func loadNodes() {
         if !MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
-            MEGASdkManager.sharedMEGASdk().add(self as MEGARequestDelegate)
+            MEGASdkManager.sharedMEGASdk().add(self as any MEGARequestDelegate)
             
             MEGAPurchase.sharedInstance()?.purchaseDelegateMutableArray.add(self)
             MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.add(self)
@@ -507,7 +507,7 @@ class GetLinkViewController: UIViewController {
     }
     
     private func removeDelegates() {
-        MEGASdkManager.sharedMEGASdk().remove(self as MEGARequestDelegate)
+        MEGASdkManager.sharedMEGASdk().remove(self as any MEGARequestDelegate)
         
         MEGAPurchase.sharedInstance()?.purchaseDelegateMutableArray.remove(self)
         MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.remove(self)
