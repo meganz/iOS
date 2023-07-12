@@ -108,10 +108,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>يمكن لأي شخص لديه هذا الرابط عرض بياناتك وتنزيلها</string>
         <key>one</key>
-        <string>Anyone with this link can view and download your data</string>
+        <string>يمكن لأي شخص لديه هذا الرابط عرض بياناتك وتنزيلها</string>
+        <key>two</key>
+        <string>يمكن لأي شخص لديه هذه الروابط عرض بياناتك وتنزيلها</string>
+        <key>few</key>
+        <string>يمكن لأي شخص لديه هذه الروابط عرض بياناتك وتنزيلها</string>
+        <key>many</key>
+        <string>يمكن لأي شخص لديه هذه الروابط عرض بياناتك وتنزيلها</string>
         <key>other</key>
-        <string>Anyone with these links can view and download your data</string>
+        <string>يمكن لأي شخص لديه هذه الروابط عرض بياناتك وتنزيلها</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -148,10 +156,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تم إنشاء الرابط و نسخه إلى الحافظة</string>
         <key>one</key>
-        <string>Link created and copied to your clipboard</string>
+        <string>تم إنشاء الرابط و نسخه إلى الحافظة</string>
+        <key>two</key>
+        <string>تم إنشاء الروابط و نسخهم إلى الحافظة</string>
+        <key>few</key>
+        <string>تم إنشاء الروابط و نسخهم إلى الحافظة</string>
+        <key>many</key>
+        <string>تم إنشاء الروابط و نسخهم إلى الحافظة</string>
         <key>other</key>
-        <string>Links created and copied to your clipboard</string>
+        <string>تم إنشاء الروابط و نسخهم إلى الحافظة</string>
       </dict>
     </dict>
     <key>nameCollision.applyToAll</key>
@@ -692,10 +708,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>”[A]“ و %d أخر</string>
         <key>one</key>
-        <string>“[A]” and %d more</string>
+        <string>”[A]“ و %d أخر </string>
+        <key>two</key>
+        <string>”[A]“ و %d أخران</string>
+        <key>few</key>
+        <string>”[A]“ و %d أخرون </string>
+        <key>many</key>
+        <string>”[A]“ و %d أخرون </string>
         <key>other</key>
-        <string>“[A]” and %d more</string>
+        <string>”[A]“ و %d أخرون </string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -3420,10 +3444,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d يوم متبقي</string>
         <key>one</key>
-        <string>%d day left</string>
+        <string>%d يوم متبقي</string>
+        <key>two</key>
+        <string>%d يومان متبقيان</string>
+        <key>few</key>
+        <string>%d أيام متبقية</string>
+        <key>many</key>
+        <string>%d يوماً متبقية</string>
         <key>other</key>
-        <string>%d days left</string>
+        <string>%d يوم متبقية</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -3436,10 +3468,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تنتهي صلاحية المكافأة في %d يوم</string>
         <key>one</key>
-        <string>Bonus expires in %d day.</string>
+        <string>تنتهي صلاحية المكافأة في %d يوم</string>
+        <key>two</key>
+        <string>تنتهي صلاحية المكافأة في %d يومين</string>
+        <key>few</key>
+        <string>تنتهي صلاحية المكافأة في %d أيام</string>
+        <key>many</key>
+        <string>تنتهي صلاحية المكافأة في %d يوماً</string>
         <key>other</key>
-        <string>Bonus expires in %d days.</string>
+        <string>تنتهي صلاحية المكافأة في %d يوم</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -3620,10 +3660,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتكرر الاجتماع كل %d يوم.</string>
         <key>one</key>
-        <string>Meeting will occur every day.</string>
+        <string>سيتكرر الاجتماع كل يوم.</string>
+        <key>two</key>
+        <string>سيتكرر الاجتماع كل %d يومين.</string>
+        <key>few</key>
+        <string>سيتكرر الاجتماع كل %d أيام.</string>
+        <key>many</key>
+        <string>سيتكرر الاجتماع كل %d يوماً.</string>
         <key>other</key>
-        <string>Meeting will occur every %d days.</string>
+        <string>سيتكرر  الاجتماع كل %d يوم.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -3636,10 +3684,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتكرر الاجتماع كل %d أسبوع يوم [weekDayName]. </string>
         <key>one</key>
-        <string>Meeting will occur every week on [weekDayName].</string>
+        <string>سيتكرر الاجتماع كل أسبوع يوم [weekDayName].</string>
+        <key>two</key>
+        <string>سيتكرر الاجتماع كل %d أسبوعين يوم [weekDayName].</string>
+        <key>few</key>
+        <string>سيتكرر الاجتماع كل %d أسابيع يوم [weekDayName].</string>
+        <key>many</key>
+        <string>سيتكرر الاجتماع كل %d أسبوعاً يوم [weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayName].</string>
+        <string>سيتكرر الاجتماع كل %d أسبوع يوم [weekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
@@ -3652,10 +3708,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتكرر الاجتماع كل %d أسبوع يوم [weekDayNames] و [lastWeekDayName].</string>
         <key>one</key>
-        <string>Meeting will occur every week on [weekDayNames] and [lastWeekDayName].</string>
+        <string>سيتكرر الاجتماع كل أسبوع يوم [weekDayNames] و [lastWeekDayName].</string>
+        <key>two</key>
+        <string>سيتكرر الاجتماع كل %d أسبوعين يوم [weekDayNames] و [lastWeekDayName].</string>
+        <key>few</key>
+        <string>سيتكرر الاجتماع كل %d أسابيع يوم [weekDayNames] و [lastWeekDayName].</string>
+        <key>many</key>
+        <string>سيتكرر الاجتماع كل %d أسبوعاً يوم [weekDayNames] و [lastWeekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayNames] and [lastWeekDayName].</string>
+        <string>سيتكرر الاجتماع كل %d أسبوع يوم [weekDayNames] و [lastWeekDayName]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
@@ -3668,10 +3732,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتكرر الاجتماع كل %d شهر في [ordinalDay].</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDay].</string>
+        <string>سيتكرر الاجتماع كل شهر في [ordinalDay].</string>
+        <key>two</key>
+        <string>سيتكرر الاجتماع كل %d شهرين في [ordinalDay].</string>
+        <key>few</key>
+        <string>سيتكرر الاجتماع كل %d أشهر في [ordinalDay].</string>
+        <key>many</key>
+        <string>سيتكرر الاجتماع كل %d شهراً في [ordinalDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDay].</string>
+        <string>سيتكرر الاجتماع كل %d شهر في [ordinalDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
@@ -3684,10 +3756,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتكرر الاجتماع كل %d شهر في [ordinalDays] و [ordinalLastDay].</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDays] and [ordinalLastDay].</string>
+        <string>سيتكرر الاجتماع كل شهر في [ordinalDays] و [ordinalLastDay].</string>
+        <key>two</key>
+        <string>سيتكرر الاجتماع كل %d شهرين في [ordinalDays] و [ordinalLastDay].</string>
+        <key>few</key>
+        <string>سيتكرر الاجتماع كل %d أشهر في [ordinalDays] و [ordinalLastDay].</string>
+        <key>many</key>
+        <string>سيتكرر الاجتماع كل %d شهراً في [ordinalDays] و [ordinalLastDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDays] and [ordinalLastDay].</string>
+        <string>سيتكرر الاجتماع كل %d شهر في [ordinalDays] و [ordinalLastDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -3700,10 +3780,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتكرر الاجتماع كل %d شهر في [weekNumber] [weekDayName].</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [weekNumber] [weekDayName].</string>
+        <string>سيتكرر الاجتماع كل شهر في [weekNumber] [weekDayName].</string>
+        <key>two</key>
+        <string>سيتكرر الاجتماع كل %d شهرين في [weekNumber] [weekDayName].</string>
+        <key>few</key>
+        <string>سيتكرر الاجتماع كل %d أشهر في [weekNumber] [weekDayName].</string>
+        <key>many</key>
+        <string>سيتكرر الاجتماع كل %d شهراً في [weekNumber] [weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [weekNumber] [weekDayName].</string>
+        <string>سيتكرر الاجتماع كل %d شهر في [weekNumber] [weekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -3716,10 +3804,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>كل %d أسبوع في [weekDayNames]</string>
         <key>one</key>
-        <string>Every week on [weekDayNames]</string>
+        <string>كل أسبوع في [weekDayNames]</string>
+        <key>two</key>
+        <string>كل %d أسبوعين في [weekDayNames]</string>
+        <key>few</key>
+        <string>كل %d أسابيع في [weekDayNames]</string>
+        <key>many</key>
+        <string>كل %d أسبوعاً في [weekDayNames]</string>
         <key>other</key>
-        <string>Every %d weeks on [weekDayNames]</string>
+        <string>كل %d أسبوع في [weekDayNames]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
@@ -3732,10 +3828,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>كل %d شهر في [ordinalNumber]</string>
         <key>one</key>
-        <string>Every month on the [ordinalNumber]</string>
+        <string>كل شهر في [ordinalNumber]</string>
+        <key>two</key>
+        <string>كل %d شهرين في [ordinalNumber]</string>
+        <key>few</key>
+        <string>كل %d أشهر في [ordinalNumber]</string>
+        <key>many</key>
+        <string>كل %d شهراً في [ordinalNumber]</string>
         <key>other</key>
-        <string>Every %d months on the [ordinalNumber]</string>
+        <string>كل %d شهر في [ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -3748,10 +3852,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>كل %d شهر في [ordinalNumber] [weekDayName]</string>
         <key>one</key>
-        <string>Every month, [ordinalNumber] [weekDayName]</string>
+        <string>كل شهر في [ordinalNumber][weekDayName]</string>
+        <key>two</key>
+        <string>كل %d شهرين في [ordinalNumber] [weekDayName]</string>
+        <key>few</key>
+        <string>كل %d أشهر في [ordinalNumber] [weekDayName]</string>
+        <key>many</key>
+        <string>كل %d شهراً في [ordinalNumber] [weekDayName]</string>
         <key>other</key>
-        <string>Every %d months, [ordinalNumber] [weekDayName]</string>
+        <string>كل %d شهر في [ordinalNumber] [weekDayName] </string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -3764,10 +3876,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>كل %d يوم</string>
         <key>one</key>
-        <string>Daily</string>
+        <string>يومياً</string>
+        <key>two</key>
+        <string>كل %d يومين</string>
+        <key>few</key>
+        <string>كل %d أيام</string>
+        <key>many</key>
+        <string>كل %d يوماً</string>
         <key>other</key>
-        <string>Every %d days</string>
+        <string>كل %d يوم</string>
       </dict>
     </dict>
   </dict>

@@ -85,9 +85,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Anyone with this link can view and download your data</string>
+        <string>Chiunque con questo link può visualizzare e scaricare i tuoi dati</string>
+        <key>many</key>
+        <string>Chiunque con questi link può visualizzare e scaricare i tuoi dati</string>
         <key>other</key>
-        <string>Anyone with these links can view and download your data</string>
+        <string>Chiunque con questi link può visualizzare e scaricare i tuoi dati</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -2603,9 +2605,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bonus expires in %d day.</string>
+        <string>Il bonus scade tra %d giorno.</string>
+        <key>many</key>
+        <string>Il bonus scade tra %d di giorni.</string>
         <key>other</key>
-        <string>Bonus expires in %d days.</string>
+        <string>Il bonus scade tra %d giorni.</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2745,9 +2749,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every day.</string>
+        <string>Il meeting avrà luogo ogni giorno.</string>
+        <key>many</key>
+        <string>Il meeting avrà luogo ogni %d di giorni. </string>
         <key>other</key>
-        <string>Meeting will occur every %d days.</string>
+        <string>Il meeting avrà luogo ogni %d giorni.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -2761,9 +2767,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every week on [weekDayName].</string>
+        <string>Il meeting avrà luogo ogni settimana di [weekDayName].</string>
+        <key>many</key>
+        <string>Il meeting avrà luogo ogni %d di settimane di [weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayName].</string>
+        <string>Il meeting avrà luogo ogni %d settimane di [weekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
@@ -2777,9 +2785,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every week on [weekDayNames] and [lastWeekDayName].</string>
+        <string>Il meeting avrà luogo ogni settimana di [weekDayNames] e di [lastWeekDayName].</string>
+        <key>many</key>
+        <string>Il meeting avrà luogo ogni %d di settimane di [weekDayNames] e di [lastWeekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayNames] and [lastWeekDayName].</string>
+        <string>Il meeting avrà luogo ogni %d settimane di [weekDayNames] e di [lastWeekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
@@ -2793,9 +2803,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDay].</string>
+        <string>Il meeting avrà luogo ogni mese il giorno [ordinalDay].</string>
+        <key>many</key>
+        <string>Il meeting avrà luogo ogni %d di mesi il giorno [ordinalDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDay].</string>
+        <string>Il meeting avrà luogo ogni %d mesi il giorno [ordinalDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
@@ -2809,9 +2821,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDays] and [ordinalLastDay].</string>
+        <string>Il meeting avrà luogo ogni mese nei giorni [ordinalDays] e [ordinalLastDay].</string>
+        <key>many</key>
+        <string>Il meeting avrà luogo ogni %d di mesi nei giorni [ordinalDays] e [ordinalLastDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDays] and [ordinalLastDay].</string>
+        <string>Il meeting avrà luogo ogni %d mesi nei giorni [ordinalDays] e [ordinalLastDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -2841,9 +2855,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every week on [weekDayNames]</string>
+        <string>Ogni settimana di [weekDayNames]</string>
+        <key>many</key>
+        <string>Ogni %d di settimane di [weekDayNames]</string>
         <key>other</key>
-        <string>Every %d weeks on [weekDayNames]</string>
+        <string>Ogni %d settimane di [weekDayNames]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
@@ -2857,9 +2873,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every month on the [ordinalNumber]</string>
+        <string>Ogni mese il giorno [ordinalNumber]</string>
+        <key>many</key>
+        <string>Ogni %d di mesi il giorno [ordinalNumber]</string>
         <key>other</key>
-        <string>Every %d months on the [ordinalNumber]</string>
+        <string>Ogni %d mesi il giorno [ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -2889,9 +2907,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Daily</string>
+        <string>Ogni giorno</string>
+        <key>many</key>
+        <string>Ogni %d di giorni</string>
         <key>other</key>
-        <string>Every %d days</string>
+        <string>Ogni %d giorni</string>
       </dict>
     </dict>
   </dict>

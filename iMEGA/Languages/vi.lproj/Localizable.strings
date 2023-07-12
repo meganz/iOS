@@ -182,6 +182,12 @@
 "folderLink"="Đường liên kết thư mục";
 /* Title for the album/collection link view */
 "albumLink"="Đường liên kết album";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="Không thể truy cập album";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="Đường liên kết tới album đã bị loại bỏ hoặc album đã bị xóa. Liên hệ với người đã chia sẻ đường liên kết cho bạn.";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="OK, hiểu rồi";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="Đi đến dòng cuối";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Có tin nhắn mới";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu tin nhắn chưa đọc";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu tin nhắn chưa đọc";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Các gói thuê bao sẽ được tự động gia hạn chu kỳ kế tiếp vào cùng thời gian và cùng mức giá như thời gian ban đầu khi gói được mua lần đầu tiên. Quý khách có thể tắt tự động gia hạn thuê bao MEGA Pro ít nhất trước 24 giờ trước thời điểm thanh toán đăng ký tiếp theo thông qua trang cài đặt tài khoản iTunes của quý khách. Để quản lý đăng ký, chỉ cần nhấp vào biểu tượng App Store trên điện thoại, đăng nhập với Apple ID của quý khách, ở dưới cùng của trang. Sau đó chạm vào Xem ID. Quý khách sẽ được đưa đến trang tài khoản, rồi di chuyển xuống đến mục Manage App Subscriptions. Từ đó, chọn vào thuê bao MEGA Pro của quý khách và xem ngày gia hạn dự kiến tiếp theo, chọn một gói thuê bao khác hoặc chuyển đổi chuyển đổi bật-tắt để ngắt việc tự động gia hạn thuê bao.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="Camêra";
 /* Device Center title */
 "device.center.title"="Trung tâm thiết bị";
+/* Device Center list current device title */
+"device.center.current.device.title"="Thiết bị này";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Các thiết bị khác";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="Đã cập nhật";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="Đang quét…";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="Đang khởi tạo…";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="Đang cập nhật…";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="Không có đăng tải camêra";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="Đã vô hiệu";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="Ngoại tuyến";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="Sao lưu chấm dứt";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="Đã tạm dừng";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="Hết băng thông";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="Lỗi";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="Bị chặn";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Ngừng tái diễn";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Không gian: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Truyền tải: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="Bạn có thể nâng cấp gói đăng ký hiện tại của mình trong [A]trang bảng giá[/A] của chúng tôi.";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="Hủy";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="Hủy “%@”?";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="Cuộc họp này sẽ được liệt vào danh sách Các cuộc họp trước đây và tất cả các thành viên sẽ nhận được thông báo.";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Cuộc họp này sẽ được liệt vào bảo lưu và tất cả các thành viên sẽ nhận được thông báo.";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Hủy bỏ và bảo lưu";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="Hủy bỏ cuộc họp";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="Đừng hủy";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Đã hủy và bảo lưu cuộc họp";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="Cuộc họp đã hủy";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="Chỉ có mỗi thời điểm tái diễn này sẽ bị hủy. Còn tất cả các thời điểm tái diễn khác sẽ vẫn diễn ra như lịch trình.";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Hủy bỏ thời điểm tái diễn";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="Thời điểm tái diễn %@ đã bị hủy";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Hủy bỏ lần tái diễn và cuộc họp?";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Đây là lần tái diễn duy nhất của cuộc họp định kỳ. Hủy bỏ lần tái diễn này sẽ hủy bỏ toàn bộ cuộc họp. Nếu bị hủy, cuộc họp sẽ được liệt vào trong bảo lưu và tất cả những người tham gia sẽ được thông báo.";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Đây là lần tái diễn duy nhất của cuộc họp định kỳ. Hủy bỏ lần tái diễn này sẽ hủy bỏ toàn bộ cuộc họp. Nếu bị hủy, cuộc họp sẽ được liệt vào trong Các cuộc họp trước đây và tất cả những người tham gia sẽ được thông báo.";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Hủy bỏ thời điểm tái diễn %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ đã hủy bỏ cuộc họp này";

@@ -182,6 +182,12 @@
 "folderLink"="資料夾連結";
 /* Title for the album/collection link view */
 "albumLink"="相簿連結";
+/* Alert title for invalid album link */
+"albumLink.invalidAlbum.alert.title"="無法存取相簿";
+/* Alert message for invalid album link */
+"albumLink.invalidAlbum.alert.message"="相簿連結已被移除或相簿已被刪除。請聯繫與您共享連結的人。";
+/* Alert dismiss button title for invalid album link */
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="好的，明白了";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="下載";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -1418,10 +1424,6 @@
 "jumpToLatest"="跳至最新";
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="新訊息";
-/* Label in chat rooms that indicates how many messages are unread. Singular and as short as possible. */
-"unreadMessage"="%lu則未讀訊息";
-/* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
-"unreadMessages"="%lu則未讀訊息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="訂閱將會自動更新，續期與第一次訂閱的相同，價格也相同。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的自動更新訂閱，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，在頁面下方以您的Apple ID登入（如果您尚未登入），然後點擊查看帳號。您將前往您的帳戶頁面，向下捲動就可以看到應用程式訂閱管理。在那裡您可以選擇你的MEGA Pro訂閱和查看續訂日期、選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
@@ -1741,7 +1743,7 @@
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
 "To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="欲發送語音留言並進行加密的語音與視訊通話，請允許MEGA存取您的相機與麥克風權限";
 /* Title label that explains that the user is going to be asked for the notifications permission */
-"Enable Notifications"="啟用提醒通知";
+"Enable Notifications"="啟用通知提醒";
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="我們希望向您發送通知，以便您能在裝置上立即的收到最新訊息。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
@@ -3416,6 +3418,34 @@
 "chat.call.quickAction.camera"="相機";
 /* Device Center title */
 "device.center.title"="Device centre";
+/* Device Center list current device title */
+"device.center.current.device.title"="This device";
+/* Device Center list other devices title */
+"device.center.other.devices.title"="Other devices";
+/* Device Center backup up to date status */
+"device.center.backup.upToDate.status.message"="最新的";
+/* Device Center backup scanning status */
+"device.center.backup.scanning.status.message"="正在掃描⋯";
+/* Device Center backup initialising status */
+"device.center.backup.initialising.status.message"="正在初始化⋯";
+/* Device Center backup updating status */
+"device.center.backup.updating.status.message"="正在更新⋯";
+/* Device Center backup no camera uploads status */
+"device.center.backup.noCameraUploads.status.message"="No camera uploads";
+/* Device Center backup disabled status */
+"device.center.backup.disabled.status.message"="停用";
+/* Device Center backup offline status */
+"device.center.backup.offline.status.message"="離線";
+/* Device Center backup backup stopped status */
+"device.center.backup.backupStopped.status.message"="備份已停止";
+/* Device Center backup paused status */
+"device.center.backup.paused.status.message"="已暫停";
+/* Device Center backup out of quota status */
+"device.center.backup.outOfQuota.status.message"="超出配額";
+/* Device Center backup error status */
+"device.center.backup.error.status.message"="錯誤";
+/* Device Center backup blocked status */
+"device.center.backup.blocked.status.message"="封鎖";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="結束重複";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3512,3 +3542,39 @@
 "upgradeAccountPlan.plan.details.storage"="Storage: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
+/* On Upgrade Account Plan screen. Footer message with pricing page link. */
+"upgradeAccountPlan.footer.message.pricingPage"="You can upgrade your current subscription on our [A]pricing page[/A].";
+/* Button title to cancel an scheduled meeting from context menu */
+"meetings.scheduled.contextMenu.cancel"="取消";
+/* Title for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.title"="是否取消「%@」？";
+/* Description for alert cancelling an scheduled meeting with messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withMessages"="此會議將被放在過去的會議中，並通知所有與會者。";
+/* Description for alert cancelling an scheduled meeting without messages in the chat room */
+"meetings.scheduled.cancelAlert.description.withoutMessages"="此會議將被封存，並通知所有與會者。";
+/* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="取消並封存";
+/* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.option.confirm.withMessages"="取消會議";
+/* Don't cancel option for alert cancelling an scheduled meeting */
+"meetings.scheduled.cancelAlert.option.dontCancel"="不要取消";
+/* Success message when cancelling an scheduled meeting without messages in chat room */
+"meetings.scheduled.cancelAlert.success.withoutMessages"="會議已取消並封存";
+/* Success message when cancelling an scheduled meeting with messages in chat room */
+"meetings.scheduled.cancelAlert.success.withMessages"="會議已取消";
+/* Description for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.description"="只有此事件會被取消。所有其它事件將按照排程進行。";
+/* Confirm cancel option for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="取消事件";
+/* Success message when cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.success"="%@事件已取消";
+/* Title for alert cancelling last occurrence */
+"meetings.scheduled.cancelAlert.occurrence.last.title"="要取消事件和會議？";
+/* Description for alert cancelling last occurrence without messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="這是定期會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被封存，而且所有參與者都將收到通知。";
+/* Description for alert cancelling last occurrence with messages in chat room */
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="這是定期會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被放在過去的會議中，而且所有參與者都將收到通知。";
+/* Title for alert cancelling an occurrence */
+"meetings.scheduled.cancelAlert.occurrence.title"="Cancel the %@ occurrence?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled"="%@ cancelled this meeting";

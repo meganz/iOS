@@ -2493,9 +2493,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Das Meeting findet am [ordinalDay] jedes Monats statt.</string>
+        <string>Das Meeting findet am [ordinalDay]. jedes Monats statt.</string>
         <key>other</key>
-        <string>Das Meeting findet alle %d Monate am [ordinalDay] des Monats statt.</string>
+        <string>Das Meeting findet alle %d Monate am [ordinalDay]. des Monats statt.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
