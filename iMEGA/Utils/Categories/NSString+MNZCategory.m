@@ -801,16 +801,6 @@ static NSString* const B = @"[B]";
 
 #pragma mark - File names and extensions
 
-- (NSString *)mnz_lastExtensionInLowercase {
-    NSString *extension;
-    NSMutableArray<NSString *> *fileNameComponents = [[self.lastPathComponent componentsSeparatedByString:@"."] mutableCopy];
-    if (fileNameComponents.count > 1) {
-        extension = fileNameComponents.lastObject.lowercaseString;
-    }
-    
-    return extension;
-}
-
 - (NSString *)mnz_sequentialFileNameInParentNode:(MEGANode *)parentNode {
     NSString *nameWithoutExtension = self.stringByDeletingPathExtension;
     NSString *extension = self.pathExtension;
