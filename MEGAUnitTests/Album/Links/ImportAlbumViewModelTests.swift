@@ -34,6 +34,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
             publicAlbumUseCase: MockPublicAlbumUseCase(nodesResult: .success(photos)))
+        XCTAssertFalse(sut.isPhotosLoaded)
         
         let exp = expectation(description: "link status should change correctly")
         sut.$publicLinkStatus
@@ -51,6 +52,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.photoLibraryContentViewModel.library,
                        photos.toPhotoLibrary(withSortType: .newest))
+        XCTAssertTrue(sut.isPhotosLoaded)
     }
     
     func testLoadPublicAlbum_onSharedAlbumError_shouldShowCannotAccessAlbumAlert() throws {
@@ -77,16 +79,16 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showCannotAccessAlbumAlert)
     }
     
-    func testLoadWithNewDecryptionKey_validKeyEntered_shouldLoadAlbumContents() throws {
+    func testLoadWithNewDecryptionKey_validKeyEntered_shouldLoadAlbumContentsAndPreserveOrignalURL() throws {
+        let link = try requireDecryptionKeyAlbumLink
         let photos = makePhotos()
         let sut = makeImportAlbumViewModel(
-            publicLink: try requireDecryptionKeyAlbumLink,
+            publicLink: link,
             publicAlbumUseCase: MockPublicAlbumUseCase(nodesResult: .success(photos)))
         sut.publicLinkStatus = .requireDecryptionKey
         sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
         
         let exp = expectation(description: "link status should change correctly")
-        var linkStatusResult = [AlbumPublicLinkStatus]()
         sut.$publicLinkStatus
             .dropFirst()
             .collect(2)
@@ -102,6 +104,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.photoLibraryContentViewModel.library,
                        photos.toPhotoLibrary(withSortType: .newest))
+        XCTAssertEqual(sut.publicLink, link)
     }
 
     func testLoadWithNewDecryptionKey_invalidKeyEntered_shouldSetStatusToInvalid() throws {
@@ -113,6 +116,17 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.loadWithNewDecryptionKey()
         
         XCTAssertEqual(sut.publicLinkStatus, .invalid)
+    }
+    
+    func testEnablePhotoLibraryEditMode_onEditModeChange_shouldUpdateisSelectionEnabled() throws {
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink)
+        XCTAssertFalse(sut.isSelectionEnabled)
+        
+        sut.enablePhotoLibraryEditMode(true)
+        XCTAssertTrue(sut.isSelectionEnabled)
+        
+        sut.enablePhotoLibraryEditMode(false)
+        XCTAssertFalse(sut.isSelectionEnabled)
     }
     
     // MARK: - Private
