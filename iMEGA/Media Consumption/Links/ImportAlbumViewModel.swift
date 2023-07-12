@@ -4,6 +4,12 @@ import MEGASwift
 import SwiftUI
 
 final class ImportAlbumViewModel: ObservableObject {
+    private let publicAlbumUseCase: any PublicAlbumUseCaseProtocol
+    private var publicLinkWithDecryptionKey: URL?
+    
+    let publicLink: URL
+    let photoLibraryContentViewModel: PhotoLibraryContentViewModel
+    
     @Published var publicLinkStatus: AlbumPublicLinkStatus = .none {
         willSet {
             showingDecryptionKeyAlert = newValue == .requireDecryptionKey
@@ -13,10 +19,16 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var publicLinkDecryptionKey = ""
     @Published var showingDecryptionKeyAlert = false
     @Published var showCannotAccessAlbumAlert = false
+    @Published private(set) var isSelectionEnabled = false
+    @Published var showShareLink = false
     
-    let photoLibraryContentViewModel: PhotoLibraryContentViewModel
-    private let publicAlbumUseCase: any PublicAlbumUseCaseProtocol
-    private var publicLink: URL
+    private var albumLink: String {
+        (publicLinkWithDecryptionKey ?? publicLink).absoluteString
+    }
+    
+    var isPhotosLoaded: Bool {
+        publicLinkStatus == .loaded
+    }
     
     init(publicLink: URL,
          publicAlbumUseCase: some PublicAlbumUseCaseProtocol) {
@@ -25,6 +37,9 @@ final class ImportAlbumViewModel: ObservableObject {
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
+        photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
+            .removeDuplicates()
+            .assign(to: &$isSelectionEnabled)
     }
     
     func loadPublicAlbum() {
@@ -38,24 +53,32 @@ final class ImportAlbumViewModel: ObservableObject {
     
     func loadWithNewDecryptionKey() {
         guard publicLinkDecryptionKey.isNotEmpty,
-              let newURL = URL(string: publicLink.absoluteString + "#" + publicLinkDecryptionKey) else {
-            publicLinkStatus = .invalid
+              let linkWithDecryption = URL(string: publicLink.absoluteString + "#" + publicLinkDecryptionKey) else {
+            setLinkToInvalid()
             return
         }
-        publicLink = newURL
+        publicLinkWithDecryptionKey = linkWithDecryption
         loadPublicAlbum()
+    }
+    
+    func enablePhotoLibraryEditMode(_ enable: Bool) {
+        photoLibraryContentViewModel.selection.editMode = enable ? .active : .inactive
+    }
+    
+    func shareLinkTapped() {
+        showShareLink.toggle()
     }
     
     private func loadPublicAlbumContents() {
         Task { @MainActor [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             do {
-                let photos = try await publicAlbumUseCase.publicPhotos(forLink: publicLink.absoluteString)
+                let photos = try await publicAlbumUseCase.publicPhotos(forLink: albumLink)
                 try Task.checkCancellation()
                 photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
                 publicLinkStatus = .loaded
             } catch let error as SharedAlbumErrorEntity {
-                publicLinkStatus = .invalid
+                setLinkToInvalid()
                 MEGALogError("Error retrieving public album: \(error.localizedDescription)")
             } catch {
                 MEGALogError("Error retrieving public album: \(error.localizedDescription)")
@@ -64,6 +87,11 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     private func decryptionKeyRequired() -> Bool {
-        publicLink.absoluteString.components(separatedBy: "#").count == 1
+        albumLink.components(separatedBy: "#").count == 1
+    }
+    
+    private func setLinkToInvalid() {
+        publicLinkStatus = .invalid
+        publicLinkWithDecryptionKey = nil
     }
 }

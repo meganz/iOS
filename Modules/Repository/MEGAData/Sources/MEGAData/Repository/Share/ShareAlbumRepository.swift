@@ -59,6 +59,8 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         await publicAlbumNodeProvider.clearCache()
         
         return try await withAsyncThrowingValue { completion in
+            sdk.stopPublicSetPreview()
+            
             sdk.fetchPublicSet(link, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
