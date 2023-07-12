@@ -39,7 +39,7 @@ final class AccountHallUseCaseTests: XCTestCase {
         )
         let sut = AccountHallUseCase(repository: mockRepo)
         
-        let successResult = AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil, accountDetails: nil)
+        let successResult = AccountRequestEntity(type: .accountDetails, file: nil, userAttribute: nil, email: nil)
         let exp = expectation(description: "Should receive success AccountRequestEntity")
         sut.requestResultPublisher()
             .sink { request in

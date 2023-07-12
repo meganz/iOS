@@ -9,13 +9,11 @@ public struct AccountRequestEntity {
     public init(type: RequestTypeEntity,
                 file: String?,
                 userAttribute: UserAttributeEntity?,
-                email: String?,
-                accountDetails: AccountDetailsEntity?) {
+                email: String?) {
         self.type = type
         self.file = file
         self.userAttribute = userAttribute
         self.email = email
-        self.accountDetails = accountDetails
     }
 }
 
