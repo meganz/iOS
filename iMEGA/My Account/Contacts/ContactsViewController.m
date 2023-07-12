@@ -26,7 +26,6 @@
 #import "ContactTableViewCell.h"
 #import "ContactRequestsViewController.h"
 #import "EmptyStateView.h"
-#import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 #import "NSArray+MNZCategory.h"
 @import MEGAUIKit;
@@ -303,9 +302,6 @@
             
         case ContactsModeFolderSharedWith: {
             self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
-            if (self.shareFolderActivity != nil) {
-                self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
-            }
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -658,9 +654,6 @@
                 }
             }
         }
-        if (self.shareFolderActivity != nil) {
-            [self.shareFolderActivity activityDidFinish:YES];
-        }
     } else if (self.contactsMode == ContactsModeFolderSharedWith) {
         void (^completion)(void);
         if (shareType == MEGAShareTypeAccessUnknown) {
@@ -785,9 +778,6 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        if (self.contactsMode == ContactsModeFolderSharedWith && self.shareFolderActivity != nil) {
-            self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
-        }
         self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
@@ -1278,9 +1268,6 @@
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    if (self.shareFolderActivity != nil) {
-        [self.shareFolderActivity activityDidFinish:YES];
-    }
     
     if (self.searchController.isActive) {
         self.searchController.active = NO;
