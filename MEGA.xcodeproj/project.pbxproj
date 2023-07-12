@@ -154,14 +154,8 @@
 		25E2717F2A40099800DDB678 /* MEGAAVViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2717E2A40099800DDB678 /* MEGAAVViewController+Combine.swift */; };
 		271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271FC4202A27EA4400E35924 /* ElementStore.swift */; };
 		274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */; };
-		27547E732A404DE2007789DD /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
-		27547E752A404FD4007789DD /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
-		275682F92A4015280038E13A /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
 		27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */; };
 		27AFAC562A53739500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */; };
-		27D1DA7B2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
-		27D1DA7D2A432F52008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
-		27D1DA7F2A432F82008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
 		2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F53F84E2612B8860027A5EF /* NSURL+Deeplinking.swift */; };
 		2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */; };
@@ -1480,6 +1474,11 @@
 		A8F0A1DC2178B43300575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
 		A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F1381B21D3ABF2003C7364 /* LocationSearchTableViewController.m */; };
 		A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */; };
+		A8F1D1072A5ECB09000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
+		A8F1D1082A5ECB15000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
+		A8F1D1092A5ECB23000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1DA7A2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift */; };
+		A8F1D10B2A5ECBB2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
+		A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */; };
 		A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */; };
 		A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F2629B1FA8F82F000B2768 /* hang_out.mp3 */; };
 		A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */ = {isa = PBXBuildFile; productRef = A8F5155727F6F24F00AEE4D6 /* ISEmojiView */; };
@@ -3929,7 +3928,6 @@
 		A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatVideoQualityTableViewController.m; sourceTree = "<group>"; };
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A85ED1FA2A20B5920036C0E5 /* MEGASDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASDK; sourceTree = "<group>"; };
-		A863223D2909142A004FED9B /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
 		A86C09D72A4B0A78001D0815 /* MEGAChatSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAChatSDK; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
@@ -5035,7 +5033,7 @@
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
-                16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */,
+				16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */,
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				A89CE55528B7D573002802BC /* MEGAData in Frameworks */,
 				B6C2CE0229F9F7D400D98DCD /* MEGADataMock in Frameworks */,
@@ -13314,9 +13312,7 @@
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				BF5E33912558D2890055395E /* FileExplorerGridCell.swift in Sources */,
 				BF5E33A02558D3EB0055395E /* FileExplorerGridCellViewModel.swift in Sources */,
-				27D1DA7B2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
-				27D1DA7B2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
-				27D1DA7B2A4328F4008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
+				A8F1D1072A5ECB09000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
 				837B179928815F7400A4D01B /* FileLinkViewController+Additions.swift in Sources */,
@@ -14045,8 +14041,7 @@
 				B6B73E6E22C5713700ACAD48 /* RegionListViewController.swift in Sources */,
 				B662B88324F8D8F60089376A /* RegionListViewModel.swift in Sources */,
 				B662B88524F8DA600089376A /* RegionListViewRouter.swift in Sources */,
-				275682F92A4015280038E13A /* RemovalConfirmationMessageGenerator.swift in Sources */,
-				275682F92A4015280038E13A /* RemovalConfirmationMessageGenerator.swift in Sources */,
+				A8F1D10B2A5ECBB2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */,
 				9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */,
 				240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */,
@@ -14389,9 +14384,7 @@
 				BFBFFD682A046ED600E4EB23 /* ChatStateListener.swift in Sources */,
 				B5925B8D279119E400170CD6 /* Colors+Generated.swift in Sources */,
 				B6F8CE18262823250074CBBF /* CoreDataErrorHandler.m in Sources */,
-				27D1DA7D2A432F52008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
-				27D1DA7D2A432F52008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
-				27D1DA7D2A432F52008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
+				A8F1D1082A5ECB15000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				774941E42410F3CD00FC5CB6 /* MEGACD.xcdatamodeld in Sources */,
 				77B9FEE723C604260002D0CD /* MEGAChatBaseRequestDelegate.m in Sources */,
 				5B205D1B2449AD3200EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
@@ -14544,9 +14537,7 @@
 				12FF88E12846E2CC00D99BED /* EmptyStateView.m in Sources */,
 				5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */,
 				B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */,
-				27D1DA7F2A432F82008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
-				27D1DA7F2A432F82008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
-				27D1DA7F2A432F82008571D7 /* FileExtensionGroupOCWrapper.swift in Sources */,
+				A8F1D1092A5ECB23000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27AFAC562A53739500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				8327EE21283391D400068856 /* FileVersionsRepository.swift in Sources */,
 				C43817B92746925E00EA82A8 /* FontStyle.swift in Sources */,
@@ -14588,8 +14579,6 @@
 				83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
-				27547E732A404DE2007789DD /* MEGAMoveRequestDelegate.m in Sources */,
-				27547E732A404DE2007789DD /* MEGAMoveRequestDelegate.m in Sources */,
 				5BE689952417CC4F00462134 /* MEGANavigationController.m in Sources */,
 				BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */,
 				B6A6E1C1287CDE6600179806 /* MEGANode+Array.swift in Sources */,
@@ -14661,8 +14650,7 @@
 				B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */,
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
-				27547E752A404FD4007789DD /* RemovalConfirmationMessageGenerator.swift in Sources */,
-				27547E752A404FD4007789DD /* RemovalConfirmationMessageGenerator.swift in Sources */,
+				A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,

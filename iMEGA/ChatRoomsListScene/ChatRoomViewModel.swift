@@ -1,8 +1,8 @@
 import Combine
 import Foundation
 import MEGADomain
-import MEGASwift
 import MEGAPermissions
+import MEGASwift
 import MEGAUI
 
 final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {

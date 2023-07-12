@@ -1,6 +1,6 @@
 import CoreServices
-import MEGADomain
 import Foundation
+import MEGADomain
 import VisionKit
 
 final class FileUploadingRouter {
