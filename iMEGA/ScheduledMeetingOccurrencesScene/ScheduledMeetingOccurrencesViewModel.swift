@@ -91,7 +91,10 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private func fetchOccurrences() {
         Task {
             do {
-                var occurrences = try await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(chatId: scheduledMeeting.chatId, since: lastOccurrenceDate)
+                let occurrences = try await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(
+                    chatId: scheduledMeeting.chatId,
+                    since: lastOccurrenceDate
+                )
                 await populateOccurrences(occurrences)
             } catch {
                 MEGALogError("Error fetching occurrences for scheduled meeting: \(scheduledMeeting.title)")

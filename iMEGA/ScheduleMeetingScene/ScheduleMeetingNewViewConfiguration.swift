@@ -27,9 +27,9 @@ final class ScheduleMeetingNewViewConfiguration: ScheduleMeetingViewConfigurable
     private let chatLinkUseCase: any ChatLinkUseCaseProtocol
     
     init(
-        chatRoomUseCase: any ChatRoomUseCaseProtocol,
-        chatLinkUseCase: any ChatLinkUseCaseProtocol,
-        scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatLinkUseCase: some ChatLinkUseCaseProtocol,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol
     ) {
         self.chatRoomUseCase = chatRoomUseCase
         self.chatLinkUseCase = chatLinkUseCase

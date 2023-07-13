@@ -112,9 +112,11 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private var viewConfiguration: any ScheduleMeetingViewConfigurable
     private var accountUseCase: any AccountUseCaseProtocol
     
-    init(router: ScheduleMeetingRouting,
-         viewConfiguration: any ScheduleMeetingViewConfigurable,
-         accountUseCase: any AccountUseCaseProtocol) {
+    init(
+        router: ScheduleMeetingRouting,
+        viewConfiguration: some ScheduleMeetingViewConfigurable,
+        accountUseCase: some AccountUseCaseProtocol
+    ) {
         self.router = router
         self.viewConfiguration = viewConfiguration
         self.accountUseCase = accountUseCase
@@ -141,7 +143,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
                 await dismiss()
                 await handle(completion: completion)
             } catch {
-                MEGALogError("Enable to submit with error \(error)")
+                MEGALogError("Unable to submit with error \(error)")
                 await hideSpinner()
             }
         }
