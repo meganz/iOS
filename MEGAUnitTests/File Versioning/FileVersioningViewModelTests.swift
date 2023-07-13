@@ -61,7 +61,7 @@ final class FileVersioningViewModelTests: XCTestCase {
                                                           deletePreviousFileVersions: .success(true))
         let sut = FileVersioningViewModel(router: mockRouter,
                                           fileVersionsUseCase: fileVersionsUseCase,
-                                          accountUseCase: MockAccountUseCase(accountDetails: .success(AccountDetailsEntity())))
+                                          accountUseCase: MockAccountUseCase(accountDetailsResult: .success(AccountDetailsEntity())))
         
         test(viewModel: sut,
              action: .deletePreviousVersions,

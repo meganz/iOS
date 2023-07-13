@@ -14,6 +14,7 @@ public final class MockRequest: MEGARequest {
     private let _backupInfoList: [MEGABackupInfo]
     private let stringDict: [String: String]
     private let _file: String?
+    private let _accountDetails: MEGAAccountDetails?
     
     public init(handle: MEGAHandle,
                 set: MEGASet? = nil,
@@ -26,7 +27,8 @@ public final class MockRequest: MEGARequest {
                 publicNode: MEGANode? = nil,
                 backupInfoList: [MEGABackupInfo] = [],
                 stringDict: [String: String] = [:],
-                file: String? = nil) {
+                file: String? = nil,
+                accountDetails: MEGAAccountDetails? = nil) {
         self.handle = handle
         _set = set
         _text = text
@@ -39,6 +41,7 @@ public final class MockRequest: MEGARequest {
         _backupInfoList = backupInfoList
         self.stringDict = stringDict
         _file = file
+        _accountDetails = accountDetails
         super.init()
     }
     
@@ -54,4 +57,5 @@ public final class MockRequest: MEGARequest {
     public override var backupInfoList: [MEGABackupInfo] { _backupInfoList }
     public override var megaStringDictionary: [String: String] { stringDict }
     public override var file: String? { _file }
+    public override var megaAccountDetails: MEGAAccountDetails? { _accountDetails }
 }

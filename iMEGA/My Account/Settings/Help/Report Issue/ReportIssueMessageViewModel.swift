@@ -8,7 +8,7 @@ struct ReportIssueMessageViewModel {
     func generateReportIssueMessage(message details: String, filename: String?) async -> String {
         
         let email = await accountUseCase.currentUser()?.email ?? ""
-        let accountDetails = try? await accountUseCase.accountDetails()
+        let accountDetails = accountUseCase.currentAccountDetails
         let accountType = accountDetails?.proLevel.toString() ?? ""
         
         let ticketMessage = """

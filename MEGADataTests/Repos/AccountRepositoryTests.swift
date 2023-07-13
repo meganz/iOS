@@ -147,7 +147,16 @@ final class AccountRepositoryTests: XCTestCase {
         assert(whenNodesCount: 10)
     }
     
-    func testAccountDetails_whenFails_shouldThrowGenericError() async {
+    func testCurrentAccountDetails_shouldReturnCurrentAccountDetails() async {
+        let expectedAccountDetails = randomAccountDetails().toAccountDetailsEntity()
+        let userSource = CurrentUserSource(sdk: MockSdk())
+        let sut = AccountRepository(sdk: MockSdk(), currentUserSource: userSource)
+        
+        userSource.setAccountDetails(expectedAccountDetails)
+        XCTAssertEqual(sut.currentAccountDetails, expectedAccountDetails)
+    }
+    
+    func testRefreshCurrentAccountDetails_whenFails_shouldThrowGenericError() async {
         let expectedError = MockError.failingError
         let sut = makeSUT(
             sdk: MockSdk(accountDetails: { sdk, delegate in
@@ -155,9 +164,25 @@ final class AccountRepositoryTests: XCTestCase {
             })
         )
         
-        await XCTAsyncAssertThrowsError(try await sut.accountDetails()) { errorThrown in
+        await XCTAsyncAssertThrowsError(try await sut.refreshCurrentAccountDetails()) { errorThrown in
             XCTAssertEqual(errorThrown as? AccountDetailsErrorEntity, .generic)
         }
+    }
+    
+    func testRefreshCurrentAccountDetails_whenSuccess_shouldReturnAccountDetails() async throws {
+        let expectedAccountDetails = randomAccountDetails()
+        let sut = makeSUT(
+            sdk: MockSdk(accountDetails: { sdk, delegate in
+                delegate.onRequestFinish?(
+                    sdk,
+                    request: MockRequest(handle: 1, accountDetails: expectedAccountDetails),
+                    error: MockError(errorType: .apiOk))
+            })
+        )
+        
+        let accountDetails = try await sut.refreshCurrentAccountDetails()
+        XCTAssertEqual(accountDetails, expectedAccountDetails.toAccountDetailsEntity())
+        XCTAssertEqual(accountDetails, sut.currentAccountDetails)
     }
     
     func testUpgradeSecurity_whenApiOk_shouldNotThrow() async {
@@ -288,5 +313,9 @@ final class AccountRepositoryTests: XCTestCase {
             sdk: sdk,
             currentUserSource: CurrentUserSource(sdk: sdk)
         )
+    }
+    
+    private func randomAccountDetails() -> MockMEGAAccountDetails {
+        MockMEGAAccountDetails(type: MEGAAccountType(rawValue: .random(in: 0...4)) ?? .free)
     }
 }

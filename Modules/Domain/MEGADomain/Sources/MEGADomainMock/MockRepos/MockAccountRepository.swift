@@ -4,7 +4,8 @@ import MEGADomain
 public final class MockAccountRepository: AccountRepositoryProtocol {
     private let nodesCount: UInt
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
-    private let accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
+    private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
+    private let _currentAccountDetails: AccountDetailsEntity?
     private let isUpgradeSecuritySuccess: Bool
     private let _isLoggedIn: Bool
     private let _isMasterBusinessAccount: Bool
@@ -31,19 +32,21 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
                 contactsRequestsCount: Int = 0,
                 unseenUserAlertsCount: UInt = 0,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
-                accountDetails: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
+                currentAccountDetails: AccountDetailsEntity? = nil,
+                accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
                 requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> = Empty().eraseToAnyPublisher(),
                 contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> = Empty().eraseToAnyPublisher(),
                 userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> = Empty().eraseToAnyPublisher(),
                 isUpgradeSecuritySuccess: Bool = false) {
+        _isLoggedIn = isLoggedIn
+        _isMasterBusinessAccount = isMasterBusinessAccount
+        _contacts = contacts
+        _currentAccountDetails = currentAccountDetails
         self.currentUser = currentUser
         self.isGuest = isGuest
-        self._isLoggedIn = isLoggedIn
-        self._isMasterBusinessAccount = isMasterBusinessAccount
-        self._contacts = contacts
         self.nodesCount = nodesCount
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
-        self.accountDetails = accountDetails
+        self.accountDetailsResult = accountDetailsResult
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
         self.contactsRequestsCount = contactsRequestsCount
         self.unseenUserAlertsCount = unseenUserAlertsCount
@@ -82,8 +85,12 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         completion(getMyChatFilesFolderResult)
     }
     
-    public func accountDetails() async throws -> AccountDetailsEntity {
-        switch accountDetails {
+    public var currentAccountDetails: AccountDetailsEntity? {
+        _currentAccountDetails
+    }
+    
+    public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
+        switch accountDetailsResult {
         case .success(let details): return details
         case .failure(let error): throw error
         }

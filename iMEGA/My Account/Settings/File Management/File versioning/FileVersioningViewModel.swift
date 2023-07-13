@@ -109,7 +109,7 @@ final class FileVersioningViewModel: ViewModelType {
         Task { [weak self] in
             guard let self else { return }
             do {
-                _ = try await self.accountUseCase.accountDetails()
+                _ = try await self.accountUseCase.refreshCurrentAccountDetails()
     #if MAIN_APP_TARGET
                 self.invokeCommand?(.updateFileVersions(self.fileVersionsUseCase.rootNodeFileVersionCount()))
     #endif
