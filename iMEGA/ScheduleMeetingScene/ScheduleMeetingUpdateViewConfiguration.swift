@@ -33,9 +33,9 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
 
     init(
         scheduledMeeting: ScheduledMeetingEntity,
-        chatRoomUseCase: any ChatRoomUseCaseProtocol,
-        chatLinkUseCase: any ChatLinkUseCaseProtocol,
-        scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatLinkUseCase: some ChatLinkUseCaseProtocol,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol
     ) {
         self.scheduledMeeting = scheduledMeeting
         self.chatRoomUseCase = chatRoomUseCase

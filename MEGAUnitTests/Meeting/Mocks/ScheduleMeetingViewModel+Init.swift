@@ -6,7 +6,7 @@ extension ScheduleMeetingViewModel {
     convenience init(
         router: ScheduleMeetingRouting = MockScheduleMeetingRouter(),
         viewConfiguration: ScheduleMeetingViewConfigurable = MockScheduleMeetingViewConfiguration(),
-        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         isTesting: Bool = true
     ) {
         self.init(

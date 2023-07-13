@@ -18,9 +18,9 @@ final class ScheduleMeetingUpdateOccurrenceViewConfiguration: ScheduleMeetingUpd
     init(
         occurrence: ScheduledMeetingOccurrenceEntity,
         scheduledMeeting: ScheduledMeetingEntity,
-        chatRoomUseCase: any ChatRoomUseCaseProtocol,
-        chatLinkUseCase: any ChatLinkUseCaseProtocol,
-        scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatLinkUseCase: some ChatLinkUseCaseProtocol,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol
     ) {
         self.occurrence = occurrence
         super.init(
