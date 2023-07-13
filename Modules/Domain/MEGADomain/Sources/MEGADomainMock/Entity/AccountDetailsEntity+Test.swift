@@ -16,4 +16,8 @@ public extension AccountDetailsEntity {
          isTesting: Bool = true) {
         self.init(storageUsed: storageUsed, versionsStorageUsed: versionsStorageUsed, storageMax: storageMax, transferOwnUsed: transferOwnUsed, transferMax: transferMax, proLevel: proLevel, proExpiration: proExpiration, subscriptionStatus: subscriptionStatus, subscriptionRenewTime: subscriptionRenewTime, subscriptionMethod: subscriptionMethod, subscriptionCycle: subscriptionCycle, numberUsageItems: numberUsageItems)
     }
+    
+    static var random: Self {
+        .init(proLevel: AccountTypeEntity.allCases.randomElement() ?? .free)
+    }
 }

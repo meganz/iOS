@@ -45,7 +45,7 @@ final class SendFeedbackViewModel: NSObject {
     
     private func setupAccountDetails() async {
         do {
-            accountDetails = try await accountUseCase.accountDetails()
+            accountDetails = try await accountUseCase.refreshCurrentAccountDetails()
         } catch {
             MEGALogError("[Send Feedback] Error loading account details. Error: \(error)")
         }

@@ -3,12 +3,13 @@ import MEGADomain
 public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let totalNodesCountVariable: UInt
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
-    private let accountDetails: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
+    private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
     private let isUpgradeSecuritySuccess: Bool
     private let _currentUser: UserEntity?
     private let _isGuest: Bool
     private let _isLoggedIn: Bool
     private let _contacts: [UserEntity]
+    private let _currentAccountDetails: AccountDetailsEntity?
     
     public init(currentUser: UserEntity? = UserEntity(handle: 1),
                 isGuest: Bool = false,
@@ -16,15 +17,17 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
                 contacts: [UserEntity] = [],
                 totalNodesCountVariable: UInt = 0,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
-                accountDetails: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
+                currentAccountDetails: AccountDetailsEntity? = nil,
+                accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
                 isUpgradeSecuritySuccess: Bool = false) {
-        self._currentUser = currentUser
-        self._isGuest = isGuest
-        self._isLoggedIn = isLoggedIn
-        self._contacts = contacts
+        _currentUser = currentUser
+        _isGuest = isGuest
+        _isLoggedIn = isLoggedIn
+        _contacts = contacts
+        _currentAccountDetails = currentAccountDetails
         self.totalNodesCountVariable = totalNodesCountVariable
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
-        self.accountDetails = accountDetails
+        self.accountDetailsResult = accountDetailsResult
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
     }
     
@@ -56,8 +59,12 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         completion(getMyChatFilesFolderResult)
     }
     
-    public func accountDetails() async throws -> AccountDetailsEntity {
-        switch accountDetails {
+    public var currentAccountDetails: AccountDetailsEntity? {
+        _currentAccountDetails
+    }
+    
+    public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
+        switch accountDetailsResult {
         case .success(let details): return details
         case .failure(let error): throw error
         }

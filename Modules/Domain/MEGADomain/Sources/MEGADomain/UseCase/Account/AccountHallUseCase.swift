@@ -40,7 +40,7 @@ public struct AccountHallUseCase<T: AccountRepositoryProtocol>: AccountHallUseCa
     }
     
     public func accountDetails() async throws -> AccountDetailsEntity {
-        try await repository.accountDetails()
+        try await repository.refreshCurrentAccountDetails()
     }
 
     public func requestResultPublisher() -> AnyPublisher<Result<AccountRequestEntity, Error>, Never> {

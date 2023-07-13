@@ -9,10 +9,12 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     func contacts() -> [UserEntity]
     func totalNodesCount() -> UInt
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
-    func accountDetails() async throws -> AccountDetailsEntity
     func upgradeSecurity() async throws -> Bool
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt
+    
+    var currentAccountDetails: AccountDetailsEntity? { get }
+    func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
     
     var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> { get }
     var contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> { get }

@@ -96,21 +96,19 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
         sdk.totalNodes
     }
     
-    func accountDetails() async throws -> AccountDetailsEntity {
-        if let userAccountDetails = currentUserSource.accountDetails,
-           !currentUserSource.shouldRefreshAccountDetails {
-            return userAccountDetails
-        }
-        
-        return try await withAsyncThrowingValue(in: { completion in
+    var currentAccountDetails: AccountDetailsEntity? {
+        currentUserSource.accountDetails
+    }
+    
+    func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
+        try await withAsyncThrowingValue(in: { completion in
             sdk.getAccountDetails(with: RequestDelegate { [weak self] result in
                 guard let self else { return }
                 switch result {
                 case .success(let request):
-                    let userAccountDetails = request.megaAccountDetails.toAccountDetailsEntity()
-                    currentUserSource.setAccountDetails(userAccountDetails)
-                    currentUserSource.setShouldRefreshAccountDetails(false)
-                    completion(.success(userAccountDetails))
+                    let accountDetails = request.megaAccountDetails.toAccountDetailsEntity()
+                    currentUserSource.setAccountDetails(accountDetails)
+                    completion(.success(accountDetails))
                 case .failure:
                     completion(.failure(AccountDetailsErrorEntity.generic))
                 }

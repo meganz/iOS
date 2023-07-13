@@ -6,11 +6,11 @@ public protocol AccountUseCaseProtocol {
     var isGuest: Bool { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]
-    
     func totalNodesCount() -> UInt
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
-    func accountDetails() async throws -> AccountDetailsEntity
     func upgradeSecurity() async throws -> Bool
+    var currentAccountDetails: AccountDetailsEntity? { get }
+    func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
 }
 
 // MARK: - Use case implementation
@@ -50,8 +50,12 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
         repository.getMyChatFilesFolder(completion: completion)
     }
     
-    public func accountDetails() async throws -> AccountDetailsEntity {
-        try await repository.accountDetails()
+    public var currentAccountDetails: AccountDetailsEntity? {
+        repository.currentAccountDetails
+    }
+    
+    public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
+        try await repository.refreshCurrentAccountDetails()
     }
     
     public func upgradeSecurity() async throws -> Bool {
