@@ -46,6 +46,7 @@ enum DeeplinkFragmentKey: String {
 enum DeeplinkHostKey: String {
 
     case chatPeerOptions = "chatPeerOptions"
+    case collection
     case publicChat = "chat"
     
     case shortcutUpload = "widget.shortcut.uploadFile"
@@ -126,6 +127,8 @@ extension NSURL {
  
         if host == DeeplinkHostKey.chatPeerOptions.rawValue {
             return .chatPeerOptionsLink
+        } else if host == DeeplinkHostKey.collection.rawValue {
+            return .collection
         } else if host == DeeplinkHostKey.publicChat.rawValue {
             return .publicChatLink
         } else if host == DeeplinkHostKey.shortcutUpload.rawValue {
