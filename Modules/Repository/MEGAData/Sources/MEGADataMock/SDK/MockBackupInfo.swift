@@ -18,8 +18,8 @@ public final class MockBackupInfo: MEGABackupInfo {
     
     // MARK: - Current Status
     private let syncState: MEGASyncState
-    private let backupSubstate: Int
-    private let backupStatus: Int
+    private let backupSubstate: MEGABackupSubstate
+    private let backupStatus: MEGABackupHeartbeatStatus
     private let backupProgress: Int
     private let backupUploads: Int
     private let backupDownloads: Int
@@ -28,7 +28,7 @@ public final class MockBackupInfo: MEGABackupInfo {
     private let timestamp: Date
     private let activityTimestamp: Date
     
-    public init(identifier: Int = 0, backupName: String = "", deviceIdentifier: String = "", rootHandle: MEGAHandle = .invalidHandle, lastHandleSync: MEGAHandle = .invalidHandle, backupType: MEGABackupType = .invalid, localFolderName: String = "", extraInfo: String = "", syncState: MEGASyncState = .unknown, backupSubstate: Int = 0, backupStatus: Int = 0, backupProgress: Int = 0, backupUploads: Int = 0, backupDownloads: Int = 0, timestamp: Date = Date(), activityTimestamp: Date = Date()) {
+    public init(identifier: Int = 0, backupName: String = "", deviceIdentifier: String = "", rootHandle: MEGAHandle = .invalidHandle, lastHandleSync: MEGAHandle = .invalidHandle, backupType: MEGABackupType = .invalid, localFolderName: String = "", extraInfo: String = "", syncState: MEGASyncState = .unknown, backupSubstate: MEGABackupSubstate = .noSyncError, backupStatus: MEGABackupHeartbeatStatus = .unknown, backupProgress: Int = 0, backupUploads: Int = 0, backupDownloads: Int = 0, timestamp: Date = Date(), activityTimestamp: Date = Date()) {
         self.identifier = identifier
         self.backupName = backupName
         self.deviceIdentifier = deviceIdentifier
@@ -56,8 +56,8 @@ public final class MockBackupInfo: MEGABackupInfo {
     public override var localFolder: String? { localFolderName }
     public override var extra: String? { extraInfo }
     public override var state: MEGASyncState { syncState }
-    public override var substate: UInt { UInt(backupSubstate) }
-    public override var status: UInt { UInt(backupStatus) }
+    public override var substate: MEGABackupSubstate { backupSubstate }
+    public override var status: MEGABackupHeartbeatStatus { backupStatus }
     public override var progress: UInt { UInt(backupProgress) }
     public override var uploads: UInt { UInt(backupUploads) }
     public override var downloads: UInt { UInt(backupDownloads) }
