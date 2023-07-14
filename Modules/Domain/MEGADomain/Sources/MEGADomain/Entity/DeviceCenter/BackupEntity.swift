@@ -17,8 +17,8 @@ public struct BackupEntity: Sendable, Identifiable {
     
     // MARK: - Current Status
     public let syncState: SyncStateEntity
-    public let substate: Int
-    public let status: Int
+    public let substate: BackupSubstateEntity
+    public let status: BackupHeartbeatStatusEntity
     public let progress: Int
     public let uploads: Int
     public let downloads: Int
@@ -39,8 +39,8 @@ public struct BackupEntity: Sendable, Identifiable {
         localFolder: String,
         extra: String,
         syncState: SyncStateEntity,
-        substate: Int,
-        status: Int,
+        substate: BackupSubstateEntity,
+        status: BackupHeartbeatStatusEntity,
         progress: Int,
         uploads: Int,
         downloads: Int,
@@ -63,6 +63,18 @@ public struct BackupEntity: Sendable, Identifiable {
         self.downloads = downloads
         self.timestamp = timestamp
         self.activityTimestamp = activityTimestamp
+    }
+    
+    public func isTwoWayPaused() -> Bool {
+        type == .twoWay && syncState.isPaused()
+    }
+    
+    public func isUploadPaused() -> Bool {
+        type.isUpload() && (syncState == .pauseUp || syncState == .pauseFull)
+    }
+    
+    public func isDownSyncPaused() -> Bool {
+        type == .downSync && (syncState == .pauseDown || syncState == .pauseFull)
     }
 }
 
