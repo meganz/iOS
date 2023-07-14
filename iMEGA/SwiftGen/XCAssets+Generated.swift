@@ -633,7 +633,6 @@ internal enum Asset {
       internal static let textfile = ImageAsset(name: "textfile")
     }
     internal enum Onboarding {
-      internal static let accessContact = ImageAsset(name: "access contact")
       internal static let notificationDevicePermission = ImageAsset(name: "notificationDevicePermission")
       internal static let onboarding1Encryption = ImageAsset(name: "onboarding1_encryption")
       internal static let onboarding2Chat = ImageAsset(name: "onboarding2_chat")

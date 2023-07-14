@@ -5,24 +5,22 @@ import XCTest
 final class DevicePermissionsHandlingTests: XCTestCase {
     func testShouldSetupPermissions_anyIsTrue_returnsTrue_elseFalse() async {
         struct Scenario {
-            let inputs: (Bool, Bool, Bool, Bool, Bool)
+            let inputs: (Bool, Bool, Bool, Bool)
             let output: Bool
         }
         let scenarios: [Scenario] = [
-            .init(inputs: (false, false, false, false, false), output: false),
-            .init(inputs: (true, false, false, false, false), output: true),
-            .init(inputs: (false, true, false, false, false), output: true),
-            .init(inputs: (false, false, true, false, false), output: true),
-            .init(inputs: (false, false, false, true, false), output: true),
-            .init(inputs: (false, false, false, false, true), output: true)
+            .init(inputs: (false, false, false, false), output: false),
+            .init(inputs: (true, false, false, false), output: true),
+            .init(inputs: (false, true, false, false), output: true),
+            .init(inputs: (false, false, true, false), output: true),
+            .init(inputs: (false, false, false, true), output: true)
         ]
         for scenario in scenarios {
             let handler = MockDevicePermissionHandler()
             handler.shouldAskForAudioPermissions = scenario.inputs.0
             handler.shouldAskForVideoPermissions = scenario.inputs.1
             handler.shouldAskForPhotosPermissions = scenario.inputs.2
-            handler.shouldAskForContactsPermissions = scenario.inputs.3
-            handler.shouldAskForNotificaitonPermissionsValueToReturn = scenario.inputs.4
+            handler.shouldAskForNotificaitonPermissionsValueToReturn = scenario.inputs.3
             let shouldSetup = await handler.shouldSetupPermissions()
             XCTAssertEqual(shouldSetup, scenario.output)
         }

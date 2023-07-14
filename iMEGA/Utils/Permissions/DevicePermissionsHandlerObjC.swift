@@ -96,11 +96,6 @@ class DevicePermissionsHandlerObjC: NSObject {
     }
     
     @objc
-    var shouldAskForContactsPermissions: Bool {
-        permissionHandler.shouldAskForContactsPermissions
-    }
-    
-    @objc
     var shouldAskForAudioPermissions: Bool {
         permissionHandler.shouldAskForAudioPermissions
     }

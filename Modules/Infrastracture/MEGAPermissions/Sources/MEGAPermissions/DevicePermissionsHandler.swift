@@ -127,10 +127,6 @@ extension DevicePermissionsHandler: DevicePermissionsHandling {
         contactStatusAccessor()
     }
     
-    public var shouldAskForContactsPermissions: Bool {
-        contactsAuthorizationStatus == .notDetermined
-    }
-    
     public func shouldAskForNotificationPermission() async -> Bool {
         await notificationsStatusAccessor() == .notDetermined
     }

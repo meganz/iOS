@@ -63,10 +63,6 @@ public protocol DevicePermissionsHandling {
     // false in any other case
     var shouldAskForPhotosPermissions: Bool { get }
     
-    // returns true if user's contact list permission status is not determined (app needs/can to ask for permission)
-    // false in any other case
-    var shouldAskForContactsPermissions: Bool { get }
-    
     // returns true if permission status to push notifications is not determined
     // returns false for any other case
     func shouldAskForNotificationPermission() async -> Bool
@@ -128,14 +124,12 @@ public extension DevicePermissionsHandling {
         let shouldAskForAudioPermissions = shouldAskForAudioPermissions
         let shouldAskForVideoPermissions = shouldAskForVideoPermissions
         let shouldAskForPhotosPermissions = shouldAskForPhotosPermissions
-        let shouldAskForContactsPermissions = shouldAskForContactsPermissions
         
         return (
             await shouldAskForNotificationPermission() ||
             shouldAskForAudioPermissions ||
             shouldAskForVideoPermissions ||
-            shouldAskForPhotosPermissions ||
-            shouldAskForContactsPermissions
+            shouldAskForPhotosPermissions
         )
     }
     

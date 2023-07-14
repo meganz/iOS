@@ -6,6 +6,5 @@ typedef NS_ENUM(NSUInteger, OnboardingViewType) {
     OnboardingViewTypeCameraUploadsInfo,
     OnboardingViewTypePhotosPermission,
     OnboardingViewTypeMicrophoneAndCameraPermissions,
-    OnboardingViewTypeNotificationsPermission,
-    OnboardingViewTypeContactsPermission
+    OnboardingViewTypeNotificationsPermission
 };

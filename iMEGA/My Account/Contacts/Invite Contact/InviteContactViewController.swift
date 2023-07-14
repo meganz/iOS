@@ -35,10 +35,6 @@ class InviteContactViewController: UIViewController {
             self.userLink = String(format: "https://mega.nz/C!%@", base64Handle)
         }
         MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
-        let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
-        if permissionHandler.contactsAuthorizationStatus == .authorized && ContactsOnMegaManager.shared.contactsOnMegaCount() != 0 {
-            createContactsOnMegaChild()
-        }
         
         if !MFMessageComposeViewController.canSendText() {
             addFromContactsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
@@ -73,19 +69,6 @@ class InviteContactViewController: UIViewController {
         addFromContactsSeparatorView.backgroundColor = separatorColor
         enterEmailSeparatorView.backgroundColor = separatorColor
         scanQrCodeSeparatorView.backgroundColor = separatorColor
-    }
-    
-    func createContactsOnMegaChild() {
-        guard let contactsOnMegaVC = storyboard?.instantiateViewController(withIdentifier: "ContactsOnMegaViewControllerID") as? ContactsOnMegaViewController else {
-            return
-        }
-        addChild(contactsOnMegaVC)
-        contactsOnMegaVC.view.frame = contactsOnMegaContainerView.bounds
-        contactsOnMegaContainerView.addSubview(contactsOnMegaVC.view)
-        contactsOnMegaVC.didMove(toParent: self)
-        contactsOnMegaVC.searchFixedView.isHidden = true
-        contactsOnMegaVC.inviteContactView.isHidden = true
-        contactsOnMegaVC.hideSearchAndInviteViews()
     }
 
     // MARK: Actions

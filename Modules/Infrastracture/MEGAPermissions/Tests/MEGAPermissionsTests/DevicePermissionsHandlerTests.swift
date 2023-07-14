@@ -294,30 +294,6 @@ final class DevicePermissionsHandlerTests: XCTestCase {
         XCTAssertEqual(status, .denied)
     }
     
-    func testShouldAskForContactsPermissions_isNoDetermined_returnsTrue() async throws {
-        let harness = Harness()
-        harness.contactStatusAccessorValueToReturn = .notDetermined
-        let shouldAsk = harness.sut.shouldAskForContactsPermissions
-        XCTAssertEqual(harness.contactStatusAccessorCallCount, 1)
-        XCTAssertTrue(shouldAsk)
-    }
-    
-    func testShouldAskForContactsPermissions_isAuthorized_returnsFalse() async throws {
-        let harness = Harness()
-        harness.contactStatusAccessorValueToReturn = .authorized
-        let shouldAsk = harness.sut.shouldAskForContactsPermissions
-        XCTAssertEqual(harness.contactStatusAccessorCallCount, 1)
-        XCTAssertFalse(shouldAsk)
-    }
-    
-    func testShouldAskForContactsPermissions_isDenied_returnsFalse() async throws {
-        let harness = Harness()
-        harness.contactStatusAccessorValueToReturn = .denied
-        let shouldAsk = harness.sut.shouldAskForContactsPermissions
-        XCTAssertEqual(harness.contactStatusAccessorCallCount, 1)
-        XCTAssertFalse(shouldAsk)
-    }
-    
     func testShouldAskForNotificationPermission_isNotDetermined_returnTrue() async throws {
         let harness = Harness()
         harness.notificationsStatusAccessorValueToReturn = .notDetermined

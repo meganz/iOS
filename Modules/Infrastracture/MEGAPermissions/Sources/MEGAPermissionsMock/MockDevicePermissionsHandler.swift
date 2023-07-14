@@ -44,8 +44,6 @@ public class MockDevicePermissionHandler: DevicePermissionsHandling {
     
     public var shouldAskForPhotosPermissions: Bool = false
     
-    public var shouldAskForContactsPermissions: Bool = false
-    
     public var shouldAskForNotificaitonPermissionsValueToReturn = false
     public func shouldAskForNotificationPermission() async -> Bool {
         shouldAskForNotificaitonPermissionsValueToReturn

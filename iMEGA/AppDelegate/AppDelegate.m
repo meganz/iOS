@@ -1551,12 +1551,6 @@
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
 
-            if (![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:7]) {
-                [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
-            } else {
-                [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
-            }
-
             [self.quickAccessWidgetManager createWidgetItemData];
             
             [self presentAccountExpiredViewIfNeeded];
