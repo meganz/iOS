@@ -57,8 +57,6 @@
 
 @property (nonatomic, getter=isReconnecting) BOOL reconnecting;
 
-@property (assign, nonatomic) NSInteger contactsOnMegaCount;
-
 @property (nonatomic) ChatNotificationControl *chatNotificationControl;
 @property (strong, nonatomic) NSObject *enterMeetingLinkObject;
 
@@ -133,17 +131,6 @@
     [super viewWillAppear:animated];
     
     if (self.chatRoomsType == ChatRoomsTypeDefault) {
-        if (![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:1]) {
-            [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:^{
-                self.contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount;
-                if (self.contactsOnMegaCount > 0) {
-                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-                }
-            }];
-        } else {
-            [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
-            self.contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount;
-        }
         [self configureNavigationBarButtons];
     }
     
@@ -257,17 +244,8 @@
             self.archivedChatEmptyState.hidden = NO;
         }
         if (self.chatRoomsType == ChatRoomsTypeDefault) {
-            if ([self hasAuthorizedContacts]) {
-                if (self.contactsOnMegaCount) {//[X] contacts found on MEGA
-                    self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? NSLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [NSLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
-                } else {
-                    self.contactsOnMegaEmptyStateTitle.text = NSLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
-                }
-                self.contactsOnMegaEmptyStateView.hidden = NO;
-            } else {
-                self.contactsOnMegaEmptyStateTitle.text = NSLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
-                self.contactsOnMegaEmptyStateView.hidden = NO;
-            }
+            self.contactsOnMegaEmptyStateTitle.text = NSLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
+            self.contactsOnMegaEmptyStateView.hidden = NO;
         }
     }
 }
@@ -745,15 +723,7 @@
 
 - (UITableViewCell *)contactsOnMegaCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"contactsOnMegaCell" forIndexPath:indexPath];
-    if ([self hasAuthorizedContacts]) {
-        if (self.contactsOnMegaCount == 0) {
-            cell.chatTitle.text = NSLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
-        } else {
-            cell.chatTitle.text = self.contactsOnMegaCount == 1 ? NSLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [NSLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
-        }
-    } else {
-        cell.chatTitle.text = NSLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
-    }
+    cell.chatTitle.text = NSLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
     return cell;
 }
 
@@ -992,12 +962,9 @@
 }
 
 - (IBAction)openContactsOnMega:(id)sender {
-    if ([self hasAuthorizedContacts] && self.contactsOnMegaCount == 0) {
+    if ([self hasAuthorizedContacts]) {
         InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
         [self.navigationController pushViewController:inviteContacts animated:YES];
-    } else {
-        ContactsOnMegaViewController *contactsOnMega = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsOnMegaViewControllerID"];
-        [self.navigationController pushViewController:contactsOnMega animated:YES];
     }
 }
 

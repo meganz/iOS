@@ -48,11 +48,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         let controller = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "InviteContactViewControllerID")
         navigationController?.pushViewController(controller, animated: true)
     }
-    
-    func showContactsOnMegaScreen() {
-        let controller = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "ContactsOnMegaViewControllerID")
-        navigationController?.pushViewController(controller, animated: true)
-    }
             
     func presentMeetingAlreayExists() {
         guard let navigationController else { return }

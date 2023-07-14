@@ -81,13 +81,7 @@
                 [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
             }
             
-            if ([permissionHandler shouldAskForContactsPermissions]) {
-                OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
-                onboardingView.type = OnboardingViewTypeContactsPermission;
-                nextIndex++;
-            } else {
-                [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
-            }
+            [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
             
             if ([permissionHandler shouldAskForAudioPermissions] || [permissionHandler shouldAskForVideoPermissions]) {
                 OnboardingView *onboardingView = self.scrollView.subviews.firstObject.subviews[nextIndex];
@@ -213,13 +207,6 @@
             switch (currentView.type) {
                 case OnboardingViewTypePhotosPermission: {
                     [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
-                        [self nextPageOrDismiss];
-                    }];
-                    break;
-                }
-                    
-                case OnboardingViewTypeContactsPermission: {
-                    [handler requestContactsPermissionWithHandler:^(BOOL granted) {
                         [self nextPageOrDismiss];
                     }];
                     break;

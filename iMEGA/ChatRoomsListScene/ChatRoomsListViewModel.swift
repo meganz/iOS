@@ -276,20 +276,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func descriptionForContactsOnMegaViewState() -> String {
-        ContactsOnMegaManager.shared.loadContactsOnMegaFromLocal()
-        let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
-        
         let description: String
-        
-        if contactsUseCase.isAuthorizedToAccessPhoneContacts {
-            if contactsOnMegaCount > 0 {
-                description = contactsOnMegaCount == 1 ?  Strings.Localizable._1ContactFoundOnMEGA : Strings.Localizable.xContactsFoundOnMEGA.replacingOccurrences(of: "[X]", with: "\(contactsOnMegaCount)")
-            } else {
-                description = Strings.Localizable.inviteContactNow
-            }
-        } else {
-            description = Strings.Localizable.seeWhoSAlreadyOnMEGA
-        }
+        description = Strings.Localizable.inviteContactNow
         
         return description
     }
@@ -642,13 +630,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func topRowViewTapped() {
-        let contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount()
-        
-        if contactsUseCase.isAuthorizedToAccessPhoneContacts, contactsOnMegaCount == 0 {
-            router.showInviteContactScreen()
-        } else {
-            router.showContactsOnMegaScreen()
-        }
+        router.showInviteContactScreen()
     }
     
     private func onChatListItemsUpdate(_ chatListItems: [ChatListItemEntity]) {

@@ -105,15 +105,6 @@
             self.titleLabel.text = NSLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
             self.descriptionLabel.text = NSLocalizedString(@"We would like to send you notifications so you receive new messages on your device instantly.", @"Detailed explanation of why the user should give permission to deliver notifications");
             break;
-            
-        case OnboardingViewTypeContactsPermission:
-            self.imageView.image = [UIImage imageNamed:@"access contact"];
-            self.imageView.contentMode = UIViewContentModeCenter;
-            self.titleLabel.text = NSLocalizedString(@"Enable Access to Your Address Book", @"Title label that explains that the user is going to be asked for the contacts permission ");
-            self.descriptionLabel.text = NSLocalizedString(@"Easily discover contacts from your address book on MEGA.", @"Detailed explanation of why the user should give permission to contactsDetailed explanation of why the user should give permission to contacts");
-            self.optionalLabel.text = NSLocalizedString(@"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.", @"Detailed explanation about MEGA not using the contacts data without permision ");
-            self.optionalLabel.hidden = NO;
-            break;
     }
 }
 
