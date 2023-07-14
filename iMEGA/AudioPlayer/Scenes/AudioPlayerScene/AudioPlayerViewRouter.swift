@@ -6,8 +6,8 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     private var configEntity: AudioPlayerConfigEntity
-    private var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
-    private var fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate?
+    private(set) var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
+    private(set) var fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate?
     
     init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController) {
         self.configEntity = configEntity
@@ -38,10 +38,21 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
 
         baseViewController = vc
         
-        if let fileLink = configEntity.fileLink {
-            self.fileLinkActionViewControllerDelegate = FileLinkActionViewControllerDelegate(link: fileLink, viewController: vc)
-        } else {
-            self.nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(viewController: vc, isNodeFromFolderLink: configEntity.isFolderLink, messageId: configEntity.messageId, chatId: configEntity.chatId)
+        switch configEntity.nodeOriginType {
+        case .folderLink, .chat:
+            nodeActionViewControllerDelegate = NodeActionViewControllerGenericDelegate(
+                viewController: vc,
+                isNodeFromFolderLink: configEntity.isFolderLink,
+                messageId: configEntity.messageId,
+                chatId: configEntity.chatId
+            )
+        case .fileLink:
+            fileLinkActionViewControllerDelegate = FileLinkActionViewControllerDelegate(
+                link: configEntity.fileLink ?? "",
+                viewController: vc
+            )
+        case .unknown:
+            break
         }
         
         return configEntity.fileLink != nil ? MEGANavigationController(rootViewController: vc) : vc
@@ -108,8 +119,13 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
 extension AudioPlayerViewRouter: NodeActionViewControllerDelegate {
 
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
-        configEntity.fileLink != nil ?
-            fileLinkActionViewControllerDelegate?.nodeAction(nodeAction, didSelect: action, for: node, from: sender) :
+        switch configEntity.nodeOriginType {
+        case .folderLink, .chat:
             nodeActionViewControllerDelegate?.nodeAction(nodeAction, didSelect: action, for: node, from: sender)
+        case .fileLink:
+            fileLinkActionViewControllerDelegate?.nodeAction(nodeAction, didSelect: action, for: node, from: sender)
+        case .unknown:
+            break
+        }
     }
 }
