@@ -66,13 +66,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes;
 - (void)toolbarActionsForShareType:(MEGAShareType)shareType isBackupNode:(BOOL)isBackupNode;
-
 - (BOOL)isListViewModeSelected;
 - (void)changeViewModePreference;
 - (void)nodesSortTypeHasChanged;
 - (void)createNewFolderAction;
-- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType;
 - (void)reloadUI;
+- (void)loadPhotoAlbumBrowser;
 @end
 
 NS_ASSUME_NONNULL_END

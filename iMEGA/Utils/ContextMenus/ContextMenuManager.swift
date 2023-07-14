@@ -157,7 +157,7 @@ final class ContextMenuManager: NSObject {
                                         identifier: actionModel.data?.identifier,
                                         type: actionModel.type,
                                         actionHandler: { [weak self] actionSheet in
-            guard let `self` = self, let actionSheetIdentifier = actionSheet.identifier  else { return }
+            guard let self, let actionSheetIdentifier = actionSheet.identifier  else { return }
             self.actionHandler(actionSheetIdentifier,
                                contextType: action.type)
         })

@@ -93,7 +93,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     self.definesPresentationContext = YES;
     
-    [self configureContextMenuManager];
+    [self configureContextMenuManagerIfNeeded];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -466,18 +466,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }];
     MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:albumTableViewController];
     [self presentViewController:navigationController animated:YES completion:nil];
-}
-
-- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
-    DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
-    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-        MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    } else {
-        [handler requstPhotoAlbumAccessPermissionsWithGrantedHandler:^{
-            [self loadPhotoAlbumBrowser];
-        }];
-    }
 }
 
 - (void)toolbarActionsForShareType:(MEGAShareType )shareType isBackupNode:(BOOL)isBackupNode {
