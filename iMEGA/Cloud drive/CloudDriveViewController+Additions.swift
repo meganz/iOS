@@ -190,4 +190,23 @@ extension CloudDriveViewController {
             }
         }
     }
+    
+    func showImagePickerFor(sourceType: UIImagePickerController.SourceType) {
+        if sourceType == .camera {
+            guard let imagePickerController = MEGAImagePickerController(
+                toUploadWithParentNode: parentNode,
+                sourceType: sourceType
+            ) else { return }
+            present(imagePickerController, animated: true)
+        } else {
+            permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
+                guard let self else { return }
+                if granted {
+                    self.loadPhotoAlbumBrowser()
+                } else {
+                    self.permissionRouter.alertPhotosPermission()
+                }
+            }
+        }
+    }
 }

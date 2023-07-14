@@ -35,7 +35,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         CMConfigEntity(menuType: .menu(type: .uploadAdd))
     }
     
-    @objc func configureContextMenuManager() {
+    @objc func configureContextMenuManagerIfNeeded() {
+        guard contextMenuManager == nil else { return }
         contextMenuManager = ContextMenuManager(displayMenuDelegate: self,
                                                 quickActionsMenuDelegate: self,
                                                 uploadAddMenuDelegate: self,
@@ -208,7 +209,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             guard let parentNode = parentNode else { return }
             CreateTextFileAlertViewRouter(presenter: navigationController, parentHandle: parentNode.handle).start()
         case .chooseFromPhotos:
-            showImagePicker(for: .photoLibrary)
+            showImagePickerFor(sourceType: .photoLibrary)
         case .capture:
             permissionHandler.requestVideoPermission { [weak self] videoPermissionGranted in
                 guard let self else { return }
@@ -218,8 +219,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                         if !photosPermissionGranted {
                             UserDefaults.standard.set(false, forKey: "isSaveMediaCapturedToGalleryEnabled")
                         }
-                        
-                        showImagePicker(for: .camera)
+                        showImagePickerFor(sourceType: .camera)
                     }
                 } else {
                     permissionRouter.alertVideoPermission()
@@ -265,7 +265,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     @objc func presentUploadOptions() {
-        if contextMenuManager == nil { configureContextMenuManager() }
+        configureContextMenuManagerIfNeeded()
         
         guard let config = uploadAddMenuConfiguration(),
               let actions = contextMenuManager?.actionSheetActions(with: config) else { return }
