@@ -24,8 +24,13 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
             
             var updatedDevice = device
             updatedDevice.backups = deviceBackups
+            updatedDevice.status = calculateGlobalStatus(updatedDevice.backups ?? [])
             return updatedDevice
         }
+    }
+    
+    public func loadCurrentDeviceId() -> String? {
+        sdk.deviceId()
     }
     
     private func fetchUserBackups() async -> [BackupEntity] {
@@ -57,5 +62,11 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
                 }
             })
         })
+    }
+    
+    private func calculateGlobalStatus(_ backups: [BackupEntity]) -> BackupStatusEntity? {
+        backups
+            .compactMap {$0.backupStatus}
+            .max {$0.priority < $1.priority} ?? .upToDate
     }
 }

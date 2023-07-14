@@ -22,6 +22,8 @@ public struct BackupEntity: Sendable, Identifiable {
     public let progress: Int
     public let uploads: Int
     public let downloads: Int
+    public var backupStatus: BackupStatusEntity?
+    public var errorState: Int?
     
     // MARK: - Timestamps
     public let timestamp: Date

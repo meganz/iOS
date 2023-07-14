@@ -237,6 +237,13 @@
         "identifier" : "MEGAAnalyticsDomainTests",
         "name" : "MEGAAnalyticsDomainTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/DeviceCenter",
+        "identifier" : "DeviceCenterTests",
+        "name" : "DeviceCenterTests"
+      }
     }
   ],
   "version" : 1

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum DeviceStatusEntity: Hashable, Sendable {
+public enum BackupStatusEntity: Hashable, Sendable {
     case upToDate
     case offline
     case blocked

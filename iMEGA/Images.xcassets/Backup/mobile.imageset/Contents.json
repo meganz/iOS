@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "pc-mobileMedium.pdf",
+      "filename" : "mobile 1.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "mobile.pdf",
       "idiom" : "universal"
     }
   ],

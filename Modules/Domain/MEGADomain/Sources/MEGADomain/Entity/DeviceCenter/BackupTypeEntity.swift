@@ -8,4 +8,8 @@ public enum BackupTypeEntity: Sendable {
     case cameraUpload
     case mediaUpload
     case backupUpload
+    
+    public func isUpload() -> Bool {
+        self == .cameraUpload || self == .mediaUpload || self == .backupUpload
+    }
 }

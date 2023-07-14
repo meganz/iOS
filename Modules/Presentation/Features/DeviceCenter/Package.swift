@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../../MEGAPresentation")
+        .package(path: "../MEGAPresentation")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
