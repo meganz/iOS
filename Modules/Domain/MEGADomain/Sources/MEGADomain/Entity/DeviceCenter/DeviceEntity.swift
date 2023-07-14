@@ -5,13 +5,24 @@ public struct DeviceEntity: Sendable, Identifiable {
     public let name: String
     
     public var backups: [BackupEntity]?
-    public var status: DeviceStatusEntity?
+    public var status: BackupStatusEntity?
+    public var updatingPercentage: Int?
     
     public init(
         id: String,
-        name: String
+        name: String,
+        status: BackupStatusEntity? = nil
     ) {
         self.id = id
         self.name = name
+        self.status = status
+    }
+    
+    public func isMobileDevice() -> Bool {
+        guard let backups else { return false }
+        
+        return backups.contains {
+            $0.type == .cameraUpload || $0.type == .mediaUpload
+        }
     }
 }

@@ -6,6 +6,7 @@ public final class MockSdk: MEGASdk {
     private let rubbishNodes: [MEGANode]
     private let syncDebrisNodes: [MEGANode]
     private let backupInfoList: [MEGABackupInfo]
+    private let _deviceId: String?
     private let myContacts: MEGAUserList
     public var _myUser: MEGAUser?
     public var _isLoggedIn: Int
@@ -55,6 +56,7 @@ public final class MockSdk: MEGASdk {
                 outgoingNodes: MEGANodeList = MEGANodeList(),
                 publicLinkNodes: MEGANodeList = MEGANodeList(),
                 backupInfoList: [MEGABackupInfo] = [],
+                deviceId: String? = nil,
                 myContacts: MEGAUserList = MEGAUserList(),
                 myUser: MEGAUser? = nil,
                 isLoggedIn: Int = 0,
@@ -84,6 +86,7 @@ public final class MockSdk: MEGASdk {
         self.rubbishNodes = rubbishNodes
         self.syncDebrisNodes = syncDebrisNodes
         self.backupInfoList = backupInfoList
+        _deviceId = deviceId
         self.myContacts = myContacts
         _myUser = myUser
         _isLoggedIn = isLoggedIn
@@ -410,6 +413,10 @@ public final class MockSdk: MEGASdk {
         }
         
         delegate.onRequestFinish?(self, request: mockRequest ?? MockRequest(handle: 1), error: MockError(errorType: megaSetError))
+    }
+    
+    public override func deviceId() -> String? {
+        _deviceId
     }
 
     public override func getThumbnailNode(_ node: MEGANode, destinationFilePath: String, delegate: any MEGARequestDelegate) {

@@ -37,6 +37,21 @@ final class DeviceCenterRepositoryTests: XCTestCase {
         XCTAssertTrue(devices.isEmpty)
     }
     
+    func testDeviceId_currentDeviceId_shouldReturnTheSameString() {
+        let deviceId = "device1"
+        let mockSdk = MockSdk(deviceId: deviceId)
+        let repository = DeviceCenterRepository(sdk: mockSdk)
+        
+        XCTAssertEqual(repository.loadCurrentDeviceId(), deviceId)
+    }
+    
+    func testDeviceId_nilDeviceId_shouldReturnNil() {
+        let mockSdk = MockSdk()
+        let repository = DeviceCenterRepository(sdk: mockSdk)
+        
+        XCTAssertNil(repository.loadCurrentDeviceId())
+    }
+    
     private func base64Encode(string: String) -> String {
         string.data(using: .utf8)?.base64EncodedString(options: []) ?? ""
     }
