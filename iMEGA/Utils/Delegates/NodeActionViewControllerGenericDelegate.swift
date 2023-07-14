@@ -5,9 +5,9 @@ import MEGADomain
 final class NodeActionViewControllerGenericDelegate:
     NodeActionViewControllerDelegate {
     private weak var viewController: UIViewController?
-    private let isNodeFromFolderLink: Bool
-    private let messageId: HandleEntity?
-    private let chatId: HandleEntity?
+    private(set) var isNodeFromFolderLink: Bool
+    private(set) var messageId: HandleEntity?
+    private(set) var chatId: HandleEntity?
     
     private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
 

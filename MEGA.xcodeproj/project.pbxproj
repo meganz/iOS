@@ -144,6 +144,7 @@
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
 		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
 		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
+		24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */; };
 		2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */; };
 		2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */; };
 		2562E8C72A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */; };
@@ -2644,6 +2645,7 @@
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
 		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
 		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
+		24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterTests.swift; sourceTree = "<group>"; };
 		2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManagerTests.swift; sourceTree = "<group>"; };
 		2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewDiffableDataSource.swift; sourceTree = "<group>"; };
@@ -5687,6 +5689,22 @@
 				2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */,
 			);
 			path = Delegates;
+			sourceTree = "<group>";
+		};
+		24F231562A5FB313000BFBBA /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				24F231572A5FB31C000BFBBA /* AudioPlayerScenes */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		24F231572A5FB31C000BFBBA /* AudioPlayerScenes */ = {
+			isa = PBXGroup;
+			children = (
+				24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */,
+			);
+			path = AudioPlayerScenes;
 			sourceTree = "<group>";
 		};
 		2546EE032A4149A000CBB82E /* AVPlayerManager */ = {
@@ -11609,6 +11627,7 @@
 				C4575F2F265FA3C000D527DC /* DispatchQueue */,
 				C47E7C0025D18FC800DB6FF5 /* Repository */,
 				C45A2E0625D2B9C200915A83 /* Routers */,
+				24F231562A5FB313000BFBBA /* Scenes */,
 				C45A2E3625D2F7F100915A83 /* UseCases */,
 				C45A2DF325D2B93B00915A83 /* ViewModel */,
 				C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */,
@@ -14866,6 +14885,7 @@
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
+				24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */,
 				C45A2DF525D2B97F00915A83 /* AudioPlaylistViewModelTests.swift in Sources */,
 				2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */,
 				99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */,
@@ -14958,6 +14978,7 @@
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
+				BFCA570F2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift in Sources */,
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,

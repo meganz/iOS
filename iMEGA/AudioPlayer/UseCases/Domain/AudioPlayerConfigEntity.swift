@@ -21,11 +21,11 @@ struct AudioPlayerConfigEntity {
     var playerHandler: any AudioPlayerHandlerProtocol
     var shouldResetPlayer = false
     
-    lazy var isFileLink: Bool = {
-       fileLink != nil && relatedFiles == nil
-    }()
+    var isFileLink: Bool {
+        fileLink != nil && relatedFiles == nil
+    }
     
-    lazy var playerType: PlayerType = {
+    var playerType: PlayerType {
         if isFolderLink {
             return .folderLink
         } else if isFileLink {
@@ -34,5 +34,31 @@ struct AudioPlayerConfigEntity {
             return .offline
         }
         return .default
-    }()
+    }
+    
+    enum NodeOriginType {
+        case folderLink
+        case fileLink
+        case chat
+        case unknown
+    }
+    
+    var nodeOriginType: AudioPlayerConfigEntity.NodeOriginType {
+        let hasChatIds = (messageId != nil && chatId != nil) || (messageId != .invalid && chatId != .invalid)
+        let isChat = hasChatIds && !isFileLink && !isFolderLink
+        
+        if isFolderLink {
+            return .folderLink
+        }
+        
+        if isFileLink {
+            return .fileLink
+        }
+        
+        if isChat {
+            return .chat
+        }
+        
+        return .unknown
+    }
 }
