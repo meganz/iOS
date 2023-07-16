@@ -23,11 +23,11 @@ import UIKit
         }
     }
     
-    @objc weak var delegate: DynamicTypeCollectionViewSizing?
+    @objc weak var delegate: (any DynamicTypeCollectionViewSizing)?
     
     private let cache = NSCache<NSString, CollectionItem>()
     
-    @objc init(delegate: DynamicTypeCollectionViewSizing) {
+    @objc init(delegate: any DynamicTypeCollectionViewSizing) {
         self.delegate = delegate
     }
     

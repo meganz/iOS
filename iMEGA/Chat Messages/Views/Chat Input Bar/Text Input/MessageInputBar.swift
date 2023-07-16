@@ -54,7 +54,7 @@ class MessageInputBar: UIView {
 
     // MARK: - Interface properties
 
-    weak var delegate: MessageInputBarDelegate?
+    weak var delegate: (any MessageInputBarDelegate)?
     
     var text: String? {
         return messageTextView.text
@@ -70,8 +70,8 @@ class MessageInputBar: UIView {
     // MARK: - Private properties
     private let kMEGAUIKeyInputCarriageReturn = "\r"
 
-    private var keyboardShowObserver: NSObjectProtocol?
-    private var keyboardHideObserver: NSObjectProtocol?
+    private var keyboardShowObserver: (any NSObjectProtocol)?
+    private var keyboardHideObserver: (any NSObjectProtocol)?
 
     private var expanded: Bool = false
     private var minTopPaddingWhenExpanded: CGFloat = 20.0
@@ -308,7 +308,7 @@ class MessageInputBar: UIView {
         remove(observers: [keyboardShowObserver, keyboardHideObserver])
     }
     
-    private func remove(observers: [NSObjectProtocol?]) {
+    private func remove(observers: [(any NSObjectProtocol)?]) {
         observers.forEach { observer in
             guard let observer = observer else {
                 return
@@ -397,7 +397,7 @@ class MessageInputBar: UIView {
         expandCollapseButton.setImage(Asset.Images.Chat.InputToolbar.collapse.image, for: .normal)
     }
     
-    private func keyboardShowNotification() -> NSObjectProtocol {
+    private func keyboardShowNotification() -> any NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardDidShowNotification,
             object: nil,
@@ -427,7 +427,7 @@ class MessageInputBar: UIView {
         }
     }
     
-    private func keyboardHideNotification() -> NSObjectProtocol {
+    private func keyboardHideNotification() -> any NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardDidHideNotification,
             object: nil,

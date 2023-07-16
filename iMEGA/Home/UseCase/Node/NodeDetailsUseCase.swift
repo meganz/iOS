@@ -15,11 +15,11 @@ final class NodeDetailUseCase: NodeDetailUseCaseProtocol {
 
     private var sdkNodeClient: SDKNodeClient
 
-    private var nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol
+    private var nodeThumbnailHomeUseCase: any NodeThumbnailHomeUseCaseProtocol
 
     init(
         sdkNodeClient: SDKNodeClient,
-        nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol
+        nodeThumbnailHomeUseCase: some NodeThumbnailHomeUseCaseProtocol
     ) {
         self.sdkNodeClient = sdkNodeClient
         self.nodeThumbnailHomeUseCase = nodeThumbnailHomeUseCase

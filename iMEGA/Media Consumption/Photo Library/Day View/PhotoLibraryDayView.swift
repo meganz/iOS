@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PhotoLibraryDayView: View {
     @StateObject var viewModel: PhotoLibraryDayViewModel
-    let router: PhotoLibraryContentViewRouting
+    let router: any PhotoLibraryContentViewRouting
 
     var body: some View {
         PhotoLibraryModeCardView(viewModel: viewModel) {

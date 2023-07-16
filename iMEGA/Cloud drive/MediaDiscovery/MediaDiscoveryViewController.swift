@@ -244,7 +244,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
         DevicePermissionsHandler.makeHandler()
     }
     
-    private var permissionRouter: PermissionAlertRouting {
+    private var permissionRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
     

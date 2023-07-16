@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PhotoLibraryContentView: View {
     @ObservedObject var viewModel: PhotoLibraryContentViewModel
-    var router: PhotoLibraryContentViewRouting
+    var router: any PhotoLibraryContentViewRouting
     let onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?
     
     @State private var editMode: EditMode = .inactive

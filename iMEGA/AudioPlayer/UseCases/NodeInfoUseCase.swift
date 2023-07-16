@@ -14,9 +14,9 @@ protocol NodeInfoUseCaseProtocol {
 }
 
 final class NodeInfoUseCase: NodeInfoUseCaseProtocol {
-    private var nodeInfoRepository: NodeInfoRepositoryProtocol
+    private var nodeInfoRepository: any NodeInfoRepositoryProtocol
     
-    init(nodeInfoRepository: NodeInfoRepositoryProtocol = NodeInfoRepository()) {
+    init(nodeInfoRepository: some NodeInfoRepositoryProtocol = NodeInfoRepository()) {
         self.nodeInfoRepository = nodeInfoRepository
     }
     

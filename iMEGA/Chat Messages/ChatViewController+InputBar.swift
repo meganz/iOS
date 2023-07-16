@@ -502,7 +502,7 @@ extension ChatViewController: ChatInputBarDelegate {
                                                    isSourceTemporary: false,
                                                    delegate: self.createUploadTransferDelegate())
             } else {
-                let requestDelegate: MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in
+                let requestDelegate: some MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in
                     guard let request = request else {
                         fatalError("request object should not be nil")
                     }
@@ -593,7 +593,7 @@ extension ChatViewController: ChatInputBarDelegate {
 extension ChatViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController,
                              presenting: UIViewController,
-                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+                             source: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
         guard presented is AddToChatViewController else {
             return nil
         }
@@ -601,7 +601,7 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
         return AddToChatViewAnimator(type: .present)
     }
     
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
         guard dismissed is AddToChatViewController else {
             return nil
         }

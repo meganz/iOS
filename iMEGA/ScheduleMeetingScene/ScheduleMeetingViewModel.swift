@@ -108,12 +108,12 @@ final class ScheduleMeetingViewModel: ObservableObject {
     
     @Published private(set) var rules: ScheduledMeetingRulesEntity
 
-    private let router: ScheduleMeetingRouting
+    private let router: any ScheduleMeetingRouting
     private var viewConfiguration: any ScheduleMeetingViewConfigurable
     private var accountUseCase: any AccountUseCaseProtocol
     
     init(
-        router: ScheduleMeetingRouting,
+        router: some ScheduleMeetingRouting,
         viewConfiguration: some ScheduleMeetingViewConfigurable,
         accountUseCase: some AccountUseCaseProtocol
     ) {

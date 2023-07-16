@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var cornerStyleFactory: CornerStyleFactory {
+    var cornerStyleFactory: some CornerStyleFactory {
         CornerStyleFactoryImpl()
     }
 }
