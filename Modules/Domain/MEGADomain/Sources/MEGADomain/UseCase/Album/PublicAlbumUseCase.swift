@@ -1,7 +1,8 @@
 import Foundation
 
 public protocol PublicAlbumUseCaseProtocol {
-    func publicPhotos(forLink link: String) async throws -> [NodeEntity]
+    func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity
+    func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity]
 }
 
 public struct PublicAlbumUseCase<T: ShareAlbumRepositoryProtocol>: PublicAlbumUseCaseProtocol {
@@ -11,11 +12,13 @@ public struct PublicAlbumUseCase<T: ShareAlbumRepositoryProtocol>: PublicAlbumUs
         self.shareAlbumRepository = shareAlbumRepository
     }
     
-    public func publicPhotos(forLink link: String) async throws -> [NodeEntity] {
-        let publicAlbumPhotos = try await shareAlbumRepository.publicAlbumContents(forLink: link)
-            .setElements
+    public func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity {
+        try await shareAlbumRepository.publicAlbumContents(forLink: link)
+    }
+    
+    public func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity] {
         return await withTaskGroup(of: NodeEntity?.self) { group in
-            publicAlbumPhotos.forEach { photoElement in
+            photos.forEach { photoElement in
                 group.addTask {
                     try? await shareAlbumRepository.publicPhoto(photoElement)
                 }

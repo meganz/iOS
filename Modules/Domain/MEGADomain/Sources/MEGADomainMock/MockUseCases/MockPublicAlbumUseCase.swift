@@ -1,15 +1,22 @@
 import MEGADomain
 
 public struct MockPublicAlbumUseCase: PublicAlbumUseCaseProtocol {
-    private let nodesResult: Result<[NodeEntity], Error>
+    private let publicAlbumResult: Result<SharedAlbumEntity, Error>
+    private let nodes: [NodeEntity]
     
-    public init(nodesResult: Result<[NodeEntity], Error> = .failure(GenericErrorEntity())) {
-        self.nodesResult = nodesResult
+    public init(publicAlbumResult: Result<SharedAlbumEntity, Error> = .failure(GenericErrorEntity()),
+                nodes: [NodeEntity] = []) {
+        self.publicAlbumResult = publicAlbumResult
+        self.nodes = nodes
     }
     
-    public func publicPhotos(forLink link: String) async throws -> [NodeEntity] {
+    public func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity {
         try await withCheckedThrowingContinuation {
-            $0.resume(with: nodesResult)
+            $0.resume(with: publicAlbumResult)
         }
+    }
+    
+    public func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity] {
+        nodes
     }
 }
