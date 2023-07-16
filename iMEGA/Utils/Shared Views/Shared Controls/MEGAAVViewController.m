@@ -22,7 +22,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 @property (nonatomic, assign, getter=isEndPlaying) BOOL endPlaying;
 @property (nonatomic, strong) MEGASdk *apiForStreaming;
 @property (nonatomic, assign, getter=isViewDidAppearFirstTime) BOOL viewDidAppearFirstTime;
-@property (nonatomic, strong) NSMutableSet *subscriptions;
+@property (nonatomic, strong) NSSet *subscriptions;
 
 @end
 
@@ -65,13 +65,13 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
     self.viewDidAppearFirstTime = YES;
     
-    [_subscriptions unionSet:[self bindToSubscriptionsWithMovieFinised:^{
+    self.subscriptions = [self bindToSubscriptionsWithMovieFinished:^{
         [self movieFinishedCallback];
     } checkNetworkChanges:^{
         [self checkNetworkChanges];
     } applicationDidEnterBackground:^{
         [self applicationDidEnterBackground];
-    }]];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
