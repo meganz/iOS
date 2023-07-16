@@ -4,14 +4,14 @@ import MEGADomain
 
 extension MEGAAVViewController {
     
-    @objc func bindToSubscriptions(movieFinised: (() -> Void)?, checkNetworkChanges: (() -> Void)?, applicationDidEnterBackground: (() -> Void)?) -> NSSet {
+    @objc func bindToSubscriptions(movieFinished: (() -> Void)?, checkNetworkChanges: (() -> Void)?, applicationDidEnterBackground: (() -> Void)?) -> NSSet {
         var subscriptions = Set<AnyCancellable>()
         let notificationCenter = NotificationCenter.default
         
         notificationCenter
             .publisher(for: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
             .receive(on: DispatchQueue.main)
-            .sink { _ in movieFinised?() }
+            .sink { _ in movieFinished?() }
             .store(in: &subscriptions)
         
         Publishers
