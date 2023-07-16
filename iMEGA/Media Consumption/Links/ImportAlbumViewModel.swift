@@ -21,6 +21,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showCannotAccessAlbumAlert = false
     @Published private(set) var isSelectionEnabled = false
     @Published var showShareLink = false
+    @Published var albumName: String?
     
     private var albumLink: String {
         (publicLinkWithDecryptionKey ?? publicLink).absoluteString
@@ -73,7 +74,10 @@ final class ImportAlbumViewModel: ObservableObject {
         Task { @MainActor [weak self] in
             guard let self else { return }
             do {
-                let photos = try await publicAlbumUseCase.publicPhotos(forLink: albumLink)
+                let publicAlbum = try await publicAlbumUseCase.publicAlbum(forLink: albumLink)
+                try Task.checkCancellation()
+                albumName = publicAlbum.set.name
+                let photos = await publicAlbumUseCase.publicPhotos(publicAlbum.setElements)
                 try Task.checkCancellation()
                 photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
                 publicLinkStatus = .loaded

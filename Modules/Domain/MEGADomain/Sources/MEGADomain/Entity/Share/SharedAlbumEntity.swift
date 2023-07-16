@@ -1,6 +1,6 @@
 import Foundation
 
-public struct SharedAlbumEntity {
+public struct SharedAlbumEntity: Sendable, Equatable {
     public let `set`: SetEntity
     public let setElements: [SetElementEntity]
     

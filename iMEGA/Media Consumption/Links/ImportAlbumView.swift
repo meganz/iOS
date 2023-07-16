@@ -56,9 +56,7 @@ struct ImportAlbumView: View {
             rightNavigationBarButton
                 .frame(maxHeight: 44)
         }, center: {
-            Text(Strings.Localizable.albumLink)
-                .foregroundColor(colorScheme == .dark ? .white : .black)
-                .bold()
+            navigationTitle
         }, backgroundColor: Color(Colors.General.Gray.navigationBgColor.color))
     }
     
@@ -67,6 +65,25 @@ struct ImportAlbumView: View {
             dismissImportAlbumScreen()
         }
         .foregroundColor(toolbarButtonColor)
+    }
+    
+    @ViewBuilder
+    private var navigationTitle: some View {
+        Group {
+            if let albumName = viewModel.albumName {
+                VStack {
+                    Text(albumName)
+                        .font(.subheadline)
+                        .bold()
+                    Text(Strings.Localizable.albumLink)
+                        .font(.caption)
+                }
+            } else {
+                Text(Strings.Localizable.albumLink)
+                    .bold()
+            }
+        }
+        .foregroundColor(colorScheme == .dark ? .white : .black)
     }
     
     @ViewBuilder
