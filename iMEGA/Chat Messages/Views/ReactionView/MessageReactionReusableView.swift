@@ -23,7 +23,7 @@ class MessageReactionReusableView: MessageReusableView {
         }
     }
 
-    weak var delegate: MessageReactionReusableViewDelegate?
+    weak var delegate: (any MessageReactionReusableViewDelegate)?
 
     override func awakeFromNib() {
         super.awakeFromNib()

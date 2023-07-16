@@ -30,7 +30,7 @@ class MessageTextView: UITextView {
     
     // MARK: - Private properties
     
-    private var textChangeNotificationToken: NSObjectProtocol?
+    private var textChangeNotificationToken: (any NSObjectProtocol)?
 
     private var collapsedMaxHeight: CGFloat {
         guard let font = font else {

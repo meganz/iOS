@@ -7,7 +7,7 @@ protocol MessagesEditCollectionOverlayViewDelegate: AnyObject {
 class MessageEditCollectionOverlayView: MessageReusableView {
     @IBOutlet weak var centerConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftIconView: UIImageView!
-    open weak var delegate: MessagesEditCollectionOverlayViewDelegate?
+    open weak var delegate: (any MessagesEditCollectionOverlayViewDelegate)?
     var isActive = false {
         didSet {
             if isActive {

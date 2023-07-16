@@ -58,7 +58,7 @@ extension MarkedString {
     /// - Parameter styleMarks: It's, under the hood, a `Dictionary` with `Marker/Tag` as the key, and `AttributedTextStyle` as values.
     /// - Parameter attributedTextStyleFactory: Factory that could produce text styler with given text style
     /// - Returns: An attributed string with current instances's configurations - text, tags/styles, a
-    func attributedString(withStyleMarks styleMarks: [String: AttributedTextStyle], attributedTextStyleFactory: AttributedTextStyleFactory) -> NSAttributedString {
+    func attributedString(withStyleMarks styleMarks: [String: AttributedTextStyle], attributedTextStyleFactory: some AttributedTextStyleFactory) -> NSAttributedString {
         switch self {
         case let .text(tag: tags, text: text, child: child):
             guard !text.isEmpty else {

@@ -42,14 +42,14 @@ class NodeInfoViewController: UIViewController {
     
     private var node = MEGANode()
     private var folderInfo: MEGAFolderInfo?
-    private var delegate: NodeInfoViewControllerDelegate?
+    private var delegate: (any NodeInfoViewControllerDelegate)?
     private var nodeVersions: [MEGANode] = []
     private var viewModel: NodeInfoViewModel?
     
     // MARK: - Lifecycle
 
     @objc class func instantiate(withViewModel viewModel: NodeInfoViewModel,
-                                 delegate: NodeInfoViewControllerDelegate?) -> MEGANavigationController {
+                                 delegate: (any NodeInfoViewControllerDelegate)?) -> MEGANavigationController {
         guard let nodeInfoVC = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(withIdentifier: "NodeInfoViewControllerID") as? NodeInfoViewController else {
             fatalError("Could not instantiate NodeInfoViewController")
         }
@@ -62,7 +62,7 @@ class NodeInfoViewController: UIViewController {
     }
 
     // MARK: - Public Interface
-    func display(_ node: MEGANode, withDelegate delegate: NodeInfoViewControllerDelegate) {
+    func display(_ node: MEGANode, withDelegate delegate: some NodeInfoViewControllerDelegate) {
         self.node = node
         self.delegate = delegate
     }

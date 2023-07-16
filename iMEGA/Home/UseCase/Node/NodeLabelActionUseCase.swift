@@ -24,9 +24,9 @@ protocol NodeLabelActionUseCaseProtocol {
 
 final class NodeLabelActionUseCase: NodeLabelActionUseCaseProtocol {
 
-    private let nodeLabelActionRepository: NodeLabelActionRepositoryProtocol
+    private let nodeLabelActionRepository: any NodeLabelActionRepositoryProtocol
 
-    init(nodeLabelActionRepository: NodeLabelActionRepositoryProtocol) {
+    init(nodeLabelActionRepository: some NodeLabelActionRepositoryProtocol) {
         self.nodeLabelActionRepository = nodeLabelActionRepository
     }
 

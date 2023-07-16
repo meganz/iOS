@@ -7,12 +7,12 @@ protocol MiniPlayerActionsDelegate: AnyObject {
 }
 
 final class MiniPlayerDelegate: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
-    private weak var delegate: MiniPlayerActionsDelegate?
+    private weak var delegate: (any MiniPlayerActionsDelegate)?
     private let loopMode: Bool
     private let itemsNumber: Int
     private var lastContentOffset: CGPoint?
     
-    init(delegate: MiniPlayerActionsDelegate, loopMode: Bool = false, itemsNumber: Int) {
+    init(delegate: some MiniPlayerActionsDelegate, loopMode: Bool = false, itemsNumber: Int) {
         self.delegate = delegate
         self.loopMode = loopMode
         self.itemsNumber = itemsNumber

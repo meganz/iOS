@@ -10,7 +10,7 @@ class MessageOptionItemTableCell: UITableViewCell {
     @IBOutlet weak var seperatorView: UIView!
     
     var index: Int = -1
-    weak var delegate: MessageOptionItemTableCellDelegate? {
+    weak var delegate: (any MessageOptionItemTableCellDelegate)? {
         didSet {
             guard let delegate = delegate else {
                 return

@@ -10,11 +10,11 @@ final class PhotoLibraryCollectionViewScrollTracker {
     private let libraryViewModel: PhotoLibraryContentViewModel
     private let collectionView: UICollectionView
     private let timeZone: TimeZone?
-    private weak var delegate: PhotoLibraryCollectionViewScrolling?
+    private weak var delegate: (any PhotoLibraryCollectionViewScrolling)?
     
     init(libraryViewModel: PhotoLibraryContentViewModel,
          collectionView: UICollectionView,
-         delegate: PhotoLibraryCollectionViewScrolling,
+         delegate: some PhotoLibraryCollectionViewScrolling,
          in timeZone: TimeZone? = nil) {
         self.libraryViewModel = libraryViewModel
         self.collectionView = collectionView

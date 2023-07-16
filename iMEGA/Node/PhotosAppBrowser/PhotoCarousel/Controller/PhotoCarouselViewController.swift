@@ -61,7 +61,7 @@ final class PhotoCarouselViewController: UIViewController {
         return nil
     }
     
-    weak private var delegate: PhotoCarouselViewControllerDelegate?
+    weak private var delegate: (any PhotoCarouselViewControllerDelegate)?
     
     // MARK: - Initializers.
 
@@ -70,7 +70,7 @@ final class PhotoCarouselViewController: UIViewController {
          selectedAssets: [PHAsset],
          selectionActionType: AlbumsSelectionActionType,
          selectionActionDisabledText: String,
-         delegate: PhotoCarouselViewControllerDelegate) {
+         delegate: some PhotoCarouselViewControllerDelegate) {
         
         self.album = album
         self.selectedPhotoIndexPath = selectedPhotoIndexPath

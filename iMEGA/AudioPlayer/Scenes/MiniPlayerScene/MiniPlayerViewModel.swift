@@ -33,9 +33,9 @@ final class MiniPlayerViewModel: ViewModelType {
     private var configEntity: AudioPlayerConfigEntity
     private var shouldInitializePlayer: Bool = false
     private let router: any MiniPlayerViewRouting
-    private let nodeInfoUseCase: NodeInfoUseCaseProtocol?
-    private let streamingInfoUseCase: StreamingInfoUseCaseProtocol?
-    private let offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?
+    private let nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?
+    private let streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?
+    private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let dispatchQueue: any DispatchQueueProtocol
     
@@ -45,9 +45,9 @@ final class MiniPlayerViewModel: ViewModelType {
     // MARK: - Init
     init(configEntity: AudioPlayerConfigEntity,
          router: some MiniPlayerViewRouting,
-         nodeInfoUseCase: NodeInfoUseCaseProtocol?,
-         streamingInfoUseCase: StreamingInfoUseCaseProtocol?,
-         offlineInfoUseCase: OfflineFileInfoUseCaseProtocol?,
+         nodeInfoUseCase: (any NodeInfoUseCaseProtocol)?,
+         streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?,
+         offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?,
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
          dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global()) {
         self.configEntity = configEntity

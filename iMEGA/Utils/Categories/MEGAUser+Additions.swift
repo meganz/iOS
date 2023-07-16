@@ -1,6 +1,6 @@
 
 extension MEGAUser {
-    func avatarImage(withDelegate delegate: MEGARequestDelegate?) -> UIImage? {
+    func avatarImage(withDelegate delegate: (any MEGARequestDelegate)?) -> UIImage? {
         guard let base64Handle = MEGASdk.base64Handle(forHandle: handle) else { return nil }
         
         let filePath = Helper
