@@ -101,9 +101,9 @@ struct FutureMeetingRoomView: View {
             let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
             return Alert(title: Text(cancelMeetingAlertData.title),
                          message: Text(cancelMeetingAlertData.message),
-                         primaryButton: .cancel(Text(cancelMeetingAlertData.primaryButtonTitle), action: {
+                         primaryButton: .default(Text(cancelMeetingAlertData.primaryButtonTitle), action: {
                 cancelMeetingAlertData.primaryButtonAction?()
-            }), secondaryButton: .default(Text(cancelMeetingAlertData.secondaryButtonTitle))
+            }), secondaryButton: .cancel(Text(cancelMeetingAlertData.secondaryButtonTitle))
             )
         }
         .onTapGesture {

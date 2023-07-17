@@ -316,20 +316,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             return
         }
         
-        let chatListItems = chatUseCase.fetchMeetings() ?? []
-        
         fetchFutureScheduledMeetings()
-        
-        let futureScheduledMeetingsChatIds: [ChatIdEntity] = futureMeetings?.flatMap(\.allChatIds) ?? []
-        pastMeetings = chatListItems.compactMap { chatListItem in
-            guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
-                return nil
-            }
-            
-            return constructChatRoomViewModel(forChatListItem: chatListItem)
-        }
-        
-        await filterMeetings()
     }
     
     private func fetchFutureScheduledMeetings() {
@@ -348,10 +335,27 @@ final class ChatRoomsListViewModel: ObservableObject {
                 }
             }
         }
+
+        let futureScheduledMeetingsChatIds = futureScheduledMeetings.map { $0.chatId }
+
+        createPastMeetings(with: futureScheduledMeetingsChatIds)
         
         Task {
             let upcomingOccurrences = try await scheduledMeetingUseCase.upcomingOccurrences(forScheduledMeetings: futureScheduledMeetings)
             await populateFutureMeetings(from: futureScheduledMeetings, withUpcomingOccurrences: upcomingOccurrences)
+            await filterMeetings()
+        }
+    }
+    
+    private func createPastMeetings(with futureScheduledMeetingsChatIds: [ChatIdEntity]) {
+        let chatListItems = chatUseCase.fetchMeetings() ?? []
+
+        pastMeetings = chatListItems.compactMap { chatListItem in
+            guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
+                return nil
+            }
+            
+            return constructChatRoomViewModel(forChatListItem: chatListItem)
         }
     }
     
