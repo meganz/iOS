@@ -1,4 +1,4 @@
-import MEGAData
+import MEGASDKRepo
 
 @objc final class FileSystemHelperOCWrapper: NSObject {
     let fileSystemRepository = FileSystemRepository.newRepo

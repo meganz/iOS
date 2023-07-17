@@ -50,7 +50,7 @@
 #import "MEGASdkManager+CleanUp.h"
 @import Firebase;
 @import SDWebImageWebPCoder;
-@import MEGAData;
+@import MEGASDKRepo;
 
 #import "MEGA-Swift.h"
 

@@ -1,6 +1,6 @@
 import Foundation
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreatingRepositoryProtocol {
     

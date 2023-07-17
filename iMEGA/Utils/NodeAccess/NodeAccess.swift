@@ -1,6 +1,6 @@
 import Foundation
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: Error?) -> Void
 

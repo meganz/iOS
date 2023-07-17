@@ -1,6 +1,6 @@
 import Foundation
-import MEGAData
 import MEGASdk
+import MEGASDKRepo
 import MEGASwift
 
 extension MEGANode {

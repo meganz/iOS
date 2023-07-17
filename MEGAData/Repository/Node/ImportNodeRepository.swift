@@ -1,6 +1,6 @@
 import Foundation
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 struct ImportNodeRepository: ImportNodeRepositoryProtocol {
     static var newRepo: ImportNodeRepository {

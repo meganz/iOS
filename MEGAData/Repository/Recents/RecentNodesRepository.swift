@@ -1,6 +1,6 @@
 import Foundation
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 import MEGASwift
 
 struct RecentNodesRepository: RecentNodesRepositoryProtocol {

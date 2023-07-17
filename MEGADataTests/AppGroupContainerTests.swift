@@ -1,5 +1,5 @@
 @testable import MEGA
-import MEGAData
+import MEGASDKRepo
 import XCTest
 
 class AppGroupContainerTests: XCTestCase {

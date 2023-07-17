@@ -15,7 +15,7 @@
 #import "PasswordStrengthIndicatorView.h"
 #import "PasswordView.h"
 #import "TwoFactorAuthenticationViewController.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 typedef NS_ENUM(NSUInteger, TextFieldTag) {
     CurrentEmailTextFieldTag = 0,

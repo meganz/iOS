@@ -1,7 +1,7 @@
 import FileProvider
-import MEGAData
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 final class FileProviderExtension: NSFileProviderExtension {
     private var credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)

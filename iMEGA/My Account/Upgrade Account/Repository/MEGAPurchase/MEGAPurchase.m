@@ -5,7 +5,7 @@
 
 #import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface MEGAPurchase ()
 @property (nonatomic, strong) NSArray *iOSProductIdentifiers;

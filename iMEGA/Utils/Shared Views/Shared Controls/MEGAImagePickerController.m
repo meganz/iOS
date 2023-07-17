@@ -15,7 +15,7 @@
 #import "NSString+MNZCategory.h"
 
 #import "MEGA-Swift.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface MEGAImagePickerController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 

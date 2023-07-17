@@ -29,7 +29,7 @@
 #import "ItemListViewController.h"
 #import "NSArray+MNZCategory.h"
 @import MEGAUIKit;
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 

@@ -1,6 +1,6 @@
 import DeviceCenter
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 extension MyAccountHallViewController: UITableViewDelegate {
     

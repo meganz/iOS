@@ -1,8 +1,8 @@
 import Contacts
 import Intents
-import MEGAData
 import MEGADomain
 import MEGASdk
+import MEGASDKRepo
 
 extension IntentHandler: INStartCallIntentHandling {
     

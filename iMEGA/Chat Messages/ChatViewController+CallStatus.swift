@@ -1,6 +1,6 @@
 import Combine
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 import UIKit
 
 extension ChatViewController {

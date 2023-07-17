@@ -1,5 +1,5 @@
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 struct ShareAlbumLinkInitialSections {
     private let album: AlbumEntity

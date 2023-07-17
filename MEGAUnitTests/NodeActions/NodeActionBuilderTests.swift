@@ -1,5 +1,5 @@
 @testable import MEGA
-import MEGADataMock
+import MEGASDKRepoMock
 import XCTest
 
 class NodeActionBuilderTests: XCTestCase {

@@ -1,5 +1,5 @@
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 extension FeatureFlagUseCase where T == FeatureFlagRepository {
     

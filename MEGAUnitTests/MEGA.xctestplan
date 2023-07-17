@@ -47,9 +47,9 @@
           "name" : "MEGAIntent"
         },
         {
-          "containerPath" : "container:Modules\/Repository\/MEGAData",
-          "identifier" : "MEGAData",
-          "name" : "MEGAData"
+          "containerPath" : "container:Modules\/Repository\/MEGASDKRepo",
+          "identifier" : "MEGASDKRepo",
+          "name" : "MEGASDKRepo"
         },
         {
           "containerPath" : "container:Modules\/Domain\/MEGADomain",
@@ -170,19 +170,6 @@
       }
     },
     {
-      "skippedTests" : [
-        "ThumbnailRepositoryTests\/testCachedPreviewOrOriginalPath_forCachedOrignal_shouldReturnOriginalURLWithFileName()",
-        "ThumbnailRepositoryTests\/testCachedPreviewOrOriginalPath_forCachedPreview_shouldReturnPreviewURL()",
-        "ThumbnailRepositoryTests\/testCachedThumbnail_forType_shouldReturnCorrectURL()",
-        "ThumbnailRepositoryTests\/testLoadThumbnail_withCachedFile_shouldReturnCachedURL()"
-      ],
-      "target" : {
-        "containerPath" : "container:Modules\/Repository\/MEGAData",
-        "identifier" : "MEGADataTests",
-        "name" : "MEGADataTests"
-      }
-    },
-    {
       "target" : {
         "containerPath" : "container:Modules\/Infrastracture\/MEGASwift",
         "identifier" : "MEGASwiftTests",
@@ -236,6 +223,19 @@
         "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
         "identifier" : "MEGAAnalyticsDomainTests",
         "name" : "MEGAAnalyticsDomainTests"
+      }
+    },
+    {
+      "skippedTests" : [
+        "ThumbnailRepositoryTests\/testCachedPreviewOrOriginalPath_forCachedOrignal_shouldReturnOriginalURLWithFileName()",
+        "ThumbnailRepositoryTests\/testCachedPreviewOrOriginalPath_forCachedPreview_shouldReturnPreviewURL()",
+        "ThumbnailRepositoryTests\/testCachedThumbnail_forType_shouldReturnCorrectURL()",
+        "ThumbnailRepositoryTests\/testLoadThumbnail_withCachedFile_shouldReturnCachedURL()"
+      ],
+      "target" : {
+        "containerPath" : "container:Modules\/Repository\/MEGASDKRepo",
+        "identifier" : "MEGASDKRepoTests",
+        "name" : "MEGASDKRepoTests"
       }
     },
     {

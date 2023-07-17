@@ -1,8 +1,8 @@
 @testable import MEGA
 import MEGAAnalyticsDomain
-import MEGAData
-import MEGADataMock
 import MEGADomain
+import MEGASDKRepo
+import MEGASDKRepoMock
 import XCTest
 
 final class AnalyticsRepositoryTests: XCTestCase {

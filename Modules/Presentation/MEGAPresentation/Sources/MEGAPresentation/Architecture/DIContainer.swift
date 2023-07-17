@@ -1,7 +1,7 @@
 import MEGAAnalyticsDomain
 import MEGAAnalyticsiOS
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 public enum DIContainer {
     public static var authUseCase: any AuthUseCaseProtocol {

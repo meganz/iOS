@@ -1,5 +1,5 @@
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 extension SharedItemsViewController: ContatctsViewControllerDelegate {
     @objc func shareFolder() {

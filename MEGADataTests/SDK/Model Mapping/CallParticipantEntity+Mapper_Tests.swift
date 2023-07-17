@@ -1,6 +1,6 @@
 @testable import MEGA
-import MEGADataMock
 @testable import MEGADomain
+import MEGASDKRepoMock
 import XCTest
 
 final class CallParticipantEntity_Mapper_Tests: XCTestCase {

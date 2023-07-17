@@ -50,7 +50,7 @@
 
 @import Photos;
 @import MEGAUIKit;
-@import MEGAData;
+@import MEGASDKRepo;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;

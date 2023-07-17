@@ -1,5 +1,5 @@
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 extension PhotosViewController {
     @IBAction func moreAction(_ sender: UIBarButtonItem) {

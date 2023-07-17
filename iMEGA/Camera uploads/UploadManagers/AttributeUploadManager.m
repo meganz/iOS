@@ -7,7 +7,7 @@
 #import "CameraUploadManager.h"
 #import "NSString+MNZCategory.h"
 #import "NSError+CameraUpload.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 static NSString * const AttributesDirectoryName = @"Attributes";
 

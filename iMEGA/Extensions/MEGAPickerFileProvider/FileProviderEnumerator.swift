@@ -1,6 +1,6 @@
 import FileProvider
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
     

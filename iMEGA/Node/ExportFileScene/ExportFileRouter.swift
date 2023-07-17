@@ -1,6 +1,6 @@
 import Foundation
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 import UIKit
 
 final class ExportFileRouter: ExportFileViewRouting {

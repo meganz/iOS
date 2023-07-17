@@ -1,7 +1,7 @@
 import Foundation
-import MEGAData
 import MEGADomain
 import MEGAFoundation
+import MEGASDKRepo
 import StoreKit
 
 @objc final class RatingRequestMonitor: NSObject {

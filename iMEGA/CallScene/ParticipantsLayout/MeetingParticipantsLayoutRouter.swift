@@ -1,6 +1,6 @@
-import MEGAData
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 protocol MeetingParticipantsLayoutRouting: Routing {
     func showRenameChatAlert()

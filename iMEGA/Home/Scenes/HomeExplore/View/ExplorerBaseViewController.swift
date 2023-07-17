@@ -1,5 +1,5 @@
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 import MEGAUIKit
 
 class ExplorerBaseViewController: UIViewController {

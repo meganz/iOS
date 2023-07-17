@@ -1,5 +1,5 @@
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 import UIKit
 
 class ChatSharedItemsViewController: UIViewController {

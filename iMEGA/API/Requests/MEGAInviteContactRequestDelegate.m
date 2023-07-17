@@ -6,7 +6,7 @@
 #import "SVProgressHUD.h"
 #import "CustomModalAlertViewController.h"
 #import "UIApplication+MNZCategory.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface MEGAInviteContactRequestDelegate ()
 

@@ -1,7 +1,7 @@
 
-import MEGAData
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import SwiftUI
 
 protocol ReportIssueViewRouting: Routing {

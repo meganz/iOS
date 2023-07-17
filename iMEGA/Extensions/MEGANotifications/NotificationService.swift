@@ -1,6 +1,6 @@
 import Firebase
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 import SAMKeychain
 import UserNotifications
 

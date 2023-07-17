@@ -1,6 +1,6 @@
 import Combine
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 import MEGASwift
 
 public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtocol {

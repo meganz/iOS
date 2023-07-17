@@ -22,7 +22,7 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
 
