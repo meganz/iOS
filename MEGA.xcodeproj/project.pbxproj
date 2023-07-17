@@ -15318,7 +15318,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev;
 				PRODUCT_NAME = MEGA;
@@ -15376,7 +15376,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -15433,8 +15433,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
-					"-ObjC",
-					"$(inherited)",
+					"-Xlinker",
+					"-no_application_extension",
 				);
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGANotifications;
@@ -15487,10 +15487,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"$(inherited)",
-				);
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15542,6 +15539,10 @@
 				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-no_application_extension",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAWidget";
@@ -15593,6 +15594,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAWidget";
@@ -15634,6 +15636,10 @@
 				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-no_application_extension",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAIntent";
@@ -15674,6 +15680,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAIntent";
@@ -15723,6 +15730,10 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-no_application_extension",
+				);
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15778,6 +15789,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15819,6 +15831,10 @@
 				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-no_application_extension",
+				);
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15863,6 +15879,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15907,6 +15924,7 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -15948,6 +15966,7 @@
 				MARKETING_VERSION = 10.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development mega.ios.dev.MEGAPicker";
@@ -15987,6 +16006,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore mega.ios.MEGAPicker";
@@ -16026,6 +16046,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGAPicker";
@@ -16247,7 +16268,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa;
 				PRODUCT_NAME = MEGA;
@@ -16307,6 +16328,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16358,10 +16380,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"$(inherited)",
-				);
+				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16467,6 +16486,10 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = (
+					"-Xlinker",
+					"-no_application_extension",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGAWidget";
@@ -16508,6 +16531,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAIntent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc mega.ios.qa.MEGAIntent";
