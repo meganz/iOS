@@ -1,8 +1,8 @@
-import MEGAData
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
 import MEGASdk
+import MEGASDKRepo
 import SwiftUI
 import UserNotifications
 

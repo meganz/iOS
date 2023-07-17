@@ -27,7 +27,7 @@
 #import "MEGAProcessAsset.h"
 
 @import Firebase;
-@import MEGAData;
+@import MEGASDKRepo;
 
 #define MNZ_ANIMATION_TIME 0.35
 

@@ -1,6 +1,6 @@
-import MEGAData
 import MEGADomain
 import MEGAPermissions
+import MEGASDKRepo
 
 @objc final class SaveMediaToPhotosUseCaseOCWrapper: NSObject {
     @objc func saveToPhotos(node: MEGANode, isFolderLink: Bool = false) {

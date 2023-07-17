@@ -1,6 +1,6 @@
 import Combine
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRouting {
     private(set) var presenter: UINavigationController

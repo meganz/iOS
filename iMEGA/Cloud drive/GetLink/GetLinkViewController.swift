@@ -1,6 +1,6 @@
-import MEGAData
 import MEGADomain
 import MEGAFoundation
+import MEGASDKRepo
 import UIKit
 
 enum GetLinkTableViewSection: Int {

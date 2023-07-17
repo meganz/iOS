@@ -1,5 +1,5 @@
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 final class TurnOnNotificationsViewRouter: TurnOnNotificationsViewRouting {
     private weak var baseViewController: UIViewController?

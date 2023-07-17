@@ -17,7 +17,7 @@
 #import "MEGA-Swift.h"
 #endif
 
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface NodeTableViewCell()
 

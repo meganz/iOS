@@ -1,6 +1,6 @@
-import MEGAData
 import MEGADomain
 import MEGAPermissions
+import MEGASDKRepo
 import MEGAUIKit
 
 class FilesExplorerContainerViewController: UIViewController, TextFileEditable {

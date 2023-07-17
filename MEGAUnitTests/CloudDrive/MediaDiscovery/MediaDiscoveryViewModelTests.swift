@@ -1,8 +1,8 @@
 import Combine
 @testable import MEGA
-import MEGADataMock
 import MEGADomain
 import MEGADomainMock
+import MEGASDKRepoMock
 import XCTest
 
 final class MediaDiscoveryViewModelTests: XCTestCase {

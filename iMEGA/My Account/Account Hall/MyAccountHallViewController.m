@@ -18,7 +18,7 @@
 #import "UIImage+MNZCategory.h"
 #import "UsageViewController.h"
 
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface MyAccountHallViewController () <UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
 

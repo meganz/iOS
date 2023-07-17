@@ -1,7 +1,7 @@
 import Combine
-import MEGAData
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import SwiftUI
 
 protocol AlbumListViewRouting {

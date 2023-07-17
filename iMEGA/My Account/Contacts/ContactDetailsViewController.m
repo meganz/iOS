@@ -26,7 +26,7 @@
 #import "MEGA-Swift.h"
 
 @import MEGAUIKit;
-@import MEGAData;
+@import MEGASDKRepo;
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionDonotDisturb = 0,

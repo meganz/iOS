@@ -20,7 +20,7 @@
 #import "NSArray+MNZCategory.h"
 
 @import MEGAFoundation;
-@import MEGAData;
+@import MEGASDKRepo;
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 

@@ -1,5 +1,5 @@
 @testable import MEGA
-@testable import MEGADataMock
+@testable import MEGASDKRepoMock
 import XCTest
 
 final class CloudDriveViewControllerTests: XCTestCase {

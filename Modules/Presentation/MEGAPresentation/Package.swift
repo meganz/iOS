@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Domain/MEGAAnalyticsDomain"),
-        .package(path: "../../Repository/MEGAData"),
+        .package(path: "../../Repository/MEGASDKRepo"),
         .package(path: "../../Infrastracture/MEGATest")
     ],
     targets: [
@@ -24,7 +24,7 @@ let package = Package(
             dependencies: [
                 "MEGAAnalyticsDomain",
                 "MEGADomain",
-                "MEGAData"
+                "MEGASDKRepo"
             ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(

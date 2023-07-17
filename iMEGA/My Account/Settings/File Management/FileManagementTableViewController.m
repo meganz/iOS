@@ -11,7 +11,7 @@
 #import "MEGA-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     FileManagementTableSectionMobileData = 0,

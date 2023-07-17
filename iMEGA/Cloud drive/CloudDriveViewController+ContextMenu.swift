@@ -1,7 +1,7 @@
 import CoreServices
-import MEGAData
 import MEGADomain
 import MEGAPermissions
+import MEGASDKRepo
 import UIKit
 
 extension CloudDriveViewController: CloudDriveContextMenuDelegate {

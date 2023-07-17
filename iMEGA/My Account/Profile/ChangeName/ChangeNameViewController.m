@@ -8,7 +8,7 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate, UIAdaptivePresentationControllerDelegate>
 

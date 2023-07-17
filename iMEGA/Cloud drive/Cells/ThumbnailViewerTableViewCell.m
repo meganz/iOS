@@ -16,7 +16,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGA-Swift.h"
 #import "MEGARecentActionBucket+MNZCategory.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface ThumbnailViewerTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 

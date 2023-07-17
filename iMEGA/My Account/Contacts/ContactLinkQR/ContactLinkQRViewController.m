@@ -17,7 +17,7 @@
 #import "UIImage+GKContact.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 typedef NS_ENUM(NSInteger, QRSection) {
     QRSectionMyCode = 0,

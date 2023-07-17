@@ -14,7 +14,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-@import MEGAData;
+@import MEGASDKRepo;
 
 @implementation ContactTableViewCell
 

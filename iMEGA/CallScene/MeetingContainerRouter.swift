@@ -1,8 +1,8 @@
 import Combine
-import MEGAData
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
+import MEGASDKRepo
 
 protocol MeetingContainerRouting: AnyObject, Routing {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel)

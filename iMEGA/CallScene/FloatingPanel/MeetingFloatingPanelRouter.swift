@@ -1,7 +1,7 @@
-import MEGAData
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
+import MEGASDKRepo
 import PanModal
 
 protocol MeetingFloatingPanelRouting: AnyObject, Routing {

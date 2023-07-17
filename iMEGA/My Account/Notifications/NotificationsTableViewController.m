@@ -19,7 +19,7 @@
 #import "NotificationTableViewCell.h"
 #import "SharedItemsViewController.h"
 
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface NotificationsTableViewController () <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, MEGAGlobalDelegate>
 

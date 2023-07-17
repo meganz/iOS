@@ -1,7 +1,7 @@
 import Foundation
-import MEGAData
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 final class VerificationCodeViewRouter: VerificationCodeViewRouting {
     private weak var baseViewController: UIViewController?

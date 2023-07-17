@@ -1,6 +1,6 @@
 import Foundation
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol {
     static var newRepo: FavouriteNodesRepository {

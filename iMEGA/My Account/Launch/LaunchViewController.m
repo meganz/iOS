@@ -1,7 +1,7 @@
 #import "LaunchViewController.h"
 #import "MEGASdkManager.h"
 
-@import MEGAData;
+@import MEGASDKRepo;
 
 @interface LaunchViewController () <MEGARequestDelegate>
 

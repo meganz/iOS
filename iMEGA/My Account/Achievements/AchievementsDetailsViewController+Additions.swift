@@ -1,4 +1,4 @@
-import MEGAData
+import MEGASDKRepo
 
 extension AchievementsDetailsViewController {
     @objc func showAddPhoneNumber() {

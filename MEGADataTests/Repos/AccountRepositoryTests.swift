@@ -1,8 +1,8 @@
 import Combine
-import MEGAData
-import MEGADataMock
 import MEGADomain
 import MEGADomainMock
+import MEGASDKRepo
+import MEGASDKRepoMock
 import MEGASwift
 import XCTest
 

@@ -1,5 +1,5 @@
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 @objc protocol MyAvatarManagerProtocol {
     var myAvatarBarButton: UIBarButtonItem? { get }

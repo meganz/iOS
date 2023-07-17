@@ -1,7 +1,7 @@
 import Combine
-import MEGAData
 import MEGADomain
 import MEGASdk
+import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI

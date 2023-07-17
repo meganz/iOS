@@ -1,5 +1,5 @@
 @testable import MEGA
-import MEGADataMock
+import MEGASDKRepoMock
 import XCTest
 
 final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {

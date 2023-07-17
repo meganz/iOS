@@ -1,9 +1,9 @@
 import Combine
 import Foundation
-import MEGAData
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
+import MEGASDKRepo
 import SafariServices
 
 extension AppDelegate {

@@ -258,7 +258,6 @@
 		3258B90F298B787C0055E65C /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3258B90E298B787C0055E65C /* FilterType.swift */; };
 		325EFA7328AB9408005D4851 /* Slideshow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325EFA7028AB9405005D4851 /* Slideshow.storyboard */; };
 		327717B529FB82C4004DE295 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 327717B429FB82C4004DE295 /* MEGAPresentation */; };
-		327717BB29FB84BC004DE295 /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = 327717BA29FB84BC004DE295 /* MEGAData */; };
 		3282013E29AC431200C0E841 /* PhotoAlbumContainerViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3282013D29AC431200C0E841 /* PhotoAlbumContainerViewController+ContextMenu.swift */; };
 		3282014029AC45C000C0E841 /* PhotoAlbumContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3282013F29AC45C000C0E841 /* PhotoAlbumContainerViewModel.swift */; };
 		3282016829AEDEE100C0E841 /* AlbumNameValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3282016729AEDEE100C0E841 /* AlbumNameValidator.swift */; };
@@ -1338,7 +1337,6 @@
 		A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E684286B317F004CED9E /* FirebaseCrashlytics */; };
 		A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E686286B318A004CED9E /* FirebaseCrashlytics */; };
 		A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68C286B3204004CED9E /* FirebaseCrashlytics */; };
-		A82A5CAD292E6AEE00EF700A /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A82A5CAC292E6AEE00EF700A /* MEGAData */; };
 		A82F364928EF352900093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82F364728EF31CE00093AE4 /* NodesOnDemandMigrationCheckerUseCaseOCWrapper.swift */; };
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
@@ -1413,7 +1411,6 @@
 		A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		A899467B297189F5008448C4 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		A899F0E8278F3567001A2D43 /* CompressingLogFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A899F0E7278F3567001A2D43 /* CompressingLogFileManager.m */; };
-		A89CE55528B7D573002802BC /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A89CE55428B7D573002802BC /* MEGAData */; };
 		A89D72712795C5F500284BFC /* ReportIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89D72702795C5F500284BFC /* ReportIssueView.swift */; };
 		A8A3D3742980383300037036 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A715C126307B0A00DDC8E2 /* UIPasteboard+WebP.swift */; };
@@ -1423,7 +1420,6 @@
 		A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A717032639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift */; };
 		A8A923A62861DFAC006F66C3 /* CompressingLogFileManager+additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */; };
 		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
-		A8ABA36E292FA40000487D3A /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A8ABA36D292FA40000487D3A /* MEGAData */; };
 		A8AC23D8299A5D4E0025C2D3 /* TransferRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */; };
 		A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
 		A8B09DEA29B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
@@ -1435,6 +1431,7 @@
 		A8BAFCAC28B6381200ED4259 /* OfflineFileEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BAFCAA28B6380E00ED4259 /* OfflineFileEntity+Mapper.swift */; };
 		A8BB95122813028F002449D7 /* SharedItemsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8BB95112813028F002449D7 /* SharedItemsTableViewCell.xib */; };
 		A8BB95202816A006002449D7 /* SharedItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BB951F2816A006002449D7 /* SharedItemsTableViewCell.swift */; };
+		A8BC1C332A600F8D001B30F0 /* MEGASDKRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = A8BC1C322A600F8D001B30F0 /* MEGASDKRepoMock */; };
 		A8C1B73E27734A22007095F4 /* OfflineTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */; };
 		A8C1B7B3277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7B2277384BC007095F4 /* OfflineCollectionViewController+ContextMenu.swift */; };
 		A8C1B7BD27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C1B7BC27748A84007095F4 /* SharedItemsViewController+ContextMenu.swift */; };
@@ -1448,12 +1445,13 @@
 		A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */; };
 		A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C93C1322D71C470030CE1B /* Profile.storyboard */; };
 		A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */; };
-		A8D68A8929E8261300F27204 /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A8D68A8829E8261300F27204 /* MEGAData */; };
-		A8D68A8B29E827B200F27204 /* MEGAData in Frameworks */ = {isa = PBXBuildFile; productRef = A8D68A8A29E827B200F27204 /* MEGAData */; };
 		A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */; };
 		A8DE32CC22FC14CC006BAC7A /* AccountExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */; };
 		A8DEF28F298AC0C700137E38 /* MEGATransferList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DEF28E298AC0C700137E38 /* MEGATransferList+Mapper.swift */; };
 		A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
+		A8DF55662A5F0F5800CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55652A5F0F5800CA33E5 /* MEGASDKRepo */; };
+		A8DF55682A5F0F6900CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55672A5F0F6900CA33E5 /* MEGASDKRepo */; };
+		A8DF556A2A5F0F8100CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55692A5F0F8100CA33E5 /* MEGASDKRepo */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
 		A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D8EA277F316E009093C5 /* Logger.swift */; };
 		A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */; };
@@ -1793,7 +1791,6 @@
 		B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BD012421B71FB500E97086 /* NSURL+CameraUpload.m */; };
 		B6BD983527D6F343006E4333 /* NSData+CameraUploads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BD983427D6F343006E4333 /* NSData+CameraUploads.swift */; };
 		B6C1681028B8719800BEA824 /* PhotoLibraryYearViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1680F28B8719800BEA824 /* PhotoLibraryYearViewModelTests.swift */; };
-		B6C2CE0229F9F7D400D98DCD /* MEGADataMock in Frameworks */ = {isa = PBXBuildFile; productRef = B6C2CE0129F9F7D400D98DCD /* MEGADataMock */; };
 		B6C444CB274A27DE00268D9A /* PhotoLibraryMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444CA274A27DE00268D9A /* PhotoLibraryMonthView.swift */; };
 		B6C444D1274A280800268D9A /* PhotoLibraryDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444D0274A280800268D9A /* PhotoLibraryDayView.swift */; };
 		B6C444D3274A281700268D9A /* PhotoLibraryDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444D2274A281700268D9A /* PhotoLibraryDayViewModel.swift */; };
@@ -3976,7 +3973,6 @@
 		A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAProviderDelegate.m; path = Chat/MEGAProviderDelegate.m; sourceTree = "<group>"; };
 		A899F0E4278F3567001A2D43 /* CompressingLogFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompressingLogFileManager.h; sourceTree = "<group>"; };
 		A899F0E7278F3567001A2D43 /* CompressingLogFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompressingLogFileManager.m; sourceTree = "<group>"; };
-		A89CE55328B7D23F002802BC /* MEGAData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAData; sourceTree = "<group>"; };
 		A89D72702795C5F500284BFC /* ReportIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueView.swift; sourceTree = "<group>"; };
 		A89EEC3325599FA6009FBF33 /* MEGAWidget-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAWidget-PrefixHeader.pch"; sourceTree = "<group>"; };
 		A8A715C126307B0A00DDC8E2 /* UIPasteboard+WebP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPasteboard+WebP.swift"; sourceTree = "<group>"; };
@@ -4005,6 +4001,7 @@
 		A8C47591299D02B70074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C47593299D02E60074511F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8C6494A2A39B8B0009F59ED /* CameraUploadOperation+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadOperation+Additions.swift"; sourceTree = "<group>"; };
+		A8C8E6B82A5F0E4100A00A57 /* MEGASDKRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASDKRepo; sourceTree = "<group>"; };
 		A8C93C0B22D718030030CE1B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryKeyTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
@@ -5033,14 +5030,14 @@
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
 				16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */,
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
-				A89CE55528B7D573002802BC /* MEGAData in Frameworks */,
-				B6C2CE0229F9F7D400D98DCD /* MEGADataMock in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
 				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
 				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
 				946ACCC5299C0B0000E6C0F5 /* MEGAPresentation in Frameworks */,
 				A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */,
+				A8DF55662A5F0F5800CA33E5 /* MEGASDKRepo in Frameworks */,
+				A8BC1C332A600F8D001B30F0 /* MEGASDKRepoMock in Frameworks */,
 				B63D34142898A9AB0059DE66 /* MEGASwift in Frameworks */,
 				B63995412898CF1000EA88F1 /* MEGASwiftUI in Frameworks */,
 				B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */,
@@ -5065,7 +5062,6 @@
 			files = (
 				A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */,
 				A812CB3B2A4B0FB400F99382 /* MEGAChatSdk in Frameworks */,
-				A82A5CAD292E6AEE00EF700A /* MEGAData in Frameworks */,
 				A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */,
 				B6A01BB4289A644D00B503FD /* MEGAFoundation in Frameworks */,
 				946ACCC3299C0ADD00E6C0F5 /* MEGAPresentation in Frameworks */,
@@ -5080,7 +5076,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */,
-				A8D68A8B29E827B200F27204 /* MEGAData in Frameworks */,
 				B610447428979EA200AAECF4 /* MEGADomain in Frameworks */,
 				946ACCC7299C0B3500E6C0F5 /* MEGAPresentation in Frameworks */,
 				BF0CB9422803AF6000C21F11 /* SAMKeychain in Frameworks */,
@@ -5092,10 +5087,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A828E683286B3150004CED9E /* FirebaseCrashlytics in Frameworks */,
-				327717BB29FB84BC004DE295 /* MEGAData in Frameworks */,
 				A803C8FB2955DB550056C9F0 /* MEGADomain in Frameworks */,
 				327717B529FB82C4004DE295 /* MEGAPresentation in Frameworks */,
 				3241349729FB712B006E5310 /* MEGASdk in Frameworks */,
+				A8DF55682A5F0F6900CA33E5 /* MEGASDKRepo in Frameworks */,
 				A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5108,7 +5103,6 @@
 				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
 				A812CB3D2A4B0FBE00F99382 /* MEGAChatSdk in Frameworks */,
-				A8ABA36E292FA40000487D3A /* MEGAData in Frameworks */,
 				B610447228979E9B00AAECF4 /* MEGADomain in Frameworks */,
 				B6A01BB0289A623C00B503FD /* MEGAFoundation in Frameworks */,
 				946ACCC9299C0B5700E6C0F5 /* MEGAPresentation in Frameworks */,
@@ -5127,9 +5121,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8D68A8929E8261300F27204 /* MEGAData in Frameworks */,
 				A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */,
 				A891E8AB29C1E0C40020072A /* MEGASdk in Frameworks */,
+				A8DF556A2A5F0F8100CA33E5 /* MEGASDKRepo in Frameworks */,
 				A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -10921,7 +10915,7 @@
 		B6FDEF792A204E7D00276DD6 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				A89CE55328B7D23F002802BC /* MEGAData */,
+				A8C8E6B82A5F0E4100A00A57 /* MEGASDKRepo */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -12006,7 +12000,6 @@
 				A8B51ADB27F3534F0030F1EA /* Haptica */,
 				A8F5155727F6F24F00AEE4D6 /* ISEmojiView */,
 				BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */,
-				A89CE55428B7D573002802BC /* MEGAData */,
 				B6061FEB2897928D0094087E /* MEGADomain */,
 				B66BC70728A0F9CB00D4CB04 /* MEGADomainMock */,
 				B6A01BAB289A61CA00B503FD /* MEGAFoundation */,
@@ -12026,12 +12019,13 @@
 				BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */,
 				BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */,
 				A8B51AE827F3565E0030F1EA /* WSTagsField */,
-				B6C2CE0129F9F7D400D98DCD /* MEGADataMock */,
 				A812CB382A4B0FAD00F99382 /* MEGAChatSdk */,
 				9418DB282A4EE5FB002B0077 /* MEGAPermissions */,
 				940931FB2A56ED5F0093C169 /* DeviceCenter */,
 				940931FD2A56ED680093C169 /* Settings */,
 				16405C4A2A56917200DE911F /* MEGAAnalyticsiOS */,
+				A8DF55652A5F0F5800CA33E5 /* MEGASDKRepo */,
+				A8BC1C322A600F8D001B30F0 /* MEGASDKRepoMock */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -12053,7 +12047,6 @@
 			name = MEGANotifications;
 			packageProductDependencies = (
 				A828E686286B318A004CED9E /* FirebaseCrashlytics */,
-				A82A5CAC292E6AEE00EF700A /* MEGAData */,
 				A86280BB291E8D510010D6E0 /* MEGADomain */,
 				B6A01BB3289A644D00B503FD /* MEGAFoundation */,
 				946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */,
@@ -12085,7 +12078,6 @@
 				B610447328979EA200AAECF4 /* MEGADomain */,
 				946ACCC6299C0B3500E6C0F5 /* MEGAPresentation */,
 				BF0CB9412803AF6000C21F11 /* SAMKeychain */,
-				A8D68A8A29E827B200F27204 /* MEGAData */,
 			);
 			productName = MEGAWidgetExtension;
 			productReference = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */;
@@ -12111,7 +12103,7 @@
 				A803C8FC2955DB790056C9F0 /* SAMKeychain */,
 				3241349629FB712B006E5310 /* MEGASdk */,
 				327717B429FB82C4004DE295 /* MEGAPresentation */,
-				327717BA29FB84BC004DE295 /* MEGAData */,
+				A8DF55672A5F0F6900CA33E5 /* MEGASDKRepo */,
 			);
 			productName = MEGAIntent;
 			productReference = 831B490E256FED6F0086002B /* MEGAIntent.appex */;
@@ -12135,7 +12127,6 @@
 				A8F5157727F6F92800AEE4D6 /* DZNEmptyDataSet */,
 				A828E68C286B3204004CED9E /* FirebaseCrashlytics */,
 				BF1CEA3D27FA757800C1A2E5 /* GKContactImage */,
-				A8ABA36D292FA40000487D3A /* MEGAData */,
 				B610447128979E9B00AAECF4 /* MEGADomain */,
 				B6A01BAF289A623C00B503FD /* MEGAFoundation */,
 				A891E8A629C1E0A70020072A /* MEGASdk */,
@@ -12170,7 +12161,7 @@
 				A8399FBA296DD5F10062B6BC /* MEGADomain */,
 				A891E8AA29C1E0C40020072A /* MEGASdk */,
 				A8399FB8296DD5A70062B6BC /* SAMKeychain */,
-				A8D68A8829E8261300F27204 /* MEGAData */,
+				A8DF55692A5F0F8100CA33E5 /* MEGASDKRepo */,
 			);
 			productName = MEGAPickerFileProvider;
 			productReference = A8399F42296C40060062B6BC /* MEGAPickerFileProvider.appex */;
@@ -16813,10 +16804,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPresentation;
 		};
-		327717BA29FB84BC004DE295 /* MEGAData */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAData;
-		};
 		940931FB2A56ED5F0093C169 /* DeviceCenter */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DeviceCenter;
@@ -16895,10 +16882,6 @@
 			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
-		A82A5CAC292E6AEE00EF700A /* MEGAData */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAData;
-		};
 		A8399FB8296DD5A70062B6BC /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
@@ -16928,14 +16911,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASdk;
 		};
-		A89CE55428B7D573002802BC /* MEGAData */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAData;
-		};
-		A8ABA36D292FA40000487D3A /* MEGAData */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAData;
-		};
 		A8B51ADB27F3534F0030F1EA /* Haptica */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A8B51ADA27F3534F0030F1EA /* XCRemoteSwiftPackageReference "Haptica" */;
@@ -16946,13 +16921,21 @@
 			package = A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */;
 			productName = WSTagsField;
 		};
-		A8D68A8829E8261300F27204 /* MEGAData */ = {
+		A8BC1C322A600F8D001B30F0 /* MEGASDKRepoMock */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = MEGAData;
+			productName = MEGASDKRepoMock;
 		};
-		A8D68A8A29E827B200F27204 /* MEGAData */ = {
+		A8DF55652A5F0F5800CA33E5 /* MEGASDKRepo */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = MEGAData;
+			productName = MEGASDKRepo;
+		};
+		A8DF55672A5F0F6900CA33E5 /* MEGASDKRepo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASDKRepo;
+		};
+		A8DF55692A5F0F8100CA33E5 /* MEGASDKRepo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGASDKRepo;
 		};
 		A8ECD8CA27F34BB0008D75B8 /* PinLayout */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -17053,10 +17036,6 @@
 		B6A01BB3289A644D00B503FD /* MEGAFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAFoundation;
-		};
-		B6C2CE0129F9F7D400D98DCD /* MEGADataMock */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGADataMock;
 		};
 		BF0CB9352803AEAE00C21F11 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;

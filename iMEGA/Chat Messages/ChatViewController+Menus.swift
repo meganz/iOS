@@ -1,7 +1,7 @@
 
 import Foundation
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 
 extension ChatViewController {
     

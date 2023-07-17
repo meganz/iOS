@@ -1,7 +1,7 @@
 import Combine
 import Foundation
-import MEGAData
 import MEGADomain
+import MEGASDKRepo
 import MEGASwift
 
 final class AccountRepository: NSObject, AccountRepositoryProtocol {
