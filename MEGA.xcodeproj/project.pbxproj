@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */; };
-		0D0B53B626264B3200E9BB16 /* TransferEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B53B526264B3200E9BB16 /* TransferEntity+Mapper.swift */; };
 		0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */; };
 		0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */; };
 		0D213E8E263A613500B43723 /* NodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E8D263A613500B43723 /* NodeRepository.swift */; };
@@ -17,8 +16,6 @@
 		0D2E4BDE26241C8900F4804A /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		0D30D86225BFA14A00C26367 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30D86125BFA14A00C26367 /* Tab.swift */; };
 		0D4A123B2689921E0024997E /* GlobalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4A123A2689921E0024997E /* GlobalDelegate.swift */; };
-		0D7E5E0726311D9700C5CB2A /* TransferTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E0626311D9600C5CB2A /* TransferTypeEntity+Mapper.swift */; };
-		0D7E5E1126311E0900C5CB2A /* TransferStateEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E1026311E0900C5CB2A /* TransferStateEntity+Mapper.swift */; };
 		0D7E5E3B2631258700C5CB2A /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
 		0D7E5FA62634E1E800C5CB2A /* DownloadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */; };
 		0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */; };
@@ -1072,11 +1069,6 @@
 		83CBA3E627A81B2F005F0FD5 /* CancellableTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BA00692798703600498493 /* CancellableTransfer.swift */; };
 		83CCBC47279595D300B90EF2 /* UploadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */; };
 		83CCBC4C2795988A00B90EF2 /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
-		83CCBC4D2795999900B90EF2 /* TransferEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B53B526264B3200E9BB16 /* TransferEntity+Mapper.swift */; };
-		83CCBC4E279599F300B90EF2 /* TransferTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E0626311D9600C5CB2A /* TransferTypeEntity+Mapper.swift */; };
-		83CCBC4F279599F700B90EF2 /* TransferStateEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E1026311E0900C5CB2A /* TransferStateEntity+Mapper.swift */; };
-		83CCBC5127959CF800B90EF2 /* TransferStageEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC5027959CF700B90EF2 /* TransferStageEntity+Mapper.swift */; };
-		83CCBC552795A25600B90EF2 /* TransferStageEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC5027959CF700B90EF2 /* TransferStageEntity+Mapper.swift */; };
 		83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D0E56727C78D53003BEC2E /* ExportFileUseCaseHelper.swift */; };
 		83D374E82A431ED400F7B07C /* CancelMeetingAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D374E72A431ED400F7B07C /* CancelMeetingAlertDataModel.swift */; };
 		83D374EE2A4348C400F7B07C /* ScheduledMeetingFlagsEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D374ED2A4348C400F7B07C /* ScheduledMeetingFlagsEntity+Mapper.swift */; };
@@ -1375,11 +1367,6 @@
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		A86FB61A297AF2EC00561DF8 /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
-		A86FB61B297AF30A00561DF8 /* TransferEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B53B526264B3200E9BB16 /* TransferEntity+Mapper.swift */; };
-		A86FB61C297AF3AA00561DF8 /* TransferTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E0626311D9600C5CB2A /* TransferTypeEntity+Mapper.swift */; };
-		A86FB61D297AF3D500561DF8 /* TransferErrorEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B647DB8528A09F7100BD0202 /* TransferErrorEntity+Mapper.swift */; };
-		A86FB61E297AF3FE00561DF8 /* TransferStateEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E1026311E0900C5CB2A /* TransferStateEntity+Mapper.swift */; };
-		A86FB61F297AF40500561DF8 /* TransferStageEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC5027959CF700B90EF2 /* TransferStageEntity+Mapper.swift */; };
 		A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */; };
 		A873E84426E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */; };
 		A873E84626E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */; };
@@ -1423,7 +1410,6 @@
 		A8AC23D8299A5D4E0025C2D3 /* TransferRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AC23D7299A5D4E0025C2D3 /* TransferRepositoryTests.swift */; };
 		A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
 		A8B09DEA29B0CBD600C922B9 /* PickerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B09DE829B0CBD600C922B9 /* PickerConstant.swift */; };
-		A8B09DEB29B0FFE200C922B9 /* MEGATransferList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DEF28E298AC0C700137E38 /* MEGATransferList+Mapper.swift */; };
 		A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */; };
 		A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51ADB27F3534F0030F1EA /* Haptica */; };
 		A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */ = {isa = PBXBuildFile; productRef = A8B51AE827F3565E0030F1EA /* WSTagsField */; };
@@ -1447,7 +1433,6 @@
 		A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */; };
 		A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */; };
 		A8DE32CC22FC14CC006BAC7A /* AccountExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */; };
-		A8DEF28F298AC0C700137E38 /* MEGATransferList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DEF28E298AC0C700137E38 /* MEGATransferList+Mapper.swift */; };
 		A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
 		A8DF55662A5F0F5800CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55652A5F0F5800CA33E5 /* MEGASDKRepo */; };
 		A8DF55682A5F0F6900CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55672A5F0F6900CA33E5 /* MEGASDKRepo */; };
@@ -1638,8 +1623,6 @@
 		B645165322320C23001680BC /* UploadStats.m in Sources */ = {isa = PBXBuildFile; fileRef = B645165222320C23001680BC /* UploadStats.m */; };
 		B6472DFB25819A6E0040B2DB /* CameraUploadHeartbeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6472DFA25819A6E0040B2DB /* CameraUploadHeartbeat.swift */; };
 		B6472E082581D35D0040B2DB /* HeartbeatRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6472E072581D35D0040B2DB /* HeartbeatRequestDelegate.swift */; };
-		B647DB8628A09F7100BD0202 /* TransferErrorEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B647DB8528A09F7100BD0202 /* TransferErrorEntity+Mapper.swift */; };
-		B647DB8728A09F7100BD0202 /* TransferErrorEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B647DB8528A09F7100BD0202 /* TransferErrorEntity+Mapper.swift */; };
 		B647DB8828A0A38500BD0202 /* PreferenceUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A0CF1928A08D1B00D7F52E /* PreferenceUseCase+Additions.swift */; };
 		B64A71B128794CED0085087D /* PhotoBrowserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */; };
 		B64A71CB287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */; };
@@ -2479,7 +2462,6 @@
 
 /* Begin PBXFileReference section */
 		0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileRepository.swift; sourceTree = "<group>"; };
-		0D0B53B526264B3200E9BB16 /* TransferEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferEntity+Mapper.swift"; sourceTree = "<group>"; };
 		0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUploadFileUseCase.swift; sourceTree = "<group>"; };
 		0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CHTCollectionViewWaterfallLayout+Additions.swift"; sourceTree = "<group>"; };
 		0D213E8D263A613500B43723 /* NodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepository.swift; sourceTree = "<group>"; };
@@ -2487,8 +2469,6 @@
 		0D2E4B0D2623B2EB00F4804A /* TextEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModelTests.swift; sourceTree = "<group>"; };
 		0D30D86125BFA14A00C26367 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		0D4A123A2689921E0024997E /* GlobalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDelegate.swift; sourceTree = "<group>"; };
-		0D7E5E0626311D9600C5CB2A /* TransferTypeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferTypeEntity+Mapper.swift"; sourceTree = "<group>"; };
-		0D7E5E1026311E0900C5CB2A /* TransferStateEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferStateEntity+Mapper.swift"; sourceTree = "<group>"; };
 		0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferDelegate.swift; sourceTree = "<group>"; };
 		0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFileRepository.swift; sourceTree = "<group>"; };
 		0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewBaseDataSource.swift; sourceTree = "<group>"; };
@@ -3628,7 +3608,6 @@
 		83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferControllerWrapper.swift; sourceTree = "<group>"; };
 		83CCBC3D2795954E00B90EF2 /* CancellableTransferRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouter.swift; sourceTree = "<group>"; };
 		83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferViewModel.swift; sourceTree = "<group>"; };
-		83CCBC5027959CF700B90EF2 /* TransferStageEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TransferStageEntity+Mapper.swift"; sourceTree = "<group>"; };
 		83D0E56727C78D53003BEC2E /* ExportFileUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileUseCaseHelper.swift; sourceTree = "<group>"; };
 		83D374E72A431ED400F7B07C /* CancelMeetingAlertDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelMeetingAlertDataModel.swift; sourceTree = "<group>"; };
 		83D374ED2A4348C400F7B07C /* ScheduledMeetingFlagsEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingFlagsEntity+Mapper.swift"; sourceTree = "<group>"; };
@@ -4011,7 +3990,6 @@
 		A8D8A5A42990F964008518BE /* TransferRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRepository.swift; sourceTree = "<group>"; };
 		A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountExpiredViewController.swift; sourceTree = "<group>"; };
 		A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountExpiredViewController.xib; sourceTree = "<group>"; };
-		A8DEF28E298AC0C700137E38 /* MEGATransferList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGATransferList+Mapper.swift"; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
 		A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ShareLocationViewController.m; path = Chat/ShareLocationViewController.m; sourceTree = "<group>"; };
 		A8E1D8EA277F316E009093C5 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -4185,7 +4163,6 @@
 		B645165222320C23001680BC /* UploadStats.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UploadStats.m; sourceTree = "<group>"; };
 		B6472DFA25819A6E0040B2DB /* CameraUploadHeartbeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadHeartbeat.swift; sourceTree = "<group>"; };
 		B6472E072581D35D0040B2DB /* HeartbeatRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatRequestDelegate.swift; sourceTree = "<group>"; };
-		B647DB8528A09F7100BD0202 /* TransferErrorEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransferErrorEntity+Mapper.swift"; sourceTree = "<group>"; };
 		B64A71B028794CED0085087D /* PhotoBrowserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserDataProvider.swift; sourceTree = "<group>"; };
 		B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoBrowserDataProvider_megaNode_Tests.swift; sourceTree = "<group>"; };
 		B64F9A9A22389E6B000A4EA7 /* PHAssetResource+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PHAssetResource+CameraUpload.h"; sourceTree = "<group>"; };
@@ -5182,19 +5159,6 @@
 				6D6FCBF1297E14ED0051EB4A /* NodeFormatEntity+Mapper.swift */,
 			);
 			path = NodeEntityMapping;
-			sourceTree = "<group>";
-		};
-		0D7E5F1826322DFA00C5CB2A /* TransferEntityMapping */ = {
-			isa = PBXGroup;
-			children = (
-				A8DEF28E298AC0C700137E38 /* MEGATransferList+Mapper.swift */,
-				0D0B53B526264B3200E9BB16 /* TransferEntity+Mapper.swift */,
-				B647DB8528A09F7100BD0202 /* TransferErrorEntity+Mapper.swift */,
-				83CCBC5027959CF700B90EF2 /* TransferStageEntity+Mapper.swift */,
-				0D7E5E1026311E0900C5CB2A /* TransferStateEntity+Mapper.swift */,
-				0D7E5E0626311D9600C5CB2A /* TransferTypeEntity+Mapper.swift */,
-			);
-			path = TransferEntityMapping;
 			sourceTree = "<group>";
 		};
 		0D7E5FA42634E1CE00C5CB2A /* Transfer */ = {
@@ -10131,7 +10095,6 @@
 				A859043529F2D1A000632F0C /* Offline */,
 				A859043329F2D14300632F0C /* Preference */,
 				A859043629F2D1AC00632F0C /* Recent */,
-				0D7E5F1826322DFA00C5CB2A /* TransferEntityMapping */,
 				B6FB5F8029A321130023BA6A /* User */,
 			);
 			path = "Model Mapping";
@@ -13665,7 +13628,6 @@
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
-				A8DEF28F298AC0C700137E38 /* MEGATransferList+Mapper.swift in Sources */,
 				BFB463F724342F7F00FB90B9 /* MEGAUser+Additions.swift in Sources */,
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
 				C45B971B26A7221D00875003 /* MEGAVerticalButton.swift in Sources */,
@@ -14263,8 +14225,6 @@
 				947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,
 				0D7E5E3B2631258700C5CB2A /* TransferDelegate.swift in Sources */,
-				0D0B53B626264B3200E9BB16 /* TransferEntity+Mapper.swift in Sources */,
-				B647DB8628A09F7100BD0202 /* TransferErrorEntity+Mapper.swift in Sources */,
 				83A49E7D270476A300FD0D85 /* TransferInventoryRepository.swift in Sources */,
 				B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */,
 				BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */,
@@ -14273,12 +14233,9 @@
 				B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */,
 				B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */,
 				83A4E47327F49AE000A429F4 /* TransferStage.swift in Sources */,
-				83CCBC5127959CF800B90EF2 /* TransferStageEntity+Mapper.swift in Sources */,
-				0D7E5E1126311E0900C5CB2A /* TransferStateEntity+Mapper.swift in Sources */,
 				5BAC3B10277F76BD00E99121 /* TransfersWidgetViewController+Additions.swift in Sources */,
 				2F6F088E253E387600C5B5D7 /* TransfersWidgetViewController.m in Sources */,
 				2F6F0891253E387600C5B5D7 /* TransferTableViewCell.m in Sources */,
-				0D7E5E0726311D9700C5CB2A /* TransferTypeEntity+Mapper.swift in Sources */,
 				A8A717042639BE7D00DDC8E2 /* TurnOnNotificationsModel.swift in Sources */,
 				A8A716D62639A6B400DDC8E2 /* TurnOnNotificationsViewController.swift in Sources */,
 				A8A716E02639A71800DDC8E2 /* TurnOnNotificationsViewModel.swift in Sources */,
@@ -14677,13 +14634,8 @@
 				B695B601264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				BF943E9323554021001C18E0 /* TimeInterval+Additions.swift in Sources */,
 				83CCBC4C2795988A00B90EF2 /* TransferDelegate.swift in Sources */,
-				83CCBC4D2795999900B90EF2 /* TransferEntity+Mapper.swift in Sources */,
-				B647DB8728A09F7100BD0202 /* TransferErrorEntity+Mapper.swift in Sources */,
 				BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */,
 				83A4E47427F49AE000A429F4 /* TransferStage.swift in Sources */,
-				83CCBC552795A25600B90EF2 /* TransferStageEntity+Mapper.swift in Sources */,
-				83CCBC4F279599F700B90EF2 /* TransferStateEntity+Mapper.swift in Sources */,
-				83CCBC4E279599F300B90EF2 /* TransferTypeEntity+Mapper.swift in Sources */,
 				83B906BF249A29EF0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
 				0D2E4BDE26241C8900F4804A /* UIAlertController+Additions.swift in Sources */,
 				B6F5EAB225CBC30C0038AC0B /* UIApplication+MNZCategory.m in Sources */,
@@ -14713,17 +14665,11 @@
 				A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
 				A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
-				A8B09DEB29B0FFE200C922B9 /* MEGATransferList+Mapper.swift in Sources */,
 				A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */,
 				A854C21D29AE1FB800CB37E7 /* NodeAttributeRepository.swift in Sources */,
 				A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */,
 				A86FB61A297AF2EC00561DF8 /* TransferDelegate.swift in Sources */,
-				A86FB61B297AF30A00561DF8 /* TransferEntity+Mapper.swift in Sources */,
-				A86FB61D297AF3D500561DF8 /* TransferErrorEntity+Mapper.swift in Sources */,
 				A8C4754D299A66AF0074511F /* TransferRepository.swift in Sources */,
-				A86FB61F297AF40500561DF8 /* TransferStageEntity+Mapper.swift in Sources */,
-				A86FB61E297AF3FE00561DF8 /* TransferStateEntity+Mapper.swift in Sources */,
-				A86FB61C297AF3AA00561DF8 /* TransferTypeEntity+Mapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

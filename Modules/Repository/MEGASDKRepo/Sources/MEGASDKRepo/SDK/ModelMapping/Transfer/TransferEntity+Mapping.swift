@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension TransferEntity {
-    fileprivate init(transfer: MEGATransfer) {
+    init(transfer: MEGATransfer) {
         self.init(
             type: TransferTypeEntity(transferType: transfer.type) ?? .download,
             transferString: transfer.transferString,
@@ -33,15 +34,5 @@ extension TransferEntity {
             priority: transfer.priority,
             stage: TransferStageEntity(transferStage: transfer.stage) ?? .none
         )
-    }
-    
-    func toMEGATransfer(in sdk: MEGASdk) -> MEGATransfer? {
-        sdk.transfer(byTag: self.tag)
-    }
-}
-
-extension MEGATransfer {
-    func toTransferEntity() -> TransferEntity {
-        TransferEntity(transfer: self)
     }
 }

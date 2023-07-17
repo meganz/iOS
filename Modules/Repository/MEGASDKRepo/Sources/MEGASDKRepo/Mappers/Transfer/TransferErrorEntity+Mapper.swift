@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASdk
 
 extension MEGAError {
     func toTransferErrorEntity() -> TransferErrorEntity? {

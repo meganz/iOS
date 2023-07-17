@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASDKRepo
 
 final class TransferDelegate: NSObject, MEGATransferDelegate {
     var start: ((TransferEntity) -> Void)?

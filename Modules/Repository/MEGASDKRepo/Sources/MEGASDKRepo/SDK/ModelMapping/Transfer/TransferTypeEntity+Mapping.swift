@@ -1,6 +1,7 @@
 import MEGADomain
+import MEGASdk
 
-extension TransferTypeEntity {
+public extension TransferTypeEntity {
     init?(transferType: MEGATransferType) {
         self.init(rawValue: transferType.rawValue)
     }
