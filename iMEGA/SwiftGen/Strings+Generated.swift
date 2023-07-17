@@ -4753,7 +4753,7 @@ public enum Strings {
             public static func success(_ p1: Any) -> String {
               return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.success", String(describing: p1))
             }
-            /// Cancel the %@ occurrence?
+            /// Cancel %@ occurrence?
             public static func title(_ p1: Any) -> String {
               return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.occurrence.title", String(describing: p1))
             }
@@ -4888,9 +4888,27 @@ public enum Strings {
           public static func cancelled(_ p1: Any) -> String {
             return Strings.tr("Localizable", "meetings.scheduled.managementMessages.cancelled", String(describing: p1))
           }
+          /// %@ created this meeting
+          public static func created(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "meetings.scheduled.managementMessages.created", String(describing: p1))
+          }
           /// %@ updated the meeting
           public static func updated(_ p1: Any) -> String {
             return Strings.tr("Localizable", "meetings.scheduled.managementMessages.updated", String(describing: p1))
+          }
+          public enum Cancelled {
+            /// %@ cancelled the occurrence scheduled for %@
+            public static func occurrence(_ p1: Any, _ p2: Any) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.managementMessages.cancelled.occurrence", String(describing: p1), String(describing: p2))
+            }
+            /// %@ cancelled this meeting
+            public static func oneOffMeeting(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.managementMessages.cancelled.oneOffMeeting", String(describing: p1))
+            }
+            /// %@ cancelled this meeting and all its occurrences
+            public static func recurrenceMeeting(_ p1: Any) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.managementMessages.cancelled.recurrenceMeeting", String(describing: p1))
+            }
           }
         }
         public enum Recurring {

@@ -684,15 +684,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     }
     
     private func updateDescriptionForScheduledMeeting() async throws {
-        guard let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: true), let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId), let message = chatRoomUseCase.message(forChatRoom: chatRoom, messageId: chatListItem.lastMessageId) else {
+        guard let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: true) else {
             return
         }
         
-        if chatRoomUseCase.hasScheduledMeetingChange(.cancelled, for: message, inChatRoom: chatRoom) {
-            updateDescription(withMessage: Strings.Localizable.Meetings.Scheduled.ManagementMessages.cancelled(sender))
-        } else {
-            updateDescription(withMessage: Strings.Localizable.Chat.Listing.Description.MeetingCreated.message(sender))
-        }
+        updateDescription(withMessage: Strings.Localizable.Meetings.Scheduled.ManagementMessages.updated(sender))
     }
     
     private func callDurationString(fromSeconds seconds: Int) -> String? {
