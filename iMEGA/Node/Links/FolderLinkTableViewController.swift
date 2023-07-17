@@ -42,67 +42,83 @@ class FolderLinkTableViewController: UIViewController {
         
         folderLink.setViewEditing(editing)
         
-        if editing {
-            tableView.visibleCells.forEach { (cell) in
-                let view = UIView()
-                view.backgroundColor = .clear
-                cell.selectedBackgroundView = view
-            }
-        } else {
-            tableView.visibleCells.forEach { (cell) in
-                cell.selectedBackgroundView = nil
-            }
+        tableView.visibleCells.forEach { (cell) in
+            let view = UIView()
+            view.backgroundColor = .clear
+            cell.selectedBackgroundView = editing ?  UIView() : nil
         }
     }
     
-    @objc func tableViewSelectIndexPath(_ indexPath: IndexPath) {
-        tableView(tableView, didSelectRowAt: indexPath)
+    private func getNode(at indexPath: IndexPath) -> MEGANode? {
+        nodes[safe: indexPath.row]
     }
     
     @objc func reload(node: MEGANode) {
-        guard MEGAReachabilityManager.isReachable(),
-              let rowIndex = folderLink.searchController.isActive ? folderLink.searchNodesArray?.firstIndex(of: node) : folderLink.nodesArray.firstIndex(of: node),
-              tableView.hasRow(at: IndexPath(row: rowIndex, section: 0)) else { return }
+        guard
+            isOnline,
+            let rowIndex = nodes.firstIndex(of: node),
+            tableView.hasRow(at: IndexPath(row: rowIndex, section: 0))
+        else { return }
         
         UIView.performWithoutAnimation {
             tableView.reloadRows(at: [IndexPath(row: rowIndex, section: 0)], with: .none)
         }
     }
+}
+
+extension FolderLinkTableViewController {
+    var nodes: [MEGANode] {
+        guard isOnline else {
+            return []
+        }
+            
+        if isSearching {
+            return folderLink.searchNodesArray ?? []
+        }
+        
+        if isFolderLinkInvalid {
+            return []
+        }
+        
+        return folderLink.nodesArray
+    }
     
-    private func getNode(at indexPath: IndexPath) -> MEGANode? {
-        folderLink.searchController.isActive ? folderLink.searchNodesArray?[safe: indexPath.row] : folderLink.nodesArray[safe: indexPath.row]
+    var isFolderLinkInvalid: Bool {
+        folderLink.isFolderLinkNotValid
+    }
+    
+    var isOnline: Bool {
+        MEGAReachabilityManager.isReachable()
+    }
+    
+    var isSearching: Bool {
+        folderLink.searchController.isActive
     }
 }
+
 
 // MARK: - UITableViewDataSource
 
 extension FolderLinkTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if MEGAReachabilityManager.isReachable() {
-            if folderLink.searchController.isActive {
-                return folderLink.searchNodesArray?.count ?? 0
-            } else {
-                if folderLink.isFolderLinkNotValid {
-                    return 0
-                } else {
-                    return folderLink.nodesArray.count
-                }
-            }
-        } else {
-            return 0
-        }
+        nodes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let node = getNode(at: indexPath),
-              let cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell else {
-            fatalError("Could not instantiate NodeCollectionViewCell. Node at \(indexPath) not found: \(getNode(at: indexPath) == nil)")
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: "nodeCell", for: indexPath) as? NodeTableViewCell
+        else {
+            fatalError("Could not instantiate NodeCollectionViewCell")
         }
         
         cell.backgroundColor = UIColor.mnz_secondaryBackgroundGroupedElevated(traitCollection)
         cell.infoLabel.textColor = UIColor.mnz_label()
         
-        config(cell, by: node, at: indexPath)
+        if let node = getNode(at: indexPath) {
+            config(cell, by: node, at: indexPath)
+        } else {
+            CrashlyticsLogger.log("Node at \(indexPath) not found, nodes \(nodes.map { $0.handle }), is online \(isOnline), isSearching: \(isSearching), isFolderLinkInvalid: \(isFolderLinkInvalid) ")
+        }
         
         return cell
     }
