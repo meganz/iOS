@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASDKRepo
 
 struct TransferInventoryRepository: TransferInventoryRepositoryProtocol {
     
