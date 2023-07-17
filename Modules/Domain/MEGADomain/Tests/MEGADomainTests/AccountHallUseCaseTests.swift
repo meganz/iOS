@@ -32,6 +32,29 @@ final class AccountHallUseCaseTests: XCTestCase {
         XCTAssertFalse(sut.isMasterBusinessAccount)
     }
     
+    func testCurrentAccountDetails_shouldReturnCurrentAccountDetails() {
+        let accountDetails = AccountDetailsEntity.random
+        let sut = AccountHallUseCase(repository: MockAccountRepository(currentAccountDetails: accountDetails))
+        
+        XCTAssertEqual(sut.currentAccountDetails, accountDetails)
+    }
+    
+    func testRefreshCurrentAccountDetails_whenSuccess_shouldReturnAccountDetails() async throws {
+        let accountDetails = AccountDetailsEntity.random
+        let sut = AccountHallUseCase(repository: MockAccountRepository(accountDetailsResult: .success(accountDetails)))
+        
+        let currentAccountDetails = try await sut.refreshCurrentAccountDetails()
+        XCTAssertEqual(currentAccountDetails, accountDetails)
+    }
+    
+    func testRefreshCurrentAccountDetails_whenFails_shouldThrowGenericError() async {
+        let sut = AccountHallUseCase(repository: MockAccountRepository(accountDetailsResult: .failure(.generic)))
+        
+        await XCTAsyncAssertThrowsError(try await sut.refreshCurrentAccountDetails()) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountDetailsErrorEntity, .generic)
+        }
+    }
+    
     func testRequestResultPublisher_shouldReturnSuccessResult() {
         let requestResultPublisher = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>()
         let mockRepo = MockAccountRepository(

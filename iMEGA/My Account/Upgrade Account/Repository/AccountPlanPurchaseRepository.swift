@@ -24,6 +24,11 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         failedRestoreSourcePublisher.eraseToAnyPublisher()
     }
     
+    private let purchasePlanResultSourcePublisher = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+    var purchasePlanResultPublisher: AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
+        purchasePlanResultSourcePublisher.eraseToAnyPublisher()
+    }
+    
     init(purchase: MEGAPurchase) {
         self.purchase = purchase
     }
@@ -36,8 +41,24 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         purchase.restoreDelegateMutableArray.remove(self)
     }
     
+    func registerPurchaseDelegate() async {
+        purchase.purchaseDelegateMutableArray.add(self)
+    }
+    
+    func deRegisterPurchaseDelegate() async {
+        purchase.purchaseDelegateMutableArray.remove(self)
+    }
+
     func restorePurchase() async {
         purchase.restore()
+    }
+    
+    func purchasePlan(_ plan: AccountPlanEntity) async {
+        guard let products = purchase.products as? [SKProduct],
+              let productPlan = products.first(where: { $0.productIdentifier == plan.productIdentifier }) else {
+            return
+        }
+        purchase.purchaseProduct(productPlan)
     }
     
     func accountPlanProducts() async -> [AccountPlanEntity] {
@@ -80,5 +101,17 @@ extension AccountPlanPurchaseRepository: MEGARestoreDelegate {
     func failedRestore(_ errorCode: Int, message errorMessage: String!) {
         let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: errorMessage)
         failedRestoreSourcePublisher.send(error)
+    }
+}
+
+// MARK: - MEGAPurchaseDelegate
+extension AccountPlanPurchaseRepository: MEGAPurchaseDelegate {
+    func successfulPurchase(_ megaPurchase: MEGAPurchase?) {
+        purchasePlanResultSourcePublisher.send(.success(()))
+    }
+    
+    func failedPurchase(_ errorCode: Int, message errorMessage: String?) {
+        let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: errorMessage)
+        purchasePlanResultSourcePublisher.send(.failure(error))
     }
 }

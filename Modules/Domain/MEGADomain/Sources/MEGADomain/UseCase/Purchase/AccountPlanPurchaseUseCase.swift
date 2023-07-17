@@ -3,13 +3,17 @@ import Combine
 public protocol AccountPlanPurchaseUseCaseProtocol {
     func accountPlanProducts() async -> [AccountPlanEntity]
     func restorePurchase() async
+    func purchasePlan(_ plan: AccountPlanEntity) async
     
     var successfulRestorePublisher: AnyPublisher<Void, Never> { get }
     var incompleteRestorePublisher: AnyPublisher<Void, Never> { get }
     var failedRestorePublisher: AnyPublisher<AccountPlanErrorEntity, Never> { get }
+    func purchasePlanResultPublisher() -> AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never>
     
     func registerRestoreDelegate() async
     func deRegisterRestoreDelegate() async
+    func registerPurchaseDelegate() async
+    func deRegisterPurchaseDelegate() async
 }
 
 public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtocol>: AccountPlanPurchaseUseCaseProtocol {
@@ -26,6 +30,10 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
     public func restorePurchase() async {
         await repo.restorePurchase()
     }
+    
+    public func purchasePlan(_ plan: AccountPlanEntity) async {
+        await repo.purchasePlan(plan)
+    }
 
     public var successfulRestorePublisher: AnyPublisher<Void, Never> {
         repo.successfulRestorePublisher
@@ -39,11 +47,23 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
         repo.failedRestorePublisher
     }
     
+    public func purchasePlanResultPublisher() -> AnyPublisher<Result<Void, AccountPlanErrorEntity>, Never> {
+        repo.purchasePlanResultPublisher
+    }
+    
     public func registerRestoreDelegate() async {
         await repo.registerRestoreDelegate()
     }
     
     public func deRegisterRestoreDelegate() async {
         await repo.deRegisterRestoreDelegate()
+    }
+    
+    public func registerPurchaseDelegate() async {
+        await repo.registerPurchaseDelegate()
+    }
+    
+    public func deRegisterPurchaseDelegate() async {
+        await repo.deRegisterPurchaseDelegate()
     }
 }
