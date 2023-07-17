@@ -6,6 +6,7 @@ import XCTest
 final class AccountPlanPurchaseRepositoryTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
+    // MARK: Plans
     func testAccountPlanProducts_monthly() async {
         let products = [MockSKProduct(identifier: "pro1.oneMonth", price: "1", priceLocale: Locale.current),
                         MockSKProduct(identifier: "pro2.oneMonth", price: "1", priceLocale: Locale.current),
@@ -38,6 +39,7 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
         XCTAssertEqual(plans, expectedResult)
     }
     
+    // MARK: Restore purchase
     func testRestorePurchase_addDelegate_delegateShouldExist() async {
         let mockPurchase = MockMEGAPurchase()
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase)
@@ -100,6 +102,62 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
                 exp.fulfill()
             }.store(in: &subscriptions)
         sut.failedRestore(expectedError.errorCode, message: expectedError.errorMessage)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    // MARK: Purchase plan
+    func testPurchasePlan_addDelegate_delegateShouldExist() async {
+        let mockPurchase = MockMEGAPurchase()
+        let sut = AccountPlanPurchaseRepository(purchase: mockPurchase)
+        await sut.registerPurchaseDelegate()
+        XCTAssertTrue(mockPurchase.hasPurchaseDelegate)
+    }
+    
+    func testPurchasePlan_removeDelegate_delegateShouldNotExist() async {
+        let mockPurchase = MockMEGAPurchase()
+        let sut = AccountPlanPurchaseRepository(purchase: mockPurchase)
+        await sut.registerPurchaseDelegate()
+        
+        await sut.deRegisterPurchaseDelegate()
+        XCTAssertFalse(mockPurchase.hasPurchaseDelegate)
+    }
+    
+    func testPurchasePublisher_successPurchase_shouldSendToPublisher() {
+        let mockPurchase = MockMEGAPurchase()
+        let sut = AccountPlanPurchaseRepository(purchase: mockPurchase)
+        
+        let exp = expectation(description: "Should receive success purchase result")
+        sut.purchasePlanResultPublisher
+            .sink { result in
+                if case .failure = result {
+                    XCTFail("Request error is not expected.")
+                }
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.successfulPurchase(mockPurchase)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testPurchasePublisher_failedPurchase_shouldSendToPublisher() {
+        let mockPurchase = MockMEGAPurchase()
+        let sut = AccountPlanPurchaseRepository(purchase: mockPurchase)
+        let expectedError = AccountPlanErrorEntity(errorCode: 1, errorMessage: "TestError")
+        
+        let exp = expectation(description: "Should receive success purchase result")
+        sut.purchasePlanResultPublisher
+            .sink { result in
+                switch result {
+                case .success:
+                    XCTFail("Expecting an error but got a success.")
+                case .failure(let error):
+                    XCTAssertEqual(error.errorCode, expectedError.errorCode)
+                    XCTAssertEqual(error.errorMessage, expectedError.errorMessage)
+                }
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.failedPurchase(expectedError.errorCode, message: expectedError.errorMessage)
         wait(for: [exp], timeout: 1)
     }
 }

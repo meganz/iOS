@@ -119,7 +119,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     private func fetchAccountDetails() {
         Task {
             do {
-                accountDetails = try await accountHallUsecase.accountDetails()
+                accountDetails = try await accountHallUsecase.refreshCurrentAccountDetails()
                 await setCurrentPlanName(accountDetails?.proLevel)
                 await configPlanDisplay()
             } catch {

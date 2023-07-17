@@ -4,7 +4,8 @@ import MEGADomainMock
 import XCTest
 
 final class AccountPlanPurchaseUseCaseTests: XCTestCase {
-
+    private var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - Plans
     func testAccountPlanProducts_monthly() async {
         let plans = monthlyPlans
@@ -48,8 +49,7 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
         monthlyPlans + yearlyPlans
     }
     
-    // MARK: - Publishers
-    private var subscriptions = Set<AnyCancellable>()
+    // MARK: - Restore purchase
     
     func testRegisterRestoreDelegateCalled_shouldReturnTrue() async {
         let mockRepo = MockAccountPlanPurchaseRepository()
@@ -113,5 +113,66 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
             }.store(in: &subscriptions)
         failedRestorePublisher.send(expectedError)
         wait(for: [exp], timeout: 1)
+    }
+    
+    // MARK: - Purchase plan
+    
+    func testRegisterPurchaseDelegateCalled_shouldReturnTrue() async {
+        let mockRepo = MockAccountPlanPurchaseRepository()
+        let sut = AccountPlanPurchaseUseCase(repository: mockRepo)
+        await sut.registerPurchaseDelegate()
+        XCTAssertTrue(mockRepo.registerPurchaseDelegateCalled == 1)
+    }
+    
+    func testDeRegisterPurchaseDelegateCalled_shouldReturnTrue() async {
+        let mockRepo = MockAccountPlanPurchaseRepository()
+        let sut = AccountPlanPurchaseUseCase(repository: mockRepo)
+        await sut.deRegisterPurchaseDelegate()
+        XCTAssertTrue(mockRepo.deRegisterPurchaseDelegateCalled == 1)
+    }
+    
+    func testPurchasePublisher_successResultPublisher_shouldSendToPublisher() {
+        let purchasePlanResultPublisher = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+        let mockRepo = MockAccountPlanPurchaseRepository(
+            purchasePlanResultPublisher: purchasePlanResultPublisher.eraseToAnyPublisher()
+        )
+        let sut = AccountPlanPurchaseUseCase(repository: mockRepo)
+        
+        let exp = expectation(description: "Should receive success result from purchasePlanResultPublisher")
+        sut.purchasePlanResultPublisher()
+            .sink { result in
+                if case .failure = result {
+                    XCTFail("Request error is not expected.")
+                }
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        purchasePlanResultPublisher.send(.success(()))
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testPurchasePublisher_failedResultPublisher_shouldSendToPublisher() {
+        let purchasePlanResultPublisher = PassthroughSubject<Result<Void, AccountPlanErrorEntity>, Never>()
+        let mockRepo = MockAccountPlanPurchaseRepository(
+            purchasePlanResultPublisher: purchasePlanResultPublisher.eraseToAnyPublisher()
+        )
+        let sut = AccountPlanPurchaseUseCase(repository: mockRepo)
+        let expectedError = AccountPlanErrorEntity(errorCode: 1, errorMessage: "TestError")
+        
+        let exp = expectation(description: "Should receive success result from purchasePlanResultPublisher")
+        sut.purchasePlanResultPublisher()
+            .sink { result in
+                switch result {
+                case .success:
+                    XCTFail("Expecting an error but got a success.")
+                case .failure(let error):
+                    XCTAssertEqual(error.errorCode, expectedError.errorCode)
+                    XCTAssertEqual(error.errorMessage, expectedError.errorMessage)
+                }
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        purchasePlanResultPublisher.send(.failure(expectedError))
+        wait(for: [exp], timeout: 1.0)
     }
 }

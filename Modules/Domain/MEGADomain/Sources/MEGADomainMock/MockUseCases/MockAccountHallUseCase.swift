@@ -4,7 +4,7 @@ import MEGADomain
 final public class MockAccountHallUseCase: AccountHallUseCaseProtocol {
     private let contactRequestsCount: Int
     private let unseenUserAlertsCount: UInt
-    private let accountDetails: AccountDetailsEntity
+    private let _currentAccountDetails: AccountDetailsEntity
     private let _requestResultPublisher: PassthroughSubject<Result<AccountRequestEntity, Error>, Never>
     private let _contactRequestPublisher: PassthroughSubject<[ContactRequestEntity], Never>
     private let _userAlertUpdatePublisher: PassthroughSubject<[UserAlertEntity], Never>
@@ -18,7 +18,7 @@ final public class MockAccountHallUseCase: AccountHallUseCaseProtocol {
     
     public init(contactRequestsCount: Int = 0,
                 unseenUserAlertsCount: UInt = 0,
-                accountDetails: AccountDetailsEntity = AccountDetailsEntity(),
+                currentAccountDetails: AccountDetailsEntity = AccountDetailsEntity(),
                 isMasterBusinessAccount: Bool = false,
                 currentUserHandle: HandleEntity? = nil,
                 requestResultPublisher: PassthroughSubject<Result<AccountRequestEntity, Error>, Never> = PassthroughSubject<Result<AccountRequestEntity, Error>, Never>(),
@@ -26,7 +26,7 @@ final public class MockAccountHallUseCase: AccountHallUseCaseProtocol {
                 userAlertUpdatePublisher: PassthroughSubject<[UserAlertEntity], Never> = PassthroughSubject<[UserAlertEntity], Never>()) {
         self.contactRequestsCount = contactRequestsCount
         self.unseenUserAlertsCount = unseenUserAlertsCount
-        self.accountDetails = accountDetails
+        _currentAccountDetails = currentAccountDetails
         _requestResultPublisher = requestResultPublisher
         _contactRequestPublisher = contactRequestPublisher
         _userAlertUpdatePublisher = userAlertUpdatePublisher
@@ -42,8 +42,12 @@ final public class MockAccountHallUseCase: AccountHallUseCaseProtocol {
         unseenUserAlertsCount
     }
     
-    public func accountDetails() async throws -> AccountDetailsEntity {
-        accountDetails
+    public var currentAccountDetails: AccountDetailsEntity? {
+        _currentAccountDetails
+    }
+    
+    public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
+        _currentAccountDetails
     }
     
     public func requestResultPublisher() -> AnyPublisher<Result<AccountRequestEntity, Error>, Never> {

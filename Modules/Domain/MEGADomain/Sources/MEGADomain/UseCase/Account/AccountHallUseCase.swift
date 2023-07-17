@@ -5,7 +5,10 @@ public protocol AccountHallUseCaseProtocol {
     var isMasterBusinessAccount: Bool { get }
     func incomingContactsRequestsCount() async -> Int
     func relevantUnseenUserAlertsCount() async -> UInt
-    func accountDetails() async throws -> AccountDetailsEntity
+    
+    var currentAccountDetails: AccountDetailsEntity? { get }
+    func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
+    
     func requestResultPublisher() -> AnyPublisher<Result<AccountRequestEntity, Error>, Never>
     func contactRequestPublisher() -> AnyPublisher<[ContactRequestEntity], Never>
     func userAlertUpdatePublisher() -> AnyPublisher<[UserAlertEntity], Never>
@@ -39,7 +42,11 @@ public struct AccountHallUseCase<T: AccountRepositoryProtocol>: AccountHallUseCa
         repository.relevantUnseenUserAlertsCount()
     }
     
-    public func accountDetails() async throws -> AccountDetailsEntity {
+    public var currentAccountDetails: AccountDetailsEntity? {
+        repository.currentAccountDetails
+    }
+    
+    public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
         try await repository.refreshCurrentAccountDetails()
     }
 
