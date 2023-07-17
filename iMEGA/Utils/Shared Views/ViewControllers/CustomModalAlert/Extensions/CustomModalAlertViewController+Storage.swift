@@ -1,4 +1,6 @@
 import Foundation
+import MEGAData
+import MEGADomain
 
 extension CustomModalAlertViewController {
     func configureForStorageEvent(_ event: MEGAEvent) {
@@ -28,8 +30,14 @@ extension CustomModalAlertViewController {
     
     private func storageDetailForEvent(_ event: MEGAEvent, pricing: MEGAPricing?) -> String {
         let pricing = pricing ?? MEGAPricing()
-        let maxStorage = String(format: "%ld", pricing.storageGB(atProductIndex: 7))
-        let maxStorageTB = String(format: "%ld", pricing.storageGB(atProductIndex: 7) / 1024)
+        let productStorage = pricing.productStorageGB(ofAccountType: .proIII)
+        
+        //StorageGB can return 0 if there is no product or the given account type doesn't match on the product list.
+        //Checking if it is greater than zero first to avoid negative TB storage.
+        let maxTB = productStorage > 0 ? productStorage / 1024 : 0
+        
+        let maxStorage = String(format: "%ld", productStorage)
+        let maxStorageTB = String(format: "%ld", maxTB)
         
         let detailText = event.number == StorageState.orange.rawValue ? Strings.Localizable.Dialog.Storage.AlmostFull.detail(maxStorageTB, maxStorage) : Strings.Localizable.Dialog.Storage.Odq.detail
         return detailText
