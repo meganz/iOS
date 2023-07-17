@@ -15318,7 +15318,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG -DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev;
 				PRODUCT_NAME = MEGA;
@@ -15376,7 +15376,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -15433,6 +15433,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-Xlinker",
 					"-no_application_extension",
 				);
@@ -15487,7 +15488,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16268,7 +16269,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MARKETING_VERSION = 10.6;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa;
 				PRODUCT_NAME = MEGA;
@@ -16380,7 +16381,7 @@
 				);
 				MARKETING_VERSION = 10.6;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGANotifications;
 				PRODUCT_NAME = "$(TARGET_NAME)";
