@@ -13,6 +13,17 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### configure_sdk_and_chat_library
+
+```sh
+[bundle exec] fastlane configure_sdk_and_chat_library
+```
+
+
+
+----
+
+
 ## iOS
 
 ### ios upload_symbols

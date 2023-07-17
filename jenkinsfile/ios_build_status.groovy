@@ -72,18 +72,18 @@ pipeline {
         }
     }
     stages {
+        stage('Bundle install') {
+            steps {
+                gitlabCommitStatus(name: 'Bundle install') {
+                    injectEnvironments({
+                        sh "bundle install"
+                    })
+                }
+            }
+        }
+
         stage('Installing dependencies') {
             parallel {
-                stage('Bundle install') {
-                    steps {
-                        gitlabCommitStatus(name: 'Bundle install') {
-                            injectEnvironments({
-                                sh "bundle install"
-                            })
-                        }
-                    }
-                }
-
                 stage('Submodule update and run cmake') {
                     steps {
                         gitlabCommitStatus(name: 'Submodule update and run cmake') {
@@ -105,9 +105,7 @@ pipeline {
                     steps {
                         gitlabCommitStatus(name: 'Downloading third party libraries') {
                             injectEnvironments({
-                                retry(3) {
-                                    sh "sh download_3rdparty.sh"
-                                }
+                                sh "bundle exec fastlane configure_sdk_and_chat_library use_cache:true"
                             })
                         }
                     }
