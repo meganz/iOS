@@ -225,6 +225,7 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
+  dotenv
   fastlane
   fastlane-plugin-appcenter
   fastlane-plugin-firebase_app_distribution

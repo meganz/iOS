@@ -14,6 +14,7 @@
 # update_fastlane
 
 require 'json'
+import("Fastfile_download_libraries")
 
 # Directories
 BUILD_DIR       = File.expand_path('build')
