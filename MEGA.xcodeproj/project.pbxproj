@@ -1254,6 +1254,7 @@
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
 		990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */; };
+		991C87062A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
 		99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */; };
@@ -3789,6 +3790,7 @@
 		94F568C12A56E7A6005CE9F2 /* DeviceCenter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceCenter; sourceTree = "<group>"; };
 		990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModelTests.swift; sourceTree = "<group>"; };
 		990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomLinkViewModel+Additions.swift"; sourceTree = "<group>"; };
+		991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOnboardingRecord.swift; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
 		99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingLinkActivityItemSource.swift; sourceTree = "<group>"; };
@@ -8355,6 +8357,7 @@
 				83B71A6328F03E0E00E006C6 /* ChatRoomsTopRowViewState.swift */,
 				BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */,
 				BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */,
+				991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */,
 				BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */,
 			);
 			path = "Data Model";
@@ -14068,6 +14071,7 @@
 				BFA1EEEA2A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift in Sources */,
 				83DE6D1F2989410E000503CC /* ScheduleMeetingOccurence.swift in Sources */,
 				BF0D5125298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift in Sources */,
+				991C87062A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift in Sources */,
 				BFCB32B62A0239A60013409C /* ScheduleMeetingPushNotifications.swift in Sources */,
 				83DBDDDC29D723B300CF433B /* ScheduleMeetingRouter.swift in Sources */,
 				BF2675E92A38626400736759 /* ScheduleMeetingSelectedFrequencyDetails.swift in Sources */,

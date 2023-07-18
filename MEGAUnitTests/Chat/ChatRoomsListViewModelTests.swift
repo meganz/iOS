@@ -173,6 +173,143 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertEqual(permissionRouter.presentModalNotificationsPermissionPromptCallCount, 0)
     }
     
+    func testMeetingTip_meetingListNotShown_shouldNotShowMeetingTip() {
+        let sut = ChatRoomsListViewModel()
+        
+        sut.loadChatRoomsIfNeeded()
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingCreateMeetingTip == true ||
+            sut.presentingStartMeetingTip == true ||
+            sut.presentingRecurringMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        exception.isInverted = true
+        wait(for: [exception], timeout: 2)
+    }
+    
+    func testCreateMeetingTip_meetingListIsFirstShown_shouldShowCreateMeetingTip() {
+        let sut = ChatRoomsListViewModel(chatViewMode: .meetings)
+        
+        sut.loadChatRoomsIfNeeded()
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingCreateMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [exception], timeout: 5)
+    }
+    
+    func testFeatureFlagForShowingCreateMeetingTip_whenTurnedOff_shouldNotShowCreateMeetingTip() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.scheduleMeeting: false])
+        let sut = ChatRoomsListViewModel(chatViewMode: .meetings, featureFlagProvider: featureFlagProvider)
+        
+        sut.loadChatRoomsIfNeeded()
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingCreateMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        exception.isInverted = true
+        wait(for: [exception], timeout: 2)
+
+    }
+    
+    func testStartMeetingTip_meetingTipRecordIsCreateMeeting_shouldNotShowStartMeetingTip() {
+        let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.createMeeting)
+        let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
+        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        
+        sut.loadChatRoomsIfNeeded()
+        sut.startMeetingTipOffsetY = 100
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingStartMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        exception.isInverted = true
+        wait(for: [exception], timeout: 2)
+    }
+    
+    func testStartMeetingTip_meetingTipRecordIsStartMeeting_shouldShowStartMeetingTip() {
+        let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
+        let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
+        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        
+        sut.loadChatRoomsIfNeeded()
+        sut.startMeetingTipOffsetY = 100
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingStartMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [exception], timeout: 5)
+    }
+    
+    func testStartMeetingTip_meetingTipRecordIsStartMeetingAndScrollingList_shouldNotShowStartMeetingTip() {
+        let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
+        let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
+        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        
+        sut.loadChatRoomsIfNeeded()
+        sut.startMeetingTipOffsetY = 100
+        sut.isMeetingListScrolling = true
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingStartMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        exception.isInverted = true
+        wait(for: [exception], timeout: 2)
+    }
+    
+    func testStartMeetingTip_meetingTipRecordIsStartMeetingAndTipIsNotVisiable_shouldNotShowStartMeetingTip() {
+        let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
+        let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
+        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        
+        sut.loadChatRoomsIfNeeded()
+        sut.startMeetingTipOffsetY = -1
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingStartMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        exception.isInverted = true
+        wait(for: [exception], timeout: 2)
+    }
+    
+    func testRecurringMeetingTip_meetingTipRecordIsStartMeeting_shouldNotShowRecurringMeetingTip() {
+        let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
+        let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
+        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        
+        sut.loadChatRoomsIfNeeded()
+        sut.recurringMeetingTipOffsetY = 100
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingRecurringMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        exception.isInverted = true
+        wait(for: [exception], timeout: 2)
+    }
+    
+    func testRecurringMeetingTip_meetingTipRecordIsStartMeeting_shouldShowRecurringMeetingTip() {
+        let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.recurringMeeting)
+        let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
+        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        
+        sut.loadChatRoomsIfNeeded()
+        sut.recurringMeetingTipOffsetY = 100
+        
+        let predicate = NSPredicate { _, _ in
+            sut.presentingRecurringMeetingTip == true
+        }
+        let exception = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [exception], timeout: 5)
+    }
+    
     // MARK: - Private methods
     
     private func assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: Bool, description: String, line: UInt = #line) {
@@ -196,6 +333,10 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     private func futureDate(byAddingDays numberOfDays: Int) -> Date? {
         Calendar.current.date(byAdding: .day, value: numberOfDays, to: Date())
+    }
+    
+    private func createScheduledMeetingOnboardingEntity(_ tipType: ScheduledMeetingOnboardingTipType) -> ScheduledMeetingOnboardingEntity {
+        ScheduledMeetingOnboardingEntity(ios: ScheduledMeetingOnboardingIos(record: ScheduledMeetingOnboardingRecord(currentTip: tipType)))
     }
 }
 

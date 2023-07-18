@@ -8,4 +8,10 @@ extension UserAttributeUseCaseProtocol {
             filterLocation: PhotosFilterLocation.toFilterLocation(from: ccAttributes.ios.timeline.location),
             usePreference: ccAttributes.ios.timeline.usePreference ?? false)
     }
+    
+    func onboardingRecord() async throws -> ScheduledMeetingOnboardingTipRecord? {
+        guard let smotAttributes = try await retrieveScheduledMeetingOnBoardingAttrubute() else { return nil }
+        let currentTip = ScheduledMeetingOnboardingTip.toScheduledMeetingOnboardingTip(from: smotAttributes.ios.record.currentTip)
+        return ScheduledMeetingOnboardingTipRecord(currentTip: currentTip)
+    }
 }

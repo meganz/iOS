@@ -137,4 +137,66 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let updatedJsonData = try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences]?[ContentConsumptionKeysEntity.key]).sorted()
         XCTAssertEqual(updatedJsonData, try XCTUnwrap(targetJson).sorted())
     }
+    
+    // MARK: - Scheduled meeting onboarding
+    
+    func testRetrieveScheduledMeetingOnboardingAttribute_haveNoInitialData_shouldBeNil() async throws {
+        let repo = MockUserAttributeRepository()
+        let sut = UserAttributeUseCase(repo: repo)
+        
+        let scheduledMeetingOnboardingEntity = try await sut.retrieveScheduledMeetingOnBoardingAttrubute()
+        
+        XCTAssertNil(scheduledMeetingOnboardingEntity)
+    }
+    
+    func testRetrieveScheduledMeetingOnboardingAttribute_haveInitialData_shouldBeNotNilAndHaveShownMeetingTabShouldBeFalse() async throws {
+        let json = """
+            {"ios":{"record":{"currentTip":"createMeeting"}}}
+        """
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.appsPreferences: [ScheduledMeetingOnboardingKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
+        let sut = UserAttributeUseCase(repo: repo)
+        
+        let scheduledMeetingOnboardingEntity = try await sut.retrieveScheduledMeetingOnBoardingAttrubute()
+        
+        XCTAssertNotNil(scheduledMeetingOnboardingEntity)
+        XCTAssertEqual(scheduledMeetingOnboardingEntity?.ios.record.currentTip.rawValue, "createMeeting")
+    }
+    
+    func testRetrieveScheduledMeetingOnboarding_onFirstTime_shouldSaveCorrectly() async throws {
+        let json = ""
+        let targetJson = """
+            {"ios":{"record":{"currentTip":"initial"}}}
+        """.trim
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.appsPreferences: [ScheduledMeetingOnboardingKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
+        let sut = UserAttributeUseCase(repo: repo)
+        
+        try await sut.saveScheduledMeetingOnBoardingRecord(
+            key: ScheduledMeetingOnboardingKeysEntity.key,
+            record: ScheduledMeetingOnboardingRecord(currentTip: .initial)
+        )
+        
+        XCTAssertNotNil(repo.userAttributesContainer[.appsPreferences])
+        let updatedJsonData = try XCTUnwrap(repo.userAttributesContainer[.appsPreferences]?[ScheduledMeetingOnboardingKeysEntity.key]).sorted()
+        XCTAssertEqual(updatedJsonData, try XCTUnwrap(targetJson).sorted())
+    }
+    
+    func testSaveScheduledMeetingOnboarding_onSecondTime_shouldSaveCorrectly() async throws {
+        let json = """
+            {"ios":{"record":{"currentTip":"initial"}}}
+        """.trim
+        let targetJson = """
+            {"ios":{"record":{"currentTip":"createMeeting"}}}
+        """.trim
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.appsPreferences: [ScheduledMeetingOnboardingKeysEntity.key: try XCTUnwrap(json?.base64Encoded)]])
+        let sut = UserAttributeUseCase(repo: repo)
+        
+        try await sut.saveScheduledMeetingOnBoardingRecord(
+            key: ScheduledMeetingOnboardingKeysEntity.key,
+            record: ScheduledMeetingOnboardingRecord(currentTip: .createMeeting)
+        )
+        
+        XCTAssertNotNil(repo.userAttributesContainer[.appsPreferences])
+        let updatedJsonData = try XCTUnwrap(repo.userAttributesContainer[.appsPreferences]?[ScheduledMeetingOnboardingKeysEntity.key]).sorted()
+        XCTAssertEqual(updatedJsonData, try XCTUnwrap(targetJson).sorted())
+    }
 }

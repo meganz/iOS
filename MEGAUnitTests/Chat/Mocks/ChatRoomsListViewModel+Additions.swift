@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentation
 
 extension ChatRoomsListViewModel {
     
@@ -14,11 +15,13 @@ extension ChatRoomsListViewModel {
         accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
         chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
+        userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
         notificationCenter: NotificationCenter = NotificationCenter.default,
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [.scheduleMeeting: true]),
         isTesting: Bool = true
     ) {
         self.init(
@@ -29,11 +32,13 @@ extension ChatRoomsListViewModel {
             networkMonitorUseCase: networkMonitorUseCase,
             accountUseCase: accountUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,
+            userAttributeUseCase: userAttributeUseCase,
             notificationCenter: notificationCenter,
             chatType: chatType,
             chatViewMode: chatViewMode,
             permissionHandler: permissionHandler,
-            permissionAlertRouter: permissionAlertRouter
+            permissionAlertRouter: permissionAlertRouter,
+            featureFlagProvider: featureFlagProvider
         )
     }
 }

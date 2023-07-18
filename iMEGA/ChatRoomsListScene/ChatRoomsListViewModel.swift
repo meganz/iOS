@@ -3,6 +3,7 @@ import Foundation
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
+import MEGASwiftUI
 import MEGASDKRepo
 
 enum ChatViewMode {
@@ -23,8 +24,10 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private let userAttributeUseCase: any UserAttributeUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
     private let permissionAlertRouter: any PermissionAlertRouting
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let notificationCenter: NotificationCenter
     private let chatViewType: ChatViewType
     
@@ -78,7 +81,8 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     private var loadingTask: Task<Void, Never>?
     private var searchTask: Task<Void, Never>?
-    
+    private var meetingTipTask: Task<Void, Never>?
+
     @Published var isSearchActive: Bool
     
     private var chatRooms: [ChatRoomViewModel]?
@@ -87,6 +91,24 @@ final class ChatRoomsListViewModel: ObservableObject {
     private var futureMeetings: [FutureMeetingSection]?
     private var subscriptions = Set<AnyCancellable>()
     private var isViewOnScreen = false
+    
+    @Published private var currentTip: ScheduledMeetingOnboardingTip = .initial
+    @Published private var meetingListFrame: CGRect = .zero
+    @Published var isMeetingListScrolling: Bool = false
+    @Published var createMeetingTipOffsetX: CGFloat = 0
+    @Published var startMeetingTipOffsetY: CGFloat = 0
+    @Published var recurringMeetingTipOffsetY: CGFloat = 0
+    
+    var presentingCreateMeetingTip: Bool {
+        chatViewMode == .meetings && isConnectedToNetwork && currentTip == .createMeeting
+    }
+
+    var presentingStartMeetingTip: Bool {
+        chatViewMode == .meetings && currentTip == .startMeeting && !isMeetingListScrolling && startMeetingTipOffsetY > 0
+    }
+    var presentingRecurringMeetingTip: Bool {
+        chatViewMode == .meetings && currentTip == .recurringMeeting && !isMeetingListScrolling && recurringMeetingTipOffsetY > 0
+    }
     
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
 
@@ -97,11 +119,13 @@ final class ChatRoomsListViewModel: ObservableObject {
          networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol,
          scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
+         userAttributeUseCase: any UserAttributeUseCaseProtocol,
          notificationCenter: NotificationCenter = NotificationCenter.default,
          chatType: ChatViewType = .regular,
          chatViewMode: ChatViewMode = .chats,
          permissionHandler: some DevicePermissionsHandling,
-         permissionAlertRouter: some PermissionAlertRouting
+         permissionAlertRouter: some PermissionAlertRouting,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -110,6 +134,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.networkMonitorUseCase = networkMonitorUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.accountUseCase = accountUseCase
+        self.userAttributeUseCase = userAttributeUseCase
         self.notificationCenter = notificationCenter
         self.chatViewType = chatType
         self.chatViewMode = chatViewMode
@@ -117,6 +142,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.searchText = ""
         self.permissionHandler = permissionHandler
         self.permissionAlertRouter = permissionAlertRouter
+        self.featureFlagProvider = featureFlagProvider
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         
@@ -153,6 +179,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         monitorNetworkChanges()
         monitorActiveCallChanges()
         createTaskToUpdateContactsOnMegaViewStateIfRequired()
+        fetchScheduledMeetingTipRecord()
     }
     
     func cancelLoading() {
@@ -162,6 +189,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         
         cancelLoadingTask()
         cancelSearchTask()
+        cancelMeetingTipTask()
     }
     
     func contextMenuConfiguration() -> CMConfigEntity {
@@ -246,6 +274,64 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
+    @MainActor
+    func updateMeetingListFrame(_ meetingListframeInGlobal: CGRect) {
+        meetingListFrame = meetingListframeInGlobal
+        let trailingPadding = UIDevice.current.iPad ? 91.0 : 88.0
+        createMeetingTipOffsetX = meetingListFrame.width / 2 - trailingPadding
+    }
+    
+    @MainActor
+    func updateTipOffsetY(for meeting: FutureMeetingRoomViewModel, meetingframeInGlobal: CGRect?) {
+        guard currentTip != .showedAll else { return }
+
+        if isFirstScheduledMeeting(meeting) {
+            if let meetingframeInGlobal = meetingframeInGlobal {
+                startMeetingTipOffsetY = meetingframeInGlobal.midY - meetingListFrame.minY
+            } else {
+                startMeetingTipOffsetY = -1
+            }
+        }
+        
+        if meeting.isFirstRecurringAndHost {
+            if let meetingframeInGlobal = meetingframeInGlobal {
+                recurringMeetingTipOffsetY = meetingframeInGlobal.midY - meetingListFrame.minY
+            } else {
+                recurringMeetingTipOffsetY = -1
+            }
+        }
+    }
+        
+    func makeCreateMeetingTip() -> Tip {
+        Tip(title: Strings.Localizable.Meetings.ScheduleMeeting.CreateMeetingTip.title,
+            message: Strings.Localizable.Meetings.ScheduleMeeting.CreateMeetingTip.message,
+            buttonTitle: Strings.Localizable.Meetings.ScheduleMeeting.TipView.gotIt) { [weak self] in
+            guard let self else { return }
+            currentTip = .startMeeting
+            saveOnboardingTipRecord()
+        }
+    }
+    
+    func makeStartMeetingTip() -> Tip {
+        Tip(title: Strings.Localizable.Meetings.ScheduleMeeting.StartMeetingTip.title,
+            message: Strings.Localizable.Meetings.ScheduleMeeting.StartMeetingTip.message,
+            buttonTitle: Strings.Localizable.Meetings.ScheduleMeeting.TipView.gotIt) { [weak self] in
+            guard let self else { return }
+            currentTip = .recurringMeeting
+            saveOnboardingTipRecord()
+        }
+    }
+    
+    func makeRecurringMeetingTip() -> Tip {
+        Tip(title: Strings.Localizable.Meetings.ScheduleMeeting.RecurringMeetingTip.title,
+            message: Strings.Localizable.Meetings.ScheduleMeeting.RecurringMeetingTip.message,
+            buttonTitle: Strings.Localizable.Meetings.ScheduleMeeting.TipView.gotIt) { [weak self] in
+            guard let self else { return }
+            currentTip = .showedAll
+            saveOnboardingTipRecord()
+        }
+    }
+    
     // MARK: - Private
     
     private func fetchChats() {
@@ -299,6 +385,11 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func cancelSearchTask() {
         searchTask?.cancel()
         searchTask = nil
+    }
+    
+    private func cancelMeetingTipTask() {
+        meetingTipTask?.cancel()
+        meetingTipTask = nil
     }
     
     private func fetchNonMeetingChats() async {
@@ -438,6 +529,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @MainActor
     private func populate(futureMeetingSection: [FutureMeetingSection]) {
         futureMeetings = futureMeetingSection.sorted(by: <)
+        updateFirstRecurringMeetingAndHost()
         filterMeetings()
         setFirstMeetingsLoad()
     }
@@ -654,6 +746,47 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     private func refreshContextMenu() {
         Task { @MainActor in refreshContextMenuBarButton?() }
+    }
+    
+    private func fetchScheduledMeetingTipRecord() {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting) else { return }
+        
+        meetingTipTask = Task { @MainActor in
+            defer { cancelMeetingTipTask() }
+            
+            do {
+                if let onboardingRecord = try await userAttributeUseCase.onboardingRecord() {
+                    currentTip = onboardingRecord.currentTip
+                } else {
+                    currentTip = .createMeeting
+                }
+            } catch {
+                MEGALogError("[Chat] when to load saved scheduled meeting onboarding record \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func saveOnboardingTipRecord() {
+        Task { @MainActor in
+            do {
+                let record = ScheduledMeetingOnboardingRecord(currentTip: currentTip.toScheduledMeetingOnboardingTipType())
+                try await userAttributeUseCase.saveScheduledMeetingOnBoardingRecord(key: ScheduledMeetingOnboardingKeysEntity.key, record: record)
+            } catch {
+                MEGALogError("[Chat] Unable to save scheduled meeting onboarding record. \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func isFirstScheduledMeeting(_ meeting: FutureMeetingRoomViewModel) -> Bool {
+        guard let firstMeetingId = displayFutureMeetings?.first?.items.first?.scheduledMeeting.scheduledId else { return false }
+        return firstMeetingId == meeting.scheduledMeeting.scheduledId
+    }
+    
+    private func updateFirstRecurringMeetingAndHost() {
+        guard let futureMeetings = futureMeetings, currentTip != .showedAll else { return }
+        let allFutureMeetings = futureMeetings.flatMap {$0.items }
+        let firstRecurringMeetingAndHost = allFutureMeetings.first { $0.isRecurring && $0.scheduledMeeting.organizerUserId == accountUseCase.currentUserHandle }
+        firstRecurringMeetingAndHost?.isFirstRecurringAndHost = true
     }
 }
 
