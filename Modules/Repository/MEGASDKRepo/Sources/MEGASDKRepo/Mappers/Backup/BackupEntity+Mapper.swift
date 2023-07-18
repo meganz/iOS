@@ -30,8 +30,8 @@ fileprivate extension BackupEntity {
                   progress: Int(backupInfo.progress),
                   uploads: Int(backupInfo.uploads),
                   downloads: Int(backupInfo.downloads),
-                  timestamp: backupInfo.ts ?? Date(),
-                  activityTimestamp: backupInfo.activityTs ?? Date()
+                  timestamp: backupInfo.ts,
+                  activityTimestamp: backupInfo.activityTs
         )
     }
 }

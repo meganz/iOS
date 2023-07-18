@@ -23,7 +23,7 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
                     deviceBackups.isNotEmpty else { return nil }
             
             var updatedDevice = device
-            updatedDevice.backups = deviceBackups
+            updatedDevice.backups = updateBackupsWithSyncStatus(deviceBackups)
             updatedDevice.status = calculateGlobalStatus(updatedDevice.backups ?? [])
             return updatedDevice
         }
@@ -67,6 +67,75 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
     private func calculateGlobalStatus(_ backups: [BackupEntity]) -> BackupStatusEntity? {
         backups
             .compactMap {$0.backupStatus}
-            .max {$0.priority < $1.priority} ?? .upToDate
+            .max {$0.priority < $1.priority}
+    }
+    
+    private func updateBackupsWithSyncStatus(_ backups: [BackupEntity]) -> [BackupEntity] {
+        let currentDate = Date().timeIntervalSince1970
+        let maxLastHeartbeatTimeForMobiles: Double = 3600.0
+        let maxLastSyncTimeForOtherDevices: Double = 1800.0
+        
+        return backups.map { backup in
+            var updatedBackup = backup
+            var backupSyncState: BackupStatusEntity?
+            var lastBackupHeartbeat: TimeInterval = 0
+            
+            let isMobileBackup = backup.type == .mediaUpload || backup.type == .cameraUpload
+            
+            lastBackupHeartbeat = max(
+                (backup.timestamp?.timeIntervalSince1970 ?? 0),
+                (backup.activityTimestamp?.timeIntervalSince1970 ?? 0)
+            )
+            
+            let timeSinceLastInteractionInSeconds = currentDate - lastBackupHeartbeat
+            
+            let lastInteractionOutOfRange = (isMobileBackup && timeSinceLastInteractionInSeconds > maxLastHeartbeatTimeForMobiles) || !isMobileBackup && timeSinceLastInteractionInSeconds > maxLastSyncTimeForOtherDevices
+            
+            switch backup.syncState {
+            case .unknown:
+                backupSyncState = .backupStopped
+            case .failed, .temporaryDisabled:
+                switch backup.substate {
+                case .storageOverquota:
+                    backupSyncState = .outOfQuota
+                case .accountExpired, .accountBlocked:
+                    backupSyncState = .blocked
+                default:
+                    backupSyncState = .error
+                }
+            case .pauseDown:
+                backupSyncState = .paused
+            case .disabled:
+                backupSyncState = .disabled
+            default:
+                if lastBackupHeartbeat == 0 || lastInteractionOutOfRange {
+                    let backupOlderThan10Minutes = currentDate - (backup.timestamp?.timeIntervalSince1970 ?? 0) > 600
+                    let currentBackupFolderExists = backup.rootHandle != .invalid
+                    
+                    if currentBackupFolderExists || backupOlderThan10Minutes {
+                        backupSyncState = .offline
+                    }
+                } else if backup.isPaused() {
+                    backupSyncState = .paused
+                } else {
+                    switch backup.status {
+                    case .upToDate, .inactive:
+                        if backup.syncState == .active || backup.syncState.isPaused() {
+                            backupSyncState = .upToDate
+                        }
+                    case .unknown:
+                        backupSyncState = .initialising
+                    case .syncing:
+                        backupSyncState = .updating
+                    case .pending:
+                        backupSyncState = .scanning
+                    }
+                }
+            }
+            
+            updatedBackup.backupStatus = backupSyncState
+            
+            return updatedBackup
+        }
     }
 }
