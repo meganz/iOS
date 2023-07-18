@@ -30,3 +30,9 @@ import SwiftUI
         super.init()
     }
 }
+
+extension PhotoLibraryContentViewModel {
+    var shouldShowPhotoLibraryPicker: Bool {
+        ![.album, .albumLink].contains(contentMode)
+    }
+}
