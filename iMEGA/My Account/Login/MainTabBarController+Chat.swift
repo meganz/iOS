@@ -7,13 +7,15 @@ extension MainTabBarController {
     
     @objc func showStartConversation() {
         selectedIndex = TabType.chat.rawValue
+        existingChatRoomsListViewController?.viewModel.router.presentStartConversation()
+    }
+    
+    var existingChatRoomsListViewController: ChatRoomsListViewController? {
         guard let navigationController = self.children[safe: TabType.chat.rawValue] as? MEGANavigationController else {
-            return
+            return nil
         }
         
-        if let chatRoomsListViewController = navigationController.viewControllers.first as? ChatRoomsListViewController {
-            chatRoomsListViewController.viewModel.router.presentStartConversation()
-        }
+        return navigationController.viewControllers.first as? ChatRoomsListViewController
     }
     
     @objc func openChatRoom(withPublicLink publicLink: String?, chatID: ChatIdEntity) {

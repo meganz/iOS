@@ -72,7 +72,9 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     self.notificationSectionRows = @[@(ChatSettingsNotificationRowChatNotification),
                                      @(ChatSettingsNotificationRowDND)];
     
-    self.navigationItem.title = NSLocalizedString(@"chat", @"Chat section header");
+    NSString *title = NSLocalizedString(@"chat", @"Chat section header");
+    self.navigationItem.title = title;
+    [self setMenuCapableBackButtonWithMenuTitle:title];
     
     self.statusLabel.text = NSLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
     

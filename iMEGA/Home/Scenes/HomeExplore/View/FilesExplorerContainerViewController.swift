@@ -62,7 +62,6 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         configureNavigationBarButtons()
         configureSearchBar()
         navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -111,6 +110,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         configureNavigationBarButtons()
         navigationItem.leftBarButtonItem = nil
         updateTitle(currentState.title)
+        navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: currentState.title ?? "")
     }
     
     func setViewModePreference(_ preference: ViewModePreference) {

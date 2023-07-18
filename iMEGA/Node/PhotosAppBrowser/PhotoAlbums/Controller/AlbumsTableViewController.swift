@@ -1,3 +1,4 @@
+import MEGAUIKit
 import Photos
 import UIKit
 
@@ -46,7 +47,7 @@ final class AlbumsTableViewController: UITableViewController {
         tableView.delegate = albumsDelegate
         
         addRightCancelBarButtonItem()
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.albums)
         
         if albums.numberOfAlbums() == 0 {
             showNoPhotosOrVideos()

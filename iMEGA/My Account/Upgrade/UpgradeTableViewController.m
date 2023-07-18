@@ -83,10 +83,10 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     SKProduct *product = MEGAPurchase.sharedInstance.products.firstObject;
     self.numberFormatter.locale = product.priceLocale;
     
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
-    
     NSString *navigationTitle = MEGASdkManager.sharedMEGASdk.mnz_isProAccount ? NSLocalizedString(@"Manage Account", @"account management button title in business account’s landing page") : NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
     self.title = (self.isChoosingTheAccountType) ? NSLocalizedString(@"chooseYourAccountType", nil) : navigationTitle;
+    
+    [self setMenuCapableBackButtonWithMenuTitle:self.title];
     
     self.chooseFromOneOfThePlansLabel.text = (self.isChoosingTheAccountType) ? NSLocalizedString(@"selectOneAccountType", @"") : NSLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     

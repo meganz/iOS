@@ -47,7 +47,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addParticipantBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *createGroupBarButtonItem;
 
@@ -348,7 +347,7 @@
         }
             
         case ContactsModeChatNamingGroup: {
-            self.backBarButtonItem.image = self.backBarButtonItem.image.imageFlippedForRightToLeftLayoutDirection;
+            
             self.createGroupBarButtonItem.title = NSLocalizedString(@"createFolderButton", nil);
             self.encryptedKeyRotationLabel.text = NSLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
             self.getChatLinkLabel.text = NSLocalizedString(@"Get Chat Link", @"Label in a cell where you can get the chat link");
@@ -373,7 +372,7 @@
 }
 
 - (void)reloadUI {
-    [self setNavigationBarTitle];
+    [self setNavigationBarTitles];
     
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
     
@@ -695,45 +694,6 @@
     return userHasChanged;
 }
 
-- (void)setNavigationBarTitle {
-    switch (self.contactsMode) {
-        case ContactsModeDefault:
-            self.navigationItem.title = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section");
-            break;
-            
-        case ContactsModeShareFoldersWith:
-            self.navigationItem.title = NSLocalizedString(@"Share with", @"Title of the screen that shows the users with whom the user can share a folder ");
-            break;
-            
-        case ContactsModeFolderSharedWith:
-            self.navigationItem.title = NSLocalizedString(@"sharedWith", @"Title of the view where you see with who you have shared a folder");
-            break;
-            
-        case ContactsModeChatStartConversation:
-            self.navigationItem.title = NSLocalizedString(@"startConversation", @"start a chat/conversation");
-            break;
-            
-        case ContactsModeScheduleMeeting:
-        case ContactsModeChatAddParticipant:
-            self.navigationItem.title = NSLocalizedString(@"addParticipants", @"Menu item to add participants to a chat");
-            break;
-            
-        case ContactsModeChatAttachParticipant:
-            self.navigationItem.title = NSLocalizedString(@"sendContact", @"A button label. The button sends contact information to a user in the conversation.");
-            break;
-            
-        case ContactsModeChatCreateGroup:
-            self.navigationItem.title = NSLocalizedString(@"addParticipants", @"Menu item to add participants to a chat");
-            break;
-            
-        case ContactsModeChatNamingGroup:
-            self.navigationItem.title = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
-            break;
-        case ContactsModeInviteParticipants:
-            self.navigationItem.title = NSLocalizedString(@"meetings.panel.InviteParticipants", @"Menu item to add participants to a chat");
-            break;
-    }
-}
 
 - (void)addContactAlertTextFieldDidChange:(UITextField *)textField {
     UIAlertController *addContactFromEmailAlertController = (UIAlertController *)self.presentedViewController;

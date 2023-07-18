@@ -46,7 +46,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
+    NSString *title = NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
+    self.navigationItem.title = title;
+    [self setMenuCapableBackButtonWithMenuTitle:title];
     self.requestedParticipantsMutableSet = NSMutableSet.new;
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
     

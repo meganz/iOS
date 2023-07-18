@@ -48,7 +48,9 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = NSLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
+    NSString *title = NSLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
+    self.navigationItem.title = title;
+    [self setMenuCapableBackButtonWithMenuTitle: title];
     
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";

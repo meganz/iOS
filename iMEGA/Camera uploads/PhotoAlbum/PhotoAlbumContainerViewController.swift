@@ -56,7 +56,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.Photo.Navigation.title)
         setUpPagerTabView()
         setUpPageViewController()
     }

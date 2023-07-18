@@ -203,7 +203,7 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dTv-Ub-Mph">
-                                            <rect key="frame" x="0.0" y="119.33333333333334" width="414" height="180.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="119.33333333333337" width="414" height="180.66666666666663"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTD-Tw-XPh">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="0.66666666666666663"/>
@@ -424,9 +424,6 @@
                             <constraint firstItem="LBi-pG-gwY" firstAttribute="bottom" secondItem="chW-fI-TZM" secondAttribute="bottom" id="xgS-Tb-WCP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="My Account" id="QGy-e9-5RQ">
-                        <barButtonItem key="backBarButtonItem" title=" " id="pRW-9u-iVN"/>
-                    </navigationItem>
                     <connections>
                         <outlet property="disclosureIndicatorImageView" destination="n73-QM-XwA" id="XGG-k8-fmd"/>
                         <outlet property="inviteYourFriendsSubtitleLabel" destination="vB2-Bt-AED" id="Jhe-Py-2Gu"/>
@@ -586,9 +583,6 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="My Account" id="Ag5-Bo-akq">
-                        <barButtonItem key="backBarButtonItem" title=" " id="qrD-yC-eKM"/>
-                    </navigationItem>
                     <connections>
                         <outlet property="achievementImageView" destination="AQS-fQ-dv2" id="2bD-Z7-YLi"/>
                         <outlet property="addPhoneNumberButton" destination="kFj-Kh-Kdm" id="IgJ-Vx-XzF"/>
@@ -763,9 +757,6 @@
                             <constraint firstItem="6NG-Ro-fKd" firstAttribute="width" secondItem="P8E-mQ-pfE" secondAttribute="width" id="tDx-ie-u9Z"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ivR-w3-epW">
-                        <barButtonItem key="backBarButtonItem" title=" " id="BM5-Ou-Q55"/>
-                    </navigationItem>
                     <connections>
                         <outlet property="howItWorksFirstParagraphLabel" destination="pii-Oi-FzM" id="eDp-Bc-FDl"/>
                         <outlet property="howItWorksLabel" destination="Tge-E5-flH" id="5mz-Id-shU"/>

@@ -43,11 +43,29 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
             cell.controlSwitch.isEnabled = true
         }
     }
+    
+    @objc
+    func assignBackButton() {
+        // This button is not visible , using a custom back button
+        // but this needs to be assigned, so that it's visible
+        // to the screens that originate from contact details and
+        // need to navigate back to it. We need this to generate
+        // correct menu items on long press on back button
+        setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.ContactInfo.BackButton.menu)
+    }
 }
 
 // MARK: - NodeInfo
 extension ContactDetailsViewController {
-    @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
+    @objc
+    func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
         NodeInfoViewModel(withNode: node)
+    }
+    
+    @objc
+    func addMenuTo(backButton: UIButton) {
+        if let navigationController = self.navigationController as? MEGANavigationController {
+            backButton.menu = UIMenu(items: navigationController.currentBackButtonMenuItems())
+        }
     }
 }

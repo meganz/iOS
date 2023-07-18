@@ -1,4 +1,3 @@
-
 import UIKit
 
 enum AppearanceSection: Int {
@@ -44,7 +43,9 @@ class AppearanceTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = Strings.Localizable.Settings.Section.userInterface
+        let title = Strings.Localizable.Settings.Section.userInterface
+        self.title = title
+        setMenuCapableBackButtonWith(menuTitle: title)
         
         defaultTabLabel.text = Strings.Localizable.defaultTab
         

@@ -28,7 +28,7 @@
 #import "NodeTableViewCell.h"
 @import MEGAUIKit;
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, UINavigationControllerDelegate> {
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, MEGANavigationControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -101,7 +101,7 @@
         self.sortOrderType = MEGASortOrderTypeDefaultAsc;
     }
     
-    self.navigationController.delegate = self;
+    [self assignAsMEGANavigationDelegateWithDelegate:self];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SharedItemsTableViewCell" bundle:nil] forCellReuseIdentifier:@"sharedItemsTableViewCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"NodeTableViewCell" bundle:nil] forCellReuseIdentifier:@"nodeCell"];
@@ -122,6 +122,8 @@
     self.shouldRemovePlayerDelegate = YES;
     
     [self refreshMyAvatar];
+    
+    [self setBackBarButton];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1310,7 +1312,7 @@
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
 }
 
-#pragma mark - UINavigationControllerDelegate
+#pragma mark - MEGANavigatioControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if([AudioPlayerManager.shared isPlayerAlive] && navigationController.viewControllers.count > 1) {

@@ -2,7 +2,12 @@
 
 @protocol MEGANavigationControllerDelegate <NSObject>
 - (void)navigationController:(UINavigationController *)navigationController
-      willShowViewController:(UIViewController *)viewController;
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated;
+@optional
+- (void)navigationController:(UINavigationController *)navigationController
+       didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated;
 @end
 
 

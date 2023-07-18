@@ -43,7 +43,12 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 
 @property (nonatomic, weak) id<BrowserViewControllerDelegate> browserViewControllerDelegate;
 
+@property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
+
+@property (nonatomic) MEGAShareType parentShareType;
+
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode;
+- (void)updatePromptTitle;
 
 @end
 

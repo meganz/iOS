@@ -1,6 +1,7 @@
 extension OfflineViewController {
     
-    @objc func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
+    @objc
+    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
         AudioPlayerManager.shared.initFullScreenPlayer(
             node: node,
             fileLink: fileLink,
@@ -10,5 +11,20 @@ extension OfflineViewController {
             messageId: .invalid,
             chatId: .invalid
         )
+    }
+    
+    @objc
+    func configureNavigationBar() {
+        let title = screenTitle
+        setMenuCapableBackButtonWith(menuTitle: title)
+        navigationItem.title = title
+    }
+    
+    private var screenTitle: String {
+        if let path = folderPathFromOffline?.lastPathComponent {
+            return path
+        } else {
+            return Strings.Localizable.offline
+        }
     }
 }

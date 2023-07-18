@@ -28,12 +28,8 @@
 
 @interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
-@property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
-
 @property (nonatomic, strong) MEGANodeList *nodes;
 @property (nonatomic, strong) MEGAShareList *shares;
-
-@property (nonatomic) MEGAShareType parentShareType;
 
 @property (nonatomic) NSUInteger remainingOperations;
 
@@ -305,55 +301,6 @@
             self.shares = [MEGASdkManager.sharedMEGASdk inSharesList:MEGASortOrderTypeNone];
         } else {
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
-        }
-    }
-}
-
-- (void)setNavigationBarTitle {
-    [self updatePromptTitle];
-    
-    if (self.isParentBrowser) {
-        self.navigationItem.title = NSLocalizedString(@"MEGA", nil);
-
-        if (self.browserAction == BrowserActionDocumentProvider) {
-            self.navigationItem.title = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-        } else if (self.browserAction == BrowserActionNewHomeUpload) {
-            self.navigationItem.title = NSLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
-        }
-    } else {
-        if (self.isChildBrowserFromIncoming) {
-            NSString *accessTypeString;
-            switch (self.parentShareType) {
-                case MEGAShareTypeAccessRead:
-                    accessTypeString = NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with");
-                    break;
-                    
-                case MEGAShareTypeAccessReadWrite:
-                    accessTypeString = NSLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with");
-                    break;
-                    
-                case MEGAShareTypeAccessFull:
-                    accessTypeString = NSLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with");
-                    break;
-                    
-                default:
-                    accessTypeString = @"";
-                    break;
-            }
-            
-            if ([self.parentNode name] != nil) {
-                UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle:accessTypeString color:UIColor.mnz_label];
-                label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-                self.navigationItem.titleView = label;
-            } else {
-                self.navigationItem.title = [NSString stringWithFormat:@"(%@)", accessTypeString];
-            }
-        } else {
-            if (!self.parentNode || self.parentNode.type == MEGANodeTypeRoot) {
-                self.navigationItem.title = NSLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
-            } else {
-                self.navigationItem.title = self.parentNode.name;
-            }
         }
     }
 }

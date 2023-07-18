@@ -170,6 +170,7 @@ extension CloudDriveViewController {
         }
         
         navigationItem.title = navigationTitle
+        setMenuCapableBackButtonWith(menuTitle: navigationTitle)
     }
 
     @objc func updateToolbarButtonsEnabled(_ enabled: Bool, selectedNodesArray: [MEGANode]) {

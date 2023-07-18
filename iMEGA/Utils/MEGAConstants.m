@@ -33,7 +33,6 @@ NSString * const MEGABusinessAccountExpiredNotification = @"nz.mega.businessAcco
 NSString * const MEGABusinessAccountActivatedNotification = @"nz.mega.businessAccountActivated";
 NSString * const MEGAStorageEventDidChangeNotification = @"nz.mega.event.storage";
 NSString * const MEGAMediaInfoReadyNotification = @"nz.mega.mediaInfoReady";
-NSString * const MEGAOpenChatRoomFromPushNotification = @"nz.mega.openChatRoomFromPush";
 NSString * const MEGAPasscodeViewControllerWillCloseNotification = @"nz.mega.passcodeViewControllerWillClose";
 NSString * const MEGAAudioPlayerInterruptionNotification = @"nz.mega.audioPlayerInterruption";
 NSString * const MEGASQLiteDiskFullNotification = @"nz.mega.sqliteDiskFull";

@@ -251,7 +251,8 @@ final class HomeViewController: UIViewController {
     private func setTitle(with text: String) {
         navigationItem.title = text
         // Avoid using the title on pushing a view controller
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+
+        navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.home)
     }
 
     private func setupSearchResultExtendedLayout() {

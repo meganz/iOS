@@ -25,7 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = NSLocalizedString(@"twoFactorAuthentication", @"");
+    NSString *title = NSLocalizedString(@"twoFactorAuthentication", @"");
+    self.navigationItem.title = title;
+    [self setMenuCapableBackButtonWithMenuTitle:title];
     
     self.twoFactorAuthenticationLabel.text = NSLocalizedString(@"twoFactorAuthentication", @"");
     

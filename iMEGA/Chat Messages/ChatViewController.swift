@@ -2,6 +2,7 @@ import Combine
 import KeyboardLayoutGuide
 import MEGADomain
 import MEGAPermissions
+import MEGAUIKit
 import MessageKit
 import UIKit
 
@@ -234,6 +235,7 @@ class ChatViewController: MessagesViewController {
             
             excuteCommand(command)
         }
+        navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: chatRoom.title ?? "")
     }
     
     @objc func update(chatRoom: MEGAChatRoom) {
@@ -630,14 +632,6 @@ class ChatViewController: MessagesViewController {
     }
     
     // MARK: - Interface methods
-    
-    @objc func updateUnreadLabel() {
-        let unreadChats = MEGASdkManager.sharedMEGAChatSdk().unreadChats
-        let unreadChatsString = unreadChats > 0 ? "\(unreadChats)" : ""
-        
-        let backBarButton = UIBarButtonItem(title: unreadChatsString, style: .plain, target: nil, action: nil)
-        navigationController?.viewControllers.first?.navigationItem.backBarButtonItem = backBarButton
-    }
     
     @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView?) {
         

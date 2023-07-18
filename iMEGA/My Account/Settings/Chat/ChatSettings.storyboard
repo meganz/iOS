@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -246,9 +246,6 @@
                             <outlet property="delegate" destination="er2-Fn-lfg" id="Hd9-4P-Ewe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="GPK-V0-xKb">
-                        <barButtonItem key="backBarButtonItem" title=" " id="4km-6t-WFt"/>
-                    </navigationItem>
                     <connections>
                         <outlet property="chatNotificationsLabel" destination="fSs-CA-M24" id="bgW-Bf-dsR"/>
                         <outlet property="chatNotificationsSwitch" destination="T3d-vZ-ACF" id="JOR-US-fwG"/>
@@ -816,9 +813,6 @@
                             <outlet property="delegate" destination="64Q-sc-5yG" id="ppW-nl-zVg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="qIH-gw-xX3">
-                        <barButtonItem key="backBarButtonItem" title=" " id="JLm-jg-8ux"/>
-                    </navigationItem>
                     <connections>
                         <outlet property="highLabel" destination="EwQ-qD-uvm" id="JRC-Tt-bxM"/>
                         <outlet property="lowLabel" destination="XoM-lP-ezB" id="hn9-uR-iSe"/>
@@ -925,9 +919,6 @@
                             <outlet property="delegate" destination="Z1I-ir-VIC" id="UEK-Yo-5Ji"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="h7t-Qo-pSl">
-                        <barButtonItem key="backBarButtonItem" title=" " id="JC3-L3-Vls"/>
-                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mou-Do-CgU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

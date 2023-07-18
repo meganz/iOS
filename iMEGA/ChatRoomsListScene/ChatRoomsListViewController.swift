@@ -1,4 +1,5 @@
 import Combine
+import MEGAChatSdk
 import MEGAUIKit
 import SwiftUI
 
@@ -22,11 +23,11 @@ final class ChatRoomsListViewController: UIViewController {
         configureListView()
         updateTitleView()
         initSubscriptions()
+        assignBackButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
         navigationItem.rightBarButtonItems = [moreBarButtonItem, addBarButtonItem]
         configureNavigationBarButtons(chatViewMode: viewModel.chatViewMode)
         viewModel.refreshMyAvatar()
@@ -92,23 +93,38 @@ final class ChatRoomsListViewController: UIViewController {
         ]
     }
     
+    // this function should be called in only 2 places :
+    // 1. when view is created to have a default value
+    // 2. whenever unread count changes (this is triggered by MainTabBarController
+    // this should guarantee valid number shown in the back button and simplify the logic
+    func assignBackButton() {
+        let unreadChats = MEGAChatSdk.shared.unreadChats
+        updateBackBarButtonItem(withUnreadMessages: unreadChats)
+    }
+    
     @objc func addBarButtonItemTapped() {
         viewModel.addChatButtonTapped()
     }
     
-    func updateBackBarButtonItem(withUnreadMessages count: Int) {
+    private func updateBackBarButtonItem(withUnreadMessages count: Int) {
         guard count > 0 else {
             clearBackBarButtonItem()
             return
         }
         
-        let title = String(format: "(%td)", count)
-        let backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backBarButtonItem
+        let title = String(format: "%td", count)
+        assignBackButtonWith(title: title)
+    }
+    
+    private func assignBackButtonWith(title: String?) {
+        navigationItem.backBarButtonItem = BackBarButtonItem(
+            title: title,
+            menuTitle: Strings.Localizable.chat
+        )
     }
     
     private func clearBackBarButtonItem() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        assignBackButtonWith(title: nil)
     }
 }
 

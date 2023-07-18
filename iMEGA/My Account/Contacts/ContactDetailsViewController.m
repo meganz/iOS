@@ -100,6 +100,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [super viewDidLoad];
     
     self.navigationItem.title = @"";
+    [self assignBackButton];
     self.fd_prefersNavigationBarHidden = YES;
     self.avatarExpandedPosition = self.view.frame.size.height * 0.5;
     self.avatarCollapsedPosition = self.view.frame.size.height * 0.3;
@@ -118,6 +119,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         CGSize size = CGSizeMake(CGFLOAT_MAX, self.backButton.bounds.size.height);
         self.backButtonWidthConstraint.constant = [backButtonTitle sizeForFont:self.backButton.titleLabel.font size:size mode:NSLineBreakByTruncatingMiddle].width + 20;
     }
+    [self addMenuToBackButton:self.backButton];
     self.messageLabel.text = NSLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).");
     self.callLabel.text = NSLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call");
     self.videoLabel.text = NSLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call");

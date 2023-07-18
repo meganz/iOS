@@ -1,4 +1,4 @@
-
+import MEGAUIKit
 import Photos
 import UIKit
 
@@ -66,7 +66,7 @@ final class PhotoGridViewController: UIViewController {
         updateView()
         addToolbar()
         addRightCancelBarButtonItem()
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: album.title)
     }
     
     override func viewWillAppear(_ animated: Bool) {

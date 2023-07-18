@@ -32,7 +32,6 @@ extern NSString * const MEGABusinessAccountExpiredNotification;
 extern NSString * const MEGABusinessAccountActivatedNotification;
 extern NSString * const MEGAStorageEventDidChangeNotification;
 extern NSString * const MEGAMediaInfoReadyNotification;
-extern NSString * const MEGAOpenChatRoomFromPushNotification;
 extern NSString * const MEGAPasscodeViewControllerWillCloseNotification;
 extern NSString * const MEGAAudioPlayerInterruptionNotification;
 extern NSString * const MEGASQLiteDiskFullNotification;

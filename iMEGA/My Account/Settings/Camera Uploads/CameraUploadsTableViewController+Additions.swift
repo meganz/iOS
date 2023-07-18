@@ -4,4 +4,10 @@ extension CameraUploadsTableViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.presentAccountExpiredAlertIfNeeded()
     }
+    @objc
+    func configureNavigationBar() {
+        let title = Strings.Localizable.cameraUploadsLabel
+        navigationItem.title = title
+        setMenuCapableBackButtonWith(menuTitle: title)
+    }
 }

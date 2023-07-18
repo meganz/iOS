@@ -14,12 +14,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.mnz_background;
-    __weak MEGANavigationController *weakSelf = self;
+    self.interactivePopGestureRecognizer.delegate = self;
+    self.delegate = self;
     
-    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.interactivePopGestureRecognizer.delegate = weakSelf;
-        self.delegate = weakSelf;
-    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -56,7 +53,6 @@
     }
     [super pushViewController:viewController animated:animated];
 }
-
 #pragma mark - Private
 
 - (UIBarButtonItem *)cancelBarButtonItem {
@@ -78,11 +74,21 @@
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
-    [self.navigationDelegate navigationController:navigationController willShowViewController:viewController];
+    [self.navigationDelegate navigationController:navigationController
+                           willShowViewController:viewController
+                                         animated:animated];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animate {
+- (void)navigationController:(UINavigationController *)navigationController
+       didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animate {
+    [self updateBackButtonMenu];
     self.interactivePopGestureRecognizer.enabled = ([self respondsToSelector:@selector(interactivePopGestureRecognizer)] && self.viewControllers.count > 1);
+    if ([self.navigationController respondsToSelector:@selector(navigationController:didShowViewController:animated:)]) {
+        [self.navigationDelegate navigationController:navigationController
+                                didShowViewController:viewController
+                                             animated:animate];
+    }
 }
 
 @end

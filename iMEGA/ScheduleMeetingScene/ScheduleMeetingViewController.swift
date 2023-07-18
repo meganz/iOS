@@ -27,18 +27,15 @@ final class ScheduleMeetingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubview()
-        navigationItem.title = Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting
+        let title = Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting
+        navigationItem.title = title
         updateRightBarButton(
             viewModel.isNewMeeting ? createBarButtonItem : updateBarButtonItem,
             enablePublisher: viewModel.$isRightBarButtonEnabled
         )
         navigationItem.leftBarButtonItem = cancelBarButtonItem
+        setMenuCapableBackButtonWith(menuTitle: title)
         isModalInPresentation = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
