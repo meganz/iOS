@@ -71,10 +71,11 @@ struct ImportAlbumView: View {
     private var navigationTitle: some View {
         Group {
             if let albumName = viewModel.albumName {
-                VStack {
+                VStack(alignment: .center) {
                     Text(albumName)
                         .font(.subheadline)
                         .bold()
+                        .lineLimit(1)
                     Text(Strings.Localizable.albumLink)
                         .font(.caption)
                 }
