@@ -3,8 +3,8 @@ import Foundation
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
-import MEGASwiftUI
 import MEGASDKRepo
+import MEGASwiftUI
 
 enum ChatViewMode {
     case chats

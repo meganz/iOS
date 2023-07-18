@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCollectionViewEditing:(BOOL)editing animated:(BOOL)animated;
 - (void)collectionViewSelectIndexPath:(NSIndexPath *)indexPath;
 - (void)reloadData;
+- (void)reloadDataAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 - (nullable MEGANode *)thumbnailNodeAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
