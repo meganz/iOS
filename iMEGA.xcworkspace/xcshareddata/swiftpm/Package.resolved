@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/layoutBox/FlexLayout.git",
       "state" : {
-        "revision" : "f74852384d0e70ac655c6021fe954ee223abb102",
-        "version" : "1.3.31"
+        "revision" : "f3187749d2d31a01aa18f8b107e603e210f9bce9",
+        "version" : "1.3.33"
       }
     },
     {
@@ -283,8 +283,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",
       "state" : {
-        "revision" : "20df851f2ae27efbaeeff73e9babdf4fd839a144",
-        "version" : "5.15.6"
+        "revision" : "c51ba84499268ea3020e6aee9e229c0f56b9d924",
+        "version" : "5.16.0"
       }
     },
     {
@@ -292,8 +292,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImageWebPCoder.git",
       "state" : {
-        "revision" : "7087a82a3d23cbace8e4bb12cd0df054c7f2356a",
-        "version" : "0.11.0"
+        "revision" : "76565bc46ce878736910e9167ca4321fd0889845",
+        "version" : "0.12.0"
       }
     },
     {

@@ -3586,6 +3586,20 @@
 "meetings.scheduled.managementMessages.created"="%@ created this meeting";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="%@ cancelled this meeting";
+/* Create meeting tip view title */
+"meetings.scheduleMeeting.createMeetingTip.title"="Schedule meeting";
+/* Create meeting tip view message */
+"meetings.scheduleMeeting.createMeetingTip.message"="You can now schedule one-off and recurring meetings.";
+/* Scheduled meeting tip view dismiss action button title */
+"meetings.scheduleMeeting.tipView.gotIt"="Got it";
+/* Start meeting tip view title */
+"meetings.scheduleMeeting.startMeetingTip.title"="Start meeting";
+/* Start meeting tip view message */
+"meetings.scheduleMeeting.startMeetingTip.message"="You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.";
+/* Recurring meeting tip view title */
+"meetings.scheduleMeeting.recurringMeetingTip.title"="Manage recurring meetings";
+/* Recurring meeting tip view message */
+"meetings.scheduleMeeting.recurringMeetingTip.message"="You can view, cancel, or edit any occurrence of a recurring meeting by tapping and holding the meeting and selecting Occurrences.";
 /* Schedule meeting update button */
 "meetings.scheduleMeeting.update"="Update";
 /* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */

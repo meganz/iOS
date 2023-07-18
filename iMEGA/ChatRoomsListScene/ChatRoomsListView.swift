@@ -30,6 +30,37 @@ struct ChatRoomsListView: View {
         .onDisappear {
             viewModel.cancelLoading()
         }
+        .background(
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear {
+                        viewModel.updateMeetingListFrame(geo.frame(in: .global))
+                    }
+                    .onChange(of: geo.frame(in: .global)) { _ in
+                        viewModel.updateMeetingListFrame(geo.frame(in: .global))
+                    }
+            }
+        )
+        .overlay(
+            TipView(tip: viewModel.makeCreateMeetingTip(),
+                    width: 230,
+                    contentOffsetX: -90)
+            .offset(x: viewModel.createMeetingTipOffsetX)
+            .opacity(viewModel.presentingCreateMeetingTip ? 1 : 0)
+            , alignment: .top
+        )
+        .overlay(
+            TipView(tip: viewModel.makeStartMeetingTip())
+                .offset(x: 50, y: viewModel.startMeetingTipOffsetY)
+                .opacity(viewModel.presentingStartMeetingTip ? 1 : 0)
+            , alignment: .top
+        )
+        .overlay(
+            TipView(tip: viewModel.makeRecurringMeetingTip())
+                .offset(x: 50, y: viewModel.recurringMeetingTipOffsetY)
+                .opacity(viewModel.presentingRecurringMeetingTip ? 1 : 0)
+            , alignment: .top
+        )
     }
     
     @ViewBuilder
@@ -103,6 +134,21 @@ struct ChatRoomsListView: View {
                             ForEach(futureMeetingSection.items) { futureMeeting in
                                 FutureMeetingRoomView(viewModel: futureMeeting)
                                     .listRowInsets(EdgeInsets())
+                                    .background(
+                                        GeometryReader { geo in
+                                            Color.clear
+                                                .onAppear {
+                                                    viewModel.updateTipOffsetY(for: futureMeeting, meetingframeInGlobal: geo.frame(in: .global))
+                                                }
+                                                .onDisappear {
+                                                    viewModel.updateTipOffsetY(for: futureMeeting, meetingframeInGlobal: nil)
+                                                }
+                                                .onChange(of: geo.frame(in: .global)) { _ in
+                                                    viewModel.updateTipOffsetY(for: futureMeeting, meetingframeInGlobal: geo.frame(in: .global))
+                                                }
+                                                
+                                        }
+                                    )
                             }
                         }
                         
@@ -123,6 +169,7 @@ struct ChatRoomsListView: View {
                     }
                     , alignment: .center
                 )
+                .scrollStatusMonitor($viewModel.isMeetingListScrolling)
             } else {
                 LoadingSpinner()
             }

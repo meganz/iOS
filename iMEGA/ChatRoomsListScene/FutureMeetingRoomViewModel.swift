@@ -22,6 +22,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
     private var chatHasMessagesSubscription: AnyCancellable?
+    var isFirstRecurringAndHost = false
     
     var title: String {
         scheduledMeeting.title

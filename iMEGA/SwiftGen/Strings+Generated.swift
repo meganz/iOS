@@ -4675,6 +4675,12 @@ public enum Strings {
             public static let optionTitle = Strings.tr("Localizable", "meetings.scheduleMeeting.create.weekly.optionTitle")
           }
         }
+        public enum CreateMeetingTip {
+          /// You can now schedule one-off and recurring meetings.
+          public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.createMeetingTip.message")
+          /// Schedule meeting
+          public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.createMeetingTip.title")
+        }
         public enum Description {
           /// Enter up to 3,000 characters
           public static let lenghtError = Strings.tr("Localizable", "meetings.scheduleMeeting.description.lenghtError")
@@ -4720,6 +4726,22 @@ public enum Strings {
             /// Meeting occurrence updated
             public static let popupMessage = Strings.tr("Localizable", "meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage")
           }
+        }
+        public enum RecurringMeetingTip {
+          /// You can view, cancel, or edit any occurrence of a recurring meeting by tapping and holding the meeting and selecting Occurrences.
+          public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.recurringMeetingTip.message")
+          /// Manage recurring meetings
+          public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.recurringMeetingTip.title")
+        }
+        public enum StartMeetingTip {
+          /// You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.
+          public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.message")
+          /// Start meeting
+          public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.title")
+        }
+        public enum TipView {
+          /// Got it
+          public static let gotIt = Strings.tr("Localizable", "meetings.scheduleMeeting.tipView.gotIt")
         }
         public enum UpdateSuccessfull {
           /// Meeting updated
