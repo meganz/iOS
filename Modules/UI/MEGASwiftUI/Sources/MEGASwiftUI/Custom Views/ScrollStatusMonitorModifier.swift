@@ -18,7 +18,7 @@ final class ExclusionStore: ObservableObject {
                 .map { _ in 0 } // Send 0 when not scrolling
             )
             .receive(on: DispatchQueue.main)
-            .sink{ [weak self] output in
+            .sink { [weak self] output in
                 guard let self else { return }
                 if output == 1, !isScrolling {
                     isScrolling = true

@@ -87,7 +87,7 @@
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.collectionView.allowsMultipleSelection) {
         MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
-
+        
         NSArray *filteredArray = [self.cloudDrive.selectedNodesArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
             return ((MEGANode*)evaluatedObject).handle == node.handle;
         }]];
@@ -240,6 +240,12 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
     self.fileList = nil;
     self.folderList = nil;
     [self.collectionView reloadData];
+}
+
+- (void)reloadDataAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    self.fileList = nil;
+    self.folderList = nil;
+    [self.collectionView reloadItemsAtIndexPaths:indexPaths];
 }
 
 #pragma mark - Private methods

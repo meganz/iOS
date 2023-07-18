@@ -169,7 +169,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    [self reloadUI];
+    [self reloadUI:NULL];
     
     if (self.displayMode != DisplayModeRecents) {
         self.shouldRemovePlayerDelegate = YES;
@@ -388,7 +388,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)nodesSortTypeHasChanged {
-    [self reloadUI];
+    [self reloadUI:NULL];
     
     if (self.searchController.isActive) {
         NSArray *sortedSearchedNodes = [self sortNodes:self.searchNodesArray
@@ -400,7 +400,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - Private
 
-- (void)reloadUI {
+- (void)reloadUI:(MEGANodeList *)nodeList {
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
@@ -452,7 +452,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self determineViewMode];
     }
     
-    [self reloadData];
+    if (nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail) {
+        MEGANode *updatedNode = [nodeList nodeAtIndex:0];
+        NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
+        [self reloadDataAtIndexPaths:@[indexPath]];
+    } else {
+        [self reloadData];
+    }
 }
 
 - (void)loadPhotoAlbumBrowser {
@@ -508,7 +514,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)internetConnectionChanged {
-    [self reloadUI];
+    [self reloadUI:NULL];
 }
 
 - (void)setNavigationBarButtonItems {
@@ -658,8 +664,28 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
+- (void)reloadListAt:(NSArray<NSIndexPath *> *)indexPaths {
+    if (self.viewModePreference == ViewModePreferenceList) {
+        [self.cdTableView.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else {
+        [self.cdCollectionView reloadDataAtIndexPaths:indexPaths];
+    }
+}
+
 - (void)reloadData {
     [self reloadList];
+    
+    if (!self.cdTableView.tableView.isEditing && !self.cdCollectionView.collectionView.allowsMultipleSelection) {
+        if (self.displayMode == DisplayModeBackup) {
+            [self setBackupNavigationBarButtons];
+        } else {
+            [self setNavigationBarButtons];
+        }
+    }
+}
+
+- (void)reloadDataAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    [self reloadListAt:indexPaths];
     
     if (!self.cdTableView.tableView.isEditing && !self.cdCollectionView.collectionView.allowsMultipleSelection) {
         if (self.displayMode == DisplayModeBackup) {
@@ -964,7 +990,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             self.shouldDetermineViewMode = YES;
         }
         [self.nodesIndexPathMutableDictionary removeAllObjects];
-        [self reloadUI];
+        [self reloadUI: nodeList];
         
         if (self.searchController.isActive) {
             [self search];
