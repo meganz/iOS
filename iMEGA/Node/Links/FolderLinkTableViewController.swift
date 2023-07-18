@@ -96,7 +96,6 @@ extension FolderLinkTableViewController {
     }
 }
 
-
 // MARK: - UITableViewDataSource
 
 extension FolderLinkTableViewController: UITableViewDataSource {

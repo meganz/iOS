@@ -140,6 +140,56 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isSelectionEnabled)
     }
     
+    func testSelectionNavigationTitle_onItemSelectionChange_shouldUpdateSelectionTitle() throws {
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink)
+        XCTAssertFalse(sut.isSelectionEnabled)
+        XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.selectTitle)
+        
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos([NodeEntity(handle: 5)])
+        XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.oneItemSelected(1))
+        
+        let multiplePhotos = makePhotos()
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos(multiplePhotos)
+        XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.itemsSelected(multiplePhotos.count))
+        
+        sut.photoLibraryContentViewModel.selection.allSelected = false
+        XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.selectTitle)
+    }
+    
+    func testIsToolbarButtonsDisabled_onContentLoadAndSelection_shouldEnableAndDisableCorrectly() throws {
+        let photos = makePhotos()
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
+        let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
+                                                  nodes: photos)
+        let sut = makeImportAlbumViewModel(publicLink: try requireDecryptionKeyAlbumLink,
+                                           publicAlbumUseCase: albumUseCase)
+        XCTAssertTrue(sut.isToolbarButtonsDisabled)
+        
+        let exp = expectation(description: "wait for loaded state")
+        sut.$publicLinkStatus
+            .dropFirst()
+            .filter { $0 == .loaded }
+            .first()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
+        sut.loadWithNewDecryptionKey()
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertFalse(sut.isToolbarButtonsDisabled)
+        
+        sut.enablePhotoLibraryEditMode(true)
+        XCTAssertTrue(sut.isToolbarButtonsDisabled)
+        
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos([NodeEntity(handle: 5)])
+        XCTAssertFalse(sut.isToolbarButtonsDisabled)
+        
+        sut.photoLibraryContentViewModel.selection.allSelected = false
+        XCTAssertTrue(sut.isToolbarButtonsDisabled)
+    }
+    
     // MARK: - Private
     
     private func makeImportAlbumViewModel(publicLink: URL,

@@ -22,6 +22,8 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published private(set) var isSelectionEnabled = false
     @Published var showShareLink = false
     @Published var albumName: String?
+    @Published var selectionNavigationTitle: String = ""
+    @Published var isToolbarButtonsDisabled = true
     
     private var albumLink: String {
         (publicLinkWithDecryptionKey ?? publicLink).absoluteString
@@ -38,9 +40,7 @@ final class ImportAlbumViewModel: ObservableObject {
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
-        photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
-            .removeDuplicates()
-            .assign(to: &$isSelectionEnabled)
+        subscribeToSelection()
     }
     
     func loadPublicAlbum() {
@@ -97,5 +97,48 @@ final class ImportAlbumViewModel: ObservableObject {
     private func setLinkToInvalid() {
         publicLinkStatus = .invalid
         publicLinkWithDecryptionKey = nil
+    }
+    
+    private func subscribeToSelection() {
+        photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
+            .removeDuplicates()
+            .assign(to: &$isSelectionEnabled)
+        
+        let selectionCountPublisher = photoLibraryContentViewModel.selection.$photos
+            .map { $0.values.count }
+        
+        selectionCountPublisher
+            .removeDuplicates()
+            .map {
+                switch $0 {
+                case 0:
+                    return Strings.Localizable.selectTitle
+                case 1:
+                    return Strings.Localizable.oneItemSelected(1)
+                default:
+                    return Strings.Localizable.itemsSelected($0)
+                }
+            }.assign(to: &$selectionNavigationTitle)
+        
+        $publicLinkStatus.map { [weak self] status -> AnyPublisher<Bool, Never> in
+            guard let self else {
+                return Empty().eraseToAnyPublisher()
+            }
+            guard status == .loaded else {
+                return Just(true).eraseToAnyPublisher()
+            }
+            return $isSelectionEnabled.combineLatest(selectionCountPublisher)
+                .map { isSelectionEnabled, selectionCount in
+                    if isSelectionEnabled {
+                        return selectionCount == 0
+                    }
+                    return false
+                }
+                .removeDuplicates()
+                .eraseToAnyPublisher()
+        }
+        .switchToLatest()
+        .removeDuplicates()
+        .assign(to: &$isToolbarButtonsDisabled)
     }
 }
