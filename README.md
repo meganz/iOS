@@ -36,10 +36,49 @@ git submodule update --init --recursive
 1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/kbZTXIqY#o8rQAOveVwuVHyvNKLbQ4skSNzHgj5IlHmXVGmKajQw
 2. Uncompress that file and move the folders `webrtc` and `lib` into `Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty`.
 
+#### Build KMM mobile analytics library
+1. Set up KMM build tools
+    1. Install [HomeBrew](https://brew.sh/) (if not yet)
+    2. Install JDKL17 (if not yet)
+        ```shell
+        brew install openjdk@17
+        ```
+    3. Open [Android Command Line tools](https://developer.android.com/studio), scroll down to `Command line tools only`, download commandline tool for Mac and unzip to folder `cmdline-tools`
+        ```shell
+        mv cmdline-tools/ tools
+        mkdir -p ~/android-sdk/cmdline-tools
+        mv tools ~/android-sdk/cmdline-tools/
+    
+        cd ~/android-sdk/cmdline-tools/tools/bin
+
+        ./sdkmanager "platforms;android-33" "platform-tools" "build-tools;33.0.0"
+        #    - "y" to accept agreement and finish installation
+        ```
+    4. Set environment variable
+        ```
+        export ANDROID_HOME=<YOUR_HOME>/android-sdk
+        export JAVA_HOME=<PATH-TO-JDK-INSTALLATION>
+        ```
+        For Apple Sillicon, your `PATH-TO-JDK-INSTALLATION` would be `/opt/homebrew/opt/openjdk@17`. For Intel chip, change the homebrew installation path accordingly. 
+2. Download [Mobile Analytics](https://github.com/meganz/mobile-analytics) source code
+    ```shell
+    git clone --recursive https://github.com/meganz/mobile-analytics.git
+    cd mobile-analytics
+    git checkout main
+    ```
+3. Build Mobile Analytics    
+    ```shell
+    ./gradlew assemble
+    ./gradlew createSwiftPackage
+    ```
+    Generated Swift Package can be found under `SwiftPackages/MEGAAnalyticsiOS`.
+
+4. In next step, import the Swift Package in XCode
+
 #### Open and Run the project
-5. Open `iMEGA.xcworkspace`.
-6. Make sure the `MEGA` target is selected.
-7. Build and run (⌘R).
+1. Open `iMEGA.xcworkspace`.
+2. Make sure the `MEGA` target is selected.
+3. Build and run (⌘R).
 
 ## Build 3rdparty packages manually
 If you want to build the third party dependencies by yourself: 
