@@ -1,7 +1,7 @@
 import MEGADomain
 
 extension BackupStatusEntity {
-    var priority: Int {
+    public var priority: Int {
         switch self {
         case .noCameraUploads: return 0
         case .backupStopped: return 1

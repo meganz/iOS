@@ -26,8 +26,8 @@ public struct BackupEntity: Sendable, Identifiable {
     public var errorState: Int?
     
     // MARK: - Timestamps
-    public let timestamp: Date
-    public let activityTimestamp: Date
+    public let timestamp: Date?
+    public let activityTimestamp: Date?
     
     public init(
         id: Int,
@@ -44,8 +44,8 @@ public struct BackupEntity: Sendable, Identifiable {
         progress: Int,
         uploads: Int,
         downloads: Int,
-        timestamp: Date,
-        activityTimestamp: Date
+        timestamp: Date?,
+        activityTimestamp: Date?
     ) {
         self.id = id
         self.name = name
@@ -75,6 +75,10 @@ public struct BackupEntity: Sendable, Identifiable {
     
     public func isDownSyncPaused() -> Bool {
         type == .downSync && (syncState == .pauseDown || syncState == .pauseFull)
+    }
+    
+    public func isPaused() -> Bool {
+        isTwoWayPaused() || isUploadPaused() || isDownSyncPaused()
     }
 }
 

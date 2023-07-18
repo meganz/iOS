@@ -16,8 +16,8 @@ public extension BackupEntity {
          progress: Int = 0,
          uploads: Int = 0,
          downloads: Int = 0,
-         timestamp: Date = Date(),
-         activityTimestamp: Date = Date(),
+         timestamp: Date? = nil,
+         activityTimestamp: Date? = nil,
          isTesting: Bool = true) {
         self.init(
             id: id,
