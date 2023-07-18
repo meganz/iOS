@@ -56,7 +56,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, TextFileEditable> {
+@interface CloudDriveViewController () <MEGANavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, TextFileEditable> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -155,8 +155,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
-    
-    self.navigationController.delegate = self;
+    [self assignAsMEGANavigationDelegateWithDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1068,7 +1067,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-#pragma mark - UINavigationControllerDelegate
+#pragma mark - MEGANavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if([AudioPlayerManager.shared isPlayerAlive] && navigationController.viewControllers.count > 1) {
         self.shouldRemovePlayerDelegate = ![viewController conformsToProtocol:@protocol(AudioPlayerPresenterProtocol)];

@@ -29,8 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationItem.title = NSLocalizedString(@"account.achievement.referral.title", nil);
+    [self configureNavigationBar];
     
     self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"account.achievement.referral.title", nil);
     self.inviteYourFriendsSubtitleLabel.text = self.inviteYourFriendsSubtitleString;

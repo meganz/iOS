@@ -47,7 +47,7 @@ class InviteContactViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationController?.presentationController?.delegate = self
-        
+        setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.inviteContact)
         guard let navigationBar = navigationController?.navigationBar else { return }
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }
@@ -83,7 +83,6 @@ class InviteContactViewController: UIViewController {
 
     @IBAction func enterEmailButtonTapped(_ sender: Any) {
         guard let enterEmailVC = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "EnterEmailViewControllerID") as? EnterEmailViewController else { return }
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.pushViewController(enterEmailVC, animated: true)
     }
 

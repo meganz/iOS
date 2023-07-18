@@ -125,7 +125,6 @@
 		160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711532A558DED00970A19 /* PagerTabViewModelTests.swift */; };
 		160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */; };
 		160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160CEA822A5BB98E0051541F /* MockAnalyticsTracker.swift */; };
-		16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 16405C4A2A56917200DE911F /* MEGAAnalyticsiOS */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
@@ -1170,6 +1169,7 @@
 		9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9437B93E1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m */; };
 		943AFB59283E43DC00C1F1FD /* MEGAChatError+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943AFB58283E43DC00C1F1FD /* MEGAChatError+Mapper.swift */; };
 		943E4AFF28D1C09800903A78 /* ContextMenuDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943E4AFE28D1C09800903A78 /* ContextMenuDataModel.swift */; };
+		943E6BBE2A60056100A92F94 /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 943E6BBD2A60056100A92F94 /* MEGAAnalyticsiOS */; };
 		943F8B1A1EF26E9C00AFD89F /* MEGAShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C289FC1BF65B7800F7A034 /* LaunchViewController.m */; };
 		943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
@@ -1204,6 +1204,7 @@
 		94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */; };
 		9455CF532927F17200E6FB8F /* SnackBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9455CF522927F17200E6FB8F /* SnackBarViewModel.swift */; };
 		9458610C292696B300866F03 /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9458610B292696B300866F03 /* SnackBarView.swift */; };
+		94592D332A5F0DC900ED110E /* MEGAAnalyticsDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 94592D322A5F0DC900ED110E /* MEGAAnalyticsDomain */; };
 		94598D751F0CD53A00B57144 /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94598D741F0CD53A00B57144 /* Share.storyboard */; };
 		9460C8AC28227180006C3E3D /* CloudDriveViewController+EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9460C8AB28227180006C3E3D /* CloudDriveViewController+EmptyState.swift */; };
 		94614C69290FEA6C00503174 /* CloudDriveViewController+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */; };
@@ -1228,6 +1229,13 @@
 		9479F02528BF93CA008578BE /* DNDTurnOnOptionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */; };
 		9479F02728BFA4C3008578BE /* ContextMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02628BFA4C3008578BE /* ContextMenuModel.swift */; };
 		9479F02B28BFAB26008578BE /* ContextMenuModel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02A28BFAB26008578BE /* ContextMenuModel+Mapper.swift */; };
+		947C6CB22A5D408C00CF929E /* BrowserViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CB12A5D408C00CF929E /* BrowserViewController+Additions.swift */; };
+		947C6CB32A5D409100CF929E /* BrowserViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CB12A5D408C00CF929E /* BrowserViewController+Additions.swift */; };
+		947C6CB52A5D40BF00CF929E /* MEGANavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */; };
+		947C6CB72A5D40D700CF929E /* MEGANavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */; };
+		947C6CBA2A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */; };
+		947C6CC62A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
+		947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
 		9487BF3D29B6744000645D32 /* NodeActionRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
@@ -3765,6 +3773,10 @@
 		9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DNDTurnOnOptionEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9479F02628BFA4C3008578BE /* ContextMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuModel.swift; sourceTree = "<group>"; };
 		9479F02A28BFAB26008578BE /* ContextMenuModel+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContextMenuModel+Mapper.swift"; sourceTree = "<group>"; };
+		947C6CB12A5D408C00CF929E /* BrowserViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+Additions.swift"; sourceTree = "<group>"; };
+		947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANavigationController+Additions.swift"; sourceTree = "<group>"; };
+		947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InviteYourFriendsViewController+Additions.swift"; sourceTree = "<group>"; };
+		947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackBarButtonItem.swift"; sourceTree = "<group>"; };
 		9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionRepositoryTests.swift; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
@@ -5009,7 +5021,8 @@
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
-				16405C4B2A56917200DE911F /* MEGAAnalyticsiOS in Frameworks */,
+				94592D332A5F0DC900ED110E /* MEGAAnalyticsDomain in Frameworks */,
+				943E6BBE2A60056100A92F94 /* MEGAAnalyticsiOS in Frameworks */,
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
 				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
@@ -5983,6 +5996,7 @@
 				12647CD027D7F7AA002033AF /* MediaDiscovery */,
 				834EFDBC24D9AB9C004BFECA /* NodeInfo */,
 				A811CE2922EAFB1700B24E76 /* Operations */,
+				947C6CB12A5D408C00CF929E /* BrowserViewController+Additions.swift */,
 				6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */,
 				942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */,
 				41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */,
@@ -6173,6 +6187,7 @@
 				5B20B00920E61DDF00511C0F /* MEGALinkManager.m */,
 				A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */,
 				A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */,
+				947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */,
 				E8C8D73D1B1DCB4000BCDBA4 /* MEGANavigationController.h */,
 				E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */,
 				8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */,
@@ -6187,6 +6202,7 @@
 				0D30D86125BFA14A00C26367 /* Tab.swift */,
 				947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */,
 				BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */,
+				947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */,
 				B6990163262F879400176FFC /* UncaughtExceptionHandler.swift */,
 			);
 			path = Utils;
@@ -6698,6 +6714,7 @@
 				5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */,
 				5B17C9B11F73DE310093F162 /* InviteFriendsViewController.h */,
 				5B17C9B21F73DE310093F162 /* InviteFriendsViewController.m */,
+				947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */,
 				5B323F211F5834E100C5F557 /* ReferralBonusesTableViewController.h */,
 				5B323F221F5834E100C5F557 /* ReferralBonusesTableViewController.m */,
 			);
@@ -12313,7 +12330,7 @@
 				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
 				A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */,
 				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				16405C492A56917200DE911F /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */,
+				943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -12924,6 +12941,7 @@
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				5D8DC6AF248CB0AE0067A4F9 /* BorderStyle.swift in Sources */,
 				5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */,
+				947C6CB22A5D408C00CF929E /* BrowserViewController+Additions.swift in Sources */,
 				6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
 				942A64F729C390410017F439 /* BrowserViewController+TargetAction.swift in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
@@ -13406,6 +13424,7 @@
 				8312D72C22BCE38A00C13BCB /* InviteContactViewController.swift in Sources */,
 				5B17C9B31F73DE310093F162 /* InviteFriendsViewController.m in Sources */,
 				BF66DF362612CE3100066F35 /* InviteRequestDelegate.swift in Sources */,
+				947C6CBA2A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift in Sources */,
 				835223B1205957DD00A47438 /* ItemCollectionViewCell.m in Sources */,
 				5D166B8B252198BB004F4F4A /* ItemGroup.swift in Sources */,
 				5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */,
@@ -13569,6 +13588,7 @@
 				7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */,
 				5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
+				947C6CB52A5D40BF00CF929E /* MEGANavigationController+Additions.swift in Sources */,
 				E8C8D73F1B1DCB4000BCDBA4 /* MEGANavigationController.m in Sources */,
 				B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */,
 				B6A6E1BF287CDE6600179806 /* MEGANode+Array.swift in Sources */,
@@ -14275,6 +14295,7 @@
 				8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */,
 				B65D17D3289A1A8600D5AD33 /* UIView+RoundCornerShadow.swift in Sources */,
 				83DC30CE25F247CA00A82F30 /* UIViewController+Additions.swift in Sources */,
+				947C6CC62A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */,
 				5D31674D24FCA9880032492F /* UIViewController+DevicePermissionAlerting.swift in Sources */,
 				5D31674724FCA8FD0032492F /* UIViewController+ErrorHandling.swift in Sources */,
 				BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */,
@@ -14479,6 +14500,7 @@
 				A873E84626E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */,
 				834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */,
 				C42C35762743D8E3004D8BA9 /* BackupRootNodeAccess.swift in Sources */,
+				947C6CB32A5D409100CF929E /* BrowserViewController+Additions.swift in Sources */,
 				6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
 				942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
@@ -14544,6 +14566,7 @@
 				83B841672051905E00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				C43817B52746924300EA82A8 /* MEGALabel.swift in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
+				947C6CB72A5D40D700CF929E /* MEGANavigationController+Additions.swift in Sources */,
 				5BE689952417CC4F00462134 /* MEGANavigationController.m in Sources */,
 				BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */,
 				B6A6E1C1287CDE6600179806 /* MEGANode+Array.swift in Sources */,
@@ -14654,6 +14677,7 @@
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
+				947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */,
 				BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				83CCBC47279595D300B90EF2 /* UploadFileRepository.swift in Sources */,
@@ -16591,7 +16615,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		16405C492A56917200DE911F /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */ = {
+		943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios";
 			requirement = {
@@ -16762,11 +16786,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		16405C4A2A56917200DE911F /* MEGAAnalyticsiOS */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16405C492A56917200DE911F /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */;
-			productName = MEGAAnalyticsiOS;
-		};
 		164948662A41586F00AEB736 /* SwiftLint */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftLint";
@@ -16798,6 +16817,15 @@
 		9418DB2A2A4EE611002B0077 /* MEGAPermissionsMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPermissionsMock;
+		};
+		943E6BBD2A60056100A92F94 /* MEGAAnalyticsiOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */;
+			productName = MEGAAnalyticsiOS;
+		};
+		94592D322A5F0DC900ED110E /* MEGAAnalyticsDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAAnalyticsDomain;
 		};
 		946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;

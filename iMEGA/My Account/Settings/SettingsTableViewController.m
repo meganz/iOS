@@ -18,7 +18,9 @@
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     [self updateAppearance];
-    self.navigationItem.title = NSLocalizedString(@"settingsTitle", nil);
+    NSString *title = NSLocalizedString(@"settingsTitle", nil);
+    self.navigationItem.title = title;
+    [self setMenuCapableBackButtonWithMenuTitle:title];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

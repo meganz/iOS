@@ -338,3 +338,10 @@ extension SharedItemsViewController {
         )
     }
 }
+
+extension SharedItemsViewController {
+    @objc
+    func setBackBarButton() {
+        setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.sharedItems)
+    }
+}

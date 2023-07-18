@@ -1,6 +1,7 @@
-
 extension VideoUploadsTableViewController {
     @objc func updateNavigationTitle() {
-        navigationItem.title = Strings.Localizable.CameraUploads.VideoUploads.title
+        let title = Strings.Localizable.CameraUploads.VideoUploads.title
+        navigationItem.title = title
+        setMenuCapableBackButtonWith(menuTitle: title)
     }
 }

@@ -3274,6 +3274,12 @@ public enum Strings {
         public static let message = Strings.tr("Localizable", "contact.invite.message")
       }
     }
+    public enum ContactInfo {
+      public enum BackButton {
+        /// Contact info
+        public static let menu = Strings.tr("Localizable", "contactInfo.backButton.menu")
+      }
+    }
     public enum Device {
       public enum Center {
         /// Device centre

@@ -324,10 +324,7 @@
     MEGALogInfo(@"onChatListItemUpdate %@", item);
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
         [self debounce:@selector(setBadgeValueForChats) delay:0.1];
-        if ([[self.selectedViewController visibleViewController] isKindOfClass:[ChatViewController class]]) {
-            ChatViewController *chatViewController = (ChatViewController *)[self.selectedViewController visibleViewController];
-            [chatViewController updateUnreadLabel];
-        }
+        [self updateUnreadChatsOnBackButton];
     }
 }
 
@@ -356,7 +353,8 @@
 #pragma mark - MEGANavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController
-      willShowViewController:(UIViewController *)viewController {
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
     if (self.psaViewModel != nil) {
         [self hidePSAView:viewController.hidesBottomBarWhenPushed psaViewModel:self.psaViewModel];
     }

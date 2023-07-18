@@ -30,7 +30,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"passcode", nil)];
+    NSString *title = NSLocalizedString(@"passcode", nil);
+    [self.navigationItem setTitle:title];
+    [self setMenuCapableBackButtonWithMenuTitle:title];
     [self.turnOnOffPasscodeLabel setText:NSLocalizedString(@"passcode", nil)];
     [self.changePasscodeLabel setText:NSLocalizedString(@"changePasscodeLabel", @"Section title where you can change the app's passcode")];
     self.requirePasscodeLabel.text = NSLocalizedString(@"Require Passcode", @"Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes");
@@ -51,8 +53,6 @@
     LTHPasscodeViewController.sharedUser.navigationBarTintColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     LTHPasscodeViewController.sharedUser.navigationTintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     LTHPasscodeViewController.sharedUser.navigationTitleColor = UIColor.mnz_label;
-
-    self.navigationItem.backBarButtonItem = [UIBarButtonItem.alloc initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
     [self updateAppearance];
 }

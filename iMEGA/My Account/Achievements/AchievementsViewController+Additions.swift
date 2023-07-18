@@ -1,10 +1,14 @@
-
 extension AchievementsViewController {
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         tableView.sizeHeaderToFit()
+    }
+    
+    @objc
+    func configureBackButton() {
+        setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.achievementsTitle)
     }
     
     @objc func achievementSubtitle(remainingDays: Int) -> String {

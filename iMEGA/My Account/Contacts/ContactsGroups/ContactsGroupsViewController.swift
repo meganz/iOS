@@ -18,6 +18,7 @@ class ContactsGroupsViewController: UIViewController {
         super.viewDidLoad()
 
         title = Strings.Localizable.groups
+        navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.groups)
         newGroupChatLabel.text = Strings.Localizable.newGroupChat
         
         searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)

@@ -63,7 +63,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"cameraUploadsLabel", nil)];
+    [self configureNavigationBar];
     [self.enableCameraUploadsLabel setText:NSLocalizedString(@"cameraUploadsLabel", nil)];
     
     [self.uploadVideosInfoLabel setText:NSLocalizedString(@"uploadVideosLabel", nil)];

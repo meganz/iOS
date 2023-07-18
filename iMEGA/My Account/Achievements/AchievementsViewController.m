@@ -52,6 +52,7 @@
     [self.tableView sizeHeaderToFit];
     
     self.navigationItem.title = NSLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
+    [self configureBackButton];
     
     self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"account.achievement.referral.title", nil);
     

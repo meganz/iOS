@@ -85,8 +85,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         
     func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int) {
         guard let navigationController, let chatViewController = ChatViewController(chatId: chatId) else { return }
-        
-        chatRoomsListViewController?.updateBackBarButtonItem(withUnreadMessages: unreadMessagesCount)
         navigationController.pushViewController(chatViewController, animated: true)
     }
     
@@ -105,7 +103,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
                 if navigationController.viewControllers.count != 2 {
                     navigationController.popToViewController(chatViewController, animated: true)
                 }
-                NotificationCenter.default.post(name: .MEGAOpenChatRoomFromPush, object: nil)
                 return
             } else {
                 chatViewController.closeChatRoom()
@@ -114,10 +111,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         }
         
         if let chatViewController = ChatViewController(chatId: chatId) {
-            if unreadMessageCount > 0 {
-                chatRoomsListViewController?.updateBackBarButtonItem(withUnreadMessages: unreadMessageCount)
-            }
-            
             if let publicLink {
                 chatViewController.publicChatWithLinkCreated = true
                 chatViewController.publicChatLink = URL(string: publicLink)

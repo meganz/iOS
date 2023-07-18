@@ -66,11 +66,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
     [self determineViewMode];
     
-    if (self.folderPathFromOffline == nil) {
-        [self.navigationItem setTitle:NSLocalizedString(@"offline", @"Offline")];
-    } else {
-        [self.navigationItem setTitle:self.folderPathFromOffline.lastPathComponent];
-    }
+    [self configureNavigationBar];
     
     [self setNavigationBarButtons];
     

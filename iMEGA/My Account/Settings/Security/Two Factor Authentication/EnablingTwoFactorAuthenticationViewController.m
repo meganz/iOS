@@ -30,7 +30,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = NSLocalizedString(@"twoFactorAuthentication", @"");
+    NSString *title = NSLocalizedString(@"twoFactorAuthentication", @"");
+    self.navigationItem.title = title;
+    [self setMenuCapableBackButtonWithMenuTitle:title];
     
     self.firstSectionLabel.userInteractionEnabled = YES;
     self.firstSectionLabel.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstSectionLabelTapped:)]];

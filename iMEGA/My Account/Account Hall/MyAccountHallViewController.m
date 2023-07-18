@@ -152,6 +152,7 @@
         self.tableFooterLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
+    [self setMenuCapableBackButtonWithMenuTitle:NSLocalizedString(@"My Account", nil)];
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody],
                                                                      NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}
                                                           forState:UIControlStateNormal];

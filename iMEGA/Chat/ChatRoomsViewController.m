@@ -376,7 +376,6 @@
                 if (viewControllers.count != 2) {
                     [self.navigationController popToViewController:currentChatViewController animated:YES];
                 }
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAOpenChatRoomFromPushNotification object:nil];
                 return;
             } else {
                 [currentChatViewController closeChatRoom];
@@ -387,7 +386,6 @@
 
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
     if (chatRoom != nil) {
-        [self updateBackBarButtonItem:chatRoom.unreadCount];
         ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
         [self.navigationController pushViewController:chatViewController animated:YES];
 
@@ -405,7 +403,6 @@
                 if (viewControllers.count != 2) {
                     [self.navigationController popToViewController:currentMessagesVC animated:YES];
                 }
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGAOpenChatRoomFromPushNotification object:nil];
                 return;
             } else {
                 [currentMessagesVC closeChatRoom];
@@ -417,8 +414,6 @@
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
     
     if (chatRoom != nil) {
-        [self updateBackBarButtonItem:chatRoom.unreadCount];
-
         ChatViewController *messagesVC = [ChatViewController.alloc initWithChatRoom:chatRoom];
         messagesVC.publicChatWithLinkCreated = YES;
         messagesVC.publicChatLink = [NSURL URLWithString:publicLink];
@@ -666,8 +661,6 @@
     MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
     
     if (chatRoom != nil) {
-        [self updateBackBarButtonItem:chatRoom.unreadCount];
-
         ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
         [self.navigationController pushViewController:chatViewController animated:YES];
     }
@@ -685,18 +678,6 @@
     [self.searchUsersWithoutChatArray removeObject:user];
     [self.usersWithoutChatArray removeObject:user];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
-- (void)updateBackBarButtonItem:(BOOL)hasUnreadMessages {
-    NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk].unreadChats;
-    if (hasUnreadMessages) {
-        unreadChats--;
-    }
-    
-    NSString *unreadChatsString = unreadChats ? [NSString stringWithFormat:@"(%td)", unreadChats] : @"";
-    
-    UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithTitle:unreadChatsString style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backBarButton;
 }
 
 - (UITableViewCell *)archivedChatRoomCellForIndexPath:(NSIndexPath *)indexPath {

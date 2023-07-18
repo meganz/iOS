@@ -13,7 +13,7 @@ enum PhotoLibraryTab: CaseIterable {
         }
     }
     
-    var eventIdentifier: any TabSelectedEventIdentifier {
+    var eventIdentifier: TabSelectedEventIdentifier {
         switch self {
         case .timeline: return TimelineTabEvent()
         case .album: return AlbumsTabEvent()
