@@ -4,6 +4,9 @@ import MEGASwift
 import SwiftUI
 
 final class ImportAlbumViewModel: ObservableObject {
+    enum Constants {
+        static let disabledOpacity = 0.3
+    }
     private let publicAlbumUseCase: any PublicAlbumUseCaseProtocol
     private var publicLinkWithDecryptionKey: URL?
     
@@ -18,12 +21,13 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     @Published var publicLinkDecryptionKey = ""
     @Published var showingDecryptionKeyAlert = false
+    @Published var showShareLink = false
     @Published var showCannotAccessAlbumAlert = false
     @Published private(set) var isSelectionEnabled = false
-    @Published var showShareLink = false
-    @Published var albumName: String?
-    @Published var selectionNavigationTitle: String = ""
-    @Published var isToolbarButtonsDisabled = true
+    @Published private(set) var selectButtonOpacity = 0.0
+    @Published private(set) var albumName: String?
+    @Published private(set) var selectionNavigationTitle: String = ""
+    @Published private(set) var isToolbarButtonsDisabled = true
     
     private var albumLink: String {
         (publicLinkWithDecryptionKey ?? publicLink).absoluteString
@@ -70,6 +74,10 @@ final class ImportAlbumViewModel: ObservableObject {
         showShareLink.toggle()
     }
     
+    func selectAllPhotos() {
+        photoLibraryContentViewModel.toggleSelectAllPhotos()
+    }
+    
     private func loadPublicAlbumContents() {
         Task { @MainActor [weak self] in
             guard let self else { return }
@@ -98,11 +106,10 @@ final class ImportAlbumViewModel: ObservableObject {
         publicLinkStatus = .invalid
         publicLinkWithDecryptionKey = nil
     }
-    
+
     private func subscribeToSelection() {
-        photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
-            .removeDuplicates()
-            .assign(to: &$isSelectionEnabled)
+        subscribeToEditMode()
+        subscribeToSelectionHidden()
         
         let selectionCountPublisher = photoLibraryContentViewModel.selection.$photos
             .map { $0.values.count }
@@ -140,5 +147,23 @@ final class ImportAlbumViewModel: ObservableObject {
         .switchToLatest()
         .removeDuplicates()
         .assign(to: &$isToolbarButtonsDisabled)
+    }
+    
+    private func subscribeToEditMode() {
+        photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
+            .removeDuplicates()
+            .assign(to: &$isSelectionEnabled)
+    }
+    
+    private func subscribeToSelectionHidden() {
+        $publicLinkStatus.combineLatest(photoLibraryContentViewModel.selection.$isHidden)
+            .map { linkStatus, selectionHidden in
+                if selectionHidden {
+                    return 0.0
+                }
+                return linkStatus == .loaded ? 1 : Constants.disabledOpacity
+            }
+            .removeDuplicates()
+            .assign(to: &$selectButtonOpacity)
     }
 }

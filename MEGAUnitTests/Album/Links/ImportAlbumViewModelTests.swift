@@ -165,19 +165,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
                                            publicAlbumUseCase: albumUseCase)
         XCTAssertTrue(sut.isToolbarButtonsDisabled)
         
-        let exp = expectation(description: "wait for loaded state")
-        sut.$publicLinkStatus
-            .dropFirst()
-            .filter { $0 == .loaded }
-            .first()
-            .sink { _ in
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
-        sut.loadWithNewDecryptionKey()
-        
-        wait(for: [exp], timeout: 1.0)
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
+            sut.loadWithNewDecryptionKey()
+        }
         XCTAssertFalse(sut.isToolbarButtonsDisabled)
         
         sut.enablePhotoLibraryEditMode(true)
@@ -188,6 +179,26 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         sut.photoLibraryContentViewModel.selection.allSelected = false
         XCTAssertTrue(sut.isToolbarButtonsDisabled)
+    }
+    
+    func testSelectButtonOpacity_onLinkStatusAndSelectionHiddenChange_shouldChangeCorrectly() throws {
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
+                                                  nodes: [])
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase)
+        XCTAssertEqual(sut.selectButtonOpacity, 0.3, accuracy: 0.1)
+        
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.loadPublicAlbum()
+        }
+        XCTAssertEqual(sut.selectButtonOpacity, 1.0, accuracy: 0.1)
+        
+        sut.photoLibraryContentViewModel.selection.isHidden = true
+        XCTAssertEqual(sut.selectButtonOpacity, 0.0, accuracy: 0.1)
+        
+        sut.photoLibraryContentViewModel.selection.isHidden = false
+        XCTAssertEqual(sut.selectButtonOpacity, 1.0, accuracy: 0.1)
     }
     
     // MARK: - Private
@@ -210,5 +221,21 @@ final class ImportAlbumViewModelTests: XCTestCase {
          NodeEntity(handle: 4, hasThumbnail: true, mediaType: .video),
          NodeEntity(handle: 7, hasThumbnail: true, mediaType: .image)
         ]
+    }
+    
+    private func waitForLoadedState(linkStatus: AnyPublisher<AlbumPublicLinkStatus, Never>,
+                                    action: () -> Void) {
+        let exp = expectation(description: "wait for loaded state")
+        linkStatus
+            .dropFirst()
+            .filter { $0 == .loaded }
+            .first()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
     }
 }
