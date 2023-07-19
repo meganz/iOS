@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)changeViewModePreference;
 - (void)nodesSortTypeHasChanged;
 - (void)createNewFolderAction;
-- (void)reloadUI;
+- (void)reloadUI:(MEGANodeList * _Nullable)nodeList;
 - (void)loadPhotoAlbumBrowser;
 @end
 
