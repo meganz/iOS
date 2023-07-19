@@ -71,14 +71,8 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
     }
     
     @MainActor
-    func showSuccess(message: String) async {
-        await withCheckedContinuation { continuation in
-            SVProgressHUD.dismiss {
-                continuation.resume()
-            }
-            
-            SVProgressHUD.showSuccess(withStatus: message)
-        }
+    func showSuccess(message: String) {
+        SVProgressHUD.showSuccess(withStatus: message)
     }
     
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {

@@ -2,6 +2,7 @@ import MEGADomain
 
 final class ScheduleMeetingNewViewConfiguration: ScheduleMeetingViewConfigurable {
     
+    var title: String { Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting }
     var type: ScheduleMeetingViewConfigurationType { .new }
     var meetingName: String { "" }
     lazy var startDate: Date = nextDateMinutesIsFiveMultiple(Date())

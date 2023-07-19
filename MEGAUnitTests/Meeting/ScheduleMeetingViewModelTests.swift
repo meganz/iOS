@@ -559,7 +559,7 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
         dismiss_calledTimes += 1
     }
     
-    func showSuccess(message: String) async {
+    func showSuccess(message: String) {
         showSuccessMessage_calledTimes += 1
     }
     
