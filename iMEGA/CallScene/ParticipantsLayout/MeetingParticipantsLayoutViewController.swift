@@ -285,10 +285,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         pageControl.numberOfPages = Int(ceil(Double(participantsCount) / 6.0))
         if pageControl.isHidden && participantsCount > 6 {
             pageControl.isHidden = false
-            callCollectionView.layoutIfNeeded()
+            callCollectionView.reloadData()
         } else if !pageControl.isHidden && participantsCount <= 6 {
             pageControl.isHidden = true
-            callCollectionView.layoutIfNeeded()
+            callCollectionView.reloadData()
         }
     }
     
