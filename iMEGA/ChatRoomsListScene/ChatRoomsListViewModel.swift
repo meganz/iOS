@@ -4,6 +4,7 @@ import MEGAData
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
+import MEGASwiftUI
 
 enum ChatViewMode {
     case chats

@@ -4,14 +4,47 @@ import XCTest
 
 final class CloudDriveViewControllerTests: XCTestCase {
     
-    func testNodeAction_whenSelectFavorite_reloadCollectionOnlyOnce() {
+    override func setUp() {
+        super.setUp()
+        cleanTestArtifacts()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        cleanTestArtifacts()
+    }
+    
+    func testNodeAction_whenSelectFavoriteOnViewModePreferenceThumbnail_reloadCollectionAtIndexPath() {
+        simulateUserHasThumbnailViewModePreference()
         let selectedNode = anyNode()
-        let mockNodeActionViewController = makeNodeActionViewController(node: selectedNode, displayMode: .cloudDrive)
-        let sut = makeSUT()
+        let mockNodeActionViewController = makeNodeActionViewController(nodes: [selectedNode], displayMode: .cloudDrive)
+        let sut = makeSUT(nodeList: MockNodeList(nodes: [selectedNode]))
         setNoEditingState(on: sut)
         
         sut.simulateUserSelectFavorite(mockNodeActionViewController, selectedNode)
-        sut.simulateOnNodesUpdateReloadUI()
+        sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
+        
+        XCTAssertEqual(sut.collectionView().messages, [ .reloadDataAt([ IndexPath(item: 0, section: 1) ]) ])
+    }
+    
+    func testReloadUI_whenUpdatesOnOneNodeOnViewModePreferenceThumbnail_reloadCollectionAtIndexPath() {
+        simulateUserHasThumbnailViewModePreference()
+        let sampleNode = anyNode()
+        let sut = makeSUT(nodeList: MockNodeList(nodes: [sampleNode]))
+        setNoEditingState(on: sut)
+        
+        sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
+        
+        XCTAssertEqual(sut.collectionView().messages, [ .reloadDataAt([ IndexPath(item: 0, section: 1) ]) ])
+    }
+    
+    func testReloadUI_whenUpdatesMoreThanOneNodeOnViewModePreferenceThumbnail_reloadCollection() {
+        simulateUserHasThumbnailViewModePreference()
+        let sampleNode = anyNode()
+        let sut = makeSUT(nodeList: MockNodeList(nodes: [sampleNode, sampleNode, sampleNode]))
+        setNoEditingState(on: sut)
+        
+        sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
         XCTAssertEqual(sut.collectionView().messages, [ .reloadData ])
     }
@@ -27,27 +60,39 @@ final class CloudDriveViewControllerTests: XCTestCase {
         MockNode.init(handle: .invalidHandle, isFavourite: false)
     }
     
-    private func makeNodeActionViewController(node: MockNode, displayMode: DisplayMode) -> NodeActionViewController {
+    private func makeNodeActionViewController(nodes: [MockNode], displayMode: DisplayMode) -> NodeActionViewController {
         let mockNodeActionViewController = NodeActionViewController(
-            node: node,
+            nodes: nodes,
             delegate: MockNodeActionViewController(),
             displayMode: displayMode,
-            isInVersionsView: false,
-            isBackupNode: false,
             sender: "any-sender"
         )
         return mockNodeActionViewController
     }
     
-    private func makeSUT() -> CloudDriveViewController {
+    private func makeSUT(nodeList: MockNodeList) -> CloudDriveViewController {
         let storyboard = UIStoryboard(name: "Cloud", bundle: .main)
         let sut = storyboard.instantiateViewController(withIdentifier: "CloudDriveID") as! CloudDriveViewController
         sut.cdTableView = storyboard.instantiateViewController(withIdentifier: "CloudDriveTableID") as? CloudDriveTableViewController
-        sut.cdCollectionView = MockCloudDriveCollectionViewController()
         sut.loadView()
+        sut.viewDidLoad()
+        sut.cdCollectionView = MockCloudDriveCollectionViewController()
         sut.cdTableView?.loadView()
         sut.cdCollectionView?.loadView()
+        sut.nodes = nodeList
         return (sut)
+    }
+    
+    private func simulateUserHasThumbnailViewModePreference() {
+        UserDefaults.standard.setValue(ViewModePreference.thumbnail.rawValue, forKey: MEGAViewModePreference)
+    }
+    
+    private func cleanTestArtifacts() {
+        clearViewModePreference()
+    }
+    
+    private func clearViewModePreference() {
+        UserDefaults.standard.removeObject(forKey: MEGAViewModePreference)
     }
 }
 
@@ -56,8 +101,8 @@ private extension CloudDriveViewController {
         nodeAction(nodeActionViewController, didSelect: .favourite, for: selectedNode, from: "any-sender")
     }
     
-    func simulateOnNodesUpdateReloadUI() {
-        reloadUI()
+    func simulateOnNodesUpdateReloadUI(nodeList: MEGANodeList?) {
+        reloadUI(nodeList)
     }
     
     func collectionView() -> MockCloudDriveCollectionViewController {
@@ -76,11 +121,13 @@ private final class MockCloudDriveCollectionViewController: CloudDriveCollection
     enum Message: Equatable, CustomStringConvertible {
         case setCollectionViewEditing
         case reloadData
+        case reloadDataAt([IndexPath])
         
         var description: String {
             switch self {
             case .setCollectionViewEditing: return "setCollectionViewEditing"
             case .reloadData: return "reloadData"
+            case let .reloadDataAt(indexPaths): return "reloadDataAtIndexPaths:\(indexPaths)"
             }
         }
     }
@@ -93,5 +140,9 @@ private final class MockCloudDriveCollectionViewController: CloudDriveCollection
     
     override func reloadData() {
         messages.append(.reloadData)
+    }
+    
+    override func reloadData(at indexPaths: [IndexPath]) {
+        messages.append(.reloadDataAt(indexPaths))
     }
 }
