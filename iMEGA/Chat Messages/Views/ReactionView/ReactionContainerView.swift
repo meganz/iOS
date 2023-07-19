@@ -17,7 +17,7 @@ enum ReactionErrorType: Int {
 class ReactionContainerView: UIView {
     fileprivate let rootFlexContainer = UIView()
     
-    weak var delegate: ReactionEmojiViewDelegate?
+    weak var delegate: (any ReactionEmojiViewDelegate)?
     open var addMoreView: UIButton = {
         let addMoreView = UIButton()
         addMoreView.setImage(Asset.Images.Chat.addReactionSmall.image, for: .normal)

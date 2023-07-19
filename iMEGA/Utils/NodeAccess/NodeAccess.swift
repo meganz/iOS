@@ -8,10 +8,10 @@ struct NodeAccessConfiguration {
     var autoCreate: (() -> Bool)?
     let updateInMemoryNotificationName: Notification.Name?
     let updateInRemoteNotificationName: Notification.Name?
-    let loadNodeRequest: (MEGARequestDelegate) -> Void
-    var setNodeRequest: ((HandleEntity, MEGARequestDelegate) -> Void)?
+    let loadNodeRequest: (any MEGARequestDelegate) -> Void
+    var setNodeRequest: ((HandleEntity, any MEGARequestDelegate) -> Void)?
     var nodeName: String?
-    var createNodeRequest: ((String, MEGANode, MEGARequestDelegate) -> Void)?
+    var createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)?
 }
 
 class NodeAccess: NSObject {

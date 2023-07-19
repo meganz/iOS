@@ -33,7 +33,7 @@ final class MEGABannerView: UIView, NibOwnerLoadable {
 
     @IBOutlet weak var carouselCollectionViewHeightConstraint: NSLayoutConstraint!
     
-    weak var delegate: MEGABannerViewDelegate?
+    weak var delegate: (any MEGABannerViewDelegate)?
 
     private var bannerDataSource: [Banner] = []
 

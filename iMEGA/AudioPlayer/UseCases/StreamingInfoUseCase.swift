@@ -10,9 +10,9 @@ protocol StreamingInfoUseCaseProtocol {
 
 final class StreamingInfoUseCase: StreamingInfoUseCaseProtocol {
     
-    private var streamingInfoRepository: StreamingInfoRepositoryProtocol
+    private var streamingInfoRepository: any StreamingInfoRepositoryProtocol
     
-    init(streamingInfoRepository: StreamingInfoRepositoryProtocol = StreamingInfoRepository()) {
+    init(streamingInfoRepository: some StreamingInfoRepositoryProtocol = StreamingInfoRepository()) {
         self.streamingInfoRepository = streamingInfoRepository
     }
     

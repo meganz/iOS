@@ -4,8 +4,8 @@ import MEGADomainMock
 
 extension ScheduleMeetingViewModel {
     convenience init(
-        router: ScheduleMeetingRouting = MockScheduleMeetingRouter(),
-        viewConfiguration: ScheduleMeetingViewConfigurable = MockScheduleMeetingViewConfiguration(),
+        router: some ScheduleMeetingRouting = MockScheduleMeetingRouter(),
+        viewConfiguration: some ScheduleMeetingViewConfigurable = MockScheduleMeetingViewConfiguration(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         isTesting: Bool = true
     ) {

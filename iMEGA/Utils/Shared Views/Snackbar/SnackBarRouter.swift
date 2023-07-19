@@ -2,9 +2,9 @@ import SwiftUI
 
 final class SnackBarRouter: NSObject {
     static var shared = SnackBarRouter()
-    var presenter: SnackBarPresenting?
+    var presenter: (any SnackBarPresenting)?
 
-    func configurePresenter(_ presenter: SnackBarPresenting) {
+    func configurePresenter(_ presenter: some SnackBarPresenting) {
         self.presenter = presenter
     }
     

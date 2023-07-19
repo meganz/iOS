@@ -8,7 +8,7 @@ extension UIViewController {
     }
     
     @objc
-    func assignAsMEGANavigationDelegate(delegate: MEGANavigationControllerDelegate) {
+    func assignAsMEGANavigationDelegate(delegate: any MEGANavigationControllerDelegate) {
         if let nc = navigationController as? MEGANavigationController {
             nc.navigationDelegate = delegate
         } else {

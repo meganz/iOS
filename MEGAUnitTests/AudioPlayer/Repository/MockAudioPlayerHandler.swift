@@ -43,11 +43,11 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         addPlayerTracks_calledTimes += 1
     }
     
-    func addPlayer(listener: AudioPlayerObserversProtocol) {
+    func addPlayer(listener: any AudioPlayerObserversProtocol) {
         addPlayerListener_calledTimes += 1
     }
     
-    func removePlayer(listener: AudioPlayerObserversProtocol) {
+    func removePlayer(listener: any AudioPlayerObserversProtocol) {
         removePlayerListener_calledTimes += 1
     }
     
@@ -143,10 +143,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func isPlayerPlaying() -> Bool { true }
     func isPlayerPaused() -> Bool { false }
     func isPlayerAlive() -> Bool { true }
-    func addDelegate(_ delegate: AudioPlayerPresenterProtocol) {}
-    func removeDelegate(_ delegate: AudioPlayerPresenterProtocol) {}
-    func addMiniPlayerHandler(_ handler: AudioMiniPlayerHandlerProtocol) {}
-    func removeMiniPlayerHandler(_ handler: AudioMiniPlayerHandlerProtocol) {}
+    func addDelegate(_ delegate: any AudioPlayerPresenterProtocol) {}
+    func removeDelegate(_ delegate: any AudioPlayerPresenterProtocol) {}
+    func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
+    func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
     func isShuffleEnabled() -> Bool { false }
     func currentRepeatMode() -> RepeatMode { RepeatMode.none }
     func refreshCurrentItemState() {}

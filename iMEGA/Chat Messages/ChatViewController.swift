@@ -285,8 +285,8 @@ class ChatViewController: MessagesViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatDelegate)
-        MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatCallDelegate)
+        MEGASdkManager.sharedMEGAChatSdk().add(self as (any MEGAChatDelegate))
+        MEGASdkManager.sharedMEGAChatSdk().add(self as (any MEGAChatCallDelegate))
         
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
@@ -371,8 +371,8 @@ class ChatViewController: MessagesViewController {
         
         saveDraft()
         
-        MEGASdkManager.sharedMEGAChatSdk().removeMEGAChatDelegateAsync(self as MEGAChatDelegate)
-        MEGASdkManager.sharedMEGAChatSdk().removeMEGACallDelegateAsync(self as MEGAChatCallDelegate)
+        MEGASdkManager.sharedMEGAChatSdk().removeMEGAChatDelegateAsync(self as (any MEGAChatDelegate))
+        MEGASdkManager.sharedMEGAChatSdk().removeMEGACallDelegateAsync(self as (any MEGAChatCallDelegate))
         
         if previewMode || isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
@@ -399,7 +399,7 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(alongsideTransition: { [weak self] _ in

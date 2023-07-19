@@ -14,7 +14,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var removePeerAsModerator_CalledTimes = 0
     var call: CallEntity
     
-    var callbacksDelegate: CallCallbacksUseCaseProtocol?
+    var callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
     var networkQuality: NetworkQuality = .bad
     var chatRoom: ChatRoomEntity?
     var video: Bool = false

@@ -127,7 +127,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         baseViewController?.dismiss(animated: true, completion: nil)
     }
     
-    func showActions(nodeHandle: HandleEntity, delegate: NodeActionViewControllerDelegate, sender button: Any) {
+    func showActions(nodeHandle: HandleEntity, delegate: some NodeActionViewControllerDelegate, sender button: Any) {
         guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
             return
         }

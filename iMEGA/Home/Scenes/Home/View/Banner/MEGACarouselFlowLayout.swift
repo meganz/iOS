@@ -36,7 +36,7 @@ final class MEGACarouselFlowLayout: UICollectionViewFlowLayout {
 
     fileprivate var state = LayoutState(size: CGSize.zero)
 
-    weak var delegate: MEGACarouselFlowLayoutDelegate?
+    weak var delegate: (any MEGACarouselFlowLayoutDelegate)?
 
     override func prepare() {
         super.prepare()

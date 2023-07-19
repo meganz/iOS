@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var shadowStyleFactory: ShadowStyleFactory {
+    var shadowStyleFactory: some ShadowStyleFactory {
         ShadowStyleFactoryImpl()
     }
 }

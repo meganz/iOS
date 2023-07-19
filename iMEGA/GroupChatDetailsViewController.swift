@@ -5,11 +5,11 @@ import MEGASDKRepo
 extension GroupChatDetailsViewController {
     
     @objc func addChatCallDelegate() {
-        MEGASdkManager.sharedMEGAChatSdk().add(self as MEGAChatCallDelegate)
+        MEGASdkManager.sharedMEGAChatSdk().add(self as (any MEGAChatCallDelegate))
     }
     
     @objc func removeChatCallDelegate() {
-        MEGASdkManager.sharedMEGAChatSdk().remove(self as MEGAChatCallDelegate)
+        MEGASdkManager.sharedMEGAChatSdk().remove(self as (any MEGAChatCallDelegate))
     }
     
     @objc func addChatRoomDelegate() {
@@ -26,7 +26,7 @@ extension GroupChatDetailsViewController {
         return (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && !MEGASdk.isGuest && chatRoomPrivilege.isUserInChat
     }
     
-    @objc func openChatRoom(chatId: HandleEntity, delegate: MEGAChatRoomDelegate) {
+    @objc func openChatRoom(chatId: HandleEntity, delegate: any MEGAChatRoomDelegate) {
         guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chatId) else { return }
         
         if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatRoom) {

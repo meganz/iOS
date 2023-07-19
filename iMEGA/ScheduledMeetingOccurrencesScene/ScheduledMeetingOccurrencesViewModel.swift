@@ -11,7 +11,7 @@ protocol ScheduledMeetingOccurrencesRouting {
 }
 
 final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
-    private let router: ScheduledMeetingOccurrencesRouting
+    private let router: any ScheduledMeetingOccurrencesRouting
     private var scheduledMeeting: ScheduledMeetingEntity
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
@@ -37,10 +37,10 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     
     var chatHasMeesages = false
     
-    init(router: ScheduledMeetingOccurrencesRouting,
+    init(router: some ScheduledMeetingOccurrencesRouting,
          scheduledMeeting: ScheduledMeetingEntity,
-         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
+         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
          chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     ) {
         self.router = router

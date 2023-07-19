@@ -1,4 +1,3 @@
-
 import Foundation
 
 class FolderLinkCollectionViewController: UIViewController {
@@ -44,7 +43,7 @@ class FolderLinkCollectionViewController: UIViewController {
         reloadData()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { (_) in
             self.layout.configThumbnailListColumnCount()
@@ -217,7 +216,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
         return contextMenuConfiguration
     }
     
-    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: any UIContextMenuInteractionCommitAnimating) {
         guard let folderLinkVC = animator.previewViewController as? FolderLinkViewController else { return }
         animator.addCompletion {
             self.navigationController?.pushViewController(folderLinkVC, animated: true)

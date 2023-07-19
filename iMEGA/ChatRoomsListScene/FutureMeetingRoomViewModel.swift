@@ -9,7 +9,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
     private var chatNotificationControl: ChatNotificationControl
-    private let callUseCase: CallUseCaseProtocol
+    private let callUseCase: any CallUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
@@ -65,7 +65,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         return nil
     }
     
-    private let router: ChatRoomsListRouting
+    private let router: any ChatRoomsListRouting
     
     @Published var showDNDTurnOnOptions = false
     @Published var showCancelMeetingAlert = false
@@ -75,16 +75,16 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     
     init(scheduledMeeting: ScheduledMeetingEntity,
          nextOccurrence: ScheduledMeetingOccurrenceEntity?,
-         router: ChatRoomsListRouting,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         userImageUseCase: UserImageUseCaseProtocol,
-         chatUseCase: any ChatUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         callUseCase: CallUseCaseProtocol,
-         audioSessionUseCase: any AudioSessionUseCaseProtocol,
-         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
+         router: some ChatRoomsListRouting,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+         userImageUseCase: some UserImageUseCaseProtocol,
+         chatUseCase: some ChatUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         callUseCase: some CallUseCaseProtocol,
+         audioSessionUseCase: some AudioSessionUseCaseProtocol,
+         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          permissionAlertRouter: some PermissionAlertRouting,
          chatNotificationControl: ChatNotificationControl) {
         

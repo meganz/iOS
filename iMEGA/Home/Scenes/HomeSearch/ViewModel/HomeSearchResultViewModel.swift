@@ -19,9 +19,9 @@ protocol HomeAccountSearchResultViewModelOutputs {
 
 protocol HomeAccountSearchResultViewModelType {
 
-    var inputs: HomeAccountSearchResultViewModelInputs { get }
+    var inputs: any HomeAccountSearchResultViewModelInputs { get }
 
-    var notifyUpdate: ((HomeAccountSearchResultViewModelOutputs) -> Void)? { get set }
+    var notifyUpdate: ((any HomeAccountSearchResultViewModelOutputs) -> Void)? { get set }
 }
 
 final class HomeSearchResultViewModel {
@@ -32,7 +32,7 @@ final class HomeSearchResultViewModel {
 
     // MARK: - Output
 
-    var notifyUpdate: ((HomeAccountSearchResultViewModelOutputs) -> Void)?
+    var notifyUpdate: ((any HomeAccountSearchResultViewModelOutputs) -> Void)?
 
     // MARK: - Components
 
@@ -40,14 +40,14 @@ final class HomeSearchResultViewModel {
 
     // MARK: - Use Case
 
-    private let searchFileUseCase: SearchFileUseCaseProtocol
-    private let searchFileHistoryUseCase: SearchFileHistoryUseCaseProtocol
-    private let nodeDetailUseCase: NodeDetailUseCaseProtocol
+    private let searchFileUseCase: any SearchFileUseCaseProtocol
+    private let searchFileHistoryUseCase: any SearchFileHistoryUseCaseProtocol
+    private let nodeDetailUseCase: any NodeDetailUseCaseProtocol
 
     init(
-        searchFileUseCase: SearchFileUseCaseProtocol,
-        searchFileHistoryUseCase: SearchFileHistoryUseCaseProtocol,
-        nodeDetailUseCase: NodeDetailUseCaseProtocol,
+        searchFileUseCase: some SearchFileUseCaseProtocol,
+        searchFileHistoryUseCase: some SearchFileHistoryUseCaseProtocol,
+        nodeDetailUseCase: some NodeDetailUseCaseProtocol,
         router: HomeSearchResultRouter
     ) {
         self.searchFileUseCase = searchFileUseCase
@@ -145,7 +145,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
 
 extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelType {
 
-    var inputs: HomeAccountSearchResultViewModelInputs { return self }
+    var inputs: any HomeAccountSearchResultViewModelInputs { return self }
 
     struct HomeSearchViewModel: HomeAccountSearchResultViewModelOutputs {
         var viewState: HomeSearchState

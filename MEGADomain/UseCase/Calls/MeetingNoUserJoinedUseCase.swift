@@ -11,13 +11,13 @@ struct MeetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol {
         static let timerDuration: TimeInterval = 300 // 5 minutes
     }
     
-    private let repository: MeetingNoUserJoinedRepositoryProtocol
+    private let repository: any MeetingNoUserJoinedRepositoryProtocol
     
     var monitor: AnyPublisher<Void, Never> {
         repository.monitor
     }
     
-    init(repository: MeetingNoUserJoinedRepositoryProtocol) {
+    init(repository: some MeetingNoUserJoinedRepositoryProtocol) {
         self.repository = repository
     }
     

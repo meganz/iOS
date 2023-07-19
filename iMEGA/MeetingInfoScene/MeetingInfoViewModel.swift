@@ -24,12 +24,12 @@ protocol MeetingInfoRouting {
 final class MeetingInfoViewModel: ObservableObject {
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
-    private var userImageUseCase: UserImageUseCaseProtocol
+    private var userImageUseCase: any UserImageUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
-    private let router: MeetingInfoRouting
+    private let router: any MeetingInfoRouting
     @Published var isAllowNonHostToAddParticipantsOn = true
     @Published var isPublicChat = true
     @Published var isUserInChat = true
@@ -49,14 +49,14 @@ final class MeetingInfoViewModel: ObservableObject {
     @Published var scheduledMeeting: ScheduledMeetingEntity
     
     init(scheduledMeeting: ScheduledMeetingEntity,
-         router: MeetingInfoRouting,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         userImageUseCase: UserImageUseCaseProtocol,
-         chatUseCase: any ChatUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         chatLinkUseCase: any ChatLinkUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol
+         router: some MeetingInfoRouting,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+         userImageUseCase: some UserImageUseCaseProtocol,
+         chatUseCase: some ChatUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         chatLinkUseCase: some ChatLinkUseCaseProtocol,
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol
     ) {
         self.scheduledMeeting = scheduledMeeting
         self.router = router

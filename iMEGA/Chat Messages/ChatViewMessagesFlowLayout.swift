@@ -38,7 +38,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        guard let attributesArray = super.layoutAttributesForElements(in: rect), editing, let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? ChatViewMessagesLayoutDelegate else {
+        guard let attributesArray = super.layoutAttributesForElements(in: rect), editing, let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? (any ChatViewMessagesLayoutDelegate) else {
             return super.layoutAttributesForElements(in: rect)
         }
         
@@ -61,7 +61,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     }
     
     func configureMessageCellLayoutAttributes(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        guard let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? ChatViewMessagesLayoutDelegate, chatLayoutDelegate.collectionView(messagesCollectionView, layout: self, shouldEditItemAt: layoutAttributes.indexPath) else {
+        guard let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? (any ChatViewMessagesLayoutDelegate), chatLayoutDelegate.collectionView(messagesCollectionView, layout: self, shouldEditItemAt: layoutAttributes.indexPath) else {
             return
         }
 

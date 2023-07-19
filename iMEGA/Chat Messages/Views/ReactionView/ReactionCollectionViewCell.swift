@@ -10,7 +10,7 @@ class ReactionCollectionViewCell: UILabel {
     @IBOutlet weak var reactionButton: UIButton!
     var count: Int?
     var emoji: String?
-    weak var delegate: ReactionCollectionViewCellDelegate?
+    weak var delegate: (any ReactionCollectionViewCellDelegate)?
     
     override func awakeFromNib() {
         super.awakeFromNib()

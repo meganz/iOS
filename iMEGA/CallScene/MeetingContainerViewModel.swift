@@ -36,12 +36,12 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private let router: any MeetingContainerRouting
     private let chatRoom: ChatRoomEntity
-    private let callUseCase: CallUseCaseProtocol
-    private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
+    private let callUseCase: any CallUseCaseProtocol
+    private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
-    private let noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol
+    private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private var noUserJoinedSubscription: AnyCancellable?
@@ -58,14 +58,14 @@ final class MeetingContainerViewModel: ViewModelType {
 
     init(router: some MeetingContainerRouting,
          chatRoom: ChatRoomEntity,
-         callUseCase: CallUseCaseProtocol,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         authUseCase: any AuthUseCaseProtocol,
-         noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol,
-         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol) {
+         callUseCase: some CallUseCaseProtocol,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         authUseCase: some AuthUseCaseProtocol,
+         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
+         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol) {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase

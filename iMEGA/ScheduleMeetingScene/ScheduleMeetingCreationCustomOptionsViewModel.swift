@@ -49,11 +49,11 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
     private(set) var weeklyOptionsViewModel: ScheduleMeetingCreationWeeklyCustomOptionsViewModel?
     
     private var subscriptions = Set<AnyCancellable>()
-    private let router: ScheduleMeetingCreationCustomOptionsRouting
+    private let router: any ScheduleMeetingCreationCustomOptionsRouting
     private let startDate: Date
 
     init(
-        router: ScheduleMeetingCreationCustomOptionsRouting,
+        router: some ScheduleMeetingCreationCustomOptionsRouting,
         rules: ScheduledMeetingRulesEntity,
         startDate: Date
     ) {

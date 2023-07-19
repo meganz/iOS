@@ -3,8 +3,8 @@ import SwiftUI
 struct SlideShowOptionView: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: SlideShowOptionViewModel
-    let preference: SlideShowViewModelPreferenceProtocol
-    let router: SlideShowOptionContentRouting
+    let preference: any SlideShowViewModelPreferenceProtocol
+    let router: any SlideShowOptionContentRouting
     var dismissal: () -> Void
     
     var body: some View {

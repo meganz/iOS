@@ -26,7 +26,7 @@ final class SlideShowViewModel: ViewModelType {
         case showLoader
     }
     
-    private var dataSource: SlideShowDataSourceProtocol
+    private var dataSource: any SlideShowDataSourceProtocol
     private let slideShowUseCase: any SlideShowUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     
@@ -54,7 +54,7 @@ final class SlideShowViewModel: ViewModelType {
         }
     }
     
-    init(dataSource: SlideShowDataSourceProtocol,
+    init(dataSource: some SlideShowDataSourceProtocol,
          slideShowUseCase: any SlideShowUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol) {
         

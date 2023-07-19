@@ -16,7 +16,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     }
     
     private let participant: CallParticipantEntity
-    private var userImageUseCase: UserImageUseCaseProtocol
+    private var userImageUseCase: any UserImageUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private var chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
@@ -46,11 +46,11 @@ final class MeetingParticipantViewModel: ViewModelType {
     var loadNameTask: Task<Void, Never>?
     
     init(participant: CallParticipantEntity,
-         userImageUseCase: UserImageUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
+         userImageUseCase: some UserImageUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          contextMenuTappedHandler: @escaping (CallParticipantEntity, UIButton) -> Void) {
         self.participant = participant
         self.userImageUseCase = userImageUseCase
