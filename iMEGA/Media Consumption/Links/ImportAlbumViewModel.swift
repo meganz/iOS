@@ -23,6 +23,8 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showingDecryptionKeyAlert = false
     @Published var showShareLink = false
     @Published var showCannotAccessAlbumAlert = false
+    @Published var showImportAlbumLocation = false
+    @Published var importFolderLocation: NodeEntity?
     @Published private(set) var isSelectionEnabled = false
     @Published private(set) var selectButtonOpacity = 0.0
     @Published private(set) var albumName: String?

@@ -40,6 +40,13 @@ struct ImportAlbumView: View {
                   dismissButton: .default(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
                                           action: dismissImportAlbumScreen))
         }
+        .sheet(isPresented: $viewModel.showImportAlbumLocation) {
+            BrowserView(browserAction: .saveToCloudDrive,
+                        isChildBrowser: true,
+                        parentNode: MEGASdk.shared.rootNode,
+                        selectedNode: $viewModel.importFolderLocation)
+                .ignoresSafeArea(edges: .bottom)
+        }
         .onAppear {
             viewModel.loadPublicAlbum()
         }
@@ -140,7 +147,7 @@ struct ImportAlbumView: View {
     private var bottomToolbar: some View {
         HStack(alignment: .top) {
             toolbarImageButton(image: Asset.Images.InfoActions.import.image) {
-                
+                viewModel.showImportAlbumLocation.toggle()
             }
             Spacer()
             toolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image) {
