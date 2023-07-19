@@ -130,14 +130,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var switchingCamera: Bool = false
     private weak var containerViewModel: MeetingContainerViewModel?
 
-    private let callUseCase: CallUseCaseProtocol
+    private let callUseCase: any CallUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
-    private let localVideoUseCase: CallLocalVideoUseCaseProtocol
-    private let remoteVideoUseCase: CallRemoteVideoUseCaseProtocol
+    private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
+    private let remoteVideoUseCase: any CallRemoteVideoUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
-    private var userImageUseCase: UserImageUseCaseProtocol
+    private var userImageUseCase: any UserImageUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
 
@@ -172,19 +172,19 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     init(router: some MeetingParticipantsLayoutRouting,
          containerViewModel: MeetingContainerViewModel,
-         callUseCase: CallUseCaseProtocol,
-         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: CallLocalVideoUseCaseProtocol,
-         remoteVideoUseCase: CallRemoteVideoUseCaseProtocol,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         userImageUseCase: UserImageUseCaseProtocol,
-         analyticsEventUseCase: any AnalyticsEventUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
+         callUseCase: some CallUseCaseProtocol,
+         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
+         remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         userImageUseCase: some UserImageUseCaseProtocol,
+         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          chatRoom: ChatRoomEntity,
          call: CallEntity,
-         preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         
         self.router = router
         self.containerViewModel = containerViewModel

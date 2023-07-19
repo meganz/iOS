@@ -17,11 +17,11 @@ final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedReposito
     init(chatSDK: MEGAChatSdk) {
         self.chatSDK = chatSDK
         super.init()
-        chatSDK.add(self as MEGAChatCallDelegate)
+        chatSDK.add(self as (any MEGAChatCallDelegate))
     }
     
     deinit {
-        chatSDK.remove(self as MEGAChatCallDelegate)
+        chatSDK.remove(self as (any MEGAChatCallDelegate))
     }
 
     func start(timerDuration duration: TimeInterval, chatId: HandleEntity) {

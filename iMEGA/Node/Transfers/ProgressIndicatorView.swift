@@ -133,8 +133,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     }
     
     private func configureDelegate() {
-        MEGASdkManager.sharedMEGASdk().add(self as MEGARequestDelegate)
-        MEGASdkManager.sharedMEGASdk().add(self as MEGATransferDelegate)
+        MEGASdkManager.sharedMEGASdk().add(self as (any MEGARequestDelegate))
+        MEGASdkManager.sharedMEGASdk().add(self as (any MEGATransferDelegate))
     }
     
     private func updateProgress() {

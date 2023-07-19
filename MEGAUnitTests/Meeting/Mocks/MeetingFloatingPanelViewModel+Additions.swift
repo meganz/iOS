@@ -10,19 +10,19 @@ extension MeetingFloatingPanelViewModel {
         containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         isSpeakerEnabled: Bool = false,
-        callCoordinatorUseCase: CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
-        callUseCase: CallUseCaseProtocol = MockCallUseCase(),
-        audioSessionUseCase: any AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
+        callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
+        callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+        audioSessionUseCase: some AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(
             photoAuthorization: .denied,
             audioAuthorized: false,
             videoAuthorized: false
         ),
-        captureDeviceUseCase: any CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
-        localVideoUseCase: CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
-        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
-        chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        megaHandleUseCase: any MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
+        localVideoUseCase: some CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         isTesting: Bool = true
     ) {
         self.init(

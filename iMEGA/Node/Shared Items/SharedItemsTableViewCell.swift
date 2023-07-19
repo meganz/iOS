@@ -16,7 +16,7 @@ final class SharedItemsTableViewCell: UITableViewCell {
     @IBOutlet weak var permissionsButton: UIButton!
     @IBOutlet weak var infoButton: UIButton!
     
-    @objc var delegate: SharedItemsTableViewCellDelegate?
+    @objc var delegate: (any SharedItemsTableViewCellDelegate)?
     
     @objc var nodeHandle: UInt64 = 0
     

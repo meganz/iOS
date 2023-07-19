@@ -29,7 +29,7 @@ class PasteImagePreviewViewController: UIViewController {
         view = PasteImagePreviewView(viewModel: viewModel)
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         mainView.viewOrientationDidChange()
     }

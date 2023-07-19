@@ -14,16 +14,16 @@ import MEGASDKRepo
 }
 
 @objc final class MyAvatarManager: NSObject, MyAvatarManagerProtocol {
-    var myAvatarViewModel: MyAvatarViewModelType?
+    var myAvatarViewModel: (any MyAvatarViewModelType)?
     weak var navigationController: UINavigationController?
     var badgeButton: BadgeButton?
     var myAvatarBarButton: UIBarButtonItem? {
         guard let badgeButton = badgeButton else { return nil}
         return UIBarButtonItem(customView: badgeButton)
     }
-    weak var delegate: MyAvatarPresenterProtocol?
+    weak var delegate: (any MyAvatarPresenterProtocol)?
     
-    init(navigationController: UINavigationController, delegate: MyAvatarPresenterProtocol) {
+    init(navigationController: UINavigationController, delegate: some MyAvatarPresenterProtocol) {
         self.navigationController = navigationController
         self.delegate = delegate
     }

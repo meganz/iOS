@@ -232,7 +232,7 @@ extension FolderLinkTableViewController: UITableViewDelegate {
         return contextMenuConfiguration
     }
     
-    func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+    func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: any UIContextMenuInteractionCommitAnimating) {
         guard let folderLinkVC = animator.previewViewController as? FolderLinkViewController else { return }
         animator.addCompletion {
             self.navigationController?.pushViewController(folderLinkVC, animated: true)

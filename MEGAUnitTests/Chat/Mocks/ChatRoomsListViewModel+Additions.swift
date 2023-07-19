@@ -8,7 +8,7 @@ import MEGAPresentation
 extension ChatRoomsListViewModel {
     
     convenience init(
-        router: ChatRoomsListRouting = MockChatRoomsListRouter(),
+        router: some ChatRoomsListRouting = MockChatRoomsListRouter(),
         chatUseCase: any ChatUseCaseProtocol = MockChatUseCase(),
         contactsUseCase: any ContactsUseCaseProtocol = MockContactsUseCase(),
         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),

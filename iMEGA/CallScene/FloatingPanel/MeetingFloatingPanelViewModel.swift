@@ -49,8 +49,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var call: CallEntity? {
         return callUseCase.call(for: chatRoom.chatId)
     }
-    private let callCoordinatorUseCase: CallCoordinatorUseCaseProtocol
-    private let callUseCase: CallUseCaseProtocol
+    private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
+    private let callUseCase: any CallUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
@@ -85,15 +85,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
          isSpeakerEnabled: Bool,
-         callCoordinatorUseCase: CallCoordinatorUseCaseProtocol,
-         callUseCase: CallUseCaseProtocol,
-         audioSessionUseCase: any AudioSessionUseCaseProtocol,
+         callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
+         callUseCase: some CallUseCaseProtocol,
+         audioSessionUseCase: some AudioSessionUseCaseProtocol,
          permissionHandler: some DevicePermissionsHandling,
-         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: CallLocalVideoUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol) {
+         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom

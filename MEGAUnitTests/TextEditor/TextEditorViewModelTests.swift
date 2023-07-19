@@ -1094,7 +1094,7 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
         dismissBrowserVC_calledTimes += 1
     }
     
-    func showActions(nodeHandle: HandleEntity, delegate: NodeActionViewControllerDelegate, sender button: Any) {
+    func showActions(nodeHandle: HandleEntity, delegate: some NodeActionViewControllerDelegate, sender button: Any) {
         showActions_calledTimes += 1
     }
     

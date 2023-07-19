@@ -41,7 +41,7 @@ struct LightColorThemeFactory: ColorFactory {
         }
     }
 
-    func themeButtonTextFactory(_ style: MEGAColor.ThemeButton) -> ButtonColorFactory {
+    func themeButtonTextFactory(_ style: MEGAColor.ThemeButton) -> any ButtonColorFactory {
         switch style {
         case .primary:
             return LightPrimaryThemeButtonTextColorFactory()
@@ -50,7 +50,7 @@ struct LightColorThemeFactory: ColorFactory {
         }
     }
 
-    func themeButtonBackgroundFactory(_ style: MEGAColor.ThemeButton) -> ButtonColorFactory {
+    func themeButtonBackgroundFactory(_ style: MEGAColor.ThemeButton) -> any ButtonColorFactory {
         switch style {
         case .primary:
             return LightPrimaryThemeButtonBackgroundColorFactory()

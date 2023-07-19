@@ -17,11 +17,11 @@ protocol HomeRecentActionViewModelOutputs {
 
 protocol HomeRecentActionViewModelType {
 
-    var inputs: HomeRecentActionViewModelInputs { get }
+    var inputs: any HomeRecentActionViewModelInputs { get }
 
-    var outputs: HomeRecentActionViewModelOutputs { get }
+    var outputs: any HomeRecentActionViewModelOutputs { get }
 
-    var notifyUpdate: ((HomeRecentActionViewModelOutputs) -> Void)? { get set }
+    var notifyUpdate: ((any HomeRecentActionViewModelOutputs) -> Void)? { get set }
 }
 
 final class HomeRecentActionViewModel:
@@ -82,11 +82,11 @@ final class HomeRecentActionViewModel:
 
     // MARK: - HomeRecentActionViewModelType
 
-    var inputs: HomeRecentActionViewModelInputs { self }
+    var inputs: any HomeRecentActionViewModelInputs { self }
 
-    var outputs: HomeRecentActionViewModelOutputs { self }
+    var outputs: any HomeRecentActionViewModelOutputs { self }
 
-    var notifyUpdate: ((HomeRecentActionViewModelOutputs) -> Void)?
+    var notifyUpdate: ((any HomeRecentActionViewModelOutputs) -> Void)?
 
     // MARK: - Use Cases
 

@@ -66,7 +66,7 @@ class SlideshowViewModelTests: XCTestCase {
     
     func testSlideShowViewModel_cancel_playbackStatusShouldBePlaying() throws {
         let slideShowViewModel = try makeSlideshowViewModel()
-        let sut: SlideShowViewModelPreferenceProtocol = slideShowViewModel
+        let sut: some SlideShowViewModelPreferenceProtocol = slideShowViewModel
         
         slideShowViewModel.dispatch(.pause)
         XCTAssertTrue(slideShowViewModel.playbackStatus == .pause)
@@ -77,7 +77,7 @@ class SlideshowViewModelTests: XCTestCase {
     
     func testSlideShowViewModel_restart_repeatShouldBeTrueAndTimeShouldBe8AndCurrentSlideShouldBeNeg1() throws {
         let slideShowViewModel = try makeSlideshowViewModel()
-        let sut: SlideShowViewModelPreferenceProtocol = slideShowViewModel
+        let sut: some SlideShowViewModelPreferenceProtocol = slideShowViewModel
         
         XCTAssertTrue(slideShowViewModel.playbackStatus == .initialized)
         slideShowViewModel.dispatch(.play)

@@ -29,7 +29,7 @@ protocol TextEditorViewRouting: Routing {
     func chooseParentNode(completion: @escaping (HandleEntity) -> Void)
     func dismissTextEditorVC()
     func dismissBrowserVC()
-    func showActions(nodeHandle: HandleEntity, delegate: NodeActionViewControllerDelegate, sender button: Any)
+    func showActions(nodeHandle: HandleEntity, delegate: any NodeActionViewControllerDelegate, sender button: Any)
     func showPreviewDocVC(fromFilePath path: String, showUneditableError: Bool)
     func importNode(nodeHandle: HandleEntity?)
     func exportFile(from node: NodeEntity, sender button: Any)

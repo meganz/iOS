@@ -47,12 +47,12 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let type: MeetingConfigurationType
     private let link: String?
     
-    private let meetingUseCase: MeetingCreatingUseCaseProtocol
+    private let meetingUseCase: any MeetingCreatingUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
-    private let localVideoUseCase: CallLocalVideoUseCaseProtocol
+    private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
-    private let userImageUseCase: UserImageUseCaseProtocol
+    private let userImageUseCase: any UserImageUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
 
@@ -79,14 +79,14 @@ final class MeetingCreatingViewModel: ViewModelType {
     // MARK: - Init
     init(router: some MeetingCreatingViewRouting,
          type: MeetingConfigurationType,
-         meetingUseCase: MeetingCreatingUseCaseProtocol,
-         audioSessionUseCase: any AudioSessionUseCaseProtocol,
-         localVideoUseCase: CallLocalVideoUseCaseProtocol,
-         captureDeviceUseCase: any CaptureDeviceUseCaseProtocol,
+         meetingUseCase: some MeetingCreatingUseCaseProtocol,
+         audioSessionUseCase: some AudioSessionUseCaseProtocol,
+         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
+         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
          permissionHandler: some DevicePermissionsHandling,
-         userImageUseCase: UserImageUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
+         userImageUseCase: some UserImageUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          link: String?,
          userHandle: UInt64) {
         self.router = router

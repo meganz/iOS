@@ -203,9 +203,9 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     private func makeSUT(
         configEntity: AudioPlayerConfigEntity,
-        nodeInfoUseCase: NodeInfoUseCaseProtocol? = nil,
-        streamingInfoUseCase: StreamingInfoUseCaseProtocol? = nil,
-        offlineInfoUseCase: OfflineFileInfoUseCaseProtocol? = nil
+        nodeInfoUseCase: (any NodeInfoUseCaseProtocol)? = nil,
+        streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
+        offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil
     ) -> AudioPlayerViewModel {
         AudioPlayerViewModel(
             configEntity: configEntity,

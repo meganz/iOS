@@ -79,7 +79,7 @@ extension MEGAChatSdk {
         }
     }
     
-    @objc func removeMEGAChatDelegateAsync(_ delegate: MEGAChatDelegate) {
+    @objc func removeMEGAChatDelegateAsync(_ delegate: any MEGAChatDelegate) {
         Task.detached {
             MEGAChatSdk.shared.remove(delegate)
         }

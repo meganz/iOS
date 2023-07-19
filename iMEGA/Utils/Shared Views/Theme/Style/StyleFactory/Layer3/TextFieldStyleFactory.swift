@@ -1,6 +1,6 @@
 extension InterfaceStyle {
 
-    var textFieldStyleFactory: TextFieldStyleFactory {
+    var textFieldStyleFactory: some TextFieldStyleFactory {
         TextFieldStyleFactoryImpl(
             colorFactory: colorFactory,
             textStyleFactory: textStyleFactory,
@@ -23,9 +23,9 @@ protocol TextFieldStyleFactory {
 
 private struct TextFieldStyleFactoryImpl: TextFieldStyleFactory {
 
-    let colorFactory: ColorFactory
-    let textStyleFactory: TextStyleFactory
-    let cornerStyleFactory: CornerStyleFactory
+    let colorFactory: any ColorFactory
+    let textStyleFactory: any TextStyleFactory
+    let cornerStyleFactory: any CornerStyleFactory
 
     func styler(of style: MEGATextFieldStyle) -> TextFieldStyler {
         switch style {

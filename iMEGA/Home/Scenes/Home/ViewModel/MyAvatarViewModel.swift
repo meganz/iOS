@@ -19,18 +19,18 @@ protocol MyAvatarViewModelOutputs {
 
 protocol MyAvatarViewModelType {
 
-    var inputs: MyAvatarViewModelInputs { get }
+    var inputs: any MyAvatarViewModelInputs { get }
 
-    var outputs: MyAvatarViewModelOutputs { get }
+    var outputs: any MyAvatarViewModelOutputs { get }
 
-    var notifyUpdate: ((MyAvatarViewModelOutputs) -> Void)? { get set }
+    var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)? { get set }
 }
 
 final class MyAvatarViewModel: NSObject {
 
     // MARK: - MyAvatarViewModelType
 
-    var notifyUpdate: ((MyAvatarViewModelOutputs) -> Void)?
+    var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)?
 
     // MARK: - View States
 
@@ -42,16 +42,16 @@ final class MyAvatarViewModel: NSObject {
 
     // MARK: - Dependencies
 
-    private let megaNotificationUseCase: MEGANotificationUseCaseProtocol
+    private let megaNotificationUseCase: any MEGANotificationUseCaseProtocol
 
-    private let megaAvatarUseCase: MEGAAvatarUseCaseProtocol
+    private let megaAvatarUseCase: any MEGAAvatarUseCaseProtocol
 
-    private let megaAvatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol
+    private let megaAvatarGeneratingUseCase: any MEGAAvatarGeneratingUseCaseProtocol
 
     init(
-        megaNotificationUseCase: MEGANotificationUseCaseProtocol,
-        megaAvatarUseCase: MEGAAvatarUseCaseProtocol,
-        megaAvatarGeneratingUseCase: MEGAAvatarGeneratingUseCaseProtocol
+        megaNotificationUseCase: some MEGANotificationUseCaseProtocol,
+        megaAvatarUseCase: some MEGAAvatarUseCaseProtocol,
+        megaAvatarGeneratingUseCase: some MEGAAvatarGeneratingUseCaseProtocol
     ) {
         self.megaNotificationUseCase = megaNotificationUseCase
         self.megaAvatarUseCase = megaAvatarUseCase
@@ -167,9 +167,9 @@ extension MyAvatarViewModel {
 
 extension MyAvatarViewModel: MyAvatarViewModelType {
 
-    var inputs: MyAvatarViewModelInputs { self }
+    var inputs: any MyAvatarViewModelInputs { self }
 
-    var outputs: MyAvatarViewModelOutputs {
+    var outputs: any MyAvatarViewModelOutputs {
         MyAvatarOutputViewModel(
             avatarImage: resizedAvartarImage,
             notificationNumber: notificationNumber

@@ -2,7 +2,7 @@ import Foundation
 
 extension InterfaceStyle {
 
-    var labelStyleFactory: LabelStyleFactory {
+    var labelStyleFactory: some LabelStyleFactory {
         LabelStyleFactoryImpl(
             colorFactory: colorFactory,
             textStyleFactory: textStyleFactory,
@@ -45,10 +45,10 @@ protocol LabelStyleFactory {
 
 private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
-    let colorFactory: ColorFactory
-    let textStyleFactory: TextStyleFactory
-    let paragraphStyleFactory: ParagraphStyleFactory
-    let cornerStyleFactory: CornerStyleFactory
+    let colorFactory: any ColorFactory
+    let textStyleFactory: any TextStyleFactory
+    let paragraphStyleFactory: any ParagraphStyleFactory
+    let cornerStyleFactory: any CornerStyleFactory
 
     func styler(of style: MEGALabelStyle) -> LabelStyler {
         switch style {
@@ -155,7 +155,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
 extension InterfaceStyle {
 
-    var alwyasBrightLabelStyleFactory: LabelStyleFactory {
+    var alwyasBrightLabelStyleFactory: some LabelStyleFactory {
         AlwaysBrightLabelStyleFactoryImpl(
             colorFactory: colorFactory,
             textStyleFactory: textStyleFactory
@@ -165,8 +165,8 @@ extension InterfaceStyle {
 
 private struct AlwaysBrightLabelStyleFactoryImpl: LabelStyleFactory {
 
-    let colorFactory: ColorFactory
-    let textStyleFactory: TextStyleFactory
+    let colorFactory: any ColorFactory
+    let textStyleFactory: any TextStyleFactory
 
     func styler(of style: MEGALabelStyle) -> LabelStyler {
         switch style {

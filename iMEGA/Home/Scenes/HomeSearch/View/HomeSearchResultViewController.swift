@@ -18,7 +18,7 @@ final class HomeSearchResultViewController: UIViewController {
         HomeSearchHintViewModel
     >!
 
-    weak var searchHintSelectDelegate: HomeSearchControllerDelegate?
+    weak var searchHintSelectDelegate: (any HomeSearchControllerDelegate)?
 
     override func viewDidLoad() {
         super.viewDidLoad()

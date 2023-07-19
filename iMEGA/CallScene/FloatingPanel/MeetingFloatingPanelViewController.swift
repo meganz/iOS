@@ -42,14 +42,14 @@ final class MeetingFloatingPanelViewController: UIViewController {
 
     private var callParticipants: [CallParticipantEntity] = []
     private let viewModel: MeetingFloatingPanelViewModel
-    private let userImageUseCase: UserImageUseCaseProtocol
+    private let userImageUseCase: any UserImageUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     
     init(viewModel: MeetingFloatingPanelViewModel,
-         userImageUseCase: UserImageUseCaseProtocol,
+         userImageUseCase: some UserImageUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
@@ -112,7 +112,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         }
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: nil) { [weak self] _ in
             self?.panModalSetNeedsLayoutUpdate()

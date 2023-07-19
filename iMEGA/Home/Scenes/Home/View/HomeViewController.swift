@@ -23,19 +23,19 @@ final class HomeViewController: UIViewController {
 
     // MARK: - View Model
     
-    var myAvatarViewModel: MyAvatarViewModelType!
+    var myAvatarViewModel: (any MyAvatarViewModelType)?
 
-    var uploadViewModel: HomeUploadingViewModelType!
+    var uploadViewModel: (any HomeUploadingViewModelType)?
     
-    var startConversationViewModel: StartConversationViewModel!
+    var startConversationViewModel: StartConversationViewModel?
 
-    var recentsViewModel: HomeRecentActionViewModelType!
+    var recentsViewModel: (any HomeRecentActionViewModelType)?
 
-    var bannerViewModel: HomeBannerViewModelType!
+    var bannerViewModel: (any HomeBannerViewModelType)?
 
-    var quickAccessWidgetViewModel: QuickAccessWidgetViewModel!
+    var quickAccessWidgetViewModel: QuickAccessWidgetViewModel?
     
-    var homeViewModel: HomeViewModel!
+    var homeViewModel: HomeViewModel?
     
     private var featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     
@@ -118,7 +118,7 @@ final class HomeViewController: UIViewController {
     }
 
     private func setupViewModelEventListening() {
-        myAvatarViewModel.notifyUpdate = { [weak self] output in
+        myAvatarViewModel?.notifyUpdate = { [weak self] output in
             guard let self = self else { return }
             let resizedImage = output.avatarImage
 
@@ -129,23 +129,23 @@ final class HomeViewController: UIViewController {
                 }
             }
         }
-        myAvatarViewModel.inputs.viewIsReady()
+        myAvatarViewModel?.inputs.viewIsReady()
 
-        recentsViewModel.notifyUpdate = { [weak self] recentsViewModel in
+        recentsViewModel?.notifyUpdate = { [weak self] recentsViewModel in
             if let error = recentsViewModel.error {
                 self?.handle(error)
             }
         }
         
-        startConversationViewModel.dispatch(.viewDidLoad)
-        startConversationViewModel.invokeCommand = { [weak self] command in
+        startConversationViewModel?.dispatch(.viewDidLoad)
+        startConversationViewModel?.invokeCommand = { [weak self] command in
             switch command {
             case .networkAvailablityUpdate(let networkAvailable):
                 self?.startConversationItem.isEnabled = networkAvailable
             }
         }
         
-        quickAccessWidgetViewModel.invokeCommand = { [weak self] command in
+        quickAccessWidgetViewModel?.invokeCommand = { [weak self] command in
             switch command {
             case .selectOfflineTab:
                 self?.slidePanelView.showTab(.offline)
@@ -165,9 +165,9 @@ final class HomeViewController: UIViewController {
                 self?.offlineViewController.openFileFromWidget(with: path)
             }
         }
-        quickAccessWidgetViewModel.dispatch(.managePendingAction)
+        quickAccessWidgetViewModel?.dispatch(.managePendingAction)
 
-        uploadViewModel.notifyUpdate = { [weak self] homeUploadingViewModel in
+        uploadViewModel?.notifyUpdate = { [weak self] homeUploadingViewModel in
             asyncOnMain {
                 guard let self = self else { return }
                 self.startUploadBarButtonItem.isEnabled = homeUploadingViewModel.networkReachable
@@ -180,16 +180,16 @@ final class HomeViewController: UIViewController {
                 self.startUploadBarButtonItem.menu = homeUploadingViewModel.contextMenu
             }
         }
-        uploadViewModel.inputs.viewIsReady()
+        uploadViewModel?.inputs.viewIsReady()
 
-        bannerViewModel.notifyUpdate = { [weak self] bannerViewModelOutput in
+        bannerViewModel?.notifyUpdate = { [weak self] bannerViewModelOutput in
             guard let self = self else { return }
             asyncOnMain {
                 self.bannerCollectionView.reloadBanners(bannerViewModelOutput.state.banners)
                 self.toggleBannerCollectionView(isOn: true)
             }
         }
-        bannerViewModel.inputs.viewIsReady()
+        bannerViewModel?.inputs.viewIsReady()
     }
 
     private func toggleBannerCollectionView(isOn: Bool) {
@@ -204,7 +204,8 @@ final class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        myAvatarViewModel.inputs.viewIsAppearing()
+        
+        myAvatarViewModel?.inputs.viewIsAppearing()
     }
 
     override func viewDidLayoutSubviews() {
@@ -212,7 +213,7 @@ final class HomeViewController: UIViewController {
         setupSlidePanelVerticalOffset()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self] (_) in
             guard let bannerCollectionView = self?.bannerCollectionView else { return }
@@ -495,23 +496,23 @@ extension HomeViewController: HomeRouting {
     }
 
     func showOfflines() {
-        quickAccessWidgetViewModel.dispatch(.showOffline)
+        quickAccessWidgetViewModel?.dispatch(.showOffline)
     }
     
     func showOfflineFile(_ handle: String) {
-        quickAccessWidgetViewModel.dispatch(.showOfflineFile(handle))
+        quickAccessWidgetViewModel?.dispatch(.showOfflineFile(handle))
     }
     
     func showRecents() {
-        quickAccessWidgetViewModel.dispatch(.showRecents)
+        quickAccessWidgetViewModel?.dispatch(.showRecents)
     }
     
     func showFavourites() {
-        quickAccessWidgetViewModel.dispatch(.showFavourites)
+        quickAccessWidgetViewModel?.dispatch(.showFavourites)
     }
     
     func showFavouritesNode(_ base64Handle: Base64HandleEntity) {
-        quickAccessWidgetViewModel.dispatch(.showFavouritesNode(base64Handle))
+        quickAccessWidgetViewModel?.dispatch(.showFavouritesNode(base64Handle))
     }
 }
 
@@ -557,7 +558,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
 
             // MARK: Save && Download
             case .saveToPhotos:
-                self.recentsViewModel.inputs.saveToPhotoAlbum(of: node)
+                self.recentsViewModel?.inputs.saveToPhotoAlbum(of: node)
             case .download:
                 router?.showDownloadTransfer(node: node)
 
@@ -569,7 +570,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
             case .exportFile:
                 router?.didTap(on: .exportFile(node, sender))
             case .shareFolder:
-                self.homeViewModel.openShareFolderDialog(forNode: node, router: router)
+                self.homeViewModel?.openShareFolderDialog(forNode: node, router: router)
             case .manageShare:
                 router?.didTap(on: .manageShare(node))
             case .leaveSharing:
@@ -581,7 +582,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
 
             // MARK: Favourite
             case .favourite:
-                self.recentsViewModel.inputs.toggleFavourite(of: node)
+                self.recentsViewModel?.inputs.toggleFavourite(of: node)
 
             case .label:
                 self.router.didTap(on: .setLabel(node))
@@ -662,11 +663,11 @@ extension HomeViewController: MEGASearchBarViewDelegate {
 extension HomeViewController: MEGABannerViewDelegate {
 
     func didSelectMEGABanner(withBannerIdentifier bannerIdentifier: Int, actionURL: URL?) {
-        bannerViewModel.inputs.didSelectBanner(actionURL: actionURL)
+        bannerViewModel?.inputs.didSelectBanner(actionURL: actionURL)
     }
 
     func dismissMEGABanner(_ bannerView: MEGABannerView, withBannerIdentifier bannerIdentifier: Int) {
-        bannerViewModel.inputs.dismissBanner(withBannerId: bannerIdentifier)
+        bannerViewModel?.inputs.dismissBanner(withBannerId: bannerIdentifier)
     }
 
     func hideMEGABannerView(_ bannerView: MEGABannerView) {

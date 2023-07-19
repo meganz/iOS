@@ -31,19 +31,19 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
         }
     }
     
-    weak var delegate: PushNotificationControlProtocol?
+    weak var delegate: (any PushNotificationControlProtocol)?
     
     // MARK: - Initializer
     
-    @objc init(delegate: PushNotificationControlProtocol) {
+    @objc init(delegate: any PushNotificationControlProtocol) {
         self.delegate = delegate
         super.init()
-        MEGASdkManager.sharedMEGASdk().add(self as MEGARequestDelegate)
+        MEGASdkManager.sharedMEGASdk().add(self as (any MEGARequestDelegate))
         MEGASdkManager.sharedMEGASdk().getPushNotificationSettings()
     }
     
     deinit {
-        MEGASdkManager.sharedMEGASdk().remove(self as MEGARequestDelegate)
+        MEGASdkManager.sharedMEGASdk().remove(self as (any MEGARequestDelegate))
     }
     
     // MARK: - Interface.

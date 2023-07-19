@@ -40,7 +40,7 @@ class TransferActionViewController: NodeActionViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
-        guard let action = actions[indexPath.row] as? NodeAction, let delegate = delegate as? TransferActionViewControllerDelegate, let transfer = transfer else {
+        guard let action = actions[indexPath.row] as? NodeAction, let delegate = delegate as? (any TransferActionViewControllerDelegate), let transfer = transfer else {
             return
         }
         

@@ -17,7 +17,7 @@ class NodeActionViewController: ActionSheetViewController {
     private let viewModel = NodeActionViewModel(nodeUseCase: NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo))
     
     var sender: Any
-    var delegate: NodeActionViewControllerDelegate
+    var delegate: any NodeActionViewControllerDelegate
     
     private var viewMode: ViewModePreference?
     
@@ -32,7 +32,7 @@ class NodeActionViewController: ActionSheetViewController {
     
     convenience init?(
         node: HandleEntity,
-        delegate: NodeActionViewControllerDelegate,
+        delegate: some NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         isIncoming: Bool = false,
         isBackupNode: Bool,
@@ -43,7 +43,7 @@ class NodeActionViewController: ActionSheetViewController {
     
     init?(
         nodeHandle: HandleEntity,
-        delegate: NodeActionViewControllerDelegate,
+        delegate: some NodeActionViewControllerDelegate,
         displayMode: DisplayMode,
         isBackupNode: Bool = false,
         sender: Any) {
@@ -65,7 +65,7 @@ class NodeActionViewController: ActionSheetViewController {
             .build()
     }
     
-    init(nodes: [MEGANode], delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, sender: Any) {
+    init(nodes: [MEGANode], delegate: some NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, containsABackupNode: Bool = false, sender: Any) {
         self.nodes = nodes
         self.displayMode = displayMode
         self.delegate = delegate
@@ -101,7 +101,7 @@ class NodeActionViewController: ActionSheetViewController {
             .multiselectBuild()
     }
 
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -116,7 +116,7 @@ class NodeActionViewController: ActionSheetViewController {
                           isBackupNode: isBackupNode)
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare, shouldShowVerifyContact: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare, shouldShowVerifyContact: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -134,7 +134,7 @@ class NodeActionViewController: ActionSheetViewController {
                           shouldShowVerifyContact: shouldShowVerifyContact)
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, isInVersionsView: Bool, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -150,7 +150,7 @@ class NodeActionViewController: ActionSheetViewController {
                           isBackupNode: isBackupNode)
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference,
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference,
                isBackupNode: Bool, containsMediaFiles: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
@@ -170,7 +170,7 @@ class NodeActionViewController: ActionSheetViewController {
             .build()
     }
     
-    @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, isLink: Bool = false, displayMode: DisplayMode, isInVersionsView: Bool = false, isBackupNode: Bool, sender: Any) {
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, isLink: Bool = false, displayMode: DisplayMode, isInVersionsView: Bool = false, isBackupNode: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate

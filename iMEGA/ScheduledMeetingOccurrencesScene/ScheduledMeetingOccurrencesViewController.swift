@@ -20,7 +20,7 @@ final class ScheduledMeetingOccurrencesViewController: UIViewController {
         updateTitle()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         updateTitle()
     }

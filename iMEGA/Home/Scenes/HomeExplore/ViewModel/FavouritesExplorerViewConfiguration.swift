@@ -9,7 +9,7 @@ struct FavouritesExplorerViewConfiguration: FilesExplorerViewConfiguration {
         return .favourites
     }
     
-    var listSourceType: FilesExplorerListSourceProtocol.Type {
+    var listSourceType: any FilesExplorerListSourceProtocol.Type {
         return FavouritesExplorerListSource.self
     }
 }

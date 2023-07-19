@@ -7,14 +7,14 @@ extension MeetingContainerViewModel {
     convenience init(
         router: some MeetingContainerRouting = MockMeetingContainerRouter(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
-        callUseCase: CallUseCaseProtocol = MockCallUseCase(call: CallEntity()),
-        chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
-        callCoordinatorUseCase: CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
+        callUseCase: some CallUseCaseProtocol = MockCallUseCase(call: CallEntity()),
+        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
         accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-        authUseCase: any AuthUseCaseProtocol = MockAuthUseCase(),
-        noUserJoinedUseCase: MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
-        analyticsEventUseCase: any AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
-        megaHandleUseCase: any MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        authUseCase: some AuthUseCaseProtocol = MockAuthUseCase(),
+        noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
+        analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         isTesting: Bool = true
     ) {
         self.init(

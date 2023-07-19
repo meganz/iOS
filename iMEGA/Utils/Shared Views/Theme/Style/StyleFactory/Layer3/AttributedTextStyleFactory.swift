@@ -1,7 +1,6 @@
 import Foundation
 
 extension InterfaceStyle {
-
     var attributedTextStyleFactory: some AttributedTextStyleFactory {
         return AttributedTextStyleFactoryImpl(
             colorStyleFactory: colorFactory,
@@ -12,7 +11,6 @@ extension InterfaceStyle {
 }
 
 protocol AttributedTextStyleFactory {
-
     func styler(of textStyle: AttributedTextStyle) -> AttributedTextStyler
 }
 
