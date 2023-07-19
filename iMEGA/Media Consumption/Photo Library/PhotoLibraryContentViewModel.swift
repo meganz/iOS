@@ -35,4 +35,13 @@ extension PhotoLibraryContentViewModel {
     var shouldShowPhotoLibraryPicker: Bool {
         ![.album, .albumLink].contains(contentMode)
     }
+    
+    func toggleSelectAllPhotos() {
+        let allSelectedCurrently = selection.photos.count == library.allPhotos.count
+        selection.allSelected = !allSelectedCurrently
+        
+        if selection.allSelected {
+            selection.setSelectedPhotos(library.allPhotos)
+        }
+    }
 }

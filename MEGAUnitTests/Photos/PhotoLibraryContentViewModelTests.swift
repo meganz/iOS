@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomain
 import XCTest
 
 final class PhotoLibraryContentViewModelTests: XCTestCase {
@@ -16,5 +17,27 @@ final class PhotoLibraryContentViewModelTests: XCTestCase {
             let sut = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: $0, configuration: nil)
             XCTAssertTrue(sut.shouldShowPhotoLibraryPicker)
         }
+    }
+    
+    func testToggleSelectAllPhotos_onCalledAgain_shouldToggleBetweenSelectAllAndUnselectAll() throws {
+        let photos = [NodeEntity(name: "a.png", handle: HandleEntity(1),
+                                 modificationTime: try "2023-08-18T22:01:04Z".date),
+                      NodeEntity(name: "b.png", handle: HandleEntity(2),
+                                 modificationTime: try "2023-08-11T22:01:04Z".date)
+        ]
+        let library = photos.toPhotoLibrary(withSortType: .newest)
+        let sut = PhotoLibraryContentViewModel(library: library,
+                                               contentMode: .album, configuration: nil)
+        
+        sut.toggleSelectAllPhotos()
+        
+        XCTAssertTrue(sut.selection.allSelected)
+        XCTAssertEqual(Set(library.allPhotos), Set(photos))
+        
+        sut.toggleSelectAllPhotos()
+        
+        XCTAssertFalse(sut.selection.allSelected)
+        XCTAssertTrue(sut.selection.photos.isEmpty)
+        XCTAssertTrue(library.allPhotos.isNotEmpty)
     }
 }

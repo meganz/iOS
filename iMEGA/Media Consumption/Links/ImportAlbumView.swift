@@ -5,7 +5,6 @@ struct ImportAlbumView: View {
     private enum Constants {
         static let toolbarButtonVerticalPadding = 11.0
         static let toolbarButtonHorizontalPadding = 16.0
-        static let toolbarDisabledOpacity = 0.3
     }
     
     @Environment(\.presentationMode) private var presentationMode
@@ -51,7 +50,7 @@ struct ImportAlbumView: View {
     
     private var navigationBar: some View {
         NavigationBarView(leading: {
-            buttonClose
+            leftNavigationButton
         }, trailing: {
             rightNavigationBarButton
                 .frame(maxHeight: 44)
@@ -60,11 +59,20 @@ struct ImportAlbumView: View {
         }, backgroundColor: Color(Colors.General.Gray.navigationBgColor.color))
     }
     
-    private var buttonClose: some View {
-        Button(Strings.Localizable.close) {
-            dismissImportAlbumScreen()
+    @ViewBuilder
+    private var leftNavigationButton: some View {
+        if viewModel.isSelectionEnabled {
+            Button {
+                viewModel.selectAllPhotos()
+            } label: {
+                Image(uiImage: Asset.Images.NavigationBar.selectAll.image)
+            }
+        } else {
+            Button(Strings.Localizable.close) {
+                dismissImportAlbumScreen()
+            }
+            .foregroundColor(toolbarButtonColor)
         }
-        .foregroundColor(toolbarButtonColor)
     }
     
     @ViewBuilder
@@ -88,6 +96,7 @@ struct ImportAlbumView: View {
                 Text(albumName)
                     .font(.subheadline)
                     .bold()
+                    .lineLimit(1)
                 Text(Strings.Localizable.albumLink)
                     .font(.caption)
             }
@@ -114,7 +123,7 @@ struct ImportAlbumView: View {
             } label: {
                 Image(uiImage: Asset.Images.NavigationBar.selectAll.image)
             }
-            .opacity(viewModel.isPhotosLoaded ? 1: Constants.toolbarDisabledOpacity)
+            .opacity(viewModel.selectButtonOpacity)
             .disabled(!viewModel.isPhotosLoaded)
         }
     }
@@ -148,7 +157,7 @@ struct ImportAlbumView: View {
             Image(uiImage: image)
                 .resizable()
                 .frame(width: 28, height: 28)
-                .opacity(!viewModel.isToolbarButtonsDisabled ? 1: Constants.toolbarDisabledOpacity)
+                .opacity(toolbarButtonOpacity)
         }
         .disabled(viewModel.isToolbarButtonsDisabled)
         .padding(.vertical, Constants.toolbarButtonVerticalPadding)
@@ -162,7 +171,7 @@ struct ImportAlbumView: View {
                 Image(uiImage: Asset.Images.Generic.link.image)
                     .resizable()
                     .frame(width: 28, height: 28)
-                    .opacity(!viewModel.isToolbarButtonsDisabled ? 1: Constants.toolbarDisabledOpacity)
+                    .opacity(toolbarButtonOpacity)
             }
             .padding(.vertical, Constants.toolbarButtonVerticalPadding)
             .padding(.horizontal, Constants.toolbarButtonHorizontalPadding)
@@ -172,6 +181,10 @@ struct ImportAlbumView: View {
                                action: viewModel.shareLinkTapped)
             .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
         }
+    }
+    
+    private var toolbarButtonOpacity: Double {
+        viewModel.isToolbarButtonsDisabled ? ImportAlbumViewModel.Constants.disabledOpacity : 1
     }
 }
 

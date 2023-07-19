@@ -35,12 +35,7 @@ extension PhotoLibraryProvider {
     }
     
     func configPhotoLibrarySelectAll() {
-        let allSelectedCurrently = photoLibraryContentViewModel.selection.photos.count == photoLibraryContentViewModel.library.allPhotos.count
-        photoLibraryContentViewModel.selection.allSelected = !allSelectedCurrently
-        
-        if photoLibraryContentViewModel.selection.allSelected {
-            photoLibraryContentViewModel.selection.setSelectedPhotos(photoLibraryContentViewModel.library.allPhotos)
-        }
+        photoLibraryContentViewModel.toggleSelectAllPhotos()
     }
     
     func updateNavigationTitle(withSelectedPhotoCount count: Int) {
