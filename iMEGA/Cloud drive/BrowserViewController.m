@@ -225,6 +225,13 @@
             self.navigationController.toolbarHidden = YES;
             break;
         }
+        
+        case BrowserActionSaveToCloudDrive:
+            [self setupDefaultElements];
+            self.toolBarSelectBarButtonItem.title = NSLocalizedString(@"cloudDrive.browser.saveToCloudDrive.title", @"Browser save to cloud drive select button title");
+            [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSelectBarButtonItem]];
+
+            break;
             
         case BrowserActionSelectFolder:
             [self setupDefaultElements];

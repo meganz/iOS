@@ -3231,6 +3231,12 @@ public enum Strings {
       }
     }
     public enum CloudDrive {
+      public enum Browser {
+        public enum SaveToCloudDrive {
+          /// Save to Cloud drive
+          public static let title = Strings.tr("Localizable", "cloudDrive.browser.saveToCloudDrive.title")
+        }
+      }
       public enum Info {
         public enum Node {
           /// Location
