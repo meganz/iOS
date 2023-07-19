@@ -479,12 +479,8 @@
             
         case MEGAChatMessageTypeScheduledMeeting: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-            MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatRoom.chatId messageId:item.lastMessageId];
-            if ([message hasScheduledMeetingChangeForType:MEGAChatMessageScheduledMeetingChangeTypeCancelled]) {
-                NSString *meetingCancelledString = [NSString stringWithFormat:NSLocalizedString(@"meetings.scheduled.managementMessages.cancelled", @"A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting "), senderString];
-                self.chatLastMessage.text = meetingCancelledString;
-            }
+            NSString *meetingCancelledString = [NSString stringWithFormat:NSLocalizedString(@"meetings.scheduled.managementMessages.updated", @"A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting "), senderString];
+            self.chatLastMessage.text = meetingCancelledString;
             break;
         }
 
