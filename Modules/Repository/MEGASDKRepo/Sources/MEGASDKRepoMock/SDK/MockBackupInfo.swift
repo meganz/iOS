@@ -25,8 +25,8 @@ public final class MockBackupInfo: MEGABackupInfo {
     private let backupDownloads: Int
     
     // MARK: - Timestamps
-    private let timestamp: Date
-    private let activityTimestamp: Date
+    private let ts: Date
+    private let activityTs: Date
     
     public init(identifier: Int = 0, backupName: String = "", deviceIdentifier: String = "", rootHandle: MEGAHandle = .invalidHandle, lastHandleSync: MEGAHandle = .invalidHandle, backupType: MEGABackupType = .invalid, localFolderName: String = "", extraInfo: String = "", syncState: MEGASyncState = .unknown, backupSubstate: MEGABackupSubstate = .noSyncError, heartbeatStatus: MEGABackupHeartbeatStatus = .unknown, backupProgress: Int = 0, backupUploads: Int = 0, backupDownloads: Int = 0, timestamp: Date = Date(), activityTimestamp: Date = Date()) {
         self.identifier = identifier
@@ -43,8 +43,8 @@ public final class MockBackupInfo: MEGABackupInfo {
         self.backupProgress = backupProgress
         self.backupUploads = backupUploads
         self.backupDownloads = backupDownloads
-        self.timestamp = timestamp
-        self.activityTimestamp = activityTimestamp
+        self.ts = timestamp
+        self.activityTs = activityTimestamp
     }
     
     public override var id: UInt { UInt(identifier) }
@@ -61,6 +61,6 @@ public final class MockBackupInfo: MEGABackupInfo {
     public override var progress: UInt { UInt(backupProgress) }
     public override var uploads: UInt { UInt(backupUploads) }
     public override var downloads: UInt { UInt(backupDownloads) }
-    public override var ts: Date { timestamp }
-    public override var activityTs: Date { activityTimestamp }
+    public override var timestamp: Date? { ts }
+    public override var activityTimestamp: Date? { activityTs }
 }
