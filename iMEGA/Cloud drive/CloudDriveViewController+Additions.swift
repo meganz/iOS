@@ -209,4 +209,19 @@ extension CloudDriveViewController {
             }
         }
     }
+    
+    @objc func findIndexPath(for node: MEGANode, source: [MEGANode]) -> IndexPath {
+        let section = node.isFolder() ? 0 : 1
+        let item = itemIndex(for: node, source: source)
+        return IndexPath(item: item, section: section)
+    }
+    
+    private func itemIndex(for node: MEGANode, source: [MEGANode]) -> Int {
+        if source.isEmpty {
+            return 0
+        } else {
+            let potentialIndex = source.firstIndex { $0.handle == node.handle } ?? 0
+            return node.isFolder() ? potentialIndex : potentialIndex - 1
+        }
+    }
 }
