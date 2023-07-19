@@ -12,6 +12,7 @@ enum ScheduleMeetingViewConfigurationCompletion {
 }
 
 protocol ScheduleMeetingViewConfigurable {
+    var title: String { get }
     var type: ScheduleMeetingViewConfigurationType { get }
     var meetingName: String { get }
     var startDate: Date { get }

@@ -27,7 +27,7 @@ final class ScheduleMeetingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubview()
-        let title = Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting
+        let title = viewModel.title
         navigationItem.title = title
         updateRightBarButton(
             viewModel.isNewMeeting ? createBarButtonItem : updateBarButtonItem,

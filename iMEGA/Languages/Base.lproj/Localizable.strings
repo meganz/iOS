@@ -3610,3 +3610,5 @@
 "meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="Meeting occurrence updated";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
 "meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
+/* Edit Schedule meeting navigaion title. */
+"meetings.scheduled.editMeeting.title" = "Edit meeting";

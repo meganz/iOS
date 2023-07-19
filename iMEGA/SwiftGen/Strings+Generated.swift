@@ -4901,6 +4901,10 @@ public enum Strings {
             }
           }
         }
+        public enum EditMeeting {
+          /// Edit meeting
+          public static let title = Strings.tr("Localizable", "meetings.scheduled.editMeeting.title")
+        }
         public enum Listing {
           public enum InProgress {
             /// Meeting in progress

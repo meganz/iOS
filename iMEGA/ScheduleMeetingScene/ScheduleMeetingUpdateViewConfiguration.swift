@@ -3,6 +3,7 @@ import MEGADomain
 class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
     let scheduledMeeting: ScheduledMeetingEntity
     
+    var title: String { Strings.Localizable.Meetings.Scheduled.EditMeeting.title }
     var type: ScheduleMeetingViewConfigurationType { .edit }
     var meetingName: String { scheduledMeeting.title }
     var startDate: Date { scheduledMeeting.startDate }

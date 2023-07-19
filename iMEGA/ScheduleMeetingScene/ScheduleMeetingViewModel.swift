@@ -6,7 +6,7 @@ protocol ScheduleMeetingRouting {
     func showSpinner()
     func hideSpinner()
     func dismiss(animated: Bool) async
-    func showSuccess(message: String) async
+    func showSuccess(message: String)
     func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity)
     func updated(occurrence: ScheduledMeetingOccurrenceEntity)
     func updated(meeting: ScheduledMeetingEntity)
@@ -23,6 +23,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         static let minDurationFiveMinutes: TimeInterval = 300
     }
     
+    var title: String { viewConfiguration.title }
     lazy var startDateFormatted = formatDate(startDate)
     lazy var endDateFormatted = formatDate(endDate)
     var minimunEndDate: Date { startDate.addingTimeInterval(Constants.minDurationFiveMinutes) }
@@ -109,8 +110,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
     @Published private(set) var rules: ScheduledMeetingRulesEntity
 
     private let router: any ScheduleMeetingRouting
-    private var viewConfiguration: any ScheduleMeetingViewConfigurable
-    private var accountUseCase: any AccountUseCaseProtocol
+    private let viewConfiguration: any ScheduleMeetingViewConfigurable
+    private let accountUseCase: any AccountUseCaseProtocol
     
     init(
         router: some ScheduleMeetingRouting,
@@ -189,6 +190,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
             var participantHandleList = participantHandleList
             participantHandleList.removeAll { removedParticipantHandleList.contains($0) }
             self.participantHandleList = Array(Set(participantHandleList).union(selectedParticipants.map(\.handle)))
+            self.updateRightBarButtonState()
         }
     }
     
@@ -355,8 +357,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     @MainActor
-    private func showSuccess(message: String) async {
-        await router.showSuccess(message: message)
+    private func showSuccess(message: String) {
+        router.showSuccess(message: message)
     }
     
     @MainActor

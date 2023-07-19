@@ -2,6 +2,7 @@
 import MEGADomain
 
 final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurable {
+    var title: String
     var type: ScheduleMeetingViewConfigurationType
     var meetingName: String
     var startDate: Date
@@ -24,6 +25,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
     var updateMeetingLinkEnabled_calledTimes = 0
     
     init(
+        title: String = "",
         type: ScheduleMeetingViewConfigurationType = .new,
         meetingName: String = "",
         startDate: Date = Date(),
@@ -47,6 +49,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
             scheduledMeeting: ScheduledMeetingEntity()
         )
     ) {
+        self.title = title
         self.type = type
         self.meetingName = meetingName
         self.startDate = startDate
