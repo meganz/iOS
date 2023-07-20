@@ -140,16 +140,6 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         if let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId), chatRoom.ownPrivilege == .moderator {
             options.append(
                 OccurrenceContextMenuOption(
-                    title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
-                    imageName: Asset.Images.NodeActions.rubbishBin.name
-                ) { [weak self] occurrence in
-                    guard let self else { return }
-                    cancelOccurrenceTapped(occurrence)
-                }
-            )
-            
-            options.append(
-                OccurrenceContextMenuOption(
                     title: Strings.Localizable.edit,
                     imageName: Asset.Images.NodeActions.edittext.name
                 ) { [weak self] occurrence in
@@ -167,6 +157,16 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
                             reload(occurrence: updatedOccurrence, at: occurrenceIndex)
                         }
                         .store(in: &subscriptions)
+                }
+            )
+            
+            options.append(
+                OccurrenceContextMenuOption(
+                    title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
+                    imageName: Asset.Images.NodeActions.rubbishBin.name
+                ) { [weak self] occurrence in
+                    guard let self else { return }
+                    cancelOccurrenceTapped(occurrence)
                 }
             )
         }
