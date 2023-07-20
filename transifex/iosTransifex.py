@@ -72,6 +72,7 @@ user_cache = {}
 # re.sub compatible version of PHP regex: /^[\pZ\pC]+|[\pZ\pC]+$/u as \p is not supported
 unicode_regex = re.compile('^[\u0000-\u0020\u007F-\u00A0\u00AD\u0600-\u0605\u061C\u06DD\u070F\u08E2\u1680\u180E\u2000-\u200F\u2028-\u202F\u205F-\u2064\u2066-\u206F\u3000\uFEFF\uFFF9-\uFFFB\U000110BD\U000110CD\U00013430-\U00013438\U0001BCA0\U0001BCA3\U0001D173-\U0001D17A\U000E0001\U000E0020-\U000E007F]+|[\u0000-\u0020\u007F-\u00A0\u00AD\u0600-\u0605\u061C\u06DD\u070F\u08E2\u1680\u180E\u2000-\u200F\u2028-\u202F\u205F-\u2064\u2066-\u206F\u3000\uFEFF\uFFF9-\uFFFB\U000110BD\U000110CD\U00013430-\U00013438\U0001BCA0\U0001BCA3\U0001D173-\U0001D17A\U000E0001\U000E0020-\U000E007F]+$', re.UNICODE)
 xml_tag_regex = re.compile(r'<[^[sd][^>]*>')
+jira_id = ""
 
 # Call this function to create a new resource in Transifex for the current git branch and create a local file for string additions/edits
 def run_branch(resource):
@@ -247,6 +248,9 @@ def run_upload(file_content, resource, branch):
                 print("Error: Failed to download gitlab file")
                 return False
         now = int(datetime.datetime.now(datetime.timezone.utc).timestamp()) - 30
+        global jira_id
+        while re.search("^[A-Z]{2,4}-\d+", jira_id) == None:
+            jira_id = input("Please enter the JIRA ticket ID for this branch. e.g: IOS-1234: ")
         print("Uploading file")
         if resource_put_english(resource_key, process_as_upload(file_content, is_plurals)):
             print("Upload completed")
@@ -312,6 +316,8 @@ def run_lock(resource, update_time = 0, is_stores = False, updated_comments = Fa
             print("Error: Unable to retrieve strings to lock")
             return False
         to_lock = {}
+        instructions = {}
+        global jira_id
         languages = get_languages()
         locked_tags = ["do_not_translate"]
         if is_change_logs:
@@ -329,9 +335,10 @@ def run_lock(resource, update_time = 0, is_stores = False, updated_comments = Fa
                         string_tags.append(tag)
                 if not_fully_locked:
                     to_lock[string["id"]] = string_tags
+                    instructions[string["id"]] = jira_id + " " + (string["attributes"]["instructions"] if string["attributes"]["instructions"] else "")
         if to_lock:
             print("Locking strings")
-            update_tags(to_lock)
+            update_string_meta(to_lock, instructions)
             print("Strings locked successfully")
         elif not updated_comments:
             print("Error: Resource is already locked or there are no strings to lock")
@@ -347,7 +354,7 @@ def run_lock(resource, update_time = 0, is_stores = False, updated_comments = Fa
                         string_tags.append(tag)
                 if not_fully_locked:
                     to_lock[id] = string_tags
-            update_tags(to_lock)
+            update_string_meta(to_lock, instructions)
             update_comments(to_lock)
     else:
         print("Error: Resource " + resource + " not found")
@@ -386,7 +393,7 @@ def run_unlock(resource):
                 to_unlock[string["id"]] = tmp
         if to_unlock:
             print("Unlocking strings")
-            update_tags(to_unlock)
+            update_string_meta(to_unlock, {})
             print("Strings unlocked successfully")
         else:
             print("Error: Resource is already unlocked or there are no strings")
@@ -883,7 +890,7 @@ def process_as_upload(file_content, is_plurals):
     return map_to_content(content_to_map(file_content, True, is_plurals), is_plurals)
 
 # Call this function to update the string tags for a resource.
-def update_tags(to_lock):
+def update_string_meta(to_lock, string_instructions):
     for key in to_lock:
         payload = {
             "data": {
@@ -894,6 +901,8 @@ def update_tags(to_lock):
                 "type": "resource_strings"
             }
         }
+        if string_instructions[key]:
+            payload["data"]["attributes"]["instructions"] = string_instructions[key].strip()
         response = do_request(BASE_URL + "/resource_strings/" + key, payload, "PATCH")
         if "errors" in response:
             print_error(response["errors"])
@@ -1539,7 +1548,11 @@ def main():
     parser.add_argument("-r", "--resource", nargs=1, help="The Transifex resource to perform the action for")
     parser.add_argument("-b", "--branch", nargs="?", help="The Transifex branch resource to perform the action for", const=True, default=False)
     parser.add_argument("-f", "--file", nargs=1, help="The file to process or output to")
+    parser.add_argument("-j", "--jira", nargs=1, help="The JIRA ticket id for the current branch e.g: IOS-1234")
     args = parser.parse_args()
+    if args.jira:
+        global jira_id
+        jira_id = args.jira[0]
     if args.mode:
         mode = args.mode[0].lower()
         if mode == "download":
