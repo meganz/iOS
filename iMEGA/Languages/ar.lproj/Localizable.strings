@@ -348,6 +348,8 @@
 "Document scanning is not available"="المسح الضوئي للمستند غير متوفر";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="هناك ملف بنفس الاسم";
+/* Browser save to cloud drive select button title */
+"cloudDrive.browser.saveToCloudDrive.title"="حفظ في السواقة السحابية";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="استيراد من تطبيق الملفات";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -3237,15 +3239,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] قام بدعوتك[/B] إلي اجتماع مجدول بتاريخ:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] قام بتحديث[/B] تفاصيل الاجتماع المجدول بتاريخ:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] قام بتحديث[/B] وصف الاجتماع";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] قام بإلغاء[/B] الاجتماع المجدول بتاريخ:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] قام بتحديث[/B] تاريخ الاجتماع";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] قام بتحديث[/B] وقت الاجتماع";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] قام بتحديث[/B] اسم الاجتماع من”[PreviousTitle]“ إلى [B]”[UpdatedTitle]“[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3253,13 +3255,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] قام بدعوتك لي اجتماع متكرر مجدول بتاريخ:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] قام بتحديث[/B] تفاصيل الاجتماع المتكرر المجدول بتاريخ:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] قام بتحديث[/B] وصف الاجتماع المتكرر";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] قام بتحديث[/B] تاريخ الاجتماع المتكرر";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] قام بتحديث[/B] وقت الاجتماع المتكرر";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="التكرارات";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3277,9 +3279,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="كل يوم اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] قام بإلغاء[/B] التكرار المجدول بتاريخ:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] قام بتحديث[/B] التكرار إلى: ";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="ترقية أمان الحساب";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3547,7 +3549,7 @@
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="إلغاء";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="إلغاء ”%@“؟";
+"meetings.scheduled.cancelAlert.title"="إلغاء %@؟";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="سيتم وضع هذا الاجتماع تحت الاجتماعات السابقة وسيتم إعلام جميع المشاركين.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3576,7 +3578,39 @@
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="هذا هو التكرار الوحيد للاجتماع المتكرر. إلغاء هذا التكرار سيلغي الاجتماع. في حالة الإلغاء سيتم وضع الاجتماع ضمن الاجتماعات الماضية وسيتم إعلام جميع المشاركين.";
 /* Title for alert cancelling an occurrence */
 "meetings.scheduled.cancelAlert.occurrence.title"="إلغاء التكرار في %@؟";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@قام بإلغاء هذا الاجتماع";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
+"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ قام بإلغاء الاجتماع المتكرر وجميع تكراراته";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
+"meetings.scheduled.managementMessages.cancelled.occurrence"="قام %@ بإلغاء التكرار المجدول بتاريخ %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
+"meetings.scheduled.managementMessages.created"="قام %@ بإنشاء هذا الاجتماع";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="%@ ألغى هذا الاجتماع";
+/* Name of the screen of contact info shown when back button is long pressed */
+"contactInfo.backButton.menu"="معلومات جهة الاتصال";
+/* Create meeting tip view title */
+"meetings.scheduleMeeting.createMeetingTip.title"="الاجتماع المجدول";
+/* Create meeting tip view message */
+"meetings.scheduleMeeting.createMeetingTip.message"="يمكنك الآن جدولة اجتماعات لمرة واحدة ومتكررة.";
+/* Scheduled meeting tip view dismiss action button title */
+"meetings.scheduleMeeting.tipView.gotIt"="فهمت ذلك";
+/* Start meeting tip view title */
+"meetings.scheduleMeeting.startMeetingTip.title"="ابدأ الاجتماع";
+/* Start meeting tip view message */
+"meetings.scheduleMeeting.startMeetingTip.message"="يمكنك بدء الاجتماع قبل موعده المحدد بالضغط على \"بدء الاجتماع\" في غرفة الاجتماع.";
+/* Recurring meeting tip view title */
+"meetings.scheduleMeeting.recurringMeetingTip.title"="إدارة الاجتماعات المتكررة";
+/* Recurring meeting tip view message */
+"meetings.scheduleMeeting.recurringMeetingTip.message"="يمكنك عرض أو إلغاء أو تعديل أي تكرار لاجتماع متكرر من خلال النقر على الاجتماع مع الاستمرار واختيار التكرارات.";
+/* Schedule meeting update button */
+"meetings.scheduleMeeting.update"="تحديث";
+/* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
+"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="تم تحديث الاجتماع";
+/* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
+"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="تم تحديث تكرار الاجتماع";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
-"meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
+"meetings.scheduled.managementMessages.updated"="%@ قام بتحديث الاجتماع";
+/* Edit Schedule meeting navigaion title. */
+"meetings.scheduled.editMeeting.title"="تعديل الاجتماع";

@@ -348,6 +348,8 @@
 "Document scanning is not available"="Pemindaian dokumen tidak tersedia";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Sudah ada file dengan nama yang sama";
+/* Browser save to cloud drive select button title */
+"cloudDrive.browser.saveToCloudDrive.title"="Simpan ke drive Cloud";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Impor dari File";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -395,7 +397,7 @@
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
 "sharedItems.link.linkUpdated"="Tautan diperbarui. Salin lagi.";
 /* An alert dialog for the Get Link feature */
-"proOnly"="(HANYA PRO)";
+"proOnly"="(hanya Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Tetapkan Tanggal Kedaluwarsa";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -1161,7 +1163,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Hemat 16%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="SALAH BELI %@ (%ld)";
+"wrongPurchase"="Salah beli %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="In-App Purchases di nonaktifkan, harap aktifkan pada iOS Settings";
 /* Error message shown when the selected product doesn't exist */
@@ -2345,7 +2347,7 @@
 /* Text used for a title or header listing the details of something. */
 "DETAILS"="DETAIL";
 /* Text used as title or header for reference an url, for instance, a node link. */
-"LINK"="TAUTAN";
+"LINK"="Tautan";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Pembuatan Tautan";
 /* Context menu item. Allows user to add file/folder to favourites */
@@ -2373,7 +2375,7 @@
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
 "Grey"="Abu";
 /* Text presenting a key (for a LINK or similar) as header usually */
-"KEY"="KUNCI";
+"KEY"="Kunci";
 /* Text for options in Get Link View to separate the key from the link */
 "Send Decryption Key Separately"="Kirim Kunci Dekripsi Secara Terpisah";
 /* Text for options in Get Link View to activate expiry date */
@@ -3237,15 +3239,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] telah mengundang[/B] anda ke rapat yang dijadwalkan untuk:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] telah diperbarui[/B] rincian pertemuan yang dijadwalkan untuk: ";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] telah diperbarui[/B] deskripsi pertemuan ";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] telah membatalkan[/B] pertemuan yang dijadwalkan untuk: ";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] telah diperbarui[/B] tanggal pertemuan ";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] telah diperbarui[/B] waktu pertemuan";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] telah diperbarui[/B] nama pertemuan dari  “[PreviousTitle]” menjadi [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3253,13 +3255,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] mengundang anda ke rapat berulang yang dijadwalkan untuk:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] telah diperbarui[/B] rincian rapat rutin yang dijadwalkan untuk: ";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] telah diperbarui[/B] deskripsi pertemuan berulang";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] telah diperbarui[/B] tanggal pertemuan berulang ";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] telah diperbarui[/B] waktu pertemuan berulang ";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Kejadian";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3277,9 +3279,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Setiap hari efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] telah membatalkan[/B] kejadian yang dijadwalkan untuk: ";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] telah diperbarui[/B] kejadian untuk: ";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Peningkatan keamanan akun";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3547,7 +3549,7 @@
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Batal";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Batalkan “%@”?";
+"meetings.scheduled.cancelAlert.title"="Cancel %@?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="Rapat ini akan ditempatkan di bawah rapat Sebelumnya dan semua peserta akan diberi tahu.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3575,8 +3577,40 @@
 /* Description for alert cancelling last occurrence with messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Ini adalah satu-satunya kejadian pertemuan berulang. Membatalkan kejadian ini akan membatalkan rapat. Jika dibatalkan, rapat akan ditempatkan di bawah rapat Sebelumnya dan semua peserta akan diberi tahu.";
 /* Title for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.title"="Batalkan kejadian ke %@?";
+"meetings.scheduled.cancelAlert.occurrence.title"="Cancel %@ occurrence?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ membatalkan pertemuan ini ";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
+"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ cancelled this meeting and all its occurrences";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
+"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ cancelled the occurrence scheduled for %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
+"meetings.scheduled.managementMessages.created"="%@ created this meeting";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="%@ membatalkan pertemuan ini ";
+/* Name of the screen of contact info shown when back button is long pressed */
+"contactInfo.backButton.menu"="Info kontak";
+/* Create meeting tip view title */
+"meetings.scheduleMeeting.createMeetingTip.title"="Jadwalkan pertemuan";
+/* Create meeting tip view message */
+"meetings.scheduleMeeting.createMeetingTip.message"="You can now schedule one-off and recurring meetings.";
+/* Scheduled meeting tip view dismiss action button title */
+"meetings.scheduleMeeting.tipView.gotIt"="Saya mengerti";
+/* Start meeting tip view title */
+"meetings.scheduleMeeting.startMeetingTip.title"="Mulai pertemuan";
+/* Start meeting tip view message */
+"meetings.scheduleMeeting.startMeetingTip.message"="You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.";
+/* Recurring meeting tip view title */
+"meetings.scheduleMeeting.recurringMeetingTip.title"="Manage recurring meetings";
+/* Recurring meeting tip view message */
+"meetings.scheduleMeeting.recurringMeetingTip.message"="You can view, cancel, or edit any occurrence of a recurring meeting by tapping and holding the meeting and selecting Occurrences.";
+/* Schedule meeting update button */
+"meetings.scheduleMeeting.update"="Perbarui";
+/* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
+"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="Meeting updated";
+/* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
+"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="Meeting occurrence updated";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
-"meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
+"meetings.scheduled.managementMessages.updated"="%@ updated the meeting";
+/* Edit Schedule meeting navigaion title. */
+"meetings.scheduled.editMeeting.title"="Mengubah rapat";

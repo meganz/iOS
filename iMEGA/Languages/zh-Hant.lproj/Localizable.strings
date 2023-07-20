@@ -348,6 +348,8 @@
 "Document scanning is not available"="無法進行文件掃描";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="已經有一個相同名稱的檔案";
+/* Browser save to cloud drive select button title */
+"cloudDrive.browser.saveToCloudDrive.title"="儲存到雲端硬碟";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="從檔案匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -883,23 +885,23 @@
 /* Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account */
 "removeNodeFromRubbishBinTitle"="確認移除";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 file' */
-"removeFileToRubbishBinMessage"="您即將永久刪除 1 個檔案。您要繼續嗎？（您不能復原此操作。）";
+"removeFileToRubbishBinMessage"="您將永久刪除1個檔案。您要繼續嗎？（您無法撤銷此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files" */
-"removeFilesToRubbishBinMessage"="您即將永久刪除%d個檔案。您要繼續嗎？（您不能復原該操作。）";
+"removeFilesToRubbishBinMessage"="您將永久刪除%d個檔案。您要繼續嗎？（您無法撤銷此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove '1 folder' */
-"removeFolderToRubbishBinMessage"="您即將永久刪除1個資料夾。您要繼續嗎？（您不能復原該操作。）";
+"removeFolderToRubbishBinMessage"="您將永久刪除1個資料夾。您要繼續嗎？（您無法撤銷此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} folders" */
-"removeFoldersToRubbishBinMessage"="您即將永久刪除%d個資料夾。您要繼續嗎？（您不能復原該操作。）";
+"removeFoldersToRubbishBinMessage"="您將永久刪除%d個資料夾。您要繼續嗎？（您無法撤銷此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and 1 folder" */
-"removeFileFolderToRubbishBinMessage"="您即將永久刪除 1 個檔案和 1 個資料夾。您要繼續嗎？（您不能復原該操作。）";
+"removeFileFolderToRubbishBinMessage"="您將永久刪除1個檔案和1個資料夾。您要繼續嗎？（您無法撤銷此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "1 file and {1+} folders" */
-"removeFileFoldersToRubbishBinMessage"="您即將永久刪除 1 個檔案和%d個資料夾。您要繼續嗎？（您不能復原該操作。）";
+"removeFileFoldersToRubbishBinMessage"="您將永久刪除1個檔案和%d個資料夾。您要繼續嗎？（您無法撤銷此操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} files and 1 folder" */
 "removeFilesFolderToRubbishBinMessage"="您即將永久刪除%d個檔案和1個資料夾。您要繼續嗎？（您不能復原該操作。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="您將永久刪除[A]個檔案和[B]個資料夾。您要繼續嗎？（此操作不可恢復。）";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
-"sharedItems.rubbish.warning.message"="You are about to permanently remove %@. Would you like to proceed? (You cannot undo this action.)";
+"sharedItems.rubbish.warning.message"="您將永久刪除%@。您要繼續嗎？（您無法撤銷此操作。）";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="已自MEGA移除1個檔案";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -917,7 +919,7 @@
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="已自MEGA移除[A]個檔案與[B]個資料夾";
 /* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="%@ removed from MEGA";
+"sharedItems.rubbish.confirmation.message"="已從MEGA移除%@";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="新密碼";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1425,7 +1427,7 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="新訊息";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="訂閱將會自動更新，續期與第一次訂閱的相同，價格也相同。您可以於您的iTunes帳戶設定頁面關閉MEGA Pro的自動更新訂閱，此操作必須於您的下一個訂閱繳款期限的24小時之前執行。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，在頁面下方以您的Apple ID登入（如果您尚未登入），然後點擊查看帳號。您將前往您的帳戶頁面，向下捲動就可以看到應用程式訂閱管理。在那裡您可以選擇你的MEGA Pro訂閱和查看續訂日期、選擇不同的訂閱方案或切換開關至關閉以停用您的自動續訂。";
+"autorenewableDescription"="訂閱將自動更新，續期時間和價格都與第一次訂閱的相同。您可以在下一次訂閱付款生效的24小時之前，透過您的iTunes帳戶設定頁面關閉MEGA Pro的自動續訂。欲管理您的訂閱內容，只需點擊您手機上的App Store圖示，在頁面下方以您的Apple ID登入（如果您尚未登入），然後點擊查看帳號。您將前往您的帳戶頁面，向下捲動就可以看到應用程式訂閱管理。在那裡您可以選擇你的MEGA Pro訂閱和查看續訂日期、選擇不同訂閱方案或切換開關至關閉以停用您的自動續訂。";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="開啟MEGA並登入以繼續";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -2643,7 +2645,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="新的會議";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
+"meetings.createMeeting.defaultMeetingName"="%@的會議";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="開始會議";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -3237,15 +3239,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] 邀請[/B]您參加會議，排程時間：";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]更新[/B]以下排定時間的會議細節：";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] 更新[/B]會議說明";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] 取消[/B]排程時間如下的會議：";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] 更新[/B]會議日期";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] 更新[/B]會議時間";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] 更新[/B]會議名稱，從「[PreviousTitle]」更新為[B]「[UpdatedTitle]」[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3253,13 +3255,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 邀請您參加定期會議，排程時間：";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email]更新[/B]以下排定時間的定期性會議細節：";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 更新[/B]定期會議說明";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] 更新[/B]定期會議日期";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] 更新[/B]定期會議時間";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="事件";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3277,9 +3279,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="從[B][StartDate]到[UntilDate][/B]，每天的[B][StartTime]到[EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] 取消[/B]排程時間如下的事件：";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] 更新[/B]事件為：";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="帳戶安全性升級";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3347,7 +3349,7 @@
 /* Schedule meeting link field */
 "meetings.scheduleMeeting.link"="會議連結";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.link.description"="知道此連結的任何人都可以加入會議並檢視會議對話。";
+"meetings.scheduleMeeting.link.description"="任何擁有此連結的人都可以加入會議並查看會議對話記錄。";
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="新增與會者";
 /* Schedule meeting send calendar invite field */
@@ -3417,13 +3419,13 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="相機";
 /* Device Center title */
-"device.center.title"="Device centre";
+"device.center.title"="裝置中心";
 /* Device Center list current device title */
-"device.center.current.device.title"="This device";
+"device.center.current.device.title"="此裝置";
 /* Device Center list other devices title */
-"device.center.other.devices.title"="Other devices";
+"device.center.other.devices.title"="其它裝置";
 /* Device Center backup up to date status */
-"device.center.backup.upToDate.status.message"="最新的";
+"device.center.backup.upToDate.status.message"="已是最新";
 /* Device Center backup scanning status */
 "device.center.backup.scanning.status.message"="正在掃描⋯";
 /* Device Center backup initialising status */
@@ -3431,9 +3433,9 @@
 /* Device Center backup updating status */
 "device.center.backup.updating.status.message"="正在更新⋯";
 /* Device Center backup no camera uploads status */
-"device.center.backup.noCameraUploads.status.message"="No camera uploads";
+"device.center.backup.noCameraUploads.status.message"="沒有相機上傳";
 /* Device Center backup disabled status */
-"device.center.backup.disabled.status.message"="停用";
+"device.center.backup.disabled.status.message"="已停用";
 /* Device Center backup offline status */
 "device.center.backup.offline.status.message"="離線";
 /* Device Center backup backup stopped status */
@@ -3445,7 +3447,7 @@
 /* Device Center backup error status */
 "device.center.backup.error.status.message"="錯誤";
 /* Device Center backup blocked status */
-"device.center.backup.blocked.status.message"="封鎖";
+"device.center.backup.blocked.status.message"="已封鎖";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="結束重複";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3463,11 +3465,11 @@
 /* The button or alert title to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistory"="清空會議記錄";
 /* Message show when the history of a meeting has been successfully deleted */
-"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history cleared";
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="會議歷史記錄已清除";
 /* The alert message to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="您確定要刪除此會議全部的訊息記錄嗎？";
 /* Text explaining users how the meeting links work. */
-"meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+"meetings.info.shareMeetingLink.explainLink"="任何擁有此連結的人都可以加入會議並查看會議對話記錄";
 /* The title of a menu button which allows users to rename a meeting. */
 "meetings.info.renameMeeting"="重新命名會議名稱";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
@@ -3481,13 +3483,13 @@
 /* Create Schedule Meeting: The text is shown along with the selected interval. */
 "meetings.scheduleMeeting.create.interval.optionTitle"="每";
 /* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
-"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="選擇頻率";
 /* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
-"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="選擇每週間隔";
 /* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
-"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="選擇一週中的某一天";
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
-"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="選擇每月間隔";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
 "meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="在…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
@@ -3503,51 +3505,51 @@
 /* Create Schedule Meeting: Month custom option - fifth week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="第五個";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
-"meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
+"meetings.scheduled.create.weekly.everyDay.footerNote"="會議將每日舉行。";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
-"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="每日";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
-"upgradeAccountPlan.button.restore.title"="Restore purchase";
+"upgradeAccountPlan.button.restore.title"="恢復購買";
 /* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Terms and policies";
+"upgradeAccountPlan.button.termsAndPolicies.title"="條款和政策";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
-"upgradeAccountPlan.button.buyAccountPlan.title"="Buy %@";
+"upgradeAccountPlan.button.buyAccountPlan.title"="購買%@";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="選擇適合您的方案";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Current plan: %@";
+"upgradeAccountPlan.header.title.currentPlan"="目前方案：%@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="每月";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="每年";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
-"upgradeAccountPlan.header.title.saveYearlyBilling"="Save up to 16%% with yearly billing";
+"upgradeAccountPlan.header.title.saveYearlyBilling"="按年計費最多可節省16%%";
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多可還原90天，Pro I、II、III最多可還原365天（即將推出）\n\n• 可設定7天到10年之間垃圾筒清理自動排程";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
-"upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
+"upgradeAccountPlan.header.title.subscriptionDetails"="訂閱詳情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
-"upgradeAccountPlan.message.text.subscriptionDetails"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.";
+"upgradeAccountPlan.message.text.subscriptionDetails"="訂閱會自動續訂，續期時間和價格都與第一次訂閱的相同。\n您可以在下一次訂閱付款生效的24小時之前，在您的iTunes帳戶設定頁面關閉MEGA Pro的自動續訂。";
 /* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
 "upgradeAccountPlan.plan.tag.currentPlan"="目前方案";
 /* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
 "upgradeAccountPlan.plan.tag.recommended"="推薦的";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/month";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/月";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/year";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/年";
 /* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
-"upgradeAccountPlan.plan.details.storage"="Storage: %@";
+"upgradeAccountPlan.plan.details.storage"="儲存：%@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
-"upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
+"upgradeAccountPlan.plan.details.transfer"="傳輸：%@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
-"upgradeAccountPlan.footer.message.pricingPage"="You can upgrade your current subscription on our [A]pricing page[/A].";
+"upgradeAccountPlan.footer.message.pricingPage"="您可以在我們的[A]定價頁面[/A]升級您目前的訂閱方案。";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="取消";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="是否取消「%@」？";
+"meetings.scheduled.cancelAlert.title"="Cancel %@?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="此會議將被放在過去的會議中，並通知所有與會者。";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3575,8 +3577,40 @@
 /* Description for alert cancelling last occurrence with messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="這是定期會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被放在過去的會議中，而且所有參與者都將收到通知。";
 /* Title for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.title"="Cancel the %@ occurrence?";
+"meetings.scheduled.cancelAlert.occurrence.title"="取消%@事件？";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@已取消此會議";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
+"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@已取消這次會議及其所有事件";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
+"meetings.scheduled.managementMessages.cancelled.occurrence"="%@已取消以下排定時間的事件%@";
+/* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
+"meetings.scheduled.managementMessages.created"="%@已建立此會議";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
-"meetings.scheduled.managementMessages.cancelled"="%@ cancelled this meeting";
+"meetings.scheduled.managementMessages.cancelled"="%@已取消此會議";
+/* Name of the screen of contact info shown when back button is long pressed */
+"contactInfo.backButton.menu"="聯絡資訊";
+/* Create meeting tip view title */
+"meetings.scheduleMeeting.createMeetingTip.title"="安排會議";
+/* Create meeting tip view message */
+"meetings.scheduleMeeting.createMeetingTip.message"="You can now schedule one-off and recurring meetings.";
+/* Scheduled meeting tip view dismiss action button title */
+"meetings.scheduleMeeting.tipView.gotIt"="知道了";
+/* Start meeting tip view title */
+"meetings.scheduleMeeting.startMeetingTip.title"="開始會議";
+/* Start meeting tip view message */
+"meetings.scheduleMeeting.startMeetingTip.message"="您可以點擊會議室中的「開始會議」，在預定時間之前開始會議。";
+/* Recurring meeting tip view title */
+"meetings.scheduleMeeting.recurringMeetingTip.title"="管理定期會議";
+/* Recurring meeting tip view message */
+"meetings.scheduleMeeting.recurringMeetingTip.message"="您可以點擊並按住會議，然後選擇「事件」來查看、取消或編輯定期會議的任何事件。";
+/* Schedule meeting update button */
+"meetings.scheduleMeeting.update"="更新";
+/* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
+"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="會議已更新";
+/* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
+"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="會議事件已更新";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
-"meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
+"meetings.scheduled.managementMessages.updated"="%@已更新會議";
+/* Edit Schedule meeting navigaion title. */
+"meetings.scheduled.editMeeting.title"="編輯會議";

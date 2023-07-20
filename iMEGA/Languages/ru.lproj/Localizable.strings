@@ -348,6 +348,8 @@
 "Document scanning is not available"="Сканирование документов недоступно";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Файл с таким названием уже существует";
+/* Browser save to cloud drive select button title */
+"cloudDrive.browser.saveToCloudDrive.title"="Сохранить на Облачном диске";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Импорт из «Файлов»";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -395,7 +397,7 @@
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
 "sharedItems.link.linkUpdated"="Ссылка обновлена. Скопируйте ещё раз.";
 /* An alert dialog for the Get Link feature */
-"proOnly"="(ТОЛЬКО PRO)";
+"proOnly"="(только Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Задать срок годности";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -1161,7 +1163,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Экономия 16 %";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="НЕВЕРНАЯ ПОКУПКА %@ (%ld)";
+"wrongPurchase"="Неверная покупка %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Покупки внутри приложений отключены, включите их в настройках iOS";
 /* Error message shown when the selected product doesn't exist */
@@ -2345,7 +2347,7 @@
 /* Text used for a title or header listing the details of something. */
 "DETAILS"="ПОДРОБНОСТИ";
 /* Text used as title or header for reference an url, for instance, a node link. */
-"LINK"="ССЫЛКА";
+"LINK"="Ссылка";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Ссылка создана";
 /* Context menu item. Allows user to add file/folder to favourites */
@@ -2373,7 +2375,7 @@
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
 "Grey"="Серый";
 /* Text presenting a key (for a LINK or similar) as header usually */
-"KEY"="КЛЮЧ";
+"KEY"="Ключ";
 /* Text for options in Get Link View to separate the key from the link */
 "Send Decryption Key Separately"="Отправлять ключ дешифрования отдельно";
 /* Text for options in Get Link View to activate expiry date */
@@ -3237,15 +3239,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] пригласил[/B] вас на встречу, назначенную на:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] изменил[/B] подробности встречи, назначенной на:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] изменил[/B] описание встречи";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] отменил[/B] встречу, назначенную на:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] изменил[/B] дату встречи";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] изменил[/B] время встречи";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] изменил[/B] название встречи с «[PreviousTitle]» to [B]«[UpdatedTitle]»[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3253,13 +3255,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] пригласил вас на повторяющуюся встречу, назначенную на:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] изменил[/B] подробности повторяющейся встречи, назначенной на:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] изменил[/B] описание повторяющейся встречи";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] изменил[/B] дату повторяющейся встречи";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] изменил[/B] время повторяющейся встречи";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Повторения";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3277,9 +3279,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Каждый день [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] отменил[/B] повторение, назначенное на:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] изменил[/B] повторение на:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Повышение безопасности аккаунта";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3563,20 +3565,52 @@
 /* Success message when cancelling an scheduled meeting with messages in chat room */
 "meetings.scheduled.cancelAlert.success.withMessages"="Встреча отменена";
 /* Description for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.description"="Только это событие будет отменено. Все остальные события будут продолжаться, как и запланировано.";
+"meetings.scheduled.cancelAlert.occurrence.description"="Только это повторение будет отменено. Все остальные повторения будут продолжаться, как и запланировано.";
 /* Confirm cancel option for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Отменить событие";
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Отменить повторение";
 /* Success message when cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.success"="Событие %@ отменено";
+"meetings.scheduled.cancelAlert.occurrence.success"="Повторение %@ отменено";
 /* Title for alert cancelling last occurrence */
-"meetings.scheduled.cancelAlert.occurrence.last.title"="Отменить событие и встречу?";
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Отменить повторение и встречу?";
 /* Description for alert cancelling last occurrence without messages in chat room */
-"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Это единственное событие регулярной встречи. Если его отменить, встреча также будет отменена. Отменённая встреча будет архивирована, и все участники будут уведомлены об этом.";
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Это единственное повторение повторяющейся встречи. Если его отменить, встреча также будет отменена. Отменённая встреча будет архивирована, и все участники будут уведомлены об этом.";
 /* Description for alert cancelling last occurrence with messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Это единственное событие регулярной встречи. Если его отменить, встреча также будет отменена. Отменённая встреча будет помещена в раздел «Прошлые встречи», и все участники будут уведомлены об этом.";
 /* Title for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.title"="Отменить событие %@?";
+"meetings.scheduled.cancelAlert.occurrence.title"="Отменить повторение %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="Пользователь %@ отменил встречу";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
+"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="Пользователь %@ отменил эту встречу и все её повторения";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
+"meetings.scheduled.managementMessages.cancelled.occurrence"="Пользователь %@ отменил повторение, назначенное на %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
+"meetings.scheduled.managementMessages.created"="Пользователь %@ создал эту встречу";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="Пользователь %@ отменил встречу";
+/* Name of the screen of contact info shown when back button is long pressed */
+"contactInfo.backButton.menu"="О контакте";
+/* Create meeting tip view title */
+"meetings.scheduleMeeting.createMeetingTip.title"="Запланировать встречу";
+/* Create meeting tip view message */
+"meetings.scheduleMeeting.createMeetingTip.message"="Теперь вы можете планировать разовые и повторяющиеся встречи.";
+/* Scheduled meeting tip view dismiss action button title */
+"meetings.scheduleMeeting.tipView.gotIt"="Понятно";
+/* Start meeting tip view title */
+"meetings.scheduleMeeting.startMeetingTip.title"="Начать встречу";
+/* Start meeting tip view message */
+"meetings.scheduleMeeting.startMeetingTip.message"="Вы можете начать встречу раньше запланированного времени, нажав «Начать встречу» в комнате встречи.";
+/* Recurring meeting tip view title */
+"meetings.scheduleMeeting.recurringMeetingTip.title"="Управляйте повторяющимися встречами";
+/* Recurring meeting tip view message */
+"meetings.scheduleMeeting.recurringMeetingTip.message"="Вы можете просмотреть, отменить или отредактировать любое повторение повторяющейся встречи, нажав и удерживая её, а затем выбрав «События».";
+/* Schedule meeting update button */
+"meetings.scheduleMeeting.update"="Изменить";
+/* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
+"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="Встреча обновлена";
+/* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
+"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="Повторение встречи обновлено";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
-"meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
+"meetings.scheduled.managementMessages.updated"="Пользователь %@ обновил встречу";
+/* Edit Schedule meeting navigaion title. */
+"meetings.scheduled.editMeeting.title"="Редактировать встречу";
