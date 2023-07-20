@@ -7,7 +7,6 @@ public protocol AudioSessionUseCaseProtocol {
     func configureAudioPlayerAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureChatDefaultAudioPlayer(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
-    func configureInstantSoundsAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func isOutputFrom(port: AudioPort) -> Bool
     func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
@@ -34,10 +33,6 @@ extension AudioSessionUseCaseProtocol {
     
     public func configureAudioRecorderAudioSession() {
         configureAudioRecorderAudioSession(completion: nil)
-    }
-    
-    public func configureInstantSoundsAudioSession() {
-        configureInstantSoundsAudioSession(completion: nil)
     }
     
     public func configureVideoAudioSession() {
@@ -90,10 +85,6 @@ public final class AudioSessionUseCase<T: AudioSessionRepositoryProtocol>: Audio
     
     public func configureAudioRecorderAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         audioSessionRepository.configureAudioRecorderAudioSession(completion: completion)
-    }
-    
-    public func configureInstantSoundsAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        audioSessionRepository.configureInstantSoundsAudioSession(completion: completion)
     }
     
     public func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {

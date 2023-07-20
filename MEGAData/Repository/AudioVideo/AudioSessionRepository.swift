@@ -47,7 +47,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     func configureCallAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         do {
             let isSpeakerEnabled = currentSelectedAudioPort == .builtInSpeaker
-            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP])
+            try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
             if isSpeakerEnabled {
                 try audioSession.overrideOutputAudioPort(.speaker)
             }
@@ -89,20 +89,6 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             completion?(.success)
         } catch {
             MEGALogError("[AudioSession] configureAudioRecorderAudioSession Error: \(error.localizedDescription)")
-            completion?(.failure(.generic))
-        }
-    }
-    
-    func configureInstantSoundsAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
-        do {
-            let isSpeakerEnabled = currentSelectedAudioPort == .builtInSpeaker
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, options: [.allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
-            if isSpeakerEnabled {
-                try audioSession.overrideOutputAudioPort(.speaker)
-            }
-            completion?(.success)
-        } catch {
-            MEGALogError("[AudioSession] configureInstantSoundsAudioSession Error: \(error.localizedDescription)")
             completion?(.failure(.generic))
         }
     }

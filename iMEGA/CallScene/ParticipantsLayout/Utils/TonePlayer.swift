@@ -22,9 +22,6 @@ final class TonePlayer: NSObject {
             MEGALogDebug("\(tone.rawValue) file not found")
             return
         }
-
-        audioSessionUseCase = AudioSessionUseCase.default
-        audioSessionUseCase?.configureInstantSoundsAudioSession()
         
         if let audioPlayer = audioPlayer {
             audioPlayer.stop()
@@ -33,6 +30,7 @@ final class TonePlayer: NSObject {
 
         self.audioPlayer = try? AVAudioPlayer(contentsOf: toneURL)
         self.audioPlayer?.delegate = self
+        self.audioPlayer?.volume = 1
         self.audioPlayer?.play()
     }
     
