@@ -452,7 +452,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self determineViewMode];
     }
     
-    if (nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail) {
+    if (self.displayMode == DisplayModeCloudDrive && nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail) {
         MEGANode *updatedNode = [nodeList nodeAtIndex:0];
         NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
         [self reloadDataAtIndexPaths:@[indexPath]];

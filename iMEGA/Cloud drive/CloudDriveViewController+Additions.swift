@@ -211,17 +211,51 @@ extension CloudDriveViewController {
     }
     
     @objc func findIndexPath(for node: MEGANode, source: [MEGANode]) -> IndexPath {
-        let section = node.isFolder() ? 0 : 1
+        let section = sectionIndex(for: node, source: source)
         let item = itemIndex(for: node, source: source)
         return IndexPath(item: item, section: section)
     }
     
+    private func sectionIndex(for node: MEGANode, source: [MEGANode]) -> Int {
+        return node.isFolder() ? 0 : 1
+    }
+    
     private func itemIndex(for node: MEGANode, source: [MEGANode]) -> Int {
-        if source.isEmpty {
+        guard source.isNotEmpty else {
             return 0
-        } else {
-            let potentialIndex = source.firstIndex { $0.handle == node.handle } ?? 0
-            return node.isFolder() ? potentialIndex : potentialIndex - 1
         }
+        
+        let isOnlyFiles = isAllNodeIsFileType(in: source)
+        let isOnlyFolders = isAllNodeIsFolderType(in: source)
+        let hasFilesAndFolders = !isOnlyFiles && !isOnlyFolders
+        
+        if isOnlyFiles || isOnlyFolders {
+            return source.firstIndex { $0.handle == node.handle } ?? 0
+        }
+        
+        if hasFilesAndFolders {
+            if node.isFolder() {
+                return source.firstIndex { $0.handle == node.handle } ?? 0
+            } else {
+                return findItemIndexForFileNode(for: node, source: source)
+            }
+        }
+            
+        return 0
+    }
+    
+    private func findItemIndexForFileNode(for node: MEGANode, source: [MEGANode]) -> Int {
+        let potentialIndex = source.firstIndex { $0.handle == node.handle } ?? 0
+        let folderNodeCount = source.filter { $0.isFolder() }.count
+        let normalizedFileNodeIndex = potentialIndex - folderNodeCount
+        return normalizedFileNodeIndex
+    }
+    
+    private func isAllNodeIsFileType(in source: [MEGANode]) -> Bool {
+        source.allSatisfy { $0.isFile() }
+    }
+    
+    private func isAllNodeIsFolderType(in source: [MEGANode]) -> Bool {
+        source.allSatisfy { $0.isFolder() }
     }
 }
