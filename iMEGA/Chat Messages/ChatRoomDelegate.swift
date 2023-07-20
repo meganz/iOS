@@ -150,11 +150,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
     
     func onMessageLoaded(_ api: MEGAChatSdk, message: MEGAChatMessage?) {
-        // Remove the new meeting management message from chatroom.
-        // This is because the information provided by SDK is interpreted wrongly by the app and hence filtering it for now.
-        guard message?.messageIndex != -1 || message?.type != .scheduledMeeting else {
-            return
-        }
+        guard include(message: message) else { return }
         
         if let chatMessage = message {
             if !chatMessage.isDeleted {
@@ -213,6 +209,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     
     func onMessageReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
         MEGALogInfo("ChatRoomDelegate: onMessageReceived \(message)")
+        guard include(message: message) else { return }
         
         guard supportedMessage(message) else {
             MEGALogError("ChatRoomDelegate: onMessageReceived - message not supported")
@@ -549,6 +546,17 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     }
     
     // MARK: - Private methods
+    
+    private func include(message: MEGAChatMessage?) -> Bool {
+        // Remove the new meeting management message from chatroom.
+        // This is because the information provided by SDK is interpreted wrongly by the app and hence filtering it for now.
+        guard message?.messageIndex != -1 || message?.type != .scheduledMeeting else { return false }
+        // Updating the meeting title requires to update the chat title as well.
+        // So filter the message if the chatroom is meeting and the type is chat title.
+        guard !chatRoom.isMeeting || message?.type != .chatTitle else { return false }
+        
+        return true
+    }
     
     private func isLastSectionVisible() -> Bool {
         guard !messages.isEmpty else { return true }
