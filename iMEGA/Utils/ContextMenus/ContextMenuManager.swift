@@ -3,6 +3,10 @@ import UIKit
 
 typealias CloudDriveContextMenuDelegate = DisplayMenuDelegate & QuickActionsMenuDelegate & RubbishBinMenuDelegate & UploadAddMenuDelegate
 
+typealias FolderLinkContextMenuDelegate = DisplayMenuDelegate & QuickActionsMenuDelegate & UploadAddMenuDelegate & RubbishBinMenuDelegate
+
+typealias FileLinkContextMenuDelegate = QuickActionsMenuDelegate & UploadAddMenuDelegate & RubbishBinMenuDelegate
+
 protocol DisplayMenuDelegate: AnyObject {
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool)
     func sortMenu(didSelect sortType: SortOrderType)

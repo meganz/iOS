@@ -32,7 +32,7 @@
 
 @import MEGAUIKit;
 
-@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
+@interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
 
 @property (nonatomic, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
@@ -40,7 +40,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
@@ -51,11 +50,7 @@
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 
-@property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
-
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (nonatomic, strong) FolderLinkTableViewController *flTableView;
-@property (nonatomic, strong) FolderLinkCollectionViewController *flCollectionView;
 
 @property (nonatomic, assign) ViewModePreference viewModePreference;
 
@@ -101,6 +96,9 @@
     
     self.moreBarButtonItem.title = nil;
     self.moreBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
+
+    self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+
     self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
 
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
@@ -110,17 +108,17 @@
 
     if (self.isFolderRootNode) {
         self.navigationItem.leftBarButtonItem = self.closeBarButtonItem;
-        
         [self setActionButtonsEnabled:NO];
     } else {
         [self reloadUI];
-        [self determineViewMode];
     }
+
+    [self determineViewMode];
     
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
-    
+
     [self updateAppearance];
-    
+
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
 }
 
@@ -224,9 +222,10 @@
     }
     
     self.nodesArray = tempArray;
-    
+    [self configureContextMenuManager];
+
     [self reloadData];
-    
+
     if (self.nodeList.size.unsignedIntegerValue == 0) {
         [self.flTableView.tableView setTableHeaderView:nil];
     } else {
@@ -426,41 +425,6 @@
     }
 }
 
-- (void)presentSortByActionSheet {
-    MEGASortOrderType sortType = [Helper sortTypeFor:self.parentNode];
-    
-    UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
-    
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameAscending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"nameDescending", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeDefaultDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"largest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"smallest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeSizeAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"newest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationDesc ? checkmarkImageView : nil image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"oldest", nil) detail:nil accessoryView:sortType == MEGASortOrderTypeModificationAsc ? checkmarkImageView : nil image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.parentNode];
-        [self reloadUI];
-    }]];
-    
-    ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
-    [self presentViewController:sortByActionSheet animated:YES completion:nil];
-}
-
 - (GlobalDelegate *)globalDelegate {
     if (_globalDelegate == nil) {
         __weak __typeof__(self) weakSelf = self;
@@ -562,27 +526,14 @@
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
     [MEGALinkManager resetUtilsForLinksWithoutSession];
-    
+
     if (!AudioPlayerManager.shared.isPlayerAlive) {
         [[MEGASdkManager sharedMEGASdkFolder] logout];
     }
-    
-    [SVProgressHUD dismiss];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
-- (IBAction)moreAction:(UIBarButtonItem *)sender {
-    if (self.flTableView.tableView.isEditing || self.flCollectionView.collectionView.allowsMultipleSelection) {
-        [self setEditMode:NO];
-        return;
-    }
-    
-    if (self.parentNode.name) {
-        BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:self.parentNode];
-        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink viewMode:self.viewModePreference isBackupNode:isBackupNode containsMediaFiles: [self containsMediaFiles] sender:sender];
-        [self presentViewController:nodeActions animated:YES completion:nil];
-    }
+    [SVProgressHUD dismiss];
+
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)editAction:(UIBarButtonItem *)sender {
@@ -652,39 +603,6 @@
         [self presentViewController:activityVC animated:YES completion:nil];
     }
 }
-
-- (IBAction)importAction:(UIBarButtonItem *)sender {
-    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-        [browserVC setBrowserAction:BrowserActionImportFromFolderLink];
-        if (self.selectedNodesArray.count != 0) {
-            browserVC.selectedNodesArray = [NSArray arrayWithArray:self.selectedNodesArray];
-        } else {
-            if (self.parentNode == nil) {
-                return;
-            }
-            browserVC.selectedNodesArray = [NSArray arrayWithObject:self.parentNode];
-        }
-        
-        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-    } else {
-        if (self.selectedNodesArray.count != 0) {
-            [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
-        } else {
-            if (self.parentNode == nil) {
-                return;
-            }
-            [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
-        }
-        
-        MEGALinkManager.selectedOption = LinkOptionImportFolderOrNodes;
-        
-        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
-    }
-    
-    return;
-}
     
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
     if (self.selectedNodesArray.count != 0) {
@@ -708,21 +626,10 @@
     }
 }
 
-- (void)sendFolderLinkToChat {
-    UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:[NSBundle bundleForClass:SendToViewController.class]];
-    SendToViewController *sendToViewController = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToViewControllerID"];
-    sendToViewController.sendMode = SendModeFileAndFolderLink;
-    self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString navigationController:self.navigationController];
-    sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
-    [self.navigationController pushViewController:sendToViewController animated:YES];
-}
-
 #pragma mark - Public
 
-- (void)showActionsForNode:(MEGANode *)node from:(UIButton *)sender {
-    BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
-    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeInsideFolderLink isIncoming:NO isBackupNode:isBackupNode sender:sender];
-    [self presentViewController:nodeActions animated:YES completion:nil];
+- (BOOL)isListViewModeSelected {
+    return self.viewModePreference == ViewModePreferenceList;
 }
     
 - (void)didSelectNode:(MEGANode *)node {
@@ -753,6 +660,8 @@
     } else {
         [self.flCollectionView setCollectionViewEditing:editMode animated:YES];
     }
+
+    [self setNavigationBarButton:editMode];
 }
 
 - (FolderLinkViewController *)folderLinkViewControllerFromNode:(MEGANode *)node {
@@ -1004,57 +913,6 @@
             break;
         }
             
-        default:
-            break;
-    }
-}
-
-#pragma mark - NodeActionViewControllerDelegate
-
-- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
-    switch (action) {
-        case MegaNodeActionTypeDownload:
-            self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
-            [self downloadAction:nil];
-            break;
-            
-        case MegaNodeActionTypeImport:
-            if (node.handle != self.parentNode.handle) {
-                self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
-            }
-            [self importAction:nil];
-            break;
-            
-        case MegaNodeActionTypeSelect: {
-            BOOL enableEditing = self.viewModePreference == ViewModePreferenceList ? !self.flTableView.tableView.isEditing : !self.flCollectionView.collectionView.allowsMultipleSelection;
-            [self setEditMode:enableEditing];
-            break;
-        }
-            
-        case MegaNodeActionTypeShareLink:
-            [self shareLinkAction:self.moreBarButtonItem];
-            break;
-            
-        case MegaNodeActionTypeSaveToPhotos:
-            node = [MEGASdkManager.sharedMEGASdkFolder authorizeNode:node];
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node isFolderLink:YES];
-            break;
-            
-        case MegaNodeActionTypeSendToChat:
-            [self sendFolderLinkToChat];
-            break;
-            
-        case MegaNodeActionTypeList:
-        case MegaNodeActionTypeThumbnail:
-            [self changeViewModePreference];
-            break;
-            
-        case MegaNodeActionTypeSort:
-            [self presentSortByActionSheet];
-            break;
-        case MegaNodeActionTypeMediaDiscovery:
-            [self showMediaDiscovery];
-            break;
         default:
             break;
     }

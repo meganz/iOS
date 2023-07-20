@@ -20,16 +20,12 @@
 
 @import MEGAUIKit;
 
-@interface FileLinkViewController () <NodeActionViewControllerDelegate>
-
-@property (strong, nonatomic) MEGANode *node;
+@interface FileLinkViewController ()
 
 @property (strong, nonatomic) UILabel *navigationBarLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sendToBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareLinkBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -43,7 +39,6 @@
 
 @property (nonatomic) BOOL decryptionAlertControllerHasBeenPresented;
 
-@property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 @end
 
 @implementation FileLinkViewController
@@ -74,6 +69,7 @@
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     [self updateAppearance];
+    [self configureContextMenuManager];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -309,7 +305,7 @@
     }
 }
 
-- (void)import {
+- (void)importFromFiles {
     [self.node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
 }
 
@@ -320,34 +316,18 @@
     }
 }
 
-- (void)shareFileLink {
-    NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-    activityVC.popoverPresentationController.barButtonItem = self.shareLinkBarButtonItem;
-    [self presentViewController:activityVC animated:YES completion:nil];
-}
-
-- (void)sendFileLinkToChat {
-    UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:[NSBundle bundleForClass:SendToViewController.class]];
-    SendToViewController *sendToViewController = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToViewControllerID"];
-    sendToViewController.sendMode = SendModeFileAndFolderLink;
-    self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString navigationController:self.navigationController];
-    sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
-    [self.navigationController pushViewController:sendToViewController animated:YES];
-}
-
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
     [MEGALinkManager resetUtilsForLinksWithoutSession];
-    
+
     [SVProgressHUD dismiss];
-    
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)importAction:(UIButton *)sender {
-    [self import];
+    [self importFromFiles];
 }
 
 - (IBAction)openAction:(UIButton *)sender {
@@ -355,48 +335,11 @@
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    [self shareFileLink];
+    [self showShareLink];
 }
 
 - (IBAction)sendToContactAction:(UIBarButtonItem *)sender {
-    [self sendFileLinkToChat];
-}
-
-- (IBAction)moreAction:(UIBarButtonItem *)sender {
-    if (self.node.name) {
-        BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:self.node];
-        NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeFileLink isIncoming:NO isBackupNode:isBackupNode sender:sender];
-        [self presentViewController:nodeActions animated:YES completion:nil];
-    }
-}
-
-#pragma mark - NodeActionViewControllerDelegate
-
-- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
-    switch (action) {
-        case MegaNodeActionTypeDownload:
-            [self download];
-            break;
-            
-        case MegaNodeActionTypeImport:
-            [self import];
-            break;
-            
-        case MegaNodeActionTypeSendToChat:
-            [self sendFileLinkToChat];
-            break;
-            
-        case MegaNodeActionTypeShareLink:
-            [self shareFileLink];
-            break;
-            
-        case MegaNodeActionTypeSaveToPhotos:
-            [SaveMediaToPhotosUseCaseOCWrapper.alloc.init saveToPhotosWithNode:node isFolderLink:NO];
-            break;
-            
-        default:
-            break;
-    }
+    [self showSendToChat];
 }
 
 @end

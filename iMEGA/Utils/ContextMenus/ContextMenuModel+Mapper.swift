@@ -109,6 +109,10 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "removeSharing", title: Strings.Localizable.removeSharing, image: Asset.Images.SharedItems.removeShare.image)
         case .leaveSharing:
             return ContextMenuDataModel(identifier: "leaveSharing", title: Strings.Localizable.leaveFolder, image: Asset.Images.NodeActions.leaveShare.image)
+        case .sendToChat:
+            return ContextMenuDataModel(identifier: "sendToChat", title: Strings.Localizable.General.sendToChat, image: Asset.Images.NodeActions.sendToChat.image)
+        case .saveToPhotos:
+            return ContextMenuDataModel(identifier: "saveToPhotos", title: Strings.Localizable.saveToPhotos, image: Asset.Images.NodeActions.saveToPhotos.image)
         }
     }
 

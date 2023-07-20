@@ -180,6 +180,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                     SVProgressHUD.dismiss()
                 }
             }).start()
+        default:
+            break
         }
         
         if needToRefreshMenu {

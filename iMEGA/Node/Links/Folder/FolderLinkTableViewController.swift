@@ -41,6 +41,7 @@ class FolderLinkTableViewController: UIViewController {
         tableView.setEditing(editing, animated: animated)
         
         folderLink.setViewEditing(editing)
+        folderLink.setNavigationBarButton(editing)
         
         tableView.visibleCells.forEach { (cell) in
             let view = UIView()

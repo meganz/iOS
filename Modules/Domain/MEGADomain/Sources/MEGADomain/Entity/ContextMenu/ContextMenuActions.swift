@@ -34,7 +34,7 @@ public enum CMElementTypeEntity: Equatable {
 
 // MARK: - Context Menu types
 public enum ContextMenuTypeEntity {
-    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline
+    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink
 }
 
 // MARK: - Context Menu grouped actions
@@ -47,7 +47,7 @@ public enum DisplayActionEntity: CaseIterable {
 }
 
 public enum QuickActionEntity: CaseIterable {
-    case info, download, shareLink, manageLink, removeLink, shareFolder, manageFolder, rename, copy, removeSharing, leaveSharing
+    case info, download, shareLink, manageLink, removeLink, shareFolder, manageFolder, rename, copy, removeSharing, leaveSharing, sendToChat, saveToPhotos
 }
 
 public enum RubbishBinActionEntity: CaseIterable {
