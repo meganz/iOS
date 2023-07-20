@@ -119,7 +119,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }
-                callCollectionView.layoutIfNeeded()
+                callCollectionView.reloadData()
                 viewModel.dispatch(.onViewReady)
             }
             .store(in: &subscriptions)
