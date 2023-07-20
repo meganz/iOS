@@ -44,6 +44,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setShouldScheduleMeeting(config.shouldScheduleMeeting)
                         .setSharedLinkStatus(config.sharedLinkStatus)
                         .setIsArchivedChatsVisible(config.isArchivedChatsVisible)
+                        .setIsMediaFile(config.isMediaFile)
                         .build()
     }
 }

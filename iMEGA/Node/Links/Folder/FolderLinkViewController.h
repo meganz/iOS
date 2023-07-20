@@ -2,6 +2,10 @@
 
 @class AudioPlayer;
 @class MiniPlayerViewRouter;
+@class ContextMenuManager;
+@class FolderLinkTableViewController;
+@class FolderLinkCollectionViewController;
+@class SendLinkToChatsDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -10,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isFolderRootNode;
 @property (nonatomic, strong, nullable) NSString *publicLinkString;
 @property (nonatomic, strong, nullable) NSString *linkEncryptedString;
+@property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
 @property (strong, nonatomic) UISearchController *searchController;
 
@@ -23,14 +28,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) UIView *bottomView;
 @property (nonatomic, strong, nullable) UIView *snackBarContainerView;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (nonatomic, strong, nullable) AudioPlayer *player;
 @property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
+@property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
+@property (nonatomic, strong, nullable) FolderLinkTableViewController *flTableView;
+@property (nonatomic, strong, nullable) FolderLinkCollectionViewController *flCollectionView;
 
+- (IBAction)shareLinkAction:(UIBarButtonItem *)sender;
+
+- (BOOL)isListViewModeSelected;
 - (void)didSelectNode:(MEGANode *)node;
-- (void)showActionsForNode:(MEGANode *)node from:(UIButton *)sender;
 - (void)setNavigationBarTitleLabel;
 - (void)setToolbarButtonsEnabled:(BOOL)boolValue;
 - (void)setViewEditing:(BOOL)editing;
+- (void)setEditMode:(BOOL)editMode;
+- (void)changeViewModePreference;
+- (void)reloadUI;
 
 - (void)didDownloadTransferFinish:(MEGANode *)node;
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView;

@@ -36,6 +36,7 @@ public final class ContextMenuBuilder {
     private var shouldScheduleMeeting = false
     private var sharedLinkStatus: SharedLinkStatusEntity = .unavailable
     private var isArchivedChatsVisible: Bool = false
+    private var isMediaFile: Bool = false
 
     public init() {}
     
@@ -223,6 +224,11 @@ public final class ContextMenuBuilder {
         isArchivedChatsVisible = archivedChatVisible
         return self
     }
+
+    public func setIsMediaFile(_ isMediaFile: Bool) -> ContextMenuBuilder {
+        self.isMediaFile = isMediaFile
+        return self
+    }
     
     public func build() -> CMEntity? {
         /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
@@ -244,6 +250,10 @@ public final class ContextMenuBuilder {
                 return albumMenu()
             case .timeline:
                 return timelineMenu()
+            case .folderLink:
+                return folderLinkMenu()
+            case .fileLink:
+                return fileLinkMenu()
             default:
                 return nil
             }
@@ -410,6 +420,19 @@ public final class ContextMenuBuilder {
         return CMEntity(displayInline: true,
                         children: quickActions)
     }
+
+    private func makeFolderLinkQuickActions() -> CMEntity {
+        return CMEntity(
+            displayInline: true,
+            children: [
+                selectMenu(),
+                importFromFiles,
+                download,
+                shareLink,
+                sendToChat
+            ]
+        )
+    }
     
     // MARK: - Rubbish Bin Children Context Actions grouping functions
     private func rubbishBinChildFolderMenu() -> CMEntity {
@@ -563,5 +586,54 @@ public final class ContextMenuBuilder {
         
         return CMEntity(displayInline: true,
                         children: displayActionsMenuChildren)
+    }
+
+    // MARK: - Folder link actions
+    private func folderLinkMenu() -> CMEntity {
+        var folderLinkActions = [CMElement]()
+
+        if isRestorable {
+            folderLinkActions.append(restore)
+        }
+
+        folderLinkActions.append(
+            makeFolderLinkQuickActions()
+        )
+
+        if showMediaDiscovery {
+            folderLinkActions.append(mediaDiscovery)
+        }
+
+        folderLinkActions.append(
+            contentsOf: [
+                sortMenu(),
+                viewTypeMenu()
+            ]
+        )
+
+        return CMEntity(
+            displayInline: true,
+            children: folderLinkActions
+        )
+    }
+
+    // MARK: - File link actions
+    private func fileLinkMenu() -> CMEntity {
+        var fileLinkActions = [CMActionEntity]()
+
+        if isRestorable {
+            fileLinkActions.append(restore)
+        }
+
+        fileLinkActions.append(contentsOf: [importFromFiles, download, shareLink, sendToChat])
+
+        if isMediaFile {
+            fileLinkActions.append(saveToPhotos)
+        }
+
+        return CMEntity(
+            displayInline: true,
+            children: fileLinkActions
+        )
     }
 }

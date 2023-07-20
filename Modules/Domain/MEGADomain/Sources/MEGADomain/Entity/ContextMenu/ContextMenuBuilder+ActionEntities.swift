@@ -157,6 +157,14 @@ extension ContextMenuBuilder {
     var rename: CMActionEntity {
         CMActionEntity(type: .quickActions(actionType: .rename))
     }
+
+    var sendToChat: CMActionEntity {
+        CMActionEntity(type: .quickActions(actionType: .sendToChat))
+    }
+
+    var saveToPhotos: CMActionEntity {
+        CMActionEntity(type: .quickActions(actionType: .saveToPhotos))
+    }
     
     // MARK: - Rubbish Bin Actions
     
