@@ -295,7 +295,7 @@
 /* Label for the state of a transfer when is being retrying - (String as short as possible). */
 "Retrying..."="Ponawiam próbę…";
 /* Section title of the 'Sort by' */
-"sortTitle"="SORTUJ";
+"sortTitle"="Sortuj";
 /* Button title to 'Save' the selected option */
 "save"="Zapisz";
 /* Sort by option (1/6). This one orders the files alphabethically */
@@ -348,6 +348,8 @@
 "Document scanning is not available"="Skanowanie dokumentów nie jest dostępne";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Istnieje już plik o takiej nazwie";
+/* Browser save to cloud drive select button title */
+"cloudDrive.browser.saveToCloudDrive.title"="Zapisz do dysku w chmurze";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Importuj z aplikacji Pliki";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -395,7 +397,7 @@
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
 "sharedItems.link.linkUpdated"="Link zaktualizowany. Kopiuj ponownie.";
 /* An alert dialog for the Get Link feature */
-"proOnly"="(TYLKO PRO)";
+"proOnly"="(Tylko Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Ustaw datę ważności";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -1161,7 +1163,7 @@
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Zaoszczędź 16%";
 /* Error message shown when the purchase has failed */
-"wrongPurchase"="BŁĄD ZAKUPU %@ (%ld)";
+"wrongPurchase"="Błąd zakupu %@ (%ld)";
 /* Error message shown the In App Purchase is disabled in the device Settings */
 "appPurchaseDisabled"="Zakupy w aplikacji są zablokowane, odblokuj w ustawieniach telefonu";
 /* Error message shown when the selected product doesn't exist */
@@ -2345,7 +2347,7 @@
 /* Text used for a title or header listing the details of something. */
 "DETAILS"="SZCZEGÓŁY";
 /* Text used as title or header for reference an url, for instance, a node link. */
-"LINK"="LINK";
+"LINK"="Link";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Tworzenie linków";
 /* Context menu item. Allows user to add file/folder to favourites */
@@ -2373,7 +2375,7 @@
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
 "Grey"="Szary";
 /* Text presenting a key (for a LINK or similar) as header usually */
-"KEY"="KLUCZ";
+"KEY"="Klucz";
 /* Text for options in Get Link View to separate the key from the link */
 "Send Decryption Key Separately"="Wyślij klucz odszyfrowywania oddzielnie";
 /* Text for options in Get Link View to activate expiry date */
@@ -3237,15 +3239,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] zaprosił[/B] cię na spotkanie zaplanowane na:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] zaktualizował[/B] szczegóły spotkania zaplanowane na:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] zaktualizował[/B] opis spotkania";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] odwołał[/B] spotkanie zaplanowane na:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] zaktualizował[/B] datę spotkania";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] zaktualizował[/B] czas spotkania";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] zaktualizował[/B] nazwę spotkania z “[PreviousTitle]” na [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3253,13 +3255,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email] zaprosił[/B] cię na cykliczne spotkanie zaplanowane na:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] zaktualizował[/B] szczegóły cyklicznego spotkania zaplanowane na:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] zaktualizował[/B] opis cyklicznego potkania";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] zaktualizował[/B] datę cyklicznego spotkania";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] zaktualizował[/B] czas cyklicznego spotkania";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Występowanie";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3277,9 +3279,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Codziennie zaczynając [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] odwołał[/B] spotkanie zaplanowane na:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] zaktualizował[/B] wystąpienie na:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Aktualizacja zabezpieczeń konta";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3547,7 +3549,7 @@
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Anuluj";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Anulować \"%@\"?";
+"meetings.scheduled.cancelAlert.title"="Anulować %@?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="Spotkanie to zostanie umieszczone w zakładce Poprzednie spotkania, a wszyscy uczestnicy zostaną o nim powiadomieni.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3575,8 +3577,40 @@
 /* Description for alert cancelling last occurrence with messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Jest to jedyne wystąpienie powtarzającego się spotkania. Odwołanie tego zdarzenia spowoduje anulowanie spotkania. W przypadku anulowania spotkanie zostanie umieszczone w kategorii Przeszłe spotkania, a wszyscy uczestnicy zostaną o tym powiadomieni.";
 /* Title for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.title"="Anulować zdarzenie %@?";
+"meetings.scheduled.cancelAlert.occurrence.title"="Anulować wystąpienie %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ odwołał to spotkanie";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
+"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ anulował to spotkanie i wszystkie jego wystąpienia";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
+"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ anulował wystąpienie zaplanowane na %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
+"meetings.scheduled.managementMessages.created"="%@ utworzył to spotkanie";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="%@ odwołał to spotkanie";
+/* Name of the screen of contact info shown when back button is long pressed */
+"contactInfo.backButton.menu"="Informacje kontaktowe";
+/* Create meeting tip view title */
+"meetings.scheduleMeeting.createMeetingTip.title"="Zaplanuj spotkanie";
+/* Create meeting tip view message */
+"meetings.scheduleMeeting.createMeetingTip.message"="Możesz teraz planować jednorazowe i cykliczne spotkania.";
+/* Scheduled meeting tip view dismiss action button title */
+"meetings.scheduleMeeting.tipView.gotIt"="Rozumiem";
+/* Start meeting tip view title */
+"meetings.scheduleMeeting.startMeetingTip.title"="Rozpocznij spotkanie";
+/* Start meeting tip view message */
+"meetings.scheduleMeeting.startMeetingTip.message"="Spotkanie można rozpocząć przed zaplanowanym czasem, dotykając opcji \"Rozpocznij spotkanie\" w pokoju spotkań.";
+/* Recurring meeting tip view title */
+"meetings.scheduleMeeting.recurringMeetingTip.title"="Zarządzaj powtarzającymi się spotkaniami";
+/* Recurring meeting tip view message */
+"meetings.scheduleMeeting.recurringMeetingTip.message"="Każde wystąpienie spotkania cyklicznego można wyświetlić, anulować lub edytować, dotykając i przytrzymując spotkanie, a następnie wybierając opcję Wystąpienia.";
+/* Schedule meeting update button */
+"meetings.scheduleMeeting.update"="Zapisz zmiany";
+/* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
+"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="Spotkanie zaktualizowane";
+/* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
+"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="Zaktualizowano miejsce spotkania";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
-"meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
+"meetings.scheduled.managementMessages.updated"="%@ zaktualizował spotkanie";
+/* Edit Schedule meeting navigaion title. */
+"meetings.scheduled.editMeeting.title"="Edycja spotkania";

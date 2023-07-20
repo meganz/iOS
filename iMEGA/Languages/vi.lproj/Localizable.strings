@@ -348,6 +348,8 @@
 "Document scanning is not available"="Quét Tài Liệu không khả dụng";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Đã có một tệp tin với cái tên này rồi";
+/* Browser save to cloud drive select button title */
+"cloudDrive.browser.saveToCloudDrive.title"="Lưu vào Ổ mây";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Chuyển nhập từ Tệp";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -395,7 +397,7 @@
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
 "sharedItems.link.linkUpdated"="Đường liên kết đã được cập nhật. Xin sao chép lại.";
 /* An alert dialog for the Get Link feature */
-"proOnly"="(CHỈ CHO HẠNG PRO)";
+"proOnly"="(Chỉ cho hạng Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="Đặt ngày hết hạn";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -2345,7 +2347,7 @@
 /* Text used for a title or header listing the details of something. */
 "DETAILS"="CHI TIẾT";
 /* Text used as title or header for reference an url, for instance, a node link. */
-"LINK"="ĐƯỜNG LIÊN KẾT";
+"LINK"="Đường liên kết";
 /* Text referencing the date of creation of a link */
 "Link Creation"="Ngày Tạo Liên Kết";
 /* Context menu item. Allows user to add file/folder to favourites */
@@ -2373,7 +2375,7 @@
 /* A user can mark a folder or file with its own colour, in this case “Grey”. */
 "Grey"="Màu xám";
 /* Text presenting a key (for a LINK or similar) as header usually */
-"KEY"="CHÌA KHÓA";
+"KEY"="Chìa khóa";
 /* Text for options in Get Link View to separate the key from the link */
 "Send Decryption Key Separately"="Gửi Chìa Khóa Giải Mã Ra Riêng";
 /* Text for options in Get Link View to activate expiry date */
@@ -3237,15 +3239,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] đã mời[/B] bạn cho một cuộc họp được lên lịch vào:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] đã cập nhật[/B] chi tiết của cuộc họp được lên lịch vào:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] đã cập nhật[/B] mô tả  của cuộc họp";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] đã hủy[/B] một cuộc họp được lên lịch vào:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] đã cập nhật[/B] ngày của cuộc họp";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] đã cập nhật[/B] thời gian của cuộc họp";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] đã cập nhật[/B] tên của cuộc họp từ “[PreviousTitle]” thành [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3253,13 +3255,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email] đã mời[/B] bạn cho một cuộc họp được lên lịch định kỳ vào:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] đã cập nhật[/B] chi tiết của cuộc họp được lên lịch định kỳ vào:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] đã cập nhật[/B] mô tả  của cuộc họp định kỳ";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] đã cập nhật[/B] ngày của cuộc họp định kỳ";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] đã cập nhật[/B] thời gian của cuộc họp định kỳ";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Thời điểm tái diễn";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3277,9 +3279,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Mỗi ngày, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] đã hủy[/B] một thời điểm tái diễn của cuộc họp được lên lịch vào:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] đã cập nhật[/B] một thời điểm tái diễn của cuộc họp thành:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Nâng cấp bảo mật tài khoản";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3547,7 +3549,7 @@
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Hủy";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Hủy “%@”?";
+"meetings.scheduled.cancelAlert.title"="Hủy %@?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="Cuộc họp này sẽ được liệt vào danh sách Các cuộc họp trước đây và tất cả các thành viên sẽ nhận được thông báo.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3576,7 +3578,39 @@
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Đây là lần tái diễn duy nhất của cuộc họp định kỳ. Hủy bỏ lần tái diễn này sẽ hủy bỏ toàn bộ cuộc họp. Nếu bị hủy, cuộc họp sẽ được liệt vào trong Các cuộc họp trước đây và tất cả những người tham gia sẽ được thông báo.";
 /* Title for alert cancelling an occurrence */
 "meetings.scheduled.cancelAlert.occurrence.title"="Hủy bỏ thời điểm tái diễn %@?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ đã hủy bỏ cuộc họp này";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
+"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ đã hủy bỏ cuộc họp đình kỳ này và tất cả các thời điểm tái diễn có liên quan";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
+"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ đã hủy một thời điểm tái diễn của cuộc họp được lên lịch vào %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
+"meetings.scheduled.managementMessages.created"="%@ đã tạo cuộc họp này";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="%@ đã hủy bỏ cuộc họp này";
+/* Name of the screen of contact info shown when back button is long pressed */
+"contactInfo.backButton.menu"="Thông tin liên lạc";
+/* Create meeting tip view title */
+"meetings.scheduleMeeting.createMeetingTip.title"="Đặt lịch cuộc họp";
+/* Create meeting tip view message */
+"meetings.scheduleMeeting.createMeetingTip.message"="Bạn giờ đây có thể đặt lịch cuộc họp một lần và định kỳ.";
+/* Scheduled meeting tip view dismiss action button title */
+"meetings.scheduleMeeting.tipView.gotIt"="Đã hiểu";
+/* Start meeting tip view title */
+"meetings.scheduleMeeting.startMeetingTip.title"="Bắt đầu cuộc họp";
+/* Start meeting tip view message */
+"meetings.scheduleMeeting.startMeetingTip.message"="Bạn có thể bắt đầu cuộc họp trước thời gian dự kiến ​​bằng cách chạm vào “Bắt đầu cuộc họp” khi ở trong phòng họp.";
+/* Recurring meeting tip view title */
+"meetings.scheduleMeeting.recurringMeetingTip.title"="Quản lý các cuộc họp định kỳ";
+/* Recurring meeting tip view message */
+"meetings.scheduleMeeting.recurringMeetingTip.message"="Bạn có thể xem qua, hủy bỏ hoặc chỉnh sửa bất kỳ thời điểm tái diễn nào của cuộc họp định kỳ bằng cách nhấn rồi giữ vào cuộc họp, sau đó chọn Thời điểm tái diễn.";
+/* Schedule meeting update button */
+"meetings.scheduleMeeting.update"="Cập nhật";
+/* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
+"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="Cuộc họp đã được cập nhật";
+/* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
+"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="Thời điểm tái diễn cuộc họp đã được cập nhật";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
-"meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
+"meetings.scheduled.managementMessages.updated"="%@ đã cập nhật cuộc họp";
+/* Edit Schedule meeting navigaion title. */
+"meetings.scheduled.editMeeting.title"="Chỉnh sửa cuộc họp";

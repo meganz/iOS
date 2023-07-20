@@ -348,6 +348,8 @@
 "Document scanning is not available"="สแกนเอกสารยังไม่พร้อมใช้งาน";
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="มีไฟล์ชื่อเดียวกันอยู่แล้ว";
+/* Browser save to cloud drive select button title */
+"cloudDrive.browser.saveToCloudDrive.title"="บันทึกไปยังคลาวด์ไดรฟ์";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="นำเข้าจากไฟล์";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -391,11 +393,11 @@
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="ลิงก์รวมคีย์ด้วย";
 /* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
-"sharedItems.link.accessInfoPasswordProtected"="Only people with the password can open the link";
+"sharedItems.link.accessInfoPasswordProtected"="เฉพาะผู้ที่มีรหัสผ่านเท่านั้นที่สามารถเปิดลิงก์ได้";
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
-"sharedItems.link.linkUpdated"="Link updated. Copy again.";
+"sharedItems.link.linkUpdated"="อัปเดตลิงก์แล้ว คัดลอกใหม่อีกครั้ง";
 /* An alert dialog for the Get Link feature */
-"proOnly"="(PRO เท่านั้น)";
+"proOnly"="(Pro เท่านั้น)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
 "setExpiryDate"="กำหนดวันหมดอายุ";
 /* This is a title label on the Export Link dialog. The title covers the section where the user can password protect a public link. */
@@ -2643,7 +2645,7 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="ประชุมใหม่";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
+"meetings.createMeeting.defaultMeetingName"="กำลังประชุมกับ %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="เริ่มการประชุม";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
@@ -3147,13 +3149,13 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="ส่งคำเชิญ";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
+"notifications.message.takenDownReinstated.file"="ไฟล์ “%@” ที่ถูกลบออก ได้ถูกกู้คืนเรียบร้อยแล้ว";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
+"notifications.message.takenDownReinstated.folder"="โฟลเดอร์ “%@” ที่ถูกลบออก ได้ถูกกู้คืนเรียบร้อยแล้ว";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.file"="ไฟล์ “%@” ที่แชร์แบบสาธารณะ ถูกลบออกแล้ว";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.folder"="โฟลเดอร์ “%@” ที่แชร์แบบสาธารณะ ถูกลบออกแล้ว";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="อนุญาตให้ผู้ที่ไม่ใช่ผู้จัดการประชุมเพิ่มผู้เข้าร่วมได้";
 /* Start conversation: Schedule meeting context menu */
@@ -3237,15 +3239,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] เชิญ[/B]คุณเข้าร่วมการประชุมตามเวลาที่กำหนดไว้:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] อัปเดต[/B]รายละเอียดกำหนดการการประชุมใหม่แล้ว:";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] อัปเดต[/B]คำอธิบายการประชุมใหม่:";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] ยกเลิก[/B]การประชุมตามเวลาที่กำหนดไว้:";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] อัปเดต[/B]วันที่ประชุมใหม่:";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] อัปเดต[/B]เวลาประชุมใหม่:";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] อัปเดต[/B]ชื่อการประชุมใหม่จากเดิม “[PreviousTitle]” เปลี่ยนเป็น [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3253,13 +3255,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B]เชิญคุณเข้าร่วมการประชุมที่กำหนดเวลาเป็นกิจวัตรไว้แล้ว";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] อัปเดต[/B]รายละเอียดกำหนดการการประชุมที่เป็นกิจวัตรใหม่แล้ว:";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] อัปเดต[/B]คำอธิบายการประชุมที่เป็นกิจวัตรใหม่แล้ว:";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] อัปเดต[/B]วันที่การประชุมที่เป็นกิจวัตรใหม่แล้ว:";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] อัปเดต[/B]เวลาการประชุมที่เป็นกิจวัตรใหม่แล้ว:";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="เหตุการณ์";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3277,9 +3279,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="ทุกวัน มีผลตั้งแต่ [B][StartDate] จนถึง [UntilDate][/B] ตั้งแต่ [B][StartTime] จนถึง [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] ยกเลิก[/B]เหตุการณ์ตามเวลาที่กำหนดไว้แล้ว:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] อัปเดต[/B]เหตุการณ์ใหม่แล้ว:";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="อัปเกรดความปลอดภัยของบัญชี";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3417,7 +3419,7 @@
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="กล้อง";
 /* Device Center title */
-"device.center.title"="Device centre";
+"device.center.title"="ศูนย์อุปกรณ์";
 /* Device Center list current device title */
 "device.center.current.device.title"="This device";
 /* Device Center list other devices title */
@@ -3447,9 +3449,9 @@
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="บล็อกแล้ว";
 /* End Recurrence option title in creating schedule meeting screen. */
-"meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
+"meetings.scheduleMeeting.create.endRecurrence.title"="สิ้นสุดการทำประจำ";
 /* End Recurrence on date option title in creating schedule meeting screen. */
-"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="On date";
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="ในวันที่";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="ไม่เคยมี";
 /* Title for meeting notifications option in meeting info */
@@ -3477,21 +3479,21 @@
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
 "meetings.scheduleMeeting.create.monthly.optionTitle"="รายเดือน";
 /* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
-"meetings.scheduleMeeting.create.frequency.optionTitle"="Frequency";
+"meetings.scheduleMeeting.create.frequency.optionTitle"="ความถี่";
 /* Create Schedule Meeting: The text is shown along with the selected interval. */
-"meetings.scheduleMeeting.create.interval.optionTitle"="Every";
+"meetings.scheduleMeeting.create.interval.optionTitle"="ทุก";
 /* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
-"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="เลือกความถี่";
 /* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
-"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="เลือกช่วงเวลารายสัปดาห์";
 /* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
-"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="เลือกวันในสัปดาห์";
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
-"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="เลือกช่วงเวลารายเดือน";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
-"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="On the…";
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="ใน…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
-"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Each";
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="ทุก";
 /* Create Schedule Meeting: Month custom option - first week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.first"="แรก";
 /* Create Schedule Meeting: Month custom option - second week option text */
@@ -3547,7 +3549,7 @@
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="ยกเลิก";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Cancel “%@”?";
+"meetings.scheduled.cancelAlert.title"="Cancel %@?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="การประชุมนี้จะถูกเก็บไว้ในประวัติการประชุมและผู้เข้าร่วมทุกคนจะได้รับการแจ้งเตือน";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3575,8 +3577,40 @@
 /* Description for alert cancelling last occurrence with messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="นี่เป็นการประชุมที่เป็นกิจวัตรเพียงครั้งเดียวที่จัดขึ้น การยกเลิกเหตุการณ์นี้จะทำให้การประชุมถูกยกเลิก หากยกเลิกแล้ว การประชุมจะถูกเก็บไว้ในประวัติการประชุม และผู้เข้าร่วมทุกคนจะได้รับการแจ้งเตือน";
 /* Title for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.title"="Cancel the %@ occurrence?";
+"meetings.scheduled.cancelAlert.occurrence.title"="Cancel %@ occurrence?";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
+"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ cancelled this meeting";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
+"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ cancelled this meeting and all its occurrences";
+/* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
+"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ cancelled the occurrence scheduled for %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
+"meetings.scheduled.managementMessages.created"="%@ created this meeting";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
 "meetings.scheduled.managementMessages.cancelled"="%@ cancelled this meeting";
+/* Name of the screen of contact info shown when back button is long pressed */
+"contactInfo.backButton.menu"="ข้อมูลการติดต่อ";
+/* Create meeting tip view title */
+"meetings.scheduleMeeting.createMeetingTip.title"="จัดกำหนดการประชุม";
+/* Create meeting tip view message */
+"meetings.scheduleMeeting.createMeetingTip.message"="You can now schedule one-off and recurring meetings.";
+/* Scheduled meeting tip view dismiss action button title */
+"meetings.scheduleMeeting.tipView.gotIt"="รับทราบ";
+/* Start meeting tip view title */
+"meetings.scheduleMeeting.startMeetingTip.title"="เริ่มการประชุม";
+/* Start meeting tip view message */
+"meetings.scheduleMeeting.startMeetingTip.message"="You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.";
+/* Recurring meeting tip view title */
+"meetings.scheduleMeeting.recurringMeetingTip.title"="Manage recurring meetings";
+/* Recurring meeting tip view message */
+"meetings.scheduleMeeting.recurringMeetingTip.message"="You can view, cancel, or edit any occurrence of a recurring meeting by tapping and holding the meeting and selecting Occurrences.";
+/* Schedule meeting update button */
+"meetings.scheduleMeeting.update"="อัปเดต";
+/* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
+"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="Meeting updated";
+/* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
+"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="Meeting occurrence updated";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
-"meetings.scheduled.managementMessages.updated" = "%@ updated the meeting";
+"meetings.scheduled.managementMessages.updated"="%@ updated the meeting";
+/* Edit Schedule meeting navigaion title. */
+"meetings.scheduled.editMeeting.title"="แก้ไขการประชุม";
