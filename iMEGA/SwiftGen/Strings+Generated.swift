@@ -4057,11 +4057,11 @@ public enum Strings {
         public enum ScheduledMeetings {
           public enum OneOff {
             public enum Cancelled {
-              /// [B][Email] cancelled[/B] the meeting scheduled for:
+              /// [B][Email] cancelled[/B] the meeting scheduled for
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.cancelled.description")
             }
             public enum DayChanged {
-              /// [B][Email] updated[/B] the meeting date
+              /// [B][Email] updated[/B] the meeting date to
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.dayChanged.description")
             }
             public enum DescriptionFieldUpdate {
@@ -4069,7 +4069,7 @@ public enum Strings {
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description")
             }
             public enum MulitpleFieldsUpdate {
-              /// [B][Email] updated[/B] the details of the meeting scheduled for:
+              /// [B][Email] updated[/B] the meeting to
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description")
             }
             public enum New {
@@ -4077,7 +4077,7 @@ public enum Strings {
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.new.description")
             }
             public enum TimeChanged {
-              /// [B][Email] updated[/B] the meeting time
+              /// [B][Email] updated[/B] the meeting time to
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.oneOff.timeChanged.description")
             }
           }
@@ -4087,7 +4087,7 @@ public enum Strings {
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.cancelled.description")
             }
             public enum DayChanged {
-              /// [B][Email] updated[/B] the recurring meeting date
+              /// [B][Email] updated[/B] the recurring meeting date to
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.dayChanged.description")
             }
             public enum DescriptionFieldUpdate {
@@ -4095,7 +4095,7 @@ public enum Strings {
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description")
             }
             public enum MulitpleFieldsUpdate {
-              /// [B][Email] updated[/B] the details of the recurring meeting scheduled for:
+              /// [B][Email] updated[/B] the meeting to
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description")
             }
             public enum New {
@@ -4103,15 +4103,15 @@ public enum Strings {
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.new.description")
             }
             public enum OccurrenceCancelled {
-              /// [B][Email] cancelled[/B] the occurrence scheduled for:
+              /// [B][Email] cancelled[/B] the occurrence scheduled for
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description")
             }
             public enum OccurrenceUpdated {
-              /// [B][Email] updated[/B] an occurrence to:
+              /// [B][Email] updated[/B] an occurrence to
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description")
             }
             public enum TimeChanged {
-              /// [B][Email] updated[/B] the recurring meeting time
+              /// [B][Email] updated[/B] the recurring meeting time to
               public static let description = Strings.tr("Localizable", "inapp.notifications.scheduledMeetings.recurring.timeChanged.description")
             }
           }
@@ -4746,7 +4746,7 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.recurringMeetingTip.title")
         }
         public enum StartMeetingTip {
-          /// You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.
+          /// You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.
           public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.message")
           /// Start meeting
           public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.title")
@@ -4770,7 +4770,7 @@ public enum Strings {
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduled.buttonOverlay.startMeeting")
         }
         public enum CancelAlert {
-          /// Cancel “%@”?
+          /// Cancel %@?
           public static func title(_ p1: Any) -> String {
             return Strings.tr("Localizable", "meetings.scheduled.cancelAlert.title", String(describing: p1))
           }
