@@ -37,7 +37,7 @@ struct ImportAlbumView: View {
         .alert(isPresented: $viewModel.showCannotAccessAlbumAlert) {
             Alert(title: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.title),
                   message: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message),
-                  dismissButton: .default(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
+                  dismissButton: .cancel(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
                                           action: dismissImportAlbumScreen))
         }
         .sheet(isPresented: $viewModel.showImportAlbumLocation) {
@@ -157,6 +157,8 @@ struct ImportAlbumView: View {
             shareLinkButton()
         }
         .frame(maxHeight: 64)
+        .background(Color(Colors.General.Gray.navigationBgColor.color)
+            .edgesIgnoringSafeArea(.bottom))
     }
     
     private func toolbarImageButton(image: UIImage, action: @escaping () -> Void) -> some View {
