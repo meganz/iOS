@@ -11,10 +11,12 @@ public struct DeviceEntity: Sendable, Identifiable {
     public init(
         id: String,
         name: String,
+        backups: [BackupEntity]? = nil,
         status: BackupStatusEntity? = nil
     ) {
         self.id = id
         self.name = name
+        self.backups = backups
         self.status = status
     }
     

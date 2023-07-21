@@ -27,9 +27,9 @@ fileprivate extension BackupEntity {
                   syncState: backupInfo.state.toSyncStateEntity(),
                   substate: backupInfo.substate.toBackupSubstateEntity(),
                   status: backupInfo.status.toBackupHeartbeatStatusEntity(),
-                  progress: Int(backupInfo.progress),
-                  uploads: Int(backupInfo.uploads),
-                  downloads: Int(backupInfo.downloads),
+                  progress: UInt(backupInfo.progress),
+                  uploads: UInt(backupInfo.uploads),
+                  downloads: UInt(backupInfo.downloads),
                   timestamp: backupInfo.timestamp,
                   activityTimestamp: backupInfo.activityTimestamp
         )
