@@ -262,6 +262,7 @@ extension MeetingInfoViewModel {
             .sink { [weak self] meeting in
                 guard let self else { return }
                 scheduledMeeting = meeting
+                subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: meeting, chatRoom: chatRoom).buildDateDescriptionString()
             }
             .store(in: &subscriptions)
     }
