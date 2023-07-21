@@ -33,14 +33,35 @@ extension MEGALinkManager {
     
     @objc class func showCollectionLinkView() {
         guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink) else { return }
+        guard let publicLink = albumPublicLink() else {
+            MEGALinkManager.showLinkNotValid()
+            return
+        }
         
         let vm = ImportAlbumViewModel(
-            publicLink: MEGALinkManager.linkURL,
+            publicLink: publicLink,
             publicAlbumUseCase: PublicAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo))
         let viewController = UIHostingController(rootView: ImportAlbumView(viewModel: vm))
         viewController.modalPresentationStyle = .fullScreen
         
         UIApplication.mnz_visibleViewController().present(viewController, animated: true)
+    }
+    
+    class func albumPublicLink() -> URL? {
+        guard let link = MEGALinkManager.linkURL else { return nil }
+        guard link.scheme == "mega" else {
+            return link
+        }
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "mega.nz"
+        var startingPath = ""
+        if let host = link.host {
+            startingPath = "/" + host
+        }
+        components.path = startingPath + link.path
+        components.fragment = link.fragment
+        return components.url
     }
     
     @objc
