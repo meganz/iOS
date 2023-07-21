@@ -20,8 +20,12 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             storedRate = 0.0
         }
     }
-    
+
     func setProgressCompleted(_ position: TimeInterval) {
+        setProgressCompleted(position, completion: { })
+    }
+    
+    func setProgressCompleted(_ position: TimeInterval, completion: @escaping () -> Void) {
         guard let queuePlayer = queuePlayer, let currentItem = queuePlayer.currentItem else { return }
         
         let time = CMTime(seconds: position, preferredTimescale: currentItem.duration.timescale)
@@ -33,14 +37,19 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                      if CMTIME_IS_VALID(
                         CMTime(seconds: position, preferredTimescale: item.duration.timescale)
                      ) {
-                         self?.setProgressCompleted(position)
+                         self?.setProgressCompleted(position, completion: completion)
                      }
                  }
             )
             return
         }
-        
-        currentItem.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: refreshCurrentState)
+
+        notify(aboutShowingLoadingView)
+        currentItem.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] in
+            self?.refreshCurrentState(refresh: $0)
+            completion()
+        }
+
         audioSeekFallbackObserver?.invalidate()
     }
     
@@ -210,29 +219,13 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         }
         
         if currentIndex > index {
-            let resumePlaying = isPlaying
-            
-            if resumePlaying {
-                // pause the audio player to avoid playback issues
-                pause()
-            }
-            
-            // remove item before insert it to avoid duplicates
             queuePlayer.remove(item)
             queuePlayer.secureInsert(item, after: queuePlayer.currentItem)
-            
-            // remove the playlist tracks before update it with the correct tracks
-            queuePlayer.items().filter({$0 != item}).forEach {
-                queuePlayer.remove($0)
-            }
-            
-            // insert following items to the playlist
-            ((index + 1)..<tracks.count).forEach { index in
-                queuePlayer.secureInsert(tracks[index], after: queuePlayer.items().last)
-            }
-            
-            if resumePlaying {
-                play()
+            item.seek(to: .zero, completionHandler: nil)
+
+            if let currentItem = queuePlayer.currentItem {
+                queuePlayer.remove(currentItem)
+                queuePlayer.secureInsert(currentItem, after: item)
             }
         } else if currentIndex == index {
             queuePlayer.currentItem?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) {_ in

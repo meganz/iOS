@@ -120,6 +120,7 @@ import MEGAPresentation
     
     func addPlayer(tracks: [AudioPlayerItem]) {
         CrashlyticsLogger.log("[AudioPlayer] adding new tracks: \(tracks)")
+        playbackStoppedForCurrentItem()
         player?.add(tracks: tracks)
     }
     
@@ -183,8 +184,10 @@ import MEGAPresentation
     }
     
     func playerResumePlayback(from timeInterval: TimeInterval) {
-        player?.setProgressCompleted(timeInterval)
-        playerPlay()
+        playerPause()
+        player?.setProgressCompleted(timeInterval) { [weak self] in
+            self?.playerPlay()
+        }
     }
     
     func playNext() {
@@ -390,7 +393,7 @@ import MEGAPresentation
         }
     }
     
-    private func playbackStoppedForCurrentItem() {
+    @objc func playbackStoppedForCurrentItem() {
         guard let fingerprint = playerCurrentItem()?.node?.fingerprint else { return }
         
         playbackContinuationUseCase.playbackStopped(

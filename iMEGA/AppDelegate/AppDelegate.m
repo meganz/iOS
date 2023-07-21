@@ -357,7 +357,8 @@
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
-    
+
+    [AudioPlayerManager.shared playbackStoppedForCurrentItem];
     [MEGASdkManager localLogoutAndCleanUp];
 }
 
