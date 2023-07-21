@@ -54,8 +54,8 @@ public final class PlaybackContinuationUseCase<
         on timeInterval: TimeInterval,
         outOf fullTimeInterval: TimeInterval
     ) {
-        guard timeInterval >= Constants.minimumContinuationPlaybackTime else { return }
-        guard fullTimeInterval - timeInterval >= Constants.completedPlaybackThreshold else {
+        guard timeInterval >= Constants.minimumContinuationPlaybackTime,
+              fullTimeInterval - timeInterval >= Constants.completedPlaybackThreshold else {
             return previousSessionRepo.removeSavedTimeInterval(for: fingerprint)
         }
         

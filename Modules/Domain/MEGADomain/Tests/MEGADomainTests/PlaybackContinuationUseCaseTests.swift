@@ -6,18 +6,18 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
     
     private var mockPreviousSessionRepo: MockPreviousPlaybackSessionRepository!
     
-    func testStatus_shouldStartFromBeginning_whenPreviousPlaybackLessThanMinimum() {
+    func testStatus_whenPreviousPlaybackLessThanMinimum_shouldStartFromBeginning() {
         assertStatus(shouldBe: .startFromBeginning, whenLastPlaybackTime: nil)
         assertStatus(shouldBe: .startFromBeginning, whenLastPlaybackTime: lessThanMinimumTime)
     }
     
-    func testStatus_shouldDisplayDialog_whenPreviousPlaybackMoreThanMinimum_andHasNoPreference() {
+    func testStatus_whenPreviousPlaybackMoreThanMinimum_andHasNoPreference_shouldDisplayDialog() {
         let expectedTime = moreThanMinimumTime
         assertStatus(shouldBe: .displayDialog(playbackTime: expectedTime), whenLastPlaybackTime: expectedTime)
         assertStatus(shouldBe: .displayDialog(playbackTime: minimumTime), whenLastPlaybackTime: minimumTime)
     }
     
-    func testStatus_shouldStartFromBeginning_whenPreviousPlaybackMoreThanMinimum_andPreferRestart() {
+    func testStatus_whenPreviousPlaybackMoreThanMinimum_andPreferRestart_shouldStartFromBeginning() {
         assertStatus(
             shouldBe: .startFromBeginning,
             whenLastPlaybackTime: minimumTime,
@@ -31,7 +31,7 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
         )
     }
     
-    func testStatus_shouldResumeFromLastSession_whenPreviousPlaybackMoreThanMinimum_andPreferResume() {
+    func testStatus_whenPreviousPlaybackMoreThanMinimum_andPreferResume_shouldResumeFromLastSession() {
         let expectedTime = moreThanMinimumTime
         assertStatus(
             shouldBe: .resumeSession(playbackTime: expectedTime),
@@ -46,7 +46,7 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
         )
     }
     
-    func testPlaybackStopped_shouldNotSaveLastPlaybackTime_whenTimeLessThanMinimum() {
+    func testPlaybackStopped_whenTimeLessThanMinimum_shouldNotSaveLastPlaybackTime() {
         let exitTime = lessThanMinimumTime
         makeSUT().playbackStopped(
             for: testFingerprint,
@@ -57,7 +57,7 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
         XCTAssertNil(mockPreviousSessionRepo.mockTimeIntervals[testFingerprint])
     }
     
-    func testPlaybackStopped_shouldSaveLastPlaybackTime_whenTimeMoreThanMinimum() {
+    func testPlaybackStopped_whenTimeMoreThanMinimum_shouldSaveLastPlaybackTime() {
         let expectedTime = moreThanMinimumTime
         makeSUT().playbackStopped(
             for: testFingerprint,
@@ -68,22 +68,32 @@ final class PlaybackContinuationUseCaseTests: XCTestCase {
         XCTAssertEqual(mockPreviousSessionRepo.mockTimeIntervals[testFingerprint], expectedTime)
     }
     
-    func testPlaybackStopped_shouldRemoveLastPlaybackTime_whenUnderCompletedPlaybackThreshold() {
-        let expectedTime = moreThanMinimumTime
+    func testPlaybackStopped_whenUnderCompletedPlaybackThreshold_shouldRemoveLastPlaybackTime() {
+        let stopTime = moreThanMinimumTime
         let sut = makeSUT()
+
+        mockPreviousSessionRepo.mockTimeIntervals[testFingerprint] = moreThanMinimumTime
         
         sut.playbackStopped(
             for: testFingerprint,
-            on: expectedTime,
-            outOf: expectedTime + completedThreshold
+            on: stopTime,
+            outOf: stopTime - 1 + completedThreshold
         )
         
+        XCTAssertNil(mockPreviousSessionRepo.mockTimeIntervals[testFingerprint])
+    }
+
+    func testPlaybackStopped_whenUnderMinimumPlaybackThreshold_shouldRemoveLastPlaybackTime() {
+        let sut = makeSUT()
+
+        mockPreviousSessionRepo.mockTimeIntervals[testFingerprint] = moreThanMinimumTime
+
         sut.playbackStopped(
             for: testFingerprint,
-            on: expectedTime + 1,
-            outOf: expectedTime + completedThreshold
+            on: lessThanMinimumTime,
+            outOf: moreThanMinimumTime
         )
-        
+
         XCTAssertNil(mockPreviousSessionRepo.mockTimeIntervals[testFingerprint])
     }
 

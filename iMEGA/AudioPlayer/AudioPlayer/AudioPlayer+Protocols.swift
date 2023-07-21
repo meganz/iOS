@@ -23,6 +23,7 @@ protocol AudioPlayerStateProtocol {
     func isDefaultRepeatMode() -> Bool
     func setProgressCompleted(_ percentage: Float)
     func setProgressCompleted(_ position: TimeInterval)
+    func setProgressCompleted(_ position: TimeInterval, completion: @escaping () -> Void)
     func progressDragEventBegan()
     func progressDragEventEnded()
     func move(of movedItem: AudioPlayerItem, to position: IndexPath, direction: MovementDirection)

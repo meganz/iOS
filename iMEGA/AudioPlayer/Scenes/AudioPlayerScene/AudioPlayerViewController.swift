@@ -161,9 +161,21 @@ final class AudioPlayerViewController: UIViewController {
         activityIndicatorView.isHidden = !enabled
         if enabled {
             activityIndicatorView.startAnimating()
+            hideInfoLabels()
         } else {
             activityIndicatorView.stopAnimating()
+            showInfoLabels()
         }
+    }
+
+    private func hideInfoLabels() {
+        titleLabel.isHidden = true
+        subtitleLabel.isHidden = true
+    }
+
+    private func showInfoLabels() {
+        titleLabel.isHidden = false
+        subtitleLabel.isHidden = false
     }
     
     private func configureNavigationBar(title: String, subtitle: String) {
