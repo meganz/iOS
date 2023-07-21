@@ -13,9 +13,9 @@ public extension BackupEntity {
          syncState: SyncStateEntity = .unknown,
          substate: BackupSubstateEntity = .noSyncError,
          status: BackupHeartbeatStatusEntity = .unknown,
-         progress: Int = 0,
-         uploads: Int = 0,
-         downloads: Int = 0,
+         progress: UInt = 0,
+         uploads: UInt = 0,
+         downloads: UInt = 0,
          timestamp: Date? = nil,
          activityTimestamp: Date? = nil,
          isTesting: Bool = true) {
