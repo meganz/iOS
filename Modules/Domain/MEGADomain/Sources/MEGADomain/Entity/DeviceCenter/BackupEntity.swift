@@ -19,9 +19,9 @@ public struct BackupEntity: Sendable, Identifiable {
     public let syncState: SyncStateEntity
     public let substate: BackupSubstateEntity
     public let status: BackupHeartbeatStatusEntity
-    public let progress: Int
-    public let uploads: Int
-    public let downloads: Int
+    public let progress: UInt
+    public let uploads: UInt
+    public let downloads: UInt
     public var backupStatus: BackupStatusEntity?
     public var errorState: Int?
     
@@ -41,9 +41,9 @@ public struct BackupEntity: Sendable, Identifiable {
         syncState: SyncStateEntity,
         substate: BackupSubstateEntity,
         status: BackupHeartbeatStatusEntity,
-        progress: Int,
-        uploads: Int,
-        downloads: Int,
+        progress: UInt,
+        uploads: UInt,
+        downloads: UInt,
         timestamp: Date?,
         activityTimestamp: Date?
     ) {

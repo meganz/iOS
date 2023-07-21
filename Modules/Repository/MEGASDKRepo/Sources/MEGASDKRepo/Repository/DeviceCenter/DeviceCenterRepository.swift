@@ -14,18 +14,22 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
     }
     
     public func fetchUserDevices() async -> [DeviceEntity] {
-        let devices = await fetchUserDeviceNames()
+        let deviceNamesDictionary = await fetchUserDeviceNames()
         let userBackups = await fetchUserBackups()
         let userGroupedBackups = Dictionary(grouping: userBackups, by: \.deviceId)
         
-        return devices.compactMap { device in
-            guard let deviceBackups = userGroupedBackups[device.id],
+        return userGroupedBackups.keys.compactMap { deviceId in
+            guard let deviceBackups = userGroupedBackups[deviceId],
                     deviceBackups.isNotEmpty else { return nil }
             
-            var updatedDevice = device
-            updatedDevice.backups = updateBackupsWithSyncStatus(deviceBackups)
-            updatedDevice.status = calculateGlobalStatus(updatedDevice.backups ?? [])
-            return updatedDevice
+            let backups = updateBackupsWithSyncStatus(deviceBackups)
+            
+            return DeviceEntity(
+                id: deviceId,
+                name: deviceNamesDictionary[deviceId] ?? "",
+                backups: backups,
+                status: calculateGlobalStatus(backups)
+            )
         }
     }
     
@@ -45,20 +49,20 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
         })
     }
     
-    private func fetchUserDeviceNames() async -> [DeviceEntity] {
+    private func fetchUserDeviceNames() async -> [String: String] {
         await withAsyncValue(in: { completion in
             sdk.getUserAttributeType(.deviceNames, delegate: RequestDelegate { (result) in
                 if case let .success(request) = result {
                     guard let devicesDictionary = request.megaStringDictionary else { return }
                     
-                    let devices = devicesDictionary.compactMap { (key, value) -> DeviceEntity? in
-                        guard let deviceName = value.base64URLDecoded else { return nil }
-                        return DeviceEntity(id: key, name: deviceName)
+                    let devices = devicesDictionary.mapValues { value in
+                        guard let deviceName = value.base64URLDecoded else { return "" }
+                        return deviceName
                     }
                     
                     completion(.success(devices))
                 } else {
-                    completion(.success([]))
+                    completion(.success([:]))
                 }
             })
         })
@@ -98,7 +102,7 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
                 switch backup.substate {
                 case .storageOverquota:
                     backupSyncState = .outOfQuota
-                case .accountExpired, .accountBlocked:
+                case .accountExpired, .accountBlocked, .noSyncError:
                     backupSyncState = .blocked
                 default:
                     backupSyncState = .error
