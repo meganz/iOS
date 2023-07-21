@@ -243,9 +243,7 @@
         }
     } else {
         if (self.parentNode.name && !self.isFolderLinkNotValid) {
-            UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle:NSLocalizedString(@"folderLink", nil) color:UIColor.mnz_label];
-            label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-            self.navigationItem.titleView = label;
+            self.navigationItem.titleView = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle:NSLocalizedString(@"folderLink", nil) color:UIColor.mnz_label];
         } else {
             self.navigationItem.title = NSLocalizedString(@"folderLink", nil);
         }

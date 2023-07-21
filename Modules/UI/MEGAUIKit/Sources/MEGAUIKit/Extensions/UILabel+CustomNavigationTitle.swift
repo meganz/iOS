@@ -4,7 +4,7 @@ public extension UILabel {
     @objc func customNavigationBarLabel(title: String, subtitle: String?, color: UIColor = UIColor.label) -> UILabel {
         let label = UILabel()
         label.numberOfLines = (subtitle != nil) ? 2 : 1
-        label.lineBreakMode = .byClipping
+        label.lineBreakMode = .byTruncatingTail
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.8
