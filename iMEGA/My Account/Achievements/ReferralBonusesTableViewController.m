@@ -112,7 +112,7 @@
     [self setStorageQuotaRewardsForCell:cell withAwardId:awardId];
     
     NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:inviteIndexPath];
-    cell.daysLeftTrailingLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.complete.valid.cell.subtitle", nil), [NSString stringWithFormat:@"%td", awardExpirationdDate.daysUntil]];
+    cell.daysLeftTrailingLabel.text = [self awardDaysLeftMessage:awardExpirationdDate.daysUntil];
     cell.daysLeftTrailingLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
     return cell;
