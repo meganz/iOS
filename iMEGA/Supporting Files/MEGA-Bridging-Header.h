@@ -178,6 +178,7 @@
 #import "AwaitingEmailConfirmationView.h"
 #import "TwoFactorAuthenticationViewController.h"
 #import "MEGAPhotoBrowserPickerViewController.h"
+#import "ReferralBonusesTableViewController.h"
 
 #import "TransferTableViewCell.h"
 #import "CameraUploadsTableViewController.h"
