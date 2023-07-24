@@ -5704,6 +5704,10 @@ public enum Strings {
           public static func message(_ p1: Any) -> String {
             return Strings.tr("Localizable", "sharedItems.rubbish.confirmation.message", String(describing: p1))
           }
+          /// Plural format key: "%#@count@"
+          public static func removedItemCount(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "sharedItems.rubbish.confirmation.removedItemCount", p1)
+          }
         }
         public enum Warning {
           /// Plural format key: "%#@count@"
