@@ -51,7 +51,7 @@
         
         if (self.mode == DisplayModeCloudDrive || self.mode == DisplayModeRubbishBin) {
             NSString *message = [RemovalConfirmationMessageGenerator messageForRemovedFiles:self.numberOfFiles andFolders:self.numberOfFolders];
-
+            
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
         } else if (self.mode == DisplayModeSharedItem) {
             if (self.totalRequests > 1) {
