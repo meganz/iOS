@@ -10,6 +10,8 @@ public final class DeviceViewModel: ObservableObject, Identifiable {
     @Published var statusIconName: String?
     @Published var statusTitle: String = ""
     @Published var statusColorName: String = ""
+    @Published var shouldShowBackupPercentage: Bool = false
+    @Published var backupPercentage: String = ""
     
     init(device: DeviceEntity, assets: DeviceAssets) {
         self.device = device
@@ -17,6 +19,7 @@ public final class DeviceViewModel: ObservableObject, Identifiable {
         self.name = device.name
         
         updateDeviceAssets()
+        updateBackupProgressIfNeeded()
     }
     
     private func updateDeviceAssets() {
@@ -24,5 +27,18 @@ public final class DeviceViewModel: ObservableObject, Identifiable {
         statusTitle = assets.status.title
         statusIconName = assets.status.iconName
         statusColorName = assets.status.colorName
+    }
+    
+    private func updateBackupProgressIfNeeded() {
+        if device.status == .updating {
+            let progress = device.backups?.first(where: {
+                $0.backupStatus == .updating
+            }).flatMap {
+                $0.progress
+            } ?? 0
+            
+            backupPercentage = "\(progress) %"
+            shouldShowBackupPercentage = progress > 0
+        }
     }
 }

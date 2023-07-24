@@ -18,11 +18,21 @@ struct DeviceView: View {
                     .fontWeight(.medium)
                     .foregroundColor(colorScheme == .dark ? .white : .black)
                 HStack(spacing: 4) {
-                    if let statusIcon = viewModel.statusIconName {
-                        Image(statusIcon)
-                            .renderingMode(.template)
-                            .foregroundColor(Color(viewModel.statusColorName))
-                            .frame(width: 12, height: 12)
+                    if viewModel.shouldShowBackupPercentage {
+                        Text(viewModel.backupPercentage)
+                            .font(.caption)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 2)
+                            .background(Color(viewModel.statusColorName))
+                            .clipShape(Capsule())
+                    } else {
+                        if let statusIcon = viewModel.statusIconName {
+                            Image(statusIcon)
+                                .renderingMode(.template)
+                                .foregroundColor(Color(viewModel.statusColorName))
+                                .frame(width: 12, height: 12)
+                        }
                     }
                     Text(viewModel.statusTitle)
                         .font(.caption)
