@@ -2,6 +2,7 @@ import Combine
 
 final class SnackBarViewModel: ObservableObject {
     @Published var snackBar: SnackBar
+    @Published var isShowSnackBar: Bool = true
     
     var displayDuration: Double = 4.0
     
@@ -28,6 +29,7 @@ final class SnackBarViewModel: ObservableObject {
     private func dismissSnackBar() {
         SnackBarRouter.shared.dismissSnackBar()
         cancelDisplaySnackBarSubscription()
+        isShowSnackBar = false
     }
     
     private func cancelDisplaySnackBarSubscription() {

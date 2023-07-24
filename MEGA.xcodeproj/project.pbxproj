@@ -1509,6 +1509,7 @@
 		B53BDBEB27619171001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B53BDBEC27619172001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
 		B53BDBED27619173001D73F8 /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120B4A7A27430F5D00312B35 /* XCAssets+Generated.swift */; };
+		B541CD302A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */; };
 		B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */; };
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
 		B558B1E42A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */; };
@@ -4066,6 +4067,7 @@
 		B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextImageView.swift; sourceTree = "<group>"; };
 		B52B8C67297FE9A400981F47 /* RecentsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagUseCase+Additions.swift"; sourceTree = "<group>"; };
+		B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSelectionSnackBarType.swift; sourceTree = "<group>"; };
 		B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+LiveText.swift"; sourceTree = "<group>"; };
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
 		B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanAlertType.swift; sourceTree = "<group>"; };
@@ -9700,6 +9702,7 @@
 		B558B1E12A551F1A006FB3A4 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */,
 				B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */,
 			);
 			path = Data;
@@ -14002,6 +14005,7 @@
 				B5000FA72A1DB01600E06478 /* PlanHeaderTagView.swift in Sources */,
 				B5000FA92A1DB01600E06478 /* PlanHeaderView.swift in Sources */,
 				B5000FAA2A1DB01600E06478 /* PlanPricingView.swift in Sources */,
+				B541CD302A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift in Sources */,
 				B5000FA82A1DB01600E06478 /* PlanStorageView.swift in Sources */,
 				C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */,
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,

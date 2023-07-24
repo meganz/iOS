@@ -7,6 +7,13 @@ struct UpgradeAccountPlanView: View {
     @StateObject var viewModel: UpgradeAccountPlanViewModel
     @Environment(\.presentationMode) private var presentationMode
     
+    var body: some View {
+        ZStack {
+            planView()
+            snackBarView()
+        }
+    }
+    
     private var cancelButton: some View {
         Button {
             viewModel.isDismiss = true
@@ -17,7 +24,7 @@ struct UpgradeAccountPlanView: View {
         .padding()
     }
     
-    var body: some View {
+    private func planView() -> some View {
         VStack(alignment: .leading) {
             cancelButton
             
@@ -91,7 +98,17 @@ struct UpgradeAccountPlanView: View {
         })
     }
     
-    func termsAndPoliciesView() -> some View {
+    private func snackBarView() -> some View {
+        VStack {
+            Spacer()
+
+            if viewModel.isShowSnackBar {
+                SnackBarView(viewModel: viewModel.snackBarViewModel())
+            }
+        }
+    }
+    
+    private func termsAndPoliciesView() -> some View {
         @ViewBuilder
         func contentView() -> some View {
             if #available(iOS 15.0, *) {
