@@ -3,9 +3,9 @@ import MEGADomain
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     private let audioSession: AVAudioSession
     private let callActionManager: CallActionManager?
-
+    
     var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?
-
+    
     var isBluetoothAudioRouteAvailable: Bool {
         audioSession.mnz_isBluetoothAudioRouteAvailable
     }
@@ -22,7 +22,13 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         default: return .other
         }
     }
-
+    
+    // wrapping in async to make sure it's executed in the background thread
+    // and does not cause app hang
+    private func asyncCurrentSelectedAudioPort() async -> AudioPort {
+        currentSelectedAudioPort
+    }
+    
     init(audioSession: AVAudioSession, callActionManager: CallActionManager? = nil) {
         self.audioSession = audioSession
         self.callActionManager = callActionManager
@@ -83,7 +89,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         do {
             if AudioPlayerManager.shared.isPlayerAlive() {
                 AudioPlayerManager.shared.audioInterruptionDidStart()
-                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .allowBluetoothA2DP]) 
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.allowBluetooth, .allowBluetoothA2DP])
             }
             try AVAudioSession.sharedInstance().setActive(true)
             completion?(.success)
@@ -154,31 +160,44 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             return
         }
         
-        MEGALogDebug("AudioSession: session route changed \(notification) with current selected port \(currentSelectedAudioPort)")
-            
-        // Enabling webrtc audio changes the audio output from speaker to inbuilt receiver.
-        // So we need to revert back to original settings.
-        let currentAudioPort = currentSelectedAudioPort
-        if reason == .categoryChange,
-           let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription,
-           let previousAudioPort = previousRoute.outputs.first?.toAudioPort(),
-           callActionManager?.didEnableWebrtcAudioNow ?? false,
-           previousAudioPort == .builtInSpeaker,
-           currentAudioPort != .builtInSpeaker {
-            MEGALogDebug("AudioSession: The route is changed is because of the webrtc audio")
-            callActionManager?.didEnableWebrtcAudioNow = false
-            enableLoudSpeaker { _ in }
-            return
-        } else if callActionManager?.didEnableWebrtcAudioNow ?? false {
-            callActionManager?.didEnableWebrtcAudioNow = false
+        let previousAudioPort: AudioPort?
+        if
+            reason == .categoryChange,
+            let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
+        {
+            previousAudioPort = previousRoute.outputs.first?.toAudioPort()
+        } else {
+            previousAudioPort = nil
         }
         
-        if let handler = routeChanged, let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {
-            let previousRoute = userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
-            let previousAudioPort = previousRoute?.outputs.first?.toAudioPort()
-            handler(audioSessionRouteChangeReason, previousAudioPort)
-        } else {
-            MEGALogDebug("AudioSession: Either the handler is nil or the audioSessionRouteChangeReason is nil")
+        let notificationDescription = String(describing: notification)
+        
+        Task { @MainActor in
+            // Enabling webrtc audio changes the audio output from speaker to inbuilt receiver.
+            // So we need to revert back to original settings.
+            
+            // run the getter to check current port async so that it's not blocking main thread
+            let currentAudioPort = await asyncCurrentSelectedAudioPort()
+            MEGALogDebug("AudioSession: session route changed \(notificationDescription) with current selected port \(currentAudioPort)")
+            if let previousAudioPort,
+               callActionManager?.didEnableWebrtcAudioNow ?? false,
+               previousAudioPort == .builtInSpeaker,
+               currentAudioPort != .builtInSpeaker {
+                MEGALogDebug("AudioSession: The route is changed is because of the webrtc audio")
+                callActionManager?.didEnableWebrtcAudioNow = false
+                enableLoudSpeaker { _ in }
+                return
+            } else if callActionManager?.didEnableWebrtcAudioNow ?? false {
+                callActionManager?.didEnableWebrtcAudioNow = false
+            }
+            
+            if let handler = routeChanged,
+               let previousAudioPort,
+               let audioSessionRouteChangeReason = reason.toAudioSessionRouteChangedReason() {
+                handler(audioSessionRouteChangeReason, previousAudioPort)
+            } else {
+                MEGALogDebug("AudioSession: Either the handler is nil or the audioSessionRouteChangeReason is nil")
+            }
         }
     }
 }
