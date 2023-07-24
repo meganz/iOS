@@ -163,7 +163,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI:) name:MEGASortingPreference object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(determineViewMode) name:MEGAViewModePreference object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
