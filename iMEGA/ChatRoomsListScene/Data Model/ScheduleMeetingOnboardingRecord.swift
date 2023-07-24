@@ -4,6 +4,7 @@ import MEGADomain
 enum ScheduledMeetingOnboardingTip {
     case initial
     case createMeeting
+    case recurringOrStartMeeting
     case startMeeting
     case recurringMeeting
     case showedAll
@@ -18,6 +19,7 @@ extension ScheduledMeetingOnboardingTip {
         switch self {
         case .initial: return .initial
         case .createMeeting: return .createMeeting
+        case .recurringOrStartMeeting: return .recurringOrStartMeeting
         case .startMeeting: return .startMeeting
         case .recurringMeeting: return .recurringMeeting
         case .showedAll: return .showedAll
@@ -28,6 +30,7 @@ extension ScheduledMeetingOnboardingTip {
         switch scheduledMeetingOnboardingTipType {
         case .initial: return .initial
         case .createMeeting: return .createMeeting
+        case .recurringOrStartMeeting: return .recurringOrStartMeeting
         case .startMeeting: return .startMeeting
         case .recurringMeeting: return .recurringMeeting
         case .showedAll: return .showedAll

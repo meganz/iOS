@@ -96,18 +96,23 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published private var meetingListFrame: CGRect = .zero
     @Published var isMeetingListScrolling: Bool = false
     @Published var createMeetingTipOffsetX: CGFloat = 0
-    @Published var startMeetingTipOffsetY: CGFloat = 0
-    @Published var recurringMeetingTipOffsetY: CGFloat = 0
-    
+    @Published var startMeetingTipOffsetY: CGFloat?
+    @Published var startMeetingTipArrowDirection: TipView.TipArrowDirection = .up
+    @Published var recurringMeetingTipOffsetY: CGFloat?
+    @Published var recurringMeetingTipArrowDirection: TipView.TipArrowDirection = .up
+
     var presentingCreateMeetingTip: Bool {
         chatViewMode == .meetings && isConnectedToNetwork && currentTip == .createMeeting
     }
+    
+    var presentingRecurringMeetingTip: Bool {
+        chatViewMode == .meetings  && !isMeetingListScrolling && recurringMeetingTipOffsetY != nil &&
+        (currentTip == .recurringMeeting || currentTip == .recurringOrStartMeeting)
+    }
 
     var presentingStartMeetingTip: Bool {
-        chatViewMode == .meetings && currentTip == .startMeeting && !isMeetingListScrolling && startMeetingTipOffsetY > 0
-    }
-    var presentingRecurringMeetingTip: Bool {
-        chatViewMode == .meetings && currentTip == .recurringMeeting && !isMeetingListScrolling && recurringMeetingTipOffsetY > 0
+        chatViewMode == .meetings  && !isMeetingListScrolling && startMeetingTipOffsetY != nil &&
+        (currentTip == .startMeeting || (currentTip == .recurringOrStartMeeting && !presentingRecurringMeetingTip))
     }
     
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
@@ -287,17 +292,31 @@ final class ChatRoomsListViewModel: ObservableObject {
 
         if isFirstScheduledMeeting(meeting) {
             if let meetingframeInGlobal = meetingframeInGlobal {
-                startMeetingTipOffsetY = meetingframeInGlobal.midY - meetingListFrame.minY
+                let offsetY = meetingframeInGlobal.midY - meetingListFrame.minY
+                if offsetY < meetingListFrame.midY {
+                    startMeetingTipOffsetY = offsetY
+                    startMeetingTipArrowDirection = .up
+                } else {
+                    startMeetingTipOffsetY = meetingframeInGlobal.midY - meetingListFrame.maxY
+                    startMeetingTipArrowDirection = .down
+                }
             } else {
-                startMeetingTipOffsetY = -1
+                startMeetingTipOffsetY = nil
             }
         }
         
         if meeting.isFirstRecurringAndHost {
             if let meetingframeInGlobal = meetingframeInGlobal {
-                recurringMeetingTipOffsetY = meetingframeInGlobal.midY - meetingListFrame.minY
+                let offsetY = meetingframeInGlobal.midY - meetingListFrame.minY
+                if offsetY < meetingListFrame.midY {
+                    recurringMeetingTipOffsetY = offsetY
+                    recurringMeetingTipArrowDirection = .up
+                } else {
+                    recurringMeetingTipOffsetY = meetingframeInGlobal.midY - meetingListFrame.maxY
+                    recurringMeetingTipArrowDirection = .down
+                }
             } else {
-                recurringMeetingTipOffsetY = -1
+                recurringMeetingTipOffsetY = nil
             }
         }
     }
@@ -307,7 +326,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             message: Strings.Localizable.Meetings.ScheduleMeeting.CreateMeetingTip.message,
             buttonTitle: Strings.Localizable.Meetings.ScheduleMeeting.TipView.gotIt) { [weak self] in
             guard let self else { return }
-            currentTip = .startMeeting
+            currentTip = .recurringOrStartMeeting
             saveOnboardingTipRecord()
         }
     }
@@ -315,9 +334,14 @@ final class ChatRoomsListViewModel: ObservableObject {
     func makeStartMeetingTip() -> Tip {
         Tip(title: Strings.Localizable.Meetings.ScheduleMeeting.StartMeetingTip.title,
             message: Strings.Localizable.Meetings.ScheduleMeeting.StartMeetingTip.message,
+            boldMessage: Strings.Localizable.Meetings.ScheduleMeeting.StartMeetingTip.startMeeting,
             buttonTitle: Strings.Localizable.Meetings.ScheduleMeeting.TipView.gotIt) { [weak self] in
             guard let self else { return }
-            currentTip = .recurringMeeting
+            if currentTip == .recurringOrStartMeeting {
+                currentTip = .recurringMeeting
+            } else {
+                currentTip = .showedAll
+            }
             saveOnboardingTipRecord()
         }
     }
@@ -325,9 +349,14 @@ final class ChatRoomsListViewModel: ObservableObject {
     func makeRecurringMeetingTip() -> Tip {
         Tip(title: Strings.Localizable.Meetings.ScheduleMeeting.RecurringMeetingTip.title,
             message: Strings.Localizable.Meetings.ScheduleMeeting.RecurringMeetingTip.message,
+            boldMessage: Strings.Localizable.Meetings.ScheduleMeeting.RecurringMeetingTip.occurrences,
             buttonTitle: Strings.Localizable.Meetings.ScheduleMeeting.TipView.gotIt) { [weak self] in
             guard let self else { return }
-            currentTip = .showedAll
+            if currentTip == .recurringOrStartMeeting {
+                currentTip = .startMeeting
+            } else {
+                currentTip = .showedAll
+            }
             saveOnboardingTipRecord()
         }
     }

@@ -3614,3 +3614,9 @@
 "meetings.scheduled.managementMessages.updated"="%@ updated the meeting";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Edit meeting";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Start meeting";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Occurrences";

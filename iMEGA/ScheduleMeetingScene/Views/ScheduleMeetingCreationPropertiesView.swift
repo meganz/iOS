@@ -24,7 +24,7 @@ struct ScheduleMeetingCreationPropertiesView: View {
                 }
                 .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
                 
-                ScheduleMeetingCreationLinkFootnoteView()
+                ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.Link.description)
                     .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
             }
             .padding(.vertical)
