@@ -264,6 +264,22 @@ final class CloudDriveViewControllerTests: XCTestCase {
         XCTAssertEqual(indexPath.item, 1)
     }
     
+    // MARK: - CloudDriveViewController+ContextMenu
+    
+    func testSortMenu_whenSortFromRubbishBinOnThumbnailView_reloadData() {
+        simulateUserHasThumbnailViewModePreference()
+        let displayMode = rubbishBinDisplayMode()
+        let selectedNode = anyNode(handle: .min, nodeType: .file)
+        let sut = makeSUT(nodes: [selectedNode], displayMode: displayMode)
+        sut.viewWillAppear(true)
+        
+        SortOrderType.allCases.enumerated().forEach { (index, sortOption) in
+            sut.simulateUserOpenContextMenuThen(select: sortOption)
+            
+            XCTAssertTrue(sut.collectionView().messages.contains(.reloadData), "Expect to reload data safely or without crash, but fail instead at index: \(index), with option: \(sortOption)")
+        }
+    }
+    
     // MARK: - Helpers
     
     private func setNoEditingState(on sut: CloudDriveViewController) {
@@ -339,6 +355,10 @@ private extension CloudDriveViewController {
     
     func simulateUserSelectDelete(_ nodeActionViewController: NodeActionViewController, _ selectedNode: MockNode) {
         nodeAction(nodeActionViewController, didSelect: .remove, for: selectedNode, from: "any-sender")
+    }
+    
+    func simulateUserOpenContextMenuThen(select selection: SortOrderType) {
+        sortMenu(didSelect: selection)
     }
 }
 
