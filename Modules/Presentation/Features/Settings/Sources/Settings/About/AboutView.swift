@@ -34,8 +34,26 @@ struct AboutView: View {
                 })
                 AboutItemView(title: viewModel.aboutSetting.sdkVersion.title,
                               subtitle: viewModel.aboutSetting.sdkVersion.message)
-                AboutItemView(title: viewModel.aboutSetting.chatSdkVersion.title,
-                              subtitle: viewModel.aboutSetting.chatSdkVersion.message)
+                if #available(iOS 15.0, *) {
+                    AboutItemView(title: viewModel.aboutSetting.chatSdkVersion.title,
+                                  subtitle: viewModel.aboutSetting.chatSdkVersion.message)
+                    .onTapGesture(count: 5) {
+                        viewModel.refreshToggleSfuServerAlertStatus()
+                    }
+                    .alert(viewModel.aboutSetting.changeSfuServer.title, isPresented: $viewModel.showSfuServerChangeAlert) {
+                        TextField(viewModel.aboutSetting.changeSfuServer.placeholder, text: $viewModel.sfuServerId)
+                            .keyboardType(.numbersAndPunctuation)
+                        Button(viewModel.aboutSetting.changeSfuServer.changeButton) {
+                            viewModel.changeSfuServer()
+                        }
+                        Button(viewModel.aboutSetting.changeSfuServer.cancelButton, role: .cancel) { }
+                    } message: {
+                        Text(viewModel.aboutSetting.changeSfuServer.message)
+                    }
+                } else {
+                    AboutItemView(title: viewModel.aboutSetting.chatSdkVersion.title,
+                                  subtitle: viewModel.aboutSetting.chatSdkVersion.message)
+                }
             }
             Section {
                 Link(viewModel.aboutSetting.viewSourceLink.title,

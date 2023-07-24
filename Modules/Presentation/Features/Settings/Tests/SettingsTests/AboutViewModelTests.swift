@@ -8,6 +8,7 @@ final class AboutViewModeTests: XCTestCase {
     private var preferenceUC: MockPreferenceUseCase!
     private var apiEnvironmentUC: MockAPIEnvironmentUseCase!
     private var manageLogsUC: MockManageLogsUseCase!
+    private var changeSfuServerUC: MockChangeSfuServerUseCase!
     private var aboutModel: AboutSetting!
     private var aboutVM: AboutViewModel!
     private let toggleLogsEntity = LogTogglingAlert(enableTitle: "Enable title",
@@ -21,6 +22,7 @@ final class AboutViewModeTests: XCTestCase {
         preferenceUC = MockPreferenceUseCase(dict: [.logging: enableLogs])
         apiEnvironmentUC = MockAPIEnvironmentUseCase()
         manageLogsUC = MockManageLogsUseCase()
+        changeSfuServerUC = MockChangeSfuServerUseCase()
         aboutModel = AboutSetting(appVersion: AppVersion(title: "", message: ""),
                                    sdkVersion: AppVersion(title: "", message: ""),
                                    chatSDKVersion: AppVersion(title: "", message: ""),
@@ -35,9 +37,14 @@ final class AboutViewModeTests: XCTestCase {
                                                             disableTitle: "Disable title",
                                                             disableMessage: "Disable message",
                                                             mainActionTitle: "",
-                                                            cancelActionTitle: ""))
+                                                             cancelActionTitle: ""),
+                                  changeSfuServer: ChangeSfuServerAlert(title: "Change server title",
+                                                                        message: "Change server message",
+                                                                        placeholder: "Change server placeholder",
+                                                                        cancelButton: "Change server cancel button",
+                                                                        changeButton: "Change server change button"))
         
-        aboutVM = AboutViewModel(preferenceUC: preferenceUC, apiEnvironmentUC: apiEnvironmentUC, manageLogsUC: manageLogsUC, aboutSetting: aboutModel)
+        aboutVM = AboutViewModel(preferenceUC: preferenceUC, apiEnvironmentUC: apiEnvironmentUC, manageLogsUC: manageLogsUC, changeSfuServerUC: changeSfuServerUC, aboutSetting: aboutModel)
     }
     
     func testShouldEnableLogs_toggleLogsAlertText() throws {

@@ -8,8 +8,9 @@ public struct AboutSetting {
     public var acknowledgementsLink: SettingsLink
     public var apiEnvironment: APIEnvironmentChangingAlert
     public var toggleLogs: LogTogglingAlert
+    public var changeSfuServer: ChangeSfuServerAlert
 
-    public init(appVersion: AppVersion, sdkVersion: AppVersion, chatSDKVersion: AppVersion, viewSourceLink: SettingsLink, acknowledgementsLink: SettingsLink, apiEnvironment: APIEnvironmentChangingAlert, toggleLogs: LogTogglingAlert) {
+    public init(appVersion: AppVersion, sdkVersion: AppVersion, chatSDKVersion: AppVersion, viewSourceLink: SettingsLink, acknowledgementsLink: SettingsLink, apiEnvironment: APIEnvironmentChangingAlert, toggleLogs: LogTogglingAlert, changeSfuServer: ChangeSfuServerAlert) {
         self.appVersion = appVersion
         self.sdkVersion = sdkVersion
         self.chatSdkVersion = chatSDKVersion
@@ -17,5 +18,6 @@ public struct AboutSetting {
         self.acknowledgementsLink = acknowledgementsLink
         self.apiEnvironment = apiEnvironment
         self.toggleLogs = toggleLogs
+        self.changeSfuServer = changeSfuServer
     }
 }

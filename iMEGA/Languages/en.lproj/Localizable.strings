@@ -3620,3 +3620,13 @@
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Start meeting";
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Occurrences";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="Change SFU server";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="Default is -1";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="Cancel";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="Change";
