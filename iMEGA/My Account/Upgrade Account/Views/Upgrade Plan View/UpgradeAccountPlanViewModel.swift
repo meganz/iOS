@@ -18,6 +18,11 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             if !isAlertPresented { setAlertType(nil) }
         }
     }
+    
+    @Published var isShowSnackBar = false
+    private(set) var snackBarType: PlanSelectionSnackBarType = .none
+    private var showSnackBarSubscription: AnyCancellable?
+    
     @Published var isRestoreAccountPlan = false
     @Published var isTermsAndPoliciesPresented = false
     @Published var isDismiss = false
@@ -182,7 +187,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     func setSelectedPlan(_ plan: AccountPlanEntity) {
-        guard isSelectionEnabled(forPlan: plan) else { return }
+        guard isSelectionEnabled(forPlan: plan) else {
+            showSnackBar(for: .currentRecurringPlanSelected)
+            return
+        }
         selectedPlanType = plan.type
     }
     
@@ -192,6 +200,27 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         let shouldPresentAlert = type != nil
         guard shouldPresentAlert != isAlertPresented else { return }
         isAlertPresented = shouldPresentAlert
+    }
+    
+    func showSnackBar(for type: PlanSelectionSnackBarType) {
+        guard snackBarType != type || !isShowSnackBar else { return }
+        snackBarType = type
+        isShowSnackBar = true
+    }
+    
+    func snackBarViewModel() -> SnackBarViewModel {
+        let snackBar = SnackBar(message: snackBarType.title)
+        let viewModel = SnackBarViewModel(snackBar: snackBar)
+
+        showSnackBarSubscription = viewModel.$isShowSnackBar
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isShow in
+                guard let self else { return }
+                if isShow { snackBarType = .none }
+                isShowSnackBar = isShow
+            }
+        
+        return viewModel
     }
     
     // MARK: - Private

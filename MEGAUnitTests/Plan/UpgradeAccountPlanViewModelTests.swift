@@ -566,4 +566,53 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         XCTAssertNil(sut.alertType)
         XCTAssertFalse(sut.isAlertPresented)
     }
+    
+    func testSnackBar_selectedCurrentRecurringAccount_shouldShowSnackBar() async {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList = [proI_monthly, proI_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        sut.setSelectedPlan(proI_monthly)
+        
+        XCTAssertTrue(sut.isShowSnackBar)
+        XCTAssertEqual(sut.snackBarType, .currentRecurringPlanSelected)
+    }
+    
+    func testSnackBar_selectedCurrentOneTimeAccount_shouldNotShowSnackBar() async {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .none)
+        let planList = [proI_monthly, proI_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        sut.setSelectedPlan(proI_monthly)
+        
+        XCTAssertFalse(sut.isShowSnackBar)
+        XCTAssertEqual(sut.snackBarType, .none)
+    }
+    
+    func testSnackBarType_isShowSnackBarSetToFalse_shouldBeNone() async {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList = [proI_monthly, proI_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        sut.setSelectedPlan(proI_monthly)
+        XCTAssertTrue(sut.isShowSnackBar)
+        
+        let exp = expectation(description: "Set snackBarViewModel snackBarViewModel to false")
+        let snackBarViewModel = sut.snackBarViewModel()
+        snackBarViewModel.$isShowSnackBar
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }.store(in: &subscriptions)
+
+        snackBarViewModel.isShowSnackBar = false
+        await fulfillment(of: [exp], timeout: 0.5)
+        XCTAssertEqual(sut.snackBarType, .none)
+    }
 }

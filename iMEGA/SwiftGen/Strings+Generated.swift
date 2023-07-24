@@ -5931,6 +5931,12 @@ public enum Strings {
           public static let recommended = Strings.tr("Localizable", "upgradeAccountPlan.plan.tag.recommended")
         }
       }
+      public enum Selection {
+        public enum Message {
+          /// You already have a recurring subscription for this plan
+          public static let alreadyHaveRecurringSubscriptionOfPlan = Strings.tr("Localizable", "upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan")
+        }
+      }
     }
     public enum VerifyCredentials {
       public enum YourCredentials {
