@@ -4565,6 +4565,10 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
         /// Update
         public static let update = Strings.tr("Localizable", "meetings.scheduleMeeting.update")
+        public enum CalendarInvite {
+          /// Email a calendar invite to participants so they can add the meeting to their calendars.
+          public static let description = Strings.tr("Localizable", "meetings.scheduleMeeting.calendarInvite.description")
+        }
         public enum Create {
           public enum Daily {
             /// Daily
@@ -4742,12 +4746,16 @@ public enum Strings {
         public enum RecurringMeetingTip {
           /// You can view, cancel, or edit any occurrence of a recurring meeting by tapping and holding the meeting and selecting Occurrences.
           public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.recurringMeetingTip.message")
+          /// Occurrences
+          public static let occurrences = Strings.tr("Localizable", "meetings.scheduleMeeting.recurringMeetingTip.occurrences")
           /// Manage recurring meetings
           public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.recurringMeetingTip.title")
         }
         public enum StartMeetingTip {
           /// You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.
           public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.message")
+          /// Start meeting
+          public static let startMeeting = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.startMeeting")
           /// Start meeting
           public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.title")
         }

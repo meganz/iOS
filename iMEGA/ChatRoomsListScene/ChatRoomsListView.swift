@@ -50,16 +50,18 @@ struct ChatRoomsListView: View {
             , alignment: .top
         )
         .overlay(
-            TipView(tip: viewModel.makeStartMeetingTip())
-                .offset(x: 50, y: viewModel.startMeetingTipOffsetY)
+            TipView(tip: viewModel.makeStartMeetingTip(),
+                    arrowDirection: viewModel.startMeetingTipArrowDirection)
+                .offset(x: 50, y: viewModel.startMeetingTipOffsetY ?? 0)
                 .opacity(viewModel.presentingStartMeetingTip ? 1 : 0)
-            , alignment: .top
+            , alignment: viewModel.startMeetingTipArrowDirection == .up ? .top : .bottom
         )
         .overlay(
-            TipView(tip: viewModel.makeRecurringMeetingTip())
-                .offset(x: 50, y: viewModel.recurringMeetingTipOffsetY)
+            TipView(tip: viewModel.makeRecurringMeetingTip(),
+                    arrowDirection: viewModel.recurringMeetingTipArrowDirection)
+                .offset(x: 50, y: viewModel.recurringMeetingTipOffsetY ?? 0)
                 .opacity(viewModel.presentingRecurringMeetingTip ? 1 : 0)
-            , alignment: .top
+            , alignment: viewModel.recurringMeetingTipArrowDirection == .up ? .top : .bottom
         )
     }
     

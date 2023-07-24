@@ -242,13 +242,13 @@ final class ScheduleMeetingViewModel: ObservableObject {
         switch completion {
         case .showMessageForScheduleMeeting(let message, let scheduledMeeting):
             updated(meeting: scheduledMeeting)
-            await showSuccess(message: message)
+            showSuccess(message: message)
         case .showMessageForOccurrence(let message, let occurrence):
             updated(occurrence: occurrence)
-            await showSuccess(message: message)
+            showSuccess(message: message)
         case .showMessageAndNavigateToInfo(let message, let scheduledMeeting):
             showMeetingInfo(for: scheduledMeeting)
-            await showSuccess(message: message)
+            showSuccess(message: message)
         }
     }
     

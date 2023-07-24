@@ -3,6 +3,7 @@ import Foundation
 public enum ScheduledMeetingOnboardingTipType: String, Codable, Sendable {
     case initial
     case createMeeting
+    case recurringOrStartMeeting
     case startMeeting
     case recurringMeeting
     case showedAll

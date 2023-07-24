@@ -1884,7 +1884,7 @@
 		BF06E3DE243191B000B30FB7 /* ChatTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */; };
 		BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */; };
 		BF085C9929E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */; };
-		BF085C9B29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift */; };
+		BF085C9B29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift */; };
 		BF085C9D29E66A9A001E6AB7 /* ScheduleMeetingCreationDateAndRecurrenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9C29E66A9A001E6AB7 /* ScheduleMeetingCreationDateAndRecurrenceView.swift */; };
 		BF085C9F29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085C9E29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift */; };
 		BF085CA129E66B11001E6AB7 /* ScheduleMeetingCreationOpenInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF085CA029E66B11001E6AB7 /* ScheduleMeetingCreationOpenInviteView.swift */; };
@@ -4501,7 +4501,7 @@
 		BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTitleView.xib; sourceTree = "<group>"; };
 		BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
 		BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationPropertiesView.swift; sourceTree = "<group>"; };
-		BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationLinkFootnoteView.swift; sourceTree = "<group>"; };
+		BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationFootnoteView.swift; sourceTree = "<group>"; };
 		BF085C9C29E66A9A001E6AB7 /* ScheduleMeetingCreationDateAndRecurrenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationDateAndRecurrenceView.swift; sourceTree = "<group>"; };
 		BF085C9E29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationDescriptionView.swift; sourceTree = "<group>"; };
 		BF085CA029E66B11001E6AB7 /* ScheduleMeetingCreationOpenInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationOpenInviteView.swift; sourceTree = "<group>"; };
@@ -5032,8 +5032,8 @@
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
-				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */,
+				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
 				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
@@ -8814,8 +8814,8 @@
 				BFAD0FAC2A2F0DD6003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift */,
 				BF085C9C29E66A9A001E6AB7 /* ScheduleMeetingCreationDateAndRecurrenceView.swift */,
 				BF085C9E29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift */,
+				BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift */,
 				BF085CA229E66B38001E6AB7 /* ScheduleMeetingCreationInvitationView.swift */,
-				BF085C9A29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift */,
 				BFAD0FA52A2992A6003F5F83 /* ScheduleMeetingCreationMonthlyCustomOptionsView.swift */,
 				BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */,
 				BF085CA429E66BE9001E6AB7 /* ScheduleMeetingCreationNameView.swift */,
@@ -9025,10 +9025,10 @@
 				83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */,
 				0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */,
 				C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */,
-				6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */,
-				943270602A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift */,
-				9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */,
 				94389C672A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift */,
+				943270602A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift */,
+				6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */,
+				9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */,
 				C472964326C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift */,
 				E81616711A8397B5002EFDD7 /* FolderLinkViewController.h */,
 				E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */,
@@ -11852,9 +11852,9 @@
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
 			isa = PBXGroup;
 			children = (
+				837B179A2881811600A4D01B /* DownloadLinkOrOnboarding */,
 				945339D02A60150D00363DAD /* File */,
 				945339CF2A60150500363DAD /* Folder */,
-				837B179A2881811600A4D01B /* DownloadLinkOrOnboarding */,
 				E84CDB001A7292C9003F4C77 /* Links.storyboard */,
 				E8CD19851A9266D600CB8B2A /* UnavailableLinkView.h */,
 				E8CD19861A9266D600CB8B2A /* UnavailableLinkView.m */,
@@ -13335,6 +13335,7 @@
 				27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
 				C45C2FA825C94DAA00315369 /* FileLinkActionViewControllerDelegate.swift in Sources */,
 				837B179928815F7400A4D01B /* FileLinkViewController+Additions.swift in Sources */,
+				945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				9D3563CE28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
@@ -13371,6 +13372,8 @@
 				83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */,
 				0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */,
 				C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */,
+				94389C682A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift in Sources */,
+				943270612A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */,
 				9425DF662931329200AD3156 /* FolderLinkViewController+SnackBar.swift in Sources */,
 				C472964426C41B7C00F2CFE3 /* FolderLinkViewController+Transfers.swift in Sources */,
@@ -13397,7 +13400,6 @@
 				0E3B1A4E2A1DBFC400EC5859 /* GetLinkStringCellViewModel.swift in Sources */,
 				837DC7A9256D196400CA289E /* GetLinkStringTableViewCell.swift in Sources */,
 				0ECDCD502A1DDEEA00FBEFE7 /* GetLinkSwitchCellViewConfiguration.swift in Sources */,
-				94389C682A3B491600CB156E /* FolderLinkViewController+ContextMenu.swift in Sources */,
 				0E3B1A482A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift in Sources */,
 				837DC7AA256D196400CA289E /* GetLinkSwitchOptionTableViewCell.swift in Sources */,
 				94361BB72A273ABD00B5AB02 /* GetLinkViewController+SnackBar.swift in Sources */,
@@ -14000,7 +14002,6 @@
 				C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */,
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
-				943270612A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
 				B6A0CF1A28A08D1B00D7F52E /* PreferenceUseCase+Additions.swift in Sources */,
 				837B179528815E4400A4D01B /* PreviewDocumentViewController+Additions.swift in Sources */,
@@ -14103,10 +14104,10 @@
 				BFAD0FAE2A2F0DE4003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift in Sources */,
 				BF085C9D29E66A9A001E6AB7 /* ScheduleMeetingCreationDateAndRecurrenceView.swift in Sources */,
 				BF085C9F29E66AF3001E6AB7 /* ScheduleMeetingCreationDescriptionView.swift in Sources */,
+				BF085C9B29E66A45001E6AB7 /* ScheduleMeetingCreationFootnoteView.swift in Sources */,
 				BF2675DD2A3307BC00736759 /* ScheduleMeetingCreationFrequencyOption.swift in Sources */,
 				BF2675D52A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift in Sources */,
 				BF085CA329E66B38001E6AB7 /* ScheduleMeetingCreationInvitationView.swift in Sources */,
-				BF085C9B29E66A45001E6AB7 /* ScheduleMeetingCreationLinkFootnoteView.swift in Sources */,
 				BFAD0FA62A2992A6003F5F83 /* ScheduleMeetingCreationMonthlyCustomOptionsView.swift in Sources */,
 				BF2675D72A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift in Sources */,
 				BF2675D32A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift in Sources */,
@@ -14324,7 +14325,6 @@
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
 				2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				B65D17D5289A226A00D5AD33 /* UINavigationViewController+Additions.swift in Sources */,
-				945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */,
 				A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */,
 				5D31674224FC9A1B0032492F /* UIResponder+ErrorHandling.swift in Sources */,
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,

@@ -7,30 +7,34 @@ struct ScheduleMeetingCreationInvitationView: View {
     
     var body: some View {
         VStack {
-            Divider()
-            
-            DetailDisclosureView(
-                text: Strings.Localizable.Meetings.ScheduleMeeting.addParticipants,
-                detail: viewModel.participantsCount > 0 ? String(viewModel.participantsCount) : nil
-            ) {
-                viewModel.addParticipantsTap()
+            VStack {
+                Divider()
+                
+                DetailDisclosureView(
+                    text: Strings.Localizable.Meetings.ScheduleMeeting.addParticipants,
+                    detail: viewModel.participantsCount > 0 ? String(viewModel.participantsCount) : nil
+                ) {
+                    viewModel.addParticipantsTap()
+                }
+                .opacity(viewModel.shouldAllowEditingParticipants ? 1.0 : 0.3)
+                .disabled(!viewModel.shouldAllowEditingParticipants)
+                
+                Divider()
+                    .padding(.leading)
+                
+                Toggle(isOn: $viewModel.calendarInviteEnabled) {
+                    Text(Strings.Localizable.Meetings.ScheduleMeeting.sendCalendarInvite)
+                        .opacity(viewModel.shouldAllowEditingCalendarInvite ? 1.0 : 0.3)
+                }
+                .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
+                .padding(.horizontal)
+                .disabled(!viewModel.shouldAllowEditingCalendarInvite)
+                
+                Divider()
             }
-            .opacity(viewModel.shouldAllowEditingParticipants ? 1.0 : 0.3)
-            .disabled(!viewModel.shouldAllowEditingParticipants)
+            .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
             
-            Divider()
-                .padding(.leading)
-            
-            Toggle(isOn: $viewModel.calendarInviteEnabled) {
-                Text(Strings.Localizable.Meetings.ScheduleMeeting.sendCalendarInvite)
-                    .opacity(viewModel.shouldAllowEditingCalendarInvite ? 1.0 : 0.3)
-            }
-            .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
-            .padding(.horizontal)
-            .disabled(!viewModel.shouldAllowEditingCalendarInvite)
-
-            Divider()
+            ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.CalendarInvite.description)
         }
-        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
     }
 }

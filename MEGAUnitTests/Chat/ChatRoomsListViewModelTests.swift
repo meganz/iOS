@@ -269,7 +269,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
         
         sut.loadChatRoomsIfNeeded()
-        sut.startMeetingTipOffsetY = -1
+        sut.startMeetingTipOffsetY = nil
         
         let predicate = NSPredicate { _, _ in
             sut.presentingStartMeetingTip == true
