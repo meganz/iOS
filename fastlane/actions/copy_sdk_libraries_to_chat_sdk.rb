@@ -36,10 +36,6 @@ module Fastlane
           "Copies the required files from SDK to chat SDK"
       end
 
-      def self.details
-        "Copies the required files from SDK to chat SDK"
-      end
-
       def self.available_options
         [
           FastlaneCore::ConfigItem.new(key: :sdk_third_party_path,
