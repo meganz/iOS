@@ -245,7 +245,9 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
 - (void)reloadDataAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
     self.fileList = nil;
     self.folderList = nil;
-    [self.collectionView reloadItemsAtIndexPaths:indexPaths];
+    [UIView performWithoutAnimation:^{
+        [self.collectionView reloadItemsAtIndexPaths:indexPaths];
+    }];
 }
 
 #pragma mark - Private methods
