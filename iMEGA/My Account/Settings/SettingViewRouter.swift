@@ -124,6 +124,7 @@ extension SettingViewRouter {
                                                                                         apiEnvironmentUC: APIEnvironmentUseCase(repository: APIEnvironmentRepository.newRepo),
                                                                                         manageLogsUC: ManageLogsUseCase(repository: LogSettingRepository.newRepo,
                                                                                                                         preferenceUseCase: PreferenceUseCase.default),
+                                                                                        changeSfuServerUC: ChangeSfuServerUseCase(repository: ChangeSfuServerRepository.newRepo),
                                                                                         aboutSetting: makeAboutSetting()),
                                                          title: Strings.Localizable.about))
             
@@ -211,6 +212,14 @@ extension SettingViewRouter {
                     disableMessage: Strings.Localizable.disableDebugModeMessage,
                     mainActionTitle: Strings.Localizable.ok,
                     cancelActionTitle: Strings.Localizable.cancel
+                ),
+            changeSfuServer:
+                ChangeSfuServerAlert(
+                    title: Strings.Localizable.Settings.About.Sfu.ChangeAlert.title,
+                    message: Strings.Localizable.Settings.About.Sfu.ChangeAlert.message,
+                    placeholder: Strings.Localizable.Settings.About.Sfu.ChangeAlert.placeholder,
+                    cancelButton: Strings.Localizable.Settings.About.Sfu.ChangeAlert.cancelButton,
+                    changeButton: Strings.Localizable.Settings.About.Sfu.ChangeAlert.changeButton
                 )
         )
     }

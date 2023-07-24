@@ -5534,6 +5534,22 @@ public enum Strings {
       }
     }
     public enum Settings {
+      public enum About {
+        public enum Sfu {
+          public enum ChangeAlert {
+            /// Cancel
+            public static let cancelButton = Strings.tr("Localizable", "settings.about.sfu.changeAlert.cancelButton")
+            /// Change
+            public static let changeButton = Strings.tr("Localizable", "settings.about.sfu.changeAlert.changeButton")
+            /// Default is -1
+            public static let message = Strings.tr("Localizable", "settings.about.sfu.changeAlert.message")
+            /// Enter SFU ID
+            public static let placeholder = Strings.tr("Localizable", "settings.about.sfu.changeAlert.placeholder")
+            /// Change SFU server
+            public static let title = Strings.tr("Localizable", "settings.about.sfu.changeAlert.title")
+          }
+        }
+      }
       public enum Accept {
         public enum Cookies {
           /// Cookies aren’t used for ad tracking or sharing any personal information with third parties.
