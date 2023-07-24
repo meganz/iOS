@@ -18,6 +18,7 @@ In order to build MEGA for iOS locally, it is necessary to install the following
 
 - Install [Xcode](https://itunes.apple.com/app/xcode/id497799835?mt=12) in your system.
 - Install [CMake](https://cmake.org/install/).
+- Install [MEGA CMD](https://mega.io/cmd)
 
 #### Clone the project
 
@@ -26,17 +27,14 @@ If you are the general public user, please open .gitmodules file and:
 1. Change url for karere submodule, [use this one](https://github.com/meganz/MEGAchat.git)
 2. Change url for SDK submodule, [use this one](https://github.com/meganz/SDK.git)
 
-#### Update submodule
+#### Install Ruby, update submodules, download third party libraries and configure pre-commit hook
 
 ```
-git submodule update --init --recursive
+./configure.sh
 ```
-
-#### Download 3rdparty packages
-1. Download the prebuilt third party dependencies from this link: https://mega.nz/file/kbZTXIqY#o8rQAOveVwuVHyvNKLbQ4skSNzHgj5IlHmXVGmKajQw
-2. Uncompress that file and move the folders `webrtc` and `lib` into `Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty`.
 
 #### Build KMM mobile analytics library
+If you are the general public user:
 1. Set up KMM build tools
     1. Install [HomeBrew](https://brew.sh/) (if not yet)
     2. Install JDKL17 (if not yet)
@@ -80,7 +78,7 @@ git submodule update --init --recursive
 2. Make sure the `MEGA` target is selected.
 3. Build and run (⌘R).
 
-## Build 3rdparty packages manually
+## Build 3rdparty packages manually (Optional)
 If you want to build the third party dependencies by yourself: 
 1. Open a terminal in the directory `Modules/DataSource/MEGASDK/Sources/MEGASDK/bindings/ios/3rdparty`. 
 2. Run sh build-all.sh --enable-chat (Wait until the process ends, it will take some time, ~30 minutes). 

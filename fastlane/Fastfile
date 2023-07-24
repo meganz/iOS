@@ -440,7 +440,20 @@ platform :ios do
 
   desc "setup your development environment"
   lane :setup do |options|
+    sh "bundle install"
+    if check_repo_is_internal == true
+      cert_dev readonly:true
+    end
+    update_submodules_and_run_cmake
+    configure_sdk_and_chat_library
     setup_git
+  end
+
+  private_lane :update_submodules_and_run_cmake do
+    sh "git submodule update --init --recursive"
+    current_directory = Dir.pwd
+    target_directory = File.join(current_directory, "./../Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK/src/")
+    sh "cd #{target_directory} && cmake -P genDbSchema.cmake"
   end
 
   private_lane :setup_git do |options|
