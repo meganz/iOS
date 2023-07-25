@@ -1252,6 +1252,7 @@
 		9495DBBD2A40C08300FA22EE /* UIApplication+PermissionModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */; };
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
 		94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94A220172A696502004130C4 /* MEGAAnalyticsiOS */; };
+		94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */; };
 		94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
@@ -3800,6 +3801,7 @@
 		9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+PermissionModal.swift"; sourceTree = "<group>"; };
 		949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenAppRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.h; sourceTree = SOURCE_ROOT; };
 		949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenAppRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.m; sourceTree = SOURCE_ROOT; };
+		94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTests.swift; sourceTree = "<group>"; };
 		94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeVersionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
@@ -8095,6 +8097,7 @@
 				BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */,
 				6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */,
 				8336E3F82906B449000F1E9F /* ChatRoomsListViewModelTests.swift */,
+				94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */,
 				83751C5529E5734D0030310B /* MockChatLinkUseCase.swift */,
 			);
 			path = Chat;
@@ -14807,6 +14810,7 @@
 				8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */,
 				BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */,
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
+				94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */,
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
