@@ -2252,6 +2252,7 @@
 		BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */; };
 		BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB13322908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift */; };
 		BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */; };
+		BFFC467A2A6F64A900A5DAA8 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFFC46792A6F64A900A5DAA8 /* MEGAPresentation */; };
 		BFFE2289292F2F4B0063CFF2 /* FutureMeetingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */; };
 		BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */; };
 		BFFE22912931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE22902931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift */; };
@@ -5132,6 +5133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */,
+				BFFC467A2A6F64A900A5DAA8 /* MEGAPresentation in Frameworks */,
 				A891E8AB29C1E0C40020072A /* MEGASdk in Frameworks */,
 				A8DF556A2A5F0F8100CA33E5 /* MEGASDKRepo in Frameworks */,
 				A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */,
@@ -12189,6 +12191,7 @@
 				A891E8AA29C1E0C40020072A /* MEGASdk */,
 				A8399FB8296DD5A70062B6BC /* SAMKeychain */,
 				A8DF55692A5F0F8100CA33E5 /* MEGASDKRepo */,
+				BFFC46792A6F64A900A5DAA8 /* MEGAPresentation */,
 			);
 			productName = MEGAPickerFileProvider;
 			productReference = A8399F42296C40060062B6BC /* MEGAPickerFileProvider.appex */;
@@ -17188,6 +17191,10 @@
 		BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "FirebaseAppDistribution-Beta";
+		};
+		BFFC46792A6F64A900A5DAA8 /* MEGAPresentation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPresentation;
 		};
 /* End XCSwiftPackageProductDependency section */
 
