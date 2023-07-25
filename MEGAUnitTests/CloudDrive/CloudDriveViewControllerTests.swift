@@ -280,6 +280,35 @@ final class CloudDriveViewControllerTests: XCTestCase {
         }
     }
     
+    func testMapNodeListToArray_whenHasNoItem_sucessfullyMapItems() {
+        let sut = makeSUT(nodes: [], displayMode: .cloudDrive)
+        let emptyItems = MockNodeList(nodes: [])
+        
+        let result = sut.mapNodeListToArray(emptyItems)
+        
+        XCTAssertEqual(result.count, emptyItems.size.intValue)
+    }
+    
+    func testMapNodeListToArray_whenHasSingleItem_sucessfullyMapItems() {
+        let anyNode = anyNode(handle: .min, nodeType: .file)
+        let sut = makeSUT(nodes: [anyNode], displayMode: .cloudDrive)
+        let emptyItems = MockNodeList(nodes: [anyNode])
+        
+        let result = sut.mapNodeListToArray(emptyItems)
+        
+        XCTAssertEqual(result.count, emptyItems.size.intValue)
+    }
+    
+    func testMapNodeListToArray_whenHasMoreThanOneItem_sucessfullyMapItems() {
+        let anyNode = anyNode(handle: .min, nodeType: .file)
+        let sut = makeSUT(nodes: [anyNode, anyNode], displayMode: .cloudDrive)
+        let emptyItems = MockNodeList(nodes: [anyNode, anyNode])
+        
+        let result = sut.mapNodeListToArray(emptyItems)
+        
+        XCTAssertEqual(result.count, emptyItems.size.intValue)
+    }
+    
     // MARK: - Helpers
     
     private func setNoEditingState(on sut: CloudDriveViewController) {
