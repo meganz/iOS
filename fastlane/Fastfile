@@ -445,7 +445,7 @@ platform :ios do
       cert_dev readonly:true
     end
     update_submodules_and_run_cmake
-    configure_sdk_and_chat_library
+    configure_sdk_and_chat_library(use_cache: true)
     setup_git
   end
 
