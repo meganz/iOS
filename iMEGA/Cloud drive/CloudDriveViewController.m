@@ -163,13 +163,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI:) name:MEGASortingPreference object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(determineViewMode) name:MEGAViewModePreference object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
-    [self reloadUI:NULL];
+    [self reloadUI];
     
     if (self.displayMode != DisplayModeRecents) {
         self.shouldRemovePlayerDelegate = YES;
@@ -388,7 +388,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)nodesSortTypeHasChanged {
-    [self reloadUI:NULL];
+    [self reloadUI];
     
     if (self.searchController.isActive) {
         NSArray *sortedSearchedNodes = [self sortNodes:self.searchNodesArray
@@ -400,8 +400,38 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - Private
 
+- (void)reloadUI {
+    [self preparForReloadUI];
+    [self reloadData];
+}
+
 - (void)reloadUI:(MEGANodeList *)nodeList {
-    switch (self.displayMode) {
+    [self preparForReloadUI];
+    
+    if (nodeList) {
+        if (self.displayMode == DisplayModeCloudDrive && nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail) {
+            MEGANode *updatedNode = [nodeList nodeAtIndex:0];
+            NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
+            [self reloadDataAtIndexPaths:@[indexPath]];
+        } else {
+            [self reloadData];
+        }
+    } else {
+        [self reloadData];
+    }
+}
+
+- (void)preparForReloadUI {
+    [self prepareNodesAndNavigationBarForDisplayMode:self.displayMode];
+    self.nodesArray = [self mapNodeListToArray:self.nodes];
+    
+    if (self.shouldDetermineViewMode) {
+        [self determineViewMode];
+    }
+}
+
+- (void)prepareNodesAndNavigationBarForDisplayMode:(DisplayMode)displayMode {
+    switch (displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
                 self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
@@ -409,7 +439,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.hasMediaFiles = [[self.nodes mnz_mediaNodesMutableArrayFromNodeList] count] > 0;
-            
             break;
         }
             
@@ -417,7 +446,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
-            
             break;
         }
             
@@ -426,8 +454,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             self.nodes = self.recentActionBucket.nodesList;
             [self updateNavigationBarTitle];
             break;
+        }
             
-        case DisplayModeBackup:
+        case DisplayModeBackup: {
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             break;
@@ -440,25 +469,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
     self.navigationItem.searchController = self.searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
-    
-    NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodes.size.integerValue];
-    for (NSUInteger i = 0; i < self.nodes.size.integerValue ; i++) {
-        [tempArray addObject:[self.nodes nodeAtIndex:i]];
-    }
-    
-    self.nodesArray = tempArray;
-    
-    if (self.shouldDetermineViewMode) {
-        [self determineViewMode];
-    }
-    
-    if (self.displayMode == DisplayModeCloudDrive && nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail) {
-        MEGANode *updatedNode = [nodeList nodeAtIndex:0];
-        NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
-        [self reloadDataAtIndexPaths:@[indexPath]];
-    } else {
-        [self reloadData];
-    }
 }
 
 - (void)loadPhotoAlbumBrowser {
@@ -514,7 +524,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)internetConnectionChanged {
-    [self reloadUI:NULL];
+    [self reloadUI];
 }
 
 - (void)setNavigationBarButtonItems {

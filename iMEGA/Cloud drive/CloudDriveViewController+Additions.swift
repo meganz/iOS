@@ -258,4 +258,22 @@ extension CloudDriveViewController {
     private func isAllNodeIsFolderType(in source: [MEGANode]) -> Bool {
         source.allSatisfy { $0.isFolder() }
     }
+    
+    @objc func mapNodeListToArray(_ nodeList: MEGANodeList) -> NSArray {
+        guard let size = nodeList.size, size.intValue > 0 else {
+            return []
+        }
+        
+        let tempNodes = NSMutableArray(capacity: nodeList.size.intValue)
+        for i in 0..<nodeList.size.intValue {
+            if let node = nodeList.node(at: i) {
+                tempNodes.add(node)
+            }
+        }
+        
+        guard let immutableNodes = tempNodes.copy() as? NSArray else {
+            return []
+        }
+        return immutableNodes
+    }
 }
