@@ -878,9 +878,11 @@
             self.fetchNodesDone = YES;
             
             [self reloadUI];
-            
+
             [self determineViewMode];
             
+            [self configureContextMenuManager];
+
             NSArray *componentsArray = [self.publicLinkString componentsSeparatedByString:@"!"];
             if (componentsArray.count == 4) {
                 [self navigateToNodeWithBase64Handle:componentsArray.lastObject];
