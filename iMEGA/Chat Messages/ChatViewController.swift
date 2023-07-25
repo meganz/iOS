@@ -235,7 +235,22 @@ class ChatViewController: MessagesViewController {
             
             excuteCommand(command)
         }
-        navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: chatRoom.title ?? "")
+        setMenuCapableBackButtonWith(
+            menuTitle: Self.backButtonMenuTitle(
+                chatTitle: chatRoom.title,
+                isOneToOne: chatRoom.isOneToOne
+            )
+        )
+    }
+    
+    static func backButtonMenuTitle(chatTitle: String?, isOneToOne: Bool) -> String {
+        let title = chatTitle ?? ""
+        
+        if isOneToOne && title.isNotEmpty {
+            return Strings.Localizable.Chat.BackButton.OneToOne.menu(title)
+        }
+        
+        return title
     }
     
     @objc func update(chatRoom: MEGAChatRoom) {

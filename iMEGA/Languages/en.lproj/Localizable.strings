@@ -3632,3 +3632,5 @@
 "settings.about.sfu.changeAlert.cancelButton"="Cancel";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="Change";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="Chat with %@";

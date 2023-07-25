@@ -3075,6 +3075,14 @@ public enum Strings {
           }
         }
       }
+      public enum BackButton {
+        public enum OneToOne {
+          /// Chat with %@
+          public static func menu(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "chat.backButton.oneToOne.menu", String(describing: p1))
+          }
+        }
+      }
       public enum Call {
         public enum QuickAction {
           /// Camera
