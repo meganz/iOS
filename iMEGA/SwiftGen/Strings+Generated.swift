@@ -4760,7 +4760,7 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.recurringMeetingTip.title")
         }
         public enum StartMeetingTip {
-          /// You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.
+          /// You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.
           public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.message")
           /// Start meeting
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.startMeeting")
