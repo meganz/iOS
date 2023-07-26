@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi được.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Cấp Quyền Cho Phép Truy Cập vào Danh Bạ";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Dễ dàng tìm thêm người để kết nối trên MEGA từ sổ danh bạ của bạn.";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA sẽ không bao giờ sử dụng dữ liệu này cho bất kỳ mục đích nào khác và không giao tiếp với người nào trong danh bạ của bạn mà không có sự cho phép.";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Xem ai đã có mặt trên MEGA";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="Đã tìm thấy [X] tên liên lạc trên MEGA";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="Đã tìm thấy 1 tên liên lạc trên MEGA";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Đi tới Cài Đặt của iOS";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="Chạm dấu cách để điền thêm email";
 /* Text used as a section title or similar */
 "Enter Email"="Nhập Email";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="SỔ LIÊN LẠC TRÊN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Bạn có một lời đang chờ bạn tham gia chát trên MEGA. Đăng ký một tài khoản trên MEGA và nhận 20 GB không gian lưu trữ miễn phí vô thời hạn.";
 /* Destination folder name of chat files */
@@ -3546,6 +3534,8 @@
 "upgradeAccountPlan.plan.details.transfer"="Truyền tải: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="Bạn có thể nâng cấp gói đăng ký hiện tại của mình trong [A]trang bảng giá[/A] của chúng tôi.";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="Bạn hiện đang có một đăng ký định kỳ cho gói này";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Hủy";
 /* Title for alert cancelling an scheduled meeting */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Bắt đầu cuộc họp";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="Bạn có thể bắt đầu cuộc họp trước thời gian dự kiến ​​bằng cách chạm vào “Bắt đầu cuộc họp” khi ở trong phòng họp.";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Quản lý các cuộc họp định kỳ";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="%@ đã cập nhật cuộc họp";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Chỉnh sửa cuộc họp";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Bắt đầu cuộc họp";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Thời điểm tái diễn";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="Change SFU server";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="Default is -1";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="Hủy";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="Thay đổi";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="Chat with %@";

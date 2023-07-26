@@ -615,7 +615,7 @@
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d выбрано";
 /* Title of the Offline section */
-"offline"="Не в сети";
+"offline"="Локальные";
 /* Title of the Contacts section */
 "contactsTitle"="Контакты";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
@@ -1209,11 +1209,11 @@
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Отключить режим отладки";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="Журнал (MEGAiOS.log) будет удалён виз локального раздела.";
+"disableDebugMode_message"="Журнал (MEGAiOS.log) будет удалён из раздела «Локальные».";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Действительно удалить этот элемент локально?";
+"removeItemFromOffline"="Действительно удалить этот элемент из раздела «Локальные»?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Действительно удалить эти элементы локально?";
+"removeItemsFromOffline"="Действительно удалить эти элементы из раздела «Локальные»?";
 /* Giphy section header */
 "Send GIF"="Отправить GIF";
 /* This is the placeholder text for GIPHY search */
@@ -1703,7 +1703,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Сохранять видео в «Фото»";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Скачанные изображения и видео будут сохранены в медиабиблиотеке устройства, а не в локальном разделе.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Скачанные изображения и видео будут сохранены в медиабиблиотеке устройства, а не в разделе «Локальные».";
 /* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Камера";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Предоставьте доступ к адресной книге";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Легко находите контакты из своей адресной книги в MEGA.";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA не будет использовать эти данные для каких-либо других целей и никогда не будет взаимодействовать с вашими контактами без вашего согласия.";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Найдите свои контакты в MEGA";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="Контакты ([X]) найдены в MEGA";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 контакт найден в MEGA";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Открыть настройки";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="Нажмите пробел, чтобы ввести несколько электронных писем";
 /* Text used as a section title or similar */
 "Enter Email"="Введите email";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="КОНТАКТЫ В MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="У вас есть ожидающий запрос в MEGA Secure Chat. Зарегистрируйтесь в MEGA и получите бесплатно 20 ГБ хранилища навсегда.";
 /* Destination folder name of chat files */
@@ -2539,7 +2527,7 @@
 /* Text description for the Recents QuickAccess widget */
 "Quickly access files on Recents section"="Быстрый доступ к файлам из «Недавних»";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="Быстрый доступ к файлам из «Локальных»";
+"Quickly access files on Offline section"="Быстрый доступ к файлам из раздела «Локальные»";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="Недостаточно свободного места на устройстве для нормальной работы MEGA.";
 /* Dialog description for the no enough device storage screen */
@@ -3239,15 +3227,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] пригласил[/B] вас на встречу, назначенную на:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] изменил[/B] подробности встречи:";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] изменил[/B] описание встречи";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] отменил[/B] встречу, назначенную на";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] изменил[/B] дату встречи на";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] изменил[/B] время встречи на";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] изменил[/B] название встречи с «[PreviousTitle]» to [B]«[UpdatedTitle]»[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3255,13 +3243,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] пригласил вас на повторяющуюся встречу, назначенную на:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] изменил[/B] подробности встречи:";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] изменил[/B] описание повторяющейся встречи";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] изменил[/B] дату повторяющейся встречи на";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] изменил[/B] время повторяющейся встречи на";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Повторения";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3279,9 +3267,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Каждый день [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] отменил[/B] повторение, назначенное на";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] изменил[/B] повторение на";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Повышение безопасности аккаунта";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3546,6 +3534,8 @@
 "upgradeAccountPlan.plan.details.transfer"="Передачи: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="Улучшить текущую подписку можно на [A]странице цен[/A]./";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="У вас уже есть подписка с автопродлением на этот план";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Отмена";
 /* Title for alert cancelling an scheduled meeting */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Начать встречу";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="Вы можете начать встречу раньше запланированного времени, нажав «Начать встречу» в комнате встречи.";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Управляйте повторяющимися встречами";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="Пользователь %@ обновил встречу";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Редактировать встречу";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="Отправьте событие календаря участникам по электронной почте, чтобы они могли добавить встречу в свои календари.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Начать встречу";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Повторения";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="Изменение SFU-сервера";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="По умолчанию -1";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="Введите SFU ID";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="Отмена";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="Изменить";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="Chat with %@";

@@ -16,6 +16,20 @@
         <string>%d ไฟล์</string>
       </dict>
     </dict>
+    <key>sharedItems.rubbish.confirmation.removedItemCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string></string>
+      </dict>
+    </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -68,10 +82,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Anyone with this link can view and download your data</string>
         <key>other</key>
-        <string>Anyone with these links can view and download your data</string>
+        <string>ใครก็ตามที่มีลิงก์เหล่านี้ สามารถดูและดาวน์โหลดข้อมูลของคุณได้</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -98,10 +110,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Link created and copied to your clipboard</string>
         <key>other</key>
-        <string>Links created and copied to your clipboard</string>
+        <string>ทำการสร้างลิงก์และคัดลอกไปที่คลิปบอร์ดของคุณแล้ว</string>
       </dict>
     </dict>
     <key>nameCollision.applyToAll</key>
@@ -422,10 +432,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>“[A]” and %d more</string>
         <key>other</key>
-        <string>“[A]” and %d more</string>
+        <string>“[A]” และอื่น ๆ อีก %d รายการ</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -2020,10 +2028,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d day left</string>
         <key>other</key>
-        <string>%d days left</string>
+        <string>เหลืออีก %d วัน</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -2036,10 +2042,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Bonus expires in %d day.</string>
         <key>other</key>
-        <string>Bonus expires in %d days.</string>
+        <string>โบนัสจะหมดอายุใน %d วัน</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2150,10 +2154,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every day.</string>
         <key>other</key>
-        <string>Meeting will occur every %d days.</string>
+        <string>การประชุมจะมีขึ้นทุก %d วัน</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -2166,10 +2168,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every week on [weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayName].</string>
+        <string>การประชุมจะมีขึ้นใน[weekDayName]ของทุก %d สัปดาห์</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
@@ -2182,10 +2182,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every week on [weekDayNames] and [lastWeekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayNames] and [lastWeekDayName].</string>
+        <string>การประชุมจะมีขึ้นใน[weekDayNames]และ[lastWeekDayName]ของทุก %d สัปดาห์</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
@@ -2198,10 +2196,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDay].</string>
+        <string>การประชุมจะมีขึ้นในวันที่ [ordinalDay] ของทุก %d เดือน</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
@@ -2214,10 +2210,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDays] and [ordinalLastDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDays] and [ordinalLastDay].</string>
+        <string>การประชุมจะมีขึ้นในวันที่ [ordinalDays] และที่ [ordinalLastDay] ของทุก %d เดือน</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -2230,10 +2224,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every month on the [weekNumber] [weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [weekNumber] [weekDayName].</string>
+        <string>การประชุมจะมีขึ้นใน[weekDayName]ของสัปดาห์ที่ [weekNumber] ของทุก %d เดือน</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -2246,10 +2238,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every week on [weekDayNames]</string>
         <key>other</key>
-        <string>Every %d weeks on [weekDayNames]</string>
+        <string>[weekDayNames]ของทุก %d สัปดาห์</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
@@ -2262,10 +2252,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every month on the [ordinalNumber]</string>
         <key>other</key>
-        <string>Every %d months on the [ordinalNumber]</string>
+        <string>ทุกวันที่ [ordinalNumber] ของทุก %d เดือน</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -2278,10 +2266,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every month, [ordinalNumber] [weekDayName]</string>
         <key>other</key>
-        <string>Every %d months, [ordinalNumber] [weekDayName]</string>
+        <string>วัน[weekDayName]สัปดาห์ที่ [ordinalNumber] ของทุก %d เดือน</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2294,10 +2280,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Daily</string>
         <key>other</key>
-        <string>Every %d days</string>
+        <string>ทุก %d วัน</string>
       </dict>
     </dict>
   </dict>

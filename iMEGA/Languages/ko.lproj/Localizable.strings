@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="테스트 서버로 변경하시겠습니까? 당신의 계정이 복구할 수 없는 문제를 겪을 수 있습니다.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="주소록에 대한 접근 허가";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="MEGA에서 당신의 주소록에 있는 지인들을 쉽게 찾으세요.";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호작용하지 않을 것입니다.";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="MEGA에서 지인들 찾기";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X]명의 지인을 MEGA에서 발견함";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1명의 지인을 MEGA에서 발견함";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="설정 열기";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="여러 이메일을 입력하려면 스페이스를 탭하세요";
 /* Text used as a section title or similar */
 "Enter Email"="이메일 입력";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="MEGA의 연락처";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="대기중인 MEGA 안전 대화 요청이 있습니다. MEGA에 가입하고 20GB의 평생 무료 저장소를 받으세요.";
 /* Destination folder name of chat files */
@@ -3239,15 +3227,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] 님이 당신을 다음의 회의에 초대[/B]하였습니다:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] 님이 회의를 수정[/B]하였습니다";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] 님이 회의 설명을 수정[/B]하였습니다";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] 님이 다음의 회의에 취소[/B]하였습니다";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] 님이 회의 날짜를 수정[/B]하였습니다";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] 님이 회의 시간을 수정[/B]하였습니다";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] 님이 [/B]회의 이름을 “[PreviousTitle]”에서 [B]“[UpdatedTitle]”[/B]로 수정하였습니다";
 /* In app notification description for cancelled recurring meeting */
@@ -3255,13 +3243,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 님이 당신을 다음의 반복 회의에 초대하였습니다:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] 님이 회의를 수정[/B]하였습니다";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 님이 반복 회의 설명을 수정[/B]하였습니다";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] 님이 반복 회의 날짜를 수정[/B]하였습니다";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] 님이 반복 회의 시간을 수정[/B]하였습니다";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="주기";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3279,9 +3267,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="[B][StartDate]부터 [UntilDate]까지[/B] 매일 [B][StartTime]부터 [EndTime][/B]까지";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] 님이 다음의 예약된 되풀이 항목을 취소[/B]하였습니다";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] 님이 되풀이 항목을 수정[/B]하였습니다";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="계정 보안 업그레이드";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3546,10 +3534,12 @@
 "upgradeAccountPlan.plan.details.transfer"="전송: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="[A]가격 페이지[/A]에서 현재 구독을 업그레이드할 수 있습니다.";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="이미 이 요금제에 대한 반복 구독이 있습니다";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="취소";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Cancel %@?";
+"meetings.scheduled.cancelAlert.title"="%@을/를 취소할까요?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="이 회의는 지난 회의에 위치할 것이며 모든 참여자에게 알려질 것입니다.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="회의 시작";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="회의실에서 “회의 시작”을 탭하여 예정된 시간보다 앞서 회의를 시작할 수 있습니다.";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="반복 회의 관리";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="%@ 님이 회의를 수정하였습니다";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="회의 편집";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="참여자들이 달력에 회의를 추가할 수 있도록 달력 초대를 이메일로 보냅니다.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="회의 시작";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="주기";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="SFU 서버 변경";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="기본값은 -1입니다";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="SFU ID 입력";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="취소";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="변경";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="%@ 님과 대화";

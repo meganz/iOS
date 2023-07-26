@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？您的帐户可能会遇到一些问题。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="开启允许访问您的通讯录";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="从您的MEGA通讯录中轻松发现联系人。";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不会将这些数据用于任何其他目的，并且未经您的允许绝不会与您的联系人互动。";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="发现您在MEGA上的联系人";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="在MEGA上发现[X]位联系人";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="在MEGA上发现1位联系人";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="打开设置";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="点击空格输入多个电子邮件地址";
 /* Text used as a section title or similar */
 "Enter Email"="输入电子邮件地址";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="MEGA上的联系人";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="您有一条MEGA chat消息等待查收。注册MEGA帐户即可获得20 GB永久免费存储空间。";
 /* Destination folder name of chat files */
@@ -3546,6 +3534,8 @@
 "upgradeAccountPlan.plan.details.transfer"="传输：%@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="您可以在我们的[A]定价页面[/A]升级您当前的订阅方案。";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="您已经拥有此方案的定期订阅";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="取消";
 /* Title for alert cancelling an scheduled meeting */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="发起会议";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="您可以在会议室中点击“开始会议”按钮，即可在预定时间之前开始会议。";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="管理定期会议";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="%@已更新此会议";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="编辑会议";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="发起会议";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="事件";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="Change SFU server";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="Default is -1";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="取消";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="更改";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="Chat with %@";

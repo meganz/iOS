@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="テストサーバーに変更してもよろしいですか？アカウントに回復不能な問題が発生する可能性があります。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="アドレス帳へのアクセスを許可する";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="MEGAのあなたのアドレス帳から連絡先を簡単に見つけます。";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGAはこのデータを他の目的に使用せず、あなたの同意なしにあなたの連絡先とやり取りすることは絶対にございません。";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="MEGAであなたの連絡先を見つける";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="MEGAで[X]件の連絡先が見つかりました";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="MEGAで1件の連絡先が見つかりました";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="設定を開く";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="スペースをタップして複数のメールアドレスを入力します";
 /* Text used as a section title or similar */
 "Enter Email"="メールアドレスを入力";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="MEGA上の連絡先";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="待機中のMEGAセキュアチャット要求があります。MEGAにアカウントを登録すると、20 GBの生涯無料ストレージが得られます。";
 /* Destination folder name of chat files */
@@ -3239,7 +3227,7 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email]さんが以下に予定されたミーティングにあなたを招待しました：[/B]";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="ミーティングを[B][Email]さんが更新しました[/B]";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="ミーティングの説明を[B][Email]さんが更新しました[/B]";
 /* In app notification description for one off cancelled meeting */
@@ -3255,7 +3243,7 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B]さんが以下に予定された定期的なミーティングにあなたを招待しました：";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="ミーティングを[B][Email]さんが更新しました[/B]";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="定期的なミーティングの説明を[B][Email]さんが更新しました[/B]";
 /* In app notification description when date field is updated for recurring meeting. */
@@ -3546,6 +3534,8 @@
 "upgradeAccountPlan.plan.details.transfer"="転送：%@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="現在のお持ちのサブスクリプションは、当社の[A]料金ページ[/A]でアップグレードできます。";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="このプランの定期的なサブスクリプションをすでにお持ちです";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="キャンセル";
 /* Title for alert cancelling an scheduled meeting */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="ミーティング開始";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="ミーティングルームで「ミーティングを開始」をタップすると、予定時刻より前にミーティングを開始できます。";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="定期的なミーティングを管理する";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="%@さんがミーティングを更新しました";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="ミーティングを編集";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="参加者にカレンダーの招待状をメールで送信し、参加者がミーティングをカレンダーに追加できるようにします。";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="ミーティング開始";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="開催";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="SFUサーバーの変更";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="デフォルトは-1です";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="SFU IDを入力してください";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="キャンセル";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="変更";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="%@さんとチャット";
