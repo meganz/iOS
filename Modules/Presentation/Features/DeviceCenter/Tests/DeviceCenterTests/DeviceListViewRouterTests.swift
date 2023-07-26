@@ -33,6 +33,7 @@ final class DeviceListViewRouterTests: XCTestCase {
             title: "Device List",
             currentDeviceTitle: "This device",
             otherDevicesTitle: "Other devices",
+            deviceDefaultName: "",
             backupStatuses: [
                 BackupStatus(status: .upToDate, title: "", colorName: "blue", iconName: "circle.fill")
             ]

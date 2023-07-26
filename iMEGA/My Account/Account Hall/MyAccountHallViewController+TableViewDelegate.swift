@@ -106,6 +106,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
             title: Strings.Localizable.Device.Center.title,
             currentDeviceTitle: Strings.Localizable.Device.Center.Current.Device.title,
             otherDevicesTitle: Strings.Localizable.Device.Center.Other.Devices.title,
+            deviceDefaultName: Strings.Localizable.Device.Center.Default.Device.title,
             backupStatuses: [
                 BackupStatus(
                     status: .upToDate,
