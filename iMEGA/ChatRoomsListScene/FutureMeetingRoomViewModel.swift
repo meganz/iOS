@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 
 final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let scheduledMeeting: ScheduledMeetingEntity
@@ -463,7 +464,8 @@ extension FutureMeetingRoomViewModel {
             options.insert(occurrenceContextMenuOption, at: 1)
         }
         
-        if chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)?.ownPrivilege == .moderator {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting),
+           chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)?.ownPrivilege == .moderator {
             options.insert(editContextMenuOption, at: 1)
             options.append(cancelContextMenuOption)
         }
