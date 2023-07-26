@@ -114,6 +114,7 @@
     }
 
     [self determineViewMode];
+    [self configureContextMenuManager];
     
     self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 
@@ -222,7 +223,6 @@
     }
     
     self.nodesArray = tempArray;
-    [self configureContextMenuManager];
 
     [self reloadData];
 
@@ -612,6 +612,10 @@
         [self download:@[self.parentNode]];
     }
     [self setEditMode:NO];
+}
+
+- (IBAction)importAction:(UIBarButtonItem *)sender {
+    [self importFromFiles];
 }
 
 - (void)openNode:(MEGANode *)node {
