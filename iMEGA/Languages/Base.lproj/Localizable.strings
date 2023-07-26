@@ -3436,6 +3436,8 @@
 "device.center.backup.error.status.message"="Error";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blocked";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="Unknown device";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */

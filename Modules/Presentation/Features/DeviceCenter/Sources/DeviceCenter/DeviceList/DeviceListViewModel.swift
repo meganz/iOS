@@ -36,7 +36,7 @@ public final class DeviceListViewModel: ObservableObject {
         if let device = devices
             .first(where: { $0.id == currentDeviceId }) {
                 if let assets = loadAssets(for: device) {
-                        currentDevice = DeviceViewModel(device: device, assets: assets)
+                        currentDevice = DeviceViewModel(device: device, defaultName: deviceListAssets.deviceDefaultName, assets: assets)
                 }
         } else {
             loadDefaultDevice()
@@ -46,7 +46,7 @@ public final class DeviceListViewModel: ObservableObject {
             .compactMap { device in
                 if device.id != currentDeviceId,
                    let assets = loadAssets(for: device) {
-                    return DeviceViewModel(device: device, assets: assets)
+                    return DeviceViewModel(device: device, defaultName: deviceListAssets.deviceDefaultName, assets: assets)
                 }
                 return nil
             }
@@ -60,7 +60,7 @@ public final class DeviceListViewModel: ObservableObject {
         )
         
         if let status = deviceListAssets.sortedBackupStatuses[.noCameraUploads] {
-            currentDevice = DeviceViewModel(device: device, assets: DeviceAssets(iconName: "mobile", status: status))
+            currentDevice = DeviceViewModel(device: device, defaultName: deviceListAssets.deviceDefaultName, assets: DeviceAssets(iconName: "mobile", status: status))
         }
     }
     

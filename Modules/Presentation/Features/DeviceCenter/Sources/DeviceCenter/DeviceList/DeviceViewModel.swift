@@ -13,10 +13,10 @@ public final class DeviceViewModel: ObservableObject, Identifiable {
     @Published var shouldShowBackupPercentage: Bool = false
     @Published var backupPercentage: String = ""
     
-    init(device: DeviceEntity, assets: DeviceAssets) {
+    init(device: DeviceEntity, defaultName: String, assets: DeviceAssets) {
         self.device = device
         self.assets = assets
-        self.name = device.name
+        self.name = device.name.isNotEmpty ? device.name : defaultName
         
         updateDeviceAssets()
         updateBackupProgressIfNeeded()

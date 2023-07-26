@@ -3366,6 +3366,12 @@ public enum Strings {
             public static let title = Strings.tr("Localizable", "device.center.current.device.title")
           }
         }
+        public enum Default {
+          public enum Device {
+            /// Unknown device
+            public static let title = Strings.tr("Localizable", "device.center.default.device.title")
+          }
+        }
         public enum Other {
           public enum Devices {
             /// Other devices
