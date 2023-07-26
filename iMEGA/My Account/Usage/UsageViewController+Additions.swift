@@ -103,6 +103,19 @@ extension UsageViewController {
         return !(accountDetails.type == .business || accountDetails.type == .proFlexi)
     }
     
+    @objc var showTransferQuota: Bool {
+        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+            return false
+        }
+        return Self.shouldShowTransferQuota(accountType: accountDetails.type.toAccountTypeEntity())
+    }
+    
+    static func shouldShowTransferQuota(accountType: AccountTypeEntity) -> Bool {
+        // Transfer Quota should be hidden on free accounts due to
+        // different transfer limits in different countries and also it is subject to change.
+        accountType != .free
+    }
+    
     @objc func configStorageContentView() {
         let isShowPieChartView = isShowPieChartView
         pieChartView?.isHidden = !isShowPieChartView
