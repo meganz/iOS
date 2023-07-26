@@ -2,7 +2,7 @@ import MapKit
 import MEGADomain
 import MessageKit
 
-extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, MessageLabelDelegate {
+extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
     
     func didSelectPhoneNumber(_ phoneNumber: String) {
         guard let number = generateURL(forPhoneNumber: phoneNumber) else { return }
@@ -236,7 +236,6 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate, Mes
                                                                                  api: MEGASdkManager.sharedMEGASdk(),
                                                                                  displayMode: .chatAttachment,
                                                                                  preferredIndex: UInt(foundIndex ?? 0))
-                photoBrowserVC.delegate = self
                 photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)
                 present(viewController: photoBrowserVC)
             } else {

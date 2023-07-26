@@ -3,6 +3,7 @@ import MEGASdk
 import MEGASDKRepo
 
 public final class MockPublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
+    
     private let node: MEGANode?
     
     public var clearCacheCalled = 0

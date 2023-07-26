@@ -52,16 +52,29 @@ actor ElementStore<Element, ElementID: Hashable>: ElementStoreProtocol {
     }
     
     private func reset(indicesAfter startIndex: Int) {
-        guard startIndex < count, startIndex >= .zero else { return }
+        guard startIndex < count, startIndex >= .zero else {
+            self.currentIndex = isEmpty ? .zero : count - 1
+            return
+        }
+        var newCurrentIndex = currentIndex
         elements.suffix(from: startIndex)
             .map(elementID)
             .enumerated()
             .forEach { offset, id in
-                indicesByID[id] = startIndex + offset
+                let oldValue = indicesByID[id]
+                let newValue = startIndex + offset
+                indicesByID[id] = newValue
+                
+                if currentIndex == oldValue {
+                    newCurrentIndex = newValue
+                }
             }
         
-        if elements.indices ~= currentIndex { return }
-        self.currentIndex = isEmpty ? .zero : count - 1
+        guard elements.indices ~= newCurrentIndex else {
+            self.currentIndex = isEmpty ? .zero : count - 1
+            return
+        }
+        currentIndex = newCurrentIndex
     }
     
     @discardableResult
@@ -90,5 +103,9 @@ actor ElementStore<Element, ElementID: Hashable>: ElementStoreProtocol {
             elements[index] = $0
         }
         return elements
+    }
+    
+    func updateCurrent(index: Int) {
+        self.currentIndex = (elements.indices ~= index) ? index : .zero
     }
 }

@@ -2,6 +2,7 @@ import MEGADomain
 import MEGASdk
 
 public struct DefaultMEGANodeProvider: MEGANodeProviderProtocol {
+    
     private let sdk: MEGASdk
     
     public init(sdk: MEGASdk) {
