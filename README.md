@@ -28,9 +28,9 @@ If you are the general public user, please open .gitmodules file and:
 2. Change url for SDK submodule, [use this one](https://github.com/meganz/SDK.git)
 
 #### Install Ruby, update submodules, download third party libraries and configure pre-commit hook
-
+The installation of `libyaml` requires `sudo` to run `make install`. Alternatively, you can execute `./configure.sh`, and when the `sudo` command is prompted, you will be asked to enter your login password.
 ```
-./configure.sh
+sudo ./configure.sh
 ```
 
 #### Build KMM mobile analytics library
