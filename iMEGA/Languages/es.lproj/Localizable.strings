@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="¿Confirmas que quieres cambiar a un servidor de prueba? Tu cuenta podría sufrir daños irreparables.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Permitir el acceso a tus contactos";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Descubre contactos de tu agenda que tienen MEGA.";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA no utilizará estos datos para ningún otro propósito y nunca interactuará con tus contactos sin tu consentimiento.";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Descubre tus contactos en MEGA";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contactos encontrados en MEGA";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contacto encontrado en MEGA";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Abrir Configuración";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="Inserta un espacio para añadir múltiples correos";
 /* Text used as a section title or similar */
 "Enter Email"="Añadir correo electrónico";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="CONTACTOS CON CUENTA EN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Tienes una solicitud en espera para chatear de manera segura en MEGA. Registra una cuenta en MEGA y obtén 20 GB de almacenamiento gratuito para siempre.";
 /* Destination folder name of chat files */
@@ -3546,6 +3534,8 @@
 "upgradeAccountPlan.plan.details.transfer"="Transferencia: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="Puedes ampliar tu suscripción actual en nuestra [A]página de precios[/A].";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="Ya tienes una suscripción activa con este plan";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Cancelar";
 /* Title for alert cancelling an scheduled meeting */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Empezar reunión";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="Puedes empezar la reunión antes de la hora programada tocando “Empezar reunión” en la sala de reuniones.";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Gestionar reuniones periódicas";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="%@ ha actualizado la reunión";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Editar reunión";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Empezar reunión";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Eventos";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="Change SFU server";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="Default is -1";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="Cancelar";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="Cambiar";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="Chat with %@";

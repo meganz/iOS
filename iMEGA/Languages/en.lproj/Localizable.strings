@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Grant access to your address book";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Discover your contacts on MEGA";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contacts found on MEGA";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contact found on MEGA";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Open Settings";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="Tap space to enter multiple emails";
 /* Text used as a section title or similar */
 "Enter Email"="Enter email";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="Contacts on MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */

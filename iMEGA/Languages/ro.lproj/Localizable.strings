@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Acordă accesul la agenda de adrese";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Descoperă cu ușurință contactele din agenda de adrese pe MEGA.";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nu va folosi aceste date în alt scop și nu va interacționa niciodată cu contactele tale fără consimțământul tău.";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Descoperă-ți contactele pe MEGA";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contacte găsite pe MEGA";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contact găsit pe MEGA";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Deschide Configurări";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="Atinge spațiu pentru a introduce mai multe e-mailuri";
 /* Text used as a section title or similar */
 "Enter Email"="Introdu un e-mail";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="CONTACTE PE MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
@@ -3546,6 +3534,8 @@
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="You can upgrade your current subscription on our [A]pricing page[/A].";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="You already have a recurring subscription for this plan";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Anulează";
 /* Title for alert cancelling an scheduled meeting */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Începe o întâlnire";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Manage recurring meetings";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="%@ updated the meeting";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Editează întâlnirea";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Începe o întâlnire";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Ocurențe";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="Change SFU server";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="Default is -1";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="Anulează";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="Schimbă";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="Chat with %@";

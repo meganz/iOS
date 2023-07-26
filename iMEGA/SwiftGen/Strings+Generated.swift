@@ -75,8 +75,6 @@ public enum Strings {
     }
     /// (Recommended)
     public static let recommended = Strings.tr("Localizable", "(Recommended)")
-    /// 1 contact found on MEGA
-    public static let _1ContactFoundOnMEGA = Strings.tr("Localizable", "1 contact found on MEGA")
     /// 1 selected
     public static let _1Selected = Strings.tr("Localizable", "1 selected")
     /// 24 hours
@@ -93,8 +91,6 @@ public enum Strings {
     public static let slideToCancel = Strings.tr("Localizable", "< Slide to cancel")
     /// Please follow the steps in the [S]verification email[/S] to unlock your account.
     public static let sPleaseVerifyYourEmailSAndFollowItsStepsToUnlockYourAccount = Strings.tr("Localizable", "[S]Please verify your email[/S] and follow its steps to unlock your account.")
-    /// [X] contacts found on MEGA
-    public static let xContactsFoundOnMEGA = Strings.tr("Localizable", "[X] contacts found on MEGA")
     /// A user has left the shared folder {0}
     public static let aUserHasLeftTheSharedFolder0 = Strings.tr("Localizable", "A user has left the shared folder {0}")
     /// About
@@ -477,8 +473,6 @@ public enum Strings {
     public static let contactRequest = Strings.tr("Localizable", "contactRequest")
     /// Contact requests
     public static let contactRequests = Strings.tr("Localizable", "contactRequests")
-    /// Contacts on MEGA
-    public static let contactsOnMega = Strings.tr("Localizable", "CONTACTS ON MEGA")
     /// No contacts
     public static let contactsEmptyStateTitle = Strings.tr("Localizable", "contactsEmptyState_title")
     /// Contacts
@@ -653,8 +647,6 @@ public enum Strings {
     public static func duration(_ p1: Any) -> String {
       return Strings.tr("Localizable", "duration", String(describing: p1))
     }
-    /// Easily discover contacts from your address book on MEGA.
-    public static let easilyDiscoverContactsFromYourAddressBookOnMEGA = Strings.tr("Localizable", "Easily discover contacts from your address book on MEGA.")
     /// Edit
     public static let edit = Strings.tr("Localizable", "edit")
     /// Edit nickname
@@ -1137,8 +1129,6 @@ public enum Strings {
     public static let me = Strings.tr("Localizable", "me")
     /// MEGA Camera uploads folder
     public static let megaCameraUploadsFolder = Strings.tr("Localizable", "MEGA CAMERA UPLOADS FOLDER")
-    /// MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.
-    public static let megaWillNotUseThisDataForAnyOtherPurposeAndWillNeverInteractWithYourContactsWithoutYourConsent = Strings.tr("Localizable", "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.")
     /// MEGA Chat SDK version
     public static let megachatSdkVersion = Strings.tr("Localizable", "megachatSdkVersion")
     /// Message
@@ -1787,8 +1777,6 @@ public enum Strings {
     public static let securityIsWhyWeExistYourFilesAreSafeWithUsBehindAWellOiledEncryptionMachineWhereOnlyYouCanAccessYourFiles = Strings.tr("Localizable", "Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files.")
     /// Security options
     public static let securityOptions = Strings.tr("Localizable", "securityOptions")
-    /// Discover your contacts on MEGA
-    public static let seeWhoSAlreadyOnMEGA = Strings.tr("Localizable", "See who's already on MEGA")
     /// See plans
     public static let seePlans = Strings.tr("Localizable", "seePlans")
     /// Select

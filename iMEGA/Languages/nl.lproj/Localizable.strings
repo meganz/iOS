@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Weet u zeker dat u wilt wijzigen naar een test server? Uw account kan onherstelbare problemen ondervinden.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Toegang Verlenen tot Uw Adresboek";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Ontdek gemakkelijk contacten vanuit uw adresboek op MEGA.";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA zal deze gegevens niet voor andere doeleinden gebruiken en zal nooit zonder uw toestemming met uw contacten communiceren.";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Ontdek uw contacten op MEGA";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contacten gevonden op MEGA";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contact gevonden op MEGA";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Instellingen Openen";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="Tik spatie om meerdere e-mails in te voeren";
 /* Text used as a section title or similar */
 "Enter Email"="Email Invoeren";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="CONTACTEN OP MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Er wacht een MEGA Veilig Gespreksverzoek. Registreer een account op MEGA en ontvang 20 GB gratis levenslange opslag.";
 /* Destination folder name of chat files */
@@ -3239,15 +3227,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email]heeft u uitgenodigd [/B]voor een vergadering gepland voor:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] heeft de vergadering bijgewerkt[/B] naar";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email]heeft de vergader omschrijving bijgewerkt[/B]";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] annuleerde[/B] de vergadering gepland voor ";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email]heeft de vergaderdatum bijgewerkt[/B] naar";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email]heeft de vergaderdatum bijgewerkt[/B] naar";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email]heeft de vergadernaam bijgewerkt[/B] van ”[PreviousTitle]” naar[B] ”[UpdatedTitle]” [/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3255,13 +3243,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B]heeft u uitgenodigd tot een herhalende vergadering gepland voor:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] heeft de vergadering bijgewerkt[/B] naar";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email]heeft de herhalende vergader omschrijving bijgewerkt[/B]";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email]heeft de herhalende vergaderdatum bijgewerkt[/B] naar";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email]heeft de herhalende vergaderdatum bijgewerkt[/B] naar";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Voorvallen";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3279,9 +3267,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Elke dag van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot[EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]heeft de gebeurtenis geannuleerd[/B] die gepland is voor";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email]heeft een gebeurtenis bijgewerkt[/B] naar";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Account beveiligingsupgrade";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3546,6 +3534,8 @@
 "upgradeAccountPlan.plan.details.transfer"="Overdracht: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="U kunt uw huidige abonnement upgraden op onze [A]prijzen pagina.[/A]";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="U heeft al een herhalende inschrijving voor dit abonnement";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Annuleren";
 /* Title for alert cancelling an scheduled meeting */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Begin vergadering";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="U kunt de vergadering voor de geplande tijd starten door in de vergaderruimte op \"Vergadering starten\" te tikken.";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Beheer terugkerende vergaderingen";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="%@ heeft de vergadering bijgewerkt";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Vergadering wijzigen";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="E-mail een agenda-uitnodiging naar deelnemers zodat ze de vergadering aan hun agenda kunnen toevoegen.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Begin vergadering";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Voorvallen";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="Wijzig de SFU-server";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="Standaard is -1";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="Voer SFU-ID in";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="Annuleren";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="Wijzigen";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="Chatten met %@";

@@ -2032,16 +2032,6 @@
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Czy na pewno chcesz przejść na serwer testowy? Twoje konto może mieć nieodwracalne problemy.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Udzielanie dostępu do książki adresowej";
-/* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Łatwo odkrywaj kontakty z książki adresowej na MEGA.";
-/* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nie będzie wykorzystywać tych danych w żadnym innym celu i nigdy nie będzie wchodzić w interakcje z Twoimi kontaktami bez Twojej zgody.";
-/* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Znajdź swoje kontakty w MEGA";
-/* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] kontakty znaleziono w MEGA";
-/* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="Znaleziono 1 kontakt na MEGA";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Otwórz ustawienia";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2052,8 +2042,6 @@
 "Tap space to enter multiple emails"="Klknij spację, aby wprowadzić wiele wiadomości e-mail";
 /* Text used as a section title or similar */
 "Enter Email"="Wpisz adres e-mail";
-/* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="KONTAKTY NA MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Masz MEGA Bezpieczny czat na żądanie. Załóż konto w MEGA i otrzymaj 20 GB darmowej pamięci masowej na cały okres użytkowania.";
 /* Destination folder name of chat files */
@@ -3239,15 +3227,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] zaprosił[/B] cię na spotkanie zaplanowane na:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] zaktualizował[/B] spotkanie na";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] zaktualizował[/B] opis spotkania";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] odwołał[/B] spotkanie zaplanowane na";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] zaktualizował[/B] datę spotkania na";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] zaktualizował[/B] czas spotkania na";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] zaktualizował[/B] nazwę spotkania z “[PreviousTitle]” na [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3255,13 +3243,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email] zaprosił[/B] cię na cykliczne spotkanie zaplanowane na:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] zaktualizował[/B] spotkanie na";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] zaktualizował[/B] opis cyklicznego potkania";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] zaktualizował[/B] cykliczną datę spotkania na";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] zaktualizował[/B] powtarzający się czas spotkania do";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Występowanie";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3279,9 +3267,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Codziennie zaczynając [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] anulował[/B] zdarzenie zaplanowane na";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] zaktualizował[/B] wystąpienie na";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Aktualizacja zabezpieczeń konta";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3546,6 +3534,8 @@
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="Aktualną subskrypcję można uaktualnić na naszej stronie [A]cennik[/A].";
+/* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="Posiadasz już cykliczną subskrypcję dla tego planu.";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Anuluj";
 /* Title for alert cancelling an scheduled meeting */
@@ -3599,7 +3589,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Rozpocznij spotkanie";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="Spotkanie można rozpocząć przed zaplanowanym czasem, dotykając opcji \"Rozpocznij spotkanie\" w pokoju spotkań.";
+"meetings.scheduleMeeting.startMeetingTip.message"="";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Zarządzaj powtarzającymi się spotkaniami";
 /* Recurring meeting tip view message */
@@ -3614,3 +3604,21 @@
 "meetings.scheduled.managementMessages.updated"="%@ zaktualizował spotkanie";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Edycja spotkania";
+/* Schedule meeting calendar invite description */
+"meetings.scheduleMeeting.calendarInvite.description"="Wyślij zaproszenie do kalendarza pocztą e-mail, aby uczestnicy mogli dodać spotkanie do swoich kalendarzy.";
+/* Start meeting tip view message bold text */
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Rozpocznij spotkanie";
+/* Recurring meeting tip view message bold text */
+"meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Występowanie";
+/* Change SFU server alert title. */
+"settings.about.sfu.changeAlert.title"="Zmień serwer SFU";
+/* Change SFU server alert message. */
+"settings.about.sfu.changeAlert.message"="Domyślna wartość to -1";
+/* Change SFU server alert test field placeholder. */
+"settings.about.sfu.changeAlert.placeholder"="Wprowadź SFU ID";
+/* Change SFU server alert cancel button. */
+"settings.about.sfu.changeAlert.cancelButton"="Anuluj";
+/* Change SFU server alert change button. */
+"settings.about.sfu.changeAlert.changeButton"="Zmień";
+/* Back button menu item title visible when navigating back to 1:1 chat  . */
+"chat.backButton.oneToOne.menu"="Czat z %@";
