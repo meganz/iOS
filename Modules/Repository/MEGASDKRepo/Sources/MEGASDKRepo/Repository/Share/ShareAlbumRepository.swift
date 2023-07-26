@@ -4,9 +4,8 @@ import MEGASwift
 
 public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
     public static var newRepo: ShareAlbumRepository {
-        let sdk = MEGASdk.sharedSdk
-        return ShareAlbumRepository(sdk: MEGASdk.sharedSdk,
-                             publicAlbumNodeProvider: PublicAlbumNodeProvider(sdk: sdk))
+        ShareAlbumRepository(sdk: MEGASdk.sharedSdk,
+                             publicAlbumNodeProvider: PublicAlbumNodeProvider.shared)
     }
     
     private let sdk: MEGASdk

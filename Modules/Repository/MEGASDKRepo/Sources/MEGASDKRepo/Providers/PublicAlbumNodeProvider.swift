@@ -3,34 +3,6 @@ import MEGASdk
 import MEGASwift
 
 public protocol PublicAlbumNodeProviderProtocol: MEGANodeProviderProtocol {
-    func publicPhotoNode(for element: SetElementEntity) async throws -> MEGANode?
-    func clearCache() async
-}
-
-/// The `PublicAlbumNodeProvider` retrieve and cache `MEGANode` for a public album link
-public class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
-    private let sdk: MEGASdk
-    private let nodeCache = PublicAlbumNodeCache()
-    
-    public init(sdk: MEGASdk) {
-        self.sdk = sdk
-    }
-    
-    /// The MEGANode for the `HandleEntity`
-    ///
-    /// If the node is cached it will be returned immediately.
-    ///
-    /// If the node is not cached it will load `publicSetElementsInPreview` then find the `MEGASetElement` with
-    /// matching node id and retrieve the `MEGANode` via `previewElementNode`
-    ///
-    /// - Parameter handle: Handle entity of node
-    /// - Returns: MEGANode or nil if not found.
-    public func node(for handle: HandleEntity) async -> MEGANode? {
-        if let node = try? await nodeCache.node(handle: handle) {
-            return node
-        }
-        return await nodeFromPreview(handle: handle)
-    }
     
     /// The MEGANode for `SetElementEntity`
     ///
@@ -42,6 +14,31 @@ public class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
     ///
     /// - Parameter element: SetElementEntity to retrieve and cache node
     /// - Returns: MEGANode or nil if not found.
+    func publicPhotoNode(for element: SetElementEntity) async throws -> MEGANode?
+    
+    /// Clear node cache
+    func clearCache() async
+}
+
+/// The `PublicAlbumNodeProvider` retrieve and cache `MEGANode` for a public album link
+public class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
+    
+    private let sdk: MEGASdk
+    private let nodeCache = PublicAlbumNodeCache()
+    
+    public static let shared = PublicAlbumNodeProvider(sdk: .sharedSdk)
+    
+    init(sdk: MEGASdk) {
+        self.sdk = sdk
+    }
+    
+    public func node(for handle: HandleEntity) async -> MEGANode? {
+        if let node = try? await nodeCache.node(handle: handle) {
+            return node
+        }
+        return await nodeFromPreview(handle: handle)
+    }
+    
     public func publicPhotoNode(for element: SetElementEntity) async throws -> MEGANode? {
         if let node = try await nodeCache.node(handle: element.nodeId) {
             return node
@@ -58,7 +55,6 @@ public class PublicAlbumNodeProvider: PublicAlbumNodeProviderProtocol {
         }
     }
     
-    /// Clear node cache
     public func clearCache() async {
         await nodeCache.clear()
     }
@@ -145,7 +141,7 @@ private actor PublicAlbumNodeCache {
     func removeCacheEntry(handle: HandleEntity) {
         nodeCache[handle] = nil
     }
-    
+
     /// Remove  all `PublicAlbumNodeCacheEntry` items
     func clear() {
         nodeCache.removeAllObjects()

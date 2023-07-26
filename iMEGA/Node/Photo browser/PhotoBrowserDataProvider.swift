@@ -1,10 +1,15 @@
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 
 protocol PhotoBrowserDataProviderProtocol {
-    init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk)
+    init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk, nodeProvider: any MEGANodeProviderProtocol)
     var allPhotoEntities: [NodeEntity] { get }
+    
+    /// Deprecate usage of currentPhoto, in favour of using currentPhoto() async. Currently using this computed var will not work for scenario that are public albums, as the node need to be fetched before hand.
     var currentPhoto: MEGANode? { get }
+    
+    func currentPhoto() async -> MEGANode?
 }
 
 final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol {
@@ -12,6 +17,7 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
     private var megaNodes: [MEGANode]?
     private var nodeEntities: [NodeEntity]?
     private let sdk: MEGASdk
+    private let nodeProvider: any MEGANodeProviderProtocol
     
     @objc var currentIndex: Int = 0
     
@@ -19,6 +25,7 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
         megaNodes = allPhotos
         nodeStore = .init(currentIndex: allPhotos.firstIndex(of: currentPhoto), elements: allPhotos, elementsIdentifiedBy: \.handle)
         self.sdk = sdk
+        self.nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
         if let index = allPhotos.firstIndex(of: currentPhoto) {
             currentIndex = index
         }
@@ -33,27 +40,30 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
         if allPhotos.indices ~= currentIndex {
             self.currentIndex = currentIndex
         }
-        
+        self.nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
         super.init()
     }
     
-    init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk) {
+    init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk, nodeProvider: any MEGANodeProviderProtocol) {
         nodeEntities = allPhotos
         nodeStore = .init(elementsIdentifiedBy: \.handle)
         self.sdk = sdk
-        if let index = allPhotos.firstIndex(of: currentPhoto) {
-            currentIndex = index
-        }
+        self.nodeProvider = nodeProvider
+        currentIndex = allPhotos.firstIndex(of: currentPhoto) ?? 0
         
         super.init()
     }
     
-    @objc subscript(index: Int) -> MEGANode? {
+    func photoNode(at index: Int) async -> MEGANode? {
         if let nodes = megaNodes {
             return nodes[safe: index]
-        } else {
-            return nodeEntities?[safe: index]?.toMEGANode(in: sdk)
         }
+        
+        guard let nodeEntity = nodeEntities?[safe: index] else {
+            return nil
+        }
+        
+        return await nodeProvider.node(for: nodeEntity.handle)
     }
     
     @objc var count: Int {
@@ -70,6 +80,10 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
         } else {
             return nodeEntities?[safe: currentIndex]?.toMEGANode(in: sdk)
         }
+    }
+    
+    @objc func currentPhoto() async -> MEGANode? {
+        await photoNode(at: currentIndex)
     }
     
     var allPhotoEntities: [NodeEntity] {
@@ -108,23 +122,17 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
             nodeEntities?[index] = node
         }
     }
-    
-    @objc func removePhotos(in nodeList: MEGANodeList) {
-        if megaNodes != nil {
-            removePhotosForMEGANodes(by: nodeList)
-        } else {
-            removePhotosForNodeEntities(by: nodeList)
-        }
-    }
-    
+        
     @MainActor
     @objc func removePhotos(in nodeList: MEGANodeList?) async -> Int {
         guard let nodeList else { return .zero }
         if megaNodes != nil {
+            await nodeStore.updateCurrent(index: currentIndex)
             self.megaNodes = await nodeStore.remove(nodeList.toNodeArray().removedChangeTypeNodes())
+            self.currentIndex = await nodeStore.currentIndex
             return await nodeStore.count
         } else {
-            removePhotosForNodeEntities(by: nodeList)
+            removePhotosForNodeEntities(by: nodeList.toNodeEntities())
             return self.count
         }
     }
@@ -150,23 +158,9 @@ extension PhotoBrowserDataProvider {
         }
     }
     
-    private func removePhotosForMEGANodes(by nodeList: MEGANodeList) {
-        let photosSet = Set(megaNodes ?? [])
-        let updatedSet = Set(nodeList.toNodeArray().removedChangeTypeNodes())
-        let removedPhotos = photosSet.intersection(updatedSet)
-        let preCurrentIndexPhotoSet = Set(megaNodes?.prefix(through: currentIndex) ?? [])
-        
-        for photo in removedPhotos {
-            megaNodes?.remove(object: photo)
-        }
-        
-        let preCurrentIndexRemovedPhotoCount = preCurrentIndexPhotoSet.intersection(removedPhotos).count
-        currentIndex = max(currentIndex - preCurrentIndexRemovedPhotoCount, 0)
-    }
-    
-    private func removePhotosForNodeEntities(by nodeList: MEGANodeList) {
+    private func removePhotosForNodeEntities(by nodeList: [NodeEntity]) {
         let photosSet = Set(nodeEntities ?? [])
-        let updatedSet = Set(nodeList.toNodeEntities().removedChangeTypeNodes())
+        let updatedSet = Set(nodeList.removedChangeTypeNodes())
         let removedPhotos = photosSet.intersection(updatedSet)
         let preCurrentIndexPhotoSet = Set(nodeEntities?.prefix(through: currentIndex) ?? [])
 

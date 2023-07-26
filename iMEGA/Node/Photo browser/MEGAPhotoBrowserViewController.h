@@ -13,15 +13,6 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
     MEGAPhotoModeOriginal
 };
 
-@protocol MEGAPhotoBrowserDelegate <NSObject>
-
-@optional
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNode:(nullable MEGANode *)node;
-- (void)photoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser didPresentNodeAtIndex:(NSUInteger)index;
-- (void)didDismissPhotoBrowser:(MEGAPhotoBrowserViewController *)photoBrowser;
-
-@end
-
 @interface MEGAPhotoBrowserViewController : UIViewController
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithMediaNodes:(NSMutableArray<MEGANode *> *)mediaNodesArray api:(MEGASdk *)api displayMode:(DisplayMode)displayMode presentingNode:(MEGANode *)node;
@@ -32,7 +23,6 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 
 @property (nonatomic) MEGASdk *api;
 @property (nonatomic) CGRect originFrame;
-@property (nonatomic, weak, nullable) id<MEGAPhotoBrowserDelegate> delegate;
 @property (nonatomic) DisplayMode displayMode;
 @property (nonatomic) NSString *publicLink;
 @property (nonatomic) NSString *encryptedLink;
@@ -46,7 +36,10 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 @property (strong, nonatomic) PhotoBrowserDataProvider *dataProvider;
 
 - (void)reloadUI;
-
+- (void)configureNodeIntoImage:(MEGANode *) node nodeIndex:(NSUInteger) index;
+- (BOOL)isPreviewingVersion;
+- (IBAction)didPressAllMediasButton:(UIBarButtonItem *)sender;
+- (void)shareFileLink;
 @end
 
 NS_ASSUME_NONNULL_END

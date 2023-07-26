@@ -8,7 +8,7 @@ extension MEGAPhotoBrowserViewController {
         NodeInfoViewModel(withNode: node)
     }
     
-    @objc func subtitle(fromDate date: Date) -> String {
+    func subtitle(fromDate date: Date) -> String {
         DateFormatter.fromTemplate("MMMM dd • HH:mm").localisedString(from: date)
     }
     
@@ -37,6 +37,34 @@ extension MEGAPhotoBrowserViewController {
         }
         
         return prePesentingVC
+    }
+    
+    @objc func playCurrentVideo() async {
+        guard let node = await dataProvider.currentPhoto() else {
+            return
+        }
+        
+        if node.mnz_isPlayable() {
+            guard !MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall else {
+                Helper.cannotPlayContentDuringACallAlert()
+                return
+            }
+            
+            let controller = node.mnz_viewControllerForNode(
+                inFolderLink: displayMode == .nodeInsideFolderLink,
+                fileLink: nil)
+            controller.modalPresentationStyle = .overFullScreen
+            present(controller, animated: true)
+        } else {
+            let controller = UIAlertController(
+                title: Strings.Localizable.fileNotSupported,
+                message: Strings.Localizable.messageFileNotSupported,
+                preferredStyle: .alert)
+            controller.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel, handler: {[weak self] _ in
+                self?.view.layoutIfNeeded()
+                self?.reloadUI()
+            }))
+        }
     }
     
     @objc func configureMediaAttachment(forMessageId messageId: HandleEntity, inChatId chatId: HandleEntity, messagesIds: [HandleEntity]) {
@@ -112,24 +140,30 @@ extension MEGAPhotoBrowserViewController {
         SlideShowRouter(dataProvider: dataProvider, presenter: self).start()
     }
     
-    @objc func isSlideShowEnabled() -> Bool {
-        (displayMode == .cloudDrive || displayMode == .sharedItem) &&
-        dataProvider.currentPhoto?.name?.fileExtensionGroup.isImage == true
-    }
-    
-    @objc func activateSlideShowButton() {
-        if isSlideShowEnabled() {
-            centerToolbarItem?.image = UIImage(systemName: "play.rectangle")
-            centerToolbarItem?.isEnabled = true
-        } else {
-            centerToolbarItem?.image = nil
-            centerToolbarItem?.isEnabled = false
+    @objc func isSlideShowEnabled() async -> Bool {
+        switch displayMode {
+        case .cloudDrive, .sharedItem, .albumLink:
+            return await dataProvider.currentPhoto()?.name?.fileExtensionGroup.isImage == true
+        default:
+            return false
         }
     }
     
-    @objc func hideSlideShowButton() {
-        centerToolbarItem?.image = nil
-        centerToolbarItem?.isEnabled = false
+    @objc func activateSlideShowButton(barButtonItem: UIBarButtonItem?) {
+        Task {
+            if await isSlideShowEnabled() {
+                barButtonItem?.image = UIImage(systemName: "play.rectangle")
+                barButtonItem?.isEnabled = true
+            } else {
+                barButtonItem?.image = nil
+                barButtonItem?.isEnabled = false
+            }
+        }
+    }
+    
+    @objc func hideSlideShowButton(barButtonItem: UIBarButtonItem?) {
+        barButtonItem?.image = nil
+        barButtonItem?.isEnabled = false
     }
     
     @objc func viewNodeInFolder(_ node: MEGANode) {
@@ -190,11 +224,41 @@ extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
 }
 
 extension MEGAPhotoBrowserViewController {
+    @objc func loadNode(for index: Int) {
+        Task {
+            
+            guard let node = await dataProvider.photoNode(at: index) else {
+                return
+            }
+            configureNode(intoImage: node, nodeIndex: UInt(index))
+        }
+    }
+}
+
+extension MEGAPhotoBrowserViewController {
     static func photoBrowser(currentPhoto: NodeEntity, allPhotos: [NodeEntity],
                              displayMode: DisplayMode = .cloudDrive) -> MEGAPhotoBrowserViewController {
-        let sdk = displayMode == .nodeInsideFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared
+        
+        let sdk: MEGASdk
+        let nodeProvider: any MEGANodeProviderProtocol
+        switch displayMode {
+        case .nodeInsideFolderLink:
+            sdk = .sharedFolderLink
+            nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
+        case .albumLink:
+            sdk = .shared
+            nodeProvider = PublicAlbumNodeProvider.shared
+        default:
+            sdk = .shared
+            nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
+        }
+        
         let browser = MEGAPhotoBrowserViewController.photoBrowser(
-            with: PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: sdk),
+            with: PhotoBrowserDataProvider(
+                currentPhoto: currentPhoto,
+                allPhotos: allPhotos,
+                sdk: sdk,
+                nodeProvider: nodeProvider),
             api: sdk,
             displayMode: displayMode
         )
@@ -209,6 +273,38 @@ extension MEGAPhotoBrowserViewController {
             self.dataProvider.convertToNodeEntities(from: nodes)
         }
     }
+    
+    @objc func reloadTitle() async {
+        guard let node = await dataProvider.currentPhoto() else {
+            return
+        }
+        
+        let subtitle: String
+        switch displayMode {
+        case .fileLink:
+            subtitle = Strings.Localizable.fileLink
+        case .chatAttachment where node.creationTime != nil:
+            guard let creationTime = node.creationTime else {
+                subtitle = ""
+                break
+            }
+            subtitle = self.subtitle(fromDate: creationTime)
+        default:
+            let formattedText = Strings.Localizable.Media.Photo.Browser.indexOfTotalFiles(dataProvider.count)
+            subtitle = formattedText.replacingOccurrences(
+                of: "[A]",
+                with: String(format: "%lu", dataProvider.currentIndex + 1))
+        }
+        
+        let titleLabel = UILabel().customNavigationBarLabel(
+            title: node.name ?? "",
+            subtitle: subtitle,
+            color: .mnz_label())
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.8
+        navigationItem.titleView = titleLabel
+        navigationItem.titleView?.sizeToFit()
+    }
 }
 
 // MARK: - OnNodesUpdate
@@ -221,7 +317,7 @@ extension MEGAPhotoBrowserViewController {
             let remainingNodesToUpdateCount = await dataProvider.removePhotos(in: nodeList)
             
             if remainingNodesToUpdateCount == 0 {
-                guard let currentNode = dataProvider.currentPhoto else { return }
+                guard let currentNode = await dataProvider.currentPhoto() else { return }
                 let removedNodes = nodeList.toNodeEntities().removedChangeTypeNodes()
                 
                 guard removedNodes.isNotEmpty,
@@ -241,5 +337,78 @@ extension MEGAPhotoBrowserViewController {
                 nodeEntities.hasModifiedAttributes() ||
                 nodeEntities.hasModifiedPublicLink() ||
                 nodeEntities.hasModifiedFavourites()
+    }
+}
+
+// MARK: - IBActions
+extension MEGAPhotoBrowserViewController {
+    
+    @objc func didPressActionsButton(_ sender: UIBarButtonItem, delegate: (any NodeActionViewControllerDelegate)?) async {
+        guard let node = await dataProvider.currentPhoto(),
+              let delegate else {
+            return
+        }
+        
+        let isBackUpNode = BackupsOCWrapper().isBackupNode(node)
+        let controller = NodeActionViewController(node: node, delegate: delegate, displayMode: displayMode, isInVersionsView: isPreviewingVersion(), isBackupNode: isBackUpNode, sender: sender)
+    
+        present(controller, animated: true)
+    }
+    
+    @objc func didPressLeftToolbarButton(_ sender: UIBarButtonItem) async {
+        
+        guard let node = await dataProvider.currentPhoto() else {
+            return
+        }
+        
+        switch displayMode {
+        case .fileLink:
+            node.mnz_fileLinkImport(from: self, isFolderLink: false)
+        default:
+            didPressAllMediasButton(sender)
+        }
+    }
+    
+    @objc func didPressRightToolbarButton(_ sender: UIBarButtonItem) async {
+        guard let node = await dataProvider.currentPhoto() else {
+            return
+        }
+        
+        switch displayMode {
+        case .fileLink:
+            shareFileLink()
+        case .albumLink:
+            openSlideShow()
+        default:
+            exportFile(from: node, sender: sender)
+        }
+    }
+    
+    @objc func didPressExportFile(_ sender: UIBarButtonItem) async {
+        guard let node = await dataProvider.currentPhoto() else {
+            return
+        }
+        
+        switch displayMode {
+        case .fileLink:
+            exportFile(from: node, sender: sender)
+        default:
+            exportMessageFile(from: node, messageId: messageId, chatId: chatId, sender: sender)
+        }
+    }
+    
+    @objc func didPressCenterToolbarButton(_ sender: UIBarButtonItem) async {
+        guard let node = await dataProvider.currentPhoto() else {
+            return
+        }
+        
+        switch displayMode {
+        case .fileLink:
+            saveToPhotos(node: node)
+        case .sharedItem, .cloudDrive:
+            openSlideShow()
+        default:
+            break
+        }
     }
 }

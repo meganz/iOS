@@ -63,10 +63,13 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         }
         
         if topController.definesPresentationContext == false && topController.children.isEmpty { return }
-        let isFolderLink = contentMode == .mediaDiscoveryFolderLink
-        let displayMode: DisplayMode = isFolderLink ? .nodeInsideFolderLink : .cloudDrive
-        let photoBrowser = MEGAPhotoBrowserViewController.photoBrowser(currentPhoto: photo, allPhotos: allPhotos,
-                                                                       displayMode: displayMode)
+        
+        let displayMode = contentMode.displayMode
+        let photoBrowser = MEGAPhotoBrowserViewController
+            .photoBrowser(
+                currentPhoto: photo,
+                allPhotos: allPhotos,
+                displayMode: displayMode)
         
         topController.modalPresentationStyle = .popover
         topController.present(photoBrowser, animated: true)
@@ -74,5 +77,18 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     
     private func makeThumnailUseCase() -> some ThumbnailUseCaseProtocol {
         return ThumbnailUseCase.makeThumbnailUseCase(mode: contentMode)
+    }
+}
+
+private extension PhotoLibraryContentMode {
+    var displayMode: DisplayMode {
+        switch self {
+        case .library, .album, .mediaDiscovery:
+            return .cloudDrive
+        case .albumLink:
+            return .albumLink
+        case .mediaDiscoveryFolderLink:
+            return .nodeInsideFolderLink
+        }
     }
 }

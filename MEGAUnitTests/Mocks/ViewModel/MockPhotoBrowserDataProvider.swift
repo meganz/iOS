@@ -1,13 +1,16 @@
 import Foundation
 @testable import MEGA
 import MEGADomain
+import MEGASDKRepo
+import MEGASDKRepoMock
 
 final class MockPhotoBrowserDataProvider: PhotoBrowserDataProviderProtocol {
+    
     private var nodeEntities: [NodeEntity]?
     private var currentPhotoEntity: NodeEntity
     private var sdk: MEGASdk
     
-    init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk) {
+    init(currentPhoto: NodeEntity, allPhotos: [NodeEntity], sdk: MEGASdk, nodeProvider: any MEGANodeProviderProtocol) {
         currentPhotoEntity = currentPhoto
         nodeEntities = allPhotos
         self.sdk = sdk
@@ -18,6 +21,10 @@ final class MockPhotoBrowserDataProvider: PhotoBrowserDataProviderProtocol {
     }
     
     var currentPhoto: MEGANode? {
-        MEGANode()
+        currentPhotoEntity.toMEGANode(in: sdk)
+    }
+        
+    func currentPhoto() async -> MEGANode? {
+        currentPhotoEntity.toMEGANode(in: sdk)
     }
 }

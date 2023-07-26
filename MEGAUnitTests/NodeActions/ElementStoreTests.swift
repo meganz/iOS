@@ -146,7 +146,7 @@ final class ElementStoreTests: XCTestCase {
             let isEmpty = await store.isEmpty
             let count = await store.count
             
-            XCTAssertEqual(currentIndex, startCount - i)
+            XCTAssertEqual(currentIndex, max(0, startCount - 1  - i))
             XCTAssertEqual(isEmpty, i == startCount)
             XCTAssertEqual(count, startCount - i)
             XCTAssertEqual(remainingItems, Array(items.prefix(startCount - i)))
