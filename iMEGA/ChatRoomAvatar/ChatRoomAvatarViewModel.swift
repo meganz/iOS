@@ -169,7 +169,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         let initials = name
             .components(separatedBy: " ")
             .prefix(2)
-            .compactMap({ $0.count > 1 ? String($0.prefix(1)).uppercased() : nil })
+            .compactMap({ $0.count >= 1 ? String($0.prefix(1)).uppercased() : nil })
             .joined(separator: "")
         
         return UIImage.drawImage(
