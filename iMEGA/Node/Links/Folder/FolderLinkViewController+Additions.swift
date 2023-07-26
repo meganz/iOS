@@ -10,6 +10,39 @@ extension FolderLinkViewController {
             $0.mediaType != nil
         }
     }
+
+    @objc func importFromFiles() {
+        if SAMKeychain.password(forService: "MEGA", account: "sessionV3") != nil {
+            guard let navigationController =
+                    UIStoryboard(
+                        name: "Cloud",
+                        bundle: nil
+                    ).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
+                  let browserVC = navigationController.viewControllers.first as? BrowserViewController else {
+                return
+            }
+
+            browserVC.browserAction = .importFromFolderLink
+
+            if selectedNodesArray?.count != 0, let selectedNodesArray = selectedNodesArray as? [MEGANode] {
+                browserVC.selectedNodesArray = selectedNodesArray
+            } else if let parentNode = parentNode {
+                browserVC.selectedNodesArray = [parentNode]
+            }
+
+            UIApplication.mnz_presentingViewController().present(navigationController, animated: true)
+        } else {
+            if selectedNodesArray?.count != 0, let selectedNodesArray = selectedNodesArray {
+                MEGALinkManager.nodesFromLinkMutableArray.add(selectedNodesArray)
+            } else if let parentNode = parentNode {
+                MEGALinkManager.nodesFromLinkMutableArray.add(parentNode)
+            }
+
+            MEGALinkManager.selectedOption = .importFolderOrNodes
+
+            navigationController?.pushViewController(OnboardingViewController.instanciateOnboarding(with: .default), animated: true)
+        }
+    }
     
     func showMediaDiscovery() {
         var link = publicLinkString
@@ -105,39 +138,6 @@ extension FolderLinkViewController {
                     .makeRouter(deviceHandler: permissionHandler)
                     .alertPhotosPermission()
             }
-        }
-    }
-
-    func importFromFiles() {
-        if SAMKeychain.password(forService: "MEGA", account: "sessionV3") != nil {
-            guard let navigationController =
-                    UIStoryboard(
-                        name: "Cloud",
-                        bundle: nil
-                    ).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
-                  let browserVC = navigationController.viewControllers.first as? BrowserViewController else {
-                return
-            }
-
-            browserVC.browserAction = .importFromFolderLink
-
-            if selectedNodesArray?.count != 0, let selectedNodesArray = selectedNodesArray as? [MEGANode] {
-                browserVC.selectedNodesArray = selectedNodesArray
-            } else if let parentNode = parentNode {
-                browserVC.selectedNodesArray = [parentNode]
-            }
-
-            UIApplication.mnz_presentingViewController().present(navigationController, animated: true)
-        } else {
-            if selectedNodesArray?.count != 0, let selectedNodesArray = selectedNodesArray {
-                MEGALinkManager.nodesFromLinkMutableArray.add(selectedNodesArray)
-            } else if let parentNode = parentNode {
-                MEGALinkManager.nodesFromLinkMutableArray.add(parentNode)
-            }
-
-            MEGALinkManager.selectedOption = .importFolderOrNodes
-
-            navigationController?.pushViewController(OnboardingViewController.instanciateOnboarding(with: .default), animated: true)
         }
     }
 }
