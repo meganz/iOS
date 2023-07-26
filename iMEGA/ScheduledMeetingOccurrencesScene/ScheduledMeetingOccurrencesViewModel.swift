@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 
 protocol ScheduledMeetingOccurrencesRouting {
     func showErrorMessage(_ message: String)
@@ -137,7 +138,9 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private func constructContextMenuOptions() -> [OccurrenceContextMenuOption] {
         var options: [OccurrenceContextMenuOption] = []
         
-        if let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId), chatRoom.ownPrivilege == .moderator {
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting),
+           let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId),
+           chatRoom.ownPrivilege == .moderator {
             options.append(
                 OccurrenceContextMenuOption(
                     title: Strings.Localizable.edit,
