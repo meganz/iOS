@@ -155,7 +155,7 @@
 
 - (IBAction)leftSwipeGestureRecognizer:(UISwipeGestureRecognizer *)sender {
     NSInteger page = _usagePageControl.currentPage;
-    if (page == 1) {
+    if (page == 1 || ![self showTransferQuota]) {
         return;
     }
     
@@ -180,6 +180,9 @@
     if (page == 1) {
         page = 0;
     } else {
+        if (![self showTransferQuota]) {
+            return;
+        }
         ++page;
     }
     
