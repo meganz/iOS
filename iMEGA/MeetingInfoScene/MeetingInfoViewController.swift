@@ -1,4 +1,5 @@
 import Combine
+import MEGAPresentation
 import SwiftUI
 
 final class MeetingInfoViewController: UIViewController {
@@ -38,7 +39,9 @@ final class MeetingInfoViewController: UIViewController {
     }
     
     private func addEditButton(isModerator: Bool) {
-        navigationItem.rightBarButtonItem = isModerator ? editBarButtonItem : nil
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting) {
+            navigationItem.rightBarButtonItem = isModerator ? editBarButtonItem : nil
+        }
     }
     
     private func initSubscriptions() {
