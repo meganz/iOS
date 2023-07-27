@@ -6,4 +6,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case albumShareLink = "Album Share Link"
     case deviceCenter = "Device Center"
     case audioPlaybackContinuation = "Audio Playback Continuation"
+    case contactVerification = "Contact verification UI/UX updates"
 }
