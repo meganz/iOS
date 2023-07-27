@@ -4,7 +4,6 @@ public struct AccountRequestEntity {
     public var file: String?
     public var userAttribute: UserAttributeEntity?
     public var email: String?
-    public var accountDetails: AccountDetailsEntity?
     
     public init(type: RequestTypeEntity,
                 file: String?,

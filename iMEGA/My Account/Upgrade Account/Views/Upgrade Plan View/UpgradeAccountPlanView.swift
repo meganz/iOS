@@ -52,7 +52,8 @@ struct UpgradeAccountPlanView: View {
                         if viewModel.isShowBuyButton {
                             VStack {
                                 PrimaryActionButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(viewModel.selectedPlanName)) {
-                                }
+                                        viewModel.didTap(.buyPlan)
+                                    }
                             }
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
@@ -63,15 +64,13 @@ struct UpgradeAccountPlanView: View {
                     UpgradeSectionSubscriptionView()
                     
                     VStack(alignment: .leading, spacing: 20) {
-                        PlainFooterButtonView(
-                            title: Strings.Localizable.UpgradeAccountPlan.Button.Restore.title,
-                            didTapButton: $viewModel.isRestoreAccountPlan
-                        )
-                        
-                        PlainFooterButtonView(
-                            title: Strings.Localizable.UpgradeAccountPlan.Button.TermsAndPolicies.title,
-                            didTapButton: $viewModel.isTermsAndPoliciesPresented
-                        )
+                        PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.Restore.title) {
+                            viewModel.didTap(.restorePlan)
+                        }
+
+                        PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.TermsAndPolicies.title) {
+                            viewModel.didTap(.termsAndPolicies)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top)
@@ -81,6 +80,7 @@ struct UpgradeAccountPlanView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .clipped()
+        .disabled(viewModel.isLoading)
         .onChange(of: viewModel.isDismiss) { newValue in
             if newValue {
                 presentationMode.wrappedValue.dismiss()

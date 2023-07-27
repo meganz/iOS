@@ -7,4 +7,5 @@ public extension Notification.Name {
     static let accountDidFinishFetchNodes = Notification.Name("nz.mega.fetchNodesFinished")
     static let accountDidFinishFetchAccountDetails = Notification.Name("nz.mega.fetchAccountDetailsFinished")
     static let setShouldRefreshAccountDetails = Notification.Name("nz.mega.setShouldRefreshAccountDetails")
+    static let refreshAccountDetails = Notification.Name("nz.mega.refreshAccountDetails")
 }

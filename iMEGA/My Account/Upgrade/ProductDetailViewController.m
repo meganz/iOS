@@ -235,6 +235,8 @@
 }
 
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage {
+    if ([self isPurchaseCancelledWithErrorCode:errorCode]) { return; }
+
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"failedPurchase_title", nil)  message:NSLocalizedString(@"failedPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];

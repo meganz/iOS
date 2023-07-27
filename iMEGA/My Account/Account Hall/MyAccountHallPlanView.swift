@@ -9,14 +9,20 @@ struct MyAccountHallPlanView: View {
                 .frame(width: 24, height: 24)
                 .padding(.horizontal, 14)
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text(Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
                     .font(.footnote)
                     .foregroundColor(Color(Colors.UpgradeAccount.primaryGrayText.color))
                 
-                Text(viewModel.currentPlanName)
-                    .font(.body)
-                    .foregroundColor(Color(Colors.UpgradeAccount.primaryText.color))
+                ZStack {
+                    ProgressView()
+                        .opacity(viewModel.isUpdatingAccountDetails ? 1 : 0)
+                    
+                    Text(viewModel.currentPlanName)
+                        .font(.body)
+                        .foregroundColor(Color(Colors.UpgradeAccount.primaryText.color))
+                        .opacity(viewModel.isUpdatingAccountDetails ? 0 : 1)
+                }
             }
             
             Spacer()

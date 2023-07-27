@@ -17,6 +17,7 @@ final class UpgradeAccountPlanRouter: NSObject {
                                                     purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo))
         let upgradeAccountPlanView = UpgradeAccountPlanView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: upgradeAccountPlanView)
+        hostingController.isModalInPresentation = true
         return hostingController
     }
 

@@ -202,11 +202,9 @@
                 MEGALogError(@"[StoreKit] Transaction failed");
                 MEGALogError(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@, failed error: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier, transaction.error);
                 
-                if (transaction.error.code != SKErrorPaymentCancelled) {
-                    for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
-                        if ([purchaseDelegate respondsToSelector:@selector(failedPurchase:message:)]) {
-                            [purchaseDelegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
-                        }
+                for (id<MEGAPurchaseDelegate> purchaseDelegate in self.purchaseDelegateMutableArray) {
+                    if ([purchaseDelegate respondsToSelector:@selector(failedPurchase:message:)]) {
+                        [purchaseDelegate failedPurchase:transaction.error.code message:transaction.error.localizedDescription];
                     }
                 }
                 

@@ -15,7 +15,11 @@ enum UpgradeAccountPlanAlertType {
             case .incomplete: return Strings.Localizable.incompleteRestoreTitle
             case .failed: return Strings.Localizable.failedRestoreTitle
             }
-        default: return ""
+        case .purchase(let status):
+            switch status {
+            case .failed: return Strings.Localizable.failedPurchaseTitle
+            default: return ""
+            }
         }
     }
     
@@ -27,7 +31,12 @@ enum UpgradeAccountPlanAlertType {
             case .incomplete: return Strings.Localizable.incompleteRestoreMessage
             case .failed: return Strings.Localizable.failedRestoreMessage
             }
-        default: return ""
+        case .purchase(let status):
+            switch status {
+            case .failed: return Strings.Localizable.failedRestoreMessage
+            default: return ""
+            }
+
         }
     }
 }
