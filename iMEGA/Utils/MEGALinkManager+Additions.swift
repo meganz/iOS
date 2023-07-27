@@ -40,7 +40,8 @@ extension MEGALinkManager {
         
         let vm = ImportAlbumViewModel(
             publicLink: publicLink,
-            publicAlbumUseCase: PublicAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo))
+            publicAlbumUseCase: PublicAlbumUseCase(
+                shareAlbumRepository: ShareAlbumRepository.newRepo))
         let viewController = UIHostingController(rootView: ImportAlbumView(viewModel: vm))
         viewController.modalPresentationStyle = .fullScreen
         

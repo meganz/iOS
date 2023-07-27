@@ -5,13 +5,13 @@ public protocol PublicAlbumUseCaseProtocol {
     func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity]
 }
 
-public struct PublicAlbumUseCase<T: ShareAlbumRepositoryProtocol>: PublicAlbumUseCaseProtocol {
-    private let shareAlbumRepository: T
+public struct PublicAlbumUseCase<S: ShareAlbumRepositoryProtocol>: PublicAlbumUseCaseProtocol {
+    private let shareAlbumRepository: S
     
-    public init(shareAlbumRepository: T) {
+    public init(shareAlbumRepository: S) {
         self.shareAlbumRepository = shareAlbumRepository
     }
-    
+        
     public func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity {
         try await shareAlbumRepository.publicAlbumContents(forLink: link)
     }
