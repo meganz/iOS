@@ -59,6 +59,13 @@ final class AccountHallViewModelTests: XCTestCase {
              actions: [AccountHallAction.removeSubscriptions],
              expectedCommands: [])
     }
+    
+    func testInitAccountDetails_shouldHaveCorrectDetails() {
+        let expectedAccountDetails = AccountDetailsEntity.random
+        let sut = AccountHallViewModel(accountHallUsecase: MockAccountHallUseCase(currentAccountDetails: expectedAccountDetails), purchaseUseCase: purchaseUseCase)
+    
+        XCTAssertEqual(sut.accountDetails, expectedAccountDetails)
+    }
 
     func testIsMasterBusinessAccount_shouldBeTrue() {
         let sut = AccountHallViewModel(accountHallUsecase: MockAccountHallUseCase(isMasterBusinessAccount: true),

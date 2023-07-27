@@ -47,7 +47,7 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
         _purchasePlanResultPublisher.eraseToAnyPublisher()
     }
     
-    public func purchasePlan(_ plan: MEGADomain.AccountPlanEntity) async {
+    public func purchasePlan(_ plan: AccountPlanEntity) async {
         purchasePlanCalled += 1
     }
     

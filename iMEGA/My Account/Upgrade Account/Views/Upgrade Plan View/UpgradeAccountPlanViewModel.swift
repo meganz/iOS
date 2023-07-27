@@ -6,6 +6,10 @@ import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
+enum UpgradeAccountPlanTarget {
+    case buyPlan, restorePlan, termsAndPolicies
+}
+
 final class UpgradeAccountPlanViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
@@ -23,13 +27,13 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var snackBarType: PlanSelectionSnackBarType = .none
     private var showSnackBarSubscription: AnyCancellable?
     
-    @Published var isRestoreAccountPlan = false
     @Published var isTermsAndPoliciesPresented = false
     @Published var isDismiss = false
+    @Published var isLoading = false
     @Published private(set) var currentPlan: AccountPlanEntity?
     private(set) var recommendedPlanType: AccountTypeEntity?
-    
     var isShowBuyButton = false
+    
     @Published var selectedTermTab: AccountPlanTermEntity = .yearly {
         didSet { checkSelectedPlanType() }
     }
@@ -39,8 +43,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     private(set) var registerDelegateTask: Task<Void, Never>?
     private(set) var setUpPlanTask: Task<Void, Never>?
+    private(set) var buyPlanTask: Task<Void, Never>?
+    private(set) var restorePlanTask: Task<Void, Never>?
     
-    init(accountDetails: AccountDetailsEntity, purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol) {
+    init(accountDetails: AccountDetailsEntity, purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol) {
         self.purchaseUseCase = purchaseUseCase
         self.accountDetails = accountDetails
         registerDelegates()
@@ -49,12 +55,17 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     deinit {
         deRegisterDelegates()
+        registerDelegateTask?.cancel()
+        setUpPlanTask?.cancel()
+        buyPlanTask?.cancel()
+        restorePlanTask?.cancel()
     }
     
     // MARK: - Setup
     private func registerDelegates() {
         registerDelegateTask = Task {
             await purchaseUseCase.registerRestoreDelegate()
+            await purchaseUseCase.registerPurchaseDelegate()
             setupSubscriptions()
         }
     }
@@ -62,17 +73,11 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private func deRegisterDelegates() {
         Task.detached { [weak self] in
             await self?.purchaseUseCase.deRegisterRestoreDelegate()
+            await self?.purchaseUseCase.deRegisterPurchaseDelegate()
         }
     }
     
     private func setupSubscriptions() {
-        $isRestoreAccountPlan
-            .dropFirst()
-            .sink { [weak self] isRestore in
-                guard let self, isRestore else { return }
-                restorePurchase()
-            }.store(in: &subscriptions)
-        
         purchaseUseCase.successfulRestorePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
@@ -94,6 +99,27 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             .sink { [weak self] _ in
                 guard let self else { return }
                 setAlertType(.restore(.failed))
+            }
+            .store(in: &subscriptions)
+        
+        purchaseUseCase.purchasePlanResultPublisher()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                isLoading = false
+                
+                switch result {
+                case .success:
+                    postRefreshAccountDetailsNotification()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                        guard let self else { return }
+                        isDismiss = true
+                    }
+                case .failure(let error):
+                    guard error.toPurchaseErrorStatus() != .paymentCancelled else { return }
+                    setAlertType(.purchase(.failed))
+                }
             }
             .store(in: &subscriptions)
     }
@@ -146,7 +172,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
             let term = cycle == .monthly ? AccountPlanTermEntity.monthly : AccountPlanTermEntity.yearly
             return plan.type == type && plan.term == term
         }
-        
     }
 
     // MARK: - Public
@@ -223,7 +248,22 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return viewModel
     }
     
+    func didTap(_ target: UpgradeAccountPlanTarget) {
+        switch target {
+        case .termsAndPolicies:
+            isTermsAndPoliciesPresented = true
+        case .restorePlan:
+            restorePurchase()
+        case .buyPlan:
+            buySelectedPlan()
+        }
+    }
+
     // MARK: - Private
+    private func postRefreshAccountDetailsNotification() {
+        NotificationCenter.default.post(name: .refreshAccountDetails, object: nil)
+    }
+    
     private func setRecommendedPlan() {
         switch accountDetails.proLevel {
         case .free, .lite:
@@ -272,8 +312,27 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     // MARK: Restore
     private func restorePurchase() {
-        Task {
+        restorePlanTask = Task { [weak self] in
+            guard let self else { return }
             await purchaseUseCase.restorePurchase()
+        }
+    }
+    
+    // MARK: Buy plan
+    var currentSelectedPlan: AccountPlanEntity? {
+        guard let selectedPlanType,
+              let selectedPlan = filteredPlanList.first(where: { $0.type == selectedPlanType }) else {
+            return nil
+        }
+        return selectedPlan
+    }
+    
+    private func buySelectedPlan() {
+        guard let currentSelectedPlan else { return }
+        isLoading = true
+        buyPlanTask = Task { [weak self] in
+            guard let self else { return }
+            await purchaseUseCase.purchasePlan(currentSelectedPlan)
         }
     }
 }

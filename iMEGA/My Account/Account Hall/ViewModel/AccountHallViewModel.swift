@@ -33,21 +33,25 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     private(set) var planList: [AccountPlanEntity] = []
     private(set) var accountDetails: AccountDetailsEntity?
     private var featureFlagProvider: any FeatureFlagProviderProtocol
-    @Published private(set) var currentPlanName: String = ""
     
     private let accountHallUsecase: any AccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     
     private var subscriptions = Set<AnyCancellable>()
     
+    // MARK: Account Plan view
+    @Published private(set) var currentPlanName: String = ""
+    @Published private(set) var isUpdatingAccountDetails: Bool = true
+    
     // MARK: - Init
     
-    init(accountHallUsecase: any AccountHallUseCaseProtocol,
-         purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol,
-         featureFlagProvider: any FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+    init(accountHallUsecase: some AccountHallUseCaseProtocol,
+         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.accountHallUsecase = accountHallUsecase
         self.purchaseUseCase = purchaseUseCase
         self.featureFlagProvider = featureFlagProvider
+        setAccountDetails(accountHallUsecase.currentAccountDetails)
     }
     
     // MARK: Feature flags
@@ -98,12 +102,18 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     // MARK: - Private
+    private func setAccountDetails(_ details: AccountDetailsEntity?) {
+        accountDetails = details
+        currentPlanName = details?.proLevel.toAccountTypeDisplayName() ?? ""
+    }
+    
     private func loadContent(_ target: AccountHallLoadTarget) {
         switch target {
         case .planList:
             fetchPlanList()
         case .accountDetails:
-            fetchAccountDetails()
+            let showActivityIndicator = accountDetails == nil
+            fetchAccountDetails(showActivityIndicator: showActivityIndicator)
         case .contentCounts:
             fetchCounts()
         }
@@ -116,13 +126,17 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         }
     }
     
-    private func fetchAccountDetails() {
-        Task {
+    private func fetchAccountDetails(showActivityIndicator: Bool) {
+        isUpdatingAccountDetails = showActivityIndicator
+        
+        Task { @MainActor in
             do {
-                accountDetails = try await accountHallUsecase.refreshCurrentAccountDetails()
-                await setCurrentPlanName(accountDetails?.proLevel)
-                await configPlanDisplay()
+                let accountDetails = try await accountHallUsecase.refreshCurrentAccountDetails()
+                setAccountDetails(accountDetails)
+                isUpdatingAccountDetails = false
+                configPlanDisplay()
             } catch {
+                isUpdatingAccountDetails = false
                 MEGALogError("[Account Hall] Error loading account details. Error: \(error)")
             }
         }
@@ -141,11 +155,6 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     @MainActor
     private func reloadNotificationCounts() {
         invokeCommand?(.reloadCounts)
-    }
-    
-    @MainActor
-    private func setCurrentPlanName(_ plan: AccountTypeEntity?) {
-        currentPlanName = plan?.toAccountTypeDisplayName() ?? ""
     }
     
     @MainActor
@@ -197,6 +206,15 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
                 guard let self else { return }
                 relevantUnseenUserAlertsCount = newCount
                 invokeCommand?(.reloadCounts)
+            }
+            .store(in: &subscriptions)
+        
+        NotificationCenter
+            .default
+            .publisher(for: .refreshAccountDetails)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                fetchAccountDetails(showActivityIndicator: true)
             }
             .store(in: &subscriptions)
     }

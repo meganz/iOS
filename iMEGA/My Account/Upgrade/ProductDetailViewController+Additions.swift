@@ -1,3 +1,4 @@
+import MEGADomain
 
 extension ProductDetailViewController {
     
@@ -6,5 +7,10 @@ extension ProductDetailViewController {
         
         tableView.sizeHeaderToFit()
         tableView.sizeFooterToFit()
+    }
+
+    @objc func isPurchaseCancelled(errorCode: Int) -> Bool {
+        let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: nil)
+        return error.toPurchaseErrorStatus() == .paymentCancelled
     }
 }
