@@ -1,6 +1,7 @@
 import MEGADomain
 
 public struct MockPublicAlbumUseCase: PublicAlbumUseCaseProtocol {
+
     private let publicAlbumResult: Result<SharedAlbumEntity, Error>
     private let nodes: [NodeEntity]
     
