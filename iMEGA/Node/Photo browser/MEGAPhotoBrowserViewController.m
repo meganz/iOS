@@ -621,8 +621,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-            MEGANode *mediaNode = self.dataProvider.currentPhoto;
-            if (mediaNode != nil && transfer.nodeHandle == mediaNode.handle) {
+            if (self.dataProvider.currentIndex == index) {
                 self.pieChartView.alpha = 0.0f;
                 [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             }
@@ -638,8 +637,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     };
     
     void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
-        MEGANode *mediaNode = self.dataProvider.currentPhoto;
-        if (mediaNode != nil && transfer.nodeHandle == mediaNode.handle) {
+        if (self.dataProvider.currentIndex == index) {
             self.transferProgress = transfer.transferredBytes.doubleValue / transfer.totalBytes.doubleValue;
             [self.pieChartView reloadData];
             [self hideSlideShowButtonWithBarButtonItem:[self slideshowButton]];

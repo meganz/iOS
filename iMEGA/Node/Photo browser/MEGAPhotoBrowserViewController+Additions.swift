@@ -224,9 +224,9 @@ extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
 }
 
 extension MEGAPhotoBrowserViewController {
+    
     @objc func loadNode(for index: Int) {
         Task {
-            
             guard let node = await dataProvider.photoNode(at: index) else {
                 return
             }
