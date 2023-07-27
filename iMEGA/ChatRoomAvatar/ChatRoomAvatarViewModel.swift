@@ -166,11 +166,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
     }
     
     private func createAvatar(usingName name: String, isRightToLeftLanguage: Bool, size: CGSize = CGSize(width: 100, height: 100)) -> UIImage? {
-        let initials = name
-            .components(separatedBy: " ")
-            .prefix(2)
-            .compactMap({ $0.count >= 1 ? String($0.prefix(1)).uppercased() : nil })
-            .joined(separator: "")
+        let initials = ChatRoomAvatarInitialsGenerator.generateInitials(from: name)
         
         return UIImage.drawImage(
             forInitials: initials,
