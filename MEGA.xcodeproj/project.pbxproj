@@ -1268,6 +1268,8 @@
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
 		990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */; };
 		991C87062A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */; };
+		9949C3622A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */; };
+		9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
 		99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */; };
@@ -3818,6 +3820,8 @@
 		990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModelTests.swift; sourceTree = "<group>"; };
 		990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomLinkViewModel+Additions.swift"; sourceTree = "<group>"; };
 		991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOnboardingRecord.swift; sourceTree = "<group>"; };
+		9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGenerator.swift; sourceTree = "<group>"; };
+		9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGeneratorTest.swift; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
 		99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingLinkActivityItemSource.swift; sourceTree = "<group>"; };
@@ -8095,6 +8099,7 @@
 		8336E3F72906B442000F1E9F /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				9949C3642A72424C000C299B /* ChatRoomAvatar */,
 				BFFB13312908A54500A6B2CA /* Mocks */,
 				BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */,
 				6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */,
@@ -8222,6 +8227,7 @@
 		834D867D29197E5800CECEC0 /* ChatRoomAvatar */ = {
 			isa = PBXGroup;
 			children = (
+				9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */,
 				834D867E29197E8800CECEC0 /* ChatRoomAvatarView.swift */,
 				834D868029197EEB00CECEC0 /* ChatRoomAvatarViewModel.swift */,
 				8313914A293519F900E20170 /* UserAvatarView.swift */,
@@ -9108,6 +9114,14 @@
 				9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */,
 			);
 			path = Permissions;
+			sourceTree = "<group>";
+		};
+		9949C3642A72424C000C299B /* ChatRoomAvatar */ = {
+			isa = PBXGroup;
+			children = (
+				9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */,
+			);
+			path = ChatRoomAvatar;
 			sourceTree = "<group>";
 		};
 		9961E7242A282FBA004FB05F /* Videos */ = {
@@ -13086,6 +13100,7 @@
 				BFD2142128F7A27D0057150E /* ChatRichPreviewEntity+Mapper.swift in Sources */,
 				2F2801D32447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift in Sources */,
 				8348A8DA2901909400B66463 /* ChatRoomActiveCallView.swift in Sources */,
+				9949C3622A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift in Sources */,
 				834D867F29197E8800CECEC0 /* ChatRoomAvatarView.swift in Sources */,
 				834D868129197EEB00CECEC0 /* ChatRoomAvatarViewModel.swift in Sources */,
 				419A02751DACE848000B9DC9 /* ChatRoomCell.m in Sources */,
@@ -14807,6 +14822,7 @@
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6FB5F8429A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift in Sources */,
 				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
+				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,
 				990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */,
 				990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */,
 				BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */,
