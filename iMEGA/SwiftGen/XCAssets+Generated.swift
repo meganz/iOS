@@ -111,14 +111,16 @@ internal enum Asset {
       internal static let viewPlaylist = ImageAsset(name: "viewPlaylist")
     }
     internal enum Backup {
+      internal static let backupFolder = ImageAsset(name: "backupFolder")
+      internal static let cameraUploadsFolder = ImageAsset(name: "cameraUploadsFolder")
       internal static let deviceCenter = ImageAsset(name: "device_center")
       internal static let drive = ImageAsset(name: "drive")
-      internal static let folderSync = ImageAsset(name: "folder_sync")
       internal static let iphone = ImageAsset(name: "iphone")
       internal static let linux = ImageAsset(name: "linux")
       internal static let mac = ImageAsset(name: "mac")
       internal static let mobile = ImageAsset(name: "mobile")
       internal static let pc = ImageAsset(name: "pc")
+      internal static let syncFolder = ImageAsset(name: "syncFolder")
       internal static let win = ImageAsset(name: "win")
     }
     internal enum BackupStatus {
