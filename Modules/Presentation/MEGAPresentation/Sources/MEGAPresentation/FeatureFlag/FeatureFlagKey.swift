@@ -7,4 +7,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case deviceCenter = "Device Center"
     case audioPlaybackContinuation = "Audio Playback Continuation"
     case contactVerification = "Contact verification UI/UX updates"
+    case waitingRoom = "Waiting Room"
 }
