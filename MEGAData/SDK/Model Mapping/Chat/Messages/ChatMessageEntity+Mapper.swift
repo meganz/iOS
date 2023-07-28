@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASDKRepo
 
 extension ChatMessageEntity.Peer {
     init(chatMessage: MEGAChatMessage, index: UInt) {

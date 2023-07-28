@@ -1364,7 +1364,6 @@
 		A8399F72296C54A30062B6BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FB8296DD5A70062B6BC /* SAMKeychain */; };
 		A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FBA296DD5F10062B6BC /* MEGADomain */; };
-		A83BB99E28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */; };
 		A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */; };
 		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */; };
@@ -3923,7 +3922,6 @@
 		A8399F5E296C43F90062B6BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		A8399F60296C43F90062B6BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8399F8A296C7A250062B6BC /* MEGAPickerFileProvider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAPickerFileProvider-Bridging-Header.h"; sourceTree = "<group>"; };
-		A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAHandleList+Mapper.swift"; sourceTree = "<group>"; };
 		A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDDLogFormatter.swift; sourceTree = "<group>"; };
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
 		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
@@ -9380,14 +9378,6 @@
 			path = Preference;
 			sourceTree = "<group>";
 		};
-		A859043429F2D17400632F0C /* Lists */ = {
-			isa = PBXGroup;
-			children = (
-				A83BB99D28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift */,
-			);
-			path = Lists;
-			sourceTree = "<group>";
-		};
 		A859043529F2D1A000632F0C /* Offline */ = {
 			isa = PBXGroup;
 			children = (
@@ -10186,7 +10176,6 @@
 			children = (
 				A83BB99328E5F181001A7C68 /* Chat */,
 				320262F7298CB0A20049688C /* Filter */,
-				A859043429F2D17400632F0C /* Lists */,
 				0D7E5ED926322BFB00C5CB2A /* NodeEntityMapping */,
 				A859043529F2D1A000632F0C /* Offline */,
 				A859043329F2D14300632F0C /* Preference */,
@@ -13647,7 +13636,6 @@
 				77485F84207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m in Sources */,
 				A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				A81C659C254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.swift in Sources */,
-				A83BB99E28E5F7CB001A7C68 /* MEGAHandleList+Mapper.swift in Sources */,
 				5B28D1371F0FB9590062998C /* MEGAImagePickerController.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */,
