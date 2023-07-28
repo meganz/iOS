@@ -8,7 +8,22 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         CMConfigEntity(menuType: .menu(type: .chat),
                        isDoNotDisturbEnabled: globalDNDNotificationControl?.isGlobalDNDEnabled ?? false,
                        timeRemainingToDeactiveDND: globalDNDNotificationControl?.timeRemainingToDeactiveDND ?? "",
-                       chatStatus: ChatStatus(rawValue: MEGASdkManager.sharedMEGAChatSdk().onlineStatus().rawValue)?.toChatStatusEntity() ?? .invalid)
+                       chatStatus: ChatStatus(rawValue: onlineStatus.rawValue)?.toChatStatusEntity() ?? .invalid)
+    }
+    
+    private var sdk: MEGAChatSdk {
+        MEGAChatSdk.shared
+    }
+    
+    @objc var onlineStatus: MEGAChatStatus {
+        get {
+            sdk.onlineStatus()
+        }
+        set {
+            if newValue != sdk.onlineStatus() {
+                sdk.setOnlineStatus(newValue)
+            }
+        }
     }
     
     @objc func setEmptyViewButtonWithMeetingsOptions(button: UIButton) {
@@ -36,12 +51,6 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         addBarButtonItem?.action = #selector(showStartConversation)
     }
     
-    private func changeTo(onlineStatus: MEGAChatStatus) {
-        if onlineStatus != MEGASdkManager.sharedMEGAChatSdk().onlineStatus() {
-            MEGASdkManager.sharedMEGAChatSdk().setOnlineStatus(onlineStatus)
-        }
-    }
-    
     @objc func changeDNDStatus(sender: Any) {
         guard let dndSwitch = sender as? UISwitch else { return }
         
@@ -57,12 +66,6 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     
     @objc func refreshContextMenuBarButton() {
         moreBarButtonItem?.menu = contextMenuManager?.contextMenu(with: contextMenuConfiguration())
-    }
-    
-    @objc func changeToOnlineStatus(_ status: MEGAChatStatus) {
-        if status != MEGASdkManager.sharedMEGAChatSdk().onlineStatus() {
-            MEGASdkManager.sharedMEGAChatSdk().setOnlineStatus(status)
-        }
     }
     
     @objc func configureNavigationBarButtons() {
@@ -83,17 +86,8 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     
     // MARK: - ChatMenuDelegate functions
     func chatStatusMenu(didSelect action: ChatStatusEntity) {
-        switch action {
-        case .online:
-            changeTo(onlineStatus: .online)
-        case .away:
-            changeTo(onlineStatus: .away)
-        case .busy:
-            changeTo(onlineStatus: .busy)
-        case .offline:
-            changeTo(onlineStatus: .offline)
-        default:
-            break
+        if let newStatus = action.toMEGAChatStatus {
+            onlineStatus = newStatus
         }
     }
     
@@ -141,8 +135,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         }
     }
     
-    @objc
-    func askNotificationPermissionsIfNeeded() {
+    @objc func askNotificationPermissionsIfNeeded() {
         let permissionHandler = DevicePermissionsHandler.makeHandler()
         permissionHandler.shouldAskForNotificationsPermissions { shouldAsk in
             guard shouldAsk else { return }
@@ -152,9 +145,64 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
         }
     }
     
-    @objc
-    var hasAuthorizedContacts: Bool {
+    @objc var hasAuthorizedContacts: Bool {
         DevicePermissionsHandler.makeHandler().hasContactsAuthorization
     }
+    
+    private func configureDefaultTitleWith(chatStatus: MEGAChatStatus) {
+        let onlineStatusString = NSString.chatStatusString(chatStatus)
+        let title = Strings.Localizable.Chat.title
+        
+        defer {
+            // set the proper menu item always
+            setMenuCapableBackButtonWith(menuTitle: title)
+        }
+        
+        guard let onlineStatusString else {
+            navigationItem.titleView = nil
+            navigationItem.title = title
+            return
+        }
+        
+        navigationItem.titleView = customTitleViewWith(title: title, subtitle: onlineStatusString)
+    }
+    
+    private func customTitleViewWith(title: String, subtitle: String) -> UIView {
+        let label = UILabel().customNavigationBarLabel(title: title, subtitle: subtitle)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.8
+        label.sizeToFit()
+        label.frame = CGRect(x: 0, y: 0, width: label.bounds.size.width, height: 44)
+        return label
+    }
+    
+    @objc func customNavigationBarLabel() {
+        customNavigationBarLabel(chatStatus: onlineStatus)
+    }
 
+    private func customNavigationBarLabel(chatStatus: MEGAChatStatus) {
+        switch chatRoomsType {
+        case .default:
+            configureDefaultTitleWith(chatStatus: chatStatus)
+        case .archived:
+            let title = Strings.Localizable.archivedChats
+            navigationItem.title = title
+            setMenuCapableBackButtonWith(menuTitle: title)
+        @unknown default:
+            configureDefaultTitleWith(chatStatus: chatStatus)
+        }
+    }
+}
+
+fileprivate extension ChatStatusEntity {
+    // this mapping is for this VC particular use case and is not handling all possible cases
+    var toMEGAChatStatus: MEGAChatStatus? {
+        switch self {
+        case .online:   return .online
+        case .away:     return .away
+        case .busy:     return .busy
+        case .offline:  return .offline
+        default:        return nil
+        }
+    }
 }

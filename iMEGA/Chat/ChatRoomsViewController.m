@@ -562,30 +562,6 @@
     }
 }
 
-- (void)customNavigationBarLabel {
-    switch (self.chatRoomsType) {
-        case ChatRoomsTypeDefault: {
-            NSString *onlineStatusString = [NSString chatStatusString:[[MEGASdkManager sharedMEGAChatSdk] onlineStatus]];
-            
-            if (onlineStatusString) {
-                UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:NSLocalizedString(@"chat.title", @"Title for chats section") subtitle:onlineStatusString color:UIColor.mnz_label];
-                label.adjustsFontSizeToFitWidth = YES;
-                label.minimumScaleFactor = 0.8f;
-                label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-                [self.navigationItem setTitleView:label];
-            } else {
-                self.navigationItem.titleView = nil;
-                self.navigationItem.title = NSLocalizedString(@"chat.title", @"Title for chats section");
-            }
-        }
-            break;
-            
-        case ChatRoomsTypeArchived:
-            self.navigationItem.title = NSLocalizedString(@"archivedChats", @"Title of archived chats button");
-            break;
-    }
-}
-
 - (void)presentGroupOrContactDetailsForChatListItem:(MEGAChatListItem *)chatListItem {
     if (chatListItem.isGroup) {
         if ([MEGALinkManager.joiningOrLeavingChatBase64Handles containsObject:[MEGASdk base64HandleForUserHandle:chatListItem.chatId]]) {
