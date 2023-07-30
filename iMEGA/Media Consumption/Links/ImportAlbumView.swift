@@ -146,9 +146,8 @@ struct ImportAlbumView: View {
     
     private var bottomToolbar: some View {
         HStack(alignment: .top) {
-            toolbarImageButton(image: Asset.Images.InfoActions.import.image) {
-                viewModel.showImportAlbumLocation.toggle()
-            }
+            toolbarImageButton(image: Asset.Images.InfoActions.import.image,
+                               action: viewModel.importAlbum)
             Spacer()
             toolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image) {
                 

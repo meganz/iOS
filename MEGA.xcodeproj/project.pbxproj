@@ -20,6 +20,7 @@
 		0D7E5FA62634E1E800C5CB2A /* DownloadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */; };
 		0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */; };
 		0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */; };
+		0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */; };
 		0E2A4EE829D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2A4EE729D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift */; };
 		0E2FD9DD2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */; };
 		0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */; };
@@ -43,6 +44,7 @@
 		0E75681C2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */; };
 		0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */; };
 		0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */; };
+		0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */; };
 		0E9561602A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E95615F2A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
 		0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF73242A6786D9008F939D /* BrowserView.swift */; };
@@ -2494,6 +2496,7 @@
 		0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFileRepository.swift; sourceTree = "<group>"; };
 		0D8C01DD268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridViewBaseDataSource.swift; sourceTree = "<group>"; };
 		0DA5BCB725BA403800530F70 /* DefaultTabTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTabTableViewController.swift; sourceTree = "<group>"; };
+		0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E2A4EE729D4FDFE00EB6ECE /* PhotoLibraryPublisherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPublisherTests.swift; sourceTree = "<group>"; };
 		0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinkViewModelTests.swift; sourceTree = "<group>"; };
 		0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepositoryTests.swift; sourceTree = "<group>"; };
@@ -2517,6 +2520,7 @@
 		0E75681B2A37E7B9006A92B8 /* FolderLinkViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+Additions.swift"; sourceTree = "<group>"; };
 		0E81A9A629B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumToolbarConfiguratorTests.swift; sourceTree = "<group>"; };
 		0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALinkManager+AdditionsTests.swift"; sourceTree = "<group>"; };
+		0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+Additions.swift"; sourceTree = "<group>"; };
 		0E95615F2A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentViewModelTests.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
 		0EAF73242A6786D9008F939D /* BrowserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
@@ -5835,6 +5839,7 @@
 		328984882A288FCC0049CD40 /* DomainExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				0E10BD5F2A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift */,
 				328984892A288FF20049CD40 /* UserAttributeUseCase+AdditionsTests.swift */,
 			);
 			path = DomainExtensions;
@@ -10348,6 +10353,7 @@
 		B68ED09127D05F8700713850 /* DomainExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */,
 				94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */,
 				B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */,
 				B6A0CF1928A08D1B00D7F52E /* PreferenceUseCase+Additions.swift */,
@@ -12903,6 +12909,7 @@
 				12397E212820C4A600A30CCC /* AlbumListView.swift in Sources */,
 				12397E232820C4BC00A30CCC /* AlbumListViewModel.swift in Sources */,
 				127053A42822216800D64C21 /* AlbumListViewRouter.swift in Sources */,
+				0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */,
 				3282016829AEDEE100C0E841 /* AlbumNameValidator.swift in Sources */,
 				328C153D2A399579002499CE /* AlbumPublicLinkStatus.swift in Sources */,
 				BFAB114D23CEA5C300BCE72D /* Albums.swift in Sources */,
@@ -14798,6 +14805,7 @@
 				32EC282129BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift in Sources */,
 				32EC280129B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
+				0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */,
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,

@@ -12,7 +12,7 @@ final class PublicAlbumUseCaseTests: XCTestCase {
         let sharedAlbumEntity = SharedAlbumEntity(set: SetEntity(handle: 5),
                                                   setElements: setElements)
         let shareAlbumRepository = MockShareAlbumRepository(publicAlbumContentsResult: .success(sharedAlbumEntity))
-        let sut = PublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
         
         let publicAlbum = try await sut.publicAlbum(forLink: "public_album_link")
         
@@ -22,7 +22,7 @@ final class PublicAlbumUseCaseTests: XCTestCase {
     func testPublicAlbumContents_albumLoadFailed_shouldThrowError() async {
         let expectedError = SharedAlbumErrorEntity.couldNotBeReadOrDecrypted
         let shareAlbumRepository = MockShareAlbumRepository(publicAlbumContentsResult: .failure(expectedError))
-        let sut = PublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
         
         do {
             _ = try await sut.publicAlbum(forLink: "public_album_link")
@@ -44,10 +44,17 @@ final class PublicAlbumUseCaseTests: XCTestCase {
         let photoElements = [SetElementEntity(handle: photoOneId),
                              SetElementEntity(handle: photoTwoId)]
         let shareAlbumRepository = MockShareAlbumRepository(publicPhotoResults: photoResults)
-        let sut = PublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
         
         let photos = await sut.publicPhotos(photoElements)
         
         XCTAssertEqual(photos, [photoNode])
+    }
+    
+    // MARK: - Helpers
+    
+    private func makePublicAlbumUseCase(shareAlbumRepository: some ShareAlbumRepositoryProtocol = MockShareAlbumRepository()
+    ) -> some PublicAlbumUseCaseProtocol {
+        PublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
     }
 }
