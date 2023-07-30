@@ -11,7 +11,7 @@ public struct PublicAlbumUseCase<S: ShareAlbumRepositoryProtocol>: PublicAlbumUs
     public init(shareAlbumRepository: S) {
         self.shareAlbumRepository = shareAlbumRepository
     }
-        
+    
     public func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity {
         try await shareAlbumRepository.publicAlbumContents(forLink: link)
     }

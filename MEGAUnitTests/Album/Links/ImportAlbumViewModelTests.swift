@@ -201,14 +201,65 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectButtonOpacity, 1.0, accuracy: 0.1)
     }
     
+    func testImportAlbum_onAlbumNameNotInConflict_shouldShowImportLocation() throws {
+        let album = SetEntity(handle: 3, name: "valid album name")
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase)
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.loadPublicAlbum()
+        }
+        
+        let exp = expectation(description: "should show import album location")
+        sut.$showImportAlbumLocation
+            .dropFirst()
+            .sink {
+                XCTAssertTrue($0)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.importAlbum()
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    func testImportAlbum_onAlbumNameInConflict_shouldShowRenameAlbumAlert() throws {
+        let album = SetEntity(handle: 3,
+                              name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase)
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.loadPublicAlbum()
+        }
+        
+        let exp = expectation(description: "should show rename album alert")
+        sut.$showRenameAlbumAlert
+            .dropFirst()
+            .sink {
+                XCTAssertTrue($0)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.importAlbum()
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: - Private
     
     private func makeImportAlbumViewModel(publicLink: URL,
-                                          publicAlbumUseCase: some PublicAlbumUseCaseProtocol = MockPublicAlbumUseCase()
+                                          publicAlbumUseCase: some PublicAlbumUseCaseProtocol = MockPublicAlbumUseCase(),
+                                          albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase()
     ) -> ImportAlbumViewModel {
         ImportAlbumViewModel(
             publicLink: publicLink,
-            publicAlbumUseCase: publicAlbumUseCase)
+            publicAlbumUseCase: publicAlbumUseCase,
+            albumNameUseCase: albumNameUseCase)
     }
     
     private func makeSharedAlbumEntity(set: SetEntity = SetEntity(handle: 1),

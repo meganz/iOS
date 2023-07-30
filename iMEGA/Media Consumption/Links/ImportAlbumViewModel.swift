@@ -8,6 +8,7 @@ final class ImportAlbumViewModel: ObservableObject {
         static let disabledOpacity = 0.3
     }
     private let publicAlbumUseCase: any PublicAlbumUseCaseProtocol
+    private let albumNameUseCase: any AlbumNameUseCaseProtocol
     private var publicLinkWithDecryptionKey: URL?
     
     let publicLink: URL
@@ -25,6 +26,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showCannotAccessAlbumAlert = false
     @Published var showImportAlbumLocation = false
     @Published var importFolderLocation: NodeEntity?
+    @Published var showRenameAlbumAlert = false
     @Published private(set) var isSelectionEnabled = false
     @Published private(set) var selectButtonOpacity = 0.0
     @Published private(set) var albumName: String?
@@ -40,9 +42,11 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     init(publicLink: URL,
-         publicAlbumUseCase: some PublicAlbumUseCaseProtocol) {
+         publicAlbumUseCase: some PublicAlbumUseCaseProtocol,
+         albumNameUseCase: some AlbumNameUseCaseProtocol) {
         self.publicLink = publicLink
         self.publicAlbumUseCase = publicAlbumUseCase
+        self.albumNameUseCase = albumNameUseCase
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
@@ -78,6 +82,22 @@ final class ImportAlbumViewModel: ObservableObject {
     
     func selectAllPhotos() {
         photoLibraryContentViewModel.toggleSelectAllPhotos()
+    }
+    
+    func importAlbum() {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            guard let albumName,
+                  await !isAlbumNameInConflict(albumName) else {
+                showRenameAlbumAlert.toggle()
+                return
+            }
+            showImportAlbumLocation.toggle()
+        }
+    }
+    
+    private func isAlbumNameInConflict(_ name: String) async -> Bool {
+        await albumNameUseCase.reservedAlbumNames().contains(name)
     }
     
     private func loadPublicAlbumContents() {
