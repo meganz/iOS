@@ -15,6 +15,7 @@
 
 require 'json'
 import("Fastfile_download_libraries")
+import("Fastfile_parse_warnings_and_errors")
 
 # Directories
 BUILD_DIR       = File.expand_path('build')
@@ -301,6 +302,7 @@ platform :ios do
       output_directory: ".",
       derived_data_path: "derivedData",
       code_coverage: true,
+      xcpretty_formatter: "xcpretty-json-formatter",
       xcargs: '-skipPackagePluginValidation'
     )
   end
