@@ -2,6 +2,8 @@ import MEGADomain
 import MEGAPermissions
 import MEGASDKRepo
 import UIKit
+import MEGASwiftUI
+import SwiftUI
 
 extension MEGAPhotoBrowserViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
@@ -279,13 +281,13 @@ extension MEGAPhotoBrowserViewController {
             return
         }
         
-        let subtitle: String
+        let subtitle: String?
         switch displayMode {
         case .fileLink:
             subtitle = Strings.Localizable.fileLink
         case .chatAttachment where node.creationTime != nil:
             guard let creationTime = node.creationTime else {
-                subtitle = ""
+                subtitle = nil
                 break
             }
             subtitle = self.subtitle(fromDate: creationTime)
@@ -296,13 +298,24 @@ extension MEGAPhotoBrowserViewController {
                 with: String(format: "%lu", dataProvider.currentIndex + 1))
         }
         
-        let titleLabel = UILabel().customNavigationBarLabel(
-            title: node.name ?? "",
-            subtitle: subtitle,
-            color: .mnz_label())
-        titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.minimumScaleFactor = 0.8
-        navigationItem.titleView = titleLabel
+        let rootView: NavigationTitleView?
+        if let name = node.name {
+            rootView = .init(title: name, subtitle: subtitle)
+        } else if let subtitle {
+            rootView = .init(title: subtitle)
+        } else {
+            rootView = nil
+        }
+             
+        guard let rootView else {
+            navigationItem.titleView = nil
+            return
+        }
+        
+        let hostController = UIHostingController(rootView: rootView)
+        let titleView = hostController.view
+        titleView?.backgroundColor = .clear
+        navigationItem.titleView = titleView
         navigationItem.titleView?.sizeToFit()
     }
 }

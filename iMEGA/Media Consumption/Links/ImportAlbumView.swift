@@ -84,36 +84,15 @@ struct ImportAlbumView: View {
     
     @ViewBuilder
     private var navigationTitle: some View {
-        Group {
-            if viewModel.isSelectionEnabled {
-                Text(viewModel.selectionNavigationTitle)
-                    .font(.headline)
-                    .bold()
-            } else {
-                albumLinkNavigationTitle
-            }
-        }
-        .foregroundColor(colorScheme == .dark ? .white : .black)
-    }
-    
-    @ViewBuilder
-    private var albumLinkNavigationTitle: some View {
-        if let albumName = viewModel.albumName {
-            VStack {
-                Text(albumName)
-                    .font(.subheadline)
-                    .bold()
-                    .lineLimit(1)
-                Text(Strings.Localizable.albumLink)
-                    .font(.caption)
-            }
+        if viewModel.isSelectionEnabled {
+            NavigationTitleView(title: viewModel.selectionNavigationTitle)
+        } else if let albumName = viewModel.albumName {
+            NavigationTitleView(title: albumName, subtitle: Strings.Localizable.albumLink)
         } else {
-            Text(Strings.Localizable.albumLink)
-                .font(.headline)
-                .bold()
+            NavigationTitleView(title: Strings.Localizable.albumLink)
         }
     }
-    
+
     @ViewBuilder
     private var rightNavigationBarButton: some View {
         if viewModel.isSelectionEnabled {
