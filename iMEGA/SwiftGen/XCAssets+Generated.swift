@@ -719,6 +719,12 @@ internal enum Asset {
       internal static let verifyPendingOutshareEmail = ImageAsset(name: "verifyPendingOutshareEmail")
       internal static let warningPermission = ImageAsset(name: "warningPermission")
     }
+    internal enum ShortcutsWidget {
+      internal static let addContactWidgetXL = ImageAsset(name: "addContactWidgetXL")
+      internal static let scanDocumentWidgetXL = ImageAsset(name: "scanDocumentWidgetXL")
+      internal static let startConversationWidgetXL = ImageAsset(name: "startConversationWidgetXL")
+      internal static let uploadFileWidgetXL = ImageAsset(name: "uploadFileWidgetXL")
+    }
     internal enum TabBarIcons {
       internal static let cameraUploadsIcon = ImageAsset(name: "cameraUploadsIcon")
       internal static let chatIcon = ImageAsset(name: "chatIcon")
