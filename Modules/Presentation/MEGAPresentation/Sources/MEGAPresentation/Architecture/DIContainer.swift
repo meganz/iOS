@@ -24,12 +24,7 @@ public enum DIContainer {
 
 public extension DIContainer {
     static var playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol {
-        PlaybackContinuationUseCaseFeatureFlagProxy(
-            useCase: PlaybackContinuationUseCase.shared,
-            isFeatureFlagEnabled: {
-                featureFlagProvider.isFeatureFlagEnabled(for: .audioPlaybackContinuation)
-            }
-        )
+        PlaybackContinuationUseCase.shared
     }
 }
 
