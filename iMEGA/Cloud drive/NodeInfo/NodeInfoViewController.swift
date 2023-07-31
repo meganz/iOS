@@ -1,8 +1,9 @@
 
 import MEGADomain
 import UIKit
+import MEGASDKRepo
 
-enum NodeInfoTableViewSection: Int {
+enum NodeInfoTableViewSection {
     case info
     case details
     case link
@@ -12,12 +13,12 @@ enum NodeInfoTableViewSection: Int {
     case removeSharing
 }
 
-enum InfoSectionRow: Int {
+enum InfoSectionRow {
     case preview
     case owner
 }
 
-enum DetailsSectionRow: Int {
+enum DetailsSectionRow {
     case location
     case fileSize
     case currentFileVersionSize
@@ -44,7 +45,13 @@ class NodeInfoViewController: UIViewController {
     private var folderInfo: MEGAFolderInfo?
     private var delegate: (any NodeInfoViewControllerDelegate)?
     private var nodeVersions: [MEGANode] = []
+    
     private var viewModel: NodeInfoViewModel?
+    private var cachedSections: [NodeInfoTableViewSection] = []
+    private var cachedPendingShares: [MEGAShare] = []
+    private var cachedActiveShares: [MEGAShare] = []
+    private var cachedDetailRows: [DetailsSectionRow] = []
+    private var cachedInfoRows: [InfoSectionRow] = []
     
     // MARK: - Lifecycle
 
@@ -74,7 +81,7 @@ class NodeInfoViewController: UIViewController {
         title = Strings.Localizable.info
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .plain, target: self, action: #selector(closeButtonTapped))
         
-        MEGASdkManager.sharedMEGASdk().add(self)
+        sdk.add(self)
         
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
@@ -94,10 +101,13 @@ class NodeInfoViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
-            tableView.reloadData()
+            reloadData()
         }
     }
     
+    private func reloadData() {
+        tableView.reloadData()
+    }
     // MARK: - Private methods
 
     private func updateAppearance() {
@@ -105,22 +115,29 @@ class NodeInfoViewController: UIViewController {
         tableView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
     
+    private var sdk: MEGASdk {
+        MEGASdk.shared
+    }
+    
     private func fetchFolderInfo() {
-        MEGASdkManager.sharedMEGASdk().getFolderInfo(for: node, delegate: MEGAGetFolderInfoRequestDelegate.init(completion: { [weak self] (request) in
-            guard let folderInfo = request?.megaFolderInfo else {
+        sdk.getFolderInfo(
+                for: node,
+                delegate: RequestDelegate { [weak self] result in
+            guard
+                let self,
+                case .success(let request) = result,
+                let folderInfo = request.megaFolderInfo
+            else {
                 fatalError("Could not fetch MEGAFolderInfo")
             }
-            self?.folderInfo = folderInfo
-            
-            guard let infoSectionIndex = self?.sections().firstIndex(of: .info), let detailsSectionIndex = self?.sections().firstIndex(of: .details) else {
-                fatalError("Could not get Node Info sections to reload")
-            }
-            self?.tableView.reloadSections([infoSectionIndex, detailsSectionIndex], with: .automatic)
-        }))
+            self.folderInfo = folderInfo
+            cacheNodePropertiesSoThatTableViewChangesAreAtomic()
+            reloadData()
+        })
     }
     
     private func reloadOrShowWarningAfterActionOnNode() {
-        guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: node.handle) else {
+        guard let nodeUpdated = sdk.node(forHandle: node.handle) else {
             let alertTitle = node.isFolder() ? Strings.Localizable.youNoLongerHaveAccessToThisFolderAlertTitle : Strings.Localizable.youNoLongerHaveAccessToThisFileAlertTitle
             
             let warningAlertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
@@ -132,7 +149,7 @@ class NodeInfoViewController: UIViewController {
         }
         
         node = nodeUpdated
-        tableView.reloadData()
+        reloadData()
     }
     
     private func showNodeVersions() {
@@ -144,8 +161,8 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func showParentNode() {
-        if let parentNode = MEGASdkManager.sharedMEGASdk().parentNode(for: node) {
-            MEGASdkManager.sharedMEGASdk().remove(self)
+        if let parentNode = sdk.parentNode(for: node) {
+            sdk.remove(self)
             dismiss(animated: true) {
                 self.delegate?.nodeInfoViewController(self, presentParentNode: parentNode)
             }
@@ -163,7 +180,7 @@ class NodeInfoViewController: UIViewController {
     }
     
     @objc private func closeButtonTapped() {
-        MEGASdkManager.sharedMEGASdk().remove(self)
+        sdk.remove(self)
         dismiss(animated: true, completion: nil)
     }
     
@@ -173,22 +190,16 @@ class NodeInfoViewController: UIViewController {
         }
         node = firstVersion
         nodeVersions = node.mnz_versions()
-        tableView.reloadData()
+        reloadData()
     }
     
     private func nodeVersionRemoved() {
         nodeVersions = node.mnz_versions()
-        
-        if node.mnz_numberOfVersions() == 0 {
-            tableView.reloadData()
-        } else {
-            guard let versionsSectionIndex = sections().firstIndex(of: .versions) else { return }
-            tableView.reloadSections([versionsSectionIndex], with: .automatic)
-        }
+        reloadData()
     }
     
     private func showAlertForRemovingPendingShare(forIndexPat indexPath: IndexPath) {
-        guard let email = pendingOutShares()[indexPath.row].user else {
+        guard let email = cachedPendingShares[indexPath.row].user else {
             MEGALogError("Could not fetch pending share email")
             return
         }
@@ -196,15 +207,19 @@ class NodeInfoViewController: UIViewController {
         let removePendingShareAlertController = UIAlertController(title: Strings.Localizable.removeUserTitle, message: email, preferredStyle: .alert)
         
         removePendingShareAlertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
-        removePendingShareAlertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
-            MEGASdkManager.sharedMEGASdk().share(self.node, withEmail: email, level: MEGAShareType.accessUnknown.rawValue, delegate: MEGAShareRequestDelegate.init(toChangePermissionsWithNumberOfRequests: 1, completion: {
+        removePendingShareAlertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { [weak self] _ in
+            guard let self else { return }
+            sdk.share(node, withEmail: email, level: MEGAShareType.accessUnknown.rawValue, delegate: MEGAShareRequestDelegate(toChangePermissionsWithNumberOfRequests: 1, completion: { [weak self] in
                 
-                guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: self.node.handle) else {
+                guard
+                    let self,
+                    let nodeUpdated = sdk.node(forHandle: node.handle)
+                else {
                     MEGALogError("Could not fetch updated Node")
                     return
                 }
-                self.node = nodeUpdated
-                self.tableView.reloadData()
+                node = nodeUpdated
+                reloadData()
             }))
         }))
         
@@ -212,13 +227,13 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func prepareShareFolderPermissionsAlertController(fromIndexPat indexPath: IndexPath) {
-        let activeShare = activeOutShares()[indexPath.row - 1].access
+        let activeShare = cachedActiveShares[indexPath.row - 1].access
         let checkmarkImageView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
 
         guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else {
             return
         }
-        guard let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: activeOutShares()[indexPath.row - 1].user) else {
+        guard let user = sdk.contact(forEmail: cachedActiveShares[indexPath.row - 1].user) else {
             return
         }
         
@@ -249,7 +264,7 @@ class NodeInfoViewController: UIViewController {
     private func shareNode(withLevel level: MEGAShareType, forUser user: MEGAUser, atIndexPath indexPath: IndexPath) {
         SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk().share(node, with: user, level: level.rawValue, delegate:
+        sdk.share(node, with: user, level: level.rawValue, delegate:
             MEGAShareRequestDelegate.init(toChangePermissionsWithNumberOfRequests: 1, completion: { [weak self] in
                 if level != .accessUnknown {
                     self?.tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -271,6 +286,16 @@ class NodeInfoViewController: UIViewController {
         return outShares.filter({ !$0.isPending })
     }
     
+    // we are caching all the properties that are needed to render table view so that
+    // there's always correct backing for the table view to access the data
+    private func cacheNodePropertiesSoThatTableViewChangesAreAtomic() {
+        cachedPendingShares = pendingOutShares()
+        cachedActiveShares = activeOutShares()
+        cachedSections = sections()
+        cachedDetailRows = detailRows()
+        cachedInfoRows = infoRows()
+    }
+    
     // MARK: - TableView Data Source
 
     private func sections() -> [NodeInfoTableViewSection] {
@@ -278,11 +303,11 @@ class NodeInfoViewController: UIViewController {
         sections.append(.info)
         sections.append(.details)
 
-        if !self.node.mnz_isInRubbishBin() {
-            if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner && !node.isTakenDown() {
+        if !node.mnz_isInRubbishBin() {
+            if sdk.accessLevel(for: node) == .accessOwner && !node.isTakenDown() {
                 sections.append(.link)
             }
-            if node.isFolder() && MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
+            if node.isFolder() && sdk.accessLevel(for: node) == .accessOwner {
                 sections.append(.sharing)
                 if pendingOutShares().isNotEmpty {
                     sections.append(.pendingSharing)
@@ -292,7 +317,6 @@ class NodeInfoViewController: UIViewController {
                 }
             }
         }
-        
         return sections
     }
     
@@ -307,7 +331,7 @@ class NodeInfoViewController: UIViewController {
     
     private func detailRows() -> [DetailsSectionRow] {
         var detailRows = [DetailsSectionRow]()
-        if MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner {
+        if sdk.accessLevel(for: node) == .accessOwner {
             detailRows.append(.location)
         }
         
@@ -354,7 +378,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        if let user = MEGASdkManager.sharedMEGASdk().userFrom(inShare: node) {
+        if let user = sdk.userFrom(inShare: node) {
             cell.configure(user: user)
         }
         
@@ -366,7 +390,7 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get NodeInfoDetailTableViewCell")
         }
         
-        cell.configure(forNode: node, rowType: detailRows()[indexPath.row], folderInfo: folderInfo)
+        cell.configure(forNode: node, rowType: cachedDetailRows[indexPath.row], folderInfo: folderInfo)
         
         return cell
     }
@@ -410,13 +434,13 @@ class NodeInfoViewController: UIViewController {
             fatalError("Could not get ContactTableViewCell")
         }
         
-        guard let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: activeOutShares()[indexPath.row - 1].user) else {
+        guard let user = sdk.contact(forEmail: cachedActiveShares[indexPath.row - 1].user) else {
             fatalError("Could not get MEGAUser for ContactTableViewCell")
         }
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.avatarImageView.mnz_setImage(forUserHandle: user.handle, name: user.mnz_displayName)
-        cell.verifiedImageView.isHidden = !MEGASdkManager.sharedMEGASdk().areCredentialsVerified(of: user)
+        cell.verifiedImageView.isHidden = !sdk.areCredentialsVerified(of: user)
         if user.mnz_displayName != "" {
             cell.nameLabel.text = user.mnz_displayName
             cell.shareLabel.text = user.email
@@ -426,7 +450,7 @@ class NodeInfoViewController: UIViewController {
         }
         
         cell.permissionsImageView.isHidden = false
-        cell.permissionsImageView.image = UIImage.mnz_permissionsButtonImage(for: activeOutShares()[indexPath.row - 1].access)
+        cell.permissionsImageView.image = UIImage.mnz_permissionsButtonImage(for: cachedActiveShares[indexPath.row - 1].access)
 
         return cell
     }
@@ -437,8 +461,8 @@ class NodeInfoViewController: UIViewController {
         }
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        cell.avatarImageView.mnz_setImage(forUserHandle: MEGAInvalidHandle, name: pendingOutShares()[indexPath.row].user)
-        cell.nameLabel.text = pendingOutShares()[indexPath.row].user
+        cell.avatarImageView.mnz_setImage(forUserHandle: MEGAInvalidHandle, name: cachedPendingShares[indexPath.row].user)
+        cell.nameLabel.text = cachedPendingShares[indexPath.row].user
         cell.shareLabel.isHidden = true
         cell.permissionsImageView.isHidden = false
         cell.permissionsImageView.image = Asset.Images.NodeActions.delete.image
@@ -464,28 +488,30 @@ class NodeInfoViewController: UIViewController {
 
 extension NodeInfoViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections().count
+        let sectionCount = cachedSections.count
+        return sectionCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch sections()[section] {
+        switch cachedSections[section] {
         case .info:
-            return infoRows().count
+            return cachedInfoRows.count
         case .details:
-            return detailRows().count
+            return cachedDetailRows.count
         case .sharing:
-            return activeOutShares().count + 1
+            return cachedActiveShares.count + 1
         case .pendingSharing:
-            return pendingOutShares().count
+            return cachedPendingShares.count
         case .link, .versions, .removeSharing:
             return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch sections()[indexPath.section] {
+        
+        switch cachedSections[indexPath.section] {
         case .info:
-            switch infoRows()[indexPath.row] {
+            switch cachedInfoRows[indexPath.row] {
             case .preview:
                 return previewCell(forIndexPath: indexPath)
             case .owner:
@@ -522,7 +548,7 @@ extension NodeInfoViewController: UITableViewDelegate {
         
         header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
-        switch sections()[section] {
+        switch cachedSections[section] {
         case .details:
             header.configure(title: Strings.Localizable.details, topDistance: 30.0, isTopSeparatorVisible: false, isBottomSeparatorVisible: true)
         case .link:
@@ -553,9 +579,9 @@ extension NodeInfoViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch sections()[indexPath.section] {
+        switch cachedSections[indexPath.section] {
         case .details:
-            switch detailRows()[indexPath.row] {
+            switch cachedDetailRows[indexPath.row] {
             case .location:
                 showParentNode()
             default:
@@ -588,23 +614,10 @@ extension NodeInfoViewController: UITableViewDelegate {
 extension NodeInfoViewController: MEGAGlobalDelegate {
     func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         guard let nodeList else { return }
-        
+            
         for nodeIndex in 0..<nodeList.size.intValue {
             guard let nodeUpdated = nodeList.node(at: nodeIndex) else {
                 continue
-            }
-            
-            if nodeUpdated.hasChangedType(.outShare) && nodeUpdated.handle == node.handle {
-                guard let sharingSection = sections().firstIndex(of: .sharing),
-                      nodeUpdated.outShares().count < tableView.numberOfRows(inSection: sharingSection) - 1 else {
-                    return
-                }
-                
-                if nodeUpdated.outShares().count == 0 {
-                    tableView.reloadData()
-                } else {
-                    tableView.reloadSections([sharingSection], with: .automatic)
-                }
             }
             
             if nodeUpdated.hasChangedType(.removed) {
@@ -617,21 +630,23 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
             }
             
             if nodeUpdated.hasChangedType(.parent) && nodeUpdated.handle == node.handle {
-                guard let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.parentHandle) else { return }
+                guard let parentNode = sdk.node(forHandle: nodeUpdated.parentHandle) else { return }
                 if parentNode.isFolder() { // Node moved
-                    guard let newNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.handle) else { return }
+                    guard let newNode = sdk.node(forHandle: nodeUpdated.handle) else { return }
                     node = newNode
                 } else { // Node versioned
-                    guard let newNode = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeUpdated.parentHandle) else { return }
+                    guard let newNode = sdk.node(forHandle: nodeUpdated.parentHandle) else { return }
                     node = newNode
                 }
-                tableView.reloadData()
             }
             
-            if nodeUpdated.handle == self.node.handle {
-                self.reloadOrShowWarningAfterActionOnNode()
+            if nodeUpdated.handle == node.handle {
+                reloadOrShowWarningAfterActionOnNode()
                 break
             }
         }
+        
+        cacheNodePropertiesSoThatTableViewChangesAreAtomic()
+        reloadData()
     }
 }
