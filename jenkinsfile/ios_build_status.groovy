@@ -67,6 +67,18 @@ pipeline {
 
             updateGitlabCommitStatus name: 'Jenkins', state: 'success'
         }
+        always {
+            script {
+                withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                    injectEnvironments({
+                        if (env.BRANCH_NAME.startsWith('MR-')) {
+                            def mr_number = env.BRANCH_NAME.replace('MR-', '')
+                            sh 'bundle exec fastlane parse_and_upload_build_warnings_and_errors mr:' + mr_number + ' token:' + TOKEN
+                        }
+                    })
+                }
+            }
+        }
         cleanup {
             cleanWs()
         }

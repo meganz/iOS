@@ -21,6 +21,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### parse_and_upload_build_warnings_and_errors
+
+```sh
+[bundle exec] fastlane parse_and_upload_build_warnings_and_errors
+```
+
+
+
 ----
 
 
