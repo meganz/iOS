@@ -1243,4 +1243,13 @@ class NodeActionBuilderTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .saveToPhotos, .move, .copy]))
     }
+    
+    func testAlbumLink() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.albumLink)
+            .setAccessLevel(.accessRead)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.saveToPhotos]))
+    }
 }
