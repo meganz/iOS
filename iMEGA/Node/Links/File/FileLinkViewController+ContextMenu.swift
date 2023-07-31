@@ -3,6 +3,8 @@ import MEGASDKRepo
 
 extension FileLinkViewController: FileLinkContextMenuDelegate {
     private func contextMenuConfiguration() -> CMConfigEntity? {
+        guard let node else { return nil }
+
         let isBackupNode = BackupsUseCase(
             backupsRepository: BackupsRepository.newRepo,
             nodeRepository: NodeRepository.newRepo
@@ -27,7 +29,7 @@ extension FileLinkViewController: FileLinkContextMenuDelegate {
 
     private func setMoreButton() {
         guard let config = contextMenuConfiguration() else { return }
-        moreBarButtonItem.menu = contextMenuManager?.contextMenu(with: config)
+        moreBarButtonItem?.menu = contextMenuManager?.contextMenu(with: config)
     }
 
     func quickActionsMenu(didSelect action: QuickActionEntity, needToRefreshMenu: Bool) {
@@ -55,7 +57,7 @@ extension FileLinkViewController: FileLinkContextMenuDelegate {
     func rubbishBinMenu(didSelect action: RubbishBinActionEntity) {
         switch action {
         case .restore:
-            node.mnz_restore()
+            node?.mnz_restore()
             navigationController?.dismiss(animated: true)
         default:
             break
