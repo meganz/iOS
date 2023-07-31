@@ -1,3 +1,4 @@
+import MEGAChatSdk
 
 public typealias MEGAChatRequestCompletion = (_ result: Result<MEGAChatRequest, MEGAChatError>) -> Void
 

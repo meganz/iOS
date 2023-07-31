@@ -1,3 +1,3 @@
-import Foundation
+import MEGAChatSdk
 
 extension MEGAChatError: Error {}
