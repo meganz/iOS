@@ -868,7 +868,6 @@
 		834EFDBF24D9AF64004BFECA /* NodeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */; };
 		834EFDC224D9B373004BFECA /* Node.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834EFDC124D9B373004BFECA /* Node.storyboard */; };
 		8350800028CF85EF000A89FC /* ChatStatusTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83507FFD28CF85EE000A89FC /* ChatStatusTableViewController+Additions.swift */; };
-		835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */; };
 		835223B1205957DD00A47438 /* ItemCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B0205957DD00A47438 /* ItemCollectionViewCell.m */; };
 		835223B42059588300A47438 /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		83522FC72A4AE0BE00266D1F /* OccurrenceContextMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83522FC62A4AE0BE00266D1F /* OccurrenceContextMenuOption.swift */; };
@@ -3436,8 +3435,6 @@
 		834EFDBD24D9AF64004BFECA /* NodeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewController.swift; sourceTree = "<group>"; };
 		834EFDC124D9B373004BFECA /* Node.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Node.storyboard; sourceTree = "<group>"; };
 		83507FFD28CF85EE000A89FC /* ChatStatusTableViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ChatStatusTableViewController+Additions.swift"; sourceTree = "<group>"; };
-		835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetFolderInfoRequestDelegate.h; path = API/Requests/MEGAGetFolderInfoRequestDelegate.h; sourceTree = "<group>"; };
-		835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetFolderInfoRequestDelegate.m; path = API/Requests/MEGAGetFolderInfoRequestDelegate.m; sourceTree = "<group>"; };
 		835223AF205957DD00A47438 /* ItemCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemCollectionViewCell.h; sourceTree = "<group>"; };
 		835223B0205957DD00A47438 /* ItemCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItemCollectionViewCell.m; sourceTree = "<group>"; };
 		835223B22059588300A47438 /* ItemListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ItemListViewController.h; sourceTree = "<group>"; };
@@ -9540,8 +9537,6 @@
 				5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */,
 				77F1DBE02056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.h */,
 				77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */,
-				835223AB20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.h */,
-				835223AC20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m */,
 				A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */,
 				A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */,
 				77485F82207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.h */,
@@ -13617,7 +13612,6 @@
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,
-				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				77485F84207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m in Sources */,
 				A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
