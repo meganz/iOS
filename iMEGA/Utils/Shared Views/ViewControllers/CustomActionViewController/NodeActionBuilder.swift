@@ -269,6 +269,10 @@ final class NodeActionBuilder {
         return nodeActions
     }
     
+    private func albumLinkActions() -> [NodeAction] {
+        [.saveToPhotosAction()]
+    }
+    
     private func previewDocumentNodeActions() -> [NodeAction] {
         var nodeActions: [NodeAction] = []
 
@@ -480,6 +484,8 @@ final class NodeActionBuilder {
             return previewDocumentNodeActions()
         case .textEditor:
             return textEditorActions()
+        case .albumLink:
+            return albumLinkActions()
         default: // .unknown, .cloudDrive, .rubbishBin, .sharedItem, .nodeInfo, .nodeVersions, .recents
             switch accessLevel {
             case .accessUnknown:
