@@ -1,6 +1,6 @@
+import ChatRepo
 import Combine
 import MEGADomain
-import MEGASDKRepo
 import MEGASwift
 
 public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtocol {
