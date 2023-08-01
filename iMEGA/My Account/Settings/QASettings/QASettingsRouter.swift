@@ -1,9 +1,11 @@
+import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import SwiftUI
 
 protocol QASettingsRouting: Routing {
     func showAlert(withTitle title: String, message: String, actions: [UIAlertAction])
-    func showAlert(withError error: Error) 
+    func showAlert(withError error: Error)
 }
 
 struct QASettingsRouter: QASettingsRouting {
@@ -19,7 +21,16 @@ struct QASettingsRouter: QASettingsRouting {
     }
     
     func build() -> UIViewController {
-        let viewModel = QASettingsViewModel(router: self)
+        let manager = SharedSecureFingerprintManager()
+        manager.onToggleSecureFingerprintFlag = {
+            let adapter = ToggleSecureFingerprintFlagUIAlertAdapter(manager: manager)
+            adapter.showAlert()
+        }
+        let fingerprintRepository = SecureFingerprintRepository(manager: manager)
+        let fingerprintUseCase = SecureFingerprintUseCase(repo: fingerprintRepository)
+        let appDistributionRepository = AppDistributionRepository(appUpdateChecker: FirebaseAppUpdateChecker())
+        let appDistributionUseCase = AppDistributionUseCase(repo: appDistributionRepository)
+        let viewModel = QASettingsViewModel(router: self, fingerprintUseCase: fingerprintUseCase, appDistributionUseCase: appDistributionUseCase)
         let view = QASettingsView(viewModel: viewModel)
         let controller = UIHostingController(rootView: view)
         controller.title = Constants.screenTitle

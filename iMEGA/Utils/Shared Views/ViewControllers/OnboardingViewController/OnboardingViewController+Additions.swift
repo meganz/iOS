@@ -1,3 +1,5 @@
+import MEGASDKRepo
+
 extension OnboardingViewController {
     @objc func setSecureFingerprintVerificationTapToToggle() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self,
@@ -8,7 +10,12 @@ extension OnboardingViewController {
     }
 
     @objc func toggleSecureFingerprintFlag() {
-        SharedSecureFingerprintManager().toggleSecureFingerprintFlag()
+        let manager = SharedSecureFingerprintManager()
+        manager.onToggleSecureFingerprintFlag = {
+            let adapter = ToggleSecureFingerprintFlagUIAlertAdapter(manager: manager)
+            adapter.showAlert()
+        }
+        manager.toggleSecureFingerprintFlag()
     }
 
     @objc func setupTertiaryButton() {

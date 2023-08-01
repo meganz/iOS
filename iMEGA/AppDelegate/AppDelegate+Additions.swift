@@ -292,9 +292,13 @@ extension AppDelegate {
 // MARK: - Shared Secure fingerprint
 extension AppDelegate {
     @objc func configSharedSecureFingerprintFlag() {
-        let secureFlagManager = SharedSecureFingerprintManager()
-        let isSecure = secureFlagManager.secureFingerprintVerification
-        secureFlagManager.setSecureFingerprintFlag(isSecure)
+        let manager = SharedSecureFingerprintManager()
+        let fingerprintRepository = SecureFingerprintRepository(manager: manager)
+        let fingerprintUseCase = SecureFingerprintUseCase(repo: fingerprintRepository)
+        let isSecure = fingerprintUseCase.secureFingerprintVerification
+        Task {
+            await fingerprintUseCase.setSecureFingerprintFlag(isSecure)
+        }
     }
 }
 

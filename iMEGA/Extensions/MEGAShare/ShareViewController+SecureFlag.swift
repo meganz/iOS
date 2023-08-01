@@ -1,7 +1,12 @@
+import MEGASDKRepo
+
 extension ShareViewController {
     @objc func configSharedSecureFingerprintFlag() {
         let secureFlagManager = SharedSecureFingerprintManager()
         let isSecure = secureFlagManager.secureFingerprintVerification
-        secureFlagManager.setSecureFingerprintFlag(isSecure)
+        Task {
+            await secureFlagManager.setSecureFingerprintFlag(isSecure)
+        }
+        
     }
 }
