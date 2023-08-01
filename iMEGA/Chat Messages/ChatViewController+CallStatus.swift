@@ -108,12 +108,11 @@ extension ChatViewController {
     }
     
     private func joinCall() {
-        
         permissionRouter.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
             guard let self else { return }
             if granted {
                 timer?.invalidate()
-                openCallViewWithVideo(videoCall: false)
+                openCallViewWithVideo(videoCall: false, shouldRing: false)
             } else {
                 permissionRouter.alertAudioPermission(incomingCall: false)
             }
