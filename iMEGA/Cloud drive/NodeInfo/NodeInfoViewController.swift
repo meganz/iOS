@@ -94,6 +94,9 @@ class NodeInfoViewController: UIViewController {
         
         if node.isFolder() {
             fetchFolderInfo()
+        } else {
+            cacheNodePropertiesSoThatTableViewChangesAreAtomic()
+            reloadData()
         }
     }
     
