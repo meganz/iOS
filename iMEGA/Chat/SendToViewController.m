@@ -30,7 +30,6 @@
 
 @interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate, UIAdaptivePresentationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sendBarButtonItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
@@ -724,6 +723,11 @@
     if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
         MEGAChatListItem *chatListItem = itemAtIndex;
         [self.selectedGroupChatsMutableArray addObject:chatListItem];
+        if (indexPath.section == 0) {
+            [self syncSelectionStateFor:1 dataSourceArray:[self.usersAndGroupChatsMutableArray copy] item:chatListItem isSelected:YES];
+        } else {
+            [self syncSelectionStateFor:0 dataSourceArray:[self.recentsMutableArray copy] item:chatListItem isSelected:YES];
+        }
         [self addItemToList:[[ItemListModel alloc] initWithChat:chatListItem]];
     } else if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
         MEGAUser *user = itemAtIndex;
@@ -749,6 +753,11 @@
             if (tempChatListItem.chatId == chatListItem.chatId) {
                 [self.selectedGroupChatsMutableArray removeObject:tempChatListItem];
             }
+        }
+        if (indexPath.section == 0) {
+            [self syncSelectionStateFor:1 dataSourceArray:[self.usersAndGroupChatsMutableArray copy] item:chatListItem isSelected:NO];
+        } else {
+            [self syncSelectionStateFor:0 dataSourceArray:[self.recentsMutableArray copy] item:chatListItem isSelected:NO];
         }
         if (self.itemListVC) {
             [self.itemListVC removeItem:[[ItemListModel alloc] initWithChat:chatListItem]];
@@ -831,14 +840,8 @@
             [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfObject inSection:0] animated:YES];
         }
     } else {
-        indexOfObject = [self.recentsMutableArray indexOfObject:item];
-        if (indexOfObject != NSNotFound) {
-            [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfObject inSection:0] animated:YES];
-        }
-        indexOfObject = [self.usersAndGroupChatsMutableArray indexOfObject:item];
-        if (indexOfObject != NSNotFound) {
-            [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:indexOfObject inSection:1] animated:YES];
-        }
+        [self syncSelectionStateFor:0 dataSourceArray:[self.recentsMutableArray copy] item:item isSelected:NO];
+        [self syncSelectionStateFor:1 dataSourceArray:[self.usersAndGroupChatsMutableArray copy] item:item isSelected:NO];
     }
     
     if ((self.selectedUsersMutableArray.count + self.selectedGroupChatsMutableArray.count) == 0 && self.itemListVC) {

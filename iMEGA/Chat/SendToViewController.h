@@ -24,6 +24,8 @@
 @property (nonatomic) void (^completion)(NSArray<NSNumber *> *chatIdNumbers, NSArray<MEGAChatMessage *> *sentMessages);
 @property (nonatomic) uint64_t sourceChatId;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @property (nonatomic, weak) id<SendToViewControllerDelegate> sendToViewControllerDelegate;
 @property (nonatomic, weak) id<SendToChatActivityDelegate> sendToChatActivityDelegate;
 
