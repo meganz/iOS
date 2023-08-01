@@ -935,6 +935,7 @@
             self.searchController.hidesNavigationBarDuringPresentation = NO;
             self.navigationItem.searchController = self.searchController;
             self.navigationItem.hidesSearchBarWhenScrolling = NO;
+            [self setNavigationItemStackedPlacemenIfNeeded];
             break;
         }
             
