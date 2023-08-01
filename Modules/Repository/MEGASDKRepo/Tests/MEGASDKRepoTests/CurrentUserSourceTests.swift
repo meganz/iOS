@@ -38,7 +38,7 @@ final class CurrentUserSourceTests: XCTestCase {
         
         NotificationCenter.default.post(name: .accountDidLogin, object: nil)
         let exp = expectation(description: "login")
-        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertEqual(source.currentUserHandle, 10)
         XCTAssertNil(source.currentUserEmail)
         XCTAssertTrue(source.isGuest)
@@ -58,7 +58,7 @@ final class CurrentUserSourceTests: XCTestCase {
         
         NotificationCenter.default.post(name: .accountDidFinishFetchNodes, object: nil)
         let exp = expectation(description: "login")
-        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertEqual(source.currentUserEmail, "hello@mega.nz")
         XCTAssertNil(source.currentUserHandle)
         XCTAssertFalse(source.isGuest)
@@ -74,7 +74,7 @@ final class CurrentUserSourceTests: XCTestCase {
         
         NotificationCenter.default.post(name: .accountDidLogout, object: nil)
         let exp = expectation(description: "logout")
-        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertNil(source.currentUserHandle)
         XCTAssertNil(source.currentUserEmail)
         XCTAssertTrue(source.isGuest)
@@ -91,7 +91,7 @@ final class CurrentUserSourceTests: XCTestCase {
         
         NotificationCenter.default.post(name: .accountEmailDidChange, object: nil, userInfo: ["user": MockUser(handle: 4, email: "4@mega.nz")])
         let exp = expectation(description: "email")
-        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertEqual(source.currentUserEmail, "abc@mega.nz")
         XCTAssertEqual(source.currentUserHandle, 5)
         XCTAssertFalse(source.isGuest)
@@ -105,7 +105,7 @@ final class CurrentUserSourceTests: XCTestCase {
         
         NotificationCenter.default.post(name: .accountEmailDidChange, object: nil, userInfo: ["user": MockUser(handle: 5, email: "5@mega.nz")])
         let exp = expectation(description: "email")
-        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertEqual(source.currentUserEmail, "5@mega.nz")
         XCTAssertEqual(source.currentUserHandle, 5)
         XCTAssertFalse(source.isGuest)
@@ -115,7 +115,7 @@ final class CurrentUserSourceTests: XCTestCase {
         let source = CurrentUserSource(sdk: MockSdk())
         NotificationCenter.default.post(name: .setShouldRefreshAccountDetails, object: true)
         let exp = expectation(description: "shouldRefreshAccountDetails from notif")
-        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertTrue(source.shouldRefreshAccountDetails)
     }
     
@@ -123,7 +123,7 @@ final class CurrentUserSourceTests: XCTestCase {
         let source = CurrentUserSource(sdk: MockSdk())
         NotificationCenter.default.post(name: .setShouldRefreshAccountDetails, object: false)
         let exp = expectation(description: "shouldRefreshAccountDetails from notif")
-        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertFalse(source.shouldRefreshAccountDetails)
     }
     
@@ -144,7 +144,7 @@ final class CurrentUserSourceTests: XCTestCase {
         let accountDetails = AccountDetailsEntity(proLevel: .proI)
         NotificationCenter.default.post(name: .accountDidFinishFetchAccountDetails, object: accountDetails)
         let exp = expectation(description: "accountDetails from notif")
-        _ = XCTWaiter.wait(for: [exp], timeout: 1.0)
+        _ = XCTWaiter.wait(for: [exp], timeout: 0.01)
         XCTAssertEqual(accountDetails, source.accountDetails)
     }
     

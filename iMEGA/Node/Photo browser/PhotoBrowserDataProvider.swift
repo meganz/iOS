@@ -127,8 +127,15 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
     @objc func removePhotos(in nodeList: MEGANodeList?) async -> Int {
         guard let nodeList else { return .zero }
         if megaNodes != nil {
+            // just assigning the filtered value to mega nodes was overriding a correct value of name
+            // checking for count difference to decide if we need to update the array at all [IOS-7448]
+            // issue is generaly caused that the same data is cached in three places
+            // and synchronizing is very tricky to remember
             await nodeStore.updateCurrent(index: currentIndex)
-            self.megaNodes = await nodeStore.remove(nodeList.toNodeArray().removedChangeTypeNodes())
+            let changedNodes = await nodeStore.remove(nodeList.toNodeArray().removedChangeTypeNodes())
+            if self.megaNodes?.count != changedNodes.count {
+                self.megaNodes = changedNodes
+            }
             self.currentIndex = await nodeStore.currentIndex
             return await nodeStore.count
         } else {

@@ -426,4 +426,23 @@ final class PhotoBrowserDataProvider_megaNode_Tests: XCTestCase {
         XCTAssertEqual(nodes[1]?.name, "9-updated")
         XCTAssertEqual(nodes[2]?.name, "8")
     }
+    
+    @MainActor
+    func test_removePhotos_withUnchangedNodeCount_doesNotCauseNameOverride() async {
+        let currentPhoto = MockNode(handle: 9, name: "9")
+        let allPhotos = [MockNode(handle: 9, name: "9"),
+                         MockNode(handle: 8, name: "8")]
+        
+        let sut = PhotoBrowserDataProvider(currentPhoto: currentPhoto, allPhotos: allPhotos, sdk: MockSdk(nodes: allPhotos))
+        XCTAssertEqual(sut.allPhotos.map { $0.name }, ["9", "8"])
+        
+        let update = MockNodeList(nodes: [MockNode(handle: 9, name: "9_update", changeType: .attributes)])
+        sut.updatePhotos(in: update)
+        
+        let update2 = MockNodeList(nodes: [MockNode(handle: 9, name: "9"),
+                                          MockNode(handle: 8, name: "8")])
+        // this is called but none of the nodes have attibute removed
+        _ = await sut.removePhotos(in: Optional(update2))
+        XCTAssertEqual(sut.allPhotos.map { $0.name }, ["9_update", "8"])
+    }
 }
