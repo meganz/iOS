@@ -135,12 +135,98 @@ class ShareAlbumRepositoryTests: XCTestCase {
     }
     
     func testPublicPhoto_onProviderReturnsPhotos_shouldConvertAndReturn() async throws {
-        let expectedNode = MockNode(handle: 7)
-        let provider = MockPublicAlbumNodeProvider(node: expectedNode)
+        let handle = HandleEntity(7)
+        let expectedNode = MockNode(handle: handle)
+        let provider = MockPublicAlbumNodeProvider(nodes: [expectedNode])
         let sut = makeShareAlbumRepository(publicAlbumNodeProvider: provider)
         
-        let result = try await sut.publicPhoto(SetElementEntity(handle: 6))
+        let result = try await sut.publicPhoto(SetElementEntity(handle: 6, nodeId: handle))
+        
         XCTAssertEqual(result, expectedNode.toNodeEntity())
+    }
+    
+    func testCopyPublicPhotos_noPhotos_shouldReturnEmpty() async throws {
+        let sut = makeShareAlbumRepository()
+        
+        let copiedPhotos = try await sut.copyPublicPhotos(toFolder: NodeEntity(handle: 1),
+                                                          photos: [])
+        XCTAssertTrue(copiedPhotos.isEmpty)
+    }
+    
+    func testCopyPublicPhotos_folderNotFound_shouldThrowNodeNotFound() async {
+        let sut = makeShareAlbumRepository()
+        
+        do {
+            _ = try await sut.copyPublicPhotos(toFolder: NodeEntity(handle: 1),
+                                               photos: [NodeEntity(handle: 1)])
+            XCTFail("Should have thrown nodeNotFound")
+        } catch {
+            XCTAssertEqual(error as? NodeErrorEntity, NodeErrorEntity.nodeNotFound)
+        }
+    }
+    
+    func testCopyPublicPhotos_validFolderWithPublicPhotos_shouldCopyAndReturnCopiedNodes() async throws {
+        let folder = MockNode(handle: 8)
+        let photoHandles: [HandleEntity] = [23, 55, 76]
+        let publicPhotos = photoHandles.map { MockNode(handle: $0) }
+        let provider = MockPublicAlbumNodeProvider(nodes: publicPhotos)
+        let copiedNodeHandles = Array(repeating: UInt64.random(), count: photoHandles.count)
+        let copiedNodes = copiedNodeHandles.map { MockNode(handle: $0) }
+        let sdk = MockSdk(nodes: [folder] + copiedNodes,
+                          copiedNodeHandles: Dictionary(
+                            uniqueKeysWithValues: zip(photoHandles, copiedNodeHandles)))
+        let sut = makeShareAlbumRepository(sdk: sdk,
+                                           publicAlbumNodeProvider: provider)
+        
+        let copiedPhotos = try await sut.copyPublicPhotos(toFolder: folder.toNodeEntity(),
+                                                          photos: publicPhotos.toNodeEntities())
+        
+        XCTAssertEqual(Set(copiedPhotos), Set(copiedNodes.toNodeEntities()))
+    }
+    
+    func testCopyPublicPhotos_publicPhotosNotRetrieved_shouldReturnEmpty() async throws {
+        let folder = MockNode(handle: 8)
+        let sdk = MockSdk(nodes: [folder])
+        let sut = makeShareAlbumRepository(sdk: sdk)
+        
+        let copiedPhotos = try await sut.copyPublicPhotos(toFolder: folder.toNodeEntity(),
+                                                          photos: [NodeEntity(handle: 3)])
+        
+        XCTAssertTrue(copiedPhotos.isEmpty)
+    }
+    
+    func testCopyPublicPhotos_publicPhotosRetrievedCopyNotFound_shouldThrowNodeNotFound() async {
+        let folder = MockNode(handle: 8)
+        let publicPhotos = [MockNode(handle: 65)]
+        let provider = MockPublicAlbumNodeProvider(nodes: publicPhotos)
+        let sdk = MockSdk(nodes: [folder])
+        let sut = makeShareAlbumRepository(sdk: sdk,
+                                           publicAlbumNodeProvider: provider)
+        
+        do {
+            _ = try await sut.copyPublicPhotos(toFolder: folder.toNodeEntity(),
+                                               photos: publicPhotos.toNodeEntities())
+            XCTFail("Should have thrown nodeNotFound")
+        } catch {
+            XCTAssertEqual(error as? NodeErrorEntity, NodeErrorEntity.nodeNotFound)
+        }
+    }
+    
+    func testCopyPublicPhotos_onSdkCopyFailed_shouldThrowCopyNodeFailed() async {
+        let folder = MockNode(handle: 8)
+        let publicPhotos = [MockNode(handle: 67)]
+        let provider = MockPublicAlbumNodeProvider(nodes: publicPhotos)
+        let sdk = MockSdk(nodes: [folder], megaSetError: .apiEArgs)
+        let sut = makeShareAlbumRepository(sdk: sdk,
+                                           publicAlbumNodeProvider: provider)
+        
+        do {
+            _ = try await sut.copyPublicPhotos(toFolder: folder.toNodeEntity(),
+                                               photos: publicPhotos.toNodeEntities())
+            XCTFail("Should have thrown nodeCopyFailed")
+        } catch {
+            XCTAssertEqual(error as? CopyOrMoveErrorEntity, CopyOrMoveErrorEntity.nodeCopyFailed)
+        }
     }
     
     // MARK: - Private

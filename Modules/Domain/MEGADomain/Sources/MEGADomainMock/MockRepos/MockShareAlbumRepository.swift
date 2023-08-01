@@ -6,17 +6,20 @@ public struct MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
     private let disableAlbumShareResult: Result<Void, Error>
     private let publicAlbumContentsResult: Result<SharedAlbumEntity, Error>
     private let publicPhotoResults: [HandleEntity: Result<NodeEntity, Error>]
+    private let copyPublicPhotosResult: Result<[NodeEntity], Error>
     
     public init(
         shareAlbumResults: [HandleEntity: Result<String?, Error>] = [:],
         disableAlbumShareResult: Result<Void, Error> = .failure(GenericErrorEntity()),
         publicAlbumContentsResult: Result<SharedAlbumEntity, Error> = .failure(GenericErrorEntity()),
-        publicPhotoResults: [HandleEntity: Result<NodeEntity, Error>] = [:]
+        publicPhotoResults: [HandleEntity: Result<NodeEntity, Error>] = [:],
+        copyPublicPhotosResult: Result<[NodeEntity], Error> = .failure(GenericErrorEntity())
     ) {
         self.shareAlbumResults = shareAlbumResults
         self.disableAlbumShareResult = disableAlbumShareResult
         self.publicAlbumContentsResult = publicAlbumContentsResult
         self.publicPhotoResults = publicPhotoResults
+        self.copyPublicPhotosResult = copyPublicPhotosResult
     }
     
     public func shareAlbumLink(_ album: AlbumEntity) async throws -> String? {
@@ -46,6 +49,12 @@ public struct MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
         }
         return try await withCheckedThrowingContinuation {
             $0.resume(with: publicPhotoResult)
+        }
+    }
+    
+    public func copyPublicPhotos(toFolder folder: NodeEntity, photos: [NodeEntity]) async throws -> [NodeEntity] {
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: copyPublicPhotosResult)
         }
     }
 }
