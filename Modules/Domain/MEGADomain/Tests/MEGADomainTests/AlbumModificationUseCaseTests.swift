@@ -4,12 +4,14 @@ import XCTest
 
 final class AlbumModificationUseCaseTests: XCTestCase {
     func testAddPhotosToAlbum_onAlbumCreated_shouldReturnPhotosAddedToAlbum() async throws {
-        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
-        
         let nodes = [
             NodeEntity(name: "sample1.gif", handle: 1, hasThumbnail: true),
             NodeEntity(name: "sample2.gif", handle: 2, hasThumbnail: false)
         ]
+        let addResult = AlbumElementsResultEntity(success: UInt(nodes.count), failure: 0)
+        let userAlbumRepository = MockUserAlbumRepository(
+            addPhotosResult: .success(addResult))
+        let sut = AlbumModificationUseCase(userAlbumRepo: userAlbumRepository)
         
         let result = try await sut.addPhotosToAlbum(by: 1, nodes: nodes)
         XCTAssert(result.success == nodes.count)

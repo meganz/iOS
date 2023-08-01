@@ -210,14 +210,18 @@ final class AlbumListUseCaseTests: XCTestCase {
             NodeEntity(name: "b.mp4", handle: 3, hasThumbnail: true, isFavourite: true, modificationTime: try "2022-08-19T20:01:04Z".date),
             expectedCoverNode
         ]
+        let albumName = "Custom Album"
+        let userAlbumRepository = MockUserAlbumRepository(
+            createAlbumResult: .success(SetEntity(name: albumName)))
         let sut = AlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository(photoNodes: favouritePhotos, videoNodes: favouriteVideos),
             mediaUseCase: MockMediaUseCase(),
-            userAlbumRepository: MockUserAlbumRepository.newRepo,
+            userAlbumRepository: userAlbumRepository,
             albumContentsUpdateRepository: MockAlbumContentsUpdateNotifierRepository.newRepo,
             albumContentsUseCase: MockAlbumContentUseCase())
-        let result = try await sut.createUserAlbum(with: "Custom Album")
-        XCTAssertEqual(result.name, "Custom Album")
+        
+        let result = try await sut.createUserAlbum(with: albumName)
+        XCTAssertEqual(result.name, albumName)
         XCTAssertNotNil(result.modificationTime)
     }
     

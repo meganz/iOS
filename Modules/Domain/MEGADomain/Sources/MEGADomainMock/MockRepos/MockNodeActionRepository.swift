@@ -3,11 +3,18 @@ import MEGADomain
 public struct MockNodeActionRepository: NodeActionRepositoryProtocol {
     
     public static let newRepo = MockNodeActionRepository()
+    private let createFolderResult: Result<NodeEntity, Error>
+    
+    public init(createFolderResult: Result<NodeEntity, Error> = .failure(GenericErrorEntity())) {
+        self.createFolderResult = createFolderResult
+    }
     
     public func fetchnodes() async throws {}
     
     public func createFolder(name: String, parent: NodeEntity) async throws -> NodeEntity {
-        NodeEntity(name: name, parentHandle: parent.handle)
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: createFolderResult)
+        }
     }
     
     public func rename(node: NodeEntity, name: String) async throws -> NodeEntity {
