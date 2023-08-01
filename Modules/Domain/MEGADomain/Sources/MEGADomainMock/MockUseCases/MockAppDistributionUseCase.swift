@@ -1,0 +1,13 @@
+import MEGADomain
+
+public struct MockAppDistributionUseCase: AppDistributionUseCaseProtocol {
+    private let result: Result<AppDistributionReleaseEntity?, Error>
+    
+    public init(result: Result<AppDistributionReleaseEntity?, Error>) {
+        self.result = result
+    }
+    
+    public func checkForUpdate() async throws -> AppDistributionReleaseEntity? {
+        try result.get()
+    }
+}

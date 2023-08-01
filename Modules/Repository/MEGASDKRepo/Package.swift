@@ -32,7 +32,8 @@ let package = Package(
                 "MEGADomain",
                 "MEGASdk",
                 "SAMKeychain",
-                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk")
+                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk"),
+                .product(name: "FirebaseAppDistribution-Beta", package: "firebase-ios-sdk")
             ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .target(

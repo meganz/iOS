@@ -1,4 +1,4 @@
-@preconcurrency import FirebaseAppDistribution
+import MEGADomain
 import SwiftUI
 
 final class QASettingsViewModel {
@@ -9,10 +9,18 @@ final class QASettingsViewModel {
     }
     
     private let router: any QASettingsRouting
+    private let fingerprintUseCase: any SecureFingerprintUseCaseProtocol
+    private let appDistributionUseCase: any AppDistributionUseCaseProtocol
     private var checkForUpdateTask: Task<Void, Never>?
     
-    init(router: some QASettingsRouting) {
+    init(
+        router: some QASettingsRouting,
+        fingerprintUseCase: some SecureFingerprintUseCaseProtocol,
+        appDistributionUseCase: some AppDistributionUseCaseProtocol
+    ) {
         self.router = router
+        self.fingerprintUseCase = fingerprintUseCase
+        self.appDistributionUseCase = appDistributionUseCase
     }
     
     deinit {
@@ -20,11 +28,12 @@ final class QASettingsViewModel {
     }
     
     // MARK: - Check for Update
-    func checkForUpdate() {
+    @discardableResult
+    func checkForUpdate() -> Task<Void, Never>? {
         checkForUpdateTask = Task { @MainActor in
             do {
-                if let release = try await AppDistribution.appDistribution().checkForUpdate() {
-                    show(release: release)
+                if let releaseEntity = try await appDistributionUseCase.checkForUpdate() {
+                    show(release: releaseEntity)
                 } else {
                     MEGALogDebug("No new release available")
                 }
@@ -32,9 +41,10 @@ final class QASettingsViewModel {
                 show(error: error)
             }
         }
+        return checkForUpdateTask
     }
     
-    private func show(release: AppDistributionRelease) {
+    private func show(release: AppDistributionReleaseEntity) {
         let message = Constants
             .newVersionAvailableMessage
             .replacingOccurrences(
@@ -60,6 +70,6 @@ final class QASettingsViewModel {
     
     // MARK: - Fingerprint flag
     func fingerprintVerificationFlagStatus() -> String {
-        SharedSecureFingerprintManager().secureFingerprintStatus().lowercased()
+        fingerprintUseCase.secureFingerprintStatus().lowercased()
     }
 }
