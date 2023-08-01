@@ -34,6 +34,7 @@ public final class MockSdk: MEGASdk {
     private let smsState: SMSState
     private let devices: [String: String]
     private let file: String?
+    private let copiedNodeHandles: [MEGAHandle: MEGAHandle]
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -80,7 +81,8 @@ public final class MockSdk: MEGASdk {
                 upgradeSecurity: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
                 accountDetails: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
                 devices: [String: String] = [:],
-                file: String? = nil
+                file: String? = nil,
+                copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:]
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -114,6 +116,7 @@ public final class MockSdk: MEGASdk {
         _accountDetails = accountDetails
         self.devices = devices
         self.file = file
+        self.copiedNodeHandles = copiedNodeHandles
         super.init()
     }
     
@@ -171,6 +174,13 @@ public final class MockSdk: MEGASdk {
     
     public override func remove(_ delegate: any MEGARequestDelegate) {
         hasRequestDelegate = false
+    }
+    
+    public override func copy(_ node: MEGANode, newParent: MEGANode, delegate: any MEGARequestDelegate) {
+        let mockRequest = MockRequest(handle: copiedNodeHandles[node.handle] ?? .invalid)
+        delegate.onRequestFinish?(self,
+                                  request: mockRequest,
+                                  error: MockError(errorType: megaSetError))
     }
     
     public override var rootNode: MEGANode? { megaRootNode }
