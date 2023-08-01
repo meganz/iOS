@@ -37,4 +37,13 @@ extension ContactsViewController {
         self.navigationItem.title = title
         setMenuCapableBackButtonWith(menuTitle: title)
     }
+    
+    @objc
+    func setNavigationItemStackedPlacemenIfNeeded() {
+        if #available(iOS 16.0, *) {
+            if contactsMode == .scheduleMeeting {
+                navigationItem.preferredSearchBarPlacement = .stacked
+            }
+        }
+    }
 }
