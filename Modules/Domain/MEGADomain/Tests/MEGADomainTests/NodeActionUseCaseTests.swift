@@ -5,12 +5,15 @@ import XCTest
 
 final class NodeActionUseCaseTests: XCTestCase {
     func testCreateFolder() async throws {
-        let sut = NodeActionUseCase(repo: MockNodeActionRepository.newRepo)
-        let parent = NodeEntity(handle: 123)
         let name = "FolderName"
-        let nodeEntity = try await sut.createFolder(name: "FolderName", parent: parent)
-        XCTAssertEqual(nodeEntity.parentHandle, parent.handle)
-        XCTAssertEqual(nodeEntity.name, name)
+        let parent = NodeEntity(handle: 123)
+        let createdFolder = NodeEntity(name: name, handle: 1, parentHandle: parent.handle)
+        let nodeActionRepository = MockNodeActionRepository(createFolderResult: .success(createdFolder))
+        let sut = NodeActionUseCase(repo: nodeActionRepository)
+    
+        let nodeEntity = try await sut.createFolder(name: name, parent: parent)
+        
+        XCTAssertEqual(nodeEntity, createdFolder)
     }
     
     func testRenameNode() async throws {
