@@ -1,7 +1,7 @@
 
 import MEGADomain
-import UIKit
 import MEGASDKRepo
+import UIKit
 
 enum NodeInfoTableViewSection {
     case info
