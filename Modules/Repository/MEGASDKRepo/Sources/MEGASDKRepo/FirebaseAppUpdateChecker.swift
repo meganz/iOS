@@ -5,6 +5,7 @@ public struct FirebaseAppUpdateChecker: AppUpdateCheckerProtocol {
     
     public init() {}
    
+    @MainActor
     public func checkForUpdate() async throws -> AppDistributionReleaseEntity? {
         guard let release = try await AppDistribution.appDistribution().checkForUpdate() else {
             return nil
