@@ -59,8 +59,7 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
                 updateContextMenu()
             }
         case .mediaDiscovery:
-            guard let parentNode = parentNode else { return }
-            MediaDiscoveryRouter(viewController: self, parentNode: parentNode).start()
+            showMediaDiscovery()
         default:
             break
         }
