@@ -100,6 +100,8 @@
     [self updateVerifyOrResetButton];
     
     [self updateAppearance];
+
+    [self setLabelColors];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -130,7 +132,8 @@
     
     self.myCredentialsSubView.backgroundColor = [UIColor mnz_tertiaryBackgroundElevated:self.traitCollection];
     self.myCredentialsSubView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
-    
+
+    [self setLabelColors];
     [self updateVerifyOrResetButton];
 }
 
@@ -139,7 +142,7 @@
         [self.verifyOrResetButton setTitle:NSLocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
     } else {
-        [self.verifyOrResetButton setTitle:NSLocalizedString(@"verify", @"Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+        [self.verifyOrResetButton setTitle:NSLocalizedString(@"approve", @"Button title") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupPrimary:self.traitCollection];
     }
 }
