@@ -136,6 +136,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                                                         withLogout:YES
                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
     }
+    
+    [self cancelPlayerProcess];
+    self.player = nil;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

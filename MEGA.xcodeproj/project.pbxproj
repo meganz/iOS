@@ -143,6 +143,7 @@
 		246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */; };
 		247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */; };
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
+		248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */; };
 		24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A619DE2A52735600EBB863 /* QASettingsViewModelTests.swift */; };
 		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
 		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
@@ -2626,6 +2627,7 @@
 		246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdvancedTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsRouterTests.swift; sourceTree = "<group>"; };
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
+		248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerTests.swift; sourceTree = "<group>"; };
 		24A619DE2A52735600EBB863 /* QASettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsViewModelTests.swift; sourceTree = "<group>"; };
 		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
 		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
@@ -5648,6 +5650,22 @@
 				2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */,
 			);
 			path = Delegates;
+			sourceTree = "<group>";
+		};
+		248A03182A79024700F183A2 /* Shared Views */ = {
+			isa = PBXGroup;
+			children = (
+				248A03192A79025200F183A2 /* Shared Controls */,
+			);
+			path = "Shared Views";
+			sourceTree = "<group>";
+		};
+		248A03192A79025200F183A2 /* Shared Controls */ = {
+			isa = PBXGroup;
+			children = (
+				248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */,
+			);
+			path = "Shared Controls";
 			sourceTree = "<group>";
 		};
 		24F231562A5FB313000BFBBA /* Scenes */ = {
@@ -9994,6 +10012,7 @@
 		B63AEB16251203F5000B8517 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				248A03182A79024700F183A2 /* Shared Views */,
 				2546EE032A4149A000CBB82E /* AVPlayerManager */,
 				5BBC13E426CE64A30010115B /* Cells */,
 				2488EBC12A13B4F2005F910E /* Delegates */,
@@ -14806,6 +14825,7 @@
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
+				248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */,
 				244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */,
 				246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */,
 				3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */,
