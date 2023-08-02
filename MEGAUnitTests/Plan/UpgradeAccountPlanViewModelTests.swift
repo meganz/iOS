@@ -303,50 +303,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         sut.setSelectedPlan(proI_monthly)
         XCTAssertNotEqual(sut.selectedPlanType, proI_monthly.type)
     }
-    
-    func testSelectedPlanType_recurringPlanAccount_selectSameCurrentPlanOnYearly_shouldNotHaveSelectedPlanOnMonthly() {
-        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
-        let planList = [proI_monthly, proI_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
-
-        let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
-        sut.$currentPlan
-            .dropFirst()
-            .sink { _ in
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        wait(for: [exp], timeout: 0.5)
-
-        sut.selectedTermTab = .yearly
-        sut.setSelectedPlan(proI_yearly)
-        XCTAssertEqual(sut.selectedPlanType, proI_yearly.type)
-        
-        sut.selectedTermTab = .monthly
-        XCTAssertNil(sut.selectedPlanType)
-    }
-    
-    func testSelectedPlanType_recurringPlanAccount_selectSameCurrentPlanOnMonthly_shouldNotHaveSelectedPlanOnYearly() {
-        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .yearly)
-        let planList = [proI_monthly, proI_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
-
-        let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
-        sut.$currentPlan
-            .dropFirst()
-            .sink { _ in
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        wait(for: [exp], timeout: 0.5)
-
-        sut.selectedTermTab = .monthly
-        sut.setSelectedPlan(proI_monthly)
-        XCTAssertEqual(sut.selectedPlanType, proI_monthly.type)
-        
-        sut.selectedTermTab = .yearly
-        XCTAssertNil(sut.selectedPlanType)
-    }
 
     // MARK: - Selected term tab
     func testSelectedTermTab_freeAccount_defaultShouldBeYearly() {
@@ -480,6 +436,38 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
         sut.setSelectedPlan(proII_yearly)
         sut.selectedTermTab = .monthly
         XCTAssertTrue(sut.isShowBuyButton)
+    }
+    
+    func testIsShowBuyButtonWithRecurringPlanMonthly_selectSamePlanTypeOnYearlyTab_thenSwitchedToMonthlyTab_shouldToggleValue() async {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
+        let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        
+        sut.selectedTermTab = .yearly
+        sut.setSelectedPlan(proI_yearly)
+        XCTAssertTrue(sut.isShowBuyButton)
+        
+        sut.selectedTermTab = .monthly
+        XCTAssertFalse(sut.isShowBuyButton)
+    }
+    
+    func testIsShowBuyButtonWithRecurringPlanYearly_selectSamePlanTypeOnMonthlyTab_thenSwitchedToYearlyTab_shouldToggleValue() async {
+        let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .yearly)
+        let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
+        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        
+        await sut.setUpPlanTask?.value
+        
+        sut.selectedTermTab = .monthly
+        sut.setSelectedPlan(proI_monthly)
+        XCTAssertTrue(sut.isShowBuyButton)
+        
+        sut.selectedTermTab = .yearly
+        XCTAssertFalse(sut.isShowBuyButton)
     }
     
     // MARK: - Plan list
