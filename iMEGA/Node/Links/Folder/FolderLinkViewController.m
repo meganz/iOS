@@ -615,7 +615,7 @@
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {
-    [self importFromFiles];
+    [self importFilesFromFolderLink];
 }
 
 - (void)openNode:(MEGANode *)node {

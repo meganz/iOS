@@ -39,7 +39,7 @@ public enum ContextMenuTypeEntity {
 
 // MARK: - Context Menu grouped actions
 public enum UploadAddActionEntity: CaseIterable {
-    case chooseFromPhotos, capture, importFrom, scanDocument, newFolder, newTextFile
+    case chooseFromPhotos, capture, importFrom, scanDocument, newFolder, newTextFile, importFolderLink
 }
 
 public enum DisplayActionEntity: CaseIterable {
