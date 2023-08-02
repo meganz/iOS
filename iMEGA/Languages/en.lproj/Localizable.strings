@@ -3224,8 +3224,6 @@
 "meetings.scheduled.contextMenu.joinMeeting"="Join";
 /* Message shown in a chat room for a call in progress displaying the duration of the call */
 "chat.callInProgress.tapToReturnToCall"="Tap to return to call %@";
-/* In App notification label for new notifications. Keep it uppercased */
-"inapp.notifications.label.new"="NEW";
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Meetings";
 /* In app notification description for one off new meeting invitation */
