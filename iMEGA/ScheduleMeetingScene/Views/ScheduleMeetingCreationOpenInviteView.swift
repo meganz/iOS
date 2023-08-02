@@ -20,7 +20,6 @@ struct ScheduleMeetingCreationOpenInviteView: View {
             Divider()
         }
         .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
-        .padding(.top, 10)
         .padding(.bottom)
     }
 }

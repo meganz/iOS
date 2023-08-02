@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAFoundation
+import MEGAPresentation
 
 protocol ScheduleMeetingRouting {
     func showSpinner()
@@ -40,6 +41,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     var shouldAllowEditingMeetingLink: Bool { viewConfiguration.shouldAllowEditingMeetingLink }
     var shouldAllowEditingParticipants: Bool { viewConfiguration.shouldAllowEditingParticipants }
     var shouldAllowEditingCalendarInvite: Bool { viewConfiguration.shouldAllowEditingCalendarInvite }
+    var shouldAllowEditingWaitingRoom: Bool { viewConfiguration.shouldAllowEditingWaitingRoom }
     var shouldAllowEditingAllowNonHostsToAddParticipants: Bool { viewConfiguration.shouldAllowEditingAllowNonHostsToAddParticipants }
     var shouldAllowEditingMeetingDescription: Bool { viewConfiguration.shouldAllowEditingMeetingDescription }
     
@@ -72,6 +74,10 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     @Published var calendarInviteEnabled: Bool {
+        didSet { updateRightBarButtonState() }
+    }
+    
+    @Published var waitingRoomEnabled: Bool {
         didSet { updateRightBarButtonState() }
     }
     
@@ -112,20 +118,26 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private let router: any ScheduleMeetingRouting
     private let viewConfiguration: any ScheduleMeetingViewConfigurable
     private let accountUseCase: any AccountUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
+    lazy var isWaitingRoomFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
+
     init(
         router: some ScheduleMeetingRouting,
         viewConfiguration: some ScheduleMeetingViewConfigurable,
-        accountUseCase: some AccountUseCaseProtocol
+        accountUseCase: some AccountUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.router = router
         self.viewConfiguration = viewConfiguration
         self.accountUseCase = accountUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.meetingName = viewConfiguration.meetingName
         self.meetingDescription = viewConfiguration.meetingDescription
         self.startDate = viewConfiguration.startDate
         self.endDate = viewConfiguration.endDate
         self.calendarInviteEnabled = viewConfiguration.calendarInviteEnabled
+        self.waitingRoomEnabled = viewConfiguration.waitingRoomEnabled
         self.allowNonHostsToAddParticipantsEnabled = viewConfiguration.allowNonHostsToAddParticipantsEnabled
         self.meetingLinkEnabled = viewConfiguration.meetingLinkEnabled
         self.rules = viewConfiguration.rules
@@ -259,6 +271,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
             participantHandleList: participantHandleList,
             meetingLinkEnabled: meetingLinkEnabled,
             calendarInvite: calendarInviteEnabled,
+            waitingRoom: waitingRoomEnabled,
             allowNonHostsToAddParticipantsEnabled: allowNonHostsToAddParticipantsEnabled,
             startDate: startDate,
             endDate: endDate,
@@ -296,6 +309,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
                     || !viewConfiguration.shouldAllowEditingParticipants)
                 && (calendarInviteEnabled == viewConfiguration.calendarInviteEnabled
                     || !viewConfiguration.shouldAllowEditingCalendarInvite)
+                && (waitingRoomEnabled == viewConfiguration.waitingRoomEnabled
+                    || !viewConfiguration.shouldAllowEditingWaitingRoom)
                 && (allowNonHostsToAddParticipantsEnabled == viewConfiguration.allowNonHostsToAddParticipantsEnabled
                     || !viewConfiguration.shouldAllowEditingAllowNonHostsToAddParticipants)
                 && (trimmedMeetingDescription == viewConfiguration.meetingDescription

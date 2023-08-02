@@ -3626,3 +3626,7 @@
 "settings.about.sfu.changeAlert.changeButton"="Change";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="Chat with %@";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="Waiting Room";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="Only users admitted by the host can join the meeting.";

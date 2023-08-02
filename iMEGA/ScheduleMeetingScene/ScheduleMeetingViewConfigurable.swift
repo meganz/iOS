@@ -19,6 +19,7 @@ protocol ScheduleMeetingViewConfigurable {
     var endDate: Date { get }
     var meetingDescription: String { get }
     var calendarInviteEnabled: Bool { get }
+    var waitingRoomEnabled: Bool { get }
     var allowNonHostsToAddParticipantsEnabled: Bool { get }
     var participantHandleList: [HandleEntity] { get }
     var rules: ScheduledMeetingRulesEntity { get }
@@ -30,6 +31,7 @@ protocol ScheduleMeetingViewConfigurable {
     var shouldAllowEditingMeetingLink: Bool { get }
     var shouldAllowEditingParticipants: Bool { get }
     var shouldAllowEditingCalendarInvite: Bool { get }
+    var shouldAllowEditingWaitingRoom: Bool { get }
     var shouldAllowEditingAllowNonHostsToAddParticipants: Bool { get }
     var shouldAllowEditingMeetingDescription: Bool { get }
     

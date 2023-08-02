@@ -6,30 +6,26 @@ struct ScheduleMeetingCreationPropertiesView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack {
             VStack {
-                VStack {
-                    ScheduleMeetingCreationDateAndRecurrenceView(viewModel: viewModel)
-                    Toggle(isOn: $viewModel.meetingLinkEnabled) {
-                        Text(Strings.Localizable.Meetings.ScheduleMeeting.link)
-                            .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
-                    }
-                    .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
-                    .padding(.horizontal)
-                    .disabled(
-                        !viewModel.meetingLinkToggleUIEnabled
-                        || !viewModel.shouldAllowEditingMeetingLink
-                    )
-                    Divider()
+                ScheduleMeetingCreationDateAndRecurrenceView(viewModel: viewModel)
+                Toggle(isOn: $viewModel.meetingLinkEnabled) {
+                    Text(Strings.Localizable.Meetings.ScheduleMeeting.link)
+                        .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
                 }
-                .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
-                
-                ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.Link.description)
-                    .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
+                .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
+                .padding(.horizontal)
+                .disabled(
+                    !viewModel.meetingLinkToggleUIEnabled
+                    || !viewModel.shouldAllowEditingMeetingLink
+                )
+                Divider()
             }
-            .padding(.vertical)
+            .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
             
-            ScheduleMeetingCreationInvitationView(viewModel: viewModel)
+            ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.Link.description)
+                .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
         }
+        .padding(.vertical)
     }
 }

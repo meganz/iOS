@@ -4571,6 +4571,8 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
         /// Update
         public static let update = Strings.tr("Localizable", "meetings.scheduleMeeting.update")
+        /// Waiting Room
+        public static let waitingRoom = Strings.tr("Localizable", "meetings.scheduleMeeting.waitingRoom")
         public enum CalendarInvite {
           /// Email a calendar invite to participants so they can add the meeting to their calendars.
           public static let description = Strings.tr("Localizable", "meetings.scheduleMeeting.calendarInvite.description")
@@ -4772,6 +4774,10 @@ public enum Strings {
         public enum UpdateSuccessfull {
           /// Meeting updated
           public static let popupMessage = Strings.tr("Localizable", "meetings.scheduleMeeting.updateSuccessfull.popupMessage")
+        }
+        public enum WaitingRoom {
+          /// Only users admitted by the host can join the meeting.
+          public static let description = Strings.tr("Localizable", "meetings.scheduleMeeting.waitingRoom.description")
         }
       }
       public enum Scheduled {

@@ -24,6 +24,10 @@ struct MeetingInfoView: View {
                 }
                 
                 if viewModel.isModerator {
+                    if viewModel.isWaitingRoomFeatureEnabled {
+                        MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: $viewModel.isWaitingRoomOn)
+                    }
+                    
                     ToggleView(
                         image: Asset.Images.Meetings.Info.allowNonHostToAddParticipant.name,
                         text: Strings.Localizable.Meetings.AddContacts.AllowNonHost.message,

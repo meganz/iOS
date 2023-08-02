@@ -6,6 +6,7 @@ public struct ScheduleMeetingProxyEntity {
     public let participantHandleList: [HandleEntity]
     public let meetingLinkEnabled: Bool
     public let calendarInvite: Bool
+    public let waitingRoom: Bool
     public let allowNonHostsToAddParticipantsEnabled: Bool
     public let startDate: Date
     public let endDate: Date
@@ -17,6 +18,7 @@ public struct ScheduleMeetingProxyEntity {
         participantHandleList: [HandleEntity],
         meetingLinkEnabled: Bool,
         calendarInvite: Bool,
+        waitingRoom: Bool,
         allowNonHostsToAddParticipantsEnabled: Bool,
         startDate: Date,
         endDate: Date,
@@ -26,6 +28,7 @@ public struct ScheduleMeetingProxyEntity {
         self.description = description
         self.participantHandleList = participantHandleList
         self.calendarInvite = calendarInvite
+        self.waitingRoom = waitingRoom
         self.meetingLinkEnabled = meetingLinkEnabled
         self.allowNonHostsToAddParticipantsEnabled = allowNonHostsToAddParticipantsEnabled
         self.startDate = startDate
