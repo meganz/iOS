@@ -18,13 +18,6 @@
 
 @import MEGAUIKit;
 
-typedef NS_ENUM(NSInteger, SubscriptionOrder) {
-    SubscriptionOrderLite = 0,
-    SubscriptionOrderProI,
-    SubscriptionOrderProII,
-    SubscriptionOrderProIII
-};
-
 @interface UpgradeTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, MEGARestoreDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansHeaderView;
@@ -42,9 +35,8 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 @property (weak, nonatomic) IBOutlet UIImageView *currentPlanImageView;
 @property (weak, nonatomic) IBOutlet UIView *currentPlanNameView;
 @property (weak, nonatomic) IBOutlet UILabel *currentPlanNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *currentPlanStorageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *currentPlanBandwidthLabel;
 @property (weak, nonatomic) IBOutlet UIView *currentPlanBottomLineCellView;
+@property (weak, nonatomic) IBOutlet UIImageView *currentPlanDisclosureImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *footerTopLineView;
 
@@ -197,8 +189,15 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
     
     self.currentPlanNameLabel.textColor = UIColor.whiteColor;
     NSNumber *userProLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:self.userProLevel]];
-    self.currentPlanStorageLabel.attributedText = [self storageAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
-    self.currentPlanBandwidthLabel.attributedText = [self bandwidthAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
+    [self.currentPlanDisclosureImageView setHidden:userProLevelIndexNumber == nil];
+    
+    if (userProLevelIndexNumber) {
+        self.currentPlanStorageLabel.attributedText = [self storageAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
+        self.currentPlanBandwidthLabel.attributedText = [self bandwidthAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
+    } else {
+        [self setCurrentPlanMaxQuotaData];
+    }
+
     self.currentPlanCellView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     self.currentPlanBottomLineCellView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
@@ -250,20 +249,14 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
             break;
         
         case MEGAAccountTypeLite:
-            [self removeSubscriptionOrderAt:SubscriptionOrderLite];
-            break;
-            
         case MEGAAccountTypeProI:
-            [self removeSubscriptionOrderAt:SubscriptionOrderProI];
-            break;
-            
         case MEGAAccountTypeProII:
-            [self removeSubscriptionOrderAt:SubscriptionOrderProII];
+            [self removePlanOnAvailablePlans:self.userProLevel];
             break;
             
         case MEGAAccountTypeProIII:
             self.customPlanLabel.hidden = self.customPlanButton.hidden = NO;
-            [self removeSubscriptionOrderAt:SubscriptionOrderProIII];
+            [self removePlanOnAvailablePlans:self.userProLevel];
             break;
         default:
             break;
@@ -433,7 +426,9 @@ typedef NS_ENUM(NSInteger, SubscriptionOrder) {
 }
 
 - (IBAction)currentPlanTouchUpInside:(UITapGestureRecognizer *)sender {
-    [self pushProductDetailWithAccountType:self.userProLevel];
+    if ([self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:self.userProLevel]]) {
+        [self pushProductDetailWithAccountType:self.userProLevel];
+    }
 }
 
 - (IBAction)requestAPlanTouchUpInside:(UIButton *)sender {
