@@ -696,6 +696,7 @@
                         <outlet property="currentPlanBandwidthLabel" destination="RrN-75-nsw" id="bQl-Xn-YbV"/>
                         <outlet property="currentPlanBottomLineCellView" destination="MYs-Ul-v4e" id="Gxe-2s-a0S"/>
                         <outlet property="currentPlanCellView" destination="Dso-Lw-r72" id="yLV-LD-jIT"/>
+                        <outlet property="currentPlanDisclosureImageView" destination="dW0-su-4wN" id="tIN-SL-iiZ"/>
                         <outlet property="currentPlanImageView" destination="gKR-W8-vVI" id="pRs-zl-5Qc"/>
                         <outlet property="currentPlanLabel" destination="YEL-kZ-9DR" id="YTv-Zz-bEL"/>
                         <outlet property="currentPlanLabelLineView" destination="YWv-vd-p1Z" id="ikh-nv-X8j"/>
