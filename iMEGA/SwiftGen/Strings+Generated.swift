@@ -4052,10 +4052,6 @@ public enum Strings {
     }
     public enum Inapp {
       public enum Notifications {
-        public enum Label {
-          /// NEW
-          public static let new = Strings.tr("Localizable", "inapp.notifications.label.new")
-        }
         public enum Meetings {
           /// Meetings
           public static let header = Strings.tr("Localizable", "inapp.notifications.meetings.header")
