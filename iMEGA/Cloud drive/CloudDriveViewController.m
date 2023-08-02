@@ -156,6 +156,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     [self assignAsMEGANavigationDelegateWithDelegate:self];
+    
+    self.wasSelectingFavoriteUnfavoriteNodeActionOption = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -408,10 +410,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self preparForReloadUI];
     
     if (nodeList) {
-        if (self.displayMode == DisplayModeCloudDrive && nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail) {
+        if (self.displayMode == DisplayModeCloudDrive && nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
             MEGANode *updatedNode = [nodeList nodeAtIndex:0];
             NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
             [self reloadDataAtIndexPaths:@[indexPath]];
+            
+            self.wasSelectingFavoriteUnfavoriteNodeActionOption = false;
         } else {
             [self reloadData];
         }
