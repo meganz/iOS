@@ -58,7 +58,7 @@ final class DeviceCenterRepositoryTests: XCTestCase {
     func testFetchMobileDevices_validBackupWithTheLastIteractionMoreThanAnHourAgo_shouldReturnOfflineStatus() async {
         let id1 = "1234"
         let encodedName1 = base64Encode(string: "device1")
-        let twoHoursInterval = TimeInterval(7200) // Greater than one hour
+        let twoHoursInterval: TimeInterval = 2 * 60 * 60  // Greater than one hour
         let mockSdk = MockSdk(
             backupInfoList: [
                 MockBackupInfo(
@@ -88,7 +88,7 @@ final class DeviceCenterRepositoryTests: XCTestCase {
     func testFetchOtherDevices_validBackupWithTheLastIteractionMoreThanHalfAnHourAgo_shouldReturnOfflineStatus() async {
         let id1 = "1234"
         let encodedName1 = base64Encode(string: "device1")
-        let fortyFiveInterval = TimeInterval(2700) // Greater than 30 minutes
+        let fortyFiveInterval: TimeInterval = 45 * 60 // Greater than 30 minutes
         let mockSdk = MockSdk(
             backupInfoList: [
                 MockBackupInfo(
@@ -162,7 +162,7 @@ final class DeviceCenterRepositoryTests: XCTestCase {
     
     func assertThatHasCorrectDeviceStatus(on devices: [DeviceEntity], expectedStatus: BackupStatusEntity? = nil, file: StaticString = #filePath, line: UInt = #line) {
         for(index, userDevice) in devices.enumerated() {
-            var deviceBackupStatus = userDevice.backups?.findHighestPriorityBackupStatus()
+            let deviceBackupStatus = userDevice.backups?.findHighestPriorityBackupStatus()
             
             var deviceExpectedStatus = expectedStatus
             
