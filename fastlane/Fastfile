@@ -442,7 +442,6 @@ platform :ios do
 
   desc "setup your development environment"
   lane :setup do |options|
-    sh "bundle install"
     if check_repo_is_internal == true
       cert_dev readonly:true
     end
