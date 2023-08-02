@@ -13,6 +13,10 @@ extension ContextMenuBuilder {
     var importFromFiles: CMActionEntity {
         CMActionEntity(type: .uploadAdd(actionType: .importFrom))
     }
+
+    var importFolderLink: CMActionEntity {
+        CMActionEntity(type: .uploadAdd(actionType: .importFolderLink))
+    }
     
     var newTextFile: CMActionEntity {
         CMActionEntity(type: .uploadAdd(actionType: .newTextFile))

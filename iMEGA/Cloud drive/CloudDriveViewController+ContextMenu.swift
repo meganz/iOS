@@ -233,6 +233,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             documentPicker.allowsMultipleSelection = true
             documentPicker.popoverPresentationController?.barButtonItem = contextBarButtonItem
             present(documentPicker, animated: true)
+        default:
+            break
         }
     }
     

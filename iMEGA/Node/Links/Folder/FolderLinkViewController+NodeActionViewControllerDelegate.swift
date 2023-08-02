@@ -17,7 +17,7 @@ extension FolderLinkViewController: NodeActionViewControllerDelegate {
             if node.handle != parentNode?.handle {
                 selectedNodesArray = [node]
             }
-            importFromFiles()
+            importFilesFromFolderLink()
         case .select:
             select()
         case .shareLink:
