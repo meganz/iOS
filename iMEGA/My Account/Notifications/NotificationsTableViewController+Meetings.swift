@@ -42,7 +42,7 @@ extension NotificationsTableViewController {
         if alert.pendingContactRequestHandle != MEGAInvalidHandle, checkForOccurrenceChange {
             return occurrenceContent(for: alert, indexPath: indexPath)
         } else if alert.hasScheduledMeetingChangeType(.cancelled) {
-            if alert.hasScheduledMeetingChangeType(.rules) {
+            if scheduledMeetingEntity.rules.frequency != .invalid {
                 return contentForRecurringCancelledScheduledMeeting(withEmail: alert.email)
             } else {
                 return contentForOneOffCancelledScheduledMeeting(scheduledMeetingEntity, chatId: alert.nodeHandle, email: alert.email)
