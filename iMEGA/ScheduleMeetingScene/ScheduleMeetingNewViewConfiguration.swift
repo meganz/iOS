@@ -9,6 +9,7 @@ final class ScheduleMeetingNewViewConfiguration: ScheduleMeetingViewConfigurable
     lazy var endDate: Date = startDate.addingTimeInterval(1800)
     var meetingDescription: String { "" }
     var calendarInviteEnabled: Bool { false }
+    var waitingRoomEnabled: Bool { false }
     var allowNonHostsToAddParticipantsEnabled: Bool { true }
     var participantHandleList: [HandleEntity] { [] }
     var rules: ScheduledMeetingRulesEntity { .init(frequency: .invalid) }
@@ -20,6 +21,7 @@ final class ScheduleMeetingNewViewConfiguration: ScheduleMeetingViewConfigurable
     var shouldAllowEditingMeetingLink: Bool { true }
     var shouldAllowEditingParticipants: Bool { true }
     var shouldAllowEditingCalendarInvite: Bool { true }
+    var shouldAllowEditingWaitingRoom: Bool { true }
     var shouldAllowEditingAllowNonHostsToAddParticipants: Bool { true }
     var shouldAllowEditingMeetingDescription: Bool { true }
 

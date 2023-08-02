@@ -9,6 +9,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
     var endDate: Date
     var meetingDescription: String
     var calendarInviteEnabled: Bool
+    var waitingRoomEnabled: Bool
     var allowNonHostsToAddParticipantsEnabled: Bool
     var participantHandleList: [HandleEntity]
     var rules: ScheduledMeetingRulesEntity
@@ -19,6 +20,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
     var shouldAllowEditingMeetingLink: Bool
     var shouldAllowEditingParticipants: Bool
     var shouldAllowEditingCalendarInvite: Bool
+    var shouldAllowEditingWaitingRoom: Bool
     var shouldAllowEditingAllowNonHostsToAddParticipants: Bool
     var shouldAllowEditingMeetingDescription: Bool
     var completion: ScheduleMeetingViewConfigurationCompletion
@@ -32,6 +34,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
         endDate: Date = Date(),
         meetingDescription: String = "",
         calendarInviteEnabled: Bool = false,
+        waitingRoomEnabled: Bool = false,
         allowNonHostsToAddParticipantsEnabled: Bool = false,
         participantHandleList: [HandleEntity] = [],
         rules: ScheduledMeetingRulesEntity = .init(frequency: .invalid),
@@ -42,6 +45,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
         shouldAllowEditingMeetingLink: Bool = false,
         shouldAllowEditingParticipants: Bool = false,
         shouldAllowEditingCalendarInvite: Bool = false,
+        shouldAllowEditingWaitingRoom: Bool = false,
         shouldAllowEditingAllowNonHostsToAddParticipants: Bool = false,
         shouldAllowEditingMeetingDescription: Bool = false,
         completion: ScheduleMeetingViewConfigurationCompletion = .showMessageForScheduleMeeting(
@@ -56,6 +60,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
         self.endDate = endDate
         self.meetingDescription = meetingDescription
         self.calendarInviteEnabled = calendarInviteEnabled
+        self.waitingRoomEnabled = waitingRoomEnabled
         self.allowNonHostsToAddParticipantsEnabled = allowNonHostsToAddParticipantsEnabled
         self.participantHandleList = participantHandleList
         self.rules = rules
@@ -66,6 +71,7 @@ final class MockScheduleMeetingViewConfiguration: ScheduleMeetingViewConfigurabl
         self.shouldAllowEditingMeetingLink = shouldAllowEditingMeetingLink
         self.shouldAllowEditingParticipants = shouldAllowEditingParticipants
         self.shouldAllowEditingCalendarInvite = shouldAllowEditingCalendarInvite
+        self.shouldAllowEditingWaitingRoom = shouldAllowEditingWaitingRoom
         self.shouldAllowEditingAllowNonHostsToAddParticipants = shouldAllowEditingAllowNonHostsToAddParticipants
         self.shouldAllowEditingMeetingDescription = shouldAllowEditingMeetingDescription
         self.completion = completion

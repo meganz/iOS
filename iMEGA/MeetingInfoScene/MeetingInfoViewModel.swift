@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPresentation
 
 protocol MeetingInfoRouting {
     func showSharedFiles(for chatRoom: ChatRoomEntity)
@@ -29,7 +30,9 @@ final class MeetingInfoViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let router: any MeetingInfoRouting
+    @Published var isWaitingRoomOn = false
     @Published var isAllowNonHostToAddParticipantsOn = true
     @Published var isPublicChat = true
     @Published var isUserInChat = true
@@ -48,6 +51,8 @@ final class MeetingInfoViewModel: ObservableObject {
     @Published var subtitle: String = ""
     @Published var scheduledMeeting: ScheduledMeetingEntity
     
+    lazy var isWaitingRoomFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
+    
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: some MeetingInfoRouting,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
@@ -56,7 +61,8 @@ final class MeetingInfoViewModel: ObservableObject {
          chatUseCase: some ChatUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          chatLinkUseCase: some ChatLinkUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
@@ -67,6 +73,7 @@ final class MeetingInfoViewModel: ObservableObject {
         self.accountUseCase = accountUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
         
         if let chatRoom {

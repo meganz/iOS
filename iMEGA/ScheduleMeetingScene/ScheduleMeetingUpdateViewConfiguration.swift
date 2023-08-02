@@ -10,6 +10,7 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
     var endDate: Date { scheduledMeeting.endDate }
     var meetingDescription: String { scheduledMeeting.description }
     var calendarInviteEnabled: Bool { scheduledMeeting.flags.emailsEnabled }
+    var waitingRoomEnabled: Bool { scheduledMeeting.waitingRoom }
     var rules: ScheduledMeetingRulesEntity { scheduledMeeting.rules }
     var participantHandleList: [HandleEntity] { participantHandleListInChatRoom() }
     var meetingLinkEnabled: Bool = false
@@ -20,6 +21,7 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
     var shouldAllowEditingMeetingLink: Bool { true }
     var shouldAllowEditingParticipants: Bool { true }
     var shouldAllowEditingCalendarInvite: Bool { true }
+    var shouldAllowEditingWaitingRoom: Bool { true }
     var shouldAllowEditingAllowNonHostsToAddParticipants: Bool { true }
     var shouldAllowEditingMeetingDescription: Bool { true }
 
@@ -146,6 +148,7 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
             description: meeting.description,
             attributes: scheduledMeeting.attributes,
             overrides: scheduledMeeting.overrides,
+            waitingRoom: scheduledMeeting.waitingRoom,
             flags: ScheduledMeetingFlagsEntity(emailsEnabled: meeting.calendarInvite),
             rules: meeting.rules ?? .init(frequency: .invalid)
         )

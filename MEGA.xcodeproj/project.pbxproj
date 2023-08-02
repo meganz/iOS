@@ -1276,6 +1276,8 @@
 		9949C3622A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */; };
 		9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
+		996F742C2A794B9D007209F0 /* MeetingInfoWaitingRoomSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */; };
+		996F742D2A794BAB007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */; };
 		9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
@@ -3830,6 +3832,8 @@
 		9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGeneratorTest.swift; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
 		996309C52A78A61300382C38 /* SendToViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SendToViewController+Additions.swift"; path = "Chat/SendToViewController+Additions.swift"; sourceTree = "<group>"; };
+		996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoWaitingRoomSettingView.swift; sourceTree = "<group>"; };
+		996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWaitingRoomView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
 		99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingLinkActivityItemSource.swift; sourceTree = "<group>"; };
 		9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewWrapper.swift; sourceTree = "<group>"; };
@@ -8684,6 +8688,7 @@
 				834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */,
 				83792B872950A4080033ED3E /* MeetingDescriptionView.swift */,
 				83B4FC66292401A000364F04 /* MeetingInfoHeaderView.swift */,
+				996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */,
 				8358A6E72925460800EE197C /* ToggleView.swift */,
 			);
 			path = Views;
@@ -8854,6 +8859,7 @@
 				BF085CA029E66B11001E6AB7 /* ScheduleMeetingCreationOpenInviteView.swift */,
 				BFAD0FAF2A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift */,
 				BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */,
+				996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */,
 				BFAD0FA32A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift */,
 				BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */,
 				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
@@ -13573,6 +13579,7 @@
 				83BFDBD7291BE84D00FFFEA0 /* MeetingInfoView.swift in Sources */,
 				83BFDBD5291BE6A300FFFEA0 /* MeetingInfoViewController.swift in Sources */,
 				83BFDBD3291BE67900FFFEA0 /* MeetingInfoViewModel.swift in Sources */,
+				996F742C2A794B9D007209F0 /* MeetingInfoWaitingRoomSettingView.swift in Sources */,
 				99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */,
 				BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */,
 				BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */,
@@ -14155,6 +14162,7 @@
 				BF6C83D92A0891C4000517E2 /* ScheduleMeetingCreationRecurrenceOptionsRouter.swift in Sources */,
 				BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */,
 				BF6C83D72A089170000517E2 /* ScheduleMeetingCreationRecurrenceOptionsViewModel.swift in Sources */,
+				996F742D2A794BAB007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift in Sources */,
 				BFAD0FA42A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift in Sources */,
 				BF2675D92A32988A00736759 /* ScheduleMeetingCreationWeeklyCustomOptionsViewModel.swift in Sources */,
 				83C9CE812A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift in Sources */,

@@ -553,6 +553,7 @@ internal enum Asset {
       internal enum Info {
         internal static let allowNonHostToAddParticipant = ImageAsset(name: "allowNonHostToAddParticipant")
         internal static let enableChatNotifications = ImageAsset(name: "enableChatNotifications")
+        internal static let enableWaitingRoom = ImageAsset(name: "enableWaitingRoom")
         internal static let manageChatHistory = ImageAsset(name: "manageChatHistory")
         internal static let meetingLink = ImageAsset(name: "meetingLink")
         internal static let sharedFilesInfo = ImageAsset(name: "sharedFilesInfo")

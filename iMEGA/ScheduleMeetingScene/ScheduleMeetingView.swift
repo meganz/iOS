@@ -17,6 +17,10 @@ struct ScheduleMeetingView: View {
                     ErrorView(error: Strings.Localizable.Meetings.ScheduleMeeting.MeetingName.lenghtError)
                 }
                 ScheduleMeetingCreationPropertiesView(viewModel: viewModel)
+                ScheduleMeetingCreationInvitationView(viewModel: viewModel)
+                if viewModel.isWaitingRoomFeatureEnabled {
+                    ScheduleMeetingCreationWaitingRoomView(waitingRoomEnabled: $viewModel.waitingRoomEnabled, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
+                }
                 ScheduleMeetingCreationOpenInviteView(viewModel: viewModel)
                 ScheduleMeetingCreationDescriptionView(viewModel: viewModel, isBottomViewInFocus: $isBottomViewInFocus)
                 
