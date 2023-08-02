@@ -14,69 +14,17 @@ If you want to be the first one to receive the updates, join the MEGA beta follo
 This document will guide you to build the application on a Mac machine with Xcode.
 
 #### Prerequisites
-In order to build MEGA for iOS locally, it is necessary to install the following tools on the local machine:
+In order to build MEGA for iOS locally, it is necessary to install [Xcode](https://itunes.apple.com/app/xcode/id497799835?mt=12) on the local machine:
 
-- Install [Xcode](https://itunes.apple.com/app/xcode/id497799835?mt=12) in your system.
-- Install [CMake](https://cmake.org/install/).
-- Install [MEGA CMD](https://mega.io/cmd)
+#### Configure the project - for public users
+1. Open the .gitmodules file and update the URL for the "karere" submodule to https://github.com/meganz/MEGAchat.git, and the URL for the "SDK" submodule to https://github.com/meganz/SDK.git.
+2. In the SPM dependencies, replace the current package with the URL https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios and instead use https://github.com/meganz/mobile-analytics-ios.git.
 
-#### Clone the project
-
-If you are the general public user, please open .gitmodules file and:
-
-1. Change url for karere submodule, [use this one](https://github.com/meganz/MEGAchat.git)
-2. Change url for SDK submodule, [use this one](https://github.com/meganz/SDK.git)
-
-#### Install Ruby, update submodules, download third party libraries and configure pre-commit hook
-The installation of `libyaml` requires `sudo` to run `make install`. Alternatively, you can execute `./configure.sh`, and when the `sudo` command is prompted, you will be asked to enter your login password.
-```
-sudo ./configure.sh
-```
-
-#### Build KMM mobile analytics library
-If you are the general public user:
-1. Set up KMM build tools
-    1. Install [HomeBrew](https://brew.sh/) (if not yet)
-    2. Install JDKL17 (if not yet)
-        ```shell
-        brew install openjdk@17
-        ```
-    3. Open [Android Command Line tools](https://developer.android.com/studio), scroll down to `Command line tools only`, download commandline tool for Mac and unzip to folder `cmdline-tools`
-        ```shell
-        mv cmdline-tools/ tools
-        mkdir -p ~/android-sdk/cmdline-tools
-        mv tools ~/android-sdk/cmdline-tools/
-    
-        cd ~/android-sdk/cmdline-tools/tools/bin
-
-        ./sdkmanager "platforms;android-33" "platform-tools" "build-tools;33.0.0"
-        #    - "y" to accept agreement and finish installation
-        ```
-    4. Set environment variable
-        ```
-        export ANDROID_HOME=<YOUR_HOME>/android-sdk
-        export JAVA_HOME=<PATH-TO-JDK-INSTALLATION>
-        ```
-        For Apple Sillicon, your `PATH-TO-JDK-INSTALLATION` would be `/opt/homebrew/opt/openjdk@17`. For Intel chip, change the homebrew installation path accordingly. 
-2. Download [Mobile Analytics](https://github.com/meganz/mobile-analytics) source code
-    ```shell
-    git clone --recursive https://github.com/meganz/mobile-analytics.git
-    cd mobile-analytics
-    git checkout main
-    ```
-3. Build Mobile Analytics    
-    ```shell
-    ./gradlew assemble
-    ./gradlew createSwiftPackage
-    ```
-    Generated Swift Package can be found under `SwiftPackages/MEGAAnalyticsiOS`.
-
-4. In next step, import the Swift Package in XCode
-
-#### Open and Run the project
-1. Open `iMEGA.xcworkspace`.
-2. Make sure the `MEGA` target is selected.
-3. Build and run (⌘R).
+#### Run the project
+1. Use the terminal to execute `./configure.sh`
+2. Open `iMEGA.xcworkspace`.
+3. Make sure the `MEGA` target is selected.
+4. Build and run (⌘R).
 
 ## Build 3rdparty packages manually (Optional)
 If you want to build the third party dependencies by yourself: 
