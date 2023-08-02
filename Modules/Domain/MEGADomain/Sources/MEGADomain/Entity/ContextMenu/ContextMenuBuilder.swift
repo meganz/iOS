@@ -426,7 +426,7 @@ public final class ContextMenuBuilder {
             displayInline: true,
             children: [
                 selectMenu(),
-                importFromFiles,
+                importFolderLink,
                 download,
                 shareLink,
                 sendToChat
