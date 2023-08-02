@@ -35,7 +35,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     var isShowBuyButton = false
     
     @Published var selectedTermTab: AccountPlanTermEntity = .yearly {
-        didSet { checkSelectedPlanType() }
+        didSet { toggleBuyButton() }
     }
     @Published private(set) var selectedPlanType: AccountTypeEntity? {
         didSet { toggleBuyButton() }
@@ -134,7 +134,11 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     private func toggleBuyButton() {
-        isShowBuyButton = selectedPlanType != nil
+        guard let currentSelectedPlan else {
+            isShowBuyButton = false
+            return
+        }
+        isShowBuyButton = isSelectionEnabled(forPlan: currentSelectedPlan)
     }
     
     @MainActor
@@ -142,20 +146,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         selectedTermTab = accountDetails.subscriptionCycle == .monthly ? .monthly : .yearly
     }
     
-    private func checkSelectedPlanType() {
-        guard let currentPlan else { return }
-        
-        switch accountDetails.subscriptionCycle {
-        case .monthly, .yearly:
-            if let selectedPlanType,
-               selectedTermTab == currentPlan.term,
-               selectedPlanType == currentPlan.type {
-                self.selectedPlanType = nil
-            }
-        default: return
-        }
-    }
-
     @MainActor
     private func setCurrentPlan(type: AccountTypeEntity) {
         guard type != .free else {
@@ -300,7 +290,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     private func isPlanSelected(_ plan: AccountPlanEntity) -> Bool {
         guard let selectedPlanType else { return false }
-        return selectedPlanType == plan.type
+        return selectedPlanType == plan.type && isSelectionEnabled(forPlan: plan)
     }
     
     private func isSelectionEnabled(forPlan plan: AccountPlanEntity) -> Bool {
