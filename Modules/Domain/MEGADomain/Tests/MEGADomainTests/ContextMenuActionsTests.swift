@@ -128,7 +128,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setShowMediaDiscovery(true)
                                                 .build())
 
-        XCTAssertTrue(filterUploadAddActions(from: decomposeMenuIntoActions(menu: menuEntity)) == UploadAddActionEntity.allCases)
+        XCTAssertTrue(filterUploadAddActions(from: decomposeMenuIntoActions(menu: menuEntity)) == [.chooseFromPhotos, .capture, .importFrom, .scanDocument, .newFolder, .newTextFile])
     }
     
     func testDisplayMenu() throws {

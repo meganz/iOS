@@ -76,6 +76,8 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "capture", title: Strings.Localizable.capturePhotoVideo, image: Asset.Images.ActionSheetIcons.capture.image)
         case .importFrom:
             return ContextMenuDataModel(identifier: "importFrom", title: Strings.Localizable.CloudDrive.Upload.importFromFiles, image: Asset.Images.InfoActions.import.image)
+        case .importFolderLink:
+            return ContextMenuDataModel(identifier: "importFrom", title: Strings.Localizable.importToCloudDrive, image: Asset.Images.InfoActions.import.image)
         case .scanDocument:
             return ContextMenuDataModel(identifier: "scanDocument", title: Strings.Localizable.scanDocument, image: Asset.Images.ActionSheetIcons.scanDocument.image)
         case .newFolder:

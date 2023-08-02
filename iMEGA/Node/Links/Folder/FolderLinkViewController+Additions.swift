@@ -11,7 +11,7 @@ extension FolderLinkViewController {
         }
     }
 
-    @objc func importFromFiles() {
+    @objc func importFilesFromFolderLink() {
         if SAMKeychain.password(forService: "MEGA", account: "sessionV3") != nil {
             guard let navigationController =
                     UIStoryboard(
