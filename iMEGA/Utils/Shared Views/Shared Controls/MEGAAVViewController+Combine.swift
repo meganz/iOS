@@ -30,4 +30,10 @@ extension MEGAAVViewController {
         
         return NSSet(set: subscriptions)
     }
+    
+    @objc func cancelPlayerProcess() {
+        player?.pause()
+        player?.currentItem?.cancelPendingSeeks()
+        player?.currentItem?.asset.cancelLoading()
+    }
 }
