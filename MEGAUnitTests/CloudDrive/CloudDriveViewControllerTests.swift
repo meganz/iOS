@@ -62,13 +62,14 @@ final class CloudDriveViewControllerTests: XCTestCase {
     
     // MARK: - ReloadUI
     
-    func testReloadUI_whenUpdatesOnOneNodeOnViewModePreferenceThumbnailHasFileTypeOnly_reloadCollectionAtIndexPath() {
+    func testReloadUI_whenUpdatesOnOneNodeOnViewModePreferenceThumbnailHasFileTypeOnlyAndSelectFavoriteAction_reloadCollectionAtIndexPath() {
         simulateUserHasThumbnailViewModePreference()
         let displayMode = cloudDriveDisplayMode()
         let sampleNode = anyNode(handle: anyHandle(), nodeType: .file)
         let sut = makeSUT(nodes: [sampleNode], displayMode: displayMode)
         setNoEditingState(on: sut)
         
+        sut.wasSelectingFavoriteUnfavoriteNodeActionOption = true
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
         XCTAssertEqual(sut.collectionView().messages, [ .reloadDataAt([ IndexPath(item: 0, section: 1) ]) ])
@@ -371,6 +372,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
 
 private extension CloudDriveViewController {
     func simulateUserSelectFavorite(_ nodeActionViewController: NodeActionViewController, _ selectedNode: MockNode) {
+        wasSelectingFavoriteUnfavoriteNodeActionOption = true
         nodeAction(nodeActionViewController, didSelect: .favourite, for: selectedNode, from: "any-sender")
     }
     
