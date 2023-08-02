@@ -89,13 +89,6 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                 isEditingModeBeingDisabled = false
             }
         }
-        
-        if presentingViewController != nil {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close,
-                                                               style: .plain,
-                                                               target: self,
-                                                               action: #selector(dismissController))
-        }
     }
     
     @objc func dismissController() {
