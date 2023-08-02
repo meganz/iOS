@@ -13,3 +13,15 @@ extension MEGABackupHeartbeatStatus {
         }
     }
 }
+
+extension BackupHeartbeatStatusEntity {
+    public func toMEGABackupHeartbeatStatus() -> MEGABackupHeartbeatStatus {
+        switch self {
+        case .upToDate: return .upToDate
+        case .syncing: return .syncing
+        case .pending: return .pending
+        case .inactive: return .inactive
+        case .unknown: return .unknown
+        }
+    }
+}
