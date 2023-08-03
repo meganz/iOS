@@ -47,6 +47,9 @@ struct ImportAlbumView: View {
                         selectedNode: $viewModel.importFolderLocation)
                 .ignoresSafeArea(edges: .bottom)
         }
+        .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
+            CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
+        }
         .onAppear {
             viewModel.loadPublicAlbum()
         }

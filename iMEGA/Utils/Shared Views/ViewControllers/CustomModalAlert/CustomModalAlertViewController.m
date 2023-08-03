@@ -45,6 +45,11 @@
 }
 
 #pragma mark - Lifecycle
+- (void)didMoveToParentViewController:(UIViewController *)parent {
+    [super didMoveToParentViewController:parent];
+    
+    parent.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

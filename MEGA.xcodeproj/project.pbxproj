@@ -149,6 +149,7 @@
 		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
 		24E99B462A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */; };
 		24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */; };
+		2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */; };
 		2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */; };
 		2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */; };
 		2562E8C72A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */; };
@@ -2633,6 +2634,7 @@
 		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
 		24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleSecureFingerprintFlagUIAlertAdapter.swift; sourceTree = "<group>"; };
 		24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterTests.swift; sourceTree = "<group>"; };
+		2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertView.swift; sourceTree = "<group>"; };
 		2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManagerTests.swift; sourceTree = "<group>"; };
 		2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewDiffableDataSource.swift; sourceTree = "<group>"; };
@@ -7060,6 +7062,7 @@
 			children = (
 				124667EA275DB81F00C94335 /* Extensions */,
 				124667F4275DB82000C94335 /* Routers */,
+				2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */,
 				124667E9275DB81300C94335 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
@@ -13285,6 +13288,7 @@
 				12466802275DB82000C94335 /* CustomModalAlertContactsRouter.swift in Sources */,
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
 				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
+				2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */,
 				124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */,
 				124667FF275DB82000C94335 /* CustomModalAlertViewController+Config.swift in Sources */,
 				124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */,

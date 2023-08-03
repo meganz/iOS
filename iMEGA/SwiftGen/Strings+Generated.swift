@@ -2820,6 +2820,16 @@ public enum Strings {
       }
     }
     public enum AlbumLink {
+      public enum ImportFailed {
+        public enum StorageQuotaWillExceed {
+          public enum Alert {
+            /// You don't have enough storage to save this album to your Cloud drive. Upgrade now to get more stoarage.
+            public static let detail = Strings.tr("Localizable", "albumLink.importFailed.storageQuotaWillExceed.alert.detail")
+            /// Cannot save album
+            public static let title = Strings.tr("Localizable", "albumLink.importFailed.storageQuotaWillExceed.alert.title")
+          }
+        }
+      }
       public enum InvalidAlbum {
         public enum Alert {
           /// Ok, got it
