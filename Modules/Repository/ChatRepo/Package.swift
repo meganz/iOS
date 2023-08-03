@@ -17,7 +17,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
-        .package(path: "../../MEGAChatSdk")
+        .package(path: "../../MEGAChatSdk"),
+        .package(path: "../../MEGASDKRepo")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -26,7 +27,8 @@ let package = Package(
             name: "ChatRepo",
             dependencies: [
                 "MEGADomain",
-                "MEGAChatSdk"
+                "MEGAChatSdk",
+                "MEGASDKRepo"
             ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         )
