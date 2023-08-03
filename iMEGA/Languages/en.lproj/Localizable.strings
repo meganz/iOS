@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="The link to the album has been removed or the album has been deleted. Contact the person who shared the link with you.";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, got it";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Cannot save album";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="You don't have enough storage to save this album to your Cloud drive. Upgrade now to get more stoarage.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */

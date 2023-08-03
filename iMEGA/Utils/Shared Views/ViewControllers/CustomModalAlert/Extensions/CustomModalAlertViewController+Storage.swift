@@ -63,4 +63,27 @@ extension CustomModalAlertViewController {
         
         configureUpgradeAccountThreeButtons(title, detailText, base64Handle, imageName, hasBonusButton: false)
     }
+    
+    func configureForStorageQuotaWillExceed(for displayMode: CustomModalAlertView.Mode.StorageQuotaWillExceedDisplayMode) {
+        
+        let title: String
+        let detailText: String
+        let imageName: ImageAsset
+        
+        switch displayMode {
+        case .albumLink:
+            title = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.title
+            detailText = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.detail
+            imageName = Asset.Images.WarningStorageAlmostFull.storageFull
+        }
+        
+        configureUpgradeAccountThreeButtons(
+            title,
+            detailText,
+            nil,
+            imageName.name,
+            hasBonusButton: false,
+            firstButtonTitle: Strings.Localizable.upgrade,
+            dismissTitle: Strings.Localizable.cancel)
+    }
 }

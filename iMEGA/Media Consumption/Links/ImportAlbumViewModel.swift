@@ -9,6 +9,7 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     private let publicAlbumUseCase: any PublicAlbumUseCaseProtocol
     private let albumNameUseCase: any AlbumNameUseCaseProtocol
+    private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private var publicLinkWithDecryptionKey: URL?
     
     let publicLink: URL
@@ -25,6 +26,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showShareLink = false
     @Published var showCannotAccessAlbumAlert = false
     @Published var showImportAlbumLocation = false
+    @Published var showStorageQuotaWillExceed = false
     @Published var importFolderLocation: NodeEntity?
     @Published var showRenameAlbumAlert = false
     @Published private(set) var isSelectionEnabled = false
@@ -43,10 +45,12 @@ final class ImportAlbumViewModel: ObservableObject {
     
     init(publicLink: URL,
          publicAlbumUseCase: some PublicAlbumUseCaseProtocol,
-         albumNameUseCase: some AlbumNameUseCaseProtocol) {
+         albumNameUseCase: some AlbumNameUseCaseProtocol,
+         accountStorageUseCase: some AccountStorageUseCaseProtocol) {
         self.publicLink = publicLink
         self.publicAlbumUseCase = publicAlbumUseCase
         self.albumNameUseCase = albumNameUseCase
+        self.accountStorageUseCase = accountStorageUseCase
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
@@ -87,6 +91,19 @@ final class ImportAlbumViewModel: ObservableObject {
     func importAlbum() {
         Task { @MainActor [weak self] in
             guard let self else { return }
+            
+            do {
+                try await accountStorageUseCase.refreshCurrentAccountDetails()
+            } catch {
+                MEGALogError("[Import Album] Error loading account details. Error: \(error)")
+                return
+            }
+
+            guard !accountStorageUseCase.willStorageQuotaExceed(after: photoLibraryContentViewModel.library.allPhotos) else {
+                showStorageQuotaWillExceed.toggle()
+                return
+            }
+            
             guard let albumName,
                   await !isAlbumNameInConflict(albumName) else {
                 showRenameAlbumAlert.toggle()

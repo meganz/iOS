@@ -250,16 +250,85 @@ final class ImportAlbumViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
+    func testImportAlbum_onAccountStorageWillExceed_shouldShowStorageAlert() throws {
+        // Arrange
+        let album = SetEntity(handle: 3,
+                              name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: true)
+            
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           accountStorageUseCase: accountStorageUseCase)
+        
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.loadPublicAlbum()
+        }
+        
+        let exp = expectation(description: "should show storage alert")
+        var result: [Bool] = []
+        sut.$showStorageQuotaWillExceed
+            .dropFirst()
+            .first()
+            .sink(
+                receiveCompletion: { _ in exp.fulfill() },
+                receiveValue: { result.append($0) })
+            .store(in: &subscriptions)
+        
+        // Act
+        sut.importAlbum()
+        wait(for: [exp], timeout: 1.0)
+        
+        // Assert
+        XCTAssertEqual(result, [true])
+    }
+    
+    func testImportAlbum_onAccountStorageWillNotExceed_shouldNotShowStorageAlert() throws {
+        // Arrange
+        let album = SetEntity(handle: 3,
+                              name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: false)
+            
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           accountStorageUseCase: accountStorageUseCase)
+        
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.loadPublicAlbum()
+        }
+        
+        let exp = expectation(description: "should not show storage alert")
+        var result: [Bool] = []
+        sut.$showStorageQuotaWillExceed
+            .timeout(.seconds(1), scheduler: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { _ in exp.fulfill() },
+                receiveValue: { result.append($0) })
+            .store(in: &subscriptions)
+        
+        // Act
+        sut.importAlbum()
+        wait(for: [exp], timeout: 1.0)
+        
+        // Assert
+        XCTAssertEqual(result, [false])
+    }
+    
     // MARK: - Private
     
     private func makeImportAlbumViewModel(publicLink: URL,
                                           publicAlbumUseCase: some PublicAlbumUseCaseProtocol = MockPublicAlbumUseCase(),
-                                          albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase()
+                                          albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
+                                          accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase()
     ) -> ImportAlbumViewModel {
         ImportAlbumViewModel(
             publicLink: publicLink,
             publicAlbumUseCase: publicAlbumUseCase,
-            albumNameUseCase: albumNameUseCase)
+            albumNameUseCase: albumNameUseCase,
+            accountStorageUseCase: accountStorageUseCase)
     }
     
     private func makeSharedAlbumEntity(set: SetEntity = SetEntity(handle: 1),
