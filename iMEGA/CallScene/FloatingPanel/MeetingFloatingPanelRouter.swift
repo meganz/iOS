@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation

@@ -9,3 +9,5 @@ public extension MEGAChatSdk {
         return chatSdk
     }()
 }
+
+extension MEGAChatSdk: @unchecked Sendable { }
