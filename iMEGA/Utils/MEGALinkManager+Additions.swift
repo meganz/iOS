@@ -37,14 +37,27 @@ extension MEGALinkManager {
             MEGALinkManager.showLinkNotValid()
             return
         }
+        let userAlbumRepository = UserAlbumRepository.newRepo
+        let shareAlbumRepository = ShareAlbumRepository(
+            sdk: MEGASdk.shared,
+            publicAlbumNodeProvider: PublicAlbumNodeProvider.shared)
+        let importAlbumUseCase = ImportPublicAlbumUseCase(
+            saveAlbumToFolderUseCase: SaveAlbumToFolderUseCase(
+                nodeActionRepository: NodeActionRepository.newRepo,
+             shareAlbumRepository: shareAlbumRepository),
+            userAlbumRepository: userAlbumRepository)
         
         let vm = ImportAlbumViewModel(
             publicLink: publicLink,
             publicAlbumUseCase: PublicAlbumUseCase(
-                shareAlbumRepository: ShareAlbumRepository.newRepo),
+                shareAlbumRepository: shareAlbumRepository),
             albumNameUseCase: AlbumNameUseCase(
                 userAlbumRepository: UserAlbumRepository.newRepo),
-            accountStorageUseCase: AccountStorageUseCase(accountRepository: AccountRepository.newRepo))
+            accountStorageUseCase: AccountStorageUseCase(accountRepository: AccountRepository.newRepo),
+            importPublicAlbumUseCase: importAlbumUseCase,
+            accountUseCase: AccountUseCase(
+                repository: AccountRepository.newRepo))
+        
         let viewController = UIHostingController(rootView: ImportAlbumView(viewModel: vm))
         viewController.modalPresentationStyle = .fullScreen
         
