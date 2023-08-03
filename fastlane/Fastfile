@@ -297,7 +297,7 @@ platform :ios do
       scheme: SCHEME,
       clean: true,
       device: "iPhone 14 Pro Max",
-      cloned_source_packages_path: "SwiftPackages",
+      cloned_source_packages_path: "./../SwiftPackages",
       disable_package_automatic_updates: true,
       output_directory: ".",
       derived_data_path: "derivedData",
