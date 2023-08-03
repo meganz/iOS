@@ -159,7 +159,7 @@
         case BrowserActionCopy: {
             [self setupDefaultElements];
             
-            self.toolBarCopyBarButtonItem.title = NSLocalizedString(@"copy", @"List option shown on the details of a file or folder");
+            self.toolBarCopyBarButtonItem.title = NSLocalizedString(@"cloudDrive.browser.paste", @"List option shown on the details of a file or folder after the user has copied it");
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
         }
