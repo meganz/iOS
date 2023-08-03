@@ -11,7 +11,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     private let sdk: MEGAChatSdk
     private var chatRoomUpdateListeners = [ChatRoomUpdateListener]()
     private var chatRoomMessageLoadedListeners = [ChatRoomMessageLoadedListener]()
-    private var openChatRooms = Set<HandleEntity>()
+    @Atomic private var openChatRooms = Set<HandleEntity>()
     
     private init(sdk: MEGAChatSdk) {
         self.sdk = sdk
@@ -39,7 +39,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity? {
         guard let megaChatRoom = sdk.chatRoom(forChatId: chatRoom.chatId),
-                let privilege = MEGAChatRoomPrivilege(rawValue: megaChatRoom.peerPrivilege(byHandle: userHandle))?.toOwnPrivilegeEntity() else {
+              let privilege = MEGAChatRoomPrivilege(rawValue: megaChatRoom.peerPrivilege(byHandle: userHandle))?.toOwnPrivilegeEntity() else {
             return nil
         }
         return privilege
@@ -58,7 +58,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
             completion(.success(megaChatRoom.toChatRoomEntity()))
         }
     }
-
+    
     func createPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         let publicChatLinkCreationDelegate = MEGAChatGenericRequestDelegate { (request, error) in
             guard error.type == .MEGAChatErrorTypeOk else {
@@ -92,7 +92,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         
         sdk.queryChatLink(chatRoom.chatId, delegate: publicChatLinkCreationDelegate)
     }
-
+    
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "No name") with title \(title)")
         sdk.setChatTitle(chatRoom.chatId, title: title, delegate: MEGAChatGenericRequestDelegate { (request, error) in
@@ -148,7 +148,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
             )
         })
     }
-                            
+    
     func setMessageSeenForChat(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) {
         sdk.setMessageSeenForChat(chatRoom.chatId, messageId: messageId)
     }
@@ -261,7 +261,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     }
     
     func openChatRoom(chatId: HandleEntity, delegate: some MEGAChatRoomDelegate) throws {
-        openChatRooms.insert(chatId)
+        $openChatRooms.mutate { $0.insert(chatId) }
         
         if !sdk.openChatRoom(chatId, delegate: delegate) {
             throw ChatRoomErrorEntity.generic
@@ -269,10 +269,10 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     }
     
     func closeChatRoom(chatId: HandleEntity, delegate: some MEGAChatRoomDelegate) {
-        openChatRooms.remove(chatId)
+        $openChatRooms.mutate { $0.remove(chatId) }
         chatRoomUpdateListeners.removeAll { $0.chatId == chatId }
         chatRoomMessageLoadedListeners.removeAll { $0.chatId == chatId }
-
+        
         sdk.closeChatRoom(chatId, delegate: delegate)
     }
     
@@ -312,7 +312,7 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         guard let message = sdk.message(forChat: chatRoom.chatId, messageId: message.messageId), let megaChange = change.toMEGAScheduledMeetingChangeType() else {
             return false
         }
-
+        
         return message.hasScheduledMeetingChange(for: megaChange)
     }
 }
@@ -366,7 +366,7 @@ private final class ChatRoomMessageLoadedListener: NSObject, MEGAChatRoomDelegat
     var monitor: AnyPublisher<ChatMessageEntity?, Never> {
         source.eraseToAnyPublisher()
     }
-        
+    
     init(sdk: MEGAChatSdk, chatId: HandleEntity) {
         self.sdk = sdk
         self.chatId = chatId
@@ -386,7 +386,7 @@ private final class ChatRoomMessageLoadedListener: NSObject, MEGAChatRoomDelegat
 private class ChatRoomDelegateDTO: NSObject, MEGAChatRoomDelegate {
     private let chatId: ChatIdEntity
     private let chatRoomDelegate: ChatRoomDelegateEntity
-
+    
     init(chatId: ChatIdEntity, chatRoomDelegate: ChatRoomDelegateEntity) {
         self.chatId = chatId
         self.chatRoomDelegate = chatRoomDelegate
