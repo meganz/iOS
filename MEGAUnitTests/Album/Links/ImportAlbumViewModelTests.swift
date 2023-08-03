@@ -30,7 +30,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testLoadPublicAlbum_onFullAlbumLink_shouldChangeLinkStatusSetAlbumNameAndLoadPhotos() throws {
-        let photos = makePhotos()
+        let photos = try makePhotos()
         let albumName = "New album (5)"
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2, name: albumName))
         let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
@@ -42,12 +42,12 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isPhotosLoaded)
         
         let exp = expectation(description: "link status should change correctly")
+        exp.expectedFulfillmentCount = 2
+        var linkStatusResults = [AlbumPublicLinkStatus]()
         sut.$publicLinkStatus
             .dropFirst()
-            .collect(2)
-            .first()
             .sink {
-                XCTAssertEqual($0, [.inProgress, .loaded])
+                linkStatusResults.append($0)
                 exp.fulfill()
             }.store(in: &subscriptions)
         
@@ -55,6 +55,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
         
+        XCTAssertEqual(linkStatusResults, [.inProgress, .loaded])
         XCTAssertEqual(sut.albumName, albumName)
         XCTAssertEqual(sut.photoLibraryContentViewModel.library,
                        photos.toPhotoLibrary(withSortType: .newest))
@@ -69,12 +70,12 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertFalse(sut.showCannotAccessAlbumAlert)
         
         let exp = expectation(description: "link status should switch to in progress to invalid")
+        exp.expectedFulfillmentCount = 2
+        var linkStatusResults = [AlbumPublicLinkStatus]()
         sut.$publicLinkStatus
             .dropFirst()
-            .collect(2)
-            .first()
             .sink {
-                XCTAssertEqual($0, [.inProgress, .invalid])
+                linkStatusResults.append($0)
                 exp.fulfill()
             }.store(in: &subscriptions)
         
@@ -82,6 +83,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
         
+        XCTAssertEqual(linkStatusResults, [.inProgress, .invalid])
         XCTAssertTrue(sut.showCannotAccessAlbumAlert)
     }
     
@@ -89,7 +91,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let link = try requireDecryptionKeyAlbumLink
         let albumName = "New album (5)"
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 5, name: albumName))
-        let photos = makePhotos()
+        let photos = try makePhotos()
         let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
                                                   nodes: photos)
         let sut = makeImportAlbumViewModel(
@@ -99,12 +101,12 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
         
         let exp = expectation(description: "link status should change correctly")
+        exp.expectedFulfillmentCount = 2
+        var linkStatusResults = [AlbumPublicLinkStatus]()
         sut.$publicLinkStatus
             .dropFirst()
-            .collect(2)
-            .first()
             .sink {
-                XCTAssertEqual($0, [.inProgress, .loaded])
+                linkStatusResults.append($0)
                 exp.fulfill()
             }.store(in: &subscriptions)
         
@@ -112,6 +114,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
         
+        XCTAssertEqual(linkStatusResults, [.inProgress, .loaded])
         XCTAssertEqual(sut.albumName, albumName)
         XCTAssertEqual(sut.photoLibraryContentViewModel.library,
                        photos.toPhotoLibrary(withSortType: .newest))
@@ -148,7 +151,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.photoLibraryContentViewModel.selection.setSelectedPhotos([NodeEntity(handle: 5)])
         XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.oneItemSelected(1))
         
-        let multiplePhotos = makePhotos()
+        let multiplePhotos = try makePhotos()
         sut.photoLibraryContentViewModel.selection.setSelectedPhotos(multiplePhotos)
         XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.itemsSelected(multiplePhotos.count))
         
@@ -157,7 +160,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testIsToolbarButtonsDisabled_onContentLoadAndSelection_shouldEnableAndDisableCorrectly() throws {
-        let photos = makePhotos()
+        let photos = try makePhotos()
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
         let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
                                                   nodes: photos)
@@ -184,7 +187,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testSelectButtonOpacity_onLinkStatusAndSelectionHiddenChange_shouldChangeCorrectly() throws {
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
         let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
-                                                  nodes: [])
+                                                        nodes: [])
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         XCTAssertEqual(sut.selectButtonOpacity, 0.3, accuracy: 0.1)
@@ -257,7 +260,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
         let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
         let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: true)
-            
+        
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
                                            accountStorageUseCase: accountStorageUseCase)
@@ -267,13 +270,13 @@ final class ImportAlbumViewModelTests: XCTestCase {
         }
         
         let exp = expectation(description: "should show storage alert")
-        var result: [Bool] = []
+        exp.expectedFulfillmentCount = 2
+        var results: [Bool] = []
         sut.$showStorageQuotaWillExceed
-            .dropFirst()
-            .first()
-            .sink(
-                receiveCompletion: { _ in exp.fulfill() },
-                receiveValue: { result.append($0) })
+            .sink {
+                results.append($0)
+                exp.fulfill()
+            }
             .store(in: &subscriptions)
         
         // Act
@@ -281,7 +284,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         
         // Assert
-        XCTAssertEqual(result, [true])
+        XCTAssertEqual(results, [false, true])
     }
     
     func testImportAlbum_onAccountStorageWillNotExceed_shouldNotShowStorageAlert() throws {
@@ -291,7 +294,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
         let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
         let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: false)
-            
+        
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
                                            accountStorageUseCase: accountStorageUseCase)
@@ -300,13 +303,15 @@ final class ImportAlbumViewModelTests: XCTestCase {
             sut.loadPublicAlbum()
         }
         
+        XCTAssertFalse(sut.showStorageQuotaWillExceed)
+        
         let exp = expectation(description: "should not show storage alert")
-        var result: [Bool] = []
+        exp.isInverted = true
         sut.$showStorageQuotaWillExceed
-            .timeout(.seconds(1), scheduler: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { _ in exp.fulfill() },
-                receiveValue: { result.append($0) })
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
             .store(in: &subscriptions)
         
         // Act
@@ -314,7 +319,96 @@ final class ImportAlbumViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         
         // Assert
-        XCTAssertEqual(result, [false])
+        XCTAssertFalse(sut.showStorageQuotaWillExceed)
+    }
+    
+    func testImportFolderLocation_onFolderSelected_shouldImportAlbumPhotosAndShowSnackbar() throws {
+        let albumName = "New Album (1)"
+        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: albumName))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
+                                                        nodes: try makePhotos())
+        let importPublicAlbumUseCase = MockImportPublicAlbumUseCase(importAlbumResult: .success)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           importPublicAlbumUseCase: importPublicAlbumUseCase)
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.loadPublicAlbum()
+        }
+        
+        waitForLoadingToggleAndShowSnackBar(showLoading: sut.$showLoading.eraseToAnyPublisher(),
+                                            showSnackBar: sut.$showSnackBar.eraseToAnyPublisher()) {
+            sut.importFolderLocation = NodeEntity(handle: 64, isFolder: true)
+        }
+        
+        XCTAssertEqual(sut.snackBarViewModel().snackBar.message,
+                       Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(albumName))
+    }
+    
+    func testImportFolderLocation_onFolderSelectedAndImportFails_shouldShowErrorInSnackbar() throws {
+        let albumName = "New Album (1)"
+        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: albumName))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
+                                                        nodes: try makePhotos())
+        let importPublicAlbumUseCase = MockImportPublicAlbumUseCase(
+            importAlbumResult: .failure(GenericErrorEntity()))
+        
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           importPublicAlbumUseCase: importPublicAlbumUseCase)
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.loadPublicAlbum()
+        }
+        
+        waitForLoadingToggleAndShowSnackBar(showLoading: sut.$showLoading.eraseToAnyPublisher(),
+                                            showSnackBar: sut.$showSnackBar.eraseToAnyPublisher()) {
+            sut.importFolderLocation = NodeEntity(handle: 64, isFolder: true)
+        }
+        
+        XCTAssertEqual(sut.snackBarViewModel().snackBar.message,
+                       Strings.Localizable.AlbumLink.Alert.Message.albumFailedToSaveToCloudDrive(albumName))
+    }
+    
+    func testImportFolderLocation_noAlbumName_shouldDoNothingWhenCalled() throws {
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink)
+        
+        let exp = expectation(description: "Should not show loading")
+        exp.isInverted = true
+        sut.$showLoading
+            .dropFirst()
+            .sink { _ in
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.importFolderLocation = NodeEntity(handle: 64, isFolder: true)
+        
+        wait(for: [exp], timeout: 0.25)
+    }
+    
+    func testShowImportToolbarButton_userNotlLoggedIn_shouldNotShowImportBarButtonAndToggleWithSelection() throws {
+        let accountUseCase = MockAccountUseCase(isLoggedIn: false)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           accountUseCase: accountUseCase)
+        XCTAssertFalse(sut.showImportToolbarButton)
+        
+        sut.photoLibraryContentViewModel.selection.editMode = .active
+        
+        XCTAssertFalse(sut.showImportToolbarButton)
+    }
+    
+    func testShowImportToolbarButton_userLoggedIn_shouldShowImportBarButtonAndHideDuringSelection() throws {
+        let accountUseCase = MockAccountUseCase(isLoggedIn: true)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           accountUseCase: accountUseCase)
+        XCTAssertTrue(sut.showImportToolbarButton)
+        
+        sut.photoLibraryContentViewModel.selection.editMode = .active
+        
+        XCTAssertFalse(sut.showImportToolbarButton)
+        
+        sut.photoLibraryContentViewModel.selection.editMode = .inactive
+        
+        XCTAssertTrue(sut.showImportToolbarButton)
     }
     
     // MARK: - Private
@@ -322,13 +416,17 @@ final class ImportAlbumViewModelTests: XCTestCase {
     private func makeImportAlbumViewModel(publicLink: URL,
                                           publicAlbumUseCase: some PublicAlbumUseCaseProtocol = MockPublicAlbumUseCase(),
                                           albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
-                                          accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase()
+                                          accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
+                                          importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
+                                          accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase()
     ) -> ImportAlbumViewModel {
         ImportAlbumViewModel(
             publicLink: publicLink,
             publicAlbumUseCase: publicAlbumUseCase,
             albumNameUseCase: albumNameUseCase,
-            accountStorageUseCase: accountStorageUseCase)
+            accountStorageUseCase: accountStorageUseCase,
+            importPublicAlbumUseCase: importPublicAlbumUseCase,
+            accountUseCase: accountUseCase)
     }
     
     private func makeSharedAlbumEntity(set: SetEntity = SetEntity(handle: 1),
@@ -336,10 +434,13 @@ final class ImportAlbumViewModelTests: XCTestCase {
         SharedAlbumEntity(set: set, setElements: setElements)
     }
     
-    private func makePhotos() -> [NodeEntity] {
-        [NodeEntity(handle: 1, hasThumbnail: true, mediaType: .image),
-         NodeEntity(handle: 4, hasThumbnail: true, mediaType: .video),
-         NodeEntity(handle: 7, hasThumbnail: true, mediaType: .image)
+    private func makePhotos() throws -> [NodeEntity] {
+        [NodeEntity(name: "test_image_1.png", handle: 1, hasThumbnail: true,
+                    modificationTime: try "2023-01-01T22:05:04Z".date, mediaType: .image),
+         NodeEntity(name: "test_video_1.mp4", handle: 4, hasThumbnail: true,
+                    modificationTime: try "2023-01-01T22:05:04Z".date, mediaType: .video),
+         NodeEntity(name: "test_image_4.jpg", handle: 7, hasThumbnail: true,
+                    modificationTime: try "2023-01-01T22:05:04Z".date, mediaType: .image)
         ]
     }
     
@@ -357,5 +458,35 @@ final class ImportAlbumViewModelTests: XCTestCase {
         action()
         
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func waitForLoadingToggleAndShowSnackBar(showLoading: AnyPublisher<Bool, Never>,
+                                                     showSnackBar: AnyPublisher<Bool, Never>,
+                                                     action: () -> Void) {
+        let loading = expectation(description: "Should toggle loading to show then hide")
+        loading.expectedFulfillmentCount = 2
+        var showLoadingResult = [Bool]()
+        showLoading
+            .dropFirst()
+            .sink {
+                showLoadingResult.append($0)
+                loading.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        let snackBar = expectation(description: "Should show snackbar")
+        showSnackBar
+            .dropFirst()
+            .sink {
+                XCTAssertTrue($0)
+                snackBar.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        action()
+        
+        wait(for: [loading, snackBar], timeout: 1.0)
+        
+        XCTAssertEqual(showLoadingResult, [true, false])
     }
 }

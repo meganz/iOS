@@ -10,7 +10,12 @@ final class ImportAlbumViewModel: ObservableObject {
     private let publicAlbumUseCase: any PublicAlbumUseCaseProtocol
     private let albumNameUseCase: any AlbumNameUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
+    private let importPublicAlbumUseCase: any ImportPublicAlbumUseCaseProtocol
+    
     private var publicLinkWithDecryptionKey: URL?
+    private var subscriptions = Set<AnyCancellable>()
+    private var showSnackBarSubscription: AnyCancellable?
+    private var snackBarMessage = ""
     
     let publicLink: URL
     let photoLibraryContentViewModel: PhotoLibraryContentViewModel
@@ -19,6 +24,7 @@ final class ImportAlbumViewModel: ObservableObject {
         willSet {
             showingDecryptionKeyAlert = newValue == .requireDecryptionKey
             showCannotAccessAlbumAlert = newValue == .invalid
+            showLoading = newValue == .inProgress
         }
     }
     @Published var publicLinkDecryptionKey = ""
@@ -29,11 +35,14 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showStorageQuotaWillExceed = false
     @Published var importFolderLocation: NodeEntity?
     @Published var showRenameAlbumAlert = false
+    @Published var showSnackBar = false
     @Published private(set) var isSelectionEnabled = false
     @Published private(set) var selectButtonOpacity = 0.0
     @Published private(set) var albumName: String?
     @Published private(set) var selectionNavigationTitle: String = ""
     @Published private(set) var isToolbarButtonsDisabled = true
+    @Published private(set) var showLoading = false
+    @Published private(set) var showImportToolbarButton: Bool
     
     private var albumLink: String {
         (publicLinkWithDecryptionKey ?? publicLink).absoluteString
@@ -46,15 +55,21 @@ final class ImportAlbumViewModel: ObservableObject {
     init(publicLink: URL,
          publicAlbumUseCase: some PublicAlbumUseCaseProtocol,
          albumNameUseCase: some AlbumNameUseCaseProtocol,
-         accountStorageUseCase: some AccountStorageUseCaseProtocol) {
+         accountStorageUseCase: some AccountStorageUseCaseProtocol,
+         importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol) {
         self.publicLink = publicLink
         self.publicAlbumUseCase = publicAlbumUseCase
         self.albumNameUseCase = albumNameUseCase
         self.accountStorageUseCase = accountStorageUseCase
+        self.importPublicAlbumUseCase = importPublicAlbumUseCase
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
-        subscribeToSelection()
+        let isLoggedIn = accountUseCase.isLoggedIn()
+        showImportToolbarButton = isLoggedIn
+        subscribeToSelection(isLoggedIn: isLoggedIn)
+        subscibeToImportFolderSelection()
     }
     
     func loadPublicAlbum() {
@@ -98,7 +113,7 @@ final class ImportAlbumViewModel: ObservableObject {
                 MEGALogError("[Import Album] Error loading account details. Error: \(error)")
                 return
             }
-
+            
             guard !accountStorageUseCase.willStorageQuotaExceed(after: photoLibraryContentViewModel.library.allPhotos) else {
                 showStorageQuotaWillExceed.toggle()
                 return
@@ -111,6 +126,23 @@ final class ImportAlbumViewModel: ObservableObject {
             }
             showImportAlbumLocation.toggle()
         }
+    }
+    
+    func snackBarViewModel() -> SnackBarViewModel {
+        let snackBar = SnackBar(message: snackBarMessage)
+        let viewModel = SnackBarViewModel(snackBar: snackBar)
+        
+        showSnackBarSubscription = viewModel.$isShowSnackBar
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isShown in
+                guard let self else { return }
+                if isShown {
+                    snackBarMessage = ""
+                }
+                showSnackBar = isShown
+            }
+        
+        return viewModel
     }
     
     private func isAlbumNameInConflict(_ name: String) async -> Bool {
@@ -130,9 +162,9 @@ final class ImportAlbumViewModel: ObservableObject {
                 publicLinkStatus = .loaded
             } catch let error as SharedAlbumErrorEntity {
                 setLinkToInvalid()
-                MEGALogError("Error retrieving public album: \(error.localizedDescription)")
+                MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
             } catch {
-                MEGALogError("Error retrieving public album: \(error.localizedDescription)")
+                MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
             }
         }
     }
@@ -145,9 +177,9 @@ final class ImportAlbumViewModel: ObservableObject {
         publicLinkStatus = .invalid
         publicLinkWithDecryptionKey = nil
     }
-
-    private func subscribeToSelection() {
-        subscribeToEditMode()
+    
+    private func subscribeToSelection(isLoggedIn: Bool) {
+        subscribeToEditMode(isLoggedIn: isLoggedIn)
         subscribeToSelectionHidden()
         
         let selectionCountPublisher = photoLibraryContentViewModel.selection.$photos
@@ -188,10 +220,19 @@ final class ImportAlbumViewModel: ObservableObject {
         .assign(to: &$isToolbarButtonsDisabled)
     }
     
-    private func subscribeToEditMode() {
-        photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
+    private func subscribeToEditMode(isLoggedIn: Bool) {
+        let isEditing = photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
             .removeDuplicates()
+            .share()
+        
+        isEditing
             .assign(to: &$isSelectionEnabled)
+        
+        if isLoggedIn {
+            isEditing
+                .map { !$0 }
+                .assign(to: &$showImportToolbarButton)
+        }
     }
     
     private func subscribeToSelectionHidden() {
@@ -204,5 +245,46 @@ final class ImportAlbumViewModel: ObservableObject {
             }
             .removeDuplicates()
             .assign(to: &$selectButtonOpacity)
+    }
+    
+    private func subscibeToImportFolderSelection() {
+        $importFolderLocation
+            .compactMap { $0 }
+            .sink { [weak self] in
+                guard let self else { return }
+                handeImportFolderSelection(folder: $0)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func handeImportFolderSelection(folder: NodeEntity) {
+        guard let albumName else { return }
+        let photos = photoLibraryContentViewModel.library.allPhotos
+        
+        Task {
+            await toggleLoading()
+            do {
+                try await importPublicAlbumUseCase.importAlbum(name: albumName,
+                                                               photos: photos,
+                                                               parentFolder: folder)
+                await toggleLoading()
+                await showSnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(albumName))
+            } catch {
+                await toggleLoading()
+                await showSnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumFailedToSaveToCloudDrive(albumName))
+                MEGALogError("[Import Album] Error importing album. Error: \(error)")
+            }
+        }
+    }
+    
+    @MainActor
+    private func showSnackBar(message: String) {
+        snackBarMessage = message
+        showSnackBar.toggle()
+    }
+    
+    @MainActor
+    private func toggleLoading() {
+        showLoading.toggle()
     }
 }

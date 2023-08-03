@@ -2820,6 +2820,18 @@ public enum Strings {
       }
     }
     public enum AlbumLink {
+      public enum Alert {
+        public enum Message {
+          /// “%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.
+          public static func albumFailedToSaveToCloudDrive(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "albumLink.alert.message.albumFailedToSaveToCloudDrive", String(describing: p1))
+          }
+          /// “%@” saved to Cloud drive
+          public static func albumSavedToCloudDrive(_ p1: Any) -> String {
+            return Strings.tr("Localizable", "albumLink.alert.message.albumSavedToCloudDrive", String(describing: p1))
+          }
+        }
+      }
       public enum ImportFailed {
         public enum StorageQuotaWillExceed {
           public enum Alert {

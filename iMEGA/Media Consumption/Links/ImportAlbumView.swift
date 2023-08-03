@@ -31,6 +31,10 @@ struct ImportAlbumView: View {
                 
                 Spacer()
                 
+                if viewModel.showSnackBar {
+                    SnackBarView(viewModel: viewModel.snackBarViewModel())
+                }
+                
                 bottomToolbar
             }
         }
@@ -53,9 +57,9 @@ struct ImportAlbumView: View {
         .onAppear {
             viewModel.loadPublicAlbum()
         }
-        .onReceive(viewModel.$publicLinkStatus, perform: { status in
-            status == .inProgress ? SVProgressHUD.show() : SVProgressHUD.dismiss()
-        })
+        .onReceive(viewModel.$showLoading.dropFirst()) {
+            $0 ? SVProgressHUD.show() : SVProgressHUD.dismiss()
+        }
     }
     
     private var navigationBar: some View {
@@ -128,9 +132,11 @@ struct ImportAlbumView: View {
     
     private var bottomToolbar: some View {
         HStack(alignment: .top) {
-            toolbarImageButton(image: Asset.Images.InfoActions.import.image,
-                               action: viewModel.importAlbum)
-            Spacer()
+            if viewModel.showImportToolbarButton {
+                toolbarImageButton(image: Asset.Images.InfoActions.import.image,
+                                   action: viewModel.importAlbum)
+                Spacer()
+            }
             toolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image) {
                 
             }
