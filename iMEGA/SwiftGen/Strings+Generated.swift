@@ -3254,6 +3254,8 @@ public enum Strings {
     }
     public enum CloudDrive {
       public enum Browser {
+        /// Paste
+        public static let paste = Strings.tr("Localizable", "cloudDrive.browser.paste")
         public enum SaveToCloudDrive {
           /// Save to Cloud drive
           public static let title = Strings.tr("Localizable", "cloudDrive.browser.saveToCloudDrive.title")
