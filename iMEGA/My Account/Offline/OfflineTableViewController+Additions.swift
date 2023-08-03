@@ -45,7 +45,7 @@ extension OfflineTableViewViewController {
                 .videoSupportedExtensions.contains(nodeName.pathExtension)
             
             cell.thumbnailImageView.image = thumbnailImage
-            cell.thumbnailImageView.isHidden = !isVideoExtension
+            cell.thumbnailPlayImageView.isHidden = !isVideoExtension
         }
     }
 }
