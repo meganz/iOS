@@ -937,7 +937,6 @@
 		836826B7292F7DC500A0AB5F /* ChatRoomLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836826B6292F7DC500A0AB5F /* ChatRoomLinkViewModel.swift */; };
 		836924BC2582696C00658F6C /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		836A04DE29813E62009C9405 /* ScheduledMeetingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A04DD29813E62009C9405 /* ScheduledMeetingRepository.swift */; };
-		836A04E829828A47009C9405 /* ScheduledMeetingOccurrenceEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A04E729828A47009C9405 /* ScheduledMeetingOccurrenceEntity+Mapper.swift */; };
 		836A783028E2F2B500B6849F /* ChatRoomsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A782F28E2F2B500B6849F /* ChatRoomsListView.swift */; };
 		836A783228E34C2900B6849F /* ChatRoomsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A783128E34C2900B6849F /* ChatRoomsListViewModel.swift */; };
 		836A783428E34E5B00B6849F /* MainTabBarController+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836A783328E34E5B00B6849F /* MainTabBarController+Chat.swift */; };
@@ -1082,7 +1081,6 @@
 		83CCBC4C2795988A00B90EF2 /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
 		83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D0E56727C78D53003BEC2E /* ExportFileUseCaseHelper.swift */; };
 		83D374E82A431ED400F7B07C /* CancelMeetingAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D374E72A431ED400F7B07C /* CancelMeetingAlertDataModel.swift */; };
-		83D374EE2A4348C400F7B07C /* ScheduledMeetingFlagsEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D374ED2A4348C400F7B07C /* ScheduledMeetingFlagsEntity+Mapper.swift */; };
 		83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
 		83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */; };
@@ -1378,11 +1376,12 @@
 		A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
 		A84F4A92298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
 		A84F4A93298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
-		A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
-		A84F4A99298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
-		A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */; };
+		A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift */; };
+		A84F4A99298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift */; };
+		A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift */; };
 		A854C21D29AE1FB800CB37E7 /* NodeAttributeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */; };
 		A854C21E29AE27AD00CB37E7 /* NodeAttributeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */; };
+		A855D23E2A796634001D2168 /* ChatRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A855D23D2A796634001D2168 /* ChatRepo */; };
 		A85740C42032F6B80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
@@ -1392,6 +1391,10 @@
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
+		A86B67562A781046000EA41E /* ScheduledMeetingOccurrenceEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B67522A781046000EA41E /* ScheduledMeetingOccurrenceEntity+Mapper.swift */; };
+		A86B67572A781046000EA41E /* ScheduledMeetingEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B67532A781046000EA41E /* ScheduledMeetingEntity+Mapper.swift */; };
+		A86B67582A781046000EA41E /* ScheduledMeetingFlagsEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B67542A781046000EA41E /* ScheduledMeetingFlagsEntity+Mapper.swift */; };
+		A86B67592A781046000EA41E /* ScheduledMeetingRulesEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86B67552A781046000EA41E /* ScheduledMeetingRulesEntity+Mapper.swift */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		A86FB61A297AF2EC00561DF8 /* TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D7E5E3A2631258700C5CB2A /* TransferDelegate.swift */; };
 		A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */; };
@@ -2031,7 +2034,6 @@
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
 		BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */; };
 		BF782D81269BA8610001D169 /* RecentActionBucketEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D80269BA8600001D169 /* RecentActionBucketEntity+Mapper.swift */; };
-		BF7D2FB329669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D2FB229669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */; };
 		BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */; };
@@ -2264,7 +2266,6 @@
 		BFFC467A2A6F64A900A5DAA8 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFFC46792A6F64A900A5DAA8 /* MEGAPresentation */; };
 		BFFE2289292F2F4B0063CFF2 /* FutureMeetingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */; };
 		BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */; };
-		BFFE22912931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE22902931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift */; };
 		BFFE2293293488980063CFF2 /* FutureMeetingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */; };
 		BFFE22952934A7D10063CFF2 /* FutureMeetingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */; };
 		BFFED4B326FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */; };
@@ -3505,7 +3506,6 @@
 		836826B6292F7DC500A0AB5F /* ChatRoomLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModel.swift; sourceTree = "<group>"; };
 		836924A12582662700658F6C /* MEGAWidget-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAWidget-Bridging-Header.h"; sourceTree = "<group>"; };
 		836A04DD29813E62009C9405 /* ScheduledMeetingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingRepository.swift; sourceTree = "<group>"; };
-		836A04E729828A47009C9405 /* ScheduledMeetingOccurrenceEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingOccurrenceEntity+Mapper.swift"; sourceTree = "<group>"; };
 		836A782F28E2F2B500B6849F /* ChatRoomsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListView.swift; sourceTree = "<group>"; };
 		836A783128E34C2900B6849F /* ChatRoomsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListViewModel.swift; sourceTree = "<group>"; };
 		836A783328E34E5B00B6849F /* MainTabBarController+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Chat.swift"; sourceTree = "<group>"; };
@@ -3647,7 +3647,6 @@
 		83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferViewModel.swift; sourceTree = "<group>"; };
 		83D0E56727C78D53003BEC2E /* ExportFileUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileUseCaseHelper.swift; sourceTree = "<group>"; };
 		83D374E72A431ED400F7B07C /* CancelMeetingAlertDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelMeetingAlertDataModel.swift; sourceTree = "<group>"; };
-		83D374ED2A4348C400F7B07C /* ScheduledMeetingFlagsEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingFlagsEntity+Mapper.swift"; sourceTree = "<group>"; };
 		83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatSDK+Additions.swift"; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeaderFooterView.swift; sourceTree = "<group>"; };
@@ -3938,7 +3937,7 @@
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
 		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
 		A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SharedInstanceWrapper.swift"; sourceTree = "<group>"; };
-		A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatSdk+SharedInstance.swift"; sourceTree = "<group>"; };
+		A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatSdk+SharedInstanceWrapper.swift"; sourceTree = "<group>"; };
 		A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A85740C12032F6B80033034C /* MOChatDraft+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOChatDraft+CoreDataProperties.h"; sourceTree = "<group>"; };
 		A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOChatDraft+CoreDataClass.m"; sourceTree = "<group>"; };
@@ -3949,6 +3948,10 @@
 		A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatVideoUploadQuality.h; sourceTree = "<group>"; };
 		A85ED1FA2A20B5920036C0E5 /* MEGASDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGASDK; sourceTree = "<group>"; };
 		A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChangeName.storyboard; sourceTree = "<group>"; };
+		A86B67522A781046000EA41E /* ScheduledMeetingOccurrenceEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingOccurrenceEntity+Mapper.swift"; sourceTree = "<group>"; };
+		A86B67532A781046000EA41E /* ScheduledMeetingEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingEntity+Mapper.swift"; sourceTree = "<group>"; };
+		A86B67542A781046000EA41E /* ScheduledMeetingFlagsEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingFlagsEntity+Mapper.swift"; sourceTree = "<group>"; };
+		A86B67552A781046000EA41E /* ScheduledMeetingRulesEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingRulesEntity+Mapper.swift"; sourceTree = "<group>"; };
 		A86C09D72A4B0A78001D0815 /* MEGAChatSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAChatSDK; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
@@ -4635,7 +4638,6 @@
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageLoadErrorEntity.swift; sourceTree = "<group>"; };
 		BF782D80269BA8600001D169 /* RecentActionBucketEntity+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RecentActionBucketEntity+Mapper.swift"; sourceTree = "<group>"; };
-		BF7D2FB229669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingRulesEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
 		BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+MEGANode.swift"; sourceTree = "<group>"; };
 		BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKTransferListenerRepository.swift; sourceTree = "<group>"; };
@@ -4854,7 +4856,6 @@
 		BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModelTests.swift; sourceTree = "<group>"; };
 		BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingSection.swift; sourceTree = "<group>"; };
 		BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsListHeaderView.swift; sourceTree = "<group>"; };
-		BFFE22902931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScheduledMeetingEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BFFE2292293488980063CFF2 /* FutureMeetingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomViewModel.swift; sourceTree = "<group>"; };
 		BFFE22942934A7D10063CFF2 /* FutureMeetingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingRoomView.swift; sourceTree = "<group>"; };
 		BFFED4B226FB094F00B9EBEC /* FolderLinkCollectionViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLinkCollectionViewDiffableDataSource.swift; sourceTree = "<group>"; };
@@ -5128,6 +5129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A855D23E2A796634001D2168 /* ChatRepo in Frameworks */,
 				A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
@@ -9402,10 +9404,10 @@
 		A859043229F2CED300632F0C /* ScheduleMeeting */ = {
 			isa = PBXGroup;
 			children = (
-				BFFE22902931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift */,
-				83D374ED2A4348C400F7B07C /* ScheduledMeetingFlagsEntity+Mapper.swift */,
-				836A04E729828A47009C9405 /* ScheduledMeetingOccurrenceEntity+Mapper.swift */,
-				BF7D2FB229669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift */,
+				A86B67532A781046000EA41E /* ScheduledMeetingEntity+Mapper.swift */,
+				A86B67542A781046000EA41E /* ScheduledMeetingFlagsEntity+Mapper.swift */,
+				A86B67522A781046000EA41E /* ScheduledMeetingOccurrenceEntity+Mapper.swift */,
+				A86B67552A781046000EA41E /* ScheduledMeetingRulesEntity+Mapper.swift */,
 			);
 			path = ScheduleMeeting;
 			sourceTree = "<group>";
@@ -9647,7 +9649,7 @@
 		A8C81E2A29841C9500C794E9 /* MEGASDK */ = {
 			isa = PBXGroup;
 			children = (
-				A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift */,
+				A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift */,
 				A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */,
 				B6DC7CBA2640FD9D00659EE0 /* MEGASdkManager+CleanUp.h */,
 				B6DC7CBB2640FD9D00659EE0 /* MEGASdkManager+CleanUp.m */,
@@ -12218,6 +12220,7 @@
 				BFA275E627ED317600E15B92 /* SDAVAssetExportSession */,
 				BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */,
 				A812CB3C2A4B0FBE00F99382 /* MEGAChatSdk */,
+				A855D23D2A796634001D2168 /* ChatRepo */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -13654,7 +13657,7 @@
 				838A849D2631C987004804A4 /* MegaChatResultRequestDelegate.swift in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */,
-				A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
+				A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */,
@@ -14151,15 +14154,15 @@
 				833DF2762804880E00B25B64 /* SaveNodeUseCaseOCWrapper.swift in Sources */,
 				5D79B51D2498471E0070FECD /* Scanner+Compatible.swift in Sources */,
 				838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */,
-				BFFE22912931CB230063CFF2 /* ScheduledMeetingEntity+Mapper.swift in Sources */,
-				83D374EE2A4348C400F7B07C /* ScheduledMeetingFlagsEntity+Mapper.swift in Sources */,
-				836A04E829828A47009C9405 /* ScheduledMeetingOccurrenceEntity+Mapper.swift in Sources */,
+				A86B67572A781046000EA41E /* ScheduledMeetingEntity+Mapper.swift in Sources */,
+				A86B67582A781046000EA41E /* ScheduledMeetingFlagsEntity+Mapper.swift in Sources */,
+				A86B67562A781046000EA41E /* ScheduledMeetingOccurrenceEntity+Mapper.swift in Sources */,
 				83669E972987F9BC003E8F74 /* ScheduledMeetingOccurrencesRouter.swift in Sources */,
 				83669E9D2987FA9F003E8F74 /* ScheduledMeetingOccurrencesView.swift in Sources */,
 				83669E9B2987F9F1003E8F74 /* ScheduledMeetingOccurrencesViewController.swift in Sources */,
 				83669E992987F9D7003E8F74 /* ScheduledMeetingOccurrencesViewModel.swift in Sources */,
 				836A04DE29813E62009C9405 /* ScheduledMeetingRepository.swift in Sources */,
-				BF7D2FB329669C8B00C6E29D /* ScheduledMeetingRulesEntity+Mapper.swift in Sources */,
+				A86B67592A781046000EA41E /* ScheduledMeetingRulesEntity+Mapper.swift in Sources */,
 				BFB889792A13598800FC456A /* ScheduledMeetingRulesEntity+UIHelper.swift in Sources */,
 				BFAD0F9E2A29904B003F5F83 /* ScheduleMeetingCreationCustomOptionsFrequencyView.swift in Sources */,
 				BFAD0FA02A299067003F5F83 /* ScheduleMeetingCreationCustomOptionsRepetitionRulesView.swift in Sources */,
@@ -14480,7 +14483,7 @@
 				77B9FEE723C604260002D0CD /* MEGAChatBaseRequestDelegate.m in Sources */,
 				5B205D1B2449AD3200EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */,
-				A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
+				A84F4A9A298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
 				7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */,
 				774941DE2410EABC00FC5CB6 /* MEGACoreDataStack.m in Sources */,
 				77BE2FFB24084E9600514DB8 /* MEGAFunctions.swift in Sources */,
@@ -14657,7 +14660,7 @@
 				834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
 				838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */,
 				5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */,
-				A84F4A99298904860017ACB4 /* MEGAChatSdk+SharedInstance.swift in Sources */,
+				A84F4A99298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
 				B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */,
 				773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */,
 				B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */,
@@ -17006,6 +17009,10 @@
 		A8399FBA296DD5F10062B6BC /* MEGADomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGADomain;
+		};
+		A855D23D2A796634001D2168 /* ChatRepo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatRepo;
 		};
 		A85CF69C2A7180A90018FEF1 /* ChatRepo */ = {
 			isa = XCSwiftPackageProductDependency;
