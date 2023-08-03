@@ -39,11 +39,9 @@ extension ContactsViewController {
     }
     
     @objc
-    func setNavigationItemStackedPlacemenIfNeeded() {
+    func setNavigationItemStackedPlacement() {
         if #available(iOS 16.0, *) {
-            if contactsMode == .scheduleMeeting {
-                navigationItem.preferredSearchBarPlacement = .stacked
-            }
+            navigationItem.preferredSearchBarPlacement = .stacked
         }
     }
 }
