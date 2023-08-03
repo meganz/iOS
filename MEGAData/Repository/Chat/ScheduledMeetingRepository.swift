@@ -9,7 +9,8 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     }
     
     private let chatSDK: MEGAChatSdk
-    
+    private var ocurrencesUpdateRequestListener: OcurrencesUpdateRequestListener?
+
     public init(chatSDK: MEGAChatSdk) {
         self.chatSDK = chatSDK
     }
@@ -142,6 +143,14 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
         }
     }
     
+    public func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+        let ocurrencesUpdateRequestListener = OcurrencesUpdateRequestListener(sdk: chatSDK, chatId: chatRoom.chatId)
+        self.ocurrencesUpdateRequestListener = ocurrencesUpdateRequestListener
+        return ocurrencesUpdateRequestListener
+            .monitor
+            .eraseToAnyPublisher()
+    }
+    
     // MARK: - Private methods
     
     private func makeChatRequestDelegate(withCompletion completion: @escaping (Result<ScheduledMeetingEntity, Error>) -> Void) -> ChatRequestDelegate {
@@ -158,6 +167,33 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
             } else {
                 completion(.failure(GenericErrorEntity()))
             }
+        }
+    }
+}
+
+private final class OcurrencesUpdateRequestListener: NSObject, MEGAChatScheduledMeetingDelegate {
+    private let sdk: MEGAChatSdk
+    private let chatId: ChatIdEntity
+    private let source = PassthroughSubject<Bool, Never>()
+
+    var monitor: AnyPublisher<Bool, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk, chatId: ChatIdEntity) {
+        self.sdk = sdk
+        self.chatId = chatId
+        super.init()
+        sdk.add(self)
+    }
+    
+    deinit {
+        sdk.remove(self)
+    }
+    
+    func onSchedMeetingOccurrencesUpdate(_ api: MEGAChatSdk, chatId: UInt64, append: Bool) {
+        if chatId == self.chatId {
+            source.send(!append)
         }
     }
 }

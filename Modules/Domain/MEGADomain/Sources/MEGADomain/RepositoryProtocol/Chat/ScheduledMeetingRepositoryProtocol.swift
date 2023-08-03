@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 public protocol ScheduledMeetingRepositoryProtocol: RepositoryProtocol {
@@ -12,4 +13,5 @@ public protocol ScheduledMeetingRepositoryProtocol: RepositoryProtocol {
         _ occurrence: ScheduledMeetingOccurrenceEntity,
         meeting: ScheduledMeetingEntity
     ) async throws -> ScheduledMeetingEntity
+    func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never>
 }

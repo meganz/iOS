@@ -19,6 +19,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
     private var lastOccurrenceDate = Date()
+    private var maxOccurrencesLoaded = 0
     var occurrences: [ScheduledMeetingOccurrenceEntity] = []
     var selectedOccurrence: ScheduleMeetingOccurence?
 
@@ -58,6 +59,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         
         updateSubtitle()
         fetchOccurrences()
+        listenToOccurrencesUpdate()
     }
 
     // MARK: - Public
@@ -96,23 +98,38 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
                     chatId: scheduledMeeting.chatId,
                     since: lastOccurrenceDate
                 )
-                await populateOccurrences(occurrences)
+                await manageFetchedOccurrences(occurrences)
             } catch {
                 MEGALogError("Error fetching occurrences for scheduled meeting: \(scheduledMeeting.title)")
             }
         }
     }
     
+    private func refreshOccurrences() {
+        lastOccurrenceDate = Date()
+        occurrences = []
+        fetchOccurrences()
+    }
+    
     @MainActor
-    private func populateOccurrences(_ newOccurrences: [ScheduledMeetingOccurrenceEntity]) {
-        seeMoreOccurrencesVisible = newOccurrences.count >= maxOccurrencesBatchCount
-        lastOccurrenceDate = newOccurrences.last?.startDate ?? Date()
+    private func manageFetchedOccurrences(_ fetchedOccurrences: [ScheduledMeetingOccurrenceEntity]) {
+        seeMoreOccurrencesVisible = fetchedOccurrences.count >= maxOccurrencesBatchCount
+        lastOccurrenceDate = fetchedOccurrences.last?.startDate ?? Date()
 
-        let filteredOccurrences = newOccurrences.filter { !$0.cancelled }
+        let filteredOccurrences = fetchedOccurrences.filter { !$0.cancelled && !occurrences.contains($0) }
         occurrences.append(contentsOf: filteredOccurrences)
 
-        let newDisplayOccurrences = filteredOccurrences.map(scheduleMeetingOccurrence(from:))
-        displayOccurrences.append(contentsOf: newDisplayOccurrences)
+        if occurrences.count >= maxOccurrencesLoaded {
+            maxOccurrencesLoaded = occurrences.count
+            populateOccurrences()
+        } else {
+            fetchOccurrences()
+        }
+    }
+    
+    @MainActor
+    private func populateOccurrences() {
+        displayOccurrences = occurrences.map(scheduleMeetingOccurrence(from:))
     }
     
     private func scheduleMeetingOccurrence(
@@ -155,9 +172,9 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
                     router
                         .edit(occurrence: occurrence)
                         .receive(on: DispatchQueue.main)
-                        .sink { [weak self] updatedOccurrence in
+                        .sink { [weak self] _ in
                             guard let self else { return }
-                            reload(occurrence: updatedOccurrence, at: occurrenceIndex)
+                            refreshOccurrences()
                         }
                         .store(in: &subscriptions)
                 }
@@ -175,14 +192,6 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         }
         
         return options
-    }
-        
-    private func reload(occurrence: ScheduledMeetingOccurrenceEntity, at index: Int) {
-        occurrences[index] = occurrence
-        displayOccurrences[index] = scheduleMeetingOccurrence(from: occurrence)
-        
-        occurrences.sort { $0.startDate < $1.startDate }
-        displayOccurrences = occurrences.map(scheduleMeetingOccurrence(from:))
     }
     
     private func cancelOccurrenceTapped(_ occurrence: ScheduleMeetingOccurence) {
@@ -295,6 +304,21 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     @MainActor private func updateListWithDeletedIndex(_ index: Int) {
         displayOccurrences.remove(at: index)
         occurrences.remove(at: index)
+        maxOccurrencesLoaded -= 1
         router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.success(selectedOccurrence?.date ?? ""))
+    }
+
+    private func listenToOccurrencesUpdate() {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
+        scheduledMeetingUseCase.ocurrencesShouldBeReloadListener(forChatRoom: chatRoom)
+            .sink { [weak self] shouldReload in
+                guard let self else {
+                    return
+                }
+                if shouldReload {
+                    refreshOccurrences()
+                }
+            }
+            .store(in: &subscriptions)
     }
 }
