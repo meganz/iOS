@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 
@@ -7,7 +8,8 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     var upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
     var scheduleMeetingError: ScheduleMeetingErrorEntity?
     var meetingProxy: ScheduleMeetingProxyEntity?
-    
+    var ocurrencesShouldBeReloadSubject = PassthroughSubject<Bool, Never>()
+
     init(
         scheduledMeetingsList: [ScheduledMeetingEntity] = [],
         scheduledMeetingsOccurrences: [ScheduledMeetingOccurrenceEntity] = [],
@@ -70,5 +72,9 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
         }
         
         return ScheduledMeetingEntity()
+    }
+    
+    func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+        ocurrencesShouldBeReloadSubject.eraseToAnyPublisher()
     }
 }

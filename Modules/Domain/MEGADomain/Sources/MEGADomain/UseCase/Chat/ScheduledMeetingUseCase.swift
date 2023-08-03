@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 public protocol ScheduledMeetingUseCaseProtocol {
@@ -14,6 +15,7 @@ public protocol ScheduledMeetingUseCaseProtocol {
         _ occurrence: ScheduledMeetingOccurrenceEntity,
         meeting: ScheduledMeetingEntity
     ) async throws -> ScheduledMeetingEntity
+    func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never>
 }
 
 public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: ScheduledMeetingUseCaseProtocol {
@@ -73,5 +75,9 @@ public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: Sc
         meeting: ScheduledMeetingEntity
     ) async throws -> ScheduledMeetingEntity {
         try await repository.updateOccurrence(occurrence, meeting: meeting)
+    }
+    
+    public func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+        repository.ocurrencesShouldBeReloadListener(forChatRoom: chatRoom)
     }
 }
