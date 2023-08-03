@@ -1865,7 +1865,6 @@
 		B6E6726B277D4E4B00158FA0 /* PhotoUpdatePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6726A277D4E4B00158FA0 /* PhotoUpdatePublisher.swift */; };
 		B6F026B6258308EA00D29CB6 /* BackupRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026B5258308E900D29CB6 /* BackupRecorder.swift */; };
 		B6F0270225832F2C00D29CB6 /* BackupRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */; };
-		B6F2ACCB29AC5305004FC7A3 /* ChatRoomUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCA29AC5305004FC7A3 /* ChatRoomUserRepository.swift */; };
 		B6F2ACCD29AD6E19004FC7A3 /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
 		B6F39F092772A986002386BE /* PhotoLibraryModeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */; };
 		B6F39F232773D338002386BE /* PhotoCellImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F39F222773D337002386BE /* PhotoCellImage.swift */; };
@@ -4497,7 +4496,6 @@
 		B6E6726A277D4E4B00158FA0 /* PhotoUpdatePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoUpdatePublisher.swift; sourceTree = "<group>"; };
 		B6F026B5258308E900D29CB6 /* BackupRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRecorder.swift; sourceTree = "<group>"; };
 		B6F026FF25832F2C00D29CB6 /* BackupRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupRegister.swift; sourceTree = "<group>"; };
-		B6F2ACCA29AC5305004FC7A3 /* ChatRoomUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomUserRepository.swift; sourceTree = "<group>"; };
 		B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAStore+Additions.swift"; sourceTree = "<group>"; };
 		B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryModeCardViewModel.swift; sourceTree = "<group>"; };
 		B6F39F222773D337002386BE /* PhotoCellImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellImage.swift; sourceTree = "<group>"; };
@@ -7017,7 +7015,6 @@
 				836B091029224BD70058D53C /* ChatLinkRepository.swift */,
 				83DE9D2528EC823400F24DF4 /* ChatRepository.swift */,
 				BF66DF152612C20200066F35 /* ChatRoomRepository.swift */,
-				B6F2ACCA29AC5305004FC7A3 /* ChatRoomUserRepository.swift */,
 				5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */,
 				5BFA962F252E1119003653EB /* ManageChatHistoryRepository.swift */,
 				836A04DD29813E62009C9405 /* ScheduledMeetingRepository.swift */,
@@ -13177,7 +13174,6 @@
 				C45F9807264AA88C0004DCA5 /* ChatRoomsViewController+MyAvatar.swift in Sources */,
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
 				BF67C50B264B9A68003CE3C6 /* ChatRoomsViewController.swift in Sources */,
-				B6F2ACCB29AC5305004FC7A3 /* ChatRoomUserRepository.swift in Sources */,
 				83B71A6028F0356600E006C6 /* ChatRoomView.swift in Sources */,
 				BFD2141128F4D5810057150E /* ChatRoomViewModel.swift in Sources */,
 				BF66E04B2614269000066F35 /* ChatSessionEntity+Mapper.swift in Sources */,
