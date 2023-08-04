@@ -2830,6 +2830,10 @@ public enum Strings {
           public static func albumSavedToCloudDrive(_ p1: Any) -> String {
             return Strings.tr("Localizable", "albumLink.alert.message.albumSavedToCloudDrive", String(describing: p1))
           }
+          /// Plural format key: "%#@count@"
+          public static func filesSaveToCloudDrive(_ p1: Int) -> String {
+            return Strings.tr("Localizable", "albumLink.alert.message.filesSaveToCloudDrive", p1)
+          }
         }
       }
       public enum ImportFailed {

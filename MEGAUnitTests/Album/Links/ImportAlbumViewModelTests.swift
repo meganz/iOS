@@ -385,7 +385,36 @@ final class ImportAlbumViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 0.25)
     }
     
-    func testShowImportToolbarButton_userNotlLoggedIn_shouldNotShowImportBarButtonAndToggleWithSelection() throws {
+    func testImportFolderLocation_selectedPhotos_shouldImportOnlySelectedPhotosAndShowToastMessage() throws {
+        let selectedPhotos = [NodeEntity(handle: 1),
+                              NodeEntity(handle: 76)]
+        let importPublicAlbumUseCase = MockImportPublicAlbumUseCase(
+            importAlbumResult: .success)
+        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: "Test"))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
+                                                        nodes: try makePhotos())
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           importPublicAlbumUseCase: importPublicAlbumUseCase)
+        waitForLoadedState(linkStatus: sut.$publicLinkStatus.eraseToAnyPublisher()) {
+            sut.loadPublicAlbum()
+        }
+        
+        sut.photoLibraryContentViewModel.selection.editMode = .active
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos(selectedPhotos)
+        
+        waitForLoadingToggleAndShowSnackBar(showLoading: sut.$showLoading.eraseToAnyPublisher(),
+                                            showSnackBar: sut.$showSnackBar.eraseToAnyPublisher()) {
+            sut.importFolderLocation = NodeEntity(handle: 99, isFolder: true)
+        }
+        
+        XCTAssertEqual(Set(importPublicAlbumUseCase.photosToImport ?? []),
+                       Set(selectedPhotos))
+        XCTAssertEqual(sut.snackBarViewModel().snackBar.message,
+                       Strings.Localizable.AlbumLink.Alert.Message.filesSaveToCloudDrive(selectedPhotos.count))
+    }
+    
+    func testShowImportToolbarButton_userNotLoggedIn_shouldNotShowImportBarButtonAndToggleWithSelection() throws {
         let accountUseCase = MockAccountUseCase(isLoggedIn: false)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            accountUseCase: accountUseCase)
@@ -394,21 +423,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.photoLibraryContentViewModel.selection.editMode = .active
         
         XCTAssertFalse(sut.showImportToolbarButton)
-    }
-    
-    func testShowImportToolbarButton_userLoggedIn_shouldShowImportBarButtonAndHideDuringSelection() throws {
-        let accountUseCase = MockAccountUseCase(isLoggedIn: true)
-        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           accountUseCase: accountUseCase)
-        XCTAssertTrue(sut.showImportToolbarButton)
-        
-        sut.photoLibraryContentViewModel.selection.editMode = .active
-        
-        XCTAssertFalse(sut.showImportToolbarButton)
-        
-        sut.photoLibraryContentViewModel.selection.editMode = .inactive
-        
-        XCTAssertTrue(sut.showImportToolbarButton)
     }
     
     // MARK: - Private
