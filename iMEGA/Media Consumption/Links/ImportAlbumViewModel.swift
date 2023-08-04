@@ -19,6 +19,7 @@ final class ImportAlbumViewModel: ObservableObject {
     
     let publicLink: URL
     let photoLibraryContentViewModel: PhotoLibraryContentViewModel
+    let showImportToolbarButton: Bool
     
     @Published var publicLinkStatus: AlbumPublicLinkStatus = .none {
         willSet {
@@ -42,7 +43,6 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published private(set) var selectionNavigationTitle: String = ""
     @Published private(set) var isToolbarButtonsDisabled = true
     @Published private(set) var showLoading = false
-    @Published private(set) var showImportToolbarButton: Bool
     
     private var albumLink: String {
         (publicLinkWithDecryptionKey ?? publicLink).absoluteString
@@ -66,9 +66,9 @@ final class ImportAlbumViewModel: ObservableObject {
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
-        let isLoggedIn = accountUseCase.isLoggedIn()
-        showImportToolbarButton = isLoggedIn
-        subscribeToSelection(isLoggedIn: isLoggedIn)
+        showImportToolbarButton = accountUseCase.isLoggedIn()
+        
+        subscribeToSelection()
         subscibeToImportFolderSelection()
     }
     
@@ -114,7 +114,7 @@ final class ImportAlbumViewModel: ObservableObject {
                 return
             }
             
-            guard !accountStorageUseCase.willStorageQuotaExceed(after: photoLibraryContentViewModel.library.allPhotos) else {
+            guard !accountStorageUseCase.willStorageQuotaExceed(after: photoLibraryContentViewModel.photosToImport) else {
                 showStorageQuotaWillExceed.toggle()
                 return
             }
@@ -178,8 +178,8 @@ final class ImportAlbumViewModel: ObservableObject {
         publicLinkWithDecryptionKey = nil
     }
     
-    private func subscribeToSelection(isLoggedIn: Bool) {
-        subscribeToEditMode(isLoggedIn: isLoggedIn)
+    private func subscribeToSelection() {
+        subscribeToEditMode()
         subscribeToSelectionHidden()
         
         let selectionCountPublisher = photoLibraryContentViewModel.selection.$photos
@@ -220,19 +220,10 @@ final class ImportAlbumViewModel: ObservableObject {
         .assign(to: &$isToolbarButtonsDisabled)
     }
     
-    private func subscribeToEditMode(isLoggedIn: Bool) {
-        let isEditing = photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
+    private func subscribeToEditMode() {
+        photoLibraryContentViewModel.selection.$editMode.map(\.isEditing)
             .removeDuplicates()
-            .share()
-        
-        isEditing
             .assign(to: &$isSelectionEnabled)
-        
-        if isLoggedIn {
-            isEditing
-                .map { !$0 }
-                .assign(to: &$showImportToolbarButton)
-        }
     }
     
     private func subscribeToSelectionHidden() {
@@ -259,7 +250,7 @@ final class ImportAlbumViewModel: ObservableObject {
     
     private func handeImportFolderSelection(folder: NodeEntity) {
         guard let albumName else { return }
-        let photos = photoLibraryContentViewModel.library.allPhotos
+        let photos = photoLibraryContentViewModel.photosToImport
         
         Task {
             await toggleLoading()
@@ -268,7 +259,11 @@ final class ImportAlbumViewModel: ObservableObject {
                                                                photos: photos,
                                                                parentFolder: folder)
                 await toggleLoading()
-                await showSnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(albumName))
+                
+                let message = isSelectionEnabled ?
+                    Strings.Localizable.AlbumLink.Alert.Message.filesSaveToCloudDrive(photos.count) :
+                    Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(albumName)
+                await showSnackBar(message: message)
             } catch {
                 await toggleLoading()
                 await showSnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumFailedToSaveToCloudDrive(albumName))
@@ -286,5 +281,14 @@ final class ImportAlbumViewModel: ObservableObject {
     @MainActor
     private func toggleLoading() {
         showLoading.toggle()
+    }
+}
+
+private extension PhotoLibraryContentViewModel {
+    var photosToImport: [NodeEntity] {
+        if selection.editMode.isEditing {
+            return Array(selection.photos.values)
+        }
+        return library.allPhotos
     }
 }

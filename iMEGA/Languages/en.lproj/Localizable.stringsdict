@@ -2610,5 +2610,21 @@
         <string>Every %d days</string>
       </dict>
     </dict>
+    <key>albumLink.alert.message.filesSaveToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file saved to Cloud drive</string>
+        <key>other</key>
+        <string>%d files saved to Cloud drive</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
