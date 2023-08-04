@@ -456,14 +456,17 @@ final class ChatRoomsListViewModel: ObservableObject {
                 }
             }
         }
-
-        let futureScheduledMeetingsChatIds = futureScheduledMeetings.map { $0.chatId }
-
-        createPastMeetings(with: futureScheduledMeetingsChatIds)
         
         Task {
             let upcomingOccurrences = try await scheduledMeetingUseCase.upcomingOccurrences(forScheduledMeetings: futureScheduledMeetings)
-            await populateFutureMeetings(from: futureScheduledMeetings, withUpcomingOccurrences: upcomingOccurrences)
+            let futureScheduledMeetingsWithOccurrences = futureScheduledMeetings.filter {
+                $0.rules.frequency == .invalid || upcomingOccurrences.keys.contains($0.scheduledId)
+            }
+            
+            let futureScheduledMeetingsChatIds = futureScheduledMeetingsWithOccurrences.map(\.chatId)
+            createPastMeetings(with: futureScheduledMeetingsChatIds)
+            
+            await populateFutureMeetings(from: futureScheduledMeetingsWithOccurrences, withUpcomingOccurrences: upcomingOccurrences)
             await filterMeetings()
         }
     }

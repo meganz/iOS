@@ -135,8 +135,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testDisplayFutureMeetings_containsMultipleSections_shouldMatch() throws {
         let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
         let tomorrow = try XCTUnwrap(futureDate(byAddingDays: 1))
-        let scheduleMeeting = ScheduledMeetingEntity(chatId: 1, endDate: tomorrow)
-        let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeeting])
+        let scheduleMeeting = ScheduledMeetingEntity(chatId: 1, scheduledId: 100, endDate: tomorrow)
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeeting], upcomingOccurrences: [100: ScheduledMeetingOccurrenceEntity()])
         let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
         viewModel.loadChatRoomsIfNeeded()
         
