@@ -113,8 +113,7 @@ extension MyAccountHallViewController {
         buyPROBarButtonItem?.title = nil
         buyPROBarButtonItem?.isEnabled = false
 
-        guard !viewModel.isNewUpgradeAccountPlanEnabled(),
-              let accountDetails = viewModel.accountDetails else {
+        guard let accountDetails = viewModel.accountDetails else {
             return
         }
         
@@ -125,6 +124,8 @@ extension MyAccountHallViewController {
             buyPROBarButtonItem?.title = nil
             buyPROBarButtonItem?.isEnabled = false
         default:
+            guard !viewModel.isNewUpgradeAccountPlanEnabled() else { return }
+                  
             accountTypeLabel?.text = ""
             buyPROBarButtonItem?.title = Strings.Localizable.upgrade
             buyPROBarButtonItem?.isEnabled = !viewModel.planList.isEmpty

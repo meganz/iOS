@@ -47,15 +47,18 @@ final class ProfileViewModel: ViewModelType {
     private let twoFactorAuthStatusValueSubject = CurrentValueSubject<TwoFactorAuthStatus, Never>(.unknown)
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
+         
+    private var featureFlagProvider: any FeatureFlagProviderProtocol
     
-    init(sdk: MEGASdk) {
+    init(sdk: MEGASdk, featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.sdk = sdk
+        self.featureFlagProvider = featureFlagProvider
         bindToSubscriptions()
     }
     
     private func bindToSubscriptions() {
         
-        let sections: [ProfileSection] = [.profile, .security, .plan, .session]
+        let sections: [ProfileSection] = shouldShowPlanSection ? [.profile, .security, .plan, .session] : [.profile, .security, .session]
         
         invalidateSectionsValueSubject
             .map { [weak self] _ -> AnyPublisher<SectionCellDataSource, Never> in
@@ -82,6 +85,12 @@ final class ProfileViewModel: ViewModelType {
             .removeDuplicates()
             .assign(to: \.sectionCells, on: self)
             .store(in: &subscriptions)
+    }
+    
+    private var shouldShowPlanSection: Bool {
+        let shouldShow = sdk.isAccountType(.proFlexi) || sdk.isAccountType(.business) || sdk.isMasterBusinessAccount
+        
+        return shouldShow || !featureFlagProvider.isFeatureFlagEnabled(for: .newUpgradeAccountPlanUI)
     }
 }
 
