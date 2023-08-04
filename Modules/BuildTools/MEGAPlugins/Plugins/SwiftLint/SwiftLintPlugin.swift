@@ -9,6 +9,7 @@ struct SwiftLintPlugin: BuildToolPlugin {
                 executable: try context.tool(named: "swiftlint").path,
                 arguments: [
                     "lint",
+                    "--strict",
                     "--config",
                     "\(context.package.directory.string)/.swiftlint.yml",
                     "--cache-path",
@@ -32,6 +33,7 @@ extension SwiftLintPlugin: XcodeBuildToolPlugin {
                 executable: try context.tool(named: "swiftlint").path,
                 arguments: [
                     "lint",
+                    "--strict",
                     "--config",
                     "\(context.xcodeProject.directory.string)/.swiftlint.yml",
                     "--cache-path",
