@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGARepo
 import MEGASDKRepo
 
 @objc class SaveNodeUseCaseOCWrapper: NSObject {

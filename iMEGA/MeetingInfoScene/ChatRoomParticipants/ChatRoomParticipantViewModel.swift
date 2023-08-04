@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGARepo
 import MEGASDKRepo
 
 final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {

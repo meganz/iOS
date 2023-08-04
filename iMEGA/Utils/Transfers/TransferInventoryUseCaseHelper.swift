@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGARepo
 import MEGASDKRepo
 
 @objc final class TransferInventoryUseCaseHelper: NSObject {

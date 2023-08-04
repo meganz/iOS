@@ -1,6 +1,5 @@
 import Foundation
 import MEGADomain
-import MEGASwift
 
 public struct FileSystemRepository: FileSystemRepositoryProtocol {
     public static var newRepo: FileSystemRepository {

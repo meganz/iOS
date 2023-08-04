@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGARepo
 import MEGASDKRepo
 import UIKit
 

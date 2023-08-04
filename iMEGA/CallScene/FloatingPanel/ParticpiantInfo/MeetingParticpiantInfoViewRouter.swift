@@ -1,6 +1,7 @@
 import ChatRepo
 import MEGADomain
 import MEGAPresentation
+import MEGARepo
 import MEGASDKRepo
 
 protocol MeetingParticpiantInfoViewRouting: Routing {

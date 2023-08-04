@@ -3885,6 +3885,7 @@
 		A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatStartCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatStartCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
 		A802B1FF1FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAChatAnswerCallRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAChatAnswerCallRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatAnswerCallRequestDelegate.m; sourceTree = SOURCE_ROOT; };
+		A80550302A7BCA3900BC3725 /* MEGARepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGARepo; sourceTree = "<group>"; };
 		A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueViewRouter.swift; sourceTree = "<group>"; };
 		A811CE2A22EAFB1700B24E76 /* SearchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchOperation.h; sourceTree = "<group>"; };
 		A811CE2B22EAFB1700B24E76 /* SearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchOperation.m; sourceTree = "<group>"; };
@@ -11009,6 +11010,7 @@
 			isa = PBXGroup;
 			children = (
 				A8868B1C2A71794700F4BE98 /* ChatRepo */,
+				A80550302A7BCA3900BC3725 /* MEGARepo */,
 				A8C8E6B82A5F0E4100A00A57 /* MEGASDKRepo */,
 			);
 			path = Repository;

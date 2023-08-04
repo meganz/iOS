@@ -1,6 +1,7 @@
 
 import Foundation
 import MEGADomain
+import MEGARepo
 import MEGASDKRepo
 
 final class CancellableTransferRouter: NSObject, CancellableTransferRouting, TransferWidgetRouting {
