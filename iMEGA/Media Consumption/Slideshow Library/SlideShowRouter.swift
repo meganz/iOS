@@ -29,9 +29,9 @@ struct SlideShowRouter: Routing {
     
     private func slideShowDataSource(photos: [NodeEntity]) -> SlideShowDataSource {
         SlideShowDataSource(
-            currentPhoto: dataProvider.currentPhoto?.toNodeEntity(),
+            currentPhoto: dataProvider.currentPhotoNodeEntity,
             nodeEntities: photos,
-            thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
+            thumbnailUseCase: dataProvider.makeThumbnailUseCase(),
             fileDownloadUseCase: FileDownloadUseCase(fileCacheRepository: FileCacheRepository.newRepo,
                                                      fileSystemRepository: FileSystemRepository.newRepo,
                                                      downloadFileRepository: DownloadFileRepository.newRepo),
