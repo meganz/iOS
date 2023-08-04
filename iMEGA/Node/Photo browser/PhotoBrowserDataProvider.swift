@@ -86,6 +86,14 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
         await photoNode(at: currentIndex)
     }
     
+    var currentPhotoNodeEntity: NodeEntity? {
+        if let nodes = megaNodes {
+            return nodes[safe: currentIndex]?.toNodeEntity()
+        } else {
+            return nodeEntities?[safe: currentIndex]
+        }
+    }
+    
     var allPhotoEntities: [NodeEntity] {
         if let nodeEntities = nodeEntities {
             return nodeEntities
@@ -155,6 +163,14 @@ final class PhotoBrowserDataProvider: NSObject, PhotoBrowserDataProviderProtocol
 
 // MARK: - Private methods
 extension PhotoBrowserDataProvider {
+    
+    func makeThumbnailUseCase() -> some ThumbnailUseCaseProtocol {
+        ThumbnailUseCase(repository: ThumbnailRepository(
+            sdk: sdk,
+            fileManager: .default,
+            nodeProvider: nodeProvider))
+    }
+    
     private func isValid(index: Int) -> Bool {
         if let nodes = megaNodes {
             return nodes.indices ~= index

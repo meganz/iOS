@@ -22,6 +22,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.currentIndex, 5)
         XCTAssertEqual(sut.count, 7)
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.allPhotos, allPhotos)
         let successfulNode = await sut.photoNode(at: 0)
         XCTAssertEqual(successfulNode, NodeEntity(handle: 10).toMEGANode(in: sdk))
@@ -92,6 +93,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
                                            sdk: MockSdk(nodes: allPhotos),
                                            nodeProvider: MockMEGANodeProvider())
         XCTAssertEqual(sut.currentPhoto, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -121,6 +123,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 4)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -132,6 +135,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 4)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
     }
@@ -151,6 +155,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -162,6 +167,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 2)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 10).toMEGANode(in: sdk))
+        XCTAssertEqual(sut.currentPhotoNodeEntity, NodeEntity(handle: 10))
         XCTAssertEqual(sut.currentIndex, 0)
         XCTAssertEqual(sut.allPhotos, [NodeEntity(handle: 10), NodeEntity(handle: 8)].toMEGANodes(in: sdk))
     }
@@ -181,6 +187,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
          
@@ -210,6 +217,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
           
@@ -222,6 +230,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 2)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, [NodeEntity(handle: 10), NodeEntity(handle: 9)].toMEGANodes(in: sdk))
     }
@@ -242,6 +251,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 4)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 2)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -252,6 +262,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 2)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 11).toMEGANode(in: sdk))
+        XCTAssertEqual(sut.currentPhotoNodeEntity, NodeEntity(handle: 11))
         XCTAssertEqual(sut.currentIndex, 0)
         XCTAssertEqual(sut.allPhotos, [NodeEntity(handle: 11), NodeEntity(handle: 8)].toMEGANodes(in: sdk))
     }
@@ -272,6 +283,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -284,6 +296,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 1)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 8).toMEGANode(in: sdk))
+        XCTAssertEqual(sut.currentPhotoNodeEntity, NodeEntity(handle: 8))
         XCTAssertEqual(sut.currentIndex, 0)
         XCTAssertEqual(sut.allPhotos, [NodeEntity(handle: 8)].toMEGANodes(in: sdk))
     }
@@ -305,6 +318,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 5)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 2)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -315,6 +329,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 10).toMEGANode(in: sdk))
+        XCTAssertEqual(sut.currentPhotoNodeEntity, NodeEntity(handle: 10))
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, [NodeEntity(handle: 11), NodeEntity(handle: 10), NodeEntity(handle: 8)].toMEGANodes(in: sdk))
     }
@@ -335,6 +350,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -345,6 +361,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 1)
         let postRemovalResult = await sut.currentPhoto()
         XCTAssertEqual(postRemovalResult, NodeEntity(handle: 10).toMEGANode(in: sdk))
+        XCTAssertEqual(sut.currentPhotoNodeEntity, NodeEntity(handle: 10))
         XCTAssertEqual(sut.currentIndex, 0)
         XCTAssertEqual(sut.allPhotos, [NodeEntity(handle: 10)].toMEGANodes(in: sdk))
     }
@@ -364,6 +381,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -374,6 +392,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let postUpdateResult = await sut.currentPhoto()
         XCTAssertEqual(postUpdateResult, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
     }
@@ -393,6 +412,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let result = await sut.currentPhoto()
         XCTAssertEqual(result, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -406,6 +426,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let postUpdateResult = await sut.currentPhoto()
         XCTAssertEqual(postUpdateResult, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -429,6 +450,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let resut = await sut.currentPhoto()
         XCTAssertEqual(resut, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -437,6 +459,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let postUpdateResult = await sut.currentPhoto()
         XCTAssertEqual(postUpdateResult, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
     }
@@ -456,6 +479,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let resut = await sut.currentPhoto()
         XCTAssertEqual(resut, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -469,6 +493,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let postUpdateResult = await sut.currentPhoto()
         XCTAssertEqual(postUpdateResult, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, updatedPhotos)
 
@@ -494,6 +519,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let resut = await sut.currentPhoto()
         XCTAssertEqual(resut, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
         XCTAssertEqual(sut.allPhotos, allPhotos)
         
@@ -508,6 +534,7 @@ final class PhotoBrowserDataProvider_nodeEntity_Tests: XCTestCase {
         XCTAssertEqual(sut.count, 3)
         let postUpdateResult = await sut.currentPhoto()
         XCTAssertEqual(postUpdateResult, currentPhoto)
+        XCTAssertEqual(sut.currentPhotoNodeEntity, currentPhoto.toNodeEntity())
         XCTAssertEqual(sut.currentIndex, 1)
 
         let nodeResulst = await [sut.photoNode(at: 0), sut.photoNode(at: 1), sut.photoNode(at: 2)]
