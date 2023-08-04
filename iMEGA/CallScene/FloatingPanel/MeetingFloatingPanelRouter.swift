@@ -2,6 +2,7 @@ import ChatRepo
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
+import MEGARepo
 import MEGASDKRepo
 import PanModal
 

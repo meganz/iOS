@@ -1,5 +1,4 @@
 // swift-tools-version: 5.8
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -22,7 +21,8 @@ let package = Package(
         .package(path: "../../MEGASdk"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0"),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "9.0.0")
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "9.0.0"),
+        .package(path: "../../MEGARepo")
     ],
     targets: [
         .target(
@@ -33,7 +33,8 @@ let package = Package(
                 "MEGASdk",
                 "SAMKeychain",
                 .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk"),
-                .product(name: "FirebaseAppDistribution-Beta", package: "firebase-ios-sdk")
+                .product(name: "FirebaseAppDistribution-Beta", package: "firebase-ios-sdk"),
+                "MEGARepo"
             ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .target(

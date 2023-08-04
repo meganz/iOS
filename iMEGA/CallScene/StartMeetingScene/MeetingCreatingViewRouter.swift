@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 import MEGAPermissions
 import MEGAPresentation
+import MEGARepo
 import MEGASDKRepo
 
 protocol MeetingCreatingViewRouting: Routing {

@@ -1,3 +1,4 @@
+import MEGARepo
 import MEGASDKRepo
 
 @objc final class FileSystemHelperOCWrapper: NSObject {

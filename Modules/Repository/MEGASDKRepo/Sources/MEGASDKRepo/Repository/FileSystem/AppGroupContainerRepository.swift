@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGARepo
 
 public struct AppGroupContainerRepository: AppGroupContainerRepositoryProtocol {
     public static var newRepo: AppGroupContainerRepository {
