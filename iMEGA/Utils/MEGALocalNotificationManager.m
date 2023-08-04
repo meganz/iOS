@@ -286,7 +286,10 @@
         for (UNNotification *notification in notifications) {
             NSNumber *chatId = notification.request.content.userInfo[@"chatId"];
             NSNumber *msgId = notification.request.content.userInfo[@"msgId"];
-            if ([chatId isEqualToNumber:@(self.chatRoom.chatId)] && [msgId isEqualToNumber:@(self.message.messageId)]) {
+            // The chatId of scheduled meeting notification is a String and it will crash when calling the isEqualToNumber method
+            // So the type of the chatId and msgId are checked before using isEqualToNumber: method
+            if ([chatId isKindOfClass:NSNumber.class] && [chatId isEqualToNumber:@(self.chatRoom.chatId)] &&
+                [msgId isKindOfClass:NSNumber.class] && [msgId isEqualToNumber:@(self.message.messageId)]) {
                 [center removeDeliveredNotificationsWithIdentifiers:@[notification.request.identifier]];
                 break;
             }
