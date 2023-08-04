@@ -190,6 +190,32 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
     }
     
+    func waitingRoom(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool {            
+        try await withAsyncThrowingValue { completion in
+            sdk.setWaitingRoom(enabled, chatId: chatRoom.chatId, delegate: ChatRequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.isFlag))
+                case .failure(let error):
+                    let errorEntity: WaitingRoomErrorEntity
+                    switch error.type {
+                    case .MEGAChatErrorTypeArgs:
+                        errorEntity = WaitingRoomErrorEntity.oneToOneChatRoom
+                    case .MEGAChatErrorTypeNoEnt:
+                        errorEntity = WaitingRoomErrorEntity.chatRoomDoesNoExists
+                    case .MEGAChatErrorTypeAccess:
+                        errorEntity = WaitingRoomErrorEntity.access
+                    case .MegaChatErrorTypeExist:
+                        errorEntity = WaitingRoomErrorEntity.alreadyExists
+                    default:
+                        errorEntity = WaitingRoomErrorEntity.generic
+                    }
+                    completion(.failure(errorEntity))
+                }
+            })
+        }
+    }
+    
     func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never> {
         chatRoomUpdateListener(forChatId: chatRoom.chatId)
             .monitor
@@ -219,6 +245,14 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
             .monitor
             .filter { $0.changeType == .openInvite}
             .map(\.isOpenInviteEnabled)
+            .eraseToAnyPublisher()
+    }
+    
+    func waitingRoomValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+        chatRoomUpdateListener(forChatId: chatRoom.chatId)
+            .monitor
+            .filter { $0.changeType == .waitingRoom}
+            .map(\.isWaitingRoomEnabled)
             .eraseToAnyPublisher()
     }
     

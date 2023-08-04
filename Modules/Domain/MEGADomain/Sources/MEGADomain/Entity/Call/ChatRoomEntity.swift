@@ -1,4 +1,3 @@
-
 public struct ChatRoomEntity: Sendable {
     public enum ChatType: Sendable {
         case oneToOne
@@ -57,8 +56,9 @@ public struct ChatRoomEntity: Sendable {
     public let peers: [Peer]
     public let userHandle: HandleEntity
     public let isOpenInviteEnabled: Bool
+    public let isWaitingRoomEnabled: Bool
     
-    public init(chatId: HandleEntity, ownPrivilege: ChatRoomPrivilegeEntity, changeType: ChangeType?, peerCount: UInt, authorizationToken: String, title: String?, unreadCount: Int, userTypingHandle: HandleEntity, retentionTime: UInt, creationTimeStamp: UInt64, hasCustomTitle: Bool, isPublicChat: Bool, isPreview: Bool, isactive: Bool, isArchived: Bool, chatType: ChatType, peers: [Peer], userHandle: HandleEntity, isOpenInviteEnabled: Bool) {
+    public init(chatId: HandleEntity, ownPrivilege: ChatRoomPrivilegeEntity, changeType: ChangeType?, peerCount: UInt, authorizationToken: String, title: String?, unreadCount: Int, userTypingHandle: HandleEntity, retentionTime: UInt, creationTimeStamp: UInt64, hasCustomTitle: Bool, isPublicChat: Bool, isPreview: Bool, isactive: Bool, isArchived: Bool, chatType: ChatType, peers: [Peer], userHandle: HandleEntity, isOpenInviteEnabled: Bool, isWaitingRoomEnabled: Bool) {
         self.chatId = chatId
         self.ownPrivilege = ownPrivilege
         self.changeType = changeType
@@ -78,6 +78,7 @@ public struct ChatRoomEntity: Sendable {
         self.peers = peers
         self.userHandle = userHandle
         self.isOpenInviteEnabled = isOpenInviteEnabled
+        self.isWaitingRoomEnabled = isWaitingRoomEnabled
     }
 }
 

@@ -94,7 +94,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 isPublicChat: true,
                 title: meeting.title,
                 speakRequest: false,
-                waitingRoom: false,
+                waitingRoom: meeting.waitingRoom,
                 openInvite: meeting.allowNonHostsToAddParticipantsEnabled,
                 timezone: TimeZone.current.identifier,
                 startDate: Int(meeting.startDate.timeIntervalSince1970),

@@ -2,6 +2,7 @@ import Combine
 import MEGADomain
 import MEGAFoundation
 import MEGAPresentation
+import SwiftUI
 
 protocol ScheduleMeetingRouting {
     func showSpinner()
@@ -89,6 +90,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         didSet { updateRightBarButtonState() }
     }
 
+    @Published var showWaitingRoomWarningBanner = false
     @Published var meetingNameTooLong = false
     @Published var startDatePickerVisible = false
     @Published var endDatePickerVisible = false
@@ -121,6 +123,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     lazy var isWaitingRoomFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
+    
+    private var subscriptions = Set<AnyCancellable>()
 
     init(
         router: some ScheduleMeetingRouting,
@@ -143,6 +147,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         self.rules = viewConfiguration.rules
         self.participantHandleList = viewConfiguration.participantHandleList
         self.updateMeetingLinkToggle()
+        self.initShowWarningBannerSubscription()
     }
     
     // MARK: - Public
@@ -238,6 +243,19 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     // MARK: - Private
+    
+    private func initShowWarningBannerSubscription() {
+        Publishers.CombineLatest($waitingRoomEnabled, $allowNonHostsToAddParticipantsEnabled)
+            .map { $0 && $1 }
+            .removeDuplicates()
+            .sink(receiveValue: { [weak self] show in
+                guard let self else { return }
+                withAnimation {
+                    self.showWaitingRoomWarningBanner = show
+                }
+            })
+            .store(in: &subscriptions)
+    }
     
     @MainActor
     private func updated(occurrence: ScheduledMeetingOccurrenceEntity) {

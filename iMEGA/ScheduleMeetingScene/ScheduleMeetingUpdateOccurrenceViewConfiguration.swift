@@ -12,6 +12,7 @@ final class ScheduleMeetingUpdateOccurrenceViewConfiguration: ScheduleMeetingUpd
     override var shouldAllowEditingMeetingLink: Bool { false }
     override var shouldAllowEditingParticipants: Bool { false }
     override var shouldAllowEditingCalendarInvite: Bool { false }
+    override var shouldAllowEditingWaitingRoom: Bool { false }
     override var shouldAllowEditingAllowNonHostsToAddParticipants: Bool { false }
     override var shouldAllowEditingMeetingDescription: Bool { false }
     
@@ -25,6 +26,7 @@ final class ScheduleMeetingUpdateOccurrenceViewConfiguration: ScheduleMeetingUpd
         self.occurrence = occurrence
         super.init(
             scheduledMeeting: scheduledMeeting,
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
             chatLinkUseCase: chatLinkUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase

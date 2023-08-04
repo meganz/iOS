@@ -11,6 +11,7 @@ public protocol ChatRoomUseCaseProtocol {
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void)
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String) async throws -> String
     func allowNonHostToAddParticipants(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
+    func waitingRoom(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool
     func message(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) -> ChatMessageEntity?
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity)
     func archive(_ archive: Bool, chatRoom: ChatRoomEntity) async throws -> Bool
@@ -20,6 +21,7 @@ public protocol ChatRoomUseCaseProtocol {
     mutating func userPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never>
     func ownPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never>
     mutating func allowNonHostToAddParticipantsValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never>
+    mutating func waitingRoomValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never>
     func closeChatRoomPreview(chatRoom: ChatRoomEntity)
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
@@ -95,6 +97,10 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         try await chatRoomRepo.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)
     }
     
+    public func waitingRoom(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool {
+        try await chatRoomRepo.waitingRoom(enabled, forChatRoom: chatRoom)
+    }
+    
     public func message(forChatRoom chatRoom: ChatRoomEntity, messageId: HandleEntity) -> ChatMessageEntity? {
         chatRoomRepo.message(forChatRoom: chatRoom, messageId: messageId)
     }
@@ -133,6 +139,14 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         }
         
         return chatRoomRepo.allowNonHostToAddParticipantsValueChanged(forChatRoom: chatRoom)
+    }
+    
+    public func waitingRoomValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+        if chatRoomRepo.isChatRoomOpen(chatRoom) == false {
+            try? chatRoomRepo.openChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
+        }
+        
+        return chatRoomRepo.waitingRoomValueChanged(forChatRoom: chatRoom)
     }
     
     public func closeChatRoomPreview(chatRoom: ChatRoomEntity) {

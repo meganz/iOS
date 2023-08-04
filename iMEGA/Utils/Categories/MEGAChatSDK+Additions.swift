@@ -1,4 +1,5 @@
 import MEGADomain
+
 extension MEGAChatSdk {
     var firstActiveCall: MEGAChatCall? {
         guard let callIds = chatCallsIds() else { return nil }

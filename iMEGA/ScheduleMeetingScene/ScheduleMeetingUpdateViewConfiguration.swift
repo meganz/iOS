@@ -10,7 +10,6 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
     var endDate: Date { scheduledMeeting.endDate }
     var meetingDescription: String { scheduledMeeting.description }
     var calendarInviteEnabled: Bool { scheduledMeeting.flags.emailsEnabled }
-    var waitingRoomEnabled: Bool { scheduledMeeting.waitingRoom }
     var rules: ScheduledMeetingRulesEntity { scheduledMeeting.rules }
     var participantHandleList: [HandleEntity] { participantHandleListInChatRoom() }
     var meetingLinkEnabled: Bool = false
@@ -21,26 +20,33 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
     var shouldAllowEditingMeetingLink: Bool { true }
     var shouldAllowEditingParticipants: Bool { true }
     var shouldAllowEditingCalendarInvite: Bool { true }
-    var shouldAllowEditingWaitingRoom: Bool { true }
+    var shouldAllowEditingWaitingRoom: Bool { !chatUseCase.isCallInProgress(for: scheduledMeeting.chatId) }
     var shouldAllowEditingAllowNonHostsToAddParticipants: Bool { true }
     var shouldAllowEditingMeetingDescription: Bool { true }
 
+    var waitingRoomEnabled: Bool {
+        guard let chatroom = try? chatRoom(for: scheduledMeeting) else { return false }
+        return chatroom.isWaitingRoomEnabled
+    }
     var allowNonHostsToAddParticipantsEnabled: Bool {
         guard let chatroom = try? chatRoom(for: scheduledMeeting) else { return false }
         return chatroom.isOpenInviteEnabled
     }
         
+    private var chatUseCase: any ChatUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol
     private(set) var scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
 
     init(
         scheduledMeeting: ScheduledMeetingEntity,
+        chatUseCase: some ChatUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatLinkUseCase: some ChatLinkUseCaseProtocol,
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol
     ) {
         self.scheduledMeeting = scheduledMeeting
+        self.chatUseCase = chatUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatLinkUseCase = chatLinkUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
@@ -63,6 +69,7 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
         try await renameChatRoom(meeting: meeting)
         try updateParticipants(with: meeting)
         try await updateMeetingLinkIfNeeded(meeting: meeting)
+        try await updateWaitingRoomEnabled(meeting: meeting)
         try await updateAllowNonHostsToAddParticipantsEnabled(meeting: meeting)
         return .showMessageForScheduleMeeting(
             message: Strings.Localizable.Meetings.ScheduleMeeting.UpdateSuccessfull.popupMessage,
@@ -92,6 +99,15 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
         return chatRoomUseCase.peerHandles(forChatRoom: chatroom)
     }
     
+    private func updateWaitingRoomEnabled(meeting: ScheduleMeetingProxyEntity) async throws {
+        guard waitingRoomEnabled != meeting.waitingRoom else { return }
+        let result = try await chatRoomUseCase.waitingRoom(
+            meeting.waitingRoom,
+            forChatRoom: try chatRoom(for: scheduledMeeting)
+        )
+        MEGALogInfo("Updated waitingRoomEnabled: \(result)")
+    }
+
     private func updateAllowNonHostsToAddParticipantsEnabled(meeting: ScheduleMeetingProxyEntity) async throws {
         guard allowNonHostsToAddParticipantsEnabled != meeting.allowNonHostsToAddParticipantsEnabled else { return }
         let result = try await chatRoomUseCase.allowNonHostToAddParticipants(
@@ -148,7 +164,6 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
             description: meeting.description,
             attributes: scheduledMeeting.attributes,
             overrides: scheduledMeeting.overrides,
-            waitingRoom: scheduledMeeting.waitingRoom,
             flags: ScheduledMeetingFlagsEntity(emailsEnabled: meeting.calendarInvite),
             rules: meeting.rules ?? .init(frequency: .invalid)
         )

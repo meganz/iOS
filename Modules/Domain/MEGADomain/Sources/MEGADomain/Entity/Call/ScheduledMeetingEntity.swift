@@ -15,7 +15,6 @@ public struct ScheduledMeetingEntity: Sendable {
     public let description: String
     public let attributes: String
     public let overrides: Date
-    public let waitingRoom: Bool
     public let flags: ScheduledMeetingFlagsEntity
     public let rules: ScheduledMeetingRulesEntity
     
@@ -34,7 +33,6 @@ public struct ScheduledMeetingEntity: Sendable {
         description: String,
         attributes: String,
         overrides: Date,
-        waitingRoom: Bool,
         flags: ScheduledMeetingFlagsEntity,
         rules: ScheduledMeetingRulesEntity
     ) {
@@ -52,7 +50,6 @@ public struct ScheduledMeetingEntity: Sendable {
         self.description = description
         self.attributes = attributes
         self.overrides = overrides
-        self.waitingRoom = waitingRoom
         self.flags = flags
         self.rules = rules
     }

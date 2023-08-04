@@ -12,8 +12,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var privilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
     var peerPrivilege: ChatRoomPrivilegeEntity = .unknown
     var allowNonHostToAddParticipantsEnabled = false
+    var waitingRoomEnabled = false
     var chatHasBeenArchived = false
     var allowNonHostToAddParticipantsValueChangedSubject = PassthroughSubject<Bool, Never>()
+    var waitingRoomValueChangedSubject = PassthroughSubject<Bool, Never>()
     var userStatusEntity = ChatStatusEntity.invalid
     var message: ChatMessageEntity?
     var contactEmail: String?
@@ -111,6 +113,14 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func allowNonHostToAddParticipantsValueChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
         allowNonHostToAddParticipantsValueChangedSubject.eraseToAnyPublisher()
+    }
+    
+    func waitingRoom(_ enabled: Bool, forChatRoom chatRoom: MEGADomain.ChatRoomEntity) async throws -> Bool {
+        waitingRoomEnabled
+    }
+    
+    mutating func waitingRoomValueChanged(forChatRoom chatRoom: MEGADomain.ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+        waitingRoomValueChangedSubject.eraseToAnyPublisher()
     }
     
     func closeChatRoomPreview(chatRoom: ChatRoomEntity) {

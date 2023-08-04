@@ -158,6 +158,18 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.shouldAllowEditingAllowNonHostsToAddParticipants)
     }
     
+    func testShouldAllowEditingWaitingRoom_givenAllowEditingWaitingRoom_shouldMatch() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(shouldAllowEditingWaitingRoom: true)
+        let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+        XCTAssertTrue(viewModel.shouldAllowEditingWaitingRoom)
+    }
+    
+    func testShouldAllowEditingWaitingRoom_givenNotAllowEditingWaitingRoom_shouldMatch() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(shouldAllowEditingWaitingRoom: false)
+        let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+        XCTAssertFalse(viewModel.shouldAllowEditingWaitingRoom)
+    }
+    
     func testShouldAllowEditingMeetingName_givenAllowedToAddMeetingDescription_shouldMatch() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(shouldAllowEditingMeetingDescription: true)
         let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
@@ -218,6 +230,18 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(allowNonHostsToAddParticipantsEnabled: false)
         let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
         XCTAssertFalse(viewModel.allowNonHostsToAddParticipantsEnabled)
+    }
+    
+    func testWaitingRoomEnabled_givenSettingIsEnabled_shouldBeTrue() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true)
+        let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+        XCTAssertTrue(viewModel.waitingRoomEnabled)
+    }
+    
+    func testWaitingRoomEnabled_givenSettingIsDisabled_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false)
+        let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+        XCTAssertFalse(viewModel.waitingRoomEnabled)
     }
     
     func testMeetingLinkEnabled_givenSettingIsEnabled_shouldBeTrue() {
