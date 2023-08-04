@@ -147,6 +147,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     func edit(meeting: ScheduledMeetingEntity) -> AnyPublisher<ScheduledMeetingEntity, Never> {
         let viewConfiguration = ScheduleMeetingUpdateViewConfiguration(
             scheduledMeeting: meeting,
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)

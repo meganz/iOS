@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAPresentation
+import SwiftUI
 
 protocol MeetingInfoRouting {
     func showSharedFiles(for chatRoom: ChatRoomEntity)
@@ -32,11 +33,17 @@ final class MeetingInfoViewModel: ObservableObject {
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let router: any MeetingInfoRouting
+    @Published var showWaitingRoomWarningBanner = false
     @Published var isWaitingRoomOn = false
     @Published var isAllowNonHostToAddParticipantsOn = true
     @Published var isPublicChat = true
     @Published var isUserInChat = true
     @Published var isModerator = false
+    
+    var shouldAllowEditingWaitingRoom: Bool {
+        guard let chatRoom = chatRoom else { return false }
+        return !chatUseCase.isCallInProgress(for: chatRoom.chatId)
+    }
 
     private var chatRoom: ChatRoomEntity?
     private var subscriptions = Set<AnyCancellable>()
@@ -96,6 +103,7 @@ final class MeetingInfoViewModel: ObservableObject {
         initSubscriptions()
         fetchInitialValues()
         listenToIsAllowNonHostToAddParticipantsOnChange()
+        listenToIsWaitingRoomOnChange()
     }
     
     private func listenToIsAllowNonHostToAddParticipantsOnChange() {
@@ -110,11 +118,24 @@ final class MeetingInfoViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
     
+    private func listenToIsWaitingRoomOnChange() {
+        $isWaitingRoomOn
+            .dropFirst()
+            .sink { [weak self] newValue in
+                guard let self, newValue != chatRoom?.isWaitingRoomEnabled else { return }
+                Task {
+                    await self.waitingRoomValueChanged(to: newValue)
+                }
+            }
+            .store(in: &subscriptions)
+    }
+    
     private func fetchInitialValues() {
         guard let chatRoom else { return }
         isAllowNonHostToAddParticipantsOn = chatRoom.isOpenInviteEnabled
+        isWaitingRoomOn = chatRoom.isWaitingRoomEnabled
         isPublicChat = chatRoom.isPublicChat
-        self.isUserInChat = chatRoom.ownPrivilege.isUserInChat
+        isUserInChat = chatRoom.ownPrivilege.isUserInChat
         chatLinkUseCase.queryChatLink(for: chatRoom)
         chatRoomNotificationsViewModel = ChatRoomNotificationsViewModel(chatRoom: chatRoom)
         if chatRoom.ownPrivilege == .moderator {
@@ -162,6 +183,17 @@ final class MeetingInfoViewModel: ObservableObject {
             })
             .store(in: &subscriptions)
         
+        chatRoomUseCase.waitingRoomValueChanged(forChatRoom: chatRoom)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
+                    return
+                }
+                self.chatRoom = chatRoom
+                self.isWaitingRoomOn = chatRoom.isWaitingRoomEnabled
+            }
+            .store(in: &subscriptions)
+        
         chatUseCase
             .monitorChatPrivateModeUpdate(forChatId: scheduledMeeting.chatId)
             .receive(on: DispatchQueue.main)
@@ -187,12 +219,22 @@ final class MeetingInfoViewModel: ObservableObject {
                 self.isUserInChat = chatRoom.ownPrivilege.isUserInChat
             })
             .store(in: &subscriptions)
+        
+        Publishers.CombineLatest($isWaitingRoomOn, $isAllowNonHostToAddParticipantsOn)
+            .map { $0 && $1 }
+            .removeDuplicates()
+            .sink(receiveValue: { [weak self] show in
+                guard let self else { return }
+                withAnimation {
+                    self.showWaitingRoomWarningBanner = show
+                }
+            })
+            .store(in: &subscriptions)
     }
 }
 
 extension MeetingInfoViewModel {
     // MARK: - Open Invite
-    
     @MainActor func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) {
         Task {
             do {
@@ -200,6 +242,18 @@ extension MeetingInfoViewModel {
                 isAllowNonHostToAddParticipantsOn = try await chatRoomUseCase.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)
             } catch {
                 MEGALogDebug("Unable to set the isAllowNonHostToAddParticipantsOn to \(enabled) for \(scheduledMeeting.chatId)")
+            }
+        }
+    }
+    
+    // MARK: - Waiting Room
+    @MainActor func waitingRoomValueChanged(to enabled: Bool) {
+        Task {
+            do {
+                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
+                isWaitingRoomOn = try await chatRoomUseCase.waitingRoom(enabled, forChatRoom: chatRoom)
+            } catch {
+                MEGALogDebug("Unable to set the isWaitingRoomOn to \(enabled) for \(scheduledMeeting.chatId)")
             }
         }
     }

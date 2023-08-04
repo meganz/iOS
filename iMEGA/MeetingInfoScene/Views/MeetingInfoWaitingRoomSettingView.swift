@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MeetingInfoWaitingRoomSettingView: View {
     @Binding var isWaitingRoomOn: Bool
+    let shouldAllowEditingWaitingRoom: Bool
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -9,6 +10,7 @@ struct MeetingInfoWaitingRoomSettingView: View {
             ToggleView(
                 image: Asset.Images.Meetings.Info.enableWaitingRoom.name,
                 text: Strings.Localizable.Meetings.ScheduleMeeting.waitingRoom,
+                enabled: shouldAllowEditingWaitingRoom,
                 isOn: $isWaitingRoomOn)
             .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
             
@@ -29,7 +31,9 @@ struct MeetingInfoWaitingRoomSettingView_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: .constant(true))
+                MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: .constant(true), shouldAllowEditingWaitingRoom: true)
+                    .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
+                MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: .constant(true), shouldAllowEditingWaitingRoom: false)
                     .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
             }
         }

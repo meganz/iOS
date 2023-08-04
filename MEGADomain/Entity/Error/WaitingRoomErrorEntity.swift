@@ -1,4 +1,4 @@
-enum AllowNonHostToAddParticipantsErrorEntity: Error {
+enum WaitingRoomErrorEntity: Error {
     case generic
     case chatRoomDoesNoExists
     case oneToOneChatRoom

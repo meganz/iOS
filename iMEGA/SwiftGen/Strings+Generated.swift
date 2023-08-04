@@ -4801,6 +4801,12 @@ public enum Strings {
           /// Only users admitted by the host can join the meeting.
           public static let description = Strings.tr("Localizable", "meetings.scheduleMeeting.waitingRoom.description")
         }
+        public enum WaitingRoomWarningBanner {
+          /// Learn more
+          public static let learnMore = Strings.tr("Localizable", "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore")
+          /// Participants added by non-hosts during calls won't be sent to the waiting room.
+          public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.waitingRoomWarningBanner.title")
+        }
       }
       public enum Scheduled {
         /// [B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]

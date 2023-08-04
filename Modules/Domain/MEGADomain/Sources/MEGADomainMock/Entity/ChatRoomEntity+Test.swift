@@ -21,7 +21,8 @@ public extension ChatRoomEntity {
          peers: [ChatRoomEntity.Peer] = [],
          userHandle: HandleEntity = .invalid,
          isOpenInviteEnabled: Bool = false,
+         isWaitingRoomEnabled: Bool = false,
          isTesting: Bool = true) {
-        self.init(chatId: chatId, ownPrivilege: ownPrivilege, changeType: changeType, peerCount: peerCount, authorizationToken: "", title: title, unreadCount: unreadCount, userTypingHandle: userTypingHandle, retentionTime: retentionTime, creationTimeStamp: creationTimeStamp, hasCustomTitle: hasCustomTitle, isPublicChat: isPublicChat, isPreview: isPreview, isactive: isactive, isArchived: isArchived, chatType: chatType, peers: peers, userHandle: userHandle, isOpenInviteEnabled: isOpenInviteEnabled)
+        self.init(chatId: chatId, ownPrivilege: ownPrivilege, changeType: changeType, peerCount: peerCount, authorizationToken: "", title: title, unreadCount: unreadCount, userTypingHandle: userTypingHandle, retentionTime: retentionTime, creationTimeStamp: creationTimeStamp, hasCustomTitle: hasCustomTitle, isPublicChat: isPublicChat, isPreview: isPreview, isactive: isactive, isArchived: isArchived, chatType: chatType, peers: peers, userHandle: userHandle, isOpenInviteEnabled: isOpenInviteEnabled, isWaitingRoomEnabled: isWaitingRoomEnabled)
     }
 }

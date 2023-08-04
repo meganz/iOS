@@ -254,6 +254,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         guard let navigationController else { return }
         let viewConfiguration = ScheduleMeetingUpdateViewConfiguration(
             scheduledMeeting: scheduledMeeting,
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)

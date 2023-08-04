@@ -3634,6 +3634,10 @@
 "meetings.scheduleMeeting.waitingRoom"="Waiting Room";
 /* Schedule meeting waiting room setting description */
 "meetings.scheduleMeeting.waitingRoom.description"="Only users admitted by the host can join the meeting.";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won't be sent to the waiting room.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Learn more";
 /* Album saved to cloud drive alert message */
 "albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
 /* Album failed to save to cloud drive alert message */

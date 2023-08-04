@@ -1282,6 +1282,8 @@
 		9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
 		99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */; };
+		99F300982A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F300972A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift */; };
+		99F9ABC02A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */; };
 		9D26F234294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
@@ -3838,6 +3840,8 @@
 		996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWaitingRoomView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
 		99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingLinkActivityItemSource.swift; sourceTree = "<group>"; };
+		99F300972A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomErrorEntity.swift; sourceTree = "<group>"; };
+		99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomWarningBannerView.swift; sourceTree = "<group>"; };
 		9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewWrapper.swift; sourceTree = "<group>"; };
 		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
 		9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouter.swift; sourceTree = "<group>"; };
@@ -8710,6 +8714,7 @@
 				83B4FC66292401A000364F04 /* MeetingInfoHeaderView.swift */,
 				996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */,
 				8358A6E72925460800EE197C /* ToggleView.swift */,
+				99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -10014,11 +10019,11 @@
 		B63AEB16251203F5000B8517 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				248A03182A79024700F183A2 /* Shared Views */,
 				2546EE032A4149A000CBB82E /* AVPlayerManager */,
 				5BBC13E426CE64A30010115B /* Cells */,
 				2488EBC12A13B4F2005F910E /* Delegates */,
 				328984882A288FCC0049CD40 /* DomainExtensions */,
+				248A03182A79024700F183A2 /* Shared Views */,
 				A874D305263FF683000861DB /* ViewControllers */,
 				99E1A9272A383E9700974FC9 /* Views */,
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
@@ -11166,6 +11171,7 @@
 				BFBE04C726AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift */,
 				125E606D285A87C2003C7BB5 /* SearchResultErrorEntity.swift */,
 				BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */,
+				99F300972A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -14457,6 +14463,8 @@
 				5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */,
 				9440D6C128BE6D390010D167 /* ViewModePreferenceEntity+Mapper.swift in Sources */,
 				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,
+				99F300982A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift in Sources */,
+				99F9ABC02A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift in Sources */,
 				B63995362898CBEB00EA88F1 /* WarningView.swift in Sources */,
 				B63995382898CBEB00EA88F1 /* WarningViewModel.swift in Sources */,
 				B63995372898CBEB00EA88F1 /* WarningViewRouter.swift in Sources */,
@@ -14828,7 +14836,6 @@
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
-				248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */,
 				244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */,
 				246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */,
 				3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */,
@@ -14912,6 +14919,7 @@
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,
+				248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */,
 				0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */,
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,

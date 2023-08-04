@@ -14,6 +14,11 @@ struct MeetingInfoView: View {
             VStack(spacing: Constants.spacing) {
                 MeetingInfoHeaderView()
                     .environmentObject(viewModel)
+                
+                if viewModel.isWaitingRoomFeatureEnabled && viewModel.showWaitingRoomWarningBanner {
+                    WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner)
+                        .padding(.vertical, -Constants.spacing)
+                }
                  
                 if let chatRoomLinkViewModel = viewModel.chatRoomLinkViewModel, viewModel.isModerator {
                     ChatRoomLinkView(viewModel: chatRoomLinkViewModel)
@@ -25,7 +30,7 @@ struct MeetingInfoView: View {
                 
                 if viewModel.isModerator {
                     if viewModel.isWaitingRoomFeatureEnabled {
-                        MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: $viewModel.isWaitingRoomOn)
+                        MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: $viewModel.isWaitingRoomOn, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
                     }
                     
                     ToggleView(
