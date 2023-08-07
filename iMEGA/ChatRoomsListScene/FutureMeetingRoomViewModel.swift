@@ -464,8 +464,7 @@ extension FutureMeetingRoomViewModel {
             options.insert(occurrenceContextMenuOption, at: 1)
         }
         
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting),
-           chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)?.ownPrivilege == .moderator {
+        if chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)?.ownPrivilege == .moderator {
             options.insert(editContextMenuOption, at: 1)
             options.append(cancelContextMenuOption)
         }

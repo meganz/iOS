@@ -39,9 +39,7 @@ final class MeetingInfoViewController: UIViewController {
     }
     
     private func addEditButton(isModerator: Bool) {
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting) {
-            navigationItem.rightBarButtonItem = isModerator ? editBarButtonItem : nil
-        }
+        navigationItem.rightBarButtonItem = isModerator ? editBarButtonItem : nil
     }
     
     private func initSubscriptions() {

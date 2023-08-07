@@ -200,21 +200,6 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         wait(for: [exception], timeout: 5)
     }
     
-    func testFeatureFlagForShowingCreateMeetingTip_whenTurnedOff_shouldNotShowCreateMeetingTip() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.scheduleMeeting: false])
-        let sut = ChatRoomsListViewModel(chatViewMode: .meetings, featureFlagProvider: featureFlagProvider)
-        
-        sut.loadChatRoomsIfNeeded()
-        
-        let predicate = NSPredicate { _, _ in
-            sut.presentingCreateMeetingTip == true
-        }
-        let exception = expectation(for: predicate, evaluatedWith: nil)
-        exception.isInverted = true
-        wait(for: [exception], timeout: 2)
-
-    }
-    
     func testStartMeetingTip_meetingTipRecordIsCreateMeeting_shouldNotShowStartMeetingTip() {
         let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.createMeeting)
         let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
