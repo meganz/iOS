@@ -1,18 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "storage_full@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "storage_full@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "storage_full.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
