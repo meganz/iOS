@@ -23,14 +23,19 @@ public extension MEGASdk {
         }
     }
     
+    /// MEGASdk instance used for the user logged account
     static let sharedSdk: MEGASdk = {
         let baseURL: URL? = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let sdk = MEGASdk(appKey: Constants.appKey, userAgent: Constants.userAgent, basePath: baseURL?.path)
         sdk?.setRLimitFileCount(Constants.MaximumNOFILE)
         sdk?.retrySSLErrors(true)
-        return sdk!
+        guard let sdk else {
+            fatalError("Can't create shared sdk")
+        }
+        return sdk
     }()
     
+    /// MEGASdk instance used for the Notification Service Extension
     static let sharedNSESdk: MEGASdk = {
         let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.MEGAGroupIdentifier)
         let baseURL: URL? = containerURL?.appendingPathComponent(Constants.MEGANotificationServiceExtensionCacheFolder, isDirectory: true)
@@ -41,14 +46,22 @@ public extension MEGASdk {
         let sdk = MEGASdk(appKey: Constants.appKey, userAgent: Constants.userAgent, basePath: baseURL?.path)
         sdk?.setRLimitFileCount(Constants.MaximumNOFILE)
         sdk?.retrySSLErrors(true)
-        return sdk!
+        guard let sdk else {
+            fatalError("Can't create shared NSE sdk")
+        }
+        return sdk
     }()
     
+    /// MEGASdk instance used when user opens a folder link
+    /// When user opens a folder link, we use this instance to loggin in the folder link and fetch the node tree of the folder link
     static let sharedFolderLinkSdk: MEGASdk = {
         let baseURL = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let sdk = MEGASdk(appKey: Constants.appKey, userAgent: Constants.userAgent, basePath: baseURL?.path)
         sdk?.setRLimitFileCount(Constants.MaximumNOFILE)
         sdk?.retrySSLErrors(true)
-        return sdk!
+        guard let sdk else {
+            fatalError("Can't create shared folder link sdk")
+        }
+        return sdk
     }()
 }
