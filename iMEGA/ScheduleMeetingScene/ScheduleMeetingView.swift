@@ -10,38 +10,38 @@ struct ScheduleMeetingView: View {
     @State private var isBottomViewInFocus = false
 
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                if viewModel.isWaitingRoomFeatureEnabled && viewModel.showWaitingRoomWarningBanner {
-                    WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner)
+        VStack(spacing: 0) {
+            if viewModel.isWaitingRoomFeatureEnabled && viewModel.showWaitingRoomWarningBanner {
+                WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner)
+            }
+            ScrollViewReader { proxy in
+                ScrollView {
+                    ScheduleMeetingCreationNameView(viewModel: viewModel, appearFocused: viewModel.meetingName.isEmpty)
+                    if viewModel.meetingNameTooLong {
+                        ErrorView(error: Strings.Localizable.Meetings.ScheduleMeeting.MeetingName.lenghtError)
+                    }
+                    ScheduleMeetingCreationPropertiesView(viewModel: viewModel)
+                    ScheduleMeetingCreationInvitationView(viewModel: viewModel)
+                    if viewModel.isWaitingRoomFeatureEnabled {
+                        ScheduleMeetingCreationWaitingRoomView(waitingRoomEnabled: $viewModel.waitingRoomEnabled, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
+                    }
+                    ScheduleMeetingCreationOpenInviteView(viewModel: viewModel)
+                    ScheduleMeetingCreationDescriptionView(viewModel: viewModel, isBottomViewInFocus: $isBottomViewInFocus)
+                    
                     Spacer()
                         .frame(height: 0)
+                        .id(bottomViewID)
                 }
-                ScheduleMeetingCreationNameView(viewModel: viewModel, appearFocused: viewModel.meetingName.isEmpty)
-                if viewModel.meetingNameTooLong {
-                    ErrorView(error: Strings.Localizable.Meetings.ScheduleMeeting.MeetingName.lenghtError)
+                .onChange(of: viewModel.meetingDescription) { _ in
+                    scrollToBottom(proxy: proxy)
                 }
-                ScheduleMeetingCreationPropertiesView(viewModel: viewModel)
-                ScheduleMeetingCreationInvitationView(viewModel: viewModel)
-                if viewModel.isWaitingRoomFeatureEnabled {
-                    ScheduleMeetingCreationWaitingRoomView(waitingRoomEnabled: $viewModel.waitingRoomEnabled, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
+                .onReceive(
+                    NotificationCenter.Publisher(center: .default, name: UIResponder.keyboardDidShowNotification)
+                ) { _ in
+                    scrollToBottom(proxy: proxy)
                 }
-                ScheduleMeetingCreationOpenInviteView(viewModel: viewModel)
-                ScheduleMeetingCreationDescriptionView(viewModel: viewModel, isBottomViewInFocus: $isBottomViewInFocus)
-                
-                Spacer()
-                    .frame(height: 0)
-                    .id(bottomViewID)
+                .customScrollViewDismissKeyboard()
             }
-            .onChange(of: viewModel.meetingDescription) { _ in
-                scrollToBottom(proxy: proxy)
-            }
-            .onReceive(
-                NotificationCenter.Publisher(center: .default, name: UIResponder.keyboardDidShowNotification)
-            ) { _ in
-                scrollToBottom(proxy: proxy)
-            }
-            .customScrollViewDismissKeyboard()
         }
         .padding(.vertical)
         .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
