@@ -7,14 +7,14 @@ struct DeviceListView: View {
         List {
             Section(header: Text(viewModel.deviceListAssets.currentDeviceTitle)) {
                 if let currentDeviceVM = viewModel.currentDevice {
-                    DeviceView(viewModel: currentDeviceVM)
+                    DeviceCenterItemView(viewModel: currentDeviceVM)
                 }
             }
             
             if viewModel.otherDevices.isNotEmpty {
                 Section(header: Text(viewModel.deviceListAssets.otherDevicesTitle)) {
                     ForEach(viewModel.otherDevices) { deviceViewModel in
-                        DeviceView(viewModel: deviceViewModel)
+                        DeviceCenterItemView(viewModel: deviceViewModel)
                     }
                 }
             }

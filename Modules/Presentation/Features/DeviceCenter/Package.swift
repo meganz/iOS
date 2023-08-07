@@ -10,19 +10,29 @@ let package = Package(
     products: [
         .library(
             name: "DeviceCenter",
-            targets: ["DeviceCenter"])
+            targets: ["DeviceCenter"]),
+        .library(
+            name: "DeviceCenterMocks",
+            targets: ["DeviceCenterMocks"])
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../MEGAPresentation")
+        .package(path: "../MEGAPresentation"),
+        .package(path: "../../../Infrastracture/MEGATest")
     ],
     targets: [
         .target(
             name: "DeviceCenter",
             dependencies: ["MEGADomain", "MEGAPresentation"]),
+        .target(
+            name: "DeviceCenterMocks",
+            dependencies: ["DeviceCenter"]),
         .testTarget(
             name: "DeviceCenterTests",
             dependencies: ["DeviceCenter",
+                           "DeviceCenterMocks",
+                           "MEGADomain",
+                           "MEGATest",
                            .product(name: "MEGADomainMock", package: "MEGADomain")])
     ]
 )

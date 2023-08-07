@@ -80,7 +80,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
                     DeviceCenterUseCase(
                         deviceCenterRepository: DeviceCenterRepository.newRepo
                     ),
-                deviceListAssets:
+                deviceCenterAssets:
                     makeDeviceListAssetData()
             ).start()
             
@@ -101,12 +101,27 @@ extension MyAccountHallViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    private func makeDeviceListAssetData() -> DeviceListAssets {
-        DeviceListAssets(
-            title: Strings.Localizable.Device.Center.title,
-            currentDeviceTitle: Strings.Localizable.Device.Center.Current.Device.title,
-            otherDevicesTitle: Strings.Localizable.Device.Center.Other.Devices.title,
-            deviceDefaultName: Strings.Localizable.Device.Center.Default.Device.title,
+    private func makeDeviceListAssetData() -> DeviceCenterAssets {
+        DeviceCenterAssets(
+            deviceListAssets:
+                DeviceListAssets(
+                    title: Strings.Localizable.Device.Center.title,
+                    currentDeviceTitle: Strings.Localizable.Device.Center.Current.Device.title,
+                    otherDevicesTitle: Strings.Localizable.Device.Center.Other.Devices.title,
+                    deviceDefaultName: Strings.Localizable.Device.Center.Default.Device.title
+                ),
+            backupListAssets:
+                BackupListAssets(
+                    backupTypes: [
+                        BackupType(type: .backupUpload, iconName: Asset.Images.Backup.backupFolder.name),
+                        BackupType(type: .cameraUpload, iconName: Asset.Images.Backup.cameraUploadsFolder.name),
+                        BackupType(type: .mediaUpload, iconName: Asset.Images.Backup.cameraUploadsFolder.name),
+                        BackupType(type: .twoWay, iconName: Asset.Images.Backup.syncFolder.name),
+                        BackupType(type: .downSync, iconName: Asset.Images.Backup.syncFolder.name),
+                        BackupType(type: .upSync, iconName: Asset.Images.Backup.syncFolder.name),
+                        BackupType(type: .invalid, iconName: Asset.Images.Backup.syncFolder.name)
+                    ]
+                ),
             backupStatuses: [
                 BackupStatus(
                     status: .upToDate,
