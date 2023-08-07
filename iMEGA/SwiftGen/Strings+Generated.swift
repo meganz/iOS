@@ -5007,10 +5007,14 @@ public enum Strings {
           /// weekly
           public static let weekly = Strings.tr("Localizable", "meetings.scheduled.recurring.weekly")
           public enum Daily {
-            /// Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]
-            public static let forever = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever")
-            /// Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]
-            public static let until = Strings.tr("Localizable", "meetings.scheduled.recurring.daily.until")
+            /// Plural format key: "%#@interval@"
+            public static func forever(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.recurring.daily.forever", p1)
+            }
+            /// Plural format key: "%#@interval@"
+            public static func until(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "meetings.scheduled.recurring.daily.until", p1)
+            }
           }
           public enum Frequency {
             /// Occurs daily
