@@ -21,7 +21,7 @@ extension ChatRoomsListViewModel {
         chatViewMode: ChatViewMode = .chats,
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [.scheduleMeeting: true]),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         isTesting: Bool = true
     ) {
         self.init(

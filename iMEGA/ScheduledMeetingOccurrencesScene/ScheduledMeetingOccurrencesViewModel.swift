@@ -155,8 +155,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private func constructContextMenuOptions() -> [OccurrenceContextMenuOption] {
         var options: [OccurrenceContextMenuOption] = []
         
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting),
-           let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId),
+        if let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId),
            chatRoom.ownPrivilege == .moderator {
             options.append(
                 OccurrenceContextMenuOption(

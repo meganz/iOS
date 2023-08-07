@@ -277,7 +277,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                     self.addChatButtonTapped()
                 }
             },
-            bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? (DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting) ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : [startMeetingMenu(), joinMeetingMenu()]) : nil
+            bottomButtonMenus: chatViewMode == .meetings && isConnectedToNetwork ? [startMeetingMenu(), joinMeetingMenu(), scheduleMeetingMenu()] : nil
         )
     }
     
@@ -783,8 +783,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func fetchScheduledMeetingTipRecord() {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .scheduleMeeting) else { return }
-        
         meetingTipTask = Task { @MainActor in
             defer { cancelMeetingTipTask() }
             
