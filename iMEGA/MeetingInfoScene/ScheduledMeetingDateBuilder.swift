@@ -79,13 +79,15 @@ struct ScheduledMeetingDateBuilder {
     
     private func dailyDateString(_ startDateString: String, _ endDateString: String, _ startTimeString: String, _ endTimeString: String) -> String {
         if scheduledMeeting.rules.until != nil {
-            return Strings.Localizable.Meetings.Scheduled.Recurring.Daily.until
+            let format = NSLocalizedString("meetings.scheduled.recurring.daily.until", comment: "")
+            return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                 .replacingOccurrences(of: "[StartDate]", with: startDateString)
                 .replacingOccurrences(of: "[UntilDate]", with: endDateString)
                 .replacingOccurrences(of: "[StartTime]", with: startTimeString)
                 .replacingOccurrences(of: "[EndTime]", with: endTimeString)
         } else {
-            return Strings.Localizable.Meetings.Scheduled.Recurring.Daily.forever
+            let format = NSLocalizedString("meetings.scheduled.recurring.daily.forever", comment: "")
+            return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                 .replacingOccurrences(of: "[StartDate]", with: startDateString)
                 .replacingOccurrences(of: "[StartTime]", with: startTimeString)
                 .replacingOccurrences(of: "[EndTime]", with: endTimeString)

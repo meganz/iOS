@@ -1058,6 +1058,38 @@
         <string>Links removed</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.recurring.daily.until</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@interval@</string>
+        <key>interval</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+            <key>other</key>
+            <string>Every %d days effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.forever</key>
+    <dict>
+        <key>NSStringLocalizedFormatKey</key>
+        <string>%#@interval@</string>
+        <key>interval</key>
+        <dict>
+            <key>NSStringFormatSpecTypeKey</key>
+            <string>NSStringPluralRuleType</string>
+            <key>NSStringFormatValueTypeKey</key>
+            <string>d</string>
+            <key>one</key>
+            <string>Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+            <key>other</key>
+            <string>Every %d days effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        </dict>
+    </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
