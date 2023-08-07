@@ -9,16 +9,16 @@ protocol DeviceListRouting: Routing {
 public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
-    private let deviceListAssets: DeviceListAssets
+    private let deviceCenterAssets: DeviceCenterAssets
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     
     public init(
         navigationController: UINavigationController?,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
-        deviceListAssets: DeviceListAssets
+        deviceCenterAssets: DeviceCenterAssets
     ) {
         self.navigationController = navigationController
-        self.deviceListAssets = deviceListAssets
+        self.deviceCenterAssets = deviceCenterAssets
         self.deviceCenterUseCase = deviceCenterUseCase
         
         super.init()
@@ -28,12 +28,13 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         let deviceListViewModel = DeviceListViewModel(
             router: self,
             deviceCenterUseCase: deviceCenterUseCase,
-            deviceListAssets: deviceListAssets
+            deviceListAssets: deviceCenterAssets.deviceListAssets,
+            backupStatuses: deviceCenterAssets.backupStatuses
         )
         let deviceListView = DeviceListView(viewModel: deviceListViewModel)
         let hostingController = UIHostingController(rootView: deviceListView)
         baseViewController = hostingController
-        baseViewController?.title = deviceListAssets.title
+        baseViewController?.title = deviceCenterAssets.deviceListAssets.title
 
         return hostingController
     }
@@ -42,5 +43,15 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         navigationController?.pushViewController(build(), animated: true)
     }
     
-    func showDeviceBackups(_ device: DeviceEntity) {}
+    func showDeviceBackups(_ device: DeviceEntity) {
+        guard let backups = device.backups else { return }
+        
+        BackupListViewRouter(
+            deviceName: device.name,
+            backups: backups,
+            navigationController: navigationController,
+            backupListAssets: deviceCenterAssets.backupListAssets,
+            backupStatuses: deviceCenterAssets.backupStatuses
+        ).start()
+    }
 }

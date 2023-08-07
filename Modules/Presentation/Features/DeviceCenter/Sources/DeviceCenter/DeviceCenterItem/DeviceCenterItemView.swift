@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct DeviceView: View {
+struct DeviceCenterItemView: View {
     @Environment(\.colorScheme) private var colorScheme
-    @ObservedObject var viewModel: DeviceViewModel
+    @ObservedObject var viewModel: DeviceCenterItemViewModel
     
     var body: some View {
         HStack {
@@ -42,11 +42,16 @@ struct DeviceView: View {
             }
             Spacer()
             Button {
+                // Add button action here
             } label: {
                 Image("moreList")
                     .scaledToFit()
                     .frame(width: 28, height: 28)
             }.buttonStyle(.borderless)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.showDetail()
         }
     }
 }

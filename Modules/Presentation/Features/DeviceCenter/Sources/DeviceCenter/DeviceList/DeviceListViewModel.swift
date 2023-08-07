@@ -2,22 +2,27 @@ import MEGADomain
 import SwiftUI
 
 public final class DeviceListViewModel: ObservableObject {
-    
     private let router: any DeviceListRouting
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
+    private let backupStatuses: [BackupStatus]
+    private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
+        Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
+    }
     
-    @Published var currentDevice: DeviceViewModel?
-    @Published var otherDevices: [DeviceViewModel] = []
+    @Published var currentDevice: DeviceCenterItemViewModel?
+    @Published var otherDevices: [DeviceCenterItemViewModel] = []
     @Published var deviceListAssets: DeviceListAssets
     
     init(
         router: any DeviceListRouting,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
-        deviceListAssets: DeviceListAssets
+        deviceListAssets: DeviceListAssets,
+        backupStatuses: [BackupStatus]
     ) {
         self.router = router
         self.deviceCenterUseCase = deviceCenterUseCase
         self.deviceListAssets = deviceListAssets
+        self.backupStatuses = backupStatuses
         
         fetchUserDevices()
     }
@@ -33,23 +38,28 @@ public final class DeviceListViewModel: ObservableObject {
     private func arrangeDevices(_ devices: [DeviceEntity]) {
         let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
         
-        if let device = devices
-            .first(where: { $0.id == currentDeviceId }) {
-                if let assets = loadAssets(for: device) {
-                        currentDevice = DeviceViewModel(device: device, defaultName: deviceListAssets.deviceDefaultName, assets: assets)
-                }
+        if let device = devices.first(where: { $0.id == currentDeviceId }),
+           let currentDeviceVM = loadDeviceViewModel(device) {
+            currentDevice = currentDeviceVM
         } else {
             loadDefaultDevice()
         }
         
         otherDevices = devices
-            .compactMap { device in
-                if device.id != currentDeviceId,
-                   let assets = loadAssets(for: device) {
-                    return DeviceViewModel(device: device, defaultName: deviceListAssets.deviceDefaultName, assets: assets)
-                }
-                return nil
-            }
+            .filter { $0.id != currentDeviceId }
+            .compactMap(loadDeviceViewModel)
+    }
+    
+    private func loadDeviceViewModel(_ device: DeviceEntity) -> DeviceCenterItemViewModel? {
+        guard let deviceAssets = loadAssets(for: device) else {
+            return nil
+        }
+        
+        return DeviceCenterItemViewModel(
+            router: router,
+            itemType: .device(device),
+            assets: deviceAssets
+        )
     }
     
     private func loadDefaultDevice() {
@@ -59,15 +69,19 @@ public final class DeviceListViewModel: ObservableObject {
             status: .noCameraUploads
         )
         
-        if let status = deviceListAssets.sortedBackupStatuses[.noCameraUploads] {
-            currentDevice = DeviceViewModel(device: device, defaultName: deviceListAssets.deviceDefaultName, assets: DeviceAssets(iconName: "mobile", status: status))
+        if let deviceVM = loadDeviceViewModel(device) {
+            currentDevice = deviceVM
         }
     }
     
-    private func loadAssets(for device: DeviceEntity) -> DeviceAssets? {
-        guard let deviceStatus = device.status, let backupStatus = deviceListAssets.sortedBackupStatuses[deviceStatus] else {
+    private func loadAssets(for device: DeviceEntity) -> ItemAssets? {
+        guard let deviceStatus = device.status, let backupStatus = sortedBackupStatuses[deviceStatus] else {
             return nil
         }
-        return DeviceAssets(iconName: device.isMobileDevice() ? "mobile" : "pc", status: backupStatus)
+        return ItemAssets(
+            iconName: device.isMobileDevice() ? "mobile" : "pc",
+            status: backupStatus,
+            defaultName: deviceListAssets.deviceDefaultName
+        )
     }
 }

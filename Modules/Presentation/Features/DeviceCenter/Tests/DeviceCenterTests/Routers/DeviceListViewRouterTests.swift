@@ -1,6 +1,7 @@
 @testable import DeviceCenter
 import MEGADomain
 import MEGADomainMock
+import MEGATest
 import SwiftUI
 import XCTest
 
@@ -27,21 +28,32 @@ final class DeviceListViewRouterTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT() throws -> (sut: DeviceListViewRouter, mockPresenter: UINavigationController) {
+        
         let mockPresenter = UINavigationController()
         let deviceCenterUseCase = MockDeviceCenterUseCase()
-        let deviceListAssets = DeviceListAssets(
-            title: "Device List",
-            currentDeviceTitle: "This device",
-            otherDevicesTitle: "Other devices",
-            deviceDefaultName: "",
+        let deviceListAssets = DeviceCenterAssets(
+            deviceListAssets:
+                DeviceListAssets(
+                    title: "Device List",
+                    currentDeviceTitle: "This device",
+                    otherDevicesTitle: "Other devices",
+                    deviceDefaultName: "Unknown Device"),
+            backupListAssets:
+                BackupListAssets(
+                    backupTypes: [
+                        BackupType(type: .backupUpload, iconName: "backup")
+                    ]
+                ),
             backupStatuses: [
                 BackupStatus(status: .upToDate, title: "", colorName: "blue", iconName: "circle.fill")
             ]
         )
+        
         let sut = DeviceListViewRouter(
             navigationController: mockPresenter,
             deviceCenterUseCase: deviceCenterUseCase,
-            deviceListAssets: deviceListAssets)
+            deviceCenterAssets: deviceListAssets
+        )
         
         return (sut, mockPresenter)
     }
