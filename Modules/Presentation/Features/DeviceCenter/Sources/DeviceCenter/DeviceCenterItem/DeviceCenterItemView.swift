@@ -16,6 +16,7 @@ struct DeviceCenterItemView: View {
                 Text(viewModel.name)
                     .font(.subheadline)
                     .fontWeight(.medium)
+                    .lineLimit(1)
                     .foregroundColor(colorScheme == .dark ? .white : .black)
                 HStack(spacing: 4) {
                     if viewModel.shouldShowBackupPercentage {
