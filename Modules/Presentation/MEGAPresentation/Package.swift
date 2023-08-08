@@ -29,7 +29,9 @@ let package = Package(
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGAPresentationTests",
-            dependencies: ["MEGAPresentation", "MEGATest"],
+            dependencies: ["MEGAPresentation",
+                           "MEGATest",
+                           .product(name: "MEGADomainMock", package: "MEGADomain")],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
     ]
 )

@@ -35,6 +35,7 @@ public final class MockSdk: MEGASdk {
     private let devices: [String: String]
     private let file: String?
     private let copiedNodeHandles: [MEGAHandle: MEGAHandle]
+    private let abTestValues: [String: Int]
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -82,7 +83,8 @@ public final class MockSdk: MEGASdk {
                 accountDetails: @escaping (MEGASdk, any MEGARequestDelegate) -> Void = { _, _ in },
                 devices: [String: String] = [:],
                 file: String? = nil,
-                copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:]
+                copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:],
+                abTestValues: [String: Int] = [:]
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -117,6 +119,7 @@ public final class MockSdk: MEGASdk {
         self.devices = devices
         self.file = file
         self.copiedNodeHandles = copiedNodeHandles
+        self.abTestValues = abTestValues
         super.init()
     }
     
@@ -441,6 +444,11 @@ public final class MockSdk: MEGASdk {
     
     public override func stopPublicSetPreview() {
         stopPublicSetPreviewCalled += 1
+    }
+    
+    // MARK: - A/B testing
+    public override func getABTestValue(_ flag: String) -> Int {
+        abTestValues[flag] ?? 0
     }
 }
 
