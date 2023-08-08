@@ -147,6 +147,39 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         wait(for: [exception], timeout: 10)
     }
     
+    func testDisplayFutureMeetings_containsScheduledMeetingWithNoOccurrence_shouldNotContainFutureMetting() throws {
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let twoHourAgo = try XCTUnwrap(pastDate(bySubtractHours: 2))
+        let oneHourAgo = try XCTUnwrap(pastDate(bySubtractHours: 1))
+        let oneHourLater = try XCTUnwrap(futureDate(byAddingHours: 1))
+        let scheduleMeetingWithNoOccurrence = ScheduledMeetingEntity(chatId: 1, scheduledId: 100, startDate: twoHourAgo, endDate: oneHourAgo, rules: ScheduledMeetingRulesEntity(frequency: .daily, until: oneHourLater))
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeetingWithNoOccurrence], upcomingOccurrences: [:])
+        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
+        viewModel.loadChatRoomsIfNeeded()
+        
+        let predicate = NSPredicate { _, _ in
+            viewModel.displayFutureMeetings != nil && viewModel.displayFutureMeetings != []
+        }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        expectation.isInverted = true
+        wait(for: [expectation], timeout: 5)
+    }
+    
+    func testDisplayFutureMeetings_containsScheduledMeetingWithOneOccurrence_shouldMatch() throws {
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let tomorrow = try XCTUnwrap(futureDate(byAddingDays: 1))
+        let scheduleMeetingWithOnOccurrence = ScheduledMeetingEntity(chatId: 1, scheduledId: 100, endDate: tomorrow, rules: ScheduledMeetingRulesEntity(frequency: .daily, until: tomorrow))
+        let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeetingWithOnOccurrence], upcomingOccurrences: [100: ScheduledMeetingOccurrenceEntity()])
+        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
+        viewModel.loadChatRoomsIfNeeded()
+        
+        let predicate = NSPredicate { _, _ in
+            viewModel.displayFutureMeetings?.first?.items.first?.scheduledMeeting.chatId == 1
+        }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [expectation], timeout: 10)
+    }
+    
     @MainActor
     func testAskForNotificationsPermissionsIfNeeded_IfPermissionHandlerReturnsTrue_asksForNotificaitonPermissions() async {
         let permissionHandler = MockDevicePermissionHandler()
@@ -314,6 +347,14 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         viewModel.selectChatMode(.chats)
         wait(for: [expectation], timeout: 10)
         XCTAssertEqual(viewModel.contactsOnMegaViewState?.description, description, line: line)
+    }
+    
+    private func pastDate(bySubtractHours numberOfHours: Int) -> Date? {
+        Calendar.current.date(byAdding: .day, value: -numberOfHours, to: Date())
+    }
+    
+    private func futureDate(byAddingHours numberOfHours: Int) -> Date? {
+        Calendar.current.date(byAdding: .day, value: numberOfHours, to: Date())
     }
     
     private func futureDate(byAddingDays numberOfDays: Int) -> Date? {

@@ -460,15 +460,20 @@ final class ChatRoomsListViewModel: ObservableObject {
         
         Task {
             let upcomingOccurrences = try await scheduledMeetingUseCase.upcomingOccurrences(forScheduledMeetings: futureScheduledMeetings)
-            let futureScheduledMeetingsWithOccurrences = futureScheduledMeetings.filter {
-                $0.rules.frequency == .invalid || upcomingOccurrences.keys.contains($0.scheduledId)
-            }
+            let futureScheduledMeetingsWithOccurrences = filterScheduledMeetingsWithOccurrences(futureScheduledMeetings: futureScheduledMeetings, upcomingOccurrences: upcomingOccurrences)
             
             let futureScheduledMeetingsChatIds = futureScheduledMeetingsWithOccurrences.map(\.chatId)
             createPastMeetings(with: futureScheduledMeetingsChatIds)
             
             await populateFutureMeetings(from: futureScheduledMeetingsWithOccurrences, withUpcomingOccurrences: upcomingOccurrences)
             await filterMeetings()
+        }
+    }
+    
+    private func filterScheduledMeetingsWithOccurrences(futureScheduledMeetings: [ScheduledMeetingEntity], upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]) -> [ScheduledMeetingEntity] {
+        return futureScheduledMeetings.filter { meeting in
+            let hasUpcomingOccurrences = upcomingOccurrences.keys.contains(meeting.scheduledId)
+            return meeting.rules.frequency == .invalid || hasUpcomingOccurrences || (!hasUpcomingOccurrences && meeting.endDate >= Date())
         }
     }
     
