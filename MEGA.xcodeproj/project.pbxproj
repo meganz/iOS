@@ -1192,7 +1192,6 @@
 		9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */; };
 		9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */; };
 		94417EAF296D825B007C9230 /* RubbishBinRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94417EAE296D825B007C9230 /* RubbishBinRepositoryTests.swift */; };
-		9441FC1828DE148600DADFDD /* ContactLinkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441FC1728DE148600DADFDD /* ContactLinkRepository.swift */; };
 		9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */; };
 		9442009F2982EAA6005521C2 /* LogSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009E2982EAA6005521C2 /* LogSettingRepository.swift */; };
 		9444859C2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */; };
@@ -3758,7 +3757,6 @@
 		9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertTypeModel.swift; sourceTree = "<group>"; };
 		9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertDataModel.swift; sourceTree = "<group>"; };
 		94417EAE296D825B007C9230 /* RubbishBinRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubbishBinRepositoryTests.swift; sourceTree = "<group>"; };
-		9441FC1728DE148600DADFDD /* ContactLinkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkRepository.swift; sourceTree = "<group>"; };
 		9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironmentRepository.swift; sourceTree = "<group>"; };
 		9442009E2982EAA6005521C2 /* LogSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSettingRepository.swift; sourceTree = "<group>"; };
 		9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAccessInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -8639,7 +8637,6 @@
 		8396FBC525D6894D00EB50FD /* User */ = {
 			isa = PBXGroup;
 			children = (
-				9441FC1728DE148600DADFDD /* ContactLinkRepository.swift */,
 				9450A38E299E62620031BBEB /* UserAttributeRepository.swift */,
 				BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */,
 				BF5BC7732611687A00716CD6 /* UserInviteRepository.swift */,
@@ -13271,7 +13268,6 @@
 				8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */,
 				9426B67D283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift in Sources */,
 				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,
-				9441FC1828DE148600DADFDD /* ContactLinkRepository.swift in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
 				83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */,
