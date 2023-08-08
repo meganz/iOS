@@ -18,6 +18,10 @@ public enum DIContainer {
             )
         )
     }
+    
+    public static var abTestProvider: some ABTestProviderProtocol {
+        ABTestProvider()
+    }
 }
 
 // MARK: - Audio Playback Continuation

@@ -1,0 +1,2 @@
+
+public typealias ABTestFlagName = String
