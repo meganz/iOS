@@ -2,14 +2,18 @@ import MEGADomain
 
 public struct MockDeviceCenterUseCase: DeviceCenterUseCaseProtocol {
     private let devices: [DeviceEntity]
+    private let currentDeviceId: String
     
-    public init(devices: [DeviceEntity] = [] ) {
+    public init(devices: [DeviceEntity] = [], currentDeviceId: String = "") {
         self.devices = devices
+        self.currentDeviceId = currentDeviceId
     }
     
     public func fetchUserDevices() async -> [DeviceEntity] {
         devices
     }
     
-    public func loadCurrentDeviceId() -> String? { "" }
+    public func loadCurrentDeviceId() -> String? {
+        currentDeviceId
+    }
 }

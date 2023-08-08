@@ -2,7 +2,7 @@ import MEGADomain
 import MEGAPresentation
 import SwiftUI
 
-protocol DeviceListRouting: Routing {
+public protocol DeviceListRouting: Routing {
     func showDeviceBackups(_ device: DeviceEntity)
 }
 
@@ -29,6 +29,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             router: self,
             deviceCenterUseCase: deviceCenterUseCase,
             deviceListAssets: deviceCenterAssets.deviceListAssets,
+            emptyStateAssets: deviceCenterAssets.emptyStateAssets,
+            searchAssets: deviceCenterAssets.searchAssets,
             backupStatuses: deviceCenterAssets.backupStatuses
         )
         let deviceListView = DeviceListView(viewModel: deviceListViewModel)
@@ -43,14 +45,16 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         navigationController?.pushViewController(build(), animated: true)
     }
     
-    func showDeviceBackups(_ device: DeviceEntity) {
+    public func showDeviceBackups(_ device: DeviceEntity) {
         guard let backups = device.backups else { return }
         
         BackupListViewRouter(
-            deviceName: device.name,
+            deviceName: device.name.isEmpty ? deviceCenterAssets.deviceListAssets.deviceDefaultName : device.name,
             backups: backups,
             navigationController: navigationController,
             backupListAssets: deviceCenterAssets.backupListAssets,
+            emptyStateAssets: deviceCenterAssets.emptyStateAssets,
+            searchAssets: deviceCenterAssets.searchAssets,
             backupStatuses: deviceCenterAssets.backupStatuses
         ).start()
     }

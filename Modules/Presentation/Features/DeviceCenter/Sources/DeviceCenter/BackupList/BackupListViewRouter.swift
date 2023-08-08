@@ -11,6 +11,8 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let deviceName: String
     private let backups: [BackupEntity]
     private let backupListAssets: BackupListAssets
+    private let emptyStateAssets: EmptyStateAssets
+    private let searchAssets: SearchAssets
     private let backupStatuses: [BackupStatus]
     
     public init(
@@ -18,12 +20,16 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         backups: [BackupEntity],
         navigationController: UINavigationController?,
         backupListAssets: BackupListAssets,
+        emptyStateAssets: EmptyStateAssets,
+        searchAssets: SearchAssets,
         backupStatuses: [BackupStatus]
     ) {
         self.deviceName = deviceName
         self.backups = backups
         self.navigationController = navigationController
         self.backupListAssets = backupListAssets
+        self.emptyStateAssets = emptyStateAssets
+        self.searchAssets = searchAssets
         self.backupStatuses = backupStatuses
     }
     
@@ -32,6 +38,8 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             router: self,
             backups: backups,
             backupListAssets: backupListAssets,
+            emptyStateAssets: emptyStateAssets,
+            searchAssets: searchAssets,
             backupStatuses: backupStatuses
         )
         let backupListView = BackupListView(viewModel: backupListViewModel)

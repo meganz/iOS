@@ -44,6 +44,15 @@ final class DeviceListViewRouterTests: XCTestCase {
                         BackupType(type: .backupUpload, iconName: "backup")
                     ]
                 ),
+            emptyStateAssets:
+                EmptyStateAssets(
+                    image: "",
+                    title: ""
+                ),
+            searchAssets: SearchAssets(
+                placeHolder: "",
+                cancelTitle: ""
+            ),
             backupStatuses: [
                 BackupStatus(status: .upToDate, title: "", colorName: "blue", iconName: "circle.fill")
             ]

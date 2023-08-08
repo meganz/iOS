@@ -18,21 +18,27 @@ let package = Package(
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../MEGAPresentation"),
+        .package(path: "../../../Infrastracture/MEGASwiftUI"),
         .package(path: "../../../Infrastracture/MEGATest")
     ],
     targets: [
         .target(
             name: "DeviceCenter",
-            dependencies: ["MEGADomain", "MEGAPresentation"]),
+            dependencies: ["MEGADomain",
+                           "MEGAPresentation",
+                           "MEGASwiftUI"]
+        ),
         .target(
             name: "DeviceCenterMocks",
-            dependencies: ["DeviceCenter"]),
+            dependencies: ["DeviceCenter"]
+        ),
         .testTarget(
             name: "DeviceCenterTests",
             dependencies: ["DeviceCenter",
                            "DeviceCenterMocks",
                            "MEGADomain",
                            "MEGATest",
-                           .product(name: "MEGADomainMock", package: "MEGADomain")])
+                           .product(name: "MEGADomainMock", package: "MEGADomain")]
+        )
     ]
 )
