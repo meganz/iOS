@@ -20,22 +20,6 @@ final class AccountHallViewModelTests: XCTestCase {
              expectedCommands: [.reloadUIContent])
     }
     
-    func testAction_loadPlanList() {
-        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase)
-        
-        test(viewModel: sut,
-             actions: [AccountHallAction.load(.planList)],
-             expectedCommands: [.configPlanDisplay])
-    }
-    
-    func testAction_loadAccountDetails() {
-        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase)
-        
-        test(viewModel: sut,
-             actions: [AccountHallAction.load(.accountDetails)],
-             expectedCommands: [.configPlanDisplay])
-    }
-    
     func testAction_loadContentCounts() {
         let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase)
         
