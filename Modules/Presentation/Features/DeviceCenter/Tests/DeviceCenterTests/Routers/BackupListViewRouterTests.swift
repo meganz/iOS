@@ -3,7 +3,7 @@ import MEGATest
 import SwiftUI
 import XCTest
 
-final class BAckupListsViewRouterTests: XCTestCase {
+final class BackupListsViewRouterTests: XCTestCase {
     
     func testBuild_rendersCorrectViewController() throws {
         let (sut, _) = try makeSUT()
@@ -42,6 +42,15 @@ final class BAckupListsViewRouterTests: XCTestCase {
                         BackupType(type: .backupUpload, iconName: "backup")
                     ]
                 ),
+            emptyStateAssets:
+                EmptyStateAssets(
+                    image: "",
+                    title: ""
+                ),
+            searchAssets: SearchAssets(
+                placeHolder: "",
+                cancelTitle: ""
+            ),
             backupStatuses: [
                 BackupStatus(status: .upToDate, title: "", colorName: "blue", iconName: "circle.fill")
             ]

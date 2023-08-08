@@ -9,33 +9,53 @@ public final class DeviceListViewModel: ObservableObject {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
     }
     
-    @Published var currentDevice: DeviceCenterItemViewModel?
-    @Published var otherDevices: [DeviceCenterItemViewModel] = []
-    @Published var deviceListAssets: DeviceListAssets
+    var isFilteredDevicesEmpty: Bool {
+        filteredDevices.isEmpty
+    }
+    
+    var isFiltered: Bool {
+        isSearchActive && searchText.isNotEmpty
+    }
+    
+    @Published private(set) var currentDevice: DeviceCenterItemViewModel?
+    @Published private(set) var otherDevices: [DeviceCenterItemViewModel] = []
+    @Published private(set) var filteredDevices: [DeviceCenterItemViewModel] = []
+    @Published private(set) var deviceListAssets: DeviceListAssets
+    @Published private(set) var emptyStateAssets: EmptyStateAssets
+    @Published private(set) var searchAssets: SearchAssets
+    @Published var isSearchActive: Bool
+    @Published var searchText: String {
+        didSet {
+            filterDevices()
+        }
+    }
     
     init(
         router: any DeviceListRouting,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
         deviceListAssets: DeviceListAssets,
+        emptyStateAssets: EmptyStateAssets,
+        searchAssets: SearchAssets,
         backupStatuses: [BackupStatus]
     ) {
         self.router = router
         self.deviceCenterUseCase = deviceCenterUseCase
         self.deviceListAssets = deviceListAssets
+        self.emptyStateAssets = emptyStateAssets
+        self.searchAssets = searchAssets
         self.backupStatuses = backupStatuses
+        self.isSearchActive = false
+        self.searchText = ""
         
-        fetchUserDevices()
+        loadUserDevices()
     }
     
-    private func fetchUserDevices() {
-        Task {
-            let userDevices = await deviceCenterUseCase.fetchUserDevices()
-            await arrangeDevices(userDevices)
-        }
+    func fetchUserDevices() async -> [DeviceEntity] {
+        await deviceCenterUseCase.fetchUserDevices()
     }
     
     @MainActor
-    private func arrangeDevices(_ devices: [DeviceEntity]) {
+    func arrangeDevices(_ devices: [DeviceEntity]) {
         let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
         
         if let device = devices.first(where: { $0.id == currentDeviceId }),
@@ -48,6 +68,34 @@ public final class DeviceListViewModel: ObservableObject {
         otherDevices = devices
             .filter { $0.id != currentDeviceId }
             .compactMap(loadDeviceViewModel)
+        
+        resetFilteredDevices()
+    }
+    
+    private func loadUserDevices() {
+        Task {
+            let userDevices = await fetchUserDevices()
+            await arrangeDevices(userDevices)
+        }
+    }
+    
+    private func resetFilteredDevices() {
+        if let currentDevice {
+            filteredDevices = [currentDevice] + otherDevices
+        }
+    }
+    
+    private func filterDevices() {
+        if searchText.isNotEmpty {
+            isSearchActive = true
+            resetFilteredDevices()
+            filteredDevices = filteredDevices.filter {
+                $0.name.lowercased().contains(searchText.lowercased())
+            }
+        } else {
+            isSearchActive = false
+            resetFilteredDevices()
+        }
     }
     
     private func loadDeviceViewModel(_ device: DeviceEntity) -> DeviceCenterItemViewModel? {
