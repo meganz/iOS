@@ -42,6 +42,8 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         self.statusTitle = assets.backupStatus.title
         self.statusIconName = assets.backupStatus.iconName
         self.statusColorName = assets.backupStatus.colorName
+        
+        calculateProgress()
     }
     
     private func calculateProgress() {

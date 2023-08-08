@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAPresentation
+import MEGAUIKit
 import SwiftUI
 
 public protocol DeviceListRouting: Routing {
@@ -37,6 +38,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         let hostingController = UIHostingController(rootView: deviceListView)
         baseViewController = hostingController
         baseViewController?.title = deviceCenterAssets.deviceListAssets.title
+        baseViewController?.navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: deviceCenterAssets.deviceListAssets.title)
 
         return hostingController
     }

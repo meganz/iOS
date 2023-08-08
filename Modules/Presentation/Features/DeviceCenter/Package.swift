@@ -18,7 +18,8 @@ let package = Package(
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../MEGAPresentation"),
-        .package(path: "../../../Infrastracture/MEGASwiftUI"),
+        .package(path: "../../../UI/MEGASwiftUI"),
+        .package(path: "../../../UI/MEGAUIKit"),
         .package(path: "../../../Infrastracture/MEGATest")
     ],
     targets: [
@@ -26,7 +27,8 @@ let package = Package(
             name: "DeviceCenter",
             dependencies: ["MEGADomain",
                            "MEGAPresentation",
-                           "MEGASwiftUI"]
+                           "MEGASwiftUI",
+                           "MEGAUIKit"]
         ),
         .target(
             name: "DeviceCenterMocks",
