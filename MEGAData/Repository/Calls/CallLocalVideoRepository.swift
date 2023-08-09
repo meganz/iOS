@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 
 final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol {
@@ -10,23 +11,25 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
     }
     
     func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        chatSdk.enableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
-            if error?.type == .MEGAChatErrorTypeOk {
+        chatSdk.enableVideo(forChat: chatId, delegate: ChatRequestDelegate { result in
+            switch result {
+            case .success:
                 completion(.success)
-            } else {
+            case .failure:
                 completion(.failure(.chatLocalVideoNotEnabled))
             }
-        }))
+        })
     }
     
     func disableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        chatSdk.disableVideo(forChat: chatId, delegate: MEGAChatEnableDisableVideoRequestDelegate(completion: { error in
-            if error?.type == .MEGAChatErrorTypeOk {
+        chatSdk.disableVideo(forChat: chatId, delegate: ChatRequestDelegate { result in
+            switch result {
+            case .success:
                 completion(.success)
-            } else {
+            case .failure:
                 completion(.failure(.chatLocalVideoNotDisabled))
             }
-        }))
+        })
     }
     
     func addLocalVideo(for chatId: HandleEntity, localVideoListener: some CallLocalVideoListenerRepositoryProtocol) {
