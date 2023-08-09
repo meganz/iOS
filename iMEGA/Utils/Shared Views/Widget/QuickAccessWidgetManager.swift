@@ -2,6 +2,7 @@
 import Foundation
 import MEGADomain
 import MEGAFoundation
+import MEGASDKRepo
 import WidgetKit
 
 class QuickAccessWidgetManager: NSObject {
