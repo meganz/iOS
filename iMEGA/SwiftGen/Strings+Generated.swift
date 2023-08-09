@@ -13,7 +13,7 @@ public enum Strings {
   public enum InfoPlist {
     /// MEGA accesses your camera when you capture a video, photo or make a call inside the app.
     public static let nsCameraUsageDescription = Strings.tr("InfoPlist", "NSCameraUsageDescription")
-    /// If you allow access, you can invite your contacts to use MEGA by sending a message or email
+    /// If you allow access, you can invite your contacts to use MEGA by sending a message or email.
     public static let nsContactsUsageDescription = Strings.tr("InfoPlist", "NSContactsUsageDescription")
     /// MEGA accesses Face ID to allow you to easily unlock the app’s passcode when you enable this option.
     public static let nsFaceIDUsageDescription = Strings.tr("InfoPlist", "NSFaceIDUsageDescription")
@@ -463,7 +463,7 @@ public enum Strings {
     public static let contact = Strings.tr("Localizable", "Contact")
     /// Contact relationship established
     public static let contactRelationshipEstablished = Strings.tr("Localizable", "Contact relationship established")
-    /// Contact your business account administrator to resolve the issue and activate your account.
+    /// Contact your Business account administrator to resolve the issue and activate your account.
     public static let contactYourBusinessAccountAdministratorToResolveTheIssueAndActivateYourAccount = Strings.tr("Localizable", "Contact your business account administrator to resolve the issue and activate your account.")
     /// Contact credentials
     public static let contactCredentials = Strings.tr("Localizable", "contactCredentials")
@@ -2257,7 +2257,7 @@ public enum Strings {
     public static let whenYouLogoutFilesFromYourOfflineSectionWillBeDeletedFromYourDevice = Strings.tr("Localizable", "When you logout, files from your Offline section will be deleted from your device.")
     /// When you log out, ongoing transfers will be cancelled.
     public static let whenYouLogoutOngoingTransfersWillBeCancelled = Strings.tr("Localizable", "When you logout, ongoing transfers will be cancelled.")
-    /// MEGA cannot access your data. However, your business account administrator can access your Camera uploads.
+    /// MEGA cannot access your data. However, your Business account administrator can access your Camera uploads.
     public static let whileMEGADoesNotHaveAccessToYourDataYourOrganizationAdministratorsDoHaveTheAbilityToControlAndViewTheCameraUploadsInYourUserAccount = Strings.tr("Localizable", "While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account")
     /// Why am I seeing this?
     public static let whyAmISeeingThis = Strings.tr("Localizable", "Why am I seeing this?")
@@ -2557,11 +2557,11 @@ public enum Strings {
       public static let youCanDownloadAndInstallTheGoogleAuthenticatorDuoMobileAuthyOrMicrosoftAuthenticatorAppForYourPhoneOrTablet = Strings.tr("Localizable", "You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet.")
     }
     public enum YourAccountHasBeenDisabledByYourAdministrator {
-      /// Your account has been deactivated by your administrator. Please contact your business account administrator for further details.
+      /// Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.
       public static let pleaseContactYourBusinessAccountAdministratorForFurtherDetails = Strings.tr("Localizable", "Your account has been disabled by your administrator. Please contact your business account administrator for further details.")
     }
     public enum YourAccountHasBeenRemovedByYourAdministrator {
-      /// Your account has been removed by your administrator. Please contact your business account administrator for further details.
+      /// Your account has been removed by your administrator. Please contact your Business account administrator for further details.
       public static let pleaseContactYourBusinessAccountAdministratorForFurtherDetails = Strings.tr("Localizable", "Your account has been removed by your administrator. Please contact your business account administrator for further details.")
     }
     public enum YourAccountHasBeenSuspendedTemporarilyDueToPotentialAbuse {
@@ -2839,7 +2839,7 @@ public enum Strings {
       public enum ImportFailed {
         public enum StorageQuotaWillExceed {
           public enum Alert {
-            /// You don't have enough storage to save this album to your Cloud drive. Upgrade now to get more stoarage.
+            /// You don’t have enough storage to save this album to your Cloud drive. Upgrade now to get more storage.
             public static let detail = Strings.tr("Localizable", "albumLink.importFailed.storageQuotaWillExceed.alert.detail")
             /// Cannot save album
             public static let title = Strings.tr("Localizable", "albumLink.importFailed.storageQuotaWillExceed.alert.title")
@@ -4595,7 +4595,7 @@ public enum Strings {
         public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.title")
         /// Update
         public static let update = Strings.tr("Localizable", "meetings.scheduleMeeting.update")
-        /// Waiting Room
+        /// Waiting room
         public static let waitingRoom = Strings.tr("Localizable", "meetings.scheduleMeeting.waitingRoom")
         public enum CalendarInvite {
           /// Email a calendar invite to participants so they can add the meeting to their calendars.
@@ -4784,7 +4784,7 @@ public enum Strings {
           public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.recurringMeetingTip.title")
         }
         public enum StartMeetingTip {
-          /// You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.
+          /// You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.
           public static let message = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.message")
           /// Start meeting
           public static let startMeeting = Strings.tr("Localizable", "meetings.scheduleMeeting.startMeetingTip.startMeeting")
@@ -4806,7 +4806,7 @@ public enum Strings {
         public enum WaitingRoomWarningBanner {
           /// Learn more
           public static let learnMore = Strings.tr("Localizable", "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore")
-          /// Participants added by non-hosts during calls won't be sent to the waiting room.
+          /// Participants added by non-hosts during calls won’t be sent to the waiting room.
           public static let title = Strings.tr("Localizable", "meetings.scheduleMeeting.waitingRoomWarningBanner.title")
         }
       }
