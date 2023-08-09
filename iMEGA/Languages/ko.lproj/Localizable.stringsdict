@@ -27,7 +27,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>%d개의 항목 제거됨</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -924,6 +924,34 @@
         <string>d</string>
         <key>other</key>
         <string>링크 제거됨</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[B][StartDate]부터 [UntilDate]까지[/B] %d일마다 [B][StartTime]부터 [EndTime][/B]까지</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[B][StartDate][/B]부터 %d일마다 [B][StartTime]부터 [EndTime][/B]까지</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -2282,6 +2310,20 @@
         <string>d</string>
         <key>other</key>
         <string>%d일마다</string>
+      </dict>
+    </dict>
+    <key>albumLink.alert.message.filesSaveToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d개의 파일이 클라우드 드라이브에 저장되었습니다.</string>
       </dict>
     </dict>
   </dict>

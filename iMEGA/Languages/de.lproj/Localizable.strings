@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="Der Link zum Album wurde entfernt oder das Album wurde gelöscht. Wenden Sie sich an die Person, die Ihnen den Link mitgeteilt hat.";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="Alles klar";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Album kann nicht gespeichert werden";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Sie haben nicht genug Speicherplatz, um dieses Album in Ihrem Cloud Drive zu speichern. Führen Sie jetzt ein Upgrade durch, um mehr Speicherplatz zu erhalten.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Herunterladen";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="Eine Datei dieses Namens existiert bereits";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="In Cloud Drive speichern";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="Einfügen";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Aus Dateien-App importieren";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -847,7 +853,7 @@
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="Löschung der Offline-Daten";
+"clearOfflineFiles"="Offline-Dateien löschen";
 /* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
 "settings.fileManagement.alert.clearAllOfflineFiles"="Alle Offline-Dateien löschen?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
@@ -1285,7 +1291,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Nachricht schicken";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Identität verifizieren";
+"verifyCredentials"="Identitätsdaten bestätigen";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Verifizieren";
 /* Button title */
@@ -2991,7 +2997,7 @@
 /* Resume option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.resume"="Fortsetzen";
 /* Restart option for Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.restart"="Neustart";
+"media.audio.playbackContinuation.dialog.restart"="Neu starten";
 /* Meetings: Notification message to be shown when one person joins the call. */
 "meetings.notification.singleUserJoined"="%@ ist beigetreten";
 /* Meetings: Notification message to be shown when one person leaves the call. */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Damit Sie auf den freigegebenen Ordner zugreifen können, muss die freigebende Person Sie ebenfalls verifizieren.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Ihre Identitätsdaten";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="Wir schützen Ihre Daten mit einer Zero-Knowledge-Verschlüsselung, um die Sicherheit aller Informationen zu gewährleisten, die Sie auf MEGA speichern, freigeben oder empfangen. Um eine besonders hohe Sicherheit zu gewährleisten, bitten wir Sie, die Kontakte, für die Sie Informationen freigeben oder von denen Sie Daten erhalten, zu verifizieren.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Nicht entschlüsselter Ordner]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="Fehler";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blockiert";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="Unbekanntes Gerät";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Wiederholung beenden";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3465,7 +3475,7 @@
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
 "meetings.scheduleMeeting.create.weekly.optionTitle"="Wöchentlich";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
-"meetings.scheduleMeeting.create.monthly.optionTitle"="monatlich";
+"meetings.scheduleMeeting.create.monthly.optionTitle"="Monatlich";
 /* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
 "meetings.scheduleMeeting.create.frequency.optionTitle"="Häufigkeit";
 /* Create Schedule Meeting: The text is shown along with the selected interval. */
@@ -3491,7 +3501,7 @@
 /* Create Schedule Meeting: Month custom option - fourth week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.fourth"="vierten";
 /* Create Schedule Meeting: Month custom option - fifth week option text */
-"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="Jeden fünften";
+"meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="fünften";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
 "meetings.scheduled.create.weekly.everyDay.footerNote"="Das Meeting findet täglich statt.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
@@ -3503,11 +3513,11 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="%@ kaufen";
 /* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Wählen Sie den richtigen Tarif";
+"upgradeAccountPlan.header.title.choosePlan"="Wählen Sie das richtige Paket";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Aktueller Tarif: %@";
+"upgradeAccountPlan.header.title.currentPlan"="Aktuelles Paket: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
-"upgradeAccountPlan.header.planTermPicker.monthly"="monatlich";
+"upgradeAccountPlan.header.planTermPicker.monthly"="Monatlich";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Jährlich";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
@@ -3521,7 +3531,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
 "upgradeAccountPlan.message.text.subscriptionDetails"="Abonnements werden automatisch für den ursprünglich gewählten Abonnementzeitraum und zum gleichen Preis verlängert.\nSie können die automatische Verlängerung Ihres MEGA-Pro-Abonnements bis spätestens 24 Stunden vor Fälligkeit Ihrer nächsten Abonnementzahlung in Ihren iTunes-Accounteinstellungen deaktivieren.";
 /* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
-"upgradeAccountPlan.plan.tag.currentPlan"="Aktueller Tarif";
+"upgradeAccountPlan.plan.tag.currentPlan"="Aktuelles Paket";
 /* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
 "upgradeAccountPlan.plan.tag.recommended"="Empfohlen";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
@@ -3549,7 +3559,7 @@
 /* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
 "meetings.scheduled.cancelAlert.option.confirm.withMessages"="Meeting absagen";
 /* Don't cancel option for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.option.dontCancel"="Nicht kündigen";
+"meetings.scheduled.cancelAlert.option.dontCancel"="Nicht absagen";
 /* Success message when cancelling an scheduled meeting without messages in chat room */
 "meetings.scheduled.cancelAlert.success.withoutMessages"="Meeting abgesagt und archiviert";
 /* Success message when cancelling an scheduled meeting with messages in chat room */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Meeting starten";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="Sie können das Meeting vor der geplanten Zeit starten, indem Sie im Meetingraum auf „Meeting starten“ tippen.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Wiederkehrende Meetings verwalten";
 /* Recurring meeting tip view message */
@@ -3611,14 +3621,26 @@
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Termine";
 /* Change SFU server alert title. */
-"settings.about.sfu.changeAlert.title"="Change SFU server";
+"settings.about.sfu.changeAlert.title"="SFU-Server wechseln";
 /* Change SFU server alert message. */
-"settings.about.sfu.changeAlert.message"="Default is -1";
+"settings.about.sfu.changeAlert.message"="Der Standardwert ist -1";
 /* Change SFU server alert test field placeholder. */
-"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+"settings.about.sfu.changeAlert.placeholder"="SFU-ID eingeben";
 /* Change SFU server alert cancel button. */
 "settings.about.sfu.changeAlert.cancelButton"="Abbrechen";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="Ändern";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chat with %@";
+"chat.backButton.oneToOne.menu"="Chat mit %@";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="Warteraum";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="Nur vom Gastgeber zugelassene Benutzer können am Meeting teilnehmen.";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Teilnehmer, die während einer Konferenz von Teilnehmern ohne Gastgeberrechte hinzugefügt werden, werden nicht in den Warteraum weitergeleitet.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Mehr erfahren";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="„%@“ im Cloud Drive gespeichert";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="„%@“ kann nicht im Cloud Drive gespeichert werden. Versuchen Sie es später erneut. Wenn das Problem weiterhin besteht, wenden Sie sich an die Person, die Ihnen den Link mitgeteilt hat.";

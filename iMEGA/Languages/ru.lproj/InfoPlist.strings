@@ -5,7 +5,7 @@
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA получает доступ к вашим фото и видео, когда вы загружаете их, делитесь в чате, и когда включены Загрузки из камеры.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="Если вы разрешите доступ, MEGA сохранит информацию в вашей адресной книге на своих серверах. Это поможет вам найти существующих пользователей MEGA в своих контактах и связаться с ними в MEGA. MEGA никогда не будет отправлять сообщения вашим контактам или передавать эту информацию третьим лицам.";
+"NSContactsUsageDescription"="Если вы разрешить, вы сможете пригласить свои контакты в MEGA, отправив им сообщение или электронное письмо.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA требуется доступ к вашей фотобиблиотеке, чтобы добавлять фото и видео в галерею устройства";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -15,7 +15,7 @@
 /*  */
 "quickActionUploadString"="Загрузить";
 /* Title of the Offline section */
-"quickActionOfflineString"="Не в сети";
+"quickActionOfflineString"="Локальные";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationWhenInUseUsageDescription"="MEGA получает доступ к вашему местоположению, когда вы делитесь им со своими контактами в чате.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */

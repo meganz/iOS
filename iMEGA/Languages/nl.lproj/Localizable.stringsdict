@@ -29,9 +29,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d item verwijderd</string>
         <key>other</key>
-        <string></string>
+        <string>%d items verwijderd</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -1056,6 +1056,38 @@
         <string>Link verwijderd</string>
         <key>other</key>
         <string>Links verwijderd</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Elke dag effectief [B][StartDate] tot en met[UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
+        <key>other</key>
+        <string>Elke %d dagen effectief [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Elke dag effectief [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
+        <key>other</key>
+        <string>Elke %d dagen effectief [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -2608,6 +2640,22 @@
         <string>Dagelijks</string>
         <key>other</key>
         <string>Elke %d dagen</string>
+      </dict>
+    </dict>
+    <key>albumLink.alert.message.filesSaveToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d bestand opgeslagen naar Cloud schijf</string>
+        <key>other</key>
+        <string>%d bestanden opgeslagen naar Cloud schijf</string>
       </dict>
     </dict>
   </dict>

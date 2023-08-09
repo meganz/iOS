@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="사진첩에 대한 링크가 삭제되었거나 사진첩이 삭제되었습니다. 링크를 공유해준 사람에게 연락하세요.";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="알겠습니다";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="사진첩을 저장할 수 없습니다";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="클라우드 드라이브에 이 사진첩을 저장할 충분한 공간이 없습니다. 더 많은 저장소를 받으려면 지금 업그레이드 하세요.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="다운로드";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="이미 같은 이름을 가진 파일이 존재합니다";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="클라우드 드라이브에 저장";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="붙여넣기";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="파일에서 들여오기";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -1285,7 +1291,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="자격 증명 인증";
+"verifyCredentials"="자격 증명 승인";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="인증";
 /* Button title */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="공유된 폴더에 접근하려면, 당신에게 공유해준 사람도 당신을 인증해야 합니다.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="당신의 자격 증명";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="우리는 당신이 MEGA에 저장, 공유, 수신하는 모든 정보가 안전하도록 영지식 암호화로 당신의 데이터를 보호합니다. 추가적인 보안을 적용하려면, 우리는 당신이 정보를 공유하거나 데이터를 받는 연락처를 인증할 것을 요청합니다.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[복호화 되지 않은 폴더]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="오류";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="차단됨";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="알 수 없는 장치";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="되풀이 종료";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="회의 시작";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="회의실에서 “회의 시작”을 탭하여 예정된 시간보다 앞서 회의를 시작할 수 있습니다.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="반복 회의 관리";
 /* Recurring meeting tip view message */
@@ -3622,3 +3632,15 @@
 "settings.about.sfu.changeAlert.changeButton"="변경";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="%@ 님과 대화";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="대기실";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="호스트가 승인한 이용자만 회의에 참여할 수 있습니다";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="통화 중에 호스트가 아닌 사람으로부터 추가된 참여자들은 대기실에 보내질 수 없습니다.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="더 알아보기";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@”을/를 클라우드 드라이브에 저장했습니다";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@”을/를 클라우드 드라이브에 저장할 수 없습니다. 나중에 다시 시도하고 문제가 계속 되면, 링크를 공유해준 사람에게 연락하세요.";

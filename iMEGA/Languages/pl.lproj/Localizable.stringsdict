@@ -33,13 +33,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d element usunięty</string>
         <key>few</key>
-        <string></string>
+        <string>%d elementów usuniętych</string>
         <key>many</key>
-        <string></string>
+        <string>%d elementów usuniętych</string>
         <key>other</key>
-        <string></string>
+        <string>%d elementów usuniętych</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -1320,6 +1320,46 @@
         <string>Linki usunięte</string>
         <key>other</key>
         <string>Linki usunięte</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Codziennie od [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B].</string>
+        <key>few</key>
+        <string>Co %d dni od [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B].</string>
+        <key>many</key>
+        <string>Co %d dni od [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B].</string>
+        <key>other</key>
+        <string>Co %d dni od [B][StartDate] do [UntilDate][/B] od [B][StartTime] do [EndTime][/B].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Codziennie od [B][StartDate][/B] do [B][StartTime] do [EndTime][/B].</string>
+        <key>few</key>
+        <string>Co %d dni ze skutkiem [B][StartDate][/B] od [B][StartTime] do [EndTime][/B].</string>
+        <key>many</key>
+        <string>Co %d dni ze skutkiem [B][StartDate][/B] od [B][StartTime] do [EndTime][/B].</string>
+        <key>other</key>
+        <string>Co %d dni ze skutkiem [B][StartDate][/B] od [B][StartTime] do [EndTime][/B].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -3260,6 +3300,26 @@
         <string>Co %d dni</string>
         <key>other</key>
         <string>Co %d dni</string>
+      </dict>
+    </dict>
+    <key>albumLink.alert.message.filesSaveToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d plik zapisano na Dysku w chmurze</string>
+        <key>few</key>
+        <string>%d plików zapisano na Dysku w chmurze</string>
+        <key>many</key>
+        <string>%d plików zapisano na Dysku w chmurze</string>
+        <key>other</key>
+        <string>%d plików zapisano na Dysku w chmurze</string>
       </dict>
     </dict>
   </dict>

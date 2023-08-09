@@ -191,7 +191,7 @@
 /* Importing albums Failed modal because storage quota would exceed alert title */
 "albumLink.importFailed.storageQuotaWillExceed.alert.title"="Cannot save album";
 /* Importing albums Failed modal because storage quota would exceed alert detail */
-"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="You don't have enough storage to save this album to your Cloud drive. Upgrade now to get more stoarage.";
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="You don’t have enough storage to save this album to your Cloud drive. Upgrade now to get more storage.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Download";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -2085,7 +2085,7 @@
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]suspended[/B]. You can only browse your data.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your business account administrator can access your Camera uploads.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA cannot access your data. However, your Business account administrator can access your Camera uploads.";
 /*  */
 "Something went wrong"="Something went wrong";
 /* Title of the "Links" Shared Items. */
@@ -2097,7 +2097,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Share with";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Contact your business account administrator to resolve the issue and activate your account."="Contact your business account administrator to resolve the issue and activate your account.";
+"Contact your business account administrator to resolve the issue and activate your account."="Contact your Business account administrator to resolve the issue and activate your account.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
 "Until this morning"="Until this morning";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
@@ -2229,9 +2229,9 @@
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="File Type";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
-"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Your account has been deactivated by your administrator. Please contact your business account administrator for further details.";
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Your account has been deactivated by your administrator. Please contact your Business account administrator for further details.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
-"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Your account has been removed by your administrator. Please contact your business account administrator for further details.";
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Your account has been removed by your administrator. Please contact your Business account administrator for further details.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Enter group name";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
@@ -3599,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Start meeting";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="You can start the meeting before its scheduled time by tapping Start meeting in the meeting room.";
+"meetings.scheduleMeeting.startMeetingTip.message"="You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Manage recurring meetings";
 /* Recurring meeting tip view message */
@@ -3633,11 +3633,11 @@
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="Chat with %@";
 /* Schedule meeting waiting room setting title */
-"meetings.scheduleMeeting.waitingRoom"="Waiting Room";
+"meetings.scheduleMeeting.waitingRoom"="Waiting room";
 /* Schedule meeting waiting room setting description */
 "meetings.scheduleMeeting.waitingRoom.description"="Only users admitted by the host can join the meeting.";
 /* Schedule meeting waiting room warning banner title */
-"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won't be sent to the waiting room.";
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Learn more";
 /* Album saved to cloud drive alert message */

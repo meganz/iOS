@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="Le lien de l’album ou l’album même a été supprimé. Contactez la personne qui a partagé le lien avec vous.";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="D’accord, j’ai compris";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Impossible d’enregistrer l’album";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Vous n’avez pas suffisamment d’espace de stockage pour enregistrer cet album dans votre Disque nuagique. Surclassez votre compte pour obtenir davantage d’espace de stockage.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Télécharger";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="Un fichier porte déjà ce nom";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="Enregistrer sur Disque nuagique";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="Coller";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Importer de Fichiers";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -1023,7 +1029,7 @@
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Surclasser le compte";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Visualiser ou modifier le profil";
+"viewAndEditProfile"="Afficher ou modifier le profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the Achievements section */
@@ -1285,7 +1291,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Confirmer le numéro d’identification";
+"verifyCredentials"="Approuver le numéro d’identification";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Confirmer";
 /* Button title */
@@ -2057,7 +2063,7 @@
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfert";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="Vous ne pouvez pas supprimer %1$s de vos contacts, car ce contact fait parti de votre compte d’entreprise.";
+"You cannot remove %1$s as a contact because they are part of your Business account."="Vous ne pouvez pas supprimer %1$s de vos contacts, car ce contact fait parti de votre compte Pour entreprise.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require Passcode"="Exiger le code d’accès";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2075,11 +2081,11 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Le compte est désactivé";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Votre compte d’entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte. Pour effectuer un paiement et réactiver votre abonnement, connectez-vous à MEGA dans un navigateur.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Votre compte Pour entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte. Pour effectuer un paiement et réactiver votre abonnement, connectez-vous à MEGA dans un navigateur.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Votre compte est actuellement [B]désactivé[/B]. Vous ne pouvez que parcourir vos données.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA ne peut pas accéder à vos données. Cependant, l’administrateur de votre compte d’entreprise peut accéder à vos Téléversements de l’appareil photo.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA ne peut pas accéder à vos données. Cependant, l’administrateur de votre compte Pour entreprise peut accéder à vos Téléversements de l’appareil photo.";
 /*  */
 "Something went wrong"="Quelque chose a mal tourné";
 /* Title of the "Links" Shared Items. */
@@ -2091,7 +2097,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partager avec";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Contact your business account administrator to resolve the issue and activate your account."="Contactez l’administrateur de votre compte d’entreprise pour résoudre la situation et activer votre compte.";
+"Contact your business account administrator to resolve the issue and activate your account."="Contactez l’administrateur de votre compte Pour entreprise pour résoudre la situation et activer votre compte.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
 "Until this morning"="Jusqu’à ce matin";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
@@ -2223,9 +2229,9 @@
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Type de fichier";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
-"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Votre compte a été désactivé par votre administrateur. Veuillez contacter l’administrateur de votre compte d’entreprise pour obtenir plus de précisions.";
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Votre compte a été désactivé par votre administrateur. Veuillez contacter l’administrateur de votre compte Pour entreprise pour obtenir plus de précisions.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
-"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Votre compte a été supprimé par votre administrateur. Veuillez contacter l’administrateur de votre compte d’entreprise pour plus de précisions.";
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Votre compte a été supprimé par votre administrateur. Veuillez contacter l’administrateur de votre compte Pour entreprise pour plus de précisions.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Saisissez le nom du groupe";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Pour accéder au dossier partagé, la personne qui l’a partagé avec vous devrait aussi vous confirmer.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Votre numéro d’identification";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="Nous protégeons vos données par un chiffrement à divulgation nulle de connaissance afin que tout ce que vous stockez, partagez et recevez sur MEGA soit sécurisé. Pour garantir une sécurité accrue, nous vous demandons de confirmer les contacts avec lesquels vous partagez ou dont vous recevez des données.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[dossier non déchiffré]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="Erreur";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Bloqué";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="Appareil inconnu";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Fin de la récurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Commencer la réunion";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="Vous pouvez commencer la réunion avant l’heure prévue en touchant « Commencer la réunion » dans la salle de réunion.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Gérer les réunions récurrentes";
 /* Recurring meeting tip view message */
@@ -3622,3 +3632,15 @@
 "settings.about.sfu.changeAlert.changeButton"="Changer";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="Dialoguez avec %@";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="Salle d’attente";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="Seuls les utilisateurs admis par l’hôte peuvent se joindre à la réunion.";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Les participants ajoutés par des non-hôtes pendant les appels ne seront pas envoyés dans la salle d’attente.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="En apprendre davantage";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="« %@ » a été enregistré dans votre Disque nuagique";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="« %@ » ne peut pas être enregistré dans le Disque nuagique. Réessayez plus tard et si le problème persiste, contactez la personne qui a partagé le lien avec vous.";
