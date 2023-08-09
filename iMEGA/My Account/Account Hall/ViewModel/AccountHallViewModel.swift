@@ -38,6 +38,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     
     private var subscriptions = Set<AnyCancellable>()
+    var loadContentTask: Task<Void, Never>?
     
     // MARK: Account Plan view
     @Published private(set) var currentPlanName: String = ""
@@ -52,6 +53,10 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         self.purchaseUseCase = purchaseUseCase
         self.featureFlagProvider = featureFlagProvider
         setAccountDetails(accountHallUsecase.currentAccountDetails)
+    }
+    
+    deinit {
+        loadContentTask?.cancel()
     }
     
     // MARK: Feature flags
@@ -70,7 +75,10 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         case .reloadUI:
             invokeCommand?(.reloadUIContent)
         case .load(let target):
-            loadContent(target)
+            loadContentTask = Task { [weak self] in
+                guard let self else { return }
+                await loadContent(target)
+            }
         case .didTapUpgradeButton:
             showUpgradeAccountPlanView()
         case .addSubscriptions:
@@ -104,51 +112,47 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     // MARK: - Private
     private func setAccountDetails(_ details: AccountDetailsEntity?) {
         accountDetails = details
-        currentPlanName = details?.proLevel.toAccountTypeDisplayName() ?? ""
+        Task { @MainActor in
+            currentPlanName = details?.proLevel.toAccountTypeDisplayName() ?? ""
+        }
     }
     
-    private func loadContent(_ target: AccountHallLoadTarget) {
+    private func loadContent(_ target: AccountHallLoadTarget) async {
         switch target {
         case .planList:
-            fetchPlanList()
+            await fetchPlanList()
         case .accountDetails:
             let showActivityIndicator = accountDetails == nil
-            fetchAccountDetails(showActivityIndicator: showActivityIndicator)
+            await fetchAccountDetails(showActivityIndicator: showActivityIndicator)
         case .contentCounts:
-            fetchCounts()
+            await fetchCounts()
         }
     }
     
-    private func fetchPlanList() {
-        Task {
-            planList = await purchaseUseCase.accountPlanProducts()
-            await configPlanDisplay()
-        }
+    private func fetchPlanList() async {
+        planList = await purchaseUseCase.accountPlanProducts()
+        await configPlanDisplay()
     }
     
-    private func fetchAccountDetails(showActivityIndicator: Bool) {
-        isUpdatingAccountDetails = showActivityIndicator
+    private func fetchAccountDetails(showActivityIndicator: Bool) async {
+        await setIsUpdatingAccountDetails(showActivityIndicator)
         
-        Task { @MainActor in
-            do {
-                let accountDetails = try await accountHallUsecase.refreshCurrentAccountDetails()
-                setAccountDetails(accountDetails)
-                isUpdatingAccountDetails = false
-                configPlanDisplay()
-            } catch {
-                isUpdatingAccountDetails = false
-                MEGALogError("[Account Hall] Error loading account details. Error: \(error)")
-            }
+        do {
+            let accountDetails = try await accountHallUsecase.refreshCurrentAccountDetails()
+            setAccountDetails(accountDetails)
+            await setIsUpdatingAccountDetails(false)
+            await configPlanDisplay()
+        } catch {
+            await setIsUpdatingAccountDetails(false)
+            MEGALogError("[Account Hall] Error loading account details. Error: \(error)")
         }
     }
     
-    private func fetchCounts() {
-        Task {
-            incomingContactRequestsCount = await accountHallUsecase.incomingContactsRequestsCount()
-            relevantUnseenUserAlertsCount = await accountHallUsecase.relevantUnseenUserAlertsCount()
-            
-            await reloadNotificationCounts()
-        }
+    private func fetchCounts() async {
+        incomingContactRequestsCount = await accountHallUsecase.incomingContactsRequestsCount()
+        relevantUnseenUserAlertsCount = await accountHallUsecase.relevantUnseenUserAlertsCount()
+        
+        await reloadNotificationCounts()
     }
     
     // MARK: UI
@@ -160,6 +164,11 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     @MainActor
     private func configPlanDisplay() {
         invokeCommand?(.configPlanDisplay)
+    }
+    
+    @MainActor
+    private func setIsUpdatingAccountDetails(_ isUpdating: Bool) {
+        isUpdatingAccountDetails = isUpdating
     }
     
     // MARK: Subscriptions
@@ -214,7 +223,10 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
             .publisher(for: .refreshAccountDetails)
             .sink { [weak self] _ in
                 guard let self else { return }
-                fetchAccountDetails(showActivityIndicator: true)
+                Task { [weak self] in
+                    guard let self else { return }
+                    await fetchAccountDetails(showActivityIndicator: true)
+                }
             }
             .store(in: &subscriptions)
     }

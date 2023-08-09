@@ -20,12 +20,46 @@ final class AccountHallViewModelTests: XCTestCase {
              expectedCommands: [.reloadUIContent])
     }
     
-    func testAction_loadContentCounts() {
+    func testAction_loadPlanList() async {
         let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase)
         
-        test(viewModel: sut,
-             actions: [AccountHallAction.load(.contentCounts)],
-             expectedCommands: [.reloadCounts])
+        var commands = [AccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+
+        sut.dispatch(.load(.planList))
+        await sut.loadContentTask?.value
+        
+        XCTAssertEqual(commands, [.configPlanDisplay])
+    }
+    
+    func testAction_loadContentCounts() async {
+        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase)
+        
+        var commands = [AccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+
+        sut.dispatch(.load(.contentCounts))
+        await sut.loadContentTask?.value
+        
+        XCTAssertEqual(commands, [.reloadCounts])
+    }
+    
+    func testAction_loadAccountDetails() async {
+        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase)
+        
+        var commands = [AccountHallViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+
+        sut.dispatch(.load(.accountDetails))
+        await sut.loadContentTask?.value
+        
+        XCTAssertEqual(commands, [.configPlanDisplay])
     }
     
     func testAction_addSubscriptions() {
