@@ -435,30 +435,26 @@ final class NodeActionBuilder {
         var nodeActions: [NodeAction] = []
 
         switch displayMode {
-        case .unknown: break
-            
+        case .unknown:
+            break
         case .cloudDrive, .sharedItem, .nodeInfo, .recents:
             if isBackupNode {
                 nodeActions = backupsNodeActions()
             } else {
                 nodeActions = cloudLikeViewsNodeActions()
             }
-            
         case .rubbishBin:
             nodeActions = nodeActionsForRubbishBin()
-            
-        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .previewPdfPage, .textEditor, .photosAlbum, .photosFavouriteAlbum, .photosTimeline, .mediaDiscovery: break
-            
+        case .folderLink, .fileLink, .nodeInsideFolderLink, .publicLinkTransfers, .transfers, .transfersFailed, .chatSharedFiles, .previewDocument, .previewPdfPage, .textEditor, .photosAlbum, .photosFavouriteAlbum, .photosTimeline, .mediaDiscovery, .albumLink:
+            break
         case .nodeVersions:
             nodeActions = nodeVersionsNodeActions()
-            
         case .chatAttachment:
             nodeActions = chatAttachmentNodeActions()
-
         case .backup:
             nodeActions = backupsNodeActions()
-            
-        @unknown default: break
+        @unknown default:
+            break
         }
         
         return nodeActions
