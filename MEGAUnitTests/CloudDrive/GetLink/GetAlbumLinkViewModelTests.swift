@@ -82,7 +82,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         ])
     }
     
-    func testDispatchOnViewReady_onAlbumLinkLoaded_shouldUpdateLinkSectionLinkCell() throws {
+    func testDispatchOnViewReady_onAlbumLinkLoaded_shouldUpdateLinkSectionLinkCell() async throws {
         let album = AlbumEntity(id: 1, type: .user)
         let sections = [
             GetLinkSectionViewModel(sectionType: .link,
@@ -101,13 +101,16 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             .enableLinkActions,
             .reloadRows([updatedIndexPath])
         ])
+        
+        await sut.loadingTask?.value
+        
         let updatedCell = try XCTUnwrap(sut.cellViewModel(indexPath: updatedIndexPath) as? GetLinkStringCellViewModel)
         test(viewModel: updatedCell, action: .onViewReady, expectedCommands: [
             .configView(title: link, leftImage: Asset.Images.GetLinkView.linkGetLink.image, isRightImageViewHidden: true)
         ])
     }
     
-    func testDispatchSwitchToggled_onDecryptKeySeparateToggled_linkAndKeyShouldUpdateCorrectly() throws {
+    func testDispatchSwitchToggled_onDecryptKeySeparateToggled_linkAndKeyShouldUpdateCorrectly() async throws {
         let album = AlbumEntity(id: 1, type: .user)
         let sections = [
             GetLinkSectionViewModel(sectionType: .decryptKeySeparate,
@@ -130,6 +133,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             .enableLinkActions,
             .reloadRows([IndexPath(row: 0, section: 1)])
         ])
+        
+        await sut.loadingTask?.value
+        
         let decryptToggleIndexPath = IndexPath(row: 0, section: 0)
         let expectedKeySectionIndex = 2
         test(viewModel: sut, action: .switchToggled(indexPath: decryptToggleIndexPath, isOn: true),
@@ -204,7 +210,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
              ])
     }
     
-    func testDispatchCopyLink_onDecryptSeperateOff_shouldCopyShareOriginalLink() {
+    func testDispatchCopyLink_onDecryptSeperateOff_shouldCopyShareOriginalLink() async {
         let album = AlbumEntity(id: 1, type: .user)
         let link = "https://mega.nz/collection/link#key"
         let sections = [
@@ -223,6 +229,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
                           )
         ])
+        
+        await sut.loadingTask?.value
+        
         test(viewModel: sut, action: .copyLink,
              expectedCommands: [
                 .addToPasteBoard(link),
@@ -231,7 +240,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
              ])
     }
     
-    func testDispatchCopyLink_onDecryptSeperateOn_shouldCopyOnlyLink() {
+    func testDispatchCopyLink_onDecryptSeperateOn_shouldCopyOnlyLink() async {
         let album = AlbumEntity(id: 1, type: .user)
         let linkOnly = "https://mega.nz/collection/link"
         let key = "key"
@@ -252,6 +261,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
                           )
         ])
+        
+        await sut.loadingTask?.value
+        
         test(viewModel: sut, action: .copyLink,
              expectedCommands: [
                 .addToPasteBoard(linkOnly),
@@ -260,7 +272,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
              ])
     }
     
-    func testDispatchCopyKey_onDecryptSeperateOn_shouldCopyKey() {
+    func testDispatchCopyKey_onDecryptSeperateOn_shouldCopyKey() async {
         let album = AlbumEntity(id: 1, type: .user)
         let linkOnly = "https://mega.nz/collection/link"
         let key = "key"
@@ -281,6 +293,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1)
                           )
         ])
+        
+        await sut.loadingTask?.value
+        
         test(viewModel: sut, action: .copyKey,
              expectedCommands: [
                 .addToPasteBoard(key),
