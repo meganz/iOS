@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class MEGAQLPreviewController, MOOfflineNode, ContextMenuManager;
+@class MEGAQLPreviewController, MOOfflineNode, ContextMenuManager, OfflineViewModel;
 
 typedef NS_ENUM(NSUInteger, OfflineViewControllerFlavor) {
     AccountScreen = 0,
@@ -33,6 +33,7 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 @property (nonatomic, strong) UIBarButtonItem *contextBarButtonItem;
 @property (nonatomic, strong) NSString *logsPath;
+@property (nonatomic, strong) OfflineViewModel *viewModel;
 
 - (nullable NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)updateNavigationBarTitle;
@@ -50,6 +51,7 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 - (void)changeViewModePreference;
 - (void)changeEditingModeStatus;
 - (void)nodesSortTypeHasChanged;
+- (void)reloadUI;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -1,7 +1,7 @@
 import MEGADomain
 import MEGASdk
 
-extension MEGAError {
+public extension MEGAError {
     func toTransferErrorEntity() -> TransferErrorEntity? {
         switch type {
         case .apiOk:

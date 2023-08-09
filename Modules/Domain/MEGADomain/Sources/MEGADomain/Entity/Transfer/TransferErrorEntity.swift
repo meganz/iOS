@@ -1,4 +1,4 @@
-public enum TransferErrorEntity: Error {
+public enum TransferErrorEntity: Error, CaseIterable {
     case generic
     case upload
     case download
