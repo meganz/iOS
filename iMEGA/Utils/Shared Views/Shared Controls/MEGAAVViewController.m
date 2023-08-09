@@ -48,9 +48,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         _apiForStreaming = apiForStreaming;
         _node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
         _folderLink      = folderLink;
-        _fileUrl         = [[MEGASdkManager sharedMEGASdk] httpServerIsLocalOnly] ? [apiForStreaming httpServerGetLocalLink:_node] : [[apiForStreaming httpServerGetLocalLink:_node] mnz_updatedURLWithCurrentAddress];
+        _fileUrl         = [apiForStreaming httpServerIsLocalOnly] ? [apiForStreaming httpServerGetLocalLink:_node] : [[apiForStreaming httpServerGetLocalLink:_node] mnz_updatedURLWithCurrentAddress];
     }
-    
+        
     return self;
 }
 
@@ -242,7 +242,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     }
 
     NSURL *oldFileURL = self.fileUrl;
-    self.fileUrl = [[MEGASdkManager sharedMEGASdk] httpServerIsLocalOnly] ? [self.apiForStreaming httpServerGetLocalLink:self.node] : [[self.apiForStreaming httpServerGetLocalLink:self.node] mnz_updatedURLWithCurrentAddress];
+    self.fileUrl = [self.apiForStreaming httpServerIsLocalOnly] ? [self.apiForStreaming httpServerGetLocalLink:self.node] : [[self.apiForStreaming httpServerGetLocalLink:self.node] mnz_updatedURLWithCurrentAddress];
     if (![oldFileURL isEqual:self.fileUrl]) {
         CMTime currentTime = self.player.currentTime;
         AVPlayerItem *newPlayerItem = [AVPlayerItem playerItemWithURL:self.fileUrl];

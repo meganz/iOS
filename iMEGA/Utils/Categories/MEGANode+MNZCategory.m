@@ -149,7 +149,12 @@
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink inViewController:(UIViewController *)viewController {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
-    MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
+    MEGASdk *apiForStreaming;
+    if([MEGASdkManager sharedMEGASdk].isLoggedIn) {
+        apiForStreaming = [MEGASdkManager sharedMEGASdk];
+    } else {
+        apiForStreaming = api;
+    }
     
     MOOfflineNode *offlineNodeExist = [[MEGAStore shareInstance] offlineNodeWithNode:self];
     

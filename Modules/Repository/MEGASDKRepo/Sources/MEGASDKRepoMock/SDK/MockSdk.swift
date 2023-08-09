@@ -459,6 +459,10 @@ public final class MockSdk: MEGASdk {
     public override func getABTestValue(_ flag: String) -> Int {
         abTestValues[flag] ?? 0
     }
+    
+    public override func authorizeNode(_ node: MEGANode) -> MEGANode? {
+        node
+    }
 }
 
 private extension MEGANodeList {
