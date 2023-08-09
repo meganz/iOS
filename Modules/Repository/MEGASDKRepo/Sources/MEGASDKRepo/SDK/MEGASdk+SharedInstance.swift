@@ -52,8 +52,12 @@ public extension MEGASdk {
         return sdk
     }()
     
-    /// MEGASdk instance used when user opens a folder link
-    /// When user opens a folder link, we use this instance to loggin in the folder link and fetch the node tree of the folder link
+    /// MEGASdk instance used when user opens a folder link.
+    ///
+    /// When user opens a folder link, we use this instance to loggin in the folder link and fetch the node tree of the folder link.
+    ///
+    /// - important: **Do not** use this instance of MEGASdk to download folder links (or files inside folder links) or for streaming files,
+    /// otherwise free quota per IP is consumed instead own user's transfer quota
     static let sharedFolderLinkSdk: MEGASdk = {
         let baseURL = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let sdk = MEGASdk(appKey: Constants.appKey, userAgent: Constants.userAgent, basePath: baseURL?.path)
