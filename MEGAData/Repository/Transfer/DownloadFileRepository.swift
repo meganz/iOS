@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 
 struct DownloadFileRepository: DownloadFileRepositoryProtocol {
     static var newRepo: DownloadFileRepository {
