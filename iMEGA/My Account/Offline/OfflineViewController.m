@@ -70,6 +70,8 @@ static NSString *kisDirectory = @"kisDirectory";
     
     [self setNavigationBarButtons];
     
+    [self setUpInvokeCommands];
+    
     self.definesPresentationContext = YES;
     
     if (self.flavor == AccountScreen) {
@@ -87,8 +89,8 @@ static NSString *kisDirectory = @"kisDirectory";
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(determineViewMode) name:MEGAViewModePreference object:nil];
 
-    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
+    [self addSubscriptions];
+    
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
@@ -135,8 +137,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
-    [[MEGASdkManager sharedMEGASdk] removeMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] removeMEGATransferDelegate:self];
+    [self removeSubscriptions];
     
     if (self.offlineTableView.tableView.isEditing) {
         self.selectedItems = nil;
@@ -163,6 +164,13 @@ static NSString *kisDirectory = @"kisDirectory";
         }
         [self reloadData];
     }
+}
+
+- (OfflineViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self createOfflineViewModel];
+    }
+    return _viewModel;
 }
 
 #pragma mark - Layout
@@ -1059,18 +1067,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     return image;
-}
-
-#pragma mark - MEGATransferDelegate
-
-- (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if ([error type]) {
-        return;
-    }
-    
-    if ([transfer type] == MEGATransferTypeDownload) {
-        [self reloadUI];
-    }
 }
 
 #pragma mark - AudioPlayer
