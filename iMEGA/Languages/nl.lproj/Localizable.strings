@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="De link naar het album is verwijderd of het album is verwijderd. Neem contact op met de persoon die de link met u heeft gedeeld.";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, ik snap het";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Kan album niet opslaan";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="U heeft niet genoeg opslag om dit album op te slaan naar uw Cloud schijf. Upgrade nu om meer opslag te krijgen.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Downloaden";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="Er is al een bestand met dezelfde naam";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="Opslaan op de Cloud schijf";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="Plakken";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Importeren vanuit Bestanden";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -997,7 +1003,7 @@
 /* Title of the section to access MEGA's help centre */
 "helpCentreLabel"="Helpcentrum";
 /* Section title that links you to the webpage that let you join and test the beta versions */
-"Join Beta"="Meedoen aan Beta";
+"Join Beta"="Meedoen aan bèta";
 /* Title to rate the app */
 "rateUsLabel"="Beoordeel ons";
 /* Title of the Transfers section */
@@ -1285,7 +1291,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Bericht Versturen";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Bevestig inloggegevens";
+"verifyCredentials"="Gegevens goedkeuren";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Bevestigen";
 /* Button title */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Om toegang te krijgen tot de gedeelde map, moet de persoon die deze met u heeft gedeeld, u ook verifiëren.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Uw gegevens";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="We beschermen uw gegevens met zero-knowledge codering, zodat alle informatie die u op MEGA opslaat, deelt en ontvangt, veilig is. Om extra veiligheid te garanderen, vragen we u om de contacten waarmee u informatie deelt of gegevens van ontvangt verifieert.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Ongecodeerde map]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="Fout";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Geblokkeerd";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="Onbekend apparaat";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Herhaling beëindigen";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Begin vergadering";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="U kunt de vergadering voor de geplande tijd starten door in de vergaderruimte op \"Vergadering starten\" te tikken.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Beheer terugkerende vergaderingen";
 /* Recurring meeting tip view message */
@@ -3622,3 +3632,15 @@
 "settings.about.sfu.changeAlert.changeButton"="Wijzigen";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="Chatten met %@";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="Wachtkamer";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="Alleen gebruikers die door de host zijn toegelaten, kunnen deelnemen aan het gesprek.";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Deelnemers die toegevoegd zijn door non-hosts worden niet naar de wachtkamer gestuurd.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Meer leren";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@” opgeslagen naar Cloud schijf";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” kon niet opgeslagen worden naar Cloud schijf. Probeer later nogmaals en als het probleem blijft aanhouden, contacteer de persoon die de link met u gedeeld heeft.";

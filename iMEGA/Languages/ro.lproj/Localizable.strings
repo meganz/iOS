@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="The link to the album has been removed or the album has been deleted. Contact the person who shared the link with you.";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, got it";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Cannot save album";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="You don’t have enough storage to save this album to your Cloud drive. Upgrade now to get more storage.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Descarcă";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="Există deja un fișier cu același nume";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="Salvează în unitatea cloud";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="Lipește";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Importă de Fișiere";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -539,7 +545,7 @@
 /* Timeline empty with all media filter enable */
 "cameraUploads.timeline.allMedia.empty.title"="Niciun element media găsit";
 /* Alert title shown when adding photos once photo selection limit reached. */
-"cameraUploads.albums.addItems.alert.limitReached.title"="Cannot select more";
+"cameraUploads.albums.addItems.alert.limitReached.title"="Nu se poate selecta mai mult";
 /* Albums title within CU tab */
 "cameraUploads.albums.title"="Albume";
 /* Favourites album title */
@@ -1039,7 +1045,7 @@
 /*  */
 "howItWorks"="Cum funcționează";
 /*  */
-"howItWorksMain"="Prietenul tău trebuie să se înregistreze pentru un cont gratuit pe MEGA și să [S]instaleze cel puțin o aplicație client MEGA [/S] (fie aplicația desktop MEGA, fie una dintre aplicațiile noastre mobile MEGA)";
+"howItWorksMain"="Prietenul tău trebuie să se înregistreze pentru un cont gratuit pe MEGA și să [S]instaleze cel puțin o aplicație client MEGA [/S] (fie Aplicația Desktop MEGA, fie una dintre Aplicațiile Mobile MEGA noastre)";
 /*  */
 "howItWorksSecondary"="Poți să îți informezi prietenul prin orice metodă. Vei câștiga cota dacă ai introdus e-mailul prietenului tău aici înainte de a se înregistra cu acea adresă.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
@@ -1065,13 +1071,13 @@
 /* Cell title shown on the achievements view for referral achievement */
 "account.achievement.referralBonus.title"="Bonusuri pentru recomandări";
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
-"account.achievement.desktopApp.title"="Instalează aplicația desktop MEGA";
+"account.achievement.desktopApp.title"="Instalează Aplicația Desktop MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA Desktop App.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
 "account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %@ of complimentary storage space, valid for 365 days. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
-"account.achievement.mobileApp.title"="Instalează aplicația mobilă MEGA";
+"account.achievement.mobileApp.title"="Instalează Aplicația Mobilă MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
 "account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
@@ -1257,7 +1263,7 @@
 /* Title used in settings that enables the generation of link previews in the chat */
 "richUrlPreviews"="Previzualizări îmbogățite ale URL-urilor";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"richPreviewsFooter"="Enhance the MEGA Chat experience. URL content will be retrieved without zero-knowledge encryption.";
+"richPreviewsFooter"="Îmbunătățește experiența MEGA Chat. Conținutul URL-urilor va fi preluat fără criptare tip zero cunoștințe.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Apeluri vocale și video";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
@@ -1285,7 +1291,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Trimite un mesaj";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verifică acreditările";
+"verifyCredentials"="Aprobă acreditările";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Verifică";
 /* Button title */
@@ -1297,7 +1303,7 @@
 /* Message show when the history of a chat has been successfully deleted. */
 "Chat History has Been Cleared"="Istoricul chatului a fost șters";
 /* Message show when the history of a chat hasn’t been successfully deleted */
-"An error has occurred. The chat history has not been successfully cleared"="An error has occurred. The chat history hasn’t been cleared";
+"An error has occurred. The chat history has not been successfully cleared"="S-a produs o eroare. Istoricul chatului nu a fost golit";
 /* 'Next' button in a dialog */
 "continue"="Continuă";
 /* Title of the incoming shared folders of a user. */
@@ -2389,7 +2395,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="Parolă copiată în clipboard";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Our zero-knowledge encryption system requires a unique key automatically generated for this file or folder. A link with this key is created by default, but you can export the decryption key separately for an added layer of security.";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Sistemul nostru de criptare tip zero cunoștințe necesită o cheie unică generată automat pentru acest fișier sau folder. În mod implicit, este creat un link cu această cheie, însă poți exporta cheia de decriptare separat pentru un strat de securitate suplimentar.";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="Elimină parola";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2503,7 +2509,7 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Ajută-ne să înțelegem modul în care folosești serviciile noastre și furnizează-ne date pe care le putem folosi pentru a face îmbunătățiri. Neacceptarea acestor cookie-uri va însemna că vom avea mai puține date disponibile pentru a ajuta la îmbunătățiri ale designului.";
 /* Text shown when the creation of a version as a new file was successful */
-"Version created as a new file successfully."="Version was created as a new file";
+"Version created as a new file successfully."="Versiunea a fost creată ca un fișier nou.";
 /* Text shown for the action create new file */
 "Create new file"="Creează un fișier nou";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
@@ -2941,7 +2947,7 @@
 /* First step title message for cancellable transfer */
 "transfers.cancellable.scanning"="Se scanează…";
 /* Second step title message for cancellable transfer */
-"transfers.cancellable.creatingFolders"="Creating folders…";
+"transfers.cancellable.creatingFolders"="Se creează folderele…";
 /* Third step title message for cancellable transfer */
 "transfers.cancellable.transferring"="Transfer în curs…";
 /* Cancelling transfers step title message for cancellable transfer */
@@ -2951,7 +2957,7 @@
 /* Count of folders created in the create folders stage */
 "transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
-"transfers.cancellable.donotclose"="Don’t close the app. If you close, transfers not yet queued will be lost.";
+"transfers.cancellable.donotclose"="Nu închide aplicația. Dacă o închizi, transferurile care nu sunt încă în coadă vor fi pierdute.";
 /* Message info for a cancelled transfer */
 "transfers.cancellable.trasnferCancelled"="Transfer anulat";
 /* Title of the dialog used to send bug reports to support team. */
@@ -3173,7 +3179,7 @@
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Verifică %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații înainte de a putea accesa folderele partajate.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
 "sharedItems.contactVerification.section.myCredentials.message"="To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Pentru a accesa folderul partajat, persoana care l-a partajat cu tine ar trebui să te verifice și pe tine.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Acreditările tale";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="Vă protejăm datele cu criptare tip zero, astfel încât toate informațiile pe care le stocați, partajați și primiți pe MEGA să fie sigure. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații sau de la care primiți date.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[folder nedecriptat]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3321,13 +3329,13 @@
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
 "picker.disable.passcode.description"="Pentru a folosi MEGA în aplicația Fișiere, dezactivează codul de acces MEGA. Du-te la Setări în aplicația MEGA, atinge Securitate > Cod de acces.";
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.description"="Meeting in progress";
+"meetings.scheduled.listing.inProgress.description"="Întâlnire în desfășurare";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Planifică o întâlnire";
 /* Schedule meeting name field placeholder */
-"meetings.scheduleMeeting.meetingName.placeholder"="Meeting name";
+"meetings.scheduleMeeting.meetingName.placeholder"="Numele întâlnirii";
 /* Schedule meeting start field */
 "meetings.scheduleMeeting.start"="Starts";
 /* Schedule meeting end field */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="Eroare";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blocat";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="Unknown device";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3495,7 +3505,7 @@
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
 "meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
-"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Daily";
+"meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Zilnică";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
 "upgradeAccountPlan.button.restore.title"="Restore purchase";
 /* On Upgrade Account Plan screen. Button title to show terms and policies */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Începe o întâlnire";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Manage recurring meetings";
 /* Recurring meeting tip view message */
@@ -3622,3 +3632,15 @@
 "settings.about.sfu.changeAlert.changeButton"="Schimbă";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="Chat with %@";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="Waiting room";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="Only users admitted by the host can join the meeting.";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Află mai multe";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";

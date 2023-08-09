@@ -31,11 +31,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d item foi removido</string>
         <key>many</key>
-        <string></string>
+        <string>%d de itens foram removidos</string>
         <key>other</key>
-        <string></string>
+        <string>%d itens foram removidos</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -1188,6 +1188,42 @@
         <string>Links removidos</string>
         <key>other</key>
         <string>Links removidos</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Todos os dias, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <key>many</key>
+        <string>A cada %d de dias, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cada %d dias, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Todos os dias a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <key>many</key>
+        <string>A cada %d de dias a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
+        <key>other</key>
+        <string>A cada %d dias a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -2934,6 +2970,24 @@
         <string>A cada %d de dias</string>
         <key>other</key>
         <string>A cada %d dias</string>
+      </dict>
+    </dict>
+    <key>albumLink.alert.message.filesSaveToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d arquivo foi salvo na Nuvem de arquivos</string>
+        <key>many</key>
+        <string>%d de arquivos foram salvos na Nuvem de arquivos</string>
+        <key>other</key>
+        <string>%d arquivos foram salvos na Nuvem de arquivos</string>
       </dict>
     </dict>
   </dict>

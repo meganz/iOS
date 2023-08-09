@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="该相册的链接已被删除或该相册已被删除。请联系与您共享该链接的人。";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="好的，明白了";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="无法保存相册";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="您没有足够的存储空间将此相册保存到您的云盘。立即升级以获得更多存储空间。";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="下载";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="已经有一个相同名称的文件";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="保存到云盘";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="粘贴";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="从文件中导入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="为了访问此共享文件夹，与您分享它的人应该也对您进行验证。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="您的凭证";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="我们采用零知识加密技术来保护您的数据，因此您在MEGA上存储、共享和接收的所有信息都是安全的。为了确保额外的安全，我们要求您验证与您共享信息或接收数据的联系人。";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[未解密的文件夹]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3227,15 +3235,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email]已邀请[/B]您参加会议，安排时间：";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]会议时间为";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email]已更新[/B]会议描述";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email]已取消[/B]以下会议安排";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email]已更新[/B]会议日期为";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email]已更新[/B]会议时间为";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email]已更新[/B]会议名称，从“[PreviousTitle]”更新为[B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3243,13 +3251,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B]已邀请您参加定期会议，安排时间：";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]会议时间为";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email]已更新[/B]定期会议描述";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email]已更新[/B]定期会议日期为";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email]已更新[/B]定期会议时间为";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="事件";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3267,9 +3275,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="从[B][StartDate]到[UntilDate][/B]，每天的[B][StartTime]到[EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]已取消[/B]以下事件安排";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email]已更新[/B]事件为";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="账户安全升级";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="错误";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="已锁定";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="未知设备";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="结束重复";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="发起会议";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="您可以在会议室中点击“开始会议”按钮，即可在预定时间之前开始会议。";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="管理定期会议";
 /* Recurring meeting tip view message */
@@ -3605,20 +3615,32 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="编辑会议";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="通过电子邮件向参与者发送日历邀请，以便他们将会议添加到自己的日历中。";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="发起会议";
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="事件";
 /* Change SFU server alert title. */
-"settings.about.sfu.changeAlert.title"="Change SFU server";
+"settings.about.sfu.changeAlert.title"="更改SFU服务器";
 /* Change SFU server alert message. */
-"settings.about.sfu.changeAlert.message"="Default is -1";
+"settings.about.sfu.changeAlert.message"="默认为-1";
 /* Change SFU server alert test field placeholder. */
-"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+"settings.about.sfu.changeAlert.placeholder"="输入SFU帐号";
 /* Change SFU server alert cancel button. */
 "settings.about.sfu.changeAlert.cancelButton"="取消";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="更改";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chat with %@";
+"chat.backButton.oneToOne.menu"="与%@聊天";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="正在等候室";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="只有主持人允许的用户可以加入会议。";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="在通话期间，非主持人添加的参与者将不会被添加到等候室。";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="了解更多";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@”已保存到云盘";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@”无法保存到云盘。请稍后重试，如果问题仍然存在，请联系与您共享链接的人。";

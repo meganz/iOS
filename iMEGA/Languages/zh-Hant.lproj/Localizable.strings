@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="相簿連結已被移除或相簿已被刪除。請聯繫與您共享連結的人。";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="好的，明白了";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="無法儲存相簿";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="您沒有足夠的儲存空間將此相簿儲存到您的雲端硬碟。立即升級以獲得更多儲存空間。";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="下載";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="已經有一個相同名稱的檔案";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="儲存到雲端硬碟";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="貼上";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="從檔案匯入";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -1285,7 +1291,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="驗證憑證";
+"verifyCredentials"="核對憑證";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="驗證";
 /* Button title */
@@ -1745,7 +1751,7 @@
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
 "To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="欲發送語音留言並進行加密的語音與視訊通話，請允許MEGA存取您的相機與麥克風權限";
 /* Title label that explains that the user is going to be asked for the notifications permission */
-"Enable Notifications"="啟用通知提醒";
+"Enable Notifications"="啟用通知";
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="我們希望向您發送通知，以便您能在裝置上立即的收到最新訊息。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
@@ -2365,7 +2371,7 @@
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="金鑰";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="單獨發送解密金鑰";
+"Send Decryption Key Separately"="各別發送解密金鑰";
 /* Text for options in Get Link View to activate expiry date */
 "Expiry Date"="到期日期";
 /* Text for options in Get Link View to activate password protection */
@@ -2373,7 +2379,7 @@
 /* Text for options in Get Link View to set password protection */
 "Set Password"="設定密碼";
 /* Hint text for option separate the key from the link in Get Link View */
-"Export the link and decryption key separately."="個別匯出連結與解密金鑰。";
+"Export the link and decryption key separately."="各別匯出連結與解密金鑰。";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="瞭解更多";
 /* Text indicating the date until a link will be valid */
@@ -2383,7 +2389,7 @@
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
 "Copy All"="全部複製";
 /* Description text about options when exporting links for several nodes */
-"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="選項如個別發送解密金鑰、到期日期或密碼設定只適用於單個項目。";
+"Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="選項如各別發送解密金鑰、到期日期或密碼設定只適用於單個項目。";
 /* Message shown when the key has been copied to the Clipboard */
 "Key Copied to Clipboard"="金鑰已複製到剪貼簿";
 /* Message shown when the password has been copied to the Clipboard */
@@ -3093,7 +3099,7 @@
 /* Ttile for empty chats tab */
 "chat.chats.emptyState.title"="現在開始對話";
 /* Description for empty chats tab */
-"chat.chats.emptyState.description"="在任何裝置上與任何人安全而隱密地進行對話，沒有人可以讀取您們的對話記錄，即使是MEGA也不行。";
+"chat.chats.emptyState.description"="在任何裝置上與任何人安全而隱密地進行對話，沒有人可以讀取您們的對話，即使是MEGA也不行。";
 /* Text button for empty chats tab */
 "chat.chats.emptyState.button.title"="新的對話";
 /* Title for chats section */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="若要存取共享資料夾，與您共享資料夾的人也會對您進行驗證。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="您的憑證";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="我們採用零知識加密技術來保護您的資料，因此您在MEGA上儲存、共享、接收的所有資訊都是安全的。為了確保額外的安全，我們要求您驗證您與之共享資訊，或從之接收資料的聯絡人。";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[未解密資料夾]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3241,11 +3249,11 @@
 /* In app notification description for cancelled recurring meeting */
 "inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] 取消[/B]會議及其所有事件";
 /* In app notification description for recurring new meeting invitation. */
-"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 邀請您參加定期會議，排程時間：";
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 邀請您參加週期性會議，排程時間：";
 /* In app notification description for multiple fields update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 更新[/B]定期會議說明";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 更新[/B]週期性會議說明";
 /* In app notification description when date field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
 /* In app notification description when time field is updated for recurring meeting. */
@@ -3253,11 +3261,11 @@
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="事件";
 /* Label to indicate the daily recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.daily"="每天發生";
+"meetings.scheduled.recurring.frequency.daily"="每天重複";
 /* Label to indicate the weekly recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.weekly"="每週發生";
+"meetings.scheduled.recurring.frequency.weekly"="每週重複";
 /* Label to indicate the monthly recurrence of an scheduled meeting */
-"meetings.scheduled.recurring.frequency.monthly"="每月發生";
+"meetings.scheduled.recurring.frequency.monthly"="每月重複";
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="顯示更多";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
@@ -3337,7 +3345,7 @@
 /* Schedule meeting link field */
 "meetings.scheduleMeeting.link"="會議連結";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.link.description"="任何擁有此連結的人都可以加入會議並查看會議對話記錄。";
+"meetings.scheduleMeeting.link.description"="任何擁有此連結的人都可以加入會議並查看會議對話。";
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="新增與會者";
 /* Schedule meeting send calendar invite field */
@@ -3391,7 +3399,7 @@
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="重複";
 /* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
-"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="永不";
+"meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="持續不停";
 /* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.daily"="每日";
 /* Recurrence option weekly shown in the creating the schedule meeting screen as the selected option. */
@@ -3436,12 +3444,14 @@
 "device.center.backup.error.status.message"="錯誤";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="已封鎖";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="Unknown device";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="結束重複";
 /* End Recurrence on date option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.onDate"="結束日期";
 /* End Recurrence never option title in creating schedule meeting screen. */
-"meetings.scheduleMeeting.create.endRecurrence.option.never"="永不";
+"meetings.scheduleMeeting.create.endRecurrence.option.never"="持續不停";
 /* Title for meeting notifications option in meeting info */
 "meetings.info.meetingNotifications"="會議通知";
 /* Title for manage meeting history option in meeting info */
@@ -3457,7 +3467,7 @@
 /* The alert message to delete the history of a meeting. */
 "meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="您確定要刪除此會議全部的訊息記錄嗎？";
 /* Text explaining users how the meeting links work. */
-"meetings.info.shareMeetingLink.explainLink"="任何擁有此連結的人都可以加入會議並查看會議對話記錄";
+"meetings.info.shareMeetingLink.explainLink"="任何擁有此連結的人都可以加入會議並查看會議對話";
 /* The title of a menu button which allows users to rename a meeting. */
 "meetings.info.renameMeeting"="重新命名會議名稱";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
@@ -3535,7 +3545,7 @@
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="您可以在我們的[A]定價頁面[/A]升級您目前的訂閱方案。";
 /* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
-"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="You already have a recurring subscription for this plan";
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="您已經有此方案的定期訂閱";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="取消";
 /* Title for alert cancelling an scheduled meeting */
@@ -3559,11 +3569,11 @@
 /* Confirm cancel option for alert cancelling an occurrence */
 "meetings.scheduled.cancelAlert.occurrence.option.confirm"="取消事件";
 /* Success message when cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.success"="%@事件已取消";
+"meetings.scheduled.cancelAlert.occurrence.success"="%@的事件已取消";
 /* Title for alert cancelling last occurrence */
 "meetings.scheduled.cancelAlert.occurrence.last.title"="要取消事件和會議？";
 /* Description for alert cancelling last occurrence without messages in chat room */
-"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="這是定期會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被封存，而且所有參與者都將收到通知。";
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="這是週期性會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被封存，而且所有參與者都將收到通知。";
 /* Description for alert cancelling last occurrence with messages in chat room */
 "meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="這是定期會議的唯一事件。取消此事件將取消整個會議。如果取消，會議將被放在過去的會議中，而且所有參與者都將收到通知。";
 /* Title for alert cancelling an occurrence */
@@ -3583,17 +3593,17 @@
 /* Create meeting tip view title */
 "meetings.scheduleMeeting.createMeetingTip.title"="安排會議";
 /* Create meeting tip view message */
-"meetings.scheduleMeeting.createMeetingTip.message"="You can now schedule one-off and recurring meetings.";
+"meetings.scheduleMeeting.createMeetingTip.message"="您現在可以安排一次性和週期性會議。";
 /* Scheduled meeting tip view dismiss action button title */
 "meetings.scheduleMeeting.tipView.gotIt"="知道了";
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="開始會議";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="您可以點擊會議室中的「開始會議」，在預定時間之前開始會議。";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="管理定期會議";
 /* Recurring meeting tip view message */
-"meetings.scheduleMeeting.recurringMeetingTip.message"="您可以點擊並按住會議，然後選擇「事件」來查看、取消或編輯定期會議的任何事件。";
+"meetings.scheduleMeeting.recurringMeetingTip.message"="您可以點選並按住會議，然後選擇事件來查看、取消或編輯週期性會議的任何事件。";
 /* Schedule meeting update button */
 "meetings.scheduleMeeting.update"="更新";
 /* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
@@ -3605,7 +3615,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="編輯會議";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="使用電子郵件發送行事曆邀請給與會者，以便他們可以將會議加到他們的行事曆。";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="開始會議";
 /* Recurring meeting tip view message bold text */
@@ -3622,3 +3632,15 @@
 "settings.about.sfu.changeAlert.changeButton"="變更";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="Chat with %@";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="等候室";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="只有主持人允許的使用者才可以加入會議。";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="瞭解更多";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";

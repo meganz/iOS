@@ -27,7 +27,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string></string>
+        <string>%d個の項目が削除されました</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -924,6 +924,34 @@
         <string>d</string>
         <key>other</key>
         <string>リンクが削除されました</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[B][StartDate]から[UntilDate]まで[/B]%d日ごとに、[B][StartTime]から[EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>[B][StartDate][/B]から%d日ごとに、[B][StartTime]から[EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -2282,6 +2310,20 @@
         <string>d</string>
         <key>other</key>
         <string>%d日おきに</string>
+      </dict>
+    </dict>
+    <key>albumLink.alert.message.filesSaveToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d個のファイルがクラウドドライブに保存されました</string>
       </dict>
     </dict>
   </dict>

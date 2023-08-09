@@ -31,11 +31,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string></string>
+        <string>%d oggetto rimosso</string>
         <key>many</key>
-        <string></string>
+        <string>%d di oggetti rimossi</string>
         <key>other</key>
-        <string></string>
+        <string>%d oggetti rimossi</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -1188,6 +1188,38 @@
         <string>Link rimossi</string>
         <key>other</key>
         <string>Link rimossi</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.until</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <key>other</key>
+        <string>Every %d days effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.recurring.daily.forever</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@interval@</string>
+      <key>interval</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <key>other</key>
+        <string>Every %d days effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -2857,9 +2889,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [weekNumber] [weekDayName].</string>
+        <string>Il meeting avrà luogo ogni mese il/la [weekNumber][weekDayName].</string>
+        <key>many</key>
+        <string>Il meeting avrà luogo ogni %d di mesi il/la [weekNumber][weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [weekNumber] [weekDayName].</string>
+        <string>Il meeting avrà luogo ogni %d mesi il/la [weekNumber][weekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -2909,9 +2943,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every month, [ordinalNumber] [weekDayName]</string>
+        <string>Ogni mese, [ordinalNumber][weekDayName]</string>
+        <key>many</key>
+        <string>Ogni %d di mesi, [ordinalNumber][weekDayName]</string>
         <key>other</key>
-        <string>Every %d months, [ordinalNumber] [weekDayName]</string>
+        <string>Ogni %d mesi, [ordinalNumber][weekDayName]</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2930,6 +2966,22 @@
         <string>Ogni %d di giorni</string>
         <key>other</key>
         <string>Ogni %d giorni</string>
+      </dict>
+    </dict>
+    <key>albumLink.alert.message.filesSaveToCloudDrive</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d file saved to Cloud drive</string>
+        <key>other</key>
+        <string>%d files saved to Cloud drive</string>
       </dict>
     </dict>
   </dict>

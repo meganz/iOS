@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="Đường liên kết tới album đã bị loại bỏ hoặc album đã bị xóa. Liên hệ với người đã chia sẻ đường liên kết cho bạn.";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="OK, hiểu rồi";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Không thể lưu lại album";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Bạn không có đủ không gian lưu trữ để lưu lại album này vào Ổ Mây của bạn. Nâng cấp ngay để có thêm không gian lưu trữ.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Tải xuống";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="Đã có một tệp tin với cái tên này rồi";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="Lưu vào Ổ mây";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="Dán";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Chuyển nhập từ Tệp";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -1285,7 +1291,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Gửi tin nhắn";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Xác thực chứng thực";
+"verifyCredentials"="Chấp nhận chứng chỉ";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Xác thực";
 /* Button title */
@@ -2047,7 +2053,7 @@
 /* Destination folder name of chat files */
 "My chat files"="Tệp đã gửi trong chát";
 /* Title of the section about the plan in the storage tab in My Account Section */
-"Plan"="Gói Cước";
+"Plan"="Gói";
 /*  */
 "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Bạn sẽ cần phải sử dụng Chìa Khóa Phục Hồi này khi quên mất mật khẩu của mình,[B]không thì toàn bộ tệp tin và thư mục của bạn sẽ không thể truy cập được, ngay cả MEGA cũng sẽ không giúp được[/B].";
 /*  */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Để có thể truy cập thư mục này, người chia sẻ thư mục này cho bạn cũng cần phải xác thực bạn.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Chứng thực của bạn";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="Chúng tôi bảo vệ dữ liệu của bạn bằng mô hình mã hóa vô kiến thức nên tất cả thông tin bạn lưu trữ, chia sẻ và nhận được trên MEGA đều bảo vệ an toàn. Để đảm bảo tính bảo mật cao hơn, chúng tôi có yêu cầu bạn xác thực các tên liên lạc mà bạn có chia sẻ thông tin hoặc nhận dữ liệu từ họ.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[thư mục chưa giải mã]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3227,15 +3235,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] đã mời[/B] bạn cho một cuộc họp được lên lịch vào:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] đã cập nhật[/B] cuộc họp thành";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] đã cập nhật[/B] mô tả  của cuộc họp";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] đã hủy[/B] một cuộc họp được lên lịch vào ";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] đã cập nhật[/B] ngày của cuộc họp thành";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] đã cập nhật[/B] thời gian của cuộc họp thành";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] đã cập nhật[/B] tên của cuộc họp từ “[PreviousTitle]” thành [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3243,13 +3251,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email] đã mời[/B] bạn cho một cuộc họp được lên lịch định kỳ vào:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] đã cập nhật[/B] cuộc họp thành";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] đã cập nhật[/B] mô tả  của cuộc họp định kỳ";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] đã cập nhật[/B] ngày của cuộc họp định kỳ thành";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] đã cập nhật[/B] thời gian của cuộc họp định kỳ thành";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Thời điểm tái diễn";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3267,9 +3275,9 @@
 /* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
 "meetings.scheduled.recurring.daily.until"="Mỗi ngày, có hiệu lực từ [B][StartDate] cho đến [UntilDate][/B] từ [B][StartTime] đến [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] đã hủy[/B] một thời điểm tái diễn của cuộc họp được lên lịch vào";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] đã cập nhật[/B] một thời điểm tái diễn của cuộc họp thành";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Nâng cấp bảo mật tài khoản";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="Lỗi";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Bị chặn";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="Không rõ thiết bị";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Ngừng tái diễn";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Bắt đầu cuộc họp";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="Bạn có thể bắt đầu cuộc họp trước thời gian dự kiến ​​bằng cách chạm vào “Bắt đầu cuộc họp” khi ở trong phòng họp.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Quản lý các cuộc họp định kỳ";
 /* Recurring meeting tip view message */
@@ -3605,20 +3615,32 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Chỉnh sửa cuộc họp";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="Gửi email lời mời lịch hẹn cho những người tham gia biết và thêm cuộc họp vào lịch của họ.";
 /* Start meeting tip view message bold text */
-"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Bắt đầu cuộc họp";
+"meetings.scheduleMeeting.startMeetingTip.startMeeting"="Bắt đầu cuộc họp";
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Thời điểm tái diễn";
 /* Change SFU server alert title. */
-"settings.about.sfu.changeAlert.title"="Change SFU server";
+"settings.about.sfu.changeAlert.title"="Thay đổi máy chủ SFU";
 /* Change SFU server alert message. */
-"settings.about.sfu.changeAlert.message"="Default is -1";
+"settings.about.sfu.changeAlert.message"="Mặc định là -1";
 /* Change SFU server alert test field placeholder. */
-"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+"settings.about.sfu.changeAlert.placeholder"="Nhập số ID của SFU";
 /* Change SFU server alert cancel button. */
 "settings.about.sfu.changeAlert.cancelButton"="Hủy";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="Thay đổi";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chat with %@";
+"chat.backButton.oneToOne.menu"="Chát với %@";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="Phòng chờ";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="Chỉ những người được người chủ trì thừa nhận mới có thể tham gia cuộc họp.";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Những người tham gia cuộc gọi được thêm bởi người không phải là người chủ trì sẽ không được chuyển đến phòng chờ.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Tìm hiểu thêm";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@” đã lưu vào Ổ Mây";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="Không thể lưu “%@” vào Ổ Mây. Hãy thử lại sau và nếu sự cố vẫn tiếp diễn, hãy liên hệ với người đã chia sẻ đường liên kết cho bạn.";

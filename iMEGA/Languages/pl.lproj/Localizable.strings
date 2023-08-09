@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="Link do albumu został usunięty lub album został usunięty. Skontaktuj się z osobą, która udostępniła Ci łącze.";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, rozumiem";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Nie można zapisać albumu";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Nie masz wystarczającej ilości miejsca, aby zapisać ten album na dysku w chmurze. Uaktualnij teraz, aby uzyskać więcej miejsca.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Pobierz";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="Istnieje już plik o takiej nazwie";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="Zapisz do dysku w chmurze";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="Wklej";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="Importuj z aplikacji Pliki";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Aby uzyskać dostęp do udostępnionego katalogu, osoba, która go udostępniła, również powinna Cię zweryfikować.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Twoje uprawnienia";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="Chronimy Twoje dane za pomocą szyfrowania bez wiedzy, dzięki czemu wszystkie informacje, które przechowujesz, udostępniasz i otrzymujesz w MEGA, są bezpieczne. Aby zapewnić dodatkowe bezpieczeństwo, prosimy o weryfikację kontaktów, którym udostępniasz informacje lub od których otrzymujesz dane.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Katalog niezaszyfrowany]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="Błąd";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Zablokowane";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="Nieznane urządzenie";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Zakończ powtarzanie";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Rozpocznij spotkanie";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="Spotkanie można rozpocząć przed zaplanowanym czasem, dotykając opcji \"Rozpocznij spotkanie\" w pokoju spotkań.";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="Zarządzaj powtarzającymi się spotkaniami";
 /* Recurring meeting tip view message */
@@ -3622,3 +3632,15 @@
 "settings.about.sfu.changeAlert.changeButton"="Zmień";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="Czat z %@";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="Poczekalnia";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="Tylko użytkownicy dopuszczeni przez gospodarza mogą dołączyć do spotkania.";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Uczestnicy dodani przez osoby niebędące gospodarzami podczas połączeń nie będą wysyłani do poczekalni.";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Dowiedz się więcej";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="\"%@\" zapisane na dysku w chmurze";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="Nie można zapisać pliku \"%@\" na dysku w chmurze. Spróbuj ponownie później, a jeśli problem będzie się powtarzał, skontaktuj się z osobą, która udostępniła Ci link.";

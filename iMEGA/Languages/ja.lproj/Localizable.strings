@@ -188,6 +188,10 @@
 "albumLink.invalidAlbum.alert.message"="アルバムへのリンクが削除されているか、アルバムが削除されています。リンクを共有した人に連絡してください。";
 /* Alert dismiss button title for invalid album link */
 "albumLink.invalidAlbum.alert.dissmissButtonTitle"="はい、わかりました。";
+/* Importing albums Failed modal because storage quota would exceed alert title */
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="アルバムを保存できません";
+/* Importing albums Failed modal because storage quota would exceed alert detail */
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="このアルバムをクラウドドライブに保存するのに十分なストレージがありません。今すぐアップグレードしてストレージを増やしてください。";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="ダウンロード";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -350,6 +354,8 @@
 "There is already a file with the same name"="同じ名前のファイルがすでにあります";
 /* Browser save to cloud drive select button title */
 "cloudDrive.browser.saveToCloudDrive.title"="クラウドドライブに保存";
+/* List option shown on the details of a file or folder after the user has copied it */
+"cloudDrive.browser.paste"="貼り付け";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
 "cloudDrive.upload.importFromFiles"="ファイルからインポート";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
@@ -1285,7 +1291,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="メッセージを送信";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="認証情報の検証";
+"verifyCredentials"="認証情報を承認";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="検証";
 /* Button title */
@@ -3182,6 +3188,8 @@
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="共有フォルダにアクセスするには、あなたと共有した人もあなたを承認する必要があります。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="あなたの認証情報";
+/* Title of the header label in contact verification screen. */
+"verifyCredentials.headerMessage"="当社はゼロ知識暗号化でデータを保護するため、MEGAで保存、共有、受信する情報はすべて安全です。さらなるセキュリティを確保するために、情報を共有する連絡先、またはデータを受信する連絡先を認証するようお願いいたします。";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[ 未復号フォルダ ]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3436,6 +3444,8 @@
 "device.center.backup.error.status.message"="エラー";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="ブロックされています";
+/* Default device name in case the device name cannot be obtained */
+"device.center.default.device.title"="端末が不明です";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="定期開催を終了する";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3589,7 +3599,7 @@
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="ミーティング開始";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="";
+"meetings.scheduleMeeting.startMeetingTip.message"="ミーティングルームで「ミーティングを開始」をタップすると、予定時刻より前にミーティングを開始できます。";
 /* Recurring meeting tip view title */
 "meetings.scheduleMeeting.recurringMeetingTip.title"="定期的なミーティングを管理する";
 /* Recurring meeting tip view message */
@@ -3622,3 +3632,15 @@
 "settings.about.sfu.changeAlert.changeButton"="変更";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="%@さんとチャット";
+/* Schedule meeting waiting room setting title */
+"meetings.scheduleMeeting.waitingRoom"="待合室";
+/* Schedule meeting waiting room setting description */
+"meetings.scheduleMeeting.waitingRoom.description"="ホストによって許可されたユーザーのみがミーティングに参加できます。";
+/* Schedule meeting waiting room warning banner title */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="通話中に主催者以外によって追加された参加者は待合室に送られません。";
+/* Schedule meeting waiting room warning banner learn more */
+"meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="さらに詳しく";
+/* Album saved to cloud drive alert message */
+"albumLink.alert.message.albumSavedToCloudDrive"="「%@」がクラウドドライブに保存されました";
+/* Album failed to save to cloud drive alert message */
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="「%@」はクラウドドライブに保存できません。後でもう一度試して、問題が解決しない場合は、リンクを共有した人に連絡してください。";
