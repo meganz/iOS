@@ -1,25 +1,25 @@
 import Foundation
 import MEGADomain
-import MEGASDKRepo
+import MEGASdk
 import MEGASwift
 
-struct RecentNodesRepository: RecentNodesRepositoryProtocol {
-    static var newRepo: RecentNodesRepository {
-        RecentNodesRepository(sdk: MEGASdk.shared)
+public struct RecentNodesRepository: RecentNodesRepositoryProtocol {
+    public static var newRepo: RecentNodesRepository {
+        RecentNodesRepository(sdk: MEGASdk.sharedSdk)
     }
     
-    private enum Constants {
-        static let maxRecommendedDays = 30
-        static let maxRecommendedNodes = 500
+    public enum Constants {
+        public static let maxRecommendedDays = 30
+        public static let maxRecommendedNodes = 500
     }
     
     private let sdk: MEGASdk
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
     
-    func recentActionBuckets(limitCount: Int = Constants.maxRecommendedNodes) async throws -> [RecentActionBucketEntity] {
+    public func recentActionBuckets(limitCount: Int = Constants.maxRecommendedNodes) async throws -> [RecentActionBucketEntity] {
         try await withAsyncThrowingValue(in: { completion in
             sdk.getRecentActionsAsync(sinceDays: Constants.maxRecommendedDays, maxNodes: limitCount, delegate: RequestDelegate { result in
                 switch result {
