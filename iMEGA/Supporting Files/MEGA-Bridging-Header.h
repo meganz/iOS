@@ -146,7 +146,6 @@
 #import "MEGAChatAnswerCallRequestDelegate.h"
 #import "MEGAChatError.h"
 #import "MEGAChatStartCallRequestDelegate.h"
-#import "MEGAChatEnableDisableVideoRequestDelegate.h"
 #import "MEGAProviderDelegate.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "PhotosViewController.h"
