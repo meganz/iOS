@@ -57,6 +57,9 @@ struct ImportAlbumView: View {
         .onAppear {
             viewModel.loadPublicAlbum()
         }
+        .onDisappear {
+            viewModel.cancelLoading()
+        }
         .onReceive(viewModel.$showLoading.dropFirst()) {
             $0 ? SVProgressHUD.show() : SVProgressHUD.dismiss()
         }

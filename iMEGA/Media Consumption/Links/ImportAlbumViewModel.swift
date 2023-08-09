@@ -20,6 +20,9 @@ final class ImportAlbumViewModel: ObservableObject {
     let publicLink: URL
     let photoLibraryContentViewModel: PhotoLibraryContentViewModel
     let showImportToolbarButton: Bool
+    var publicAlbumLoadingTask: Task<Void, Never>?
+    var determineImportStateTask: Task<Void, Never>?
+    var importAlbumTask: Task<Void, Never>?
     
     @Published var publicLinkStatus: AlbumPublicLinkStatus = .none {
         willSet {
@@ -81,6 +84,11 @@ final class ImportAlbumViewModel: ObservableObject {
         }
     }
     
+    func cancelLoading() {
+        cancelPublicAlbumLoadingTask()
+        cancelDetermineImportStateTask()
+    }
+    
     func loadWithNewDecryptionKey() {
         guard publicLinkDecryptionKey.isNotEmpty,
               let linkWithDecryption = URL(string: publicLink.absoluteString + "#" + publicLinkDecryptionKey) else {
@@ -104,8 +112,9 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     func importAlbum() {
-        Task { @MainActor [weak self] in
+        determineImportStateTask = Task { @MainActor [weak self] in
             guard let self else { return }
+            defer { cancelDetermineImportStateTask() }
             
             do {
                 try await accountStorageUseCase.refreshCurrentAccountDetails()
@@ -126,6 +135,11 @@ final class ImportAlbumViewModel: ObservableObject {
             }
             showImportAlbumLocation.toggle()
         }
+    }
+    
+    private func cancelDetermineImportStateTask() {
+        determineImportStateTask?.cancel()
+        determineImportStateTask = nil
     }
     
     func snackBarViewModel() -> SnackBarViewModel {
@@ -150,8 +164,9 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     private func loadPublicAlbumContents() {
-        Task { @MainActor [weak self] in
+        publicAlbumLoadingTask = Task { @MainActor [weak self] in
             guard let self else { return }
+            defer { cancelPublicAlbumLoadingTask() }
             do {
                 let publicAlbum = try await publicAlbumUseCase.publicAlbum(forLink: albumLink)
                 try Task.checkCancellation()
@@ -167,6 +182,11 @@ final class ImportAlbumViewModel: ObservableObject {
                 MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
             }
         }
+    }
+    
+    private func cancelPublicAlbumLoadingTask() {
+        publicAlbumLoadingTask?.cancel()
+        publicAlbumLoadingTask = nil
     }
     
     private func decryptionKeyRequired() -> Bool {
@@ -252,7 +272,10 @@ final class ImportAlbumViewModel: ObservableObject {
         guard let albumName else { return }
         let photos = photoLibraryContentViewModel.photosToImport
         
-        Task {
+        importAlbumTask = Task { [weak self] in
+            guard let self else { return }
+            defer { cancelImportAlbumTask() }
+            
             await toggleLoading()
             do {
                 try await importPublicAlbumUseCase.importAlbum(name: albumName,
@@ -270,6 +293,11 @@ final class ImportAlbumViewModel: ObservableObject {
                 MEGALogError("[Import Album] Error importing album. Error: \(error)")
             }
         }
+    }
+    
+    private func cancelImportAlbumTask() {
+        importAlbumTask?.cancel()
+        importAlbumTask = nil
     }
     
     @MainActor
