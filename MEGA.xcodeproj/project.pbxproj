@@ -791,8 +791,6 @@
 		8313915129351A8600E20170 /* ChatRoomParticipantsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313915029351A8600E20170 /* ChatRoomParticipantsListViewModel.swift */; };
 		8313915329351AA300E20170 /* ChatRoomParticipantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313915229351AA300E20170 /* ChatRoomParticipantViewModel.swift */; };
 		8314150E256FFF5300D48BE3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
-		83143B5C2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83143B5B2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift */; };
-		83143B682604A4540033161A /* CallLocalVideoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83143B672604A4540033161A /* CallLocalVideoRepository.swift */; };
 		83143B722604AB380033161A /* CallLocalVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83143B712604AB380033161A /* CallLocalVideoUseCase.swift */; };
 		83143BA22604E5780033161A /* CallRemoteVideoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83143BA12604E5780033161A /* CallRemoteVideoRepository.swift */; };
 		83143BAC2604E5EC0033161A /* CallRemoteVideoListenerRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83143BAB2604E5EC0033161A /* CallRemoteVideoListenerRepositoryProtocol.swift */; };
@@ -2184,7 +2182,6 @@
 		BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB888A28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift */; };
 		BFBB888F28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */; };
 		BFBB88D528C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB88D428C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift */; };
-		BFBE04C826AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE04C726AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift */; };
 		BFBFFD652A04692F00E4EB23 /* ChatConnectionStatus+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE444452914FE1E00AAF882 /* ChatConnectionStatus+Mapper.swift */; };
 		BFBFFD672A046E9200E4EB23 /* ChatStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */; };
 		BFBFFD682A046ED600E4EB23 /* ChatStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */; };
@@ -3367,8 +3364,6 @@
 		8313914E29351A4400E20170 /* ChatRoomParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantView.swift; sourceTree = "<group>"; };
 		8313915029351A8600E20170 /* ChatRoomParticipantsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantsListViewModel.swift; sourceTree = "<group>"; };
 		8313915229351AA300E20170 /* ChatRoomParticipantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantViewModel.swift; sourceTree = "<group>"; };
-		83143B5B2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLocalVideoRepositoryProtocol.swift; sourceTree = "<group>"; };
-		83143B672604A4540033161A /* CallLocalVideoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLocalVideoRepository.swift; sourceTree = "<group>"; };
 		83143B712604AB380033161A /* CallLocalVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLocalVideoUseCase.swift; sourceTree = "<group>"; };
 		83143BA12604E5780033161A /* CallRemoteVideoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRemoteVideoRepository.swift; sourceTree = "<group>"; };
 		83143BAB2604E5EC0033161A /* CallRemoteVideoListenerRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRemoteVideoListenerRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -4783,7 +4778,6 @@
 		BFBB888A28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsEventUseCase.swift; sourceTree = "<group>"; };
 		BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingParticipantsLayoutViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFBB88D428C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowNonHostToAddParticipantsErrorEntity.swift; sourceTree = "<group>"; };
-		BFBE04C726AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraSelectionErrorEntity.swift; sourceTree = "<group>"; };
 		BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStateListener.swift; sourceTree = "<group>"; };
 		BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsAddingViewFactory.swift; sourceTree = "<group>"; };
 		BFC060F528A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = participantsAddingViewFactoryTests.swift; sourceTree = "<group>"; };
@@ -5675,8 +5669,8 @@
 		248A03192A79025200F183A2 /* Shared Controls */ = {
 			isa = PBXGroup;
 			children = (
-				248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */,
 				24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */,
+				248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */,
 			);
 			path = "Shared Controls";
 			sourceTree = "<group>";
@@ -8141,9 +8135,9 @@
 		83337CA821009476000F40A7 /* ItemList */ = {
 			isa = PBXGroup;
 			children = (
-				94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */,
 				83337CA921009494000F40A7 /* ItemListModel.h */,
 				83337CAA21009494000F40A7 /* ItemListModel.m */,
+				94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */,
 				835223B22059588300A47438 /* ItemListViewController.h */,
 				835223B32059588300A47438 /* ItemListViewController.m */,
 				5B45D2AE260A0AB600DDD076 /* ItemListViewController.storyboard */,
@@ -8587,7 +8581,6 @@
 		838A7B6725D5677500767DB0 /* Calls */ = {
 			isa = PBXGroup;
 			children = (
-				83143B672604A4540033161A /* CallLocalVideoRepository.swift */,
 				83143BA12604E5780033161A /* CallRemoteVideoRepository.swift */,
 				838A7B6825D5678C00767DB0 /* CallRepository.swift */,
 				2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */,
@@ -8599,7 +8592,6 @@
 		838A7B7A25D5679100767DB0 /* Calls */ = {
 			isa = PBXGroup;
 			children = (
-				83143B5B2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift */,
 				83143BAB2604E5EC0033161A /* CallRemoteVideoListenerRepositoryProtocol.swift */,
 				2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */,
 				BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */,
@@ -11186,7 +11178,6 @@
 			isa = PBXGroup;
 			children = (
 				BFBB88D428C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift */,
-				BFBE04C726AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift */,
 				125E606D285A87C2003C7BB5 /* SearchResultErrorEntity.swift */,
 				BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */,
 				99F300972A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift */,
@@ -13073,8 +13064,6 @@
 				8366518726497B3600BC02F0 /* CallCollectionView.swift in Sources */,
 				BF66E037261420A000066F35 /* CallEntity+Mapper.swift in Sources */,
 				BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */,
-				83143B682604A4540033161A /* CallLocalVideoRepository.swift in Sources */,
-				83143B5C2604A3F50033161A /* CallLocalVideoRepositoryProtocol.swift in Sources */,
 				83143B722604AB380033161A /* CallLocalVideoUseCase.swift in Sources */,
 				8338E0F32666552900D1458B /* CallManagerUseCase.swift in Sources */,
 				8366518A26497B3600BC02F0 /* CallNotificationView.swift in Sources */,
@@ -13092,7 +13081,6 @@
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
 				9464C2F528C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
-				BFBE04C826AF6F3C001D9A4F /* CameraSelectionErrorEntity.swift in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
 				B6998320228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.m in Sources */,
@@ -13125,7 +13113,6 @@
 				5D3AD46F252C370C006986AF /* CellConfiguration.swift in Sources */,
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				94548FC6299D537C0050A9CC /* ChangeNameViewController+Additions.swift in Sources */,
-				940CEE3C2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
 				836C1E132A697E13005874C7 /* ChangeSfuServerRepository.swift in Sources */,
@@ -13368,7 +13355,6 @@
 				8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */,
 				5B79E88D26E6973A0070D782 /* EmptyStateType.swift in Sources */,
 				5B98624D26B1B2E600BB9945 /* EmptyStateView+Config.swift in Sources */,
-				243A1AE02A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift in Sources */,
 				12FF88EE2846F03100D99BED /* EmptyStateView+Timeline.swift in Sources */,
 				12FF88E82846EE2800D99BED /* EmptyStateView.m in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
@@ -13554,6 +13540,7 @@
 				5D166B8B252198BB004F4F4A /* ItemGroup.swift in Sources */,
 				5D568205252E8C3B00FE7F9C /* ItemGrouping.swift in Sources */,
 				83337CAB21009494000F40A7 /* ItemListModel.m in Sources */,
+				94C7A3812A796E0C0090AEFC /* ItemListViewController+Additions.swift in Sources */,
 				835223B42059588300A47438 /* ItemListViewController.m in Sources */,
 				8340CAFE284E52F5007C3B39 /* ItemView.swift in Sources */,
 				BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */,
@@ -13650,6 +13637,8 @@
 				7764AAB3246EE18E00134C88 /* MegaAvatarView.swift in Sources */,
 				25E2717F2A40099800DDB678 /* MEGAAVViewController+Combine.swift in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
+				24AB98302A78B84A006E101C /* MEGAAVViewControllerDelegate.swift in Sources */,
+				243A1AE02A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
 				5D83042025638DE70082CA18 /* MEGABanner.swift in Sources */,
 				5D83041225638DC40082CA18 /* MEGABannerList.swift in Sources */,
@@ -14009,7 +13998,6 @@
 				BFAB113D23CEA5C300BCE72D /* PhotoGridViewCell.swift in Sources */,
 				BFAB113C23CEA5C300BCE72D /* PhotoGridViewController.swift in Sources */,
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
-				94C7A3812A796E0C0090AEFC /* ItemListViewController+Additions.swift in Sources */,
 				BFAB113823CEA5C300BCE72D /* PhotoGridViewDelegate.swift in Sources */,
 				BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */,
 				BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */,
@@ -14293,7 +14281,6 @@
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				32A4350829C155FE00DB8581 /* SingleSelectionCheckmarkView.swift in Sources */,
 				BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */,
-				24AB98302A78B84A006E101C /* MEGAAVViewControllerDelegate.swift in Sources */,
 				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */,
 				BFAFAF1725195B2000C92887 /* SlidePanelAnimationController.swift in Sources */,
@@ -14485,6 +14472,7 @@
 				B63995362898CBEB00EA88F1 /* WarningView.swift in Sources */,
 				B63995382898CBEB00EA88F1 /* WarningViewModel.swift in Sources */,
 				B63995372898CBEB00EA88F1 /* WarningViewRouter.swift in Sources */,
+				940CEE3C2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */,
 				BF2675DB2A32A3F300736759 /* WeekDaysInformation.swift in Sources */,
 				120B4A7B27430F5E00312B35 /* XCAssets+Generated.swift in Sources */,
 			);
@@ -14625,7 +14613,6 @@
 				8340CAFB284E4F0C007C3B39 /* ActionViewModel.swift in Sources */,
 				5BE689BC2419189700462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B92419189300462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
-				940CEE422A84C4C8007DD202 /* MEGAStore+Additions.swift in Sources */,
 				B60C7B2E2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
 				A873E84626E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */,
 				834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */,
@@ -14640,7 +14627,6 @@
 				831CDAFD27E0F2DE00A9D367 /* CancellableTransferType.swift in Sources */,
 				BF943EA62355449B001C18E0 /* ChatNotificationControl.swift in Sources */,
 				77892E9D20E5012C0020A533 /* ChatRoomCell.m in Sources */,
-				94478A452A80F452003B9BCE /* ItemCollectionViewCell.m in Sources */,
 				5BE689B82419189000462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B62419188D00462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
 				B5925B8C279119E400170CD6 /* Colors+Generated.swift in Sources */,
@@ -14663,10 +14649,12 @@
 				BF943E9F235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */,
 				8340CAF0284E226D007C3B39 /* HeaderView.swift in Sources */,
 				8340CB18284F530F007C3B39 /* HeaderViewModel.swift in Sources */,
-				94A1A2732A83B16000669C41 /* UserImageRepositoryProtocol.swift in Sources */,
 				B6D0B35B283CE4A30020C64D /* Helper+Additions.swift in Sources */,
 				835B1B90245AD23C00E41FBE /* Helper.m in Sources */,
+				94478A452A80F452003B9BCE /* ItemCollectionViewCell.m in Sources */,
 				83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */,
+				940F4DED2A80F4C400FB940A /* ItemListViewController+Additions.swift in Sources */,
+				94478A432A80F43B003B9BCE /* ItemListViewController.m in Sources */,
 				8340CAFF284E52F5007C3B39 /* ItemView.swift in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
@@ -14674,20 +14662,17 @@
 				7764AAB4246EE62900134C88 /* MegaAvatarView.swift in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,
 				77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
-				94A1A2782A83B29000669C41 /* UserStoreRepository.swift in Sources */,
 				777AC33F21AD420F00E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
 				77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */,
 				BF53B78D2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */,
 				5B205D1A2449AD1A00EFFC31 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				838F7C13243B7A5B004DEC84 /* MEGAChatListItem+Additions.swift in Sources */,
 				834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
-				940CEE3D2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */,
 				838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */,
 				5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */,
 				A84F4A99298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
 				B644B6B821ABA27B00A3B8E7 /* MEGAConstants.m in Sources */,
 				773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */,
-				940CEE352A83D8C2007DD202 /* WarningView.swift in Sources */,
 				B6048910223C4F7B00BA91F9 /* MEGACoreDataStack.m in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				C482B7D4271F360A0074CFC4 /* MEGAError+MNZCategory.m in Sources */,
@@ -14717,8 +14702,8 @@
 				B6DC7CBF2640FDE300659EE0 /* MEGASdkManager+CleanUp.m in Sources */,
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
 				5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */,
-				94A1A2712A83B14E00669C41 /* UserImageLoadErrorEntity.swift in Sources */,
 				2FBBE77E25E4544900B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */,
+				940CEE422A84C4C8007DD202 /* MEGAStore+Additions.swift in Sources */,
 				5BE6898A2417CB3D00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
 				5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */,
 				9411355C1F01008400D33428 /* MEGAStore.m in Sources */,
@@ -14747,7 +14732,6 @@
 				C42C35782743D924004D8BA9 /* NodeAccess.swift in Sources */,
 				83438A6D281AB531006C9285 /* NodeAccessEntity+Mapper.swift in Sources */,
 				943092F52914376A0092B99A /* NodeActionsRepository.swift in Sources */,
-				94A1A26F2A83B11F00669C41 /* UserImageUseCase.swift in Sources */,
 				94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */,
 				943092F829143DE60092B99A /* NodeDataRepository.swift in Sources */,
 				6D60254E28F7B9C000FF9767 /* NodeEntity+NodesUpdate.swift in Sources */,
@@ -14776,7 +14760,6 @@
 				A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */,
 				5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */,
-				940CEE372A83D8F6007DD202 /* WarningViewModel.swift in Sources */,
 				9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
 				775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */,
@@ -14785,9 +14768,7 @@
 				B56717502A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift in Sources */,
 				B566759A2A09EDA600E810F9 /* ShareDestinationTableViewController+TableViewDataSource.swift in Sources */,
 				77F95CEF20E3B14D00F42D9C /* ShareDestinationTableViewController.m in Sources */,
-				94478A432A80F43B003B9BCE /* ItemListViewController.m in Sources */,
 				83A4E47727F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift in Sources */,
-				94A1A2752A83B1B900669C41 /* UserImageRepository.swift in Sources */,
 				83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */,
 				B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */,
 				A8F515B127F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift in Sources */,
@@ -14818,8 +14799,15 @@
 				BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				83CCBC47279595D300B90EF2 /* UploadFileRepository.swift in Sources */,
+				94A1A2712A83B14E00669C41 /* UserImageLoadErrorEntity.swift in Sources */,
+				94A1A2752A83B1B900669C41 /* UserImageRepository.swift in Sources */,
+				94A1A2732A83B16000669C41 /* UserImageRepositoryProtocol.swift in Sources */,
+				94A1A26F2A83B11F00669C41 /* UserImageUseCase.swift in Sources */,
+				94A1A2782A83B29000669C41 /* UserStoreRepository.swift in Sources */,
+				940CEE352A83D8C2007DD202 /* WarningView.swift in Sources */,
+				940CEE372A83D8F6007DD202 /* WarningViewModel.swift in Sources */,
+				940CEE3D2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */,
 				B53BDBEB27619171001D73F8 /* XCAssets+Generated.swift in Sources */,
-				940F4DED2A80F4C400FB940A /* ItemListViewController+Additions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14943,6 +14931,7 @@
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,
+				24A6ADE82A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift in Sources */,
 				248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */,
 				0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */,
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
@@ -14950,7 +14939,6 @@
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
-				24A6ADE82A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift in Sources */,
 				B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
 				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
