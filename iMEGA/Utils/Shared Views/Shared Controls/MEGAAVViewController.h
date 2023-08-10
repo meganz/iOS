@@ -5,10 +5,14 @@
 
 #import "MEGASdkManager.h"
 
+@protocol MEGAAVViewControllerDelegate;
+
 @interface MEGAAVViewController : AVPlayerViewController
 
-- (instancetype)initWithURL:(NSURL *)fileUrl;
-- (instancetype)initWithNode:(MEGANode *)node folderLink:(BOOL)folderLink apiForStreaming:(MEGASdk *)apiForStreaming;
-- (NSString *)fileFingerprint;
+@property (nonatomic, weak, nullable) id<MEGAAVViewControllerDelegate> avViewControllerDelegate;
+
+- (instancetype _Nonnull)initWithURL:(NSURL *_Nonnull)fileUrl;
+- (instancetype _Nonnull)initWithNode:(MEGANode * _Nonnull)node folderLink:(BOOL)folderLink apiForStreaming:(MEGASdk * _Nonnull)apiForStreaming;
+- (NSString *_Nullable)fileFingerprint;
 
 @end
