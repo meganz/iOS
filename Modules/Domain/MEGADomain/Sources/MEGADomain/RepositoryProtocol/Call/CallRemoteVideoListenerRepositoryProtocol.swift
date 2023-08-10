@@ -1,6 +1,6 @@
-import MEGADomain
+import Foundation
 
-protocol CallRemoteVideoRepositoryProtocol {
+public protocol CallRemoteVideoRepositoryProtocol {
     func enableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: some CallRemoteVideoListenerRepositoryProtocol)
     func disableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool)
     func disableAllRemoteVideos()
@@ -10,6 +10,6 @@ protocol CallRemoteVideoRepositoryProtocol {
     func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
 }
 
-protocol CallRemoteVideoListenerRepositoryProtocol {
+public protocol CallRemoteVideoListenerRepositoryProtocol {
     func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data)
 }
