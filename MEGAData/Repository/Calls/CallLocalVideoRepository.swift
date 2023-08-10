@@ -49,37 +49,36 @@ final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol
     }
     
     func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionErrorEntity>) -> Void) {
-        let delegate =  MEGAChatGenericRequestDelegate { _, error in
-            if error.type == .MEGAChatErrorTypeOk {
+        chatSdk.setChatVideoInDevices(localizedName, delegate: ChatRequestDelegate { result in
+            switch result {
+            case .success:
                 completion(.success)
-            } else {
+            case .failure:
                 completion(.failure(.generic))
             }
-        }
-        
-        chatSdk.setChatVideoInDevices(localizedName, delegate: delegate)
+        })
     }
     
     func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        chatSdk.openVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { _, error in
-            if error.type == .MEGAChatErrorTypeOk {
+        chatSdk.openVideoDevice(with: ChatRequestDelegate { result in
+            switch result {
+            case .success:
                 completion(.success)
-            } else {
+            case .failure:
                 completion(.failure(.chatLocalVideoNotEnabled))
             }
-        }))
+        })
     }
     
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
-        chatSdk.releaseVideoDevice(with: MEGAChatGenericRequestDelegate(completion: { _, error in
-            if error.type == .MEGAChatErrorTypeOk {
-                if error.type == .MEGAChatErrorTypeOk {
-                    completion(.success)
-                } else {
-                    completion(.failure(.chatLocalVideoNotDisabled))
-                }
+        chatSdk.releaseVideoDevice(with: ChatRequestDelegate { result in
+            switch result {
+            case .success:
+                completion(.success)
+            case .failure:
+                completion(.failure(.chatLocalVideoNotDisabled))
             }
-        }))
+        })
     }
 }
 

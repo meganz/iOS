@@ -37,7 +37,6 @@
 #import "OnboardingViewController.h"
 
 #import "MEGAChatNotificationDelegate.h"
-#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
