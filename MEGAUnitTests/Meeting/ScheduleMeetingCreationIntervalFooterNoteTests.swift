@@ -129,19 +129,19 @@ final class ScheduleMeetingCreationIntervalFooterNoteTests: XCTestCase {
     }
     
     private func monthlyFooterNote(forInterval interval: Int) throws -> String {
-        let footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.SingleDay.footerNote(interval)
-        return footerNote.replacingOccurrences(of: "[ordinalDay]", with: try XCTUnwrap(ordinalString(for: 12)))
+        let footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.SingleDayCardinal.footerNote(interval)
+        return footerNote.replacingOccurrences(of: "[cardinalDay]", with: try XCTUnwrap(cardinalString(for: 12)))
     }
     
     private func monthlyFooterNote(forInterval interval: Int, selectedDays: [Int]) throws -> String {
-        var footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.MultipleDays.footerNote(interval)
+        var footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.MultipleDaysCardinal.footerNote(interval)
         footerNote = footerNote.replacingOccurrences(
-            of: "[ordinalDays]",
-            with: try XCTUnwrap(ordinalString(for: selectedDays[0]))
+            of: "[cardinalDays]",
+            with: try XCTUnwrap(cardinalString(for: selectedDays[0]))
         )
         return footerNote.replacingOccurrences(
-            of: "[ordinalLastDay]",
-            with: try XCTUnwrap(ordinalString(for: selectedDays[1]))
+            of: "[cardinalLastDay]",
+            with: try XCTUnwrap(cardinalString(for: selectedDays[1]))
         )
     }
     
@@ -210,6 +210,12 @@ final class ScheduleMeetingCreationIntervalFooterNoteTests: XCTestCase {
     private func ordinalString(for day: Int) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .ordinal
+        return numberFormatter.string(from: NSNumber(value: day))
+    }
+    
+    private func cardinalString(for day: Int) -> String? {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .none
         return numberFormatter.string(from: NSNumber(value: day))
     }
 }
