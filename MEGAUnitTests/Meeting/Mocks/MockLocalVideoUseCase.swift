@@ -4,7 +4,7 @@ import MEGADomain
 class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
     var enableDisableVideoCompletion: Result<Void, CallErrorEntity> = .failure(.generic)
     var releaseDeviceResult: Result<Void, CallErrorEntity> = .failure(.generic)
-    var selectCameraResult: Result<Void, CameraSelectionErrorEntity> = .failure(.generic)
+    var selectCameraResult: Result<Void, Error> = .failure(GenericErrorEntity())
     var videoDeviceSelectedString: String?
     var addLocalVideo_CalledTimes = 0
     var removeLocalVideo_CalledTimes = 0
@@ -32,7 +32,7 @@ class MockCallLocalVideoUseCase: CallLocalVideoUseCaseProtocol {
         return videoDeviceSelectedString
     }
     
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, CameraSelectionErrorEntity>) -> Void) {
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, Error>) -> Void) {
         selectedCamera_calledTimes += 1
         completion(selectCameraResult)
     }
