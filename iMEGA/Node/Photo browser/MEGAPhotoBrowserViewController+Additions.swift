@@ -55,8 +55,15 @@ extension MEGAPhotoBrowserViewController {
             let controller = node.mnz_viewControllerForNode(
                 inFolderLink: displayMode == .nodeInsideFolderLink,
                 fileLink: nil)
-            controller.modalPresentationStyle = .overFullScreen
-            present(controller, animated: true)
+            
+            if let avViewController = controller as? MEGAAVViewController {
+                let loadingController = MEGAAVViewControllerLoadingDecorator(decoratee: avViewController)
+                loadingController.modalPresentationStyle = .overFullScreen
+                present(loadingController, animated: true)
+            } else {
+                controller.modalPresentationStyle = .overFullScreen
+                present(controller, animated: true)
+            }
         } else {
             let controller = UIAlertController(
                 title: Strings.Localizable.fileNotSupported,
