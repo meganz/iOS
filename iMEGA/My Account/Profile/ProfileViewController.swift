@@ -21,11 +21,20 @@ import UIKit
     private var offlineLogOutWarningDismissed: Bool
     
     private let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
-    private let viewModel = ProfileViewModel(sdk: MEGASdkManager.sharedMEGASdk())
     private var dataSource: ProfileTableViewDataSource?
     private var subscriptions: Set<AnyCancellable> = []
+    private let viewModel: ProfileViewModel
 
     // MARK: - Lifecycle
+    
+    init?(coder: NSCoder, viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("You must create ProfileViewController with a viewModel.")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -105,14 +105,16 @@ final class AccountHallViewModelTests: XCTestCase {
         test(viewModel: sut, actions: [AccountHallAction.didTapUpgradeButton], expectedCommands: [])
     }
     
-    func testIsFeatureFlagEnabled_onNewUpgradeAccountPlanEnabled_shouldBeEnabled() {
-        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase, featureFlagProvider: MockFeatureFlagProvider(list: [.newUpgradeAccountPlanUI: true]))
-        XCTAssertTrue(sut.isNewUpgradeAccountPlanEnabled())
+    func testABTest_onNewUpgradeAccountPlanIsVarianA_shouldBeTrue() async {
+        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase, abTestProvider: MockABTestProvider(list: [.devTest: .variantA]))
+        await sut.setupABTestVariantTask?.value
+        XCTAssertTrue(sut.isNewUpgradeAccountPlanEnabled)
     }
 
-    func testIsFeatureFlagEnabled_onNewUpgradeAccountPlanDisabled_shouldBeTurnedOff() {
-        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase, featureFlagProvider: MockFeatureFlagProvider(list: [.newUpgradeAccountPlanUI: false]))
-        XCTAssertFalse(sut.isNewUpgradeAccountPlanEnabled())
+    func testIsFeatureFlagEnabled_onNewUpgradeAccountPlanIsBaseline_shouldBeFalse() async {
+        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase, abTestProvider: MockABTestProvider(list: [.devTest: .baseline]))
+        await sut.setupABTestVariantTask?.value
+        XCTAssertFalse(sut.isNewUpgradeAccountPlanEnabled)
     }
     
     func testIsFeatureFlagEnabled_onDeviceCenterUIEnabled_shouldBeEnabled() {

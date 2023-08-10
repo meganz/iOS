@@ -16,7 +16,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
         var shouldShowCell = true
         switch MyAccountMegaSection(rawValue: indexPath.row) {
         case .plan:
-            shouldShowCell = isNewUpgradeAccountPlanFeatureFlagEnabled() && showPlanRow
+            shouldShowCell = viewModel.isNewUpgradeAccountPlanEnabled && showPlanRow
         case .achievements:
             shouldShowCell = MEGASdk.shared.isAchievementsEnabled
         case .backups:

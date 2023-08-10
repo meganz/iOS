@@ -41,18 +41,17 @@ final class ProfileViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
 
     private let sdk: MEGASdk
+    private let isNewUpgradeAccountPlanEnabled: Bool
     
     // Internal State
     private let requestedChangeTypeValueSubject = CurrentValueSubject<ChangeType?, Never>(nil)
     private let twoFactorAuthStatusValueSubject = CurrentValueSubject<TwoFactorAuthStatus, Never>(.unknown)
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
-         
-    private var featureFlagProvider: any FeatureFlagProviderProtocol
     
-    init(sdk: MEGASdk, featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+    init(sdk: MEGASdk, isNewUpgradeAccountPlanEnabled: Bool) {
         self.sdk = sdk
-        self.featureFlagProvider = featureFlagProvider
+        self.isNewUpgradeAccountPlanEnabled = isNewUpgradeAccountPlanEnabled
         bindToSubscriptions()
     }
     
@@ -90,7 +89,7 @@ final class ProfileViewModel: ViewModelType {
     private var shouldShowPlanSection: Bool {
         let shouldShow = sdk.isAccountType(.proFlexi) || sdk.isAccountType(.business) || sdk.isMasterBusinessAccount
         
-        return shouldShow || !featureFlagProvider.isFeatureFlagEnabled(for: .newUpgradeAccountPlanUI)
+        return shouldShow || !isNewUpgradeAccountPlanEnabled
     }
 }
 

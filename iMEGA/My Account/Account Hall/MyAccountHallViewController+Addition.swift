@@ -8,6 +8,13 @@ extension MyAccountHallViewController {
         settingRouter.start()
     }
     
+    @objc func showProfileView() {
+        let profileViewModel = ProfileViewModel(sdk: MEGASdk.shared,
+                                                isNewUpgradeAccountPlanEnabled: viewModel.isNewUpgradeAccountPlanEnabled)
+        let profileRouter = ProfileViewRouter(navigationController: navigationController, viewModel: profileViewModel)
+        profileRouter.start()
+     }
+    
     @objc func setupNavigationBarColor(with trait: UITraitCollection) {
         let color: UIColor
         switch trait.theme {
@@ -50,10 +57,10 @@ extension MyAccountHallViewController {
         viewModel.dispatch(.removeSubscriptions)
     }
     
-    // MARK: - Feature flag
+    // MARK: - A/B Testing
     
-    @objc func isNewUpgradeAccountPlanFeatureFlagEnabled() -> Bool {
-        viewModel.isNewUpgradeAccountPlanEnabled()
+    @objc func isNewUpgradeAccountPlanEnabled() -> Bool {
+        viewModel.isNewUpgradeAccountPlanEnabled
     }
     
     // MARK: - Open sections programmatically
@@ -124,7 +131,7 @@ extension MyAccountHallViewController {
             buyPROBarButtonItem?.title = nil
             buyPROBarButtonItem?.isEnabled = false
         default:
-            guard !viewModel.isNewUpgradeAccountPlanEnabled() else { return }
+            guard !viewModel.isNewUpgradeAccountPlanEnabled else { return }
                   
             accountTypeLabel?.text = ""
             buyPROBarButtonItem?.title = Strings.Localizable.upgrade
