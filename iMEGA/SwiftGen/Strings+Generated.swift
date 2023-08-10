@@ -4907,10 +4907,22 @@ public enum Strings {
                 return Strings.tr("Localizable", "meetings.scheduled.create.monthly.multipleDays.footerNote", p1)
               }
             }
+            public enum MultipleDaysCardinal {
+              /// Plural format key: "%#@count@"
+              public static func footerNote(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote", p1)
+              }
+            }
             public enum SingleDay {
               /// Plural format key: "%#@count@"
               public static func footerNote(_ p1: Int) -> String {
                 return Strings.tr("Localizable", "meetings.scheduled.create.monthly.singleDay.footerNote", p1)
+              }
+            }
+            public enum SingleDayCardinal {
+              /// Plural format key: "%#@count@"
+              public static func footerNote(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "meetings.scheduled.create.monthly.singleDayCardinal.footerNote", p1)
               }
             }
             public enum WeekDay {
