@@ -1,3 +1,6 @@
+import MEGAPresentation
+import SwiftUI
+
 extension ContactsViewController {
     func selectUsers(_ users: [MEGAUser]) {
         guard users.count > 0 else { return }
@@ -43,5 +46,44 @@ extension ContactsViewController {
         if #available(iOS 16.0, *) {
             navigationItem.preferredSearchBarPlacement = .stacked
         }
+    }
+
+    @objc
+    func setupContactsNotVerifiedHeader() {
+        let hostingView = UIHostingController(rootView: WarningView(viewModel: .init(warningType: .contactsNotVerified)))
+
+        guard let hostingViewUIView = hostingView.view else { return }
+
+        hostingViewUIView.backgroundColor = Colors.General.Yellow.fed429.color
+
+        contactsNotVerifiedView.isHidden = true
+        contactsNotVerifiedView.addSubview(hostingViewUIView)
+        hostingViewUIView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            hostingViewUIView.topAnchor.constraint(equalTo: contactsNotVerifiedView.topAnchor),
+            hostingViewUIView.leadingAnchor.constraint(equalTo: contactsNotVerifiedView.leadingAnchor),
+            hostingViewUIView.trailingAnchor.constraint(equalTo: contactsNotVerifiedView.trailingAnchor),
+            hostingViewUIView.bottomAnchor.constraint(equalTo: contactsNotVerifiedView.bottomAnchor)
+        ])
+    }
+
+    @objc
+    func handleContactsNotVerifiedHeaderVisibility() {
+        var users: [MEGAUser]?
+
+        if contactsMode == .shareFoldersWith {
+            users = selectedUsersArray as? [MEGAUser]
+        } else {
+            users = visibleUsersArray as? [MEGAUser]
+        }
+
+        guard let users, DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .contactVerification)  else {
+            contactsNotVerifiedView.isHidden = true
+            return
+        }
+
+        let hasSelectedUnverifiedUsers = users.contains(where: { !MEGASdk.shared.areCredentialsVerified(of: $0) })
+        contactsNotVerifiedView.isHidden = !hasSelectedUnverifiedUsers
     }
 }

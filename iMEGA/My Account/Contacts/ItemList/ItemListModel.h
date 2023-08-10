@@ -4,6 +4,8 @@
 
 @interface ItemListModel : NSObject
 
+@property MEGAUser *user;
+
 @property (readonly) BOOL isGroup;
 @property (readonly) NSString *name;
 @property (readonly) uint64_t handle;

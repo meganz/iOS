@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -53,25 +53,37 @@
                                                         <action selector="removeUserAction:" destination="HSA-9V-kLf" eventType="touchUpInside" id="xmi-fm-JvG"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEh-uf-OXR">
-                                                    <rect key="frame" x="8" y="78" width="64" height="14"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="y0O-hB-Zi9">
+                                                    <rect key="frame" x="16.5" y="80" width="47" height="12"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEh-uf-OXR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="31" height="12"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contactVerified" translatesAutoresizingMaskIntoConstraints="NO" id="3Qk-A8-Skv">
+                                                            <rect key="frame" x="35" y="0.0" width="12" height="12"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="12" id="Y8R-nR-ekQ"/>
+                                                                <constraint firstAttribute="width" constant="12" id="bVU-tv-DR5"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailingMargin" secondItem="sEh-uf-OXR" secondAttribute="trailing" id="4nD-fy-9Dk"/>
-                                            <constraint firstAttribute="bottom" secondItem="sEh-uf-OXR" secondAttribute="bottom" constant="8" id="J41-Ke-UE0"/>
+                                            <constraint firstAttribute="bottom" secondItem="y0O-hB-Zi9" secondAttribute="bottom" constant="8" id="cqz-hm-ny4"/>
                                             <constraint firstItem="6kX-2n-KJc" firstAttribute="centerY" secondItem="rYt-IJ-bA7" secondAttribute="centerY" constant="-10" id="dap-Or-9Y5"/>
                                             <constraint firstItem="6kX-2n-KJc" firstAttribute="centerX" secondItem="rYt-IJ-bA7" secondAttribute="centerX" id="gPq-Zf-oQv"/>
                                             <constraint firstItem="ESB-0J-kq9" firstAttribute="trailing" secondItem="6kX-2n-KJc" secondAttribute="trailing" constant="2" id="jeK-t6-hga"/>
                                             <constraint firstItem="ESB-0J-kq9" firstAttribute="bottom" secondItem="6kX-2n-KJc" secondAttribute="bottom" constant="2" id="oUu-hF-MxE"/>
-                                            <constraint firstItem="sEh-uf-OXR" firstAttribute="leading" secondItem="rYt-IJ-bA7" secondAttribute="leadingMargin" id="pe8-t5-sQg"/>
+                                            <constraint firstItem="y0O-hB-Zi9" firstAttribute="centerX" secondItem="rYt-IJ-bA7" secondAttribute="centerX" id="uOw-SX-Dg6"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="avatarView" destination="6kX-2n-KJc" id="GDN-yu-vXN"/>
+                                            <outlet property="contactVerifiedImageView" destination="3Qk-A8-Skv" id="Q0b-jH-5GP"/>
                                             <outlet property="nameLabel" destination="sEh-uf-OXR" id="hZI-HU-GiQ"/>
                                             <outlet property="removeUserButton" destination="ESB-0J-kq9" id="Pci-9m-pBk"/>
                                         </connections>
@@ -102,6 +114,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="contactVerified" width="14" height="14"/>
         <image name="remove_media" width="26" height="26"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
