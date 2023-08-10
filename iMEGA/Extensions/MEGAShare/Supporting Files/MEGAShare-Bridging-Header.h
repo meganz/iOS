@@ -15,6 +15,8 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "MEGAChatGenericRequestDelegate.h"
+#import "MEGARequestDelegate.h"
+#import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAConstants.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
@@ -38,5 +40,8 @@
 #import "ShareViewController.h"
 #import "ShareDestinationTableViewController.h"
 #import "ShareAttachment.h"
+#import "ItemListViewController.h"
+#import "ItemCollectionViewCell.h"
+#import "ItemListModel.h"
 
 #endif /* MEGAShare_Bridging_Header_h */

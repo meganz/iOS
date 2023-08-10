@@ -62,6 +62,8 @@
 #import "MEGAChatScheduledMeetingList.h"
 #import "MEGAChatScheduledMeetingOccurrence.h"
 #import "MEGAShareRequestDelegate.h"
+#import "MEGARequestDelegate.h"
+#import "MEGAGetThumbnailRequestDelegate.h"
 #import "FolderLinkViewController.h"
 #import "FileLinkViewController.h"
 #import "MEGAStore.h"
@@ -186,6 +188,9 @@
 #import "MEGALogger.h"
 #import "ChangeNameViewController.h"
 
+#import "ItemListModel.h"
+#import "ItemListViewController.h"
+#import "ItemCollectionViewCell.h"
 #import "ItemListModel.h"
 #import "AdvancedTableViewController.h"
 #import "InviteFriendsViewController.h"
