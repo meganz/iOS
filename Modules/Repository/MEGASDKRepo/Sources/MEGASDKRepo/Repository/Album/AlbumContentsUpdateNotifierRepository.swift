@@ -31,6 +31,11 @@ final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContent
     }
     
     private func shouldAlbumReload(_ nodes: [NodeEntity]) -> Bool {
+        let hasVisualMedia = nodes.contains { $0.fileExtensionGroup.isVisualMedia }
+        guard hasVisualMedia else {
+            return false
+        }
+        
         let isAnyNodesTrashed = isAnyNodeMovedIntoTrash(nodes)
         let hasNewNodes = nodes.containsNewNode()
         let hasModifiedNodes = nodes.hasModifiedAttributes()
@@ -38,8 +43,8 @@ final public class AlbumContentsUpdateNotifierRepository: NSObject, AlbumContent
         let hasModifiedPublicLink = nodes.hasModifiedPublicLink()
         
         return isAnyNodesTrashed || hasNewNodes ||
-            hasModifiedNodes || hasModifiedParent ||
-            hasModifiedPublicLink
+        hasModifiedNodes || hasModifiedParent ||
+        hasModifiedPublicLink
     }
 }
 
