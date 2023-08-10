@@ -20,29 +20,29 @@ final class ProfileViewModelTests: XCTestCase {
         XCTAssertEqual(result, expectedSectionsWithPlan)
     }
     
-    func testAction_onViewDidLoad_featureFlagIsNewUpgradeAccountPlanUIDisabled_defaultValue() {
-        let sut = makeSUT(featureFlags: [.newUpgradeAccountPlanUI: false])
+    func testAction_onViewDidLoad_isNewUpgradeAccountPlanUIDisabled_defaultValue() {
+        let sut = makeSUT(isNewUpgradeAccountPlanEnabled: false)
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         
         XCTAssertEqual(result, expectedSectionsWithPlan)
     }
     
-    func testAction_onViewDidLoad_featureFlagIsNewUpgradeAccountPlanUIEnabled_defaultValue() {
-        let sut = makeSUT(featureFlags: [.newUpgradeAccountPlanUI: true])
+    func testAction_onViewDidLoad_isNewUpgradeAccountPlanUIEnabled_defaultValue() {
+        let sut = makeSUT(isNewUpgradeAccountPlanEnabled: true)
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         
         XCTAssertEqual(result, expectedSectionsWithoutPlan)
     }
     
-    func testAction_onViewDidLoad_featureFlagIsNewUpgradeAccountPlanUIEnabled_businessAccount() {
-        let sut = makeSUT(isMasterBusinessAccount: true, featureFlags: [.newUpgradeAccountPlanUI: true])
+    func testAction_onViewDidLoad_isNewUpgradeAccountPlanUIEnabled_businessAccount() {
+        let sut = makeSUT(isMasterBusinessAccount: true, isNewUpgradeAccountPlanEnabled: true)
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         
         XCTAssertEqual(result, expectedSectionsWithPlan)
     }
     
-    func testAction_onViewDidLoad_featureFlagIsNewUpgradeAccountPlanUIDisabled_businessAccount() {
-        let sut = makeSUT(isMasterBusinessAccount: true, featureFlags: [.newUpgradeAccountPlanUI: false])
+    func testAction_onViewDidLoad_isNewUpgradeAccountPlanUIDisabled_businessAccount() {
+        let sut = makeSUT(isMasterBusinessAccount: true, isNewUpgradeAccountPlanEnabled: false)
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         
         XCTAssertEqual(result, expectedSectionsWithPlan)
@@ -148,12 +148,12 @@ final class ProfileViewModelTests: XCTestCase {
         email: String = "test@email.com",
         smsState: SMSState = .notAllowed,
         isMasterBusinessAccount: Bool = false,
-        featureFlags: [FeatureFlagKey: Bool] = [:]
+        isNewUpgradeAccountPlanEnabled: Bool = false
     ) -> ProfileViewModel {
         
         ProfileViewModel(
             sdk: MockSdk(isMasterBusinessAccount: isMasterBusinessAccount, smsState: smsState, myEmail: email),
-            featureFlagProvider: MockFeatureFlagProvider(list: featureFlags)
+            isNewUpgradeAccountPlanEnabled: isNewUpgradeAccountPlanEnabled
         )
     }
     

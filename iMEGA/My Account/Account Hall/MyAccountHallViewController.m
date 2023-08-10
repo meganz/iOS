@@ -216,8 +216,7 @@
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
-    ProfileViewController *profileViewController = [[UIStoryboard storyboardWithName:@"Profile" bundle:nil] instantiateViewControllerWithIdentifier:@"ProfileViewControllerID"];
-    [self.navigationController pushViewController:profileViewController animated:YES];
+    [self showProfileView];
 }
 
 - (IBAction)didTapAddPhoneNumberView {
@@ -227,7 +226,7 @@
 #pragma mark - MEGAPurchasePricingDelegate
 
 - (void)pricingsReady {
-    BOOL isEnabled = ![self isNewUpgradeAccountPlanFeatureFlagEnabled];
+    BOOL isEnabled = ![self isNewUpgradeAccountPlanEnabled];
     self.buyPROBarButtonItem.enabled = isEnabled;
 }
 
