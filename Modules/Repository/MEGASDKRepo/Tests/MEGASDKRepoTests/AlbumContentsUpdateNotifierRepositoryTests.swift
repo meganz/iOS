@@ -1,108 +1,228 @@
 import Combine
 import MEGADomain
 import MEGADomainMock
+import MEGASdk
 import MEGASDKRepo
 import MEGASDKRepoMock
+import MEGATest
 import XCTest
 
 final class AlbumContentsUpdateNotifierRepositoryTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
-    func testOnAlbumReload_onChangeTypeNew_shouldBeCalled() {
+    func testOnAlbumReload_onChangeTypeNewWithoutVisualMediaNodeAndThumbnail_shouldNotBeCalled() {
+        let changedNode = anyNode(changeType: .new, isVisualMediaAndHasThumbnail: false)
         let mockSdk = MockSdk()
-        let repo = AlbumContentsUpdateNotifierRepository(sdk: mockSdk)
-        let changedNode = MockNode(handle: 1, changeType: .new)
-        let exp = expectation(description: "OnAlbumReload should be called.")
-        
-        repo.albumReloadPublisher
-            .sink {
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        repo.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
-        
-        wait(for: [exp], timeout: 0.5)
-    }
-    
-    func testOnAlbumReload_onChangeTypeAttributes_shouldBeCalled() {
-        let mockSdk = MockSdk()
-        let repo = AlbumContentsUpdateNotifierRepository(sdk: mockSdk)
-        let changedNode = MockNode(handle: 1, changeType: .attributes)
-        let exp = expectation(description: "OnAlbumReload should be called.")
-        
-        repo.albumReloadPublisher
-            .sink {
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        repo.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
-        
-        wait(for: [exp], timeout: 0.5)
-    }
-    
-    func testOnAlbumReload_onChangeTypeParent_shouldBeCalled() {
-        let mockSdk = MockSdk()
-        let repo = AlbumContentsUpdateNotifierRepository(sdk: mockSdk)
-        let changedNode = MockNode(handle: 1, changeType: .parent)
-        let exp = expectation(description: "OnAlbumReload should be called.")
-        
-        repo.albumReloadPublisher
-            .sink {
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        repo.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
-        
-        wait(for: [exp], timeout: 0.5)
-    }
-    
-    func testOnAlbumReload_onChangeTypePublicLink_shouldBeCalled() {
-        let mockSdk = MockSdk()
-        let repo = AlbumContentsUpdateNotifierRepository(sdk: mockSdk)
-        let changedNode = MockNode(handle: 1, changeType: .publicLink)
-        let exp = expectation(description: "OnAlbumReload should be called.")
-        
-        repo.albumReloadPublisher
-            .sink {
-                exp.fulfill()
-            }.store(in: &subscriptions)
-        
-        repo.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
-        
-        wait(for: [exp], timeout: 0.5)
-    }
-    
-    func testOnAlbumReload_onChangeTypeInShare_shouldNotBeCalled() {
-        let mockSdk = MockSdk()
-        let repo = AlbumContentsUpdateNotifierRepository(sdk: mockSdk)
-        let changedNode = MockNode(handle: 1, changeType: .inShare)
+        let sut = makeSUT(sdk: mockSdk)
         let exp = expectation(description: "OnAlbumReload should not be called.")
         exp.isInverted = true
         
-        repo.albumReloadPublisher
+        sut.albumReloadPublisher
             .sink {
                 exp.fulfill()
             }.store(in: &subscriptions)
         
-        repo.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
         
         wait(for: [exp], timeout: 0.5)
     }
     
-    func testOnAlbumReload_onOneNodeInTrash_shouldBeCalled() {
-        let node = MockNode(handle: 1, changeType: .inShare)
-        let mockSdk = MockSdk(rubbishBinNode: node)
-        let repo = AlbumContentsUpdateNotifierRepository(sdk: mockSdk)
-        let exp = expectation(description: "OnAlbumReload should be called.")
+    func testOnAlbumReload_onChangeTypeAttributeWithoutVisualMediaNodeAndThumbnail_shouldNotBeCalled() {
+        let changedNode = anyNode(changeType: .attributes, isVisualMediaAndHasThumbnail: false)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should not be called.")
+        exp.isInverted = true
         
-        repo.albumReloadPublisher
+        sut.albumReloadPublisher
             .sink {
                 exp.fulfill()
             }.store(in: &subscriptions)
         
-        let changedNodes = [node, MockNode(handle: 2, changeType: .timestamp)]
-        repo.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: changedNodes))
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
         
         wait(for: [exp], timeout: 0.5)
     }
+    
+    func testOnAlbumReload_onChangeTypeParentWithoutVisualMediaNodeAndThumbnail_shouldNotBeCalled() {
+        let changedNode = anyNode(changeType: .parent, isVisualMediaAndHasThumbnail: false)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should not be called.")
+        exp.isInverted = true
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onChangeTypePublicLinkWithoutVisualMediaNodeAndThumbnail_shouldNotBeCalled() {
+        let changedNode = anyNode(changeType: .publicLink, isVisualMediaAndHasThumbnail: false)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should not be called.")
+        exp.isInverted = true
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onChangeTypeInShareWithoutVisualMediaNodeAndThumbnail_shouldNotBeCalled() {
+        let changedNode = anyNode(changeType: .inShare, isVisualMediaAndHasThumbnail: false)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should not be called.")
+        exp.isInverted = true
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onOneNodeInTrashWithoutVisualMediaNodeAndThumbnail_shouldNotBeCalled() {
+        let node = anyNode(handle: 1, changeType: .inShare, isVisualMediaAndHasThumbnail: false)
+        let mockSdk = MockSdk(rubbishBinNode: node)
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should not be called.")
+        exp.isInverted = true
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let changedNodes = [node, anyNode(handle: 2, changeType: .timestamp, isVisualMediaAndHasThumbnail: false)]
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: changedNodes))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onChangeTypeNewWithVisualMediaNodeAndThumbnail_shouldBeCalled() {
+        let changedNode = anyNode(changeType: .new, isVisualMediaAndHasThumbnail: true)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should be called.")
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onChangeTypeAttributesWithVisualMediaNodeAndThumbnail_shouldBeCalled() {
+        let changedNode = anyNode(changeType: .attributes, isVisualMediaAndHasThumbnail: true)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should be called.")
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onChangeTypeParentWithVisualMediaNodeAndThumbnail_shouldBeCalled() {
+        let changedNode = anyNode(changeType: .parent, isVisualMediaAndHasThumbnail: true)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should be called.")
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onChangeTypePublicLinkWithVisualMediaNodeAndThumbnail_shouldBeCalled() {
+        let changedNode = anyNode(changeType: .publicLink, isVisualMediaAndHasThumbnail: true)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should be called.")
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onChangeTypeInShareWithVisualMediaNodeAndThumbnail_shouldNotBeCalled() {
+        let changedNode = anyNode(changeType: .inShare, isVisualMediaAndHasThumbnail: true)
+        let mockSdk = MockSdk()
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should not be called.")
+        exp.isInverted = true
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: [changedNode]))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    func testOnAlbumReload_onOneNodeInTrashWithVisualMediaNodeAndThumbnail_shouldBeCalled() {
+        let node = anyNode(handle: 1, changeType: .inShare, isVisualMediaAndHasThumbnail: false)
+        let mockSdk = MockSdk(rubbishBinNode: node)
+        let sut = makeSUT(sdk: mockSdk)
+        let exp = expectation(description: "OnAlbumReload should be called.")
+        
+        sut.albumReloadPublisher
+            .sink {
+                exp.fulfill()
+            }.store(in: &subscriptions)
+        
+        let changedNodes = [node, anyNode(handle: 2, changeType: .timestamp, isVisualMediaAndHasThumbnail: true)]
+        sut.onNodesUpdate(mockSdk, nodeList: MockNodeList(nodes: changedNodes))
+        
+        wait(for: [exp], timeout: 0.5)
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(sdk: MockSdk, file: StaticString = #filePath, line: UInt = #line) -> AlbumContentsUpdateNotifierRepository {
+        let sut = AlbumContentsUpdateNotifierRepository(sdk: sdk)
+        trackForMemoryLeaks(on: sut, file: file, line: line)
+        return sut
+    }
+    
+    private func anyNode(handle: MEGAHandle = 1, changeType: MEGANodeChangeType, isVisualMediaAndHasThumbnail: Bool) -> MockNode {
+        isVisualMediaAndHasThumbnail
+        ? MockNode(handle: handle, name: "any-visual-media-file.mp4", changeType: changeType, hasThumbnail: true)
+        : MockNode(handle: handle, changeType: changeType)
+    }
+    
 }
