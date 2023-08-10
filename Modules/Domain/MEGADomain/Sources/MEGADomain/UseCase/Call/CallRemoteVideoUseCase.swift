@@ -1,10 +1,9 @@
 import Combine
 import Foundation
-import MEGADomain
 
-typealias ResolutionVideoChangeCompletion = (Result<Void, CallErrorEntity>) -> Void
+public typealias ResolutionVideoChangeCompletion = (Result<Void, CallErrorEntity>) -> Void
 
-protocol CallRemoteVideoUseCaseProtocol {
+public protocol CallRemoteVideoUseCaseProtocol {
     func addRemoteVideoListener(_ remoteVideoListener: some CallRemoteVideoListenerUseCaseProtocol)
     func enableRemoteVideo(for participant: CallParticipantEntity)
     func disableRemoteVideo(for participant: CallParticipantEntity)
@@ -15,11 +14,11 @@ protocol CallRemoteVideoUseCaseProtocol {
     func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
 }
 
-protocol CallRemoteVideoListenerUseCaseProtocol: AnyObject {
+public protocol CallRemoteVideoListenerUseCaseProtocol: AnyObject {
     func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data)
 }
 
-final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRemoteVideoUseCaseProtocol {
+public final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRemoteVideoUseCaseProtocol {
     enum VideoRequestType {
         case enableVideo(CallParticipantEntity)
         case disableVideo(CallParticipantEntity)
@@ -36,7 +35,7 @@ final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRe
     private let videoReqeustSerialQueue = DispatchQueue(label: "RemoteVideoOperationQueue", qos: .userInitiated)
     private var subscriptions = Set<AnyCancellable>()
 
-    init(repository: T) {
+    public init(repository: T) {
         self.repository = repository
         
         videoRequestSubject
@@ -68,41 +67,41 @@ final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRe
         }
     }
      
-    func addRemoteVideoListener(_ remoteVideoListener: some CallRemoteVideoListenerUseCaseProtocol) {
+    public func addRemoteVideoListener(_ remoteVideoListener: some CallRemoteVideoListenerUseCaseProtocol) {
         self.remoteVideoListener = remoteVideoListener
     }
     
-    func enableRemoteVideo(for participant: CallParticipantEntity) {
+    public func enableRemoteVideo(for participant: CallParticipantEntity) {
         videoRequestSubject.send(.enableVideo(participant))
     }
     
-    func disableRemoteVideo(for participant: CallParticipantEntity) {
+    public func disableRemoteVideo(for participant: CallParticipantEntity) {
         videoRequestSubject.send(.disableVideo(participant))
     }
     
-    func disableAllRemoteVideos() {
+    public func disableAllRemoteVideos() {
         repository.disableAllRemoteVideos()
     }
     
-    func requestHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
+    public func requestHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.requestHighResolutionVideo(chatId: chatId, clientId: clientId, completion: completion))
     }
 
-    func stopHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
+    public func stopHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.stopHighResolutionVideo(chatId: chatId, clientId: clientId, completion: completion))
     }
     
-    func requestLowResolutionVideos(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
+    public func requestLowResolutionVideos(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.requestLowResolutionVideos(chatId: chatId, clientId: clientId, completion: completion))
     }
     
-    func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
+    public func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.stopLowResolutionVideo(chatId: chatId, clientId: clientId, completion: completion))
     }
 }
 
 extension CallRemoteVideoUseCase: CallRemoteVideoListenerRepositoryProtocol {
-    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data) {
+    public func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data) {
         remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer)
     }
 }
