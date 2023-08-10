@@ -22,7 +22,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 @property (nonatomic, assign, getter=isEndPlaying) BOOL endPlaying;
 @property (nonatomic, strong) MEGASdk *apiForStreaming;
 @property (nonatomic, assign, getter=isViewDidAppearFirstTime) BOOL viewDidAppearFirstTime;
-@property (nonatomic, strong) NSSet *subscriptions;
+@property (nonatomic, strong) NSMutableSet *subscriptions;
 
 @end
 
@@ -71,6 +71,8 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         [self checkNetworkChanges];
     } applicationDidEnterBackground:^{
         [self applicationDidEnterBackground];
+    } movieStalled:^{
+        [self movieStalledCallback];
     }];
 }
 
@@ -137,6 +139,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
                                                     andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
     }
     
+    [self deallocPlayer];
     [self cancelPlayerProcess];
     self.player = nil;
 }
@@ -169,18 +172,20 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         return;
     }
     
-    self.player = [AVPlayer playerWithURL:self.fileUrl];
+    [self.avViewControllerDelegate willStartPlayer];
+
+    AVAsset *asset = [AVAsset assetWithURL:self.fileUrl];
+    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+    self.player = [AVPlayer playerWithPlayerItem:playerItem];
+    [self.subscriptions addObject:[self bindPlayerItemStatusWithPlayerItem:playerItem]];
     
-    if (mediaDestination) {
-        CMTime time = CMTimeMake(mediaDestination.destination.longLongValue, mediaDestination.timescale.intValue);
-        if (CMTIME_IS_VALID(time)) {
-            [self.player seekToTime:time];
-        }
-    }
+    [self seekToMediaDestination:mediaDestination];
     
     if (play) {
         [self.player play];
     }
+    
+    [self.subscriptions addObject:[self bindPlayerTimeControlStatus]];
 }
 
 - (void)replayVideo {
