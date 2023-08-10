@@ -3,6 +3,16 @@
 #import "UIImageView+MNZCategory.h"
 #import "UIImage+GKContact.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_NOTIFICATION_EXTENSION
+#import "MEGANotifications-Swift.h"
+#elif MNZ_WIDGET_EXTENSION
+#import "MEGAWidgetExtension-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @interface ItemListViewController () <UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -97,16 +107,8 @@
     ItemCollectionViewCell *itemCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"ItemCollectionViewCellID" forIndexPath:indexPath];
     ItemListModel *item = [self.items objectAtIndex:indexPath.row];
 
-    itemCell.nameLabel.text = item.name;
-    
-    if (item.isGroup) {
-        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.handle];
-        [itemCell.avatarView setupFor:chatRoom];
-    } else {
-        [itemCell.avatarView.avatarImageView mnz_setImageForUserHandle:item.handle name:item.name];
-        [itemCell.avatarView configureWithMode:MegaAvatarViewModeSingle];
-    }
-    
+    [self setupCell:itemCell with:item];
+
     return itemCell;
 }
 

@@ -5689,6 +5689,10 @@ public enum Strings {
         }
       }
     }
+    public enum ShareFolder {
+      /// Some of the contacts you're sharing information with haven't been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.
+      public static let contactsNotVerified = Strings.tr("Localizable", "shareFolder.contactsNotVerified")
+    }
     public enum SharedItems {
       public enum ContactVerification {
         public enum Section {

@@ -161,6 +161,8 @@ internal enum Colors {
       internal static let _9D8319 = ColorAsset(name: "9D8319")
       internal static let f8D552 = ColorAsset(name: "F8D552")
       internal static let fed429 = ColorAsset(name: "FED429")
+      internal static let fed42926 = ColorAsset(name: "FED429_26")
+      internal static let ffd60A = ColorAsset(name: "FFD60A")
     }
   }
   internal enum MediaConsumption {

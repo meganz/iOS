@@ -32,6 +32,8 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareFolderWithBarButtonItem;
 
+@property (weak, nonatomic) IBOutlet UIView *contactsNotVerifiedView;
+
 @property (nonatomic) ContactsMode contactsMode;
 @property (nonatomic) ChatOptionType chatOptionType;
 

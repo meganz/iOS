@@ -296,6 +296,7 @@
             [self.navigationController setToolbarHidden:NO];
             
             [self editTapped:self.editBarButtonItem];
+            [self setupContactsNotVerifiedHeader];
             break;
         }
             
@@ -307,6 +308,7 @@
             self.deleteBarButtonItem.title = NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
             [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
+            [self setupContactsNotVerifiedHeader];
             break;
         }
             
@@ -480,6 +482,7 @@
     }
     
     [self.tableView reloadData];
+    [self handleContactsNotVerifiedHeaderVisibility];
     
     if (self.contactsMode == ContactsModeDefault) {
         [self setupContactsTableViewHeader];
@@ -1099,6 +1102,7 @@
             user = [self.visibleUsersArray objectAtIndex:i];
             [self.selectedUsersArray addObject:user];
         }
+        [self handleContactsNotVerifiedHeaderVisibility];
     } else {
         [self.selectedUsersArray removeAllObjects];
     }
@@ -1663,6 +1667,7 @@
                     }
                     if (tableView.isEditing) {
                         [self.selectedUsersArray addObject:user];
+                        [self handleContactsNotVerifiedHeaderVisibility];
                         self.deleteBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
                         return;
                     }
@@ -1739,6 +1744,7 @@
                     return;
                 }
                 [self.selectedUsersArray addObject:user];
+                [self handleContactsNotVerifiedHeaderVisibility];
                 if (self.contactsMode != ContactsModeScheduleMeeting) {
                     self.addParticipantBarButtonItem.enabled = (self.selectedUsersArray.count > 0);
                 }
@@ -1815,7 +1821,9 @@
                 self.searchController.searchBar.text = @"";
             }
         }
-        
+
+        [self handleContactsNotVerifiedHeaderVisibility];
+
         return;
     }
 }
