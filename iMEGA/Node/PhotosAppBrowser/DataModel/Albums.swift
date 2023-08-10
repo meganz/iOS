@@ -9,6 +9,37 @@ protocol AlbumsDelegate: AnyObject {
     func albumsReplaced()
 }
 
+// this protocol contains all points where we are interacting
+// with photos framework so that we can easily test all interactions
+protocol PhotoLibraryProviding {
+    func register(_ observer: any PHPhotoLibraryChangeObserver)
+    func unregisterChangeObserver(_ observer: any PHPhotoLibraryChangeObserver)
+    func fetchAssets(
+        in assetCollection: PHAssetCollection,
+        options: PHFetchOptions?
+    ) -> PHFetchResult<PHAsset>
+    
+    func enumerateCollection(collection: PHFetchResult<PHAssetCollection>, block: @escaping (PHAssetCollection) -> Void)
+}
+
+extension PHPhotoLibrary: PhotoLibraryProviding {
+    func enumerateCollection(
+        collection: PHFetchResult<PHAssetCollection>,
+        block: @escaping (PHAssetCollection) -> Void) {
+        collection.enumerateObjects { _collection, _, _ in
+            block(_collection)
+        }
+    }
+    
+    func fetchAssets(
+        in assetCollection: PHAssetCollection,
+        options: PHFetchOptions?
+    ) -> PHFetchResult<PHAsset> {
+        PHAsset.fetchAssets(in: assetCollection, options: options)
+    }
+    
+}
+
 final class Albums: NSObject {
     private var albums: [Album] = []
     private var emptyAlbums: [Album] = []
@@ -35,25 +66,44 @@ final class Albums: NSObject {
 
     // MARK: - Initializer.
     
-    override init() {
+    let permissionHandler: any DevicePermissionsHandling
+    let photoLibrary: any PhotoLibraryProviding
+    
+    init(
+        permissionHandler: some DevicePermissionsHandling,
+        photoLibraryRegisterer: some PhotoLibraryProviding
+    ) {
+        self.permissionHandler = permissionHandler
+        self.photoLibrary = photoLibraryRegisterer
         super.init()
         loadAlbums()
     }
     
+    @available(*, unavailable)
+    override init() {
+        fatalError("Do not use this initializer")
+    }
+    
     deinit {
         if !albums.isEmpty {
-            PHPhotoLibrary.shared().unregisterChangeObserver(self)
+            photoLibrary.unregisterChangeObserver(self)
         }
     }
     
     // MARK: - Interface methods.
 
-    func loadAlbums() {
-        let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
+    private func loadAlbums() {
+        
         let status = permissionHandler.photoLibraryAuthorizationStatus
-        if status == .authorized {
+        // This class was initially written in iOS > 14 when status
+        // .limited was not added yet. The PHPhotoLibrary API used initially got deprecated
+        // but until we used it, it was still not returning .limited value even though,
+        // this was what user has selected It was returning .authorized value.
+        // When later on, we started using non-deprecated API to get authorization status, code below was
+        // broken, as it was not trying to load albums when .limited access was provided by the user
+        if status == .authorized || status == .limited {
             populateAlbums()
-            PHPhotoLibrary.shared().register(self)
+            photoLibrary.register(self)
         }
     }
 
@@ -76,11 +126,21 @@ extension Albums {
     }
     
     private func populate(fromCollection collection: PHFetchResult<PHAssetCollection>) {
-        collection.enumerateObjects { (collection, _, _) in
-            let fetchResult = PHAsset.fetchAssets(in: collection, options: self.fetchOptions)
+        // the enumerateObjects on collection does not run on CI probably due to not provided authorization
+        // extracted this to the protocol interface for photy library so that we can easily run on any machine
+        
+        photoLibrary.enumerateCollection(collection: collection) { assetCollection in
+            let fetchResult = self.photoLibrary.fetchAssets(
+                in: assetCollection,
+                options: self.fetchOptions
+            )
             
-            if let title = collection.localizedTitle {
-                let album = Album(title: title, subType: collection.assetCollectionSubtype, fetchResult: fetchResult) { [weak self] album in
+            if let title = assetCollection.localizedTitle {
+                let album = Album(
+                    title: title,
+                    subType: assetCollection.assetCollectionSubtype,
+                    fetchResult: fetchResult
+                ) { [weak self] album in
                     self?.updated(album: album)
                 }
                 
