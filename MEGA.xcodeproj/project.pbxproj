@@ -1541,6 +1541,8 @@
 		B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */; };
 		B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */; };
 		B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */; };
+		B58050BE2A8237C600D377D1 /* ProfileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */; };
+		B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58050C02A823A6100D377D1 /* MockABTestProvider.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B58E375129E808A000188287 /* ContactsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD202498E7E1005DF37C /* ContactsPickerViewController.swift */; };
@@ -4103,6 +4105,8 @@
 		B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerListSource.swift; sourceTree = "<group>"; };
 		B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Additions.swift"; sourceTree = "<group>"; };
+		B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRouter.swift; sourceTree = "<group>"; };
+		B58050C02A823A6100D377D1 /* MockABTestProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockABTestProvider.swift; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+SecureFlag.swift"; sourceTree = "<group>"; };
@@ -5704,6 +5708,7 @@
 			children = (
 				259FA4072A3A9CA600C038B2 /* DataSource */,
 				2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */,
+				B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -7337,6 +7342,7 @@
 				32A9DECC28D198E300ABC3F6 /* ViewModel */,
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
 				5D33D671250DBA0B00D74666 /* CGSize.swift */,
+				B58050C02A823A6100D377D1 /* MockABTestProvider.swift */,
 				B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
 				5D33D673250DBA3900D74666 /* StoreUser.swift */,
@@ -14080,6 +14086,7 @@
 				2562E8C72A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift in Sources */,
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
 				2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */,
+				B58050BE2A8237C600D377D1 /* ProfileViewRouter.swift in Sources */,
 				2F6F088F253E387600C5B5D7 /* ProgressIndicatorView.swift in Sources */,
 				BFCA9A1C25ABA33900D1F4E0 /* PSAView.swift in Sources */,
 				BF46B82725AB991F008641BB /* PSAViewModel.swift in Sources */,
@@ -14910,6 +14917,7 @@
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
+				B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
 				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
