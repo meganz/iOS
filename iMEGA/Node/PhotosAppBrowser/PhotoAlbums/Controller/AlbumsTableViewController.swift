@@ -1,3 +1,4 @@
+import MEGAPermissions
 import MEGAUIKit
 import Photos
 import UIKit
@@ -5,7 +6,7 @@ import UIKit
 final class AlbumsTableViewController: UITableViewController {
     private var albumsDataSource: AlbumsTableViewDataSource?
     private var albumsDelegate: AlbumsTableViewDelegate?
-    private lazy var albums = Albums()
+    private let albums: Albums
     private let selectionActionType: AlbumsSelectionActionType
     private let selectionActionDisabledText: String
     private let completionBlock: AlbumsTableViewController.CompletionBlock
@@ -15,12 +16,18 @@ final class AlbumsTableViewController: UITableViewController {
     
     // MARK: - Initializers.
     
-    @objc init(selectionActionType: AlbumsSelectionActionType,
-               selectionActionDisabledText: String,
-               completionBlock: @escaping ([PHAsset]) -> Void) {
+    @objc init(
+        selectionActionType: AlbumsSelectionActionType,
+        selectionActionDisabledText: String,
+        completionBlock: @escaping ([PHAsset]) -> Void
+    ) {
         self.selectionActionType = selectionActionType
         self.selectionActionDisabledText = selectionActionDisabledText
         self.completionBlock = completionBlock
+        self.albums = .init(
+            permissionHandler: DevicePermissionsHandler.makeHandler(),
+            photoLibraryRegisterer: PHPhotoLibrary.shared()
+        )
         super.init(nibName: nil, bundle: nil)
     }
     
