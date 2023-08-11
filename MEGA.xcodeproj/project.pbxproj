@@ -1265,6 +1265,8 @@
 		94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94A220172A696502004130C4 /* MEGAAnalyticsiOS */; };
 		94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */; };
 		94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */; };
+		94B6E8852A83F6410082D9B1 /* MEGAPickerFileProviderDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */; };
+		94B6E8882A83F8530082D9B1 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */; };
 		94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
 		94C7A3812A796E0C0090AEFC /* ItemListViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */; };
@@ -3766,6 +3768,8 @@
 		94485B5A29B9FA74006B919E /* SharedItemsUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsUseCaseOCWrapper.swift; sourceTree = "<group>"; };
 		94485B5D29BA0E17006B919E /* SharedItemsViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Search.swift"; sourceTree = "<group>"; };
 		9448661329AF55C300CE3228 /* LoginViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginViewController+Additions.swift"; sourceTree = "<group>"; };
+		944917CC2A83C044006234D9 /* MEGAPickerFileProviderDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPickerFileProviderDomain; sourceTree = "<group>"; };
+		944917CF2A83C159006234D9 /* MEGAPickerFileProviderRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPickerFileProviderRepo; sourceTree = "<group>"; };
 		9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValidationRepositoryTests.swift; sourceTree = "<group>"; };
 		944AD0B028EF039700AB1E59 /* BackupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsRepository.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
@@ -5153,6 +5157,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */,
+				94B6E8852A83F6410082D9B1 /* MEGAPickerFileProviderDomain in Frameworks */,
+				94B6E8882A83F8530082D9B1 /* MEGAPickerFileProviderRepo in Frameworks */,
 				BFFC467A2A6F64A900A5DAA8 /* MEGAPresentation in Frameworks */,
 				A891E8AB29C1E0C40020072A /* MEGASdk in Frameworks */,
 				A8DF556A2A5F0F8100CA33E5 /* MEGASDKRepo in Frameworks */,
@@ -11004,6 +11010,7 @@
 			children = (
 				16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */,
 				B6061FE82897909C0094087E /* MEGADomain */,
+				944917CC2A83C044006234D9 /* MEGAPickerFileProviderDomain */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -11012,6 +11019,7 @@
 			isa = PBXGroup;
 			children = (
 				A8868B1C2A71794700F4BE98 /* ChatRepo */,
+				944917CF2A83C159006234D9 /* MEGAPickerFileProviderRepo */,
 				A80550302A7BCA3900BC3725 /* MEGARepo */,
 				A8C8E6B82A5F0E4100A00A57 /* MEGASDKRepo */,
 			);
@@ -12250,6 +12258,8 @@
 				A8399FB8296DD5A70062B6BC /* SAMKeychain */,
 				A8DF55692A5F0F8100CA33E5 /* MEGASDKRepo */,
 				BFFC46792A6F64A900A5DAA8 /* MEGAPresentation */,
+				94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */,
+				94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */,
 			);
 			productName = MEGAPickerFileProvider;
 			productReference = A8399F42296C40060062B6BC /* MEGAPickerFileProvider.appex */;
@@ -16962,6 +16972,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */;
 			productName = MEGAAnalyticsiOS;
+		};
+		94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPickerFileProviderDomain;
+		};
+		94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPickerFileProviderRepo;
 		};
 		A803C8FA2955DB550056C9F0 /* MEGADomain */ = {
 			isa = XCSwiftPackageProductDependency;
