@@ -10,7 +10,8 @@ let package = Package(
     products: [
         .library(
             name: "MEGARepo",
-            targets: ["MEGARepo"])
+            targets: ["MEGARepo"]
+        )
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain")
@@ -19,6 +20,7 @@ let package = Package(
     targets: [
         .target(
             name: "MEGARepo",
-            dependencies: ["MEGADomain"])
+            dependencies: ["MEGADomain"]
+        )
     ]
 )
