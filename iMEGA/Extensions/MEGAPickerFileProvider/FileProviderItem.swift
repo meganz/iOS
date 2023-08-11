@@ -9,12 +9,12 @@ import UniformTypeIdentifiers
 final class FileProviderItem: NSObject, NSFileProviderItem {
     private let node: NodeEntity
     private let nodeAttributeUseCase: any NodeAttributeUseCaseProtocol
-    private let favoritesRankUseCase: any FilesAppFavoriteRankUseCaseProtocol
+    private let fileProviderItemMetadataUseCase: any FileProviderItemMetadataUseCaseProtocol
     
     init(node: NodeEntity) {
         self.node = node
         self.nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
-        self.favoritesRankUseCase = FilesAppFavoriteRankUseCase(repository: FilesAppFavoriteRankRepository.newRepo)
+        self.fileProviderItemMetadataUseCase = FileProviderItemMetadataUseCase(repository: FileProviderItemMetadataRepository.newRepo)
     }
     
     var itemIdentifier: NSFileProviderItemIdentifier {
@@ -105,11 +105,21 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
 
     var favoriteRank: NSNumber? {
         get {
-            favoritesRankUseCase.favoriteRank(for: itemIdentifier)
+            fileProviderItemMetadataUseCase.favoriteRank(for: itemIdentifier)
         }
 
         set {
-            favoritesRankUseCase.setFavoriteRank(for: itemIdentifier, with: newValue)
+            fileProviderItemMetadataUseCase.setFavoriteRank(for: itemIdentifier, with: newValue)
+        }
+    }
+
+    var tagData: Data? {
+        get {
+            fileProviderItemMetadataUseCase.tagData(for: itemIdentifier)
+        }
+
+        set {
+            fileProviderItemMetadataUseCase.setTagData(for: itemIdentifier, with: newValue)
         }
     }
 
