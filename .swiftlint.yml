@@ -13,10 +13,30 @@ custom_rules:
         name: "Discouraged use of getting last path component with URL.init"
         message: "Using URL(fileURLWithPath:) to get a string lastPathComponent might cause the app to crash. Use MEGASwift.String.lastPathComponent instead."
     
-    disallow_megasdkmanager:
+    disallow_MEGASdkManager:
         regex: 'MEGASdkManager'
         name: "Disallow MEGASdkManager"
         message: "'MEGASdkManager' is deprecated, use an instance of 'MEGASdk+SharedInstance' or 'MEGASdk+SharedInstanceWrapper' instead"
+        
+    disallow_MEGAGenericRequestDelegate:
+        regex: 'MEGAGenericRequestDelegate'
+        name: "Disallow MEGAGenericRequestDelegate"
+        message: "'MEGAGenericRequestDelegate' is deprecated, use 'RequestDelegate' instead"
+        
+    disallow_MEGAResultRequestDelegate:
+        regex: 'MEGAResultRequestDelegate'
+        name: "Disallow MEGAResultRequestDelegate"
+        message: "'MEGAResultRequestDelegate' is deprecated, use 'RequestDelegate' instead"
+        
+    disallow_MEGAChatGenericRequestDelegate:
+        regex: 'MEGAChatGenericRequestDelegate'
+        name: "Disallow MEGAChatGenericRequestDelegate"
+        message: "'MEGAChatGenericRequestDelegate' is deprecated, use 'ChatRequestDelegate' instead"
+        
+    disallow_MEGAChatResultRequestDelegate:
+        regex: 'MEGAChatResultRequestDelegate'
+        name: "Disallow MEGAChatResultRequestDelegate"
+        message: "'MEGAChatResultRequestDelegate' is deprecated, use 'ChatRequestDelegate' instead"
 
 # Currently we use `only_rules` so that we can validate each and every default rule.
 # Once everything has been set, we can start using the `disabled_rules` and `opt_in_rules`.
