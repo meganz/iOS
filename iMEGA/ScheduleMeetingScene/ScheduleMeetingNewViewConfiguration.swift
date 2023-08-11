@@ -10,7 +10,7 @@ final class ScheduleMeetingNewViewConfiguration: ScheduleMeetingViewConfigurable
     var meetingDescription: String { "" }
     var calendarInviteEnabled: Bool { false }
     var waitingRoomEnabled: Bool { false }
-    var allowNonHostsToAddParticipantsEnabled: Bool { true }
+    var allowNonHostsToAddParticipantsEnabled: Bool { false }
     var participantHandleList: [HandleEntity] { [] }
     var rules: ScheduledMeetingRulesEntity { .init(frequency: .invalid) }
     var meetingLinkEnabled: Bool = false
