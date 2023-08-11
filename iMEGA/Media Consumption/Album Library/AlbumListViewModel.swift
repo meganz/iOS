@@ -40,6 +40,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     private(set) var alertViewModel: TextFieldAlertViewModel
     private var subscriptions = Set<AnyCancellable>()
+    private(set) var viewIsVisiblePublisher = PassthroughSubject<Bool, Never>()
     
     private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
@@ -289,15 +290,40 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         self.album = album
     }
     
+    func onViewAppeared() {
+        viewIsVisiblePublisher.send(true)
+    }
+    
+    func onViewDissappeared() {
+        viewIsVisiblePublisher.send(false)
+    }
+    
     // MARK: - Private
     
     private func setupSubscription() {
-        usecase.albumsUpdatedPublisher
-            .debounce(for: .seconds(0.35), scheduler: DispatchQueue.global())
+        viewIsVisiblePublisher
+            .map { [weak self] isVisible -> AnyPublisher<Void, Never> in
+                guard let self else {
+                    return Empty().eraseToAnyPublisher()
+                }
+                guard isVisible else {
+                    cancelLoading()
+                    return Empty().eraseToAnyPublisher()
+                }
+                
+                return self.usecase
+                    .albumsUpdatedPublisher
+                    .prepend(())
+                    .debounceImmediate(for: .seconds(0.35), scheduler: DispatchQueue.global())
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+            .switchToLatest()
             .sink { [weak self] in
                 self?.loadAlbums()
-            }.store(in: &subscriptions)
-        
+            }
+            .store(in: &subscriptions)
+          
         photoAlbumContainerViewModel?.$showDeleteAlbumAlert
             .dropFirst()
             .sink { [weak self] _ in

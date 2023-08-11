@@ -330,6 +330,9 @@ final class AlbumListViewModelTests: XCTestCase {
         let albumsUpdatedPublisher = PassthroughSubject<Void, Never>()
         let sut = albumListViewModel(usecase: MockAlbumListUseCase(albums: albums,
                                                                    albumsUpdatedPublisher: albumsUpdatedPublisher.eraseToAnyPublisher()))
+        
+        sut.onViewAppeared()
+        
         XCTAssertTrue(sut.albums.isEmpty)
         
         let exp = expectation(description: "should retrieve albums")
@@ -527,6 +530,71 @@ final class AlbumListViewModelTests: XCTestCase {
         sut.setEditModeToInactive()
         XCTAssertEqual(photoAlbumContainerViewModel.editMode, .inactive)
     }
+
+    func testOnViewAppeared_whenCalled_startAlbumsUpdatedSubscription() {
+        let sut = albumListViewModel()
+        var isViewVisible = false
+        let exp = expectation(description: "Wait for subscription")
+        sut.viewIsVisiblePublisher
+            .sink { isVisible in
+                isViewVisible = isVisible
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.onViewAppeared()
+        wait(for: [exp], timeout: 0.1)
+        
+        XCTAssertTrue(isViewVisible, "Expect view is visible.")
+        XCTAssertNotNil(sut.albumLoadingTask, "Expect to initialize albumLoadingTask, but not initialized instead.")
+    }
+    
+    func testOnViewDissappeared_whenCalled_releasesAlbumsUpdatedSubscription() {
+        let sut = albumListViewModel()
+        var isViewVisible = false
+        let exp = expectation(description: "Wait for subscription")
+        sut.viewIsVisiblePublisher
+            .sink { isVisible in
+                isViewVisible = isVisible
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.onViewDissappeared()
+        wait(for: [exp], timeout: 0.1)
+
+        XCTAssertFalse(isViewVisible, "Expect view is not visible.")
+        XCTAssertNil(sut.albumLoadingTask, "Expect to deallocate albumLoadingTask, but initialized instead.")
+    }
+    
+    func testOnViewAppearedDissappeared_whenCalled_subscribeAndCancelLoadAlbumTasks() async throws {
+        let sut = albumListViewModel()
+        var isViewVisible = false
+        let exp = expectation(description: "Wait for subscription emitted value")
+        exp.expectedFulfillmentCount = 2
+        sut.viewIsVisiblePublisher
+            .sink { isVisible in
+                isViewVisible = isVisible
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        sut.onViewAppeared()
+        await sut.albumLoadingTask?.value
+        
+        XCTAssertTrue(isViewVisible, "Expect view is visible.")
+        XCTAssertNotNil(sut.albumLoadingTask, "Expect to initialize albumLoadingTask, but not initialized instead.")
+        
+        sut.onViewDissappeared()
+        await sut.albumLoadingTask?.value
+        await fulfillment(of: [exp], timeout: 0.1)
+        
+        XCTAssertFalse(isViewVisible, "Expect view is not visible.")
+        let albumLoadingTask = try XCTUnwrap(sut.albumLoadingTask)
+        XCTAssertTrue(albumLoadingTask.isCancelled, "Expect to cancel albumLoadingTask, but not cancelled instead.")
+    }
+    
+    // MARK: - Helpers
     
     private func alertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
