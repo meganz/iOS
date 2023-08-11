@@ -11,6 +11,8 @@ extension ItemListViewController {
         with item: ItemListModel
     ) {
         cell.nameLabel.text = item.name
+        cell.avatarView.avatarImageView.layer.cornerRadius = cell.avatarView.avatarImageView.frame.size.width / 2
+        cell.avatarView.avatarImageView.layer.masksToBounds = true
 
         if item.isGroup {
             guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: item.handle) else { return }

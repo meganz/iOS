@@ -2147,6 +2147,7 @@
             self.addParticipantBarButtonItem.enabled = NO;
         }
     }
+    [self handleContactsNotVerifiedHeaderVisibility];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
