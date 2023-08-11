@@ -43,7 +43,7 @@
                             <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z54-Be-FUS">
                                 <rect key="frame" x="0.0" y="729" width="375" height="49"/>
                                 <items>
-                                    <barButtonItem image="thumbnailsThin" style="plain" id="xTs-Xs-c6Q">
+                                    <barButtonItem title="Item" image="thumbnailsThin" style="plain" id="xTs-Xs-c6Q">
                                         <connections>
                                             <action selector="didPressLeftToolbarButton:" destination="yD8-RT-K0O" id="ZOX-jv-VVR"/>
                                         </connections>
