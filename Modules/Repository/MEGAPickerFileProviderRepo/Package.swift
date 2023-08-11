@@ -14,12 +14,15 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../Domain/MEGAPickerFileProviderDomain")
+        .package(path: "../../Domain/MEGAPickerFileProviderDomain"),
+        .package(path: "../../MEGASDKRepo"),
+        .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "9.0.0")
     ],
     targets: [
         .target(
             name: "MEGAPickerFileProviderRepo",
-            dependencies: ["MEGAPickerFileProviderDomain"]
+            dependencies: ["MEGAPickerFileProviderDomain", "MEGASDKRepo"]
         ),
         .testTarget(
             name: "MEGAPickerFileProviderRepoTests",
