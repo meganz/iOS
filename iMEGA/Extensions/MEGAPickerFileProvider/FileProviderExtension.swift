@@ -236,6 +236,18 @@ final class FileProviderExtension: NSFileProviderExtension {
         return fileProviderItem
     }
 
+    override func setTagData(_ tagData: Data?, forItemIdentifier itemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
+        guard let node = node(for: itemIdentifier) else {
+            throw NSFileProviderError(.noSuchItem)
+        }
+
+        let fileProviderItem = FileProviderItem(node: node)
+
+        fileProviderItem.tagData = tagData
+
+        return fileProviderItem
+    }
+
     // MARK: - Accessing thumbnails
     
     override func fetchThumbnails(for itemIdentifiers: [NSFileProviderItemIdentifier],
