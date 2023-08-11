@@ -86,9 +86,9 @@ final class FileProviderExtension: NSFileProviderExtension {
         }
         
         let fileProviderItem = try item(for: identifier)
-        let placecholderDirectoryUrl = url.deletingLastPathComponent()
-        if !FileManager.default.fileExists(atPath: placecholderDirectoryUrl.path) {
-            try FileManager.default.createDirectory(at: placecholderDirectoryUrl, withIntermediateDirectories: true, attributes: nil)
+        let placeholderDirectoryUrl = url.deletingLastPathComponent()
+        if !FileManager.default.fileExists(atPath: placeholderDirectoryUrl.path) {
+            try FileManager.default.createDirectory(at: placeholderDirectoryUrl, withIntermediateDirectories: true, attributes: nil)
         }
         let placeholderURL = NSFileProviderManager.placeholderURL(for: url)
         try NSFileProviderManager.writePlaceholder(at: placeholderURL, withMetadata: fileProviderItem)
@@ -224,7 +224,19 @@ final class FileProviderExtension: NSFileProviderExtension {
         return FileProviderItem(node: node.toNodeEntity())
     }
     
-    // MARK: - Accesing thumbnails
+    override func setFavoriteRank(_ favoriteRank: NSNumber?, forItemIdentifier itemIdentifier: NSFileProviderItemIdentifier) async throws -> NSFileProviderItem {
+        guard let node = node(for: itemIdentifier) else {
+            throw NSFileProviderError(.noSuchItem)
+        }
+
+        let fileProviderItem = FileProviderItem(node: node)
+
+        fileProviderItem.favoriteRank = favoriteRank
+
+        return fileProviderItem
+    }
+
+    // MARK: - Accessing thumbnails
     
     override func fetchThumbnails(for itemIdentifiers: [NSFileProviderItemIdentifier],
                                   requestedSize size: CGSize,
