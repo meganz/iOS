@@ -51,10 +51,10 @@ struct AlbumListView: View {
         })
         .padding([.top, .bottom], 10)
         .onAppear {
-            viewModel.loadAlbums()
+            viewModel.onViewAppeared()
         }
         .onDisappear {
-            viewModel.cancelLoading()
+            viewModel.onViewDissappeared()
         }
         .progressViewStyle(.circular)
         .environment(\.editMode, $editMode)
