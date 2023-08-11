@@ -220,6 +220,14 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.calendarInviteEnabled)
     }
     
+    func testAllowNonHostsToAddParticipantsEnabled_whenCreatingNewScheduledMeeting_shouldBeFalseByDefault() {
+        let viewConfiguration = ScheduleMeetingNewViewConfiguration(chatRoomUseCase: MockChatRoomUseCase(),
+                                                                    chatLinkUseCase: MockChatLinkUseCase(),
+                                                                    scheduledMeetingUseCase: MockScheduledMeetingUseCase())
+        let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+        XCTAssertFalse(viewModel.allowNonHostsToAddParticipantsEnabled)
+    }
+    
     func testAllowNonHostsToAddParticipantsEnabled_givenSettingIsEnabled_shouldBeTrue() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(allowNonHostsToAddParticipantsEnabled: true)
         let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
@@ -230,6 +238,14 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(allowNonHostsToAddParticipantsEnabled: false)
         let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
         XCTAssertFalse(viewModel.allowNonHostsToAddParticipantsEnabled)
+    }
+    
+    func testtWaitingRoomEnabled_whenCreatingNewScheduledMeeting_shouldBeFalseByDefault() {
+        let viewConfiguration = ScheduleMeetingNewViewConfiguration(chatRoomUseCase: MockChatRoomUseCase(),
+                                                                    chatLinkUseCase: MockChatLinkUseCase(),
+                                                                    scheduledMeetingUseCase: MockScheduledMeetingUseCase())
+        let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+        XCTAssertFalse(viewModel.waitingRoomEnabled)
     }
     
     func testWaitingRoomEnabled_givenSettingIsEnabled_shouldBeTrue() {
