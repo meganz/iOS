@@ -1,15 +1,20 @@
 import FileProvider
 import MEGADomain
+import MEGAPickerFileProviderDomain
+import MEGAPickerFileProviderRepo
+import MEGARepo
 import MEGASwift
 import UniformTypeIdentifiers
 
 final class FileProviderItem: NSObject, NSFileProviderItem {
     private let node: NodeEntity
     private let nodeAttributeUseCase: any NodeAttributeUseCaseProtocol
+    private let favoritesRankUseCase: any FilesAppFavoriteRankUseCaseProtocol
     
     init(node: NodeEntity) {
         self.node = node
         self.nodeAttributeUseCase = NodeAttributeUseCase(repo: NodeAttributeRepository.newRepo)
+        self.favoritesRankUseCase = FilesAppFavoriteRankUseCase(repository: FilesAppFavoriteRankRepository.newRepo)
     }
     
     var itemIdentifier: NSFileProviderItemIdentifier {
@@ -97,7 +102,17 @@ final class FileProviderItem: NSObject, NSFileProviderItem {
         return false
 
     }
-    
+
+    var favoriteRank: NSNumber? {
+        get {
+            favoritesRankUseCase.favoriteRank(for: itemIdentifier)
+        }
+
+        set {
+            favoritesRankUseCase.setFavoriteRank(for: itemIdentifier, with: newValue)
+        }
+    }
+
     // MARK: - Private
         
     private func isFileInCloud() -> Bool {
