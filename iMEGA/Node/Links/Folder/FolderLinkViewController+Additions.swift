@@ -32,8 +32,8 @@ extension FolderLinkViewController {
 
             UIApplication.mnz_presentingViewController().present(navigationController, animated: true)
         } else {
-            if selectedNodesArray?.count != 0, let selectedNodesArray = selectedNodesArray {
-                MEGALinkManager.nodesFromLinkMutableArray.add(selectedNodesArray)
+            if let nodes = selectedNodesArray as? [MEGANode], nodes.isNotEmpty {
+                MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes)
             } else if let parentNode = parentNode {
                 MEGALinkManager.nodesFromLinkMutableArray.add(parentNode)
             }
@@ -108,8 +108,8 @@ extension FolderLinkViewController {
     func saveToPhotos(nodes: [NodeEntity]) {
         let saveMediaUseCase = SaveMediaToPhotosUseCase(
             downloadFileRepository: DownloadFileRepository(
-                sdk: MEGASdkManager.sharedMEGASdk(),
-                sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder()
+                sdk: MEGASdk.shared,
+                sharedFolderSdk: MEGASdk.sharedFolderLinkSdk
             ),
             fileCacheRepository: FileCacheRepository.newRepo,
             nodeRepository: NodeRepository.newRepo
