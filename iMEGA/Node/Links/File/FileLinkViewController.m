@@ -312,7 +312,7 @@
 - (void)open {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
-        [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:link messageId:nil chatId:nil];
+        [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:link messageId:nil chatId:nil allNodes: nil];
     }
 }
 

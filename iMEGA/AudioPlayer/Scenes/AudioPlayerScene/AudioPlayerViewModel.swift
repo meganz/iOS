@@ -215,8 +215,13 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     
     private func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) -> [AudioPlayerItem] {
-        guard tracks.contains(startItem) else { return tracks }
-        return tracks.shifted(tracks.firstIndex(of: startItem) ?? 0)
+        if let allNodes = configEntity.allNodes, allNodes.isNotEmpty {
+            let strategy = AudioPlayerAllAudioAsPlaylistShiftStrategy()
+            return strategy.shift(tracks: tracks, startItem: startItem)
+        } else {
+            let strategy = AudioPlayerDefaultPlaylistShiftStrategy()
+            return strategy.shift(tracks: tracks, startItem: startItem)
+        }
     }
     
     private func updateTracksActionStatus(enabled: Bool) {
@@ -236,21 +241,49 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             initialize(tracks: [track], currentTrack: track)
         } else {
-            guard let children = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
-                                                nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
-                  let currentTrack = children.first(where: { $0.node?.handle == node.handle }) else {
-                
-                guard let track = streamingInfoUseCase?.info(from: node) else {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.router.dismiss()
+            if let allNodes = configEntity.allNodes, allNodes.isNotEmpty {
+                initializeTracksForAllAudioFilesAsPlaylist(from: node, allNodes)
+            } else {
+                guard let (currentTrack, children) = getTracks(from: node) else {
+                    guard let track = streamingInfoUseCase?.info(from: node) else {
+                        DispatchQueue.main.async { [weak self] in self?.router.dismiss() }
+                        return
                     }
+                    initialize(tracks: [track], currentTrack: track)
                     return
                 }
-                initialize(tracks: [track], currentTrack: track)
+                initialize(tracks: children, currentTrack: currentTrack)
+            }
+        }
+    }
+    
+    private func initializeTracksForAllAudioFilesAsPlaylist(from node: MEGANode, _ allNodes: [MEGANode]) {
+        guard let (currentTrack, _) = getTracks(from: node) else {
+            guard let track = streamingInfoUseCase?.info(from: node) else {
+                DispatchQueue.main.async { [weak self] in self?.router.dismiss() }
                 return
             }
-            initialize(tracks: children, currentTrack: currentTrack)
+            initialize(tracks: [track], currentTrack: track)
+            return
         }
+        
+        let allTracks = allNodes
+            .compactMap { streamingInfoUseCase?.info(from: $0) }
+        
+        initialize(tracks: allTracks, currentTrack: currentTrack)
+    }
+    
+    private func getTracks(from node: MEGANode) -> (currentTrack: AudioPlayerItem, childrenTracks: [AudioPlayerItem])? {
+        guard
+            let children = configEntity.isFolderLink
+                ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle)
+                : nodeInfoUseCase?.childrenInfo(fromParentHandle: node.parentHandle),
+            let currentTrack = children.first(where: { $0.node?.handle == node.handle })
+        else {
+            return nil
+        }
+        
+        return (currentTrack, children)
     }
     
     // MARK: - Offline Files Initialize
