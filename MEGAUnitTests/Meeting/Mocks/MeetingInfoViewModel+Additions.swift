@@ -14,7 +14,6 @@ extension MeetingInfoViewModel {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         chatLinkUseCase: some ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         isTesting: Bool = true
     ) {
@@ -27,8 +26,7 @@ extension MeetingInfoViewModel {
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             chatLinkUseCase: chatLinkUseCase,
-            megaHandleUseCase: megaHandleUseCase,
-            preferenceUseCase: preferenceUseCase
+            megaHandleUseCase: megaHandleUseCase
         )
     }
 }

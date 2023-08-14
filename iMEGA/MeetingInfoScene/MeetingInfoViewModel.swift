@@ -44,9 +44,6 @@ final class MeetingInfoViewModel: ObservableObject {
         guard let chatRoom = chatRoom else { return false }
         return !chatUseCase.isCallInProgress(for: chatRoom.chatId)
     }
-    
-    @PreferenceWrapper(key: .waitingRoomWarningBannerDismissed, defaultValue: false)
-    var waitingRoomWarningBannerDismissed: Bool
 
     private var chatRoom: ChatRoomEntity?
     private var subscriptions = Set<AnyCancellable>()
@@ -72,7 +69,6 @@ final class MeetingInfoViewModel: ObservableObject {
          accountUseCase: some AccountUseCaseProtocol,
          chatLinkUseCase: some ChatLinkUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.scheduledMeeting = scheduledMeeting
@@ -104,7 +100,6 @@ final class MeetingInfoViewModel: ObservableObject {
             self.chatRoomAvatarViewModel = nil
         }
         self.subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
-        $waitingRoomWarningBannerDismissed.useCase = preferenceUseCase
         initSubscriptions()
         fetchInitialValues()
         listenToIsAllowNonHostToAddParticipantsOnChange()
@@ -226,12 +221,13 @@ final class MeetingInfoViewModel: ObservableObject {
             .store(in: &subscriptions)
         
         Publishers.CombineLatest3($isModerator, $isWaitingRoomOn, $isAllowNonHostToAddParticipantsOn)
+            .dropFirst(3)
             .map { $0 && $1 && $2 }
             .removeDuplicates()
             .sink(receiveValue: { [weak self] show in
                 guard let self else { return }
                 withAnimation {
-                    self.showWaitingRoomWarningBanner = show && !self.waitingRoomWarningBannerDismissed
+                    self.showWaitingRoomWarningBanner = show
                 }
             })
             .store(in: &subscriptions)

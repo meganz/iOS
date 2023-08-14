@@ -272,52 +272,69 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.meetingLinkEnabled)
     }
     
-    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabledAndBannerNotDismissed_shouldBeTrue() {
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalse() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: true)
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: false])
-        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomNotEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: true)
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
         
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsNotEnabled_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: false)
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomNotEnabledAndAllowNonHostsToAddParticipantsNotEnabled_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: false)
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+        
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomDisabledThenEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalseThenTrue() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: true)
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+        
+        sut.waitingRoomEnabled = true
+        sut.waitingRoomEnabled = true
+
         evaluate {
             sut.showWaitingRoomWarningBanner == true
         }
     }
     
-    func testShowWaitingRoomWarningBanner_givenWaitingRoomNotEnabledAndAllowNonHostsToAddParticipantsEnabledAndBannerNotDismissed_shouldBeFalse() {
-        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: true)
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: false])
-        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
-        
-        evaluate(isInverted: true) {
-            sut.showWaitingRoomWarningBanner == true
-        }
-    }
-    
-    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsNotEnabledAndBannerNotDismissed_shouldBeFalse() {
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsDisabledThenEnabled_shouldBeFalseThenTrue() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: false)
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: false])
-        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
-        
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+
         evaluate(isInverted: true) {
             sut.showWaitingRoomWarningBanner == true
         }
-    }
-    
-    func testShowWaitingRoomWarningBanner_givenWaitingRoomNotEnabledAndAllowNonHostsToAddParticipantsNotEnabledAndBannerNotDismissed_shouldBeFalse() {
-        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: false)
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: false])
-        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
         
-        evaluate(isInverted: true) {
-            sut.showWaitingRoomWarningBanner == true
-        }
-    }
-    
-    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabledAndBannerDismissed_shouldBeFalse() {
-        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: true)
-        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: true])
-        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
+        sut.allowNonHostsToAddParticipantsEnabled = true
         
-        evaluate(isInverted: true) {
+        evaluate {
             sut.showWaitingRoomWarningBanner == true
         }
     }
