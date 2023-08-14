@@ -4,6 +4,8 @@ struct WaitingRoomWarningBannerView: View {
     @Binding var showBanner: Bool
     var dismissAction: () -> Void
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         HStack {
             if let url = URL(string: "https://help.mega.io/wp-admin/post.php?post=3005&action=edit") {
@@ -13,7 +15,7 @@ struct WaitingRoomWarningBannerView: View {
             closeButton
         }
         .padding()
-        .background(Color(Colors.General.Yellow.fed429.name))
+        .background(colorScheme == .dark ? Color(Colors.General.Yellow.fed42926.name) : Color(Colors.General.Yellow.fed429.name))
     }
     
     private func buildBannerText(with url: URL) -> some View {
@@ -32,7 +34,7 @@ struct WaitingRoomWarningBannerView: View {
         Text(title)
             .font(.caption2)
             .bold()
-            .foregroundColor(Color(Colors.General.Yellow._9D8319.name))
+            .foregroundColor(colorScheme == .dark ? Color(Colors.General.Yellow.ffd60A.name): Color(Colors.General.Yellow._9D8319.name))
     }
     
     var closeButton: some View {
@@ -43,7 +45,7 @@ struct WaitingRoomWarningBannerView: View {
             }
         } label: {
             Image(systemName: "xmark.circle.fill")
-                .foregroundColor(Color(Colors.General.Yellow._9D8319.name))
+                .foregroundColor(colorScheme == .dark ? Color(Colors.General.Yellow.ffd60A.name): Color(Colors.General.Yellow._9D8319.name))
         }
     }
 }
