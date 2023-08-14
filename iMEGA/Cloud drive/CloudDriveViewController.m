@@ -35,7 +35,6 @@
 
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
-#import "CopyrightWarningViewController.h"
 #import "EmptyStateView.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAImagePickerController.h"
@@ -786,12 +785,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentViewController:removeAlertController animated:YES completion:nil];
 }
 
-- (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes {
-    if (MEGAReachabilityManager.isReachableHUDIfNot) {
-        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:nodes inViewController:UIApplication.mnz_presentingViewController];
-    }
-}
-
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -928,7 +921,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    [self presentGetLinkVCForNodes:self.selectedNodesArray];
+    [self presentGetLinkFor:self.selectedNodesArray];
     
     [self setEditMode:NO];
 }

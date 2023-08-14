@@ -11,6 +11,8 @@ final class NodeLinkRouter: NSObject {
     // MARK: - Public
 
     func showLinkManagement(for node: MEGANode) {
-        CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: navigationController)
+        guard let navigationController else { return }
+        GetLinkRouter(presenter: navigationController,
+                      nodes: [node]).start()
     }
 }

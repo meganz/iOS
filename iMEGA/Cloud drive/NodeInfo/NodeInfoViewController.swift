@@ -175,7 +175,8 @@ class NodeInfoViewController: UIViewController {
     }
     
     private func showManageLinkView() {
-        CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: self)
+        GetLinkRouter(presenter: self,
+                      nodes: [node]).start()
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {

@@ -18,7 +18,8 @@ extension CloudDriveTableViewController {
         } else {
             let shareLinkAction = swipeAction(image: Asset.Images.Generic.link.image.withTintColor(.white), backgroundColor: UIColor.systemOrange) { [weak self] in
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
-                    CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: UIApplication.mnz_presentingViewController())
+                    GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
+                                  nodes: [node]).start()
                 }
                 self?.setTableViewEditing(false, animated: true)
             }

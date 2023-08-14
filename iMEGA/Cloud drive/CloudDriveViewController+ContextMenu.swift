@@ -139,7 +139,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .download:
             download([parentNode])
         case .shareLink, .manageLink:
-            presentGetLinkVC(for: [parentNode])
+            presentGetLink(for: [parentNode])
         case .shareFolder:
             viewModel.openShareFolderDialog(forNodes: [parentNode])
         case .rename:

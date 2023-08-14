@@ -22,4 +22,9 @@ extension PreviewDocumentViewController {
             }
         }).start()
     }
+    
+    @objc func presentGetLink(for nodes: [MEGANode]) {
+        GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
+                      nodes: nodes).start()
+    }
 }

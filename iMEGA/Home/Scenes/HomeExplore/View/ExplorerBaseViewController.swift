@@ -141,10 +141,8 @@ class ExplorerBaseViewController: UIViewController {
         }
         
         if MEGAReachabilityManager.isReachableHUDIfNot() {
-            CopyrightWarningViewController.presentGetLinkViewController(
-                for: selectedNodes,
-                in: UIApplication.mnz_presentingViewController()
-            )
+            GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
+                          nodes: selectedNodes).start()
             endEditingMode()
         }
     }

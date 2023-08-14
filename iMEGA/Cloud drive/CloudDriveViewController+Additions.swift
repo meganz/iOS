@@ -277,4 +277,10 @@ extension CloudDriveViewController {
         }
         return immutableNodes
     }
+    
+    @objc func presentGetLink(for nodes: [MEGANode]) {
+        guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
+        GetLinkRouter(presenter: self,
+                      nodes: nodes).start()
+    }
 }
