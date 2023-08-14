@@ -7,7 +7,7 @@ struct SwiftLintPlugin: BuildToolPlugin {
         let swiftFiles = fetchModifiedSwiftFiles()
 
         guard !swiftFiles.isEmpty else {
-            print("No new or modified .swift files, return")
+            Diagnostics.remark("No new or modified .swift files, return")
             return []
         }
 
@@ -37,7 +37,7 @@ extension SwiftLintPlugin: XcodeBuildToolPlugin {
         let swiftFiles = fetchModifiedSwiftFiles()
 
         guard !swiftFiles.isEmpty else {
-            print("No new or modified .swift files, return")
+            Diagnostics.remark("No new or modified .swift files, return")
             return []
         }
 
