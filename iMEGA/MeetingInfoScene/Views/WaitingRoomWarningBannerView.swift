@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WaitingRoomWarningBannerView: View {
     @Binding var showBanner: Bool
+    var dismissAction: () -> Void
     
     var body: some View {
         HStack {
@@ -38,6 +39,7 @@ struct WaitingRoomWarningBannerView: View {
         Button {
             withAnimation {
                 showBanner = false
+                dismissAction()
             }
         } label: {
             Image(systemName: "xmark.circle.fill")
@@ -48,7 +50,7 @@ struct WaitingRoomWarningBannerView: View {
 
 struct WaitingRoomWarningBannerView_Previews: PreviewProvider {
     static var previews: some View {
-        WaitingRoomWarningBannerView(showBanner: .constant(true))
+        WaitingRoomWarningBannerView(showBanner: .constant(true), dismissAction: {})
             .previewLayout(.sizeThatFits)
     }
 }
