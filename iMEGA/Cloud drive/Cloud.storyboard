@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -784,106 +784,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5X-ij-wkv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1476" y="-3754.2728635682161"/>
-        </scene>
-        <!--Copyright Warning-->
-        <scene sceneID="OyL-ME-4zN">
-            <objects>
-                <viewController id="n0k-ng-oPN" customClass="CopyrightWarningViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hnD-Vv-4wn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MsW-va-x5O">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8wb-Mu-SVb">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="496.5"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="©" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0jk-v8-5fM">
-                                                <rect key="frame" x="8" y="8" width="359" height="186.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="156"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright warning to all users" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i9P-WD-gV6" userLabel="Copyright warning to all users">
-                                                <rect key="frame" x="8" y="204.5" width="359" height="33.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FJn-Vd-V47">
-                                                <rect key="frame" x="8" y="248" width="359" height="240.5"/>
-                                                <string key="text">MEGA respects the copyrights of others and requires that users of the MEGA cloud service comply with the laws of copyright.
-
-You are strictly prohibited from using the MEGA cloud service to infringe copyrights. You may not upload, download, store, share, display, stream, distribute, email, link to, transmit or otherwise make available any files, data or content that infringes any copyright or other proprietary rights of any person or entity.</string>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="8wb-Mu-SVb" secondAttribute="trailing" id="0CK-tA-SzN"/>
-                                    <constraint firstItem="8wb-Mu-SVb" firstAttribute="top" secondItem="MsW-va-x5O" secondAttribute="top" id="79U-n9-nXy"/>
-                                    <constraint firstItem="8wb-Mu-SVb" firstAttribute="width" secondItem="MsW-va-x5O" secondAttribute="width" id="Mit-GK-DQa"/>
-                                    <constraint firstItem="8wb-Mu-SVb" firstAttribute="leading" secondItem="MsW-va-x5O" secondAttribute="leading" id="ooT-2F-LD7"/>
-                                    <constraint firstAttribute="bottom" secondItem="8wb-Mu-SVb" secondAttribute="bottom" id="xV4-V3-enC"/>
-                                </constraints>
-                            </scrollView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="fSA-wO-94x"/>
-                        <constraints>
-                            <constraint firstItem="fSA-wO-94x" firstAttribute="trailing" secondItem="MsW-va-x5O" secondAttribute="trailing" id="H10-DH-uBA"/>
-                            <constraint firstItem="MsW-va-x5O" firstAttribute="top" secondItem="fSA-wO-94x" secondAttribute="top" id="UeM-Yd-3jB"/>
-                            <constraint firstItem="fSA-wO-94x" firstAttribute="bottom" secondItem="MsW-va-x5O" secondAttribute="bottom" constant="8" id="XSl-rg-Kgn"/>
-                            <constraint firstItem="MsW-va-x5O" firstAttribute="leading" secondItem="fSA-wO-94x" secondAttribute="leading" id="h0d-Dp-Mng"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems>
-                        <barButtonItem title="Disagree" style="plain" id="3yM-Mt-swH" userLabel="Disagree">
-                            <connections>
-                                <action selector="disagreeTapped:" destination="n0k-ng-oPN" id="1vl-1t-Jiy"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="N3v-gy-33b"/>
-                        <barButtonItem title="Agree" style="plain" id="igh-Iv-yxF" userLabel="Agree">
-                            <connections>
-                                <action selector="agreeTapped:" destination="n0k-ng-oPN" id="zrC-zW-ToG"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Copyright Warning" id="uYa-3A-h7U" userLabel="Copyright Warning"/>
-                    <connections>
-                        <outlet property="agreeBarButtonItem" destination="igh-Iv-yxF" id="a62-eS-1R1"/>
-                        <outlet property="copyrightMessageLabel" destination="FJn-Vd-V47" id="ANa-an-v76"/>
-                        <outlet property="copyrightWarningLabel" destination="i9P-WD-gV6" id="3ny-6R-qPJ"/>
-                        <outlet property="copyrightWarningNavigationItem" destination="uYa-3A-h7U" id="MfI-hb-f5F"/>
-                        <outlet property="disagreeBarButtonItem" destination="3yM-Mt-swH" id="qb6-Cp-AHO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lLt-dj-Mzk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5732" y="-2996.8515742128939"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Tjv-hu-zdo">
-            <objects>
-                <navigationController storyboardIdentifier="CopywriteWarningNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="G9N-xa-ji2" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="HL8-Pt-2nJ">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="n0k-ng-oPN" kind="relationship" relationship="rootViewController" id="AAs-ZB-sAg"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vfc-Jf-wQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5001" y="-2996"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7NI-Kw-6L0">
