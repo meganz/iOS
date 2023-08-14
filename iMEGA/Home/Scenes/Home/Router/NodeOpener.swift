@@ -43,7 +43,7 @@ final class NodeOpener {
     
     private func openFileNode(_ node: MEGANode, allNodes: [MEGANode]?) {
         guard node.name?.fileExtensionGroup.isVisualMedia == true else {
-            node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil)
+            node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, allNodes: allNodes)
             return
         }
         

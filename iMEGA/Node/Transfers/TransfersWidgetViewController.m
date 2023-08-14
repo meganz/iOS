@@ -353,7 +353,7 @@ static TransfersWidgetViewController* instance = nil;
             if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
                 [self showNode:node];
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil];
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil allNodes: nil];
             }
         } else {
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];

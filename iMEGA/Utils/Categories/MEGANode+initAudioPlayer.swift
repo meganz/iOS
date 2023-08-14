@@ -1,5 +1,5 @@
 extension MEGANode {
-    @objc func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: NSNumber?, chatId: NSNumber?) {
+    @objc func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: NSNumber?, chatId: NSNumber?, allNodes: [MEGANode]?) {
         AudioPlayerManager.shared.initFullScreenPlayer(
             node: node,
             fileLink: fileLink,
@@ -7,7 +7,8 @@ extension MEGANode {
             isFolderLink: isFolderLink,
             presenter: presenter,
             messageId: messageId?.uint64Value ?? .invalid,
-            chatId: chatId?.uint64Value ?? .invalid
+            chatId: chatId?.uint64Value ?? .invalid,
+            allNodes: allNodes
         )
     }
 }
