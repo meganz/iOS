@@ -1,5 +1,5 @@
 input_dir: ../iMEGA/
-output_dir: ../iMEGA/SwiftGen/
+output_dir: ${DERIVED_SOURCES_DIR}
 
 ## Strings
 strings:

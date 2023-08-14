@@ -25,7 +25,7 @@ struct AudioPlayerAllAudioAsPlaylistShiftStrategy: AudioPlayerPlaylistShiftStrat
             return tracks
         }
         
-        var mutableTracks = tracks
+        let mutableTracks = tracks
         return mutableTracks.shifted(startItemIndex)
     }
     
