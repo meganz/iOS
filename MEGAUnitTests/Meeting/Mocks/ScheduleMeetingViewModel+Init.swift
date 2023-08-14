@@ -8,6 +8,7 @@ extension ScheduleMeetingViewModel {
         router: some ScheduleMeetingRouting = MockScheduleMeetingRouter(),
         viewConfiguration: some ScheduleMeetingViewConfigurable = MockScheduleMeetingViewConfiguration(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         isTesting: Bool = true
     ) {
@@ -15,6 +16,7 @@ extension ScheduleMeetingViewModel {
             router: router,
             viewConfiguration: viewConfiguration,
             accountUseCase: accountUseCase,
+            preferenceUseCase: preferenceUseCase,
             featureFlagProvider: featureFlagProvider
         )
     }
