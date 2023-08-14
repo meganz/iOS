@@ -12,9 +12,7 @@ struct ScheduleMeetingView: View {
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.isWaitingRoomFeatureEnabled && viewModel.showWaitingRoomWarningBanner {
-                WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner) {
-                    viewModel.waitingRoomWarningBannerDismissed = true
-                }
+                WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner)
             }
             ScrollViewReader { proxy in
                 ScrollView {
