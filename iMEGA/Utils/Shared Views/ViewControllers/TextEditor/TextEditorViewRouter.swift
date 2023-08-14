@@ -55,7 +55,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     
     // MARK: - U-R-MVVM Routing
     @objc func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
+        let sdk = MEGASdk.shared
         let nodeRepository = NodeRepository.newRepo
         let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
         let uploadUC = UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo)
@@ -129,7 +129,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func showActions(nodeHandle: HandleEntity, delegate: some NodeActionViewControllerDelegate, sender button: Any) {
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+        guard let node = MEGASdk.shared.node(forHandle: nodeHandle) else {
             return
         }
         
@@ -157,7 +157,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     
     func importNode(nodeHandle: HandleEntity?) {
         guard let nodeHandle = nodeHandle,
-              let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+              let node = MEGASdk.shared.node(forHandle: nodeHandle) else {
             return
         }
         if MEGAReachabilityManager.isReachableHUDIfNot() {
@@ -216,11 +216,13 @@ extension TextEditorViewRouter: TextEditorViewRouting {
     }
     
     func shareLink(from nodeHandle: HandleEntity) {
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+        guard let baseViewController,
+              let node = MEGASdk.shared.node(forHandle: nodeHandle) else {
             return
         }
         
-        CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: baseViewController)
+        GetLinkRouter(presenter: baseViewController,
+                      nodes: [node]).start()
     }
     
     func removeLink(from nodeHandle: HandleEntity) {

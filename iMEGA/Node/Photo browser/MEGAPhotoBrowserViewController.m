@@ -8,7 +8,6 @@
 #import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
-#import "CopyrightWarningViewController.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGANavigationController.h"
@@ -1162,9 +1161,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             if (self.displayMode == DisplayModeFileLink) {
                 [self shareFileLink];
             } else {
-                if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                    [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
-                }
+                [self presentGetLinkFor:@[node]];
             }
             break;
         }
