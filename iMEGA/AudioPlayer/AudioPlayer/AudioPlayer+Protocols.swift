@@ -171,7 +171,7 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func removeDelegate(_ delegate: any AudioPlayerPresenterProtocol)
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol)
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol)
-    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity)
+    func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, allNodes: [MEGANode]?)
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool)
     func playerHidden(_ hidden: Bool, presenter: UIViewController)
     func closePlayer()

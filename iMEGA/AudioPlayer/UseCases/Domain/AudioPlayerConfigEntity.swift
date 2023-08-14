@@ -17,6 +17,9 @@ struct AudioPlayerConfigEntity {
     // Playlist
     var parentNode: MEGANode?
     
+    // Playlist for All Nodes from Explorer entry point
+    var allNodes: [MEGANode]?
+    
     // Common properties
     var playerHandler: any AudioPlayerHandlerProtocol
     var shouldResetPlayer = false

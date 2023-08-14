@@ -246,7 +246,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                 } else {
                     let messageId = NSNumber(value: megaMessage.messageId)
                     let chatId = NSNumber(value: chatRoom.chatId)
-                    node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: messageId, chatId: chatId)
+                    node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: messageId, chatId: chatId, allNodes: nil)
                 }
             }
         } else {
