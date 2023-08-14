@@ -220,6 +220,12 @@ extension MEGAPhotoBrowserViewController {
             }
         }).start()
     }
+    
+    @objc func presentGetLink(for nodes: [MEGANode]) {
+        guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
+        GetLinkRouter(presenter: self,
+                      nodes: nodes).start()
+    }
 }
 
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {

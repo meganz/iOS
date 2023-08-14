@@ -6,7 +6,6 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "CopyrightWarningViewController.h"
 #import "MEGAQLPreviewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
@@ -471,7 +470,7 @@
             if (self.isLink && self.fileLink) {
                 [self presentActivityVC:@[self.fileLink] barButtonItem:self.moreBarButtonItem];
             } else if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+                [self presentGetLinkFor:@[node]];
             }
             break;
         }

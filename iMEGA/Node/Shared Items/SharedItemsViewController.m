@@ -22,7 +22,6 @@
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
-#import "CopyrightWarningViewController.h"
 #import "EmptyStateView.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
@@ -560,12 +559,6 @@
     }
 }
 
-- (void)presentGetLinkVCForNodes:(NSArray<MEGANode *> *)nodes {
-    if (MEGAReachabilityManager.isReachableHUDIfNot) {
-        [CopyrightWarningViewController presentGetLinkViewControllerForNodes:nodes inViewController:UIApplication.mnz_presentingViewController];
-    }
-}
-
 #pragma mark - Utils
 
 - (void)selectSegment:(NSUInteger)index {
@@ -771,7 +764,7 @@
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
-    [self presentGetLinkVCForNodes:self.selectedNodesMutableArray];
+    [self presentGetLinkFor:self.selectedNodesMutableArray];
     
     [self setEditing:NO animated:YES];
 }
@@ -1232,7 +1225,7 @@
             
         case MegaNodeActionTypeShareLink:
         case MegaNodeActionTypeManageLink: {
-            [self presentGetLinkVCForNodes:@[node]];
+            [self presentGetLinkFor:@[node]];
             break;
         }
             

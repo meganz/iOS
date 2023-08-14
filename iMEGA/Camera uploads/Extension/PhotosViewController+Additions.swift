@@ -28,7 +28,8 @@ extension PhotosViewController {
     
     @objc func handleShareLink(for nodes: [MEGANode]) {
         guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
-        CopyrightWarningViewController.presentGetLinkViewController(for: nodes, in: UIApplication.mnz_presentingViewController())
+        GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
+                      nodes: nodes).start()
         toggleEditing()
     }
     

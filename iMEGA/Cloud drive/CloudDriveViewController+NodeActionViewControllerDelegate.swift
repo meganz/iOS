@@ -21,7 +21,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .shareFolder:
             viewModel.openShareFolderDialog(forNodes: nodes)
         case .shareLink, .manageLink:
-            presentGetLinkVC(for: nodes)
+            presentGetLink(for: nodes)
             setEditMode(false)
         case .sendToChat:
             showSendToChat(nodes)
@@ -105,7 +105,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .shareFolder:
             viewModel.openShareFolderDialog(forNodes: [node])
         case .manageLink, .shareLink:
-            presentGetLinkVC(for: [node])
+            presentGetLink(for: [node])
         case .sendToChat:
             showSendToChat([node])
         case .editTextFile:

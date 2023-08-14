@@ -309,6 +309,12 @@ extension SharedItemsViewController {
             self.endEditingMode()
         }
     }
+    
+    @objc func presentGetLink(for nodes: [MEGANode]) {
+        guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
+        GetLinkRouter(presenter: self,
+                      nodes: nodes).start()
+    }
 }
 
 // MARK: - SharedItemsTableViewCellDelegate

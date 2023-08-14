@@ -159,7 +159,8 @@ extension DocAndAudioListSource {
 
     private func shareLink(node: MEGANode) {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
-            CopyrightWarningViewController.presentGetLinkViewController(for: [node], in: UIApplication.mnz_presentingViewController())
+            GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
+                          nodes: [node]).start()
         }
         
         tableView.setEditing(false, animated: true)
