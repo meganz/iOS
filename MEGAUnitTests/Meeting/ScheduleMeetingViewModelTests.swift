@@ -272,6 +272,56 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.meetingLinkEnabled)
     }
     
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabledAndBannerNotDismissed_shouldBeTrue() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: true)
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: false])
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
+        
+        evaluate {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomNotEnabledAndAllowNonHostsToAddParticipantsEnabledAndBannerNotDismissed_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: true)
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: false])
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
+        
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsNotEnabledAndBannerNotDismissed_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: false)
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: false])
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
+        
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomNotEnabledAndAllowNonHostsToAddParticipantsNotEnabledAndBannerNotDismissed_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: false, allowNonHostsToAddParticipantsEnabled: false)
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: false])
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
+        
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabledAndBannerDismissed_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: true)
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: true])
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
+        
+        evaluate(isInverted: true) {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
     func testMeetingNameTooLong_givenLongMeetingName_shouldBeTrue() {
         let name = "MEGA protects your communications with our end-to-end (user controlled)"
         let viewConfiguration = MockScheduleMeetingViewConfiguration(meetingName: name)
@@ -555,9 +605,10 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
     
     // MARK: - Private methods.
     
-    private func evaluate(expression: @escaping () -> Bool) {
+    private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {
         let predicate = NSPredicate { _, _ in expression() }
         let expectation = expectation(for: predicate, evaluatedWith: nil)
+        expectation.isInverted = isInverted
         wait(for: [expectation], timeout: 5)
     }
     

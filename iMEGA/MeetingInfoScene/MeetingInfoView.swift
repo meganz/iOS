@@ -12,7 +12,9 @@ struct MeetingInfoView: View {
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.isWaitingRoomFeatureEnabled && viewModel.showWaitingRoomWarningBanner {
-                WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner)
+                WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner) {
+                    viewModel.waitingRoomWarningBannerDismissed = true
+                }
             }
             ScrollView {
                 VStack(spacing: Constants.spacing) {
