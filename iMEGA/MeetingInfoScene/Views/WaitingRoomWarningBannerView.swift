@@ -2,7 +2,7 @@ import SwiftUI
 
 struct WaitingRoomWarningBannerView: View {
     @Binding var showBanner: Bool
-    var dismissAction: () -> Void
+    var dismissAction: (() -> Void)?
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -41,7 +41,7 @@ struct WaitingRoomWarningBannerView: View {
         Button {
             withAnimation {
                 showBanner = false
-                dismissAction()
+                dismissAction?()
             }
         } label: {
             Image(systemName: "xmark.circle.fill")
@@ -52,7 +52,7 @@ struct WaitingRoomWarningBannerView: View {
 
 struct WaitingRoomWarningBannerView_Previews: PreviewProvider {
     static var previews: some View {
-        WaitingRoomWarningBannerView(showBanner: .constant(true), dismissAction: {})
+        WaitingRoomWarningBannerView(showBanner: .constant(true))
             .previewLayout(.sizeThatFits)
     }
 }
