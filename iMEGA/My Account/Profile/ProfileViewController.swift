@@ -4,7 +4,7 @@ import MEGAPermissions
 import UIKit
 
 @objc class ProfileViewController: UIViewController, MEGAPurchasePricingDelegate {
-
+    
     @IBOutlet weak var nameLabel: MEGALabel!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -24,14 +24,14 @@ import UIKit
     private var dataSource: ProfileTableViewDataSource?
     private var subscriptions: Set<AnyCancellable> = []
     private let viewModel: ProfileViewModel
-
+    
     // MARK: - Lifecycle
     
     init?(coder: NSCoder, viewModel: ProfileViewModel) {
         self.viewModel = viewModel
         super.init(coder: coder)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("You must create ProfileViewController with a viewModel.")
     }
@@ -46,13 +46,13 @@ import UIKit
         avatarCollapsedPosition = view.frame.size.height * 0.3
         avatarViewHeightConstraint.constant = avatarCollapsedPosition
         
-        nameLabel.text = MEGASdk.currentUserHandle().map { MEGAUser.mnz_fullName($0.uint64Value) }
+        nameLabel.text = MEGASdk.currentUserHandle().map { MEGAUser.mnz_fullName($0.uint64Value) ?? "" }
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
         nameLabel.layer.shadowColor = Colors.General.Shadow.blackAlpha20.color.cgColor
         nameLabel.layer.shadowRadius = 2.0
         nameLabel.layer.shadowOpacity = 1
         
-        emailLabel.text = MEGASdkManager.sharedMEGASdk().myEmail
+        emailLabel.text = MEGASdk.shared.myEmail
         emailLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
         emailLabel.layer.shadowColor = Colors.General.Shadow.blackAlpha20.color.cgColor
         emailLabel.layer.shadowRadius = 2.0
@@ -61,9 +61,9 @@ import UIKit
         avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: MEGASdk.currentUserHandle()?.uint64Value ?? ~0)
         configureGestures()
         
-        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdk.shared.add(self)
         MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.add(self)
-
+        
         updateAppearance()
         
         $offlineLogOutWarningDismissed.useCase = PreferenceUseCase.default
@@ -74,7 +74,7 @@ import UIKit
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)        
+        super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -85,7 +85,7 @@ import UIKit
         }
         
         if isMovingFromParent {
-            MEGASdkManager.sharedMEGASdk().remove(self)
+            MEGASdk.shared.remove(self)
             MEGAPurchase.sharedInstance()?.pricingsDelegateMutableArray.remove(self)
         }
     }
@@ -97,12 +97,12 @@ import UIKit
             updateAppearance()
         }
     }
-        
+    
     private func bindToSubscriptions() {
-
+        
         NotificationCenter.default
             .publisher(for: Notification.Name.MEGAEmailHasChanged)
-            .map { _ in  MEGASdkManager.sharedMEGASdk().myEmail }
+            .map { _ in  MEGASdk.shared.myEmail }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak emailLabel] in emailLabel?.text = $0 }
@@ -135,7 +135,7 @@ import UIKit
     
     private func updateAppearance() {
         dataSource?.update(traitCollection: traitCollection)
-    
+        
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         
@@ -218,7 +218,7 @@ import UIKit
     
     private func showImagePicker(sourceType: UIImagePickerController.SourceType) {
         guard let imagePickerController = MEGAImagePickerController.init(toChangeAvatarWith: sourceType) else {
-            return            
+            return
         }
         
         self.present(imagePickerController, animated: true, completion: nil)
@@ -279,19 +279,19 @@ import UIKit
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
             let removeAvatarAlertAction = UIAlertAction.init(title: Strings.Localizable.removePhoto, style: .default) { _ in
-                MEGASdkManager.sharedMEGASdk().setAvatarUserWithSourceFilePath(nil)
+                MEGASdk.shared.setAvatarUserWithSourceFilePath(nil)
             }
             changeAvatarAlertController.addAction(removeAvatarAlertAction)
         }
         
         self.present(changeAvatarAlertController, animated: true, completion: nil)
     }
-        
+    
     func presentChangeViewController(changeType: ChangeType, isTwoFactorAuthenticationEnabled: Bool) {
         let changePasswordViewController = UIStoryboard.init(name: "ChangeCredentials", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
         changePasswordViewController.changeType = changeType
         changePasswordViewController.isTwoFactorAuthenticationEnabled = isTwoFactorAuthenticationEnabled
-
+        
         let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
         navigationController.addLeftDismissButton(withText: Strings.Localizable.cancel)
         present(navigationController, animated: true, completion: nil)
@@ -343,7 +343,7 @@ extension ProfileViewController: UITableViewDelegate {
         case .changeEmail:
             viewModel.dispatch(.changeEmail)
         case .phoneNumber:
-            if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
+            if MEGASdk.shared.smsVerifiedPhoneNumber() == nil {
                 showAddPhoneNumber()
             } else {
                 showPhoneNumberView()
@@ -354,8 +354,8 @@ extension ProfileViewController: UITableViewDelegate {
             let recoveryKeyViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "MasterKeyViewControllerID")
             navigationController?.pushViewController(recoveryKeyViewController, animated: true)
         case .upgrade, .role:
-            if !MEGASdkManager.sharedMEGASdk().isAccountType(.business) &&
-                !MEGASdkManager.sharedMEGASdk().isAccountType(.proFlexi) {
+            if !MEGASdk.shared.isAccountType(.business) &&
+                !MEGASdk.shared.isAccountType(.proFlexi) {
                 guard let navigationController = navigationController else {
                     return
                 }
@@ -366,7 +366,7 @@ extension ProfileViewController: UITableViewDelegate {
                 guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
                     return
                 }
-                MEGASdkManager.sharedMEGASdk().shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
+                MEGASdk.shared.shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
                 offlineLogOutWarningDismissed = false
             }
         }
