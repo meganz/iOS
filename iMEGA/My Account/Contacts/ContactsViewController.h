@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 - (void)nodeEditCompleted:(BOOL)complete;
 @end
 
-@class ItemListModel, UserEntity;
+@class ItemListModel, UserEntity, ContactsViewModel;
 
 @interface ContactsViewController : UIViewController
 
@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 
 @property (nonatomic) ContactsMode contactsMode;
 @property (nonatomic) ChatOptionType chatOptionType;
+@property (strong, nonatomic) ContactsViewModel*viewModel;
 
 @property (nonatomic) BOOL avoidPresentIncomingPendingContactRequests;
 
