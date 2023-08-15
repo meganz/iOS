@@ -34,6 +34,17 @@ struct TextFieldAlertViewModel {
     }
 }
 
+extension TextFieldAlertViewModel: Equatable {
+    static func == (lhs: TextFieldAlertViewModel, rhs: TextFieldAlertViewModel) -> Bool {
+        lhs.textString == rhs.textString &&
+        lhs.title == rhs.title &&
+        lhs.placeholderText == rhs.placeholderText &&
+        lhs.affirmativeButtonTitle == rhs.affirmativeButtonTitle &&
+        lhs.affirmativeButtonInitiallyEnabled == rhs.affirmativeButtonInitiallyEnabled &&
+        lhs.highlightInitialText == rhs.highlightInitialText
+    }
+}
+
 struct TextFieldAlertError: Equatable {
     let title: String
     let description: String
