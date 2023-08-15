@@ -11,6 +11,7 @@ public final class MockSdk: MEGASdk {
     public var _myUser: MEGAUser?
     public var _isLoggedIn: Int
     public var _isMasterBusinessAccount: Bool
+    private let _bandwidthOverquotaDelay: Int64
     private let email: String?
     private let megaRootNode: MEGANode?
     private let rubbishBinNode: MEGANode?
@@ -64,6 +65,7 @@ public final class MockSdk: MEGASdk {
                 myUser: MEGAUser? = nil,
                 isLoggedIn: Int = 0,
                 isMasterBusinessAccount: Bool = false,
+                bandwidthOverquotaDelay: Int64 = 0,
                 smsState: SMSState = .notAllowed,
                 myEmail: String? = nil,
                 megaSets: [MEGASet] = [],
@@ -96,6 +98,7 @@ public final class MockSdk: MEGASdk {
         _myUser = myUser
         _isLoggedIn = isLoggedIn
         _isMasterBusinessAccount = isMasterBusinessAccount
+        _bandwidthOverquotaDelay = bandwidthOverquotaDelay
         self.smsState = smsState
         email = myEmail
         sets = megaSets
@@ -135,6 +138,8 @@ public final class MockSdk: MEGASdk {
     public override var myEmail: String? { email }
     
     public override var totalNodes: UInt { UInt(nodes.count) }
+    
+    public override var bandwidthOverquotaDelay: Int64 { _bandwidthOverquotaDelay }
     
     public override func node(forHandle handle: MEGAHandle) -> MEGANode? {
         nodes.first { $0.handle == handle }
