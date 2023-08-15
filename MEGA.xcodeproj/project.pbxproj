@@ -1276,6 +1276,8 @@
 		94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */; };
 		94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */; };
+		94CBB2C12A8A4DBA00C62F32 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */; };
+		94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */; };
 		94CC921829F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CC921729F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift */; };
 		94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */; };
 		94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */; };
@@ -3815,6 +3817,8 @@
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
 		94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemListViewController+Additions.swift"; sourceTree = "<group>"; };
 		94C85E6B28B93CEF00007A38 /* NodeAssetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeAssetsManager.swift; sourceTree = "<group>"; };
+		94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
+		94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModelTests.swift; sourceTree = "<group>"; };
 		94CC921729F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeAccessEntity+Mapper_Tests.swift"; sourceTree = "<group>"; };
 		94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Permissions.swift"; sourceTree = "<group>"; };
@@ -6100,6 +6104,7 @@
 				415226731A692ECC00EC7BB6 /* Contacts.storyboard */,
 				8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */,
 				94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */,
+				94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */,
 				415226741A692ECC00EC7BB6 /* ContactsViewController.h */,
 				415226751A692ECC00EC7BB6 /* ContactsViewController.m */,
 				A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */,
@@ -10933,6 +10938,7 @@
 				6D5A19AF2A10D33E00FDD5B3 /* AccountHallViewModelTests.swift */,
 				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
 				B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */,
+				94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -14326,6 +14332,7 @@
 				5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */,
 				5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */,
 				5D64660424890A34006030A5 /* ThemeColor.swift in Sources */,
+				94CBB2C12A8A4DBA00C62F32 /* ContactsViewModel.swift in Sources */,
 				B6B9D91329492CC100ABC161 /* ThumbnailEntity+Mapping.swift in Sources */,
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
 				B68ED09327D05F9F00713850 /* ThumbnailUseCase+Additions.swift in Sources */,
@@ -14904,6 +14911,7 @@
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
 				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
+				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,
