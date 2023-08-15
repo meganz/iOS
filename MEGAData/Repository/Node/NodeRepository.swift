@@ -3,7 +3,7 @@ import MEGASDKRepo
 
 struct NodeRepository: NodeRepositoryProtocol {
     static var newRepo: NodeRepository {
-        NodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder(), chatSdk: MEGASdkManager.sharedMEGAChatSdk())
+        NodeRepository(sdk: MEGASdk.shared, sharedFolderSdk: MEGASdk.sharedFolderLink, chatSdk: MEGAChatSdk.shared)
     }
     
     private let sdk: MEGASdk
@@ -71,6 +71,17 @@ struct NodeRepository: NodeRepositoryProtocol {
         }
         
         return node.toNodeEntity()
+    }
+    
+    func childNode(parent node: NodeEntity,
+                   name: String,
+                   type: NodeTypeEntity) async -> NodeEntity? {
+        guard let parent = node.toMEGANode(in: sdk) else {
+            return nil
+        }
+        return sdk.childNode(forParent: parent,
+                             name: name,
+                             type: type.rawValue)?.toNodeEntity()
     }
     
     func images(for parentNode: NodeEntity) -> [NodeEntity] {
