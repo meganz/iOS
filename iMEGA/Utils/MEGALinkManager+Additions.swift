@@ -28,7 +28,7 @@ extension MEGALinkManager {
     }
     
     class func nodesFromLinkToDownloadAfterLogin(nodes: [NodeEntity]) {
-        MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes.toMEGANodes(in: MEGASdk.shared))
+        MEGALinkManager.nodesFromLinkMutableArray.addObjects(from: nodes.toMEGANodes(in: .sharedFolderLinkSdk))
     }
     
     @objc class func showCollectionLinkView() {
@@ -57,7 +57,8 @@ extension MEGALinkManager {
             accountStorageUseCase: AccountStorageUseCase(accountRepository: AccountRepository.newRepo),
             importPublicAlbumUseCase: importAlbumUseCase,
             accountUseCase: AccountUseCase(
-                repository: AccountRepository.newRepo))
+                repository: AccountRepository.newRepo),
+            tracker: DIContainer.tracker)
         
         let viewController = UIHostingController(rootView: ImportAlbumView(viewModel: vm))
         viewController.modalPresentationStyle = .fullScreen
