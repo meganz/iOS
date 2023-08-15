@@ -158,6 +158,10 @@ public final class MockSdk: MEGASdk {
         return MockNodeList(nodes: children)
     }
     
+    public override func childNode(forParent parent: MEGANode, name: String, type: Int) -> MEGANode? {
+        nodes.first(where: { $0.name == name && $0.type.rawValue == type })
+    }
+    
     public override func contacts() -> MEGAUserList { myContacts }
     
     public override func sendEvent(_ eventType: Int, message: String, addJourneyId: Bool, viewId: String?) {
