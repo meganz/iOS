@@ -442,6 +442,23 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertTrue(sut.reservedAlbumNames?.contains(userAlbumNames) ?? false)
     }
     
+    func testRenameAlbumAlertViewModel_albumLoadeded_isConfiguredCorrectly() throws {
+        let albumName = "Test"
+        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: albumName))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
+                                                        nodes: try makePhotos())
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase)
+        let expectedAlertViewModel = TextFieldAlertViewModel(title: Strings.Localizable.AlbumLink.Alert.RenameAlbum.title,
+                                                             affirmativeButtonTitle: Strings.Localizable.rename,
+                                                             affirmativeButtonInitiallyEnabled: false,
+                                                             message: Strings.Localizable.AlbumLink.Alert.RenameAlbum.message(albumName))
+        
+        let alertViewModel = sut.renameAlbumAlertViewModel()
+        
+        XCTAssertEqual(alertViewModel, expectedAlertViewModel)
+    }
+    
     // MARK: - Private
     
     private func makeImportAlbumViewModel(publicLink: URL,
