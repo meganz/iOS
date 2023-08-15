@@ -3650,3 +3650,27 @@
 "albumLink.alert.renameAlbum.title"="Rename album";
 /* Rename public album alert message */
 "albumLink.alert.renameAlbum.message"="An album named “%@” already exists in your Albums. Enter a new name for the album you're saving.";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="Upgrade";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="I will wait";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="Buy new plan";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% of [B] TB used";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="Limited available transfer quota";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts*/
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Downloading may be interrupted as you’ve used most of your transfer quota for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="Downloading may be interrupted as you’ve used most of your transfer quota on this account. To get more quota, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="Transfer quota exceeded";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts*/
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="You can't continue downloading as you don't have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="You can't continue downloading as you don’t have any transfer quota left on this account. To get more quota, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts*/
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Your media stopped playing as you don't have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="Your media stopped playing as you don't have any transfer quota left on this account. To get more quota, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.";
