@@ -1,5 +1,7 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
 import MEGASwift
 import SwiftUI
 
@@ -11,7 +13,8 @@ final class ImportAlbumViewModel: ObservableObject {
     private let albumNameUseCase: any AlbumNameUseCaseProtocol
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let importPublicAlbumUseCase: any ImportPublicAlbumUseCaseProtocol
-    
+    private let tracker: any AnalyticsTracking
+
     private var publicLinkWithDecryptionKey: URL?
     private var subscriptions = Set<AnyCancellable>()
     private var showSnackBarSubscription: AnyCancellable?
@@ -69,21 +72,28 @@ final class ImportAlbumViewModel: ObservableObject {
          albumNameUseCase: some AlbumNameUseCaseProtocol,
          accountStorageUseCase: some AccountStorageUseCaseProtocol,
          importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol) {
+         accountUseCase: some AccountUseCaseProtocol,
+         tracker: some AnalyticsTracking) {
         self.publicLink = publicLink
         self.publicAlbumUseCase = publicAlbumUseCase
         self.albumNameUseCase = albumNameUseCase
         self.accountStorageUseCase = accountStorageUseCase
         self.importPublicAlbumUseCase = importPublicAlbumUseCase
+        self.tracker = tracker
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
         showImportToolbarButton = accountUseCase.isLoggedIn()
         
         subscribeToSelection()
-        subscibeToImportFolderSelection()
+        subscribeToImportFolderSelection()
+        subscribeToHandleAnalytics()
     }
     
+    func onViewAppear() {
+        tracker.trackAnalyticsEvent(with: AlbumImportScreenEvent())
+    }
+        
     @MainActor
     func loadPublicAlbum() async {
         publicLinkStatus = .inProgress
@@ -177,6 +187,7 @@ final class ImportAlbumViewModel: ObservableObject {
             try Task.checkCancellation()
             photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
             publicLinkStatus = .loaded
+            tracker.trackAnalyticsEvent(with: ImportAlbumContentLoadedEvent())
         } catch let error as SharedAlbumErrorEntity {
             setLinkToInvalid()
             MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
@@ -193,7 +204,7 @@ final class ImportAlbumViewModel: ObservableObject {
         publicLinkStatus = .invalid
         publicLinkWithDecryptionKey = nil
     }
-    
+
     private func subscribeToSelection() {
         subscribeToEditMode()
         subscribeToSelectionHidden()
@@ -254,7 +265,14 @@ final class ImportAlbumViewModel: ObservableObject {
             .assign(to: &$selectButtonOpacity)
     }
     
-    private func subscibeToImportFolderSelection() {
+    private func subscribeToHandleAnalytics() {
+        $showingDecryptionKeyAlert
+            .filter { $0 }
+            .sink { [weak self] _ in self?.tracker.trackAnalyticsEvent(with: AlbumImportInputDecryptionKeyDialogEvent()) }
+            .store(in: &subscriptions)
+    }
+    
+    private func subscribeToImportFolderSelection() {
         $importFolderLocation
             .compactMap { $0 }
             .sink { [weak self] in

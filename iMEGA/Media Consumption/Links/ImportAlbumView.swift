@@ -25,7 +25,7 @@ struct ImportAlbumView: View {
                         await viewModel.loadWithNewDecryptionKey()
                     }
                 })
-                                           
+                
             VStack(spacing: 0) {
                 navigationBar
                 
@@ -66,6 +66,7 @@ struct ImportAlbumView: View {
         .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
             CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
         }
+        .onAppear { viewModel.onViewAppear() }
         .onReceive(viewModel.$showLoading.dropFirst()) {
             $0 ? SVProgressHUD.show() : SVProgressHUD.dismiss()
         }
