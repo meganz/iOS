@@ -63,6 +63,12 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertEqual(sut.contacts(), [userStubOne.toUserEntity(), userStubTwo.toUserEntity()])
     }
     
+    func testBandwidthOverquotaDelay_returnBandwidth() {
+        let expectedBandwidth: Int64 = 100
+        let sut = makeSUT(sdk: MockSdk(bandwidthOverquotaDelay: expectedBandwidth))
+        XCTAssertEqual(sut.bandwidthOverquotaDelay, expectedBandwidth)
+    }
+    
     func testIncomingContactsRequestCount() {
         func assert(
             whenContactRequestCount expectedCount: Int,

@@ -18,6 +18,12 @@ final class AccountUseCaseTests: XCTestCase {
         XCTAssertEqual(sut.currentAccountDetails, accountDetails)
     }
     
+    func testBandwidthOverquotaDelay_returnBandwidth() {
+        let expectedBandwidth: Int64 = 100
+        let sut = AccountUseCase(repository: MockAccountRepository(bandwidthOverquotaDelay: expectedBandwidth))
+        XCTAssertEqual(sut.bandwidthOverquotaDelay, expectedBandwidth)
+    }
+    
     func testRefreshCurrentAccountDetails_whenSuccess_shouldReturnAccountDetails() async throws {
         let accountDetails = AccountDetailsEntity.random
         let sut = AccountUseCase(repository: MockAccountRepository(accountDetailsResult: .success(accountDetails)))

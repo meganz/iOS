@@ -5,6 +5,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
     private let isUpgradeSecuritySuccess: Bool
+    private let _bandwidthOverquotaDelay: Int64
     private let _currentUser: UserEntity?
     private let _isGuest: Bool
     private let _isLoggedIn: Bool
@@ -19,12 +20,14 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 currentAccountDetails: AccountDetailsEntity? = nil,
                 accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
-                isUpgradeSecuritySuccess: Bool = false) {
+                isUpgradeSecuritySuccess: Bool = false,
+                bandwidthOverquotaDelay: Int64 = 0) {
         _currentUser = currentUser
         _isGuest = isGuest
         _isLoggedIn = isLoggedIn
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
+        _bandwidthOverquotaDelay = bandwidthOverquotaDelay
         self.totalNodesCountVariable = totalNodesCountVariable
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
         self.accountDetailsResult = accountDetailsResult
@@ -49,6 +52,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public func contacts() -> [UserEntity] {
         _contacts
+    }
+    
+    public var bandwidthOverquotaDelay: Int64 {
+        _bandwidthOverquotaDelay
     }
     
     public func totalNodesCount() -> UInt {

@@ -65,6 +65,10 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
         sdk.isMasterBusinessAccount
     }
     
+    var bandwidthOverquotaDelay: Int64 {
+        sdk.bandwidthOverquotaDelay
+    }
+    
     func isLoggedIn() -> Bool {
         currentUserSource.isLoggedIn
     }
