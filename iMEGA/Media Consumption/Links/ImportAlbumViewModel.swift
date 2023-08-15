@@ -16,13 +16,14 @@ final class ImportAlbumViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var showSnackBarSubscription: AnyCancellable?
     private var snackBarMessage = ""
+    private var renamedAlbum: String?
+    
+    private(set) var importAlbumTask: Task<Void, Never>?
+    private(set) var reservedAlbumNames: [String]?
     
     let publicLink: URL
     let photoLibraryContentViewModel: PhotoLibraryContentViewModel
     let showImportToolbarButton: Bool
-    var publicAlbumLoadingTask: Task<Void, Never>?
-    var determineImportStateTask: Task<Void, Never>?
-    var importAlbumTask: Task<Void, Never>?
     
     @Published var publicLinkStatus: AlbumPublicLinkStatus = .none {
         willSet {
@@ -42,7 +43,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showSnackBar = false
     @Published private(set) var isSelectionEnabled = false
     @Published private(set) var selectButtonOpacity = 0.0
-    @Published private(set) var albumName: String?
+    @Published private(set) var publicAlbumName: String?
     @Published private(set) var selectionNavigationTitle: String = ""
     @Published private(set) var isToolbarButtonsDisabled = true
     @Published private(set) var showLoading = false
@@ -51,8 +52,16 @@ final class ImportAlbumViewModel: ObservableObject {
         (publicLinkWithDecryptionKey ?? publicLink).absoluteString
     }
     
+    private var albumName: String? {
+        renamedAlbum ?? publicAlbumName
+    }
+    
     var isPhotosLoaded: Bool {
         publicLinkStatus == .loaded
+    }
+    
+    var renameAlbumMessage: String {
+        Strings.Localizable.AlbumLink.Alert.RenameAlbum.message(publicAlbumName ?? "")
     }
     
     init(publicLink: URL,
@@ -75,28 +84,25 @@ final class ImportAlbumViewModel: ObservableObject {
         subscibeToImportFolderSelection()
     }
     
-    func loadPublicAlbum() {
+    @MainActor
+    func loadPublicAlbum() async {
         publicLinkStatus = .inProgress
         if decryptionKeyRequired() {
             publicLinkStatus = .requireDecryptionKey
         } else {
-            loadPublicAlbumContents()
+            await loadPublicAlbumContents()
         }
     }
     
-    func cancelLoading() {
-        cancelPublicAlbumLoadingTask()
-        cancelDetermineImportStateTask()
-    }
-    
-    func loadWithNewDecryptionKey() {
+    @MainActor
+    func loadWithNewDecryptionKey() async {
         guard publicLinkDecryptionKey.isNotEmpty,
               let linkWithDecryption = URL(string: publicLink.absoluteString + "#" + publicLinkDecryptionKey) else {
             setLinkToInvalid()
             return
         }
         publicLinkWithDecryptionKey = linkWithDecryption
-        loadPublicAlbum()
+        await loadPublicAlbum()
     }
     
     func enablePhotoLibraryEditMode(_ enable: Bool) {
@@ -111,35 +117,26 @@ final class ImportAlbumViewModel: ObservableObject {
         photoLibraryContentViewModel.toggleSelectAllPhotos()
     }
     
-    func importAlbum() {
-        determineImportStateTask = Task { @MainActor [weak self] in
-            guard let self else { return }
-            defer { cancelDetermineImportStateTask() }
-            
-            do {
-                try await accountStorageUseCase.refreshCurrentAccountDetails()
-            } catch {
-                MEGALogError("[Import Album] Error loading account details. Error: \(error)")
-                return
-            }
-            
-            guard !accountStorageUseCase.willStorageQuotaExceed(after: photoLibraryContentViewModel.photosToImport) else {
-                showStorageQuotaWillExceed.toggle()
-                return
-            }
-            
-            guard let albumName,
-                  await !isAlbumNameInConflict(albumName) else {
-                showRenameAlbumAlert.toggle()
-                return
-            }
-            showImportAlbumLocation.toggle()
+    @MainActor
+    func importAlbum() async {
+        do {
+            try await accountStorageUseCase.refreshCurrentAccountDetails()
+        } catch {
+            MEGALogError("[Import Album] Error loading account details. Error: \(error)")
+            return
         }
-    }
-    
-    private func cancelDetermineImportStateTask() {
-        determineImportStateTask?.cancel()
-        determineImportStateTask = nil
+        
+        guard !accountStorageUseCase.willStorageQuotaExceed(after: photoLibraryContentViewModel.photosToImport) else {
+            showStorageQuotaWillExceed.toggle()
+            return
+        }
+        
+        guard let publicAlbumName,
+              await !isAlbumNameInConflict(publicAlbumName) else {
+            showRenameAlbumAlert.toggle()
+            return
+        }
+        showImportAlbumLocation.toggle()
     }
     
     func snackBarViewModel() -> SnackBarViewModel {
@@ -159,34 +156,33 @@ final class ImportAlbumViewModel: ObservableObject {
         return viewModel
     }
     
+    func renameAlbum(newName: String) {
+        renamedAlbum = newName
+        showImportAlbumLocation.toggle()
+    }
+    
     private func isAlbumNameInConflict(_ name: String) async -> Bool {
-        await albumNameUseCase.reservedAlbumNames().contains(name)
+        let reservedNames = await albumNameUseCase.reservedAlbumNames()
+        reservedAlbumNames = reservedNames
+        return reservedNames.contains(name)
     }
     
-    private func loadPublicAlbumContents() {
-        publicAlbumLoadingTask = Task { @MainActor [weak self] in
-            guard let self else { return }
-            defer { cancelPublicAlbumLoadingTask() }
-            do {
-                let publicAlbum = try await publicAlbumUseCase.publicAlbum(forLink: albumLink)
-                try Task.checkCancellation()
-                albumName = publicAlbum.set.name
-                let photos = await publicAlbumUseCase.publicPhotos(publicAlbum.setElements)
-                try Task.checkCancellation()
-                photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
-                publicLinkStatus = .loaded
-            } catch let error as SharedAlbumErrorEntity {
-                setLinkToInvalid()
-                MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
-            } catch {
-                MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
-            }
+    @MainActor
+    private func loadPublicAlbumContents() async {
+        do {
+            let publicAlbum = try await publicAlbumUseCase.publicAlbum(forLink: albumLink)
+            try Task.checkCancellation()
+            publicAlbumName = publicAlbum.set.name
+            let photos = await publicAlbumUseCase.publicPhotos(publicAlbum.setElements)
+            try Task.checkCancellation()
+            photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
+            publicLinkStatus = .loaded
+        } catch let error as SharedAlbumErrorEntity {
+            setLinkToInvalid()
+            MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
+        } catch {
+            MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
         }
-    }
-    
-    private func cancelPublicAlbumLoadingTask() {
-        publicAlbumLoadingTask?.cancel()
-        publicAlbumLoadingTask = nil
     }
     
     private func decryptionKeyRequired() -> Bool {
@@ -318,5 +314,21 @@ private extension PhotoLibraryContentViewModel {
             return Array(selection.photos.values)
         }
         return library.allPhotos
+    }
+}
+
+extension ImportAlbumViewModel {
+    func renameAlbumAlertViewModel() -> TextFieldAlertViewModel {
+        TextFieldAlertViewModel(title: Strings.Localizable.AlbumLink.Alert.RenameAlbum.title,
+                                affirmativeButtonTitle: Strings.Localizable.rename,
+                                message: renameAlbumMessage,
+                                action: { [ weak self] in
+            guard let self, let newName = $0 else { return }
+            renameAlbum(newName: newName)
+        },
+                                validator: AlbumNameValidator(existingAlbumNames: { [ weak self] in
+            guard let self, let reservedAlbumNames else { return [] }
+            return reservedAlbumNames
+        }).rename)
     }
 }

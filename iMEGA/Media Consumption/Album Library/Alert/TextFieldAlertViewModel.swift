@@ -3,7 +3,7 @@ import Foundation
 struct TextFieldAlertViewModel {
     var textString: String
     let title: String
-    var placeholderText: String
+    var placeholderText: String?
     let affirmativeButtonTitle: String
     let affirmativeButtonInitiallyEnabled: Bool?
     let highlightInitialText: Bool?
@@ -14,7 +14,7 @@ struct TextFieldAlertViewModel {
     init(
         textString: String = "",
         title: String,
-        placeholderText: String,
+        placeholderText: String? = nil,
         affirmativeButtonTitle: String,
         affirmativeButtonInitiallyEnabled: Bool? = nil,
         highlightInitialText: Bool? = nil,
