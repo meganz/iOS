@@ -1,7 +1,9 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 import MEGATest
 import XCTest
 
@@ -21,13 +23,20 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testLoadPublicAlbum_onCollectionLinkOpen_publicLinkStatusShouldBeNeedsDescryptionKey() async throws {
+        let tracker = MockTracker()
+
         let sut = makeImportAlbumViewModel(
             publicLink: try requireDecryptionKeyAlbumLink,
-            publicAlbumUseCase: MockPublicAlbumUseCase())
+            publicAlbumUseCase: MockPublicAlbumUseCase(),
+            tracker: tracker)
+        
+        sut.onViewAppear()
         
         await sut.loadPublicAlbum()
         
         XCTAssertEqual(sut.publicLinkStatus, .requireDecryptionKey)
+        
+        tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportScreenEvent(), AlbumImportInputDecryptionKeyDialogEvent()])
     }
     
     func testLoadPublicAlbum_onFullAlbumLink_shouldChangeLinkStatusSetAlbumNameAndLoadPhotos() async throws {
@@ -36,9 +45,14 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2, name: albumName))
         let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
                                                   nodes: photos)
+        let tracker = MockTracker()
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            publicAlbumUseCase: albumUseCase)
+            publicAlbumUseCase: albumUseCase,
+            tracker: tracker)
+
+        sut.onViewAppear()
+
         XCTAssertNil(sut.publicAlbumName)
         XCTAssertFalse(sut.isPhotosLoaded)
         
@@ -61,15 +75,22 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photoLibraryContentViewModel.library,
                        photos.toPhotoLibrary(withSortType: .newest))
         XCTAssertTrue(sut.isPhotosLoaded)
+        
+        tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportScreenEvent(), ImportAlbumContentLoadedEvent()])
     }
     
     func testLoadPublicAlbum_onSharedAlbumError_shouldShowCannotAccessAlbumAlert() async throws {
+        let tracker = MockTracker()
         let sut = makeImportAlbumViewModel(
             publicLink: try validFullAlbumLink,
-            publicAlbumUseCase: MockPublicAlbumUseCase(publicAlbumResult: .failure(SharedAlbumErrorEntity.couldNotBeReadOrDecrypted)))
+            publicAlbumUseCase: MockPublicAlbumUseCase(publicAlbumResult: .failure(SharedAlbumErrorEntity.couldNotBeReadOrDecrypted)),
+            tracker: tracker)
+
+        sut.onViewAppear()
+
         XCTAssertEqual(sut.publicLinkStatus, .none)
         XCTAssertFalse(sut.showCannotAccessAlbumAlert)
-        
+
         let exp = expectation(description: "link status should switch to in progress to invalid")
         exp.expectedFulfillmentCount = 2
         var linkStatusResults = [AlbumPublicLinkStatus]()
@@ -86,6 +107,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         XCTAssertEqual(linkStatusResults, [.inProgress, .invalid])
         XCTAssertTrue(sut.showCannotAccessAlbumAlert)
+        tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportScreenEvent()])
     }
     
     func testLoadWithNewDecryptionKey_validKeyEntered_shouldSetAlbumNameLoadAlbumContentsAndPreserveOrignalURL() async throws {
@@ -95,9 +117,11 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let photos = try makePhotos()
         let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
                                                   nodes: photos)
+        let tracker = MockTracker()
         let sut = makeImportAlbumViewModel(
             publicLink: link,
-            publicAlbumUseCase: albumUseCase)
+            publicAlbumUseCase: albumUseCase,
+            tracker: tracker)
         sut.publicLinkStatus = .requireDecryptionKey
         sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
         
@@ -114,6 +138,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.loadWithNewDecryptionKey()
         
         await fulfillment(of: [exp], timeout: 1.0)
+        
+        tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportInputDecryptionKeyDialogEvent(), ImportAlbumContentLoadedEvent()])
         
         XCTAssertEqual(linkStatusResults, [.inProgress, .loaded])
         XCTAssertEqual(sut.publicAlbumName, albumName)
@@ -423,7 +449,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
                                           albumNameUseCase: some AlbumNameUseCaseProtocol = MockAlbumNameUseCase(),
                                           accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
                                           importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
-                                          accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase()
+                                          accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+                                          tracker: some AnalyticsTracking = MockTracker()
     ) -> ImportAlbumViewModel {
         let sut = ImportAlbumViewModel(
             publicLink: publicLink,
@@ -431,7 +458,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
             albumNameUseCase: albumNameUseCase,
             accountStorageUseCase: accountStorageUseCase,
             importPublicAlbumUseCase: importPublicAlbumUseCase,
-            accountUseCase: accountUseCase)
+            accountUseCase: accountUseCase,
+            tracker: tracker)
         trackForMemoryLeaks(on: sut)
         return sut
     }
