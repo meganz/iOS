@@ -14,21 +14,38 @@ public protocol SaveAlbumToFolderUseCaseProtocol {
 }
 
 public struct SaveAlbumToFolderUseCase<T: NodeActionRepositoryProtocol,
-                                       U: ShareAlbumRepositoryProtocol>: SaveAlbumToFolderUseCaseProtocol {
+                                       U: ShareAlbumRepositoryProtocol,
+                                       V: NodeRepositoryProtocol>: SaveAlbumToFolderUseCaseProtocol {
     private let nodeActionRepository: T
     private let shareAlbumRepository: U
+    private let nodeRepository: V
     
     public init(nodeActionRepository: T,
-                shareAlbumRepository: U) {
+                shareAlbumRepository: U,
+                nodeRepository: V) {
         self.nodeActionRepository = nodeActionRepository
         self.shareAlbumRepository = shareAlbumRepository
+        self.nodeRepository = nodeRepository
     }
     
     public func saveToFolder(albumName: String,
                              photos: [NodeEntity],
                              parent: NodeEntity) async throws -> [NodeEntity] {
-        let album = try await nodeActionRepository.createFolder(name: albumName, parent: parent)
+        let albumFolderName = await folderName(in: parent, albumName: albumName)
         try Task.checkCancellation()
-        return try await shareAlbumRepository.copyPublicPhotos(toFolder: album, photos: photos)
+        let albumFolder = try await nodeActionRepository.createFolder(name: albumFolderName,
+                                                                      parent: parent)
+        try Task.checkCancellation()
+        return try await shareAlbumRepository.copyPublicPhotos(toFolder: albumFolder,
+                                                               photos: photos)
+    }
+    
+    // MARK: - Private
+    private func folderName(in parent: NodeEntity, albumName: String) async -> String {
+        var folderName = albumName
+        while await nodeRepository.childNode(parent: parent, name: folderName, type: .folder) != nil {
+            folderName += " (1)"
+        }
+        return folderName
     }
 }

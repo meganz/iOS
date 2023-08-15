@@ -3,7 +3,7 @@ import MEGADomain
 
 final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
     static var newRepo: FilesSearchRepository {
-        FilesSearchRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        FilesSearchRepository(sdk: MEGASdk.shared)
     }
     
     public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
@@ -132,7 +132,7 @@ extension FilesSearchRepository: MEGAGlobalDelegate {
             updater.send(nodeList?.toNodeEntities() ?? [])
             return
         }
-
+        
         callback(nodeList?.toNodeEntities() ?? [])
     }
 }
