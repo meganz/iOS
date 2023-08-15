@@ -1298,7 +1298,7 @@
 		99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */; };
 		99F300982A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F300972A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift */; };
 		99F9ABC02A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */; };
-		9D26F234294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */; };
+		9D26F234294BADCA00FAD016 /* TextFieldAlertRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
 		9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */; };
 		9D3563C828B54C1300CB3365 /* AppearanceViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */; };
@@ -3838,7 +3838,7 @@
 		99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingLinkActivityItemSource.swift; sourceTree = "<group>"; };
 		99F300972A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomErrorEntity.swift; sourceTree = "<group>"; };
 		99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomWarningBannerView.swift; sourceTree = "<group>"; };
-		9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertViewWrapper.swift; sourceTree = "<group>"; };
+		9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertRepresenter.swift; sourceTree = "<group>"; };
 		9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountRouter.swift; sourceTree = "<group>"; };
 		9D3563C528B54BB300CB3365 /* AdvancedViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouter.swift; sourceTree = "<group>"; };
 		9D3563C728B54C1300CB3365 /* AppearanceViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewRouter.swift; sourceTree = "<group>"; };
@@ -9199,8 +9199,8 @@
 		9DD2E849295557E5000983A3 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */,
 				9DD2E84C295558D0000983A3 /* TextFieldAlertViewModel.swift */,
-				9D26F233294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift */,
 				9DD2E84A29555880000983A3 /* UIAlertController+Extension.swift */,
 			);
 			path = Alert;
@@ -14316,8 +14316,8 @@
 				12466830275DBE0500C94335 /* TextEditorViewController.swift in Sources */,
 				12466832275DBE0500C94335 /* TextEditorViewModel.swift in Sources */,
 				12466833275DBE0600C94335 /* TextEditorViewRouter.swift in Sources */,
+				9D26F234294BADCA00FAD016 /* TextFieldAlertRepresenter.swift in Sources */,
 				9DD2E84D295558D0000983A3 /* TextFieldAlertViewModel.swift in Sources */,
-				9D26F234294BADCA00FAD016 /* TextFieldAlertViewWrapper.swift in Sources */,
 				5D7D53472551263C00D3582E /* TextFieldStyleFactory.swift in Sources */,
 				83DBDDE329D730C800CF433B /* TextFieldView.swift in Sources */,
 				1246682E275DBE0500C94335 /* TextFile.swift in Sources */,

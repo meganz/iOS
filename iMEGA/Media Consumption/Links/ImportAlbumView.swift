@@ -12,13 +12,20 @@ struct ImportAlbumView: View {
     
     @StateObject var viewModel: ImportAlbumViewModel
     
+    @State private var publicAlbumLoadingTask: Task<Void, Never>?
+    
     var body: some View {
         ZStack {
             EmptyView()
                 .decryptionKeyMissingAlert(isPresented: $viewModel.showingDecryptionKeyAlert,
                                            decryptionKey: $viewModel.publicLinkDecryptionKey,
                                            onTappingCancel: dismissImportAlbumScreen,
-                                           onTappingDecryptButton: viewModel.loadWithNewDecryptionKey)
+                                           onTappingDecryptButton: {
+                    publicAlbumLoadingTask = Task {
+                        await viewModel.loadWithNewDecryptionKey()
+                    }
+                })
+                                           
             VStack(spacing: 0) {
                 navigationBar
                 
@@ -38,6 +45,11 @@ struct ImportAlbumView: View {
                 bottomToolbar
             }
         }
+        .taskForiOS14 {
+            await viewModel.loadPublicAlbum()
+        }
+        .alert(isPresented: $viewModel.showRenameAlbumAlert,
+               viewModel.renameAlbumAlertViewModel())
         .alert(isPresented: $viewModel.showCannotAccessAlbumAlert) {
             Alert(title: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.title),
                   message: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message),
@@ -53,12 +65,6 @@ struct ImportAlbumView: View {
         }
         .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
             CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
-        }
-        .onAppear {
-            viewModel.loadPublicAlbum()
-        }
-        .onDisappear {
-            viewModel.cancelLoading()
         }
         .onReceive(viewModel.$showLoading.dropFirst()) {
             $0 ? SVProgressHUD.show() : SVProgressHUD.dismiss()
@@ -96,7 +102,7 @@ struct ImportAlbumView: View {
     private var navigationTitle: some View {
         if viewModel.isSelectionEnabled {
             NavigationTitleView(title: viewModel.selectionNavigationTitle)
-        } else if let albumName = viewModel.albumName {
+        } else if let albumName = viewModel.publicAlbumName {
             NavigationTitleView(title: albumName, subtitle: Strings.Localizable.albumLink)
         } else {
             NavigationTitleView(title: Strings.Localizable.albumLink)
@@ -136,8 +142,9 @@ struct ImportAlbumView: View {
     private var bottomToolbar: some View {
         HStack(alignment: .top) {
             if viewModel.showImportToolbarButton {
-                toolbarImageButton(image: Asset.Images.InfoActions.import.image,
-                                   action: viewModel.importAlbum)
+                toolbarImageButton(image: Asset.Images.InfoActions.import.image) {
+                    Task { await viewModel.importAlbum() }
+                }
                 Spacer()
             }
             toolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image) {
