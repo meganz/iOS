@@ -339,6 +339,7 @@ extension ImportAlbumViewModel {
     func renameAlbumAlertViewModel() -> TextFieldAlertViewModel {
         TextFieldAlertViewModel(title: Strings.Localizable.AlbumLink.Alert.RenameAlbum.title,
                                 affirmativeButtonTitle: Strings.Localizable.rename,
+                                affirmativeButtonInitiallyEnabled: false,
                                 message: renameAlbumMessage,
                                 action: { [ weak self] in
             guard let self, let newName = $0 else { return }
