@@ -89,7 +89,7 @@ class AppearanceManager: NSObject {
         navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
         navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
-        
+
         navigationBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
     }
     
@@ -99,10 +99,14 @@ class AppearanceManager: NSObject {
     }
     
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
-        toolbar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
-        toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        
+        let appearance = makeUIToolbarAppearance(traitCollection)
+        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
+
+        toolbar.standardAppearance = appearance
+        if #available(iOS 15.0, *) {
+            toolbar.scrollEdgeAppearance = appearance
+        }
+
         let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
         for i in 0..<numberOfBarButtonItems {
             let barButtonItem = toolbar.items?[i]
@@ -167,13 +171,19 @@ class AppearanceManager: NSObject {
     }
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {
-        let toolbarAppearance = UIToolbarAppearance.init()
-        toolbarAppearance.configureWithDefaultBackground()
-        toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        let toolbarAppearance = makeUIToolbarAppearance(traitCollection)
+
         UIToolbar.appearance().standardAppearance = toolbarAppearance
         if #available(iOS 15.0, *) {
             UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
         }
+    }
+
+    private class func makeUIToolbarAppearance(_ traitCollection: UITraitCollection) -> UIToolbarAppearance {
+        let toolbarAppearance = UIToolbarAppearance.init()
+        toolbarAppearance.configureWithDefaultBackground()
+        toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        return toolbarAppearance
     }
     
     @objc private func appDidBecomeActive() {
