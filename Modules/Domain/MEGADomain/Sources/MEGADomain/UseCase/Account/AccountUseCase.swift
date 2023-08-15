@@ -4,6 +4,7 @@ public protocol AccountUseCaseProtocol {
     var currentUserHandle: HandleEntity? { get }
     func currentUser() async -> UserEntity?
     var isGuest: Bool { get }
+    var bandwidthOverquotaDelay: Int64 { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]
     func totalNodesCount() -> UInt
@@ -32,6 +33,10 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     
     public var isGuest: Bool {
         repository.isGuest
+    }
+    
+    public var bandwidthOverquotaDelay: Int64 {
+        repository.bandwidthOverquotaDelay
     }
     
     public func isLoggedIn() -> Bool {

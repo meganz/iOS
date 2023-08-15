@@ -10,6 +10,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     private let _isLoggedIn: Bool
     private let _isMasterBusinessAccount: Bool
     private let _contacts: [UserEntity]
+    private let _bandwidthOverquotaDelay: Int64
     private let contactsRequestsCount: Int
     private let unseenUserAlertsCount: UInt
     public let requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never>
@@ -37,11 +38,13 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
                 requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> = Empty().eraseToAnyPublisher(),
                 contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> = Empty().eraseToAnyPublisher(),
                 userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> = Empty().eraseToAnyPublisher(),
-                isUpgradeSecuritySuccess: Bool = false) {
+                isUpgradeSecuritySuccess: Bool = false,
+                bandwidthOverquotaDelay: Int64 = 0) {
         _isLoggedIn = isLoggedIn
         _isMasterBusinessAccount = isMasterBusinessAccount
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
+        _bandwidthOverquotaDelay = bandwidthOverquotaDelay
         self.currentUser = currentUser
         self.isGuest = isGuest
         self.nodesCount = nodesCount
@@ -73,6 +76,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     
     public func contacts() -> [UserEntity] {
         _contacts
+    }
+    
+    public var bandwidthOverquotaDelay: Int64 {
+        _bandwidthOverquotaDelay
     }
     
     public static var newRepo: MockAccountRepository {
