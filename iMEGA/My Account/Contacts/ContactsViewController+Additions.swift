@@ -70,20 +70,18 @@ extension ContactsViewController {
 
     @objc
     func handleContactsNotVerifiedHeaderVisibility() {
-        var users: [MEGAUser]?
+        contactsNotVerifiedView.isHidden = !viewModel.shouldShowUnverifiedContactsBanner(
+            contactsMode: contactsMode,
+            selectedUsersArray: selectedUsersArray,
+            visibleUsersArray: visibleUsersArray
+        )
+    }
 
-        if contactsMode == .shareFoldersWith {
-            users = selectedUsersArray as? [MEGAUser]
-        } else {
-            users = visibleUsersArray as? [MEGAUser]
-        }
-
-        guard let users, DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .contactVerification)  else {
-            contactsNotVerifiedView.isHidden = true
-            return
-        }
-
-        let hasSelectedUnverifiedUsers = users.contains(where: { !MEGASdk.shared.areCredentialsVerified(of: $0) })
-        contactsNotVerifiedView.isHidden = !hasSelectedUnverifiedUsers
+    @objc
+    func createViewModel() {
+        self.viewModel = ContactsViewModel(
+            sdk: MEGASdk.shared,
+            featureFlagProvider: DIContainer.featureFlagProvider
+        )
     }
 }

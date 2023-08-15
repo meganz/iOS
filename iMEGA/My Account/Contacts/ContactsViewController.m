@@ -120,6 +120,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self createViewModel];
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
@@ -1021,6 +1023,7 @@
     } else {
         [self addItemsToList:@[[ItemListModel.alloc initWithEmail:email]]];
         [self.selectedUsersArray addObject:email];
+        [self handleContactsNotVerifiedHeaderVisibility];
     }
 }
 
