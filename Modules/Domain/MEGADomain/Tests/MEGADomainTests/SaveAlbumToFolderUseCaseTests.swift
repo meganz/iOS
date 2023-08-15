@@ -49,14 +49,38 @@ final class SaveAlbumToFolderUseCaseTests: XCTestCase {
         }
     }
     
+    func testSaveToFolder_folderExistWithAlbumName_shouldAddSuffixToAlbumName() async throws {
+        let albumName = "New Album"
+        let childNodes = [albumName: NodeEntity(handle: 5),
+                          albumName + " (1)": NodeEntity(handle: 66)]
+        let nodeRepository = MockNodeRepository(childNodes: childNodes)
+        let expectedFolderName = albumName + " (1) (1)"
+        let albumFolder = NodeEntity(name: expectedFolderName, handle: 64, isFolder: true)
+        let nodeActionRepository = MockNodeActionRepository(createFolderResult: .success(albumFolder))
+        let copiedPhotos = makePhotos()
+        let shareAlbumRepository = MockShareAlbumRepository(copyPublicPhotosResult: .success(copiedPhotos))
+        let sut = makeSaveAlbumToFolderUseCase(nodeActionRepository: nodeActionRepository,
+                                               shareAlbumRepository: shareAlbumRepository,
+                                               nodeRepository: nodeRepository)
+        
+        let photos = try await sut.saveToFolder(albumName: albumName,
+                                                photos: makePhotos(),
+                                                parent: parentFolder)
+        XCTAssertEqual(photos, copiedPhotos)
+        XCTAssertEqual(nodeActionRepository.createFolderName,
+                       expectedFolderName)
+    }
+    
     // MARK: - Helpers
     
     private func makeSaveAlbumToFolderUseCase(
         nodeActionRepository: some NodeActionRepositoryProtocol = MockNodeActionRepository(),
-        shareAlbumRepository: some ShareAlbumRepositoryProtocol = MockShareAlbumRepository()
+        shareAlbumRepository: some ShareAlbumRepositoryProtocol = MockShareAlbumRepository(),
+        nodeRepository: some NodeRepositoryProtocol = MockNodeRepository()
     ) -> some SaveAlbumToFolderUseCaseProtocol {
         SaveAlbumToFolderUseCase(nodeActionRepository: nodeActionRepository,
-                                 shareAlbumRepository: shareAlbumRepository)
+                                 shareAlbumRepository: shareAlbumRepository,
+                                 nodeRepository: nodeRepository)
     }
     
     private func makePhotos(count: Int = 4) -> [NodeEntity] {
