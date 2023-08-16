@@ -1,5 +1,5 @@
 import MEGADomain
-import MEGASDKRepo
+import MEGARepo
 
 extension PreferenceUseCase where T == PreferenceRepository {
     static var `default`: PreferenceUseCase {
