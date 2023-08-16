@@ -1,6 +1,7 @@
 
 import MEGADomain
 import MEGASDKRepo
+import MEGASwiftUI
 import UIKit
 
 enum NodeInfoTableViewSection {
@@ -16,6 +17,7 @@ enum NodeInfoTableViewSection {
 enum InfoSectionRow {
     case preview
     case owner
+    case verifyContact
 }
 
 enum DetailsSectionRow {
@@ -52,6 +54,14 @@ class NodeInfoViewController: UIViewController {
     private var cachedActiveShares: [MEGAShare] = []
     private var cachedDetailRows: [DetailsSectionRow] = []
     private var cachedInfoRows: [InfoSectionRow] = []
+
+    private var isContactVerified: Bool {
+        viewModel?.isContactVerified() == true
+    }
+
+    private var shouldDisplayContactVerificationInfo: Bool {
+        viewModel?.shouldDisplayContactVerificationInfo == true
+    }
     
     // MARK: - Lifecycle
 
@@ -87,6 +97,8 @@ class NodeInfoViewController: UIViewController {
             tableView.sectionHeaderTopPadding = 0
         }
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
+        tableView.register(HostingTableViewCell<NodeInfoVerifyAccountTableViewCell>.self,
+                                 forCellReuseIdentifier: "NodeInfoVerifyAccountTableViewCell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -185,6 +197,7 @@ class NodeInfoViewController: UIViewController {
     
     @objc private func closeButtonTapped() {
         sdk.remove(self)
+        viewModel?.complete()
         dismiss(animated: true, completion: nil)
     }
     
@@ -299,6 +312,19 @@ class NodeInfoViewController: UIViewController {
         cachedDetailRows = detailRows()
         cachedInfoRows = infoRows()
     }
+
+    private func showVerifyCredentials() {
+        guard let navigationController else { return }
+
+        viewModel?.openVerifyCredentials(
+            from: navigationController,
+            completion: { [weak self] in
+                guard let self else { return }
+                self.cachedInfoRows = self.infoRows()
+                self.reloadData()
+            }
+        )
+    }
     
     // MARK: - TableView Data Source
 
@@ -329,6 +355,9 @@ class NodeInfoViewController: UIViewController {
         infoRows.append(.preview)
         if node.isInShare() {
             infoRows.append(.owner)
+            if shouldDisplayContactVerificationInfo && !isContactVerified {
+                infoRows.append(.verifyContact)
+            }
         }
         return infoRows
     }
@@ -383,9 +412,27 @@ class NodeInfoViewController: UIViewController {
         }
         
         if let user = sdk.userFrom(inShare: node) {
-            cell.configure(user: user)
+            cell.configure(
+                user: user,
+                shouldDisplayUserVerifiedIcon: shouldDisplayContactVerificationInfo && isContactVerified
+            )
         }
         
+        return cell
+    }
+
+    private func verifyContactCell(_ indexPath: IndexPath) -> HostingTableViewCell<NodeInfoVerifyAccountTableViewCell> {
+        guard let cell = tableView?.dequeueReusableCell(withIdentifier: "NodeInfoVerifyAccountTableViewCell", for: indexPath) as? HostingTableViewCell<NodeInfoVerifyAccountTableViewCell> else {
+            return HostingTableViewCell<NodeInfoVerifyAccountTableViewCell>()
+        }
+
+        let upgradeCellView = NodeInfoVerifyAccountTableViewCell(
+            onTap: { [weak self] in
+                self?.showVerifyCredentials()
+            }
+        )
+        cell.host(upgradeCellView, parent: self)
+        cell.selectionStyle = .none
         return cell
     }
     
@@ -520,6 +567,8 @@ extension NodeInfoViewController: UITableViewDataSource {
                 return previewCell(forIndexPath: indexPath)
             case .owner:
                 return ownerCell(forIndexPath: indexPath)
+            case .verifyContact:
+                return verifyContactCell(indexPath)
             }
         case .details:
             return detailCell(forIndexPath: indexPath)

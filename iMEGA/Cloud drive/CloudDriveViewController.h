@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) BOOL shouldRemovePlayerDelegate;
 @property (assign, nonatomic) BOOL isFromViewInFolder;
 @property (assign, nonatomic) BOOL isFromSharedItem;
+@property (assign, nonatomic) BOOL isFromUnverifiedContactSharedFolder;
 @property (assign, nonatomic) MEGAShareType shareType; //Control the actions allowed for node/nodes selected
 @property (assign, nonatomic) BOOL hasMediaFiles;
 @property (assign, nonatomic) BOOL isEditingModeBeingDisabled;
@@ -43,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
 
+@property (strong, nonatomic) IBOutlet UIView *contactNotVerifiedBannerView;
 @property (strong, nonatomic) UIBarButtonItem *contextBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *uploadAddBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;

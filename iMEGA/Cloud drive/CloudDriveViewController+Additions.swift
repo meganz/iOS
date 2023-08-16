@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASDKRepo
+import SwiftUI
 
 extension CloudDriveViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
@@ -73,7 +74,7 @@ extension CloudDriveViewController {
         var currentNodeShareType: MEGAShareType = .accessUnknown
     
         nodes.forEach { node in
-            currentNodeShareType = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
+            currentNodeShareType = MEGASdk.shared.accessLevel(for: node)
             
             if currentNodeShareType == .accessRead && currentNodeShareType.rawValue < shareType.rawValue {
                 return
@@ -282,5 +283,26 @@ extension CloudDriveViewController {
         guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
         GetLinkRouter(presenter: self,
                       nodes: nodes).start()
+    }
+
+    @objc func setupContactNotVerifiedBanner() {
+        let hostingView = UIHostingController(
+            rootView: WarningView(
+                viewModel: .init(warningType: .contactNotVerifiedSharedFolder(parentNode?.name ?? ""))
+            )
+        )
+
+        guard let hostingViewUIView = hostingView.view else { return }
+
+        contactNotVerifiedBannerView.isHidden = !isFromUnverifiedContactSharedFolder
+        contactNotVerifiedBannerView.addSubview(hostingViewUIView)
+        hostingViewUIView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            hostingViewUIView.topAnchor.constraint(equalTo: contactNotVerifiedBannerView.topAnchor),
+            hostingViewUIView.leadingAnchor.constraint(equalTo: contactNotVerifiedBannerView.leadingAnchor),
+            hostingViewUIView.trailingAnchor.constraint(equalTo: contactNotVerifiedBannerView.trailingAnchor),
+            hostingViewUIView.bottomAnchor.constraint(equalTo: contactNotVerifiedBannerView.bottomAnchor)
+        ])
     }
 }

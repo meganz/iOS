@@ -28,6 +28,11 @@ public struct ShareRepository: ShareRepositoryProtocol {
     public func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity] {
         sdk.outShares(order.toMEGASortOrderType()).toShareEntities()
     }
+
+    public func areCredentialsVerifed(of user: UserEntity) -> Bool {
+        guard let user = user.toMEGAUser() else { return false }
+        return sdk.areCredentialsVerified(of: user)
+    }
     
     public func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity {
         guard let sharedNode = node.toMEGANode(in: sdk) else { throw ShareErrorEntity.nodeNotFound }

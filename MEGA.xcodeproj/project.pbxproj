@@ -1270,6 +1270,7 @@
 		94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */; };
 		94B6E8852A83F6410082D9B1 /* MEGAPickerFileProviderDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */; };
 		94B6E8882A83F8530082D9B1 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */; };
+		94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */; };
 		94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
 		94C7A3812A796E0C0090AEFC /* ItemListViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */; };
@@ -3813,6 +3814,7 @@
 		949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenAppRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTests.swift; sourceTree = "<group>"; };
 		94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTests.swift; sourceTree = "<group>"; };
+		94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoVerifyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeVersionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
 		94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemListViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -8108,6 +8110,7 @@
 				8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */,
 				8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */,
 				C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */,
+				94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -14370,6 +14373,7 @@
 				9495DBBD2A40C08300FA22EE /* UIApplication+PermissionModal.swift in Sources */,
 				83B906BB249A29CA0088F15C /* UIButton+Additions.swift in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
+				94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */,
 				5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */,
 				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,

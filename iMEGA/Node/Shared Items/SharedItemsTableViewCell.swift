@@ -15,6 +15,7 @@ final class SharedItemsTableViewCell: UITableViewCell {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var permissionsButton: UIButton!
     @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var contactVerifiedImageView: UIImageView!
     
     @objc var delegate: (any SharedItemsTableViewCellDelegate)?
     
