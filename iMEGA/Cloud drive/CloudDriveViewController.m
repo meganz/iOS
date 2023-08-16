@@ -157,6 +157,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self assignAsMEGANavigationDelegateWithDelegate:self];
     
     self.wasSelectingFavoriteUnfavoriteNodeActionOption = NO;
+
+    [self setupContactNotVerifiedBanner];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

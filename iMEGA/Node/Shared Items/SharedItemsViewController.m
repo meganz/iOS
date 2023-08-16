@@ -459,6 +459,7 @@
     
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     [self configureAccessibilityForCell:cell];
+    [self configureContactNotVerifiedImageVisibilityFor: cell with:user];
     
     return cell;
 }
@@ -999,8 +1000,11 @@
                 [self showContactVerificationViewForIndexPath:indexPath];
             } else {
                 BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
+
                 CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
                 cloudDriveVC.isFromSharedItem = YES;
+                cloudDriveVC.isFromUnverifiedContactSharedFolder = [self shouldDisplayContactVerificationBannerForCloudDrive:node];
+                
                 [cloudDriveVC setParentNode:node];
                 [cloudDriveVC setDisplayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive];
                 
