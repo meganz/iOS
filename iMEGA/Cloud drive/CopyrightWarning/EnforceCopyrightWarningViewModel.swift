@@ -12,7 +12,7 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
     @Published var viewStatus: CopyrightWarningViewStatus = .unknown
     @Published var isTermsAggreed: Bool = false
     
-    private let shareUseCase: any ShareUseCaseProtocol
+    private let copyrightUseCase: any CopyrightUseCaseProtocol
     @PreferenceWrapper(key: .agreedCopywriteWarning, defaultValue: false)
     private var agreedCopywriteWarning: Bool
     private var subscriptions = Set<AnyCancellable>()
@@ -21,27 +21,35 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
         "\(Strings.Localizable.copyrightMessagePart1)\n\n\(Strings.Localizable.copyrightMessagePart2)"
     }
     
-    init(preferenceUseCase: any PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         shareUseCase: any ShareUseCaseProtocol) {
-        self.shareUseCase = shareUseCase
+    init(preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+         copyrightUseCase: some CopyrightUseCaseProtocol) {
+        self.copyrightUseCase = copyrightUseCase
         $agreedCopywriteWarning.useCase = preferenceUseCase
         subscribeToTermsAggreed()
     }
     
-    func determineViewState() {
-        setAgreedIfAccountContainsSharedLinks()
+    @MainActor
+    func determineViewState() async {
         if agreedCopywriteWarning {
             viewStatus = .agreed
+        } else {
+            await checkCopyrightAgreedBefore()
+        }
+    }
+    
+    @MainActor
+    private func checkCopyrightAgreedBefore() async {
+        if await copyrightUseCase.shouldAutoApprove() {
+            agreeToCopyright()
         } else {
             viewStatus = .declined
         }
     }
     
-    private func setAgreedIfAccountContainsSharedLinks() {
-        if !agreedCopywriteWarning,
-           shareUseCase.allPublicLinks(sortBy: .none).isNotEmpty {
-            agreedCopywriteWarning = true
-        }
+    @MainActor
+    private func agreeToCopyright() {
+        agreedCopywriteWarning = true
+        viewStatus = .agreed
     }
     
     private func subscribeToTermsAggreed() {
@@ -50,8 +58,9 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
             .filter { $0 }
             .sink { [weak self] _ in
                 guard let self else { return }
-                agreedCopywriteWarning = true
-                viewStatus = .agreed
+                Task { [weak self] in
+                    await self?.agreeToCopyright()
+                }
             }.store(in: &subscriptions)
     }
 }
