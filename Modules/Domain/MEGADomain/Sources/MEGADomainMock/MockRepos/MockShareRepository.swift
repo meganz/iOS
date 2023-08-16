@@ -7,9 +7,11 @@ final public class MockShareRepository: ShareRepositoryProtocol {
     }
     
     private let sharingUser: UserEntity?
+    private let areUserCredentialsVerified: Bool
     
-    public init(sharingUser: UserEntity? = nil) {
+    public init(sharingUser: UserEntity? = nil, areUserCredentialsVerified: Bool = false) {
         self.sharingUser = sharingUser
+        self.areUserCredentialsVerified = areUserCredentialsVerified
     }
     
     public func user(sharing node: NodeEntity) -> UserEntity? {
@@ -22,6 +24,10 @@ final public class MockShareRepository: ShareRepositoryProtocol {
     
     public func allOutShares(sortBy order: SortOrderEntity) -> [ShareEntity] {
         [ShareEntity()]
+    }
+
+    public func areCredentialsVerifed(of user: UserEntity) -> Bool {
+        areUserCredentialsVerified
     }
     
     public func createShareKey(forNode node: NodeEntity) async throws -> HandleEntity {

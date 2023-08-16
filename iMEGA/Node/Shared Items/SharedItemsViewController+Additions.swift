@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
 extension SharedItemsViewController: ContatctsViewControllerDelegate {
@@ -23,9 +24,15 @@ extension SharedItemsViewController {
     
     @objc func createNodeInfoViewModel(withNode node: MEGANode,
                                        isNodeUndecryptedFolder: Bool) -> NodeInfoViewModel {
-        return NodeInfoViewModel(withNode: node,
-                                 shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
-                                 isNodeUndecryptedFolder: isNodeUndecryptedFolder)
+        return NodeInfoViewModel(
+            withNode: node,
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            isNodeUndecryptedFolder: isNodeUndecryptedFolder,
+            shouldDisplayContactVerificationInfo: isContactVerificationEnabled() && incomingButton?.isSelected == true,
+            completion: { [weak self] in
+                self?.reloadUI()
+            }
+        )
     }
     
     @objc func indexPathFromSender(_ sender: UIButton) -> IndexPath? {
@@ -314,6 +321,48 @@ extension SharedItemsViewController {
         guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
         GetLinkRouter(presenter: self,
                       nodes: nodes).start()
+    }
+
+    @objc func configureContactNotVerifiedImageVisibility(
+        for cell: SharedItemsTableViewCell,
+        with user: MEGAUser
+    ) {
+        guard isContactVerificationEnabled() else {
+            cell.contactVerifiedImageView.isHidden = true
+            return
+        }
+
+        cell.contactVerifiedImageView.isHidden = !isContactVerificationEnabled() || !isContactVerified(user)
+    }
+
+    @objc func isContactVerified(_ user: MEGAUser) -> Bool {
+        MEGASdk.shared.areCredentialsVerified(of: user)
+    }
+
+    @objc func isContactVerificationEnabled() -> Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .contactVerification)
+    }
+
+    @objc func user(for node: MEGANode) -> MEGAUser? {
+        guard let incomingShareList = incomingShareList else { return nil }
+
+        for i in 0...Int(truncating: incomingShareList.size) {
+            guard let share = incomingShareList.share(at: i), share.nodeHandle == node.handle else {
+                continue
+            }
+
+            return MEGASdk.shared.contact(forEmail: share.user)
+        }
+
+        return nil
+    }
+
+    @objc func shouldDisplayContactVerificationBannerForCloudDrive(_ node: MEGANode) -> Bool {
+        var isUserVerified = false
+        if let user = user(for: node) {
+            isUserVerified = isContactVerified(user)
+        }
+        return isContactVerificationEnabled() && !isUserVerified && incomingButton?.isSelected == true
     }
 }
 
