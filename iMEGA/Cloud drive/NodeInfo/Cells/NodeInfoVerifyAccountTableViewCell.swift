@@ -7,7 +7,7 @@ struct NodeInfoVerifyAccountTableViewCell: View {
         Button(
             action: onTap,
             label: {
-                Text(Strings.Localizable.verifyContact)
+                Text(Strings.Localizable.verifyCredentials)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .foregroundColor(Color(Colors.General.Green._00A886.name))
             }
