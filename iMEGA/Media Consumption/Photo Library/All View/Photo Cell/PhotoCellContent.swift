@@ -24,12 +24,7 @@ struct PhotoCellContent: View {
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
         .gesture(viewModel.editMode.isEditing ? tap : nil)
-        .onAppear {
-            viewModel.startLoadingThumbnail()
-        }
-        .onDisappear {
-            viewModel.cancelLoadingThumbnail()
-        }
+        .taskForiOS14 { await viewModel.startLoadingThumbnail() }
     }
     
     @ViewBuilder
