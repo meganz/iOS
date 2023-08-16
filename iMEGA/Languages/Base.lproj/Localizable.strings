@@ -1098,8 +1098,6 @@
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been locked temporarily due to potential abuse. Please verify your phone number to unlock your account.";
 /* Verify your account title */
 "Verify Your Account"="Verify your account";
-/* Verify contact title */
-"verifyContact"="Verify Contact";
 /* Add your phone number title */
 "Add Your Phone Number"="Add your phone number";
 /* Choose Your Region title */
