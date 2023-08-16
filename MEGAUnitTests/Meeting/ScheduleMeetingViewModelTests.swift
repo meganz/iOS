@@ -272,9 +272,20 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.meetingLinkEnabled)
     }
     
-    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalse() {
+    func testShowWaitingRoomWarningBanner_givenWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeTrue() {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: true)
+        
         let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
+
+        evaluate {
+            sut.showWaitingRoomWarningBanner == true
+        }
+    }
+    
+    func testShowWaitingRoomWarningBanner_givenBannerDismissedBeforeAndWaitingRoomEnabledAndAllowNonHostsToAddParticipantsEnabled_shouldBeFalse() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(waitingRoomEnabled: true, allowNonHostsToAddParticipantsEnabled: true)
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.waitingRoomWarningBannerDismissed: true])
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, preferenceUseCase: preferenceUseCase)
 
         evaluate(isInverted: true) {
             sut.showWaitingRoomWarningBanner == true
@@ -316,7 +327,6 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
             sut.showWaitingRoomWarningBanner == true
         }
         
-        sut.waitingRoomEnabled = true
         sut.waitingRoomEnabled = true
 
         evaluate {
