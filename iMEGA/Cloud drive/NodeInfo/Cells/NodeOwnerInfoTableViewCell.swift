@@ -1,3 +1,4 @@
+import MEGAChatSdk
 import UIKit
 
 class NodeOwnerInfoTableViewCell: UITableViewCell {
@@ -5,8 +6,12 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var emailLabel: MEGALabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var onlineStatusView: RoundedView!
+    @IBOutlet weak var contactVerifiedImageView: UIImageView!
 
-    func configure(user: MEGAUser) {
+    func configure(
+        user: MEGAUser,
+        shouldDisplayUserVerifiedIcon: Bool
+    ) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         emailLabel.textColor = UIColor.mnz_label()
         emailLabel.text = user.email
@@ -21,8 +26,10 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
         
         avatarImageView.mnz_setImage(forUserHandle: user.handle, name: userDisplayName)
         
-        onlineStatusView.backgroundColor = UIColor.mnz_color(for: MEGASdkManager.sharedMEGAChatSdk().userOnlineStatus(user.handle))
+        onlineStatusView.backgroundColor = UIColor.mnz_color(for: MEGAChatSdk.shared.userOnlineStatus(user.handle))
         onlineStatusView.layer.cornerRadius = onlineStatusView.frame.height / 2
+
+        contactVerifiedImageView.isHidden = !shouldDisplayUserVerifiedIcon
     }
     
     func createOwnerAttributedString(string: String,

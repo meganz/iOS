@@ -652,15 +652,26 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udP-7t-bdN">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAf-QH-eJE">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nks-eK-WKJ">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                                    </view>
+                                        <subviews>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K7S-dn-qcF">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="80" id="9Xd-mr-pWg"/>
+                                                </constraints>
+                                            </view>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAf-QH-eJE">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="xAf-QH-eJE" secondAttribute="trailing" id="AXi-wK-ZEL"/>
-                                    <constraint firstItem="xAf-QH-eJE" firstAttribute="centerY" secondItem="udP-7t-bdN" secondAttribute="centerY" id="CjC-YF-DV2"/>
-                                    <constraint firstItem="xAf-QH-eJE" firstAttribute="leading" secondItem="udP-7t-bdN" secondAttribute="leading" id="Fed-Hw-nPW"/>
-                                    <constraint firstAttribute="bottom" secondItem="xAf-QH-eJE" secondAttribute="bottom" id="l7E-zt-Ydk"/>
+                                    <constraint firstItem="nks-eK-WKJ" firstAttribute="leading" secondItem="udP-7t-bdN" secondAttribute="leading" id="JfF-bo-WJB"/>
+                                    <constraint firstAttribute="trailing" secondItem="nks-eK-WKJ" secondAttribute="trailing" id="YYp-h2-fgY"/>
+                                    <constraint firstItem="nks-eK-WKJ" firstAttribute="centerY" secondItem="udP-7t-bdN" secondAttribute="centerY" id="fHE-LR-t0I"/>
+                                    <constraint firstAttribute="bottom" secondItem="nks-eK-WKJ" secondAttribute="bottom" id="qNy-jp-cpd"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -680,6 +691,7 @@
                     <connections>
                         <outlet property="actionsBarButtonItem" destination="cH7-iH-c9P" id="nZM-7E-XQf"/>
                         <outlet property="carbonCopyBarButtonItem" destination="vGK-lg-Cye" id="AWV-kg-ow1"/>
+                        <outlet property="contactNotVerifiedBannerView" destination="K7S-dn-qcF" id="4mr-VA-zQC"/>
                         <outlet property="containerView" destination="xAf-QH-eJE" id="5Qa-dm-LTN"/>
                         <outlet property="deleteBarButtonItem" destination="T78-eD-QmZ" id="CFD-Ds-54c"/>
                         <outlet property="downloadBarButtonItem" destination="JAE-WG-FSu" id="Z1m-5a-lse"/>
