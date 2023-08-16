@@ -116,6 +116,9 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     self.pieChartView.layer.cornerRadius = self.pieChartView.frame.size.width/2;
     self.pieChartView.layer.masksToBounds = YES;
     
+    self.leftToolbarItem.accessibilityIdentifier = @"leftToolbarItem";
+    self.rightToolbarItem.accessibilityIdentifier = @"rightToolbarItem";
+
     switch (self.displayMode) {
         case DisplayModeFileLink:
             self.leftToolbarItem.image = [UIImage imageNamed:@"import"];
