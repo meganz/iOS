@@ -22,9 +22,10 @@ struct EnforceCopyrightWarningView<T: View>: View {
                     .scaleEffect(1.5)
                     .opacity(viewModel.viewStatus == .unknown ? 1.0 : 0.0)
             }
-            .onAppear {
-                viewModel.determineViewState()
-            }.onReceive(viewModel.$isTermsAggreed.dropFirst()) {
+            .taskForiOS14 {
+                await viewModel.determineViewState()
+            }
+            .onReceive(viewModel.$isTermsAggreed.dropFirst()) {
                 guard !$0 else { return }
                 presentationMode.wrappedValue.dismiss()
             }

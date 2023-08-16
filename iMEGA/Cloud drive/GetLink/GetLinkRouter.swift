@@ -14,8 +14,12 @@ struct GetLinkRouter: Routing {
     }
     
     func build() -> UIViewController {
+        let copyrightUseCase = CopyrightUseCase(
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            userAlbumRepository: UserAlbumRepository.newRepo)
         let viewModel = EnforceCopyrightWarningViewModel(preferenceUseCase: PreferenceUseCase.default,
-                                                         shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+                                                         copyrightUseCase: copyrightUseCase)
+        
         let view = EnforceCopyrightWarningView(viewModel: viewModel) {
             GetLinkView(nodes: nodes)
                 .ignoresSafeArea(edges: .bottom)

@@ -86,10 +86,13 @@ struct AlbumListView: View {
     private func shareLinksView(forAlbums albums: [AlbumEntity]) -> some View {
         EnforceCopyrightWarningView(viewModel: EnforceCopyrightWarningViewModel(
             preferenceUseCase: PreferenceUseCase.default,
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))) {
-                GetAlbumsLinksViewWrapper(albums: albums)
-                    .ignoresSafeArea(edges: .bottom)
-                    .navigationBarHidden(true)
-            }
+            copyrightUseCase: CopyrightUseCase(
+                shareUseCase: ShareUseCase(
+                    repo: ShareRepository.newRepo),
+                userAlbumRepository: UserAlbumRepository.newRepo))) {
+                    GetAlbumsLinksViewWrapper(albums: albums)
+                        .ignoresSafeArea(edges: .bottom)
+                        .navigationBarHidden(true)
+                }
     }
 }

@@ -108,7 +108,10 @@ struct AlbumContentRouter: AlbumContentRouting {
     @MainActor
     func showShareLink(album: AlbumEntity) {
         let viewModel = EnforceCopyrightWarningViewModel(preferenceUseCase: PreferenceUseCase.default,
-                                                         shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+                                                         copyrightUseCase: CopyrightUseCase(
+                                                            shareUseCase: ShareUseCase(
+                                                                repo: ShareRepository.newRepo),
+                                                            userAlbumRepository: UserAlbumRepository.newRepo))
         let view = EnforceCopyrightWarningView(viewModel: viewModel) {
             GetAlbumsLinksViewWrapper(albums: [album])
                 .ignoresSafeArea(edges: .bottom)
