@@ -1293,6 +1293,8 @@
 		9949C3622A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */; };
 		9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
+		996A48FF2A8CBD9600264298 /* MeetingInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */; };
+		996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */; };
 		996F742C2A794B9D007209F0 /* MeetingInfoWaitingRoomSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */; };
 		996F742D2A794BAB007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */; };
 		9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
@@ -3838,6 +3840,8 @@
 		9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGeneratorTest.swift; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
 		996309C52A78A61300382C38 /* SendToViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SendToViewController+Additions.swift"; path = "Chat/SendToViewController+Additions.swift"; sourceTree = "<group>"; };
+		996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewModelTests.swift; sourceTree = "<group>"; };
+		996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MeetingInfoViewModel+Additions.swift"; sourceTree = "<group>"; };
 		996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoWaitingRoomSettingView.swift; sourceTree = "<group>"; };
 		996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWaitingRoomView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
@@ -6106,9 +6110,9 @@
 				415226731A692ECC00EC7BB6 /* Contacts.storyboard */,
 				8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */,
 				94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */,
-				94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */,
 				415226741A692ECC00EC7BB6 /* ContactsViewController.h */,
 				415226751A692ECC00EC7BB6 /* ContactsViewController.m */,
+				94CBB2C02A8A4DBA00C62F32 /* ContactsViewModel.swift */,
 				A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */,
 				BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */,
 				BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */,
@@ -10940,8 +10944,8 @@
 			children = (
 				6D5A19AF2A10D33E00FDD5B3 /* AccountHallViewModelTests.swift */,
 				B6D5482F283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift */,
-				B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */,
 				94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */,
+				B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -11230,6 +11234,7 @@
 				BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */,
 				BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */,
 				BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */,
+				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
 				BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */,
 				BFBB888A28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift */,
 				BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */,
@@ -11588,6 +11593,7 @@
 				BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */,
 				2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */,
 				BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */,
+				996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */,
 				8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */,
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
 				BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */,
@@ -13251,6 +13257,7 @@
 				8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */,
 				94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
+				94CBB2C12A8A4DBA00C62F32 /* ContactsViewModel.swift in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				943E4AFF28D1C09800903A78 /* ContextMenuDataModel.swift in Sources */,
 				9428B9A02819499A00DB7250 /* ContextMenuManager.swift in Sources */,
@@ -14335,7 +14342,6 @@
 				5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */,
 				5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */,
 				5D64660424890A34006030A5 /* ThemeColor.swift in Sources */,
-				94CBB2C12A8A4DBA00C62F32 /* ContactsViewModel.swift in Sources */,
 				B6B9D91329492CC100ABC161 /* ThumbnailEntity+Mapping.swift in Sources */,
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
 				B68ED09327D05F9F00713850 /* ThumbnailUseCase+Additions.swift in Sources */,
@@ -14862,6 +14868,7 @@
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
 				94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */,
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
+				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
@@ -14897,6 +14904,8 @@
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,
 				BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */,
 				BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */,
+				996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */,
+				996A48FF2A8CBD9600264298 /* MeetingInfoViewModelTests.swift in Sources */,
 				BFBB888F28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift in Sources */,
 				8394EB812643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift in Sources */,
 				BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */,
@@ -14915,7 +14924,6 @@
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
 				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
-				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,

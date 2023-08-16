@@ -100,6 +100,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
     @Published var isRightBarButtonEnabled = false
     @Published var participantHandleList: [HandleEntity] = []
     
+    @PreferenceWrapper(key: .waitingRoomWarningBannerDismissed, defaultValue: false)
+    var waitingRoomWarningBannerDismissed: Bool
+    
     var monthlyRecurrenceFootnoteViewText: String? {
         guard rules.frequency == .monthly, let day = rules.monthDayList?.first else { return nil }
         
@@ -130,6 +133,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         router: some ScheduleMeetingRouting,
         viewConfiguration: some ScheduleMeetingViewConfigurable,
         accountUseCase: some AccountUseCaseProtocol,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.router = router
@@ -146,6 +150,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         self.meetingLinkEnabled = viewConfiguration.meetingLinkEnabled
         self.rules = viewConfiguration.rules
         self.participantHandleList = viewConfiguration.participantHandleList
+        $waitingRoomWarningBannerDismissed.useCase = preferenceUseCase
         updateMeetingLinkToggle()
         initShowWarningBannerSubscription()
     }
@@ -246,7 +251,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     
     private func initShowWarningBannerSubscription() {
         Publishers.CombineLatest($waitingRoomEnabled, $allowNonHostsToAddParticipantsEnabled)
-            .dropFirst()
+            .dropFirst(waitingRoomWarningBannerDismissed ? 1 : 0)
             .map { $0 && $1 }
             .removeDuplicates()
             .sink(receiveValue: { [weak self] show in
