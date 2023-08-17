@@ -5,8 +5,10 @@ import XCTest
 final class ContactsViewModelTests: XCTestCase {
     func testShouldShowContactsNotVerifiedBanner_whenSharingFolder_contactVerficationOff_shouldBeHidden() {
         let sut = ContactsViewModel(
-            sdk: MockSdk(isSharedFolderOwnerVerified: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.contactVerification: false])
+            sdk: MockSdk(
+                isContactVerificationWarningEnabled: false,
+                isSharedFolderOwnerVerified: true
+            )
         )
 
         let selectedUsersArray: NSMutableArray = [MEGAUser(), MEGAUser()]
@@ -22,8 +24,10 @@ final class ContactsViewModelTests: XCTestCase {
 
     func testShouldShowContactsNotVerifiedBanner_whenSharingFolder_withOnlyUnverifiedContacts_shouldBeVisible() {
         let sut = ContactsViewModel(
-            sdk: MockSdk(isSharedFolderOwnerVerified: false),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.contactVerification: true])
+            sdk: MockSdk(
+                isContactVerificationWarningEnabled: true,
+                isSharedFolderOwnerVerified: false
+            )
         )
 
         let selectedUsersArray: NSMutableArray = [MEGAUser(), MEGAUser()]
@@ -39,8 +43,10 @@ final class ContactsViewModelTests: XCTestCase {
 
     func testShouldShowContactsNotVerifiedBanner_whenSharingFolder_withOnlyVerifiedContacts_shouldBeHidden() {
         let sut = ContactsViewModel(
-            sdk: MockSdk(isSharedFolderOwnerVerified: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.contactVerification: true])
+            sdk: MockSdk(
+                isContactVerificationWarningEnabled: true,
+                isSharedFolderOwnerVerified: true
+            )
         )
 
         let selectedUsersArray: NSMutableArray = [MEGAUser()]
@@ -56,8 +62,10 @@ final class ContactsViewModelTests: XCTestCase {
 
     func testShouldShowContactsNotVerifiedBanner_whenSharingFolder_withOnlyNonContacts_shouldBeVisible() {
         let sut = ContactsViewModel(
-            sdk: MockSdk(isSharedFolderOwnerVerified: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.contactVerification: true])
+            sdk: MockSdk(
+                isContactVerificationWarningEnabled: true,
+                isSharedFolderOwnerVerified: true
+            )
         )
 
         let selectedUsersArray: NSMutableArray = ["test@test.com", "test@test.com"]
@@ -73,8 +81,10 @@ final class ContactsViewModelTests: XCTestCase {
 
     func testShouldShowContactsNotVerifiedBanner_whenSharingFolder_withUnverifiedContactsAndNonContacts_shouldBeVisible() {
         let sut = ContactsViewModel(
-            sdk: MockSdk(isSharedFolderOwnerVerified: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.contactVerification: true])
+            sdk: MockSdk(
+                isContactVerificationWarningEnabled: true,
+                isSharedFolderOwnerVerified: true
+            )
         )
 
         let selectedUsersArray: NSMutableArray = [MEGAUser(), "test@test.com", "test@test.com"]
@@ -90,8 +100,10 @@ final class ContactsViewModelTests: XCTestCase {
 
     func testShouldShowContactsNotVerifiedBanner_whenManagingFolder_shouldBeVisible() {
         let sut = ContactsViewModel(
-            sdk: MockSdk(isSharedFolderOwnerVerified: false),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.contactVerification: true])
+            sdk: MockSdk(
+                isContactVerificationWarningEnabled: true,
+                isSharedFolderOwnerVerified: false
+            )
         )
 
         let visibleUsersArray: NSMutableArray = [MEGAUser(), MEGAUser()]
@@ -107,8 +119,10 @@ final class ContactsViewModelTests: XCTestCase {
 
     func testShouldShowContactsNotVerifiedBanner_whenManagingFolder_shouldBeHidden() {
         let sut = ContactsViewModel(
-            sdk: MockSdk(isSharedFolderOwnerVerified: true),
-            featureFlagProvider: MockFeatureFlagProvider(list: [.contactVerification: true])
+            sdk: MockSdk(
+                isContactVerificationWarningEnabled: true,
+                isSharedFolderOwnerVerified: true
+            )
         )
 
         let visibleUsersArray: NSMutableArray = [MEGAUser(), MEGAUser()]
