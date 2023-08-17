@@ -3,9 +3,10 @@ import MEGASwiftUI
 import Settings
 import SwiftUI
 
-struct UpgradeAccountPlanView: View {
+struct UpgradeAccountPlanView: View, DismissibleContentView {
     @StateObject var viewModel: UpgradeAccountPlanViewModel
     @Environment(\.presentationMode) private var presentationMode
+    var invokeDismiss: (() -> Void)?
     
     var body: some View {
         ZStack {
@@ -83,7 +84,7 @@ struct UpgradeAccountPlanView: View {
         .disabled(viewModel.isLoading)
         .onChange(of: viewModel.isDismiss) { newValue in
             if newValue {
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }
         }
         .alert(isPresented: $viewModel.isAlertPresented) {
@@ -143,5 +144,13 @@ struct UpgradeAccountPlanView: View {
                     }
                 }
         })
+    }
+    
+    private func dismiss() {
+        if #available(iOS 15.0, *) {
+            presentationMode.wrappedValue.dismiss()
+        } else {
+            invokeDismiss?()
+        }
     }
 }
