@@ -60,9 +60,8 @@ extension MEGALinkManager {
                 repository: AccountRepository.newRepo),
             tracker: DIContainer.tracker)
         
-        let viewController = UIHostingController(rootView: ImportAlbumView(viewModel: vm))
+        let viewController = UIHostingController(dismissibleView: ImportAlbumView(viewModel: vm))
         viewController.modalPresentationStyle = .fullScreen
-        
         UIApplication.mnz_visibleViewController().present(viewController, animated: true)
     }
     

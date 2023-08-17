@@ -1,10 +1,11 @@
 import MEGASwiftUI
 import SwiftUI
 
-struct EnforceCopyrightWarningView<T: View>: View {
+struct EnforceCopyrightWarningView<T: View>: View, DismissibleContentView {
     @Environment(\.presentationMode) private var presentationMode
     @StateObject var viewModel: EnforceCopyrightWarningViewModel
     let termsAgreedView: () -> T
+    var invokeDismiss: (() -> Void)?
     
     var body: some View {
         NavigationStackView {
@@ -14,7 +15,7 @@ struct EnforceCopyrightWarningView<T: View>: View {
                     termsAgreedView()
                 case .declined:
                     CopyrightWarningView(copyrightMessage: viewModel.copyrightMessage,
-                                         isTermsAgreed: $viewModel.isTermsAggreed)
+                                         isTermsAgreed: $viewModel.isTermsAgreed)
                 case .unknown:
                     EmptyView()
                 }
@@ -25,9 +26,13 @@ struct EnforceCopyrightWarningView<T: View>: View {
             .taskForiOS14 {
                 await viewModel.determineViewState()
             }
-            .onReceive(viewModel.$isTermsAggreed.dropFirst()) {
+            .onReceive(viewModel.$isTermsAgreed.dropFirst()) {
                 guard !$0 else { return }
-                presentationMode.wrappedValue.dismiss()
+                if #available(iOS 15.0, *) {
+                    presentationMode.wrappedValue.dismiss()
+                } else {
+                    invokeDismiss?()
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -66,6 +71,10 @@ private struct CopyrightWarningView: View {
                         Text(Strings.Localizable.disagree)
                             .font(.body)
                             .foregroundColor(textColor)
+                    }
+                    
+                    if #unavailable(iOS 15) {
+                        Spacer()
                     }
                     
                     Button {

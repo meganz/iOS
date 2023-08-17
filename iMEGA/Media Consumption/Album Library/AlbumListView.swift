@@ -89,10 +89,13 @@ struct AlbumListView: View {
             copyrightUseCase: CopyrightUseCase(
                 shareUseCase: ShareUseCase(
                     repo: ShareRepository.newRepo),
-                userAlbumRepository: UserAlbumRepository.newRepo))) {
-                    GetAlbumsLinksViewWrapper(albums: albums)
-                        .ignoresSafeArea(edges: .bottom)
-                        .navigationBarHidden(true)
-                }
+                userAlbumRepository: UserAlbumRepository.newRepo)),
+                                    termsAgreedView: {
+            GetAlbumsLinksViewWrapper(albums: albums)
+                .ignoresSafeArea(edges: .bottom)
+                .navigationBarHidden(true)
+        }, invokeDismiss: {
+            viewModel.showShareAlbumLinks = false
+        })
     }
 }

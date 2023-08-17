@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwiftUI
 import SwiftUI
 
 struct GetLinkRouter: Routing {
@@ -23,8 +24,9 @@ struct GetLinkRouter: Routing {
         let view = EnforceCopyrightWarningView(viewModel: viewModel) {
             GetLinkView(nodes: nodes)
                 .ignoresSafeArea(edges: .bottom)
+                .navigationBarHidden(true)
         }
-        return UIHostingController(rootView: view)
+        return UIHostingController(dismissibleView: view)
     }
     
     func start() {
