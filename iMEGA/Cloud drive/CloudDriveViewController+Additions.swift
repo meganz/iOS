@@ -4,7 +4,11 @@ import SwiftUI
 
 extension CloudDriveViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
-        NodeInfoViewModel(withNode: node, shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+        NodeInfoViewModel(
+            withNode: node,
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            shouldDisplayContactVerificationInfo: isFromUnverifiedContactSharedFolder
+        )
     }
     
     @objc func createCloudDriveViewModel() -> CloudDriveViewModel {
