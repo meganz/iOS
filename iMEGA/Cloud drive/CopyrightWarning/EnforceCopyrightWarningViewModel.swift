@@ -10,7 +10,7 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
     }
     
     @Published var viewStatus: CopyrightWarningViewStatus = .unknown
-    @Published var isTermsAggreed: Bool = false
+    @Published var isTermsAgreed: Bool = false
     
     private let copyrightUseCase: any CopyrightUseCaseProtocol
     @PreferenceWrapper(key: .agreedCopywriteWarning, defaultValue: false)
@@ -53,7 +53,7 @@ final class EnforceCopyrightWarningViewModel: ObservableObject {
     }
     
     private func subscribeToTermsAggreed() {
-        $isTermsAggreed
+        $isTermsAgreed
             .dropFirst()
             .filter { $0 }
             .sink { [weak self] _ in

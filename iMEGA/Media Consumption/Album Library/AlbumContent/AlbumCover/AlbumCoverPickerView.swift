@@ -1,11 +1,13 @@
+import MEGASwiftUI
 import SwiftUI
 
-struct AlbumCoverPickerView: View {
+struct AlbumCoverPickerView: View, DismissibleContentView {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.presentationMode) private var presentationMode
     
     @ObservedObject var viewModel: AlbumCoverPickerViewModel
+    var invokeDismiss: (() -> Void)?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +30,7 @@ struct AlbumCoverPickerView: View {
         }
         .onChange(of: viewModel.isDismiss, perform: { newValue in
             if newValue {
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             }
         })
         .edgesIgnoringSafeArea(.vertical)
@@ -66,5 +68,13 @@ struct AlbumCoverPickerView: View {
     
     private var textColor: Color {
         colorScheme == .dark ? Color(UIColor.mnz_grayD1D1D1()) : Color(UIColor.mnz_gray515151())
+    }
+    
+    private func dismiss() {
+        if #available(iOS 15.0, *) {
+            presentationMode.wrappedValue.dismiss()
+        } else {
+            invokeDismiss?()
+        }
     }
 }

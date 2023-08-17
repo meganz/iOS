@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwiftUI
 import SwiftUI
 import UIKit
 
@@ -91,7 +92,8 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                   albumContentsUseCase: albumContentsUseCase, router: self,
                                                     completion: completion)
         let content = AlbumCoverPickerView(viewModel: viewModel)
-        navigationController?.present(UIHostingController(rootView: content), animated: true)
+        navigationController?.present(UIHostingController(dismissibleView: content),
+                                      animated: true)
     }
     
     func albumCoverPickerPhotoCell(albumPhoto: AlbumPhotoEntity, photoSelection: AlbumCoverPickerPhotoSelection) -> AlbumCoverPickerPhotoCell {
@@ -117,7 +119,8 @@ struct AlbumContentRouter: AlbumContentRouting {
                 .ignoresSafeArea(edges: .bottom)
                 .navigationBarHidden(true)
         }
-        navigationController?.present(UIHostingController(rootView: view), animated: true)
+        navigationController?.present(UIHostingController(dismissibleView: view),
+                                      animated: true)
     }
     
     func start() {}
