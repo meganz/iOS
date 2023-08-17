@@ -123,6 +123,7 @@
   },
   "testTargets" : [
     {
+      "parallelizable" : true,
       "skippedTests" : [
         "ChatRoomsListViewModelTests\/testAction_selectChatsMode()",
         "ChatRoomsListViewModelTests\/testAction_selectMeetingsMode()",
@@ -156,6 +157,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Domain\/MEGADomain",
         "identifier" : "MEGADomainTests",
@@ -163,6 +165,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Infrastracture\/MEGAFoundation",
         "identifier" : "MEGAFoundationTests",
@@ -170,6 +173,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Infrastracture\/MEGASwift",
         "identifier" : "MEGASwiftTests",
@@ -177,6 +181,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/UI\/MEGASwiftUI",
         "identifier" : "MEGASwiftUITests",
@@ -184,6 +189,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/UI\/MEGAUI",
         "identifier" : "MEGAUITests",
@@ -191,6 +197,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/UI\/MEGAUIKit",
         "identifier" : "MEGAUIKitTests",
@@ -198,6 +205,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/Settings",
         "identifier" : "SettingsTests",
@@ -205,6 +213,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/MEGAPresentation",
         "identifier" : "MEGAPresentationTests",
@@ -212,6 +221,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Infrastracture\/MEGAPermissions",
         "identifier" : "MEGAPermissionsTests",
@@ -219,6 +229,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Domain\/MEGAAnalyticsDomain",
         "identifier" : "MEGAAnalyticsDomainTests",
@@ -226,6 +237,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "skippedTests" : [
         "ThumbnailRepositoryTests\/testCachedPreviewOrOriginalPath_forCachedOrignal_shouldReturnOriginalURLWithFileName()",
         "ThumbnailRepositoryTests\/testCachedPreviewOrOriginalPath_forCachedPreview_shouldReturnPreviewURL()",
@@ -239,6 +251,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/DeviceCenter",
         "identifier" : "DeviceCenterTests",
