@@ -29,6 +29,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### get_latest_xcresult_file
+
+```sh
+[bundle exec] fastlane get_latest_xcresult_file
+```
+
+
+
+### parse_and_upload_code_coverage
+
+```sh
+[bundle exec] fastlane parse_and_upload_code_coverage
+```
+
+
+
 ----
 
 
@@ -169,14 +185,6 @@ Sync appstore signing certificates
 ```
 
 Run unit tests for main app
-
-### ios code_coverage_main_app
-
-```sh
-[bundle exec] fastlane ios code_coverage_main_app
-```
-
-Generate code coverage for main app
 
 ### ios download_metadata
 

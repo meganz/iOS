@@ -29,9 +29,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
                         final String logsResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
                         def logsJSON = new groovy.json.JsonSlurperClassic().parseText(logsResponse)
-                        final String unitTestsHTMLOutputResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@report.html https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
-                        def unitTestsHTMLJSON = new groovy.json.JsonSlurperClassic().parseText(unitTestsHTMLOutputResponse)
-                        env.MARKDOWN_LINK = ":x: Build status check Failed <br />Build Log: ${logsJSON.markdown} <br />Unit Tests Report: ${unitTestsHTMLJSON.markdown}"
+                        env.MARKDOWN_LINK = ":x: Build status check Failed <br />Build Log: ${logsJSON.markdown}"
                         env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
                         sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
                     }
@@ -52,17 +50,18 @@ pipeline {
         }
         success {
             script {
-                if (env.BRANCH_NAME.startsWith('MR-')) {
-                    def mrNumber = env.BRANCH_NAME.replace('MR-', '')
+                injectEnvironments({
+                    if (env.BRANCH_NAME.startsWith('MR-')) {
+                        def mr_number = env.BRANCH_NAME.replace('MR-', '')
 
-                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        final String unitTestsHTMLOutputResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@report.html https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
-                        def unitTestsHTMLJSON = new groovy.json.JsonSlurperClassic().parseText(unitTestsHTMLOutputResponse)
-                        env.MARKDOWN_LINK = ":white_check_mark: Build status check succeeded <br />Unit Tests Report: ${unitTestsHTMLJSON.markdown} <br />${CODE_COVERAGE_MESSAGE}"
-                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
-                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+                        withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+                            sh 'bundle exec fastlane parse_and_upload_code_coverage mr:' + mr_number + ' token:' + TOKEN
+                            env.MARKDOWN_LINK = ":white_check_mark: Build status check succeeded"
+                            env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mr_number}/notes"
+                            sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+                        }
                     }
-                }
+                })
             }
 
             updateGitlabCommitStatus name: 'Jenkins', state: 'success'
@@ -122,6 +121,16 @@ pipeline {
                         }
                     }
                 }
+
+                stage('Boot Simulators') {
+                    steps {
+                        gitlabCommitStatus(name: 'Bundle install') {
+                            injectEnvironments({
+                                sh "./scripts/boot-simulators.sh"
+                            })
+                        }
+                    }
+                }
             }
         }
 
@@ -131,24 +140,8 @@ pipeline {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                         injectEnvironments({
                             sh "bundle exec fastlane run_tests_app"
-                            sh "bundle exec fastlane code_coverage_main_app"
                         })
                     }
-                }
-            }
-        }
-
-        stage('Generate code Coverage Results') {
-            steps {
-                gitlabCommitStatus(name: 'Generate code Coverage Results') {
-                    injectEnvironments({
-                        script {
-                            dir("scripts/CodeCoverageParser/") {
-                                sh "swift run CodeCoverageParser  --input './../../CodeCoverage/report.json' --output 'coverage.txt'"
-                                env.CODE_COVERAGE_MESSAGE = readFile(file: 'coverage.txt', encoding: "UTF-8")
-                            }
-                        }
-                    })
                 }
             }
         }
