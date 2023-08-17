@@ -1,7 +1,7 @@
 import MEGASwiftUI
 import SwiftUI
 
-struct ImportAlbumView: View {
+struct ImportAlbumView: View, DismissibleContentView {
     private enum Constants {
         static let toolbarButtonVerticalPadding = 11.0
         static let toolbarButtonHorizontalPadding = 16.0
@@ -11,6 +11,7 @@ struct ImportAlbumView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     @StateObject var viewModel: ImportAlbumViewModel
+    var invokeDismiss: (() -> Void)?
     
     @State private var publicAlbumLoadingTask: Task<Void, Never>?
     
@@ -137,7 +138,11 @@ struct ImportAlbumView: View {
     
     private func dismissImportAlbumScreen() {
         viewModel.publicLinkStatus = .none
-        presentationMode.wrappedValue.dismiss()
+        if #available(iOS 15.0, *) {
+            presentationMode.wrappedValue.dismiss()
+        } else {
+            invokeDismiss?()
+        }
     }
     
     private var bottomToolbar: some View {
