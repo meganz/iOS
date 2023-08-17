@@ -340,7 +340,7 @@ extension SharedItemsViewController {
     }
 
     @objc func isContactVerificationEnabled() -> Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .contactVerification)
+        MEGASdk.shared.isContactVerificationWarningEnabled
     }
 
     @objc func user(for node: MEGANode) -> MEGAUser? {
