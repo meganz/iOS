@@ -80,8 +80,7 @@ extension ContactsViewController {
     @objc
     func createViewModel() {
         self.viewModel = ContactsViewModel(
-            sdk: MEGASdk.shared,
-            featureFlagProvider: DIContainer.featureFlagProvider
+            sdk: MEGASdk.shared
         )
     }
 }

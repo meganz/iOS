@@ -28,8 +28,7 @@ extension ItemListViewController {
             cell.avatarView.configure(mode: .single)
         }
 
-        guard let user = item.user,
-              DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .contactVerification)
+        guard let user = item.user, MEGASdk.shared.isContactVerificationWarningEnabled
         else {
             cell.contactVerifiedImageView.isHidden = true
             return

@@ -11,6 +11,7 @@ public final class MockSdk: MEGASdk {
     public var _myUser: MEGAUser?
     public var _isLoggedIn: Int
     public var _isMasterBusinessAccount: Bool
+    public var _isContactVerificationWarningEnabled: Bool
     private let _bandwidthOverquotaDelay: Int64
     private let email: String?
     private let megaRootNode: MEGANode?
@@ -65,6 +66,7 @@ public final class MockSdk: MEGASdk {
                 myUser: MEGAUser? = nil,
                 isLoggedIn: Int = 0,
                 isMasterBusinessAccount: Bool = false,
+                isContactVerificationWarningEnabled: Bool = false,
                 bandwidthOverquotaDelay: Int64 = 0,
                 smsState: SMSState = .notAllowed,
                 myEmail: String? = nil,
@@ -98,6 +100,7 @@ public final class MockSdk: MEGASdk {
         _myUser = myUser
         _isLoggedIn = isLoggedIn
         _isMasterBusinessAccount = isMasterBusinessAccount
+        _isContactVerificationWarningEnabled = isContactVerificationWarningEnabled
         _bandwidthOverquotaDelay = bandwidthOverquotaDelay
         self.smsState = smsState
         email = myEmail
@@ -140,6 +143,8 @@ public final class MockSdk: MEGASdk {
     public override var totalNodes: UInt { UInt(nodes.count) }
     
     public override var bandwidthOverquotaDelay: Int64 { _bandwidthOverquotaDelay }
+
+    public override var isContactVerificationWarningEnabled: Bool { _isContactVerificationWarningEnabled }
     
     public override func node(forHandle handle: MEGAHandle) -> MEGANode? {
         nodes.first { $0.handle == handle }

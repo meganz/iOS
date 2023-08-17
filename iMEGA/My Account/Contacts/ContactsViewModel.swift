@@ -3,14 +3,11 @@ import MEGAPresentation
 
 @objc final class ContactsViewModel: NSObject {
     private let sdk: MEGASdk
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     init(
-        sdk: MEGASdk,
-        featureFlagProvider: any FeatureFlagProviderProtocol
+        sdk: MEGASdk
     ) {
         self.sdk = sdk
-        self.featureFlagProvider = featureFlagProvider
     }
     
     @objc
@@ -19,7 +16,7 @@ import MEGAPresentation
         selectedUsersArray: NSMutableArray?,
         visibleUsersArray: NSMutableArray?
     ) -> Bool {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .contactVerification) else {
+        guard sdk.isContactVerificationWarningEnabled else {
             return false
         }
 
