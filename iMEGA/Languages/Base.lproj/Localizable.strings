@@ -3155,9 +3155,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Schedule meeting";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Account suspended due to copyright violations. We sent you an email with more information about this.";
+"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email for more information on how to file a counter-notice.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Account terminated due to a breach of MEGA’s Terms of Service, such as abuse of others’ rights, sharing and importing illegal data, or system abuse.";
+"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA's Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to register a new MEGA account.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Open the MEGA app and log in to continue.";
 /* Account Storage title label of used storage size */
