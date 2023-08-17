@@ -54,7 +54,7 @@ final class EnforceCopyrightWarningViewModelTests: XCTestCase {
             }
             .store(in: &subscription)
         
-        sut.isTermsAggreed = true
+        sut.isTermsAgreed = true
         
         wait(for: [exp], timeout: 0.5)
         let isAgreed = try XCTUnwrap(preferenceUseCase.dict[.agreedCopywriteWarning] as? Bool)
