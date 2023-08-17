@@ -1,3 +1,5 @@
+require_relative 'issue_fetcher'
+
 class WarningsMarkdownGenerator
   SWIFT_PACKAGES = "Third Party Swift Packages Warnings"
   SDK_AND_CHAT_WARNINGS = "SDK and MEGAChatSDK Warnings"
@@ -7,11 +9,8 @@ class WarningsMarkdownGenerator
   SDK_PATH = "Modules/DataSource"
   ANALYTICS_PATH = "MEGAAnalyticsiOS"
 
-  def generate_markdown(json_path, output_file_path, repo_url)
-    file = File.read(json_path)
-    data_hash = JSON.parse(file)
-    warnings = data_hash["compile_warnings"]
-
+  def generate_markdown(warnings_json_path, output_file_path)
+    warnings = fetch_all_issues(warnings_json_path, :warning)
     markdown = initialize_markdown_sections
     markdown = append_warnings_to_markdown(warnings, markdown)
     markdown = append_close_tags(markdown)
@@ -34,13 +33,15 @@ class WarningsMarkdownGenerator
 
   private def append_warnings_to_markdown(warnings, markdown) 
     warnings.each do |warning|
-      link = warning["file_path"]
-      line_number = link.match(/:(\d+):(\d+)\z/)[1]
-      current_directory = Pathname.getwd
-      relative_path = Pathname.new(link).relative_path_from(current_directory).to_s.sub(/:\d+:\d+\z/, '')
-      row_text = "| ⚠️ | #{warning['reason']} | #{warning['file_name']} | #{line_number} |\n"
+      file = warning[:file]
+      reason = warning[:reason]
+      line_number = warning[:line]
+      filename = file.empty? ? "" : File.basename(file)
 
-      case relative_path
+      current_directory = Pathname.getwd
+      row_text = "| ⚠️ | #{reason} | #{filename} | #{line_number} |\n"
+
+      case file
       when /#{SWIFT_PACKAGES_PATH}/
         markdown[:swift_packages] += row_text unless markdown[:swift_packages].include?(row_text)
       when /#{SDK_PATH}/
