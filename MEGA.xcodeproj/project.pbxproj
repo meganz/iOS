@@ -140,6 +140,7 @@
 		245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A72A32DDFD005F6527 /* AppMetaData.swift */; };
 		245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */; };
 		246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246013112A459166007EF5ED /* AdvancedViewRouterTests.swift */; };
+		2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461E7032A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift */; };
 		246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */; };
 		247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */; };
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
@@ -2626,6 +2627,7 @@
 		245CB1A72A32DDFD005F6527 /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
 		245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaData.swift; sourceTree = "<group>"; };
 		246013112A459166007EF5ED /* AdvancedViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouterTests.swift; sourceTree = "<group>"; };
+		2461E7032A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdvancedTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsRouterTests.swift; sourceTree = "<group>"; };
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
@@ -5664,6 +5666,17 @@
 				248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */,
 			);
 			path = "Shared Controls";
+			sourceTree = "<group>";
+		};
+		24D59EDC2A8CD52900503F43 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C47E7C3F25D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift */,
+				C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */,
+				C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */,
+				C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		24F231562A5FB313000BFBBA /* Scenes */ = {
@@ -11834,10 +11847,8 @@
 		C47E7C0025D18FC800DB6FF5 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				C47E7C3F25D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift */,
-				C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */,
-				C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */,
-				C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */,
+				24D59EDC2A8CD52900503F43 /* Mocks */,
+				2461E7032A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -15046,6 +15057,7 @@
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,
 				B5C3ABAF2A71232B008C3708 /* UsageViewControllerTests.swift in Sources */,
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
+				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* UserAttributeUseCase+AdditionsTests.swift in Sources */,
 				B6FB5F8629A437CE0023BA6A /* UserEntityMapperTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
