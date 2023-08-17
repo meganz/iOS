@@ -1,12 +1,19 @@
 #!/bin/bash
 
-source install-megacmd.sh
-source install-cmake.sh
-source install-libyaml.sh
-source install-ruby.sh
+run_script() {
+    local script="$1"
+    cd scripts
+    source "$script"
+    cd ..
+}
+
+run_script install-megacmd.sh
+run_script install-cmake.sh
+run_script install-libyaml.sh
+run_script install-ruby.sh
 
 gem update --system
-source install-bundler.sh
+run_script install-bundler.sh
 bundle install
 bundle exec fastlane setup
 
