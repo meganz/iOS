@@ -295,18 +295,22 @@ extension CloudDriveViewController {
                 viewModel: .init(warningType: .contactNotVerifiedSharedFolder(parentNode?.name ?? ""))
             )
         )
-
+        
         guard let hostingViewUIView = hostingView.view else { return }
-
+        
         contactNotVerifiedBannerView.isHidden = !isFromUnverifiedContactSharedFolder
         contactNotVerifiedBannerView.addSubview(hostingViewUIView)
         hostingViewUIView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             hostingViewUIView.topAnchor.constraint(equalTo: contactNotVerifiedBannerView.topAnchor),
             hostingViewUIView.leadingAnchor.constraint(equalTo: contactNotVerifiedBannerView.leadingAnchor),
             hostingViewUIView.trailingAnchor.constraint(equalTo: contactNotVerifiedBannerView.trailingAnchor),
             hostingViewUIView.bottomAnchor.constraint(equalTo: contactNotVerifiedBannerView.bottomAnchor)
         ])
+    }
+
+    @objc func showUpgradePlanView() {
+        UpgradeAccountRouter().presentUpgradeTVC()
     }
 }

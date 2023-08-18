@@ -121,10 +121,6 @@
     self.longerRetentionPeriodUpgradetoProLabel.attributedText = longerRetentionUpgradeToProMAS;
 }
 
-- (void)showUpgradeToPro {
-    [UpgradeAccountRouter.new presentUpgradeTVC];
-}
-
 - (void)scheduleRubbishBinClearingTextFieldDidChange:(UITextField *)textField {
     UIAlertController *scheduleRubbishBinClearingAlertController = (UIAlertController *)self.presentedViewController;
     if ([scheduleRubbishBinClearingAlertController isKindOfClass:UIAlertController.class]) {
@@ -159,7 +155,7 @@
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
             customModalAlertVC.firstCompletion = ^{
                 [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    [UpgradeAccountRouter.new presentUpgradeTVC];
+                    [self showUpgradeToPro];
                 }];
             };
             

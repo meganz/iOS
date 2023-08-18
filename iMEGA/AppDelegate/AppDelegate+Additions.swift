@@ -432,6 +432,7 @@ extension AppDelegate {
     private var permissionAlertRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
+    
     @objc
     func initiateCallAfterAskingForPermissions(videoCall: Bool) {
         permissionAlertRouter.requestPermissionsFor(videoCall: videoCall) { [weak self] in
@@ -471,5 +472,9 @@ extension AppDelegate {
         ).start()
         
         NotificationCenter.default.post(name: .MEGATransferOverQuota, object: self)
+    }
+    
+    @objc func showChooseAccountPlanTypeView() {
+        UpgradeAccountRouter().presentChooseAccountType()
     }
 }

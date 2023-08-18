@@ -13,15 +13,20 @@
 @property (nonatomic, strong) NSMutableArray<id<MEGARestoreDelegate>> *restoreDelegateMutableArray;
 @property (nonatomic, strong) NSMutableArray<id<MEGAPurchasePricingDelegate>> *pricingsDelegateMutableArray;
 @property (nonatomic, strong) MEGAPricing *pricing;
-@property (nonatomic, strong) NSMutableArray *products;
 
 + (MEGAPurchase *)sharedInstance;
+- (instancetype)initWithProducts:(NSArray<SKProduct *>*)products;
 
 - (void)requestPricing;
 - (void)purchaseProduct:(SKProduct *)product;
 - (void)restorePurchase;
 - (NSUInteger)pricingProductIndexForProduct:(SKProduct *)product;
+- (void)removeAllProducts;
 
+@end
+
+@interface MEGAPurchase(Collection)
+@property (nonatomic, readonly) NSArray *products;
 @end
 
 @protocol MEGAPurchaseDelegate <NSObject>
