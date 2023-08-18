@@ -3713,6 +3713,7 @@
 		9405E70D28A3AC43005A16D1 /* BackupNodesValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupNodesValidator.swift; sourceTree = "<group>"; };
 		940CEE3B2A83DA5E007DD202 /* WarningViewRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewRouting.swift; sourceTree = "<group>"; };
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
+		94114EDE2A8F3C3500B525B9 /* Search */ = {isa = PBXFileReference; lastKnownFileType = text; name = Search; path = Modules/Features/Search; sourceTree = SOURCE_ROOT; };
 		9418DB272A4EE5E7002B0077 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
 		9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeLoadOperation+NodeAccessConfiguration.swift"; sourceTree = "<group>"; };
@@ -9502,6 +9503,7 @@
 		A861B8332907F5DB00AB06D4 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				94114EDE2A8F3C3500B525B9 /* Search */,
 				94F568C12A56E7A6005CE9F2 /* DeviceCenter */,
 				94F568BD2A56E412005CE9F2 /* Settings */,
 			);
