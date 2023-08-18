@@ -941,23 +941,13 @@
 - (void)handleTransferQuotaError:(MEGAError *)error transfer:(MEGATransfer *)transfer {
     switch (transfer.type) {
         case MEGATransferTypeDownload:
-            [self handleDownloadQuotaError:error];
+            [self handleDownloadQuotaError:error transfer:transfer];
             break;
         case MEGATransferTypeUpload:
             [self handleStorageQuotaError:error];
             break;
         default:
             break;
-    }
-}
-
-- (void)handleDownloadQuotaError:(MEGAError *)error {
-    if (error.type == MEGAErrorTypeApiEOverQuota) {
-        [SVProgressHUD dismiss];
-        if (error.value != 0) {
-            [[CustomModalAlertRouter.alloc init:CustomModalAlertModeStorageDownloadQuotaError presenter:UIApplication.mnz_presentingViewController] start];
-            [NSNotificationCenter.defaultCenter postNotificationName:MEGATransferOverQuotaNotification object:self];
-        }
     }
 }
 
@@ -1550,6 +1540,7 @@
             }
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+            [self refreshAccountDetails];
 
             [self.quickAccessWidgetManager createWidgetItemData];
             

@@ -84,9 +84,9 @@ public extension String {
 public extension String {
     static var byteCountFormatter = ByteCountFormatter()
 
-    static func memoryStyleString(fromByteCount byteCount: Int64) -> String {
+    static func memoryStyleString(fromByteCount byteCount: Int64, includesUnit: Bool = true) -> String {
         byteCountFormatter.countStyle = .memory
-        
+        byteCountFormatter.includesUnit = includesUnit
         return byteCountFormatter.string(fromByteCount: byteCount)
     }
 }
