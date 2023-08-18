@@ -13,7 +13,12 @@ extension MyAccountHallViewController {
                                                 isNewUpgradeAccountPlanEnabled: viewModel.isNewUpgradeAccountPlanEnabled)
         let profileRouter = ProfileViewRouter(navigationController: navigationController, viewModel: profileViewModel)
         profileRouter.start()
-     }
+    }
+    
+    @objc func showUpgradePlanView() {
+        guard let navigationController else { return }
+        UpgradeAccountRouter().pushUpgradeTVC(navigationController: navigationController)
+    }
     
     @objc func setupNavigationBarColor(with trait: UITraitCollection) {
         let color: UIColor

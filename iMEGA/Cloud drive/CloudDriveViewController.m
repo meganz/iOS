@@ -638,7 +638,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
         MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
-            [UpgradeAccountRouter.new presentUpgradeTVC];
+            [self showUpgradePlanView];
             [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
             alreadyPresented = YES;
         }
