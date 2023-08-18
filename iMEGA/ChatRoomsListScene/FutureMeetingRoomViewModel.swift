@@ -49,7 +49,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     var shouldShowUnreadCount = false
     var unreadCountString = ""
     var isRecurring: Bool
-    var chatHasMeesages = false
+    var chatHasMessages = false
     
     var lastMessageTimestamp: String? {
         let chatListItem = chatUseCase.chatListItem(forChatId: scheduledMeeting.chatId)
@@ -160,8 +160,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     func cancelMeetingAlertData() -> CancelMeetingAlertDataModel {
         return CancelMeetingAlertDataModel(
             title: Strings.Localizable.Meetings.Scheduled.CancelAlert.title(scheduledMeeting.title),
-            message: chatHasMeesages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withMessages : Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withoutMessages,
-            primaryButtonTitle: chatHasMeesages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withMessages : Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withoutMessages,
+            message: chatHasMessages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withMessages : Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withoutMessages,
+            primaryButtonTitle: chatHasMessages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withMessages : Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withoutMessages,
             primaryButtonAction: cancelScheduledMeeting,
             secondaryButtonTitle: Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.dontCancel)
     }
@@ -228,7 +228,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private func chatHasMessages(_ chatRoom: ChatRoomEntity, _ hasMessages: Bool) {
         cancelChatHasMessageSuscription()
         closeChat(chatRoom)
-        chatHasMeesages = hasMessages
+        chatHasMessages = hasMessages
         showCancelMeetingAlert = true
     }
     
@@ -247,7 +247,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
                 var scheduledMeeting = scheduledMeeting
                 scheduledMeeting.cancelled = true
                 _ = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting)
-                if !chatHasMeesages {
+                if !chatHasMessages {
                     archiveChatRoom()
                 } else {
                     router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withMessages)
@@ -395,9 +395,8 @@ extension FutureMeetingRoomViewModel {
         ChatRoomContextMenuOption(
             title: Strings.Localizable.edit,
             imageName: Asset.Images.Meetings.editMeeting.name
-        ) { [weak self] in
-            guard let self else { return }
-            router.edit(scheduledMeeting: scheduledMeeting)
+        ) {
+            self.router.edit(scheduledMeeting: self.scheduledMeeting)
         }
     }
     
@@ -405,9 +404,8 @@ extension FutureMeetingRoomViewModel {
         return ChatRoomContextMenuOption(
             title: Strings.Localizable.Meetings.Scheduled.ContextMenu.occurrences,
             imageName: Asset.Images.Meetings.Scheduled.ContextMenu.occurrences.name
-        ) { [weak self] in
-            guard let self else { return }
-            showOccurrences()
+        ) {
+            self.showOccurrences()
         }
     }
     
@@ -415,9 +413,8 @@ extension FutureMeetingRoomViewModel {
         return ChatRoomContextMenuOption(
             title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
             imageName: Asset.Images.NodeActions.rubbishBin.name
-        ) { [weak self] in
-            guard let self else { return }
-            cancelMeeting()
+        ) {
+            self.cancelMeeting()
         }
     }
     
