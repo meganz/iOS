@@ -3,11 +3,14 @@ final class MockMEGAPurchase: MEGAPurchase {
     private(set) var restorePurchaseCalled = 0
     private(set) var purchasePlanCalled = 0
     
-    init(productPlans: [MockSKProduct] = []) {
+    override init() {
         super.init()
-        products = NSMutableArray(array: productPlans)
         restoreDelegateMutableArray = NSMutableArray()
         purchaseDelegateMutableArray = NSMutableArray()
+    }
+    
+    init(productPlans: [MockSKProduct]) {
+        super.init(products: productPlans)
     }
     
     var hasRestoreDelegate: Bool {

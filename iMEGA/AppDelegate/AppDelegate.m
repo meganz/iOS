@@ -682,7 +682,7 @@
                 isAccountFirstLogin = NO;
                 if (self.isNewAccount) {
                     if (MEGAPurchase.sharedInstance.products.count > 0) {
-                        [UpgradeAccountRouter.new presentChooseAccountType];
+                        [self showChooseAccountPlanTypeView];
                     } else {
                         [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
                         self.chooseAccountTypeLater = YES;
@@ -1176,7 +1176,7 @@
 
 - (void)pricingsReady {
     if (self.showChooseAccountTypeLater) {
-        [UpgradeAccountRouter.new presentChooseAccountType];
+        [self showChooseAccountPlanTypeView];
         
         self.chooseAccountTypeLater = NO;
         [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
@@ -1553,7 +1553,8 @@
         case MEGARequestTypeLogout: {
             // if logout (not if localLogout) or session killed in other client
             BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
-            [MEGAPurchase.sharedInstance.products removeAllObjects];
+            [MEGAPurchase.sharedInstance removeAllProducts];
+
             if (request.flag || sessionInvalidateInOtherClient) {
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];

@@ -489,7 +489,7 @@
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
         case MEGAUserAlertTypePaymentReminder: {
-            [UpgradeAccountRouter.new pushUpgradeTVCWithNavigationController:self.navigationController];
+            [self showUpgradePlanView];
             break;
         }
             

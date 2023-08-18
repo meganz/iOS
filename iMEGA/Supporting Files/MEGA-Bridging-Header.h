@@ -193,3 +193,4 @@
 #import "ItemListModel.h"
 #import "AdvancedTableViewController.h"
 #import "InviteFriendsViewController.h"
+#import "RubbishBinTableViewController.h"

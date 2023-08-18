@@ -51,4 +51,9 @@ extension NotificationsTableViewController {
         
         MEGALogDebug("[Notifications] \(userAlerts.count)\n\(alertsString)")
     }
+    
+    @objc func showUpgradePlanView() {
+        guard let navigationController else { return }
+        UpgradeAccountRouter().pushUpgradeTVC(navigationController: navigationController)
+    }
 }
