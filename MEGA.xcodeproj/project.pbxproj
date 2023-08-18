@@ -1536,6 +1536,9 @@
 		B541CD302A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */; };
 		B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */; };
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
+		B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
+		B5488B742A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
+		B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */; };
 		B558B1E42A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */; };
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
@@ -1549,6 +1552,7 @@
 		B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */; };
 		B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */; };
 		B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */; };
+		B571B21C2A8CC3BC00B8F112 /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */; };
 		B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57496E82A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift */; };
 		B5762F7F29E67F6800CFA884 /* ShareViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */; };
 		B57A559628644C5300070BBB /* FavouritesExplorerListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */; };
@@ -1592,6 +1596,7 @@
 		B5CC2AA52995F15200A966A0 /* SharedItemsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */; };
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
 		B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */; };
+		B5CFA46E2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */; };
 		B5D875372A04B501003F9380 /* SendFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */; };
 		B5E411AB28AB740F00D05719 /* MockFeatureFlagProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */; };
 		B5E4EB432A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */; };
@@ -4103,6 +4108,8 @@
 		B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSelectionSnackBarType.swift; sourceTree = "<group>"; };
 		B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+LiveText.swift"; sourceTree = "<group>"; };
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
+		B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Additions.swift"; sourceTree = "<group>"; };
+		B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerTests.swift; sourceTree = "<group>"; };
 		B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanAlertType.swift; sourceTree = "<group>"; };
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
@@ -4115,6 +4122,7 @@
 		B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModelTests.swift; sourceTree = "<group>"; };
 		B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Banner.swift"; sourceTree = "<group>"; };
 		B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+UpgradeSecurity.swift"; sourceTree = "<group>"; };
+		B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
 		B57496E82A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift; sourceTree = "<group>"; };
 		B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+Additions.swift"; sourceTree = "<group>"; };
 		B57A559528644C5300070BBB /* FavouritesExplorerListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerListSource.swift; sourceTree = "<group>"; };
@@ -4166,6 +4174,7 @@
 		B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewRouter.swift; sourceTree = "<group>"; };
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+MenuActions.swift"; sourceTree = "<group>"; };
+		B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Transfer.swift"; sourceTree = "<group>"; };
 		B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModel.swift; sourceTree = "<group>"; };
 		B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFeatureFlagProvider.swift; sourceTree = "<group>"; };
 		B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReferralBonusesTableViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -5401,6 +5410,7 @@
 				94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */,
 				B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */,
 				124667EE275DB81F00C94335 /* CustomModalAlertViewController+Storage.swift */,
+				B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */,
 				124667F3275DB81F00C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */,
 				B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */,
 				124667EF275DB81F00C94335 /* CustomModalAlertViewController+UpgradeToPro.swift */,
@@ -6252,6 +6262,7 @@
 				B582965627C5DF28004DD7A5 /* Transfers */,
 				5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */,
 				BF22BFC8268D366D00460DB3 /* CallActionManager.swift */,
+				B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */,
 				C473097426FC93BB00DC9D55 /* CrashlyticsLogger.swift */,
 				B6D0B356283CE48C0020C64D /* Helper+Additions.swift */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
@@ -7076,6 +7087,7 @@
 				124667EA275DB81F00C94335 /* Extensions */,
 				124667F4275DB82000C94335 /* Routers */,
 				2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */,
+				B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */,
 				124667E9275DB81300C94335 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
@@ -8126,8 +8138,8 @@
 				833003A324DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift */,
 				8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */,
 				8333E51E24DC41EB00BB5A9D /* NodeInfoPreviewTableViewCell.swift */,
-				C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */,
 				94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */,
+				C4575F32265FEB4600D527DC /* NodeOwnerInfoTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -10041,6 +10053,7 @@
 				A874D305263FF683000861DB /* ViewControllers */,
 				99E1A9272A383E9700974FC9 /* Views */,
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
+				B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */,
 				0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */,
 				B6AADE9B251845E2009A874C /* Routing+Addition.swift */,
 				947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */,
@@ -13281,6 +13294,7 @@
 				B6F8CDCB262821820074CBBF /* CoreDataErrorHandler.m in Sources */,
 				5D8DC6B1248CB0C40067A4F9 /* CornerStyle.swift in Sources */,
 				5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */,
+				B571B21C2A8CC3BC00B8F112 /* CountdownTimer.swift in Sources */,
 				C473097526FC93BB00DC9D55 /* CrashlyticsLogger.swift in Sources */,
 				B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
@@ -13294,6 +13308,7 @@
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
 				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
 				2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */,
+				B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */,
 				124667F9275DB82000C94335 /* CustomModalAlertViewController+Business.swift in Sources */,
 				124667FF275DB82000C94335 /* CustomModalAlertViewController+Config.swift in Sources */,
 				124667FE275DB82000C94335 /* CustomModalAlertViewController+Contacts.swift in Sources */,
@@ -13303,6 +13318,7 @@
 				94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */,
 				B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */,
 				124667FC275DB82000C94335 /* CustomModalAlertViewController+Storage.swift in Sources */,
+				B5CFA46E2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift in Sources */,
 				12466801275DB82000C94335 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */,
 				B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */,
 				124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
@@ -13859,6 +13875,7 @@
 				9DAC1B632951589F00562475 /* NodeInfoRepository.swift in Sources */,
 				5D7792DC250613B200378D87 /* NodeInfoRouter.swift in Sources */,
 				C453AB7F256E7AE8005E4E1B /* NodeInfoUseCase.swift in Sources */,
+				94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */,
 				834EFDBF24D9AF64004BFECA /* NodeInfoViewController.swift in Sources */,
 				B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */,
 				5D609298255D5D40005FA3E4 /* NodeLabelActionRepository.swift in Sources */,
@@ -14390,7 +14407,6 @@
 				9495DBBD2A40C08300FA22EE /* UIApplication+PermissionModal.swift in Sources */,
 				83B906BB249A29CA0088F15C /* UIButton+Additions.swift in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
-				94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */,
 				5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */,
 				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
@@ -14620,6 +14636,7 @@
 				5BE689B62419188D00462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
 				77892E9E20E501DC0020A533 /* ContactTableViewCell.m in Sources */,
 				B6F8CE17262823240074CBBF /* CoreDataErrorHandler.m in Sources */,
+				B5488B742A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */,
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
@@ -14881,6 +14898,7 @@
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
 				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
+				B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */,
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,

@@ -438,4 +438,38 @@ extension AppDelegate {
             self?.performCall()
         }
     }
+    
+    // MARK: - Account details
+    @objc func refreshAccountDetails() {
+        Task {
+            do {
+                let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+                _ = try await accountUseCase.refreshCurrentAccountDetails()
+            } catch {
+                MEGALogError("Error loading account details. Error: \(error)")
+            }
+        }
+    }
+    
+    // MARK: - Transfer Quota Dialog
+    @objc func handleDownloadQuotaError(_ error: MEGAError, transfer: MEGATransfer) {
+        guard error.value != 0 else { return }
+        
+        var alertDisplayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode
+        switch error.type {
+        case .apiEgoingOverquota:
+            alertDisplayMode = .limitedDownload
+        case .apiEOverQuota:
+            alertDisplayMode = transfer.isStreamingTransfer ? .streamingExceeded : .downloadExceeded
+        default: return
+        }
+        
+        CustomModalAlertRouter(
+            .transferDownloadQuotaError,
+            presenter: UIApplication.mnz_presentingViewController(),
+            transferQuotaDisplayMode: alertDisplayMode
+        ).start()
+        
+        NotificationCenter.default.post(name: .MEGATransferOverQuota, object: self)
+    }
 }
