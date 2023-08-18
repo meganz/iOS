@@ -212,7 +212,7 @@
 }
 
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
-    [UpgradeAccountRouter.new pushUpgradeTVCWithNavigationController:self.navigationController];
+    [self showUpgradePlanView];
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {

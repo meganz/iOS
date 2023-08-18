@@ -9,6 +9,7 @@
 
 @interface MEGAPurchase ()
 @property (nonatomic, strong) NSArray *iOSProductIdentifiers;
+@property (nonatomic, strong) NSMutableArray *products;
 @end
 
 @implementation MEGAPurchase
@@ -33,6 +34,15 @@
     return self;
 }
 
+- (instancetype)initWithProducts:(NSArray<SKProduct *> *)products {
+    self = [self init];
+    if (self != nil) {
+        self.products = [products mutableCopy];
+    }
+    
+    return self;
+}
+
 - (void)requestPricing {
     [[MEGASdkManager sharedMEGASdk] getPricingWithDelegate:self];
 }
@@ -50,7 +60,7 @@
                 MEGALogWarning(@"Product identifier \"%@\" (account type \"%@\") does not exist in the App Store, not need to request its information", productId, [MEGAAccountDetails stringForAccountType:[self.pricing proLevelAtProductIndex:i]]);
             }
         }
-        _products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
+        self.products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
         self.iOSProductIdentifiers = [productIdentifieres copy];
         SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:self.iOSProductIdentifiers]];
         prodRequest.delegate = self;
@@ -59,6 +69,10 @@
     } else {
         MEGALogWarning(@"[StoreKit] In-App purchases is disabled");
     }
+}
+
+- (void)removeAllProducts {
+    [self.products removeAllObjects];
 }
 
 - (void)purchaseProduct:(SKProduct *)product {
@@ -115,6 +129,7 @@
         MEGALogDebug(@"[StoreKit] Product \"%@\" received", product.productIdentifier);
         [self.products addObject:product];
     }
+    
     for (NSString *invalidProductIdentifiers in response.invalidProductIdentifiers) {
         MEGALogError(@"[StoreKit] Invalid product \"%@\"", invalidProductIdentifiers);
     }
