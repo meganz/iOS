@@ -155,4 +155,14 @@ extension MEGALinkManager {
             allNodes: nil
         )
     }
+    
+    @objc class func shouldOpenWaitingRoom(chatRoom: MEGAChatRoom) -> Bool {
+        let isModerator = chatRoom.ownPrivilege.toOwnPrivilegeEntity() == .moderator
+        return !isModerator && chatRoom.isWaitingRoomEnabled && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
+    }
+    
+    @objc class func openWaitingRoom(for chatId: ChatIdEntity) {
+        guard let scheduledMeeting = MEGAChatSdk.shared.scheduledMeetings(byChat: chatId).first?.toScheduledMeetingEntity() else { return }
+        WaitingRoomViewRouter(presenter: UIApplication.mnz_visibleViewController(), scheduledMeeting: scheduledMeeting).start()
+    }
 }

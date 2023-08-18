@@ -246,7 +246,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     }
 }
 
-extension TurnOnNotificationsViewController: TraitEnviromentAware {
+extension TurnOnNotificationsViewController: TraitEnvironmentAware {
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         view.backgroundColor = UIColor.mnz_backgroundElevated(currentTrait)
         openSettingsButton.mnz_setupPrimary(currentTrait)

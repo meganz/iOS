@@ -67,9 +67,9 @@ class VideoExplorerTableViewCell: UITableViewCell {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension VideoExplorerTableViewCell: TraitEnviromentAware {
+extension VideoExplorerTableViewCell: TraitEnvironmentAware {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
