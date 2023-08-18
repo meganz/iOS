@@ -194,7 +194,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     
     func  test_cancelMeetingWithMessagesInChat_stringsShouldMatch() {
         let viewModel = FutureMeetingRoomViewModel()
-        viewModel.chatHasMeesages = true
+        viewModel.chatHasMessages = true
         let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
         XCTAssertTrue(cancelMeetingAlertData.message == Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withMessages)
         XCTAssertTrue(cancelMeetingAlertData.primaryButtonTitle == Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withMessages)
@@ -202,7 +202,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     
     func  test_cancelMeetingWithoutMessagesInChat_stringsShouldMatch() {
         let viewModel = FutureMeetingRoomViewModel()
-        viewModel.chatHasMeesages = false
+        viewModel.chatHasMessages = false
         let cancelMeetingAlertData = viewModel.cancelMeetingAlertData()
         XCTAssertTrue(cancelMeetingAlertData.message == Strings.Localizable.Meetings.Scheduled.CancelAlert.Description.withoutMessages)
         XCTAssertTrue(cancelMeetingAlertData.primaryButtonTitle == Strings.Localizable.Meetings.Scheduled.CancelAlert.Option.Confirm.withoutMessages)
@@ -211,7 +211,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     func test_cancelScheduledMeeting_meetingCancelledSuccess() {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
         let viewModel = FutureMeetingRoomViewModel(router: router, scheduledMeetingUseCase: scheduledMeetingUseCase)
-        viewModel.chatHasMeesages = true
+        viewModel.chatHasMessages = true
         viewModel.cancelScheduledMeeting()
         evaluate { self.router.showSuccessMessage_calledTimes == 1 }
     }
