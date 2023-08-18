@@ -7,7 +7,7 @@ import MEGAPresentation
     case storageEvent = 0
     case storageQuotaError
     case storageUploadQuotaError
-    case storageDownloadQuotaError
+    case transferDownloadQuotaError
     case businessGracePeriod
     case outgoingContactRequest
     case contactNotInMEGA
@@ -26,6 +26,8 @@ import MEGAPresentation
     
     private var outShareEmail: String?
     
+    private var transferQuotaDisplayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode?
+    
     @objc init(_ mode: CustomModalAlertMode, presenter: UIViewController) {
         self.mode = mode
         self.presenter = presenter
@@ -43,6 +45,14 @@ import MEGAPresentation
         self.outShareEmail = outShareEmail
     }
     
+    init(_ mode: CustomModalAlertMode,
+         presenter: UIViewController,
+         transferQuotaDisplayMode: CustomModalAlertView.Mode.TransferQuotaErrorDisplayMode) {
+        self.mode = mode
+        self.presenter = presenter
+        self.transferQuotaDisplayMode = transferQuotaDisplayMode
+    }
+    
     func build() -> UIViewController {
         let customModalAlertVC = CustomModalAlertViewController()
         switch mode {
@@ -52,9 +62,10 @@ import MEGAPresentation
         case .storageUploadQuotaError:
             customModalAlertVC.configureForStorageQuotaError(true)
             
-        case .storageDownloadQuotaError:
-            customModalAlertVC.configureForStorageDownloadQuotaError()
-            
+        case .transferDownloadQuotaError:
+            guard let transferDisplayMode = transferQuotaDisplayMode else { return customModalAlertVC }
+            customModalAlertVC.configureForTransferQuotaError(for: transferDisplayMode)
+             
         case .businessGracePeriod:
             customModalAlertVC.configureForBusinessGracePeriod()
             

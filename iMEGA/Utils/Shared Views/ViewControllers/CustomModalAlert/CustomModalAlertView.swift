@@ -17,8 +17,8 @@ struct CustomModalAlertView: UIViewControllerRepresentable {
             controller.configureForStorageQuotaError(false)
         case .storageUploadQuotaError:
             controller.configureForStorageQuotaError(true)
-        case .storageDownloadQuotaError:
-            controller.configureForStorageDownloadQuotaError()
+        case .transferQuotaError(let displayMode):
+            controller.configureForTransferQuotaError(for: displayMode)
         case .businessGracePeriod:
             controller.configureForBusinessGracePeriod()
         case .enableKeyRotation(let chatId):
@@ -43,7 +43,7 @@ extension CustomModalAlertView {
     enum Mode {
         case storageQuotaError
         case storageUploadQuotaError
-        case storageDownloadQuotaError
+        case transferQuotaError(displayMode: TransferQuotaErrorDisplayMode)
         case businessGracePeriod
         case enableKeyRotation(chatId: ChatIdEntity)
         case upgradeSecurity
@@ -52,6 +52,10 @@ extension CustomModalAlertView {
         
         enum StorageQuotaWillExceedDisplayMode {
             case albumLink
+        }
+        
+        enum TransferQuotaErrorDisplayMode {
+            case limitedDownload, downloadExceeded, streamingExceeded
         }
     }
 }

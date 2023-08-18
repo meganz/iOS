@@ -16,9 +16,7 @@
 @interface CustomModalAlertViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *firstButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondButton;
@@ -106,6 +104,10 @@
         self.linkView.hidden = YES;
     }
     
+    if (self.detailAttributedTextWithLink) {
+        [self updateDetailAttributedTextWithLink:self.detailAttributedTextWithLink];
+    }
+    
     self.closeButton.hidden = !self.isShowCloseButton;
     [self updateAppearance];
 }
@@ -119,6 +121,8 @@
 }
 
 - (void)setDetailLabelText:(NSString*)detail {
+    self.detailTextView.hidden = YES;
+    
     if (self.detailAttributed) {
         self.detailLabel.attributedText = self.detailAttributed;
     } else if (self.boldInDetail) {
