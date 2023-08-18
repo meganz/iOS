@@ -206,9 +206,9 @@ extension MEGABannerView: MEGACarouselFlowLayoutDelegate {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension MEGABannerView: TraitEnviromentAware {
+extension MEGABannerView: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

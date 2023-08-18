@@ -55,7 +55,7 @@ class ContactLinkContentView: UIView {
     }
 }
 
-extension ContactLinkContentView: TraitEnviromentAware {
+extension ContactLinkContentView: TraitEnvironmentAware {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)

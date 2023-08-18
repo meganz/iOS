@@ -84,7 +84,7 @@ class ExplorerBaseViewController: UIViewController {
             return
         }
         
-        let favoriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let favoriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: .shared))
         
         selectedNodes.forEach { node in
             if node.isFavourite {
@@ -116,7 +116,7 @@ class ExplorerBaseViewController: UIViewController {
               !selectedNodes.isEmpty else {
             return
         }
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         Task { @MainActor in
             do {
                 try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())
@@ -150,7 +150,7 @@ class ExplorerBaseViewController: UIViewController {
     fileprivate func deleteButtonPressed(_ button: UIBarButtonItem) {
         guard let selectedNodes = selectedNodes(),
               !selectedNodes.isEmpty,
-              let rubbishBinNode = MEGASdkManager.sharedMEGASdk().rubbishNode else {
+              let rubbishBinNode = MEGASdk.shared.rubbishNode else {
             return
         }
         
@@ -161,7 +161,7 @@ class ExplorerBaseViewController: UIViewController {
             }
         
         selectedNodes.forEach {
-            MEGASdkManager.sharedMEGASdk().move(
+            MEGASdk.shared.move(
                 $0,
                 newParent: rubbishBinNode,
                 delegate: moveRequestDelegate
@@ -254,7 +254,7 @@ class ExplorerBaseViewController: UIViewController {
     }
 }
 
-extension ExplorerBaseViewController: TraitEnviromentAware {
+extension ExplorerBaseViewController: TraitEnvironmentAware {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)

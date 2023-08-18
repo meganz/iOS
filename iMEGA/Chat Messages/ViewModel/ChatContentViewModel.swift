@@ -36,14 +36,22 @@ final class ChatContentViewModel: ViewModelType {
         chatUseCase.myUserHandle()
     }()
     
+    lazy var isWaitingRoomFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
+    
     private let chatUseCase: any ChatUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let chatRoom: ChatRoomEntity
-    
-    init(chatRoom: ChatRoomEntity, chatUseCase: any ChatUseCaseProtocol, scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol) {
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+
+    init(chatRoom: ChatRoomEntity,
+         chatUseCase: some ChatUseCaseProtocol,
+         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    ) {
         self.chatRoom = chatRoom
         self.chatUseCase = chatUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
+        self.featureFlagProvider = featureFlagProvider
     }
     
     // MARK: - Dispatch actions

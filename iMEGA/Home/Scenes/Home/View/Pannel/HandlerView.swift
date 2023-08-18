@@ -72,9 +72,9 @@ final class HandlerView: UIView {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension HandlerView: TraitEnviromentAware {
+extension HandlerView: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

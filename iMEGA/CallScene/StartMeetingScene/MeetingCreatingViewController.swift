@@ -318,7 +318,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-extension MeetingCreatingViewController: TraitEnviromentAware {
+extension MeetingCreatingViewController: TraitEnvironmentAware {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         forceDarkNavigationUI()

@@ -602,9 +602,9 @@ extension HomeViewController: HomeSearchControllerDelegate {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension HomeViewController: TraitEnviromentAware {
+extension HomeViewController: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

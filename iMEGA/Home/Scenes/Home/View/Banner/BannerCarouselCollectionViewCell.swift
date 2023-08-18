@@ -61,9 +61,9 @@ final class BannerCarouselCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension BannerCarouselCollectionViewCell: TraitEnviromentAware {
+extension BannerCarouselCollectionViewCell: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
