@@ -132,9 +132,9 @@ final class SegmentTitleView: UIView {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension SegmentTitleView: TraitEnviromentAware {
+extension SegmentTitleView: TraitEnvironmentAware {
 
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         updateView(with: currentTrait)

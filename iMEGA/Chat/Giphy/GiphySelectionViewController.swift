@@ -55,7 +55,7 @@ class GiphySelectionViewController: UIViewController {
     }
 }
 
-extension GiphySelectionViewController: TraitEnviromentAware {
+extension GiphySelectionViewController: TraitEnvironmentAware {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

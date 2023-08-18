@@ -828,17 +828,20 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 + (void)openMeetingWithRequest:(MEGAChatRequest * _Nonnull)request  chatLinkURL:(NSURL * _Nonnull)chatLinkUrl {
     // "It's a meeting, open join call"
     MEGAHandleList *list = request.megaHandleList;
+    MEGAChatRoom *chatRoom = [[MEGAChatSdk shared] chatRoomForChatId:request.chatHandle];
+
     if (list.size > 0 && [list megaHandleAtIndex:0] != 0) {
         [self createMeetingAndShow:request.chatHandle userhandle:request.userHandle publicChatLink:chatLinkUrl];
         [SVProgressHUD dismiss];
+    } else if ([self shouldOpenWaitingRoomWithChatRoom: chatRoom]) {
+        [SVProgressHUD dismiss];
+        [self openWaitingRoomFor:request.chatHandle];
     } else {
-        //  meeing ended
+        //  meeting ended
         [SVProgressHUD dismiss];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"meetings.alert.end", nil) message:NSLocalizedString(@"meetings.alert.end.description", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"meetings.alert.meetingchat", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
-            
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
             if (!chatRoom.isPreview && !chatRoom.isActive) {
                 MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (error.type) {

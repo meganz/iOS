@@ -79,7 +79,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         } else if chatRoom.isMeeting {
             statusView.isHidden = true
             chattingWithTextLabel.isHidden = true
-            guard let scheduledMeeting = MEGASdkManager.sharedMEGAChatSdk().scheduledMeetings(byChat: chatRoom.chatId).first?.toScheduledMeetingEntity() else {
+            guard let scheduledMeeting = MEGAChatSdk.shared.scheduledMeetings(byChat: chatRoom.chatId).first?.toScheduledMeetingEntity() else {
                 statusLabel.isHidden = true
                 return
             }

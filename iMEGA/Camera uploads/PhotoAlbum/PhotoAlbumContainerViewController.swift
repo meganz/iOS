@@ -5,7 +5,7 @@ import MEGAUIKit
 import SwiftUI
 import UIKit
 
-final class PhotoAlbumContainerViewController: UIViewController, TraitEnviromentAware {
+final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmentAware {
     var photoViewController: PhotosViewController?
     var numberOfPages: Int = PhotoLibraryTab.allCases.count
     
@@ -115,7 +115,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnviroment
         pageTabViewModel.selectedTab == .timeline
     }
     
-    // MARK: - TraitEnviromentAware
+    // MARK: - TraitEnvironmentAware
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)

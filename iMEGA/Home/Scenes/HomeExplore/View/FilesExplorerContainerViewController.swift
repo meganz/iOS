@@ -219,7 +219,7 @@ extension FilesExplorerContainerViewController: UISearchResultsUpdating {
     }
 }
 
-extension FilesExplorerContainerViewController: TraitEnviromentAware {
+extension FilesExplorerContainerViewController: TraitEnvironmentAware {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)

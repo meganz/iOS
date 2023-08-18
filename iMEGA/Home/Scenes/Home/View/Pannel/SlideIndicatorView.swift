@@ -50,9 +50,9 @@ final class SlideIndicatorView: UIView {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension SlideIndicatorView: TraitEnviromentAware {
+extension SlideIndicatorView: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

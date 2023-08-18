@@ -128,9 +128,9 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension MEGASearchBarView: TraitEnviromentAware {
+extension MEGASearchBarView: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

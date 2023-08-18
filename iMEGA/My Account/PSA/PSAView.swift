@@ -121,9 +121,9 @@ final class PSAView: UIView, ViewType {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension PSAView: TraitEnviromentAware {
+extension PSAView: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
