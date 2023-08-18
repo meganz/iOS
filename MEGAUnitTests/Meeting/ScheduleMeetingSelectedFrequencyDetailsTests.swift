@@ -95,8 +95,8 @@ final class ScheduleMeetingSelectedFrequencyDetailsTests: XCTestCase {
         var rules = try makeRules(forFrequency: .monthly, interval: interval)
         rules.monthDayList = [1]
         let frequencyDetails = try makeFrequencyDetails(rules: rules)
-        let expectedString = Strings.Localizable.Meetings.Scheduled.Create.Monthly.WeekDay.selectedFrequency(interval)
-            .replacingOccurrences(of: "[ordinalNumber]", with: "1st")
+        let expectedString = Strings.Localizable.Meetings.Scheduled.Create.Monthly.WeekDayCardinal.selectedFrequency(interval)
+            .replacingOccurrences(of: "[cardinalNumber]", with: "1")
         XCTAssertEqual(frequencyDetails.string, expectedString)
 
     }
