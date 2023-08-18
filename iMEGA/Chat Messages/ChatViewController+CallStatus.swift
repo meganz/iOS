@@ -68,8 +68,8 @@ extension ChatViewController {
     }
     
     @objc func didTapJoinCall() {
-        guard !MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall ||
-                MEGASdkManager.sharedMEGAChatSdk().isCallActive(forChatRoomId: chatRoom.chatId) else {
+        guard !MEGAChatSdk.shared.mnz_existsActiveCall ||
+                MEGAChatSdk.shared.isCallActive(forChatRoomId: chatRoom.chatId) else {
             MeetingAlreadyExistsAlert.show(presenter: self) { [weak self] in
                 guard let self = self else { return }
                 self.endActiveCallAndJoinCurrentChatroomCall()
@@ -81,8 +81,8 @@ extension ChatViewController {
     }
     
     @objc func didTapToReturnToCall() {
-        guard !MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall ||
-                MEGASdkManager.sharedMEGAChatSdk().isCallActive(forChatRoomId: chatRoom.chatId) else {
+        guard !MEGAChatSdk.shared.mnz_existsActiveCall ||
+                MEGAChatSdk.shared.isCallActive(forChatRoomId: chatRoom.chatId) else {
             MeetingAlreadyExistsAlert.show(presenter: self) { [weak self] in
                 guard let self = self else { return }
                 self.endActiveCallAndJoinCurrentChatroomCall()
@@ -94,13 +94,13 @@ extension ChatViewController {
     }
     
     private func endCall(_ call: CallEntity) {
-        let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)
+        let callRepository = CallRepository(chatSdk: MEGAChatSdk.sharedChatSdk, callActionManager: CallActionManager.shared)
         CallUseCase(repository: callRepository).hangCall(for: call.callId)
         CallCoordinatorUseCase().endCall(call)
     }
     
     private func endActiveCallAndJoinCurrentChatroomCall() {
-        if let activeCall = MEGASdkManager.sharedMEGAChatSdk().firstActiveCall {
+        if let activeCall = MEGAChatSdk.shared.firstActiveCall {
             endCall(activeCall.toCallEntity())
         }
         
@@ -112,13 +112,27 @@ extension ChatViewController {
             guard let self else { return }
             if granted {
                 timer?.invalidate()
-                openCallViewWithVideo(videoCall: false, shouldRing: false)
+                if shouldOpenWaitingRoom() {
+                    openWaitingRoom()
+                } else {
+                    openCallViewWithVideo(videoCall: false, shouldRing: false)
+                }
             } else {
                 permissionRouter.alertAudioPermission(incomingCall: false)
             }
         }
     }
     
+    private func shouldOpenWaitingRoom() -> Bool {
+        let isModerator = chatRoom.ownPrivilege.toOwnPrivilegeEntity() == .moderator
+        return !isModerator && chatRoom.isWaitingRoomEnabled && chatContentViewModel.isWaitingRoomFeatureEnabled
+    }
+    
+    private func openWaitingRoom() {
+        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else { return }
+        WaitingRoomViewRouter(presenter: self, scheduledMeeting: scheduledMeeting).start()
+    }
+
     func subscribeToNoUserJoinedNotification() {
         let usecase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
         noUserJoinedSubscription = usecase
@@ -127,7 +141,7 @@ extension ChatViewController {
             .sink { [weak self] _ in
                 guard let self = self,
                       MeetingContainerRouter.isAlreadyPresented == false,
-                      let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: self.chatRoom.chatId) else {
+                      let call = MEGAChatSdk.shared.chatCall(forChatId: self.chatRoom.chatId) else {
                     return
                 }
                 
@@ -155,7 +169,7 @@ extension ChatViewController {
     }
     
     private func showCallEndDialog(withCall call: CallEntity) {
-        let analyticsEventStatsUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let analyticsEventStatsUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdk.sharedSdk))
         
         let endCallDialog = EndCallDialog { [weak self] in
             analyticsEventStatsUseCase.sendAnalyticsEvent(.meetings(.stayOnCallInNoParticipantsPopup))

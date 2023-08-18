@@ -4,12 +4,12 @@ import MEGAUIKit
 import SwiftUI
 import UIKit
 
-final class AlbumContentViewController: UIViewController, ViewType, TraitEnviromentAware {
+final class AlbumContentViewController: UIViewController, ViewType, TraitEnvironmentAware {
     let viewModel: AlbumContentViewModel
     
     lazy var photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: PhotoLibraryContentMode.album)
     lazy var photoLibraryPublisher = PhotoLibraryPublisher(viewModel: photoLibraryContentViewModel)
-    lazy var selection = PhotoSelectionAdapter(sdk: MEGASdkManager.sharedMEGASdk())
+    lazy var selection = PhotoSelectionAdapter(sdk: .shared)
     
     lazy var rightBarButtonItem = UIBarButtonItem(
         image: Asset.Images.NavigationBar.selectAll.image,
@@ -216,7 +216,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnvirom
         viewModel.showAlbumContentPicker()
     }
     
-    // MARK: - TraitEnviromentAware
+    // MARK: - TraitEnvironmentAware
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)

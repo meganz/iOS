@@ -72,9 +72,9 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension ExploreViewStack: TraitEnviromentAware {
+extension ExploreViewStack: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

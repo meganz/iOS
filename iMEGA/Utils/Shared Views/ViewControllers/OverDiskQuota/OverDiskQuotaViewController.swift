@@ -264,9 +264,9 @@ private extension Selector {
     static let didTapDismissButton = #selector(OverDiskQuotaViewController.didTapDismissButton(button:))
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension OverDiskQuotaViewController: TraitEnviromentAware {
+extension OverDiskQuotaViewController: TraitEnvironmentAware {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

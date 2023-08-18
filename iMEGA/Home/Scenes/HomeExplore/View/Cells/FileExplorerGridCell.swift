@@ -109,9 +109,9 @@ extension FileExplorerGridCell: FileExplorerGridCellViewModelDelegate {
     }
 }
 
-// MARK: - TraitEnviromentAware
+// MARK: - TraitEnvironmentAware
 
-extension FileExplorerGridCell: TraitEnviromentAware {
+extension FileExplorerGridCell: TraitEnvironmentAware {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
