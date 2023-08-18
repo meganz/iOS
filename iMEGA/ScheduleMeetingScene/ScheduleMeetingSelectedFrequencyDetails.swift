@@ -62,9 +62,9 @@ struct ScheduleMeetingSelectedFrequencyDetails {
     private func monthlyString() -> String {
         if let monthDayList = rules.monthDayList,
            let monthDay = monthDayList.first,
-            let ordinalNumber = ordinalString(for: monthDay) {
-            let string = Strings.Localizable.Meetings.Scheduled.Create.Monthly.WeekDay.selectedFrequency(rules.interval)
-            return string.replacingOccurrences(of: "[ordinalNumber]", with: ordinalNumber)
+            let cardinalNumber = cardinalString(for: monthDay) {
+            let string = Strings.Localizable.Meetings.Scheduled.Create.Monthly.WeekDayCardinal.selectedFrequency(rules.interval)
+            return string.replacingOccurrences(of: "[cardinalNumber]", with: cardinalNumber)
         } else if let monthWeekDayList = rules.monthWeekDayList {
             guard let weekNumber = monthWeekDayList.first?.first,
                   let ordinalNumber = ordinalString(for: weekNumber),
@@ -84,6 +84,12 @@ struct ScheduleMeetingSelectedFrequencyDetails {
     private func ordinalString(for day: Int) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .ordinal
+        return numberFormatter.string(from: NSNumber(value: day))
+    }
+    
+    private func cardinalString(for day: Int) -> String? {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .none
         return numberFormatter.string(from: NSNumber(value: day))
     }
 }
