@@ -98,7 +98,7 @@ final class AudioPlayerViewModel: ViewModelType {
             configEntity.playerHandler.changePlayer(speed: speedModeState)
         }
     }
-    private var isSingleTrackPlayer: Bool = false
+    private(set) var isSingleTrackPlayer: Bool = false
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -200,6 +200,7 @@ final class AudioPlayerViewModel: ViewModelType {
             configEntity.playerHandler.setCurrent(player: audioPlayer, autoPlayEnabled: !configEntity.isFileLink, tracks: mutableTracks)
         } else {
             if shouldInitializePlayer() {
+                cleanPlayerStateForReuse()
                 configEntity.playerHandler.autoPlay(enable: configEntity.playerType != .fileLink)
                 configEntity.playerHandler.addPlayer(tracks: mutableTracks)
                 
@@ -212,6 +213,21 @@ final class AudioPlayerViewModel: ViewModelType {
         }
         
         configurePlayerType(tracks: tracks, currentTrack: currentTrack)
+    }
+    
+    private func cleanPlayerStateForReuse() {
+        removePreviousQueuedTrackInPlayer()
+        refreshPlayerListener()
+    }
+    
+    private func removePreviousQueuedTrackInPlayer() {
+        configEntity.playerHandler.currentPlayer()?.queuePlayer = nil
+        configEntity.playerHandler.currentPlayer()?.update(tracks: [])
+    }
+    
+    private func refreshPlayerListener() {
+        configEntity.playerHandler.currentPlayer()?.removeAllListeners()
+        configEntity.playerHandler.currentPlayer()?.add(listener: self)
     }
     
     private func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) -> [AudioPlayerItem] {
