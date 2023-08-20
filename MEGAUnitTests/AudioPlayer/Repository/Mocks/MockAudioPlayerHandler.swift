@@ -24,10 +24,13 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var removePlayerListener_calledTimes = 0
     var playItem_calledTimes = 0
     var changePlayerRate_calledTimes = 0
+    var setCurrent_callTimes = 0
+    
+    private var _isPlayerDefined = false
     
     private(set) var playerResumePlayback_Calls = [TimeInterval]()
     
-    func isPlayerDefined() -> Bool { false }
+    func isPlayerDefined() -> Bool { _isPlayerDefined }
     func isPlayerEmpty() -> Bool { false }
     
     func currentPlayer() -> AudioPlayer? {
@@ -41,6 +44,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     ) {
         addPlayer_calledTimes += 1
         addPlayerTracks_calledTimes += 1
+        _isPlayerDefined = true
     }
     
     func addPlayer(listener: any AudioPlayerObserversProtocol) {
@@ -156,6 +160,8 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func remoteCommandEnabled(_ enabled: Bool) {}
     func resetAudioPlayerConfiguration() {}
     func playerTracksContains(url: URL) -> Bool { true }
-    func resetCurrentItem() {}
+    func resetCurrentItem() {
+        setCurrent_callTimes += 1
+    }
     func currentSpeedMode() -> SpeedMode { .normal }
 }
