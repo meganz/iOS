@@ -286,6 +286,10 @@ final class AudioPlayer: NSObject {
         listenerManager.remove(listener)
     }
     
+    func removeAllListeners() {
+        listenerManager.listeners.removeAll()
+    }
+    
     @objc func add(presenterListener: any AudioPlayerPresenterProtocol) {
         presenterListenerManager.add(presenterListener)
     }
