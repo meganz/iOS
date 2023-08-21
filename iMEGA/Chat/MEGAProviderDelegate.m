@@ -126,13 +126,20 @@
         case MEGAChatCallTermCodeInvalid:
         case MEGAChatCallTermCodeError:
         case MEGAChatCallTermCodeTooManyParticipants:
+        case MEGAChatCallTermCodeTooManyClients:
+        case MEGAChatCallTermCodeProtocolVersion:
             callEndedReason = CXCallEndedReasonFailed;
             break;
             
         case MEGAChatCallTermCodeCallReject:
         case MEGAChatCallTermCodeUserHangup:
         case MEGAChatCallTermCodeNoParticipate:
+        case MEGAChatCallTermCodeKicked:
             callEndedReason = CXCallEndedReasonRemoteEnded;
+            break;
+            
+        case MEGAChatCallTermCodeWaitingRoomTimeout:
+            callEndedReason = CXCallEndedReasonUnanswered;
             break;
     }
     

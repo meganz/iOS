@@ -72,6 +72,14 @@ extension MEGAChatCallTermCode {
             return .error
         case .noParticipate:
             return .noParticipate
+        case .tooManyClients:
+            return .tooManyClients
+        case .protocolVersion:
+            return .protocolVersion
+        case .kicked:
+            return .kicked
+        case .waitingRoomTimeout:
+            return .waitingRoomTimeout
         @unknown default:
             return .invalid
         }
