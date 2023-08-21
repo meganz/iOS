@@ -1536,8 +1536,6 @@
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B5120F4A2A16050A00A56354 /* ShareAttachmentCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */; };
 		B5120F4C2A16053A00A56354 /* ShareAttachmentCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F4B2A16053A00A56354 /* ShareAttachmentCellViewModel.swift */; };
-		B51977C62942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51977C52942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift */; };
-		B51977C92942DC27008770CD /* VerifyCredentialsViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51977C82942DC27008770CD /* VerifyCredentialsViewProvider.swift */; };
 		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
 		B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */; };
 		B51DD9CE28B5D34A0094A979 /* LiveTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */; };
@@ -4120,8 +4118,6 @@
 		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
 		B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellView.swift; sourceTree = "<group>"; };
 		B5120F4B2A16053A00A56354 /* ShareAttachmentCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellViewModel.swift; sourceTree = "<group>"; };
-		B51977C52942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+WarningBannerView.swift"; sourceTree = "<group>"; };
-		B51977C82942DC27008770CD /* VerifyCredentialsViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCredentialsViewProvider.swift; sourceTree = "<group>"; };
 		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
 		B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+SharedItem.swift"; sourceTree = "<group>"; };
 		B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextImageView.swift; sourceTree = "<group>"; };
@@ -8063,7 +8059,6 @@
 		831844B922C4D51500E4C401 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B51977C72942DBEC008770CD /* VerifyCredentials warning view */,
 				5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */,
 				5B86D7C4248957E100B7888D /* ContactsTableViewHeader.xib */,
 			);
@@ -9801,15 +9796,6 @@
 				B567174F2A1EF97C00CFF55A /* ShareDestinationTableViewCell.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		B51977C72942DBEC008770CD /* VerifyCredentials warning view */ = {
-			isa = PBXGroup;
-			children = (
-				B51977C52942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift */,
-				B51977C82942DC27008770CD /* VerifyCredentialsViewProvider.swift */,
-			);
-			path = "VerifyCredentials warning view";
 			sourceTree = "<group>";
 		};
 		B51DD9CB28B5D3110094A979 /* LiveText */ = {
@@ -14520,9 +14506,7 @@
 				B662B86524ED0D800089376A /* VerificationCodeViewModel.swift in Sources */,
 				B662B86724ED14A30089376A /* VerificationCodeViewRouter.swift in Sources */,
 				B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */,
-				B51977C62942DB94008770CD /* VerifyCredentialsViewController+WarningBannerView.swift in Sources */,
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
-				B51977C92942DC27008770CD /* VerifyCredentialsViewProvider.swift in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				BFAAF70F252E6D170053A9BF /* VideoExplorerListSource.swift in Sources */,
 				BFAAF726252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift in Sources */,
