@@ -20,6 +20,10 @@ public struct CallEntity: Sendable {
         case reject
         case error
         case noParticipate
+        case tooManyClients
+        case protocolVersion
+        case kicked
+        case waitingRoomTimeout
     }
     
     public enum ChangeType: Sendable {
