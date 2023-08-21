@@ -30,14 +30,18 @@ struct ImportAlbumView: View, DismissibleContentView {
             VStack(spacing: 0) {
                 navigationBar
                 
-                PhotoLibraryContentView(
-                    viewModel: viewModel.photoLibraryContentViewModel,
-                    router: PhotoLibraryContentViewRouter(contentMode: .albumLink),
-                    onFilterUpdate: nil
-                )
-                .opacity(viewModel.isPhotosLoaded ? 1.0 : 0)
-                
-                Spacer()
+                if viewModel.shouldShowEmptyAlbumView {
+                    EmptyAlbumView()
+                        .frame(maxHeight: .infinity, alignment: .center)
+                } else {
+                    PhotoLibraryContentView(
+                        viewModel: viewModel.photoLibraryContentViewModel,
+                        router: PhotoLibraryContentViewRouter(contentMode: .albumLink),
+                        onFilterUpdate: nil
+                    )
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .opacity(viewModel.isPhotosLoaded ? 1.0 : 0)
+                }
                 
                 if viewModel.showSnackBar {
                     SnackBarView(viewModel: viewModel.snackBarViewModel())
@@ -128,7 +132,7 @@ struct ImportAlbumView: View, DismissibleContentView {
                 Image(uiImage: Asset.Images.NavigationBar.selectAll.image)
             }
             .opacity(viewModel.selectButtonOpacity)
-            .disabled(!viewModel.isPhotosLoaded)
+            .disabled(viewModel.isAlbumEmpty)
         }
     }
     
@@ -148,12 +152,14 @@ struct ImportAlbumView: View, DismissibleContentView {
     private var bottomToolbar: some View {
         HStack(alignment: .top) {
             if viewModel.showImportToolbarButton {
-                toolbarImageButton(image: Asset.Images.InfoActions.import.image) {
+                ToolbarImageButton(image: Asset.Images.InfoActions.import.image,
+                                   isDisabled: viewModel.isToolbarButtonsDisabled) {
                     Task { await viewModel.importAlbum() }
                 }
                 Spacer()
             }
-            toolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image) {
+            ToolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image,
+                               isDisabled: viewModel.isToolbarButtonsDisabled) {
                 
             }
             Spacer()
@@ -164,18 +170,6 @@ struct ImportAlbumView: View, DismissibleContentView {
             .edgesIgnoringSafeArea(.bottom))
     }
     
-    private func toolbarImageButton(image: UIImage, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(uiImage: image)
-                .resizable()
-                .frame(width: 28, height: 28)
-                .opacity(toolbarButtonOpacity)
-        }
-        .disabled(viewModel.isToolbarButtonsDisabled)
-        .padding(.vertical, Constants.toolbarButtonVerticalPadding)
-        .padding(.horizontal, Constants.toolbarButtonHorizontalPadding)
-    }
-    
     @ViewBuilder
     private func shareLinkButton() -> some View {
         if #available(iOS 16.0, *) {
@@ -183,20 +177,17 @@ struct ImportAlbumView: View, DismissibleContentView {
                 Image(uiImage: Asset.Images.Generic.link.image)
                     .resizable()
                     .frame(width: 28, height: 28)
-                    .opacity(toolbarButtonOpacity)
+                    .opacity(viewModel.isShareLinkButtonDisabled ? ImportAlbumViewModel.Constants.disabledOpacity : 1)
             }
             .padding(.vertical, Constants.toolbarButtonVerticalPadding)
             .padding(.horizontal, Constants.toolbarButtonHorizontalPadding)
-            .disabled(viewModel.isToolbarButtonsDisabled)
+            .disabled(viewModel.isShareLinkButtonDisabled)
         } else {
-            toolbarImageButton(image: Asset.Images.Generic.link.image,
+            ToolbarImageButton(image: Asset.Images.Generic.link.image,
+                               isDisabled: viewModel.isShareLinkButtonDisabled,
                                action: viewModel.shareLinkTapped)
             .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
         }
-    }
-    
-    private var toolbarButtonOpacity: Double {
-        viewModel.isToolbarButtonsDisabled ? ImportAlbumViewModel.Constants.disabledOpacity : 1
     }
 }
 
@@ -224,6 +215,36 @@ private extension View {
         background(
             ShareSheet(isPresented: isPresented, activityItems: activityItems)
         )
+    }
+}
+
+private struct ToolbarImageButton: View {
+    private enum Constants {
+        static let toolbarButtonVerticalPadding = 11.0
+        static let toolbarButtonHorizontalPadding = 16.0
+        static let disabledOpacity = 0.3
+        static let imageSize: CGSize = .init(width: 28, height: 28)
+    }
+    
+    let image: UIImage
+    let isDisabled: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Image(uiImage: image)
+                .resizable()
+                .frame(width: Constants.imageSize.width,
+                       height: Constants.imageSize.height)
+                .opacity(toolbarButtonOpacity)
+        }
+        .disabled(isDisabled)
+        .padding(.vertical, Constants.toolbarButtonVerticalPadding)
+        .padding(.horizontal, Constants.toolbarButtonHorizontalPadding)
+    }
+    
+    private var toolbarButtonOpacity: Double {
+        isDisabled ? Constants.disabledOpacity : 1
     }
 }
 

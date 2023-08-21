@@ -186,7 +186,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.selectTitle)
     }
     
-    func testIsToolbarButtonsDisabled_onContentLoadAndSelection_shouldEnableAndDisableCorrectly() async throws {
+    func testIsToolbarButtonsDisabled_photosLoadedAndSelection_shouldEnableAndDisableCorrectly() async throws {
         let photos = try makePhotos()
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
         let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
@@ -212,10 +212,23 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isToolbarButtonsDisabled)
     }
     
-    func testSelectButtonOpacity_onLinkStatusAndSelectionHiddenChange_shouldChangeCorrectly() async throws {
+    func testIsToolbarButtonDisabled_noPhotosLoaded_shouldDisable() async throws {
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
-                                                        nodes: [])
+        let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: albumUseCase)
+        XCTAssertTrue(sut.isToolbarButtonsDisabled)
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertTrue(sut.isToolbarButtonsDisabled)
+    }
+    
+    func testSelectButtonOpacity_onPhotosLoadedAndSelectionHiddenChange_shouldChangeCorrectly() async throws {
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(
+            publicAlbumResult: .success(sharedAlbumEntity),
+            nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         XCTAssertEqual(sut.selectButtonOpacity, 0.3, accuracy: 0.1)
@@ -229,6 +242,19 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         sut.photoLibraryContentViewModel.selection.isHidden = false
         XCTAssertEqual(sut.selectButtonOpacity, 1.0, accuracy: 0.1)
+    }
+    
+    func testSelectButtonOpacity_noPhotos_shouldUseCorrectOpacity() async throws {
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(
+            publicAlbumResult: .success(sharedAlbumEntity))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase)
+        XCTAssertEqual(sut.selectButtonOpacity, 0.3, accuracy: 0.1)
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertEqual(sut.selectButtonOpacity, 0.3, accuracy: 0.1)
     }
     
     func testImportAlbum_onAlbumNameNotInConflict_shouldShowImportLocation() async throws {
@@ -457,6 +483,45 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let alertViewModel = sut.renameAlbumAlertViewModel()
         
         XCTAssertEqual(alertViewModel, expectedAlertViewModel)
+    }
+    
+    func testsShouldShowEmptyAlbumView_noPhotos_shouldReturnTrue() async throws {
+        let sharedAlbum = makeSharedAlbumEntity(set: SetEntity(handle: 1))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(
+            publicAlbumResult: .success(sharedAlbum))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase)
+        XCTAssertFalse(sut.shouldShowEmptyAlbumView)
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertTrue(sut.shouldShowEmptyAlbumView)
+        XCTAssertTrue(sut.isAlbumEmpty)
+    }
+    
+    func testsShouldShowEmptyAlbumView_photosLoaded_shouldReturnFalse() async throws {
+        let sharedAlbum = makeSharedAlbumEntity(set: SetEntity(handle: 1))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbum),
+                                                        nodes: try makePhotos())
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase)
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertFalse(sut.shouldShowEmptyAlbumView)
+        XCTAssertFalse(sut.isAlbumEmpty)
+    }
+    
+    func testIsShareLinkButtonDisabled_onAlbumLoaded_shouldEnableShareButtonEvenIfNoPhotosLoaded() async throws {
+        let sharedAlbum = makeSharedAlbumEntity(set: SetEntity(handle: 1))
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbum))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase)
+        XCTAssertTrue(sut.isShareLinkButtonDisabled)
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertFalse(sut.isShareLinkButtonDisabled)
     }
     
     // MARK: - Private
