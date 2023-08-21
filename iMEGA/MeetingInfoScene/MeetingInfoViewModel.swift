@@ -234,6 +234,9 @@ final class MeetingInfoViewModel: ObservableObject {
                 withAnimation {
                     self.showWaitingRoomWarningBanner = show
                 }
+                if show {
+                    waitingRoomWarningBannerDismissed = false
+                }
             })
             .store(in: &subscriptions)
     }
