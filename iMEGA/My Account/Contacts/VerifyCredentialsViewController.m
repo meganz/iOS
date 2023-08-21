@@ -92,9 +92,7 @@
         self.ninthPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange((position * 8), length)];
         self.tenthPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange((position * 9), length)];
     }
-    
-    [self objcWrapper_configSharedItemWarningView];
-    
+
     [self setContentMessages];
     
     [self updateVerifyOrResetButton];
@@ -106,9 +104,7 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
-    [self updateSharedItemWarningViewIfNeededWithPreviousTraitCollection:previousTraitCollection];
-    
+        
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
     }
