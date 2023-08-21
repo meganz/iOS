@@ -1,17 +1,19 @@
+import ChatRepo
 import Combine
 import KeyboardLayoutGuide
 import MEGADomain
 import MEGAPermissions
+import MEGASDKRepo
 import MEGAUIKit
 import MessageKit
 import UIKit
 
 class ChatViewController: MessagesViewController {
     let spacePadding = "   "
-    let sdk = MEGASdkManager.sharedMEGASdk()
+    let sdk = MEGASdk.shared
     let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
-    let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk()))
-    let callUseCase = CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared))
+    let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: .shared))
+    let callUseCase = CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared))
     let chatContentViewModel: ChatContentViewModel
     
     @objc private(set) var chatRoom: MEGAChatRoom
@@ -41,6 +43,8 @@ class ChatViewController: MessagesViewController {
     var endCallDialog: EndCallDialog?
     private(set) lazy var tonePlayer = TonePlayer()
     
+    var startOrJoinButtonIsHiddenSubscription: AnyCancellable?
+
     lazy var exportBarButtonItem: UIBarButtonItem = {
         let exportBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.export.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.exportSelectedMessages))
         return exportBarButtonItem
@@ -118,7 +122,7 @@ class ChatViewController: MessagesViewController {
         return chatRoomDelegate.messages
     }
     
-    var myUser = User(senderId: String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle ), displayName: "")
+    var myUser = User(senderId: String(format: "%llu", MEGAChatSdk.shared.myUserHandle ), displayName: "")
     
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom)
@@ -199,7 +203,7 @@ class ChatViewController: MessagesViewController {
     }
     
     convenience init?(chatId: UInt64) {
-        guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId) else {
+        guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId) else {
             MEGALogDebug("No chatroom found with chat id \(chatId)")
             return nil
         }
@@ -241,6 +245,14 @@ class ChatViewController: MessagesViewController {
                 isOneToOne: chatRoom.isOneToOne
             )
         )
+        
+        startOrJoinButtonIsHiddenSubscription = startOrJoinCallButton
+            .publisher(for: \.isHidden)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] isHidden in
+                guard let self else { return }
+                messagesCollectionView.contentInset.top = isHidden ? 0 : startOrJoinCallButton.frame.height * 2
+            })
     }
     
     static func backButtonMenuTitle(chatTitle: String?, isOneToOne: Bool) -> String {
@@ -300,8 +312,8 @@ class ChatViewController: MessagesViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MEGASdkManager.sharedMEGAChatSdk().add(self as (any MEGAChatDelegate))
-        MEGASdkManager.sharedMEGAChatSdk().add(self as (any MEGAChatCallDelegate))
+        MEGAChatSdk.shared.add(self as (any MEGAChatDelegate))
+        MEGAChatSdk.shared.add(self as (any MEGAChatCallDelegate))
         
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
@@ -358,14 +370,14 @@ class ChatViewController: MessagesViewController {
                 })
                 
             }
+            
             customModalAlertVC.secondCompletion = { [weak customModalAlertVC] in
                 customModalAlertVC?.dismiss(animated: true, completion: {
-                    MEGASdkManager.sharedMEGAChatSdk().removeChatLink(self.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate(completion: { (_, error) in
-                        if error.type == .MEGAChatErrorTypeOk {
+                    MEGAChatSdk.shared.removeChatLink(self.chatRoom.chatId, delegate: ChatRequestDelegate { result in
+                        if case .success = result {
                             SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
                         }
-                    }))
-                    
+                    })
                 })
             }
             
@@ -386,8 +398,8 @@ class ChatViewController: MessagesViewController {
         
         saveDraft()
         
-        MEGASdkManager.sharedMEGAChatSdk().removeMEGAChatDelegateAsync(self as (any MEGAChatDelegate))
-        MEGASdkManager.sharedMEGAChatSdk().removeMEGACallDelegateAsync(self as (any MEGAChatCallDelegate))
+        MEGAChatSdk.shared.removeMEGAChatDelegateAsync(self as (any MEGAChatDelegate))
+        MEGAChatSdk.shared.removeMEGACallDelegateAsync(self as (any MEGAChatCallDelegate))
         
         if previewMode || isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
@@ -681,7 +693,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Internal methods used by the extension of this class
     
     func isFromCurrentSender(message: MessageType) -> Bool {
-        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle
+        return UInt64(message.sender.senderId) == MEGAChatSdk.shared.myUserHandle
     }
     
     func isDateLabelVisible(for indexPath: IndexPath) -> Bool {
@@ -747,8 +759,8 @@ class ChatViewController: MessagesViewController {
     func avatarImage(for message: MessageType) -> UIImage? {
         guard let userHandle = UInt64(message.sender.senderId) else { return nil }
         
-        return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGAGenericRequestDelegate { (_, _) in
-        })
+        return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: RequestDelegate(completion: { _ in
+        }))
     }
     
     func initials(for message: MessageType) -> String {
@@ -915,7 +927,7 @@ class ChatViewController: MessagesViewController {
         chatRoomDelegate.openChatRoom()
         
         if !chatRoom.isGroup {
-            MEGASdkManager.sharedMEGAChatSdk().requestLastGreen(chatRoom.peerHandle(at: 0))
+            MEGAChatSdk.shared.requestLastGreen(chatRoom.peerHandle(at: 0))
         }
         
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
@@ -938,10 +950,10 @@ class ChatViewController: MessagesViewController {
                 return
             }
             
-            let lastSeenMessage = MEGASdkManager.sharedMEGAChatSdk().lastChatMessageSeen(forChat: chatRoom.chatId)
-            if lastMessage.message.userHandle != MEGASdkManager.sharedMEGAChatSdk().myUserHandle
+            let lastSeenMessage = MEGAChatSdk.shared.lastChatMessageSeen(forChat: chatRoom.chatId)
+            if lastMessage.message.userHandle != MEGAChatSdk.shared.myUserHandle
                 && (lastSeenMessage?.messageId != lastMessage.message.messageId) {
-                MEGASdkManager.sharedMEGAChatSdk().setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage.message.messageId)
+                MEGAChatSdk.shared.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage.message.messageId)
             }
         }
     }
@@ -1039,7 +1051,7 @@ class ChatViewController: MessagesViewController {
             let cancel = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel)
             
             let action2 = UIAlertAction(title: Strings.Localizable.resume, style: .default) { _ in
-                MEGASdkManager.sharedMEGASdk().pauseTransfers(false)
+                MEGASdk.shared.pauseTransfers(false)
                 UserDefaults.standard.set(false, forKey: "TransfersPaused")
             }
             
@@ -1115,8 +1127,8 @@ class ChatViewController: MessagesViewController {
     
     @objc func dismissChatRoom() {
         dismiss(animated: true) {
-            if MEGASdkManager.sharedMEGAChatSdk().initState() == .anonymous {
-                MEGASdkManager.sharedMEGAChatSdk().logout()
+            if MEGAChatSdk.shared.initState() == .anonymous {
+                MEGAChatSdk.shared.logout()
                 
                 if MEGALinkManager.selectedOption == .joinChatLink, let onboardingVC = UIApplication.mnz_visibleViewController() as? OnboardingViewController {
                     
@@ -1185,7 +1197,7 @@ class ChatViewController: MessagesViewController {
     }
     
     private func joinActiveCall(isVideoEnabled: Bool) {
-        guard let activeCall = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
+        guard let activeCall = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
             return
         }
         if activeCall.status == .userNoPresent {
@@ -1197,7 +1209,7 @@ class ChatViewController: MessagesViewController {
     }
     
     private func startMeetingUI(isVideoEnabled: Bool, isSpeakerEnabled: Bool) {
-        guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
+        guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
         
         let callEntity = call.toCallEntity()
         let chatRoomEntity = chatRoom.toChatRoomEntity()
@@ -1221,9 +1233,9 @@ class ChatViewController: MessagesViewController {
     }
     
     func openCallViewWithVideo(videoCall: Bool, shouldRing: Bool = true) {
-        guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
+        guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
             let reachable = MEGAReachabilityManager.isReachable()
-            let existsActiveCall = MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+            let existsActiveCall = MEGAChatSdk.shared.mnz_existsActiveCall
             
             if chatRoom.isMeeting && !shouldRing {
                 chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
