@@ -152,6 +152,7 @@
 		24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */; };
 		24A6ADE82A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */; };
 		24AB98302A78B84A006E101C /* MEGAAVViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */; };
+		24B6276F2A8F687E00AD588C /* NodeInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */; };
 		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
 		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
 		24E99B462A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */; };
@@ -2655,6 +2656,7 @@
 		24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaylistShiftStrategyProtocol.swift; sourceTree = "<group>"; };
 		24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerLoadingDecoratorTests.swift; sourceTree = "<group>"; };
 		24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerDelegate.swift; sourceTree = "<group>"; };
+		24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
 		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
 		24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleSecureFingerprintFlagUIAlertAdapter.swift; sourceTree = "<group>"; };
@@ -11723,6 +11725,7 @@
 				C45A2E3625D2F7F100915A83 /* UseCases */,
 				C45A2DF325D2B93B00915A83 /* ViewModel */,
 				C452B66325CD50260073B22C /* AudioPlayerPlaybackTests.swift */,
+				24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -15039,6 +15042,7 @@
 				BFCA570F2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift in Sources */,
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
+				24B6276F2A8F687E00AD588C /* NodeInfoRepositoryTests.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,
