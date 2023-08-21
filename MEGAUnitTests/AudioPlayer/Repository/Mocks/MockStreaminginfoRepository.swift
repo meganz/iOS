@@ -1,8 +1,10 @@
 @testable import MEGA
 import MEGADomain
 
-struct MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
+class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
     var result: Result<Void, NodeInfoError>
+    
+    private(set) var pathFromNodeCallCount = 0
     
     init(result: Result<Void, NodeInfoError> = .success(())) {
         self.result = result
@@ -27,6 +29,7 @@ struct MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
     }
     
     func path(fromNode: MEGANode) -> URL? {
+        pathFromNodeCallCount += 1
         switch result {
         case .failure: return nil
         case .success: return AudioPlayerItem.mockItem.url

@@ -1,7 +1,9 @@
 @testable import MEGA
 
-struct MockOfflineInfoRepository: OfflineInfoRepositoryProtocol {
+class MockOfflineInfoRepository: OfflineInfoRepositoryProtocol {
     var result: Result<Void, NodeInfoError>
+    
+    private(set) var localPathfromNodeCallCount = 0
     
     init(result: Result<Void, NodeInfoError> = .success(())) {
         self.result = result
@@ -15,6 +17,7 @@ struct MockOfflineInfoRepository: OfflineInfoRepositoryProtocol {
     }
     
     func localPath(fromNode: MEGANode) -> URL? {
+        localPathfromNodeCallCount += 1
         switch result {
         case .failure: return nil
         case .success: return AudioPlayerItem.mockItem.url
