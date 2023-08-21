@@ -46,6 +46,14 @@ public final class MockSdk: MEGASdk {
         viewId: String?
     )]()
     
+    public private(set) var nodeForHandleCallCount = 0
+    
+    public private(set) var messages = [Message]()
+    
+    public enum Message: Equatable {
+        case publicNodeForMegaFileLink(String)
+    }
+    
     public var hasGlobalDelegate = false
     public var hasRequestDelegate = false
     public var hasTransferDelegate = false
@@ -147,7 +155,8 @@ public final class MockSdk: MEGASdk {
     public override var isContactVerificationWarningEnabled: Bool { _isContactVerificationWarningEnabled }
     
     public override func node(forHandle handle: MEGAHandle) -> MEGANode? {
-        nodes.first { $0.handle == handle }
+        nodeForHandleCallCount += 1
+        return nodes.first { $0.handle == handle }
     }
     
     public override func parentNode(for node: MEGANode) -> MEGANode? {
@@ -467,6 +476,10 @@ public final class MockSdk: MEGASdk {
     
     public override func stopPublicSetPreview() {
         stopPublicSetPreviewCalled += 1
+    }
+    
+    public override func publicNode(forMegaFileLink megaFileLink: String, delegate: any MEGARequestDelegate) {
+        messages.append(.publicNodeForMegaFileLink(megaFileLink))
     }
     
     // MARK: - A/B testing

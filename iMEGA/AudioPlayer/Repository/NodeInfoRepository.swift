@@ -19,8 +19,8 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     private let sdk: MEGASdk
     private let folderSDK: MEGASdk
     private let megaStore: MEGAStore
-    private var streamingInfoRepository = StreamingInfoRepository()
-    private var offlineFileInfoRepository = OfflineInfoRepository()
+    private var streamingInfoRepository: any StreamingInfoRepositoryProtocol
+    private var offlineFileInfoRepository: any OfflineInfoRepositoryProtocol
    
     @PreferenceWrapper(key: .sortingPreference, defaultValue: .perFolder, useCase: PreferenceUseCase.default)
     private var sortingPreference: SortingPreference
@@ -28,10 +28,18 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     @PreferenceWrapper(key: .sortingPreferenceType, defaultValue: .defaultAsc, useCase: PreferenceUseCase.default)
     private var sortingType: MEGASortOrderType
     
-    init(sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(), folderSDK: MEGASdk = MEGASdkManager.sharedMEGASdkFolder(), megaStore: MEGAStore = MEGAStore.shareInstance()) {
+    init(
+        sdk: MEGASdk = MEGASdk.shared,
+        folderSDK: MEGASdk = MEGASdk.sharedFolderLink,
+        megaStore: MEGAStore = MEGAStore.shareInstance(),
+        offlineFileInfoRepository: any OfflineInfoRepositoryProtocol = OfflineInfoRepository(),
+        streamingInfoRepository: any StreamingInfoRepositoryProtocol = StreamingInfoRepository()
+    ) {
         self.sdk = sdk
         self.folderSDK = folderSDK
         self.megaStore = megaStore
+        self.offlineFileInfoRepository = offlineFileInfoRepository
+        self.streamingInfoRepository = streamingInfoRepository
     }
     
     // MARK: - Private functions
