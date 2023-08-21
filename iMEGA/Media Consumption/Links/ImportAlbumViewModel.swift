@@ -14,7 +14,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let importPublicAlbumUseCase: any ImportPublicAlbumUseCaseProtocol
     private let tracker: any AnalyticsTracking
-
+    
     private var publicLinkWithDecryptionKey: URL?
     private var subscriptions = Set<AnyCancellable>()
     private var showSnackBarSubscription: AnyCancellable?
@@ -50,6 +50,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published private(set) var selectionNavigationTitle: String = ""
     @Published private(set) var isToolbarButtonsDisabled = true
     @Published private(set) var showLoading = false
+    @Published private(set) var isShareLinkButtonDisabled = true
     
     private var albumLink: String {
         (publicLinkWithDecryptionKey ?? publicLink).absoluteString
@@ -57,6 +58,14 @@ final class ImportAlbumViewModel: ObservableObject {
     
     private var albumName: String? {
         renamedAlbum ?? publicAlbumName
+    }
+    
+    var shouldShowEmptyAlbumView: Bool {
+        isPhotosLoaded && isAlbumEmpty
+    }
+    
+    var isAlbumEmpty: Bool {
+        photoLibraryContentViewModel.library.isEmpty
     }
     
     var isPhotosLoaded: Bool {
@@ -93,7 +102,7 @@ final class ImportAlbumViewModel: ObservableObject {
     func onViewAppear() {
         tracker.trackAnalyticsEvent(with: AlbumImportScreenEvent())
     }
-        
+    
     @MainActor
     func loadPublicAlbum() async {
         publicLinkStatus = .inProgress
@@ -188,10 +197,8 @@ final class ImportAlbumViewModel: ObservableObject {
             photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
             publicLinkStatus = .loaded
             tracker.trackAnalyticsEvent(with: ImportAlbumContentLoadedEvent())
-        } catch let error as SharedAlbumErrorEntity {
-            setLinkToInvalid()
-            MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
         } catch {
+            setLinkToInvalid()
             MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
         }
     }
@@ -204,7 +211,7 @@ final class ImportAlbumViewModel: ObservableObject {
         publicLinkStatus = .invalid
         publicLinkWithDecryptionKey = nil
     }
-
+    
     private func subscribeToSelection() {
         subscribeToEditMode()
         subscribeToSelectionHidden()
@@ -225,26 +232,46 @@ final class ImportAlbumViewModel: ObservableObject {
                 }
             }.assign(to: &$selectionNavigationTitle)
         
-        $publicLinkStatus.map { [weak self] status -> AnyPublisher<Bool, Never> in
-            guard let self else {
-                return Empty().eraseToAnyPublisher()
+        let isItemsSelectedPublisher = $isSelectionEnabled.combineLatest(selectionCountPublisher)
+            .map { isSelectionEnabled, selectionCount in
+                if isSelectionEnabled {
+                    return selectionCount == 0
+                }
+                return false
             }
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+        
+        subscribeToPublicLinkStatus(isItemsSelectedPublisher: isItemsSelectedPublisher)
+        subscribeToLibraryChange(isItemsSelectedPublisher: isItemsSelectedPublisher)
+    }
+    
+    private func subscribeToPublicLinkStatus(isItemsSelectedPublisher: AnyPublisher<Bool, Never>) {
+        $publicLinkStatus.map { status -> AnyPublisher<Bool, Never> in
             guard status == .loaded else {
                 return Just(true).eraseToAnyPublisher()
             }
-            return $isSelectionEnabled.combineLatest(selectionCountPublisher)
-                .map { isSelectionEnabled, selectionCount in
-                    if isSelectionEnabled {
-                        return selectionCount == 0
-                    }
-                    return false
-                }
-                .removeDuplicates()
-                .eraseToAnyPublisher()
+            return isItemsSelectedPublisher
         }
         .switchToLatest()
         .removeDuplicates()
-        .assign(to: &$isToolbarButtonsDisabled)
+        .assign(to: &$isShareLinkButtonDisabled)
+    }
+    
+    private func subscribeToLibraryChange(isItemsSelectedPublisher: AnyPublisher<Bool, Never>) {
+        photoLibraryContentViewModel.$library
+            .dropFirst()
+            .map(\.isEmpty)
+            .removeDuplicates()
+            .map { isLibraryEmpty -> AnyPublisher<Bool, Never> in
+                guard !isLibraryEmpty else {
+                    return Just(true).eraseToAnyPublisher()
+                }
+                return isItemsSelectedPublisher
+            }
+            .switchToLatest()
+            .removeDuplicates()
+            .assign(to: &$isToolbarButtonsDisabled)
     }
     
     private func subscribeToEditMode() {
@@ -254,12 +281,14 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     private func subscribeToSelectionHidden() {
-        $publicLinkStatus.combineLatest(photoLibraryContentViewModel.selection.$isHidden)
-            .map { linkStatus, selectionHidden in
+        photoLibraryContentViewModel.$library
+            .map(\.isEmpty)
+            .combineLatest(photoLibraryContentViewModel.selection.$isHidden)
+            .map { isLibraryEmpty, selectionHidden in
                 if selectionHidden {
                     return 0.0
                 }
-                return linkStatus == .loaded ? 1 : Constants.disabledOpacity
+                return isLibraryEmpty ? Constants.disabledOpacity : 1
             }
             .removeDuplicates()
             .assign(to: &$selectButtonOpacity)
