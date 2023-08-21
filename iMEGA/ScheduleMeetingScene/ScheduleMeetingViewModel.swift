@@ -259,6 +259,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
                 withAnimation {
                     self.showWaitingRoomWarningBanner = show
                 }
+                if show {
+                    waitingRoomWarningBannerDismissed = false
+                }
             })
             .store(in: &subscriptions)
     }
