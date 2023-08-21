@@ -1,7 +1,6 @@
 enum WarningType: CustomStringConvertible {
     case noInternetConnection
     case limitedPhotoAccess
-    case requiredIncomingSharedItemVerification
     case contactsNotVerified
     case contactNotVerifiedSharedFolder(String)
 
@@ -11,8 +10,6 @@ enum WarningType: CustomStringConvertible {
             return Strings.Localizable.General.noIntenerConnection
         case .limitedPhotoAccess:
             return Strings.Localizable.CameraUploads.Warning.limitedAccessToPhotoMessage
-        case .requiredIncomingSharedItemVerification:
-            return Strings.Localizable.SharedItems.ContactVerification.Section.VerifyContact.bannerMessage
         case .contactsNotVerified:
             return Strings.Localizable.ShareFolder.contactsNotVerified
         case .contactNotVerifiedSharedFolder(let nodeName):
@@ -43,7 +40,6 @@ enum WarningType: CustomStringConvertible {
         case .limitedPhotoAccess:
             router?.goToSettings()
         case .noInternetConnection,
-             .requiredIncomingSharedItemVerification,
              .contactsNotVerified,
              .contactNotVerifiedSharedFolder:
             break
