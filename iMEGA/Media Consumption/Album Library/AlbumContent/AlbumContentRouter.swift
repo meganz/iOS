@@ -74,7 +74,8 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                         scaleFactor: UIDevice().iPadDevice ? .five : .three)
                                                     )
         let content = AlbumContentPickerView(viewModel: viewModel)
-        navigationController?.present(UIHostingController(rootView: content), animated: true)
+        navigationController?.present(UIHostingController(dismissibleView: content),
+                                      animated: true)
     }
     
     @MainActor
