@@ -16,6 +16,7 @@
 require 'json'
 import("Fastfile_download_libraries")
 import("Fastfile_parse_code_coverage")
+import("Fastfile_submit_build_to_appstore")
 
 # Directories
 BUILD_DIR       = File.expand_path('build')
@@ -76,16 +77,8 @@ platform :ios do
 
   desc "upload device id's to Apple developer portal"
   lane :upload_device_ids_to_developer_portal do
-    api_key = app_store_connect_api_key(
-      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
-      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
-      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
-      is_key_content_base64: true,
-      in_house: false
-    )
-
     register_devices(
-      api_key: api_key,
+      api_key: app_store_api_key,
       devices_file: "./devices.txt"
     )
   end
@@ -108,17 +101,9 @@ platform :ios do
 
   desc "installs certificate and profiles for a given profile type to temp keychain created in create_temporary_keychain lane"
   lane :install_certificate_and_profile_to_temp_keychain do |options|
-    api_key = app_store_connect_api_key(
-        key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
-        issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
-        key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
-        is_key_content_base64: true,
-        in_house: false
-    )
-
     match(
       type: options[:type],
-      api_key: api_key,
+      api_key: app_store_api_key,
       keychain_name: TEMP_KEYCHAIN_NAME,
       keychain_password: TEMP_KEYCHAIN_PASSWORD,
       readonly: options[:readonly],
@@ -204,19 +189,11 @@ platform :ios do
       match_lightweight_tag: false,
       merge_commit_filtering: "include_merges"
     )
-
-    api_key = app_store_connect_api_key(
-      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
-      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
-      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
-      is_key_content_base64: true,
-      in_house: false
-    )
-
+    
     upload_to_testflight(
       skip_submission: false,
       groups:["MEGA"],
-      api_key: api_key,
+      api_key: app_store_api_key,
       ipa: "#{BUILD_DIR}/MEGA.ipa",
       changelog: lane_context[SharedValues::FL_CHANGELOG],
     ) # to only upload the build
@@ -370,20 +347,9 @@ platform :ios do
 
   desc "Uploads metadata to app store connect"
   lane :upload_metadata_to_appstore_connect do
-    
-    api_key = app_store_connect_api_key(
-      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
-      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
-      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
-      is_key_content_base64: true,
-      in_house: false
-    )
-
-    get_version_number(target: "MEGA")
-
     deliver(
-      api_key: api_key,
-      app_version: lane_context[SharedValues::VERSION_NUMBER],
+      api_key: app_store_api_key,
+      app_version: get_version_number(target: "MEGA"),
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
       skip_binary_upload: true
