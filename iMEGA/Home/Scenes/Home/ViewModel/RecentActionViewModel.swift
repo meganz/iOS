@@ -66,12 +66,10 @@ final class HomeRecentActionViewModel:
         if node.isFavourite {
             Task {
                 try await nodeFavouriteActionUseCase.unFavourite(node: node.toNodeEntity())
-                QuickAccessWidgetManager().deleteFavouriteItem(for: node)
             }
         } else {
             Task {
                 try await nodeFavouriteActionUseCase.favourite(node: node.toNodeEntity())
-                QuickAccessWidgetManager().insertFavouriteItem(for: node)
             }
         }
     }

@@ -85,4 +85,6 @@ public final class MockNode: MEGANode {
     public override var fingerprint: String? { _fingerprint }
     
     public override func hasPreview() -> Bool { _hasPreview }
+
+    public override var base64Handle: String? { String(handle) }
 }

@@ -10,14 +10,32 @@ class QuickAccessWidgetManager: NSObject {
     private let recentNodesUseCase: any RecentNodesUseCaseProtocol
     private let favouriteItemsUseCase: any FavouriteItemsUseCaseProtocol
     private let favouriteNodesUseCase: any FavouriteNodesUseCaseProtocol
-    
-    private let debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .background))
+    private let debouncer: Debouncer
 
     override init() {
         self.recentItemsUseCase = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance()))
         self.recentNodesUseCase = RecentNodesUseCase(repo: RecentNodesRepository.newRepo)
         self.favouriteItemsUseCase = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance()))
         self.favouriteNodesUseCase = FavouriteNodesUseCase(repo: FavouriteNodesRepository.newRepo)
+        self.debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .background))
+
+        super.init()
+    }
+
+    init(
+        recentItemsUseCase: some RecentItemsUseCaseProtocol = RecentItemsUseCase(repo: RecentItemsRepository(store: MEGAStore.shareInstance())),
+        recentNodesUseCase: some RecentNodesUseCaseProtocol = RecentNodesUseCase(repo: RecentNodesRepository.newRepo),
+        favouriteItemsUseCase: some FavouriteItemsUseCaseProtocol = FavouriteItemsUseCase(repo: FavouriteItemsRepository(store: MEGAStore.shareInstance())),
+        favouriteNodesUseCase: some FavouriteNodesUseCaseProtocol = FavouriteNodesUseCase(repo: FavouriteNodesRepository.newRepo),
+        debouncer: Debouncer = Debouncer(delay: 1, dispatchQueue: DispatchQueue.global(qos: .background))
+    ) {
+        self.recentItemsUseCase = recentItemsUseCase
+        self.recentNodesUseCase = recentNodesUseCase
+        self.favouriteItemsUseCase = favouriteItemsUseCase
+        self.favouriteNodesUseCase = favouriteNodesUseCase
+        self.debouncer = debouncer
+
+        super.init()
     }
 
     @objc public static func reloadAllWidgetsContent() {
@@ -25,66 +43,81 @@ class QuickAccessWidgetManager: NSObject {
         WidgetCenter.shared.reloadAllTimelines()
         #endif
     }
-    
+
     @objc public static func reloadWidgetContentOfKind(kind: String) {
         #if arch(arm64) || arch(i386) || arch(x86_64)
         WidgetCenter.shared.reloadTimelines(ofKind: kind)
         #endif
     }
-    
+
     @objc func createWidgetItemData() {
         self.createRecentItemsDataWithDebounce()
         self.createFavouritesItemsDataWithDebounce()
     }
-    
+
     @objc func createQuickAccessWidgetItemsDataIfNeeded(for nodeList: MEGANodeList) {
         guard let nodes = nodeList.mnz_nodesArrayFromNodeList() else {
             return
         }
-        
+
         var shouldCreateRecentItems = false
         var shouldCreateFavouriteItems = false
-        
+
         for node in nodes {
             if (node.isFolder() && node.hasChangedType(.new)) || node.hasChangedType(.removed) {
                 shouldCreateRecentItems = false
             } else {
                 shouldCreateRecentItems = true
             }
-            
+
             if node.hasChangedType(.attributes) {
                 shouldCreateFavouriteItems = true
             }
         }
-        
+
         if shouldCreateRecentItems {
             self.createRecentItemsDataWithDebounce()
         }
-        
+
         if shouldCreateFavouriteItems {
             self.createFavouritesItemsDataWithDebounce()
         }
     }
-    
-    @objc func insertFavouriteItem(for node: MEGANode) {
+
+    @objc func updateFavouritesWidget(for nodeList: MEGANodeList) {
+        nodeList.toNodeArray().forEach { node in
+            guard node.hasChangedType(.favourite) else {
+                return
+            }
+
+            if node.isFavourite {
+                insertFavouriteItem(for: node)
+            } else {
+                deleteFavouriteItem(for: node)
+            }
+        }
+    }
+
+    // MARK: - Private
+
+    private func insertFavouriteItem(for node: MEGANode) {
         guard let base64Handle = node.base64Handle, let name = node.name else { return }
         favouriteItemsUseCase.insertFavouriteItem(FavouriteItemEntity(base64Handle: base64Handle, name: name, timestamp: Date()))
         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
-    
-    @objc func deleteFavouriteItem(for node: MEGANode) {
+
+    private func deleteFavouriteItem(for node: MEGANode) {
         guard let base64Handle = node.base64Handle else { return }
         favouriteItemsUseCase.deleteFavouriteItem(with: base64Handle)
         QuickAccessWidgetManager.reloadWidgetContentOfKind(kind: MEGAFavouritesQuickAccessWidget)
     }
-    
-    // MARK: - Private
+
     private func createRecentItemsDataWithDebounce() {
         debouncer.start {
             self.createRecentItemsData()
         }
     }
-    
+
     private func createRecentItemsData() {
         Task {
             do {
@@ -108,13 +141,13 @@ class QuickAccessWidgetManager: NSObject {
             }
         }
     }
-    
+
     private func createFavouritesItemsDataWithDebounce() {
         debouncer.start {
             self.createFavouritesItemsData()
         }
     }
-    
+
     private func createFavouritesItemsData() {
         favouriteNodesUseCase.getFavouriteNodes(limitCount: MEGAQuickAccessWidgetMaxDisplayItems) { (result) in
             switch result {

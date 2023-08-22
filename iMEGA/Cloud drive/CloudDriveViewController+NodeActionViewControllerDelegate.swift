@@ -56,12 +56,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             showNodeInfo(node)
         case .favourite:
             wasSelectingFavoriteUnfavoriteNodeActionOption = true
-            MEGASdkManager.sharedMEGASdk().setNodeFavourite(node, favourite: !node.isFavourite, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
-                if error.type == .apiOk {
-                    request.numDetails == 1 ? QuickAccessWidgetManager().insertFavouriteItem(for: node) :
-                    QuickAccessWidgetManager().deleteFavouriteItem(for: node)
-                }
-            }))
+            MEGASdk.shared.setNodeFavourite(node, favourite: !node.isFavourite)
         case .label:
             node.mnz_labelActionSheet(in: self)
         case .leaveSharing:
@@ -136,7 +131,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     }
     
     private func saveToPhotos(nodes: [NodeEntity]) {
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         Task { @MainActor in
             do {
                 try await saveMediaUseCase.saveToPhotos(nodes: nodes)
