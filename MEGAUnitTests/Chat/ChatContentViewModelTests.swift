@@ -11,8 +11,8 @@ final class ChatContentViewModelTests: XCTestCase {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
-        test(viewModel: sut, action: ChatContentAction.startOrJoinCallCleanUp(false),
-             expectedCommands: [ChatContentViewModel.Command.startOrJoinCallCleanUp(false, [])])
+        test(viewModel: sut, action: ChatContentAction.startOrJoinCallCleanUp,
+             expectedCommands: [ChatContentViewModel.Command.hideStartOrJoinCallButton(true)])
     }
     
     func testAction_updateCallNavigationBarButtons_callUpdateCallBarButtons() {
@@ -56,7 +56,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: ChatContentAction.updateContent,
-             expectedCommands: [ChatContentViewModel.Command.tapToReturnToCallCleanUp, ChatContentViewModel.Command.startOrJoinCallCleanUp(false, [])])
+             expectedCommands: [ChatContentViewModel.Command.tapToReturnToCallCleanUp, ChatContentViewModel.Command.hideStartOrJoinCallButton(true)])
     }
     
     func testUpdateContentIfNeeded_connectionIsNotOnline_shouldCallCleanUpAndUpdateStartOrJoinCallButton() {
@@ -69,7 +69,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         test(viewModel: sut, action: ChatContentAction.updateContent,
-             expectedCommands: [ChatContentViewModel.Command.tapToReturnToCallCleanUp, ChatContentViewModel.Command.startOrJoinCallCleanUp(false, [])])
+             expectedCommands: [ChatContentViewModel.Command.tapToReturnToCallCleanUp, ChatContentViewModel.Command.hideStartOrJoinCallButton(true)])
     }
     
     func testUpdateContentIfNeeded_joiningTheCall_shouldCall4Commands() {
@@ -83,7 +83,7 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: ChatContentAction.updateContent,
              expectedCommands: [ChatContentViewModel.Command.configNavigationBar,
-                                ChatContentViewModel.Command.startOrJoinCallCleanUp(false, []),
+                                ChatContentViewModel.Command.hideStartOrJoinCallButton(true),
                                 ChatContentViewModel.Command.tapToReturnToCallCleanUp,
                                 ChatContentViewModel.Command.showStartOrJoinCallButton
                                ])
@@ -101,7 +101,7 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: ChatContentAction.updateContent,
              expectedCommands: [ChatContentViewModel.Command.configNavigationBar,
-                                ChatContentViewModel.Command.startOrJoinCallCleanUp(false, []),
+                                ChatContentViewModel.Command.hideStartOrJoinCallButton(true),
                                 ChatContentViewModel.Command.initTimerForCall(callEntity),
                                 ChatContentViewModel.Command.showCallEndTimerIfNeeded(callEntity)
                                ])
@@ -135,7 +135,7 @@ final class ChatContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: ChatContentAction.updateContent,
              expectedCommands: [ChatContentViewModel.Command.configNavigationBar,
-                                ChatContentViewModel.Command.startOrJoinCallCleanUp(false, []),
+                                ChatContentViewModel.Command.hideStartOrJoinCallButton(true),
                                 ChatContentViewModel.Command.tapToReturnToCallCleanUp])
     }
     
