@@ -23,7 +23,7 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModel: ObservableObje
     
     var selectedWeekNumber: String? {
         guard let weekIndex = rules.monthWeekDayList?.first?.first else { return nil }
-        return weekNumbers[weekIndex - 1]
+        return weekNumbers[safe: weekIndex - 1]
     }
     
     var selectedWeekSymbol: String? {
