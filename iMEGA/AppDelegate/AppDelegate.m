@@ -1261,7 +1261,8 @@
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (nodeList) {
         [self.quickAccessWidgetManager createQuickAccessWidgetItemsDataIfNeededFor:nodeList];
-        
+        [self.quickAccessWidgetManager updateFavouritesWidgetFor:nodeList];
+
         [self postNodeUpdatesNotificationsFor:nodeList];
     } else {
         [Helper startPendingUploadTransferIfNeeded];
