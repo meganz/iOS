@@ -130,18 +130,18 @@ final class ScheduleMeetingCreationIntervalFooterNoteTests: XCTestCase {
     
     private func monthlyFooterNote(forInterval interval: Int) throws -> String {
         let footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.SingleDayCardinal.footerNote(interval)
-        return footerNote.replacingOccurrences(of: "[cardinalDay]", with: try XCTUnwrap(cardinalString(for: 12)))
+        return footerNote.replacingOccurrences(of: "[cardinalDay]", with: try XCTUnwrap(12.cardinal))
     }
     
     private func monthlyFooterNote(forInterval interval: Int, selectedDays: [Int]) throws -> String {
         var footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.MultipleDaysCardinal.footerNote(interval)
         footerNote = footerNote.replacingOccurrences(
             of: "[cardinalDays]",
-            with: try XCTUnwrap(cardinalString(for: selectedDays[0]))
+            with: try XCTUnwrap(selectedDays[0].cardinal)
         )
         return footerNote.replacingOccurrences(
             of: "[cardinalLastDay]",
-            with: try XCTUnwrap(cardinalString(for: selectedDays[1]))
+            with: try XCTUnwrap(selectedDays[1].cardinal)
         )
     }
     
@@ -150,7 +150,7 @@ final class ScheduleMeetingCreationIntervalFooterNoteTests: XCTestCase {
         let weekDay = try XCTUnwrap(selectedWeekNumberAndWeekDay.first?.last)
         
         var footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.WeekNumberAndWeekDay.footerNote(interval)
-        footerNote = footerNote.replacingOccurrences(of: "[weekNumber]", with: try XCTUnwrap(ordinalString(for: weekNumber)))
+        footerNote = footerNote.replacingOccurrences(of: "[weekNumber]", with: try XCTUnwrap(WeekNumberInformation.word(for: weekNumber)))
         return footerNote.replacingOccurrences(of: "[weekDayName]", with: WeekDaysInformation().symbols[weekDay - 1])
     }
     
@@ -205,17 +205,5 @@ final class ScheduleMeetingCreationIntervalFooterNoteTests: XCTestCase {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.date(from: "12/06/2023")
-    }
-    
-    private func ordinalString(for day: Int) -> String? {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .ordinal
-        return numberFormatter.string(from: NSNumber(value: day))
-    }
-    
-    private func cardinalString(for day: Int) -> String? {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .none
-        return numberFormatter.string(from: NSNumber(value: day))
     }
 }

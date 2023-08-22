@@ -14,6 +14,12 @@ extension Int {
     public static func random() -> Int {
         Int.random(in: Int.min...Int.max)
     }
+    
+    public var cardinal: String? {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .none
+        return numberFormatter.string(from: NSNumber(value: self))
+    }
 }
 
 // MARK: - TimeInterval

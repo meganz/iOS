@@ -64,14 +64,14 @@ struct ScheduleMeetingCreationIntervalFooterNote {
     private func monthlyFooterNote(withMonthDayList monthDayList: [Int]) -> String {
         var footerNote = ""
         
-        if monthDayList.count == 1, let cardinalDay = cardinalString(for: monthDayList[0]) {
+        if monthDayList.count == 1, let cardinalDay = monthDayList[0].cardinal {
             footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.SingleDayCardinal.footerNote(rules.interval)
             footerNote = footerNote.replacingOccurrences(of: "[cardinalDay]", with: cardinalDay)
         } else if monthDayList.count > 1 {
             var monthDays = monthDayList.sorted()
             let lastDay = monthDays.removeLast()
-            let cardinalMonthDays = monthDays.compactMap(cardinalString(for:)).joined(separator: ", ")
-            let cardinalLastDay = cardinalString(for: lastDay)
+            let cardinalMonthDays = monthDays.compactMap(\.cardinal).joined(separator: ", ")
+            let cardinalLastDay = lastDay.cardinal
             footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.MultipleDaysCardinal.footerNote(rules.interval)
             footerNote = footerNote.replacingOccurrences(of: "[cardinalDays]", with: cardinalMonthDays)
             footerNote = footerNote.replacingOccurrences(of: "[cardinalLastDay]", with: cardinalLastDay ?? "")
@@ -89,19 +89,7 @@ struct ScheduleMeetingCreationIntervalFooterNote {
         }
 
         var footerNote = Strings.Localizable.Meetings.Scheduled.Create.Monthly.WeekNumberAndWeekDay.footerNote(rules.interval)
-        footerNote = footerNote.replacingOccurrences(of: "[weekNumber]", with: ordinalString(for: weekNumber) ?? "")
+        footerNote = footerNote.replacingOccurrences(of: "[weekNumber]", with: WeekNumberInformation.word(for: weekNumber) ?? "")
         return footerNote.replacingOccurrences(of: "[weekDayName]", with: weekDaysInformation.symbols[weekDayInt - 1])
-    }
-    
-    private func ordinalString(for day: Int) -> String? {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .ordinal
-        return numberFormatter.string(from: NSNumber(value: day))
-    }
-    
-    private func cardinalString(for day: Int) -> String? {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .none
-        return numberFormatter.string(from: NSNumber(value: day))
     }
 }
