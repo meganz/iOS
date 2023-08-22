@@ -1302,6 +1302,7 @@
 		99487BCC2A8F328D00BE4685 /* WaitingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */; };
 		9949C3622A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */; };
 		9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */; };
+		9959F75D2A93460B00225D71 /* WeekNumberInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
 		996A48FF2A8CBD9600264298 /* MeetingInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */; };
 		996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */; };
@@ -3865,6 +3866,7 @@
 		992453EF2A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomJoinPanelView.swift; sourceTree = "<group>"; };
 		9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGenerator.swift; sourceTree = "<group>"; };
 		9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGeneratorTest.swift; sourceTree = "<group>"; };
+		9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekNumberInformation.swift; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
 		996309C52A78A61300382C38 /* SendToViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SendToViewController+Additions.swift"; path = "Chat/SendToViewController+Additions.swift"; sourceTree = "<group>"; };
 		996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -8903,6 +8905,7 @@
 				83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */,
 				83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */,
 				BF2675DA2A32A3F300736759 /* WeekDaysInformation.swift */,
+				9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */,
 			);
 			path = ScheduleMeetingScene;
 			sourceTree = "<group>";
@@ -14540,6 +14543,7 @@
 				B63995372898CBEB00EA88F1 /* WarningViewRouter.swift in Sources */,
 				940CEE3C2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */,
 				BF2675DB2A32A3F300736759 /* WeekDaysInformation.swift in Sources */,
+				9959F75D2A93460B00225D71 /* WeekNumberInformation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
