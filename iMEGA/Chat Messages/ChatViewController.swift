@@ -789,8 +789,8 @@ class ChatViewController: MessagesViewController {
             configureNavigationBar()
         case .tapToReturnToCallCleanUp:
             tapToReturnToCallCleanup()
-        case .startOrJoinCallCleanUp(let inProgress, let meetings):
-            startOrJoinCallCleanUp(callInProgress: inProgress, scheduledMeetings: meetings)
+        case .hideStartOrJoinCallButton(let hide):
+            hideStartOrJoinCallButton(hide)
         case .showStartOrJoinCallButton:
             showStartOrJoinCallButton()
         case .showCallEndTimerIfNeeded(let callEntity):
@@ -868,7 +868,7 @@ class ChatViewController: MessagesViewController {
             startOrJoinCallButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 150.0)
         ].activate()
         
-        chatContentViewModel.dispatch(.startOrJoinCallCleanUp(false))
+        chatContentViewModel.dispatch(.startOrJoinCallCleanUp)
     }
     
     private func configurePreviewerButton() {

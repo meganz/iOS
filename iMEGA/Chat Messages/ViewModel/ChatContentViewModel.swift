@@ -3,7 +3,7 @@ import MEGADomain
 import MEGAPresentation
 
 enum ChatContentAction: ActionType {
-    case startOrJoinCallCleanUp(_ callInProgress: Bool)
+    case startOrJoinCallCleanUp
     case updateCallNavigationBarButtons(_ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool,
                                         _ reachable: Bool, _ activeCall: Bool)
     case startMeetingNoRinging(_ videoCall: Bool, _ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool,
@@ -26,7 +26,7 @@ final class ChatContentViewModel: ViewModelType {
         case enableAudioVideoButtons(_ enable: Bool)
         case showCallEndTimerIfNeeded(_ call: CallEntity)
         case startMeetingNoRinging(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity)
-        case startOrJoinCallCleanUp(_ inProgress: Bool, _ scheduledMeetings: [ScheduledMeetingEntity])
+        case hideStartOrJoinCallButton(_ hide: Bool)
     }
     
     var chatCall: CallEntity?
@@ -58,8 +58,8 @@ final class ChatContentViewModel: ViewModelType {
     
     func dispatch(_ action: ChatContentAction) {
         switch action {
-        case .startOrJoinCallCleanUp(let callInProgress):
-            onUpdateStartOrJoinCallButtons(callInProgress)
+        case .startOrJoinCallCleanUp:
+            onUpdateStartOrJoinCallButtons()
         case .updateCallNavigationBarButtons(let disableCalling, let isVoiceRecordingInProgress,
                                              let reachable, let activeCall):
             onUpdateNavigationBarButtonItems(disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
@@ -85,7 +85,7 @@ final class ChatContentViewModel: ViewModelType {
             guard let call = await chatUseCase.chatCall(for: chatRoom.chatId),
                   await chatUseCase.chatConnectionStatus(for: chatRoom.chatId) == .online else {
                 await updateReturnToCallCleanUpButton()
-                await updateStartOrJoinCallButton(false, scheduledMeetings)
+                await updateStartOrJoinCallButton(scheduledMeetings)
                 
                 return
             }
@@ -134,10 +134,10 @@ final class ChatContentViewModel: ViewModelType {
         }
     }
     
-    private func onUpdateStartOrJoinCallButtons(_ callInProgress: Bool) {
+    private func onUpdateStartOrJoinCallButtons() {
         Task {
             let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
-            await updateStartOrJoinCallButton(callInProgress, scheduledMeetings)
+            await updateStartOrJoinCallButton(scheduledMeetings)
         }
     }
     
@@ -184,8 +184,8 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     @MainActor
-    private func updateStartOrJoinCallButton(_ callInProgress: Bool, _ scheduledMeetings: [ScheduledMeetingEntity]) {
-        invokeCommand?(.startOrJoinCallCleanUp(callInProgress, scheduledMeetings))
+    private func updateStartOrJoinCallButton( _ scheduledMeetings: [ScheduledMeetingEntity]) {
+        invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
     }
     
     @MainActor
@@ -203,20 +203,28 @@ final class ChatContentViewModel: ViewModelType {
         
         switch call.status {
         case .initial, .joining, .userNoPresent:
-            invokeCommand?(.startOrJoinCallCleanUp(false, scheduledMeetings))
+            invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
             invokeCommand?(.tapToReturnToCallCleanUp)
             invokeCommand?(.showStartOrJoinCallButton)
         case .inProgress:
-            invokeCommand?(.startOrJoinCallCleanUp(false, scheduledMeetings))
+            invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
             invokeCommand?(.initTimerForCall(call))
             invokeCommand?(.showCallEndTimerIfNeeded(call))
         case .connecting:
             invokeCommand?(.showTapToReturnToCall(Strings.Localizable.reconnecting))
         case .destroyed, .terminatingUserParticipation, .undefined:
-            invokeCommand?(.startOrJoinCallCleanUp(false, scheduledMeetings))
+            invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
             invokeCommand?(.tapToReturnToCallCleanUp)
         default:
             return
         }
+    }
+    
+    private func shouldHideStartOrJoinCallButton(scheduledMeetings: [ScheduledMeetingEntity]) -> Bool {
+        chatRoom.isArchived
+        || chatRoom.chatType != .meeting
+        || scheduledMeetings.isEmpty
+        || chatUseCase.isCallInProgress(for: chatRoom.chatId)
+        || !chatRoom.ownPrivilege.isUserInChat
     }
 }
