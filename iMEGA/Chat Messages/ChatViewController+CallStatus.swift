@@ -56,15 +56,11 @@ extension ChatViewController {
         tapToReturnToCallButton.isHidden = true
     }
     
-    func startOrJoinCallCleanUp(callInProgress: Bool, scheduledMeetings: [ScheduledMeetingEntity]) {
+    func hideStartOrJoinCallButton(_ hide: Bool) {
         timer?.invalidate()
         
-        if !chatRoom.isArchived && chatRoom.isMeeting && scheduledMeetings.isNotEmpty && !callInProgress {
-            startOrJoinCallButton.setTitle(spacePadding + Strings.Localizable.Meetings.Scheduled.ButtonOverlay.startMeeting + spacePadding, for: .normal)
-            startOrJoinCallButton.isHidden = false
-        } else {
-            startOrJoinCallButton.isHidden = true
-        }
+        startOrJoinCallButton.setTitle(spacePadding + Strings.Localizable.Meetings.Scheduled.ButtonOverlay.startMeeting + spacePadding, for: .normal)
+        startOrJoinCallButton.isHidden = hide
     }
     
     @objc func didTapJoinCall() {
