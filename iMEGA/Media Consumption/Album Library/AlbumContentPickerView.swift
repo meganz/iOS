@@ -1,7 +1,9 @@
+import MEGASwiftUI
 import SwiftUI
 
-struct AlbumContentPickerView: View {
+struct AlbumContentPickerView: View, DismissibleContentView {
     @StateObject var viewModel: AlbumContentPickerViewModel
+    var invokeDismiss: (() -> Void)?
     
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.presentationMode) private var presentationMode
@@ -27,11 +29,11 @@ struct AlbumContentPickerView: View {
                   message: Text(Strings.Localizable.CameraUploads.Albums.AddItems.Alert.LimitReached.message(viewModel.selectLimit)),
                   dismissButton: .default(Text(Strings.Localizable.ok)))
         }
-        .onChange(of: viewModel.isDismiss, perform: { newValue in
-            if newValue {
-                presentationMode.wrappedValue.dismiss()
+        .onChange(of: viewModel.shouldDismiss) {
+            if $0 {
+                dismiss()
             }
-        })
+        }
         .edgesIgnoringSafeArea(.vertical)
     }
     
@@ -96,5 +98,13 @@ struct AlbumContentPickerView: View {
     
     private var textColor: Color {
         colorScheme == .dark ? Color(UIColor.mnz_grayD1D1D1()) : Color(UIColor.mnz_gray515151())
+    }
+    
+    private func dismiss() {
+        if #available(iOS 15.0, *) {
+            presentationMode.wrappedValue.dismiss()
+        } else {
+            invokeDismiss?()
+        }
     }
 }

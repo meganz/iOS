@@ -21,8 +21,10 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
     func testOnDone_whenNoImagesSelected_shouldDismissTheScreen() async {
         let sut = makeAlbumContentPickerViewModel()
         await sut.photosLoadingTask?.value
+        
         sut.onDone()
-        XCTAssertTrue(sut.isDismiss)
+        
+        XCTAssertTrue(sut.shouldDismiss)
     }
     
     func testOnDone_whenItemsSelected_completionShouldReturnSelectedPhotos() async {
@@ -36,19 +38,22 @@ final class AlbumContentPickerViewModelTests: XCTestCase {
             exp.fulfill()
         })
         await sut.photosLoadingTask?.value
-        
         sut.photoLibraryContentViewModel.selection.setSelectedPhotos(expectedSelectedPhotos)
+        
         sut.onDone()
+        
         await sut.photosLoadingTask?.value
-        XCTAssertTrue(sut.isDismiss)
+        XCTAssertTrue(sut.shouldDismiss)
         await fulfillment(of: [exp], timeout: 1.0)
     }
     
-    func testOnCancel_dismissSetToTrue() {
+    func testOnCancel_shouldDismissSetToTrue() {
         let viewModel = makeAlbumContentPickerViewModel()
-        XCTAssertFalse(viewModel.isDismiss)
+        XCTAssertFalse(viewModel.shouldDismiss)
+        
         viewModel.onCancel()
-        XCTAssertTrue(viewModel.isDismiss)
+        
+        XCTAssertTrue(viewModel.shouldDismiss)
     }
     
     func testLoadPhotos_initLoadPhotos_shouldUpdateContentLibraryAndSortToNewest() async throws {

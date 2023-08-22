@@ -14,7 +14,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     @Published private(set) var photoSourceLocation: PhotosFilterLocation = .allLocations
     @Published var navigationTitle: String = ""
     @Published var photoSourceLocationNavigationTitle: String = ""
-    @Published var isDismiss = false
+    @Published var shouldDismiss = false
     @Published var photoLibraryContentViewModel: PhotoLibraryContentViewModel
     @Published var shouldRemoveFilter = true
     @Published var isDoneButtonDisabled = true
@@ -51,11 +51,11 @@ final class AlbumContentPickerViewModel: ObservableObject {
     public func onDone() {
         let nodes: [NodeEntity] = photoLibraryContentViewModel.selection.photos.values.map { $0 }
         guard nodes.isNotEmpty else {
-            isDismiss.toggle()
+            shouldDismiss.toggle()
             return
         }
         completion(album, nodes)   
-        isDismiss.toggle()
+        shouldDismiss.toggle()
     }
     
     func onFilter() {
@@ -63,7 +63,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     }
     
     func onCancel() {
-        isDismiss.toggle()
+        shouldDismiss.toggle()
     }
     
     // MARK: - Private
