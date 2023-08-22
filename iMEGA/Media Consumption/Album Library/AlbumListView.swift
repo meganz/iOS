@@ -79,8 +79,9 @@ struct AlbumListView: View {
             isNewAlbum: true,
             configuration: PhotoLibraryContentConfiguration(
                 scaleFactor: UIDevice().iPadDevice ? .five : .three)
-            )
-        )
+        ), invokeDismiss: {
+            viewModel.newlyAddedAlbum = nil
+        })
     }
     
     private func shareLinksView(forAlbums albums: [AlbumEntity]) -> some View {
