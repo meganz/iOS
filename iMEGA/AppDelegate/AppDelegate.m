@@ -832,34 +832,35 @@
 }
 
 - (void)copyDatabasesForExtensions {
-    MEGALogDebug(@"Copy databases for extensions");
-    [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
-    NSError *error;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
-    if (error) {
-        MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
-    }
-    
-    NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder] path];
-    if (![fileManager fileExistsAtPath:groupSupportPath]) {
-        [fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:nil];
-    }
-    
-    NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
-    NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
-    for (NSString *filename in applicationSupportContent) {
-        if ([filename containsString:@"megaclient_statecache13"] || [filename containsString:@"karere"]) {
-            NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
-            [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
-            if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
-                MEGALogDebug(@"Copy file %@", filename);
-            } else {
-                MEGALogError(@"Copy item at path failed with error: %@", error);
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^(void) {
+        MEGALogDebug(@"Copy databases for extensions");
+        NSError *error;
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        NSURL *applicationSupportDirectoryURL = [fileManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+        if (error) {
+            MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+        }
+        
+        NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder] path];
+        if (![fileManager fileExistsAtPath:groupSupportPath]) {
+            [fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:nil];
+        }
+        
+        NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
+        NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
+        for (NSString *filename in applicationSupportContent) {
+            if ([filename containsString:@"megaclient_statecache13"] || [filename containsString:@"karere"]) {
+                NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
+                [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
+                if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
+                    MEGALogDebug(@"Copy file %@", filename);
+                } else {
+                    MEGALogError(@"Copy item at path failed with error: %@", error);
+                }
             }
         }
-    }
+    });
 }
 
 - (void)performCall {
