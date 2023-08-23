@@ -1,5 +1,6 @@
 import Contacts
 import ContactsUI
+import MEGADomain
 import MEGAPermissions
 import MessageUI
 import UIKit
@@ -20,6 +21,12 @@ class InviteContactViewController: UIViewController {
     @IBOutlet weak var scanQrCodeSeparatorView: UIView!
     @IBOutlet weak var moreLabel: UILabel!
 
+    private let contactPickerViewController: CNContactPickerViewController = {
+        let controller = CNContactPickerViewController()
+        controller.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0")
+        return controller
+    }()
+
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +41,16 @@ class InviteContactViewController: UIViewController {
             guard let base64Handle = MEGASdk.base64Handle(forHandle: request.nodeHandle) else { return }
             self.userLink = String(format: "https://mega.nz/C!%@", base64Handle)
         }
-        MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
+
+        MEGASdk.shared.contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
         
         if !MFMessageComposeViewController.canSendText() {
             addFromContactsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
         }
         
         updateAppearance()
+
+        contactPickerViewController.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +72,7 @@ class InviteContactViewController: UIViewController {
     
     // MARK: - Private
     
-    func updateAppearance() {
+    private func updateAppearance() {
         mainView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_backgroundGroupedElevated(traitCollection)
         
         let separatorColor = UIColor.mnz_separator(for: self.traitCollection)
@@ -71,13 +81,21 @@ class InviteContactViewController: UIViewController {
         scanQrCodeSeparatorView.backgroundColor = separatorColor
     }
 
+    private func presentComposeControllerForPhoneNumbers(_ phoneNumbers: [String]) {
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
+        composeVC.recipients = phoneNumbers
+        composeVC.body = Strings.Localizable.Contact.Invite.message + " " + self.userLink
+        present(composeVC, animated: true, completion: nil)
+    }
+
     // MARK: Actions
     @IBAction func addFromContactsButtonTapped(_ sender: Any) {
         guard MFMessageComposeViewController.canSendText() else {
             return
         }
-        
-        let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(withContactKeys: [CNContactPhoneNumbersKey], delegate: self))
+
+        let contactsPickerNavigation = MEGANavigationController(rootViewController: contactPickerViewController)
         present(contactsPickerNavigation, animated: true, completion: nil)
     }
 
@@ -119,15 +137,10 @@ extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
     }
 }
 
-// MARK: - ContactsPickerViewControllerDelegate
-
-extension InviteContactViewController: ContactsPickerViewControllerDelegate {
-    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String]) {
-        let composeVC = MFMessageComposeViewController()
-        composeVC.messageComposeDelegate = self
-        composeVC.recipients = values
-        composeVC.body = Strings.Localizable.Contact.Invite.message + " " + self.userLink
-        self.present(composeVC, animated: true, completion: nil)
+extension InviteContactViewController: CNContactPickerDelegate {
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+        let phoneNumbers = contacts.extractPhoneNumbers()
+        presentComposeControllerForPhoneNumbers(phoneNumbers)
     }
 }
 
