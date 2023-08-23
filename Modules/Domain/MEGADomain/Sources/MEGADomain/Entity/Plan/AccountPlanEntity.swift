@@ -4,7 +4,7 @@ public struct AccountPlanEntity: Sendable {
     public var type: AccountTypeEntity
     public var name: String
     public var currency: String
-    public var term: AccountPlanTermEntity
+    public var subscriptionCycle: SubscriptionCycleEntity
     public var storage: String
     public var transfer: String
     public var price: Double
@@ -14,7 +14,7 @@ public struct AccountPlanEntity: Sendable {
                 type: AccountTypeEntity = .free,
                 name: String = "",
                 currency: String = "",
-                term: AccountPlanTermEntity = .none,
+                subscriptionCycle: SubscriptionCycleEntity = .none,
                 storage: String = "",
                 transfer: String = "",
                 price: Double = 0,
@@ -23,7 +23,7 @@ public struct AccountPlanEntity: Sendable {
         self.type = type
         self.name = name
         self.currency = currency
-        self.term = term
+        self.subscriptionCycle = subscriptionCycle
         self.storage = storage
         self.transfer = transfer
         self.price = price
@@ -33,13 +33,13 @@ public struct AccountPlanEntity: Sendable {
 
 extension AccountPlanEntity: Equatable {
     public static func == (lhs: AccountPlanEntity, rhs: AccountPlanEntity) -> Bool {
-        lhs.type == rhs.type && lhs.term == rhs.term
+        lhs.type == rhs.type && lhs.subscriptionCycle == rhs.subscriptionCycle
     }
 }
 
 extension AccountPlanEntity: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(type)
-        hasher.combine(term)
+        hasher.combine(subscriptionCycle)
     }
 }

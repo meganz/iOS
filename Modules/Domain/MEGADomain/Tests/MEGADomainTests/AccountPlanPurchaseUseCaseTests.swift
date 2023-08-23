@@ -32,17 +32,17 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
     }
     
     private var monthlyPlans: [AccountPlanEntity] {
-        [AccountPlanEntity(type: .proI, term: .monthly),
-         AccountPlanEntity(type: .proII, term: .monthly),
-         AccountPlanEntity(type: .proIII, term: .monthly),
-         AccountPlanEntity(type: .lite, term: .monthly)]
+        [AccountPlanEntity(type: .proI, subscriptionCycle: .monthly),
+         AccountPlanEntity(type: .proII, subscriptionCycle: .monthly),
+         AccountPlanEntity(type: .proIII, subscriptionCycle: .monthly),
+         AccountPlanEntity(type: .lite, subscriptionCycle: .monthly)]
     }
     
     private var yearlyPlans: [AccountPlanEntity] {
-        [AccountPlanEntity(type: .proI, term: .yearly),
-         AccountPlanEntity(type: .proII, term: .yearly),
-         AccountPlanEntity(type: .proIII, term: .yearly),
-         AccountPlanEntity(type: .lite, term: .yearly)]
+        [AccountPlanEntity(type: .proI, subscriptionCycle: .yearly),
+         AccountPlanEntity(type: .proII, subscriptionCycle: .yearly),
+         AccountPlanEntity(type: .proIII, subscriptionCycle: .yearly),
+         AccountPlanEntity(type: .lite, subscriptionCycle: .yearly)]
     }
     
     private var allPlans: [AccountPlanEntity] {
