@@ -47,7 +47,7 @@
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertMessage"="Pentru a accesa acest folder sau fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, te rugăm să contactezi creatorul linkului.";
 /* Alert message shown when you tap on a encrypted album/collection link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessageForAlbum"="To access the album, enter the decryption key. If you don’t have it, contact the person who shared the link with you.";
+"decryptionKeyAlertMessageForAlbum"="Pentru a accesa albumul, introduceți cheia de decriptare. Dacă nu îl aveți, contactați persoana care a partajat linkul cu dvs.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Cheie de decriptare";
 /* Button title to try to decrypt the link */
@@ -181,17 +181,17 @@
 /* Title for the folder link view */
 "folderLink"="Linkul folderului";
 /* Title for the album/collection link view */
-"albumLink"="Album link";
+"albumLink"="Link pentru album";
 /* Alert title for invalid album link */
-"albumLink.invalidAlbum.alert.title"="Cannot access album";
+"albumLink.invalidAlbum.alert.title"="Nu se poate accesa albumul";
 /* Alert message for invalid album link */
-"albumLink.invalidAlbum.alert.message"="The link to the album has been removed or the album has been deleted. Contact the person who shared the link with you.";
+"albumLink.invalidAlbum.alert.message"="Link-ul către album a fost eliminat sau albumul a fost șters. Contactați persoana care a partajat linkul cu dvs.";
 /* Alert dismiss button title for invalid album link */
-"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, got it";
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="OK, am înțeles";
 /* Importing albums Failed modal because storage quota would exceed alert title */
-"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Cannot save album";
+"albumLink.importFailed.storageQuotaWillExceed.alert.title"="Nu se poate salva albumul";
 /* Importing albums Failed modal because storage quota would exceed alert detail */
-"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="You don’t have enough storage to save this album to your Cloud drive. Upgrade now to get more storage.";
+"albumLink.importFailed.storageQuotaWillExceed.alert.detail"="Nu aveți suficient spațiu de stocare pentru a salva acest album pe Unitatea cloud. Faceți upgrade acum pentru a obține mai mult spațiu de stocare.";
 /* Button title which downloads a file/folder to your device */
 "downloadButton"="Descarcă";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
@@ -399,9 +399,9 @@
 /* This is button text on the Get Link dialog. This lets the user get a public file/folder link with the decryption key e.g. https://mega.nz/#!Qo12lSpT!3uv6GhJhAWWH46fcMN2KGRtxc_QSLthcwvAdaA_TjCE. */
 "linkWithKey"="Link cu cheie";
 /* This is a description of a row on Get Link dialog which explains who will be able to access the link if the password is added to link */
-"sharedItems.link.accessInfoPasswordProtected"="Only people with the password can open the link";
+"sharedItems.link.accessInfoPasswordProtected"="Doar persoanele cu parola pot deschide linkul";
 /* This is a text of a banner which will be displayed user does an action which updates the shared link */
-"sharedItems.link.linkUpdated"="Link updated. Copy again.";
+"sharedItems.link.linkUpdated"="Linkul a fost actualizat. Copiați din nou.";
 /* An alert dialog for the Get Link feature */
 "proOnly"="(numai Pro)";
 /* A label in the Get Link dialog which allows the user to set an expiry date on their public link. */
@@ -491,7 +491,7 @@
 /* Rename file confirmation confirm button title */
 "rename.confirmationAlert.ok"="Modifică oricum";
 /* Rename file no extension warning text */
-"rename.fileWithoutExtension"="File without extension .%@";
+"rename.fileWithoutExtension"="Fișier fără extensie. %@";
 /* Title for the action that allows you to replace a file. */
 "replace"="Înlocuiește";
 /* Success message shown when you have moved 1 file to the rubbish bin */
@@ -601,9 +601,9 @@
 /* Filter UI media location option */
 "cameraUploads.timeline.filter.location.cameraUploads"="Încărcări cameră";
 /* Filter UI remember preferences option */
-"cameraUploads.timeline.filter.rememberPreferences"="Remember preferences";
+"cameraUploads.timeline.filter.rememberPreferences"="Amintiți-vă preferințele";
 /* Video Uploads title */
-"cameraUploads.videoUploads.title"="Video uploads";
+"cameraUploads.videoUploads.title"="Încărcări video";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
 "Upload paused because of no WiFi, 1 file pending"="Încărcare pusă pe pauză din cauză că nu există conexiune Wi-Fi, 1 fișier în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
@@ -907,7 +907,7 @@
 /* Alert message shown on the Rubbish Bin when you want to remove "[A] = {1+} files and [B] = {1+} folders */
 "removeFilesFoldersToRubbishBinMessage"="Ești pe cale să ștergi definitiv [A] fișiere și [B] foldere. Dorești să continui? (Nu poți anula această acțiune.)";
 /* Alert message shown on the Rubbish Bin when you want to remove "{1+} file{s} {and} {1+} folder{s}" */
-"sharedItems.rubbish.warning.message"="You are about to permanently remove %@. Would you like to proceed? (You cannot undo this action.)";
+"sharedItems.rubbish.warning.message"="Sunteți pe cale să eliminați definitiv %@. Doriți să continuați? (Nu puteți anula această acțiune.)";
 /* Success message shown when 1 file has been removed from MEGA */
 "fileRemovedToRubbishBinMessage"="1 fișier eliminat de pe MEGA";
 /* Success message shown when {1+} files have been removed from MEGA */
@@ -925,7 +925,7 @@
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] fișiere și [B] foldere eliminate de pe MEGA";
 /* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="%@ removed from MEGA";
+"sharedItems.rubbish.confirmation.message"="%@ au fost eliminat din MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Parolă nouă";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -969,7 +969,7 @@
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="E-mailul nou și cel vechi nu trebuie să coincidă";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="Email addresses do not match";
+"emailsDoNotMatch"="Adresele de e-mail nu se potrivesc";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ai solicitat deja un link de confirmare pentru acea adresă de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -1039,7 +1039,7 @@
 /* Subtitle of the referral achievement introduction, %@ is a placeholder. */
 "account.achievement.referral.subtitle"="%@ spațiu de stocare pentru fiecare recomandare. \nValabili timp de 365 de zile.";
 /* Text shown to explain how and where you can invite friends */
-"Select from phone contacts or enter multiple email addresses"="Select from device contacts or enter multiple email addresses.";
+"Select from phone contacts or enter multiple email addresses"="Selectează din contactele dispozitivului sau introdu mai multe adrese de e-mail.";
 /*  */
 "insertYourFriendsEmails"="Inserează e-mailurile prietenilor:";
 /*  */
@@ -1073,23 +1073,23 @@
 /* Cell title shown on the achievements view for install MEGA desktop app achievement */
 "account.achievement.desktopApp.title"="Instalează Aplicația Desktop MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA Desktop App.";
+"account.achievement.desktopApp.complete.explaination.label"="Ați primit %@ spațiu de stocare pentru instalarea Aplicației Desktop MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA desktop app achievement, %@ is a placeholder. */
-"account.achievement.desktopApp.incomplete.explaination.label"="When you install the MEGA Desktop App you get %@ of complimentary storage space, valid for 365 days. The MEGA Desktop App is available for Windows, macOS and most Linux distributions.";
+"account.achievement.desktopApp.incomplete.explaination.label"="Când instalezi Aplicația Desktop MEGA, primești %@ spațiu de stocare complementar, valabil timp de 365 de zile. Aplicația desktop MEGA este disponibilă pentru Windows, macOS și majoritatea distribuțiilor Linux.";
 /* Cell title shown on the achievements view for install MEGA mobile app achievement */
 "account.achievement.mobileApp.title"="Instalează Aplicația Mobilă MEGA";
 /* Explanation label shown on the achievements view for complete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.complete.explaination.label"="You have received %@ storage space for installing the MEGA mobile app.";
+"account.achievement.mobileApp.complete.explaination.label"="Ai primit %@ spațiu de stocare pentru instalarea Aplicației Mobile MEGA.";
 /* Explanation label shown on the achievements view for incomplete install MEGA mobile app achievement, %@ is a placeholder. */
-"account.achievement.mobileApp.incomplete.explaination.label"="When you install the MEGA Mobile App you get %@ of complimentary storage space, valid for 365 days. The MEGA Mobile App is available for iOS and Android. ";
+"account.achievement.mobileApp.incomplete.explaination.label"="Când instalați Aplicații Mobile MEGA, primiți %@ de spațiu de depozitare gratuit, valabil 365 de zile. Aplicații Mobile MEGA sunt disponibile pentru iOS și Android. ";
 /* Subtitle of the incomplete achievement, %@ is a placeholder. */
 "account.achievement.incomplete.subtitle"="%@ spațiu de stocare. Valabili timp de 365 de zile.";
 /* Add Phone Number title */
 "Add Phone Number"="Adaugă un număr de telefon";
 /* Explanation Label shown on the achievements view for complete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.complete.explaination.label"="You have received %@ storage space for adding your phone number.";
+"account.achievement.phoneNumber.complete.explaination.label"="Ați primit %@ spațiu de stocare pentru adăugarea numărului dvs. de telefon.";
 /* Explanation Label shown on the achievements view for incomplete add phone number achievement, %@ is a placeholder. */
-"account.achievement.phoneNumber.incomplete.explaination.label"="When you add your phone number you get %@ of complimentary storage space, valid for 365 days.";
+"account.achievement.phoneNumber.incomplete.explaination.label"="Când adăugați numărul dvs. de telefon, primiți %@ de spațiu de depozitare gratuit, valabil 365 de zile.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obține %@ gratuiți atunci când adaugi numărul de telefon. Acest lucru face mai ușor pentru contactele tale să te găsească pe MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1153,7 +1153,7 @@
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Un abonament anual este cu 16 % mai ieftin decât 12 plăți lunare";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="To upgrade your current subscription, please contact support for a [A]custom plan[/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Pentru a upgrada abonamentul actual, vă rugăm să contactați asistența pentru un [A]plan personalizat [/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
 "inAppPurchase.upgrade.label.currentPlan"="Plan actual:";
 /* A label which shows the user's current PRO plan. */
@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Upgradează la Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Accesează funcțiile unice Pro precum setarea protecției prin parolă și datele de expirare pentru fișierele publice.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Accesează funcțiile unice Pro precum setarea protecției prin parolă și datele de expirare pentru linkurile publice.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activează modul depanare";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1235,7 +1235,7 @@
 /* Empty Conversations section */
 "noConversations"="Nicio conversație";
 /* Empty Conversations description */
-"Start chatting securely with your contacts using end-to-end encryption"="Start chatting securely with your contacts using zero-knowledge encryption";
+"Start chatting securely with your contacts using end-to-end encryption"="Începe să chatuiești securizat cu contactele tale folosind criptare tip zero cunoștințe";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activează";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1293,9 +1293,9 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Aprobă acreditările";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Verifică";
+"verify"="Aprobă";
 /* Button title */
-"verified"="Verificat";
+"verified"="Aprobate";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Șterge istoricul chatului";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1310,8 +1310,6 @@
 "sharedFolders"="Foldere partajate";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Acreditările contactului";
-/* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="Acest lucru este realizat cel mai bine întâlnindu-vă față în față. Dacă ai un alt canal verificat deja precum OTR sau PGP verificat, l-ai putea folosi și pe acela.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="Acreditările mele";
 /* Button to reset the password */
@@ -1355,7 +1353,7 @@
 /* Explanation when loading voice message error */
 "Couldn't load. [RED]Tap to retry[/RED]"="Nu se poate încărca. [RED]Atinge pentru a reîncerca[/RED]";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA protects your chat with zero-knowledge encryption providing essential safety assurances:";
+"chatIntroductionMessage"="MEGA vă protejează chat-ul cu criptare tip zero cunoștințe, oferind asigurări esențiale de siguranță:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidențialitate.[/S] Doar autorul și destinatarii vizați sunt capabili să descifreze și să citească conținutul.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1415,7 +1413,7 @@
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
 "areYouSureYouWantToAbortTheRegistration"="Sigur vrei să abandonezi înregistrarea?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
-"misspelledEmailAddress"="If you have misspelled your email address, correct it and tap on “Resend”.";
+"misspelledEmailAddress"="Dacă ați scris greșit adresa dvs. de e-mail, corectați-o și atingeți „Retrimite”.";
 /* A button to resend the email confirmation. */
 "resend"="Retrimite";
 /* Error message displayed when trying to invite a contact who is already added. */
@@ -1671,7 +1669,7 @@
 /* Title of flag of archived chats. */
 "archived"="Arhivate";
 /* Title of empty state view for archived chats. */
-"noArchivedChats"="No archived chats or meetings";
+"noArchivedChats"="Niciun chat sau întâlnire arhivată";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
 "twoFactorAuthentication"="Autentificare cu doi factori";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
@@ -1745,7 +1743,7 @@
 /* Title label that explains that the user is going to be asked for the photos permission */
 "Allow Access to Photos"="Permite accesul la fotografii";
 /* Detailed explanation of why the user should give permission to access to the photos */
-"Please give the MEGA App permission to access Photos to share photos and videos."="Please give MEGA permission to access Photos to share photos and videos.";
+"Please give the MEGA App permission to access Photos to share photos and videos."="Vă rugăm să acordați MEGA permisiunea de a accesa Fotografii pentru a partaja fotografii și videoclipuri.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activează microfonul și camera";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
@@ -1785,15 +1783,15 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Elimină fișierele mai vechi de";
 /* This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear. */
-"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="For a longer retention period [S]Upgrade to Pro[/S]";
+"settings.fileManagement.rubbishBin.longerRetentionUpgrade"="Pentru o perioadă de păstrare mai lungă, [S]Upgradează la Pro[/S]";
 /* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
 "settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="de zile";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish bin is emptied for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit pentru tine automat. Perioada minimă este de 7 zile și perioada maximă este de 30 de zile.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="The Rubbish bin can be emptied for you automatically. The minimum period is 7 days.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Coșul de gunoi poate fi golit pentru tine automat. Perioada minimă este de 7 zile.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="To disable the Rubbish bin emptying scheduler or set a longer retention period, you need to subscribe to a Pro plan.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pentru a dezactiva planificatorul de golire a coșului de gunoi sau pentru a seta o perioadă de păstrare mai lungă, trebuie să te abonezi la un plan PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Vrei să închizi toate celelalte sesiuni? Acest lucru te va deconecta din toate celelalte sesiuni active, cu excepția celei actuale.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1851,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Nu ți se permite să activezi funcția video deoarece acest apel a atins numărul maxim de participanți care folosesc funcția video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Nu se poate iniția un apel din cauza depășirii limitei de participanți.";
+"Unable to start a call because the participants limit was exceeded."="Nu se poate iniția apelul din cauza depășirii limitei de participanți.";
 /* Label shown while joining a public chat */
 "Joining..."="Se alătură…";
 /* Label shown while leaving a public chat */
@@ -1939,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Această acțiune nu poate fi finalizată, deoarece îți va depăși limita actuală de stocare";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Încărcarea(ările) nu poate(pot) continua deoarece contul tău este plin";
+"Your upload(s) cannot proceed because your account is full"="Încărcarea dvs. nu poate continua, deoarece spațiul de stocare in cloud este plin";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permite contactelor tale să vadă ultima dată când ai fost activ(ă) pe MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Introdu un e-mail";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Secure Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Aveți o solicitare MEGA Chat în așteptare. Înregistrați-vă un cont pe MEGA și obțineți 20 GB spațiu de stocare gratuit pe viață.";
 /* Destination folder name of chat files */
 "My chat files"="Fișierele mele de chat";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2115,7 +2113,7 @@
 /* Chat Notifications DND: Remaining time left if until tomorrow */
 "Notifications will be silenced until tomorrow, %@"="Notificările vor fi amuțite până mâine, %@";
 /* Chat Notifications DND: Remaining time left if until today */
-"Notifications will be silenced until %@"="Notifications will be muted until %@";
+"Notifications will be silenced until %@"="Notificările vor fi dezactivate până la %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificări de chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2191,7 +2189,7 @@
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Contul tău a fost blocat temporar pentru siguranța ta.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="Please follow the steps in the [S]verification email[/S] to unlock your account.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Vă rugăm să urmați pașii din [S]e-mailul de confirmare [/S] pentru a vă debloca contul.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="De ce văd asta?";
 /* Text to notify user an email has been sent */
@@ -2203,7 +2201,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Transfer peste cotă";
+"Transfer over quota"="Cotă de transfer depășită";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Șterge elementele selectate";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
@@ -2449,7 +2447,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Se redă";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Are you sure you want to move the Camera uploads folder to the Rubbish bin? If so, a new folder will be automatically generated for Camera uploads.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Sigur vrei să mutați folderul Încărcări cameră în coșul de gunoi? Dacă da, un folder nou va fi generat automat pentru Încărcări cameră.";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Încarcă fișierul";
 /* Text title for shortcuts, ie in the widget */
@@ -2493,11 +2491,11 @@
 /* Cookie dialog title */
 "dialog.cookies.title.yourPrivacy"="Intimitatea ta";
 /* Cookie dialog text. */
-"dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+"dialog.cookies.description"="Folosim cookie-uri și tehnologii similare numai în scopul de a vă oferi serviciile pe care le solicitați de la MEGA sau pentru analiza și colectarea datelor de performanță. Nu folosim cookie-uri pentru urmărirea anunțurilor sau partajarea oricăror informații personale despre dvs. cu terțe părți.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Acceptă cookie-urile";
 /* Cookie dialog footer description */
-"settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties.";
+"settings.accept.cookies.footer"="Cookie-urile nu sunt utilizate pentru urmărirea anunțurilor sau partajarea oricăror informații personale cu terțe părți.";
 /* Cookie settings dialog text. */
 "settings.cookies.essential"="Cookie-uri esențiale";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
@@ -2527,35 +2525,35 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="Acces rapid";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Quickly access files on Recents, Favourites, or the Offline section";
+"Quickly access files on Recents, Favourites, or Offline section"="Accesați rapid fișierele din secțiunea Recente, Favorite sau Offline";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="Accesează rapid fișierele din secțiunea Favorite";
 /* Text description for the Recents QuickAccess widget */
-"Quickly access files on Recents section"="Quickly access files from your Recents section";
+"Quickly access files on Recents section"="Accesați rapid fișierele din secțiunea Recente";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="Quickly access files from your Offline section";
+"Quickly access files on Offline section"="Accesați rapid fișierele din secțiunea Offline";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="Dispozitivul nu are suficient spațiu pentru ca MEGA să funcționeze corect.";
 /* Dialog description for the no enough device storage screen */
-"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@";
+"Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Eliberați spațiu ștergând aplicațiile pe care nu le mai utilizați sau fișierele video mari din galeria dvs. Vă puteți gestiona spațiul de stocare în %@";
 /* The title of Turn on Notifications view */
 "dialog.turnOnNotifications.label.title"="Pornește notificările";
 /* The description of Turn on Notifications view */
-"dialog.turnOnNotifications.label.description"="This way, you will see new messages on your device instantly.";
+"dialog.turnOnNotifications.label.description"="În acest fel, veți vedea instantaneu mesaje noi pe dispozitivul dvs.";
 /* First step to turn on notifications */
-"dialog.turnOnNotifications.label.stepOne"="1. Open <b>Settings</b>";
+"dialog.turnOnNotifications.label.stepOne"="1. Deschide <b>Configurări</b>";
 /* Second step to turn on notifications */
-"dialog.turnOnNotifications.label.stepTwo"="2. Tap <b>Notifications</b>";
+"dialog.turnOnNotifications.label.stepTwo"="2. Atinge <b>Notificări</b>";
 /* Third step to turn on notifications */
-"dialog.turnOnNotifications.label.stepThree"="3. Tap <b>MEGA</b>";
+"dialog.turnOnNotifications.label.stepThree"="3. Atinge <b>MEGA</b>";
 /* Fourth step to turn on notifications */
-"dialog.turnOnNotifications.label.stepFour"="4. Turn on <b>Allow notifications</b>";
+"dialog.turnOnNotifications.label.stepFour"="3. Pornește <b>Permiteți notificări</b>";
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Deschide Configurări";
 /* Dialog title for the change launch tab screen */
 "Change Launch Tab"="Modifică secțiunea Lansare";
 /* Dialog description for the change launch tab screen */
-"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud drive, or Home.";
+"You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Acum puteți selecta ce secțiune se deschide aplicația la lansare. Alegeți-l pe cel care se potrivește mai bine nevoilor dvs., fie că este vorba de Chat, Unitatea cloud sau Start.";
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Modifică setarea";
 /* Offline log out warning message */
@@ -2567,7 +2565,7 @@
 /* Hud info message when edit large text file. */
 "general.textEditor.hud.uneditableLargeFile"="Fișierul este prea mare și nu poate fi editat.";
 /* Hud info message when read unknown encode file. */
-"general.textEditor.hud.unknownEncode"="File could not be edited due to unknown content encoding.";
+"general.textEditor.hud.unknownEncode"="Fișierul nu a putut fi editat din cauza codificării conținutului necunoscut.";
 /* Show the node owner's name. The %@ is the owner's name */
 "cloudDrive.nodeInfo.owner"="%@ (Proprietar)";
 /* Name for the recovery key file */
@@ -2579,41 +2577,41 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
 "dialog.storage.almostFull.detail"="Unitatea ta cloud este aproape plină. Upgradează acum la un cont Pro și obține până la %@ TB (%@ GB) spațiu de stocare în cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Your Cloud storage is full. Please upgrade to a MEGA Pro plan to increase your storage space and enjoy additional benefits. If you remain over your storage limit and do not upgrade or delete some data your account may get locked. Please see the emails we sent you for more information.";
+"dialog.storage.odq.detail"="Spațiul de stocare în cloud este plin. Vă rugăm să upgradati la un plan MEGA Pro pentru a vă mări spațiul de stocare și pentru a vă bucura de beneficii suplimentare. Dacă rămâneți peste limita de stocare și nu upgradați sau ștergeți unele date, contul dvs. poate fi blocat. Vă rugăm să consultați e-mailurile pe care vi le-am trimis pentru mai multe informații.";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Cont blocat";
 /* Over Disk Quota paywall final title. */
 "dialog.storage.paywall.final.title"="Datele tale sunt în pericol!";
 /* Over Disk Quota paywall not final detail message. */
-"dialog.storage.paywall.notFinal.detail"="<paragraph>Unfortunately you have not taken action in the <b>%@</b> since our emails were sent to <b>%@</b>, on <b>%@</b>. You are still using <b>%@</b> storage, which is over your free limit. Please see the emails we have sent you for more information on what you need to do.</paragraph>";
+"dialog.storage.paywall.notFinal.detail"="<paragraph>Din păcate, nu ați luat măsuri în cele <b>%@</b> de când e-mailurile noastre au fost trimise la <b>%@</b>, pe <b>%@</b>. Încă folosești <b>%@</b> spațiu de stocare, care depășește limita dvs. gratuită. Vă rugăm să consultați e-mailurile pe care vi le-am trimis pentru mai multe informații despre ceea ce trebuie să faceți.</paragraph>\n";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Unfortunately you have not upgraded your account yet. If you do not upgrade now, your data will be deleted tomorrow. See your email for more information on what you need to do.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Datele dvs. vor fi șterse mâine dacă contul dvs. nu a fost upgradat.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Please upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Upgradați în <warn>%@</warn> pentru a evita ștergerea datelor.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Please upgrade today if you wish to keep your data.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Upgradați astăzi dacă doriți să vă păstrați datele.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Obține bonusul";
 /* Backup setup warning title */
 "dialog.backup.setup.title"="Configurează backupul";
 /* Backup setup warning message */
-"dialog.backup.setup.message"="Use our Desktop App to ensure your backup folder is synchronised with your MEGA Cloud.";
+"dialog.backup.setup.message"="Folosiți aplicația noastră desktop pentru a vă asigura că folderul de backup este sincronizat cu MEGA Cloud.";
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Mută „%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder in the future. Please remember where it is located so that you can find it in the future.";
+"dialog.root.backup.folder.location.warning.message"="Schimbați locația implicită a folderului de backup. Acest lucru vă poate afecta capacitatea de a găsi folderul de backup. Vă rugăm să rețineți unde se află, astfel încât să îl puteți găsi în viitor.";
 /* Change the default backup location warning message */
-"dialog.backup.folder.location.warning.message"="Moving this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.";
+"dialog.backup.folder.location.warning.message"="Mutarea acestui folder modifică destinația de backup. Backup-ul va fi dezactivat pentru siguranță. Asta vrei să faci? Backup-urile pot fi reactivate cu Aplicația Desktop MEGA.";
 /* Delete the default backup folder warning title. %@ is a folder */
 "dialog.delete.backup.folder.warning.title"="Mută „%@” în Coșul de gunoi";
 /* Delete the default backup folder warning message */
 "dialog.delete.root.backup.folder.warning.message"="Ștergi folderul de backupuri. Acest lucru va elimina toate backupurile pe care le-ai setat. Sigur vrei să faci acest lucru?";
 /* Delete the default backup folder warning message */
-"dialog.delete.backup.folder.warning.message"="Are you sure you want to delete your backup folder and disable backup you set?";
+"dialog.delete.backup.folder.warning.message"="Sigur doriți să ștergeți folderul de backup și să dezactivați backupul pe care l-ați setat?";
 /* Add new items to a backup folder warning title. %@ is a folder */
 "dialog.add.items.backup.folder.warning.title"="Adaugă elementul în „%@”";
 /* Add new items to a backup folder warning message */
-"dialog.add.items.backup.folder.warning.message"="Adding items to this folder changes the backup destination. The backup will be turned off for safety. Is this what you want to do? Backups can be re-enabled with the MEGA Desktop App.";
+"dialog.add.items.backup.folder.warning.message"="Adăugarea de elemente în acest folder modifică destinația de backup. Backup-ul va fi dezactivat pentru siguranță. Asta vrei să faci? Backup-urile pot fi reactivate cu Aplicația Desktop MEGA.";
 /* Backup warning confirmation message. %@ is an action: move backup, delete backup, disable backup */
 "dialog.backup.warning.confirm.message"="Te rugăm să tastezi „%@” pentru a confirma această acțiune";
 /* Change the location of a backup folder placeholder for a textfield */
@@ -2639,13 +2637,13 @@
 /* Text button for init a Meeting. */
 "meetings.create.newMeeting"="Întâlnire nouă";
 /* Meeting Title */
-"meetings.createMeeting.defaultMeetingName"="%@’s meeting";
+"meetings.createMeeting.defaultMeetingName"="Întâlnirea lui %@";
 /* Start meeting button title */
 "meetings.createMeeting.startMeeting"="Începe o întâlnire";
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Întâlnire încheiată";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="Vezi chatul întâlnirii";
+"meetings.alert.meetingchat"="Vezi istoricul chatului";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="Întâlnirea la care încerci să participi s-a încheiat deja. Poți vedea în continuare istoricul chatului din cadrul întâlnirii.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -2691,7 +2689,7 @@
 /* Message shown when the user privilege is changed to moderator */
 "meetings.notifications.moderatorPrivilege"="Ești noua gazdă";
 /* This message is shown when calling and the receiver is not picking up the call */
-"meetings.incompatibility.warningMessage"="We are upgrading MEGA Chat. Your calls might not be connected due to version incompatibility unless all parties update their MEGA Apps to the latest version.";
+"meetings.incompatibility.warningMessage"="Actualizăm MEGA Chat. Este posibil ca apelurile dvs. să nu fie conectate din cauza incompatibilității versiunii, cu excepția cazului în care toate părțile își actualizează aplicațiile MEGA la cea mai recentă versiune.";
 /* This is the button text for enabling the loud speaker in the floating panel for meetings */
 "meetings.quickAction.speaker"="Difuzor";
 /* This is the button text for flipping the front and back camera in the floating panel for meetings */
@@ -2705,31 +2703,31 @@
 /* Header of a Use Mobile Data setting to load preview of images in hight resolution */
 "settings.fileManagement.useMobileData.header"="Previzualizează imagini de înaltă rezoluție";
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
-"settings.fileManagement.useMobileData.footer"="Use mobile data to load high resolution images when previewing. If disabled, the high resolution image will only be loaded when you zoom in.";
+"settings.fileManagement.useMobileData.footer"="Utilizați date mobile pentru a încărca imagini de înaltă rezoluție la previzualizare. Dacă este dezactivată, imaginea de înaltă rezoluție va fi încărcată numai când faci zoom in.";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.title"="You already have an active subscription";
+"account.upgrade.alreadyHaveASubscription.title"="Aveți deja un abonament activ";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.message"="You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.";
+"account.upgrade.alreadyHaveASubscription.message"="V-ați abonat anterior la un plan Pro cu Google Play sau AppGallery. Vă rugăm să anulați manual abonamentul cu acestea în Google Play sau Huawei AppGallery de pe dispozitiv și apoi încercați din nou.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
-"account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
+"account.upgrade.alreadyHaveACancellableSubscription.message"="Doriți să anulați abonamentul curent și să continuați cu achiziția?";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Abonament activ";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="You have an active MEGA subscription with Apple. You must cancel it separately at Subscriptions, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.itunes"="Ai un abonament MEGA activ cu Apple. Trebuie să îl anulezi separat la Abonamente, deoarece MEGA nu îl poate anula pentru tine. Vizitează-ne Centrul de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="Gestionează abonamentele";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="You have an active MEGA subscription with Google. You must cancel it separately in Google Play, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.googlePlay"="Ai un abonament MEGA activ cu Google. Trebuie să îl anulezi separat la Abonamente, deoarece MEGA nu îl poate anula pentru tine. Vizitează-ne Centrul de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="Vizitează Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="You have an active MEGA subscription with Huawei. You must cancel it separately at Huawei AppGallery, as MEGA is not able to cancel it for you. Visit our Help Centre for more information.";
+"account.delete.subscription.huaweiAppGallery"="Ai un abonament MEGA activ cu Huawei. Trebuie să îl anulezi separat la Huawei AppGallery, deoarece MEGA nu îl poate anula pentru tine. Vizitează-ne Centrul de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Vizitează AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
 "account.delete.subscription.webClient"="Acesta este ultimul pas pentru a-ți șterge contul. Atât contul, cât și abonamentul vor fi șterse și vei pierde definitiv toate datele stocate în unitatea cloud. Te rugăm să introduci parola mai jos.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
-"account.profile.avatar.uploadPhoto"="Upload photo";
+"account.profile.avatar.uploadPhoto"="Încarcă o fotografie";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
 "meetings.new.anotherAlreadyExistsError"="Un alt apel în curs. Te rugăm să închei apelul actual înainte de a efectua altul.";
 /* Button option when trying to join a new meeting given that the user is already in another meeting */
@@ -2757,11 +2755,11 @@
 /* File extension: .ascii. Commercial names should be stay on English */
 "general.filetype.ascii"="Text ASCII";
 /* File extension: .asf. Commercial names should be stay on English */
-"general.filetype.asf"="Streaming video";
+"general.filetype.asf"="Video în flux continuu";
 /* File extension: .asx. Is not a commercial name, but a file format name. */
-"general.filetype.asx"="Advanced stream";
+"general.filetype.asx"="Flux avansat";
 /* File extension: .avi. Name of a multimedia container format */
-"general.filetype.avi"="A/V interleave";
+"general.filetype.avi"="Intercalare A/V";
 /* File extension: .bat. "DOS" is not a commercial name, but the acronym for disk operating system. "Batch" is common noun */
 "general.filetype.bat"="Batch DOS";
 /* File extension: .bay. Commercial names should be stay on English */
@@ -2783,7 +2781,7 @@
 /* File extension: .com. Commercial names should be stay on English */
 "general.filetype.com"="Comandă DOS";
 /* File extension: .css. Commercial names should be stay on English */
-"general.filetype.css"="CSS style sheet";
+"general.filetype.css"="Foaie de stil CSS";
 /* File extension: .dhtml. Is not a commercial name. "dynamic" is an adjective */
 "general.filetype.dhtml"="HTML dinamic";
 /* File extension: .dll. Is not a commercial name. "dynamic" is the name of concept */
@@ -2809,7 +2807,7 @@
 /* File extension: .gif. Commercial names should be stay on English */
 "general.filetype.gif"="Imagine GIF";
 /* File extension: .gpx. Commercial names should be stay on English */
-"general.filetype.gpx"="GPS exchange";
+"general.filetype.gpx"="Schimb GPS";
 /* File extensions: .gsheet, .ods and .ots. Commercial names should be stay on English */
 "general.filetype.spreadsheet"="Foaie de calcul";
 /* File extension: .gz. Commercial names should be stay on English */
@@ -2851,7 +2849,7 @@
 /* File extensions: .mpeg and .mpg. Commercial names should be stay on English */
 "general.filetype.mpeg"="Film MPEG";
 /* File extension: .msi. Commercial names should be stay on English */
-"general.filetype.msi"="MS installer";
+"general.filetype.msi"="Programul de instalare MS";
 /* File extensions: .txt and .odt. Commercial names should be stay on English */
 "general.filetype.textDocument"="Document text";
 /* File extension: .otf. Commercial names should be stay on English */
@@ -2885,7 +2883,7 @@
 /* File extension: .sitx. Commercial names should be stay on English */
 "general.filetype.sitx"="Fișier comprimat X";
 /* File extension: .sql. Commercial names should be stay on English */
-"general.filetype.sql"="SQL statements";
+"general.filetype.sql"="Instructiuni SQL";
 /* File extension: .srf. Commercial names should be stay on English */
 "general.filetype.srf"="Imagine RAW Sony";
 /* File extension: .srt. Commercial names should be stay on English */
@@ -2899,7 +2897,7 @@
 /* File extension: .tbz and .tgz. Commercial names should be stay on English */
 "general.filetype.compressed"="Fișier comprimat";
 /* File extension: .tga. Is not a commercial name. "graphic" is a common noun */
-"general.filetype.tga"="TARGA graphic";
+"general.filetype.tga"="Grafică TARGA";
 /* File extension: .tif. Commercial names should be stay on English */
 "general.filetype.tif"="Imagine TIF";
 /* File extension: .tiff. Commercial names should be stay on English */
@@ -2923,11 +2921,11 @@
 /* Button title for incoming call with `initial`, `joining` and `userNoPresent` status */
 "chat.joinCall"="Alătură-te apelului";
 /* Description shown in chat screen if the user didn't allow access to photos */
-"chat.photos.allowPhotoAccessMessage"="To share photos and videos, grant MEGA access to your gallery";
+"chat.photos.allowPhotoAccessMessage"="Pentru a partaja fotografii și videoclipuri, acordați MEGA acces la galeria dvs.";
 /* Alert title to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.title"="Attach log files";
+"help.reportIssue.attachLogFiles.title"="Atașarea fișierelor jurnal";
 /* Alert message to confirm if the users want to attach log files generated by iOS to our support team. */
-"help.reportIssue.attachLogFiles.message"="Do you want to attach diagnostic log files to assist with debug?";
+"help.reportIssue.attachLogFiles.message"="Doriți să atașați fișiere jurnal de diagnosticare pentru a ajuta la depanare?";
 /* Backups title */
 "backups.title"="Backupuri";
 /* No backups and old inbox files in the account message */
@@ -2939,7 +2937,7 @@
 /* Message for action of cancelling a transfer */
 "transfers.cancellable.cancel"="Anulează transferul";
 /* Message informing the user about transfers lost */
-"transfers.cancellable.confirmCancel"="Interrupting the transfer process may render some of the items incomplete.";
+"transfers.cancellable.confirmCancel"="Întreruperea procesului de transfer poate face ca unele dintre elemente să fie incomplete.";
 /* Confirm action of cancelling a transfer */
 "transfers.cancellable.proceed"="Da, anulează";
 /* Dismiss action of cancelling a transfer */
@@ -2953,7 +2951,7 @@
 /* Cancelling transfers step title message for cancellable transfer */
 "transfers.cancellable.cancellingTransfers"="Se anulează transferurile…";
 /* Count of folders and files in the scanning stage */
-"transfers.cancellable.scanning.count"="Found %@ and %@";
+"transfers.cancellable.scanning.count"="A găsit %@ și %@";
 /* Count of folders created in the create folders stage */
 "transfers.cancellable.creatingFolders.count"="%@/%@";
 /* Message asking the user to not close the app during a process */
@@ -2963,7 +2961,7 @@
 /* Title of the dialog used to send bug reports to support team. */
 "help.reportIssue.title"="Raportează o problemă";
 /* Title of the dialog button to discard a report. */
-"help.reportIssue.discardReport"="Discard report";
+"help.reportIssue.discardReport"="Renunță la raport";
 /* Label to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describe"="Te rugăm să descrii clar problema întâmpinată. Cu cât oferi mai multe detalii, cu atât ne va fi mai ușor să o rezolvăm. Trimiterea ta va fi examinată de către echipa noastră de dezvoltare.";
 /* Switch to confirm the attachment and upload of log files generated by iOS to our support team. */
@@ -2973,17 +2971,17 @@
 /* Confirmation title shown when a bug report is successfully uploaded. */
 "help.reportIssue.success.title"="Îți mulțumim pentru feedback";
 /* Confirmation message shown when a bug report is successfully uploaded. */
-"help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
+"help.reportIssue.success.message"="Multumesc. Vom analiza această problemă și un membru al echipei noastre vă va răspunde.";
 /* Error message shown when some error occurs during uploading a bug report. */
-"help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+"help.reportIssue.fail.message"="Imposibil de trimis raportul. Vă rugăm să încercați din nou.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Sigur vrei să anulezi încărcarea problemei raportate?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
-"help.reportIssue.creating.cancel.message"="This issue will not be reported if you cancel uploading it.";
+"help.reportIssue.creating.cancel.message"="Această problemă nu va fi raportată dacă anulați încărcarea acesteia.";
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describeIssue.placeholder"="Descrie problema";
 /* Label shown when users lost the internet connection */
-"general.NoIntenerConnection"="Unable to connect to the Internet. Please check your connection and try again.";
+"general.NoIntenerConnection"="Imposibil de conectat la Internet. Vă rugăm să verificați conexiunea și să încercați din nou.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="Afișează în vizualizarea principală";
 /* Label indicating storage over quota */
@@ -2991,25 +2989,25 @@
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="Înainte";
 /* Title of Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.title"="Resume audio?";
+"media.audio.playbackContinuation.dialog.title"="Reluați audio?";
 /* Description of Audio Player dialog for Playback Continuation */
-"media.audio.playbackContinuation.dialog.description"="“%@” will resume from %@.";
+"media.audio.playbackContinuation.dialog.description"="„%@” se va relua de la %@.";
 /* Resume option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.resume"="Reia";
 /* Restart option for Audio Player dialog for Playback Continuation */
 "media.audio.playbackContinuation.dialog.restart"="Repornește";
 /* Meetings: Notification message to be shown when one person joins the call. */
-"meetings.notification.singleUserJoined"="%@ joined";
+"meetings.notification.singleUserJoined"="%@ s-a alăturat";
 /* Meetings: Notification message to be shown when one person leaves the call. */
 "meetings.notification.singleUserLeft"="%@ a părăsit apelul";
 /* Meetings: Notification message to be shown when two people join the call at the same time */
-"meetings.notification.twoUsersJoined"="%@ and %@ joined";
+"meetings.notification.twoUsersJoined"="%@ și %@ s-au alăturat";
 /* Meetings: Notification message to be shown when two people are leaving the call at the same time */
-"meetings.notification.twoUsersLeft"="%@ and %@ left the call";
+"meetings.notification.twoUsersLeft"="%@ și %@ au părăsit apelul";
 /* Meetings: Notification message to be shown when more than 2 people are joining the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersJoined"="%@ and %@ others joined";
+"meetings.notification.moreThanTwoUsersJoined"="%@ și ați %@ s-au alăturat";
 /* Meetings: Notification message to be shown when more than 2 people are leaving the call at the same time. The second %@ would display the number in spell out format. */
-"meetings.notification.moreThanTwoUsersLeft"="%@ and %@ others left the call";
+"meetings.notification.moreThanTwoUsersLeft"="%@ și alți %@ au părăsit apelul";
 /* Title for files or folders action that allows user to 'Move to Rubbish Bin' */
 "general.menuAction.moveToRubbishBin"="Mută în Coșul de gunoi";
 /* Title for action that allows user to delete files or folders permanently from Rubbish Bin */
@@ -3033,15 +3031,15 @@
 /* Text to indicate the user that folder already exists when uploading/copying/moving */
 "nameCollision.title.folder"="Folderul există deja";
 /* Text to indicate the user that the folder trying to upload/copy/move already exists in destination */
-"nameCollision.folders.alreadyExists"="A folder named %@ already exists at this destination.";
+"nameCollision.folders.alreadyExists"="Un folder numit %@ există deja la această destinație.";
 /* Text of the merge action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.merge.title"="Îmbină";
 /* Text description for the merge action when upload/copy/move and already exists in destination */
-"nameCollision.folders.action.merge.description"="The new folder will be merged with the folder at this destination.";
+"nameCollision.folders.action.merge.description"="Noul folder va fi fuzionat cu folderul de la această destinație.";
 /* Text of the skip action when trying to upload/copy/move a folder and already exists in destination */
 "nameCollision.folders.action.skip.title"="Omite acest folder";
 /* Text to indicate the user that the file trying to upload/copy/move already exists in destination */
-"nameCollision.files.alreadyExists"="A file named %@ already exists at this destination.";
+"nameCollision.files.alreadyExists"="Un fișier numit %@ există deja la această destinație.";
 /* Text of the replace action trying to upload/copy/move a file and already exists in destination */
 "nameCollision.files.action.replace.title"="Înlocuiește";
 /* Text description for the replace action when upload/copy/move and already exists in destination */
@@ -3057,7 +3055,7 @@
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Fișierul va fi actualizat cu o nouă versiune.";
 /* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Apply to all %@ duplicates";
+"nameCollision.applyToAll"="Aplică la toate cele %@ de duplicate";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Ești singura persoană de aici";
 /* Meetings end call dialog description */
@@ -3069,9 +3067,9 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="Apelul se va încheia în %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Make available offline";
+"general.downloadToOffline"="Fă disponibil offline";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
-"general.fileIsBeingDownloaded"="File is already being downloaded";
+"general.fileIsBeingDownloaded"="Fișierul este deja în curs de descărcare";
 /* Button and title text that ends the meeting for all */
 "meetings.endCall.endForAllButtonTitle"="Încheie apelul pentru toți";
 /* Title of the popup that ends the meeting for all */
@@ -3105,11 +3103,11 @@
 /* Title for chats section */
 "chat.title"="Chat";
 /* A log message in a chat to display that a participant's permission was changed to read-only and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B], they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to read-only by John Smith. */
-"chat.message.changedRole.readOnly"="[A] was changed to [S]read-only[/S] by [B]";
+"chat.message.changedRole.readOnly"="[A] a fost schimbat(ă) în [S]numai citire[/S] de [B]";
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
-"chat.message.changedRole.host"="[A] was changed to [S]host role[/S] by [B]";
+"chat.message.changedRole.host"="[A] a fost schimbat(ă) în [S]rolul gazdei[/S] de [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] was changed to [S]standard role[/S] by [B]";
+"chat.message.changedRole.standard"="[A] a fost schimbat(ă) în [S]rol standard[/S] de [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3129,7 +3127,7 @@
 /* Contacts selection screen: Alert title shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.title"="Toate contactele au fost adăugate";
 /* Contacts selection screen: Alert message shown when all the contacts are already added to the chatRoom */
-"meetings.addContacts.allContactsAdded.description"="You’ve already added all your contacts to this chat.\nIf you want to add more participants, first invite them to your contact list.";
+"meetings.addContacts.allContactsAdded.description"="Ai adăugat deja toate contactele tale în acest chat.\nDacă vrei să adaugi mai mulți participanți, invită-i mai întâi în lista de contacte.";
 /* Contacts selection screen: Button title for the alert that is shown when all the contacts are already added to the chatRoom */
 "meetings.addContacts.allContactsAdded.confirmationButtonTitle"="Invită";
 /* Menu option from the `Add` section that allows the user to share files from Files app */
@@ -3143,21 +3141,21 @@
 /* Text title showed when users share the contact link */
 "invite.contactLink.share.title"="Trimite invitația";
 /* The text of a notification indicating that a file that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownReinstated.file"="Your taken-down file “%@” has been reinstated";
+"notifications.message.takenDownReinstated.file"="Fișierul dvs. eliminat „%@” a fost restabilit";
 /* The text of a notification indicating that a folder that was taken down has now been restored due to a successful counter-notice.The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownReinstated.folder"="Your taken-down folder “%@” has been reinstated";
+"notifications.message.takenDownReinstated.folder"="Folderul dvs. eliminat „%@” a fost restabilit";
 /* The text of a notification indicating that a file has been taken down due to infringement or other reason. The %@ will be replaced with the name of the file. */
-"notifications.message.takenDownPubliclyShared.file"="Your publicly shared file “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.file"="Fișierul dvs. partajat public „%@” a fost eliminat";
 /* The text of a notification indicating that a folder has been taken down due to infringement or other reason. The %@ will be replaced with the name of the folder. */
-"notifications.message.takenDownPubliclyShared.folder"="Your publicly shared folder “%@” has been taken down";
+"notifications.message.takenDownPubliclyShared.folder"="Folderul dvs. partajat public „%@” a fost eliminat";
 /* Add contacts: Message to allow non host to add contacts in the group chat and meeting */
 "meetings.addContacts.allowNonHost.message"="Permite non-gazdelor să adauge participanți";
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Planifică o întâlnire";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Cont suspendat din cauza încălcării drepturilor de autor. Ți-am trimis un e-mail cu mai multe informații despre acest lucru.";
+"account.suspension.message.copyright"="Contul dvs. MEGA a fost suspendat din cauza acuzațiilor repetate de încălcare a drepturilor de autor. Aceasta înseamnă că nu vă puteți accesa contul sau datele din cadrul acestuia.\n\nVerificați-vă e-mailul pentru mai multe informații despre cum să depuneți o contranotificare. ";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Cont desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, cum ar fi abuzul drepturilor celorlalți; partajarea și importarea de date ilegale; ori abuzul de sistem.";
+"account.suspension.message.nonCopyright"="Contul dvs. a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA.\n\nNu veți putea recâștiga accesul la datele stocate sau nu veți putea fi autorizat să înregistrați un nou cont MEGA.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Deschide aplicația MEGA și autentifică-te pentru a continua";
 /* Account Storage title label of used storage size */
@@ -3167,7 +3165,7 @@
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Cont dezactivat";
 /* Content message of expired Pro Flexi account view */
-"account.expired.proFlexi.message"="Your Pro Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. You won’t be able to access the data stored in your account. To make a payment and reactivate your subscription, log in to MEGA through a browser.";
+"account.expired.proFlexi.message"="Contul tău Pro Flexi a fost dezactivat din cauza unei plăți nereușite sau ai anulat abonamentul. Nu vei putea accesa datele stocate în contul tău. Pentru a efectua o plată și a-ți reactiva abonamentul, autentifică-te în MEGA printr-un browser.";
 /* Label to indicate the user about the activation of a meeting link */
 "meetings.info.meetingLink"="Link pentru întâlnire";
 /* Label to inform user about privacy of sharing a chat link */
@@ -3177,25 +3175,27 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Întâlniri din trecut";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Verifică %@";
+"general.menuAction.verifyContact.title"="Aprobați %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații înainte de a putea accesa folderele partajate.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să aprobați contactele cu care partajați informații înainte de a putea accesa folderele partajate.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
+"sharedItems.contactVerification.section.myCredentials.message"="Pentru a vă aproba contactul, asigurați-vă că acreditările pe care le vedeți mai sus corespund cu acreditările contului lor. Le puteți cere să vă împărtășească acreditările.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să aprobați contactele de la care primiți informații înainte de a putea accesa folderele partajate.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Pentru a accesa folderul partajat, persoana care l-a partajat cu tine ar trebui să te verifice și pe tine.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Pentru a accesa folderul partajat, persoana care l-a partajat cu tine ar trebui să te aprobe și pe tine.";
+/* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ este partajat de un contact pe care nu l-ați aprobat. Pentru a asigura un plus de securitate, vă recomandăm să aprobați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl aprobați.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Acreditările tale";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Vă protejăm datele cu criptare tip zero, astfel încât toate informațiile pe care le stocați, partajați și primiți pe MEGA să fie sigure. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații sau de la care primiți date.";
+"verifyCredentials.headerMessage"="Vă protejăm datele cu criptare tip zero, astfel încât toate informațiile pe care le stocați, partajați și primiți pe MEGA să fie sigure. Pentru a asigura un plus de securitate, vă rugăm să aprobați contactele cu care partajați informații sau de la care primiți date.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[folder nedecriptat]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
-"sharedItems.tab.outgoing.sharedToContact"="Shared with %@";
+"sharedItems.tab.outgoing.sharedToContact"="Partajat cu %@";
 /* Chat Listing - row description for the created meeting */
-"chat.listing.description.meetingCreated.message"="%@: created a meeting";
+"chat.listing.description.meetingCreated.message"="%@: a creat o întâlnire";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeAll"="Vezi toți";
 /* The button title that allows the user to leave a ad hoc meeting. */
@@ -3207,19 +3207,19 @@
 /* Title for manage chat history option in meeting info */
 "meetings.info.manageChatHistory"="Gestionează istoricul chatului";
 /* Title for enable encryption key rotation option in meeting info */
-"meetings.info.keyRotation.title"="Enable encryption key rotation";
+"meetings.info.keyRotation.title"="Activează rotația cheii de criptare";
 /* Description for enable encryption key rotation option in meeting info */
-"meetings.info.keyRotation.description"="Key rotation is slightly more secure, but doesn’t allow you to create a chat link and hides past messages from new participants.";
+"meetings.info.keyRotation.description"="Rotația cheii este puțin mai sigură, dar nu îți permite să creați un link al chatul și ascunde mesajele anterioare de la noii participanți.";
 /* Title for a button to send a file to a chat */
 "meetings.info.shareOptions.sendToChat"="Trimite în chat";
 /* Title for share chat link option in meeting info */
-"meetings.info.shareChatLink"="Share chat link";
+"meetings.info.shareChatLink"="Partajează linkul chatului";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeMore"="Vezi mai mulți";
 /* Button title to see less participants in meeting info view */
 "meetings.info.participants.seeLess"="Vezi mai puțini";
 /* Text description for chat privacy communication */
-"chat.introductionHeader.privacy.description"="MEGA protects your communications with our zero-knowledge encryption system providing essential safety assurances:";
+"chat.introductionHeader.privacy.description"="MEGA vă protejează comunicațiile cu sistemul nostru de criptare tip zero cunoștințe, oferind asigurări esențiale de siguranță:";
 /* Button title to start an scheduled meeting before the start date */
 "meetings.scheduled.buttonOverlay.startMeeting"="Începe o întâlnire";
 /* Button title to join an scheduled meeting */
@@ -3229,35 +3229,35 @@
 /* Button title to join an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.joinMeeting"="Alătură-te";
 /* Message shown in a chat room for a call in progress displaying the duration of the call */
-"chat.callInProgress.tapToReturnToCall"="Tap to return to call %@";
+"chat.callInProgress.tapToReturnToCall"="Atinge pentru a reveni la apel %@";
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Întâlniri";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] invited[/B] you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] te-a invitat[/B] la o întâlnire programată pentru:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] a actualizat [/B] Întâlnirea la";
 /* In app notification description for scheduled meeting description field update */
-"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] updated[/B] the meeting description";
+"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] a actualizat [/B] descrierea întâlnirii";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] a anulat [/B] Întâlnirea programată pentru";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] a actualizat [/B] data întâlnirii la";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] a actualizat [/B] ora întâlnirii";
 /* In app notification description for scheduled meeting title update. */
-"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] updated[/B] the meeting name from “[PreviousTitle]” to [B]“[UpdatedTitle]”[/B]";
+"inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] a actualizat [/B] numele întâlnirii de la „[PreviousTitle]” la [B]„[UpdatedTitle]” [/B]";
 /* In app notification description for cancelled recurring meeting */
-"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] cancelled[/B] the meeting and all its occurrences";
+"inapp.notifications.scheduledMeetings.recurring.cancelled.description"="[B][Email] a anulat [/B] Întâlnirea și toate ocurențele sale";
 /* In app notification description for recurring new meeting invitation. */
-"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] invited you to a recurring meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] te-a invitat la o întâlnire recurentă programată pentru:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] a actualizat [/B] Întâlnirea la";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] updated[/B] the recurring meeting description";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] a actualizat [/B] descrierea întâlnirii recurente";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] a actualizat [/B] data întâlnirii recurente la";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] a actualizat [/B] timpul de întâlnire recurentă pentru";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Ocurențe";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3269,15 +3269,11 @@
 /* Button label to indicate that more occurencies can be loaded in the list */
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Vezi mai mulți";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
-"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] from [B][StartTime] to [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]";
+"meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] de la [B][StartTime] la [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] a anulat [/B] ocurența programată pentru";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] a actualizat [/B] o ocurență la";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Actualizare de securitate pentru cont";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3315,15 +3311,15 @@
 /* In app notification description text representing the meeting repeats every saturday. This text is used in the middle of the sentence. */
 "inapp.notifications.scheduledMeetings.weekDay.midSentence.sat.title"="sâm";
 /* Text description for a meeting showing that is a daily recurring meeting */
-"meetings.scheduled.recurring.daily"="daily";
+"meetings.scheduled.recurring.daily"="zilnică";
 /* Text description for a meeting showing that is a weekly recurring meeting */
-"meetings.scheduled.recurring.weekly"="weekly";
+"meetings.scheduled.recurring.weekly"="săptămânal";
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="lunar";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Nu se poate verifica contactul";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Nu se poate aproba contactul";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Nu poți verifica pe %@ deoarece nu se află în lista de contacte. Așteaptă ca această persoană să îți accepte mai întâi invitația.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Nu poți aproba pe %@ deoarece nu se află în lista de contacte. Așteaptă ca această persoană să îți accepte mai întâi invitația.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Dezactivează codul de acces MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3331,17 +3327,17 @@
 /* Description shown when a meeting is in progress. This text appears in the chat listing screeen. */
 "meetings.scheduled.listing.inProgress.description"="Întâlnire în desfășurare";
 /* Description shown when a meeting is in progress. Description includes time. This text appears in the chat listing screeen. */
-"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Meeting in progress · %@";
+"meetings.scheduled.listing.inProgress.descriptionWithDuration"="Întâlnire în desfășurare · %@";
 /* Schedule meeting view title */
 "meetings.scheduleMeeting.title"="Planifică o întâlnire";
 /* Schedule meeting name field placeholder */
 "meetings.scheduleMeeting.meetingName.placeholder"="Numele întâlnirii";
 /* Schedule meeting start field */
-"meetings.scheduleMeeting.start"="Starts";
+"meetings.scheduleMeeting.start"="Începe";
 /* Schedule meeting end field */
-"meetings.scheduleMeeting.end"="Ends";
+"meetings.scheduleMeeting.end"="Se termină";
 /* Schedule meeting recurrence field */
-"meetings.scheduleMeeting.recurrence"="Recurrence";
+"meetings.scheduleMeeting.recurrence"="Recurență";
 /* Schedule meeting link field */
 "meetings.scheduleMeeting.link"="Link pentru întâlnire";
 /* Schedule meeting end field */
@@ -3353,23 +3349,23 @@
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="Permite non-gazdelor să adauge participanți";
 /* Schedule meeting description field placeholder */
-"meetings.scheduleMeeting.description"="Add description";
+"meetings.scheduleMeeting.description"="Adaugă o descriere";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Enter up to 30 characters";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Introdu până la 30 de caractere";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Enter up to 3,000 characters";
+"meetings.scheduleMeeting.description.lenghtError"="Introdu până la 3.000 de caractere";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Anulează";
 /* Schedule meeting create button */
 "meetings.scheduleMeeting.create"="Creează";
 /* Schedule meeting discard changes title */
-"meetings.scheduleMeeting.discardChanges.title"="Discard changes or keep editing?";
+"meetings.scheduleMeeting.discardChanges.title"="Renunțați la modificări sau continuați să editați?";
 /* Schedule meeting discard changes confirmation */
 "meetings.scheduleMeeting.discardChanges.confirm"="Renunță la modificări";
 /* Schedule meeting discard changes cancellation */
-"meetings.scheduleMeeting.discardChanges.cancel"="Keep editing";
+"meetings.scheduleMeeting.discardChanges.cancel"="Continuați să editați";
 /* Schedule meeting creation complete */
-"meetings.scheduleMeeting.meetingCreated"="Meeting created";
+"meetings.scheduleMeeting.meetingCreated"="Întâlnire a fost creată";
 /* Alert title shown for video with options to resume playing the video or start from the beginning */
 "video.alert.resumeVideo.title"="Reiei videoclipul?";
 /* Alert message shown for video with options to resume playing the video or start from the beginning. %1$s will be replaced by name of the video. %2$s will be replaced by video timestamp */
@@ -3379,9 +3375,9 @@
 /* Alert button title that will start playing the video from the beginning */
 "video.alert.resumeVideo.button.restart"="Repornește";
 /* Push notification message to be shown when the meeting is about to start now. */
-"meetings.scheduleMeeting.notification.meetingStartsNow.message"="Meeting starts now";
+"meetings.scheduleMeeting.notification.meetingStartsNow.message"="Întâlnirea începe acum";
 /* Push notification message to be shown when the meeting is about to start in 15 min. */
-"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="Meeting starts in 15 minutes";
+"meetings.scheduleMeeting.notification.meetingStartsInFifteenMins.message"="Întâlnirea începe în 15 minute";
 /* Push notification: Button title to be shown when the meeting is about to start. */
 "meetings.scheduleMeeting.notification.meetingStarts.button.join"="Alătură-te";
 /* Push notification: Button title to be shown when the meeting is about to start. */
@@ -3389,15 +3385,15 @@
 /* Recurrence option never shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.never"="Niciodată";
 /* Recurrence option daily shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="Every day";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.daily"="În fiecare zi";
 /* Recurrence option weekly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="Every week";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.weekly"="În fiecare săptămână";
 /* Recurrence option monthly shown in the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="Every month";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.monthly"="În fiecare lună";
 /* Recurrence option custom shown in the recurrence options screen while creating the schedule meeting. */
 "meetings.scheduleMeeting.create.recurrenceOptionScreen.custom"="Personalizat";
 /* Navigation title of the recurrence options screen while creating the schedule meeting. */
-"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="Recurrence";
+"meetings.scheduleMeeting.create.recurrenceOptionScreen.navigationTitle"="Recurență";
 /* Recurrence option never shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.never"="Niciodată";
 /* Recurrence option daily shown in the creating the schedule meeting screen as the selected option. */
@@ -3407,19 +3403,19 @@
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Lunar";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Some months don’t have 29 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Unele luni nu au 29 de zile. Pentru aceste luni, ocurența va fi programată pentru ultima zi a lunii.";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Some months don’t have 30 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Unele luni nu au 30 de zile. Pentru aceste luni, ocurența va fi programată pentru ultima zi a lunii.";
 /* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Some months don’t have 31 days. For these months, the occurrence will be scheduled for the last day of the month.";
+"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Unele luni nu au 31 de zile. Pentru aceste luni, ocurența va fi programată pentru ultima zi a lunii.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Cameră";
 /* Device Center title */
-"device.center.title"="Device centre";
+"device.center.title"="Centrul dispozitivului";
 /* Device Center list current device title */
-"device.center.current.device.title"="This device";
+"device.center.current.device.title"="Acest dispozitiv";
 /* Device Center list other devices title */
-"device.center.other.devices.title"="Other devices";
+"device.center.other.devices.title"="Alte dispozitive";
 /* Device Center backup up to date status */
 "device.center.backup.upToDate.status.message"="La zi";
 /* Device Center backup scanning status */
@@ -3429,7 +3425,7 @@
 /* Device Center backup updating status */
 "device.center.backup.updating.status.message"="Se actualizează…";
 /* Device Center backup no camera uploads status */
-"device.center.backup.noCameraUploads.status.message"="No camera uploads";
+"device.center.backup.noCameraUploads.status.message"="Niciun încărcarea de cameră";
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Dezactivat";
 /* Device Center backup offline status */
@@ -3439,35 +3435,35 @@
 /* Device Center backup paused status */
 "device.center.backup.paused.status.message"="Pus pe pauză";
 /* Device Center backup out of quota status */
-"device.center.backup.outOfQuota.status.message"="Out of quota";
+"device.center.backup.outOfQuota.status.message"="În afara cotei";
 /* Device Center backup error status */
 "device.center.backup.error.status.message"="Eroare";
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Blocat";
 /* Default device name in case the device name cannot be obtained */
-"device.center.default.device.title"="Unknown device";
+"device.center.default.device.title"="Dispozitiv necunoscut";
 /* End Recurrence option title in creating schedule meeting screen. */
-"meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
+"meetings.scheduleMeeting.create.endRecurrence.title"="Încheiați recurența";
 /* End Recurrence on date option title in creating schedule meeting screen. */
-"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="On date";
+"meetings.scheduleMeeting.create.endRecurrence.option.onDate"="La o anumită dată";
 /* End Recurrence never option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.option.never"="Niciodată";
 /* Title for meeting notifications option in meeting info */
-"meetings.info.meetingNotifications"="Meeting notifications";
+"meetings.info.meetingNotifications"="Notificări de întâlnire";
 /* Title for manage meeting history option in meeting info */
-"meetings.info.manageMeetingHistory"="Manage meeting history";
+"meetings.info.manageMeetingHistory"="Gestionează istoricul întâlnirilor";
 /* Meeting Notifications DND: Title bar message for the dnd activate options */
-"meetings.info.muteMeetingNotificationsFor"="Mute meeting notifications for";
+"meetings.info.muteMeetingNotificationsFor"="Amuțește notificările de întâlnire timp de";
 /* Title for share meeting link option in meeting info */
 "meetings.info.shareMeetingLink"="Partajează linkul întâlnirii";
 /* The button or alert title to delete the history of a meeting. */
-"meetings.info.manageMeetingHistory.clearMeetingHistory"="Clear meeting history";
+"meetings.info.manageMeetingHistory.clearMeetingHistory"="Golește istoricul întâlnirilor";
 /* Message show when the history of a meeting has been successfully deleted */
-"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Meeting history cleared";
+"meetings.info.manageMeetingHistory.meetingHistoryHasBeenCleared"="Istoricul întâlnirilor a fost șters";
 /* The alert message to delete the history of a meeting. */
-"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Are you sure you want to clear the full message history of this meeting?";
+"meetings.info.manageMeetingHistory.clearMeetingHistoryMessage"="Sigur vrei să ștergi istoricul complet al mesajelor din acestei întâlniri?";
 /* Text explaining users how the meeting links work. */
-"meetings.info.shareMeetingLink.explainLink"="Anyone with this link can join the meeting and view the meeting chat";
+"meetings.info.shareMeetingLink.explainLink"="Oricine cu acest link se poate alătura întâlnirii și poate vedea chatul întâlnirii";
 /* The title of a menu button which allows users to rename a meeting. */
 "meetings.info.renameMeeting"="Redenumește întâlnirea";
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
@@ -3477,21 +3473,21 @@
 /* This text is shown to the user while creating a scheduled meeting. User can choose between Daily, weekly and Monthly options. */
 "meetings.scheduleMeeting.create.monthly.optionTitle"="Lunar";
 /* Create Schedule Meeting: The text is shown along with the selected frequency which can either be Daily, Weekly and Monthly. */
-"meetings.scheduleMeeting.create.frequency.optionTitle"="Frequency";
+"meetings.scheduleMeeting.create.frequency.optionTitle"="Frecventa";
 /* Create Schedule Meeting: The text is shown along with the selected interval. */
-"meetings.scheduleMeeting.create.interval.optionTitle"="Every";
+"meetings.scheduleMeeting.create.interval.optionTitle"="În fiecare";
 /* Create Schedule Meeting: This text is used as a accessibility label for frequency picker. */
-"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Select a frequency";
+"meetings.scheduleMeeting.create.frequency.picker.accessibilityLabel"="Selectați o frecvență";
 /* Create Schedule Meeting: This text is used as a accessibility label for week number picker. */
-"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Select a weekly interval";
+"meetings.scheduleMeeting.create.weekNumber.picker.accessibilityLabel"="Selectați un interval săptămânal";
 /* Create Schedule Meeting: This text is used as a accessibility label for week day picker. */
-"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Select a day of the week";
+"meetings.scheduleMeeting.create.weekDay.picker.accessibilityLabel"="Selectați o zi a săptămânii";
 /* Create Schedule Meeting: This text is used as a accessibility label for interval picker. */
-"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Select a monthly interval";
+"meetings.scheduleMeeting.create.interval.picker.accessibilityLabel"="Selectați un interval lunar";
 /* Create Schedule Meeting: Month custom option - header title for choosing the week number and week day */
-"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="On the…";
+"meetings.scheduleMeeting.create.monthly.weekNumberAndWeekDay.headerTitle"="A…";
 /* Create Schedule Meeting: Month custom option - header title for the calendar */
-"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="Each";
+"meetings.scheduleMeeting.create.monthly.calendar.headerTitle"="În fiecare a";
 /* Create Schedule Meeting: Month custom option - first week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.first"="Prima";
 /* Create Schedule Meeting: Month custom option - second week option text */
@@ -3503,19 +3499,19 @@
 /* Create Schedule Meeting: Month custom option - fifth week option text */
 "meetings.scheduleMeeting.create.monthly.weekNumber.fifth"="A cincea";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the custom option selection screen */
-"meetings.scheduled.create.weekly.everyDay.footerNote"="Meeting will occur every day.";
+"meetings.scheduled.create.weekly.everyDay.footerNote"="Întâlnirea va avea loc în fiecare zi.";
 /* Create Schedule Meeting: Schedule meeting repeats all days in a week. This text is shown in the main screen that shows all the options along with the selected recurrence option. */
 "meetings.scheduleMeeting.create.selectedRecurrence.weekly.everyDay"="Zilnică";
 /* On Upgrade Account Plan screen. Button title to restore purchases */
-"upgradeAccountPlan.button.restore.title"="Restore purchase";
+"upgradeAccountPlan.button.restore.title"="Restaurați achiziția";
 /* On Upgrade Account Plan screen. Button title to show terms and policies */
-"upgradeAccountPlan.button.termsAndPolicies.title"="Terms and policies";
+"upgradeAccountPlan.button.termsAndPolicies.title"="Termeni și politici";
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
-"upgradeAccountPlan.button.buyAccountPlan.title"="Buy %@";
+"upgradeAccountPlan.button.buyAccountPlan.title"="Cumpără %@";
 /* On Upgrade Account Plan screen. Displayed header title text message */
 "upgradeAccountPlan.header.title.choosePlan"="Alege planul potrivit pentru tine";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Current plan: %@";
+"upgradeAccountPlan.header.title.currentPlan"="Planul curent: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Lunar";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
@@ -3523,124 +3519,168 @@
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Economisește până la 16 %% cu facturarea anuală";
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Features of Pro plans";
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Caracteristicile planurilor Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link-uri protejate prin parolă\n\n• Link-uri cu datele de expirare\n\n• Partajarea cotelor de transfer\n\n• Backup-uri automate\n\n• Derulați înapoi până la 90 de zile pe Pro Lite și până la 365 de zile pe Pro I, II și III (în curând)\n\n• Programați curățarea coșurilor de gunoi între 7 zile și 10 ani.";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
-"upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
+"upgradeAccountPlan.header.title.subscriptionDetails"="Detaliile abonamentului";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
-"upgradeAccountPlan.message.text.subscriptionDetails"="Subscriptions are renewed automatically for successive subscription periods of the same duration and at the same price as the initial period chosen.\nYou can switch off the automatic renewal of your MEGA Pro subscription no later than 24 hours before your next subscription payment is due via your iTunes account settings page.";
+"upgradeAccountPlan.message.text.subscriptionDetails"="Abonamentele sunt reînnoite automat pentru perioade succesive de abonament de aceeași durată și la același preț ca perioada inițială aleasă. \nPuteți dezactiva reînnoirea automată a abonamentului MEGA Pro cu cel puțin 24 de ore înainte de scadență următoarea plată a abonamentului prin pagina de setări a contului iTunes.";
 /* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
 "upgradeAccountPlan.plan.tag.currentPlan"="Planul actual";
 /* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
 "upgradeAccountPlan.plan.tag.recommended"="Recomandat";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/month";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerMonth"="%@/luna";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per year on account plan options */
-"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/year";
+"upgradeAccountPlan.plan.details.pricing.localCurrencyPerYear"="%@/an";
 /* On Upgrade Account Plan screen. Displayed Storage detail on account plan options */
-"upgradeAccountPlan.plan.details.storage"="Storage: %@";
+"upgradeAccountPlan.plan.details.storage"="Spațiu de stocare: %@";
 /* On Upgrade Account Plan screen. Displayed Transfer detail on account plan options */
 "upgradeAccountPlan.plan.details.transfer"="Transfer: %@";
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
-"upgradeAccountPlan.footer.message.pricingPage"="You can upgrade your current subscription on our [A]pricing page[/A].";
+"upgradeAccountPlan.footer.message.pricingPage"="Vă puteți upgrada abonamentul actual pe [A]pagina noastră de prețuri[/A].";
 /* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
-"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="You already have a recurring subscription for this plan";
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="Aveți deja un abonament recurent pentru acest plan";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Anulează";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Cancel %@?";
+"meetings.scheduled.cancelAlert.title"="Anulați %@?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
-"meetings.scheduled.cancelAlert.description.withMessages"="This meeting will be placed under Past meetings and all participants will be notified.";
+"meetings.scheduled.cancelAlert.description.withMessages"="Această întâlnire va fi plasată în cadrul Întâlnirilor din trecut și toți participanții vor fi anunțați.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
-"meetings.scheduled.cancelAlert.description.withoutMessages"="This meeting will be archived and all participants will be notified.";
+"meetings.scheduled.cancelAlert.description.withoutMessages"="Această întâlnire va fi arhivată și toți participanții vor fi anunțați.";
 /* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
-"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Cancel and archive";
+"meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="Anulează și arhivează";
 /* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
 "meetings.scheduled.cancelAlert.option.confirm.withMessages"="Anulează întâlnirea";
 /* Don't cancel option for alert cancelling an scheduled meeting */
 "meetings.scheduled.cancelAlert.option.dontCancel"="Nu o anula";
 /* Success message when cancelling an scheduled meeting without messages in chat room */
-"meetings.scheduled.cancelAlert.success.withoutMessages"="Meeting cancelled and archived";
+"meetings.scheduled.cancelAlert.success.withoutMessages"="Întâlnirea a fost anulată și arhivată";
 /* Success message when cancelling an scheduled meeting with messages in chat room */
-"meetings.scheduled.cancelAlert.success.withMessages"="Meeting cancelled";
+"meetings.scheduled.cancelAlert.success.withMessages"="Întâlnirea a fost anulată";
 /* Description for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.description"="Only this occurrence will be cancelled. All the other occurrences will go ahead as scheduled.";
+"meetings.scheduled.cancelAlert.occurrence.description"="Doar această ocurență va fi anulată. Toate celelalte ocurențe vor continua așa cum a fost programat.";
 /* Confirm cancel option for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Cancel occurrence";
+"meetings.scheduled.cancelAlert.occurrence.option.confirm"="Anulează ocurența";
 /* Success message when cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.success"="%@ occurrence cancelled";
+"meetings.scheduled.cancelAlert.occurrence.success"="%@ ocurență a fost anulată";
 /* Title for alert cancelling last occurrence */
-"meetings.scheduled.cancelAlert.occurrence.last.title"="Cancel occurrence and meeting?";
+"meetings.scheduled.cancelAlert.occurrence.last.title"="Anulați ocurența și întâlnirea?";
 /* Description for alert cancelling last occurrence without messages in chat room */
-"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="This is the only occurrence of the recurring meeting. Cancelling this occurrence will cancel the meeting. If cancelled, the meeting will be archived and all participants will be notified.";
+"meetings.scheduled.cancelAlert.occurrence.last.withoutMessages.description"="Aceasta este singura ocurență a întâlnirii recurente. Anularea acestei ocurențe va anula întâlnirea. Dacă este anulată, întâlnirea va fi arhivată și toți participanții vor fi anunțați.";
 /* Description for alert cancelling last occurrence with messages in chat room */
-"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="This is the only occurrence of the recurring meeting. Cancelling this occurrence will cancel the meeting. If cancelled, the meeting will be placed under Past meetings and all participants will be notified.";
+"meetings.scheduled.cancelAlert.occurrence.last.withMessages.description"="Aceasta este singura ocurență a întâlnirii recurente. Anularea acestei ocurențe va anula întâlnirea. Dacă este anulată, întâlnirea va fi plasată sub Întâlniri din trecut și toți participanții vor fi anunțați.";
 /* Title for alert cancelling an occurrence */
-"meetings.scheduled.cancelAlert.occurrence.title"="Cancel %@ occurrence?";
+"meetings.scheduled.cancelAlert.occurrence.title"="Anulați ocurență din %@?";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting. For example: Zadie Smith cancelled this meeting */
-"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ cancelled this meeting";
+"meetings.scheduled.managementMessages.cancelled.oneOffMeeting"="%@ a anulat această întâlnire";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled a meeting with recurrence. For example: Zadie Smith cancelled this meeting and all its occurrences */
-"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ cancelled this meeting and all its occurrences";
+"meetings.scheduled.managementMessages.cancelled.recurrenceMeeting"="%@ a anulat această întâlnire și toate ocurențele sale";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled one ocurrence. For example: Zadie Smith cancelled the occurrence scheduled for Fri 22 April from 10:00 to 11:00 */
-"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ cancelled the occurrence scheduled for %@";
+"meetings.scheduled.managementMessages.cancelled.occurrence"="%@ a anulat ocurența programată pentru %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] created the meeting. For example: Zadie Smith created this meeting */
-"meetings.scheduled.managementMessages.created"="%@ created this meeting";
+"meetings.scheduled.managementMessages.created"="%@ a creat această întâlnire";
 /* A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting */
-"meetings.scheduled.managementMessages.cancelled"="%@ cancelled this meeting";
+"meetings.scheduled.managementMessages.cancelled"="%@ a anulat această întâlnire";
 /* Name of the screen of contact info shown when back button is long pressed */
 "contactInfo.backButton.menu"="Informații de contact";
 /* Create meeting tip view title */
 "meetings.scheduleMeeting.createMeetingTip.title"="Planifică o întâlnire";
 /* Create meeting tip view message */
-"meetings.scheduleMeeting.createMeetingTip.message"="You can now schedule one-off and recurring meetings.";
+"meetings.scheduleMeeting.createMeetingTip.message"="Acum puteți programa întâlniri unice și recurente.";
 /* Scheduled meeting tip view dismiss action button title */
 "meetings.scheduleMeeting.tipView.gotIt"="Am înțeles";
 /* Start meeting tip view title */
 "meetings.scheduleMeeting.startMeetingTip.title"="Începe o întâlnire";
 /* Start meeting tip view message */
-"meetings.scheduleMeeting.startMeetingTip.message"="You can start the meeting before its scheduled time by tapping “Start meeting” in the meeting room.";
+"meetings.scheduleMeeting.startMeetingTip.message"="Puteți începe întâlnirea înainte de ora programată, atingând „Începeți o întâlnire” în camera de întâlnire.";
 /* Recurring meeting tip view title */
-"meetings.scheduleMeeting.recurringMeetingTip.title"="Manage recurring meetings";
+"meetings.scheduleMeeting.recurringMeetingTip.title"="Gestionați întâlniri recurente";
 /* Recurring meeting tip view message */
-"meetings.scheduleMeeting.recurringMeetingTip.message"="You can view, cancel, or edit any occurrence of a recurring meeting by tapping and holding the meeting and selecting Occurrences.";
+"meetings.scheduleMeeting.recurringMeetingTip.message"="Puteți vizualiza, anula sau edita orice ocurență a unei întâlniri recurente atingând și menținând apăsată întâlnirea și selectând Ocurențe.";
 /* Schedule meeting update button */
 "meetings.scheduleMeeting.update"="Actualizează";
 /* Schedule meeting update: Success message shown when the schedule meeeting is updated successfully. */
-"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="Meeting updated";
+"meetings.scheduleMeeting.updateSuccessfull.popupMessage"="Întâlnire a fost actualizată";
 /* Schedule meeting update: Success message shown when the schedule meeeting occurrence is updated successfully. */
-"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="Meeting occurrence updated";
+"meetings.scheduleMeeting.occurrence.updateSuccessfull.popupMessage"="Întâlnirea a fost actualizată";
 /* Schedule meeting management message: Description in the chatroom whenever there is an update in the scheduled meeting. */
-"meetings.scheduled.managementMessages.updated"="%@ updated the meeting";
+"meetings.scheduled.managementMessages.updated"="%@ a actualizat întâlnirea";
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Editează întâlnirea";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="Trimită prin e-mail invitația pentru calendar participanților, astfel încât aceștia să poată adăuga întâlnirea în calendarele lor.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Începe o întâlnire";
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Ocurențe";
 /* Change SFU server alert title. */
-"settings.about.sfu.changeAlert.title"="Change SFU server";
+"settings.about.sfu.changeAlert.title"="Schimbați serverul SFU";
 /* Change SFU server alert message. */
-"settings.about.sfu.changeAlert.message"="Default is -1";
+"settings.about.sfu.changeAlert.message"="Implicit este -1";
 /* Change SFU server alert test field placeholder. */
-"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+"settings.about.sfu.changeAlert.placeholder"="Introduceți ID-ul SFU";
 /* Change SFU server alert cancel button. */
 "settings.about.sfu.changeAlert.cancelButton"="Anulează";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="Schimbă";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chat with %@";
+"chat.backButton.oneToOne.menu"="Discutați cu %@";
 /* Schedule meeting waiting room setting title */
-"meetings.scheduleMeeting.waitingRoom"="Waiting room";
+"meetings.scheduleMeeting.waitingRoom"="Sala de asteptare";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Only users admitted by the host can join the meeting.";
+"meetings.scheduleMeeting.waitingRoom.description"="Doar utilizatorii admiși de gazdă se pot alătura întâlnirii.";
 /* Schedule meeting waiting room warning banner title */
-"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participanții adăugați de non-gazde în timpul apelurilor nu vor fi trimiși în sala de așteptare.";
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Află mai multe";
 /* Album saved to cloud drive alert message */
-"albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
+"albumLink.alert.message.albumSavedToCloudDrive"="„%@” salvat în Unitatea cloud";
 /* Album failed to save to cloud drive alert message */
-"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="„%@” nu poate fi salvat pe Unitatea cloud. Încercați din nou mai târziu și dacă problema continuă, contactați persoana care a partajat linkul cu dvs.";
+/* Text displayed on banner we show when sharing folder with unverified contacts */
+"shareFolder.contactsNotVerified"="Unele persoane de contact cu care partajați informații nu au fost aprobate de dvs. Pentru a asigura un plus de securitate, vă recomandăm să aprobați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl aprobați.";
+/* Rename public album alert title */
+"albumLink.alert.renameAlbum.title"="Redenumește albumul";
+/* Rename public album alert message */
+"albumLink.alert.renameAlbum.message"="Un album numit „%@” există deja în Albumele dvs. Introduceți un nume nou pentru albumul pe care îl salvați.";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="Upgradează";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="Voi aștepta";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="Cumpără un plan nou";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="[A] %% din [B] TB folosiți";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="Cotă de transfer disponibilă limitată";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un plan Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe[/A] despre cota de transfer.";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer în acest cont. Pentru a obține mai multă cotă, achiziționați un plan nou sau dacă aveți un abonament recurent la MEGA, puteți aștepta reînnoirea planului.";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="Cotă de transfer depășită";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="Nu puteți continua descărcarea, deoarece nu aveți nicio cotă de transfer rămasă pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un plan Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe[/A] despre cota de transfer.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="Nu poți continua descărcarea deoarece nu mai ai suficientă cotă de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou plan sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea planului.";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Media dvs. a încetat redarea, deoarece nu mai aveți nicio cotă de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un plan Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe [/A] despre cota de transfer.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="Media dvs. a încetat să se redea, deoarece nu mai aveți nicio cotă de transfer rămasă în acest cont. Pentru a obține mai multă cotă, achiziționați un plan nou sau dacă aveți un abonament recurent la MEGA, puteți aștepta reînnoirea planului.";
+/* Meeting waiting room leave button */
+"meetings.waitingRoom.leave"="Părăsește";
+/* Meeting waiting room leave alert message */
+"meetings.waitingRoom.alert.leaveMeeting"="Părăsiți întâlnirea?";
+/* Meeting waiting room don't leave button */
+"meetings.waitingRoom.alert.dontLeave"="Nu părăsește";
+/* Meeting waiting room guest join first name textfield */
+"meetings.waitingRoom.guest.firstName"="Prenume";
+/* Meeting waiting room guest join last name textfield */
+"meetings.waitingRoom.guest.lastName"="Nume";
+/* Meeting waiting room guest join button */
+"meetings.waitingRoom.guest.join"="Alătură-te";
+/* Meeting waiting room message of wait for host to let you in */
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="Așteptați ca gazda să vă lase să intrați";

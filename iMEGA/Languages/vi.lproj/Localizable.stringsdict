@@ -2242,6 +2242,34 @@
         <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào [ordinalDays] và [ordinalLastDay].</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào ngày [cardinalDay].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc họp sẽ diễn ra mỗi %d tháng vào ngày [cardinalDays] và ngày [cardinalLastDay].</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2282,6 +2310,20 @@
         <string>d</string>
         <key>other</key>
         <string>Mỗi %d tháng vào [ordinalNumber]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Mỗi %d tháng vào ngày [cardinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>

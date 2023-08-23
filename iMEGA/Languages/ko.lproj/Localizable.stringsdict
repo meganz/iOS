@@ -2242,6 +2242,34 @@
         <string>회의가 매 %d개월마다 [ordinalDays]일과 [ordinalLastDay]일에 반복됩니다.</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>회의가 매 %d개월마다 [cardinalDay]일에 반복됩니다.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>회의가 매 %d개월마다 [cardinalDays]일과 [cardinalLastDay]일에 반복됩니다.</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2282,6 +2310,20 @@
         <string>d</string>
         <key>other</key>
         <string>매 %d개월마다 [ordinalNumber]일</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d개월마다 [cardinalNumber]일</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
