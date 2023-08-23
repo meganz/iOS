@@ -31,7 +31,7 @@
 @import MEGAUIKit;
 @import MEGASDKRepo;
 
-@interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, ContactsPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
+@interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, CNContactPickerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 
@@ -1004,7 +1004,11 @@
 }
 
 - (void)showEmailContactPicker {
-    MEGANavigationController *contactsPickerNavigation = [MEGANavigationController.alloc initWithRootViewController:[ContactsPickerViewController instantiateWithContactKeys:@[CNContactEmailAddressesKey] delegate:self]];
+    CNContactPickerViewController *contactPickerController = [[CNContactPickerViewController alloc] init];
+    contactPickerController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
+    contactPickerController.delegate = self;
+
+    MEGANavigationController *contactsPickerNavigation = [[MEGANavigationController alloc] initWithRootViewController:contactPickerController];
     [self presentViewController:contactsPickerNavigation animated:YES completion:nil];
 }
 
@@ -1843,9 +1847,11 @@
     [self setTableViewEditing:NO animated:YES];
 }
 
-#pragma mark - ContactsPickerViewControllerDelegate
+#pragma mark - CNContactPickerDelegate
 
-- (void)contactsPicker:(ContactsPickerViewController *)contactsPicker didSelectContacts:(NSArray<NSString *> *)values {
+-(void)contactPicker:(CNContactPickerViewController *)picker didSelectContacts:(NSArray<CNContact *> *)contacts {
+    NSArray<NSString *> * values = [self extractEmails:contacts];
+
     if (self.childViewControllers.count == 0) {
         [self insertItemListSubviewWithCompletion:^{
             for (NSString *email in values) {

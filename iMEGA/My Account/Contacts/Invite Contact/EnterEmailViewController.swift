@@ -1,4 +1,5 @@
 import ContactsUI
+import MEGADomain
 import UIKit
 import WSTagsField
 
@@ -13,6 +14,12 @@ class EnterEmailViewController: UIViewController {
     @IBOutlet weak var tagsFieldHeightLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagsFieldButton: UIButton!
     @IBOutlet weak var inviteContactsButtonBottomConstraint: NSLayoutConstraint!
+
+    private let contactPickerViewController: CNContactPickerViewController = {
+        let controller = CNContactPickerViewController()
+        controller.predicateForEnablingContact = NSPredicate(format: "emailAddresses.@count > 0")
+        return controller
+    }()
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -29,6 +36,7 @@ class EnterEmailViewController: UIViewController {
         updateAppearance()
         
         navigationController?.presentationController?.delegate = self
+        contactPickerViewController.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -150,6 +158,19 @@ class EnterEmailViewController: UIViewController {
         configureTagFieldEvents()
     }
 
+    private func updateUIOnEmailPickedFromContacts(_ email: String) {
+        tagsField.addTag(email)
+
+        instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
+        instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
+
+        if tagsField.tags.isEmpty {
+            disableInviteContactsButton()
+        } else {
+            enableInviteContactsButton()
+        }
+    }
+
     // MARK: Actions
     @IBAction func inviteContactsTapped(_ sender: UIButton) {
         if let text = tagsField.text, text.mnz_isValidEmail() {
@@ -170,7 +191,7 @@ class EnterEmailViewController: UIViewController {
             weakSelf?.navigationController?.popViewController(animated: true)
         }
         tagsField.tags.forEach { (tag) in
-            MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: tag.text, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
+            MEGASdk.shared.inviteContact(withEmail: tag.text, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
         }
 
         tagsField.textField.resignFirstResponder()
@@ -187,27 +208,17 @@ class EnterEmailViewController: UIViewController {
     }
     
     private func showContactsPicker() {
-        let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(withContactKeys: [CNContactEmailAddressesKey], delegate: self))
+        let contactsPickerNavigation = MEGANavigationController(rootViewController: contactPickerViewController)
         present(contactsPickerNavigation, animated: true, completion: nil)
     }
 }
 
-// MARK: - ContactsPickerViewControllerDelegate
+// MARK: - CNContactPickerDelegate
 
-extension EnterEmailViewController: ContactsPickerViewControllerDelegate {
-    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String]) {
-        values.forEach { (email) in
-            tagsField.addTag(email)
-            
-            instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
-            instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
-            
-            if tagsField.tags.isEmpty {
-                disableInviteContactsButton()
-            } else {
-                enableInviteContactsButton()
-            }
-        }
+extension EnterEmailViewController: CNContactPickerDelegate {
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+        let emails = contacts.extractEmails()
+        emails.forEach(updateUIOnEmailPickedFromContacts(_:))
     }
 }
 

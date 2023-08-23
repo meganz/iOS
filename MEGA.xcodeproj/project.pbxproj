@@ -872,8 +872,6 @@
 		8348A8DA2901909400B66463 /* ChatRoomActiveCallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348A8D92901909400B66463 /* ChatRoomActiveCallView.swift */; };
 		834AFD1D2492567A005DF37C /* MEGAChatPeerList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD1C2492567A005DF37C /* MEGAChatPeerList+Additions.swift */; };
 		834AFD1E2492569E005DF37C /* MEGAChatPeerList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD1C2492567A005DF37C /* MEGAChatPeerList+Additions.swift */; };
-		834AFD232498E925005DF37C /* ContactsPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834AFD222498E925005DF37C /* ContactsPicker.storyboard */; };
-		834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD242498F637005DF37C /* DeviceContactTableViewCell.swift */; };
 		834D7DA02926699500634B66 /* LeaveChatButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */; };
 		834D865C2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */; };
 		834D865D2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */; };
@@ -897,7 +895,6 @@
 		8358A6EA2925461C00EE197C /* DisclosureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8358A6E92925461C00EE197C /* DisclosureView.swift */; };
 		8359E4B325F0E1DF0023FE18 /* QuickAccessWidgetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */; };
 		8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */; };
-		835AD14924A0F438009BC85A /* DeviceContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835AD14824A0F438009BC85A /* DeviceContactsManager.swift */; };
 		835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */; };
 		835B1B90245AD23C00E41FBE /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
 		835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */; };
@@ -1579,7 +1576,6 @@
 		B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58050C02A823A6100D377D1 /* MockABTestProvider.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
-		B58E375129E808A000188287 /* ContactsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AFD202498E7E1005DF37C /* ContactsPickerViewController.swift */; };
 		B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */; };
 		B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */; };
 		B5925B79279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
@@ -3471,9 +3467,6 @@
 		8348A8D72901902B00B66463 /* ActiveCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModel.swift; sourceTree = "<group>"; };
 		8348A8D92901909400B66463 /* ChatRoomActiveCallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomActiveCallView.swift; sourceTree = "<group>"; };
 		834AFD1C2492567A005DF37C /* MEGAChatPeerList+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAChatPeerList+Additions.swift"; sourceTree = "<group>"; };
-		834AFD202498E7E1005DF37C /* ContactsPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsPickerViewController.swift; sourceTree = "<group>"; };
-		834AFD222498E925005DF37C /* ContactsPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactsPicker.storyboard; sourceTree = "<group>"; };
-		834AFD242498F637005DF37C /* DeviceContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceContactTableViewCell.swift; sourceTree = "<group>"; };
 		834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveChatButtonView.swift; sourceTree = "<group>"; };
 		834D865B2913F2F000CECEC0 /* ApplyToAllView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyToAllView.swift; sourceTree = "<group>"; };
 		834D867E29197E8800CECEC0 /* ChatRoomAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarView.swift; sourceTree = "<group>"; };
@@ -3498,7 +3491,6 @@
 		8358A6E92925461C00EE197C /* DisclosureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureView.swift; sourceTree = "<group>"; };
 		8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetAction.swift; sourceTree = "<group>"; };
 		8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatus.swift; sourceTree = "<group>"; };
-		835AD14824A0F438009BC85A /* DeviceContactsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceContactsManager.swift; sourceTree = "<group>"; };
 		835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		835E62492085ED56007470A2 /* MEGAPauseTransferRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPauseTransferRequestDelegate.h; sourceTree = "<group>"; };
 		835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPauseTransferRequestDelegate.m; sourceTree = "<group>"; };
@@ -6155,7 +6147,6 @@
 				835223AE205956A700A47438 /* Cells */,
 				5B9F20112433330000F22FBA /* ContactLinkQR */,
 				83ECE1702488EFE600E9E264 /* ContactsGroups */,
-				834AFD1F2498E7BF005DF37C /* ContactsPicker */,
 				5BA53FEA2462B27800D168B9 /* Invite Contact */,
 				83337CA821009476000F40A7 /* ItemList */,
 				831844B922C4D51500E4C401 /* Views */,
@@ -8316,17 +8307,6 @@
 				8348A8D92901909400B66463 /* ChatRoomActiveCallView.swift */,
 			);
 			path = ActiveCall;
-			sourceTree = "<group>";
-		};
-		834AFD1F2498E7BF005DF37C /* ContactsPicker */ = {
-			isa = PBXGroup;
-			children = (
-				834AFD222498E925005DF37C /* ContactsPicker.storyboard */,
-				834AFD202498E7E1005DF37C /* ContactsPickerViewController.swift */,
-				835AD14824A0F438009BC85A /* DeviceContactsManager.swift */,
-				834AFD242498F637005DF37C /* DeviceContactTableViewCell.swift */,
-			);
-			path = ContactsPicker;
 			sourceTree = "<group>";
 		};
 		834D867D29197E5800CECEC0 /* ChatRoomAvatar */ = {
@@ -12611,7 +12591,6 @@
 				5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */,
-				834AFD232498E925005DF37C /* ContactsPicker.storyboard in Resources */,
 				5B86D7C5248957E100B7888D /* ContactsTableViewHeader.xib in Resources */,
 				5B366C4225767D2E00FD3806 /* CookieSettings.storyboard in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
@@ -13342,7 +13321,6 @@
 				415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */,
 				83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */,
 				83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */,
-				B58E375129E808A000188287 /* ContactsPickerViewController.swift in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,
 				8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */,
 				94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */,
@@ -13399,8 +13377,6 @@
 				0DA5BCB825BA403800530F70 /* DefaultTabTableViewController.swift in Sources */,
 				9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */,
 				83DBDDE129D730AE00CF433B /* DetailDisclosureView.swift in Sources */,
-				835AD14924A0F438009BC85A /* DeviceContactsManager.swift in Sources */,
-				834AFD252498F637005DF37C /* DeviceContactTableViewCell.swift in Sources */,
 				245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */,
 				24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */,
 				5D31674B24FCA9330032492F /* DevicePermissionAlerting.swift in Sources */,
