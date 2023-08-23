@@ -45,7 +45,7 @@ final class UpgradeAccountRouter {
     
     // MARK: AB Testing
     private func shouldShowNewPlanPageVariant() async -> Bool {
-        await abTestProvider.abTestVariant(for: .devTest) == .variantA
+        await abTestProvider.abTestVariant(for: .upgradePlanRevamp) == .variantA
     }
 
     private func presentNewPlanPage() {
