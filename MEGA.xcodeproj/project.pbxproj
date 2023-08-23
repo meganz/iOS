@@ -1291,6 +1291,7 @@
 		94E7180B283D6603000EDDDF /* ChatRoomsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ChatRoomsViewController+Additions.swift */; };
 		94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */; };
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
+		94FCE08B2A94CF8D001E9D72 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 94FCE08A2A94CF8D001E9D72 /* Search */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
 		990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */; };
 		9911BA8B2A8B20C300B88F28 /* WaitingRoomViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */; };
@@ -5123,6 +5124,7 @@
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
+				94FCE08B2A94CF8D001E9D72 /* Search in Frameworks */,
 				940931FE2A56ED680093C169 /* Settings in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
 			);
@@ -12199,6 +12201,7 @@
 				A8BC1C322A600F8D001B30F0 /* MEGASDKRepoMock */,
 				94A220172A696502004130C4 /* MEGAAnalyticsiOS */,
 				A85CF69C2A7180A90018FEF1 /* ChatRepo */,
+				94FCE08A2A94CF8D001E9D72 /* Search */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -17080,6 +17083,10 @@
 		94CD1F742A8AA76C00DF456D /* SwiftGen */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftGen";
+		};
+		94FCE08A2A94CF8D001E9D72 /* Search */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Search;
 		};
 		A803C8FA2955DB550056C9F0 /* MEGADomain */ = {
 			isa = XCSwiftPackageProductDependency;

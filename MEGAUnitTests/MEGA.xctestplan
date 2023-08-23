@@ -257,6 +257,13 @@
         "identifier" : "DeviceCenterTests",
         "name" : "DeviceCenterTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Search",
+        "identifier" : "SearchTests",
+        "name" : "SearchTests"
+      }
     }
   ],
   "version" : 1

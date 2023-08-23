@@ -66,7 +66,7 @@ final class HomeSearchResultViewController: UIViewController {
 
 // MARK: - MEGASearchControllerEdittingDelegate
 
-extension HomeSearchResultViewController: MEGASearchBarViewEdittingDelegate {
+extension HomeSearchResultViewController: MEGASearchBarViewEditingDelegate {
 
     func didInputText(_ inputText: String, from searchController: MEGASearchBarView) {
         switch inputText.isEmpty {

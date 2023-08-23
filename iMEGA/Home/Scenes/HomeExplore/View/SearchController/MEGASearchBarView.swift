@@ -20,7 +20,7 @@ protocol MEGASearchBarViewDelegate: AnyObject {
     func didFinishSearchSessionOnSearchController(_ searchController: MEGASearchBarView)
 }
 
-protocol MEGASearchBarViewEdittingDelegate: AnyObject {
+protocol MEGASearchBarViewEditingDelegate: AnyObject {
 
     /// Tells the `delegate` that user highlights the search field in the `SearchBarView`.
     /// - Parameter searchController: The `SearchBarView` itself.
@@ -49,7 +49,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
 
     weak var delegate: (any MEGASearchBarViewDelegate)?
 
-    weak var edittingDelegate: (any MEGASearchBarViewEdittingDelegate)?
+    weak var edittingDelegate: (any MEGASearchBarViewEditingDelegate)?
 
     // MARK: - Initialization
 
