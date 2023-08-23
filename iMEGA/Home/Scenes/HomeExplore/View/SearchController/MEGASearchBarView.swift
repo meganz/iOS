@@ -23,18 +23,15 @@ protocol MEGASearchBarViewDelegate: AnyObject {
 protocol MEGASearchBarViewEditingDelegate: AnyObject {
 
     /// Tells the `delegate` that user highlights the search field in the `SearchBarView`.
-    /// - Parameter searchController: The `SearchBarView` itself.
-    func didHighlightSearchController(_ searchController: MEGASearchBarView)
+    func didHighlightSearchBar()
 
     /// Tell teh `delegate` that new text `inputText` is updated in the `SearchField` on `SearchBarView`.
     /// - Parameters:
     ///   - inputText: The newly updated text that in the text field.
-    ///   - searchController: The `SearchBarView` itself.
-    func didInputText(_ inputText: String, from searchController: MEGASearchBarView)
+    func didInputText(_ inputText: String)
 
     /// Tells the `delegate` the **clear** button is tapped and all text in the `TextField` is removed.
-    /// - Parameter searchController: The `SearchBarView` itself.
-    func didClearText(for searchController: MEGASearchBarView)
+    func didClearText()
 }
 
 final class MEGASearchBarView: UIView, NibOwnerLoadable {
@@ -49,7 +46,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
 
     weak var delegate: (any MEGASearchBarViewDelegate)?
 
-    weak var edittingDelegate: (any MEGASearchBarViewEditingDelegate)?
+    weak var editingDelegate: (any MEGASearchBarViewEditingDelegate)?
 
     // MARK: - Initialization
 
@@ -152,17 +149,17 @@ extension MEGASearchBarView: UITextFieldDelegate {
         guard let textFieldText = textField.text, !textFieldText.isEmpty else {
             cancelButton.isHidden = false
             delegate?.didStartSearchSessionOnSearchController(self)
-            edittingDelegate?.didHighlightSearchController(self)
+            editingDelegate?.didHighlightSearchBar()
             return
         }
         delegate?.didResumeSearchSessionOnSearchController(self)
-        edittingDelegate?.didInputText(textFieldText, from: self)
+        editingDelegate?.didInputText(textFieldText)
     }
 
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         let shouldClearText = (textField.text?.isEmpty == false)
         if shouldClearText {
-            edittingDelegate?.didClearText(for: self)
+            editingDelegate?.didClearText()
         }
         return shouldClearText
     }
@@ -175,7 +172,7 @@ extension MEGASearchBarView: UITextFieldDelegate {
         guard let newText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) else {
             return true
         }
-        edittingDelegate?.didInputText(newText, from: self)
+        editingDelegate?.didInputText(newText)
         return true
     }
 }

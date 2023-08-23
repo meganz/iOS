@@ -3,7 +3,7 @@ import MEGADomain
 
 protocol HomeAccountSearchResultViewModelInputs {
 
-    func didHilightEmptySearchBar()
+    func didHighlightEmptySearchBar()
 
     func didInputText(text: String)
 
@@ -59,7 +59,7 @@ final class HomeSearchResultViewModel {
 
 extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
 
-    func didHilightEmptySearchBar() {
+    func didHighlightEmptySearchBar() {
         searchFileUseCase.cancelCurrentSearch()
 
         let hints = searchFileHistoryUseCase.searchHistoryEntries().map {

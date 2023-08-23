@@ -1,15 +1,22 @@
-import Foundation
+import Foundation  
 import MEGADomain
 import MEGAPermissions
 import MEGASDKRepo
+import Search
+import SwiftUI
 
-@objc
 final class HomeScreenFactory: NSObject {
+    
+    private var sdk: MEGASdk {
+        MEGASdk.sharedSdk
+    }
 
-    @objc func createHomeScreen(from tabBarController: MainTabBarController) -> UIViewController {
+    func createHomeScreen(
+        from tabBarController: MainTabBarController,
+        newHomeSearchResultsEnabled: Bool
+    ) -> UIViewController {
         let homeViewController = HomeViewController()
         let navigationController = MEGANavigationController(rootViewController: homeViewController)
-        let sdk = MEGASdkManager.sharedMEGASdk()
 
         let myAvatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
@@ -53,34 +60,75 @@ final class HomeScreenFactory: NSObject {
         homeViewController.recentsViewModel = HomeRecentActionViewModel(
             permissionHandler: permissionHandler,
             nodeFavouriteActionUseCase: NodeFavouriteActionUseCase(
-                nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdkManager.sharedMEGASdk())
+                nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: sdk)
             ),
-            saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: sdk), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(
+                downloadFileRepository: DownloadFileRepository(sdk: sdk),
+                fileCacheRepository: FileCacheRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(
             userBannerUseCase: UserBannerUseCase(
-                userBannerRepository: BannerRepository(sdk: MEGASdkManager.sharedMEGASdk())
+                userBannerRepository: BannerRepository(sdk: sdk)
             ),
             router: HomeBannerRouter(navigationController: navigationController)
         )
 
-        homeViewController.quickAccessWidgetViewModel = QuickAccessWidgetViewModel(offlineFilesUseCase: OfflineFilesUseCase(repo: OfflineFileFetcherRepository.newRepo))
+        homeViewController.quickAccessWidgetViewModel = QuickAccessWidgetViewModel(
+            offlineFilesUseCase: OfflineFilesUseCase(
+                repo: OfflineFileFetcherRepository.newRepo
+            )
+        )
                 
         navigationController.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.home.image, selectedImage: nil)
 
-        homeViewController.searchResultViewController = createSearchResultViewController(with: navigationController)
+        let bridge = SearchResultsBridge()
+        homeViewController.searchResultsBridge = bridge
+        
+        let searchResultViewController = makeSearchResultViewController(
+            with: navigationController,
+            bridge: bridge,
+            newHomeSearchResultsEnabled: newHomeSearchResultsEnabled
+        )
+        
+        homeViewController.searchResultViewController = searchResultViewController
 
-        let router = HomeRouter(navigationController: navigationController, tabBarController: tabBarController)
+        let router = HomeRouter(
+            navigationController: navigationController,
+            tabBarController: tabBarController
+        )
         homeViewController.router = router
-        homeViewController.homeViewModel = HomeViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+        homeViewController.homeViewModel = HomeViewModel(
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo)
+        )
 
         return navigationController
     }
 
-    private func createSearchResultViewController(
-        with navigationController: UINavigationController
-    ) -> HomeSearchResultViewController {
+    private func makeSearchResultViewController(
+        with navigationController: UINavigationController,
+        bridge: SearchResultsBridge,
+        newHomeSearchResultsEnabled: Bool
+    ) -> UIViewController {
 
+        if newHomeSearchResultsEnabled {
+            return makeNewSearchResultsViewController(with: navigationController)
+        } else {
+            return makeLegacySearchResultsViewController(with: navigationController, bridge: bridge)
+        }
+    }
+    
+    private func makeNewSearchResultsViewController(
+        with navigationController: UINavigationController
+    ) -> UIViewController {
+        UIHostingController(rootView: SearchResultsView())
+    }
+    
+    private func makeLegacySearchResultsViewController(
+        with navigationController: UINavigationController,
+        bridge: SearchResultsBridge
+    ) -> UIViewController {
         let searchResultViewModel = HomeSearchResultViewModel(
             searchFileUseCase: SearchFileUseCase(
                 nodeSearchClient: .live,
@@ -102,25 +150,25 @@ final class HomeScreenFactory: NSObject {
             router: HomeSearchResultRouter(
                 navigationController: navigationController,
                 nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                viewController: navigationController
+                    viewController: navigationController
                 )
             )
         )
-
+        
         let homeSearchResultViewController = HomeSearchResultViewController()
         homeSearchResultViewController.viewModel = searchResultViewModel
         homeSearchResultViewController.resultTableViewDataSource
-            = TableViewProxy<HomeSearchResultFileViewModel>(
-                cellIdentifier: "SearchResultFile",
-                emptyStateConfiguration: .searchResult,
-                configureCell: { cell, model in
-                    (cell as? SearchResultFileTableViewCell)?.configure(with: model)
-                },
-                selectionAction: { selectedNode in
-                    searchResultViewModel.didSelectNode(selectedNode.handle)
-                }
-            )
-
+        = TableViewProxy<HomeSearchResultFileViewModel>(
+            cellIdentifier: "SearchResultFile",
+            emptyStateConfiguration: .searchResult,
+            configureCell: { cell, model in
+                (cell as? SearchResultFileTableViewCell)?.configure(with: model)
+            },
+            selectionAction: { selectedNode in
+                searchResultViewModel.didSelectNode(selectedNode.handle)
+            }
+        )
+        
         homeSearchResultViewController.hintTableViewDataSource = TableViewProxy<HomeSearchHintViewModel>(
             cellIdentifier: "SearchHint",
             emptyStateConfiguration: .searchHints,
@@ -131,6 +179,21 @@ final class HomeScreenFactory: NSObject {
                 searchResultViewModel.didSelectHint(selectedSearchHint.text)
             }
         )
+        // setting up the bridge connection instead of just connecting delegates
+        homeSearchResultViewController.searchHintSelectDelegate = bridge
+        
+        bridge.didClearTrampoline = { [weak homeSearchResultViewController] in
+            homeSearchResultViewController?.didClearText()
+        }
+        
+        bridge.didInputTextTrampoline = { [weak homeSearchResultViewController] text in 
+            homeSearchResultViewController?.didInputText(text)
+        }
+        
+        bridge.didHighlightTrampoline = { [weak homeSearchResultViewController] in
+            homeSearchResultViewController?.didHighlightSearchBar()
+        }
+        
         return homeSearchResultViewController
     }
 }
