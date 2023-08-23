@@ -10,15 +10,34 @@ let package = Package(
     products: [
         .library(
             name: "Search",
-            targets: ["Search"]),
+            targets: ["Search"]
+        ),
+        .library(
+            name: "SearchMock",
+            targets: ["SearchMock"]
+        )
+        
     ],
-    dependencies: [],
+    dependencies: [
+        .package(path: "../../Domain/MEGADomain")
+    ],
     targets: [
         .target(
             name: "Search",
-            dependencies: []),
+            dependencies: [
+                "MEGADomain"
+            ],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+        ),
+        .target(
+            name: "SearchMock",
+            dependencies: ["Search"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+        ),
         .testTarget(
             name: "SearchTests",
-            dependencies: ["Search"]),
+            dependencies: ["Search"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+        )
     ]
 )

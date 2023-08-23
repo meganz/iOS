@@ -1,4 +1,8 @@
-import XCTest
 @testable import Search
+import XCTest
 
-final class SearchTests: XCTestCase {}
+final class SearchTests: XCTestCase {
+    func testPlaceholder() {
+        XCTAssert(true)
+    }
+}
