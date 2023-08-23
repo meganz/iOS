@@ -74,7 +74,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     func setupABTestVariant() {
         setupABTestVariantTask = Task { [weak self] in
             guard let self else { return }
-            isNewUpgradeAccountPlanEnabled = await abTestProvider.abTestVariant(for: .devTest) == .variantA
+            isNewUpgradeAccountPlanEnabled = await abTestProvider.abTestVariant(for: .upgradePlanRevamp) == .variantA
         }
     }
 
