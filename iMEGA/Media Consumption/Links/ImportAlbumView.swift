@@ -5,6 +5,7 @@ struct ImportAlbumView: View, DismissibleContentView {
     private enum Constants {
         static let toolbarButtonVerticalPadding = 11.0
         static let toolbarButtonHorizontalPadding = 16.0
+        static let snackBarVerticalOffSet = 16.0
     }
     
     @Environment(\.presentationMode) private var presentationMode
@@ -26,7 +27,7 @@ struct ImportAlbumView: View, DismissibleContentView {
                         await viewModel.loadWithNewDecryptionKey()
                     }
                 })
-                
+            
             VStack(spacing: 0) {
                 navigationBar
                 
@@ -43,11 +44,12 @@ struct ImportAlbumView: View, DismissibleContentView {
                     .opacity(viewModel.isPhotosLoaded ? 1.0 : 0)
                 }
                 
-                if viewModel.showSnackBar {
-                    SnackBarView(viewModel: viewModel.snackBarViewModel())
-                }
-                
                 bottomToolbar
+                    .overlay(
+                        GeometryReader { geometry in
+                            snackBar(toolbarGeometry: geometry)
+                        },
+                        alignment: .top)
             }
         }
         .taskForiOS14 {
@@ -59,14 +61,14 @@ struct ImportAlbumView: View, DismissibleContentView {
             Alert(title: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.title),
                   message: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message),
                   dismissButton: .cancel(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
-                                          action: dismissImportAlbumScreen))
+                                         action: dismissImportAlbumScreen))
         }
         .sheet(isPresented: $viewModel.showImportAlbumLocation) {
             BrowserView(browserAction: .saveToCloudDrive,
                         isChildBrowser: true,
                         parentNode: MEGASdk.shared.rootNode,
                         selectedNode: $viewModel.importFolderLocation)
-                .ignoresSafeArea(edges: .bottom)
+            .ignoresSafeArea(edges: .bottom)
         }
         .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
             CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
@@ -114,7 +116,7 @@ struct ImportAlbumView: View, DismissibleContentView {
             NavigationTitleView(title: Strings.Localizable.albumLink)
         }
     }
-
+    
     @ViewBuilder
     private var rightNavigationBarButton: some View {
         if viewModel.isSelectionEnabled {
@@ -187,6 +189,14 @@ struct ImportAlbumView: View, DismissibleContentView {
                                isDisabled: viewModel.isShareLinkButtonDisabled,
                                action: viewModel.shareLinkTapped)
             .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])
+        }
+    }
+    
+    @ViewBuilder
+    private func snackBar(toolbarGeometry: GeometryProxy) -> some View {
+        if viewModel.showSnackBar {
+            SnackBarView(viewModel: viewModel.snackBarViewModel())
+                .offset(y: -(Constants.snackBarVerticalOffSet + toolbarGeometry.size.height))
         }
     }
 }
