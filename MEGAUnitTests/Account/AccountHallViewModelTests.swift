@@ -105,14 +105,14 @@ final class AccountHallViewModelTests: XCTestCase {
         test(viewModel: sut, actions: [AccountHallAction.didTapUpgradeButton], expectedCommands: [])
     }
     
-    func testABTest_onNewUpgradeAccountPlanIsVarianA_shouldBeTrue() async {
-        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase, abTestProvider: MockABTestProvider(list: [.devTest: .variantA]))
+    func testABTest_onNewUpgradeAccountPlanIsVariantA_shouldBeTrue() async {
+        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase, abTestProvider: MockABTestProvider(list: [.upgradePlanRevamp: .variantA]))
         await sut.setupABTestVariantTask?.value
         XCTAssertTrue(sut.isNewUpgradeAccountPlanEnabled)
     }
 
-    func testIsFeatureFlagEnabled_onNewUpgradeAccountPlanIsBaseline_shouldBeFalse() async {
-        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase, abTestProvider: MockABTestProvider(list: [.devTest: .baseline]))
+    func testABTest_onNewUpgradeAccountPlanIsBaseline_shouldBeFalse() async {
+        let sut = AccountHallViewModel(accountHallUsecase: accountHallUseCase, purchaseUseCase: purchaseUseCase, abTestProvider: MockABTestProvider(list: [.upgradePlanRevamp: .baseline]))
         await sut.setupABTestVariantTask?.value
         XCTAssertFalse(sut.isNewUpgradeAccountPlanEnabled)
     }
