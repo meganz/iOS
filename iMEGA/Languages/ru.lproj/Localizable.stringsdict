@@ -1333,9 +1333,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Каждый день [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <key>few</key>
+        <string>Каждые %d дня [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <key>many</key>
+        <string>Каждые %d дней [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Каждые %d дня [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -1349,9 +1353,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Каждый день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <key>few</key>
+        <string>Каждые %d дня с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
+        <key>many</key>
+        <string>Каждые %d дней с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Каждые %d дня с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -3194,6 +3202,46 @@
         <string>Встреча будет проводиться в [ordinalDays] и [ordinalLastDay] числа каждые %d месяца.</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Встреча будет проводиться в день [cardinalDay] каждый месяц.</string>
+        <key>few</key>
+        <string>Встреча будет проводиться в день [cardinalDay] каждые %d месяца.</string>
+        <key>many</key>
+        <string>Встреча будет проводиться в день [cardinalDay] каждые %d месяцев.</string>
+        <key>other</key>
+        <string>Встреча будет проводиться в день [cardinalDay] каждые %d месяца.</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждый месяц.</string>
+        <key>few</key>
+        <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждые %d месяца.</string>
+        <key>many</key>
+        <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждые %d месяцев.</string>
+        <key>other</key>
+        <string>Встреча будет проводиться в день [cardinalDays] и [cardinalLastDay] каждые %d месяца.</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3252,6 +3300,26 @@
         <string>В [ordinalNumber] число каждые %d месяцев</string>
         <key>other</key>
         <string>В [ordinalNumber] число каждые %d месяца</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Каждый месяц в день [cardinalNumber]</string>
+        <key>few</key>
+        <string>Каждые %d месяца в день [cardinalNumber]</string>
+        <key>many</key>
+        <string>Каждые %d месяцев в день [cardinalNumber]</string>
+        <key>other</key>
+        <string>Каждые %d месяца в день [cardinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>

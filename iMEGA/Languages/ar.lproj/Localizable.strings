@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="قم بترقية حسابك إلى برو Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="الحصول على ميزات برو Pro فقط مثل إعدادات الحماية بكلمة مرور وتواريخ انتهاء الصلاحية للملفات العامة.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Access Pro only features like setting password protection and expiry dates for public links.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="تمكين وضع اكتشاف الأخطاء";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1293,9 +1293,9 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="قبول بيانات الاعتماد ";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="تحقق";
+"verify"="موافق";
 /* Button title */
-"verified"="تم التحقق";
+"verified"="تمت الموافقة";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="امسح سجل المحادثة";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1310,8 +1310,6 @@
 "sharedFolders"="مجلدات مشاركة";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="بيانات اعتماد جهة اتصال";
-/* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="من الأفضل القيام بذلك في واقع الحياة من خلال اللقاء وجها لوجه. إذا كان لديك قناة أخرى موثوقة بالفعل، مثل OTR أو PGP، يمكنك أيضا استخدام ذلك.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="بيانات الاعتماد الخاصة بي";
 /* Button to reset the password */
@@ -1851,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="لا يمكنك القيام بمكالمة الفيديو لأن هذه المكالمة بلغت الحد الأقصى لعدد المشاركين الذين يستخدمون الفيديو.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="تعذر بدء مكالمة بسبب تجاوز حد عدد المشتركين.";
+"Unable to start a call because the participants limit was exceeded."="Unable to start the call due to the participant limit having been exceeded.";
 /* Label shown while joining a public chat */
 "Joining..."="جاري الانضمام…";
 /* Label shown while leaving a public chat */
@@ -1939,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="لا يمكن إكمال هذا الإجراء لأنه سيتجاوز حد التخزين الحالي";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="لا يمكن مواصلة الترفيع(ات) الخاص بك لأن حسابك ممتلئ";
+"Your upload(s) cannot proceed because your account is full"="Your upload cannot proceed because your Cloud storage is full";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="اسمح لجهات الاتصال الخاصة بك برؤية آخر مرة كنت فيها نشطًا على ميغا MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="أدخل البريد الإلكتروني";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="لديك طلب لمحادثة ميغا MEGA الآمنة في انتظارك. قم بتسجيل حساب على ميغا MEGA واحصل على 20 جيجابايت من مساحة التخزين المجانية مدى الحياة.";
+"contact.invite.message"="You have a MEGA Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="ملفات المحادثة الخاصة بي";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2203,7 +2201,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="تم تسريب كلمة المرور الخاصة بك وتستخدمها الآن أطراف خبيثة لتسجيل الدخول إلى حساباتك، بما في ذلك على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="تجاوز حد التراسل المتاح";
+"Transfer over quota"="تم تجاوز حجم تراسل المعطيات المتاح";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="إلغاء التحديد";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
@@ -2587,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>للأسف، لم تتخذ أي إجراء خلال<b>%@</b> منذ أن قمنا بإرسال رسائل البريد الإلكتروني الخاصة بنا إلى <b>%@</b> بتاريخ<b>%@</b>. أنت لا تزال تستخدم <b>%@</b>من مساحة التخزين، والتي تتجاوز الحد المجاني الخاص بك. يرجى الاطلاع على رسائل البريد الإلكتروني التي أرسلناها لك للحصول على مزيد من المعلومات حول ما عليك القيام به.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>للأسف لم تقم بترقية حسابك حتى الآن. إذا لم تقم بالترقية الآن، فسيتم حذف بياناتك غدًا. راجع بريدك الإلكتروني للحصول على مزيد من المعلومات حول ما عليك القيام به.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Your data will be deleted tomorrow if your account has not been upgraded.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>يرجى الترقية في غضون<warn>%@</warn> لتجنب حذف البيانات الخاصة بك.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>يرجى الترقية اليوم إذا كنت ترغب في الاحتفاظ ببياناتك.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Upgrade today if you wish to keep your data.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="احصل على علاوة";
 /* Backup setup warning title */
@@ -2601,7 +2599,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="نقل “%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="أنت تقوم بتغيير موقع مجلد النسخ الاحتياطي الافتراضي. قد يؤثر ذلك على قدرتك على العثور على مجلد النسخ الاحتياطي في المستقبل. يرجى تذكر مكانه حتى تتمكن من العثور عليه في المستقبل.";
+"dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder. Please remember where it is located so that you can find it in the future.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="يؤدي نقل هذا المجلد إلى تغيير وجهة النسخ الاحتياطي. سيتم إيقاف النسخ الاحتياطي للأمان. هل هذا ما تريد أن تفعله؟ يمكن إعادة تمكين النسخ الاحتياطية باستخدام تطبيق ميغا للحاسوب المكتبي MEGA Desktop App.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2645,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="اجتماع منتهي";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="عرض محادثة الاجتماع";
+"meetings.alert.meetingchat"="View chat history";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="الاجتماع الذي تحاول الانضمام إليه قد انتهى بالفعل. لا يزال بإمكانك عرض سجل المحادثة الخاصة بالاجتماع.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -3155,9 +3153,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="جدول اجتماع";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="تم تعليق الحساب بسبب انتهاكات حقوق النشر. لقد أرسلنا لك بريدًا إلكترونيًا يحتوي على مزيد من المعلومات حول هذا الموضوع.";
+"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email for more information on how to file a counter-notice.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="تم إنهاء الحساب بسبب خرق لشروط خدمة ميغا MEGA ، مثل إساءة استخدام حقوق الآخرين أو مشاركة واستيراد البيانات غير القانونية  أو إساءة استخدام النظام.";
+"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to register a new MEGA account.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="افتح ميغا MEGA و قم بتسجيل الدخول للمتابعة";
 /* Account Storage title label of used storage size */
@@ -3177,19 +3175,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="الاجتماعات السابقة";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="تحقق من %@";
+"general.menuAction.verifyContact.title"="Approve %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="نحن نحمي بياناتك عن طريق تشفير المعرفة الصفرية. لضمان أمان إضافي نطلب منك التحقق من جهات الاتصال التي تشارك المعلومات معها قبل أن يتمكنوا من الوصول إلى المجلدات المشاركة.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you share information with before they can access the shared folders.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="للتحقق من جهة الاتصال الخاصة بك، تأكد من أن بيانات الاعتماد التي تراها أعلاه تطابق بيانات اعتماد حسابهم. يمكنك أن تطلب منهم مشاركة بيانات اعتمادهم معك.";
+"sharedItems.contactVerification.section.myCredentials.message"="للموافقة على جهة الاتصال الخاصة بك، تأكد من أن بيانات الاعتماد التي تراها أعلاه تطابق بيانات اعتماد حسابهم. يمكنك أن تطلب منهم مشاركة بيانات اعتمادهم معك.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="نحن نحمي بياناتك عن طريق تشفير المعرفة الصفرية. لضمان أمان إضافي نطلب منك التحقق من جهات الاتصال التي تستقبل المعلومات منها قبل أن تتمكن من الوصول إلى المجلدات المشاركة.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you receive information from before you can access the shared folders.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="للوصول إلى المجلد المشارك يجب على الشخص الذي شاركه معك التحقق منك أيضًا.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="للوصول إلى المجلد المشارك يجب أن يوافق عليك أيضًا الشخص الذي شاركه معك.";
+/* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t approved. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="بيانات الاعتماد الخاصة بك";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="We protect your data with zero-knowledge encryption so all the information you store, share, and receive on MEGA is secure. To ensure extra security, we ask you to verify the contacts you share information with or receive data from.";
+"verifyCredentials.headerMessage"="نحن نحمي بياناتك بتشفير المعرفة الصفرية بحيث تكون جميع المعلومات التي تقوم بتخزينها ومشاركتها وتلقيها على ميغا MEGA آمنة. لضمان أمان إضافي نطلب منك الموافقة على جهات الاتصال التي تشارك المعلومات معها أو تتلقى البيانات منها.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[مجلد غير مشفر]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3270,10 +3270,6 @@
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="شاهد المزيد";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay]،[StartDate][/B] من [B][StartTime] إلى [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="كل يوم اعتباراً من [B][StartDate][/B] من [B][StartTime] إلى [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="كل يوم اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3321,9 +3317,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="شهرياً";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="لا يمكن التحقق من جهة الاتصال";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="لا يمكن الموافقة على جهة الاتصال";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="لا يمكنك التحقق من %@ لأنه ليس في قائمة جهات الاتصال الخاصة بك. انتظر حتى يقبل دعوتك أولاً.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t approve %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="تعطيل رمز مرور ميغا MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3615,7 +3611,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="تعديل الاجتماع";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="أرسل دعوة تقويم بالبريد الإلكتروني إلى المشاركين حتى يتمكنوا من إضافة الاجتماع إلى التقويم الخاص بهم.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="ابدأ الاجتماع";
 /* Recurring meeting tip view message bold text */
@@ -3635,7 +3631,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="غرفة الانتظار";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Only users admitted by the host can join the meeting.";
+"meetings.scheduleMeeting.waitingRoom.description"="يمكن فقط للمستخدمين المعترف بهم من قبل المضيف الانضمام إلى الاجتماع.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3644,3 +3640,47 @@
 "albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
+/* Text displayed on banner we show when sharing folder with unverified contacts */
+"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been approved by you. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
+/* Rename public album alert title */
+"albumLink.alert.renameAlbum.title"="إعادة تسمية الألبوم";
+/* Rename public album alert message */
+"albumLink.alert.renameAlbum.message"="An album named “%@” already exists in your Albums. Enter a new name for the album you’re saving.";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="الترقية";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="سأنتظر";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="شراء باقة جديدة";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% of [B] TB used";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="حصة نقل متوفرة بشكل محدود";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Downloading may be interrupted as you’ve used most of your transfer quota for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="قد يتم توقيف التنزيل لأنك استخدمت معظم حجم تراسل معطيات الخاص بك على هذا الحساب. للحصول على حجم أكبر قم بشراء باقة جديدة أو إذا كان لديك اشتراك متكرر مع ميغا MEGA ، يمكنك الانتظار حتى يتم تجديد باقتك.";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="تم تجاوز حجم تراسل المعطيات المتاح";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="You can’t continue downloading as you don’t have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="لا يمكنك متابعة التنزيل نظرًا لعدم وجود أي حجم تراسل معطيات متبقي في هذا الحساب. للحصول على حجم أكبر قم بشراء باقة جديدة أو إذا كان لديك اشتراك متكرر مع ميغا MEGA يمكنك الانتظار حتى يتم تجديد باقتك.";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Your media stopped playing as you don’t have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="توقف تشغيل الوسائط الخاصة بك لأنه ليس لديك أي حجم تراسل معطيات متبقي في هذا الحساب. للحصول على حجم أكبر قم بشراء باقة جديدة أما إذا كان لديك اشتراك متكرر مع ميغا MEGA يمكنك الانتظار حتى يتم تجديد باقتك.";
+/* Meeting waiting room leave button */
+"meetings.waitingRoom.leave"="غادر";
+/* Meeting waiting room leave alert message */
+"meetings.waitingRoom.alert.leaveMeeting"="غادر الاجتماع؟";
+/* Meeting waiting room don't leave button */
+"meetings.waitingRoom.alert.dontLeave"="لا تغادر";
+/* Meeting waiting room guest join first name textfield */
+"meetings.waitingRoom.guest.firstName"="الاسم الأول";
+/* Meeting waiting room guest join last name textfield */
+"meetings.waitingRoom.guest.lastName"="الاسم الأخير";
+/* Meeting waiting room guest join button */
+"meetings.waitingRoom.guest.join"="انضمام";
+/* Meeting waiting room message of wait for host to let you in */
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="انتظر حتى يسمح لك المضيف بالدخول";

@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Proにアップグレード";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="パスワードの保護や公開ファイル用の有効期限の設定など、Proのみの機能にアクセスできます。";
+"Access Pro only features like setting password protection and expiry dates for public files."="パスワードの保護や公開リンク用の有効期限の設定など、Proのみの機能にアクセスできます。";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="デバッグモードを有効にします";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1293,9 +1293,9 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="認証情報を承認";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="検証";
+"verify"="承認";
 /* Button title */
-"verified"="検証済み";
+"verified"="承認済み";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="チャット履歴をクリア";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1310,8 +1310,6 @@
 "sharedFolders"="共有フォルダ";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="連絡先認証情報";
-/* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="実際に顔を合わせるのが一番いい方法です。すでに認証済みのOTRやPGRがあれば、それを使うのも良いでしょう。";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="私の認証情報";
 /* Button to reset the password */
@@ -1939,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="この操作は、現在のストレージ容量上限を超えてしまうため完了できません";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="あなたのアカウントがいっぱいのため、あなたのアップロード（複数）は続行できません";
+"Your upload(s) cannot proceed because your account is full"="クラウドストレージがいっぱいのため、アップロードを続行できません";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="あなたの連絡先がMEGAであなたが最後に活動していた時間を見れるようにします。";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="メールアドレスを入力";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="待機中のMEGAセキュアチャット要求があります。MEGAにアカウントを登録すると、20 GBの生涯無料ストレージが得られます。";
+"contact.invite.message"="待機中のMEGAチャット要求があります。MEGAにアカウントをご登録いただくと、20 GBの生涯無料ストレージが得られます。";
 /* Destination folder name of chat files */
 "My chat files"="私のチャットファイル";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2203,7 +2201,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="あなたのパスワードが漏えいし、悪意のあるアクターがあなたのアカウント（あなたのMEGAアカウントを含むがこれに限定されない）にログインするために使用されています。";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="容量を超えた転送";
+"Transfer over quota"="転送容量を超えました";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="選択をクリア";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
@@ -2587,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>残念ながら、お知らせしてから<b>%@</b>間アクションを起こされておりません。当社は<b>%@</b>様に<b>%@</b>にメールを送信いたしました。あなたはまだ<b>%@</b>のストレージを使用しており、無料の制限を超えています。何をするべきかについての詳細情報は、お送りしたメールをご覧ください。</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>残念ながら、まだアカウントをアップグレードされておりません。今すぐアップグレードされない場合、あなたのデータは明日削除されてしまいます。何をするべきかについての詳細情報は、メールをご覧ください。</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>アカウントをアップグレードされていない場合、あなたのデータは明日削除されます。</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
 "dialog.storage.paywall.notFinal.warning"="<body><warn>%@</warn>以内にアップグレードして、データが削除されないようにしてください</body>。";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>データの保持をご希望の場合は、本日中にアップグレードしてください。</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>データの保持をご希望の場合は、本日中にアップグレードしてください。</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="ボーナスを獲得";
 /* Backup setup warning title */
@@ -2601,7 +2599,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="「%@」を移動";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="デフォルトのバックアップフォルダの場所を変更しています。これにより、将来的にバックアップフォルダを見つけることが難しくなる場合があります。どこにあるのかを覚えておいて、今後も見つけられるようにしてください。";
+"dialog.root.backup.folder.location.warning.message"="デフォルトのバックアップフォルダの場所を変更しようとしています。それにより、バックアップフォルダを見つけることが難しくなる場合があります。フォルダの場所を覚えておいて、今後も見つけられるようにしてください。";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="このフォルダを移動すると、バックアップ先が変わります。バックアップは安全のためにオフにします。これを行ってもよろしいですか？バックアップは、MEGAデスクトップアプリで再度有効にすることができます。";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2645,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="ミーティング終了";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="ミーティングチャットを見る";
+"meetings.alert.meetingchat"="チャット履歴を表示する";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="参加しようとしているミーティングはすでに終了しています。ミーティングのチャット履歴は引き続き見ることができます。";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -3155,9 +3153,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="ミーティングをスケジュール";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="著作権侵害によりアカウントが停止されました。これに関する詳細情報を記載したメールをお送りしました。";
+"account.suspension.message.copyright"="度重なる著作権侵害の申し立てにより、あなたのMEGAアカウントは停止されました。これは、アカウントまたはアカウント内のデータにアクセスできないことを意味します。\n\n異議申し立て通知を提出する方法の詳細については、メールを確認してください。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="アカウントは、他人の権利の乱用、違法データの共有やインポート、システムの乱用など、MEGAのご利用規約に違反したために終了しました。";
+"account.suspension.message.nonCopyright"="MEGAのご利用規約違反により、あなたのアカウントは停止されました。\n\n保存されたデータへのアクセスを回復したり、MEGAアカウントを新規登録したりすることはできません。";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="MEGAアプリを開き、ログインして続行します。";
 /* Account Storage title label of used storage size */
@@ -3177,19 +3175,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="過去のミーティング";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="%@さんを認証する";
+"general.menuAction.verifyContact.title"="%@さんを承認する";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、連絡先が共有フォルダにアクセスする前に、情報を共有する連絡先を認証するようお願いしています。";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、連絡先が共有フォルダにアクセスする前に、情報を共有する連絡先を承認するようお願いしています。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="連絡先を認証するには、上記の資格情報がアカウントの資格情報と一致していることを確認してください。連絡先に資格情報を共有するように依頼できます。";
+"sharedItems.contactVerification.section.myCredentials.message"="連絡先を承認するには、上記の認証情報がアカウントの認証情報と一致していることを確認してください。連絡先に認証情報を共有するように依頼できます。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、あなたが共有フォルダにアクセスする前に、あなたが情報を受け取る連絡先を認証するようお願いしています。";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、あなたが共有フォルダにアクセスする前に、あなたが情報を受け取る連絡先を承認するようお願いいたします。";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="共有フォルダにアクセスするには、あなたと共有した人もあなたを承認する必要があります。";
+/* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@は、あなたが承認していない連絡先によって共有されています。セキュリティをさらに強化するために、承認する連絡先の横にあるⓘをタップして、連絡先で認証情報を承認することをお勧めします。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="あなたの認証情報";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="当社はゼロ知識暗号化でデータを保護するため、MEGAで保存、共有、受信する情報はすべて安全です。さらなるセキュリティを確保するために、情報を共有する連絡先、またはデータを受信する連絡先を認証するようお願いいたします。";
+"verifyCredentials.headerMessage"="当社はゼロ知識暗号化でデータを保護するため、MEGAで保存、共有、受信する情報はすべて安全です。さらなるセキュリティを確保するために、情報を共有する連絡先、またはデータを受信する連絡先を承認するようお願いいたします。";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[ 未復号フォルダ ]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3270,10 +3270,6 @@
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="もっと見る";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][StartDate][/B]から[WeekDay]に、[B][StartTime] から[EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="[B][StartDate][/B]から毎日、[B][StartTime] から[EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="[B][StartDate]から[UntilDate]まで[/B]毎日、[B][StartTime] から[EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="以下に予定された開催を[B][Email]さんがキャンセルしました[/B]：";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3321,9 +3317,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="毎月";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="連絡先を認証できません";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="連絡先を承認できません";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="連絡先リストにないため、%@を認証できません。相手側が最初にあなたの招待を受け入れるのを待ちます。";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="連絡先リストにないため、%@を承認できません。相手側が最初にあなたの招待を受け入れるのを待ちます。";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="MEGAパスコードを無効にする";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3644,3 +3640,47 @@
 "albumLink.alert.message.albumSavedToCloudDrive"="「%@」がクラウドドライブに保存されました";
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="「%@」はクラウドドライブに保存できません。後でもう一度試して、問題が解決しない場合は、リンクを共有した人に連絡してください。";
+/* Text displayed on banner we show when sharing folder with unverified contacts */
+"shareFolder.contactsNotVerified"="情報を共有している連絡先の一部は、あなたによって承認されていません。セキュリティをさらに強化するために、承認する連絡先の横にあるⓘをタップして、連絡先で連絡先の認証情報を承認することをお勧めします。";
+/* Rename public album alert title */
+"albumLink.alert.renameAlbum.title"="アルバムの名前を変更";
+/* Rename public album alert message */
+"albumLink.alert.renameAlbum.message"="「%@」という名前のアルバムがすでにアルバムに存在します。保存するアルバムの新しい名前を入力してください。";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="アップグレード";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="待ちます";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="新しいプランを購入する";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="[B] TB中[A]%%を使用済み";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="利用可能な転送容量の制限";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="このIPアドレスの転送容量のほとんどを使用されているため、ダウンロードが中断される可能性があります。さらに多くの容量を取得するには、Proプランにアップグレードしていただくか、あなたのIPアドレスでさらに多くの無料容量が利用可能になるまで、%@お待ちください。転送容量の詳細については、[A]こちら[/A]をご覧ください。";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="このアカウントの転送容量のほとんどを使用されているため、ダウンロードが中断される可能性があります。より多くの容量を取得するには、新しいプランをご購入いただくか、MEGAの定期サブスクリプションをお持ちの場合は、お客様のプランが更新されるまでお待ちいただくことができます。";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="転送容量を超えました";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="このIPアドレスには転送容量が残っていないため、ダウンロードを続行できません。さらに多くの容量を取得するには、Proプランにアップグレードしていただくか、あなたのIPアドレスでさらに多くの無料容量が利用可能になるまで、%@お待ちください。転送容量の詳細については、[A]こちら[/A]をご覧ください。";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="このアカウントには転送容量が残っていないため、ダウンロードを続行できません。より多くの容量を取得するには、新しいプランをご購入いただくか、MEGAの定期サブスクリプションをお持ちの場合は、お客様のプランが更新されるまでお待ちいただくことができます。";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="このIPアドレスには転送容量が残っていないため、メディアの再生が停止しました。さらに多くの容量を取得するには、Proプランにアップグレードしていただくか、あなたのIPアドレスでさらに多くの無料容量が利用可能になるまで、%@お待ちください。転送容量の詳細については、[A]こちら[/A]をご覧ください。";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="このアカウントには転送容量が残っていないため、メディアの再生が停止しました。より多くの容量を取得するには、新しいプランをご購入いただくか、MEGAの定期サブスクリプションをお持ちの場合は、お客様のプランが更新されるまでお待ちいただくことができます。";
+/* Meeting waiting room leave button */
+"meetings.waitingRoom.leave"="終了";
+/* Meeting waiting room leave alert message */
+"meetings.waitingRoom.alert.leaveMeeting"="ミーティングを抜けますか？";
+/* Meeting waiting room don't leave button */
+"meetings.waitingRoom.alert.dontLeave"="退室しない";
+/* Meeting waiting room guest join first name textfield */
+"meetings.waitingRoom.guest.firstName"="名前";
+/* Meeting waiting room guest join last name textfield */
+"meetings.waitingRoom.guest.lastName"="苗字";
+/* Meeting waiting room guest join button */
+"meetings.waitingRoom.guest.join"="参加する";
+/* Meeting waiting room message of wait for host to let you in */
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="主催者が参加を許可するまでお待ちください";
