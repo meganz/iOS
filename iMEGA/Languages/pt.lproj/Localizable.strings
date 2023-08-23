@@ -965,7 +965,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar novo email";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Alterar o endereço de email";
+"Change Email"="Alterar o email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="O email novo e o email antigo não podem iguais";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Fazer o upgrade a Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Tenha acesso a recursos Pro exclusivos, como a proteção adicional por senha e a definição de datas de validade para arquivos públicos.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Tenha acesso a recursos Pro exclusivos, como a proteção adicional por senha e a definição de datas de validade para links públicos.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Ativar o modo de depuração";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1293,9 +1293,9 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Validar as credenciais";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Confirmar";
+"verify"="Validar";
 /* Button title */
-"verified"="Verificado";
+"verified"="Validadas";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Deletar o histórico do chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1310,8 +1310,6 @@
 "sharedFolders"="Pastas compartilhadas";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Credenciais do contato";
-/* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="O melhor jeito de fazer isso é pessoalmente, na vida real. Se você tiver outro canal confiável como OTR ou PGP, você também pode usá-lo.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="Minhas credenciais";
 /* Button to reset the password */
@@ -1851,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Você não tem permissão para ativar o vídeo, pois essa chamada alcançou o número máximo de participantes usando o vídeo.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Não foi possível iniciar uma chamada porque o limite de participantes foi excedido.";
+"Unable to start a call because the participants limit was exceeded."="Não foi possível iniciar a chamada porque o limite de participantes foi excedido.";
 /* Label shown while joining a public chat */
 "Joining..."="Entrando…";
 /* Label shown while leaving a public chat */
@@ -1939,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Esta ação não pode ser concluída, pois excederia o seu limite de armazenamento atual";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Não foi possível fazer o upload porque a sua conta está cheia";
+"Your upload(s) cannot proceed because your account is full"="Não foi possível fazer o upload porque você já atingiu o seu limite de armazenamento";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permitir que seus contatos vejam o seu último acesso ao MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Digitar email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Você recebeu uma solicitação do chat seguro do MEGA Cadastre uma conta no MEGA e obtenha 20 GB de armazenamento vitalício grátis.";
+"contact.invite.message"="Você recebeu uma solicitação do MEGA Chat. Cadastre uma conta no MEGA e obtenha 20 GB de armazenamento grátis para sempre.";
 /* Destination folder name of chat files */
 "My chat files"="Arquivos dos meus chats";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2573,7 +2571,7 @@
 /* Name for the recovery key file */
 "general.security.recoveryKeyFile"="MEGA-CHAVEDERECUPERACAO";
 /* Hint text to display user's current email */
-"account.changeEmail.currentEmail"="Endereço de email atual";
+"account.changeEmail.currentEmail"="Email atual";
 /* Title of Over Disk Quota dialog */
 "dialog.storage.odq.title"="Faça o upgrade";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
@@ -2587,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Infelizmente, você não solucionou a situação nos <b>%@</b> que passaram desde que enviamos emails para <b>%@</b>, em <b>%@</b>. Você continua usando <b>%@</b>, o que excede o seu limite de armazenamento gratuito. Consulte os emails que enviamos para obter mais informações. </paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Infelizmente, você ainda não fez o upgrade da sua conta. Caso não o fizer ainda hoje, os seus dados serão excluídos amanhã. Acesse o seu email para mais informações sobre o que você precisa fazer.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Se você não fizer o upgrade da sua conta até amanhã, os seus dados serão deletados.</paragraph> ";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Por favor, faça o upgrade em <warn>%@</warn>para evitar que os seus dados sejam deletados.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Faça upgrade nos próximos <warn>%@</warn> para evitar que os seus dados sejam deletados.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Por favor, faça o upgrade ainda hoje para manter os seus dados.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Se você quiser manter os seus dados, faça o upgrade ainda hoje.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Ganhe bônus";
 /* Backup setup warning title */
@@ -2645,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Reunião finalizada";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="Ver o chat da reunião";
+"meetings.alert.meetingchat"="Ver o histórico do chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="A reunião na qual você está tentando entrar já terminou. Você ainda pode ver o histórico do chat da reunião.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -3155,9 +3153,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Programar reunião";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Conta suspensa devido a infrações de direitos autorais. Enviamos um email com mais informações.";
+"account.suspension.message.copyright"="A sua conta no MEGA foi suspensa devido a repetidas alegações de infrações de direitos autorais, o que significa que você não poderá acessar a sua conta, nem os dados armazenados.\n\nAcesse o seu email para obter informações sobre como enviar uma contra-notificação.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Conta encerrada devido a uma infração dos Termos de serviço do MEGA, como abuso dos direitos de terceiros, compartilhamento e importação de dados ilegais ou abuso do sistema.";
+"account.suspension.message.nonCopyright"="A sua conta foi encerrada devido a uma infração dos Termos de serviço do MEGA.\n\nVocê não poderá recuperar o acesso aos seus dados armazenados, nem está autorizado a registrar uma nova conta no MEGA.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Abra o aplicativo do MEGA e faça o login para continuar";
 /* Account Storage title label of used storage size */
@@ -3177,19 +3175,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Reuniões anteriores";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Confirmar %@";
+"general.menuAction.verifyContact.title"="Validar %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você verifique os contatos com os quais compartilha informações antes que eles possam acessar as pastas compartilhadas.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você valide os contatos com os quais compartilha informações antes que eles possam acessar as pastas compartilhadas.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="Para verificar o seu contato, confirme que as credenciais que você vê acima correspondem às credenciais da conta dele. Você pode pedir que eles compartilhem as credenciais com você.";
+"sharedItems.contactVerification.section.myCredentials.message"="Para validar o seu contato, confirme que as credenciais que você vê acima correspondem às credenciais da conta dele. Você pode pedir que eles compartilhem as credenciais com você.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você verifique os contatos dos quais você recebe informações antes de poder acessar as pastas compartilhadas.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você valide os contatos dos quais você recebe informações antes de poder acessar as pastas compartilhadas.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Para acessar a pasta compartilhada, a pessoa que a compartilhou com você também deve verificar as suas credenciais.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Para acessar a pasta compartilhada, a pessoa que a compartilhou com você também deve validar as suas credenciais.";
+/* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ foi compartilhado por um contato que você não validou. Como medida de segurança, recomendamos que você valide as credenciais dos mesmos em Contatos, tocando no ícone ⓘ ao lado do contato que quiser validar.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Suas credenciais";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Protegemos os seus dados com criptografia de conhecimento zero para que todas as informações que você armazene, compartilhe e receba no MEGA estejam seguras. Para garantir segurança extra, pedimos que você verifique os contatos com os quais você compartilha informações ou dos quais recebe dados.";
+"verifyCredentials.headerMessage"="Protegemos os seus dados com criptografia de conhecimento zero para que todas as informações que você armazene, compartilhe e receba no MEGA estejam seguras. Para garantir segurança extra, pedimos que você valide os contatos com os quais você compartilha informações ou dos quais recebe dados.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Pasta não decodificada]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3270,10 +3270,6 @@
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Ver mais";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B], das[B][StartTime] às [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Todos os dias a partir de [B][StartDate][/B], das [B][StartTime] às [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Todos os dias, de [B][StartDate] a [UntilDate][/B], das [B][StartTime] às [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelou[/B] o agendamento programado para";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3321,9 +3317,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="mensal";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Não foi possível verificar o contato";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Não foi possível validar o contato";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Você não pode verificar %@ porque ele não está na sua lista de contatos. Espere que ele aceite o seu convite.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Você não pode validar %@ porque ele(a) não está na sua lista de contatos. Espere até ele(a) aceitar o seu convite.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Desativar o código de acesso do MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3644,3 +3640,47 @@
 "albumLink.alert.message.albumSavedToCloudDrive"="“%@” foi salvo na Nuvem de arquivos";
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="Não foi possível salvar “%@” na sua Nuvem de arquivos. Tente novamente mais tarde e, se o problema persistir, entre em contato com a pessoa que compartilhou o link com você.";
+/* Text displayed on banner we show when sharing folder with unverified contacts */
+"shareFolder.contactsNotVerified"="Você não validou alguns dos contatos com os quais você está compartilhando informações. Como medida de segurança, recomendamos que você valide as credenciais dos mesmos em Contatos, tocando no ícone ⓘ ao lado do contato que quiser validar.";
+/* Rename public album alert title */
+"albumLink.alert.renameAlbum.title"="Renomear álbum";
+/* Rename public album alert message */
+"albumLink.alert.renameAlbum.message"="Nos seus Álbuns já existe um álbum chamado “%@”. Digite um novo nome para o álbum que você está salvando.";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="Upgrade";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="Vou esperar";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="Comprar um plano novo";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% de [B] TB usado";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="Cota de transferência disponível limitada";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="O download pode ser interrompido porque você já usou a maior parte da cota de transferência disponível para este IP. Para obter mais cota, faça o upgrade para um plano Pro ou espere %@ até mais cota gratuita estar disponível para o seu IP. [A]Mais informações[/A] sobre a cota de transferência.";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="O download pode ser interrompido porque você já usou a maior parte da cota de transferência disponível nesta conta. Para obter mais cota, adquira um novo plano ou, se tiver uma assinatura do MEGA, aguarde a renovação do seu plano.";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="Cota de transferência excedida";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="O download foi interrompido porque já não há cota de transferência disponível para este IP. Para obter mais cota, faça o upgrade para um plano Pro ou espere %@ até mais cota gratuita estar disponível para o seu IP. [A]Mais informações[/A] sobre a cota de transferência.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="O download foi interrompido porque já não há cota de transferência disponível nesta conta. Para obter mais cota, adquira um novo plano ou, se tiver uma assinatura do MEGA, aguarde a renovação do seu plano.";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="A reprodução do seu arquivo de mídia foi interrompida porque já não há cota de transferência disponível para este IP. Para obter mais cota, faça o upgrade para um plano Pro ou espere %@ até mais cota gratuita estar disponível para o seu IP. [A]Mais informações[/A] sobre a cota de transferência.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="A reprodução do seu arquivo de mídia foi interrompida porque já não há cota de transferência disponível nesta conta. Para obter mais cota, adquira um novo plano ou, se tiver uma assinatura do MEGA, aguarde a renovação do seu plano.";
+/* Meeting waiting room leave button */
+"meetings.waitingRoom.leave"="Sair";
+/* Meeting waiting room leave alert message */
+"meetings.waitingRoom.alert.leaveMeeting"="Você quer sair da reunião?";
+/* Meeting waiting room don't leave button */
+"meetings.waitingRoom.alert.dontLeave"="Não sair";
+/* Meeting waiting room guest join first name textfield */
+"meetings.waitingRoom.guest.firstName"="Nome";
+/* Meeting waiting room guest join last name textfield */
+"meetings.waitingRoom.guest.lastName"="Sobrenome";
+/* Meeting waiting room guest join button */
+"meetings.waitingRoom.guest.join"="Entrar";
+/* Meeting waiting room message of wait for host to let you in */
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="Espere até que o host deixe você entrar";

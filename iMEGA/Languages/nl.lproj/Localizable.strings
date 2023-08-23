@@ -187,7 +187,7 @@
 /* Alert message for invalid album link */
 "albumLink.invalidAlbum.alert.message"="De link naar het album is verwijderd of het album is verwijderd. Neem contact op met de persoon die de link met u heeft gedeeld.";
 /* Alert dismiss button title for invalid album link */
-"albumLink.invalidAlbum.alert.dissmissButtonTitle"="Ok, ik snap het";
+"albumLink.invalidAlbum.alert.dissmissButtonTitle"="OK, ik snap het";
 /* Importing albums Failed modal because storage quota would exceed alert title */
 "albumLink.importFailed.storageQuotaWillExceed.alert.title"="Kan album niet opslaan";
 /* Importing albums Failed modal because storage quota would exceed alert detail */
@@ -1293,9 +1293,9 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Gegevens goedkeuren";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Bevestigen";
+"verify"="Goedkeuren";
 /* Button title */
-"verified"="Bevestigd";
+"verified"="Goedgekeurd";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Verwijder Gespreksgeschiedenis";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1310,8 +1310,6 @@
 "sharedFolders"="Gedeelde Mappen";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Contact Inloggegevens";
-/* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="Dit kan het beste gebeuren door elkaar in het echte leven, face to face te ontmoeten. Als u een andere al geverifieerde kanaal heeft, zoals geverifieerd OTR of PGP, dan kunt u deze ook gebruiken.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="Mijn inloggegevens";
 /* Button to reset the password */
@@ -1851,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="U mag geen video inschakelen omdat deze oproep het maximale aantal deelnemers heeft bereikt dat video gebruikt.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Kan geen oproep starten omdat de deelnemerslimiet is overschreden.";
+"Unable to start a call because the participants limit was exceeded."="Kan de oproep niet starten omdat de deelnemerslimiet is overschreden.";
 /* Label shown while joining a public chat */
 "Joining..."="Deelnemen…";
 /* Label shown while leaving a public chat */
@@ -1939,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Deze actie kan niet worden voltooid omdat het u over uw huidige opslag limiet brengt";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Uw upload(s) kunnen niet doorgaan omdat uw account vol is";
+"Your upload(s) cannot proceed because your account is full"="Uw upload kan niet doorgaan omdat uw Cloud opslag vol is";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Contacten toestaan om te zien wanneer u de laatste keer actief was op MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Email Invoeren";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Er wacht een MEGA Veilig Gespreksverzoek. Registreer een account op MEGA en ontvang 20 GB gratis levenslange opslag.";
+"contact.invite.message"="Er wacht een MEGA Gespreksverzoek. Registreer een account op MEGA en ontvang 20 GB gratis levenslange opslag.";
 /* Destination folder name of chat files */
 "My chat files"="Mijn gesprek bestanden";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2203,7 +2201,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief, maar niet beperkt tot, uw MEGA-account.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Overdrachttegoed";
+"Transfer over quota"="Overdrachtstegoed overschreden";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Selectie Wissen";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
@@ -2587,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Helaas heeft u geen actie ondernomen in de <b>%@</b>sinds onze e-mails zijn verzonden naar<b>%@</b>, op<b>%@</b>. U gebruikt nog steeds<b>%@</b> opslagruimte, wat uw gratis limiet overschrijdt. Raadpleeg de e-mails die we u hebben gestuurd voor meer informatie over wat u moet doen.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Helaas heeft u uw account nog niet geüpgradet. Als u nu niet upgradet, worden uw gegevens morgen verwijderd. Zie u e-mail voor meer informatie over wat u moet doen.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Uw gegevens worden morgen verwijderd als uw account niet is geüpgraded.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Voer een upgrade uit binnen <warn>%@</warn> om te voorkomen dat uw gegevens worden verwijderd.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Upgrade binnen <warn>%@</warn> om te voorkomen dat uw gegevens verwijderd worden.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Upgrade vandaag nog als u uw gegevens wilt behouden.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Upgrade vandaag als u wenst uw gegevens te behouden.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Beschikbare Bonus";
 /* Backup setup warning title */
@@ -2645,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Vergadering Beëindigd";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="Vergader Gesprek Weergeven";
+"meetings.alert.meetingchat"="Chatgeschiedenis bekijken";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="De vergadering waaraan u probeert deel te nemen, is al beëindigd. U kunt de chatgeschiedenis van de vergadering nog steeds bekijken.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -3155,9 +3153,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Plan vergadering";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Account is geschorst vanwege copyright overtredingen. We hebben u een email gestuurd met meer informatie hierover.";
+"account.suspension.message.copyright"="Uw MEGA-account is opgeschort vanwege herhaalde beschuldigingen van inbreuk op het auteursrecht. Dit betekent dat u geen toegang heeft tot uw account of gegevens daarin.\n\n Controleer uw e-mail voor meer informatie over het indienen van een tegenmelding.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Uw account was beëindigd door een schending van MEGA’s Algemene Voorwaarden, zoals misbruik van rechten van anderen; Het delen en/of importen van illegale gegevens; of systeem misbruik.";
+"account.suspension.message.nonCopyright"="Uw account is beëindigd vanwege een schending van MEGA's Algemene Voorwaarden.\n\n U kunt geen toegang meer krijgen tot uw opgeslagen gegevens of worden geautoriseerd om een ​​nieuw MEGA-account te registreren.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Open de MEGA applicatie en log in om door te gaan.";
 /* Account Storage title label of used storage size */
@@ -3177,19 +3175,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Eerdere vergaderingen";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="%@Verifiëren";
+"general.menuAction.verifyContact.title"="%@ goedkeuren";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We beschermen uw gegevens met zero-knowledge codering. Om extra veiligheid te garanderen, vragen we u om de contacten met wie u informatie deelt te verifiëren voordat ze toegang krijgen tot de gedeelde mappen.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="We beschermen uw gegevens met zero-knowledge codering. Om extra veiligheid te garanderen, vragen we u om de contacten met wie u informatie deelt goed te keuren voordat ze toegang krijgen tot de gedeelde mappen.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
 "sharedItems.contactVerification.section.myCredentials.message"="Om uw contactpersoon te verifiëren, moet u ervoor zorgen dat de inloggegevens die u hierboven ziet, overeenkomen met de inloggegevens van hun account. U kunt hen vragen om hun inloggegevens met u te delen.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We beschermen uw gegevens met zero-knowledge codering. Om extra veiligheid te garanderen, vragen we u om de contacten van wie u informatie ontvangt te verifiëren voordat u oegang krijgt tot de gedeelde mappen.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="We beschermen uw gegevens met zero-knowledge codering. Om extra veiligheid te garanderen, vragen we u om de contacten van wie u informatie ontvangt goed te keuren voordat u toegang krijgt tot de gedeelde mappen.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Om toegang te krijgen tot de gedeelde map, moet de persoon die deze met u heeft gedeeld, u ook verifiëren.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Om toegang te krijgen tot de gedeelde map, moet de persoon die deze met u heeft gedeeld, u ook goedkeuren.";
+/* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ wordt gedeeld door een contactpersoon die u niet heeft goedgekeurd. Om extra veiligheid te garanderen, raden we aan dat u hun inloggegevens goedkeurt in Contacten door op ⓘ te tikken naast het contact dat u wilt goedkeuren.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Uw gegevens";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="We beschermen uw gegevens met zero-knowledge codering, zodat alle informatie die u op MEGA opslaat, deelt en ontvangt, veilig is. Om extra veiligheid te garanderen, vragen we u om de contacten waarmee u informatie deelt of gegevens van ontvangt verifieert.";
+"verifyCredentials.headerMessage"="We beschermen uw gegevens met zero-knowledge codering, zodat alle informatie die u op MEGA opslaat, deelt en ontvangt, veilig is. Om extra veiligheid te garanderen, vragen we u om de contacten met wie u informatie deelt of van wie u gegevens ontvangt, goed te keuren.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Ongecodeerde map]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3270,10 +3270,6 @@
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Meer weergeven";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] van [B][StartTime] tot [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Elke dag van kracht [B][StartDate][/B] van [B][StartTime] tot [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Elke dag van kracht [B][StartDate] tot en met [UntilDate][/B] van [B][StartTime] tot[EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]heeft de gebeurtenis geannuleerd[/B] die gepland is voor";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3283,7 +3279,7 @@
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.message.upgrade"="We upgraden de beveiliging van uw account. U zou dit bericht slechts één keer moeten zien. Als u het al eerder hebt gezien, controleer dan eerst of het voor dit account was en niet voor een ander MEGA-account dat u heeft \n\nAls u het zeker weet en het is de tweede keer dat u dit bericht voor dit account ziet, stop dan met het gebruik van dit account .";
 /* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.button.title"="Ok, ik snap het";
+"account.upgradeSecurity.button.title"="OK, ik snap het";
 /* Label to introduce meeting info description field */
 "meetings.info.descriptionLabel"="Omschrijving";
 /* In app notification description text representing the meeting repeats every sunday. This text is used at the start of the sentence. */
@@ -3321,9 +3317,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="maandelijks";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Kan contact niet verifiëren";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Kan contact niet goedkeuren";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="U kunt %@ niet verifiëren omdat ze niet in u contactenlijst staan. Wacht tot ze eerst uw uitnodiging accepteren.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="U kunt %@ niet goedkeuren omdat ze niet in uw contactenlijst staan. Wacht tot ze eerst uw uitnodiging accepteren.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="MEGA toegangscode uitgschakelen";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3644,3 +3640,47 @@
 "albumLink.alert.message.albumSavedToCloudDrive"="“%@” opgeslagen naar Cloud schijf";
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” kon niet opgeslagen worden naar Cloud schijf. Probeer later nogmaals en als het probleem blijft aanhouden, contacteer de persoon die de link met u gedeeld heeft.";
+/* Text displayed on banner we show when sharing folder with unverified contacts */
+"shareFolder.contactsNotVerified"="Sommige contacten met wie u informatie deelt, zijn niet door u goedgekeurd. Om extra veiligheid te garanderen, raden we aan dat u hun inloggegevens goedkeurt in Contacten door op ⓘ te tikken naast het contact dat u wilt goedkeuren.";
+/* Rename public album alert title */
+"albumLink.alert.renameAlbum.title"="Hernoem album";
+/* Rename public album alert message */
+"albumLink.alert.renameAlbum.message"="Er bestaat al een album met de naam “%@” in uw Albums. Voer een nieuwe naam in voor het album dat u opslaat.";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="Upgraden";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="Ik zal wachten";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="Koop nieuw abonnement";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% van [B] TB gebruikt";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="Gelimiteerd beschikbaar overdrachtstegoed";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Het downloaden kan worden onderbroken omdat u het grootste deel van uw overdrachtstegoed voor dit IP-adres hebt gebruikt. Om meer tegoed te krijgen, upgrade u naar een Pro-abonnement of wacht u tot %@ er meer gratis tegoed beschikbaar komt op uw IP-adres.[A] Leer meer[/A] over overdrachtstegoed.";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="Het downloaden kan worden onderbroken omdat u het grootste deel van uw overdrachtstegoed voor dit account hebt gebruikt. Als u meer tegoed wilt krijgen, een nieuw abonnement wilt kopen of als u een terugkerend abonnement bij MEGA hebt, kunt u wachten tot uw abonnement wordt verlengd.";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="Overdrachtstegoed overschreden";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="U kunt niet doorgaan met downloaden omdat u geen overdrachtstegoed meer hebt voor dit IP-adres. Om meer tegoed te krijgen, upgrade u naar een Pro-abonnement of wacht u %@ tot er meer gratis tegoed beschikbaar komt op uw IP-adres. [A]Leer meer[/A] over overdrachtstegoed.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="U kunt niet doorgaan met downloaden omdat u geen overdrachtstegoed meer hebt op dit account. Als u meer tegoed wilt krijgen, een nieuw abonnement wilt kopen of als u een terugkerend abonnement bij MEGA hebt, kunt u wachten tot uw abonnement wordt verlengd.";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Uw media is gestopt met spelen omdat u geen overdrachtstegoed meer hebt voor dit IP-adres. Om meer tegoed te krijgen, upgrade u naar een Pro-abonnement of wacht u %@ tot er meer gratis tegoed beschikbaar komt op uw IP-adres. [A]Leer meer [/A]over overdrachtsquota.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="Uw media is gestopt met spelen omdat u geen overdrachtstegoed meer hebt op dit account. Als u meer tegoed wilt krijgen, een nieuw abonnement wilt kopen of als u een herhalende abonnement bij MEGA hebt, kunt u wachten tot uw abonnement wordt verlengd.";
+/* Meeting waiting room leave button */
+"meetings.waitingRoom.leave"="Verlaten";
+/* Meeting waiting room leave alert message */
+"meetings.waitingRoom.alert.leaveMeeting"="Vergadering verlaten?";
+/* Meeting waiting room don't leave button */
+"meetings.waitingRoom.alert.dontLeave"="Niet verlaten";
+/* Meeting waiting room guest join first name textfield */
+"meetings.waitingRoom.guest.firstName"="Voornaam";
+/* Meeting waiting room guest join last name textfield */
+"meetings.waitingRoom.guest.lastName"="Achternaam";
+/* Meeting waiting room guest join button */
+"meetings.waitingRoom.guest.join"="Aansluiten";
+/* Meeting waiting room message of wait for host to let you in */
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="Wacht tot de host u binnenlaat";

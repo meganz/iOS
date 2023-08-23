@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Ampliar cuenta a Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Accede a las características de una cuenta Pro, como configurar la protección por contraseña o la fecha de caducidad para archivos públicos.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Access Pro only features like setting password protection and expiry dates for public links.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activar modo debug";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1261,7 +1261,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="Estado";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Vista previa del enlace";
+"richUrlPreviews"="Vista previa de los enlaces";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Mejora tu experiencia con MEGA Chat. El contenido del enlace se recuperará sin cifrado de conocimiento cero.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1293,9 +1293,9 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Aceptar las credenciales";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Verificar";
+"verify"="Aceptar";
 /* Button title */
-"verified"="Verificado";
+"verified"="Aceptadas";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Limpiar historial del chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1310,8 +1310,6 @@
 "sharedFolders"="Carpetas compartidas";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Credenciales del contacto";
-/* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="Esto es mejor hacerlo en persona, cara a cara. Si tienes algún otro canal ya verificado, como OTR o PGP, podrías utilizarlo.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="Mis credenciales";
 /* Button to reset the password */
@@ -1851,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="No puedes activar el vídeo ya que se alcanzado el número máximo de participantes que usan el vídeo en esta llamada.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="No se puede iniciar una llamada porque se ha superado el límite de participantes.";
+"Unable to start a call because the participants limit was exceeded."="Unable to start the call due to the participant limit having been exceeded.";
 /* Label shown while joining a public chat */
 "Joining..."="Entrando…";
 /* Label shown while leaving a public chat */
@@ -1939,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Esta acción no se puede completar ya que te llevaría por encima de tu límite de almacenamiento actual";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="La subida no puede continuar porque tu cuenta está llena";
+"Your upload(s) cannot proceed because your account is full"="Your upload cannot proceed because your Cloud storage is full";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permitir que tus contactos vean tu último acceso a MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Añadir correo electrónico";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="Tienes una solicitud en espera para chatear de manera segura en MEGA. Registra una cuenta en MEGA y obtén 20 GB de almacenamiento gratuito para siempre.";
+"contact.invite.message"="You have a MEGA Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
 "My chat files"="Mis archivos de chat";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2587,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Lamentablemente no has realizado ninguna acción en los últimos <b>%@</b> desde que te avisamos por correo electrónico a la dirección <b>%@</b>, el <b>%@</b>. Todavía estás usando <b>%@</b> de almacenamiento, y estás por encima de tu límite gratuito. Consulta los correos electrónicos que te enviamos para obtener más información sobre lo que debes hacer.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Lamentablemente aún no has ampliado tu cuenta. Si no lo haces ya, mañana eliminaremos tus datos. Consulta los correos electrónicos que te enviamos para obtener más información sobre lo que debes hacer.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Your data will be deleted tomorrow if your account has not been upgraded.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Amplia tu cuenta dentro de <warn>%@</warn> para evitar que tus datos sean eliminados.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Amplía tu cuenta hoy si quieres conservar tus datos.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Upgrade today if you wish to keep your data.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Obtén bono";
 /* Backup setup warning title */
@@ -2601,7 +2599,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Mover “%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="Vas a cambiar la ubicación de tu carpeta de backup. Esto puede afectar tu capacidad para encontrar esa carpeta en el futuro. Recuerda la nueva ubicación para que puedas encontrarla en el futuro.";
+"dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder. Please remember where it is located so that you can find it in the future.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Al mover esta carpeta se cambiará el destino de los backups y se desactivará esta función. ¿Es esto lo que quieres hacer? Puedes volver a activar los backups a través de la aplicación de escritorio de MEGA.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2645,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="La reunión ha terminado";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="Ver el chat de la reunión";
+"meetings.alert.meetingchat"="View chat history";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="La reunión a la que intentas unirte ya ha finalizado. Aún puedes ver el historial de chat de la reunión.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -3155,9 +3153,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Programar reunión";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Cuenta suspendida por violar los derechos de autor. Te hemos enviado un correo electrónico con más información al respecto.";
+"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email for more information on how to file a counter-notice.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Cuenta cerrada por incumplir los Términos de servicio de MEGA, como el abuso de los derechos de otros, el intercambio e importación de datos ilegales o el abuso del sistema.";
+"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to register a new MEGA account.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Abre la app de MEGA e inicia sesión para continuar.";
 /* Account Storage title label of used storage size */
@@ -3177,19 +3175,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Reuniones anteriores";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Verificar %@";
+"general.menuAction.verifyContact.title"="Approve %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Protegemos tus datos con cifrado de conocimiento cero. Para garantizar una mayor seguridad, te pedimos que verifiques los contactos con los que compartes información antes de que puedan acceder a las carpetas compartidas.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you share information with before they can access the shared folders.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="Para verificar tu contacto, asegúrate de que las credenciales que ves arriba coincidan con las credenciales de su cuenta. Puedes pedirle que comparta sus credenciales contigo.";
+"sharedItems.contactVerification.section.myCredentials.message"="To approve your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Protegemos tus datos con cifrado de conocimiento cero. Para garantizar una mayor seguridad, te pedimos que verifiques los contactos de los que recibes información antes de que puedas acceder a las carpetas compartidas.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you receive information from before you can access the shared folders.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Para acceder a la carpeta compartida, la persona que la ha compartido contigo también debe verificar tus credenciales.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="";
+/* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t approved. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Tus credenciales";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="We protect your data with zero-knowledge encryption so all the information you store, share, and receive on MEGA is secure. To ensure extra security, we ask you to verify the contacts you share information with or receive data from.";
+"verifyCredentials.headerMessage"="We protect your data with zero-knowledge encryption so all the information you store, share, and receive on MEGA is secure. To ensure extra security, we ask you to approve the contacts you share information with or receive data from.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Carpeta sin descifrar]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3235,15 +3235,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email]te ha invitado[/B] a una reunión programada para:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]ha actualizado[/B] la reunión a";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email]ha actualizado[/B] la descripción de la reunión";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email]ha cancelado[/B] la reunión programada para";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email]ha actualizado[/B] la fecha de la reunión a";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email]ha actualizado[/B]la hora de la reunión a ";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] ha actualizado[/B] el nombre de la reunión de “[PreviousTitle]” a [B]“[UpdatedTitle]”[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3251,13 +3251,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B]te ha invitado a una reunión programada para:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email]ha actualizado[/B] la reunión a";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email]ha actualizado[/B] la descripción de la reunión periódica";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email]ha actualizado[/B] la fecha de la reunión periódica a ";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email]ha actualizado[/B] la hora de la reunión periódica a";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="Eventos";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3270,14 +3270,10 @@
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Mostrar más";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay][StartDate][/B] de [B][StartTime] a [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Cada día desde el [B][StartDate][/B] de [B][StartTime] a [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Cada día desde el [B][StartDate] hasta el [UntilDate][/B] de [B][StartTime] a [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]ha cancelado[/B] el evento programado para";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email]ha actualizado[/B] un evento a";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Actualización de seguridad de la cuenta";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3321,9 +3317,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="mes";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="No se puede verificar el contacto";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot approve contact";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="No se puede verificar %@ porque no está en tu lista de contactos. Espera a que acepte tu invitación primero.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t approve %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Desactivar código de acceso de MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3445,7 +3441,7 @@
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Bloqueado";
 /* Default device name in case the device name cannot be obtained */
-"device.center.default.device.title"="Unknown device";
+"device.center.default.device.title"="Dispositivo desconocido";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Dejar de repetir";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3549,7 +3545,7 @@
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Cancelar";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Cancel %@?";
+"meetings.scheduled.cancelAlert.title"="¿Cancelar %@?";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
 "meetings.scheduled.cancelAlert.description.withMessages"="Esta reunión se moverá a Reuniones anteriores y todos los participantes serán notificados.";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
@@ -3593,7 +3589,7 @@
 /* Create meeting tip view title */
 "meetings.scheduleMeeting.createMeetingTip.title"="Programar reunión";
 /* Create meeting tip view message */
-"meetings.scheduleMeeting.createMeetingTip.message"="Programa reuniones puntuales y periódicas.";
+"meetings.scheduleMeeting.createMeetingTip.message"="Programa reuniones únicas y periódicas.";
 /* Scheduled meeting tip view dismiss action button title */
 "meetings.scheduleMeeting.tipView.gotIt"="Entendido";
 /* Start meeting tip view title */
@@ -3615,32 +3611,76 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Editar reunión";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="Envía por correo electrónico una invitación a los participantes para que puedan añadir la reunión a sus calendarios.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Empezar reunión";
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Eventos";
 /* Change SFU server alert title. */
-"settings.about.sfu.changeAlert.title"="Change SFU server";
+"settings.about.sfu.changeAlert.title"="Cambiar servidor SFU";
 /* Change SFU server alert message. */
-"settings.about.sfu.changeAlert.message"="Default is -1";
+"settings.about.sfu.changeAlert.message"="El predeterminado es -1";
 /* Change SFU server alert test field placeholder. */
-"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+"settings.about.sfu.changeAlert.placeholder"="Introducir identificador del SFU";
 /* Change SFU server alert cancel button. */
 "settings.about.sfu.changeAlert.cancelButton"="Cancelar";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="Cambiar";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chat with %@";
+"chat.backButton.oneToOne.menu"="Chatear con %@";
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Sala de espera";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Only users admitted by the host can join the meeting.";
+"meetings.scheduleMeeting.waitingRoom.description"="Solo los usuarios admitidos por el anfitrión pueden unirse a la reunión.";
 /* Schedule meeting waiting room warning banner title */
-"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Los participantes que han sido añadidos a las llamadas por usuarios que no son anfitriones no serán enviados a la sala de espera.";
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Más info";
 /* Album saved to cloud drive alert message */
-"albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@⁣” se ha guardado en la Nube";
 /* Album failed to save to cloud drive alert message */
-"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” no se ha podido guardar en la Nube. Vuelve a intentarlo más tarde y, si el problema persiste, contacta con la persona que te ha compartido el enlace.";
+/* Text displayed on banner we show when sharing folder with unverified contacts */
+"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been approved by you. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
+/* Rename public album alert title */
+"albumLink.alert.renameAlbum.title"="Renombrar álbum";
+/* Rename public album alert message */
+"albumLink.alert.renameAlbum.message"="Ya existe un álbum llamado “%@” en tus álbumes. Introduce otro nombre para este álbum.";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="Ampliar";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="Esperaré";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="Comprar nuevo plan";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="Has usado [A]%% de [B] TB";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="Cuota de transferencia disponible limitada";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Es posible que la descarga se interrumpa ya que has utilizado la mayor parte de la cuota de transferencia disponible para esta dirección IP. Para obtener más cuota, compra un plan Pro o espera %@ hasta que haya más cuota disponible para tu dirección IP. [A]Más información[/A] sobre la cuota de transferencia.";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="Es posible que la descarga se interrumpa ya que has utilizado la mayor parte de la cuota de transferencia disponible para esta cuenta. Para obtener más cuota, compra un nuevo plan o, si tienes una suscripción recurrente con MEGA, puedes esperar a que se renueve tu plan.";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="Cuota de transferencia agotada";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="No puedes seguir descargando porque has usado toda la cuota de transferencia disponible para esta dirección IP. Para obtener más cuota, compra un plan Pro o espera %@ hasta que haya más cuota disponible para tu dirección IP. [A]Más información[/A] sobre la cuota de transferencia.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="No puedes seguir descargando porque no te queda cuota de transferencia en esta cuenta. Para obtener más cuota, compra un nuevo plan o, si tienes una suscripción recurrente con MEGA, puedes esperar a que se renueve tu plan.";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="El contenido multimedia se ha dejado de reproducir porque no queda cuota de transferencia disponible para esta dirección IP. Para obtener más cuota, compra un plan Pro o espera %@ hasta que haya más cuota disponible para tu dirección IP. [A]Más información[/A] sobre la cuota de transferencia.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="Tu audio o vídeo ha dejado de reproducirse porque no te queda cuota de transferencia en esta cuenta. Para obtener más cuota, compra un nuevo plan o, si tienes una suscripción recurrente con MEGA, puedes esperar a que se renueve tu plan.";
+/* Meeting waiting room leave button */
+"meetings.waitingRoom.leave"="Abandonar";
+/* Meeting waiting room leave alert message */
+"meetings.waitingRoom.alert.leaveMeeting"="¿Quieres abandonar la reunión?";
+/* Meeting waiting room don't leave button */
+"meetings.waitingRoom.alert.dontLeave"="Don’t leave";
+/* Meeting waiting room guest join first name textfield */
+"meetings.waitingRoom.guest.firstName"="Nombre";
+/* Meeting waiting room guest join last name textfield */
+"meetings.waitingRoom.guest.lastName"="Apellido(s)";
+/* Meeting waiting room guest join button */
+"meetings.waitingRoom.guest.join"="Únete";
+/* Meeting waiting room message of wait for host to let you in */
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="Wait for host to let you in";

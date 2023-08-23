@@ -31,9 +31,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item removed</string>
+        <string>%d element a fost eliminat</string>
+        <key>few</key>
+        <string>%d elemente au fost eliminate</string>
         <key>other</key>
-        <string>%d items removed</string>
+        <string>%d de elemente au fost eliminate</string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -101,9 +103,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Anyone with this link can view and download your data</string>
+        <string>Oricine are acest link vă poate vizualiza și descărca datele</string>
+        <key>few</key>
+        <string>Oricine are aceste link-uri vă poate vizualiza și descărca datele</string>
         <key>other</key>
-        <string>Anyone with these links can view and download your data</string>
+        <string>Oricine are aceste link-uri vă poate vizualiza și descărca datele</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCopied</key>
@@ -117,9 +121,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Link copied to clipboard</string>
+        <string>Link copiat în clipboard</string>
+        <key>few</key>
+        <string>Link-uri copiate în clipboard</string>
         <key>other</key>
-        <string>Links copied to clipboard</string>
+        <string>Link-uri copiate în clipboard</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCreatedAndCopied</key>
@@ -133,9 +139,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Link created and copied to your clipboard</string>
+        <string>Link creat și copiat în clipboard</string>
+        <key>few</key>
+        <string>Link-uri create și copiate în clipboard</string>
         <key>other</key>
-        <string>Links created and copied to your clipboard</string>
+        <string>Link-uri create și copiate în clipboard</string>
       </dict>
     </dict>
     <key>nameCollision.applyToAll</key>
@@ -419,9 +427,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item</string>
+        <string>%d element</string>
+        <key>few</key>
+        <string>%d elemente</string>
         <key>other</key>
-        <string>%d items</string>
+        <string>%d de elemente</string>
       </dict>
     </dict>
     <key>general.format.rubbishBin.days</key>
@@ -453,9 +463,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item</string>
+        <string>%d element</string>
+        <key>few</key>
+        <string>%d elemente</string>
         <key>other</key>
-        <string>%d items</string>
+        <string>%d de elemente</string>
       </dict>
     </dict>
     <key>recents.section.thumbnail.count.image</key>
@@ -541,9 +553,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>“[A]” and %d more</string>
+        <string>„[A]” și alți %d</string>
+        <key>few</key>
+        <string>„[A]” și alți %d</string>
         <key>other</key>
-        <string>“[A]” and %d more</string>
+        <string>„[A]” și alți %d</string>
       </dict>
     </dict>
     <key>media.photo.browser.indexOfTotalFiles</key>
@@ -647,9 +661,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>People you have shared this link with will no longer be able to access it.</string>
+        <string>Persoanele cu care ați partajat acest link nu vor mai putea accesa acest link.</string>
+        <key>few</key>
+        <string>Persoanele cu care ați partajat aceste linkuri nu le vor mai putea accesa.</string>
         <key>other</key>
-        <string>People you have shared these links with will no longer be able to access them.</string>
+        <string>Persoanele cu care ați partajat aceste linkuri nu le vor mai putea accesa.</string>
       </dict>
     </dict>
     <key>general.menuAction.shareFolder.title</key>
@@ -969,9 +985,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d unread message</string>
+        <string>%d mesaj necitit</string>
+        <key>few</key>
+        <string>%d mesaje necitite</string>
         <key>other</key>
-        <string>%d unread messages</string>
+        <string>%d de mesaje necitite</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addItems.alert.limitReached.message</key>
@@ -985,9 +1003,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>You can add only up to %d item at a time to an album.</string>
+        <string>Poți adăuga doar până la %d element o dată într-un album</string>
+        <key>few</key>
+        <string>Poți adăuga doar până la %d elemente o dată într-un album</string>
         <key>other</key>
-        <string>You can add only up to %d items at a time to an album.</string>
+        <string>Poți adăuga doar până la %d de elemente o dată într-un album</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.addedItemTo</key>
@@ -1145,9 +1165,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>People you shared this link with will lose access to the album.</string>
+        <string>Persoanele cu care ați partajat acest link vor pierde accesul la album.</string>
+        <key>few</key>
+        <string>Persoanele cu care ați partajat aceste linkuri vor pierde accesul la albume.</string>
         <key>other</key>
-        <string>People you shared these links with will lose access to the albums.</string>
+        <string>Persoanele cu care ați partajat aceste linkuri vor pierde accesul la albume.</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.removeShareLinkSuccessMessage</key>
@@ -1179,9 +1201,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>În fiecare zi, începând cu [B][StartDate] până in [/B] de la [B][StartTime] la [EndTime][/B][UntilDate]</string>
+        <key>few</key>
+        <string>În fiecare %d zi, începând cu [B][StartDate] până in [/B] de la [B][StartTime] la [EndTime][/B][UntilDate]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>În fiecare %d zi, începând cu [B][StartDate] până in [/B] de la [B][StartTime] la [EndTime][/B][UntilDate]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -1195,9 +1219,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>În fiecare zi, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>În fiecare %d zi, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>În fiecare %d zi, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -1247,9 +1273,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList] and [LastWeekDay] every week effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] și [LastWeekDay], în fiecare săptămână, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList] and [LastWeekDay] every %d weeks effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate] până în [UntilDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.severalDays.forever</key>
@@ -1263,9 +1291,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>[WeekDaysList] and [LastWeekDay] every week effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] și [LastWeekDay], în fiecare săptămână, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
+        <key>few</key>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B]</string>
         <key>other</key>
-        <string>[WeekDaysList] and [LastWeekDay] every %d weeks effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>[WeekDaysList] și [LastWeekDay], la fiecare %d de săptămâni, începând cu [B][StartDate][/B] de la [B][StartTime] la [EndTime][/B] </string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.monthly.singleDay.until</key>
@@ -2611,9 +2641,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d day left</string>
+        <string>%d zi rămasă</string>
+        <key>few</key>
+        <string>%d zile rămase</string>
         <key>other</key>
-        <string>%d days left</string>
+        <string>%d zile rămase</string>
       </dict>
     </dict>
     <key>account.achievement.complete.validBonusExpiry.detail.subtitle</key>
@@ -2627,9 +2659,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Bonus expires in %d day.</string>
+        <string>Bonusul expiră în %d zi</string>
+        <key>few</key>
+        <string>Bonusul expiră în %d zile.</string>
         <key>other</key>
-        <string>Bonus expires in %d days.</string>
+        <string>Bonusul expiră în %d zile.</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>
@@ -2643,9 +2677,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Uploaded “[A]” to “[B]”</string>
+        <string>„[A]” a fost încărcat în „[B]”</string>
+        <key>few</key>
+        <string>%d elemente au fost încărcate în „[B]”</string>
         <key>other</key>
-        <string>Uploaded %d items to “[B]”</string>
+        <string>%d de elemente au fost încărcate în „[B]”</string>
       </dict>
     </dict>
     <key>share.message.uploadedToCloudDrive</key>
@@ -2659,9 +2695,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Uploaded “[A]” to Cloud drive</string>
+        <string>„[A]” a fost încărcat în Unitatea cloud</string>
+        <key>few</key>
+        <string>%d de elemente au fost încărcate în Unitatea cloud</string>
         <key>other</key>
-        <string>Uploaded %d items to Cloud drive</string>
+        <string>%d de elemente au fost încărcate în Unitatea cloud</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withOneFile</key>
@@ -2675,9 +2713,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sent “[A]” to chat</string>
+        <string>A trimis „[A]” la chat</string>
+        <key>few</key>
+        <string>A trimis „[A]” la toate chat-urile</string>
         <key>other</key>
-        <string>Sent “[A]” to all chats</string>
+        <string>A trimis „[A]” la toate chat-urile</string>
       </dict>
     </dict>
     <key>share.message.sendToChat.withMultipleFiles</key>
@@ -2830,6 +2870,38 @@
         <string>Meeting will occur every %d months on the [ordinalDays] and [ordinalLastDay].</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Meeting will occur every month on day [cardinalDay].</string>
+        <key>other</key>
+        <string>Meeting will occur every %d months on day [cardinalDay].</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Meeting will occur every month on day [cardinalDays] and day [cardinalLastDay].</string>
+        <key>other</key>
+        <string>Meeting will occur every %d months on day [cardinalDays] and day [cardinalLastDay].</string>
+      </dict>
+    </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2876,6 +2948,22 @@
         <string>Every month on the [ordinalNumber]</string>
         <key>other</key>
         <string>Every %d months on the [ordinalNumber]</string>
+      </dict>
+    </dict>
+    <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Every month on day [cardinalNumber]</string>
+        <key>other</key>
+        <string>Every %d months on day [cardinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>

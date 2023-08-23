@@ -951,13 +951,13 @@
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送出";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="封存帳號";
+"parkAccount"="停用帳號";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="我已瞭解我正在重新註冊一個全新且空白的帳戶。除非我能想起原本的密碼，或者找到之前匯出的還原金鑰，否則我將失去我現在帳戶中的所有資料。";
 /* Caption of the button to proceed */
 "startNewAccount"="開始建立新帳號";
 /*  */
-"yourAccounHasBeenParked"="您的舊帳戶已封存。您現在可以登入您的新帳戶。";
+"yourAccounHasBeenParked"="您的舊帳戶已停用。您現在可以登入您的新帳戶。";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="新的電子郵件地址";
 /* Button text for the user to confirm their change of email address. */
@@ -1215,7 +1215,7 @@
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="關閉除錯模式";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="系統日誌檔（MEGAiOS.log）將從離線使用中刪除。";
+"disableDebugMode_message"="系統日誌檔（MEGAiOS.log）將從離線使用部分刪除。";
 /* Alert message shown when the user remove one item from the Offline section */
 "removeItemFromOffline"="您確定要從離線使用裡刪除這個項目？";
 /* Alert message shown when the user remove various items from the Offline section */
@@ -1291,11 +1291,11 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="核對憑證";
+"verifyCredentials"="驗證憑證";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="驗證";
+"verify"="批准";
 /* Button title */
-"verified"="已驗證";
+"verified"="已批准";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="清空對話記錄";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1310,8 +1310,6 @@
 "sharedFolders"="已共享的資料夾";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="聯絡人憑證";
-/* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="這最好由實際面對面來完成。如您有其他已驗證管道，如已驗證的OTR或PGP，您也可以採用。";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="我的憑證";
 /* Button to reset the password */
@@ -1851,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="由於此通話已達到視訊與會人數上限，因此您無法開啟視訊。";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="由於與會者人數超過上限，因此無法發起通話。";
+"Unable to start a call because the participants limit was exceeded."="由於與會者人數超過上限，無法發起通話。";
 /* Label shown while joining a public chat */
 "Joining..."="正在加入⋯";
 /* Label shown while leaving a public chat */
@@ -1939,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="因將超出您目前儲存空間限制，此操作無法完成";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="由於您的帳戶已滿，您的上傳（多個）無法繼續";
+"Your upload(s) cannot proceed because your account is full"="由於您的雲端儲存已滿，您的上傳無法繼續，";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="允許您的聯絡人查看您上次在MEGA活動是什麼時候。";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="輸入電子郵件";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="您有一個等待中的MEGA安全對話請求。在MEGA上註冊一個帳戶並獲得20 GB的終身免費儲存空間。";
+"contact.invite.message"="您有一個等待中的MEGA Chat請求。在MEGA上註冊帳戶並獲得20 GB的終身免費儲存空間。";
 /* Destination folder name of chat files */
 "My chat files"="我的對話檔案";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2203,7 +2201,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密碼已洩漏並且現在被不肖人士拿來登入您的帳戶，包括但不限於您的MEGA帳戶。";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="超出傳輸配額";
+"Transfer over quota"="已超過傳輸配額";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="清除選取";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
@@ -2395,7 +2393,7 @@
 /* Message shown when the password has been copied to the Clipboard */
 "Password Copied to Clipboard"="密碼已複製到剪貼簿";
 /* Export links dialog -> Keys tip about links and keys. */
-"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我們的零知識加密系統需要有為此檔案或資料夾自動生成的唯一金鑰才能開啟。預設情況下會自動產生帶有此金鑰的連結，但為了更加安全考量，您可以將解密金鑰個別匯出。";
+"Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="我們的零知識加密系統需要有為此檔案或資料夾自動生成的專屬金鑰才能開啟。預設情況下會自動產生帶有此金鑰的連結，但為了更加安全考量，您可以將解密金鑰個別匯出。";
 /* Text to indicate the user to remove the password of a link */
 "Remove Password"="移除密碼";
 /* Text to indicate the user to reset/change the password of a link */
@@ -2523,17 +2521,17 @@
 /* Text describing that there is not any node marked as favourite */
 "No Favourites"="沒有收藏";
 /* Text indicating to the user that can perform an action to view more results */
-"VIEW MORE"="檢視更多";
+"VIEW MORE"="查看更多";
 /* Title for the QuickAccess widget */
 "Quick Access"="快速存取";
 /* Text description for the QuickAccess widget */
 "Quickly access files on Recents, Favourites, or Offline section"="快速存取在近期的、收藏的、或離線使用中的檔案";
 /* Text description for the Favourites QuickAccess widget */
-"Quickly access files on Favourites section"="從您的收藏快速存取檔案";
+"Quickly access files on Favourites section"="從您的收藏中快速存取檔案";
 /* Text description for the Recents QuickAccess widget */
-"Quickly access files on Recents section"="從近期活動快速存取檔案";
+"Quickly access files on Recents section"="從近期活動中快速存取檔案";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="從離線使用中快速存取檔案";
+"Quickly access files on Offline section"="從可離線使用部份快速存取檔案";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="裝置沒有足夠的空間好讓MEGA正確的運行。";
 /* Dialog description for the no enough device storage screen */
@@ -2587,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>自從我們在<b>%@</b>發送電子郵件到<b>%@</b>之後，您並沒有在<b>%@</b>天內採取任何行動。目前您仍然使用了<b>%@</b>儲存空間，這已超出您的免費空間限制。請查看我們寄給您的電子郵件以瞭解更多訊息。</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>可惜的是您尚未升級您的帳戶。如果現在不升級，您的資料將在明天被刪除。請查看您的電子郵件來獲得您需要採取什麼樣的行動的更多訊息。</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>如果您的帳戶尚未升級，您的資料將在明天被刪除。</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>請在<warn>%@</warn>內升級以避免您的資料被刪除。</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>在<warn>%@</warn>內升級以避免您的資料被刪除。</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>如果您希望保存您的資料，請在今天升級。</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>如果您希望保留您的資料，請立即升級。</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="獲得獎勵";
 /* Backup setup warning title */
@@ -2601,7 +2599,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="移至“%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="您正在更改預設的備份資料夾位置。這可能會影響您將來查找備份資料夾。 因此請記住它的位置，以便將來可以找到它。";
+"dialog.root.backup.folder.location.warning.message"="您正在更改預設的備份資料夾位置。這可能會影響您將來查找備份資料夾。因此請記住它的位置，以便將來可以找到它。";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="移動此資料夾會更改備份目的地。為安全起見，備份將會停止。您確定要繼續嗎？備份可以透過MEGA桌面應用程式重新啟用。";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2645,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="會議已結束";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="檢視會議記錄";
+"meetings.alert.meetingchat"="檢視對話記錄";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="您嘗試加入的會議已經結束。您仍然可以檢視會議對談記錄。";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -2715,15 +2713,15 @@
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="現行的訂閱";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="您目前在Apple有一個現行的MEGA訂閱。您必須在訂閱裡個別取消它，因為MEGA無法為您取消訂閱。造訪我們的幫助中心瞭解更多訊息。";
+"account.delete.subscription.itunes"="您目前使用Apple訂閱MEGA。您必須在訂閱中單獨取消它，因為MEGA無法為您取消訂閱。造訪我們的幫助中心瞭解更多資訊。";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="管理訂閱";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="您在Google有一個現行的MEGA訂閱。您必須在Google Play個別將它取消，因為MEGA無法為您取消訂閱。造訪我們的幫助中心瞭解更多訊息。";
+"account.delete.subscription.googlePlay"="您目前使用Google訂閱MEGA。您必須在Google Play中單獨取消它，因為MEGA無法為您取消訂閱。造訪我們的幫助中心瞭解更多資訊。";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="造訪Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="您目前在華為有一個現行的MEGA訂閱。您必須在華為應用程式商店中單獨取消它，因為MEGA無法為您取消訂閱。造訪我們的幫助中心瞭解更多訊息。";
+"account.delete.subscription.huaweiAppGallery"="您目前使用華為訂閱MEGA。您必須在華為應用程式商店中單獨取消它，因為MEGA無法為您取消訂閱。造訪我們的幫助中心瞭解更多資訊。";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="造訪華為應用程式商店";
 /* Dialog message shown before deleting an account with active webclient subscription */
@@ -2987,7 +2985,7 @@
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="在主視窗顯示";
 /* Label indicating storage over quota */
-"transfer.storage.quotaExceeded"="已超出空間配額";
+"transfer.storage.quotaExceeded"="超出空間配額";
 /* Title of section Next on Audio Playlist */
 "media.audio.playlist.section.next.title"="下一步";
 /* Title of Audio Player dialog for Playback Continuation */
@@ -3069,7 +3067,7 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="通話將於%@後結束";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="下載為可離線使用";
+"general.downloadToOffline"="下載為離線使用";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
 "general.fileIsBeingDownloaded"="檔案已在下載中";
 /* Button and title text that ends the meeting for all */
@@ -3155,9 +3153,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="安排會議";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="帳戶因侵犯版權而被暫停。我們向您發送了一封電子郵件，其中有包含關於此的更多訊息。";
+"account.suspension.message.copyright"="由於多次指控侵犯版權，您的MEGA帳戶已被暫停。這意味著您無法存取您的帳戶或其中的資料。\n\n請檢查您的電子郵件以獲取有關如何提交反對通知的更多資訊。";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="帳戶因違反MEGA服務條款而被終止，例如侵犯他人權益、共享和匯入非法資料、或濫用系統資源行為。";
+"account.suspension.message.nonCopyright"="您的帳戶由於違反MEGA的服務條款而被終止。\n\n您將無法重新存取您儲存的資料，也無法被授權註冊新的MEGA帳戶。";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="開啟MEGA應用程式並登入以繼續";
 /* Account Storage title label of used storage size */
@@ -3177,19 +3175,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="過去的會議";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="驗證%@";
+"general.menuAction.verifyContact.title"="批准%@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="我們使用零知識加密保護您的資料。為確保額外的安全性，我們會要求您驗證您與之共享資訊的聯絡人，他們才能存取共享資料夾。";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="我們使用零知識加密來保護您的資料。為確保額外的安全性，我們要求您批准與您共享資訊的聯絡人，然後他們才能存取共享資料夾。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="若要驗證您的聯絡人，請確定您在上面看到的憑證與他們的帳戶憑證相匹配。您可以要求對方分享他們的憑證給您。";
+"sharedItems.contactVerification.section.myCredentials.message"="若要批准您的聯絡人，請確定您在上面看到的憑證與他們的帳戶憑證相匹配。您可以要求對方分享他們的憑證給您。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="我們使用零知識加密保護您的資料。為確保額外的安全性，我們會要求您驗證您從之接收資訊的聯絡人，您才能存取共享資料夾。";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="我們使用零知識加密來保護您的資料。為了確保額外的安全性，我們要求您先批准向您發送資訊的聯絡人，然後您才能存取共享文件夾。";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="若要存取共享資料夾，與您共享資料夾的人也會對您進行驗證。";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="要存取共享資料夾，與您共享資料夾的人也應該批准您。";
+/* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@是由您尚未批准的聯絡人共享。為了確保額外的安全性，我們建議您透過點擊要批准的聯絡人旁邊的ⓘ於聯絡人中批准他們的憑證。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="您的憑證";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="我們採用零知識加密技術來保護您的資料，因此您在MEGA上儲存、共享、接收的所有資訊都是安全的。為了確保額外的安全，我們要求您驗證您與之共享資訊，或從之接收資料的聯絡人。";
+"verifyCredentials.headerMessage"="我們採用零知識加密技術來保護您的資料，因此您在MEGA上儲存、共享、接收的所有資訊都是安全的。為了確保額外的安全，我們要求您批准您與之共享資訊，或從之接收資料的聯絡人。";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[未解密資料夾]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3235,15 +3235,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] 邀請[/B]您參加會議，排程時間：";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]會議時間為";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] 更新[/B]會議說明";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email]已取消[/B]以下會議排程";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email]已更新[/B]會議日期為";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email]已更新[/B]會議時間為";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] 更新[/B]會議名稱，從「[PreviousTitle]」更新為[B]「[UpdatedTitle]」[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3251,13 +3251,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] 邀請您參加週期性會議，排程時間：";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]會議為";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 更新[/B]週期性會議說明";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email]已更新[/B]週期性會議日期為";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email]已更新[/B]週期性會議時間為";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="事件";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3270,14 +3270,10 @@
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="顯示更多";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][StartDate]起[WeekDay][/B]的[B][StartTime]到[EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="從[B][StartDate][/B]起，每天的[B][StartTime]到[EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="從[B][StartDate]到[UntilDate][/B]，每天的[B][StartTime]到[EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email]已取消[/B]以下事件排程";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email]已更新[/B]事件為";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="帳戶安全性升級";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3321,9 +3317,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="每月";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="無法驗證聯絡人";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="無法批准聯絡人";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="您無法驗證%@，因為他們不在您的聯絡人列表中。請先等待他們接受您的邀請。";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="您無法批准%@，因為他們不在您的聯絡人列表中。請先等待他們接受您的邀請。";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="停用MEGA密碼";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3445,7 +3441,7 @@
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="已封鎖";
 /* Default device name in case the device name cannot be obtained */
-"device.center.default.device.title"="Unknown device";
+"device.center.default.device.title"="不明的裝置";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="結束重複";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3549,11 +3545,11 @@
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="取消";
 /* Title for alert cancelling an scheduled meeting */
-"meetings.scheduled.cancelAlert.title"="Cancel %@?";
+"meetings.scheduled.cancelAlert.title"="是否取消%@？";
 /* Description for alert cancelling an scheduled meeting with messages in the chat room */
-"meetings.scheduled.cancelAlert.description.withMessages"="此會議將被放在過去的會議中，並通知所有與會者。";
+"meetings.scheduled.cancelAlert.description.withMessages"="此會議將歸入過去的會議，所有與會者都將收到通知。";
 /* Description for alert cancelling an scheduled meeting without messages in the chat room */
-"meetings.scheduled.cancelAlert.description.withoutMessages"="此會議將被封存，並通知所有與會者。";
+"meetings.scheduled.cancelAlert.description.withoutMessages"="此會議將被封存，所有與會者都將收到通知。";
 /* Confirm cancel option for alert cancelling an scheduled meeting without messages in chat room */
 "meetings.scheduled.cancelAlert.option.confirm.withoutMessages"="取消並封存";
 /* Confirm cancel option for alert cancelling an scheduled meeting with messages in chat room */
@@ -3615,32 +3611,76 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="編輯會議";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="使用電子郵件發送行事曆邀請給與會者，以便他們可以將會議加到他們的行事曆。";
+"meetings.scheduleMeeting.calendarInvite.description"="透過電子郵件發送行事曆邀請給與會者，以便他們可以將會議加到他們的行事曆。";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="開始會議";
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="事件";
 /* Change SFU server alert title. */
-"settings.about.sfu.changeAlert.title"="Change SFU server";
+"settings.about.sfu.changeAlert.title"="更改SFU伺服器";
 /* Change SFU server alert message. */
-"settings.about.sfu.changeAlert.message"="Default is -1";
+"settings.about.sfu.changeAlert.message"="預設為-1";
 /* Change SFU server alert test field placeholder. */
-"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+"settings.about.sfu.changeAlert.placeholder"="輸入SFU ID";
 /* Change SFU server alert cancel button. */
 "settings.about.sfu.changeAlert.cancelButton"="取消";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="變更";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chat with %@";
+"chat.backButton.oneToOne.menu"="與%@對話";
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="等候室";
 /* Schedule meeting waiting room setting description */
 "meetings.scheduleMeeting.waitingRoom.description"="只有主持人允許的使用者才可以加入會議。";
 /* Schedule meeting waiting room warning banner title */
-"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="通話期間由非主持人加入的與會者不會被傳送到等候室。";
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="瞭解更多";
 /* Album saved to cloud drive alert message */
-"albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
+"albumLink.alert.message.albumSavedToCloudDrive"="「%@」已儲存到雲端硬碟";
 /* Album failed to save to cloud drive alert message */
-"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="「%@」無法儲存到雲端硬碟。請稍後再試。如果問題仍然存在，請聯繫共享連結給您的人。";
+/* Text displayed on banner we show when sharing folder with unverified contacts */
+"shareFolder.contactsNotVerified"="您與之共享資訊的某些聯絡人尚未獲得您的批准。為了確保額外的安全性，我們建議您透過點擊要批准的聯絡人旁邊的ⓘ於聯絡人中批准他們的憑證。。";
+/* Rename public album alert title */
+"albumLink.alert.renameAlbum.title"="重新命名相簿";
+/* Rename public album alert message */
+"albumLink.alert.renameAlbum.message"="您的相簿中已存在名為「%@」的相簿。請為您要儲存的相簿輸入一個新名稱。";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="升級";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="我願意等待";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="購買新方案";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="[B] TB已使用[A]%%";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="可用的傳輸配額有限";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="由於您已使用此IP位址大部分的傳輸配額，下載可能會中斷。若要獲得更多配額，請升級到Pro方案或等待%@直到您的IP位址有更多免費配額可用。[A]瞭解更多[/A]關於傳輸配額的資訊。";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="由於您已使用此帳戶大部分的傳輸配額，下載可能會中斷。若要獲得更多配額，請購買新方案，或者如果您有MEGA定期訂閱，您可以等待方案續訂更新。";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="超出傳輸配額";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="由於此IP位址沒有任何剩餘的傳輸配額，您無法繼續下載。若要獲得更多配額，請升級到Pro方案或等待%@直到您的IP位址有更多免費配額可用。[A]瞭解更多[/A]關於傳輸配額的資訊。";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="由於此帳戶沒有任何剩餘的傳輸配額，您無法繼續下載。若要獲得更多配額，請購買新方案，或者如果您有MEGA定期訂閱，您可以等待方案續訂更新。";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="由於此IP位址沒有任何剩餘的傳輸配額，您的媒體停止播放。若要獲得更多配額，請升級到Pro方案或等待%@直到您的IP位址有更多免費配額可用。[A]瞭解更多[/A]關於傳輸配額的資訊。";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="由於您的帳戶沒有任何剩餘的傳輸配額，媒體已停止播放。若要獲得更多配額，請購買新方案，或者若您有MEGA定期訂閱，您可以等待方案續訂更新。";
+/* Meeting waiting room leave button */
+"meetings.waitingRoom.leave"="離開";
+/* Meeting waiting room leave alert message */
+"meetings.waitingRoom.alert.leaveMeeting"="要離開會議嗎？";
+/* Meeting waiting room don't leave button */
+"meetings.waitingRoom.alert.dontLeave"="不要離開";
+/* Meeting waiting room guest join first name textfield */
+"meetings.waitingRoom.guest.firstName"="名字";
+/* Meeting waiting room guest join last name textfield */
+"meetings.waitingRoom.guest.lastName"="姓氏";
+/* Meeting waiting room guest join button */
+"meetings.waitingRoom.guest.join"="加入";
+/* Meeting waiting room message of wait for host to let you in */
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="等待主持人讓你進入";

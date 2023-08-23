@@ -1127,7 +1127,7 @@
 /* title of the My Account screen */
 "accountType"="Тип учётной записи:";
 /* Label to indicate that the current user has a Free account. */
-"Free"="Бесплатно";
+"Free"="Бесплатный";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="истекает %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Улучшить до Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Разблокируйте возможности Pro, такие как защита публичных файлов паролем и срок годности.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Разблокируйте возможности Pro, такие как защита паролем и срок годности для общедоступных ссылок.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Включить режим отладки";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Подтвердить";
 /* Button title */
-"verified"="Проверен";
+"verified"="Подтверждены";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Очистить историю";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1310,8 +1310,6 @@
 "sharedFolders"="Общие папки";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="Учетные Данные Контакта";
-/* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="Лучше всего это сделать в реальной жизни, встречаясь лицом к лицу. Если у вас есть другой проверенный канал, например, проверенный OTR или PGP, вы также можете его использовать.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "My credentials"="Мои учётные данные";
 /* Button to reset the password */
@@ -1743,7 +1741,7 @@
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 из %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
-"Allow Access to Photos"="Разрешить доступ к фотографиям";
+"Allow Access to Photos"="Разрешите доступ к фотографиям";
 /* Detailed explanation of why the user should give permission to access to the photos */
 "Please give the MEGA App permission to access Photos to share photos and videos."="Пожалуйста, откройте MEGA доступ к «Фото» для обмена фото и видео.";
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
@@ -1851,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Вы не можете включить видео, так в этом вызове уже максимальное количество участников, использующих видео.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Невозможно начать вызов из-за превышения лимита участников.";
+"Unable to start a call because the participants limit was exceeded."="Невозможно начать звонок из-за превышения лимита участников.";
 /* Label shown while joining a public chat */
 "Joining..."="Присоединение…";
 /* Label shown while leaving a public chat */
@@ -1939,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Это действие не может быть выполнено, так как это приведет к превышению текущего лимита хранилища";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Загрузки нельзя продолжить, потому что диск заполнен";
+"Your upload(s) cannot proceed because your account is full"="Загрузку нельзя продолжить, потому что облачное хранилище заполнено";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Разрешать контактам видеть, когда я был активен в MEGA последний раз.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2049,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Введите email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="У вас есть ожидающий запрос в MEGA Secure Chat. Зарегистрируйтесь в MEGA и получите бесплатно 20 ГБ хранилища навсегда.";
+"contact.invite.message"="У вас есть ожидающий запрос в MEGA Chat. Зарегистрируйтесь в MEGA и получите бесплатно 20 ГБ хранилища навсегда.";
 /* Destination folder name of chat files */
 "My chat files"="Мои файлы из чата";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2093,7 +2091,7 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Нет публичных ссылок";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Управлять обменом";
+"Manage Share"="Управлять доступом";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Поделиться с";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2203,7 +2201,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Ваш пароль утёк и теперь используется плохими игроками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.";
 /* Label indicating transfer over quota. */
-"Transfer over quota"="Превышена квота передач";
+"Transfer over quota"="Исчерпана квота передачи данных";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
 "Clear Selected"="Очистить выбранное";
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
@@ -2587,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>К сожалению, вы не предприняли никаких действий в течение <b>%@</b> после того, как мы отправили письма на <b>%@</b> <b>%@</b>. У вас всё ещё использовано <b>%@</b> хранилища, что превышает ваш бесплатный лимит. Для информации по дальнейшим действиям, пожалуйста, посмотрите электронные письма, которые мы отправили вам.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>К сожалению, вы еще не улучшили аккаунт. Если вы не сделаете это, ваши данные будут удалены завтра. Информация о том, что нужно сделать, была отправлена по электронной почте.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Если не улучшить аккаунт, ваши данные будут удалены завтра.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Пожалуйста, улучшите аккаунт в течение <warn>%@</warn>, чтобы ваши данные не были удалены.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Улучшите аккаунт в течение <warn>%@</warn>, чтобы ваши данные не были удалены.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Пожалуйста, улучшите аккаунт сегодня, если вы хотите сохранить свои данные.</warn><body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Улучшите аккаунт сегодня, если хотите сохранить свои данные.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Бонусы";
 /* Backup setup warning title */
@@ -2601,7 +2599,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Перемещение папки «%@»";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="Вы меняете расположение папки резервного копирования по умолчанию. Из-за этого её может быть сложнее найти в будущем. Пожалуйста, запомните, где она находится, чтобы не потерять.";
+"dialog.root.backup.folder.location.warning.message"="Вы меняете расположение папки резервного копирования по умолчанию. Из-за этого её может быть сложнее найти. Пожалуйста, запомните, где она находится, чтобы не потерять.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="При перемещении этой папки изменяется место сохранения резервных копий. Резервное копирование будет отключено в целях безопасности. Вы действительно хотите это сделать? Резервное копирование можно повторно включить с помощью настольного приложения MEGA.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2645,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Встреча закончилась";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="Посмотреть чат встречи";
+"meetings.alert.meetingchat"="Посмотреть историю чата";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="Встреча, к которой вы пытаетесь присоединиться, уже закончилась. Вы по-прежнему можете просматривать историю чата собрания.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -3155,9 +3153,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Запланировать встречу";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Аккаунт заблокирован из-за нарушения авторских прав. Мы отправили вам электронное письмо с дополнительной информацией об этом.";
+"account.suspension.message.copyright"="Ваш аккаунт MEGA был заблокирован из-за неоднократных обвинений в нарушении авторских прав. Это означает, что вы не можете получить доступ к аккаунту или данным в нём.\n\nДля получения дополнительной информации о том, как подать встречное заявление, проверьте свою электронную почту.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Аккаунт заблокирован из-за нарушения условий использования MEGA, таких как злоупотребление правами других лиц, обмен и импорт незаконных данных или злоупотребление системой.";
+"account.suspension.message.nonCopyright"="Ваш аккаунт был удалён из-за нарушения Условий использования MEGA.\n\nВы не сможете восстановить доступ к своим сохранённым данным или зарегистрировать новый аккаунт MEGA.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Откройте приложение MEGA и войдите, чтобы продолжить.";
 /* Account Storage title label of used storage size */
@@ -3179,17 +3177,19 @@
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Подтвердить %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, с которыми вы делитесь информацией, прежде чем они смогут получить доступ к общим папкам.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас одобрить контакты, с которыми вы делитесь информацией, прежде чем они смогут получить доступ к общим папкам.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="Чтобы подтвердить контакт, убедитесь, что учётные данные, которые вы видите выше, соответствуют его учётным данным. Вы можете попросить его поделиться с вами своими учётными данными.";
+"sharedItems.contactVerification.section.myCredentials.message"="Чтобы одобрить контакт, убедитесь, что учётные данные, которые вы видите выше, соответствуют его учётным данным. Вы можете попросить его поделиться с вами своими учётными данными.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, от которых вы получаете информацию, прежде чем вы сможете получить доступ к общим папкам.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас одобрить контакты, от которых вы получаете информацию, прежде чем вы сможете получить доступ к общим папкам.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Чтобы общая папка стала доступной, человек, который поделился ею с вами, также должен подтвердить вас.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Чтобы общая папка стала доступной, человек, который поделился ей с вами, также должен одобрить вас.";
+/* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="Папкой «%@» поделился контакт, которого вы не одобрили. Чтобы обеспечить дополнительную безопасность, мы рекомендуем вам одобрить иго учетные данные в «Контактах». Нажмите на ⓘ рядом с контактом, который хотите одобрить.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Ваши учётные данные";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением, поэтому вся информация, которую вы храните, делитесь и получаете в MEGA, находится в безопасности. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, с которыми вы делитесь информацией или от которых получаете данные.";
+"verifyCredentials.headerMessage"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением, поэтому вся информация, которую вы храните, делитесь и получаете в MEGA, находится в безопасности. Чтобы обеспечить дополнительную безопасность, мы просим вас одобрить контакты, с которыми вы делитесь информацией или от которых получаете данные.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Нерасшифрованная папка]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3270,10 +3270,6 @@
 "meetings.scheduled.recurring.occurrences.list.seeMoreOccurrences"="Показать больше";
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay], [StartDate][/B] с [B][StartTime] до [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting without ending date - Everyday, effective 26 January 2023 from 13:00 to 13:30 */
-"meetings.scheduled.recurring.daily.forever"="Каждый день с [B][StartDate][/B] с [B][StartTime] до [EndTime][/B]";
-/* Scheduled meeting date and time description, for a daily recurring meeting with ending date - Everyday, effective 2 February 2023 until 2 August 2023 from 13:30 to 14:00 */
-"meetings.scheduled.recurring.daily.until"="Каждый день [B][StartDate] по [UntilDate][/B] с [B][StartTime] до [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] отменил[/B] повторение, назначенное на";
 /* In app notification description when an occurence is updated in a recurring meeting. */
@@ -3321,9 +3317,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="ежемесячно";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Не удаётся подтвердить контакт";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Не удаётся одобрить контакт";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Вы не можете подтвердить %@, так как его нет в вашем списке контактов. Подождите, пока он сначала примет приглашение.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Вы не можете одобрить %@, так как его нет в вашем списке контактов. Подождите, пока он сначала примет приглашение.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Отключите код доступа MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3644,3 +3640,47 @@
 "albumLink.alert.message.albumSavedToCloudDrive"="«%@» сохранён на Облачном диске";
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="«%@» не удаётся сохранить на Облачном диске. Повторите попытку позже. Если проблема не исчезнет, обратитесь к человеку, который поделился с вами ссылкой.";
+/* Text displayed on banner we show when sharing folder with unverified contacts */
+"shareFolder.contactsNotVerified"="Некоторые контакты, с которыми вы делитесь информацией, не были вами одобрены. Чтобы обеспечить дополнительную безопасность, мы рекомендуем вам одобрить их учетные данные в «Контактах». Нажмите на ⓘ рядом с контактом, который хотите одобрить.";
+/* Rename public album alert title */
+"albumLink.alert.renameAlbum.title"="Переименование альбома";
+/* Rename public album alert message */
+"albumLink.alert.renameAlbum.message"="Альбом «%@» уже существует в «Альбомах». Введите новое название для сохраняемого альбома.";
+/* Button title of the dialog for transfer quota error that will direct to upgrade plan */
+"transferQuotaError.button.upgrade"="Улучшить аккаунт";
+/* Button title of the dialog for transfer quota error that will dismiss dialog */
+"transferQuotaError.button.wait"="Я подожду";
+/* Button title of the dialog for transfer quota error to buy new plan */
+"transferQuotaError.button.buyNewPlan"="Купить новый план";
+/* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
+"transferQuotaError.footerMessage.quotaUsage"="Использовано [A]%% из [B] ТБ";
+/* Title of the dialog for transfer quota error with limited available trasfer quota */
+"transferQuotaError.downloadLimitedQuota.title"="Доступная квота передачи данных ограничена";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Скачивание может быть прервано, так как вы использовали бо́льшую часть квоты передачи данных для этого IP-адреса. Чтобы получить дополнительную квоту, перейдите на план Pro или подождите %@, пока для вашего IP-адреса не обновится доступная квота. [A]Подробнее[/A] о квоте передачи данных.";
+/* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="Скачивание может быть прервано, так как вы использовали бо́льшую часть квоты передачи данных для этого аккаунта. Чтобы получить больше квоты, улучшите текущий план или, если у вас есть регулярная подписка на MEGA, вы можете дождаться её продления.";
+/* Title of the dialog for transfer quota error with exceeded quota */
+"transferQuotaError.downloadExceededQuota.title"="Исчерпана квота передачи данных";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="Вы не можете продолжить скачивание, потому что была исчерпана квота передачи данных для этого IP-адреса. Чтобы получить дополнительную квоту, перейдите на план Pro или подождите %@, пока для вашего IP-адреса не обновится доступная квота. [A]Подробнее[/A] о квоте передачи данных.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.downloadExceededQuota.proAccount.message"="Вы не можете продолжить скачивание, потому что была исчерпана квота передачи данных для этого аккаунта. Чтобы получить больше квоты, улучшите текущий план или, если у вас есть регулярная подписка на MEGA, вы можете дождаться её продления.";
+/* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Воспроизведение медиа остановилось, потому что была исчерпана квота передачи данных для этого IP-адреса. Чтобы получить дополнительную квоту, перейдите на план Pro или подождите %@, пока для вашего IP-адреса не обновится доступная квота. [A]Подробнее[/A] о квоте передачи данных.";
+/* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
+"transferQuotaError.streamingExceededQuota.proAccount.message"="Воспроизведение медиа остановилось, потому что была исчерпана квота передачи данных для этого аккаунта. Чтобы получить больше квоты, улучшите текущий план или, если у вас есть регулярная подписка на MEGA, вы можете дождаться её продления.";
+/* Meeting waiting room leave button */
+"meetings.waitingRoom.leave"="Выйти";
+/* Meeting waiting room leave alert message */
+"meetings.waitingRoom.alert.leaveMeeting"="Покинуть встречу?";
+/* Meeting waiting room don't leave button */
+"meetings.waitingRoom.alert.dontLeave"="Не покидать";
+/* Meeting waiting room guest join first name textfield */
+"meetings.waitingRoom.guest.firstName"="Имя";
+/* Meeting waiting room guest join last name textfield */
+"meetings.waitingRoom.guest.lastName"="Фамилия";
+/* Meeting waiting room guest join button */
+"meetings.waitingRoom.guest.join"="Войти";
+/* Meeting waiting room message of wait for host to let you in */
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="Подождите, пока организатор впустит вас";
