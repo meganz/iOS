@@ -636,29 +636,6 @@
     return quickActionManaged;
 }
 
-- (void)requestUserName {
-    NSNumber *handle = MEGASdk.currentUserHandle;
-    if (handle == nil) {
-        return;
-    }
-    
-    if (![[MEGAStore shareInstance] fetchUserWithUserHandle:[handle unsignedLongLongValue]]) {
-        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
-        [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
-    }
-}
-
-- (void)requestContactsFullname {
-    MEGAUserList *userList = [[MEGASdkManager sharedMEGASdk] contacts];
-    for (NSInteger i = 0; i < userList.size.integerValue; i++) {
-        MEGAUser *user = [userList userAtIndex:i];
-        if (![[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle] && user.visibility == MEGAUserVisibilityVisible) {
-            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
-            [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
-        }
-    }
-}
-
 - (void)showMainTabBar {
     if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         
@@ -1523,8 +1500,6 @@
             
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
             
-            [self requestUserName];
-            [self requestContactsFullname];
             [self updateContactsNickname];
             
             MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
