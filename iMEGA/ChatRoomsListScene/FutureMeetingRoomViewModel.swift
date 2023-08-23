@@ -263,6 +263,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         Task {
             do {
                 guard let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else { return }
+                try await Task.sleep(nanoseconds: 2_000_000_000) //This is a temporal workaround until API fixes that some management messages (like this one, cancelled meeting) don't unarchive chats MEET-2928
                 _ = try await chatRoomUseCase.archive(true, chatRoom: chatRoom)
                 router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withoutMessages)
             } catch {
