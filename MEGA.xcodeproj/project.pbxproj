@@ -1240,6 +1240,7 @@
 		946E783529C0F79800BB3FE6 /* SharedItemsSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946E783429C0F79800BB3FE6 /* SharedItemsSearchOperation.swift */; };
 		9470003929B77BCF00827E04 /* ActionWarningViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */; };
 		9472202C2A29E16600890CFB /* MyAccountHallViewController+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9472202B2A29E16600890CFB /* MyAccountHallViewController+TableViewDelegate.swift */; };
+		947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */; };
 		947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */; };
 		947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */; };
 		9479F02528BF93CA008578BE /* DNDTurnOnOptionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */; };
@@ -1252,6 +1253,8 @@
 		947C6CBA2A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */; };
 		947C6CC62A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
 		947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
+		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
+		948425E32A9504400024FF1F /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 948425E22A9504400024FF1F /* Search */; };
 		948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */; };
 		9487BF3D29B6744000645D32 /* NodeActionRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
@@ -2052,7 +2055,6 @@
 		BF6DF36B2457A06300D612D0 /* AddToChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */; };
 		BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */; };
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
-		BF6E8DFF25BA556C003A125A /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */; };
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
 		BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */; };
@@ -3819,6 +3821,7 @@
 		946E783429C0F79800BB3FE6 /* SharedItemsSearchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsSearchOperation.swift; sourceTree = "<group>"; };
 		9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionWarningViewRouter.swift; sourceTree = "<group>"; };
 		9472202B2A29E16600890CFB /* MyAccountHallViewController+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+TableViewDelegate.swift"; sourceTree = "<group>"; };
+		947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsBridge.swift; sourceTree = "<group>"; };
 		947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisabler.swift; sourceTree = "<group>"; };
 		947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisablerTests.swift; sourceTree = "<group>"; };
 		9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DNDTurnOnOptionEntity+Mapper.swift"; sourceTree = "<group>"; };
@@ -3828,6 +3831,7 @@
 		947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANavigationController+Additions.swift"; sourceTree = "<group>"; };
 		947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InviteYourFriendsViewController+Additions.swift"; sourceTree = "<group>"; };
 		947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackBarButtonItem.swift"; sourceTree = "<group>"; };
+		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManagerTests.swift; sourceTree = "<group>"; };
 		9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionRepositoryTests.swift; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
@@ -4680,7 +4684,6 @@
 		BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatImageCell.swift; sourceTree = "<group>"; };
 		BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatImageCell.xib; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
-		BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageLoadErrorEntity.swift; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
@@ -5124,7 +5127,7 @@
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
-				94FCE08B2A94CF8D001E9D72 /* Search in Frameworks */,
+				948425E32A9504400024FF1F /* Search in Frameworks */,
 				940931FE2A56ED680093C169 /* Settings in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
 			);
@@ -6191,6 +6194,7 @@
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
 				4152267A1A692ECC00EC7BB6 /* LoginViewController.m */,
 				E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */,
+				948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */,
 				C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */,
 				B6D995F7222CA42000A98BEF /* MainTabBarController+CameraUpload.h */,
 				B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */,
@@ -6509,7 +6513,6 @@
 				BFB463EC2433FD9C00FB90B9 /* Date+Additions.swift */,
 				B6A01BA7289A5E9200B503FD /* FileManager+Additions.swift */,
 				B6A01BA6289A5E9200B503FD /* FolderContentStat.swift */,
-				BF6E8DFE25BA556B003A125A /* MainTabBarController+Additions.swift */,
 				BF53B78B2745F92F00B47CA0 /* MEGAChatCall+Additions.swift */,
 				BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */,
 				BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */,
@@ -7656,6 +7659,7 @@
 				5D166B752521952F004F4F4A /* HomeSearch */,
 				5D8C5AB624F0A39300EDD7A9 /* HomeLocalisation.swift */,
 				5DA32DB924EA27DC0075B613 /* HomeScreenFactory.swift */,
+				947381B92A9626D000C4E8EC /* SearchResultsBridge.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -12201,7 +12205,7 @@
 				A8BC1C322A600F8D001B30F0 /* MEGASDKRepoMock */,
 				94A220172A696502004130C4 /* MEGAAnalyticsiOS */,
 				A85CF69C2A7180A90018FEF1 /* ChatRepo */,
-				94FCE08A2A94CF8D001E9D72 /* Search */,
+				948425E22A9504400024FF1F /* Search */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -13645,7 +13649,7 @@
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
-				BF6E8DFF25BA556C003A125A /* MainTabBarController+Additions.swift in Sources */,
+				948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */,
 				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,
 				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,
 				836A783428E34E5B00B6849F /* MainTabBarController+Chat.swift in Sources */,
@@ -14309,6 +14313,7 @@
 				A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */,
 				125E606E285A87C2003C7BB5 /* SearchResultErrorEntity.swift in Sources */,
 				5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */,
+				947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */,
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				9D3563D228B5506A00CB3365 /* SecuritySettingsViewRouter.swift in Sources */,
@@ -17066,6 +17071,10 @@
 		946ACCC8299C0B5700E6C0F5 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPresentation;
+		};
+		948425E22A9504400024FF1F /* Search */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Search;
 		};
 		94A220172A696502004130C4 /* MEGAAnalyticsiOS */ = {
 			isa = XCSwiftPackageProductDependency;

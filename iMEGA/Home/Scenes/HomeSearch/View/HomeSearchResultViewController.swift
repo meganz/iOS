@@ -64,24 +64,24 @@ final class HomeSearchResultViewController: UIViewController {
     }
 }
 
-// MARK: - MEGASearchControllerEdittingDelegate
+// MARK: - MEGASearchControllerEditingDelegate
 
 extension HomeSearchResultViewController: MEGASearchBarViewEditingDelegate {
 
-    func didInputText(_ inputText: String, from searchController: MEGASearchBarView) {
+    func didInputText(_ inputText: String) {
         switch inputText.isEmpty {
         case true:
-            viewModel.didHilightEmptySearchBar()
+            viewModel.didHighlightEmptySearchBar()
         case false:
             viewModel.didInputText(text: inputText)
         }
     }
 
-    func didHighlightSearchController(_ searchController: MEGASearchBarView) {
-        viewModel.didHilightEmptySearchBar()
+    func didHighlightSearchBar() {
+        viewModel.didHighlightEmptySearchBar()
     }
 
-    func didClearText(for searchController: MEGASearchBarView) {
-        viewModel.didHilightEmptySearchBar()
+    func didClearText() {
+        viewModel.didHighlightEmptySearchBar()
     }
 }

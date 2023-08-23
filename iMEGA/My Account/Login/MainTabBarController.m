@@ -34,7 +34,7 @@
     
     [defaultViewControllersMutableArray addObject:[self cloudDriveViewController]];
     [defaultViewControllersMutableArray addObject:[self photosViewController]];
-    [defaultViewControllersMutableArray addObject:[self homeViewController]];
+    [defaultViewControllersMutableArray addObject:[self makeHomeViewController]];
     [defaultViewControllersMutableArray addObject:[self chatViewController]];
     [defaultViewControllersMutableArray addObject:[self SharedItemsViewController]];
     
@@ -272,10 +272,6 @@
 
 - (UIViewController *)photosViewController {
     return [self photoAlbumViewController];
-}
-
-- (UIViewController *)homeViewController {
-    return [HomeScreenFactory.new createHomeScreenFrom:self];
 }
 
 - (UIViewController *)SharedItemsViewController {

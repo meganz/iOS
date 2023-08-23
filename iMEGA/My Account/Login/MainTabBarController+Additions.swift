@@ -1,7 +1,19 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 
 extension MainTabBarController {
+    
+    private var shouldUseNewHomeSearchResults: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newHomeSearch)
+    }
+    
+    @objc func makeHomeViewController() -> UIViewController {
+        HomeScreenFactory().createHomeScreen(
+            from: self,
+            newHomeSearchResultsEnabled: shouldUseNewHomeSearchResults
+        )
+    }
     
     @objc func createPSAViewModel() -> PSAViewModel? {
         let router = PSAViewRouter(tabBarController: self)
