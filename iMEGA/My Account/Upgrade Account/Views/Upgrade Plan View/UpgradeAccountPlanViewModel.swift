@@ -34,7 +34,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var recommendedPlanType: AccountTypeEntity?
     var isShowBuyButton = false
     
-    @Published var selectedTermTab: AccountPlanTermEntity = .yearly {
+    @Published var selectedCycleTab: SubscriptionCycleEntity = .yearly {
         didSet { toggleBuyButton() }
     }
     @Published private(set) var selectedPlanType: AccountTypeEntity? {
@@ -128,7 +128,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         setUpPlanTask = Task {
             planList = await purchaseUseCase.accountPlanProducts()
             setRecommendedPlan()
-            await setDefaultPlanTermTab()
+            await setDefaultPlanCycleTab()
             await setCurrentPlan(type: accountDetails.proLevel)
         }
     }
@@ -142,8 +142,8 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     @MainActor
-    private func setDefaultPlanTermTab() {
-        selectedTermTab = accountDetails.subscriptionCycle == .monthly ? .monthly : .yearly
+    private func setDefaultPlanCycleTab() {
+        selectedCycleTab = accountDetails.subscriptionCycle == .monthly ? .monthly : .yearly
     }
     
     @MainActor
@@ -159,8 +159,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 return plan.type == type
             }
             
-            let term = cycle == .monthly ? AccountPlanTermEntity.monthly : AccountPlanTermEntity.yearly
-            return plan.type == type && plan.term == term
+            return plan.type == type && plan.subscriptionCycle == cycle
         }
     }
 
@@ -174,7 +173,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     var filteredPlanList: [AccountPlanEntity] {
-        planList.filter { $0.term == selectedTermTab }
+        planList.filter { $0.subscriptionCycle == selectedCycleTab }
     }
     
     var pricingPageFooterDetails: TextWithLinkDetails {
@@ -279,7 +278,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         default:
             if plan == currentPlan { return .currentPlan }
             if let recommendedPlanType,
-                plan.term == selectedTermTab,
+                plan.subscriptionCycle == selectedCycleTab,
                 plan.type == recommendedPlanType {
                 return .recommended
             }

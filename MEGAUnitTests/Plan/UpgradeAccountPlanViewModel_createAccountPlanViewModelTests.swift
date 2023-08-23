@@ -7,12 +7,12 @@ import XCTest
 final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
-    private let proI_monthly = AccountPlanEntity(type: .proI, name: "Pro I", term: .monthly)
-    private let proI_yearly = AccountPlanEntity(type: .proI, name: "Pro I", term: .yearly)
-    private let proII_monthly = AccountPlanEntity(type: .proII, name: "Pro II", term: .monthly)
-    private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", term: .yearly)
-    private let proIII_monthly = AccountPlanEntity(type: .proII, name: "Pro III", term: .monthly)
-    private let proIII_yearly = AccountPlanEntity(type: .proII, name: "Pro III", term: .yearly)
+    private let proI_monthly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .monthly)
+    private let proI_yearly = AccountPlanEntity(type: .proI, name: "Pro I", subscriptionCycle: .yearly)
+    private let proII_monthly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .monthly)
+    private let proII_yearly = AccountPlanEntity(type: .proII, name: "Pro II", subscriptionCycle: .yearly)
+    private let proIII_monthly = AccountPlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .monthly)
+    private let proIII_yearly = AccountPlanEntity(type: .proII, name: "Pro III", subscriptionCycle: .yearly)
     
     func testCreateAccountPlanViewModel_withSelectedPlanType_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .free)

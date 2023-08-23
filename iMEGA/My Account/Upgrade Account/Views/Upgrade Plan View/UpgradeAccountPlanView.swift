@@ -32,7 +32,7 @@ struct UpgradeAccountPlanView: View, DismissibleContentView {
             ScrollView {
                 LazyVStack(pinnedViews: .sectionFooters) {
                     UpgradeSectionHeaderView(currentPlanName: viewModel.currentPlanName,
-                                             selectedTermTab: $viewModel.selectedTermTab)
+                                             selectedCycleTab: $viewModel.selectedCycleTab)
                     
                     Section {
                         ForEach(viewModel.filteredPlanList, id: \.self) { plan in

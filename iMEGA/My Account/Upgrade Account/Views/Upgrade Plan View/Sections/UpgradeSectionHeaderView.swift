@@ -3,7 +3,7 @@ import SwiftUI
 
 struct UpgradeSectionHeaderView: View {
     var currentPlanName: String
-    @Binding var selectedTermTab: AccountPlanTermEntity
+    @Binding var selectedCycleTab: SubscriptionCycleEntity
     
     var body: some View {
         Section {
@@ -17,11 +17,11 @@ struct UpgradeSectionHeaderView: View {
                 .bold()
                 .padding(.top, 1)
             
-            Picker("Account Plan Term", selection: $selectedTermTab) {
+            Picker("Account Plan Cycle", selection: $selectedCycleTab) {
                 Text(Strings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.monthly)
-                    .tag(AccountPlanTermEntity.monthly)
+                    .tag(SubscriptionCycleEntity.monthly)
                 Text(Strings.Localizable.UpgradeAccountPlan.Header.PlanTermPicker.yearly)
-                    .tag(AccountPlanTermEntity.yearly)
+                    .tag(SubscriptionCycleEntity.yearly)
             }
             .pickerStyle(.segmented)
             .frame(width: 200)

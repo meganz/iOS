@@ -11,8 +11,8 @@ extension SKProduct {
     }
 }
 
-// MARK: - AccountPlanTerm
-fileprivate extension AccountPlanTermEntity {
+// MARK: - SubscriptionCycleEntity
+fileprivate extension SubscriptionCycleEntity {
     init(productIdentifier identifier: String) {
         switch identifier {
         case let id where id.contains("oneYear"): self = .yearly
@@ -31,7 +31,7 @@ fileprivate extension AccountPlanEntity {
         self.init(productIdentifier: product.productIdentifier)
 
         let productIdentifier = product.productIdentifier
-        term = AccountPlanTermEntity(productIdentifier: productIdentifier)
+        subscriptionCycle = SubscriptionCycleEntity(productIdentifier: productIdentifier)
         
         let planType = planType(productIdentifier: productIdentifier)
         name = MEGAAccountDetails.string(for: planType)
