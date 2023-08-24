@@ -248,7 +248,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
                 scheduledMeeting.cancelled = true
                 _ = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting)
                 if !chatHasMessages {
-                    archiveChatRoom()
+                    archiveChatRoom(afterCancelMeeting: true)
                 } else {
                     router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withMessages)
                 }
@@ -259,13 +259,15 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         }
     }
     
-    private func archiveChatRoom() {
+    private func archiveChatRoom(afterCancelMeeting: Bool) {
         Task {
             do {
                 guard let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else { return }
                 try await Task.sleep(nanoseconds: 2_000_000_000) //This is a temporal workaround until API fixes that some management messages (like this one, cancelled meeting) don't unarchive chats MEET-2928
                 _ = try await chatRoomUseCase.archive(true, chatRoom: chatRoom)
-                router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withoutMessages)
+                if afterCancelMeeting {
+                    router.showSuccessMessage(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withoutMessages)
+                }
             } catch {
                 router.showErrorMessage(Strings.Localizable.somethingWentWrong)
                 MEGALogError("Failed to archive chat")
@@ -446,7 +448,7 @@ extension FutureMeetingRoomViewModel {
             imageName: Asset.Images.Chat.ContextualMenu.archiveChatMenu.name
         ) { [weak self] in
             guard let self else { return }
-            archiveChatRoom()
+            archiveChatRoom(afterCancelMeeting: false)
         }
     }
     
