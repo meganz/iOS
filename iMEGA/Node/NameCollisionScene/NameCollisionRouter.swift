@@ -75,12 +75,14 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
 #endif
         }
     }
-    
+
+    @MainActor
     func showCopyOrMoveSuccess() {
         dismiss()
         SVProgressHUD.showSuccess(withStatus: Strings.Localizable.completed)
     }
-    
+
+    @MainActor
     func showCopyOrMoveError() {
         dismiss()
         SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
