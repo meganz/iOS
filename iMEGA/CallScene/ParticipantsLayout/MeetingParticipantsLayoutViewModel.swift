@@ -315,7 +315,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func isBackCameraSelected() -> Bool {
-        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .back),
+        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: .back),
               localVideoUseCase.videoDeviceSelected() == selectCameraLocalizedString else {
             return false
         }

@@ -17,12 +17,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         let permissionHandler = DevicePermissionsHandler.makeHandler()
         let viewModel = ChatRoomsListViewModel(
             router: self,
-            chatUseCase: ChatUseCase(
-                chatRepo: ChatRepository(
-                    sdk: MEGASdkManager.sharedMEGASdk(),
-                    chatSDK: MEGASdkManager.sharedMEGAChatSdk()
-                )
-            ),
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: .shared, chatSDK: .shared)),
             chatRoomUseCase: chatRoomUseCase,
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
@@ -50,7 +45,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         navigationController?.pushViewController(controller, animated: true)
     }
             
-    func presentMeetingAlreayExists() {
+    func presentMeetingAlreadyExists() {
         guard let navigationController else { return }
         MeetingAlreadyExistsAlert.show(presenter: navigationController)
     }
@@ -81,6 +76,10 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
         )
         ScheduleMeetingRouter(presenter: navigationController, viewConfiguration: viewConfiguration).start()
+    }
+    
+    func presentWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity) {
+        WaitingRoomViewRouter(presenter: chatRoomsListViewController, scheduledMeeting: scheduledMeeting).start()
     }
         
     func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int) {

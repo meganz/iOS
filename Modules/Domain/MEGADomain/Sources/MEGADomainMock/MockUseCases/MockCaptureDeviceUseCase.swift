@@ -7,7 +7,7 @@ public struct MockCaptureDeviceUseCase: CaptureDeviceUseCaseProtocol {
         self.cameraPositionName = cameraPositionName
     }
     
-    public func wideAngleCameraLocalizedName(postion: CameraPositionEntity) -> String? {
+    public func wideAngleCameraLocalizedName(position: CameraPositionEntity) -> String? {
         return cameraPositionName
     }
 }

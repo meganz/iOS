@@ -2,8 +2,8 @@ import MEGADomain
 
 struct CaptureDeviceRepository: CaptureDeviceRepositoryProtocol {
     
-    func wideAngleCameraLocalizedName(postion: CameraPositionEntity) -> String? {
-        guard let capturePosition = AVCaptureDevice.Position(rawValue: postion.toCameraPositionCode()) else {
+    func wideAngleCameraLocalizedName(position: CameraPositionEntity) -> String? {
+        guard let capturePosition = AVCaptureDevice.Position(rawValue: position.toCameraPositionCode()) else {
             return nil
         }
         

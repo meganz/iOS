@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGAPermissions
+import MEGAPresentation
 import MEGASwift
 import MEGAUI
 
@@ -755,11 +756,21 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                 return
             }
             
-            startOrJoinCall()
+            if chatRoomUseCase.shouldOpenWaitingRoom(forChatId: chatListItem.chatId)
+                && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom) {
+                openWaitingRoom()
+            } else {
+                startOrJoinCall()
+            }
         }
     }
     
-    func startOrJoinCall() {
+    private func openWaitingRoom() {
+        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first else { return }
+        router.presentWaitingRoom(for: scheduledMeeting)
+    }
+    
+    private func startOrJoinCall() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else {
             MEGALogError("Not able to fetch chat room for start or join call")
             return

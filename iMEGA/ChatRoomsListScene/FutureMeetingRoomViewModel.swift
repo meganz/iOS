@@ -294,8 +294,17 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
                 return
             }
             
-            startOrJoinCall()
+            if chatRoomUseCase.shouldOpenWaitingRoom(forChatId: scheduledMeeting.chatId)
+                && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom) {
+                openWaitingRoom()
+            } else {
+                startOrJoinCall()
+            }
         }
+    }
+    
+    private func openWaitingRoom() {
+        router.presentWaitingRoom(for: scheduledMeeting)
     }
     
     func startOrJoinCall() {
