@@ -7,7 +7,7 @@ extension CloudDriveViewController {
         NodeInfoViewModel(
             withNode: node,
             shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
-            shouldDisplayContactVerificationInfo: true
+            shouldDisplayContactVerificationInfo: MEGASdk.shared.isContactVerificationWarningEnabled
         )
     }
     
