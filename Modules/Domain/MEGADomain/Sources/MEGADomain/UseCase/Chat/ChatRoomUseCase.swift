@@ -31,6 +31,7 @@ public protocol ChatRoomUseCaseProtocol {
     func chatMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
     func closeChatRoom(_ chatRoom: ChatRoomEntity)
     func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
+    func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool
 }
 
 public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCaseProtocol {
@@ -189,5 +190,11 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
     
     public func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool {
         chatRoomRepo.hasScheduledMeetingChange(change, for: message, inChatRoom: chatRoom)
+    }
+    
+    public func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool {
+        guard let chatRoom = chatRoomRepo.chatRoom(forChatId: chatId) else { return false }
+        let isModerator = chatRoom.ownPrivilege == .moderator
+        return !isModerator && chatRoom.isWaitingRoomEnabled
     }
 }

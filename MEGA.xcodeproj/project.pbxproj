@@ -1092,7 +1092,6 @@
 		83DBDDDC29D723B300CF433B /* ScheduleMeetingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */; };
 		83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */; };
 		83DBDDE129D730AE00CF433B /* DetailDisclosureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */; };
-		83DBDDE329D730C800CF433B /* TextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE229D730C800CF433B /* TextFieldView.swift */; };
 		83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */; };
 		83DBDDE729D730EC00CF433B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE629D730EC00CF433B /* ErrorView.swift */; };
 		83DBDDE929D7310500CF433B /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDE829D7310500CF433B /* DatePickerView.swift */; };
@@ -3680,7 +3679,6 @@
 		83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingRouter.swift; sourceTree = "<group>"; };
 		83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingViewModel.swift; sourceTree = "<group>"; };
 		83DBDDE029D730AE00CF433B /* DetailDisclosureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDisclosureView.swift; sourceTree = "<group>"; };
-		83DBDDE229D730C800CF433B /* TextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldView.swift; sourceTree = "<group>"; };
 		83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDescriptionView.swift; sourceTree = "<group>"; };
 		83DBDDE629D730EC00CF433B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		83DBDDE829D7310500CF433B /* DatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
@@ -8943,7 +8941,6 @@
 				BFAD0FA32A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift */,
 				BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */,
 				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
-				83DBDDE229D730C800CF433B /* TextFieldView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -14430,7 +14427,6 @@
 				9D26F234294BADCA00FAD016 /* TextFieldAlertRepresenter.swift in Sources */,
 				9DD2E84D295558D0000983A3 /* TextFieldAlertViewModel.swift in Sources */,
 				5D7D53472551263C00D3582E /* TextFieldStyleFactory.swift in Sources */,
-				83DBDDE329D730C800CF433B /* TextFieldView.swift in Sources */,
 				1246682E275DBE0500C94335 /* TextFile.swift in Sources */,
 				5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */,
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,

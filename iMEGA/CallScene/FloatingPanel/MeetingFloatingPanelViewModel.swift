@@ -308,7 +308,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func currentCameraPosition() -> CameraPositionEntity {
-        return captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .front) == localVideoUseCase.videoDeviceSelected() ? .front : .back
+        return captureDeviceUseCase.wideAngleCameraLocalizedName(position: .front) == localVideoUseCase.videoDeviceSelected() ? .front : .back
     }
     
     private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
@@ -330,7 +330,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func switchCamera(backCameraOn: Bool) {
-        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: backCameraOn ? .back : .front),
+        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: backCameraOn ? .back : .front),
               localVideoUseCase.videoDeviceSelected() != selectCameraLocalizedString else {
             return
         }
@@ -342,7 +342,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func isBackCameraSelected() -> Bool {
-        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(postion: .back),
+        guard let selectCameraLocalizedString = captureDeviceUseCase.wideAngleCameraLocalizedName(position: .back),
               localVideoUseCase.videoDeviceSelected() == selectCameraLocalizedString else {
             return false
         }

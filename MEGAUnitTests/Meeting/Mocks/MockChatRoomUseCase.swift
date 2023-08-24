@@ -31,6 +31,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var chatSourceEntity: ChatSourceEntity = .error
     var chatMessageLoadedSubject = PassthroughSubject<ChatMessageEntity?, Never>()
     var chatMessageScheduledMeetingChange: ChatMessageScheduledMeetingChangeType = .none
+    var shouldOpenWaitRoom: Bool = true
     
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
         return chatRoomEntity
@@ -159,5 +160,9 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool {
         change == chatMessageScheduledMeetingChange
+    }
+    
+    func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool {
+        shouldOpenWaitRoom
     }
 }

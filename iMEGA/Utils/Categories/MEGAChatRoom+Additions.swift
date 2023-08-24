@@ -9,7 +9,7 @@ extension MEGAChatRoom {
             return nil
         }
         
-        return MEGASdkManager.sharedMEGAChatSdk().userOnlineStatus(peerHandle(at: 0))
+        return MEGAChatSdk.shared.userOnlineStatus(peerHandle(at: 0))
     }
     
     @objc var isOneToOne: Bool {
@@ -62,8 +62,9 @@ extension MEGAChatRoom {
             return userName
         }
 
-        return MEGASdkManager.sharedMEGAChatSdk().userFullnameFromCache(byUserHandle: userHandle)
+        return MEGAChatSdk.shared.userFullnameFromCache(byUserHandle: userHandle)
     }
+    
     @objc func chatTitle() -> String {
         if isGroup && !hasCustomTitle && peerCount == 0 {
             let date = Date(timeIntervalSince1970: TimeInterval(creationTimeStamp))
@@ -78,13 +79,13 @@ extension MEGAChatRoom {
         var meString = Strings.Localizable.me
         if me {
             var myNameOrEmail: String?
-            if let myFullname = MEGASdkManager.sharedMEGAChatSdk().myFullname {
+            if let myFullname = MEGAChatSdk.shared.myFullname {
                 if !myFullname.mnz_isEmpty() {
                     myNameOrEmail = myFullname
                 }
             }
             if myNameOrEmail == nil {
-                if let myEmail = MEGASdkManager.sharedMEGAChatSdk().myEmail {
+                if let myEmail = MEGAChatSdk.shared.myEmail {
                     if !myEmail.mnz_isEmpty() {
                         myNameOrEmail = myEmail
                     }
@@ -131,7 +132,7 @@ extension MEGAChatRoom {
         }
         
         if handlesToLoad.isNotEmpty {
-            MEGASdkManager.sharedMEGAChatSdk().loadUserAttributes(forChatId: chatId, usersHandles: handlesToLoad as [NSNumber])
+            MEGAChatSdk.shared.loadUserAttributes(forChatId: chatId, usersHandles: handlesToLoad as [NSNumber])
         }
         
         return participantsNames
@@ -148,19 +149,19 @@ extension MEGAChatRoom {
             }
         }
         
-        if let firstName = MEGASdkManager.sharedMEGAChatSdk().userFirstnameFromCache(byUserHandle: userHandle) {
+        if let firstName = MEGAChatSdk.shared.userFirstnameFromCache(byUserHandle: userHandle) {
             if !firstName.mnz_isEmpty() {
                 return firstName
             }
         }
         
-        if let lastName = MEGASdkManager.sharedMEGAChatSdk().userLastnameFromCache(byUserHandle: userHandle) {
+        if let lastName = MEGAChatSdk.shared.userLastnameFromCache(byUserHandle: userHandle) {
             if !lastName.mnz_isEmpty() {
                 return lastName
             }
         }
         
-        if let email = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: userHandle) {
+        if let email = MEGAChatSdk.shared.userEmailFromCache(byUserHandle: userHandle) {
             if !email.mnz_isEmpty() {
                 return email
             }

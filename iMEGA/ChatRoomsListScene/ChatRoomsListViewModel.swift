@@ -607,7 +607,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         let userImageUseCase = UserImageUseCase(
-            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userImageRepo: UserImageRepository(sdk: .shared),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
@@ -622,7 +622,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase,
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)), scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl, permissionHandler: permissionHandler
         )
@@ -637,7 +637,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         let userImageUseCase = UserImageUseCase(
-            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userImageRepo: UserImageRepository(sdk: .shared),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
@@ -652,7 +652,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             userImageUseCase: userImageUseCase,
             chatUseCase: chatUseCase,
             accountUseCase: accountUseCase,
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             megaHandleUseCase: megaHandleUseCase,
@@ -756,7 +756,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             activeCallViewModel = ActiveCallViewModel(
                 call: call,
                 router: router,
-                activeCallUseCase: ActiveCallUseCase(callRepository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+                activeCallUseCase: ActiveCallUseCase(callRepository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
                 chatRoomUseCase: chatRoomUseCase
             )
         } else {
@@ -859,7 +859,7 @@ extension ChatRoomsListViewModel: ChatMenuDelegate {
 extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
     func meetingContextMenu(didSelect action: MeetingActionEntity) {
         if chatUseCase.existsActiveCall() {
-            router.presentMeetingAlreayExists()
+            router.presentMeetingAlreadyExists()
             return
         }
         

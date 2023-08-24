@@ -367,13 +367,13 @@ final class ChatRoomsListViewModelTests: XCTestCase {
 }
 
 final class MockChatRoomsListRouter: ChatRoomsListRouting {
-    
     var openCallView_calledTimes = 0
     var presentStartConversation_calledTimes = 0
-    var presentMeetingAlreayExists_calledTimes = 0
+    var presentMeetingAlreadyExists_calledTimes = 0
     var presentCreateMeeting_calledTimes = 0
     var presentEnterMeeting_calledTimes = 0
     var presentScheduleMeeting_calledTimes = 0
+    var presentWaitingRoom_calledTimes = 0
     var showInviteContactScreen_calledTimes = 0
     var showContactsOnMegaScreen_calledTimes = 0
     var showDetails_calledTimes = 0
@@ -395,8 +395,8 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         presentStartConversation_calledTimes += 1
     }
     
-    func presentMeetingAlreayExists() {
-        presentMeetingAlreayExists_calledTimes += 1
+    func presentMeetingAlreadyExists() {
+        presentMeetingAlreadyExists_calledTimes += 1
     }
     
     func presentCreateMeeting() {
@@ -409,6 +409,10 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     
     func presentScheduleMeeting() {
         presentScheduleMeeting_calledTimes += 1
+    }
+    
+    func presentWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity) {
+        presentWaitingRoom_calledTimes += 1
     }
     
     func showInviteContactScreen() {

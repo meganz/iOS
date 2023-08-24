@@ -9,16 +9,20 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     private let scheduledMeeting: ScheduledMeetingEntity
     private weak var baseViewController: UIViewController?
 
+    private var permissionRouter: PermissionAlertRouter {
+        .makeRouter(deviceHandler: DevicePermissionsHandler.makeHandler())
+    }
+
     init(presenter: UIViewController?, scheduledMeeting: ScheduledMeetingEntity) {
         self.presenter = presenter
         self.scheduledMeeting = scheduledMeeting
     }
     
     func build() -> UIViewController {
-        let audioSessionRepository = AudioSessionRepository(audioSession: AVAudioSession.sharedInstance(), callActionManager: CallActionManager.shared)
+        let audioSessionRepository = AudioSessionRepository(audioSession: .sharedInstance(), callActionManager: .shared)
         let userImageUseCase = UserImageUseCase(
-            userImageRepo: UserImageRepository(sdk: MEGASdk.shared),
-            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
+            userImageRepo: UserImageRepository(sdk: .shared),
+            userStoreRepo: UserStoreRepository(store: .shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
         )
@@ -26,9 +30,12 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         let viewModel = WaitingRoomViewModel(
             scheduledMeeting: scheduledMeeting,
             router: self,
+            waitingRoomUseCase: WaitingRoomUseCase(waitingRoomRepo: WaitingRoomRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
             userImageUseCase: userImageUseCase,
-            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGAChatSdk.shared)),
+            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
+            captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             permissionHandler: DevicePermissionsHandler.makeHandler()
         )
@@ -60,5 +67,19 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         alertController.addAction(leaveAction)
         alertController.preferredAction = leaveAction
         baseViewController.present(alertController, animated: true)
+    }
+    
+    func showMeetingInfo() {
+        if let url = URL(string: "https://mega.io/chatandmeetings") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    func showVideoPermissionError() {
+        permissionRouter.alertVideoPermission()
+    }
+    
+    func showAudioPermissionError() {
+        permissionRouter.alertAudioPermission(incomingCall: false)
     }
 }

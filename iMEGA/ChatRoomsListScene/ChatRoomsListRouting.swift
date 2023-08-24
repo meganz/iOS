@@ -3,10 +3,11 @@ import MEGADomain
 protocol ChatRoomsListRouting {
     var navigationController: UINavigationController? { get }
     func presentStartConversation()
-    func presentMeetingAlreayExists()
+    func presentMeetingAlreadyExists()
     func presentCreateMeeting()
     func presentEnterMeeting()
     func presentScheduleMeeting()
+    func presentWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity)
     func showInviteContactScreen()
     func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int)
     func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int)

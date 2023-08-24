@@ -1,3 +1,3 @@
 public protocol CaptureDeviceRepositoryProtocol {
-    func wideAngleCameraLocalizedName(postion: CameraPositionEntity) -> String?
+    func wideAngleCameraLocalizedName(position: CameraPositionEntity) -> String?
 }

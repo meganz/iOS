@@ -1,4 +1,4 @@
-
+import MEGASwiftUI
 import SwiftUI
 
 struct ScheduleMeetingCreationNameView: View {
@@ -9,13 +9,14 @@ struct ScheduleMeetingCreationNameView: View {
     var body: some View {
         VStack {
             Divider()
-            Group {
-                if #available(iOS 15.0, *) {
-                    FocusableTextFieldView(text: $viewModel.meetingName, appearFocused: appearFocused)
-                } else {
-                    TextFieldView(text: $viewModel.meetingName)
-                }
-            }
+            
+            FocusableTextFieldView(
+                placeholder: Strings.Localizable.Meetings.ScheduleMeeting.MeetingName.placeholder,
+                text: $viewModel.meetingName,
+                appearFocused: appearFocused,
+                clearButtonMode: .whileEditing
+            )
+            .padding(.horizontal)
             .opacity(viewModel.shouldAllowEditingRecurrenceOption ? 1.0 : 0.3)
             .disabled(!viewModel.shouldAllowEditingMeetingName)
 
