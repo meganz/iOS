@@ -41,11 +41,14 @@ extension MEGALinkManager {
         let shareAlbumRepository = ShareAlbumRepository(
             sdk: MEGASdk.shared,
             publicAlbumNodeProvider: PublicAlbumNodeProvider.shared)
+        
+        let nodeRepository: NodeRepository = .newRepo
+        
         let importAlbumUseCase = ImportPublicAlbumUseCase(
             saveAlbumToFolderUseCase: SaveAlbumToFolderUseCase(
                 nodeActionRepository: NodeActionRepository.newRepo,
                 shareAlbumRepository: shareAlbumRepository,
-                nodeRepository: NodeRepository.newRepo),
+                nodeRepository: nodeRepository),
             userAlbumRepository: userAlbumRepository)
         
         let vm = ImportAlbumViewModel(
@@ -58,9 +61,15 @@ extension MEGALinkManager {
             importPublicAlbumUseCase: importAlbumUseCase,
             accountUseCase: AccountUseCase(
                 repository: AccountRepository.newRepo),
+            saveMediaUseCase: SaveMediaToPhotosUseCase(
+                downloadFileRepository: DownloadFileRepository.newRepo,
+                fileCacheRepository: FileCacheRepository.newRepo,
+                nodeRepository: nodeRepository),
+            transferWidgetResponder: TransfersWidgetViewController.sharedTransfer(),
             tracker: DIContainer.tracker)
         
-        let viewController = UIHostingController(dismissibleView: ImportAlbumView(viewModel: vm))
+        let viewController = UIHostingController(dismissibleView: ImportAlbumView(
+            viewModel: vm))
         viewController.modalPresentationStyle = .fullScreen
         UIApplication.mnz_visibleViewController().present(viewController, animated: true)
     }

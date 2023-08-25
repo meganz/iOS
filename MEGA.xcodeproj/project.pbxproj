@@ -167,6 +167,7 @@
 		25DB82D32A3C07D100207E72 /* ProfileTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DB82D22A3C07D100207E72 /* ProfileTableViewDataSource.swift */; };
 		25E2717D2A3FE96800DDB678 /* AVPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2717C2A3FE96800DDB678 /* AVPlayerManager.swift */; };
 		25E2717F2A40099800DDB678 /* MEGAAVViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2717E2A40099800DDB678 /* MEGAAVViewController+Combine.swift */; };
+		25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */; };
 		271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271FC4202A27EA4400E35924 /* ElementStore.swift */; };
 		274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */; };
 		27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */; };
@@ -1252,9 +1253,9 @@
 		947C6CBA2A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */; };
 		947C6CC62A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
 		947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */; };
+		948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */; };
 		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
 		948425E32A9504400024FF1F /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 948425E22A9504400024FF1F /* Search */; };
-		948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */; };
 		9487BF3D29B6744000645D32 /* NodeActionRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */; };
 		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
@@ -2674,6 +2675,7 @@
 		25DB82D22A3C07D100207E72 /* ProfileTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewDataSource.swift; sourceTree = "<group>"; };
 		25E2717C2A3FE96800DDB678 /* AVPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManager.swift; sourceTree = "<group>"; };
 		25E2717E2A40099800DDB678 /* MEGAAVViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAVViewController+Combine.swift"; sourceTree = "<group>"; };
+		25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferWidgetResponder.swift; sourceTree = "<group>"; };
 		271FC4202A27EA4400E35924 /* ElementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStore.swift; sourceTree = "<group>"; };
 		274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStoreTests.swift; sourceTree = "<group>"; };
 		275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovalConfirmationMessageGenerator.swift; sourceTree = "<group>"; };
@@ -3829,8 +3831,8 @@
 		947C6CB42A5D40BE00CF929E /* MEGANavigationController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANavigationController+Additions.swift"; sourceTree = "<group>"; };
 		947C6CB92A5D417200CF929E /* InviteYourFriendsViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InviteYourFriendsViewController+Additions.swift"; sourceTree = "<group>"; };
 		947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackBarButtonItem.swift"; sourceTree = "<group>"; };
-		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManagerTests.swift; sourceTree = "<group>"; };
+		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
 		9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionRepositoryTests.swift; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
@@ -7408,6 +7410,7 @@
 				B58050C02A823A6100D377D1 /* MockABTestProvider.swift */,
 				B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
+				25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */,
 				5D33D673250DBA3900D74666 /* StoreUser.swift */,
 				5D33D675250DBAAB00D74666 /* StoreUserClient.swift */,
 			);
@@ -15052,6 +15055,7 @@
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
+				25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,
 				BFDE0EEB263A44BC00FC586E /* MockUserInviteUseCase.swift in Sources */,

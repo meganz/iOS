@@ -17,6 +17,7 @@ struct ImportAlbumView: View, DismissibleContentView {
     @State private var publicAlbumLoadingTask: Task<Void, Never>?
     
     var body: some View {
+        
         ZStack {
             EmptyView()
                 .decryptionKeyMissingAlert(isPresented: $viewModel.showingDecryptionKeyAlert,
@@ -73,7 +74,9 @@ struct ImportAlbumView: View, DismissibleContentView {
         .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
             CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
         }
-        .onAppear { viewModel.onViewAppear() }
+        .onAppear {
+            viewModel.onViewAppear()
+        }
         .onReceive(viewModel.$showLoading.dropFirst()) {
             $0 ? SVProgressHUD.show() : SVProgressHUD.dismiss()
         }
@@ -162,7 +165,7 @@ struct ImportAlbumView: View, DismissibleContentView {
             }
             ToolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image,
                                isDisabled: viewModel.isToolbarButtonsDisabled) {
-                
+                Task { await viewModel.saveToPhotos() }
             }
             Spacer()
             shareLinkButton()
@@ -194,8 +197,8 @@ struct ImportAlbumView: View, DismissibleContentView {
     
     @ViewBuilder
     private func snackBar(toolbarGeometry: GeometryProxy) -> some View {
-        if viewModel.showSnackBar {
-            SnackBarView(viewModel: viewModel.snackBarViewModel())
+        if let snackBarViewModel = viewModel.snackBarViewModel {
+            SnackBarView(viewModel: snackBarViewModel)
                 .offset(y: -(Constants.snackBarVerticalOffSet + toolbarGeometry.size.height))
         }
     }
