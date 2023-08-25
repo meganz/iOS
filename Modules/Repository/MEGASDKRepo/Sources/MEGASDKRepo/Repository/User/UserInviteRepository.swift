@@ -28,7 +28,7 @@ struct UserInviteRepository: UserInviteRepositoryProtocol {
                             completion(.failure(InviteErrorEntity.alreadyAContact))
                         } else {
                             let outgoingContactRequests1 = sdk.outgoingContactRequests()
-                            let contactRequests = (0..<outgoingContactRequests1.size.intValue).compactMap {
+                            let contactRequests = (0..<outgoingContactRequests1.size).compactMap {
                                 outgoingContactRequests1.contactRequest(at: $0)
                             }
                             let isInOutgoingContactRequest1 = contactRequests.contains { $0.targetEmail == email }

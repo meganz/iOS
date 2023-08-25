@@ -367,7 +367,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
     } else {
         BOOL isInOutgoingContactRequest = NO;
         MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
-        for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
+        for (NSInteger i = 0; i < outgoingContactRequestList.size; i++) {
             MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
             if ([email isEqualToString:contactRequest.targetEmail]) {
                 isInOutgoingContactRequest = YES;

@@ -48,9 +48,9 @@ class ContactsTableViewHeader: UIView {
     }
     
     private func configDetailsLabel() {
-        let incomingContactsLists = MEGASdkManager.sharedMEGASdk().incomingContactRequests()
-        let contactsCount = incomingContactsLists.size?.intValue ?? 0
-        requestsDetailLabel.text = contactsCount == 0 ? "" : incomingContactsLists.size.stringValue
+        let incomingContactsLists = MEGASdk.shared.incomingContactRequests()
+        let contactsCount = incomingContactsLists.size
+        requestsDetailLabel.text = contactsCount == 0 ? "" : String(contactsCount)
     }
     
     // MARK: - IBAction

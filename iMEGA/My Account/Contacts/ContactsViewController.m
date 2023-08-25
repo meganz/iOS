@@ -201,7 +201,7 @@
     
     if (self.contactsMode == ContactsModeDefault) {
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-        if (!self.avoidPresentIncomingPendingContactRequests && incomingContactsLists.size.intValue > 0) {
+        if (!self.avoidPresentIncomingPendingContactRequests && incomingContactsLists.size > 0) {
             ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
             
             [self.navigationController pushViewController:contactRequestsVC animated:YES];
@@ -855,7 +855,8 @@
 - (void)updatePendingContactRequestsLabel {
     if (self.contactsMode == ContactsModeDefault) {
         MEGAContactRequestList *incomingContactsLists = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
-        self.contactsTableViewHeader.requestsDetailLabel.text = incomingContactsLists.size.intValue == 0 ? @"" : incomingContactsLists.size.stringValue;
+        self.contactsTableViewHeader.requestsDetailLabel.text = incomingContactsLists.size == 0 ? @"" : [NSString stringWithFormat:@"%ld", (long)incomingContactsLists.size];
+
     }
 }
 

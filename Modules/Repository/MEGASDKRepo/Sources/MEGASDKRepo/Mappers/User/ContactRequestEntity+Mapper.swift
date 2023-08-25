@@ -3,8 +3,8 @@ import MEGASdk
 
 extension MEGAContactRequestList {
     public func toContactRequestEntities() -> [ContactRequestEntity] {
-        guard let size, size.intValue > 0 else { return [] }
-        return (0..<size.intValue).compactMap { contactRequest(at: $0)?.toContactRequestEntity() }
+        guard size > 0 else { return [] }
+        return (0..<size).compactMap { contactRequest(at: $0)?.toContactRequestEntity() }
     }
 }
 
