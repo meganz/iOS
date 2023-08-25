@@ -863,7 +863,7 @@
 - (void)presentInviteContactCustomAlertViewController {
     BOOL isInOutgoingContactRequest = NO;
     MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
-    for (NSInteger i = 0; i < [[outgoingContactRequestList size] integerValue]; i++) {
+    for (NSInteger i = 0; i < outgoingContactRequestList.size; i++) {
         MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
         if ([self.email isEqualToString:contactRequest.targetEmail]) {
             isInOutgoingContactRequest = YES;

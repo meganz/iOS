@@ -7,9 +7,9 @@ public final class MockContactRequestList: MEGAContactRequestList {
         self.contactRequests = contactRequests
     }
     
-    public override var size: NSNumber! { NSNumber(value: contactRequests.count) }
+    public override var size: NSInteger { contactRequests.count }
     
-    public override func contactRequest(at index: Int) -> MEGAContactRequest! {
-        contactRequests[index]
+    public override func contactRequest(at index: Int) -> MEGAContactRequest? {
+        contactRequests[safe: index]
     }
 }

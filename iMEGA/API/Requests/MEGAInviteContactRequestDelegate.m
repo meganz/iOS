@@ -68,7 +68,7 @@
                 } else {
                     BOOL isInOutgoingContactRequest = NO;
                     MEGAContactRequestList *outgoingContactRequestList = [api outgoingContactRequests];
-                    for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
+                    for (NSInteger i = 0; i < outgoingContactRequestList.size; i++) {
                         MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
                         if ([request.email isEqualToString:contactRequest.targetEmail]) {
                             isInOutgoingContactRequest = YES;

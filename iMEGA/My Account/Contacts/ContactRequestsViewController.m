@@ -128,16 +128,16 @@ typedef NS_ENUM(NSInteger, Segment) {
     self.outgoingContactRequestArray = [[NSMutableArray alloc] init];
     
     MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
-    for (NSInteger i = 0; i < [[outgoingContactRequestList size] integerValue]; i++) {
+    for (NSInteger i = 0; i < outgoingContactRequestList.size; i++) {
         MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
         [self.outgoingContactRequestArray addObject:contactRequest];
     }
     
     //If user cancel all sent requests and HAS incoming requests > Switch to Received
     //If user cancel all sent requests and HAS NOT incoming requests > Go back to Contacts
-    if (outgoingContactRequestList.size.unsignedIntValue == 0 && self.isDeletingLastRequest) {
+    if (outgoingContactRequestList.size == 0 && self.isDeletingLastRequest) {
         MEGAContactRequestList *incomingContactRequestList = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
-        if (incomingContactRequestList.size.unsignedIntValue == 0) {
+        if (incomingContactRequestList.size == 0) {
             if (self.presentingViewController) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
@@ -155,14 +155,14 @@ typedef NS_ENUM(NSInteger, Segment) {
     self.incomingContactRequestArray = [[NSMutableArray alloc] init];
     
     MEGAContactRequestList *incomingContactRequestList = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-    for (NSInteger i = 0; i < [[incomingContactRequestList size] integerValue]; i++) {
+    for (NSInteger i = 0; i < incomingContactRequestList.size; i++) {
         MEGAContactRequest *contactRequest = [incomingContactRequestList contactRequestAtIndex:i];
         [self.incomingContactRequestArray addObject:contactRequest];
     }
     
     //If user accepts all received requests > Go back to Contacts
     //If user accepts all received requests and HAS sent requests > Go back to Contacts
-    if (incomingContactRequestList.size.unsignedIntValue == 0 && self.isAcceptingOrDecliningLastRequest) {
+    if (incomingContactRequestList.size == 0 && self.isAcceptingOrDecliningLastRequest) {
         if (self.presentingViewController) {
             [self dismissViewControllerAnimated:YES completion:nil];
         } else {

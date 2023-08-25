@@ -437,7 +437,7 @@
     switch (userAlert.type) {
         case MEGAUserAlertTypeIncomingPendingContactRequest:
         case MEGAUserAlertTypeIncomingPendingContactReminder: {
-            if ([[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue) {
+            if ([[MEGASdk shared] incomingContactRequests].size) {
                 ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
                 
                 [self.navigationController pushViewController:contactRequestsVC animated:YES];

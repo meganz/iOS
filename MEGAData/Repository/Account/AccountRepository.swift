@@ -78,7 +78,7 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
     }
     
     func incomingContactsRequestsCount() -> Int {
-        sdk.incomingContactRequests().size.intValue
+        sdk.incomingContactRequests().size
     }
     
     func relevantUnseenUserAlertsCount() -> UInt {
