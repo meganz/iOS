@@ -9,9 +9,9 @@ final class AlbumListViewModelTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
     func testLoadAlbums_onAlbumsLoaded_systemAlbumsTitlesAreUpdatedAndAlbumsAreSortedCorrectly() async throws {
-        let favouriteAlbum = AlbumEntity(id: 1, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
-        let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
-        let rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
+        var favouriteAlbum = AlbumEntity(id: 1, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .favourite)
+        var gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
+        var rawAlbum = AlbumEntity(id: 3, name: "", coverNode: NodeEntity(handle: 2), count: 1, type: .raw)
         let userAlbum1 = AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
                                      count: 1, type: .user, creationTime: try "2022-12-31T22:01:04Z".date)
         let userAlbum2 = AlbumEntity(id: 5, name: "Album 2", coverNode: NodeEntity(handle: 4),
@@ -24,15 +24,19 @@ final class AlbumListViewModelTests: XCTestCase {
                                      count: 1, type: .user, creationTime: try "2022-12-31T22:05:04Z".date)
         let useCase = MockAlbumListUseCase(albums: [favouriteAlbum, gifAlbum, rawAlbum,
                                                     userAlbum1, userAlbum2, userAlbum3, userAlbum4, userAlbum5])
-
+        // Update titles to expected
+        favouriteAlbum.name = Strings.Localizable.CameraUploads.Albums.Favourites.title
+        gifAlbum.name = Strings.Localizable.CameraUploads.Albums.Gif.title
+        rawAlbum.name = Strings.Localizable.CameraUploads.Albums.Raw.title
         let sut = albumListViewModel(usecase: useCase)
         
         sut.loadAlbums()
         await sut.albumLoadingTask?.value
+        
         XCTAssertEqual(sut.albums, [
-            favouriteAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Favourites.title),
-            gifAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Gif.title),
-            rawAlbum.update(name: Strings.Localizable.CameraUploads.Albums.Raw.title),
+            favouriteAlbum,
+            gifAlbum,
+            rawAlbum,
             userAlbum5,
             userAlbum4,
             userAlbum3,
@@ -41,7 +45,7 @@ final class AlbumListViewModelTests: XCTestCase {
         ])
     }
     
-    func testLoadAlbums_onAlbumsLoadedFinsihed_shouldLoadSetToFalse() async throws {
+    func testLoadAlbums_onAlbumsLoadedFinished_shouldLoadSetToFalse() async throws {
         let sut = albumListViewModel()
         let exp = expectation(description: "should load set after album load")
         
