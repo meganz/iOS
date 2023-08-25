@@ -20,7 +20,10 @@ public extension CallEntity {
          sessionClientIds: [HandleEntity] = [],
          clientSessions: [ChatSessionEntity] = [],
          participants: [HandleEntity] = [],
-         uuid: UUID = UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!) {
-        self.init(status: status, chatId: chatId, callId: callId, changeTye: changeType, duration: duration, initialTimestamp: initialTimestamp, finalTimestamp: finalTimestamp, hasLocalAudio: hasLocalAudio, hasLocalVideo: hasLocalVideo, termCodeType: termCodeType, isRinging: isRinging, callCompositionChange: callCompositionChange, numberOfParticipants: numberOfParticipants, isOnHold: isOnHold, sessionClientIds: sessionClientIds, clientSessions: clientSessions, participants: participants, uuid: uuid)
+         waitingRoom: WaitingRoomEntity? = nil,
+         waitingRoomHandleList: [HandleEntity] = [],
+         uuid: UUID = UUID(uuidString: "45adcd56-a31c-11eb-bcbc-0242ac130002")!,
+         isTesting: Bool = true) {
+        self.init(status: status, chatId: chatId, callId: callId, changeType: changeType, duration: duration, initialTimestamp: initialTimestamp, finalTimestamp: finalTimestamp, hasLocalAudio: hasLocalAudio, hasLocalVideo: hasLocalVideo, termCodeType: termCodeType, isRinging: isRinging, callCompositionChange: callCompositionChange, numberOfParticipants: numberOfParticipants, isOnHold: isOnHold, sessionClientIds: sessionClientIds, clientSessions: clientSessions, participants: participants, waitingRoomStatus: .unknown, waitingRoom: waitingRoom, waitingRoomHandleList: waitingRoomHandleList, uuid: uuid)
     }
 }
