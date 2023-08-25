@@ -149,11 +149,11 @@ extension ChatViewController {
     
     func showCallEndTimerIfNeeded(call: CallEntity) {
         guard MeetingContainerRouter.isAlreadyPresented == false,
-              call.changeTye == .callComposition,
+              call.changeType == .callComposition,
               call.numberOfParticipants == 1,
               call.participants.first == chatContentViewModel.userHandle else {
             
-            if call.changeTye == .callComposition, call.numberOfParticipants > 1 {
+            if call.changeType == .callComposition, call.numberOfParticipants > 1 {
                 removeEndCallDialogIfNeeded()
                 cancelEndCallSubscription()
             }

@@ -12,7 +12,7 @@ fileprivate extension CallEntity {
         self.init(status: call.status.toCallStatusType(),
                   chatId: call.chatId,
                   callId: call.callId,
-                  changeTye: call.changes.toChangeTypeEntity(),
+                  changeType: call.changes.toChangeTypeEntity(),
                   duration: call.duration,
                   initialTimestamp: call.initialTimeStamp,
                   finalTimestamp: call.finalTimeStamp,
@@ -26,6 +26,9 @@ fileprivate extension CallEntity {
                   sessionClientIds: sessionClientIds,
                   clientSessions: sessionClientIds.compactMap { call.session(forClientId: UInt64($0))?.toChatSessionEntity() },
                   participants: (0..<call.participants.size).map { call.participants.megaHandle(at: $0) },
+                  waitingRoomStatus: call.waitingRoomJoiningStatus.toWaitingRoomStatusEntity(),
+                  waitingRoom: call.waitingRoom.toWaitingRoomEntity(),
+                  waitingRoomHandleList: call.waitingRoomHandleList.toHandleEntityArray() ?? [],
                   uuid: call.uuid)
     }
 }
@@ -89,7 +92,7 @@ extension MEGAChatCallTermCode {
 extension MEGAChatCallChangeType {
     func toChangeTypeEntity() -> CallEntity.ChangeType {
         switch self {
-        case .noChages:
+        case .noChanges:
             return .noChanges
         case .status:
             return .status
@@ -113,6 +116,22 @@ extension MEGAChatCallChangeType {
             return .ownPermission
         case .genericNotification:
             return .genericNotification
+        case .waitingRoomAllow:
+            return .waitingRoomAllow
+        case .waitingRoomDeny:
+            return .waitingRoomDeny
+        case .waitingRoomComposition:
+            return .waitingRoomComposition
+        case .waitingRoomUsersEntered:
+            return .waitingRoomUsersEntered
+        case .waitingRoomUsersLeave:
+            return .waitingRoomUsersLeave
+        case .waitingRoomUsersAllow:
+            return .waitingRoomUsersAllow
+        case .waitingRoomUsersDeny:
+            return .waitingRoomUsersDeny
+        case .waitingRoomPushedFromCall:
+            return .waitingRoomPushedFromCall
         @unknown default:
             return .noChanges
         }
@@ -141,6 +160,8 @@ extension MEGAChatCallNotificationType {
             return .invalid
         case .sfuError:
             return .serverError
+        case .sfuDeny:
+            return .sfuDeny
         @unknown default:
             return .invalid
         }

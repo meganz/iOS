@@ -1006,6 +1006,7 @@
 		83850A4126B2AACD00C62304 /* EnterMeetingLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */; };
 		83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */; };
 		83850A4526B2BC1100C62304 /* MEGAProviderDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */; };
+		838838712A97769300148640 /* WaitingRoomEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838838702A97769300148640 /* WaitingRoomEntity+Mapper.swift */; };
 		838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B5525D55EFA00767DB0 /* CallUseCase.swift */; };
 		838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B6825D5678C00767DB0 /* CallRepository.swift */; };
 		838A849D2631C987004804A4 /* MegaChatResultRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A849C2631C987004804A4 /* MegaChatResultRequestDelegate.swift */; };
@@ -1294,7 +1295,6 @@
 		94E7180B283D6603000EDDDF /* ChatRoomsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ChatRoomsViewController+Additions.swift */; };
 		94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */; };
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
-		94FCE08B2A94CF8D001E9D72 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 94FCE08A2A94CF8D001E9D72 /* Search */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
 		990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */; };
 		9911BA8B2A8B20C300B88F28 /* WaitingRoomViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */; };
@@ -3604,6 +3604,7 @@
 		83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewModel.swift; sourceTree = "<group>"; };
 		83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAChatResultDelegate.swift; sourceTree = "<group>"; };
 		83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAProviderDelegate+Additions.swift"; sourceTree = "<group>"; };
+		838838702A97769300148640 /* WaitingRoomEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaitingRoomEntity+Mapper.swift"; sourceTree = "<group>"; };
 		838A7B5525D55EFA00767DB0 /* CallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallUseCase.swift; sourceTree = "<group>"; };
 		838A7B6825D5678C00767DB0 /* CallRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRepository.swift; sourceTree = "<group>"; };
 		838A849C2631C987004804A4 /* MegaChatResultRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaChatResultRequestDelegate.swift; sourceTree = "<group>"; };
@@ -9484,6 +9485,7 @@
 				BF66E036261420A000066F35 /* CallEntity+Mapper.swift */,
 				838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */,
 				9464C2F428C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift */,
+				838838702A97769300148640 /* WaitingRoomEntity+Mapper.swift */,
 			);
 			path = Call;
 			sourceTree = "<group>";
@@ -14547,6 +14549,7 @@
 				9440D6C128BE6D390010D167 /* ViewModePreferenceEntity+Mapper.swift in Sources */,
 				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,
 				99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */,
+				838838712A97769300148640 /* WaitingRoomEntity+Mapper.swift in Sources */,
 				99F300982A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift in Sources */,
 				992453F02A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift in Sources */,
 				9911BA9C2A8B949200B88F28 /* WaitingRoomMessageView.swift in Sources */,
@@ -17092,10 +17095,6 @@
 		94CD1F742A8AA76C00DF456D /* SwiftGen */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftGen";
-		};
-		94FCE08A2A94CF8D001E9D72 /* Search */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Search;
 		};
 		A803C8FA2955DB550056C9F0 /* MEGADomain */ = {
 			isa = XCSwiftPackageProductDependency;
