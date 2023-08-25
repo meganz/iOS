@@ -47,7 +47,7 @@ extension MEGAPhotoBrowserViewController {
         }
         
         if node.mnz_isPlayable() {
-            guard !MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall else {
+            guard !MEGAChatSdk.sharedChatSdk.mnz_existsActiveCall else {
                 Helper.cannotPlayContentDuringACallAlert()
                 return
             }
@@ -90,7 +90,7 @@ extension MEGAPhotoBrowserViewController {
         permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
             guard let self else { return }
             if granted {
-                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: self.displayMode == .nodeInsideFolderLink ? self.api : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .sharedSdk, sharedFolderSdk: self.displayMode == .nodeInsideFolderLink ? self.api : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
                 let completionBlock: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
                     if case let .failure(error) = result, error != .cancelled {
                         SVProgressHUD.dismiss()
@@ -176,7 +176,7 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func viewNodeInFolder(_ node: MEGANode) {
-        guard let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle),
+        guard let parentNode = MEGASdk.sharedSdk.node(forHandle: node.parentHandle),
               parentNode.isFolder() else {
             return
         }

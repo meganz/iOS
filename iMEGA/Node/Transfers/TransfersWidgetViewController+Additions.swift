@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension TransfersWidgetViewController {
+extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     @objc
     func configProgressIndicator() {
         let progressIndicatorView = ProgressIndicatorView.init(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
@@ -143,4 +143,8 @@ extension TransfersWidgetViewController {
         let nib = UINib(nibName: name, bundle: nil)
         self.tableView?.register(nib, forCellReuseIdentifier: identifier)
     }
+}
+
+protocol TransferWidgetResponderProtocol: AnyObject {
+    func bringProgressToFrontKeyWindowIfNeeded()
 }

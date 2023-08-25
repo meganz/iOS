@@ -187,12 +187,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testIsToolbarButtonsDisabled_photosLoadedAndSelection_shouldEnableAndDisableCorrectly() async throws {
-        let photos = try makePhotos()
-        let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
-        let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity),
-                                                  nodes: photos)
+        let publicAlbumUseCase = makePublicAlbumUseCase(nodes: try makePhotos())
+
         let sut = makeImportAlbumViewModel(publicLink: try requireDecryptionKeyAlbumLink,
-                                           publicAlbumUseCase: albumUseCase)
+                                           publicAlbumUseCase: publicAlbumUseCase)
         XCTAssertTrue(sut.isToolbarButtonsDisabled)
         
         sut.publicLinkDecryptionKey = "Nt8-bopPB8em4cOlKas"
@@ -213,10 +211,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testIsToolbarButtonDisabled_noPhotosLoaded_shouldDisable() async throws {
-        let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
-        let albumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let publicAlbumUseCase = makePublicAlbumUseCase()
+
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           publicAlbumUseCase: albumUseCase)
+                                           publicAlbumUseCase: publicAlbumUseCase)
         XCTAssertTrue(sut.isToolbarButtonsDisabled)
         
         await sut.loadPublicAlbum()
@@ -225,10 +223,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testSelectButtonOpacity_onPhotosLoadedAndSelectionHiddenChange_shouldChangeCorrectly() async throws {
-        let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 2))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(
-            publicAlbumResult: .success(sharedAlbumEntity),
-            nodes: try makePhotos())
+        let publicAlbumUseCase = makePublicAlbumUseCase(nodes: try makePhotos())
+        
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         XCTAssertEqual(sut.selectButtonOpacity, 0.3, accuracy: 0.1)
@@ -258,9 +254,9 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testImportAlbum_onAlbumNameNotInConflict_shouldShowImportLocation() async throws {
-        let album = SetEntity(handle: 3, name: "valid album name")
-        let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let publicAlbumUseCase = makePublicAlbumUseCase(
+            handle: 3,
+            name: "valid album name")
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         await sut.loadPublicAlbum()
@@ -271,10 +267,9 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testImportAlbum_onAlbumNameInConflict_shouldShowRenameAlbumAlert() async throws {
-        let album = SetEntity(handle: 3,
-                              name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
-        let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let publicAlbumUseCase = makePublicAlbumUseCase(
+            handle: 3,
+            name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         await sut.loadPublicAlbum()
@@ -286,10 +281,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     func testImportAlbum_onAccountStorageWillExceed_shouldShowStorageAlert() async throws {
         // Arrange
-        let album = SetEntity(handle: 3,
-                              name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
-        let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let publicAlbumUseCase = makePublicAlbumUseCase(
+            handle: 3,
+            name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
+
         let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: true)
         
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
@@ -304,10 +299,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     func testImportAlbum_onAccountStorageWillNotExceed_shouldNotShowStorageAlert() async throws {
         // Arrange
-        let album = SetEntity(handle: 3,
-                              name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
-        let sharedAlbumEntity = makeSharedAlbumEntity(set: album)
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity))
+        let publicAlbumUseCase = makePublicAlbumUseCase(
+            handle: 3,
+            name: Strings.Localizable.CameraUploads.Albums.Favourites.title)
+
         let accountStorageUseCase = MockAccountStorageUseCase(willStorageQuotaExceed: false)
         
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
@@ -325,9 +320,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     func testImportFolderLocation_onFolderSelected_shouldImportAlbumPhotosAndShowSnackbar() async throws {
         let albumName = "New Album (1)"
-        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: albumName))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
-                                                        nodes: try makePhotos())
+        let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: albumName, nodes: try makePhotos())
+
         let importPublicAlbumUseCase = MockImportPublicAlbumUseCase(importAlbumResult: .success)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
@@ -350,8 +344,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.importAlbumTask?.value
         await fulfillment(of: [exp], timeout: 1.0)
         
-        XCTAssertTrue(sut.showSnackBar)
-        XCTAssertEqual(sut.snackBarViewModel().snackBar,
+        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(albumName)))
     }
     
@@ -371,8 +364,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.importFolderLocation = NodeEntity(handle: 64, isFolder: true)
         await sut.importAlbumTask?.value
         
-        XCTAssertTrue(sut.showSnackBar)
-        XCTAssertEqual(sut.snackBarViewModel().snackBar,
+        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumFailedToSaveToCloudDrive(albumName)))
     }
     
@@ -398,9 +390,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
                               NodeEntity(handle: 76)]
         let importPublicAlbumUseCase = MockImportPublicAlbumUseCase(
             importAlbumResult: .success)
-        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: "Test"))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
-                                                        nodes: try makePhotos())
+        let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: "Test", nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
                                            importPublicAlbumUseCase: importPublicAlbumUseCase)
@@ -412,10 +402,9 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.importFolderLocation = NodeEntity(handle: 64, isFolder: true)
         await sut.importAlbumTask?.value
         
-        XCTAssertTrue(sut.showSnackBar)
         XCTAssertEqual(Set(importPublicAlbumUseCase.photosToImport ?? []),
                        Set(selectedPhotos))
-        XCTAssertEqual(sut.snackBarViewModel().snackBar,
+        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.filesSaveToCloudDrive(selectedPhotos.count)))
     }
     
@@ -432,9 +421,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     func testRenameAlbum_newNameProvided_shouldShowImportAlbumLocationAndUseNewNameDuringImport() async throws {
         let newAlbumName = "The new album name"
-        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: "Test"))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
-                                                        nodes: try makePhotos())
+        let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: "Test", nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
                                            importPublicAlbumUseCase: MockImportPublicAlbumUseCase(
@@ -447,17 +434,14 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.importFolderLocation = NodeEntity(handle: 64, isFolder: true)
         await sut.importAlbumTask?.value
         
-        XCTAssertTrue(sut.showSnackBar)
-        XCTAssertEqual(sut.snackBarViewModel().snackBar,
+        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.albumSavedToCloudDrive(newAlbumName)))
     }
     
     func testReservedAlbumNames_onImportAlbumLoad_shouldContainUserAlbumNames() async throws {
         let userAlbumNames = ["Album 1", "Album 2"]
         let albumNameUseCase = MockAlbumNameUseCase(userAlbumNames: userAlbumNames)
-        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: "Test"))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
-                                                        nodes: try makePhotos())
+        let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: "Test", nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
                                            albumNameUseCase: albumNameUseCase)
@@ -470,9 +454,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     func testRenameAlbumAlertViewModel_albumLoadeded_isConfiguredCorrectly() throws {
         let albumName = "Test"
-        let album = makeSharedAlbumEntity(set: SetEntity(handle: 24, name: albumName))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(album),
-                                                        nodes: try makePhotos())
+        let publicAlbumUseCase = makePublicAlbumUseCase(name: albumName, nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         let expectedAlertViewModel = TextFieldAlertViewModel(title: Strings.Localizable.AlbumLink.Alert.RenameAlbum.title,
@@ -486,9 +468,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testsShouldShowEmptyAlbumView_noPhotos_shouldReturnTrue() async throws {
-        let sharedAlbum = makeSharedAlbumEntity(set: SetEntity(handle: 1))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(
-            publicAlbumResult: .success(sharedAlbum))
+        let publicAlbumUseCase = makePublicAlbumUseCase(handle: 1)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         XCTAssertFalse(sut.shouldShowEmptyAlbumView)
@@ -500,9 +480,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testsShouldShowEmptyAlbumView_photosLoaded_shouldReturnFalse() async throws {
-        let sharedAlbum = makeSharedAlbumEntity(set: SetEntity(handle: 1))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbum),
-                                                        nodes: try makePhotos())
+        let publicAlbumUseCase = makePublicAlbumUseCase(nodes: try makePhotos())
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         
@@ -513,8 +491,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
     }
     
     func testIsShareLinkButtonDisabled_onAlbumLoaded_shouldEnableShareButtonEvenIfNoPhotosLoaded() async throws {
-        let sharedAlbum = makeSharedAlbumEntity(set: SetEntity(handle: 1))
-        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbum))
+        let publicAlbumUseCase = makePublicAlbumUseCase()
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase)
         XCTAssertTrue(sut.isShareLinkButtonDisabled)
@@ -522,6 +499,60 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.loadPublicAlbum()
         
         XCTAssertFalse(sut.isShareLinkButtonDisabled)
+    }
+    
+    func testSaveToPhotos_whenSelectionModeIsActive_shouldSaveSelectedItems() async throws {
+        // Arrange
+        let publicAlbumUseCase = makePublicAlbumUseCase()
+        let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           saveMediaUseCase: saveToPhotosUseCase)
+        
+        await sut.loadPublicAlbum()
+
+        let multiplePhotos = try makePhotos()
+        sut.enablePhotoLibraryEditMode(true)
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos(multiplePhotos)
+        
+        // Act
+        await sut.saveToPhotos()
+        
+        // Assert
+        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
+                       SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
+    }
+    
+    func testSaveToPhotos_whenSelectionModeNotActive_shouldSaveAllItemsInAlbum() async throws {
+        // Arrange
+        let multiplePhotos = try makePhotos()
+        let publicAlbumUseCase = makePublicAlbumUseCase(nodes: multiplePhotos)
+        let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           saveMediaUseCase: saveToPhotosUseCase)
+        
+        await sut.loadPublicAlbum()
+
+        // Act
+        await sut.saveToPhotos()
+        
+        // Assert
+        XCTAssertEqual(sut.snackBarViewModel?.snackBar,
+                       SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
+    }
+    
+    func testOnViewAppear_shouldCallToBringTransferWidgetToTheFront() throws {
+        // Arrange
+        let transferWidgetResponder = MockTransferWidgetResponder()
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           transferWidgetResponder: transferWidgetResponder)
+        
+        // Act
+        sut.onViewAppear()
+        
+        // Assert
+        XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
     }
     
     // MARK: - Private
@@ -532,6 +563,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
                                           accountStorageUseCase: some AccountStorageUseCaseProtocol = MockAccountStorageUseCase(),
                                           importPublicAlbumUseCase: some ImportPublicAlbumUseCaseProtocol = MockImportPublicAlbumUseCase(),
                                           accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+                                          saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
+                                          transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
                                           tracker: some AnalyticsTracking = MockTracker()
     ) -> ImportAlbumViewModel {
         let sut = ImportAlbumViewModel(
@@ -541,6 +574,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
             accountStorageUseCase: accountStorageUseCase,
             importPublicAlbumUseCase: importPublicAlbumUseCase,
             accountUseCase: accountUseCase,
+            saveMediaUseCase: saveMediaUseCase,
+            transferWidgetResponder: transferWidgetResponder,
             tracker: tracker)
         trackForMemoryLeaks(on: sut)
         return sut
@@ -551,6 +586,14 @@ final class ImportAlbumViewModelTests: XCTestCase {
         SharedAlbumEntity(set: set, setElements: setElements)
     }
     
+    private func makeSetElements() -> [SetElementEntity] {
+        [
+            SetElementEntity(handle: 1),
+            SetElementEntity(handle: 4),
+            SetElementEntity(handle: 7)
+        ]
+    }
+    
     private func makePhotos() throws -> [NodeEntity] {
         [NodeEntity(name: "test_image_1.png", handle: 1, hasThumbnail: true,
                     modificationTime: try "2023-01-01T22:05:04Z".date, mediaType: .image),
@@ -559,5 +602,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
          NodeEntity(name: "test_image_4.jpg", handle: 7, hasThumbnail: true,
                     modificationTime: try "2023-01-01T22:05:04Z".date, mediaType: .image)
         ]
+    }
+    
+    private func makePublicAlbumUseCase(handle: HandleEntity = 1, name: String = "valid album name", nodes: [NodeEntity] = []) -> some PublicAlbumUseCaseProtocol {
+        let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 1, name: name))
+        return MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity), nodes: nodes)
     }
 }

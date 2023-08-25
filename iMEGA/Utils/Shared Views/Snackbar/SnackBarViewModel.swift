@@ -1,7 +1,8 @@
 import Combine
 
 final class SnackBarViewModel: ObservableObject {
-    @Published var snackBar: SnackBar
+
+    @Published private(set) var snackBar: SnackBar
     @Published var isShowSnackBar: Bool = true
     
     var displayDuration: Double = 4.0
@@ -11,6 +12,11 @@ final class SnackBarViewModel: ObservableObject {
     init(snackBar: SnackBar) {
         self.snackBar = snackBar
         
+        configureSnackBar()
+    }
+    
+    func update(snackBar: SnackBar) {
+        self.snackBar = snackBar
         configureSnackBar()
     }
     
