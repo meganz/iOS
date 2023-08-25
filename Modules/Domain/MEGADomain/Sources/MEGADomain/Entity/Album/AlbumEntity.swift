@@ -9,16 +9,24 @@ public enum AlbumEntityType: Sendable {
 
 public struct AlbumEntity: Identifiable, Hashable, Sendable {
     public let id: HandleEntity
-    public let name: String
+    public var name: String
     public var coverNode: NodeEntity?
     public var count: Int
     public let type: AlbumEntityType
     public let creationTime: Date?
     public let modificationTime: Date?
     public var sharedLinkStatus: SharedLinkStatusEntity
+    public let metaData: AlbumMetaDataEntity?
     
-    public init(id: HandleEntity, name: String, coverNode: NodeEntity?, count: Int, type: AlbumEntityType, creationTime: Date? = nil, modificationTime: Date? = nil,
-                sharedLinkStatus: SharedLinkStatusEntity = .unavailable) {
+    public init(id: HandleEntity,
+                name: String,
+                coverNode: NodeEntity?,
+                count: Int,
+                type: AlbumEntityType,
+                creationTime: Date? = nil,
+                modificationTime: Date? = nil,
+                sharedLinkStatus: SharedLinkStatusEntity = .unavailable,
+                metaData: AlbumMetaDataEntity? = nil) {
         self.id = id
         self.name = name
         self.coverNode = coverNode
@@ -27,15 +35,11 @@ public struct AlbumEntity: Identifiable, Hashable, Sendable {
         self.creationTime = creationTime
         self.modificationTime = modificationTime
         self.sharedLinkStatus = sharedLinkStatus
+        self.metaData = metaData
     }
 }
 
 extension AlbumEntity {
-    public func update(name newName: String) -> AlbumEntity {
-        AlbumEntity(id: self.id, name: newName, coverNode: self.coverNode, count: self.count, type: self.type, creationTime: creationTime,
-                    modificationTime: self.modificationTime, sharedLinkStatus: self.sharedLinkStatus)
-    }
-    
     public var systemAlbum: Bool {
         type == .raw || type == .gif || type == .favourite
     }

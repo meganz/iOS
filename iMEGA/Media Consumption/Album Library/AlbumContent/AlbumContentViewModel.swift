@@ -331,7 +331,7 @@ final class AlbumContentViewModel: ViewModelType {
     
     @MainActor
     private func onAlbumRenameSuccess(with newName: String) {
-        album = album.update(name: newName)
+        album.name = newName
         invokeCommand?(.updateNavigationTitle)
     }
     
@@ -397,7 +397,7 @@ final class AlbumContentViewModel: ViewModelType {
             return
         }
         if setEntity.changeTypes.contains(.name) && albumName != setEntity.name {
-            album = album.update(name: setEntity.name)
+            album.name = setEntity.name
             invokeCommand?(.updateNavigationTitle)
         }
         if setEntity.changeTypes.contains(.cover) {

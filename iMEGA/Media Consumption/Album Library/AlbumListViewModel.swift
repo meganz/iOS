@@ -164,12 +164,14 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     // MARK: - Private
     private func systemAlbums() async -> [AlbumEntity] {
         do {
-            return try await usecase.systemAlbums().map({ album in
+            return try await usecase.systemAlbums().map { album in
                 if let localizedAlbumName = localisedName(forAlbumType: album.type) {
-                    return album.update(name: localizedAlbumName)
+                    var album = album
+                    album.name = localizedAlbumName
+                    return album
                 }
                 return album
-            })
+            }
         } catch {
             MEGALogError("Error loading system albums: \(error.localizedDescription)")
             return []

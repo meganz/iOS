@@ -75,7 +75,8 @@ public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
                                        type: .user,
                                        creationTime: setEntity.creationTime,
                                        modificationTime: setEntity.modificationTime,
-                                       sharedLinkStatus: .exported(setEntity.isExported))
+                                       sharedLinkStatus: .exported(setEntity.isExported),
+                                       metaData: makeAlbumMetaData(albumContent: userAlbumContent))
                 }
             }
             return await group.reduce(into: [AlbumEntity]()) {
@@ -180,6 +181,22 @@ public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
             return $0.photo.modificationTime > $1.photo.modificationTime
         }
         return albumContent.first?.photo
+    }
+    
+    private func makeAlbumMetaData(albumContent: [AlbumPhotoEntity]) -> AlbumMetaDataEntity {
+        let counts = albumContent
+            .reduce(into: (image: UInt(0), video: UInt(0))) { (result, content) in
+                guard let mediaType = content.photo.mediaType else { return }
+                switch mediaType {
+                case .image:
+                    result.image += 1
+                case .video:
+                    result.video += 1
+                }
+            }
+        
+        return AlbumMetaDataEntity(imageCount: counts.image,
+                                   videoCount: counts.video)
     }
     
     public func hasNoPhotosAndVideos() async -> Bool {

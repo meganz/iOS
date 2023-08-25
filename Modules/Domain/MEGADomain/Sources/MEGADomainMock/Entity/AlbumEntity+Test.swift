@@ -10,7 +10,18 @@ public extension AlbumEntity {
          creationTime: Date? = nil,
          modificationTime: Date? = nil,
          sharedLinkStatus: SharedLinkStatusEntity = .unavailable,
+         metaData: AlbumMetaDataEntity? = nil,
          isTesting: Bool = true) {
-        self.init(id: id, name: name, coverNode: coverNode, count: count, type: type, creationTime: creationTime, modificationTime: modificationTime, sharedLinkStatus: sharedLinkStatus)
+        self.init(
+            id: id,
+            name: name,
+            coverNode: coverNode,
+            count: count,
+            type: type,
+            creationTime: creationTime,
+            modificationTime: modificationTime,
+            sharedLinkStatus: sharedLinkStatus,
+            metaData: metaData
+        )
     }
 }
