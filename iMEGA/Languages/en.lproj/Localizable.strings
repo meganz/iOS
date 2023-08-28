@@ -3706,3 +3706,5 @@
 "chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ is waiting to join “%@”";
 /* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
 "chat.call.waitingRoom.alert.outsideCallUI.message.several"="%@ participants are waiting to join “%@”";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open" = "Open in MEGA";
