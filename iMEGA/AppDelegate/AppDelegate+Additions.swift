@@ -12,16 +12,20 @@ extension AppDelegate {
             return
         }
 
-        MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdk.currentUserEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, _) in
-            if request.flag {
-                return // Two Factor Authentication Enabled
+        MEGASdk.shared.multiFactorAuthCheck(withEmail: MEGASdk.currentUserEmail ?? "", delegate: RequestDelegate { result in
+            switch result {
+            case .success(let request):
+                if request.flag {
+                    return // Two Factor Authentication Enabled
+                }
+            case .failure:
+                break
             }
-
             if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController ||
                 UIApplication.mnz_visibleViewController() is CustomModalAlertViewController ||
                 UIApplication.mnz_visibleViewController() is AccountExpiredViewController ||
-                (MEGASdkManager.sharedMEGASdk().isAccountType(.business) &&
-                 MEGASdkManager.sharedMEGASdk().businessStatus != .active) {
+                (MEGASdk.shared.isAccountType(.business) &&
+                 MEGASdk.shared.businessStatus != .active) {
                 return
             }
             
@@ -35,7 +39,7 @@ extension AppDelegate {
             UIApplication.mnz_presentingViewController().present(enable2FACustomModalAlert, animated: true, completion: nil)
             
             UserDefaults.standard.set(true, forKey: "twoFactorAuthenticationAlreadySuggested")
-        }))
+        })
     }
     
     private var permissionHandler: any DevicePermissionsHandling {
@@ -84,7 +88,7 @@ extension AppDelegate {
     }
     
     @objc func performCall(presenter: UIViewController, chatRoom: MEGAChatRoom, isSpeakerEnabled: Bool) {
-        guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else { return }
+        guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
         MeetingContainerRouter(presenter: presenter,
                                chatRoom: chatRoom.toChatRoomEntity(),
                                call: call.toCallEntity(),
@@ -127,7 +131,7 @@ extension AppDelegate {
     }
     
     @objc func updateContactsNickname() {
-        MEGASdkManager.sharedMEGASdk().getUserAttributeType(.alias, delegate: RequestDelegate { (result) in
+        MEGASdk.shared.getUserAttributeType(.alias, delegate: RequestDelegate { (result) in
             if case let .success(request) = result {
                 guard let stringDictionary = request.megaStringDictionary else { return }
                 
@@ -148,7 +152,7 @@ extension AppDelegate {
     @objc func handleAccountBlockedEvent(_ event: MEGAEvent) {
         guard let suspensionType = AccountSuspensionType(rawValue: event.number) else { return }
 
-        if suspensionType == .smsVerification && MEGASdkManager.sharedMEGASdk().smsAllowedState() != .notAllowed {
+        if suspensionType == .smsVerification && MEGASdk.shared.smsAllowedState() != .notAllowed {
             if UIApplication.mnz_presentingViewController() is SMSNavigationViewController {
                 return
             }
@@ -179,7 +183,7 @@ extension AppDelegate {
             
             let alert = UIAlertController(title: Strings.Localizable.error, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel) { _ in
-                MEGASdkManager.sharedMEGASdk().logout()
+                MEGASdk.shared.logout()
             })
             UIApplication.mnz_presentingViewController().present(alert, animated: true, completion: nil)
         }
@@ -240,7 +244,9 @@ extension AppDelegate {
             
         default:
             CrashlyticsLogger.log("MEGAChatSDK onDBError occurred. Error \(error) with message \(message)")
-            MEGASdkManager.deleteSharedSdks()
+            MEGAChatSdk.shared.deleteMegaChatApi()
+            MEGASdk.shared.deleteMegaApi()
+            MEGASdk.sharedFolderLink.deleteMegaApi()
             exit(0)
         }
     }
@@ -276,7 +282,7 @@ extension AppDelegate {
     private func enableLogs() {
         MEGASdk.setLogLevel(.max)
         MEGAChatSdk.setLogLevel(.max)
-        MEGASdkManager.sharedMEGASdk().add(Logger.shared())
+        MEGASdk.shared.add(Logger.shared())
         MEGAChatSdk.setLogObject(Logger.shared())
     }
     
@@ -284,7 +290,7 @@ extension AppDelegate {
         let logUseCase = LogUseCase(preferenceUseCase: PreferenceUseCase.default, appEnvironment: AppEnvironmentUseCase.shared)
 
         if logUseCase.shouldEnableLogs() {
-            MEGASdkManager.sharedMEGASdk().remove(Logger.shared())
+            MEGASdk.shared.remove(Logger.shared())
         }
     }
 }
@@ -399,11 +405,13 @@ extension AppDelegate {
         audioSessionUC.configureCallAudioSession()
         audioSessionUC.enableLoudSpeaker()
         
-        let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk()))
-        let callUseCase = CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared))
+        let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: .shared))
+        let callUseCase = CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared))
 
         if let scheduleMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
-            let callEntity = try await callUseCase.startCallNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true)
+            let callEntity = chatRoom.isWaitingRoomEnabled ?
+            try await callUseCase.startMeetingInWaitingRoomChat(for: scheduleMeeting, enableVideo: false, enableAudio: true) :
+            try await callUseCase.startCallNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true)
             join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
         } else {
             let callEntity = try await callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true)

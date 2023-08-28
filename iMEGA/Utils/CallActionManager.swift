@@ -2,7 +2,7 @@ import MEGADomain
 
 @objc final class CallActionManager: NSObject {
     @objc static let shared = CallActionManager()
-    private let chatSdk = MEGASdkManager.sharedMEGAChatSdk()
+    private let chatSdk = MEGAChatSdk.shared
     private var callAvailabilityListener: CallAvailabilityListener?
     private var chatOnlineListener: ChatOnlineListener?
     private var callInProgressListener: CallInProgressListener?
@@ -76,6 +76,31 @@ import MEGADomain
             self.chatSdk.setChatVideoInDevices("Front Camera")
             
             self.chatSdk.startChatCallNoRinging(chatId, scheduledId: scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallRequestDelegate)
+        }
+    }
+    
+    func  startMeetingInWaitingRoomChat(chatId: ChatIdEntity, scheduledId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
+        self.chatOnlineListener = ChatOnlineListener(
+            chatId: chatId,
+            sdk: chatSdk
+        ) { [weak self] chatId in
+            guard let self else { return }
+            chatOnlineListener = nil
+            MEGALogDebug("1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
+            
+            configureAudioSessionForStartCall(chatId: chatId)
+            startCallRequestDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
+                guard let self else { return }
+                if error.type == .MEGAChatErrorTypeOk {
+                    notifyStartCallToCallKit(chatId: chatId)
+                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
+                }
+                delegate.completion(error)
+            }
+            guard let startCallRequestDelegate else { return }
+            chatSdk.setChatVideoInDevices("Front Camera")
+            
+            chatSdk.startMeeting(inWaitingRoomChat: chatId, scheduledId: scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallRequestDelegate)
         }
     }
     

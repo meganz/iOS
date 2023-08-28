@@ -780,7 +780,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             prepareAndShowCallUI(for: call, in: chatRoom)
         } else {
             if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
-                startMeetingCallNoRinging(for: scheduledMeeting, in: chatRoom)
+                if chatRoom.isWaitingRoomEnabled {
+                    startMeetingInWaitingRoomChat(for: scheduledMeeting, in: chatRoom)
+                } else {
+                    startMeetingCallNoRinging(for: scheduledMeeting, in: chatRoom)
+                }
             } else {
                 startCall(in: chatRoom)
             }
@@ -815,6 +819,24 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                     self?.router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
                 default:
                     self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
+                    MEGALogError("Not able to start scheduled meeting call")
+                }
+            }
+        }
+    }
+    
+    private func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, in chatRoom: ChatRoomEntity) {
+        callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: false, enableAudio: true) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let call):
+                prepareAndShowCallUI(for: call, in: chatRoom)
+            case .failure(let error):
+                switch error {
+                case .tooManyParticipants:
+                    router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+                default:
+                    router.showErrorMessage(Strings.Localizable.somethingWentWrong)
                     MEGALogError("Not able to start scheduled meeting call")
                 }
             }

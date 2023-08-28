@@ -105,6 +105,25 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
+    func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
+        let delegate = createStartMeetingRequestDelegate(for: scheduledMeeting.chatId, completion: completion)
+        callActionManager.startMeetingInWaitingRoomChat(chatId: scheduledMeeting.chatId, scheduledId: scheduledMeeting.scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
+    }
+    
+    @MainActor
+    func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+        try await withCheckedThrowingContinuation { continuation in
+            startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: enableVideo, enableAudio: enableAudio) { result in
+                switch result {
+                case .success(let callEntity):
+                    continuation.resume(returning: callEntity)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         guard let activeCall = chatSdk.chatCall(forChatId: chatId) else {
             completion(.failure(.generic))
