@@ -1547,6 +1547,7 @@
 		B52B8C68297FE9A400981F47 /* RecentsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52B8C67297FE9A400981F47 /* RecentsViewController+Additions.swift */; };
 		B52CB2342A7FA78A00F9C56C /* OfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB2332A7FA78A00F9C56C /* OfflineViewModel.swift */; };
 		B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */; };
+		B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */; };
 		B541CD302A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */; };
 		B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */; };
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
@@ -4130,6 +4131,7 @@
 		B52B8C67297FE9A400981F47 /* RecentsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecentsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B52CB2332A7FA78A00F9C56C /* OfflineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModel.swift; sourceTree = "<group>"; };
 		B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagUseCase+Additions.swift"; sourceTree = "<group>"; };
+		B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+PromotedPlan.swift"; sourceTree = "<group>"; };
 		B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSelectionSnackBarType.swift; sourceTree = "<group>"; };
 		B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+LiveText.swift"; sourceTree = "<group>"; };
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
@@ -9971,6 +9973,7 @@
 		B5EF0A7329F0EDF900B166B1 /* MEGAPurchase */ = {
 			isa = PBXGroup;
 			children = (
+				B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */,
 				41D4080E1B8F240B0001F8BE /* MEGAPurchase.h */,
 				41D4080F1B8F240B0001F8BE /* MEGAPurchase.m */,
 			);
@@ -13786,6 +13789,7 @@
 				83850A4526B2BC1100C62304 /* MEGAProviderDelegate+Additions.swift in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
 				BF8B02F32835A09E009AC794 /* MEGAProviderDelegate.swift in Sources */,
+				B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,
 				5B5E591320EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m in Sources */,

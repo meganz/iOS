@@ -22,6 +22,8 @@
 - (void)restorePurchase;
 - (NSUInteger)pricingProductIndexForProduct:(SKProduct *)product;
 - (void)removeAllProducts;
+- (SKProduct *)pendingPromotedProductForPayment;
+- (void)savePendingPromotedProduct:(SKProduct *)product;
 
 @end
 
