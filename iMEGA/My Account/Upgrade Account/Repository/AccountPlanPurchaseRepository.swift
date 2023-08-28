@@ -67,7 +67,6 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         var accountPlans: [AccountPlanEntity] = []
         for (index, product) in products.enumerated() {
             let plan = product.toAccountPlanEntity(
-                product: product,
                 storage: storageGB(atProductIndex: index),
                 transfer: transferGB(atProductIndex: index)
             )

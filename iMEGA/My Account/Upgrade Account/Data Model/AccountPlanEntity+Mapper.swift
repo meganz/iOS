@@ -2,12 +2,11 @@ import MEGADomain
 
 // MARK: - SKProduct
 extension SKProduct {
-    func toAccountPlanEntity(product: SKProduct,
-                             storage: Int,
-                             transfer: Int) -> AccountPlanEntity {
-        return AccountPlanEntity(product: product,
-                                 storageLimit: storage,
-                                 transferLimit: transfer)
+    func toAccountPlanEntity(storage: Int = 0,
+                             transfer: Int = 0) -> AccountPlanEntity {
+        AccountPlanEntity(product: self,
+                          storageLimit: storage,
+                          transferLimit: transfer)
     }
 }
 

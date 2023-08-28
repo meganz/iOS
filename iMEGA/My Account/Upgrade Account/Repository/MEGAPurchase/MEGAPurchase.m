@@ -10,6 +10,7 @@
 @interface MEGAPurchase ()
 @property (nonatomic, strong) NSArray *iOSProductIdentifiers;
 @property (nonatomic, strong) NSMutableArray *products;
+@property (nonatomic, strong) SKProduct *pendingStoreProduct;
 @end
 
 @implementation MEGAPurchase
@@ -97,6 +98,8 @@
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
+    
+    [self savePendingPromotedProduct:nil];
 }
 
 - (void)restorePurchase {
@@ -114,6 +117,14 @@
 
 - (NSUInteger)pricingProductIndexForProduct:(SKProduct *)product {
     return [self.iOSProductIdentifiers indexOfObject:product.productIdentifier];
+}
+
+- (SKProduct *)pendingPromotedProductForPayment {
+    return self.pendingStoreProduct;
+}
+
+- (void)savePendingPromotedProduct:(SKProduct *)product {
+    self.pendingStoreProduct = product;
 }
 
 #pragma mark - SKProductsRequestDelegate Methods
@@ -260,6 +271,11 @@
     if ([SVProgressHUD isVisible]) {
         [SVProgressHUD dismiss];
     }
+}
+
+- (BOOL)paymentQueue:(SKPaymentQueue *)queue shouldAddStorePayment:(SKPayment *)payment forProduct:(SKProduct *)product {
+    MEGALogDebug(@"[StoreKit] Initiated App store promoted plan purchase");
+    return [self shouldAddStorePaymentFor:product];
 }
 
 #pragma mark - MEGARequestDelegate

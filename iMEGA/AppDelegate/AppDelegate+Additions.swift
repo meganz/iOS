@@ -477,4 +477,9 @@ extension AppDelegate {
     @objc func showChooseAccountPlanTypeView() {
         UpgradeAccountRouter().presentChooseAccountType()
     }
+    
+    // MARK: - Promoted plan
+    @objc func listenToStorePaymentTransactions() {
+        SKPaymentQueue.default().add(MEGAPurchase.sharedInstance())
+    }
 }

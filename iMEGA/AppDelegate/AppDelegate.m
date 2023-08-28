@@ -247,6 +247,8 @@
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
             [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
+        } else {
+            [self listenToStorePaymentTransactions];
         }
     }
     
@@ -1479,6 +1481,7 @@
             [QuickAccessWidgetManager reloadAllWidgetsContent];
             [[MEGAPurchase sharedInstance] requestPricing];
             [api setAccountAuth:api.accountAuth];
+            [[MEGAPurchase sharedInstance] processAnyPendingPromotedPlanPayment];
             break;
         }
             
@@ -1488,6 +1491,7 @@
             
         case MEGARequestTypeFetchNodes: {
             [self postDidFinishFetchNodesNotification];
+            [self listenToStorePaymentTransactions];
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
