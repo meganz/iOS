@@ -36,6 +36,17 @@ final class ChatContentViewModelTests: XCTestCase {
              expectedCommands: [ChatContentViewModel.Command.startMeetingNoRinging(false, ScheduledMeetingEntity())])
     }
     
+    func testAction_startMeetingInWaitingRoomChat_callStartMeetingInWaitingRoomChat() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
+        let chatUseCase = MockChatUseCase()
+        chatUseCase.currentChatConnectionStatus = .online
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        
+        test(viewModel: sut, action: ChatContentAction.startMeetingInWaitingRoomChat(false, false, false, true, false),
+             expectedCommands: [ChatContentViewModel.Command.startMeetingInWaitingRoomChat(false, ScheduledMeetingEntity())])
+    }
+    
     func testAction_startOutGoingCall_callStartOutGoingCall() {
         let chatRoom = MockChatRoom(ownPrivilage: .standard).toChatRoomEntity()
         let chatUseCase = MockChatUseCase()

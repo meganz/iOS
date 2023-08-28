@@ -801,6 +801,8 @@ class ChatViewController: MessagesViewController {
             shouldEnableAudioVideoButtons(enable)
         case .startMeetingNoRinging(let videoCall, let scheduledMeeting):
             startMeetingNoRinging(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
+        case .startMeetingInWaitingRoomChat(let videoCall, let scheduledMeeting):
+            startMeetingInWaitingRoomChat(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
         case .startOutGoingCall(let videoEnable):
             startOutGoingCall(isVideoEnabled: videoEnable)
         }
@@ -1147,14 +1149,29 @@ class ChatViewController: MessagesViewController {
     }
     
     private func startMeetingNoRinging(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
-        preapareAudioForCall()
+        prepareAudioForCall()
         callUseCase.startCallNoRinging(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true) { [weak self] result in
             guard let self else { return }
             updateNavigationBarButtonsBeforeStartCall()
             switch result {
             case .success:
                 startMeetingUI(isVideoEnabled: videoCall,
-                                    isSpeakerEnabled: self.chatRoom.isMeeting || videoCall)
+                               isSpeakerEnabled: chatRoom.isMeeting || videoCall)
+            case .failure:
+                MEGALogDebug("Cannot start no ringing call for scheduled meeting")
+            }
+        }
+    }
+    
+    private func startMeetingInWaitingRoomChat(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
+        prepareAudioForCall()
+        callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true) { [weak self] result in
+            guard let self else { return }
+            updateNavigationBarButtonsBeforeStartCall()
+            switch result {
+            case .success:
+                startMeetingUI(isVideoEnabled: videoCall,
+                               isSpeakerEnabled: chatRoom.isMeeting || videoCall)
             case .failure:
                 MEGALogDebug("Cannot start no ringing call for scheduled meeting")
             }
@@ -1162,14 +1179,14 @@ class ChatViewController: MessagesViewController {
     }
     
     private func startOutGoingCall(isVideoEnabled: Bool) {
-        preapareAudioForCall()
+        prepareAudioForCall()
         callUseCase.startCall(for: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: !chatRoom.isMeeting) { [weak self] result in
             guard let self else { return }
             updateNavigationBarButtonsBeforeStartCall()
             switch result {
             case .success:
                 startMeetingUI(isVideoEnabled: isVideoEnabled,
-                                    isSpeakerEnabled: false)
+                               isSpeakerEnabled: false)
             case .failure:
                 MEGALogDebug("Cannot start outgoing call")
             }
@@ -1177,14 +1194,14 @@ class ChatViewController: MessagesViewController {
     }
     
     private func answerCall() {
-        preapareAudioForCall()
+        prepareAudioForCall()
         callUseCase.answerCall(for: chatRoom.chatId) { [weak self] result in
             guard let self else { return }
             updateNavigationBarButtonsBeforeStartCall()
             switch result {
             case .success:
                 startMeetingUI(isVideoEnabled: false,
-                                    isSpeakerEnabled: false)
+                               isSpeakerEnabled: false)
             case .failure:
                 MEGALogDebug("Cannot answer call")
             }
@@ -1220,7 +1237,7 @@ class ChatViewController: MessagesViewController {
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
     
-    private func preapareAudioForCall() {
+    private func prepareAudioForCall() {
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
         
@@ -1238,7 +1255,11 @@ class ChatViewController: MessagesViewController {
             let existsActiveCall = MEGAChatSdk.shared.mnz_existsActiveCall
             
             if chatRoom.isMeeting && !shouldRing {
-                chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
+                if chatRoom.isWaitingRoomEnabled {
+                    chatContentViewModel.dispatch(.startMeetingInWaitingRoomChat(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
+                } else {
+                    chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
+                }
             } else {
                 chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
             }
