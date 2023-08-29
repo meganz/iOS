@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import SwiftUI
 
@@ -8,6 +9,9 @@ public final class DeviceListViewModel: ObservableObject {
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
     }
+    private var cancellable: Set<AnyCancellable> = []
+    private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
+    private let updateInterval: UInt64
     
     var isFilteredDevicesEmpty: Bool {
         filteredDevices.isEmpty
@@ -31,6 +35,8 @@ public final class DeviceListViewModel: ObservableObject {
     }
     
     init(
+        devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
+        updateInterval: UInt64,
         router: any DeviceListRouting,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
         deviceListAssets: DeviceListAssets,
@@ -38,6 +44,8 @@ public final class DeviceListViewModel: ObservableObject {
         searchAssets: SearchAssets,
         backupStatuses: [BackupStatus]
     ) {
+        self.devicesUpdatePublisher = devicesUpdatePublisher
+        self.updateInterval = updateInterval
         self.router = router
         self.deviceCenterUseCase = deviceCenterUseCase
         self.deviceListAssets = deviceListAssets
@@ -47,29 +55,8 @@ public final class DeviceListViewModel: ObservableObject {
         self.isSearchActive = false
         self.searchText = ""
         
+        setupDevicesUpdateSubscription()
         loadUserDevices()
-    }
-    
-    func fetchUserDevices() async -> [DeviceEntity] {
-        await deviceCenterUseCase.fetchUserDevices()
-    }
-    
-    @MainActor
-    func arrangeDevices(_ devices: [DeviceEntity]) {
-        let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
-        
-        if let device = devices.first(where: { $0.id == currentDeviceId }),
-           let currentDeviceVM = loadDeviceViewModel(device) {
-            currentDevice = currentDeviceVM
-        } else {
-            loadDefaultDevice()
-        }
-        
-        otherDevices = devices
-            .filter { $0.id != currentDeviceId }
-            .compactMap(loadDeviceViewModel)
-        
-        resetFilteredDevices()
     }
     
     private func loadUserDevices() {
@@ -131,5 +118,48 @@ public final class DeviceListViewModel: ObservableObject {
             status: backupStatus,
             defaultName: deviceListAssets.deviceDefaultName
         )
+    }
+    
+    private func setupDevicesUpdateSubscription() {
+        devicesUpdatePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] devices in
+                guard let self = self else { return }
+                Task {
+                    await self.arrangeDevices(devices)
+                }
+            }
+            .store(in: &cancellable)
+    }
+    
+    func startAutoRefreshUserDevices() async throws {
+        while true {
+            if Task.isCancelled { return }
+            try await Task.sleep(nanoseconds: updateInterval * 1_000_000_000)
+            if Task.isCancelled { return }
+            loadUserDevices()
+        }
+    }
+    
+    func fetchUserDevices() async -> [DeviceEntity] {
+        await deviceCenterUseCase.fetchUserDevices()
+    }
+    
+    @MainActor
+    func arrangeDevices(_ devices: [DeviceEntity]) {
+        let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
+        
+        if let device = devices.first(where: { $0.id == currentDeviceId }),
+           let currentDeviceVM = loadDeviceViewModel(device) {
+            currentDevice = currentDeviceVM
+        } else {
+            loadDefaultDevice()
+        }
+        
+        otherDevices = devices
+            .filter { $0.id != currentDeviceId }
+            .compactMap(loadDeviceViewModel)
+        
+        resetFilteredDevices()
     }
 }

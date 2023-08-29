@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct DeviceListView: View {
@@ -41,5 +42,8 @@ struct DeviceListContentView: View {
             }
         }
         .listStyle(.plain)
+        .throwingTaskForiOS14 {
+            try await viewModel.startAutoRefreshUserDevices()
+        }
     }
 }

@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct BackupListView: View {
@@ -25,5 +26,8 @@ struct BackupListContentView: View {
             }
         }
         .listStyle(.plain)
+        .throwingTaskForiOS14 {
+            try await viewModel.updateDeviceStatusesAndNotify()
+        }
     }
 }

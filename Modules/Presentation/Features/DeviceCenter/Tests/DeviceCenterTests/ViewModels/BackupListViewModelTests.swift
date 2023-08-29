@@ -1,3 +1,4 @@
+import Combine
 @testable import DeviceCenter
 import DeviceCenterMocks
 import MEGADomain
@@ -5,10 +6,20 @@ import MEGADomainMock
 import XCTest
 
 final class BackupListViewModelTests: XCTestCase {
+    let mockCurrentDeviceId = "1"
+    let mockAuxDeviceId = "2"
+    let devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
     
     func test_loadAssets_matchesBackupStatuses() {
-        var backup = BackupEntity(id: 1, name: "backup1")
-        let viewModel = makeSUT(backups: [backup])
+        var backup = BackupEntity(
+            id: 1,
+            name: "backup1"
+        )
+        
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: [backup]
+        )
         
         for status in backupStatusEntities() {
             backup.backupStatus = status
@@ -17,24 +28,26 @@ final class BackupListViewModelTests: XCTestCase {
     }
     
     func testLoadBackupsModels_backupsWithDifferentStatus_loadsBackupModels() {
-        var backup1 = BackupEntity(id: 1, name: "backup1")
-        backup1.backupStatus = .updating
-        var backup2 = BackupEntity(id: 2, name: "backup2")
-        backup2.backupStatus = .upToDate
+        let backups = backups()
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: backups
+        )
         
-        let viewModel = makeSUT(backups: [backup1, backup2])
         viewModel.loadBackupsModels()
         
-        XCTAssertEqual(viewModel.backupModels.count, 2)
+        XCTAssertEqual(viewModel.backupModels.count, 3)
+        
+        let expectedBackupNames = backups.map(\.name)
+        let foundBackupNames = viewModel.backupModels.map(\.name)
+        XCTAssertEqual(foundBackupNames, expectedBackupNames)
     }
     
     func testFilterBackups_withSearchText_matchingBackupName() {
-        var backup1 = BackupEntity(id: 1, name: "backup1")
-        backup1.backupStatus = .updating
-        var backup2 = BackupEntity(id: 2, name: "backup2")
-        backup2.backupStatus = .upToDate
-        
-        let viewModel = makeSUT(backups: [backup1, backup2])
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: backups()
+        )
         
         viewModel.searchText = "1"
         
@@ -53,17 +66,133 @@ final class BackupListViewModelTests: XCTestCase {
     }
     
     func testFilterBackups_withEmptySearchText_shouldReturnTheSameBackups() {
-        var backup1 = BackupEntity(id: 1, name: "backup1")
-        backup1.backupStatus = .updating
-        var backup2 = BackupEntity(id: 2, name: "backup2")
-        backup2.backupStatus = .upToDate
-        
-        let backups = [backup1, backup2]
-        let viewModel = makeSUT(backups: backups)
+        let backups = backups()
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: backups
+        )
         
         viewModel.searchText = ""
         
-        XCTAssertEqual(viewModel.filteredBackups.map(\.name), backups.map(\.name))
+        let expectedBackupNames = backups.map(\.name)
+        let foundBackupNames = viewModel.backupModels.map(\.name)
+        XCTAssertEqual(foundBackupNames, expectedBackupNames)
+    }
+    
+    func testFilterAndLoadCurrentDeviceBackups_loadsBackupsForCurrentDevice() async {
+        let backups = backups()
+        let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
+        
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: userGroupedBackups[mockCurrentDeviceId] ?? []
+        )
+        
+        let expectedBackupNames = userGroupedBackups[mockCurrentDeviceId]?.map(\.name)
+        let foundBackupNames = viewModel.backups.map(\.name)
+        
+        await viewModel.filterAndLoadCurrentDeviceBackups(devices())
+        XCTAssertEqual(foundBackupNames, expectedBackupNames)
+        
+        let viewModel2 = makeSUT(
+            currentDeviceId: mockAuxDeviceId,
+            backups: userGroupedBackups[mockAuxDeviceId] ?? []
+        )
+        
+        await viewModel2.filterAndLoadCurrentDeviceBackups(devices())
+        
+        let expectedBackupNames2 = userGroupedBackups[mockAuxDeviceId]?.map(\.name)
+        let foundBackupNames2 = viewModel2.backups.map(\.name)
+        
+        XCTAssertEqual(foundBackupNames2, expectedBackupNames2)
+    }
+    
+    func testUpdateDeviceStatusesAndNotify_FetchesAndUpdateDevices() async {
+        let backups = backups()
+        let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
+        let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
+        let devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
+        
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
+            deviceCenterUseCase: mockUseCase
+        )
+        
+        await viewModel.syncDevicesAndLoadBackups()
+        let expectedBackupNames = userGroupedBackups[mockCurrentDeviceId]?.map(\.name)
+        let foundBackupNames = viewModel.backups.map(\.name)
+        
+        XCTAssertEqual(foundBackupNames, expectedBackupNames)
+    }
+    
+    func testUpdateDeviceStatusesAndNotify_cancellation() async throws {
+        let backups = backups()
+        let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
+        let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
+        
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
+            deviceCenterUseCase: mockUseCase,
+            updateInterval: 5
+        )
+        
+        let task = Task {
+            try await viewModel.updateDeviceStatusesAndNotify()
+        }
+        
+        task.cancel()
+        
+        XCTAssertTrue(task.isCancelled, "Task should be cancelled")
+    }
+    
+    private func backups() -> [BackupEntity] {
+        var backup1 = BackupEntity(
+            id: 1,
+            name: "backup1",
+            deviceId: mockCurrentDeviceId
+        )
+        
+        backup1.backupStatus = .updating
+        
+        var backup2 = BackupEntity(
+            id: 2,
+            name: "backup2",
+            deviceId: mockCurrentDeviceId
+        )
+        
+        backup2.backupStatus = .upToDate
+        
+        var backup3 = BackupEntity(
+            id: 3,
+            name: "backup3",
+            deviceId: mockAuxDeviceId
+        )
+        
+        backup3.backupStatus = .offline
+        
+        return [backup1, backup2, backup3]
+    }
+    
+    private func devices() -> [DeviceEntity] {
+        let userGroupedBackups = Dictionary(grouping: backups(), by: \.deviceId)
+        
+        let device1 = DeviceEntity(
+            id: mockCurrentDeviceId,
+            name: "device1",
+            backups: userGroupedBackups[mockCurrentDeviceId],
+            status: .upToDate
+        )
+        
+        let device2 = DeviceEntity(
+            id: "2",
+            name: "device2",
+            backups: userGroupedBackups[mockAuxDeviceId],
+            status: .upToDate
+        )
+        
+        return [device1, device2]
     }
     
     private func backupStatusEntities() -> [BackupStatusEntity] {
@@ -80,10 +209,22 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(assets?.backupStatus.status, backupEntity.backupStatus)
     }
     
-    private func makeSUT(backups: [BackupEntity], file: StaticString = #file, line: UInt = #line) -> BackupListViewModel {
+    private func makeSUT(
+        currentDeviceId: String,
+        backups: [BackupEntity],
+        deviceCenterUseCase: MockDeviceCenterUseCase = MockDeviceCenterUseCase(),
+        updateInterval: UInt64 = 1,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) -> BackupListViewModel {
+        
         let backupStatusEntities = backupStatusEntities()
         let backupTypeEntities = backupTypeEntities()
         let sut = BackupListViewModel(
+            selectedDeviceId: currentDeviceId,
+            devicesUpdatePublisher: devicesUpdatePublisher,
+            updateInterval: updateInterval,
+            deviceCenterUseCase: deviceCenterUseCase,
             router: MockBackupListViewRouter(),
             backups: backups,
             backupListAssets:

@@ -1,4 +1,7 @@
+import Combine
 @testable import DeviceCenter
+import MEGADomain
+import MEGADomainMock
 import MEGATest
 import SwiftUI
 import XCTest
@@ -33,8 +36,12 @@ final class BackupListsViewRouterTests: XCTestCase {
         let mockPresenter = UINavigationController()
         
         let sut = BackupListViewRouter(
-            deviceName: "Device 1",
+            selectedDeviceId: "1",
+            selectedDeviceName: "Device 1",
+            devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
+            updateInterval: 1,
             backups: [],
+            deviceCenterUseCase: MockDeviceCenterUseCase(),
             navigationController: mockPresenter,
             backupListAssets:
                 BackupListAssets(

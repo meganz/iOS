@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGAPresentation
 import MEGAUIKit
@@ -10,6 +11,8 @@ public protocol DeviceListRouting: Routing {
 public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
+    private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
+    private let updateInterval: UInt64
     private let deviceCenterAssets: DeviceCenterAssets
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     
@@ -22,11 +25,16 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         self.deviceCenterAssets = deviceCenterAssets
         self.deviceCenterUseCase = deviceCenterUseCase
         
+        devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
+        updateInterval = 30
+        
         super.init()
     }
     
     public func build() -> UIViewController {
         let deviceListViewModel = DeviceListViewModel(
+            devicesUpdatePublisher: devicesUpdatePublisher,
+            updateInterval: updateInterval,
             router: self,
             deviceCenterUseCase: deviceCenterUseCase,
             deviceListAssets: deviceCenterAssets.deviceListAssets,
@@ -51,8 +59,12 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         guard let backups = device.backups else { return }
         
         BackupListViewRouter(
-            deviceName: device.name.isEmpty ? deviceCenterAssets.deviceListAssets.deviceDefaultName : device.name,
+            selectedDeviceId: device.id,
+            selectedDeviceName: device.name.isEmpty ? deviceCenterAssets.deviceListAssets.deviceDefaultName : device.name,
+            devicesUpdatePublisher: devicesUpdatePublisher,
+            updateInterval: updateInterval,
             backups: backups,
+            deviceCenterUseCase: deviceCenterUseCase,
             navigationController: navigationController,
             backupListAssets: deviceCenterAssets.backupListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
