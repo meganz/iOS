@@ -269,22 +269,12 @@ platform :ios do
 
   desc "Run unit tests for main app"
   lane :run_tests_app do |options|
-    skip_package_dependencies_resolution = options[:skip_package_dependencies_resolution] || false
-    cloned_source_packages_path = File.join(File.expand_path('..', File.expand_path('..', Dir.pwd)), "SwiftPackages")
-
-    skip_package_dependencies_resolution = should_skip_package_dependencies_resolution(
-      cloned_source_packages_path: cloned_source_packages_path
-    ) unless skip_package_dependencies_resolution and options[:skip_package_dependencies_resolution].nil?
-
-    UI.message "Skipping the package dependencies resolution: #{skip_package_dependencies_resolution}"
-
     scan(
       workspace: WORKSPACE,
       scheme: SCHEME,
       devices: ['iPhone 14 Pro Max'],
-      cloned_source_packages_path: cloned_source_packages_path,
+      cloned_source_packages_path: ENV['SWIFT_PACKAGES_PATH'],
       disable_package_automatic_updates: true,
-      skip_package_dependencies_resolution: skip_package_dependencies_resolution,
       output_directory: ".",
       output_types: "junit",
       derived_data_path: "derivedData",
@@ -294,39 +284,6 @@ platform :ios do
       concurrent_workers: 2,
       xcargs: '-skipPackagePluginValidation'
     )
-  end
-
-  desc "Checks if the cached swift packages matches the version mentioned in the `package.resolved` file."
-  private_lane :should_skip_package_dependencies_resolution do |options|
-    resolved_package_file = "./iMEGA.xcworkspace/xcshareddata/swiftpm/Package.resolved"
-    resolved_package_json = read_json(json_path: resolved_package_file)
-
-    workspace_state_json_file = File.join(options[:cloned_source_packages_path], "workspace-state.json")
-    result = true
-
-    if File.exist?(workspace_state_json_file)
-      workspace_state_json = read_json(json_path: workspace_state_json_file)
-      resolved_package_json[:pins].each do |package|
-        name = package[:identity]
-        version = package[:state][:version]
-        found = false
-  
-        workspace_state_json[:object][:dependencies].each do |downloaded_package|
-          package_name = downloaded_package[:packageRef][:identity]
-          downloaded_version = downloaded_package[:state][:checkoutState][:version]
-          found = true if name == package_name and version == downloaded_version
-        end
-  
-        unless found
-          result = false
-          break
-        end
-      end
-    else
-      result = false
-    end
-    
-    result
   end
 
   desc "Download metadata"
