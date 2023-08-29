@@ -28,14 +28,14 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     }
 
     @Atomic var relevantUnseenUserAlertsCount: UInt = 0
-    
+    @Atomic var isNewUpgradeAccountPlanEnabled: Bool = false
+    @Atomic var accountDetails: AccountDetailsEntity?
+
     var invokeCommand: ((Command) -> Void)?
     var incomingContactRequestsCount = 0
     var setupABTestVariantTask: Task<Void, Never>?
-    var isNewUpgradeAccountPlanEnabled: Bool = false
-    
+
     private(set) var planList: [AccountPlanEntity] = []
-    private(set) var accountDetails: AccountDetailsEntity?
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var abTestProvider: any ABTestProviderProtocol
     private let accountHallUsecase: any AccountHallUseCaseProtocol
@@ -76,7 +76,10 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     func setupABTestVariant() {
         setupABTestVariantTask = Task { [weak self] in
             guard let self else { return }
-            isNewUpgradeAccountPlanEnabled = await abTestProvider.abTestVariant(for: .upgradePlanRevamp) == .variantA
+            let isNewUpgradeAccountPlanEnabled = await abTestProvider.abTestVariant(for: .upgradePlanRevamp) == .variantA
+            $isNewUpgradeAccountPlanEnabled.mutate { currentValue in
+                currentValue = isNewUpgradeAccountPlanEnabled
+            }
         }
     }
 
@@ -123,7 +126,9 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     
     // MARK: - Private
     private func setAccountDetails(_ details: AccountDetailsEntity?) {
-        accountDetails = details
+        $accountDetails.mutate { currentValue in
+            currentValue = details
+        }
         Task { @MainActor in
             currentPlanName = details?.proLevel.toAccountTypeDisplayName() ?? ""
         }
