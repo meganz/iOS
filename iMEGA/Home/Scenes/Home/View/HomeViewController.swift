@@ -658,6 +658,7 @@ extension HomeViewController: MEGASearchBarViewDelegate {
         searchResultViewController?.removeFromParent()
         searchResultContainerView?.removeFromSuperview()
         searchResultContainerView = nil
+        searchResultsBridge.didFinishSearching()
     }
 }
 

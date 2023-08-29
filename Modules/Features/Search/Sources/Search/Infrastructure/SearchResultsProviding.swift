@@ -1,4 +1,4 @@
 // Main interface used to execute searches
 public protocol SearchResultsProviding {
-    func search(query: SearchQueryEntity) async throws -> SearchResultsEntity
+    func search(queryRequest: SearchQueryEntity) async throws -> SearchResultsEntity
 }

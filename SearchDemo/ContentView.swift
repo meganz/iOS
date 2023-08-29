@@ -1,23 +1,27 @@
 import SwiftUI
-import Search
+@testable import Search
 
 struct ContentView: View {
-    let searchResult = SearchResult(
-        id: ResultId(stringLiteral: "1"),
-        title: "title_1",
-        description: "subtitle_1)",
-        properties: [],
-        thumbnailImageData: { .init() },
-        menuBuilder: {
-            .init()
-        },
-        type: .node
-    )
-
     var body: some View {
-        SearchResultsView(
-            with: [searchResult, searchResult, searchResult]
+        NavigationView {
+            Wrapper()
+        }
+    }
+    struct Wrapper: View {
+        @State var text: String = ""
+        @StateObject var viewModel = SearchResultsViewModel(
+            resultsProvider: NonProductionTestResultsProvider(),
+            bridge: .init(selection: { _ in }, context: {_ in })
         )
+        var body: some View {
+            SearchResultsView(
+                viewModel: viewModel
+            )
+            .onChange(of: text, perform: { newValue in
+                viewModel.bridge.queryChanged(newValue)
+            })
+            .searchable(text: $text)
+        }
     }
 }
 

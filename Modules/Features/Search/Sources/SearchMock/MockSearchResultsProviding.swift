@@ -12,10 +12,10 @@ public class MockSearchResultsProviding: SearchResultsProviding {
     }
     
     public func search(
-        query: SearchQueryEntity
+        queryRequest: SearchQueryEntity
     ) async throws -> SearchResultsEntity {
-        passedInQueries.append(query)
-        return try await resultFactory(query)
+        passedInQueries.append(queryRequest)
+        return try await resultFactory(queryRequest)
     }
 }
 
@@ -36,9 +36,6 @@ extension SearchResult {
             description: "subtitle_\(id)",
             properties: [],
             thumbnailImageData: { .init() },
-            menuBuilder: {
-                .init()
-            },
             type: .node
         )
     }

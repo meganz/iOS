@@ -21,6 +21,10 @@ class SearchResultsBridge: MEGASearchBarViewEditingDelegate, HomeSearchControlle
         didClearTrampoline?()
     }
     
+    func didFinishSearching() {
+        didFinishSearchingTrampoline?()
+    }
+    var didFinishSearchingTrampoline: (() -> Void)?
     var didHighlightTrampoline: (() -> Void)?
     var didSelectTextTrampoline: ((String) -> Void)?
     var didInputTextTrampoline: ((String) -> Void)?
