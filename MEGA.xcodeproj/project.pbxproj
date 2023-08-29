@@ -9151,8 +9151,8 @@
 		945222FE2A98AB1700C9DFAF /* SearchDemo */ = {
 			isa = PBXGroup;
 			children = (
-				945222FF2A98AB1700C9DFAF /* SearchDemoApp.swift */,
 				945223012A98AB1700C9DFAF /* ContentView.swift */,
+				945222FF2A98AB1700C9DFAF /* SearchDemoApp.swift */,
 			);
 			path = SearchDemo;
 			sourceTree = "<group>";
@@ -12748,7 +12748,6 @@
 				5D9DE5C4254BE9F600FA69C8 /* MEGASearchBarView.xib in Resources */,
 				2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */,
 				BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */,
-				94328FB82A9672B7005B94EB /* Search in Resources */,
 				BF99A3D524A994CB0035A183 /* MessageOptionItemTableCell.xib in Resources */,
 				2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
@@ -12781,6 +12780,7 @@
 				A88E7FEB2549FD8A001B0A66 /* RecentsTableViewHeaderView.xib in Resources */,
 				839B9FCF283D2DCA001A49DF /* reconnecting.wav in Resources */,
 				BFC214812547C04800AD648A /* RichPreviewContentView.xib in Resources */,
+				94328FB82A9672B7005B94EB /* Search in Resources */,
 				5D79EDD5251C71B500C0307A /* SearchHintTableViewCell.xib in Resources */,
 				5D4244E1251305BD00EE544D /* SearchResultFileTableViewCell.xib in Resources */,
 				5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */,

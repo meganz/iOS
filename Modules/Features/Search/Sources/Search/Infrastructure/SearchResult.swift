@@ -1,5 +1,4 @@
 import Foundation
-import MEGADomain
 
 /// Represents a single results of search action
 /// still deciding which one to use
@@ -10,7 +9,6 @@ public protocol SearchResultProtocol: Identifiable {
     var description: String { get }
     var properties: [Property] { get }
     func loadThumbnailImageData() async throws -> Data
-    func buildMenu() async -> ContextMenuBuilder
     var type: ResultType { get }
 }
 
@@ -20,7 +18,6 @@ public struct SearchResult: Identifiable {
     public let description: String
     public let properties: [Property]
     public let thumbnailImageData: () async -> Data
-    public let menuBuilder: () async -> ContextMenuBuilder
     public let type: ResultType
     
     public init(
@@ -29,7 +26,6 @@ public struct SearchResult: Identifiable {
         description: String,
         properties: [Property],
         thumbnailImageData: @escaping () async -> Data,
-        menuBuilder: @escaping () async -> ContextMenuBuilder,
         type: ResultType
     ) {
         self.id = id
@@ -37,7 +33,6 @@ public struct SearchResult: Identifiable {
         self.description = description
         self.properties = properties
         self.thumbnailImageData = thumbnailImageData
-        self.menuBuilder = menuBuilder
         self.type = type
     }
 }
@@ -57,3 +52,20 @@ extension ResultId: CustomStringConvertible {
         id
     }
 }
+
+extension SearchResult: Equatable {
+    public static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.title == rhs.title &&
+        lhs.description == rhs.description &&
+        lhs.properties == rhs.properties &&
+        lhs.type == rhs.type
+    }
+}
+
+extension Property: Equatable {
+    public static func == (lhs: Property, rhs: Property) -> Bool {
+        lhs.icon == rhs.icon
+    }
+}
+

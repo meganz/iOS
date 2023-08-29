@@ -28,7 +28,6 @@ class HomeSearchProvidingTests: XCTestCase {
                 description: "owner",
                 properties: [],
                 thumbnailImageData: { UIImage(named: "square.and.arrow.up")?.pngData() ?? Data() },
-                menuBuilder: { .init() },
                 type: .node
             ),
             .init(
@@ -37,13 +36,12 @@ class HomeSearchProvidingTests: XCTestCase {
                 description: "owner",
                 properties: [],
                 thumbnailImageData: { UIImage(named: "square.and.arrow.up")?.pngData() ?? Data() },
-                menuBuilder: { .init() },
                 type: .node
             )
         ]
 
         let searchResults = try await sut.search(
-            query: .init(
+            queryRequest: .init(
                 query: "node 1",
                 sorting: .automatic,
                 mode: .home,
@@ -74,7 +72,7 @@ class HomeSearchProvidingTests: XCTestCase {
         let sut = makeSUT()
 
         let searchResults = try await sut.search(
-            query: .init(
+            queryRequest: .init(
                 query: "search tests",
                 sorting: .automatic,
                 mode: .home,

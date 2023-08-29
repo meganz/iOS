@@ -113,16 +113,57 @@ final class HomeScreenFactory: NSObject {
     ) -> UIViewController {
 
         if newHomeSearchResultsEnabled {
-            return makeNewSearchResultsViewController(with: navigationController)
+            return makeNewSearchResultsViewController(with: navigationController, bridge: bridge)
         } else {
             return makeLegacySearchResultsViewController(with: navigationController, bridge: bridge)
         }
     }
     
     private func makeNewSearchResultsViewController(
-        with navigationController: UINavigationController
+        with navigationController: UINavigationController,
+        bridge: SearchResultsBridge
     ) -> UIViewController {
-        UIHostingController(rootView: SearchResultsView(with: []))
+        
+        let router = HomeSearchResultRouter(
+            navigationController: navigationController,
+            nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                viewController: navigationController
+            )
+        )
+        
+        // put some real value here to make it work
+        // this is put here until we have real API calls and real data
+        let fakeNode: HandleEntity = 221064586114322
+        
+        // this bridge is needed to do a searchBar <-> searchResults -> homeScreen communication without coupling this to
+        // MEGA app level delegates. Using simple closures to pass data back and forth
+        let searchBridge = SearchBridge(
+            selection: { _ in
+                router.didTapNode(fakeNode)
+            },
+            context: { _ in
+                // will try to remove the dummy button required by the API on later MR's
+                router.didTapMoreAction(on: fakeNode, button: UIButton())
+            }
+        )
+        
+        bridge.didInputTextTrampoline = { [weak searchBridge] text in
+            searchBridge?.queryChanged(text)
+        }
+        
+        bridge.didClearTrampoline = { [weak searchBridge] in
+            searchBridge?.queryCleaned()
+        }
+        
+        bridge.didFinishSearchingTrampoline = { [weak searchBridge] in
+            searchBridge?.searchCancelled()
+        }
+        
+        let vm = SearchResultsViewModel(
+            resultsProvider: NonProductionTestResultsProvider(),
+            bridge: searchBridge
+        )
+        return UIHostingController(rootView: SearchResultsView(viewModel: vm))
     }
     
     private func makeLegacySearchResultsViewController(

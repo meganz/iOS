@@ -14,17 +14,17 @@ final class HomeSearchResultsProviding: SearchResultsProviding {
         self.nodeDetailUseCase = nodeDetailUseCase
     }
 
-    func search(query: SearchQueryEntity) async throws -> SearchResultsEntity {
+    func search(queryRequest: SearchQueryEntity) async throws -> SearchResultsEntity {
         return try await withAsyncThrowingValue(in: { completion in
             searchFileUseCase.searchFiles(
-                withName: query.query,
+                withName: queryRequest.query,
                 searchPath: .root,
                 completion: { result in
                     completion(
                         .success(
                             .init(
                                 results: result.map { self.mapNodeToSearchResult($0) },
-                                // We don't yet get this from the SDK
+                                // will implement that in FM-797
                                 chips: []
                             )
                         )
@@ -42,9 +42,6 @@ final class HomeSearchResultsProviding: SearchResultsProviding {
             // We will fill this later on when we do FM-793
             properties: [],
             thumbnailImageData: { await self.loadThumbnail(for: node.handle) },
-            menuBuilder: {
-                .init()
-            },
             type: .node
         )
     }

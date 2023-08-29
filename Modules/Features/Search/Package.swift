@@ -19,13 +19,13 @@ let package = Package(
         
     ],
     dependencies: [
-        .package(path: "../../Domain/MEGADomain")
+        .package(path: "../../../UI/MEGASwiftUI")
     ],
     targets: [
         .target(
             name: "Search",
             dependencies: [
-                "MEGADomain"
+                "MEGASwiftUI"
             ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         ),
@@ -36,7 +36,10 @@ let package = Package(
         ),
         .testTarget(
             name: "SearchTests",
-            dependencies: ["Search"],
+            dependencies: [
+                "Search",
+                "SearchMock"
+            ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         )
     ]

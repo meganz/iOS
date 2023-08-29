@@ -1,5 +1,5 @@
 /// Represents a single search request
-public struct SearchQueryEntity {
+public struct SearchQueryEntity: Equatable {
     public let query: String
     public let sorting: SortOrderEntity
     public let mode: SearchModeEntity

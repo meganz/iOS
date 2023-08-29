@@ -1,16 +1,14 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct SearchResultRowView: View {
     @StateObject var viewModel: SearchResultsRowViewModel
-
     var body: some View {
         HStack(spacing: 8) {
-            if let uiImage = viewModel.thumbnailImage {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-            }
+            Image(uiImage: viewModel.thumbnailImage)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 40, height: 40)
 
             HStack {
                 VStack(alignment: .leading, spacing: .zero) {
@@ -27,11 +25,19 @@ struct SearchResultRowView: View {
                 Spacer()
 
                 Button(action: {
-                    // TODO: - Connect more action
+                    viewModel.contextAction()
                 }, label: {
                     Image("moreList")
                 })
             }
+        }
+        .padding()
+        .contentShape(Rectangle())
+        .onTapGesture {
+            viewModel.selectionAction()
+        }
+        .taskForiOS14 {
+            await viewModel.loadThumbnail()
         }
     }
 }
@@ -48,11 +54,10 @@ struct SearchResultRowView_Previews: PreviewProvider {
                     description: "subtitle_\(id)",
                     properties: [],
                     thumbnailImageData: { UIImage(systemName: "placeholder")?.pngData() ?? Data() },
-                    menuBuilder: {
-                        .init()
-                    },
                     type: .node
-                )
+                ),
+                contextAction: { },
+                selectionAction: { }
             )
         )
     }

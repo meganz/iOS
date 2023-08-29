@@ -13,7 +13,7 @@
 ///
 /// https://code.developers.mega.co.nz/sdk/sdk/-/blame/develop/include/megaapi.h?page=16#L15824
 
-public struct SearchChipEntity {
+public struct SearchChipEntity: Equatable {
     
     public let id: ChipId
     public let title: String
@@ -30,7 +30,7 @@ public struct SearchChipEntity {
     }
 }
 
-public struct ChipId {
+public struct ChipId: Equatable {
     let id: String
 }
 
