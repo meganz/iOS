@@ -503,11 +503,13 @@ final class ImportAlbumViewModelTests: XCTestCase {
     
     func testSaveToPhotos_whenSelectionModeIsActive_shouldSaveSelectedItems() async throws {
         // Arrange
+        let transferWidgetResponder = MockTransferWidgetResponder()
         let publicAlbumUseCase = makePublicAlbumUseCase()
         let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
-                                           saveMediaUseCase: saveToPhotosUseCase)
+                                           saveMediaUseCase: saveToPhotosUseCase,
+                                           transferWidgetResponder: transferWidgetResponder)
         
         await sut.loadPublicAlbum()
 
@@ -519,18 +521,22 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.saveToPhotos()
         
         // Assert
+        XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 1)
+        XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
         XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }
     
     func testSaveToPhotos_whenSelectionModeNotActive_shouldSaveAllItemsInAlbum() async throws {
         // Arrange
+        let transferWidgetResponder = MockTransferWidgetResponder()
         let multiplePhotos = try makePhotos()
         let publicAlbumUseCase = makePublicAlbumUseCase(nodes: multiplePhotos)
         let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
-                                           saveMediaUseCase: saveToPhotosUseCase)
+                                           saveMediaUseCase: saveToPhotosUseCase,
+                                           transferWidgetResponder: transferWidgetResponder)
         
         await sut.loadPublicAlbum()
 
@@ -538,23 +544,12 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.saveToPhotos()
         
         // Assert
+        XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 1)
+        XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
         XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }
-    
-    func testOnViewAppear_shouldCallToBringTransferWidgetToTheFront() throws {
-        // Arrange
-        let transferWidgetResponder = MockTransferWidgetResponder()
-        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           transferWidgetResponder: transferWidgetResponder)
         
-        // Act
-        sut.onViewAppear()
-        
-        // Assert
-        XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
-    }
-    
     // MARK: - Private
     
     private func makeImportAlbumViewModel(publicLink: URL,

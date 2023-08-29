@@ -1,21 +1,61 @@
 import Foundation
 import MEGADomain
 import MEGASDKRepo
+import MEGASwift
 
 struct DownloadFileRepository: DownloadFileRepositoryProtocol {
+    
     static var newRepo: DownloadFileRepository {
-        DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: nil, chatSdk: MEGASdkManager.sharedMEGAChatSdk())
+        let sdk = MEGASdk.sharedSdk
+        return DownloadFileRepository(
+            sdk: sdk,
+            sharedFolderSdk: nil,
+            chatSdk: .sharedChatSdk,
+            nodeProvider: DefaultMEGANodeProvider(sdk: sdk))
     }
     
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk?
     private let chatSdk: MEGAChatSdk
+    private let nodeProvider: any MEGANodeProviderProtocol
     private let cancelToken = MEGACancelToken()
     
-    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk? = nil, chatSdk: MEGAChatSdk = MEGASdkManager.sharedMEGAChatSdk()) {
+    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk? = nil, chatSdk: MEGAChatSdk = .sharedChatSdk, nodeProvider: some MEGANodeProviderProtocol = DefaultMEGANodeProvider(sdk: .sharedSdk)) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
         self.chatSdk = chatSdk
+        self.nodeProvider = nodeProvider
+    }
+    
+    func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?) async throws -> TransferEntity {
+        let megaNode: MEGANode
+
+        if let sharedFolderSdk = sharedFolderSdk {
+            guard let node = sharedFolderSdk.node(forHandle: nodeHandle),
+                  let sharedNode = sharedFolderSdk.authorizeNode(node) else {
+                throw TransferErrorEntity.couldNotFindNodeByHandle
+            }
+            megaNode = sharedNode
+        } else {
+            guard let node = await nodeProvider.node(for: nodeHandle) else {
+                throw TransferErrorEntity.couldNotFindNodeByHandle
+            }
+            megaNode = node
+        }
+                
+        return try await withAsyncThrowingValue { continuation in
+            sdk.startDownloadNode(
+                megaNode,
+                localPath: url.path,
+                fileName: nil,
+                appData: metaData?.rawValue,
+                startFirst: true,
+                cancelToken: cancelToken,
+                collisionCheck: CollisionCheck.fingerprint,
+                collisionResolution: CollisionResolution.newWithN,
+                delegate: TransferDelegate(completion: { result in continuation(result.mapError { $0 }) })
+            )
+        }
     }
     
     func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {

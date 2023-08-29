@@ -8,7 +8,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         progressIndicatorView.isUserInteractionEnabled = true
         progressIndicatorView.isHidden = true
         
-        TransfersWidgetViewController.sharedTransfer().progressView = progressIndicatorView
+        self.progressView = progressIndicatorView
         
         progressIndicatorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapProgressView)))
         
@@ -146,5 +146,8 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
 }
 
 protocol TransferWidgetResponderProtocol: AnyObject {
+    
+    func setProgressViewInKeyWindow()
+    
     func bringProgressToFrontKeyWindowIfNeeded()
 }

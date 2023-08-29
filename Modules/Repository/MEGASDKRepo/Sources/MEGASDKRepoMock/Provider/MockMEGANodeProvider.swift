@@ -4,8 +4,10 @@ import MEGASDKRepo
 
 public class MockMEGANodeProvider: MEGANodeProviderProtocol {
     
+    public private(set) var nodeForHandleCallCount = 0
+
     private var nodes: [MEGANode]
-        
+
     public init(node: MEGANode? = nil) {
         self.nodes = [node].compactMap { $0 }
     }
@@ -14,7 +16,8 @@ public class MockMEGANodeProvider: MEGANodeProviderProtocol {
     }
     
     public func node(for handle: HandleEntity) async -> MEGANode? {
-        nodes.first { $0.handle == handle }
+        nodeForHandleCallCount += 1
+        return nodes.first { $0.handle == handle }
     }
 }
 

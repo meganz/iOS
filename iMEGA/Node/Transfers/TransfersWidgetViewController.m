@@ -68,6 +68,11 @@ static TransfersWidgetViewController* instance = nil;
     return instance;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    [self configProgressIndicator];
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

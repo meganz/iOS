@@ -37,10 +37,12 @@ extension MEGALinkManager {
             MEGALinkManager.showLinkNotValid()
             return
         }
+        let sdk: MEGASdk = .sharedSdk
+        let nodeProvider: some PublicAlbumNodeProviderProtocol = PublicAlbumNodeProvider.shared
         let userAlbumRepository = UserAlbumRepository.newRepo
         let shareAlbumRepository = ShareAlbumRepository(
-            sdk: MEGASdk.shared,
-            publicAlbumNodeProvider: PublicAlbumNodeProvider.shared)
+            sdk: sdk,
+            publicAlbumNodeProvider: nodeProvider)
         
         let nodeRepository: NodeRepository = .newRepo
         
@@ -62,7 +64,9 @@ extension MEGALinkManager {
             accountUseCase: AccountUseCase(
                 repository: AccountRepository.newRepo),
             saveMediaUseCase: SaveMediaToPhotosUseCase(
-                downloadFileRepository: DownloadFileRepository.newRepo,
+                downloadFileRepository: DownloadFileRepository(
+                    sdk: sdk,
+                    nodeProvider: nodeProvider),
                 fileCacheRepository: FileCacheRepository.newRepo,
                 nodeRepository: nodeRepository),
             transferWidgetResponder: TransfersWidgetViewController.sharedTransfer(),

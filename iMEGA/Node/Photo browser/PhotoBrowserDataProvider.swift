@@ -170,6 +170,16 @@ extension PhotoBrowserDataProvider {
             fileManager: .default,
             nodeProvider: nodeProvider))
     }
+        
+    func makeSaveMediaToPhotosUseCase(for displayMode: DisplayMode) -> some SaveMediaToPhotosUseCaseProtocol {
+        SaveMediaToPhotosUseCase(
+            downloadFileRepository: DownloadFileRepository(
+                sdk: sdk,
+                sharedFolderSdk: displayMode == .nodeInsideFolderLink ? sdk : nil,
+                nodeProvider: nodeProvider),
+            fileCacheRepository: FileCacheRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo)
+    }
     
     private func isValid(index: Int) -> Bool {
         if let nodes = megaNodes {
