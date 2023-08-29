@@ -1,3 +1,4 @@
+import Combine
 @testable import DeviceCenter
 import DeviceCenterMocks
 import MEGADomain
@@ -7,9 +8,38 @@ import SwiftUI
 import XCTest
 
 final class DeviceListViewModelTests: XCTestCase {
-    
     let mockCurrentDeviceId = "1"
     
+    func testLoadUserDevices_returnsUserDevices() async {
+        let devices = devices()
+        let viewModel = makeSUT(
+            devices: devices,
+            currentDeviceId: mockCurrentDeviceId
+        )
+        
+        let fetchedDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(fetchedDevices)
+        
+        XCTAssertEqual(fetchedDevices.map(\.name), devices.map(\.name))
+    }
+    
+    func testArrangeDevices_withCurrentDeviceId_loadsCurrentDevice() async throws {
+        let devices = devices()
+        let currentDevice = devices.first {$0.id == mockCurrentDeviceId}
+        let viewModel = makeSUT(
+            devices: devices,
+            currentDeviceId: mockCurrentDeviceId
+        )
+        
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
+        
+        let currentDeviceName = try XCTUnwrap(currentDevice?.name)
+        XCTAssertEqual(viewModel.currentDevice?.name, currentDeviceName)
+        XCTAssertTrue(viewModel.otherDevices.isNotEmpty)
+        XCTAssertTrue(viewModel.otherDevices.count == 1)
+    }
+        
     func testFilterDevices_withSearchText_matchingDeviceName() async {
         let devices = devices()
         
@@ -31,7 +61,7 @@ final class DeviceListViewModelTests: XCTestCase {
         
         let expectedDeviceNames2 = ["device1"]
         let foundDeviceNames2 = viewModel.filteredDevices.map(\.name)
-        XCTAssertEqual(expectedDeviceNames2, foundDeviceNames2)
+        XCTAssertEqual(foundDeviceNames2, expectedDeviceNames2)
 
         viewModel.searchText = "fake_name"
         XCTAssertTrue(viewModel.filteredDevices.isEmpty)
@@ -50,23 +80,29 @@ final class DeviceListViewModelTests: XCTestCase {
         
         viewModel.searchText = ""
         
-        XCTAssertEqual(viewModel.filteredDevices.map(\.name), devices.map(\.name))
+        let expectedDeviceNames = devices.map(\.name)
+        let foundDeviceNames = viewModel.filteredDevices.map(\.name)
+        
+        XCTAssertEqual(foundDeviceNames, expectedDeviceNames)
     }
     
-    func testIsFiltered_withSearchTextMatchingDevices_shouldReturnTrue() {
+    func testIsFiltered_withSearchTextMatchingDevices_shouldReturnTrue() async {
         let devices = devices()
         
         let viewModel = makeSUT(
             devices: devices,
             currentDeviceId: mockCurrentDeviceId
         )
+        
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
         
         viewModel.searchText = "dev"
         
         XCTAssertTrue(viewModel.isFiltered)
     }
 
-    func testIsFiltered_withEmptySearchText_shouldReturnFalse() {
+    func testIsFiltered_withEmptySearchText_shouldReturnFalse() async {
         let devices = devices()
         
         let viewModel = makeSUT(
@@ -74,9 +110,33 @@ final class DeviceListViewModelTests: XCTestCase {
             currentDeviceId: mockCurrentDeviceId
         )
         
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
+        
         viewModel.searchText = ""
         
         XCTAssertFalse(viewModel.isFiltered)
+    }
+    
+    func testStartAutoRefreshUserDevices_cancellation() async throws {
+        let devices = devices()
+        
+        let viewModel = makeSUT(
+            devices: devices,
+            currentDeviceId: mockCurrentDeviceId,
+            updateInterval: 5
+        )
+        
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
+        
+        let task = Task {
+            try await viewModel.startAutoRefreshUserDevices()
+        }
+    
+        task.cancel()
+        
+        XCTAssertTrue(task.isCancelled, "Task should be cancelled")
     }
     
     private func filteredDevices(by text: String) -> [DeviceEntity] {
@@ -116,10 +176,19 @@ final class DeviceListViewModelTests: XCTestCase {
         [.upToDate, .offline, .blocked, .outOfQuota, .error, .disabled, .paused, .updating, .scanning, .initialising, .backupStopped, .noCameraUploads]
     }
     
-    private func makeSUT(devices: [DeviceEntity], currentDeviceId: String, file: StaticString = #file, line: UInt = #line) -> DeviceListViewModel {
+    private func makeSUT(
+        devices: [DeviceEntity],
+        currentDeviceId: String,
+        updateInterval: UInt64 = 1,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) -> DeviceListViewModel {
+        
         let backupStatusEntities = backupStatusEntities()
         
         let sut = DeviceListViewModel(
+            devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
+            updateInterval: updateInterval,
             router: MockDeviceListViewRouter(),
             deviceCenterUseCase: MockDeviceCenterUseCase(devices: devices, currentDeviceId: currentDeviceId),
             deviceListAssets:
@@ -141,6 +210,7 @@ final class DeviceListViewModelTests: XCTestCase {
             backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) }
         )
         
+        trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
 }
