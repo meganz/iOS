@@ -111,7 +111,6 @@ final class BackupListViewModelTests: XCTestCase {
         let backups = backups()
         let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
         let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
-        let devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
