@@ -168,6 +168,7 @@
 		25E2717D2A3FE96800DDB678 /* AVPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2717C2A3FE96800DDB678 /* AVPlayerManager.swift */; };
 		25E2717F2A40099800DDB678 /* MEGAAVViewController+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E2717E2A40099800DDB678 /* MEGAAVViewController+Combine.swift */; };
 		25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */; };
+		25ED56812A9D867D0063864F /* DownloadFileRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25ED56802A9D867D0063864F /* DownloadFileRepositoryTests.swift */; };
 		271FC4212A27EA4400E35924 /* ElementStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271FC4202A27EA4400E35924 /* ElementStore.swift */; };
 		274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */; };
 		27AFAC542A53734500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AFAC532A53734500C0D6A0 /* FileExtensionOCWrapper.swift */; };
@@ -2673,6 +2674,7 @@
 		25E2717C2A3FE96800DDB678 /* AVPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManager.swift; sourceTree = "<group>"; };
 		25E2717E2A40099800DDB678 /* MEGAAVViewController+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAVViewController+Combine.swift"; sourceTree = "<group>"; };
 		25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTransferWidgetResponder.swift; sourceTree = "<group>"; };
+		25ED56802A9D867D0063864F /* DownloadFileRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFileRepositoryTests.swift; sourceTree = "<group>"; };
 		271FC4202A27EA4400E35924 /* ElementStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStore.swift; sourceTree = "<group>"; };
 		274514C12A2F5BDE00BFFB2F /* ElementStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementStoreTests.swift; sourceTree = "<group>"; };
 		275682F82A4015280038E13A /* RemovalConfirmationMessageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovalConfirmationMessageGenerator.swift; sourceTree = "<group>"; };
@@ -5315,6 +5317,7 @@
 				B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */,
 				12B1E5792874FFEF00D23A58 /* AnalyticsRepositoryTests.swift */,
 				940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */,
+				25ED56802A9D867D0063864F /* DownloadFileRepositoryTests.swift */,
 				328FDCF22911FE2100E5990A /* FilesSearchRepositoryTests.swift */,
 				9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */,
 				A8919423299F90A700B2A225 /* NodeAttributeRepositoryTests.swift */,
@@ -14959,6 +14962,7 @@
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
 				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,
+				25ED56812A9D867D0063864F /* DownloadFileRepositoryTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
 				274514C22A2F5BDE00BFFB2F /* ElementStoreTests.swift in Sources */,
 				BF2B2C82263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift in Sources */,

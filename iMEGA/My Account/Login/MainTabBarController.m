@@ -195,7 +195,6 @@
 }
 
 - (void)configProgressView {
-    [TransfersWidgetViewController.sharedTransferViewController configProgressIndicator];
     [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
 }
 

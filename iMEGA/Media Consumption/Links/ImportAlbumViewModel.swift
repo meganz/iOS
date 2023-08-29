@@ -109,7 +109,6 @@ final class ImportAlbumViewModel: ObservableObject {
     
     func onViewAppear() {
         tracker.trackAnalyticsEvent(with: AlbumImportScreenEvent())
-        transferWidgetResponder?.bringProgressToFrontKeyWindowIfNeeded()
     }
     
     @MainActor
@@ -174,6 +173,9 @@ final class ImportAlbumViewModel: ObservableObject {
         guard photosToSave.isNotEmpty else {
             return
         }
+        
+        transferWidgetResponder?.setProgressViewInKeyWindow()
+        transferWidgetResponder?.bringProgressToFrontKeyWindowIfNeeded()
         
         showSnackBar(message: Strings.Localizable.General.SaveToPhotos.started(photosToSave.count))
 

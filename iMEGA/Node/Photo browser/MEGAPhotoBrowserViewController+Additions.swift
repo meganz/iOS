@@ -90,7 +90,8 @@ extension MEGAPhotoBrowserViewController {
         permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
             guard let self else { return }
             if granted {
-                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .sharedSdk, sharedFolderSdk: self.displayMode == .nodeInsideFolderLink ? self.api : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                let saveMediaUseCase = dataProvider.makeSaveMediaToPhotosUseCase(for: displayMode)
+                
                 let completionBlock: (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void = { result in
                     if case let .failure(error) = result, error != .cancelled {
                         SVProgressHUD.dismiss()
@@ -101,6 +102,7 @@ extension MEGAPhotoBrowserViewController {
                     }
                 }
                 
+                TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
                 
                 switch self.displayMode {

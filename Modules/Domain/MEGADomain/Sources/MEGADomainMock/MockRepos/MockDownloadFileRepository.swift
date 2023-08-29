@@ -20,6 +20,10 @@ public struct MockDownloadFileRepository: DownloadFileRepositoryProtocol {
     public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         completion(completionResult)
     }
+    
+    public func download(nodeHandle: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?) async throws -> TransferEntity {
+        try await withCheckedThrowingContinuation { continuation in continuation.resume(with: completionResult) }
+    }
 
     public func downloadChat(nodeHandle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, to url: URL, metaData: TransferMetaDataEntity?, completion: @escaping (Result<TransferEntity, TransferErrorEntity>) -> Void) {
         completion(completionResult)

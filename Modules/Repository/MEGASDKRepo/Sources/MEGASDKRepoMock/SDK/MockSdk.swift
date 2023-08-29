@@ -61,6 +61,7 @@ public final class MockSdk: MEGASdk {
     public var disablepkp: Bool?
     public var shareAccessLevel: MEGAShareType = .accessUnknown
     public var stopPublicSetPreviewCalled = 0
+    public var authorizeNodeCalled = 0
     
     public init(nodes: [MEGANode] = [],
                 rubbishNodes: [MEGANode] = [],
@@ -488,7 +489,15 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func authorizeNode(_ node: MEGANode) -> MEGANode? {
-        node
+        authorizeNodeCalled += 1
+        return node
+    }
+    
+    public override func startDownloadNode(_ node: MEGANode, localPath: String, fileName: String?, appData: String?, startFirst: Bool, cancelToken: MEGACancelToken?, collisionCheck: CollisionCheck, collisionResolution: CollisionResolution, delegate: any MEGATransferDelegate) {
+        delegate.onTransferFinish?(
+            self,
+            transfer: MockTransfer(type: .download, nodeHandle: node.handle, parentHandle: node.parentHandle),
+            error: MockError(errorType: .apiOk))
     }
 }
 
