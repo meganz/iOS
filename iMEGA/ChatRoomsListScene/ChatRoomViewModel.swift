@@ -33,9 +33,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private(set) var displayDateString: String?
     
     private var subscriptions = Set<AnyCancellable>()
-    private var loadingChatRoomInfoTask: Task<Void, Never>?
-    
-    private var isViewOnScreen = false
+
     private var loadingChatRoomInfoSubscription: AnyCancellable?
     private var searchString = ""
     
@@ -49,7 +47,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
     let permissionHandler: any DevicePermissionsHandling
-    
+
     init(chatListItem: ChatListItemEntity,
          router: some ChatRoomsListRouting,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
@@ -114,19 +112,29 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     }
     
     // MARK: - Interface methods
-    
-    func onViewAppear() {
-        isViewOnScreen = true
-        
-        loadChatRoomInfo()
+
+    func loadChatRoomInfo() async {
+        let chatId = chatListItem.chatId
+
+        guard !Task.isCancelled else {
+            MEGALogDebug("Task cancelled for \(chatId) - won't update description")
+            return
+        }
+
+        do {
+            try await updateDescription()
+        } catch {
+            MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
+        }
+
+        do {
+            try Task.checkCancellation()
+            await sendObjectChangeNotification()
+        } catch {
+            MEGALogDebug("Task cancelled for \(chatId) - won't send object change notification")
+        }
     }
-    
-    func cancelLoading() {
-        isViewOnScreen = false
-        
-        cancelChatRoomInfoTask()
-    }
-    
+
     func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
         switch chatStatus {
         case .online:
@@ -297,39 +305,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         
         return options
     }
-    
-    private func cancelChatRoomInfoTask() {
-        loadingChatRoomInfoTask?.cancel()
-        loadingChatRoomInfoTask = nil
-    }
-    
-    private func loadChatRoomInfo() {
-        loadingChatRoomInfoTask = Task { [weak self] in
-            guard let self else { return }
-            
-            let chatId = chatListItem.chatId
-            
-            defer {
-                cancelChatRoomInfoTask()
-            }
-            
-            do {
-                try await self.updateDescription()
-            } catch {
-                MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
-            }
-            
-            guard self.isViewOnScreen else { return }
-            
-            do {
-                try Task.checkCancellation()
-                await sendObjectChangeNotification()
-            } catch {
-                MEGALogDebug("Task cancelled for \(chatId)")
-            }
-        }
-    }
-    
+
     private func loadChatRoomSearchString() {
         Task { [weak self] in
             guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else {
