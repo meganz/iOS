@@ -122,7 +122,7 @@ final class HomeScreenFactory: NSObject {
     private func makeNewSearchResultsViewController(
         with navigationController: UINavigationController
     ) -> UIViewController {
-        UIHostingController(rootView: SearchResultsView())
+        UIHostingController(rootView: SearchResultsView(with: []))
     }
     
     private func makeLegacySearchResultsViewController(
