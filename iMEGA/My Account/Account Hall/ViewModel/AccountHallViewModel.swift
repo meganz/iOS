@@ -3,6 +3,7 @@ import Foundation
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
+import MEGASwift
 
 enum AccountHallLoadTarget {
     case planList, accountDetails, contentCounts
@@ -25,10 +26,11 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         case setUserAvatar
         case setName
     }
+
+    @Atomic var relevantUnseenUserAlertsCount: UInt = 0
     
     var invokeCommand: ((Command) -> Void)?
     var incomingContactRequestsCount = 0
-    var relevantUnseenUserAlertsCount: UInt = 0
     var setupABTestVariantTask: Task<Void, Never>?
     var isNewUpgradeAccountPlanEnabled: Bool = false
     
@@ -160,7 +162,10 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     
     private func fetchCounts() async {
         incomingContactRequestsCount = await accountHallUsecase.incomingContactsRequestsCount()
-        relevantUnseenUserAlertsCount = await accountHallUsecase.relevantUnseenUserAlertsCount()
+        let relevantUnseenUserAlertsCount = await accountHallUsecase.relevantUnseenUserAlertsCount()
+        $relevantUnseenUserAlertsCount.mutate { currentValue in
+            currentValue = relevantUnseenUserAlertsCount
+        }
         
         await reloadNotificationCounts()
     }
@@ -223,7 +228,9 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newCount in
                 guard let self else { return }
-                relevantUnseenUserAlertsCount = newCount
+                $relevantUnseenUserAlertsCount.mutate { currentValue in
+                    currentValue = newCount
+                }
                 invokeCommand?(.reloadCounts)
             }
             .store(in: &subscriptions)
