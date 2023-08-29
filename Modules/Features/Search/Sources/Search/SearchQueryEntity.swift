@@ -4,6 +4,13 @@ public struct SearchQueryEntity {
     public let sorting: SortOrderEntity
     public let mode: SearchModeEntity
     public let chips: [SearchChipEntity]
+
+    public init(query: String, sorting: SortOrderEntity, mode: SearchModeEntity, chips: [SearchChipEntity]) {
+        self.query = query
+        self.sorting = sorting
+        self.mode = mode
+        self.chips = chips
+    }
 }
 
 /// default value, iteration one of search project does not allow specifying sort order but that can come in next stages
