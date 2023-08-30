@@ -1,3 +1,4 @@
+import MEGASDKRepo
 import UIKit
 
 class NicknameViewController: UIViewController {
@@ -87,11 +88,14 @@ class NicknameViewController: UIViewController {
         guard let user = user else {
             return
         }
-
-        let genericRequestDelegate = MEGAGenericRequestDelegate { request, error in
+        
+        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.show()
+        MEGASdk.shared.setUserAlias(nickname, forHandle: user.handle, delegate: RequestDelegate { [weak self] (result) in
             SVProgressHUD.dismiss()
-
-            if error.type == .apiOk {
+            guard let self else { return }
+            switch result {
+            case .success:
                 if let user = self.user {
                     NotificationCenter.default.post(name: NSNotification.Name.MEGContactNicknameChange,
                                                     object: nil,
@@ -100,17 +104,13 @@ class NicknameViewController: UIViewController {
                     user.mnz_nickname = nickname
                 }
 
-                self.updateHandler(withNickname: nickname)
-            } else {
-                SVProgressHUD.showError(withStatus: request.requestString + " " + NSLocalizedString(error.name, comment: ""))
+                updateHandler(withNickname: nickname)
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: NSLocalizedString(error.name, comment: ""))
             }
-
-            self.dismissViewController()
-        }
-        
-        SVProgressHUD.setDefaultMaskType(.clear)
-        SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk().setUserAlias(nickname, forHandle: user.handle, delegate: genericRequestDelegate)
+            
+            dismissViewController()
+        })
     }
 
     private func dismissViewController() {
