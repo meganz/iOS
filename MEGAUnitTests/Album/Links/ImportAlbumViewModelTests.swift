@@ -3,6 +3,8 @@ import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPermissions
+import MEGAPermissionsMock
 import MEGAPresentation
 import MEGATest
 import XCTest
@@ -504,13 +506,18 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testSaveToPhotos_whenSelectionModeIsActive_shouldSaveSelectedItems() async throws {
         // Arrange
         let transferWidgetResponder = MockTransferWidgetResponder()
+        let permissionHandler = MockDevicePermissionHandler(
+            photoAuthorization: .authorized,
+            audioAuthorized: false,
+            videoAuthorized: false,
+            requestPhotoLibraryAccessPermissionsGranted: true)
         let publicAlbumUseCase = makePublicAlbumUseCase()
         let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
                                            saveMediaUseCase: saveToPhotosUseCase,
-                                           transferWidgetResponder: transferWidgetResponder)
-        
+                                           transferWidgetResponder: transferWidgetResponder,
+                                           permissionHandler: permissionHandler)
         await sut.loadPublicAlbum()
 
         let multiplePhotos = try makePhotos()
@@ -530,13 +537,19 @@ final class ImportAlbumViewModelTests: XCTestCase {
     func testSaveToPhotos_whenSelectionModeNotActive_shouldSaveAllItemsInAlbum() async throws {
         // Arrange
         let transferWidgetResponder = MockTransferWidgetResponder()
+        let permissionHandler = MockDevicePermissionHandler(
+            photoAuthorization: .authorized,
+            audioAuthorized: false,
+            videoAuthorized: false,
+            requestPhotoLibraryAccessPermissionsGranted: true)
         let multiplePhotos = try makePhotos()
         let publicAlbumUseCase = makePublicAlbumUseCase(nodes: multiplePhotos)
         let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
                                            publicAlbumUseCase: publicAlbumUseCase,
                                            saveMediaUseCase: saveToPhotosUseCase,
-                                           transferWidgetResponder: transferWidgetResponder)
+                                           transferWidgetResponder: transferWidgetResponder,
+                                           permissionHandler: permissionHandler)
         
         await sut.loadPublicAlbum()
 
@@ -549,6 +562,37 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }
+    
+    func testSaveToPhotos_whenPhotosLibraryPermissionRequired_shouldShowAlert() async throws {
+        // Arrange
+        let transferWidgetResponder = MockTransferWidgetResponder()
+        let permissionHandler = MockDevicePermissionHandler(
+            photoAuthorization: .denied,
+            audioAuthorized: false,
+            videoAuthorized: false,
+            requestPhotoLibraryAccessPermissionsGranted: false)
+        let publicAlbumUseCase = makePublicAlbumUseCase()
+        let saveToPhotosUseCase = MockSaveMediaToPhotosUseCase(saveToPhotosResult: .success(()))
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           saveMediaUseCase: saveToPhotosUseCase,
+                                           transferWidgetResponder: transferWidgetResponder,
+                                           permissionHandler: permissionHandler)
+        await sut.loadPublicAlbum()
+
+        let multiplePhotos = try makePhotos()
+        sut.enablePhotoLibraryEditMode(true)
+        sut.photoLibraryContentViewModel.selection.setSelectedPhotos(multiplePhotos)
+        
+        // Act
+        await sut.saveToPhotos()
+        
+        // Assert
+        XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 0)
+        XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 0)
+        XCTAssertNil(sut.snackBarViewModel?.snackBar)
+        XCTAssertTrue(sut.showPhotoPermissionAlert)
+    }
         
     // MARK: - Private
     
@@ -560,6 +604,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
                                           accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
                                           saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
                                           transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
+                                          permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
                                           tracker: some AnalyticsTracking = MockTracker()
     ) -> ImportAlbumViewModel {
         let sut = ImportAlbumViewModel(
@@ -571,6 +616,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             accountUseCase: accountUseCase,
             saveMediaUseCase: saveMediaUseCase,
             transferWidgetResponder: transferWidgetResponder,
+            permissionHandler: permissionHandler,
             tracker: tracker)
         trackForMemoryLeaks(on: sut)
         return sut

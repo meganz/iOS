@@ -1,6 +1,7 @@
 import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPermissions
 import MEGAPresentation
 import MEGASwift
 import SwiftUI
@@ -15,6 +16,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private let accountStorageUseCase: any AccountStorageUseCaseProtocol
     private let importPublicAlbumUseCase: any ImportPublicAlbumUseCaseProtocol
     private let saveMediaUseCase: any SaveMediaToPhotosUseCaseProtocol
+    private let permissionHandler: any DevicePermissionsHandling
     private let tracker: any AnalyticsTracking
     private weak var transferWidgetResponder: (any TransferWidgetResponderProtocol)?
 
@@ -46,6 +48,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var showStorageQuotaWillExceed = false
     @Published var importFolderLocation: NodeEntity?
     @Published var showRenameAlbumAlert = false
+    @Published var showPhotoPermissionAlert = false
     @Published private(set) var isSelectionEnabled = false
     @Published private(set) var selectButtonOpacity = 0.0
     @Published private(set) var publicAlbumName: String?
@@ -88,6 +91,7 @@ final class ImportAlbumViewModel: ObservableObject {
          accountUseCase: some AccountUseCaseProtocol,
          saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
          transferWidgetResponder: (some TransferWidgetResponderProtocol)?,
+         permissionHandler: some DevicePermissionsHandling,
          tracker: some AnalyticsTracking) {
         self.publicLink = publicLink
         self.publicAlbumUseCase = publicAlbumUseCase
@@ -96,6 +100,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.importPublicAlbumUseCase = importPublicAlbumUseCase
         self.saveMediaUseCase = saveMediaUseCase
         self.transferWidgetResponder = transferWidgetResponder
+        self.permissionHandler = permissionHandler
         self.tracker = tracker
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
@@ -171,6 +176,14 @@ final class ImportAlbumViewModel: ObservableObject {
         let photosToSave = photoLibraryContentViewModel.photosToAction
                 
         guard photosToSave.isNotEmpty else {
+            return
+        }
+        
+        let granted = await permissionHandler.requestPhotoLibraryAccessPermissions()
+        
+        guard granted else {
+            showPhotoPermissionAlert = true
+            MEGALogError("[Import Album] PhotoLibraryAccessPermissions not granted")
             return
         }
         

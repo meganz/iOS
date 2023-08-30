@@ -70,6 +70,7 @@ extension MEGALinkManager {
                 fileCacheRepository: FileCacheRepository.newRepo,
                 nodeRepository: nodeRepository),
             transferWidgetResponder: TransfersWidgetViewController.sharedTransfer(),
+            permissionHandler: DevicePermissionsHandler.makeHandler(),
             tracker: DIContainer.tracker)
         
         let viewController = UIHostingController(dismissibleView: ImportAlbumView(
