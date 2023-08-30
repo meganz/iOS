@@ -8,9 +8,7 @@ struct WaitingRoomWarningBannerView: View {
     
     var body: some View {
         HStack {
-            if let url = URL(string: "https://help.mega.io/wp-admin/post.php?post=3005&action=edit") {
-                buildBannerText(with: url)
-            }
+            text
             Spacer()
             closeButton
         }
@@ -18,26 +16,13 @@ struct WaitingRoomWarningBannerView: View {
         .background(colorScheme == .dark ? Color(Colors.General.Yellow.fed42926.name) : Color(Colors.General.Yellow.fed429.name))
     }
     
-    private func buildBannerText(with url: URL) -> some View {
-        Link(destination: url) {
-            Group {
-                buildText(with: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.title)
-                + buildText(with: " ")
-                + buildText(with: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.learnMore)
-                    .underline()
-            }
-            .multilineTextAlignment(.leading)
-        }
-    }
-    
-    private func buildText(with title: String) -> Text {
-        Text(title)
-            .font(.caption2)
-            .bold()
+    private var text: some View {
+        Text(Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.title)
+            .font(.caption2.bold())
             .foregroundColor(colorScheme == .dark ? Color(Colors.General.Yellow.ffd60A.name): Color(Colors.General.Yellow._9D8319.name))
     }
     
-    var closeButton: some View {
+    private var closeButton: some View {
         Button {
             withAnimation {
                 showBanner = false
