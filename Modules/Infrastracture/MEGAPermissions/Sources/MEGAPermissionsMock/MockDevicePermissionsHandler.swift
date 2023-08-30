@@ -5,26 +5,29 @@ import Photos
 import UserNotifications
 
 public class MockDevicePermissionHandler: DevicePermissionsHandling {
-    public init() {
-        
-    }
+    
+    private var requestPhotoLibraryAccessPermissionsGranted: Bool = false
+    
+    public init() { }
     
     public convenience init(
         photoAuthorization: PHAuthorizationStatus,
         audioAuthorized: Bool,
-        videoAuthorized: Bool
+        videoAuthorized: Bool,
+        requestPhotoLibraryAccessPermissionsGranted: Bool = false
     ) {
         self.init()
         photoLibraryAuthorizationStatus = photoAuthorization
         requestMediaPermissionValuesToReturn[.audio] = audioAuthorized
         requestMediaPermissionValuesToReturn[.video] = videoAuthorized
+        self.requestPhotoLibraryAccessPermissionsGranted = requestPhotoLibraryAccessPermissionsGranted
     }
     
     public func notificationPermissionStatus() async -> UNAuthorizationStatus {
         .denied
     }
     
-    public func requestPhotoLibraryAccessPermissions() async -> Bool { false }
+    public func requestPhotoLibraryAccessPermissions() async -> Bool { requestPhotoLibraryAccessPermissionsGranted }
     
     public var requestPermissionsMediaTypes: [AVMediaType] = []
     public var requestMediaPermissionValuesToReturn: [AVMediaType: Bool] = [:]

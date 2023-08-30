@@ -64,6 +64,7 @@ struct ImportAlbumView: View, DismissibleContentView {
                   dismissButton: .cancel(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
                                          action: dismissImportAlbumScreen))
         }
+        .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
         .sheet(isPresented: $viewModel.showImportAlbumLocation) {
             BrowserView(browserAction: .saveToCloudDrive,
                         isChildBrowser: true,
