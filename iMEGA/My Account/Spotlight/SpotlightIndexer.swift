@@ -1,6 +1,7 @@
 import Combine
 import CoreSpotlight
 import MEGADomain
+import MEGASDKRepo
 import MobileCoreServices
 
 final class SpotlightIndexer: NSObject {
@@ -26,7 +27,7 @@ final class SpotlightIndexer: NSObject {
     
     @objc init(sdk: MEGASdk, passcodeEnabled: Bool = false) {
         self.sdk = sdk
-        let favoritesRepository = FavouriteNodesRepository(sdk: sdk)
+        let favoritesRepository = FavouriteNodesRepository.newRepo
         self.favouritesUseCase = FavouriteNodesUseCase(repo: favoritesRepository)
         self.passcodeEnabled = passcodeEnabled
         super.init()

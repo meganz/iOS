@@ -1,10 +1,10 @@
 import Foundation
 import MEGADomain
-import MEGASDKRepo
+import MEGASdk
 
-final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol {
-    static var newRepo: FavouriteNodesRepository {
-        FavouriteNodesRepository(sdk: MEGASdkManager.sharedMEGASdk())
+public final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol {
+    public static var newRepo: FavouriteNodesRepository {
+        FavouriteNodesRepository(sdk: MEGASdk.sharedSdk)
     }
     
     private let sdk: MEGASdk
@@ -16,11 +16,11 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
     }
     
     @available(*, renamed: "allFavouritesNodes()")
-    func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+    public func getAllFavouriteNodes(completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         getFavouriteNodes(limitCount: 0, completion: completion)
     }
     
-    func allFavouritesNodes() async throws -> [NodeEntity] {
+    public func allFavouritesNodes() async throws -> [NodeEntity] {
         return try await withCheckedThrowingContinuation { continuation in
             getFavouriteNodes(limitCount: 0) { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: GetFavouriteNodesErrorEntity.generic); return }
@@ -30,7 +30,7 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
         }
     }
     
-    func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+    public func getFavouriteNodes(limitCount: Int, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         sdk.favourites(forParent: nil, count: limitCount, delegate: RequestDelegate { (result) in
             switch result {
             case .success(let request):
@@ -54,7 +54,7 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
         })
     }
     
-    func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
+    public func allFavouriteNodes(searchString: String?, completion: @escaping (Result<[NodeEntity], GetFavouriteNodesErrorEntity>) -> Void) {
         getFavouriteNodes(limitCount: 0) { result in
             switch result {
             case .success(let nodes):
@@ -69,13 +69,13 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
         }
     }
     
-    func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
+    public func registerOnNodesUpdate(callback: @escaping ([NodeEntity]) -> Void) {
         sdk.add(self)
         
         onNodesUpdate = callback
     }
     
-    func unregisterOnNodesUpdate() {
+    public func unregisterOnNodesUpdate() {
         sdk.remove(self)
         
         onNodesUpdate = nil
@@ -83,7 +83,7 @@ final class FavouriteNodesRepository: NSObject, FavouriteNodesRepositoryProtocol
 }
 
 extension FavouriteNodesRepository: MEGAGlobalDelegate {
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         guard let nodesUpdateArray = nodeList?.toNodeArray() else { return }
         var shouldProcessOnNodesUpdate: Bool = false
         

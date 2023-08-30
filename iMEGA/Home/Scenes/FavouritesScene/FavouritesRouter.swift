@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 final class FavouritesRouter: NSObject, Routing {
     private weak var navigationController: UINavigationController?
@@ -18,7 +19,7 @@ extension FavouritesRouter: FavouritesRouting {
         let favouritesVC = UIStoryboard(name: "Favourites", bundle: nil)
             .instantiateViewController(withIdentifier: "FavouritesViewControllerID") as! FavouritesViewController
         
-        let repository = FavouriteNodesRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        let repository = FavouriteNodesRepository.newRepo
         let favouritesUseCase = FavouriteNodesUseCase(repo: repository)
         
         let viewModel = FavouritesViewModel(router: self, favouritesUseCase: favouritesUseCase)
