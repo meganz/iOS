@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAPermissions
+import MEGARepo
 import MEGASDKRepo
 
 final class ChatRoomsListRouter: ChatRoomsListRouting {

@@ -5,28 +5,26 @@ import PackageDescription
 let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
 
 let package = Package(
-    name: "MEGARepo",
+    name: "MEGAIntentDomain",
     platforms: [
         .macOS(.v10_15), .iOS(.v14)
     ],
     products: [
         .library(
-            name: "MEGARepo",
-            targets: ["MEGARepo"]
-        )
+            name: "MEGAIntentDomain",
+            targets: ["MEGAIntentDomain"])
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain")
-
     ],
     targets: [
         .target(
-            name: "MEGARepo",
+            name: "MEGAIntentDomain",
             dependencies: ["MEGADomain"],
-            swiftSettings: settings
-        ),
+            swiftSettings: settings),
         .testTarget(
-            name: "MEGARepoTests",
-            dependencies: ["MEGARepo"])
+            name: "MEGAIntentDomainTests",
+            dependencies: ["MEGADomain", "MEGAIntentDomain"],
+            swiftSettings: settings)
     ]
 )
