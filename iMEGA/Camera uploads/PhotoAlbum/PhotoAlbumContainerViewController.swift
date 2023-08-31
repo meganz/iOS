@@ -282,7 +282,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
     }
     
     @objc private func shareLinksButtonPressed() {
-        viewModel.showShareAlbumLinks = true
+        viewModel.shareLinksTapped()
     }
     
     @objc private func removeLinksButtonPressed() {

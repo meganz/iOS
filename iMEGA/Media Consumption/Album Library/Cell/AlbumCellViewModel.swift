@@ -29,8 +29,7 @@ final class AlbumCellViewModel: ObservableObject {
     
     let album: AlbumEntity
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
-    
-    private var loadingTask: Task<Void, Never>?
+    private let tracker: any AnalyticsTracking
     
     let selection: AlbumSelection
     
@@ -46,11 +45,13 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailUseCase: any ThumbnailUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.thumbnailUseCase = thumbnailUseCase
         self.album = album
         self.selection = selection
+        self.tracker = tracker
         
         title = album.name
         numberOfNodes = album.count
@@ -67,7 +68,8 @@ final class AlbumCellViewModel: ObservableObject {
         subscribeToEditMode()
     }
     
-    func loadAlbumThumbnail() {
+    @MainActor
+    func loadAlbumThumbnail() async {
         guard let coverNode = album.coverNode,
               thumbnailContainer.type == .placeholder else {
             return
@@ -75,19 +77,15 @@ final class AlbumCellViewModel: ObservableObject {
         if !isLoading {
             isLoading.toggle()
         }
-        loadingTask = Task {
-            await loadThumbnail(for: coverNode)
-        }
-    }
-    
-    func cancelLoading() {
-        isLoading = false
-        loadingTask?.cancel()
+        await loadThumbnail(for: coverNode)
     }
     
     func onAlbumTap() {
         guard !album.systemAlbum else { return }
         isSelected.toggle()
+        
+        tracker.trackAnalyticsEvent(with: album.makeAlbumSelectedEvent(
+            selectionType: isSelected ? .multiadd : .multiremove))
     }
     
     // MARK: Private

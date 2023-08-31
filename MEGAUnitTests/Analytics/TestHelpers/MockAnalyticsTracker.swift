@@ -4,13 +4,13 @@ import XCTest
 
 final class MockTracker: AnalyticsTracking {
     private(set) var trackedEventIdentifiers: [EventIdentifier] = []
-
+    
     init() {}
-
+    
     func trackAnalyticsEvent(with eventIdentifier: EventIdentifier) {
         trackedEventIdentifiers.append(eventIdentifier)
     }
-
+    
     func assertTrackAnalyticsEventCalled(
         with expectedEventIdentifiers: [EventIdentifier],
         file: StaticString = #file, line: UInt = #line
@@ -20,7 +20,7 @@ final class MockTracker: AnalyticsTracking {
             expectedEventIdentifiers.count,
             file: file, line: line
         )
-
+        
         for (tracked, expected) in zip(expectedEventIdentifiers, trackedEventIdentifiers) {
             XCTAssertEqual(
                 tracked.stringValue,

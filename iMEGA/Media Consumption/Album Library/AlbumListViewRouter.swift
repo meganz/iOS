@@ -44,6 +44,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             ),
             albumModificationUseCase: AlbumModificationUseCase(userAlbumRepo: userAlbumRepo),
             shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
+            tracker: DIContainer.tracker,
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
                                                        placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
                                                        affirmativeButtonTitle: Strings.Localizable.createFolderButton,

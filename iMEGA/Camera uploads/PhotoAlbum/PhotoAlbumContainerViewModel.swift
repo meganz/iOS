@@ -24,4 +24,9 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     func didAppear() {
         tracker.trackAnalyticsEvent(with: PhotoScreenEvent())
     }
+    
+    func shareLinksTapped() {
+        showShareAlbumLinks = true
+        tracker.trackAnalyticsEvent(with: AlbumListShareLinkMenuItemEvent())
+    }
 }

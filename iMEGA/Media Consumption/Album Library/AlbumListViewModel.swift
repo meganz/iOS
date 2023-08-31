@@ -1,5 +1,7 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
 import SwiftUI
 
 @MainActor
@@ -17,7 +19,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         }
     }
     @Published var showShareAlbumLinks = false
-   
+    
     lazy var selection = AlbumSelection()
     
     var albumCreationAlertMsg: String?
@@ -38,20 +40,23 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let usecase: any AlbumListUseCaseProtocol
     private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
     private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     private(set) var alertViewModel: TextFieldAlertViewModel
     private var subscriptions = Set<AnyCancellable>()
     private(set) var viewIsVisiblePublisher = PassthroughSubject<Bool, Never>()
     
     private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
-    init(usecase: any AlbumListUseCaseProtocol,
-         albumModificationUseCase: any AlbumModificationUseCaseProtocol,
-         shareAlbumUseCase: any ShareAlbumUseCaseProtocol,
+    init(usecase: some AlbumListUseCaseProtocol,
+         albumModificationUseCase: some AlbumModificationUseCaseProtocol,
+         shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
+         tracker: some AnalyticsTracking,
          alertViewModel: TextFieldAlertViewModel,
          photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil) {
         self.usecase = usecase
         self.albumModificationUseCase = albumModificationUseCase
         self.shareAlbumUseCase = shareAlbumUseCase
+        self.tracker = tracker
         self.alertViewModel = alertViewModel
         self.photoAlbumContainerViewModel = photoAlbumContainerViewModel
         super.init()
@@ -62,7 +67,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         
         assignAlbumNameValidator()
         subscribeToEditMode()
-        subscibeToShareAlbumLinks()
+        subscribeToShareAlbumLinks()
     }
     
     func columns(horizontalSizeClass: UserInterfaceSizeClass?) -> [GridItem] {
@@ -104,7 +109,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         createAlbumTask = Task {
             do {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
-
+                
                 newlyAddedAlbum = await usecase.hasNoPhotosAndVideos() ? nil : newAlbum
                 photoAlbumContainerViewModel?.shouldShowSelectBarButton = true
             } catch {
@@ -231,7 +236,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         
         let hudMessage = albumIds.count == 1 ? Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1) : Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
         albumHudMessage = AlbumHudMessage(message: hudMessage, icon: Asset.Images.Hud.hudSuccess.image)
-
+        
         photoAlbumContainerViewModel?.editMode = .inactive
     }
     
@@ -257,7 +262,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             secondaryButton: .cancel(Text(Strings.Localizable.cancel))
         )
     }
-
+    
     func newAlbumName() -> String {
         let newAlbumName = Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder
         let names = Set(albums.filter { $0.name.hasPrefix(newAlbumName) }.map { $0.name })
@@ -290,13 +295,15 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         
         albumCreationAlertMsg = nil
         self.album = album
+        
+        tracker.trackAnalyticsEvent(with: album.makeAlbumSelectedEvent(selectionType: .single))
     }
     
     func onViewAppeared() {
         viewIsVisiblePublisher.send(true)
     }
     
-    func onViewDissappeared() {
+    func onViewDisappeared() {
         viewIsVisiblePublisher.send(false)
     }
     
@@ -325,7 +332,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
                 self?.loadAlbums()
             }
             .store(in: &subscriptions)
-          
+        
         photoAlbumContainerViewModel?.$showDeleteAlbumAlert
             .dropFirst()
             .sink { [weak self] _ in
@@ -366,7 +373,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         albumRemoveShareLinkTask = nil
     }
     
-    private func subscibeToShareAlbumLinks() {
+    private func subscribeToShareAlbumLinks() {
         guard let photoAlbumContainerViewModel else { return }
         photoAlbumContainerViewModel.$showShareAlbumLinks
             .dropFirst()
