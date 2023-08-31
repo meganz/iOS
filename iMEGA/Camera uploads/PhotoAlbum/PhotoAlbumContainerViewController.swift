@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 import MEGAUIKit
 import SwiftUI
 import UIKit

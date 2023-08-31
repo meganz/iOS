@@ -1213,8 +1213,6 @@
 		944AD0B128EF039700AB1E59 /* BackupsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B028EF039700AB1E59 /* BackupsRepository.swift */; };
 		944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */; };
 		944DB356295EE64900CE4D83 /* RubbishBinRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */; };
-		9450A38F299E62620031BBEB /* UserAttributeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9450A38E299E62620031BBEB /* UserAttributeRepository.swift */; };
-		9450A391299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9450A390299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift */; };
 		9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */; };
 		945223002A98AB1700C9DFAF /* SearchDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945222FF2A98AB1700C9DFAF /* SearchDemoApp.swift */; };
 		945223022A98AB1700C9DFAF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945223012A98AB1700C9DFAF /* ContentView.swift */; };
@@ -3794,8 +3792,6 @@
 		944AD0B028EF039700AB1E59 /* BackupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsRepository.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
 		944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RubbishBinRepository.swift; sourceTree = "<group>"; };
-		9450A38E299E62620031BBEB /* UserAttributeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeRepository.swift; sourceTree = "<group>"; };
-		9450A390299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserAttributeEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		945222FD2A98AB1700C9DFAF /* SearchDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		945222FF2A98AB1700C9DFAF /* SearchDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDemoApp.swift; sourceTree = "<group>"; };
@@ -8704,7 +8700,6 @@
 		8396FBC525D6894D00EB50FD /* User */ = {
 			isa = PBXGroup;
 			children = (
-				9450A38E299E62620031BBEB /* UserAttributeRepository.swift */,
 				BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */,
 				BF90C7A626040930006061F8 /* UserStoreRepository.swift */,
 			);
@@ -10348,7 +10343,6 @@
 				0D7E5ED926322BFB00C5CB2A /* NodeEntityMapping */,
 				A859043529F2D1A000632F0C /* Offline */,
 				A859043329F2D14300632F0C /* Preference */,
-				B6FB5F8029A321130023BA6A /* User */,
 			);
 			path = "Model Mapping";
 			sourceTree = "<group>";
@@ -11093,14 +11087,6 @@
 				B6F853432794C97300028D51 /* PhotoSelectionAdapter.swift */,
 			);
 			path = "Photo Selection";
-			sourceTree = "<group>";
-		};
-		B6FB5F8029A321130023BA6A /* User */ = {
-			isa = PBXGroup;
-			children = (
-				9450A390299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift */,
-			);
-			path = User;
 			sourceTree = "<group>";
 		};
 		B6FD6510268D7EA500988A17 /* UseCase */ = {
@@ -14582,8 +14568,6 @@
 				B645165322320C23001680BC /* UploadStats.m in Sources */,
 				B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
-				9450A391299E9ABD0031BBEB /* UserAttributeEntity+Mapper.swift in Sources */,
-				9450A38F299E62620031BBEB /* UserAttributeRepository.swift in Sources */,
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCase+Additions.swift in Sources */,
 				8313914B293519F900E20170 /* UserAvatarView.swift in Sources */,
 				83139149293511F300E20170 /* UserAvatarViewModel.swift in Sources */,

@@ -1,25 +1,25 @@
 import MEGADomain
-import MEGASDKRepo
+import MEGASdk
 import MEGASwift
 
-struct UserAttributeRepository: UserAttributeRepositoryProtocol {
-    static var newRepo: UserAttributeRepository {
-        UserAttributeRepository(sdk: MEGASdk.shared)
+public struct UserAttributeRepository: UserAttributeRepositoryProtocol {
+    public static var newRepo: UserAttributeRepository {
+        UserAttributeRepository(sdk: MEGASdk.sharedSdk)
     }
-    
+
     private let sdk: MEGASdk
-    
+
     init(sdk: MEGASdk) {
         self.sdk = sdk
     }
-    
-    func updateUserAttribute(_ attribute: UserAttributeEntity, value: String) async throws {
+
+    public func updateUserAttribute(_ attribute: UserAttributeEntity, value: String) async throws {
         return try await withCheckedThrowingContinuation { continuation in
             guard Task.isCancelled == false else {
                 continuation.resume(throwing: CancellationError())
                 return
             }
-            
+
             sdk.setUserAttributeType(attribute.toMEGAUserAttribute(), value: value, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else {
                     continuation.resume(throwing: CancellationError())
@@ -29,14 +29,14 @@ struct UserAttributeRepository: UserAttributeRepositoryProtocol {
             })
         }
     }
-    
-    func updateUserAttribute(_ attribute: UserAttributeEntity, key: String, value: String) async throws {
+
+    public func updateUserAttribute(_ attribute: UserAttributeEntity, key: String, value: String) async throws {
         return try await withCheckedThrowingContinuation { continuation in
             guard Task.isCancelled == false else {
                 continuation.resume(throwing: CancellationError())
                 return
             }
-            
+
             sdk.setUserAttributeType(attribute.toMEGAUserAttribute(), key: key, value: value, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else {
                     continuation.resume(throwing: CancellationError())
@@ -46,8 +46,8 @@ struct UserAttributeRepository: UserAttributeRepositoryProtocol {
             })
         }
     }
-    
-    func userAttribute(for attribute: UserAttributeEntity) async throws -> [String: String]? {
+
+    public func userAttribute(for attribute: UserAttributeEntity) async throws -> [String: String]? {
         try await withAsyncThrowingValue(in: { completion in
             sdk.getUserAttributeType(attribute.toMEGAUserAttribute(), delegate: RequestDelegate { result in
                 switch result {
