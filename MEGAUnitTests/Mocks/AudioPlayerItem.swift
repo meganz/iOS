@@ -6,6 +6,10 @@ extension AudioPlayerItem {
         .init(name: "Track 5", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3")!, node: MEGANode())
     }
     
+    static func mockItem(node: MEGANode) -> Self {
+        .init(name: node.name ?? "", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3")!, node: node)
+    }
+    
     static var mockArray: [AudioPlayerItem] {
         [AudioPlayerItem(name: "Track 1", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!, node: nil),
          AudioPlayerItem(name: "Track 2", url: URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!, node: nil),

@@ -158,7 +158,7 @@ final class MiniPlayerViewController: UIViewController {
         switch command {
         case .reloadPlayerStatus(let percentage, let isPlaying):
             updatePlayback(percentage, isPlaying)
-        case .reloadNodeInfo(let thumbnail):
+        case .reloadNodeInfo(let thumbnail, _):
             updateCurrent(thumbnail: thumbnail)
         case .reload(let currentItem):
             updateCurrent(item: currentItem)
@@ -170,6 +170,8 @@ final class MiniPlayerViewController: UIViewController {
             refreshStateOfLoadingView(show)
         case .enableUserInteraction(let enabled):
             userInteraction(enabled: enabled)
+        case .reloadAt(let index):
+            collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
         }
     }
 }
