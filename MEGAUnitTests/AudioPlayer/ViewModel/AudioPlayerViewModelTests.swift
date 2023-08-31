@@ -7,7 +7,7 @@ import XCTest
 final class AudioPlayerViewModelTests: XCTestCase {
     
     func testPlaybackActions() {
-        let (onlineSUT, _, playerHandler, _) = makeOnlineSUT()
+        let (onlineSUT, _, playerHandler, _, _, _) = makeOnlineSUT()
         
         test(viewModel: onlineSUT, action: .onViewDidLoad, expectedCommands: [.showLoading(true),
                                                                               .configureFileLinkPlayer(title: "Track 5", subtitle: Strings.Localizable.fileLink),
@@ -68,7 +68,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     
     func testRouterActions() {
         let router = MockAudioPlayerViewRouter()
-        let (onlineSUT, _, _, _) = makeOnlineSUT(router: router)
+        let (onlineSUT, _, _, _, _, _) = makeOnlineSUT(router: router)
         let (offlineSUT, _) = makeOfflineSUT(router: router)
         
         test(viewModel: onlineSUT, action: .dismiss, expectedCommands: [])
@@ -97,7 +97,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     func testOnReceiveAudioPlayerActions_shouldInvokeCorrectCommands() {
-        let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
+        let (onlineSUT, playbackUseCase, _, _, _, _) = makeOnlineSUT()
         playbackUseCase._status = .startFromBeginning
         
         assert(
@@ -110,7 +110,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     func testAudioStartPlayingWithDisplayDialogStatus_shouldDisplayDialog_andPausePlayer_whenAppIsActive() {
-        let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
+        let (onlineSUT, playbackUseCase, playerHandler, _, _, _) = makeOnlineSUT()
         onlineSUT.checkAppIsActive = { true }
         playbackUseCase._status = .displayDialog(playbackTime: 1234.0)
         
@@ -130,7 +130,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     func testAudioStartPlayingWithDisplayDialogStatus_shouldNotDisplayDialog_whenAppIsNotActive() {
-        let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
+        let (onlineSUT, playbackUseCase, _, _, _, _) = makeOnlineSUT()
         onlineSUT.checkAppIsActive = { false }
         playbackUseCase._status = .displayDialog(playbackTime: 1234.0)
         
@@ -144,7 +144,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     func testAudioStartPlayingWithDisplayDialogStatus_shouldResumePlayback_whenAppIsNotActive() {
-        let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
+        let (onlineSUT, playbackUseCase, playerHandler, _, _, _) = makeOnlineSUT()
         onlineSUT.checkAppIsActive = { false }
         playbackUseCase._status = .displayDialog(playbackTime: 1234.0)
         
@@ -159,7 +159,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     func testAudioPlaybackContinuation_resumeSession() {
-        let (onlineSUT, playbackUseCase, playerHandler, _) = makeOnlineSUT()
+        let (onlineSUT, playbackUseCase, playerHandler, _, _, _) = makeOnlineSUT()
         playbackUseCase._status = .resumeSession(playbackTime: 1234.0)
         
         onlineSUT.audioDidStartPlayingItem(testItem)
@@ -171,7 +171,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     func testSelectPlaybackContinuationDialog_shouldSetPreference() {
-        let (onlineSUT, playbackUseCase, _, _) = makeOnlineSUT()
+        let (onlineSUT, playbackUseCase, _, _, _, _) = makeOnlineSUT()
         onlineSUT.dispatch(.onSelectResumePlaybackContinuationDialog(playbackTime: 1234.0))
         
         XCTAssertEqual(
@@ -198,10 +198,11 @@ final class AudioPlayerViewModelTests: XCTestCase {
         XCTAssertNotNil(firstPlayerHandler.currentPlayer())
         
         let (differentSUT, _, differentPlayerHandler, _) = simulateUserViewDidLoadWithNewInstane(audioNode: latestAudioNode)
+        differentPlayerHandler.setCurrent(player: AudioPlayer(), autoPlayEnabled: false, tracks: [])
         
         XCTAssertEqual(differentPlayerHandler.setCurrent_callTimes, 0)
         try assertThatCleanPlayerStateForReuse(on: differentPlayerHandler, sut: differentSUT)
-        XCTAssertTrue(differentSUT.isSingleTrackPlayer)
+        XCTAssertTrue(differentSUT.isSingleTrackPlayer, "expect single track.")
         differentSUT.invokeCommand = {
             XCTAssertEqual($0, .configureDefaultPlayer)
             XCTAssertEqual($0, .shuffleAction(enabled: false))
@@ -210,27 +211,73 @@ final class AudioPlayerViewModelTests: XCTestCase {
         }
     }
     
+    func testOnNodesUpdate_whenHasUpdatedItemButNotFoundNodeInList_ShouldNotRefresh() {
+        let firstAudioNode = MockNode(handle: 1, name: "first-audio", nodeType: .file)
+        let latestAudioNode = MockNode(handle: 2, name: "latest-audio", nodeType: .file)
+        let updatedNode = MockNode(handle: 3, name: "New name")
+        let updatedItem: AudioPlayerItem = .mockItem(node: updatedNode)
+        let (onlineSUT, _, _, _, audioPlayerUseCase, sdk) = makeOnlineSUT(
+            node: firstAudioNode,
+            allNodes: [firstAudioNode, latestAudioNode]
+        )
+        var invokedCommands = [AudioPlayerViewModel.Command]()
+        onlineSUT.invokeCommand = { invokedCommands.append($0) }
+        let exp = expectation(description: "wait")
+        
+        audioPlayerUseCase.simulateOnNodesUpdate(MockNodeList(nodes: [updatedNode]), sdk: sdk)
+        exp.fulfill()
+        wait(for: [exp], timeout: 0.1)
+        
+        assertThatRefreshItemUIIsNotUpdatedOnRefreshItem(on: onlineSUT, updatedItem: updatedItem, invokedCommands: invokedCommands)
+        assertThatRefreshItemDataSourceIsNotUpdated(on: onlineSUT, updatedNode: updatedNode, latestAudioNode: latestAudioNode)
+    }
+    
+    func testOnNodesUpdate_whenHasUpdatedItem_refresh() {
+        let firstAudioNode = MockNode(handle: 1, name: "first-audio", nodeType: .file)
+        let latestAudioNode = MockNode(handle: 2, name: "latest-audio", nodeType: .file)
+        let updatedNode = MockNode(handle: 1, name: "New name")
+        let (onlineSUT, _, _, _, audioPlayerUseCase, sdk) = makeOnlineSUT(
+            node: firstAudioNode,
+            allNodes: [firstAudioNode, latestAudioNode]
+        )
+        
+        assertThatRefreshItemUIUpdatedOnRefreshItem(on: onlineSUT, updatedNode: updatedNode, audioPlayerUseCase: audioPlayerUseCase, sdk: sdk)
+        assertThatRefreshItemDataSourceUpdated(on: onlineSUT, updatedNode: updatedNode, latestAudioNode: latestAudioNode)
+    }
+    
     // MARK: - Helpers
     
-    private func makeOnlineSUT(router: MockAudioPlayerViewRouter = MockAudioPlayerViewRouter()) -> (sut: AudioPlayerViewModel, playbackUseCase: MockPlaybackContinuationUseCase, playerHandler: MockAudioPlayerHandler, router: MockAudioPlayerViewRouter) {
+    private func makeOnlineSUT(
+        router: MockAudioPlayerViewRouter = MockAudioPlayerViewRouter(),
+        node: MEGANode? = MEGANode(),
+        allNodes: [MEGANode]? = nil
+    ) -> (
+        sut: AudioPlayerViewModel,
+        playbackUseCase: MockPlaybackContinuationUseCase,
+        playerHandler: MockAudioPlayerHandler,
+        router: MockAudioPlayerViewRouter,
+        audioPlayerUseCase: MockAudioPlayerUseCase,
+        sdk: MockSdk
+    ) {
         let playerHandler = MockAudioPlayerHandler()
-        let (sut, playbackUseCase) = makeSUT(
+        let (sut, playbackUseCase, audioPlayerUseCase, sdk) = makeSUT(
             configEntity: AudioPlayerConfigEntity(
-                node: MEGANode(),
+                node: node,
                 isFolderLink: false,
                 fileLink: "",
+                allNodes: allNodes,
                 playerHandler: playerHandler
             ),
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),
             router: router
         )
-        return (sut, playbackUseCase, playerHandler, router)
+        return (sut, playbackUseCase, playerHandler, router, audioPlayerUseCase, sdk)
     }
     
     private func makeOfflineSUT(router: MockAudioPlayerViewRouter = MockAudioPlayerViewRouter()) -> (sut: AudioPlayerViewModel, router: MockAudioPlayerViewRouter) {
         let playerHandler = MockAudioPlayerHandler()
-        let (sut, _) = makeSUT(
+        let (sut, _, _, _) = makeSUT(
             configEntity: AudioPlayerConfigEntity(
                 fileLink: "file_path",
                 playerHandler: playerHandler
@@ -247,8 +294,15 @@ final class AudioPlayerViewModelTests: XCTestCase {
         streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
         offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
         router: MockAudioPlayerViewRouter
-    ) -> (sut: AudioPlayerViewModel, playbackContinuationUseCase: MockPlaybackContinuationUseCase) {
+    ) -> (
+        sut: AudioPlayerViewModel,
+        playbackContinuationUseCase: MockPlaybackContinuationUseCase,
+        audioPlayerUseCase: MockAudioPlayerUseCase,
+        sdk: MockSdk
+    ) {
         let mockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase()
+        let audioPlayerUseCase = MockAudioPlayerUseCase()
+        let sdk = MockSdk()
         let sut = AudioPlayerViewModel(
             configEntity: configEntity,
             router: router,
@@ -256,15 +310,17 @@ final class AudioPlayerViewModelTests: XCTestCase {
             streamingInfoUseCase: streamingInfoUseCase,
             offlineInfoUseCase: offlineInfoUseCase,
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
-            dispatchQueue: MockDispatchQueue()
+            audioPlayerUseCase: audioPlayerUseCase,
+            dispatchQueue: MockDispatchQueue(),
+            sdk: sdk
         )
-        return (sut, mockPlaybackContinuationUseCase)
+        return (sut, mockPlaybackContinuationUseCase, audioPlayerUseCase, sdk)
     }
     
     private func simulateUserViewDidLoadWithNewInstane(audioNode: MockNode) -> (sut: AudioPlayerViewModel, playbackUseCase: MockPlaybackContinuationUseCase, playerHandler: MockAudioPlayerHandler, router: MockAudioPlayerViewRouter) {
         let router = MockAudioPlayerViewRouter()
         let configEntity = audioPlayerConfigEntity(node: audioNode)
-        let (sut, playbackUseCase) = makeSUT(
+        let (sut, playbackUseCase, _, _) = makeSUT(
             configEntity: configEntity,
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),
@@ -278,6 +334,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         _ viewModel: AudioPlayerViewModel,
         when action: (AudioPlayerViewModel) -> Void,
         shouldInvokeCommands expectedCommands: [AudioPlayerViewModel.Command],
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
         var invokedCommands =  [AudioPlayerViewModel.Command]()
@@ -285,7 +342,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
         
         action(viewModel)
         
-        XCTAssertEqual(invokedCommands, expectedCommands, line: line)
+        XCTAssertEqual(invokedCommands, expectedCommands, file: file, line: line)
     }
     
     private var testItem: AudioPlayerItem {
@@ -307,18 +364,67 @@ final class AudioPlayerViewModelTests: XCTestCase {
     }
     
     private func assertThatCleanPlayerStateForReuse(on playerHandler: MockAudioPlayerHandler, sut: AudioPlayerViewModel, file: StaticString = #filePath, line: UInt = #line) throws {
-        let player = try XCTUnwrap(playerHandler.currentPlayer(), file: file, line: line)
+        let player = try XCTUnwrap(playerHandler.currentPlayer(), "Fail to get currentPlayer", file: file, line: line)
         assertThatRemovePreviousQueuedTrackInPlayer(on: player, file: file, line: line)
         assertThatRefreshPlayerListener(on: player, sut: sut, file: file, line: line)
     }
     
     private func assertThatRemovePreviousQueuedTrackInPlayer(on player: AudioPlayer, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertNil(player.queuePlayer, file: file, line: line)
-        XCTAssertTrue(player.tracks.isEmpty, file: file, line: line)
+        XCTAssertNil(player.queuePlayer, "Expect to remove previous queued track player, but not removed.", file: file, line: line)
+        XCTAssertTrue(player.tracks.isEmpty, "Expect track is empty, but not empty instead.", file: file, line: line)
     }
     
     private func assertThatRefreshPlayerListener(on player: AudioPlayer, sut: AudioPlayerViewModel, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertTrue(player.listenerManager.listeners.isEmpty, file: file, line: line)
-        XCTAssertTrue(player.listenerManager.listeners.notContains(where: { $0 as! AnyHashable == sut as! AnyHashable }), file: file, line: line)
+        XCTAssertTrue(player.listenerManager.listeners.isEmpty, "Expect listeners empty.", file: file, line: line)
+        XCTAssertTrue(player.listenerManager.listeners.notContains(where: { $0 as! AnyHashable == sut as AnyHashable }), "Expect listeners not contains observer.", file: file, line: line)
+    }
+    
+    private func assertThatRefreshItemUIIsNotUpdatedOnRefreshItem(on onlineSUT: AudioPlayerViewModel, updatedItem: AudioPlayerItem, invokedCommands: [AudioPlayerViewModel.Command], file: StaticString = #filePath, line: UInt = #line) {
+        var receivedCommands = [AudioPlayerViewModel.Command]()
+        invokedCommands.forEach { receivedCommands.append($0) }
+        XCTAssertTrue(receivedCommands.isEmpty, file: file, line: line)
+    }
+    
+    private func assertThatRefreshItemUIUpdatedOnRefreshItem(on onlineSUT: AudioPlayerViewModel, updatedNode: MEGANode, audioPlayerUseCase: MockAudioPlayerUseCase, sdk: MockSdk, file: StaticString = #filePath, line: UInt = #line) {
+        assert(
+            onlineSUT,
+            when: { _ in audioPlayerUseCase.simulateOnNodesUpdate(MockNodeList(nodes: [updatedNode]), sdk: sdk) },
+            shouldInvokeCommands: [
+                .reloadNodeInfo(name: "New name", artist: "", thumbnail: nil, size: Optional("Zero KB")),
+                .showLoading(false)
+            ],
+            file: file,
+            line: line
+        )
+    }
+    
+    private func assertThatRefreshItemDataSourceIsNotUpdated(on onlineSUT: AudioPlayerViewModel, updatedNode: MEGANode, latestAudioNode: MEGANode, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertNotEqual(onlineSUT.configEntity.node, updatedNode, file: file, line: line)
+        onlineSUT.configEntity.playerHandler.currentPlayer()?.tracks
+            .map { $0.name }
+            .enumerated()
+            .forEach { (index, name) in
+                if index == 1 {
+                    XCTAssertEqual(name, updatedNode.name, file: file, line: line)
+                }
+                if index == 2 {
+                    XCTAssertEqual(name, latestAudioNode.name, file: file, line: line)
+                }
+            }
+    }
+    
+    private func assertThatRefreshItemDataSourceUpdated(on onlineSUT: AudioPlayerViewModel, updatedNode: MEGANode, latestAudioNode: MEGANode, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(onlineSUT.configEntity.node, updatedNode, file: file, line: line)
+        onlineSUT.configEntity.playerHandler.currentPlayer()?.tracks
+            .map { $0.name }
+            .enumerated()
+            .forEach { (index, name) in
+                if index == 1 {
+                    XCTAssertEqual(name, updatedNode.name, file: file, line: line)
+                }
+                if index == 2 {
+                    XCTAssertEqual(name, latestAudioNode.name, file: file, line: line)
+                }
+            }
     }
 }
