@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGARepo",
     platforms: [
@@ -20,7 +22,8 @@ let package = Package(
     targets: [
         .target(
             name: "MEGARepo",
-            dependencies: ["MEGADomain"]
+            dependencies: ["MEGADomain"],
+            swiftSettings: settings
         )
     ]
 )

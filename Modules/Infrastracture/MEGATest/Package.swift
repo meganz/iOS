@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGATest",
     platforms: [
@@ -16,7 +18,7 @@ let package = Package(
         .target(
             name: "MEGATest",
             dependencies: [],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         )
     ]
 )

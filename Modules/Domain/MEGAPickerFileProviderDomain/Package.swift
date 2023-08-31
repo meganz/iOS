@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGAPickerFileProviderDomain",
     platforms: [
@@ -19,11 +21,13 @@ let package = Package(
     targets: [
         .target(
             name: "MEGAPickerFileProviderDomain",
-            dependencies: ["MEGADomain"]
+            dependencies: ["MEGADomain"],
+            swiftSettings: settings
         ),
         .testTarget(
             name: "MEGAPickerFileProviderDomainTests",
-            dependencies: ["MEGAPickerFileProviderDomain"]
+            dependencies: ["MEGAPickerFileProviderDomain"],
+            swiftSettings: settings
         )
     ]
 )

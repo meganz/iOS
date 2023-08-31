@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGAAnalyticsDomain",
     platforms: [
@@ -23,12 +25,12 @@ let package = Package(
         .target(
             name: "MEGAAnalyticsDomain",
             dependencies: ["MEGADomain"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         ),
         .target(
             name: "MEGAAnalyticsDomainMock",
             dependencies: ["MEGAAnalyticsDomain"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         ),
         .testTarget(
             name: "MEGAAnalyticsDomainTests",
@@ -37,7 +39,7 @@ let package = Package(
                 "MEGAAnalyticsDomainMock",
                 "MEGATest"
             ],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         )
     ]
 )

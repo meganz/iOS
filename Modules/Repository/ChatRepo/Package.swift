@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "ChatRepo",
     platforms: [
@@ -26,7 +28,7 @@ let package = Package(
                 "MEGAChatSdk",
                 "MEGASDKRepo"
             ],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         )
     ]
 )
