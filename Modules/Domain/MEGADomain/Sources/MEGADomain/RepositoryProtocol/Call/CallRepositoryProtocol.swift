@@ -16,6 +16,9 @@ public protocol CallRepositoryProtocol {
     func endCall(for callId: HandleEntity)
     func addPeer(toCall call: CallEntity, peerId: UInt64)
     func removePeer(fromCall call: CallEntity, peerId: UInt64)
+    func allowUsersJoinCall(_ call: CallEntity, users: [UInt64])
+    func kickUsersFromCall(_ call: CallEntity, users: [UInt64])
+    func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [UInt64])
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64)
     func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64)
     func createActiveSessions()
@@ -40,4 +43,6 @@ public protocol CallCallbacksRepositoryProtocol {
     func chatTitleChanged(chatRoom: ChatRoomEntity)
     func networkQualityChanged(_ quality: NetworkQuality)
     func outgoingRingingStopReceived()
+    func waitingRoomUsersEntered(with handles: [HandleEntity])
+    func waitingRoomUsersLeave(with handles: [HandleEntity])
 }

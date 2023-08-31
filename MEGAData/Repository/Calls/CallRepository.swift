@@ -163,6 +163,18 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         chatSdk.remove(fromChat: call.chatId, userHandle: peerId)
     }
     
+    func allowUsersJoinCall(_ call: CallEntity, users: [UInt64]) {
+        chatSdk.allowUsersJoinCall(call.chatId, usersHandles: users.map(NSNumber.init(value:)))
+    }
+    
+    func kickUsersFromCall(_ call: CallEntity, users: [UInt64]) {
+        chatSdk.kickUsers(fromCall: call.callId, usersHandles: users.map(NSNumber.init(value:)))
+    }
+    
+    func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [UInt64]) {
+        chatSdk.pushUsers(intoWaitingRoom: scheduledMeeting.chatId, usersHandles: users.map(NSNumber.init(value:)))
+    }
+    
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
         chatSdk.updateChatPermissions(call.chatId, userHandle: peerId, privilege: MEGAChatRoomPrivilege.moderator.rawValue)
     }
@@ -335,6 +347,11 @@ extension CallRepository: MEGAChatCallDelegate {
                 default:
                     break
                 }
+            }
+            
+            if call.hasChanged(for: .waitingRoomUsersEntered) {
+                guard let usersHandle = call.waitingRoomHandleList.toHandleEntityArray() else { return }
+                callbacksDelegate?.waitingRoomUsersEntered(with: usersHandle)
             }
         case .terminatingUserParticipation, .destroyed:
             callbacksDelegate?.callTerminated(call.toCallEntity())
