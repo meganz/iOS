@@ -1,7 +1,7 @@
 import Contacts
 import Intents
 import MEGADomain
-import MEGASdk
+import MEGARepo
 import MEGASDKRepo
 
 extension IntentHandler: INStartCallIntentHandling {
@@ -19,7 +19,7 @@ extension IntentHandler: INStartCallIntentHandling {
     
     func resolveContacts(for intent: INStartCallIntent) async -> [INStartCallContactResolutionResult] {
         let credentialUseCase = CredentialUseCase(repo: CredentialRepository.newRepo)
-        
+
         guard credentialUseCase.hasSession() else {
             return [.unsupported(forReason: .invalidHandle)]
         }
@@ -44,22 +44,48 @@ extension IntentHandler: INStartCallIntentHandling {
         if personHasEmail {
             return [.success(with: person)]
         }
-        
-        let authorizedToUseContacts = CNContactStore.authorizationStatus(for: .contacts) == .authorized
-        guard authorizedToUseContacts else {
+
+        let authorizationStatusForContacts = CNContactStore.authorizationStatus(for: .contacts)
+
+        switch authorizationStatusForContacts {
+        case .notDetermined:
+            return await handleUndeterminedAuthorizationToContacts(for: person)
+        case .restricted, .denied:
+            return [.unsupported(forReason: .noContactFound)]
+        case .authorized:
+            return processResolutionInContacts(for: person)
+        @unknown default:
             return [.unsupported(forReason: .noContactFound)]
         }
-        
-        let persons = personProvider.personsInContacts(person)
-        
+    }
+
+    func handleUndeterminedAuthorizationToContacts(for person: INPerson) async -> [INStartCallContactResolutionResult] {
+        let store = CNContactStore()
+
+        do {
+            let isAuthorized = try await store.requestAccess(for: .contacts)
+
+            guard isAuthorized else {
+                return [.unsupported(forReason: .noContactFound)]
+            }
+
+            return processResolutionInContacts(for: person)
+        } catch {
+            return [.unsupported(forReason: .noContactFound)]
+        }
+    }
+
+    func processResolutionInContacts(for person: INPerson) -> [INStartCallContactResolutionResult] {
+        let persons = intentPersonUseCase.personsInContacts(matching: person)
+
         guard persons.isNotEmpty else {
             return [.unsupported(forReason: .noContactFound)]
         }
-        
+
         if persons.count == 1, let person = persons.first {
             return [.success(with: person)]
         }
-        
+
         return [.disambiguation(with: persons)]
     }
 }

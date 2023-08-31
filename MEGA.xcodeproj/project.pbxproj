@@ -276,7 +276,6 @@
 		3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3232AD002900F7A500FF7416 /* SlideshowDataSourceTests.swift */; };
 		3232ADC3290F95C900FF7416 /* FilesSearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3232ADC2290F95C900FF7416 /* FilesSearchRepository.swift */; };
 		3234143829F0F6A500A06EFE /* PhotoLibraryContentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3234143729F0F6A500A06EFE /* PhotoLibraryContentConfiguration.swift */; };
-		3241349729FB712B006E5310 /* MEGASdk in Frameworks */ = {isa = PBXBuildFile; productRef = 3241349629FB712B006E5310 /* MEGASdk */; };
 		32473EEB2A1E16F60020012C /* SharedLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32473EEA2A1E16F60020012C /* SharedLinkView.swift */; };
 		3256C38929A63A74001B0280 /* AlbumSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3256C38829A63A74001B0280 /* AlbumSelection.swift */; };
 		3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3256C39429A8656C001B0280 /* AlbumSelectionTests.swift */; };
@@ -1147,6 +1146,7 @@
 		940CEE3D2A83DA5E007DD202 /* WarningViewRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CEE3B2A83DA5E007DD202 /* WarningViewRouting.swift */; };
 		940CEE422A84C4C8007DD202 /* MEGAStore+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F2ACCC29AD6E19004FC7A3 /* MEGAStore+Additions.swift */; };
 		940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */; };
+		940F41382A9FC40B00C2543F /* MEGAIntentDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 940F41372A9FC40B00C2543F /* MEGAIntentDomain */; };
 		940F4DED2A80F4C400FB940A /* ItemListViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */; };
 		9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226691A692ECC00EC7BB6 /* Cloud.storyboard */; };
 		941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AB8EC01A7103B300E40A39 /* BrowserViewController.m */; };
@@ -1311,6 +1311,7 @@
 		94E7180B283D6603000EDDDF /* ChatRoomsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E7180A283D6603000EDDDF /* ChatRoomsViewController+Additions.swift */; };
 		94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */; };
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
+		94FD8A8B2AA0C6F300CD1C8B /* MEGARepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
 		990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */; };
 		9911BA8B2A8B20C300B88F28 /* WaitingRoomViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */; };
@@ -1378,7 +1379,6 @@
 		A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1FC1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m */; };
 		A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B2001FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m */; };
-		A803C8FB2955DB550056C9F0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A803C8FA2955DB550056C9F0 /* MEGADomain */; };
 		A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A803C8FC2955DB790056C9F0 /* SAMKeychain */; };
 		A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A808F1822795D286004E4D31 /* ReportIssueViewRouter.swift */; };
 		A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A811CE2B22EAFB1700B24E76 /* SearchOperation.m */; };
@@ -1404,7 +1404,6 @@
 		A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = A81AD7381F3099F800CA4059 /* MEGAProcessAsset.m */; };
 		A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81F9BB327EA023A00D47C0D /* CookieSettingsViewModelTests.swift */; };
 		A820DA3C1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
-		A821A5902862257400DB7017 /* IntentPersonProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A821A58F2862257400DB7017 /* IntentPersonProvider.swift */; };
 		A8278D7F200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */; };
 		A828E681286B3112004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E680286B3112004CED9E /* FirebaseCrashlytics */; };
 		A828E683286B3150004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E682286B3150004CED9E /* FirebaseCrashlytics */; };
@@ -3744,6 +3743,7 @@
 		9405E70D28A3AC43005A16D1 /* BackupNodesValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupNodesValidator.swift; sourceTree = "<group>"; };
 		940CEE3B2A83DA5E007DD202 /* WarningViewRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewRouting.swift; sourceTree = "<group>"; };
 		940DB9132924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionUseCaseOCWrapper.swift; sourceTree = "<group>"; };
+		940F41362A9ED39200C2543F /* MEGAIntentDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAIntentDomain; sourceTree = "<group>"; };
 		94114EDE2A8F3C3500B525B9 /* Search */ = {isa = PBXFileReference; lastKnownFileType = text; name = Search; path = Modules/Features/Search; sourceTree = SOURCE_ROOT; };
 		9418DB272A4EE5E7002B0077 /* MEGAPermissions */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPermissions; sourceTree = "<group>"; };
 		9419B6C51F20DC5700FEBE31 /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
@@ -3994,7 +3994,6 @@
 		A81F9BB327EA023A00D47C0D /* CookieSettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieSettingsViewModelTests.swift; sourceTree = "<group>"; };
 		A820DA3A1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetThumbnailRequestDelegate.h; path = API/Requests/MEGAGetThumbnailRequestDelegate.h; sourceTree = "<group>"; };
 		A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetThumbnailRequestDelegate.m; path = API/Requests/MEGAGetThumbnailRequestDelegate.m; sourceTree = "<group>"; };
-		A821A58F2862257400DB7017 /* IntentPersonProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentPersonProvider.swift; sourceTree = "<group>"; };
 		A827510F1E97AB6E007CD9E2 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A82751111E97AB73007CD9E2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -5196,9 +5195,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A828E683286B3150004CED9E /* FirebaseCrashlytics in Frameworks */,
-				A803C8FB2955DB550056C9F0 /* MEGADomain in Frameworks */,
+				940F41382A9FC40B00C2543F /* MEGAIntentDomain in Frameworks */,
 				327717B529FB82C4004DE295 /* MEGAPresentation in Frameworks */,
-				3241349729FB712B006E5310 /* MEGASdk in Frameworks */,
+				94FD8A8B2AA0C6F300CD1C8B /* MEGARepo in Frameworks */,
 				A8DF55682A5F0F6900CA33E5 /* MEGASDKRepo in Frameworks */,
 				A803C8FD2955DB790056C9F0 /* SAMKeychain in Frameworks */,
 			);
@@ -9722,7 +9721,6 @@
 			isa = PBXGroup;
 			children = (
 				A8851064292D251200E92A54 /* IntentHandler+StartCall.swift */,
-				A821A58F2862257400DB7017 /* IntentPersonProvider.swift */,
 			);
 			path = StartCall;
 			sourceTree = "<group>";
@@ -11213,6 +11211,7 @@
 			children = (
 				16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */,
 				B6061FE82897909C0094087E /* MEGADomain */,
+				940F41362A9ED39200C2543F /* MEGAIntentDomain */,
 				944917CC2A83C044006234D9 /* MEGAPickerFileProviderDomain */,
 			);
 			path = Domain;
@@ -12410,11 +12409,11 @@
 			name = MEGAIntent;
 			packageProductDependencies = (
 				A828E682286B3150004CED9E /* FirebaseCrashlytics */,
-				A803C8FA2955DB550056C9F0 /* MEGADomain */,
 				A803C8FC2955DB790056C9F0 /* SAMKeychain */,
-				3241349629FB712B006E5310 /* MEGASdk */,
 				327717B429FB82C4004DE295 /* MEGAPresentation */,
 				A8DF55672A5F0F6900CA33E5 /* MEGASDKRepo */,
+				940F41372A9FC40B00C2543F /* MEGAIntentDomain */,
+				94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */,
 			);
 			productName = MEGAIntent;
 			productReference = 831B490E256FED6F0086002B /* MEGAIntent.appex */;
@@ -14838,7 +14837,6 @@
 			files = (
 				A8851065292D251200E92A54 /* IntentHandler+StartCall.swift in Sources */,
 				831B4911256FED6F0086002B /* IntentHandler.swift in Sources */,
-				A821A5902862257400DB7017 /* IntentPersonProvider.swift in Sources */,
 				831B497C256FF2580086002B /* ShortcutDetail.swift in Sources */,
 				83345230258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 			);
@@ -17325,10 +17323,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGATest;
 		};
-		3241349629FB712B006E5310 /* MEGASdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGASdk;
-		};
 		327717B429FB82C4004DE295 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPresentation;
@@ -17340,6 +17334,10 @@
 		940931FD2A56ED680093C169 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
+		};
+		940F41372A9FC40B00C2543F /* MEGAIntentDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAIntentDomain;
 		};
 		9418DB282A4EE5FB002B0077 /* MEGAPermissions */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -17414,9 +17412,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftGen";
 		};
-		A803C8FA2955DB550056C9F0 /* MEGADomain */ = {
+		94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = MEGADomain;
+			productName = MEGARepo;
 		};
 		A803C8FC2955DB790056C9F0 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,6 +1,5 @@
-
 import Contacts
-import MEGASDKRepo
+import MEGARepo
 import XCTest
 
 final class ContactsRepositoryTests: XCTestCase {

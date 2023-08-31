@@ -1,21 +1,19 @@
 import Firebase
 import Intents
+import MEGAIntentDomain
+import MEGARepo
 
 final class IntentHandler: INExtension {
-    lazy var personProvider = IntentPersonProvider()
-    
+    lazy var intentPersonUseCase = IntentPersonUseCase(repository: ContactsRepository.newRepo)
+
     override init() {
         super.init()
         FirebaseApp.configure()
     }
-    
+
     override func handler(for intent: INIntent) -> Any {
-        // This is the default implementation.  If you want different objects to handle different intents,
-        // you can override this and return the handler you want for that particular intent.
-        
-        return self
+        self
     }
-    
 }
 
 extension IntentHandler: SelectShortcutIntentHandling {
@@ -27,7 +25,7 @@ extension IntentHandler: SelectShortcutIntentHandling {
     }
     
     func defaultShortcut(for intent: SelectShortcutIntent) -> [IntentShortcut]? {
-        return ShortcutDetail.availableShortcuts.map {
+        ShortcutDetail.availableShortcuts.map {
             IntentShortcut(identifier: $0.link, display: $0.title)
         }
     }
