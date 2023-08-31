@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGASwift",
     platforms: [
@@ -18,10 +20,10 @@ let package = Package(
         .target(
             name: "MEGASwift",
             dependencies: [],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
+            swiftSettings: settings),
         .testTarget(
             name: "MEGASwiftTests",
             dependencies: ["MEGASwift"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
+            swiftSettings: settings)
     ]
 )

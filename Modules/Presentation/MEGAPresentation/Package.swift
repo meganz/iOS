@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGAPresentation",
     platforms: [
@@ -26,12 +28,12 @@ let package = Package(
                 "MEGADomain",
                 "MEGASDKRepo"
             ],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
+            swiftSettings: settings),
         .testTarget(
             name: "MEGAPresentationTests",
             dependencies: ["MEGAPresentation",
                            "MEGATest",
                            .product(name: "MEGADomainMock", package: "MEGADomain")],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
+            swiftSettings: settings)
     ]
 )

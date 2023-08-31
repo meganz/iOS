@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGAPermissions",
     platforms: [
@@ -23,17 +25,17 @@ let package = Package(
         .target(
             name: "MEGAPermissions",
             dependencies: [],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         ),
         .target(
             name: "MEGAPermissionsMock",
             dependencies: ["MEGAPermissions"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         ),
         .testTarget(
             name: "MEGAPermissionsTests",
             dependencies: ["MEGAPermissions", "MEGAPermissionsMock"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         )
     ]
 )

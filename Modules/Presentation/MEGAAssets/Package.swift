@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGAAssets",
     platforms: [
@@ -17,10 +19,10 @@ let package = Package(
         .target(
             name: "MEGAAssets",
             dependencies: [],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
+            swiftSettings: settings),
         .testTarget(
             name: "MEGAAssetsTests",
             dependencies: ["MEGAAssets"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")])
+            swiftSettings: settings)
     ]
 )

@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
+
 let package = Package(
     name: "MEGASDKRepo",
     platforms: [
@@ -36,11 +38,11 @@ let package = Package(
                 .product(name: "FirebaseAppDistribution-Beta", package: "firebase-ios-sdk"),
                 "MEGARepo"
             ],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
+            swiftSettings: settings),
         .target(
             name: "MEGASDKRepoMock",
             dependencies: ["MEGASDKRepo"],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         ),
         .testTarget(
             name: "MEGASDKRepoTests",
@@ -50,7 +52,7 @@ let package = Package(
                 .product(name: "MEGADomainMock", package: "MEGADomain"),
                 "MEGATest"
             ],
-            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+            swiftSettings: settings
         )
     ]
 )
