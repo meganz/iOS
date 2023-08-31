@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 import SwiftUI
 
 @objc final class PhotoLibraryContentViewModel: NSObject, ObservableObject {
