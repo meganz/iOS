@@ -13,4 +13,13 @@ final class PhotoAlbumContainerViewModelTests: XCTestCase {
         mockTracker.assertTrackAnalyticsEventCalled(with: [PhotoScreenEvent()])
     }
     
+    func testShareLinksTapped_shouldSetShowShareAlbumLinksToTrueAndTrackEvent() {
+        let mockTracker = MockTracker()
+        let sut = PhotoAlbumContainerViewModel(tracker: mockTracker)
+        
+        sut.shareLinksTapped()
+        
+        XCTAssertTrue(sut.showShareAlbumLinks)
+        mockTracker.assertTrackAnalyticsEventCalled(with: [AlbumListShareLinkMenuItemEvent()])
+    }
 }

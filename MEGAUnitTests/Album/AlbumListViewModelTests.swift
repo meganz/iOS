@@ -1,7 +1,9 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 import XCTest
 
 @MainActor
@@ -291,12 +293,37 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testOnAlbumTap_whenUserTap_shouldSetCorrectValues() {
-        let sut = albumListViewModel()
+        let tracker = MockTracker()
+        let sut = albumListViewModel(tracker: tracker)
+        
         let gifAlbum = AlbumEntity(id: 2, name: "", coverNode: NodeEntity(handle: 1), count: 1, type: .gif)
         
         sut.onAlbumTap(gifAlbum)
         XCTAssertNil(sut.albumCreationAlertMsg)
         XCTAssertEqual(sut.album, gifAlbum)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                gifAlbum.makeAlbumSelectedEvent(selectionType: .single)
+            ]
+        )
+    }
+    
+    func testOnAlbumTap_notInEditMode_shouldSendSelectedEvent() {
+        let userAlbum = AlbumEntity(id: 5, type: .user,
+                                    metaData: AlbumMetaDataEntity(
+                                        imageCount: 6,
+                                        videoCount: 8))
+        let tracker = MockTracker()
+        let sut = albumListViewModel(tracker: tracker)
+        
+        sut.onAlbumTap(userAlbum)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                userAlbum.makeAlbumSelectedEvent(selectionType: .single)
+            ]
+        )
     }
     
     func testOnCreateAlbum_whenIsEditModeActive_shouldReturnFalseForShowCreateAlbumAlert() {
@@ -328,7 +355,7 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.albumNames.sorted(), ["Hey there", "", "Favourites"].sorted())
     }
     
-    func testReloadUpdates_onAlbumsUpdateEmiited_shouldRealodAlbums() {
+    func testReloadUpdates_onAlbumsUpdateEmitted_shouldReloadAlbums() {
         let albums = [AlbumEntity(id: 4, name: "Album 1", coverNode: NodeEntity(handle: 3),
                                   count: 1, type: .user)]
         let albumsUpdatedPublisher = PassthroughSubject<Void, Never>()
@@ -513,7 +540,9 @@ final class AlbumListViewModelTests: XCTestCase {
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
         let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         XCTAssertFalse(sut.showShareAlbumLinks)
+        
         photoAlbumContainerViewModel.showShareAlbumLinks = true
+        
         XCTAssertTrue(sut.showShareAlbumLinks)
     }
     
@@ -553,7 +582,7 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.albumLoadingTask, "Expect to initialize albumLoadingTask, but not initialized instead.")
     }
     
-    func testOnViewDissappeared_whenCalled_releasesAlbumsUpdatedSubscription() {
+    func testOnViewDisappeared_whenCalled_releasesAlbumsUpdatedSubscription() {
         let sut = albumListViewModel()
         var isViewVisible = false
         let exp = expectation(description: "Wait for subscription")
@@ -564,14 +593,14 @@ final class AlbumListViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        sut.onViewDissappeared()
+        sut.onViewDisappeared()
         wait(for: [exp], timeout: 0.1)
 
         XCTAssertFalse(isViewVisible, "Expect view is not visible.")
         XCTAssertNil(sut.albumLoadingTask, "Expect to deallocate albumLoadingTask, but initialized instead.")
     }
     
-    func testOnViewAppearedDissappeared_whenCalled_subscribeAndCancelLoadAlbumTasks() async throws {
+    func testOnViewAppearedDisappeared_whenCalled_subscribeAndCancelLoadAlbumTasks() async throws {
         let sut = albumListViewModel()
         var isViewVisible = false
         let exp = expectation(description: "Wait for subscription emitted value")
@@ -589,7 +618,7 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertTrue(isViewVisible, "Expect view is visible.")
         XCTAssertNotNil(sut.albumLoadingTask, "Expect to initialize albumLoadingTask, but not initialized instead.")
         
-        sut.onViewDissappeared()
+        sut.onViewDisappeared()
         await sut.albumLoadingTask?.value
         await fulfillment(of: [exp], timeout: 0.1)
         
@@ -608,15 +637,17 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     private func albumListViewModel(
-        usecase: MockAlbumListUseCase = MockAlbumListUseCase(),
-        albumModificationUseCase: MockAlbumModificationUseCase = MockAlbumModificationUseCase(),
-        shareAlbumUseCase: MockShareAlbumUseCase = MockShareAlbumUseCase(),
+        usecase: some AlbumListUseCaseProtocol = MockAlbumListUseCase(),
+        albumModificationUseCase: some AlbumModificationUseCaseProtocol = MockAlbumModificationUseCase(),
+        shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
+        tracker: some AnalyticsTracking = MockTracker(),
         photoAlbumContainerViewModel: PhotoAlbumContainerViewModel? = nil
     ) -> AlbumListViewModel {
         AlbumListViewModel(
             usecase: usecase,
             albumModificationUseCase: albumModificationUseCase,
             shareAlbumUseCase: shareAlbumUseCase,
+            tracker: tracker,
             alertViewModel: alertViewModel(),
             photoAlbumContainerViewModel: photoAlbumContainerViewModel
         )

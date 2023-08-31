@@ -185,7 +185,7 @@ public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
     
     private func makeAlbumMetaData(albumContent: [AlbumPhotoEntity]) -> AlbumMetaDataEntity {
         let counts = albumContent
-            .reduce(into: (image: UInt(0), video: UInt(0))) { (result, content) in
+            .reduce(into: (image: 0, video: 0)) { (result, content) in
                 guard let mediaType = content.photo.mediaType else { return }
                 switch mediaType {
                 case .image:

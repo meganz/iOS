@@ -54,7 +54,7 @@ struct AlbumListView: View {
             viewModel.onViewAppeared()
         }
         .onDisappear {
-            viewModel.onViewDissappeared()
+            viewModel.onViewDisappeared()
         }
         .progressViewStyle(.circular)
         .environment(\.editMode, $editMode)

@@ -334,7 +334,7 @@ final class AlbumListUseCaseTests: XCTestCase {
 }
 
 private extension Sequence where Element == AlbumPhotoEntity {
-    func count(for mediaType: MediaTypeEntity) -> UInt {
-        UInt(filter({ $0.photo.mediaType == mediaType }).count)
+    func count(for mediaType: MediaTypeEntity) -> Int {
+        filter({ $0.photo.mediaType == mediaType }).count
     }
 }

@@ -1,10 +1,10 @@
 import Foundation
 
 public struct AlbumMetaDataEntity: Hashable, Sendable {
-    let imageCount: UInt
-    let videoCount: UInt
+    public let imageCount: Int
+    public let videoCount: Int
     
-    public init(imageCount: UInt, videoCount: UInt) {
+    public init(imageCount: Int, videoCount: Int) {
         self.imageCount = imageCount
         self.videoCount = videoCount
     }
