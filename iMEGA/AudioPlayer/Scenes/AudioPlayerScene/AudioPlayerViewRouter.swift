@@ -87,7 +87,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     func showMiniPlayer(file: String, shouldReload: Bool) {
         guard let presenter = presenter else { return }
         
-        configEntity.playerHandler.initMiniPlayer(node: nil, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
+        configEntity.playerHandler.initMiniPlayer(node: configEntity.node, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
     }
     
     func importNode(_ node: MEGANode) {
