@@ -7,8 +7,6 @@ import MEGASDKRepo
 protocol MeetingParticpiantInfoViewRouting: Routing {
     func showInfo()
     func openChatRoom(withChatId chatId: UInt64)
-    func showInviteSuccess(email: String)
-    func showInviteErrorMessage(_ message: String)
     func makeParticipantAsModerator()
     func removeModeratorPrivilage()
     func removeParticipant()
@@ -36,7 +34,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
     
     func build() -> UIViewController {
         let userImageUseCase = UserImageUseCase(
-            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userImageRepo: UserImageRepository.newRepo,
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
@@ -45,8 +43,6 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
-
-        let userInviteUseCase = UserInviteUseCase(repo: UserInviteRepository(sdk: MEGASdkManager.sharedMEGASdk()))
         
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         
@@ -54,7 +50,6 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: userInviteUseCase,
                                                         megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: isMyselfModerator,
                                                         router: self)
