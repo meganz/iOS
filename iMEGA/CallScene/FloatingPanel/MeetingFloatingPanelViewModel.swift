@@ -511,4 +511,12 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     func localAvFlagsUpdated(video: Bool, audio: Bool) {
         invokeCommand?(.microphoneMuted(muted: !audio))
     }
+    
+    func waitingRoomUsersEntered(with handles: [HandleEntity]) {
+        // Next ticket: Present the waiting room users in meeting floating panel
+    }
+    
+    func waitingRoomUsersLeave(with handles: [HandleEntity]) {
+        // Next ticket: Present the waiting room users in meeting floating panel
+    }
 }

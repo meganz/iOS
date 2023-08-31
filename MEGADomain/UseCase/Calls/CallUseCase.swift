@@ -17,6 +17,9 @@ protocol CallUseCaseProtocol {
     func endCall(for callId: HandleEntity)
     func addPeer(toCall call: CallEntity, peerId: HandleEntity)
     func removePeer(fromCall call: CallEntity, peerId: HandleEntity)
+    func allowUsersJoinCall(_ call: CallEntity, users: [HandleEntity])
+    func kickUsersFromCall(_ call: CallEntity, users: [HandleEntity])
+    func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [HandleEntity])
     func makePeerAModerator(inCall call: CallEntity, peerId: HandleEntity)
     func removePeerAsModerator(inCall call: CallEntity, peerId: HandleEntity)
 }
@@ -24,6 +27,8 @@ protocol CallUseCaseProtocol {
 protocol CallCallbacksUseCaseProtocol: AnyObject {
     func participantJoined(participant: CallParticipantEntity)
     func participantLeft(participant: CallParticipantEntity)
+    func waitingRoomUsersEntered(with handles: [HandleEntity])
+    func waitingRoomUsersLeave(with handles: [HandleEntity])
     func updateParticipant(_ participant: CallParticipantEntity)
     func remoteVideoResolutionChanged(for participant: CallParticipantEntity)
     func highResolutionChanged(for participant: CallParticipantEntity)
@@ -133,6 +138,18 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
         repository.removePeer(fromCall: call, peerId: peerId)
     }
     
+    func allowUsersJoinCall(_ call: CallEntity, users: [HandleEntity]) {
+        repository.allowUsersJoinCall(call, users: users)
+    }
+    
+    func kickUsersFromCall(_ call: CallEntity, users: [HandleEntity]) {
+        repository.kickUsersFromCall(call, users: users)
+    }
+    
+    func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [HandleEntity]) {
+        repository.pushUsersIntoWaitingRoom(for: scheduledMeeting, users: users)
+    }
+    
     func makePeerAModerator(inCall call: CallEntity, peerId: HandleEntity) {
         repository.makePeerAModerator(inCall: call, peerId: peerId)
     }
@@ -206,5 +223,13 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
     
     func outgoingRingingStopReceived() {
         callbacksDelegate?.outgoingRingingStopReceived()
+    }
+    
+    func waitingRoomUsersEntered(with handles: [HandleEntity]) {
+        callbacksDelegate?.waitingRoomUsersEntered(with: handles)
+    }
+    
+    func waitingRoomUsersLeave(with handles: [HandleEntity]) {
+        callbacksDelegate?.waitingRoomUsersLeave(with: handles)
     }
 }

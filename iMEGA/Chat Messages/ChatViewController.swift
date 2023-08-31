@@ -1261,7 +1261,11 @@ class ChatViewController: MessagesViewController {
                     chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
                 }
             } else {
-                chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
+                if chatRoom.isWaitingRoomEnabled {
+                    chatContentViewModel.dispatch(.startMeetingInWaitingRoomChat(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
+                } else {
+                    chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
+                }
             }
             
             return

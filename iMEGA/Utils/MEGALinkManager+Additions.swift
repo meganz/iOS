@@ -170,9 +170,8 @@ extension MEGALinkManager {
         )
     }
     
-    @objc class func shouldOpenWaitingRoom(chatRoom: MEGAChatRoom) -> Bool {
-        let isModerator = chatRoom.ownPrivilege.toOwnPrivilegeEntity() == .moderator
-        return !isModerator && chatRoom.isWaitingRoomEnabled && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
+    @objc class func shouldOpenWaitingRoom(forChatOptions bitMask: Int) -> Bool {
+        MEGAChatSdk.shared.hasChatOptionEnabled(for: .waitingRoom, chatOptionsBitMask: bitMask)
     }
     
     @objc class func openWaitingRoom(for chatId: ChatIdEntity) {

@@ -10,6 +10,9 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var endCall_CalledTimes = 0
     var addPeer_CalledTimes = 0
     var removePeer_CalledTimes = 0
+    var allowUsersJoinCall_CalledTimes = 0
+    var kickUsersFromCall_CalledTimes = 0
+    var pushUsersIntoWaitingRoom_CalledTimes = 0
     var makePeerAsModerator_CalledTimes = 0
     var removePeerAsModerator_CalledTimes = 0
     var call: CallEntity
@@ -105,6 +108,18 @@ final class MockCallUseCase: CallUseCaseProtocol {
         removePeer_CalledTimes += 1
     }
     
+    func allowUsersJoinCall(_ call: CallEntity, users: [HandleEntity]) {
+        allowUsersJoinCall_CalledTimes += 1
+    }
+    
+    func kickUsersFromCall(_ call: CallEntity, users: [HandleEntity]) {
+        kickUsersFromCall_CalledTimes += 1
+    }
+    
+    func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [HandleEntity]) {
+        pushUsersIntoWaitingRoom_CalledTimes += 1
+    }
+
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
         makePeerAsModerator_CalledTimes += 1
     }
@@ -206,5 +221,13 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
     
     func outgoingRingingStopReceived() {
         callbacksDelegate?.outgoingRingingStopReceived()
+    }
+    
+    func waitingRoomUsersEntered(with handles: [HandleEntity]) {
+        callbacksDelegate?.waitingRoomUsersEntered(with: handles)
+    }
+    
+    func waitingRoomUsersLeave(with handles: [HandleEntity]) {
+        callbacksDelegate?.waitingRoomUsersLeave(with: handles)
     }
 }
