@@ -1,6 +1,8 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 import XCTest
 
 final class GetAlbumLinkViewModelTests: XCTestCase {
@@ -11,7 +13,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
             GetLinkSectionViewModel(sectionType: .info, cellViewModels: [], itemHandle: album.id)
         ]
         
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: MockShareAlbumUseCase(), sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            sectionViewModels: sections)
         XCTAssertEqual(sut.numberOfSections, sections.count)
     }
     
@@ -24,7 +27,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                     itemHandle: album.id)
         ]
         
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: MockShareAlbumUseCase(), sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            sectionViewModels: sections)
+        
         XCTAssertEqual(sut.numberOfRowsInSection(0),
                        cellViewModels.count)
     }
@@ -37,8 +42,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                     cellViewModels: cellViewModels,
                                     itemHandle: album.id)
         ]
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: MockShareAlbumUseCase(),
-                                        sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            sectionViewModels: sections)
         let indexPath = IndexPath(row: 0, section: 0)
         XCTAssertEqual(sut.cellViewModel(indexPath: indexPath)?.type,
                        cellViewModels[indexPath.row].type
@@ -50,16 +55,17 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         let section = GetLinkSectionViewModel(sectionType: .info,
                                               cellViewModels: [],
                                               itemHandle: album.id)
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: MockShareAlbumUseCase(),
-                                        sectionViewModels: [section])
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            sectionViewModels: [section])
         XCTAssertEqual(sut.sectionType(forSection: 0),
                        section.sectionType)
     }
     
-    func testDispatchViewConfiguration_onNoExportedAlbums_shouldSetTitleToShareLink() {
+    func testDispatchViewConfiguration_onNoExportedAlbums_shouldSetTitleToShareLinkAndTrackScreen() {
         let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(false))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: MockShareAlbumUseCase(),
-                                        sectionViewModels: [])
+        let tracker = MockTracker()
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            tracker: tracker)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(1)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
@@ -67,12 +73,17 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                            isMultilink: false,
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1))
         ])
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                SingleAlbumLinkScreenEvent()
+            ]
+        )
     }
     
     func testDispatchViewConfiguration_onExportedAlbums_shouldSetTitleToManageShareLink() {
         let album = AlbumEntity(id: 1, type: .user, sharedLinkStatus: .exported(true))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: MockShareAlbumUseCase(),
-                                        sectionViewModels: [])
+        let sut = makeGetAlbumLinkViewModel(album: album)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ManageLink.title(1)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
@@ -91,8 +102,10 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         ]
         let link = "the shared link"
         let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
-                                        sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            shareAlbumUseCase: shareAlbumUseCase,
+                                            sectionViewModels: sections)
+        
         let updatedIndexPath = IndexPath(row: 0, section: 0)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
@@ -123,8 +136,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         ]
         let link = "/collection/link#key"
         let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
-                                        sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            shareAlbumUseCase: shareAlbumUseCase,
+                                            sectionViewModels: sections)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
                            isMultilink: false,
@@ -164,8 +178,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                     itemHandle: album.id)
         ]
         let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
-                                        sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            shareAlbumUseCase: shareAlbumUseCase,
+                                            sectionViewModels: sections)
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
@@ -193,8 +208,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                     itemHandle: album.id)
         ]
         let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
-                                        sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            shareAlbumUseCase: shareAlbumUseCase,
+                                            sectionViewModels: sections)
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
@@ -220,8 +236,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                     itemHandle: album.id)
         ]
         let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
-                                        sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            shareAlbumUseCase: shareAlbumUseCase,
+                                            sectionViewModels: sections)
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
@@ -252,8 +269,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                     itemHandle: album.id)
         ]
         let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
-                                        sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            shareAlbumUseCase: shareAlbumUseCase,
+                                            sectionViewModels: sections)
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
@@ -284,8 +302,9 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                                     itemHandle: album.id)
         ]
         let shareAlbumUseCase = MockShareAlbumUseCase(shareAlbumLinkResult: .success(link))
-        let sut = GetAlbumLinkViewModel(album: album, shareAlbumUseCase: shareAlbumUseCase,
-                                        sectionViewModels: sections)
+        let sut = makeGetAlbumLinkViewModel(album: album,
+                                            shareAlbumUseCase: shareAlbumUseCase,
+                                            sectionViewModels: sections)
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(1),
@@ -302,5 +321,19 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                 .showHud(.custom(Asset.Images.NodeActions.copy.image,
                                  Strings.Localizable.keyCopiedToClipboard))
              ])
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeGetAlbumLinkViewModel(
+        album: AlbumEntity,
+        shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
+        sectionViewModels: [GetLinkSectionViewModel] = [],
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> GetAlbumLinkViewModel {
+        GetAlbumLinkViewModel(album: album,
+                              shareAlbumUseCase: shareAlbumUseCase,
+                              sectionViewModels: sectionViewModels,
+                              tracker: tracker)
     }
 }
