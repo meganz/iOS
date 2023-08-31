@@ -17,6 +17,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "MiniPlayerViewControllerID") as! MiniPlayerViewController
                 
         folderSDKLogoutRequired = configEntity.isFolderLink
+        let sdk = MEGASdk.shared
         
         vc.viewModel = MiniPlayerViewModel(
             configEntity: configEntity,
@@ -24,7 +25,9 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
             offlineInfoUseCase: configEntity.relatedFiles != nil ? OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()) : nil,
-            playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
+            playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
+            audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: sdk)),
+            sdk: sdk
         )
         
         baseViewController = vc

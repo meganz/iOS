@@ -19,12 +19,16 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil)
             .instantiateViewController(withIdentifier: "AudioPlayerViewControllerID") as! AudioPlayerViewController
         
+        let sdk = MEGASdk.shared
+        
         if configEntity.playerType == .offline {
             vc.viewModel = AudioPlayerViewModel(
                 configEntity: configEntity,
                 router: self,
                 offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
-                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
+                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
+                audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: sdk)),
+                sdk: sdk
             )
         } else {
             vc.viewModel = AudioPlayerViewModel(
@@ -32,7 +36,9 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 router: self,
                 nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
                 streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
-                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
+                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
+                audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: sdk)),
+                sdk: sdk
             )
         }
 
