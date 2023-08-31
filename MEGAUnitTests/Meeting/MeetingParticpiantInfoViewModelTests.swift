@@ -17,7 +17,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -44,7 +43,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -71,7 +69,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -99,7 +96,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -127,7 +123,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: false,
                                                         router: router)
@@ -155,7 +150,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: false,
                                                         router: router)
@@ -182,7 +176,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: megaHandleUseCase,
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -209,7 +202,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: MockMEGAHandleUseCase(),
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -229,53 +221,12 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: MockChatRoomUserUseCase(),
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: MockMEGAHandleUseCase(),
                                                         isMyselfModerator: true,
                                                         router: router)
         
         viewModel.dispatch(.sendMessage)
         XCTAssert(router.openChatRoom_calledTimes == 1)
-    }
-    
-    func testAction_addToContact_success() {
-        let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
-        let chatRoomUseCase = MockChatRoomUseCase()
-        let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
-        let router = MockMeetingParticpiantInfoViewRouter()
-        
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
-                                                        userImageUseCase: userImageUseCase,
-                                                        chatRoomUseCase: chatRoomUseCase,
-                                                        chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
-                                                        megaHandleUseCase: MockMEGAHandleUseCase(),
-                                                        isMyselfModerator: true,
-                                                        router: router)
-        
-        viewModel.dispatch(.addToContact)
-        XCTAssert(router.showInviteSuccess_calledTimes == 1)
-    }
-    
-    func testAction_addToContact_error() {
-        let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
-        let chatRoomUseCase = MockChatRoomUseCase()
-        let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
-        let router = MockMeetingParticpiantInfoViewRouter()
-        
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
-                                                        userImageUseCase: userImageUseCase,
-                                                        chatRoomUseCase: chatRoomUseCase,
-                                                        chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .failure(.generic(""))),
-                                                        megaHandleUseCase: MockMEGAHandleUseCase(),
-                                                        isMyselfModerator: true,
-                                                        router: router)
-        
-        viewModel.dispatch(.addToContact)
-        XCTAssert(router.showInviteErrorMessage_calledTimes == 1)
     }
     
     func testAction_makeModerator() {
@@ -289,7 +240,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: MockMEGAHandleUseCase(),
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -309,7 +259,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: MockMEGAHandleUseCase(),
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -329,7 +278,6 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
-                                                        userInviteUseCase: MockUserInviteUseCase(result: .success),
                                                         megaHandleUseCase: MockMEGAHandleUseCase(),
                                                         isMyselfModerator: true,
                                                         router: router)
@@ -406,14 +354,6 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
     
     func openChatRoom(withChatId chatId: UInt64) {
         openChatRoom_calledTimes += 1
-    }
-    
-    func showInviteSuccess(email: String) {
-        showInviteSuccess_calledTimes += 1
-    }
-    
-    func showInviteErrorMessage(_ message: String) {
-        showInviteErrorMessage_calledTimes += 1
     }
     
     func makeParticipantAsModerator() {

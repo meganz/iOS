@@ -5,7 +5,6 @@ enum MeetingParticpiantInfoAction: ActionType {
     case onViewReady
     case showInfo
     case sendMessage
-    case addToContact
     case makeModerator
     case removeModerator
     case removeParticipant
@@ -23,7 +22,6 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private let userImageUseCase: any UserImageUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
-    private let userInviteUseCase: any UserInviteUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let isMyselfModerator: Bool
     private let router: any MeetingParticpiantInfoViewRouting
@@ -32,7 +30,6 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
          userImageUseCase: some UserImageUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
-         userInviteUseCase: some UserInviteUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          isMyselfModerator: Bool,
          router: some MeetingParticpiantInfoViewRouting) {
@@ -40,7 +37,6 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         self.userImageUseCase = userImageUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
-        self.userInviteUseCase = userInviteUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.isMyselfModerator = isMyselfModerator
         self.router = router
@@ -57,8 +53,6 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
             router.showInfo()
         case .sendMessage:
             sendMessage()
-        case .addToContact:
-            addToContact()
         case .makeModerator:
             router.makeParticipantAsModerator()
         case .removeModerator:
@@ -141,35 +135,6 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
             }
         }
     }
-    
-    private func addToContact() {
-        guard let email = participant.email else { return }
-        
-        userInviteUseCase.sendInvite(forEmail: email) { result in
-            switch result {
-            case .success:
-                self.router.showInviteSuccess(email: email)
-            case .failure(let error):
-                errorInvitingToContact(error, email: email)
-            }
-        }
-    }
-    
-    private func errorInvitingToContact(_ error: InviteErrorEntity, email: String) {
-        var errorString = ""
-        switch error {
-        case .generic(let error):
-            errorString = error
-        case .ownEmailEntered:
-            errorString = Strings.Localizable.noNeedToAddYourOwnEmailAddress
-        case .alreadyAContact:
-            errorString = Strings.Localizable.alreadyAContact(email)
-        case .isInOutgoingContactRequest:
-            errorString = Strings.Localizable.Dialog.InviteContact.outgoingContactRequest
-            errorString = errorString.replacingOccurrences(of: "[X]", with: email)
-        }
-        self.router.showInviteErrorMessage(errorString)
-    }
         
     private func infoAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.info,
@@ -204,15 +169,6 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
                           image: Asset.Images.Meetings.removeModerator.image,
                           style: .default) {
             dispatch(.removeModerator)
-        }
-    }
-    
-    private func addContactAction() -> ActionSheetAction {
-        ActionSheetAction(title: Strings.Localizable.addContact,
-                          detail: nil,
-                          image: Asset.Images.Meetings.addContactMeetings.image,
-                          style: .default) {
-            dispatch(.addToContact)
         }
     }
     
