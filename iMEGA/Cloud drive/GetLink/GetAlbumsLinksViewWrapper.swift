@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
 
@@ -21,13 +22,15 @@ struct GetAlbumsLinksViewWrapper: UIViewControllerRepresentable {
             let initialSections = ShareAlbumLinkInitialSections(album: album)
             return GetAlbumLinkViewModel(album: album,
                                          shareAlbumUseCase: shareAlbumUseCase,
-                                         sectionViewModels: initialSections.initialLinkSectionViewModels)
+                                         sectionViewModels: initialSections.initialLinkSectionViewModels,
+                                         tracker: DIContainer.tracker)
         }
         let initialSections = ShareAlbumsLinkInitialSections(albums: albums,
                                                              thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo))
         return GetAlbumsLinkViewModel(albums: albums,
                                       shareAlbumUseCase: shareAlbumUseCase,
-                                      sectionViewModels: initialSections.initialLinkSectionViewModels)
+                                      sectionViewModels: initialSections.initialLinkSectionViewModels,
+                                      tracker: DIContainer.tracker)
     }
     
     func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {}

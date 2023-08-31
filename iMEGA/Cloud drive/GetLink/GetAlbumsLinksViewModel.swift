@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 
@@ -7,6 +8,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     
     private let albums: [AlbumEntity]
     private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     private var sectionViewModels = [GetLinkSectionViewModel]()
     private var albumLinks: [HandleEntity: String]?
     private var loadingTask: Task<Void, Never>?
@@ -17,11 +19,14 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         sectionViewModels.count
     }
     
-    init(albums: [AlbumEntity], shareAlbumUseCase: any ShareAlbumUseCaseProtocol,
-         sectionViewModels: [GetLinkSectionViewModel]) {
+    init(albums: [AlbumEntity],
+         shareAlbumUseCase: some ShareAlbumUseCaseProtocol,
+         sectionViewModels: [GetLinkSectionViewModel],
+         tracker: some AnalyticsTracking) {
         self.albums = albums
         self.shareAlbumUseCase = shareAlbumUseCase
         self.sectionViewModels = sectionViewModels
+        self.tracker = tracker
     }
     
     // MARK: - Dispatch action
@@ -29,6 +34,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
     func dispatch(_ action: GetLinkAction) {
         switch action {
         case .onViewReady:
+            tracker.trackAnalyticsEvent(with: MultipleAlbumLinksScreenEvent())
             updateViewConfiguration()
             loadLinksForAlbums()
         case .onViewWillDisappear:

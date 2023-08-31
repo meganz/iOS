@@ -1,6 +1,8 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 import XCTest
 
 final class GetAlbumsLinkViewModelTests: XCTestCase {
@@ -10,9 +12,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         let sections = [
             GetLinkSectionViewModel(sectionType: .info, cellViewModels: [], itemHandle: album.id)
         ]
-        let sut = GetAlbumsLinkViewModel(albums: [album],
-                                         shareAlbumUseCase: MockShareAlbumUseCase(),
-                                         sectionViewModels: sections)
+        let sut = makeGetAlbumsLinkViewModel(albums: [album],
+                                             sectionViewModels: sections)
+        
         XCTAssertEqual(sut.numberOfSections, sections.count)
     }
     
@@ -24,9 +26,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                                     cellViewModels: cellViewModels,
                                     itemHandle: album.id)
         ]
-        let sut = GetAlbumsLinkViewModel(albums: [album],
-                                         shareAlbumUseCase: MockShareAlbumUseCase(),
-                                         sectionViewModels: sections)
+        let sut = makeGetAlbumsLinkViewModel(albums: [album],
+                                             sectionViewModels: sections)
+        
         XCTAssertEqual(sut.numberOfRowsInSection(0),
                        cellViewModels.count)
     }
@@ -39,9 +41,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
                                     cellViewModels: cellViewModels,
                                     itemHandle: album.id)
         ]
-        let sut = GetAlbumsLinkViewModel(albums: [album],
-                                         shareAlbumUseCase: MockShareAlbumUseCase(),
-                                         sectionViewModels: sections)
+        let sut = makeGetAlbumsLinkViewModel(albums: [album],
+                                             sectionViewModels: sections)
+        
         let indexPath = IndexPath(row: 0, section: 0)
         XCTAssertEqual(sut.cellViewModel(indexPath: indexPath)?.type,
                        cellViewModels[indexPath.row].type
@@ -53,16 +55,18 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         let section = GetLinkSectionViewModel(sectionType: .info,
                                               cellViewModels: [],
                                               itemHandle: album.id)
-        let sut = GetAlbumsLinkViewModel(albums: [album],
-                                         shareAlbumUseCase: MockShareAlbumUseCase(),
-                                         sectionViewModels: [section])
+        let sut = makeGetAlbumsLinkViewModel(albums: [album],
+                                             sectionViewModels: [section])
+        
         XCTAssertEqual(sut.sectionType(forSection: 0),
                        section.sectionType)
     }
     
-    func testDispatch_onViewReady_shouldSetTitleToShareLink() throws {
+    func testDispatch_onViewReady_shouldSetTitleToShareLinkAndTrackEvent() throws {
         let albums = [AlbumEntity(id: 1, type: .user), AlbumEntity(id: 2, type: .user)]
-        let sut = GetAlbumsLinkViewModel(albums: albums, shareAlbumUseCase: MockShareAlbumUseCase(), sectionViewModels: [])
+        let tracker = MockTracker()
+        let sut = makeGetAlbumsLinkViewModel(albums: albums,
+                                             tracker: tracker)
         
         let expectedTitle = Strings.Localizable.General.MenuAction.ShareLink.title(albums.count)
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
@@ -73,6 +77,12 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .showHud(.status(Strings.Localizable.generatingLinks)),
             .dismissHud
         ])
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                MultipleAlbumLinksScreenEvent()
+            ]
+        )
     }
     
     func testDispatch_onViewReadyLinksLoaded_shouldUpdateLinkCells() throws {
@@ -88,9 +98,10 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             IndexPath(row: 0, section: $0)
         }
         let links = [firstAlbum.id: "link1", secondAlbum.id: "link2"]
-        let sut = GetAlbumsLinkViewModel(albums: albums,
-                                         shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
-                                         sectionViewModels: sections)
+        let sut = makeGetAlbumsLinkViewModel(albums: albums,
+                                             shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
+                                             sectionViewModels: sections)
+        
         expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
         
         try expectedRowReloads.forEach { index in
@@ -108,13 +119,15 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             ], itemHandle: $0.id)
         }
         let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
-        let sut = GetAlbumsLinkViewModel(albums: albums,
+        let sut = makeGetAlbumsLinkViewModel(albums: albums,
                                          shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
                                          sectionViewModels: sections)
         let expectedRowReloads = sections.indices.map {
             IndexPath(row: 0, section: $0)
         }
-        expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: expectedRowReloads)
+        expectSuccessfulOnViewReady(sut: sut, albums: albums,
+                                    expectedRowReload: expectedRowReloads)
+        
         let expectedLink = links.values.joined(separator: "\n")
         let barButton = UIBarButtonItem()
         test(viewModel: sut, action: .shareLink(sender: barButton),
@@ -132,9 +145,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             ], itemHandle: $0.id)
         }
         let links = Dictionary(uniqueKeysWithValues: albums.map { ($0.id, "link-\($0.id)") })
-        let sut = GetAlbumsLinkViewModel(albums: albums,
-                                         shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
-                                         sectionViewModels: sections)
+        let sut = makeGetAlbumsLinkViewModel(albums: albums,
+                                             shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
+                                             sectionViewModels: sections)
         
         let expectedRowReloads = sections.indices.map {
             IndexPath(row: 0, section: $0)
@@ -160,9 +173,10 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         }
         let expectedLink = "link-to-copy"
         let links = [album.id: expectedLink]
-        let sut = GetAlbumsLinkViewModel(albums: albums,
-                                         shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
-                                         sectionViewModels: sections)
+        let sut = makeGetAlbumsLinkViewModel(albums: albums,
+                                             shareAlbumUseCase: MockShareAlbumUseCase(shareAlbumsLinks: links),
+                                             sectionViewModels: sections)
+        
         let linkIndexPath = IndexPath(row: 0, section: 0)
         expectSuccessfulOnViewReady(sut: sut, albums: albums, expectedRowReload: [linkIndexPath])
         
@@ -174,7 +188,9 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
              ])
     }
     
-    private func expectSuccessfulOnViewReady(sut: GetAlbumsLinkViewModel, albums: [AlbumEntity], expectedRowReload: [IndexPath]) {
+    private func expectSuccessfulOnViewReady(sut: GetAlbumsLinkViewModel,
+                                             albums: [AlbumEntity],
+                                             expectedRowReload: [IndexPath]) {
         test(viewModel: sut, action: .onViewReady, expectedCommands: [
             .configureView(title: Strings.Localizable.General.MenuAction.ShareLink.title(albums.count),
                            isMultilink: true,
@@ -185,5 +201,17 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .enableLinkActions,
             .dismissHud
         ])
+    }
+    
+    private func makeGetAlbumsLinkViewModel(
+        albums: [AlbumEntity] = [],
+        shareAlbumUseCase: some ShareAlbumUseCaseProtocol = MockShareAlbumUseCase(),
+        sectionViewModels: [GetLinkSectionViewModel] = [],
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> GetAlbumsLinkViewModel {
+        GetAlbumsLinkViewModel(albums: albums,
+                               shareAlbumUseCase: shareAlbumUseCase,
+                               sectionViewModels: sectionViewModels,
+                               tracker: tracker)
     }
 }
