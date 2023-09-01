@@ -366,9 +366,6 @@ final class AudioPlayerViewModel: NSObject, ViewModelType {
             Task {
                 await audioPlayerUseCase.registerMEGADelegate()
             }
-            if configEntity.allNodes == nil {
-                configEntity.allNodes = configEntity.playerHandler.playerPlaylistItems()?.compactMap(\.node)
-            }
             if shouldInitializePlayer() {
                 invokeCommand?(.showLoading(true))
                 dispatchQueue.async(qos: .userInteractive) {
@@ -476,7 +473,6 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
     }
     
     func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?) {
-        configEntity.node = currentItem?.node
         if let thumbnail = currentThumbnail {
             invokeCommand?(.reloadThumbnail(thumbnail: thumbnail))
         }
