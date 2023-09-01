@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGASDKRepoMock
+import MEGATest
 import XCTest
 
 final class AudioPlayerViewRouterTests: XCTestCase {
@@ -51,6 +52,7 @@ final class AudioPlayerViewRouterTests: XCTestCase {
             ),
             presenter: currentContextViewController
         )
+        trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
     
