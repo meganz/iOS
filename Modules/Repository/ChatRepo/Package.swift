@@ -17,8 +17,8 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
-        .package(path: "../../MEGAChatSdk"),
-        .package(path: "../../MEGASDKRepo")
+        .package(path: "../../DataSource/MEGAChatSdk"),
+        .package(path: "../MEGASDKRepo")
     ],
     targets: [
         .target(

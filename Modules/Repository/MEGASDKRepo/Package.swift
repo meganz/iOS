@@ -20,11 +20,11 @@ let package = Package(
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
         .package(path: "../../Domain/MEGAAnalyticsDomain"),
-        .package(path: "../../MEGASdk"),
+        .package(path: "../../DataSource/MEGASdk"),
         .package(path: "../../Infrastracture/MEGATest"),
         .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "9.0.0"),
-        .package(path: "../../MEGARepo")
+        .package(path: "../../Repository/MEGARepo")
     ],
     targets: [
         .target(
