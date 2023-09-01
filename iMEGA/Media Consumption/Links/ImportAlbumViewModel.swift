@@ -271,10 +271,8 @@ final class ImportAlbumViewModel: ObservableObject {
                 switch $0 {
                 case 0:
                     return Strings.Localizable.selectTitle
-                case 1:
-                    return Strings.Localizable.oneItemSelected(1)
                 default:
-                    return Strings.Localizable.itemsSelected($0)
+                    return Strings.Localizable.General.Format.itemsSelected($0)
                 }
             }.assign(to: &$selectionNavigationTitle)
         

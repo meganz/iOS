@@ -146,10 +146,8 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         switch count {
         case 0:
             title = Strings.Localizable.selectTitle
-        case 1:
-            title = Strings.Localizable.oneItemSelected(count)
         default:
-            title = Strings.Localizable.itemsSelected(count)
+            title = Strings.Localizable.General.Format.itemsSelected(count)
         }
         
         containerViewController.updateTitle(title)

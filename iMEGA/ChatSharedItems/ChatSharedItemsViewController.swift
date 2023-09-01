@@ -52,14 +52,14 @@ class ChatSharedItemsViewController: UIViewController {
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat.leastNormalMagnitude))
         tableView.allowsMultipleSelectionDuringEditing = true
         
-        MEGASdkManager.sharedMEGAChatSdk().openNodeHistory(forChat: chatRoom.chatId, delegate: self)
+        MEGAChatSdk.shared.openNodeHistory(forChat: chatRoom.chatId, delegate: self)
         
         updateAppearance()
         loadMoreFiles()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        MEGASdkManager.sharedMEGAChatSdk().closeNodeHistory(forChat: chatRoom.chatId, delegate: self)
+        MEGAChatSdk.shared.closeNodeHistory(forChat: chatRoom.chatId, delegate: self)
 
         super.viewWillDisappear(animated)
     }
@@ -183,15 +183,11 @@ class ChatSharedItemsViewController: UIViewController {
             title = Strings.Localizable.selectTitle
             return
         }
-        if selectedCount == 1 {
-            title = Strings.Localizable.oneItemSelected(selectedCount)
-        } else {
-            title = Strings.Localizable.itemsSelected(selectedCount)
-        }
+        title = Strings.Localizable.General.Format.itemsSelected(selectedCount)
     }
     
     private func loadMoreFiles() {
-        let source = MEGASdkManager.sharedMEGAChatSdk().loadAttachments(forChat: chatRoom.chatId, count: 16)
+        let source = MEGAChatSdk.shared.loadAttachments(forChat: chatRoom.chatId, count: 16)
         
         switch source {
         case .error:
@@ -249,14 +245,14 @@ class ChatSharedItemsViewController: UIViewController {
                 continue
             }
             let handle = messagesArray[indexPath.row].userHandle
-            if MEGASdkManager.sharedMEGAChatSdk().userFullnameFromCache(byUserHandle: handle) == nil && !requestedParticipantsMutableSet.contains(handle) {
+            if MEGAChatSdk.shared.userFullnameFromCache(byUserHandle: handle) == nil && !requestedParticipantsMutableSet.contains(handle) {
                 userHandles.append(handle)
                 requestedParticipantsMutableSet.insert(handle)
             }
         }
         
         if userHandles.isNotEmpty {
-            MEGASdkManager.sharedMEGAChatSdk().loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: userHandles as [NSNumber], delegate: self)
+            MEGAChatSdk.shared.loadUserAttributes(forChatId: chatRoom.chatId, usersHandles: userHandles as [NSNumber], delegate: self)
         }
     }
 }
@@ -401,7 +397,7 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                     
                     if name.fileExtensionGroup.isVisualMedia {
                         if chatRoom.isPreview {
-                            guard let authNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken) else { return }
+                            guard let authNode = MEGASdk.shared.authorizeChatNode(node, cauth: chatRoom.authorizationToken) else { return }
                             nodes.add(authNode)
                         } else {
                             nodes.add(node)
@@ -414,12 +410,12 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
                     return
                 }
                 
-                let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: nodes, api: MEGASdkManager.sharedMEGASdk(), displayMode: .chatSharedFiles, presenting: selectedNode)
+                let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: nodes, api: MEGASdk.shared, displayMode: .chatSharedFiles, presenting: selectedNode)
                 photoBrowserVC.configureMediaAttachment(forMessageId: message.messageId, inChatId: chatRoom.chatId, messagesIds: messagesIdsArray)
                 navigationController?.present(photoBrowserVC, animated: true, completion: nil)
             } else {
                 if chatRoom.isPreview {
-                    guard let authNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(selectedNode, cauth: chatRoom.authorizationToken) else { return }
+                    guard let authNode = MEGASdk.shared.authorizeChatNode(selectedNode, cauth: chatRoom.authorizationToken) else { return }
                     authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, allNodes: nil)
                 } else {
                     selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, allNodes: nil)
@@ -487,7 +483,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
                 return
             }
             
-            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
             
             saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, completion: { result in

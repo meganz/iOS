@@ -71,7 +71,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
         photoLibraryContentViewModel.selection.$photos
             .compactMap { [weak self] photos in
                 guard let self = self else { return nil }
-                return photos.isEmpty ? self.normalNavigationTitle : self.navigationTitle(forNumberOfItems: photos.count)
+                return photos.isEmpty ? self.normalNavigationTitle : Strings.Localizable.General.Format.itemsSelected(photos.count)
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$navigationTitle)
@@ -157,10 +157,6 @@ final class AlbumContentPickerViewModel: ObservableObject {
         case .cameraUploads:
             return cameraUploadPhotos
         }
-    }
-    
-    private func navigationTitle(forNumberOfItems num: Int) -> String {
-        num == 1 ? Strings.Localizable.oneItemSelected(1): Strings.Localizable.itemsSelected(num)
     }
     
     @MainActor

@@ -178,11 +178,11 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.selectTitle)
         
         sut.photoLibraryContentViewModel.selection.setSelectedPhotos([NodeEntity(handle: 5)])
-        XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.oneItemSelected(1))
+        XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.General.Format.itemsSelected(1))
         
         let multiplePhotos = try makePhotos()
         sut.photoLibraryContentViewModel.selection.setSelectedPhotos(multiplePhotos)
-        XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.itemsSelected(multiplePhotos.count))
+        XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.General.Format.itemsSelected(multiplePhotos.count))
         
         sut.photoLibraryContentViewModel.selection.allSelected = false
         XCTAssertEqual(sut.selectionNavigationTitle, Strings.Localizable.selectTitle)
