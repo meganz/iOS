@@ -1,24 +1,16 @@
-import MEGASDKRepo
+import MEGADomain
+import MEGASdk
 
-protocol BannerRepositoryProtocol {
-
-    func banners(
-        completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void
-    )
-
-    func dismissBanner(
-        withBannerId bannerId: Int,
-        completion: ((Result<Void, BannerErrorEntity>) -> Void)?
-    )
-}
-
-struct BannerRepository: BannerRepositoryProtocol {
-
+public struct BannerRepository: BannerRepositoryProtocol {
+    public static var newRepo: BannerRepository {
+        BannerRepository(sdk: MEGASdk.sharedSdk)
+    }
+    
     let sdk: MEGASdk
 
     // MARK: - BannerRepositoryProtocol
 
-    func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
+    public func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
 
         func mapError(sdkError: MEGAErrorType) -> BannerErrorEntity {
             switch sdkError {
@@ -43,7 +35,7 @@ struct BannerRepository: BannerRepositoryProtocol {
         })
     }
 
-    func dismissBanner(
+    public func dismissBanner(
         withBannerId bannerId: Int,
         completion: ((Result<Void, BannerErrorEntity>) -> Void)?
     ) {
