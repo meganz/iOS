@@ -1,7 +1,7 @@
 import SwiftUI
 
 public class SearchResultsViewModel: ObservableObject {
-    @Published var listItems: [SearchResultsRowViewModel]  = []
+    @Published var listItems: [SearchResultRowViewModel]  = []
 
     let bridge: SearchBridge
 
@@ -68,7 +68,7 @@ public class SearchResultsViewModel: ObservableObject {
         guard let result else { return }
         
         listItems = result.results.map { result in
-            SearchResultsRowViewModel(
+            SearchResultRowViewModel(
                 with: result,
                 contextAction: { [weak self] in
                     // present menucontext

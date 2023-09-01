@@ -36,10 +36,7 @@ let package = Package(
         ),
         .testTarget(
             name: "SearchTests",
-            dependencies: [
-                "Search",
-                "SearchMock"
-            ],
+            dependencies: ["Search", "SearchMock"],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         )
     ]

@@ -1,7 +1,7 @@
 import SwiftUI
 
-final class SearchResultsRowViewModel: ObservableObject, Identifiable, Equatable {
-    static func == (lhs: SearchResultsRowViewModel, rhs: SearchResultsRowViewModel) -> Bool {
+final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable {
+    static func == (lhs: SearchResultRowViewModel, rhs: SearchResultRowViewModel) -> Bool {
         rhs.result == lhs.result
     }
     
