@@ -43,10 +43,8 @@ extension PhotoLibraryProvider {
         
         if count == 0 {
             message = Strings.Localizable.selectTitle
-        } else if count == 1 {
-            message = Strings.Localizable.oneItemSelected(count)
         } else {
-            message = Strings.Localizable.itemsSelected(count)
+            message = Strings.Localizable.General.Format.itemsSelected(count)
         }
         
         navigationItem.title = message

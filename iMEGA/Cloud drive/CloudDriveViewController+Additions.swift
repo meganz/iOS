@@ -148,7 +148,7 @@ extension CloudDriveViewController {
         if let selectedNodesArray { selectedNodesArrayCount = selectedNodesArray.count }
         
         if let enableEditing = cdTableView?.tableView?.isEditing ?? cdCollectionView?.collectionView?.allowsMultipleSelection, enableEditing {
-            navigationTitle = selectedNodesArrayCount == 0 ? Strings.Localizable.selectTitle : selectedNodesArrayCount == 1 ? Strings.Localizable.oneItemSelected(1) : Strings.Localizable.itemsSelected(selectedNodesArrayCount)
+            navigationTitle = selectedNodesArrayCount == 0 ? Strings.Localizable.selectTitle : Strings.Localizable.General.Format.itemsSelected(selectedNodesArrayCount)
         } else {
             switch displayMode {
             case .cloudDrive:
