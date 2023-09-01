@@ -113,9 +113,15 @@ final class HomeScreenFactory: NSObject {
     ) -> UIViewController {
 
         if newHomeSearchResultsEnabled {
-            return makeNewSearchResultsViewController(with: navigationController, bridge: bridge)
+            return makeNewSearchResultsViewController(
+                with: navigationController,
+                bridge: bridge
+            )
         } else {
-            return makeLegacySearchResultsViewController(with: navigationController, bridge: bridge)
+            return makeLegacySearchResultsViewController(
+                with: navigationController,
+                bridge: bridge
+            )
         }
     }
     

@@ -14,7 +14,7 @@ final class TableViewProxy<CellItem>:
     private var emptyStateConfiguration: EmptyStateConfiguration?
     
     private var dataSourceConfiguration: TableDataSourceConfiguration<CellItem>?
-    
+
     var selectionAction: ((CellItem) -> Void)?
 
     var configureCell: ((UITableViewCell, CellItem) -> Void)
