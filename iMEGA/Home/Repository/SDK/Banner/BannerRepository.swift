@@ -1,3 +1,5 @@
+import MEGASDKRepo
+
 protocol BannerRepositoryProtocol {
 
     func banners(
@@ -18,11 +20,11 @@ struct BannerRepository: BannerRepositoryProtocol {
 
     func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
 
-        func mapError(sdkError: MEGASDKErrorType) -> BannerErrorEntity {
+        func mapError(sdkError: MEGAErrorType) -> BannerErrorEntity {
             switch sdkError {
-            case .accessDenied: return .userSessionTimeout
-            case .internalError: return .internal
-            case .resourceNotExists: return .resourceDoesNotExist
+            case .apiEAccess: return .userSessionTimeout
+            case .apiEInternal: return .internal
+            case .apiENoent: return .resourceDoesNotExist
             default: return .unexpected
             }
         }
@@ -31,26 +33,27 @@ struct BannerRepository: BannerRepositoryProtocol {
             request.bannerList.bannerEntities
         }
 
-        let sdkDelegate = MEGAResultRequestDelegate { (result) in
+        sdk.getBanners(RequestDelegate { result in
             switch result {
-            case .failure(let errorType):
-                completion(.failure(mapError(sdkError: errorType)))
+            case .failure(let error):
+                completion(.failure(mapError(sdkError: error.type)))
             case .success(let request):
                 completion(.success(request.bannerList.bannerEntities))
             }
-        }
-        sdk.getBanners(sdkDelegate)
+        })
     }
 
     func dismissBanner(
         withBannerId bannerId: Int,
         completion: ((Result<Void, BannerErrorEntity>) -> Void)?
     ) {
-        let sdkDelegate = MEGAResultMappingRequestDelegate(
-            completion: completion ?? { _ in },
-            mapValue: { _ in return () },
-            mapError: { _ in return .unexpected }
-        )
-        sdk.dismissBanner(bannerId, delegate: sdkDelegate)
+        sdk.dismissBanner(bannerId, delegate: RequestDelegate { result in
+            switch result {
+            case .failure:
+                completion?(.failure(.unexpected))
+            case .success:
+                completion?(.success(()))
+            }
+        })
     }
 }
