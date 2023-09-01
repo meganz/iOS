@@ -291,15 +291,8 @@ final class MiniPlayerViewModel: NSObject, ViewModelType {
         case .deinit:
             deInitActions()
         case .showPlayer(let node, let filePath):
-            if let configNode = configEntity.node {
-                let isFileRenamed = configNode.name != node?.name
-                let currentNode = isFileRenamed ? configEntity.node : node
-                configEntity.node = currentNode
-                showFullScreenPlayer(currentNode, path: filePath)
-            } else {
-                configEntity.node = node
-                showFullScreenPlayer(node, path: filePath)
-            }
+            let isFileRenamed = configEntity.node?.name != node?.name
+            showFullScreenPlayer(isFileRenamed ? configEntity.node : node, path: filePath)
         }
     }
     
@@ -344,7 +337,6 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     
     func audio(player: AVQueuePlayer, reload item: AudioPlayerItem?) {
         guard let currentItem = item else { return }
-        currentItem.name = presentableName(currentItem.name)
         invokeCommand?(.reload(currentItem: currentItem))
     }
     
