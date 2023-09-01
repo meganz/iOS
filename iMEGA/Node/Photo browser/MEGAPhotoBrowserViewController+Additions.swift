@@ -102,9 +102,6 @@ extension MEGAPhotoBrowserViewController {
                     }
                 }
                 
-                TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-                TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-                
                 switch self.displayMode {
                 case .chatAttachment, .chatSharedFiles:
                     saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: self.messageId, chatId: self.chatId, completion: completionBlock)
@@ -115,15 +112,19 @@ extension MEGAPhotoBrowserViewController {
                 default:
                     Task { @MainActor in
                         do {
+                            SnackBarRouter.shared.present(snackBar: SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(1)))
                             try await saveMediaUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
+                        } catch let error as SaveMediaToPhotosErrorEntity where error == .fileDownloadInProgress {
+                            SnackBarRouter.shared.dismissSnackBar(immediate: true)
+                            SnackBarRouter.shared.present(snackBar: SnackBar(message: error.localizedDescription))
+                        } catch let error as SaveMediaToPhotosErrorEntity where error != .cancelled {
+                            await SVProgressHUD.dismiss()
+                            SVProgressHUD.show(
+                                Asset.Images.NodeActions.saveToPhotos.image,
+                                status: error.localizedDescription
+                            )
                         } catch {
-                            if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                                await SVProgressHUD.dismiss()
-                                SVProgressHUD.show(
-                                    Asset.Images.NodeActions.saveToPhotos.image,
-                                    status: error.localizedDescription
-                                )
-                            }
+                            MEGALogError("[MEGAPhotoBrowserViewController] Error saving media nodes: \(error)")
                         }
                     }
                 }

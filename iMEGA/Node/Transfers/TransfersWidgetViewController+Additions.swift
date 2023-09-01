@@ -2,6 +2,10 @@ import Foundation
 import UIKit
 
 extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
+    private enum Constants {
+        static let defaultBottomAnchor: CGFloat = -60
+    }
+    
     @objc
     func configProgressIndicator() {
         let progressIndicatorView = ProgressIndicatorView.init(frame: CGRect(x: 0, y: 0, width: 70, height: 70))
@@ -20,7 +24,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         guard let window = UIApplication.shared.keyWindow else {
             return
         }
-        showProgress(view: window, bottomAnchor: -60)
+        showProgress(view: window, bottomAnchor: Constants.defaultBottomAnchor)
     }
 
     @objc
@@ -32,16 +36,19 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
               }
         window.bringSubviewToFront(progressIndicatorView)
     }
-    
+        
     @objc
-    func showProgress(view: UIView, bottomAnchor: Int) {
+    func showProgress(view: UIView, bottomAnchor: CGFloat) {
         guard let progressIndicatorView = TransfersWidgetViewController.sharedTransfer().progressView else { return }
         
         view.addSubview(progressIndicatorView)
         
+        NSLayoutConstraint.deactivate([progressViewBottomConstraint, progressViewWidthConstraint, progressViewHeightConstraint, progressViewLeadingConstraint, progressViewTraillingConstraint])
+        
         progressViewWidthConstraint = progressIndicatorView.widthAnchor.constraint(equalToConstant: 70.0)
         progressViewHeightConstraint = progressIndicatorView.heightAnchor.constraint(equalToConstant: 70)
-        progressViewBottomConstraint = progressIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: CGFloat(bottomAnchor))
+
+        progressViewBottomConstraint = progressIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: bottomAnchor)
         progressViewLeadingConstraint = progressIndicatorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 4.0)
         progressViewTraillingConstraint = progressIndicatorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -4.0)
         
@@ -150,4 +157,6 @@ protocol TransferWidgetResponderProtocol: AnyObject {
     func setProgressViewInKeyWindow()
     
     func bringProgressToFrontKeyWindowIfNeeded()
+    
+    func updateProgressView(bottomConstant: CGFloat)
 }

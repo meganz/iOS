@@ -41,7 +41,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet PieChartView *pieChartView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
@@ -162,7 +161,10 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [super viewWillAppear:animated];
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    [self configureSnackBarPresenter];
+    [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
     [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
+    [TransfersWidgetViewController.sharedTransferViewController updateProgressViewWithBottomConstant:-120];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -233,7 +235,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [self airplayClear];
     self.secondWindow.hidden = YES;
     self.secondWindow = nil;
-    
+    [self removeSnackBarPresenter];
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
 }
 
