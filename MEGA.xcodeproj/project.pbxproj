@@ -619,12 +619,7 @@
 		5D7D53472551263C00D3582E /* TextFieldStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7D53462551263C00D3582E /* TextFieldStyleFactory.swift */; };
 		5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7D6B9D2491F79E00ADBDEE /* OverDiskQuotaService.swift */; };
 		5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D816FC52564C08E0067D22F /* SlideIndicatorView.swift */; };
-		5D8303BC256262350082CA18 /* BannerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8303BB256262350082CA18 /* BannerRepository.swift */; };
 		5D8303D2256266A80082CA18 /* GeneralDomainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8303D1256266A80082CA18 /* GeneralDomainError.swift */; };
-		5D8303E7256270800082CA18 /* BannerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8303E6256270800082CA18 /* BannerEntity.swift */; };
-		5D8303F5256367D60082CA18 /* BannerErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8303F4256367D60082CA18 /* BannerErrorEntity.swift */; };
-		5D83041225638DC40082CA18 /* MEGABannerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D83041125638DC40082CA18 /* MEGABannerList.swift */; };
-		5D83042025638DE70082CA18 /* MEGABanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D83041F25638DE70082CA18 /* MEGABanner.swift */; };
 		5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D83042E256392370082CA18 /* UserBannerUseCase.swift */; };
 		5D876543252CAAE200E6CB91 /* TableDataSourceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D876542252CAAE200E6CB91 /* TableDataSourceConfiguration.swift */; };
 		5D8A76F024FCD0C900C0610C /* MEGANotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A76ED24FCD0C800C0610C /* MEGANotificationUseCase.swift */; };
@@ -3217,12 +3212,7 @@
 		5D7D53462551263C00D3582E /* TextFieldStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyleFactory.swift; sourceTree = "<group>"; };
 		5D7D6B9D2491F79E00ADBDEE /* OverDiskQuotaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaService.swift; sourceTree = "<group>"; };
 		5D816FC52564C08E0067D22F /* SlideIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideIndicatorView.swift; sourceTree = "<group>"; };
-		5D8303BB256262350082CA18 /* BannerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerRepository.swift; sourceTree = "<group>"; };
 		5D8303D1256266A80082CA18 /* GeneralDomainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDomainError.swift; sourceTree = "<group>"; };
-		5D8303E6256270800082CA18 /* BannerEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerEntity.swift; sourceTree = "<group>"; };
-		5D8303F4256367D60082CA18 /* BannerErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerErrorEntity.swift; sourceTree = "<group>"; };
-		5D83041125638DC40082CA18 /* MEGABannerList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGABannerList.swift; sourceTree = "<group>"; };
-		5D83041F25638DE70082CA18 /* MEGABanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGABanner.swift; sourceTree = "<group>"; };
 		5D83042E256392370082CA18 /* UserBannerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBannerUseCase.swift; sourceTree = "<group>"; };
 		5D876542252CAAE200E6CB91 /* TableDataSourceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDataSourceConfiguration.swift; sourceTree = "<group>"; };
 		5D8A76ED24FCD0C800C0610C /* MEGANotificationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGANotificationUseCase.swift; sourceTree = "<group>"; };
@@ -7655,7 +7645,6 @@
 		5D8303B8256262250082CA18 /* Banner */ = {
 			isa = PBXGroup;
 			children = (
-				5D8303BB256262350082CA18 /* BannerRepository.swift */,
 			);
 			path = Banner;
 			sourceTree = "<group>";
@@ -7663,7 +7652,6 @@
 		5D8303DF256266C00082CA18 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				5D8303F4256367D60082CA18 /* BannerErrorEntity.swift */,
 				5D8303D1256266A80082CA18 /* GeneralDomainError.swift */,
 				5D60928F255BC2B6005FA3E4 /* SDKError.swift */,
 			);
@@ -7673,8 +7661,6 @@
 		5D83041025638DA70082CA18 /* EntityMapping */ = {
 			isa = PBXGroup;
 			children = (
-				5D83041F25638DE70082CA18 /* MEGABanner.swift */,
-				5D83041125638DC40082CA18 /* MEGABannerList.swift */,
 			);
 			path = EntityMapping;
 			sourceTree = "<group>";
@@ -7780,7 +7766,6 @@
 			isa = PBXGroup;
 			children = (
 				5D8303DF256266C00082CA18 /* Error */,
-				5D8303E6256270800082CA18 /* BannerEntity.swift */,
 				5D667EEB24ECF9400092474D /* StoreUser.swift */,
 			);
 			path = Domain;
@@ -13241,9 +13226,6 @@
 				C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */,
 				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
 				C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */,
-				5D8303E7256270800082CA18 /* BannerEntity.swift in Sources */,
-				5D8303F5256367D60082CA18 /* BannerErrorEntity.swift in Sources */,
-				5D8303BC256262350082CA18 /* BannerRepository.swift in Sources */,
 				C44947762652A466004B4C8E /* BannerType.swift in Sources */,
 				5D6092BD256219E1005FA3E4 /* BannerViewModel.swift in Sources */,
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
@@ -13836,8 +13818,6 @@
 				24AB98302A78B84A006E101C /* MEGAAVViewControllerDelegate.swift in Sources */,
 				243A1AE02A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
-				5D83042025638DE70082CA18 /* MEGABanner.swift in Sources */,
-				5D83041225638DC40082CA18 /* MEGABannerList.swift in Sources */,
 				5DAC09D324CFC5B9001B6476 /* MEGABannerView.swift in Sources */,
 				C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,

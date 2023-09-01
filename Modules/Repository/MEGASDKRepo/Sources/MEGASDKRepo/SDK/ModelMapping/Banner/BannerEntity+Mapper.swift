@@ -1,5 +1,7 @@
-extension MEGABanner {
+import MEGADomain
+import MEGASdk
 
+extension MEGABanner {
     var bannerEntity: BannerEntity? {
         guard let title = title,
               let description = description,

@@ -1,3 +1,5 @@
+import MEGADomain
+
 protocol UserBannerUseCaseProtocol {
 
     func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void)

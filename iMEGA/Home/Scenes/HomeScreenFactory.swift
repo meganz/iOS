@@ -70,7 +70,7 @@ final class HomeScreenFactory: NSObject {
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(
             userBannerUseCase: UserBannerUseCase(
-                userBannerRepository: BannerRepository(sdk: sdk)
+                userBannerRepository: BannerRepository.newRepo
             ),
             router: HomeBannerRouter(navigationController: navigationController)
         )

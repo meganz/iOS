@@ -1,12 +1,7 @@
-import Foundation
 
-enum BannerErrorEntity: Error {
-
+public enum BannerErrorEntity: Error {
     case unexpected
-
     case userSessionTimeout
-
     case `internal`
-
     case resourceDoesNotExist
 }
