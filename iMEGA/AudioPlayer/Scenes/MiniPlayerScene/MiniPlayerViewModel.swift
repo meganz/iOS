@@ -285,6 +285,7 @@ final class MiniPlayerViewModel: NSObject, ViewModelType {
             if configEntity.playerHandler.currentRepeatMode() == .repeatOne {
                 configEntity.playerHandler.playerRepeatAll(active: true)
             }
+            configEntity.node = item.node
             configEntity.playerHandler.play(item: item)
         case .onClose:
             closeMiniPlayer()
@@ -312,6 +313,7 @@ final class MiniPlayerViewModel: NSObject, ViewModelType {
             return nil
         }
         currentItem.name = newNodeName
+        currentItem.node = updatedNode
         return currentItem
     }
 }
@@ -326,6 +328,7 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     }
     
     func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, currentThumbnail: UIImage?) {
+        configEntity.node = currentItem?.node
         invokeCommand?(.reloadNodeInfo(thumbnail: currentThumbnail, name: presentableName(currentItem?.name ?? "")))
     }
     
@@ -339,6 +342,8 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
     
     func audio(player: AVQueuePlayer, currentItem: AudioPlayerItem?, indexPath: IndexPath?) {
         guard let currentItem = currentItem, let indexPath = indexPath else { return }
+        configEntity.node = currentItem.node
+        currentItem.name = presentableName(currentItem.name)
         invokeCommand?(.change(currentItem: currentItem, indexPath: indexPath))
     }
     
