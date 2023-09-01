@@ -188,6 +188,7 @@ final class ImportAlbumViewModel: ObservableObject {
         }
         
         transferWidgetResponder?.setProgressViewInKeyWindow()
+        transferWidgetResponder?.updateProgressView(bottomConstant: -140)
         transferWidgetResponder?.bringProgressToFrontKeyWindowIfNeeded()
         
         showSnackBar(message: Strings.Localizable.General.SaveToPhotos.started(photosToSave.count))

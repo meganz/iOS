@@ -21,7 +21,7 @@ final class SnackBarRouter: NSObject {
         presenter.presentSnackBar(viewController: viewController)
     }
     
-    func dismissSnackBar() {
-        presenter?.dismissSnackBar()
+    func dismissSnackBar(immediate: Bool = false) {
+        presenter?.dismissSnackBar(immediate: immediate)
     }
 }
