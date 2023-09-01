@@ -166,7 +166,7 @@ import MEGAPresentation
     }
     
     private func checkIfCallExist(then clousure: (() -> Void)?) {
-        if MEGAChatSdk.shared.mnz_existsActiveCall {
+        if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
             Helper.cannotPlayContentDuringACallAlert()
         } else {
             clousure?()
@@ -273,8 +273,7 @@ import MEGAPresentation
             
             guard player != nil else { return }
             
-            let allNodes = currentPlayer()?.tracks.compactMap(\.node)
-            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self, shouldResetPlayer: shouldResetPlayer), presenter: presenter)
+            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, playerHandler: self, shouldResetPlayer: shouldResetPlayer), presenter: presenter)
             
             miniPlayerVC = nil
             

@@ -19,16 +19,12 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil)
             .instantiateViewController(withIdentifier: "AudioPlayerViewControllerID") as! AudioPlayerViewController
         
-        let sdk = MEGASdk.shared
-        
         if configEntity.playerType == .offline {
             vc.viewModel = AudioPlayerViewModel(
                 configEntity: configEntity,
                 router: self,
                 offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
-                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
-                audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: sdk)),
-                sdk: sdk
+                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
             )
         } else {
             vc.viewModel = AudioPlayerViewModel(
@@ -36,9 +32,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
                 router: self,
                 nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
                 streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
-                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
-                audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: sdk)),
-                sdk: sdk
+                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
             )
         }
 
@@ -87,7 +81,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     func showMiniPlayer(file: String, shouldReload: Bool) {
         guard let presenter = presenter else { return }
         
-        configEntity.playerHandler.initMiniPlayer(node: configEntity.node, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
+        configEntity.playerHandler.initMiniPlayer(node: nil, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
     }
     
     func importNode(_ node: MEGANode) {

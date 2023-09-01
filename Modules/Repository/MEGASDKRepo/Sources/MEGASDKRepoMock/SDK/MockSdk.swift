@@ -58,8 +58,6 @@ public final class MockSdk: MEGASdk {
     public var hasGlobalDelegate = false
     public var hasRequestDelegate = false
     public var hasTransferDelegate = false
-    public var addMEGADelegateCallCount = 0
-    public var removeMEGADelegateCallCount = 0
     public var apiURL: String?
     public var disablepkp: Bool?
     public var shareAccessLevel: MEGAShareType = .accessUnknown
@@ -215,14 +213,6 @@ public final class MockSdk: MEGASdk {
     
     public override func remove(_ delegate: any MEGATransferDelegate) {
         hasTransferDelegate = false
-    }
-    
-    public override func add(_ delegate: any MEGADelegate) {
-        addMEGADelegateCallCount += 1
-    }
-    
-    public override func remove(_ delegate: any MEGADelegate) {
-        removeMEGADelegateCallCount += 1
     }
     
     public override func copy(_ node: MEGANode, newParent: MEGANode, delegate: any MEGARequestDelegate) {
