@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../MEGAPresentation")
+        .package(path: "../../MEGAPresentation")
     ],
     targets: [
         .target(
