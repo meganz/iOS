@@ -530,6 +530,9 @@ final class ImportAlbumViewModelTests: XCTestCase {
         // Assert
         XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 1)
         XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
+        XCTAssertEqual(transferWidgetResponder.updateProgressViewCalled, 1)
+        XCTAssertEqual(transferWidgetResponder.showWidgetIfNeededCalled, 1)
+
         XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }
@@ -559,6 +562,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
         // Assert
         XCTAssertEqual(transferWidgetResponder.setProgressViewInKeyWindowCalled, 1)
         XCTAssertEqual(transferWidgetResponder.bringProgressToFrontKeyWindowIfNeededCalled, 1)
+        XCTAssertEqual(transferWidgetResponder.updateProgressViewCalled, 1)
+        XCTAssertEqual(transferWidgetResponder.showWidgetIfNeededCalled, 1)
         XCTAssertEqual(sut.snackBarViewModel?.snackBar,
                        SnackBar(message: Strings.Localizable.General.SaveToPhotos.started(multiplePhotos.count)))
     }

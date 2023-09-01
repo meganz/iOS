@@ -165,6 +165,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
     [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
     [TransfersWidgetViewController.sharedTransferViewController updateProgressViewWithBottomConstant:-120];
+    [TransfersWidgetViewController.sharedTransferViewController showWidgetIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
