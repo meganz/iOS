@@ -3442,6 +3442,10 @@
 "device.center.backup.blocked.status.message"="Blocked";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Unknown device";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="Show in Cloud drive";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Show in Backups";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
