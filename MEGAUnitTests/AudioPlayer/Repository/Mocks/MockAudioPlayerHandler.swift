@@ -28,15 +28,13 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     
     private var _isPlayerDefined = false
     
-    var audioPlayer: AudioPlayer?
-    
     private(set) var playerResumePlayback_Calls = [TimeInterval]()
     
     func isPlayerDefined() -> Bool { _isPlayerDefined }
     func isPlayerEmpty() -> Bool { false }
     
     func currentPlayer() -> AudioPlayer? {
-        audioPlayer
+        AudioPlayer()
     }
     
     func setCurrent(
@@ -47,7 +45,6 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         addPlayer_calledTimes += 1
         addPlayerTracks_calledTimes += 1
         _isPlayerDefined = true
-        audioPlayer = player
     }
     
     func addPlayer(listener: any AudioPlayerObserversProtocol) {
