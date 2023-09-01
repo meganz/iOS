@@ -620,7 +620,6 @@
 		5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7D6B9D2491F79E00ADBDEE /* OverDiskQuotaService.swift */; };
 		5D816FC62564C08E0067D22F /* SlideIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D816FC52564C08E0067D22F /* SlideIndicatorView.swift */; };
 		5D8303D2256266A80082CA18 /* GeneralDomainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8303D1256266A80082CA18 /* GeneralDomainError.swift */; };
-		5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D83042E256392370082CA18 /* UserBannerUseCase.swift */; };
 		5D876543252CAAE200E6CB91 /* TableDataSourceConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D876542252CAAE200E6CB91 /* TableDataSourceConfiguration.swift */; };
 		5D8A76F024FCD0C900C0610C /* MEGANotificationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A76ED24FCD0C800C0610C /* MEGANotificationUseCase.swift */; };
 		5D8A76F124FCD0C900C0610C /* MEGAAvatarGeneratingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8A76EE24FCD0C900C0610C /* MEGAAvatarGeneratingUseCase.swift */; };
@@ -3213,7 +3212,6 @@
 		5D7D6B9D2491F79E00ADBDEE /* OverDiskQuotaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaService.swift; sourceTree = "<group>"; };
 		5D816FC52564C08E0067D22F /* SlideIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideIndicatorView.swift; sourceTree = "<group>"; };
 		5D8303D1256266A80082CA18 /* GeneralDomainError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDomainError.swift; sourceTree = "<group>"; };
-		5D83042E256392370082CA18 /* UserBannerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBannerUseCase.swift; sourceTree = "<group>"; };
 		5D876542252CAAE200E6CB91 /* TableDataSourceConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDataSourceConfiguration.swift; sourceTree = "<group>"; };
 		5D8A76ED24FCD0C800C0610C /* MEGANotificationUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGANotificationUseCase.swift; sourceTree = "<group>"; };
 		5D8A76EE24FCD0C900C0610C /* MEGAAvatarGeneratingUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGAAvatarGeneratingUseCase.swift; sourceTree = "<group>"; };
@@ -5736,7 +5734,6 @@
 			isa = PBXGroup;
 			children = (
 				C47E7C3F25D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift */,
-				245543B72A9F659C0057103F /* MockAudioPlayerRepository.swift */,
 				C47E7C0125D18FDF00DB6FF5 /* MockNodeInfoRepository.swift */,
 				C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */,
 				C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */,
@@ -7642,13 +7639,6 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
-		5D8303B8256262250082CA18 /* Banner */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Banner;
-			sourceTree = "<group>";
-		};
 		5D8303DF256266C00082CA18 /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -7658,17 +7648,9 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		5D83041025638DA70082CA18 /* EntityMapping */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = EntityMapping;
-			sourceTree = "<group>";
-		};
 		5D83042D256392220082CA18 /* Banner */ = {
 			isa = PBXGroup;
 			children = (
-				5D83042E256392370082CA18 /* UserBannerUseCase.swift */,
 			);
 			path = Banner;
 			sourceTree = "<group>";
@@ -7688,7 +7670,6 @@
 			isa = PBXGroup;
 			children = (
 				5D075D00251862800067D363 /* DataStore */,
-				5D83041025638DA70082CA18 /* EntityMapping */,
 				5DF249E024F3965F003FED76 /* FileSystem */,
 				5DC016DC24F286D500BE309A /* SDK */,
 				5D3CD8A22531819200E3B459 /* UserDefault */,
@@ -7821,7 +7802,6 @@
 		5DC016DC24F286D500BE309A /* SDK */ = {
 			isa = PBXGroup;
 			children = (
-				5D8303B8256262250082CA18 /* Banner */,
 				5D94D70D2513690700B103EC /* Node */,
 				5D6D0F552527044D002A777D /* SDKAvatarClient.swift */,
 				BFEAFF712565D35400646606 /* SDKNodeClipboardOperationRepository.swift */,
@@ -11814,7 +11794,6 @@
 				C49F861F255ABE860074A054 /* AudioPlayerScene */,
 				C453AB75256E5FCF005E4E1B /* AudioPlaylistScene */,
 				C4AF4A8B2582833200594716 /* MiniPlayerScene */,
-				24E384412A9C4349006865F1 /* Shared */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -11822,7 +11801,6 @@
 		C453AB73256E5F9E005E4E1B /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				247279B82A9EFC2A00877FC1 /* AudioPlayerRepository.swift */,
 				9DAC1B622951589E00562475 /* NodeInfoRepository.swift */,
 				C4D665C325B1F84E002196E9 /* OfflineFileInfoRepository.swift */,
 				C450CFB625B83E5F005C707D /* StreamingInfoRepository.swift */,
@@ -11834,7 +11812,6 @@
 			isa = PBXGroup;
 			children = (
 				C4CBDD4E256EC8F800835CF5 /* Domain */,
-				247279C12A9F0DB400877FC1 /* AudioPlayerUseCase.swift */,
 				C453AB7E256E7AE8005E4E1B /* NodeInfoUseCase.swift */,
 				C4D665B725B1F835002196E9 /* OfflineFileInfoUseCase.swift */,
 				C450CFC225B84350005C707D /* StreamingInfoUseCase.swift */,
@@ -13187,9 +13164,6 @@
 				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
 				C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */,
 				24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */,
-				247279B92A9EFC2A00877FC1 /* AudioPlayerRepository.swift in Sources */,
-				24E384442A9C4357006865F1 /* AudioPlayerTrackNameUpdateCheckerViewModel.swift in Sources */,
-				247279C22A9F0DB400877FC1 /* AudioPlayerUseCase.swift in Sources */,
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */,
@@ -14621,7 +14595,6 @@
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCase+Additions.swift in Sources */,
 				8313914B293519F900E20170 /* UserAvatarView.swift in Sources */,
 				83139149293511F300E20170 /* UserAvatarViewModel.swift in Sources */,
-				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
 				BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */,
 				BF90C7802603FD4A006061F8 /* UserImageRepository.swift in Sources */,
 				BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */,
@@ -15054,8 +15027,6 @@
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				24A6ADDC2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift in Sources */,
-				247279B62A9EF2D100877FC1 /* AudioPlayerRepositoryTests.swift in Sources */,
-				247279BD2A9EFD9900877FC1 /* AudioPlayerUseCaseTests.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
 				24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */,
 				C45A2DF525D2B97F00915A83 /* AudioPlaylistViewModelTests.swift in Sources */,
@@ -15137,8 +15108,6 @@
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
 				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
-				245543B82A9F659C0057103F /* MockAudioPlayerRepository.swift in Sources */,
-				245543B62A9F64FA0057103F /* MockAudioPlayerUseCase.swift in Sources */,
 				C45A2DE825D2B8EA00915A83 /* MockAudioPlayerViewRouter.swift in Sources */,
 				C45A2E0825D2B9DE00915A83 /* MockAudioPlaylistViewRouter.swift in Sources */,
 				C46D4A7F26557AF900748BD3 /* MockBannerContainerViewRouter.swift in Sources */,

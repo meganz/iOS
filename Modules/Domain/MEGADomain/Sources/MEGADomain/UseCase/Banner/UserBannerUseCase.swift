@@ -1,6 +1,5 @@
-import MEGADomain
 
-protocol UserBannerUseCaseProtocol {
+public protocol UserBannerUseCaseProtocol {
 
     func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void)
 
@@ -10,22 +9,26 @@ protocol UserBannerUseCaseProtocol {
     func bannerCategory(withBannerId bannerId: Int) -> UserBannerUseCase.BannerCategory
 }
 
-struct UserBannerUseCase: UserBannerUseCaseProtocol {
+public struct UserBannerUseCase: UserBannerUseCaseProtocol {
 
     let userBannerRepository: any BannerRepositoryProtocol
+    
+    public init(userBannerRepository: any BannerRepositoryProtocol) {
+        self.userBannerRepository = userBannerRepository
+    }
 
     // MARK: - UserBannerUseCaseProtocol
 
-    func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
+    public func banners(completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void) {
         userBannerRepository.banners(completion: completion)
     }
 
-    func dismissBanner(withBannerId bannerId: Int,
-                       completion: ((Result<Void, BannerErrorEntity>) -> Void)?) {
+    public func dismissBanner(withBannerId bannerId: Int,
+                              completion: ((Result<Void, BannerErrorEntity>) -> Void)?) {
         userBannerRepository.dismissBanner(withBannerId: bannerId, completion: completion)
     }
 
-    func bannerCategory(withBannerId bannerId: Int) -> BannerCategory {
+    public func bannerCategory(withBannerId bannerId: Int) -> BannerCategory {
         switch bannerId {
         case 1: return .achievement
         case 2: return .referal
@@ -34,7 +37,7 @@ struct UserBannerUseCase: UserBannerUseCaseProtocol {
     }
 
     // MARK: -
-    enum BannerCategory {
+    public enum BannerCategory {
         case referal
         case achievement
         case undefined
