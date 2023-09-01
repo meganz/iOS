@@ -64,6 +64,11 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     }
     
     @objc
+    func showWidgetIfNeeded() {
+        progressView?.showWidgetIfNeeded()
+    }
+    
+    @objc
     func resetToKeyWindow() {
         setProgressViewInKeyWindow()
         bringProgressToFrontKeyWindowIfNeeded()
@@ -159,4 +164,6 @@ protocol TransferWidgetResponderProtocol: AnyObject {
     func bringProgressToFrontKeyWindowIfNeeded()
     
     func updateProgressView(bottomConstant: CGFloat)
+    
+    func showWidgetIfNeeded()
 }

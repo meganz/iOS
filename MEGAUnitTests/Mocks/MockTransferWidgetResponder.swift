@@ -6,6 +6,7 @@ class MockTransferWidgetResponder: TransferWidgetResponderProtocol {
     var bringProgressToFrontKeyWindowIfNeededCalled: Int = 0
     var setProgressViewInKeyWindowCalled: Int = 0
     var updateProgressViewCalled: Int = 0
+    var showWidgetIfNeededCalled: Int = 0
     
     func bringProgressToFrontKeyWindowIfNeeded() {
         bringProgressToFrontKeyWindowIfNeededCalled += 1
@@ -17,5 +18,9 @@ class MockTransferWidgetResponder: TransferWidgetResponderProtocol {
     
     func updateProgressView(bottomConstant: CGFloat) {
         updateProgressViewCalled += 1
+    }
+    
+    func showWidgetIfNeeded() {
+        showWidgetIfNeededCalled += 1
     }
 }
