@@ -1,9 +1,11 @@
 import MEGADomain
+import MEGASdk
+import StoreKit
 
 // MARK: - SKProduct
 extension SKProduct {
-    func toAccountPlanEntity(storage: Int = 0,
-                             transfer: Int = 0) -> AccountPlanEntity {
+    public func toAccountPlanEntity(storage: Int = 0,
+                                    transfer: Int = 0) -> AccountPlanEntity {
         AccountPlanEntity(product: self,
                           storageLimit: storage,
                           transferLimit: transfer)
@@ -26,9 +28,8 @@ fileprivate extension AccountPlanEntity {
     init(product: SKProduct,
          storageLimit: Int,
          transferLimit: Int) {
-        
         self.init(productIdentifier: product.productIdentifier)
-
+        
         let productIdentifier = product.productIdentifier
         subscriptionCycle = SubscriptionCycleEntity(productIdentifier: productIdentifier)
         
@@ -47,7 +48,7 @@ fileprivate extension AccountPlanEntity {
         storage = displayStringForGBValue(gbValue: storageLimit)
         transfer = displayStringForGBValue(gbValue: transferLimit)
     }
-                       
+    
     private func planType(productIdentifier: String) -> MEGAAccountType {
         if productIdentifier.contains("pro1") {
             return .proI
