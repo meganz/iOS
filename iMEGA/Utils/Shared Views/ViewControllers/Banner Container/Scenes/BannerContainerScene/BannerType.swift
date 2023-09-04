@@ -1,4 +1,3 @@
-
 @objc enum BannerType: Int {
     case warning = 0
     

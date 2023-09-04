@@ -1,4 +1,3 @@
-
 public typealias RegionCode = String
 
 public struct RegionEntity: Equatable {

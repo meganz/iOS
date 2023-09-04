@@ -1,4 +1,3 @@
-
 enum EndCallDialogType {
     case endCallForMyself
     case endCallForAll

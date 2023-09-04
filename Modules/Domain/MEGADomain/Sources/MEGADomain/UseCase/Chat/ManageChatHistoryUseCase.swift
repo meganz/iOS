@@ -1,4 +1,3 @@
-
 public struct ManageChatHistoryUseCase {
     public let retentionValueUseCase: any HistoryRetentionUseCaseProtocol
     public let historyRetentionUseCase: any HistoryRetentionUseCaseProtocol

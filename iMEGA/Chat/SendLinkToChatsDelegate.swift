@@ -1,4 +1,3 @@
-
 class SendLinkToChatsDelegate: NSObject {
 
     private let link: String
@@ -20,20 +19,20 @@ extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
         }
         
         chats.forEach {
-            MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: $0.chatId, message: link)
+            MEGAChatSdk.shared.sendMessage(toChat: $0.chatId, message: link)
         }
         
         users.forEach {
-            let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(byUser: $0.handle)
+            let chatRoom = MEGAChatSdk.shared.chatRoom(byUser: $0.handle)
             if chatRoom != nil {
                 guard let chatId = chatRoom?.chatId else {
                     return
                 }
-                MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: chatId, message: link)
+                MEGAChatSdk.shared.sendMessage(toChat: chatId, message: link)
             } else {
                 MEGALogDebug("There is not a chat with %@, create the chat and send message", $0.email)
-                MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(userHandle: $0.handle, completion: {
-                    MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: $0.chatId, message: self.link)
+                MEGAChatSdk.shared.mnz_createChatRoom(userHandle: $0.handle, completion: {
+                    MEGAChatSdk.shared.sendMessage(toChat: $0.chatId, message: self.link)
                 })
             }
         }

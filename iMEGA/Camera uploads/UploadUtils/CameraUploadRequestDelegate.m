@@ -1,4 +1,3 @@
-
 #import "CameraUploadRequestDelegate.h"
 
 @interface CameraUploadRequestDelegate ()

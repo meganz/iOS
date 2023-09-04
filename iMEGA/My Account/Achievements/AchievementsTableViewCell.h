@@ -1,4 +1,3 @@
-
 @interface AchievementsTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIView *storageQuotaRewardView;

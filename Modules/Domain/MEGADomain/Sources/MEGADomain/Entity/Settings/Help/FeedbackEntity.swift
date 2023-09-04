@@ -1,4 +1,3 @@
-
 public struct FeedbackEntity: Sendable {
     public let toEmail: String
     public let subject: String

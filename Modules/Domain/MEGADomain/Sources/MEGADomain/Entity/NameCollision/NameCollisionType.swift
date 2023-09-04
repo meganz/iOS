@@ -1,4 +1,3 @@
-
 public enum NameCollisionType {
     case upload
     case move

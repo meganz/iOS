@@ -1,4 +1,3 @@
-
 #import "SavedIdentifierParser.h"
 
 static NSString * const MEGACameraUploadIdentifierSeparator = @",";

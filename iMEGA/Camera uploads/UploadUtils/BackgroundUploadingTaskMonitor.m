@@ -1,4 +1,3 @@
-
 #import "BackgroundUploadingTaskMonitor.h"
 #import "CameraUploadRecordManager.h"
 

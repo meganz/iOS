@@ -1,4 +1,3 @@
-
 extension FileLinkViewController {
     @objc func download() {
         guard let publicLinkString = publicLinkString, let linkUrl = URL(string: publicLinkString) else { return }

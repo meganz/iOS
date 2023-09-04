@@ -1,4 +1,3 @@
-
 public struct ChatGiphyEntity {
     public let mp4Src: String?
     public let webpSrc: String?

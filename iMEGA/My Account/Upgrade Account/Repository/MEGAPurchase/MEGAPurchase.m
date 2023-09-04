@@ -1,4 +1,3 @@
-
 #import "MEGAPurchase.h"
 
 #import "SVProgressHUD.h"

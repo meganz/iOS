@@ -1,4 +1,3 @@
-
 final class FilesDownloadUseCase {
     private let repo: SDKTransferListenerRepository
     var nodes: [MEGANode]?

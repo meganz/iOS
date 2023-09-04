@@ -1,4 +1,3 @@
-
 public protocol CredentialUseCaseProtocol {
     func hasSession() -> Bool
     func isPasscodeEnabled() -> Bool

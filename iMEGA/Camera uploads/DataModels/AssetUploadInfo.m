@@ -1,4 +1,3 @@
-
 #import "AssetUploadInfo.h"
 
 @implementation AssetUploadInfo

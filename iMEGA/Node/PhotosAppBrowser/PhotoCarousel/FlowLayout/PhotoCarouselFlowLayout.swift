@@ -1,4 +1,3 @@
-
 import UIKit
 
 final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {

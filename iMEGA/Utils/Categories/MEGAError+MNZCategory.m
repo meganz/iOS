@@ -1,4 +1,3 @@
-
 #import "MEGAError+MNZCategory.h"
 
 @implementation MEGAError (MNZCategory)

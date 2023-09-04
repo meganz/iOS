@@ -1,4 +1,3 @@
-
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 #import "CoreDataErrorHandler.h"

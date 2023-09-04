@@ -1,4 +1,3 @@
-
 #import "MEGARequestDelegate.h"
 
 @interface MEGAShowPasswordReminderRequestDelegate : NSObject <MEGARequestDelegate>

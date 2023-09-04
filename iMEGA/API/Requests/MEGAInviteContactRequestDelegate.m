@@ -1,4 +1,3 @@
-
 #import "MEGAInviteContactRequestDelegate.h"
 
 #import <ContactsUI/ContactsUI.h>

@@ -1,4 +1,3 @@
-
 #import "UploadOperationFactory.h"
 #import "AssetUploadInfo.h"
 #import "LivePhotoUploadOperation.h"

@@ -1,4 +1,3 @@
-
 #import "MOMediaDestination+CoreDataProperties.h"
 
 @implementation MOMediaDestination (CoreDataProperties)

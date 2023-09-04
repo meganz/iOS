@@ -1,4 +1,3 @@
-
 #import "SendToChatActivity.h"
 
 #import "MEGANavigationController.h"

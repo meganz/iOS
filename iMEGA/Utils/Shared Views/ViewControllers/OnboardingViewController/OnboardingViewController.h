@@ -1,4 +1,3 @@
-
 #import <UIKit/UIKit.h>
 
 #import "OnboardingType.h"

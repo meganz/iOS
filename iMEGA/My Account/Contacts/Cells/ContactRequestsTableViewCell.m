@@ -1,4 +1,3 @@
-
 #import "ContactRequestsTableViewCell.h"
 
 @implementation ContactRequestsTableViewCell

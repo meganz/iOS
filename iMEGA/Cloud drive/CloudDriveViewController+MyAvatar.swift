@@ -1,4 +1,3 @@
-
 extension CloudDriveViewController: MyAvatarPresenterProtocol {
     func setupMyAvatar(barButton: UIBarButtonItem) {
         self.navigationItem.leftBarButtonItem = barButton

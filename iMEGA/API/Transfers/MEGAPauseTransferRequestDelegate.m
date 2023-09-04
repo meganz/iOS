@@ -1,4 +1,3 @@
-
 #import "MEGAPauseTransferRequestDelegate.h"
 
 @interface MEGAPauseTransferRequestDelegate ()

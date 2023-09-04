@@ -1,4 +1,3 @@
-
 public enum NSEAnalyticsEventEntity {
     case delayBetweenChatdAndApi
     case delayBetweenApiAndPushserver

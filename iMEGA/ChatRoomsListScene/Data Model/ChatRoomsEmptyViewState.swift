@@ -1,4 +1,3 @@
-
 struct ChatRoomsEmptyViewState {
     let contactsOnMega: ChatRoomsTopRowViewState?
     let archivedChats: ChatRoomsTopRowViewState?

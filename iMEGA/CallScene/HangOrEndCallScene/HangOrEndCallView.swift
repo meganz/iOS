@@ -1,4 +1,3 @@
-
 import MEGASwiftUI
 import SwiftUI
 

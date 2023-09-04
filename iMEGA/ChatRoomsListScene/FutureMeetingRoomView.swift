@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct FutureMeetingRoomView: View {

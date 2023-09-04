@@ -1,4 +1,3 @@
-
 #import "MEGAOperation.h"
 
 NS_ASSUME_NONNULL_BEGIN

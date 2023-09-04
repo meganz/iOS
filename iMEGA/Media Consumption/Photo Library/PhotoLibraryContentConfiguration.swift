@@ -1,4 +1,3 @@
-
 struct PhotoLibraryContentConfiguration {
     let selectLimit: Int?
     let scaleFactor: PhotoLibraryZoomState.ScaleFactor?

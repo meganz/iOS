@@ -1,4 +1,3 @@
-
 #import "MEGABackgroundTaskOperation.h"
 
 @interface MEGABackgroundTaskOperation ()

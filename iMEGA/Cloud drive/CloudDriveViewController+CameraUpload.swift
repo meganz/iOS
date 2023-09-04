@@ -1,4 +1,3 @@
-
 extension CloudDriveViewController {
     @IBAction func deleteAction(sender: UIBarButtonItem) {
         guard let selectedNodes = selectedNodesArray as? [MEGANode] else {
@@ -26,7 +25,7 @@ extension CloudDriveViewController {
     }
     
     @objc func moveToRubbishBin(for node: MEGANode) {
-        guard let rubbish = MEGASdkManager.sharedMEGASdk().rubbishNode else {
+        guard let rubbish = MEGASdk.shared.rubbishNode else {
             self.dismiss(animated: true)
             return
         }
@@ -40,12 +39,12 @@ extension CloudDriveViewController {
                     return
                 }
                 
-                if cuNode.isDescendant(of: node, in: MEGASdkManager.sharedMEGASdk()) {
+                if cuNode.isDescendant(of: node, in: .shared) {
                     self.promptCameraUploadFolderDeletion {
                         let delegate = MEGAMoveRequestDelegate(toMoveToTheRubbishBinWithFiles: 0, folders: 1) {
                             self.dismiss(animated: true)
                         }
-                        MEGASdkManager.sharedMEGASdk().move(node, newParent: rubbish, delegate: delegate)
+                        MEGASdk.shared.move(node, newParent: rubbish, delegate: delegate)
                     }
                 } else {
                     node.mnz_askToMoveToTheRubbishBin(in: self)
@@ -56,7 +55,7 @@ extension CloudDriveViewController {
     
     private func deleteSelectedNodes() {
         guard let selectedNodes = selectedNodesArray as? [MEGANode],
-              let rubbish = MEGASdkManager.sharedMEGASdk().rubbishNode else {
+              let rubbish = MEGASdk.shared.rubbishNode else {
             return
         }
         
@@ -66,7 +65,7 @@ extension CloudDriveViewController {
         }
         
         for node in selectedNodes {
-            MEGASdkManager.sharedMEGASdk().move(node, newParent: rubbish, delegate: delegate)
+            MEGASdk.shared.move(node, newParent: rubbish, delegate: delegate)
         }
     }
     
@@ -81,7 +80,7 @@ extension CloudDriveViewController {
             guard let cuNode = node else { return }
             
             let isSelected = selectedNodes.contains {
-                cuNode.isDescendant(of: $0, in: MEGASdkManager.sharedMEGASdk())
+                cuNode.isDescendant(of: $0, in: .shared)
             }
             
             completion(isSelected)

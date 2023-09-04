@@ -1,4 +1,3 @@
-
 enum UpgradeAccountPlanAlertType {
     case restore(_ status: AlertStatus)
     case purchase(_ status: AlertStatus)

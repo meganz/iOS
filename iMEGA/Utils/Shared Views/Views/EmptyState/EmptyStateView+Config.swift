@@ -1,4 +1,3 @@
-
 extension EmptyStateView {
     static func create(for type: EmptyStateType) -> EmptyStateView {
         switch type {

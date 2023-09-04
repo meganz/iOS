@@ -1,4 +1,3 @@
-
 struct NodeClipboardOperationUseCase {
     private let repo: SDKNodeClipboardOperationRepository
     

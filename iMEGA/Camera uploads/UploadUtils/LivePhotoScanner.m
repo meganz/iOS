@@ -1,4 +1,3 @@
-
 #import "LivePhotoScanner.h"
 #import "CameraUploadRecordManager.h"
 #import "SavedIdentifierParser.h"

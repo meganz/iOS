@@ -1,4 +1,3 @@
-
 #import "NotificationsTableViewController.h"
 
 #import "UIScrollView+EmptyDataSet.h"

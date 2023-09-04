@@ -1,4 +1,3 @@
-
 #import "PHAssetResource+CameraUpload.h"
 
 @implementation PHAssetResource (CameraUpload)

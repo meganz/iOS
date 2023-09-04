@@ -1,4 +1,3 @@
-
 #import "EnabledTwoFactorAuthenticationViewController.h"
 
 #import "Helper.h"

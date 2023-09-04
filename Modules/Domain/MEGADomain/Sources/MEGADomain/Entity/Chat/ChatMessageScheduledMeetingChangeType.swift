@@ -1,4 +1,3 @@
-
 public enum ChatMessageScheduledMeetingChangeType {
     case none
     case parent

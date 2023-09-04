@@ -1,4 +1,3 @@
-
 public enum ChatLinkErrorEntity: Error {
     case generic
     case resourceNotFound

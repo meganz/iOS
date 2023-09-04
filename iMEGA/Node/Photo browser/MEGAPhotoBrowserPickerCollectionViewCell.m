@@ -1,4 +1,3 @@
-
 #import "MEGAPhotoBrowserPickerCollectionViewCell.h"
 
 @implementation MEGAPhotoBrowserPickerCollectionViewCell

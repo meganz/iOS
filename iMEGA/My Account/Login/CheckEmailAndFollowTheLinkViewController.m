@@ -1,4 +1,3 @@
-
 #import "CheckEmailAndFollowTheLinkViewController.h"
 
 #import "SAMKeychain.h"

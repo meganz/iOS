@@ -1,4 +1,3 @@
-
 struct ScheduleMeetingNotificationInfo {
     enum StartTime {
         case now

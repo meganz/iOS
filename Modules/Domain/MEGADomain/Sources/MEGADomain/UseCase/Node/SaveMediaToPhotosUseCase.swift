@@ -1,4 +1,3 @@
-
 public protocol SaveMediaToPhotosUseCaseProtocol {
     func saveToPhotos(nodes: [NodeEntity]) async throws
     func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)

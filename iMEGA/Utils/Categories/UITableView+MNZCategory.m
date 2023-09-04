@@ -1,4 +1,3 @@
-
 #import "UITableView+MNZCategory.h"
 
 @implementation UITableView (MNZCategory)

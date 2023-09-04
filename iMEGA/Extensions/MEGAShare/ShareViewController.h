@@ -1,4 +1,3 @@
-
 #import "BrowserViewController.h"
 #import "SendToViewController.h"
 #import "OpenAppRequiredViewController.h"

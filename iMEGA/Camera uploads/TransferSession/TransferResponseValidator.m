@@ -1,4 +1,3 @@
-
 #import "TransferResponseValidator.h"
 #import "NSError+CameraUpload.h"
 

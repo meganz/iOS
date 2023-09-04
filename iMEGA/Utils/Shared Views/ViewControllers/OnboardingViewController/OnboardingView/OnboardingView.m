@@ -1,4 +1,3 @@
-
 #import "OnboardingView.h"
 
 @interface OnboardingView ()

@@ -1,4 +1,3 @@
-
 public enum ChatMessageEndCallReasonEntity {
     case ended
     case rejected

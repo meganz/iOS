@@ -1,4 +1,3 @@
-
 class SingleTapView: UIView, SingleTapHandlerProtocol {
     // MARK: - SingleTapHandlerProtocol
     

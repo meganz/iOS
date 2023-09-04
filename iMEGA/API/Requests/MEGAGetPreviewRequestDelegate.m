@@ -1,4 +1,3 @@
-
 #import "MEGAGetPreviewRequestDelegate.h"
 
 @interface MEGAGetPreviewRequestDelegate ()

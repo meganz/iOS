@@ -1,4 +1,3 @@
-
 #import "MOAssetUploadErrorRecord+CoreDataProperties.h"
 
 @implementation MOAssetUploadErrorRecord (CoreDataProperties)

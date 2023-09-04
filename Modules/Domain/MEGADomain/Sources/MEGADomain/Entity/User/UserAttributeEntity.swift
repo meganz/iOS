@@ -1,4 +1,3 @@
-
 public enum UserAttributeEntity: Sendable {
     case avatar
     case firstName

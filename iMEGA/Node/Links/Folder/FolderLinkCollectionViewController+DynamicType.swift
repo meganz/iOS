@@ -1,4 +1,3 @@
-
 extension FolderLinkCollectionViewController: DynamicTypeCollectionViewSizing {
     func provideSizingCell(for indexPath: IndexPath) -> UICollectionViewCell? {
         guard let collectionView = collectionView,
@@ -8,7 +7,7 @@ extension FolderLinkCollectionViewController: DynamicTypeCollectionViewSizing {
                                                         NodeCollectionViewCell.instantiateFromFileNib :
                                                         NodeCollectionViewCell.instantiateFromFolderNib
         
-        cell.configureCell(forFolderLinkNode: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdkManager.sharedMEGASdk(), delegate: nil)
+        cell.configureCell(forFolderLinkNode: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: .shared, delegate: nil)
         
         return cell
     }

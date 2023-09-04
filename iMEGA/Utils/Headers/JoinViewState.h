@@ -1,4 +1,3 @@
-
 #ifndef JoinViewState_h
 #define JoinViewState_h
 

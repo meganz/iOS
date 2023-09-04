@@ -1,4 +1,3 @@
-
 public protocol FileVersionsUseCaseProtocol {
     func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
     func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)

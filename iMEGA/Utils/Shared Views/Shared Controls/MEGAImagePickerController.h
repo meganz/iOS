@@ -1,4 +1,3 @@
-
 @interface MEGAImagePickerController : UIImagePickerController
 
 - (id)init NS_UNAVAILABLE;

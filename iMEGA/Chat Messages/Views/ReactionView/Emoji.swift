@@ -1,4 +1,3 @@
-
 struct Emoji: Codable {
     let category: Int
     let representation: String

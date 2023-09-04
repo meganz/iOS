@@ -1,4 +1,3 @@
-
 #import "CameraUploadConcurrentCountCalculator.h"
 
 @interface CameraUploadConcurrentCountCalculator ()

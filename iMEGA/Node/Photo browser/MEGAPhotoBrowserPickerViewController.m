@@ -1,4 +1,3 @@
-
 #import "MEGAPhotoBrowserPickerViewController.h"
 
 #import "Helper.h"

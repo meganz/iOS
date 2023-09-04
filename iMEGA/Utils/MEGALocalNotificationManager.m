@@ -1,4 +1,3 @@
-
 #import "MEGALocalNotificationManager.h"
 
 #ifndef MNZ_APP_EXTENSION

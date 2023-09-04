@@ -1,4 +1,3 @@
-
 import FirebaseCrashlytics
 import Foundation
 import MEGADomain

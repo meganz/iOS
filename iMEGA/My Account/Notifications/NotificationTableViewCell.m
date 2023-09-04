@@ -1,4 +1,3 @@
-
 #import "NotificationTableViewCell.h"
 
 @implementation NotificationTableViewCell

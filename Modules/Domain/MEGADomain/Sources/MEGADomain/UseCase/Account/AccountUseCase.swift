@@ -1,4 +1,3 @@
-
 // MARK: - Use case protocol
 public protocol AccountUseCaseProtocol {
     var currentUserHandle: HandleEntity? { get }

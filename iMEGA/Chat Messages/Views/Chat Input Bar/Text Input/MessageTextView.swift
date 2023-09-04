@@ -1,4 +1,3 @@
-
 class MessageTextView: UITextView {
     
     // MARK: - Properties

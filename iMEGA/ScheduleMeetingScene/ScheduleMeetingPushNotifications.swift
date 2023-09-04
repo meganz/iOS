@@ -1,4 +1,3 @@
-
 struct ScheduleMeetingPushNotifications {
     static let startsNowCategoryIdentifier = "nz.mega.startsNowScheduledMeeting.message"
     static let startsInFifteenMinutesCategoryIdentifier = "nz.mega.startsInFifteenMinutesScheduledMeeting.message"

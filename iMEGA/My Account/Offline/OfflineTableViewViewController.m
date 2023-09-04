@@ -1,4 +1,3 @@
-
 #import "OfflineTableViewViewController.h"
 
 #import "NSDate+MNZCategory.h"

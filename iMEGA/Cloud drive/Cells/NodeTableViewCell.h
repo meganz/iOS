@@ -1,4 +1,3 @@
-
 /*
  NodeTableViewCellFlavor is used to tell how `NodeTableViewCell` being used, e.g. CloudDriveCell, RecentCell, SharedLinkCell.
  In fact, this is a work around to tell the different scenario the same cell is reused, which should be prohibited, as it's

@@ -1,4 +1,3 @@
-
 enum SortOrderType: String, CaseIterable {
     case none
     case nameAscending

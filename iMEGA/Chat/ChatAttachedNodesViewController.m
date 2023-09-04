@@ -1,4 +1,3 @@
-
 #import "ChatAttachedNodesViewController.h"
 
 #import "SVProgressHUD.h"

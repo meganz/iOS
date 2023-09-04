@@ -1,4 +1,3 @@
-
 final class BannerContainerViewRouter: NSObject {
     private weak var navigationController: UINavigationController?
     private var contentViewController: UIViewController

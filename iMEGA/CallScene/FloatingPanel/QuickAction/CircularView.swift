@@ -1,4 +1,3 @@
-
 import UIKit
 
 final class CircularView: UIView {

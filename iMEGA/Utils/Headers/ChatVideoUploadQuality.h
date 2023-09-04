@@ -1,4 +1,3 @@
-
 typedef NS_ENUM(NSUInteger, ChatVideoUploadQuality) {
     ChatVideoUploadQualityVeryLow = 0, // Deprecated
     ChatVideoUploadQualityLow = 1,

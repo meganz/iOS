@@ -1,4 +1,3 @@
-
 public struct SearchAssets {
     public let placeHolder: String
     public let cancelTitle: String

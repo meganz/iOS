@@ -1,4 +1,3 @@
-
 extension SharedItemsViewController {
     @objc func updateTabSelection() {
         self.selectorView?.backgroundColor = .mnz_mainBars(for: traitCollection)

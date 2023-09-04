@@ -1,4 +1,3 @@
-
 extension FolderLinkViewController: SnackBarPresenting {
     @MainActor
     func layout(snackBarView: UIView?) {

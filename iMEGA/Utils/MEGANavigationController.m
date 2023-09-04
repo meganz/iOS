@@ -1,4 +1,3 @@
-
 #import "MEGANavigationController.h"
 
 #ifdef MNZ_SHARE_EXTENSION

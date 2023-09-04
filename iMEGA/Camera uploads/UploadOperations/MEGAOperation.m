@@ -1,4 +1,3 @@
-
 #import "MEGAOperation.h"
 
 @implementation MEGAOperation

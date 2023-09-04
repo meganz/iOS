@@ -1,4 +1,3 @@
-
 #import <Foundation/Foundation.h>
 #import "MEGASdkManager.h"
 @import Photos;

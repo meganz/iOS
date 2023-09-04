@@ -1,4 +1,3 @@
-
 #import "CameraUploadManager+Settings.h"
 
 #import <Photos/PhotosTypes.h>

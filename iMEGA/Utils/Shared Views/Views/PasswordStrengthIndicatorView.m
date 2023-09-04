@@ -1,4 +1,3 @@
-
 #import "PasswordStrengthIndicatorView.h"
 
 @interface PasswordStrengthIndicatorView ()

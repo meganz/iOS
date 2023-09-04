@@ -1,4 +1,3 @@
-
 public struct AccountRequestEntity {
     public var type: RequestTypeEntity
     public var file: String?

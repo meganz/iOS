@@ -1,4 +1,3 @@
-
 #import "ReferralBonusesTableViewController.h"
 #import "Helper.h"
 #import "MEGAGetAttrUserRequestDelegate.h"

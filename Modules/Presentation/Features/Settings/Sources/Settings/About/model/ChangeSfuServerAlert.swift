@@ -1,4 +1,3 @@
-
 public struct ChangeSfuServerAlert {
     public var title: String
     public var message: String

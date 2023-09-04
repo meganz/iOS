@@ -1,4 +1,3 @@
-
 #import "MOFolderLayout+CoreDataProperties.h"
 
 @implementation MOFolderLayout (CoreDataProperties)

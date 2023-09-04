@@ -1,4 +1,3 @@
-
 public protocol AdsRepositoryProtocol: RepositoryProtocol {
     func fetchAds(adsFlag: AdsFlagEntity,
                   adUnits: [AdsSlotEntity],

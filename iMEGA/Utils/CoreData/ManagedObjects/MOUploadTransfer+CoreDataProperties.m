@@ -1,4 +1,3 @@
-
 #import "MOUploadTransfer+CoreDataProperties.h"
 
 @implementation MOUploadTransfer (CoreDataProperties)

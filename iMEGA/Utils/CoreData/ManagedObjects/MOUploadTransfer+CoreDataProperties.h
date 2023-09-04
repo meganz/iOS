@@ -1,4 +1,3 @@
-
 #import "MOUploadTransfer+CoreDataClass.h"
 
 

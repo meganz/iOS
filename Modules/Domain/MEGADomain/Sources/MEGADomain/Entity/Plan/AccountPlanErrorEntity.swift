@@ -1,4 +1,3 @@
-
 public enum AccountPlanPurchaseErrorEntity {
     case paymentCancelled, paymentInvalid, paymentNotAllowed, unknown
 }

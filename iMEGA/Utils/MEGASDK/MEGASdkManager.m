@@ -1,4 +1,3 @@
-
 #import "MEGASdkManager.h"
 
 #ifdef MNZ_SHARE_EXTENSION

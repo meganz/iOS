@@ -1,4 +1,3 @@
-
 #import "AssetLocalAttribute.h"
 
 static NSString * const FingerprintFileName = @"fingerprint";

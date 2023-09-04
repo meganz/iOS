@@ -1,4 +1,3 @@
-
 #import "LocalFileNameGenerator.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAStore.h"

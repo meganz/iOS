@@ -1,4 +1,3 @@
-
 #import "MEGAImagePickerController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>

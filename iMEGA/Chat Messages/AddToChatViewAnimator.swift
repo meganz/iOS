@@ -1,4 +1,3 @@
-
 // This class is responsible for animating the "AddToChatViewController" when presented.
 class AddToChatViewAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 

@@ -1,4 +1,3 @@
-
 #import "MEGAChatBaseRequestDelegate.h"
 
 #import "SVProgressHUD.h"

@@ -1,4 +1,3 @@
-
 #import "MEGALoginToFolderLinkRequestDelegate.h"
 
 @interface MEGALoginToFolderLinkRequestDelegate ()

@@ -1,4 +1,3 @@
-
 #import "PHFetchOptions+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"
 

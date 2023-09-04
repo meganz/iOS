@@ -1,4 +1,3 @@
-
 public enum ChatConnectionStatus {
     case invalid
     case offline

@@ -1,4 +1,3 @@
-
 public struct ChatSessionEntity: Sendable {
     public enum StatusType: Sendable {
         case invalid

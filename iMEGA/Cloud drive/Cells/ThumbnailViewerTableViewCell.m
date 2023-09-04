@@ -1,4 +1,3 @@
-
 #import "ThumbnailViewerTableViewCell.h"
 
 #import "ItemCollectionViewCell.h"

@@ -1,4 +1,3 @@
-
 #import "MOAssetUploadErrorPerLaunch+CoreDataProperties.h"
 
 @implementation MOAssetUploadErrorPerLaunch (CoreDataProperties)

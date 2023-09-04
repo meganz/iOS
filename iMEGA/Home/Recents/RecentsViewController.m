@@ -1,4 +1,3 @@
-
 #import "RecentsViewController.h"
 
 #import "UIScrollView+EmptyDataSet.h"

@@ -1,4 +1,3 @@
-
 #import "QRSettingsTableViewController.h"
 
 #import "SVProgressHUD.h"

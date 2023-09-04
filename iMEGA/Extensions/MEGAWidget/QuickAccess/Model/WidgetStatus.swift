@@ -1,4 +1,3 @@
-
 enum WidgetStatus {
     case notConnected
     case noSession

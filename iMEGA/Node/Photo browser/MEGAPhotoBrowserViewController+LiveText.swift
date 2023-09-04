@@ -1,4 +1,3 @@
-
 extension MEGAPhotoBrowserViewController {
     
     @objc func imageView(frame: CGRect) -> UIImageView {

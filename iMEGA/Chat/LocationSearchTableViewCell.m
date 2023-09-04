@@ -1,4 +1,3 @@
-
 #import "LocationSearchTableViewCell.h"
 
 @implementation LocationSearchTableViewCell

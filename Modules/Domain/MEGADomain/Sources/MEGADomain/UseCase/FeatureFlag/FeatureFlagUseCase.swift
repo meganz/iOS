@@ -1,4 +1,3 @@
-
 public protocol FeatureFlagUseCaseProtocol {
     func savedFeatureFlags() -> [FeatureFlagEntity]
     func isFeatureFlagEnabled(for key: FeatureFlagName) -> Bool

@@ -1,4 +1,3 @@
-
 struct ScheduleMeetingOccurence: Identifiable, Equatable {
     let id: String
     let date: String

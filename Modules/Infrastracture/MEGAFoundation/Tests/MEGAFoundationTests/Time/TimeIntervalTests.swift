@@ -1,4 +1,3 @@
-
 import XCTest
 
 final class TimeIntervalTests: XCTestCase {

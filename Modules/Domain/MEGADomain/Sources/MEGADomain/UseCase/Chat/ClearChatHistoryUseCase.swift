@@ -1,4 +1,3 @@
-
 public protocol ClearChatHistoryUseCaseProtocol {
     func clearChatHistory(for chatId: ChatIdEntity, completion: @escaping (Result<Void, ManageChatHistoryErrorEntity>) -> Void)
 }

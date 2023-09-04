@@ -1,4 +1,3 @@
-
 #import "AssetResourceUploadOperation.h"
 #import "PHAssetResource+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"

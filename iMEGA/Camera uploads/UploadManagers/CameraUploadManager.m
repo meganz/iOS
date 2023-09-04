@@ -1,4 +1,3 @@
-
 #import "CameraUploadManager.h"
 #import "CameraUploadRecordManager.h"
 #import "CameraScanner.h"

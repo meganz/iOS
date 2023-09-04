@@ -1,4 +1,3 @@
-
 public enum ContactRequestStatusEntity {
     case unresolved
     case accepted

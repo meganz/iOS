@@ -1,4 +1,3 @@
-
 @objc extension NSString {
     static var byteCountFormatter = ByteCountFormatter()
 

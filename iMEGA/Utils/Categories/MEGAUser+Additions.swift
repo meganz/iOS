@@ -1,4 +1,3 @@
-
 extension MEGAUser {
     func avatarImage(withDelegate delegate: (any MEGARequestDelegate)?) -> UIImage? {
         guard let base64Handle = MEGASdk.base64Handle(forHandle: handle) else { return nil }
@@ -11,11 +10,11 @@ extension MEGAUser {
             return UIImage(contentsOfFile: filePath)
         } else {
             if let `delegate` = delegate {
-                MEGASdkManager.sharedMEGASdk().getAvatarUser(self,
+                MEGASdk.shared.getAvatarUser(self,
                                                              destinationFilePath: filePath,
                                                              delegate: delegate)
             } else {
-                MEGASdkManager.sharedMEGASdk().getAvatarUser(self, destinationFilePath: filePath)
+                MEGASdk.shared.getAvatarUser(self, destinationFilePath: filePath)
             }
         }
         

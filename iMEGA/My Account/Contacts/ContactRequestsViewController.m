@@ -1,4 +1,3 @@
-
 #import "ContactRequestsViewController.h"
 
 #import "UIScrollView+EmptyDataSet.h"

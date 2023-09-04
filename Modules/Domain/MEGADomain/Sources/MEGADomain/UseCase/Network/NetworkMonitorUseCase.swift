@@ -1,4 +1,3 @@
-
 public protocol NetworkMonitorUseCaseProtocol {
     func networkPathChanged(completion: @escaping (Bool) -> Void)
     func isConnected() -> Bool

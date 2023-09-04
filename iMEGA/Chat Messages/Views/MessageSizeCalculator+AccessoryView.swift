@@ -1,4 +1,3 @@
-
 import MessageKit
 
 extension MessageSizeCalculator {

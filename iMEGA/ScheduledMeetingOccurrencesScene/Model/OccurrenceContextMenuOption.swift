@@ -1,4 +1,3 @@
-
 struct OccurrenceContextMenuOption: Identifiable, Hashable {
     let title: String
     let imageName: String

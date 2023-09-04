@@ -1,4 +1,3 @@
-
 import MEGASwift
 import SwiftUI
 import WidgetKit

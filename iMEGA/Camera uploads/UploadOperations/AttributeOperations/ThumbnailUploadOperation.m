@@ -1,4 +1,3 @@
-
 #import "ThumbnailUploadOperation.h"
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"

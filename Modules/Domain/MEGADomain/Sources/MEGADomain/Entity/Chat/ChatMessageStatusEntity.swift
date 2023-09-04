@@ -1,4 +1,3 @@
-
 public enum ChatMessageStatusEntity {
     case unknown
     case sending

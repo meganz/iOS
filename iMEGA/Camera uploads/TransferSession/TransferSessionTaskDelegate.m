@@ -1,4 +1,3 @@
-
 #import "TransferSessionTaskDelegate.h"
 #import "CameraUploadCompletionManager.h"
 #import "TransferResponseValidator.h"

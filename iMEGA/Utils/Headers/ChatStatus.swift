@@ -1,4 +1,3 @@
-
 enum ChatStatus: Int, CaseIterable {
     case offline = 1
     case away

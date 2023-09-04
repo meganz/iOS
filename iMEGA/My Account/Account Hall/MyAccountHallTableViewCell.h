@@ -1,4 +1,3 @@
-
 @interface MyAccountHallTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *sectionLabel;

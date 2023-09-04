@@ -1,4 +1,3 @@
-
 #import "CameraScanner.h"
 #import "CameraUploadRecordManager.h"
 #import "MOAssetUploadRecord+CoreDataClass.h"

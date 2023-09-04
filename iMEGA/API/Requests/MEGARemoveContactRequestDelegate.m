@@ -1,4 +1,3 @@
-
 #import "MEGARemoveContactRequestDelegate.h"
 
 #import "SVProgressHUD.h"

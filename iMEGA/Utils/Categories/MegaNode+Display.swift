@@ -1,4 +1,3 @@
-
 extension MEGANode {
 
     /// Create an NSAttributedString with the name of the node and append isTakedown image

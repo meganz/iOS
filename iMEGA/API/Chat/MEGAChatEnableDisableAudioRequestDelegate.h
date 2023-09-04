@@ -1,4 +1,3 @@
-
 #import "MEGAChatBaseRequestDelegate.h"
 
 @interface MEGAChatEnableDisableAudioRequestDelegate : MEGAChatBaseRequestDelegate

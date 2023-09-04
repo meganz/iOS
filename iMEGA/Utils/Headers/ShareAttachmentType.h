@@ -1,4 +1,3 @@
-
 typedef NS_ENUM(NSUInteger, ShareAttachmentType) {
     ShareAttachmentTypePNG,
     ShareAttachmentTypeGIF,

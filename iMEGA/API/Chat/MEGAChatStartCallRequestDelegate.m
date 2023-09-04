@@ -1,4 +1,3 @@
-
 #import "MEGAChatStartCallRequestDelegate.h"
 
 @interface MEGAChatStartCallRequestDelegate ()

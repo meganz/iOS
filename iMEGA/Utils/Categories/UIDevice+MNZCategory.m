@@ -1,4 +1,3 @@
-
 #include <sys/utsname.h>
 
 #import "UIDevice+MNZCategory.h"

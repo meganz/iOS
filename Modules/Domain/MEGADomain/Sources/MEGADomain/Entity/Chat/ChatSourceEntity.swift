@@ -1,4 +1,3 @@
-
 public enum ChatSourceEntity {
     case error
     case none

@@ -1,4 +1,3 @@
-
 public enum BackupSubstateEntity: Sendable {
     case noSyncError
     case unknownError

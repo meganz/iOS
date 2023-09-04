@@ -1,4 +1,3 @@
-
 public enum ChatTypeEntity {
     case all
     case individual

@@ -1,4 +1,3 @@
-
 #import "HelpTableViewController.h"
 
 #import <MessageUI/MFMailComposeViewController.h>

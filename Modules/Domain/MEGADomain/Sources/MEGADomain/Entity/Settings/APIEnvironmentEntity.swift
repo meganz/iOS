@@ -1,4 +1,3 @@
-
 public enum APIEnvironmentEntity {
     case production
     case staging

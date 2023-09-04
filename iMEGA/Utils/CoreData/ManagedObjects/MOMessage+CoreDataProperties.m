@@ -1,4 +1,3 @@
-
 #import "MOMessage+CoreDataProperties.h"
 
 @implementation MOMessage (CoreDataProperties)

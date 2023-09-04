@@ -1,4 +1,3 @@
-
 public enum BannerErrorEntity: Error {
     case unexpected
     case userSessionTimeout

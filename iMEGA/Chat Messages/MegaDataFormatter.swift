@@ -1,4 +1,3 @@
-
 struct MegaDataFormatter {
     // MARK: - Properties
 

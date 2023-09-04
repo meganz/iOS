@@ -37,6 +37,11 @@ custom_rules:
         regex: 'MEGAChatResultRequestDelegate'
         name: "Disallow MEGAChatResultRequestDelegate"
         message: "'MEGAChatResultRequestDelegate' is deprecated, use 'ChatRequestDelegate' instead"
+        
+    avoid_empty_lines_at_the_top_of_the_file:
+        regex: '\A[\r\n]+'
+        name: "Avoid empty lines at the top of the file"
+        message: "No empty lines are allowed at the top of the file"
 
 # Currently we use `only_rules` so that we can validate each and every default rule.
 # Once everything has been set, we can start using the `disabled_rules` and `opt_in_rules`.

@@ -1,4 +1,3 @@
-
 public struct ChatGeolocationEntity {
     public let longitude: Float
     public let latitude: Float

@@ -1,4 +1,3 @@
-
 #import "MEGAChatAttachNodeRequestDelegate.h"
 
 @interface MEGAChatAttachNodeRequestDelegate ()

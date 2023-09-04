@@ -1,4 +1,3 @@
-
 extension ChatSettingsTableViewController: PushNotificationControlProtocol {
     func presentAlertController(_ alert: UIAlertController) {
         present(alert, animated: true)

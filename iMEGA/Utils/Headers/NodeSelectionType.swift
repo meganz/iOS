@@ -1,4 +1,3 @@
-
 enum NodeSelectionType: String {
     case single
     case files

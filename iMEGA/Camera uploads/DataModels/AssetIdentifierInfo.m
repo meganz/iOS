@@ -1,4 +1,3 @@
-
 #import "AssetIdentifierInfo.h"
 
 @implementation AssetIdentifierInfo

@@ -1,4 +1,3 @@
-
 #import "MOChatDraft+CoreDataClass.h"
 
 

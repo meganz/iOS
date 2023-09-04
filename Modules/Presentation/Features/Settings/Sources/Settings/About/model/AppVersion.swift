@@ -1,4 +1,3 @@
-
 public struct AppVersion {
     public var title: String
     public var message: String

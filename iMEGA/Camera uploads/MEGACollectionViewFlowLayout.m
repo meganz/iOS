@@ -1,4 +1,3 @@
-
 #import "MEGACollectionViewFlowLayout.h"
 
 @implementation MEGACollectionViewFlowLayout

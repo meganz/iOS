@@ -1,4 +1,3 @@
-
 #import "AssetUploadInfo.h"
 #import "MEGASdkManager.h"
 #import "MEGABackgroundTaskOperation.h"

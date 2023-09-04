@@ -1,4 +1,3 @@
-
 class SDKNodeClipboardOperationRepository: NSObject, MEGARequestDelegate {
     enum ClipboardOperation {
         case move

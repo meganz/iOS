@@ -1,4 +1,3 @@
-
 @interface ChangeNameViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;

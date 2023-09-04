@@ -1,4 +1,3 @@
-
 #ifndef MEGAPickerFileProvider_Bridging_Header_h
 #define MEGAPickerFileProvider_Bridging_Header_h
 

@@ -1,4 +1,3 @@
-
 import MEGADomain
 import MEGADomainMock
 import XCTest

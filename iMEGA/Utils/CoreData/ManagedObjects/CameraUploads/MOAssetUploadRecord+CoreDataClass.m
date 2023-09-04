@@ -1,4 +1,3 @@
-
 #import "MOAssetUploadRecord+CoreDataClass.h"
 
 @implementation MOAssetUploadRecord

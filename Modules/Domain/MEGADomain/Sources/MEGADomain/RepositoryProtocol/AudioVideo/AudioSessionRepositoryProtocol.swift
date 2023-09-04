@@ -1,4 +1,3 @@
-
 public protocol AudioSessionRepositoryProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }

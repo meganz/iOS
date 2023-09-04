@@ -1,4 +1,3 @@
-
 public enum AchievementTypeEntity: CaseIterable, Sendable {
     case welcome
     case invite

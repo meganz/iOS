@@ -1,4 +1,3 @@
-
 #import "AssetFetchResult.h"
 
 @implementation AssetFetchResult

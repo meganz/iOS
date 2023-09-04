@@ -1,4 +1,3 @@
-
 struct VideoExplorerViewConfiguration: FilesExplorerViewConfiguration {
     
     var title: String {

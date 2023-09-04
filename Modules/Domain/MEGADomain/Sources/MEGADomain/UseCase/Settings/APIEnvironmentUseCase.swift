@@ -1,4 +1,3 @@
-
 public protocol APIEnvironmentUseCaseProtocol {
     func changeAPIURL(_ environment: APIEnvironmentEntity)
 }

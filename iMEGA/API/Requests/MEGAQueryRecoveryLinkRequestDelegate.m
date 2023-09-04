@@ -1,4 +1,3 @@
-
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
 
 #import "SVProgressHUD.h"

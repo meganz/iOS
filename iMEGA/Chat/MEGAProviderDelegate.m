@@ -1,4 +1,3 @@
-
 #import "MEGAProviderDelegate.h"
 
 #import <AVFoundation/AVFoundation.h>

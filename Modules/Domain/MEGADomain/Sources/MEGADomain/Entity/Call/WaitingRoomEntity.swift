@@ -1,4 +1,3 @@
-
 public struct WaitingRoomEntity: Sendable {
     public let sessionClientIds: [HandleEntity]
     

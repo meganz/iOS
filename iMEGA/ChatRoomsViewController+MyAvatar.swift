@@ -1,4 +1,3 @@
-
 extension ChatRoomsViewController: MyAvatarPresenterProtocol {
     func setupMyAvatar(barButton: UIBarButtonItem) {
         self.navigationItem.leftBarButtonItem = barButton

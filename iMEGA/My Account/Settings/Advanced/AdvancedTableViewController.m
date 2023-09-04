@@ -1,4 +1,3 @@
-
 #import "AdvancedTableViewController.h"
 
 #import <Photos/Photos.h>

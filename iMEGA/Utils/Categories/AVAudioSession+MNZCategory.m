@@ -1,4 +1,3 @@
-
 #import "AVAudioSession+MNZCategory.h"
 
 @implementation AVAudioSession (MNZCategory)
