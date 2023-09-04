@@ -1,31 +1,32 @@
 import MEGADomain
+import MEGASdk
 
-struct NodeAttributeRepository: NodeAttributeRepositoryProtocol {
-    static var newRepo: NodeAttributeRepository {
-        NodeAttributeRepository(sdk: MEGASdk.shared)
+public struct NodeAttributeRepository: NodeAttributeRepositoryProtocol {
+    public static var newRepo: NodeAttributeRepository {
+        NodeAttributeRepository(sdk: MEGASdk.sharedSdk)
     }
-    
+
     private let sdk: MEGASdk
-    
-    init(sdk: MEGASdk) {
+
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
-    
-    func pathFor(node: NodeEntity) -> String? {
+
+    public func pathFor(node: NodeEntity) -> String? {
         guard let megaNode = sdk.node(forHandle: node.handle) else {
             return nil
         }
         return sdk.nodePath(for: megaNode)
     }
-    
-    func numberChildrenFor(node: NodeEntity) -> Int {
+
+    public func numberChildrenFor(node: NodeEntity) -> Int {
         guard let megaNode = sdk.node(forHandle: node.handle) else {
             return 0
         }
         return sdk.numberChildren(forParent: megaNode)
     }
-    
-    func isInRubbishBin(node: NodeEntity) -> Bool {
+
+    public func isInRubbishBin(node: NodeEntity) -> Bool {
         guard let megaNode = sdk.node(forHandle: node.handle) else {
             return false
         }
