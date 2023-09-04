@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASDKRepo
 
-final class NodeActionViewControllerGenericDelegate:
+class NodeActionViewControllerGenericDelegate:
     NodeActionViewControllerDelegate {
     private weak var viewController: UIViewController?
     private(set) var isNodeFromFolderLink: Bool

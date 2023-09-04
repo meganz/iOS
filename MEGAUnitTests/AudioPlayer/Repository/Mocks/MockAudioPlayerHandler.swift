@@ -25,6 +25,7 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var playItem_calledTimes = 0
     var changePlayerRate_calledTimes = 0
     var setCurrent_callTimes = 0
+    var initMiniPlayerCallCount = 0
     
     private var _isPlayerDefined = false
     
@@ -139,7 +140,9 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func playerCurrentItemTime() -> TimeInterval { 0.0 }
     func playerQueueItems() -> [AudioPlayerItem]? { nil }
     func playerPlaylistItems() -> [AudioPlayerItem]? { nil}
-    func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {}
+    func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {
+        initMiniPlayerCallCount += 1
+    }
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, allNodes: [MEGANode]?) {}
     func playerHidden(_ hidden: Bool, presenter: UIViewController) {}
     func closePlayer() {}

@@ -143,6 +143,8 @@
 		246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246013112A459166007EF5ED /* AdvancedViewRouterTests.swift */; };
 		2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2461E7032A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift */; };
 		246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */; };
+		246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */; };
+		246ACEB92AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */; };
 		247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */; };
 		2488EBC32A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */; };
 		248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */; };
@@ -2645,6 +2647,8 @@
 		246013112A459166007EF5ED /* AdvancedViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedViewRouterTests.swift; sourceTree = "<group>"; };
 		2461E7032A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		246A311E2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AdvancedTableViewController+Additions.swift"; sourceTree = "<group>"; };
+		246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterNodeActionAdapterTests.swift; sourceTree = "<group>"; };
+		246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterNodeActionAdapter.swift; sourceTree = "<group>"; };
 		247FC1BD2A4F1C3700CC8518 /* QASettingsRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsRouterTests.swift; sourceTree = "<group>"; };
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
 		248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5743,6 +5747,7 @@
 				24A6ADD52A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift */,
 				24A6ADDB2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift */,
 				24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */,
+				246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */,
 			);
 			path = AudioPlayerScenes;
 			sourceTree = "<group>";
@@ -11975,6 +11980,7 @@
 				C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */,
 				C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */,
 				C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */,
+				246ACEB82AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift */,
 			);
 			path = AudioPlayerScene;
 			sourceTree = "<group>";
@@ -13493,6 +13499,7 @@
 				8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */,
 				A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */,
 				83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */,
+				246ACEB92AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift in Sources */,
 				83850A4026B2AACD00C62304 /* EnterMeetingLinkRouter.swift in Sources */,
 				83850A4126B2AACD00C62304 /* EnterMeetingLinkViewModel.swift in Sources */,
 				5D31674024FC97810032492F /* ErrorHandling.swift in Sources */,
@@ -14965,6 +14972,7 @@
 				6D5A19B02A10D33E00FDD5B3 /* AccountHallViewModelTests.swift in Sources */,
 				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,
+				246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,

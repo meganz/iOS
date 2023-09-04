@@ -3,6 +3,7 @@
 final class MockAudioPlaylistViewRouter: AudioPlaylistViewRouting {
     var dismiss_calledTimes = 0
     var navigateToDetail_calledTimes = 0
+    var start_calledTimes = 0
     
     func dismiss() {
         dismiss_calledTimes += 1
@@ -10,5 +11,9 @@ final class MockAudioPlaylistViewRouter: AudioPlaylistViewRouting {
     
     func navigateToDetail(node: MEGANode) {
         navigateToDetail_calledTimes += 1
+    }
+    
+    func start() {
+        start_calledTimes += 1
     }
 }

@@ -166,7 +166,7 @@ import MEGAPresentation
     }
     
     private func checkIfCallExist(then clousure: (() -> Void)?) {
-        if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
+        if MEGAChatSdk.shared.mnz_existsActiveCall {
             Helper.cannotPlayContentDuringACallAlert()
         } else {
             clousure?()
@@ -263,8 +263,47 @@ import MEGAPresentation
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, allNodes: [MEGANode]?) {
         let configEntity = AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, messageId: messageId, chatId: chatId, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self)
         
-        AudioPlayerViewRouter(configEntity: configEntity, presenter: presenter)
-            .start()
+        let playlistRouter = AudioPlaylistViewRouter(configEntity: AudioPlayerConfigEntity(parentNode: configEntity.node?.parent, playerHandler: configEntity.playerHandler), presenter: presenter)
+        
+        let router = AudioPlayerViewRouter(
+            configEntity: configEntity,
+            presenter: presenter,
+            audioPlaylistViewRouter: playlistRouter
+        )
+        
+        guard let vc = makeAudioPlayerViewController(configEntity: configEntity, router: router) else { return }
+        router.baseViewController = vc
+        
+        router.start()
+    }
+    
+    private func makeAudioPlayerViewController(configEntity: AudioPlayerConfigEntity, router: some AudioPlayerViewRouting) -> AudioPlayerViewController? {
+        guard let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(identifier: "AudioPlayerViewControllerID", creator: { coder in
+            let makeViewModel: () -> AudioPlayerViewModel = {
+                if configEntity.playerType == .offline {
+                    return AudioPlayerViewModel(
+                        configEntity: configEntity,
+                        router: router,
+                        offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
+                        playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
+                    )
+                } else {
+                    return AudioPlayerViewModel(
+                        configEntity: configEntity,
+                        router: router,
+                        nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
+                        streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
+                        playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
+                    )
+                }
+            }
+            
+            return AudioPlayerViewController(coder: coder, viewModel: makeViewModel())
+        }) as? AudioPlayerViewController else {
+            return nil
+        }
+        
+        return vc
     }
     
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {

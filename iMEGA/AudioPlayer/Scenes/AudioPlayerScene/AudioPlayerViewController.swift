@@ -41,7 +41,16 @@ final class AudioPlayerViewController: UIViewController {
     private var playerType: PlayerType = .default
 
     // MARK: - Internal properties
-    var viewModel: AudioPlayerViewModel!
+    private(set) var viewModel: AudioPlayerViewModel
+    
+    init?(coder: NSCoder, viewModel: AudioPlayerViewModel) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("You must create this view controller with a user.")
+    }
     
     // MARK: - View lifecycle
     override func viewDidLoad() {
