@@ -1,4 +1,3 @@
-
 public enum SaveMediaToPhotosErrorEntity: Error {
     case imageNotSaved
     case videoNotSaved

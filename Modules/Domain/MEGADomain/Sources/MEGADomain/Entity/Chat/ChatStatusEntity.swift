@@ -1,4 +1,3 @@
-
 public enum ChatStatusEntity: CaseIterable {
     case offline
     case away

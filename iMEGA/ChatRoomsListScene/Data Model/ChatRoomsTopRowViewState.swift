@@ -1,4 +1,3 @@
-
 struct ChatRoomsTopRowViewState {
     let image: UIImage
     let imageTintColor: UIColor?

@@ -1,4 +1,3 @@
-
 #import "CameraUploadAdvancedOptionsViewController.h"
 
 #import "CameraUploadManager+Settings.h"

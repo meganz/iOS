@@ -1,4 +1,3 @@
-
 public enum AdsFlagEntity: Sendable {
     case defaultAds
     case forceAds

@@ -1,4 +1,3 @@
-
 #import "MEGAQuerySignupLinkRequestDelegate.h"
 
 #import "SVProgressHUD.h"

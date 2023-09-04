@@ -1,4 +1,3 @@
-
 public protocol AdsUseCaseProtocol {
     func fetchAds(adsFlag: AdsFlagEntity,
                   adUnits: [AdsSlotEntity],

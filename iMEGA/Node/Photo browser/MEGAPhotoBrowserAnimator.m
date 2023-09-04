@@ -1,4 +1,3 @@
-
 #import "MEGAPhotoBrowserAnimator.h"
 
 @interface MEGAPhotoBrowserAnimator ()

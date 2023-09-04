@@ -1,4 +1,3 @@
-
 @testable import MEGA
 import MEGASDKRepoMock
 import XCTest

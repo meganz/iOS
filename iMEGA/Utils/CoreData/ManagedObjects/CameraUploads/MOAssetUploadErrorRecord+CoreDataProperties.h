@@ -1,4 +1,3 @@
-
 #import "MOAssetUploadErrorRecord+CoreDataClass.h"
 
 

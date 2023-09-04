@@ -1,4 +1,3 @@
-
 #import "AVAsset+CameraUpload.h"
 
 static NSString * const HEVCCodec = @"hvc1";

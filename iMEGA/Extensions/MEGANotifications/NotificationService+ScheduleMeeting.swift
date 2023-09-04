@@ -1,4 +1,3 @@
-
 extension NotificationService {
     func processStartScheduledMeetingNotification(withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void, request: UNNotificationRequest) {
         MEGALogDebug("Process start schedule meeting notification")

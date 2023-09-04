@@ -1,4 +1,3 @@
-
 public enum CopyOrMoveErrorEntity: Error {
     case generic
     case nodeNotFound

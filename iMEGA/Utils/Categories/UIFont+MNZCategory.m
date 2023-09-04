@@ -1,4 +1,3 @@
-
 #import "UIFont+MNZCategory.h"
 
 @implementation UIFont (MNZCategory)

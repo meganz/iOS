@@ -1,4 +1,3 @@
-
 final class FavouriteExplorerToolbarConfigurator: ExplorerToolbarConfigurator {
     let favouriteAction: ButtonAction
     

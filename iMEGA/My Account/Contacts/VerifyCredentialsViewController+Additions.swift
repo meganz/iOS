@@ -1,4 +1,3 @@
-
 extension VerifyCredentialsViewController {
     
     @objc func setContentMessages() {

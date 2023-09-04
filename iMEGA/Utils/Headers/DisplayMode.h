@@ -1,4 +1,3 @@
-
 typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModeUnknown = -1,
     DisplayModeCloudDrive = 0,

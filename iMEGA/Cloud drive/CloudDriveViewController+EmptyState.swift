@@ -1,4 +1,3 @@
-
 extension CloudDriveViewController: DZNEmptyDataSetSource {
     public func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
         let emptyStateView = EmptyStateView(image: imageForEmptyState(), title: titleForEmptyState(), description: descriptionForEmptyState(), buttonTitle: buttonTitleForEmptyState())
@@ -78,7 +77,7 @@ extension CloudDriveViewController: DZNEmptyDataSetSource {
             return nil
         }
         
-        let parentShareType = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
+        let parentShareType = MEGASdk.shared.accessLevel(for: parentNode)
         
         if parentShareType == .accessRead {
             return nil

@@ -1,4 +1,3 @@
-
 public struct FolderTransferUpdateEntity {
     public let transfer: TransferEntity
     public let stage: TransferStageEntity

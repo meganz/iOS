@@ -1,4 +1,3 @@
-
 public struct DeviceListAssets {
     public let title: String
     public let currentDeviceTitle: String

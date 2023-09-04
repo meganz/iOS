@@ -1,4 +1,3 @@
-
 import UIKit
 
 class RichPreviewContentView: UIView {

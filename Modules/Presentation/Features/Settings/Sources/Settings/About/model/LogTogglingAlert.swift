@@ -1,4 +1,3 @@
-
 public struct LogTogglingAlert {
     public var enableTitle: String
     public var enableMessage: String

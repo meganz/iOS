@@ -1,4 +1,3 @@
-
 #import "MEGACopyRequestDelegate.h"
 
 #import "SVProgressHUD.h"

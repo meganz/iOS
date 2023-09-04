@@ -1,4 +1,3 @@
-
 #import "AssetUploadStatus.h"
 
 @implementation AssetUploadStatus

@@ -1,4 +1,3 @@
-
 #import "NSFileManager+MNZCategory.h"
 
 @implementation NSFileManager (MNZCategory)

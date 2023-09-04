@@ -1,4 +1,3 @@
-
 final class ActionViewModel: ObservableObject {
     
     let actionItem: NameCollisionAction

@@ -1,4 +1,3 @@
-
 #import "OfflineCollectionViewController.h"
 
 #import "NSString+MNZCategory.h"

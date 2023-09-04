@@ -1,4 +1,3 @@
-
 import Foundation
 import MEGADomain
 import MEGASDKRepo
@@ -55,7 +54,7 @@ extension ChatViewController {
                     audioController.stopAnyOngoingPlaying()
                 }
             }
-            MEGASdkManager.sharedMEGAChatSdk().revokeAttachmentMessage(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
+            MEGAChatSdk.shared.revokeAttachmentMessage(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
         } else {
             let foundIndex = messages.firstIndex { message -> Bool in
                 guard let localChatMessage = message as? ChatMessage else {
@@ -76,7 +75,7 @@ extension ChatViewController {
                 }, completion: nil)
             } else {
                 let messageId = megaMessage.status == .sending ? megaMessage.temporalId : megaMessage.messageId
-                let deleteMessage = MEGASdkManager.sharedMEGAChatSdk().deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
+                let deleteMessage = MEGAChatSdk.shared.deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
                 deleteMessage?.chatId = chatRoom.chatId
                 chatRoomDelegate.chatMessages[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
             }
@@ -86,7 +85,7 @@ extension ChatViewController {
     
     func removeRichPreview(_ message: ChatMessage) {
         let megaMessage =  message.message
-        MEGASdkManager.sharedMEGAChatSdk().removeRichLink(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
+        MEGAChatSdk.shared.removeRichLink(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
     }
     
     func downloadMessage(_ messages: [ChatMessage]) {
@@ -161,7 +160,7 @@ extension ChatViewController {
                     node = authorizedNode
                 }
                 
-                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
                 TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
                 TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()

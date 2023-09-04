@@ -1,4 +1,3 @@
-
 public protocol VideoMediaUseCaseProtocol {
     func isPlayable(_ node: NodeEntity) -> Bool
 }

@@ -1,4 +1,3 @@
-
 protocol SingleTapHandlerProtocol {
     var singleTapGesture: UITapGestureRecognizer { get }
     var singleTapHandler: (() -> Void)? { get set }

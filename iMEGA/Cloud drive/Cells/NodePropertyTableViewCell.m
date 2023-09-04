@@ -1,4 +1,3 @@
-
 #import "NodePropertyTableViewCell.h"
 
 @implementation NodePropertyTableViewCell

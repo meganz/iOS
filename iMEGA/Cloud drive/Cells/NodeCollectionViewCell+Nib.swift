@@ -1,4 +1,3 @@
-
 extension NodeCollectionViewCell {
     
     private static let fileNibName: String = "FileNodeCollectionViewCell"

@@ -1,4 +1,3 @@
-
 #import "MEGAChatAttachVoiceClipRequestDelegate.h"
 
 @interface MEGAChatAttachVoiceClipRequestDelegate ()

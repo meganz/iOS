@@ -1,4 +1,3 @@
-
 #import <QuickLook/QuickLook.h>
 
 @interface MEGAQLPreviewController : QLPreviewController

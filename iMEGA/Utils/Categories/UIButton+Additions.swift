@@ -1,4 +1,3 @@
-
 @objc enum MEGACustomButtonStyle: Int {
     case none
     case basic

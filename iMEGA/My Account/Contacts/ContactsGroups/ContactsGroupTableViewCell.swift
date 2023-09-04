@@ -1,4 +1,3 @@
-
 import MEGASDKRepo
 import UIKit
 
@@ -13,7 +12,7 @@ class ContactsGroupTableViewCell: UITableViewCell {
         titleLabel.text = chatListItem.chatTitle()
         keyRotationImage.isHidden = chatListItem.isPublicChat
         
-        guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatListItem.chatId) else {
+        guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatListItem.chatId) else {
             return
         }
         backAvatarImage.mnz_setImage(forUserHandle: chatRoom.peerHandle(at: 0))

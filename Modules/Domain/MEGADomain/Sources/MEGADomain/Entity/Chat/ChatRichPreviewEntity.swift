@@ -1,4 +1,3 @@
-
 public struct ChatRichPreviewEntity {
     public let text: String?
     public let title: String?

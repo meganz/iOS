@@ -1,4 +1,3 @@
-
 public enum AccountPlanAnalyticsEventEntity {
     case tapAccountPlanFreePlan
     case tapAccountPlanProLite

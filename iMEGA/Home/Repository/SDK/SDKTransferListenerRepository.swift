@@ -1,4 +1,3 @@
-
 final class SDKTransferListenerRepository: NSObject, MEGATransferDelegate {
     private let sdk: MEGASdk
     

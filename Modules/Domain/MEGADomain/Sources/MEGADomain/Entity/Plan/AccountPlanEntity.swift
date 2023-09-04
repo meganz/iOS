@@ -1,4 +1,3 @@
-
 public struct AccountPlanEntity: Sendable {
     public let productIdentifier: String
     public var type: AccountTypeEntity

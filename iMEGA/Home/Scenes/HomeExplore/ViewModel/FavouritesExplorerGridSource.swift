@@ -1,4 +1,3 @@
-
 final class FavouritesExplorerGridSource: NSObject {
     
     private enum FavouritesSection: Int {
@@ -190,7 +189,7 @@ extension FavouritesExplorerGridSource: UICollectionViewDataSource {
         
         cell.configureCell(for: node,
                            allowedMultipleSelection: collectionView.allowsMultipleSelection,
-                           sdk: MEGASdkManager.sharedMEGASdk(),
+                           sdk: .shared,
                            delegate: self)
         return cell
     }
@@ -203,7 +202,7 @@ extension FavouritesExplorerGridSource: DynamicTypeCollectionViewSizing {
         let cell = FavouritesSection(section: indexPath.section).sizingViewCell()
         cell.configureCell(for: node,
                            allowedMultipleSelection: collectionView.allowsMultipleSelection,
-                           sdk: MEGASdkManager.sharedMEGASdk(),
+                           sdk: .shared,
                            delegate: self)
         return cell
     }

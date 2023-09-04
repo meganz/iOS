@@ -1,4 +1,3 @@
-
 #import "MEGAShareRequestDelegate.h"
 
 #import "SVProgressHUD.h"

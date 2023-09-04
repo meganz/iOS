@@ -1,4 +1,3 @@
-
 public protocol UploadPhotoAssetsUseCaseProtocol {
 
     /// Upload from photo albums

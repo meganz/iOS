@@ -1,4 +1,3 @@
-
 public protocol ABTestUseCaseProtocol {
     func abTestValue(for: ABTestFlagName) async -> Int
 }

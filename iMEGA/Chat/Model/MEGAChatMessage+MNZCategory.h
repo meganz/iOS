@@ -1,4 +1,3 @@
-
 #import "MEGAChatMessage.h"
 
 @class MEGAChatRoom;

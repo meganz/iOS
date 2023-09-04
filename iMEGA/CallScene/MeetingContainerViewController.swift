@@ -1,4 +1,3 @@
-
 final class MeetingContainerViewController: UINavigationController {
     
     private let viewModel: MeetingContainerViewModel

@@ -1,4 +1,3 @@
-
 /// This gesture will help the user to know when the finger is lifted from the screen.
 /// Please note: This gesture can be cancelled if the user of the gesture is not interested in the event temporarily.
 class FingerLiftupGestureRecognizer: UIGestureRecognizer {

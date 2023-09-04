@@ -1,4 +1,3 @@
-
 #ifndef MEGAShare_Bridging_Header_h
 #define MEGAShare_Bridging_Header_h
 

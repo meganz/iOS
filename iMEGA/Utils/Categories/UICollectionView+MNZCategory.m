@@ -1,4 +1,3 @@
-
 #import "UICollectionView+MNZCategory.h"
 
 @implementation UICollectionView (MNZCategory)

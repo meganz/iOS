@@ -1,4 +1,3 @@
-
 #import "MEGASetAttrUserRequestDelegate.h"
 
 @interface MEGASetAttrUserRequestDelegate ()

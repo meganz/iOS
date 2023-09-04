@@ -1,4 +1,3 @@
-
 struct WeekDaysInformation {
     // Symbols starts with week day as Monday
     let symbols: [String] = Calendar.current.weekdaySymbols.shifted(1)

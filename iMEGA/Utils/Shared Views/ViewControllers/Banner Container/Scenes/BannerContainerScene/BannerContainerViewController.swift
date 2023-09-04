@@ -1,4 +1,3 @@
-
 final class BannerContainerViewController: UIViewController {
     @IBOutlet weak var bannerContainerView: UIView!
     @IBOutlet weak var contentContainerView: UIView!

@@ -1,4 +1,3 @@
-
 #import "MEGASdk+MNZCategory.h"
 #import <objc/runtime.h>
 

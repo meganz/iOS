@@ -1,4 +1,3 @@
-
 public protocol SMSRepositoryProtocol: RepositoryProtocol {
     func verifiedPhoneNumber() -> String?
     func getRegionCallingCodes(completion: @escaping (Result<[RegionEntity], GetSMSErrorEntity>) -> Void)

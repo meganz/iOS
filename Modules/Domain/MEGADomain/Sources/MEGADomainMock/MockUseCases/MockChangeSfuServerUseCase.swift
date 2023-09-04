@@ -1,4 +1,3 @@
-
 import MEGADomain
 
 public struct MockChangeSfuServerUseCase: ChangeSfuServerUseCaseProtocol {

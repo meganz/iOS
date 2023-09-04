@@ -1,4 +1,3 @@
-
 #import <UIKit/UIKit.h>
 
 #import "DisplayMode.h"

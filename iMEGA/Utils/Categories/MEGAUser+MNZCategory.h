@@ -1,4 +1,3 @@
-
 #import "MEGAUser.h"
 
 #import <Contacts/Contacts.h>

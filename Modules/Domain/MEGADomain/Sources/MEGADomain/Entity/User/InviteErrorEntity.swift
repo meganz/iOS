@@ -1,4 +1,3 @@
-
 public enum InviteErrorEntity: Error {
     case generic(String)
     case ownEmailEntered

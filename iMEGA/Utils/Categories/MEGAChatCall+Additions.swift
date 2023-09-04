@@ -1,4 +1,3 @@
-
 extension MEGAChatCall {
     var isActiveCall: Bool {
         switch status {

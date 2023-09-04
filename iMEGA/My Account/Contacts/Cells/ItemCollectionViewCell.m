@@ -1,4 +1,3 @@
-
 #import "ItemCollectionViewCell.h"
 
 #ifdef MNZ_SHARE_EXTENSION

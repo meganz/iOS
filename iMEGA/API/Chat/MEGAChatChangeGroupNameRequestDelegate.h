@@ -1,4 +1,3 @@
-
 #import "MEGAChatBaseRequestDelegate.h"
 
 @interface MEGAChatChangeGroupNameRequestDelegate : MEGAChatBaseRequestDelegate

@@ -1,4 +1,3 @@
-
 extension MainTabBarController: SnackBarPresenting {
     @MainActor
     func layout(snackBarView: UIView?) {

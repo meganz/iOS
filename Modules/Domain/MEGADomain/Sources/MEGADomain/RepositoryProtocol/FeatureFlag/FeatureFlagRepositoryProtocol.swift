@@ -1,4 +1,3 @@
-
 public protocol FeatureFlagRepositoryProtocol: RepositoryProtocol {
     func savedFeatureFlags() -> [FeatureFlagEntity]
     func isFeatureFlagEnabled(for key: FeatureFlagName) -> Bool

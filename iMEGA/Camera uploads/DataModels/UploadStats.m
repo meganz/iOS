@@ -1,4 +1,3 @@
-
 #import "UploadStats.h"
 
 @implementation UploadStats

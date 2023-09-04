@@ -1,4 +1,3 @@
-
 public struct ItemAssets {
     public let iconName: String
     public let backupStatus: BackupStatus

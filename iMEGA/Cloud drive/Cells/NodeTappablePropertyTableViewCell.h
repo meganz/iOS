@@ -1,4 +1,3 @@
-
 #import <UIKit/UIKit.h>
 
 @interface NodeTappablePropertyTableViewCell : UITableViewCell

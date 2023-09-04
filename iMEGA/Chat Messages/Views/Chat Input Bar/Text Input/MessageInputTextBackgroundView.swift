@@ -1,4 +1,3 @@
-
 class MessageInputTextBackgroundView: UIView {
     
     var maxCornerRadius: CGFloat = .greatestFiniteMagnitude

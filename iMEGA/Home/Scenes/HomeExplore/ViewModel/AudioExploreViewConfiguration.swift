@@ -1,4 +1,3 @@
-
 struct AudioExploreViewConfiguration: FilesExplorerViewConfiguration {
     
     var title: String {

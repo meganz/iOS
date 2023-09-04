@@ -1,4 +1,3 @@
-
 class FilesExplorerContainerListViewState: FilesExplorerContainerViewState {
     override func showContent() {
         super.showContent()

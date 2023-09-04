@@ -1,4 +1,3 @@
-
 #import "LivePhotoUploadOperation.h"
 #import "CameraUploadOperation+Utils.h"
 #import "PHAssetResource+CameraUpload.h"

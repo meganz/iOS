@@ -1,4 +1,3 @@
-
 final class AudioPlayerFileToolbarConfigurator {
     typealias ButtonAction = (UIBarButtonItem) -> Void
     let importAction: ButtonAction

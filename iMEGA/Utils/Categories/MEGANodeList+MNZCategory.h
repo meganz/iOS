@@ -1,4 +1,3 @@
-
 @interface MEGANodeList (MNZCategory)
 
 - (NSArray *)mnz_numberOfFilesAndFolders;

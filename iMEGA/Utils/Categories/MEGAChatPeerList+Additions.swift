@@ -1,4 +1,3 @@
-
 extension MEGAChatPeerList {
     @objc class func mnz_standardPrivilegePeerList(usersArray: [MEGAUser]) -> MEGAChatPeerList {
         let peerList = MEGAChatPeerList()

@@ -1,4 +1,3 @@
-
 typedef NS_ENUM (NSUInteger, URLType) {
     URLTypeDefault,
     URLTypeFileLink,

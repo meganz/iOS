@@ -1,4 +1,3 @@
-
 final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     let favouriteAction: ButtonAction
     let removeToRubbishBinAction: ButtonAction

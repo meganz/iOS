@@ -1,4 +1,3 @@
-
 public enum AdsSlotEntity: String, Sendable {
     case files      = "IOSFB"    // Files Bottom
     case home       = "IOSHB"    // Home Bottom

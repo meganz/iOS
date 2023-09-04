@@ -1,4 +1,3 @@
-
 #import "SetupTwoFactorAuthenticationTableViewController.h"
 
 #import "UIApplication+MNZCategory.h"

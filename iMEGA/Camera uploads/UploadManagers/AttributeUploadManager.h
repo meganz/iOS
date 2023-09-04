@@ -1,4 +1,3 @@
-
 #import <Foundation/Foundation.h>
 #import "AssetLocalAttribute.h"
 #import "AssetUploadInfo.h"

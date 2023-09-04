@@ -1,4 +1,3 @@
-
 public protocol CaptureDeviceUseCaseProtocol {
     func wideAngleCameraLocalizedName(position: CameraPositionEntity) -> String?
 }

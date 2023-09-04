@@ -1,4 +1,3 @@
-
 public protocol TransferInventoryRepositoryProtocol {
     func transfers() -> [TransferEntity]
     func downloadTransfers() -> [TransferEntity]

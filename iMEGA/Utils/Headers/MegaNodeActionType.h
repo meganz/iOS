@@ -1,4 +1,3 @@
-
 typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeDownload = 0,
     MegaNodeActionTypeExportFile,

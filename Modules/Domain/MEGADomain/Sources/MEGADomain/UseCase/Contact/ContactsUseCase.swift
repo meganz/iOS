@@ -1,4 +1,3 @@
-
 // MARK: - Use case protocol -
 public protocol ContactsUseCaseProtocol {
     var isAuthorizedToAccessPhoneContacts: Bool { get }

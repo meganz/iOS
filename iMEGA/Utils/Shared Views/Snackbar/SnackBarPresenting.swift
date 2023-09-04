@@ -1,4 +1,3 @@
-
 protocol SnackBarPresenting where Self: UIViewController {
     func snackBarContainerView() -> UIView?
     func layout(snackBarView: UIView?)

@@ -1,4 +1,3 @@
-
 #import "MEGAGenericRequestDelegate.h"
 
 @interface MEGAGenericRequestDelegate ()

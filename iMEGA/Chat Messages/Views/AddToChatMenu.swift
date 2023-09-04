@@ -1,4 +1,3 @@
-
 struct AddToChatMenu: Codable {
     enum MenuNameKey: String {
         case photos = "photo.navigation.title"

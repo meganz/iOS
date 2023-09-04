@@ -1,4 +1,3 @@
-
 #import "CopyableLabel.h"
 
 @implementation CopyableLabel

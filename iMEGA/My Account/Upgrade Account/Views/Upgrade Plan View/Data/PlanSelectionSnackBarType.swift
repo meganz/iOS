@@ -1,4 +1,3 @@
-
 enum PlanSelectionSnackBarType {
     case currentRecurringPlanSelected, none
     

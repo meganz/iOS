@@ -1,4 +1,3 @@
-
 #import "AttributeUploadOperation.h"
 
 @implementation AttributeUploadOperation

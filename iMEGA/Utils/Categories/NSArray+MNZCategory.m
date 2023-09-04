@@ -1,4 +1,3 @@
-
 #import "NSArray+MNZCategory.h"
 
 @implementation NSArray (MNZCategory)

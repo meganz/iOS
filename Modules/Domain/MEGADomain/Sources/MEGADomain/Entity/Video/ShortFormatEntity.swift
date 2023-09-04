@@ -1,2 +1,1 @@
-
 public typealias ShortFormatEntity = Int

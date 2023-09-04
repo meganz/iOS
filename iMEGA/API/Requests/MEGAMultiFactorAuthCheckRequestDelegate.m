@@ -1,4 +1,3 @@
-
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 
 @interface MEGAMultiFactorAuthCheckRequestDelegate ()

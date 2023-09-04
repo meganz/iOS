@@ -1,4 +1,3 @@
-
 import MEGADomain
 import MEGAPresentation
 import MEGARepo
@@ -21,7 +20,7 @@ protocol ReportIssueViewRouting: Routing {
     @objc func build() -> UIViewController {
         let areLogsEnabled = UserDefaults.standard.bool(forKey: "logging")
         
-        let sdk = MEGASdkManager.sharedMEGASdk()
+        let sdk = MEGASdk.shared
         let compressor = LogFileCompressor()
         let date = Date()
         let dateFormatter = DateFormatter()

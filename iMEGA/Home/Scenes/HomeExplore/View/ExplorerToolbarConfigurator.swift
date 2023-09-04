@@ -1,4 +1,3 @@
-
 class ExplorerToolbarConfigurator {
     typealias ButtonAction = (UIBarButtonItem) -> Void
     let downloadAction: ButtonAction
@@ -162,7 +161,7 @@ class ExplorerToolbarConfigurator {
         var lowestAccessLevel: MEGAShareType = .accessOwner
         
         for node in nodes {
-            let accessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
+            let accessLevel = MEGASdk.shared.accessLevel(for: node)
 
             if accessLevel == .accessRead || accessLevel == .accessReadWrite {
                 lowestAccessLevel = accessLevel

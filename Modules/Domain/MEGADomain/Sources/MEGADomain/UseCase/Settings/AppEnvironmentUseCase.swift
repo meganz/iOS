@@ -1,4 +1,3 @@
-
 public protocol AppEnvironmentUseCaseProtocol {
     var configuration: AppConfigurationEntity { get }
     func config(_ configuration: AppConfigurationEntity)

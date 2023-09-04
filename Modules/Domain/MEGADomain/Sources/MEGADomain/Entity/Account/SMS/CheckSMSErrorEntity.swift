@@ -1,4 +1,3 @@
-
 public enum CheckSMSErrorEntity: Error {
     case generic
     case reachedDailyLimit

@@ -1,4 +1,3 @@
-
 #import "NSDate+MNZCategory.h"
 
 const NSInteger secondsInAMinute = 60;

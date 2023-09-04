@@ -1,10 +1,9 @@
-
 import Foundation
 import MEGADomain
 
 final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
     static var newRepo: ExportChatMessagesRepository {
-        ExportChatMessagesRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSdk: MEGASdkManager.sharedMEGAChatSdk(), store: MEGAStore.shareInstance())
+        ExportChatMessagesRepository(sdk: .shared, chatSdk: .shared, store: MEGAStore.shareInstance())
     }
     
     private let sdk: MEGASdk

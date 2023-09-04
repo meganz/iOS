@@ -1,4 +1,3 @@
-
 #import "RubbishBinTableViewController.h"
 
 #import "NSString+MNZCategory.h"

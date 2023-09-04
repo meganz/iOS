@@ -1,4 +1,3 @@
-
 #import "NSError+CameraUpload.h"
 
 NSString * const CameraUploadErrorDomain = @"nz.mega.cameraUpload";

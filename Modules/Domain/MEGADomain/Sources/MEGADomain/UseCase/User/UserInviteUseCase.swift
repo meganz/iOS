@@ -1,4 +1,3 @@
-
 public protocol UserInviteUseCaseProtocol {
     func sendInvite(forEmail email: String) async throws
 }

@@ -1,4 +1,3 @@
-
 class FilesExplorerContainerGridViewState: FilesExplorerContainerViewState {
     override func showContent() {
         super.showContent()

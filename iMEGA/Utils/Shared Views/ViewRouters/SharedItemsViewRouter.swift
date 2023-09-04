@@ -1,4 +1,3 @@
-
 final class SharedItemsViewRouter: NSObject {
     
     func showShareFoldersContactView(withNodes nodes: [MEGANode]) {

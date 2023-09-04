@@ -1,4 +1,3 @@
-
 // MARK: - Context Menu different types
 
 /// Different context menu items  types defined in the app

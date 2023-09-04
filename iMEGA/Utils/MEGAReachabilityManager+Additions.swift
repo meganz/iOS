@@ -1,4 +1,3 @@
-
 extension MEGAReachabilityManager {
     static func statusConnectionMessage() -> String {
         if MEGAReachabilityManager.isReachable() {

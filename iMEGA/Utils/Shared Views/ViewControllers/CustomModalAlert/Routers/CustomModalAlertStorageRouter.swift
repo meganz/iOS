@@ -1,4 +1,3 @@
-
 import Foundation
 
 @objc final class CustomModalAlertStorageRouter: CustomModalAlertRouter {

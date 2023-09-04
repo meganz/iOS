@@ -1,4 +1,3 @@
-
 #import "MOChatDraft+CoreDataProperties.h"
 
 @implementation MOChatDraft (CoreDataProperties)

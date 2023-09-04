@@ -1,4 +1,3 @@
-
 #import "MEGAChatMessage+MNZCategory.h"
 
 #import <objc/runtime.h>

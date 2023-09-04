@@ -1,4 +1,3 @@
-
 class EnlargementView: UIView {
     @IBOutlet weak var nonSelectionView: UIView!
     @IBOutlet weak var selectionView: UIView!

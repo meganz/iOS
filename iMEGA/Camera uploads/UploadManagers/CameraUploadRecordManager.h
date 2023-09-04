@@ -1,4 +1,3 @@
-
 #import <Foundation/Foundation.h>
 #import "MOAssetUploadRecord+CoreDataClass.h"
 #import "AssetUploadStatus.h"

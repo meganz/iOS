@@ -1,4 +1,3 @@
-
 #import "ChatAttachedContactsViewController.h"
 
 #import "MEGAInviteContactRequestDelegate.h"

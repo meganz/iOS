@@ -1,4 +1,3 @@
-
 public struct StartCallEntity {
     public let meetingName: String
     public let enableVideo: Bool

@@ -1,4 +1,3 @@
-
 final class PaddingLabel: UILabel {
 
     /// The amount of padding for each side in the label.

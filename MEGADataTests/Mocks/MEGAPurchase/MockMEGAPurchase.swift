@@ -1,4 +1,3 @@
-
 final class MockMEGAPurchase: MEGAPurchase {
     private(set) var restorePurchaseCalled = 0
     private(set) var purchasePlanCalled = 0

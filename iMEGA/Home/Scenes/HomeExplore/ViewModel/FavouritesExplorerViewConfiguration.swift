@@ -1,4 +1,3 @@
-
 struct FavouritesExplorerViewConfiguration: FilesExplorerViewConfiguration {
     
     var title: String {

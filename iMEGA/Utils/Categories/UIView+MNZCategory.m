@@ -1,4 +1,3 @@
-
 #import "UIView+MNZCategory.h"
 
 @implementation UIView (MNZCategory)

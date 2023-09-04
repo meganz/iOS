@@ -1,4 +1,3 @@
-
 #import "MOOfflineFolderLayout+CoreDataClass.h"
 
 

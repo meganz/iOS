@@ -1,4 +1,3 @@
-
 @class MEGAChatMessage;
 
 @interface ChatAttachedNodesViewController : UIViewController

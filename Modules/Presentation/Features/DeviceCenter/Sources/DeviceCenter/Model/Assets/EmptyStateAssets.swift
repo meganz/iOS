@@ -1,4 +1,3 @@
-
 public struct EmptyStateAssets {
     public let image: String
     public let title: String

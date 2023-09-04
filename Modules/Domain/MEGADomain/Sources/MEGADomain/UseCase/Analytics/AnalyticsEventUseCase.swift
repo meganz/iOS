@@ -1,4 +1,3 @@
-
 public protocol AnalyticsEventUseCaseProtocol {
     func sendAnalyticsEvent(_ event: AnalyticsEventEntity)
 }

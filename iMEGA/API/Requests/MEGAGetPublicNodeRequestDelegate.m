@@ -1,4 +1,3 @@
-
 #import "MEGAGetPublicNodeRequestDelegate.h"
 
 @interface MEGAGetPublicNodeRequestDelegate ()

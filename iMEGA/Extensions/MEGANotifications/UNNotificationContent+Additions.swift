@@ -1,4 +1,3 @@
-
 extension UNNotificationContent {
    private enum NotificationType: Int {
        case startScheduleMeeting = 7

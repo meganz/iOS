@@ -1,4 +1,3 @@
-
 import UIKit
 
 enum SortingAndViewSection: Int {

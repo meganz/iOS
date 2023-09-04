@@ -1,4 +1,3 @@
-
 #import <UIKit/UIKit.h>
 
 @protocol PasswordViewDelegate <NSObject>

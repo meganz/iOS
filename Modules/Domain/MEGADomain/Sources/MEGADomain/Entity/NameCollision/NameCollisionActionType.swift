@@ -1,4 +1,3 @@
-
 public enum NameCollisionActionType {
     case update
     case replace

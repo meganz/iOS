@@ -1,4 +1,3 @@
-
 #import "MEGAStartUploadTransferDelegate.h"
 
 @interface MEGAStartUploadTransferDelegate ()

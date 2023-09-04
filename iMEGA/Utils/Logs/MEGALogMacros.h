@@ -1,4 +1,3 @@
-
 #import "MEGASdk.h"
 
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)

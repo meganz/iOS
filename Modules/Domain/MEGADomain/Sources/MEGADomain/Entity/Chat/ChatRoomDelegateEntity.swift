@@ -1,4 +1,3 @@
-
 public struct ChatRoomDelegateEntity {
     public var onChatRoomUpdate: ((ChatRoomEntity) -> Void)?
     public var onMessageLoaded: ((ChatMessageEntity?) -> Void)?

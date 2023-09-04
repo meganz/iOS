@@ -1,4 +1,3 @@
-
 #import "MEGAArchiveChatRequestDelegate.h"
 
 @interface MEGAArchiveChatRequestDelegate ()

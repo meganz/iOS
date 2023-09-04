@@ -1,4 +1,3 @@
-
 @objc class ChatUploader: NSObject {
     @objc static let sharedInstance = ChatUploader()
     
@@ -11,7 +10,7 @@
     
     @objc func setup() {
         isDatabaseCleanupTaskCompleted = false
-        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdk.shared.add(self)
     }
     
     @objc func upload(image: UIImage, chatRoomId: UInt64) {
@@ -64,12 +63,12 @@
                                                 context: context)
             
             MEGALogInfo("[ChatUploader] SDK upload started for File path \(filepath)")
-            MEGASdkManager.sharedMEGASdk().startUploadForChat(withLocalPath: filepath,
-                                                              parent: parentNode,
-                                                              appData: appData,
-                                                              isSourceTemporary: isSourceTemporary,
-                                                              fileName: nil,
-                                                              delegate: delegate)
+            MEGASdk.shared.startUploadForChat(withLocalPath: filepath,
+                                              parent: parentNode,
+                                              appData: appData,
+                                              isSourceTemporary: isSourceTemporary,
+                                              fileName: nil,
+                                              delegate: delegate)
         }
     }
     
@@ -85,7 +84,7 @@
         guard let context = store.stack.newBackgroundContext() else { return }
         
         context.performAndWait {
-            let transferList = MEGASdkManager.sharedMEGASdk().transfers
+            let transferList = MEGASdk.shared.transfers
             MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size.intValue)")
             let sdkTransfers = (0..<transferList.size.intValue).compactMap { transferList.transfer(at: $0) }
             self.store.fetchAllChatUploadTransfer(context: context).forEach { transfer in
@@ -134,9 +133,9 @@
                             dispatchGroup.leave()
                         }
                         if let appData = transfer.appData, appData.contains("attachVoiceClipToChatID") {
-                            MEGASdkManager.sharedMEGAChatSdk().attachVoiceMessage(toChat: chatRoomId, node: nodeHandle, delegate: requestDelegate)
+                            MEGAChatSdk.shared.attachVoiceMessage(toChat: chatRoomId, node: nodeHandle, delegate: requestDelegate)
                         } else {
-                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoomId, node: nodeHandle, delegate: requestDelegate)
+                            MEGAChatSdk.shared.attachNode(toChat: chatRoomId, node: nodeHandle, delegate: requestDelegate)
                         }
                         
                         MEGALogInfo("[ChatUploader] attachment complete File path \(transfer.filepath)")

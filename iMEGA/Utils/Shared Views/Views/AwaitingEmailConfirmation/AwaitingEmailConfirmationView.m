@@ -1,4 +1,3 @@
-
 #import "AwaitingEmailConfirmationView.h"
 
 @implementation AwaitingEmailConfirmationView

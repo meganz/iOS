@@ -1,4 +1,3 @@
-
 public enum MeetingsAnalyticsEventEntity {
     case endCallForAll
     case endCallInNoParticipantsPopup

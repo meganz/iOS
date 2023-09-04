@@ -1,4 +1,3 @@
-
 extension UIActivityIndicatorView {
     
     @objc class func mnz_init() -> UIActivityIndicatorView {

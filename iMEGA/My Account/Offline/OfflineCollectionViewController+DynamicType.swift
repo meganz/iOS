@@ -1,4 +1,3 @@
-
 extension OfflineCollectionViewController: DynamicTypeCollectionViewSizing {
     func provideSizingCell(for indexPath: IndexPath) -> UICollectionViewCell? {
         guard let collectionView = collectionView,
@@ -8,7 +7,7 @@ extension OfflineCollectionViewController: DynamicTypeCollectionViewSizing {
                                                         NodeCollectionViewCell.instantiateFromFileNib :
                                                         NodeCollectionViewCell.instantiateFromFolderNib
         
-        cell.configureCell(forOfflineItem: item, itemPath: offline.currentOfflinePath.appending("kFileName"), allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdkManager.sharedMEGASdk(), delegate: nil)
+        cell.configureCell(forOfflineItem: item, itemPath: offline.currentOfflinePath.appending("kFileName"), allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: .shared, delegate: nil)
         
         return cell
     }

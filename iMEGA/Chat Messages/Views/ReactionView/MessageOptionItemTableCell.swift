@@ -1,4 +1,3 @@
-
 protocol MessageOptionItemTableCellDelegate: AnyObject {
     func setImageView(_ imageView: UIImageView, forIndex index: Int)
     func setLabel(_ label: UILabel, forIndex index: Int)

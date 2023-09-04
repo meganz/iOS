@@ -1,4 +1,3 @@
-
 final class MessageInputBarComponentsSizeCalculator {
     func calculateTypingLabelSize(fitSize: CGSize) -> CGSize {
         let auxLabel = UILabel()

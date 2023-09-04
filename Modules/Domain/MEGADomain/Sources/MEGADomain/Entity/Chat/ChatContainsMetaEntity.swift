@@ -1,4 +1,3 @@
-
 public struct ChatContainsMetaEntity {
     public enum MetaType {
         case invalid

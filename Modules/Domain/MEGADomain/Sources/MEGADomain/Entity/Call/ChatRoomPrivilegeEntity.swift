@@ -1,4 +1,3 @@
-
 public enum ChatRoomPrivilegeEntity: Sendable {
     case unknown
     case removed

@@ -1,4 +1,3 @@
-
 #import "MEGALinkManager.h"
 
 #import <UserNotifications/UserNotifications.h>

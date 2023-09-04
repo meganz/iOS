@@ -1,4 +1,3 @@
-
 @interface OfflineTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;

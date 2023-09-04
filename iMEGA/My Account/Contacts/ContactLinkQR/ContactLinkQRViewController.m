@@ -1,4 +1,3 @@
-
 #import "ContactLinkQRViewController.h"
 
 #import <AVKit/AVKit.h>

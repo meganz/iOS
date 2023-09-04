@@ -1,4 +1,3 @@
-
 public protocol ManageLogsUseCaseProtocol {
     func toggleLogs()
 }

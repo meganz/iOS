@@ -1,4 +1,3 @@
-
 #import "LocationSearchTableViewController.h"
 
 #import <MapKit/MapKit.h>

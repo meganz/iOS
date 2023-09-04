@@ -1,6 +1,3 @@
-
-
-
 @interface MEGAPauseTransferRequestDelegate : NSObject <MEGARequestDelegate>
 
 - (id)init NS_UNAVAILABLE;

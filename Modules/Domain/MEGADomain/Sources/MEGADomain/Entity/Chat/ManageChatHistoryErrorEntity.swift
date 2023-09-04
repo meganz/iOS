@@ -1,4 +1,3 @@
-
 public enum ManageChatHistoryErrorEntity: Error {
     case generic
     case chatIdInvalid

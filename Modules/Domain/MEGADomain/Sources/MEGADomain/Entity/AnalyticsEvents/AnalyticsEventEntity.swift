@@ -1,4 +1,3 @@
-
 public enum AnalyticsEventEntity: Equatable {
     case mediaDiscovery(MediaDiscoveryAnalyticsEventEntity)
     case meetings(MeetingsAnalyticsEventEntity)

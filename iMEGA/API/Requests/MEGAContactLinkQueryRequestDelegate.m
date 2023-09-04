@@ -1,4 +1,3 @@
-
 #import "MEGAContactLinkQueryRequestDelegate.h"
 
 @interface MEGAContactLinkQueryRequestDelegate ()

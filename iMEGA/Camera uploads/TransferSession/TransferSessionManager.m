@@ -1,4 +1,3 @@
-
 #import "TransferSessionManager.h"
 #import "TransferSessionDelegate.h"
 #import "TransferSessionTaskDelegate.h"

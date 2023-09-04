@@ -1,4 +1,3 @@
-
 #import "MEGATransfer+MNZCategory.h"
 #import <Photos/Photos.h>
 #import "Helper.h"

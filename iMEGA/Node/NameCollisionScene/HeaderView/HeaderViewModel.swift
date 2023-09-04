@@ -1,4 +1,3 @@
-
 final class HeaderViewModel: ObservableObject {
     private let isFile: Bool
     private let name: String

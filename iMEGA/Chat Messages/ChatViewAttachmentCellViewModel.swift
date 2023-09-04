@@ -1,4 +1,3 @@
-
 class ChatViewAttachmentCellViewModel {
     // MARK: - Private properties.
     private let chatMessage: ChatMessage

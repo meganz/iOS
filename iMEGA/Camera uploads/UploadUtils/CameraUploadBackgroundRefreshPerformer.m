@@ -1,4 +1,3 @@
-
 #import "CameraUploadBackgroundRefreshPerformer.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"

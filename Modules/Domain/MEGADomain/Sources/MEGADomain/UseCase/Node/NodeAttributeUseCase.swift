@@ -1,4 +1,3 @@
-
 public protocol NodeAttributeUseCaseProtocol {
     func pathFor(node: NodeEntity) -> String?
     func numberChildrenFor(node: NodeEntity) -> Int

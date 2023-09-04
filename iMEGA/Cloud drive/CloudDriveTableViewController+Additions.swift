@@ -1,13 +1,12 @@
-
 extension CloudDriveTableViewController {
     @objc func configureSwipeActionsForIndex(_ index: IndexPath) -> UISwipeActionsConfiguration {
-        guard let node = self.cloudDrive?.node(at: index), MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner else {
+        guard let node = self.cloudDrive?.node(at: index), MEGASdk.shared.accessLevel(for: node) == .accessOwner else {
             return UISwipeActionsConfiguration(actions: [])
         }
         
-        if MEGASdkManager.sharedMEGASdk().isNode(inRubbish: node) {
-            if let restoreNode = MEGASdkManager.sharedMEGASdk().node(forHandle: node.restoreHandle),
-               !MEGASdkManager.sharedMEGASdk().isNode(inRubbish: restoreNode) {
+        if MEGASdk.shared.isNode(inRubbish: node) {
+            if let restoreNode = MEGASdk.shared.node(forHandle: node.restoreHandle),
+               !MEGASdk.shared.isNode(inRubbish: restoreNode) {
                 let restoreAction = swipeAction(image: Asset.Images.NodeActions.restore.image.withTintColor(.white), backgroundColor: UIColor.mnz_turquoise(for: traitCollection)) { [weak self] in
                     node.mnz_restore()
                     self?.setTableViewEditing(false, animated: true)

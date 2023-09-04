@@ -1,4 +1,3 @@
-
 import Foundation
 import MEGADomain
 
@@ -32,7 +31,7 @@ extension ChatViewController {
         navigationItem.rightBarButtonItems = rightBarButtons
         
         let reachable = MEGAReachabilityManager.isReachable()
-        let existsActiveCall = MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+        let existsActiveCall = MEGAChatSdk.shared.mnz_existsActiveCall
         
         chatContentViewModel.dispatch(.updateCallNavigationBarButtons(shouldDisableAudioVideoCalling,
                                                                       isVoiceRecordingInProgress, reachable, existsActiveCall))
@@ -100,7 +99,7 @@ extension ChatViewController {
             return
         }
         
-        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: peerHandle) else {
+        guard let userEmail = MEGAChatSdk.shared.userEmailFromCache(byUserHandle: peerHandle) else {
             return
         }
         
@@ -130,7 +129,7 @@ extension ChatViewController {
         ) { [weak self] handles in
             guard let self = self else { return }
             for handle in handles {
-                MEGASdkManager.sharedMEGAChatSdk().invite(
+                MEGAChatSdk.shared.invite(
                     toChat: self.chatRoom.chatId,
                     user: handle,
                     privilege: MEGAChatRoomPrivilege.standard.rawValue

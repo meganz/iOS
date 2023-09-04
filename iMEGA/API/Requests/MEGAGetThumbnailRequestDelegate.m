@@ -1,4 +1,3 @@
-
 #import "MEGAGetThumbnailRequestDelegate.h"
 
 @interface MEGAGetThumbnailRequestDelegate ()

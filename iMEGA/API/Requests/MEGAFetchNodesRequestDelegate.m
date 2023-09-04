@@ -1,4 +1,3 @@
-
 #import "MEGAFetchNodesRequestDelegate.h"
 
 @interface MEGAFetchNodesRequestDelegate ()

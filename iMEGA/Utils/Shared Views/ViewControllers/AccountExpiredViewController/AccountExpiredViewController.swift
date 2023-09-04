@@ -1,4 +1,3 @@
-
 import UIKit
 
 class AccountExpiredViewController: UIViewController {
@@ -22,13 +21,13 @@ class AccountExpiredViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdk.shared.add(self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        MEGASdkManager.sharedMEGASdk().remove(self)
+        MEGASdk.shared.remove(self)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -42,11 +41,11 @@ class AccountExpiredViewController: UIViewController {
     // MARK: - Set contents
     func getAccountDetails() {
         activityIndicator.startAnimating()
-        MEGASdkManager.sharedMEGASdk().getAccountDetails()
+        MEGASdk.shared.getAccountDetails()
     }
     
     func configContent() {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else { return }
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else { return }
         switch accountDetails.type {
         case .proFlexi:
             configProFlexiAccount()
@@ -67,7 +66,7 @@ class AccountExpiredViewController: UIViewController {
     func configBusinessAccount() {
         titleLabel.text = Strings.Localizable.yourBusinessAccountIsExpired
         dismissButton.setTitle(Strings.Localizable.dismiss, for: .normal)
-        if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
+        if MEGASdk.shared.isMasterBusinessAccount {
             imageView.image = Asset.Images.Business.accountExpiredAdmin.image
             detailLabel.text = Strings.Localizable.ThereHasBeenAProblemProcessingYourPayment.megaIsLimitedToViewOnlyUntilThisIssueHasBeenFixedInADesktopWebBrowser
         } else {

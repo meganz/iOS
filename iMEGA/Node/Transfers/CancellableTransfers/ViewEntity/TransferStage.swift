@@ -1,4 +1,3 @@
-
 enum TransferStage: Int {
     case scanning
     case creatingFolderStructure

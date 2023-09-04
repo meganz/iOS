@@ -1,4 +1,3 @@
-
 public struct APIEnvironmentChangingAlert {
     public var title: String
     public var message: String

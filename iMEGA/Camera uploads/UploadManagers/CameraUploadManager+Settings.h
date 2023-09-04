@@ -1,4 +1,3 @@
-
 #import "CameraUploadManager.h"
 
 NS_ASSUME_NONNULL_BEGIN

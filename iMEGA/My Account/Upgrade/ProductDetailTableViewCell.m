@@ -1,5 +1,3 @@
-
-
 #import "ProductDetailTableViewCell.h"
 
 @implementation ProductDetailTableViewCell

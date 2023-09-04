@@ -1,4 +1,3 @@
-
 @import UIKit;
 
 typedef NS_ENUM (NSInteger, MEGAChatStatus);

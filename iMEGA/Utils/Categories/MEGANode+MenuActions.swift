@@ -1,4 +1,3 @@
-
 extension MEGANode {
     // MARK: - Import
     func openBrowserToImport(in viewController: UIViewController) {

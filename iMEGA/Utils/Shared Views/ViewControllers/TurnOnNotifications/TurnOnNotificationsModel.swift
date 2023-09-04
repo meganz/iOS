@@ -1,4 +1,3 @@
-
 struct TurnOnNotificationsModel: Equatable {
     let headerImageName: String
     let title: String

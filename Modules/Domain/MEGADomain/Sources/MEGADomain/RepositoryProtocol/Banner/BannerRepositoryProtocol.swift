@@ -1,4 +1,3 @@
-
 public protocol BannerRepositoryProtocol: RepositoryProtocol {
     func banners(
         completion: @escaping (Result<[BannerEntity], BannerErrorEntity>) -> Void

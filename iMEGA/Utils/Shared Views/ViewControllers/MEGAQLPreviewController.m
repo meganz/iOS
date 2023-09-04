@@ -1,4 +1,3 @@
-
 #import "MEGAQLPreviewController.h"
 #import "MEGALinkManager.h"
 

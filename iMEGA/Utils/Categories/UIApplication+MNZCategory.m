@@ -1,4 +1,3 @@
-
 #import "UIApplication+MNZCategory.h"
 
 @implementation UIApplication (MNZCategory)

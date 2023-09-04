@@ -1,4 +1,3 @@
-
 public struct SMSUseCase {
     public let getSMSUseCase: any GetSMSUseCaseProtocol
     public let checkSMSUseCase: any CheckSMSUseCaseProtocol
