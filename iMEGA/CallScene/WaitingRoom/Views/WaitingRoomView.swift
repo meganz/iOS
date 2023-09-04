@@ -9,21 +9,26 @@ struct WaitingRoomView: View {
     }
     
     var body: some View {
-        ZStack {
-            waitingRoomContentView()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .ignoresSafeArea()
-        .overlay(
-            waitingRoomMessageView()
-            , alignment: .top
-        )
-        .overlay(
-            waitingRoomBottomView()
-            , alignment: .bottom
-        )
-        .onRotate { newOrientation in
-            viewModel.orientation = newOrientation
+        GeometryReader { proxy in
+            ZStack {
+                waitingRoomContentView()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
+            .overlay(
+                waitingRoomMessageView()
+                , alignment: .top
+            )
+            .overlay(
+                waitingRoomBottomView()
+                , alignment: .bottom
+            )
+            .onAppear {
+                viewModel.screenSize = proxy.size
+            }
+            .onChange(of: proxy.size) { newSize in
+                viewModel.screenSize = newSize
+            }
         }
     }
 
@@ -32,7 +37,7 @@ struct WaitingRoomView: View {
         if viewModel.isVideoEnabled, let videoImage = viewModel.videoImage {
             GeometryReader { proxy in
                 let bottomPadding = viewModel.isLandscape ? 0.0 : UI.contentBottomPadding
-                let videoSize = viewModel.calculateVideoSize(by: proxy.size.height)
+                let videoSize = viewModel.calculateVideoSize()
                 Image(uiImage: videoImage)
                     .resizable()
                     .scaledToFill()
@@ -50,9 +55,9 @@ struct WaitingRoomView: View {
     }
     
     func waitingRoomMessageView() -> some View {
-        WaitingRoomMessageView(title: Strings.Localizable.Meetings.WaitingRoom.Message.waitForHostToLetYouIn)
+        WaitingRoomMessageView(title: viewModel.waitingRoomMessage)
             .padding(26)
-            .opacity(viewModel.viewState == .waitForHostToLetIn ? 1 : 0)
+            .opacity(viewModel.showWaitingRoomMessage ? 1 : 0)
     }
     
     func waitingRoomBottomView() -> some View {

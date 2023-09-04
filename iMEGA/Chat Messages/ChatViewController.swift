@@ -1200,8 +1200,12 @@ class ChatViewController: MessagesViewController {
             updateNavigationBarButtonsBeforeStartCall()
             switch result {
             case .success:
-                startMeetingUI(isVideoEnabled: false,
-                               isSpeakerEnabled: false)
+                if chatContentViewModel.shouldOpenWaitingRoom() {
+                    openWaitingRoom()
+                } else {
+                    startMeetingUI(isVideoEnabled: false,
+                                   isSpeakerEnabled: false)
+                }
             case .failure:
                 MEGALogDebug("Cannot answer call")
             }
@@ -1237,6 +1241,11 @@ class ChatViewController: MessagesViewController {
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
     
+    private func openWaitingRoom() {
+        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else { return }
+        WaitingRoomViewRouter(presenter: self, scheduledMeeting: scheduledMeeting).start()
+    }
+    
     private func prepareAudioForCall() {
         shouldDisableAudioVideoCalling = true
         updateRightBarButtons()
@@ -1253,19 +1262,13 @@ class ChatViewController: MessagesViewController {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
             let reachable = MEGAReachabilityManager.isReachable()
             let existsActiveCall = MEGAChatSdk.shared.mnz_existsActiveCall
-            
-            if chatRoom.isMeeting && !shouldRing {
-                if chatRoom.isWaitingRoomEnabled {
-                    chatContentViewModel.dispatch(.startMeetingInWaitingRoomChat(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
-                } else {
-                    chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
-                }
+ 
+            if chatContentViewModel.shouldOpenWaitingRoom() {
+                openWaitingRoom()
+            } else if chatRoom.isMeeting && !shouldRing {
+                chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
             } else {
-                if chatRoom.isWaitingRoomEnabled {
-                    chatContentViewModel.dispatch(.startMeetingInWaitingRoomChat(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
-                } else {
-                    chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
-                }
+                chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
             }
             
             return

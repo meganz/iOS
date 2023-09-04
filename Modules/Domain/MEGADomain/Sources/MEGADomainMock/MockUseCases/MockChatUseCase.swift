@@ -6,6 +6,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var guestAccount: Bool
     public var fullName: String?
     public var status: ChatStatusEntity
+    public var isExistingActiveCall: Bool
     public var isCallActive: Bool
     public var isCallInProgress: Bool
     public var activeCallEntity: CallEntity?
@@ -26,6 +27,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         isGuestAccount: Bool = false,
         fullName: String? = nil,
         status: ChatStatusEntity = .offline,
+        isExistingActiveCall: Bool = false,
         isCallActive: Bool = false,
         isCallInProgress: Bool = false,
         statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never> = PassthroughSubject<(HandleEntity, ChatStatusEntity), Never>(),
@@ -40,6 +42,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.guestAccount = isGuestAccount
         self.fullName = fullName
         self.status = status
+        self.isExistingActiveCall = isExistingActiveCall
         self.isCallActive = isCallActive
         self.isCallInProgress = isCallInProgress
         self.statusChangePublisher = statusChangePublisher
@@ -76,7 +79,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     }
     
     public func existsActiveCall() -> Bool {
-        isCallActive
+        isExistingActiveCall
     }
     
     public func activeCall() -> CallEntity? {
@@ -145,5 +148,9 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func chatConnectionStatus(for chatId: ChatIdEntity) async -> ChatConnectionStatus {
         currentChatConnectionStatus
+    }
+    
+    public func isCallActive(for chatId: MEGADomain.HandleEntity) -> Bool {
+        isCallActive
     }
 }

@@ -18,6 +18,8 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         self.scheduledMeeting = scheduledMeeting
     }
     
+    // MARK: - Public
+    
     func build() -> UIViewController {
         let audioSessionRepository = AudioSessionRepository(audioSession: .sharedInstance(), callActionManager: .shared)
         let userImageUseCase = UserImageUseCase(
@@ -30,6 +32,9 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         let viewModel = WaitingRoomViewModel(
             scheduledMeeting: scheduledMeeting,
             router: self,
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            callCoordinatorUseCase: CallCoordinatorUseCase(),
             waitingRoomUseCase: WaitingRoomUseCase(waitingRoomRepo: WaitingRoomRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
@@ -57,7 +62,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     }
     
     func showLeaveAlert(leaveAction: @escaping () -> Void) {
-        guard let baseViewController = baseViewController else { return }
+        guard let baseViewController else { return }
         let alertController = UIAlertController(title: Strings.Localizable.Meetings.WaitingRoom.Alert.leaveMeeting, message: nil, preferredStyle: .alert)
         let leaveAction = UIAlertAction(title: Strings.Localizable.Meetings.WaitingRoom.leave, style: .default) { _ in
             leaveAction()
@@ -81,5 +86,20 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     
     func showAudioPermissionError() {
         permissionRouter.alertAudioPermission(incomingCall: false)
+    }
+    
+    func showHostDenyAlert(leaveAction: @escaping () -> Void ) {
+        guard let baseViewController else { return }
+        let alertController = UIAlertController(title: Strings.Localizable.Meetings.WaitingRoom.Alert.hostDidNotLetYouIn, message: Strings.Localizable.Meetings.WaitingRoom.Alert.youWillBeRemovedFromTheWaitingRoom, preferredStyle: .alert)
+        let leaveAction = UIAlertAction(title: Strings.Localizable.Meetings.WaitingRoom.Alert.okGotIt, style: .default) { _ in
+            leaveAction()
+        }
+        alertController.addAction(leaveAction)
+        alertController.preferredAction = leaveAction
+        baseViewController.present(alertController, animated: true)
+    }
+    
+    func hostAllowToJoin() {
+        
     }
 }

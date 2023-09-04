@@ -3688,6 +3688,14 @@
 "meetings.waitingRoom.guest.join"="Join";
 /* Meeting waiting room message of wait for host to let you in */
 "meetings.waitingRoom.message.waitForHostToLetYouIn"="Wait for host to let you in";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="Wait for host to start the meeting";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="Host didn’t let you in";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You'll be removed from the waiting room";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="OK, got it";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
 "chat.call.waitingRoom.alert.message.one"="%@ is waiting to join the call";
 /* Call waiting room alert button to deny access */

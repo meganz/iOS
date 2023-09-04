@@ -23,6 +23,7 @@ public protocol ChatUseCaseProtocol {
     func monitorChatConnectionStatusUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatConnectionStatus, Never>
     func monitorChatPrivateModeUpdate(forChatId chatId: ChatIdEntity) -> AnyPublisher<ChatRoomEntity, Never>
     func chatCall(for chatId: HandleEntity) async -> CallEntity?
+    func isCallActive(for chatId: HandleEntity) -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -115,5 +116,9 @@ public struct ChatUseCase<T: ChatRepositoryProtocol>: ChatUseCaseProtocol {
     
     public func chatCall(for chatId: HandleEntity) async -> CallEntity? {
         chatRepo.chatCall(for: chatId)
+    }
+    
+    public func isCallActive(for chatId: HandleEntity) -> Bool {
+        chatRepo.isCallActive(for: chatId)
     }
 }
