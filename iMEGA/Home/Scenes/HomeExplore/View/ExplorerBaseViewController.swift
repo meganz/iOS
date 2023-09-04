@@ -84,7 +84,7 @@ class ExplorerBaseViewController: UIViewController {
             return
         }
         
-        let favoriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: .shared))
+        let favoriteUseCase = NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)
         
         selectedNodes.forEach { node in
             if node.isFavourite {

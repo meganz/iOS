@@ -1,16 +1,19 @@
 import Foundation
 import MEGADomain
-import MEGASDKRepo
+import MEGASdk
 
-struct NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol {
+public struct NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol {
+    public static var newRepo: NodeFavouriteActionRepository = {
+        NodeFavouriteActionRepository(sdk: MEGASdk.sharedSdk)
+    }()
 
     private let sdk: MEGASdk
 
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
 
-    func favourite(node: NodeEntity) async throws {
+    public func favourite(node: NodeEntity) async throws {
         guard let node = sdk.node(forHandle: node.handle) else {
             throw NodeFavouriteErrorEntity.nodeNotFound
         }
@@ -34,7 +37,7 @@ struct NodeFavouriteActionRepository: NodeFavouriteActionRepositoryProtocol {
         }
     }
 
-    func unFavourite(node: NodeEntity) async throws {
+    public func unFavourite(node: NodeEntity) async throws {
         guard let node = sdk.node(forHandle: node.handle) else {
             throw NodeFavouriteErrorEntity.nodeNotFound
         }
