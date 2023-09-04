@@ -1,5 +1,5 @@
-@testable import MEGA
 import MEGADomain
+import MEGASDKRepo
 import MEGASDKRepoMock
 import XCTest
 
