@@ -3,7 +3,7 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func imageView(frame: CGRect) -> UIImageView {
         guard #available(iOS 16, *) else {
-            return UIImageView(frame: frame)
+            return SDAnimatedImageView(frame: frame)
         }
         return LiveTextImageView(frame: frame)
     }
