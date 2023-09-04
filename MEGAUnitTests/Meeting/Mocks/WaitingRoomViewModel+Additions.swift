@@ -8,6 +8,9 @@ extension WaitingRoomViewModel {
     convenience init(
         scheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
         router: some WaitingRoomViewRouting = MockWaitingRoomViewRouter(),
+        chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
+        callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+        callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
         waitingRoomUseCase: some WaitingRoomUseCaseProtocol = MockWaitingRoomUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
@@ -26,6 +29,9 @@ extension WaitingRoomViewModel {
         self.init(
             scheduledMeeting: scheduledMeeting,
             router: router,
+            chatUseCase: chatUseCase,
+            callUseCase: callUseCase,
+            callCoordinatorUseCase: callCoordinatorUseCase,
             waitingRoomUseCase: waitingRoomUseCase,
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase,

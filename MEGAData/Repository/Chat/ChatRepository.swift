@@ -142,6 +142,13 @@ public final class ChatRepository: ChatRepositoryProtocol {
         return call.isCallInProgress
     }
     
+    public func isCallActive(for chatId: HandleEntity) -> Bool {
+        guard let call = chatSDK.chatCall(forChatId: chatId) else {
+            return false
+        }
+        return call.isActiveCall
+    }
+    
     public func myFullName() -> String? {
         chatSDK.myFullname
     }

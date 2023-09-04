@@ -4,7 +4,7 @@ import MEGADomain
 final class MockCallUseCase: CallUseCaseProtocol {
     var startListeningForCall_CalledTimes = 0
     var stopListeningForCall_CalledTimes = 0
-    var callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic)
+    var callCompletion: Result<CallEntity, CallErrorEntity>
     var createActiveSessions_calledTimes = 0
     var hangCall_CalledTimes = 0
     var endCall_CalledTimes = 0
@@ -25,10 +25,12 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var chatSession: ChatSessionEntity?
     var participantHandle: HandleEntity = .invalid
     
-    init(call: CallEntity = CallEntity()) {
+    init(call: CallEntity = CallEntity(),
+         callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic)) {
         self.call = call
+        self.callCompletion = callCompletion
     }
-
+    
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
         startListeningForCall_CalledTimes += 1
     }
@@ -119,7 +121,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
     func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [HandleEntity]) {
         pushUsersIntoWaitingRoom_CalledTimes += 1
     }
-
+    
     func makePeerAModerator(inCall call: CallEntity, peerId: UInt64) {
         makePeerAsModerator_CalledTimes += 1
     }
@@ -130,7 +132,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
 }
 
 extension MockCallUseCase: CallCallbacksRepositoryProtocol {
-
+    
     func createdSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
         guard let chatSession = chatSession, let chatRoom = chatRoom else {
             MEGALogDebug("Error getting mock properties")

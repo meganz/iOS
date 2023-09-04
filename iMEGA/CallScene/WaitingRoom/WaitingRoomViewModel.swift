@@ -10,11 +10,16 @@ protocol WaitingRoomViewRouting: Routing {
     func showMeetingInfo()
     func showVideoPermissionError()
     func showAudioPermissionError()
+    func showHostDenyAlert(leaveAction: @escaping () -> Void)
+    func hostAllowToJoin()
 }
 
 final class WaitingRoomViewModel: ObservableObject {
     private let scheduledMeeting: ScheduledMeetingEntity
     private let router: any WaitingRoomViewRouting
+    private let chatUseCase: any ChatUseCaseProtocol
+    private let callUseCase: any CallUseCaseProtocol
+    private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
     private let waitingRoomUseCase: any WaitingRoomUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
@@ -29,29 +34,55 @@ final class WaitingRoomViewModel: ObservableObject {
     enum WaitingRoomViewState {
         case guestJoin
         case guestJoining
+        case waitForHostToStart
         case waitForHostToLetIn
     }
-    @Published var viewState: WaitingRoomViewState
+    @Published private(set) var viewState: WaitingRoomViewState = .waitForHostToLetIn
     
     @Published private(set) var userAvatar: UIImage?
     @Published private(set) var videoImage: UIImage?
-    @Published var orientation = UIDeviceOrientation.unknown
     @Published var isVideoEnabled = false
     @Published var isMicrophoneEnabled = false
     @Published var isSpeakerEnabled = true
-    @Published var showAVRoutePickerView = false
-    
-    var isLandscape: Bool {
-        orientation == .landscapeLeft || orientation == .landscapeRight || orientation == .portraitUpsideDown
+    @Published var screenSize: CGSize = .zero {
+        didSet {
+            guard screenSize != .zero else { return }
+            isLandscape = screenSize.width > screenSize.height
+        }
     }
     
-    private var subscriptions = Set<AnyCancellable>()
+    var showWaitingRoomMessage: Bool {
+        viewState == .waitForHostToStart || viewState == .waitForHostToLetIn
+    }
+    var waitingRoomMessage: String {
+        switch viewState {
+        case .waitForHostToStart:
+            return Strings.Localizable.Meetings.WaitingRoom.Message.waitForHostToStartTheMeeting
+        case .waitForHostToLetIn:
+            return Strings.Localizable.Meetings.WaitingRoom.Message.waitForHostToLetYouIn
+        default:
+            return ""
+        }
+    }
+    
+    private(set) var isLandscape: Bool = false
+    
+    private var call: CallEntity? {
+        callUseCase.call(for: scheduledMeeting.chatId)
+    }
+    private var isCallActive: Bool {
+        chatUseCase.isCallActive(for: scheduledMeeting.chatId)
+    }
     
     private var appDidBecomeActiveSubscription: AnyCancellable?
     private var appWillResignActiveSubscription: AnyCancellable?
+    private var subscriptions = Set<AnyCancellable>()
     
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: some WaitingRoomViewRouting,
+         chatUseCase: some ChatUseCaseProtocol,
+         callUseCase: some CallUseCaseProtocol,
+         callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
          waitingRoomUseCase: some WaitingRoomUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
@@ -62,6 +93,9 @@ final class WaitingRoomViewModel: ObservableObject {
          permissionHandler: some DevicePermissionsHandling) {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
+        self.chatUseCase = chatUseCase
+        self.callUseCase = callUseCase
+        self.callCoordinatorUseCase = callCoordinatorUseCase
         self.waitingRoomUseCase = waitingRoomUseCase
         self.accountUseCase = accountUseCase
         self.megaHandleUseCase = megaHandleUseCase
@@ -70,9 +104,13 @@ final class WaitingRoomViewModel: ObservableObject {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.permissionHandler = permissionHandler
-        viewState = accountUseCase.isGuest ? .guestJoin : .waitForHostToLetIn
+        initializeState()
         initSubscriptions()
         fetchInitialValues()
+    }
+    
+    deinit {
+        callUseCase.stopListeningForCall()
     }
     
     // MARK: - Public
@@ -126,6 +164,8 @@ final class WaitingRoomViewModel: ObservableObject {
     func leaveButtonTapped() {
         router.showLeaveAlert { [weak self] in
             guard let self else { return }
+            callUseCase.stopListeningForCall()
+            dismissCall()
             router.dismiss()
         }
     }
@@ -145,9 +185,9 @@ final class WaitingRoomViewModel: ObservableObject {
         }
     }
     
-    func calculateVideoSize(by screenHeight: CGFloat) -> CGSize {
+    func calculateVideoSize() -> CGSize {
         let videoAspectRatio = isLandscape ? 424.0 / 236.0 : 236.0 / 424.0
-        let videoHeight = screenHeight - (isLandscape ? 66.0 : 332.0)
+        let videoHeight = screenSize.height - (isLandscape ? 66.0 : 332.0)
         let videoWidth = videoHeight * videoAspectRatio
         return CGSize(width: videoWidth, height: videoHeight)
     }
@@ -158,12 +198,21 @@ final class WaitingRoomViewModel: ObservableObject {
             return 142.0
         case .guestJoining:
             return isLandscape ? 38.0 : 100.0
-        case .waitForHostToLetIn:
+        case .waitForHostToStart, .waitForHostToLetIn:
             return isLandscape ? 8.0 : 100.0
         }
     }
     
     // MARK: - Private
+    private func initializeState() {
+        if accountUseCase.isGuest {
+            viewState = .guestJoin
+        } else if isCallActive {
+            viewState = .waitForHostToLetIn
+        } else {
+            viewState = .waitForHostToStart
+        }
+    }
     
     private func initSubscriptions() {
         appDidBecomeActiveSubscription = NotificationCenter.default
@@ -180,6 +229,29 @@ final class WaitingRoomViewModel: ObservableObject {
             .sink { [weak self] _ in
                 self?.removeRouteChangedListener()
             }
+        
+        chatUseCase
+            .monitorChatCallStatusUpdate()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] call in
+                guard let self,
+                      viewState != .guestJoin && viewState != .guestJoining,
+                      call.chatId == scheduledMeeting.chatId else { return }
+                switch call.status {
+                case .initial, .joining, .userNoPresent, .connecting, .waitingRoom:
+                    if !isCallActive {
+                        answerCall()
+                    } else {
+                        viewState = .waitForHostToLetIn
+                    }
+                default:
+                    if isCallActive {
+                        dismissCall()
+                    }
+                    viewState = .waitForHostToStart
+                }
+            }
+            .store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
@@ -193,6 +265,18 @@ final class WaitingRoomViewModel: ObservableObject {
         permissionHandler.requestAudioPermission()
         selectFrontCameraIfNeeded()
         fetchUserAvatar()
+    }
+    
+    private func answerCall() {
+        callUseCase.answerCall(for: scheduledMeeting.chatId) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                viewState = .waitForHostToLetIn
+            case .failure:
+                MEGALogDebug("Cannot answer call")
+            }
+        }
     }
     
     private func updateSpeakerInfo() {
@@ -273,6 +357,13 @@ final class WaitingRoomViewModel: ObservableObject {
                 break
             }
         }
+    }
+    
+    private func dismissCall() {
+        guard let call else { return }
+        callCoordinatorUseCase.removeCallRemovedHandler()
+        callUseCase.hangCall(for: call.callId)
+        callCoordinatorUseCase.endCall(call)
     }
 }
 

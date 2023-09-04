@@ -8,8 +8,6 @@ enum ChatContentAction: ActionType {
                                         _ reachable: Bool, _ activeCall: Bool)
     case startMeetingNoRinging(_ videoCall: Bool, _ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool,
                                _ reachable: Bool, _ activeCall: Bool)
-    case startMeetingInWaitingRoomChat(_ videoCall: Bool, _ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool,
-                               _ reachable: Bool, _ activeCall: Bool)
     case startOutGoingCall(_ isVideoEnabled: Bool, _ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool,
                            _ reachable: Bool, _ activeCall: Bool)
     case updateContent
@@ -68,10 +66,11 @@ final class ChatContentViewModel: ViewModelType {
             onUpdateNavigationBarButtonItems(disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
         case .startMeetingNoRinging(let videoCall, let disableCalling, let isVoiceRecordingInProgress,
                                     let reachable, let activeCall):
-            startMeetingNoRinging(videoCall, disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
-        case .startMeetingInWaitingRoomChat(let videoCall, let disableCalling, let isVoiceRecordingInProgress,
-                                    let reachable, let activeCall):
-            startMeetingInWaitingRoomChat(videoCall, disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
+            if chatRoom.isWaitingRoomEnabled {
+                startMeetingInWaitingRoomChat(videoCall, disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
+            } else {
+                startMeetingNoRinging(videoCall, disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
+            }
         case .startOutGoingCall(let isVideoEnabled, let disableCalling, let isVoiceRecordingInProgress,
                                 let reachable, let activeCall):
             startOutGoingCall(isVideoEnabled, disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
@@ -80,6 +79,13 @@ final class ChatContentViewModel: ViewModelType {
         case .updateCall(let call):
             onChatCallUpdate(for: call)
         }
+    }
+    
+    // MARK: - Public
+
+    func shouldOpenWaitingRoom() -> Bool {
+        let isModerator = chatRoom.ownPrivilege == .moderator
+        return !isModerator && chatRoom.isWaitingRoomEnabled
     }
     
     // MARK: - Private

@@ -108,25 +108,11 @@ extension ChatViewController {
             guard let self else { return }
             if granted {
                 timer?.invalidate()
-                if shouldOpenWaitingRoom() {
-                    openWaitingRoom()
-                } else {
-                    openCallViewWithVideo(videoCall: false, shouldRing: false)
-                }
+                openCallViewWithVideo(videoCall: false, shouldRing: false)
             } else {
                 permissionRouter.alertAudioPermission(incomingCall: false)
             }
         }
-    }
-    
-    private func shouldOpenWaitingRoom() -> Bool {
-        let isModerator = chatRoom.ownPrivilege.toOwnPrivilegeEntity() == .moderator
-        return !isModerator && chatRoom.isWaitingRoomEnabled && chatContentViewModel.isWaitingRoomFeatureEnabled
-    }
-    
-    private func openWaitingRoom() {
-        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else { return }
-        WaitingRoomViewRouter(presenter: self, scheduledMeeting: scheduledMeeting).start()
     }
 
     func subscribeToNoUserJoinedNotification() {

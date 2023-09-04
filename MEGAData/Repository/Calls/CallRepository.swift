@@ -3,6 +3,10 @@ import MEGADomain
 
 final class CallRepository: NSObject, CallRepositoryProtocol {
 
+    static var newRepo: CallRepository {
+        CallRepository(chatSdk: .shared, callActionManager: .shared)
+    }
+    
     private let chatSdk: MEGAChatSdk
     private let callActionManager: CallActionManager
     private var callbacksDelegate: (any CallCallbacksRepositoryProtocol)?
@@ -352,6 +356,11 @@ extension CallRepository: MEGAChatCallDelegate {
             if call.hasChanged(for: .waitingRoomUsersEntered) {
                 guard let usersHandle = call.waitingRoomHandleList.toHandleEntityArray() else { return }
                 callbacksDelegate?.waitingRoomUsersEntered(with: usersHandle)
+            }
+            
+            if call.hasChanged(for: .waitingRoomUsersLeave) {
+                guard let usersHandle = call.waitingRoomHandleList.toHandleEntityArray() else { return }
+                callbacksDelegate?.waitingRoomUsersLeave(with: usersHandle)
             }
         case .terminatingUserParticipation, .destroyed:
             callbacksDelegate?.callTerminated(call.toCallEntity())
