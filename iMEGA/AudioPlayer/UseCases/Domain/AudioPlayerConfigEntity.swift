@@ -39,7 +39,7 @@ struct AudioPlayerConfigEntity {
         return .default
     }
     
-    enum NodeOriginType {
+    enum NodeOriginType: CaseIterable {
         case folderLink
         case fileLink
         case chat

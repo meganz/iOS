@@ -3,40 +3,24 @@ import MEGADomain
 import MEGAPresentation
 
 final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
-    private weak var baseViewController: UIViewController?
-    private weak var presenter: UIViewController?
-    private var configEntity: AudioPlayerConfigEntity
+    private let configEntity: AudioPlayerConfigEntity
+    private let presenter: UIViewController
+    private let audioPlaylistViewRouter: any AudioPlaylistViewRouting
+    
     private(set) var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate?
     private(set) var fileLinkActionViewControllerDelegate: FileLinkActionViewControllerDelegate?
     
-    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController) {
+    var baseViewController: UIViewController?
+    
+    init(configEntity: AudioPlayerConfigEntity, presenter: UIViewController, audioPlaylistViewRouter: some AudioPlaylistViewRouting) {
         self.configEntity = configEntity
         self.presenter = presenter
+        self.audioPlaylistViewRouter = audioPlaylistViewRouter
         super.init()
     }
     
     func build() -> UIViewController {
-        let vc = UIStoryboard(name: "AudioPlayer", bundle: nil)
-            .instantiateViewController(withIdentifier: "AudioPlayerViewControllerID") as! AudioPlayerViewController
-        
-        if configEntity.playerType == .offline {
-            vc.viewModel = AudioPlayerViewModel(
-                configEntity: configEntity,
-                router: self,
-                offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
-                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
-            )
-        } else {
-            vc.viewModel = AudioPlayerViewModel(
-                configEntity: configEntity,
-                router: self,
-                nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
-                streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
-                playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
-            )
-        }
-
-        baseViewController = vc
+        guard let vc = baseViewController else { return UIViewController() }
         
         switch configEntity.nodeOriginType {
         case .folderLink, .chat:
@@ -59,7 +43,7 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     @objc func start() {
-        presenter?.present(build(), animated: true, completion: nil)
+        presenter.present(build(), animated: true, completion: nil)
     }
     
     // MARK: - UI Actions
@@ -68,19 +52,14 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     func goToPlaylist() {
-        guard let presenter = self.baseViewController else { return }
-        AudioPlaylistViewRouter(configEntity: AudioPlayerConfigEntity(parentNode: configEntity.node?.parent, playerHandler: configEntity.playerHandler), presenter: presenter).start()
+        audioPlaylistViewRouter.start()
     }
     
     func showMiniPlayer(node: MEGANode?, shouldReload: Bool) {
-        guard let presenter = presenter else { return }
-        
         configEntity.playerHandler.initMiniPlayer(node: node, fileLink: configEntity.fileLink, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
     }
     
     func showMiniPlayer(file: String, shouldReload: Bool) {
-        guard let presenter = presenter else { return }
-        
         configEntity.playerHandler.initMiniPlayer(node: nil, fileLink: file, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, shouldReloadPlayerInfo: shouldReload, shouldResetPlayer: false)
     }
     
@@ -102,7 +81,11 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
         let nodeActionViewController = NodeActionViewController(
             node: node,
-            delegate: self,
+            delegate: AudioPlayerViewRouterNodeActionAdapter(
+                configEntity: configEntity,
+                nodeActionViewControllerDelegate: nodeActionViewControllerDelegate,
+                fileLinkActionViewControllerDelegate: fileLinkActionViewControllerDelegate
+            ),
             displayMode: displayMode,
             isInVersionsView: isPlayingFromVersionView(),
             isBackupNode: isBackupNode,
@@ -112,20 +95,6 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     private func isPlayingFromVersionView() -> Bool {
-        return presenter?.isKind(of: NodeVersionsViewController.self) == true
-    }
-}
-
-extension AudioPlayerViewRouter: NodeActionViewControllerDelegate {
-
-    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
-        switch configEntity.nodeOriginType {
-        case .folderLink, .chat:
-            nodeActionViewControllerDelegate?.nodeAction(nodeAction, didSelect: action, for: node, from: sender)
-        case .fileLink:
-            fileLinkActionViewControllerDelegate?.nodeAction(nodeAction, didSelect: action, for: node, from: sender)
-        case .unknown:
-            break
-        }
+        presenter.isKind(of: NodeVersionsViewController.self)
     }
 }
