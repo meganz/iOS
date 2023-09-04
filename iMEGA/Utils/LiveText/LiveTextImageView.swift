@@ -1,7 +1,7 @@
 @preconcurrency import VisionKit
 
 @available(iOS 16.0, *)
-final class LiveTextImageView: UIImageView {
+final class LiveTextImageView: SDAnimatedImageView {
     private lazy var interaction: ImageAnalysisInteraction = {
         let interaction = ImageAnalysisInteraction()
         interaction.preferredInteractionTypes = .automatic
