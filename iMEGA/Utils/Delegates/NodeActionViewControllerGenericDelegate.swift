@@ -233,7 +233,7 @@ final class NodeActionViewControllerGenericDelegate:
     }
     
     private func favourite(_ node: MEGANode) {
-        let nodefavouriteActionUseCase =  NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: MEGASdk.shared))
+        let nodefavouriteActionUseCase =  NodeFavouriteActionUseCase(nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo)
         if node.isFavourite {
             Task {
                 try await nodefavouriteActionUseCase.unFavourite(node: node.toNodeEntity())

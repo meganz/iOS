@@ -60,7 +60,7 @@ final class HomeScreenFactory: NSObject {
         homeViewController.recentsViewModel = HomeRecentActionViewModel(
             permissionHandler: permissionHandler,
             nodeFavouriteActionUseCase: NodeFavouriteActionUseCase(
-                nodeFavouriteRepository: NodeFavouriteActionRepository(sdk: sdk)
+                nodeFavouriteRepository: NodeFavouriteActionRepository.newRepo
             ),
             saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(
                 downloadFileRepository: DownloadFileRepository(sdk: sdk),
