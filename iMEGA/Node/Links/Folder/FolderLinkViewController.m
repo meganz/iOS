@@ -236,11 +236,7 @@
 - (void)setNavigationBarTitleLabel {
     if (self.flTableView.tableView.isEditing || self.flCollectionView.collectionView.allowsMultipleSelection) {
         self.navigationItem.titleView = nil;
-        if (self.selectedNodesArray.count == 0) {
-            self.navigationItem.title = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
-        } else {
-            self.navigationItem.title= (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
-        }
+        self.navigationItem.title = [self selectedCountTitle];
     } else {
         if (self.parentNode.name && !self.isFolderLinkNotValid) {
             self.navigationItem.titleView = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle:NSLocalizedString(@"folderLink", nil) color:UIColor.mnz_label];

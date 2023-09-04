@@ -77,4 +77,11 @@ extension BrowserViewController {
         let titleConfig = navigationBarTitleConfig()
         updateTitle(title: titleConfig.copy, shouldPlaceInTitleView: titleConfig.renderInTitleView)
     }
+    
+    @objc func prompt(forSelectedCount count: Int) -> String {
+        guard count > 0 else {
+            return Strings.Localizable.selectTitle
+        }
+        return Strings.Localizable.General.Format.itemsSelected(count)
+    }
 }

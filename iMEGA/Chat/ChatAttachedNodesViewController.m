@@ -112,26 +112,10 @@
 
 - (void)updatePromptTitle {
     if (self.tableView.isEditing) {
-        NSNumber *selectedNodesCount = [NSNumber numberWithUnsignedInteger:self.selectedNodesMutableArray.count];
-        self.navigationItem.prompt = [self titleForPromptWithCountOfNodes:selectedNodesCount];
+        self.navigationItem.prompt = [self nodeCountTitle:self.selectedNodesMutableArray.count];
     } else {
         self.navigationItem.prompt = nil;
     }
-}
-
-- (NSString *)titleForPromptWithCountOfNodes:(NSNumber *)count {
-    NSString *promptString;
-    if (count.unsignedIntegerValue == 0) {
-        promptString = NSLocalizedString(@"select", @"Button that allows you to select a given folder");
-    } else if (count.unsignedIntegerValue == 1) {
-        promptString = NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo");
-        promptString = [promptString stringByReplacingOccurrencesOfString:@"%lu" withString:count.stringValue];
-    } else {
-        promptString = NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo");
-        promptString = [promptString stringByReplacingOccurrencesOfString:@"%lu" withString:count.stringValue];
-    }
-    
-    return promptString;
 }
 
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
