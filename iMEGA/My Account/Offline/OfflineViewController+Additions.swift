@@ -43,6 +43,14 @@ extension OfflineViewController {
         viewModel.dispatch(.removeSubscriptions)
     }
     
+    @objc func selectedCountTitle() -> String {
+        guard let selectedCount = selectedItems?.count,
+              selectedCount > 0 else {
+            return Strings.Localizable.selectTitle
+        }
+        return Strings.Localizable.General.Format.itemsSelected(selectedCount)
+    }
+    
     // MARK: - Private
     
     private var screenTitle: String {

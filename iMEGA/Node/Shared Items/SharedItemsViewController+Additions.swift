@@ -364,6 +364,14 @@ extension SharedItemsViewController {
         }
         return isContactVerificationEnabled() && !isUserVerified && incomingButton?.isSelected == true
     }
+    
+    @objc func selectedCountTitle() -> String {
+        guard let selectedCount = (selectedNodesMutableArray as? [MEGANode])?.count,
+              selectedCount > 0 else {
+            return Strings.Localizable.selectTitle
+        }
+        return Strings.Localizable.General.Format.itemsSelected(selectedCount)
+    }
 }
 
 // MARK: - SharedItemsTableViewCellDelegate

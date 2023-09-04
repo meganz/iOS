@@ -888,11 +888,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)updateNavigationBarTitle {
     NSString *navigationTitle;
     if (self.offlineTableView.tableView.isEditing || self.offlineCollectionView.collectionView.allowsMultipleSelection) {
-        if (self.selectedItems.count == 0) {
-            navigationTitle = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
-        } else {
-            navigationTitle = (self.selectedItems.count == 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedItems.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedItems.count];
-        }
+        navigationTitle = [self selectedCountTitle];
     } else {
         if (self.folderPathFromOffline == nil) {
             navigationTitle = NSLocalizedString(@"offline", @"Offline");

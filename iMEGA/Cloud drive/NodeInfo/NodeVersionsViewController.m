@@ -278,11 +278,7 @@
 - (void)updateNavigationBarTitle {
     NSString *navigationTitle;
     if (self.tableView.isEditing) {
-        if (self.selectedNodesArray.count == 0) {
-            navigationTitle = NSLocalizedString(@"selectTitle", @"Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos");
-        } else {
-            navigationTitle = (self.selectedNodesArray.count <= 1) ? [NSString stringWithFormat:NSLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:NSLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
-        }
+        navigationTitle = [self selectedCountTitle];
     } else {
         navigationTitle = NSLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
     }

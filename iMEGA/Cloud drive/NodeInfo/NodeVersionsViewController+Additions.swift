@@ -17,4 +17,12 @@ extension NodeVersionsViewController {
         
         setToolbarItems(isBackupNode ? [downloadBarButtonItem, flexibleItem, removeBarButtonItem] : [downloadBarButtonItem, flexibleItem, revertBarButtonItem, flexibleItem, removeBarButtonItem], animated: true)
     }
+    
+    @objc func selectedCountTitle() -> String {
+        guard let selectedCount = selectedNodesArray?.count,
+              selectedCount > 0 else {
+            return Strings.Localizable.selectTitle
+        }
+        return Strings.Localizable.General.Format.itemsSelected(selectedCount)
+    }
 }

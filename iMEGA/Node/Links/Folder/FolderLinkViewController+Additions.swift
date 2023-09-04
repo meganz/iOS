@@ -140,4 +140,12 @@ extension FolderLinkViewController {
             }
         }
     }
+    
+    @objc func selectedCountTitle() -> String {
+        guard let selectedCount = selectedNodesArray?.count,
+              selectedCount > 0 else {
+            return Strings.Localizable.selectTitle
+        }
+        return Strings.Localizable.General.Format.itemsSelected(selectedCount)
+    }
 }
