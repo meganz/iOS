@@ -26,8 +26,6 @@
 		0E2FD9DD2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */; };
 		0E2FEAA82A7B44AC00D237C6 /* GetLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */; };
 		0E2FEAAA2A7B463700D237C6 /* GetLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */; };
-		0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */; };
-		0E32FFB2293E896A004BB11D /* NodeUpdateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */; };
 		0E3B1A352A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */; };
 		0E3B1A392A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A382A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift */; };
 		0E3B1A482A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B1A472A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift */; };
@@ -2526,8 +2524,6 @@
 		0E2FD9DC2A258C3B00FB75F1 /* GetAlbumsLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinkViewModelTests.swift; sourceTree = "<group>"; };
 		0E2FEAA62A7B44AC00D237C6 /* GetLinkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkView.swift; sourceTree = "<group>"; };
 		0E2FEAA92A7B463600D237C6 /* GetLinkRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkRouter.swift; sourceTree = "<group>"; };
-		0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepositoryTests.swift; sourceTree = "<group>"; };
-		0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeUpdateRepository.swift; sourceTree = "<group>"; };
 		0E3B1A342A1D910B00EC5859 /* GetLinkAlbumInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAlbumInfoCellViewModel.swift; sourceTree = "<group>"; };
 		0E3B1A382A1D919B00EC5859 /* GetLinkAlbumInfoCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAlbumInfoCellViewModelTests.swift; sourceTree = "<group>"; };
 		0E3B1A472A1DB9FD00EC5859 /* GetLinkSwitchOptionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkSwitchOptionCellViewModel.swift; sourceTree = "<group>"; };
@@ -5239,7 +5235,6 @@
 				A8919421299F8E6300B2A225 /* NodeAttributeRepository.swift */,
 				943092F6291438200092B99A /* NodeDataRepository.swift */,
 				0D213E8D263A613500B43723 /* NodeRepository.swift */,
-				0E32FFB1293E896A004BB11D /* NodeUpdateRepository.swift */,
 				943092F9291440010092B99A /* NodeValidationRepository.swift */,
 				944DB355295EE64900CE4D83 /* RubbishBinRepository.swift */,
 				94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */,
@@ -5333,7 +5328,6 @@
 				9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */,
 				A8919423299F90A700B2A225 /* NodeAttributeRepositoryTests.swift */,
 				94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */,
-				0E32FFA9293E8179004BB11D /* NodeUpdateRepositoryTests.swift */,
 				9449938E28BD312D001AE14B /* NodeValidationRepositoryTests.swift */,
 				94417EAE296D825B007C9230 /* RubbishBinRepositoryTests.swift */,
 				0E6F57B3299DEB13005C279F /* SDKNodesUpdateListenerRepositoryTests.swift */,
@@ -14008,7 +14002,6 @@
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
 				B678D6D82714266300BBA4E1 /* NodeThumbnailHomeUseCase.swift in Sources */,
-				0E32FFB2293E896A004BB11D /* NodeUpdateRepository.swift in Sources */,
 				943092FA291440010092B99A /* NodeValidationRepository.swift in Sources */,
 				94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */,
 				837B73AF24DD7EAA00321368 /* NodeVersionsViewController.m in Sources */,
@@ -15129,7 +15122,6 @@
 				C45A2E3825D2F80900915A83 /* NodeInfoUseCaseTests.swift in Sources */,
 				245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */,
 				94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */,
-				0E32FFAA293E817A004BB11D /* NodeUpdateRepositoryTests.swift in Sources */,
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
