@@ -15,6 +15,8 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGA-Swift.h"
 #import "MEGARecentActionBucket+MNZCategory.h"
+
+@import MEGAL10nObjc;
 @import MEGASDKRepo;
 
 @interface ThumbnailViewerTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -73,16 +75,16 @@
     
     NSString *title;
     if (numberOfPhotos == 0) {
-        NSString *videoCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.video", @"Multiple videos title shown in recents section of web client.");
+        NSString *videoCountFormat = LocalizedString(@"recents.section.thumbnail.count.video", @"Multiple videos title shown in recents section of web client.");
         title = [NSString stringWithFormat:videoCountFormat, numberOfVideos];
     } else if (numberOfVideos == 0) {
-        NSString *imageCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.image", @"Multiple Images title shown in recents section of webclient");
+        NSString *imageCountFormat = LocalizedString(@"recents.section.thumbnail.count.image", @"Multiple Images title shown in recents section of webclient");
         title = [NSString stringWithFormat:imageCountFormat, numberOfPhotos];
     } else {
-        NSString *imageCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.imageAndVideo.image", @"Image count on recents section that will be concatenated with number of videos. e.g 1 image and 1 video, 2 images and 1 video");
+        NSString *imageCountFormat = LocalizedString(@"recents.section.thumbnail.count.imageAndVideo.image", @"Image count on recents section that will be concatenated with number of videos. e.g 1 image and 1 video, 2 images and 1 video");
         NSString *imageCount = [NSString stringWithFormat:imageCountFormat, numberOfPhotos];
         
-        NSString *videoCountFormat = NSLocalizedString(@"recents.section.thumbnail.count.imageAndVideo.video", @"Video count on recents section that will be concatenated with number of images. e.g 1 image and 1 video, 2 images and 1 video");
+        NSString *videoCountFormat = LocalizedString(@"recents.section.thumbnail.count.imageAndVideo.video", @"Video count on recents section that will be concatenated with number of images. e.g 1 image and 1 video, 2 images and 1 video");
         NSString *videoCount = [NSString stringWithFormat:videoCountFormat, numberOfVideos];
         
         title = [NSString stringWithFormat:@"%@ %@", imageCount, videoCount];

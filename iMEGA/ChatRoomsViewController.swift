@@ -1,9 +1,10 @@
 import MEGADomain
+import MEGAL10n
 import UIKit
 
 extension ChatRoomsViewController {
     @objc func joinActiveCall(withChatRoom chatRoom: MEGAChatRoom) {
-        guard let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: chatRoom.chatId) else {
+        guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
             return
         }
         

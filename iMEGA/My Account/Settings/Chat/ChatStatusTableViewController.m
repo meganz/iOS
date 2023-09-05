@@ -10,6 +10,8 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAL10nObjc;
+
 @interface ChatStatusTableViewController () <UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *onlineLabel;
@@ -42,19 +44,19 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.navigationItem.title = NSLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
+    self.navigationItem.title = LocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)");
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SelectableTableViewCell" bundle:nil] forCellReuseIdentifier:@"SelectableTableViewCellID"];
     
-    self.onlineLabel.text = NSLocalizedString(@"online", nil);
-    self.awayLabel.text = NSLocalizedString(@"away", nil);
-    self.busyLabel.text = NSLocalizedString(@"busy", nil);
-    self.offlineLabel.text = NSLocalizedString(@"offline", @"Title of the Offline section");
+    self.onlineLabel.text = LocalizedString(@"online", @"");
+    self.awayLabel.text = LocalizedString(@"away", @"");
+    self.busyLabel.text = LocalizedString(@"busy", @"");
+    self.offlineLabel.text = LocalizedString(@"offline", @"Title of the Offline section");
     
-    self.autoAwayLabel.text = NSLocalizedString(@"autoAway", nil);
+    self.autoAwayLabel.text = LocalizedString(@"autoAway", @"");
     
-    self.statusPersistenceLabel.text = NSLocalizedString(@"statusPersistence", nil);
-    [self.autoAwayTimeSaveButton setTitle:NSLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
+    self.statusPersistenceLabel.text = LocalizedString(@"statusPersistence", @"");
+    [self.autoAwayTimeSaveButton setTitle:LocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
     
     [self setLastActiveLabelAttributedText];
     
@@ -131,8 +133,8 @@
 - (void)setLastActiveLabelAttributedText {
     UIFont *font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightRegular].italic;
     
-    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Last seen %s", nil), "..."] attributes:@{NSFontAttributeName: font}];
-    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", NSLocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
+    NSAttributedString *lastSeenString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:LocalizedString(@"Last seen %s", @""), "..."] attributes:@{NSFontAttributeName: font}];
+    NSMutableAttributedString *showLastSeenAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", LocalizedString(@"Show", @"Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...'")]];
     [showLastSeenAttributedString appendAttributedString:lastSeenString];
     
     self.lastActiveLabel.attributedText = showLastSeenAttributedString;
@@ -268,16 +270,16 @@
             break;
             
         case 1:
-            titleForFooter = NSLocalizedString(@"Allow your contacts to see the last time you were active on MEGA.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
+            titleForFooter = LocalizedString(@"Allow your contacts to see the last time you were active on MEGA.", @"Footer text to explain the meaning of the functionaly 'Last seen' of your chat status.");
             break;
             
         case 2:
-            titleForFooter = NSLocalizedString(@"maintainMyChosenStatusAppearance", @"Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status.");
+            titleForFooter = LocalizedString(@"maintainMyChosenStatusAppearance", @"Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status.");
             break;
             
         case 3:
             if (self.presenceConfig.isAutoAwayEnabled && !self.isSelectingTimeout) {
-                titleForFooter = NSLocalizedString(@"autoAway.footerDescription", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
+                titleForFooter = LocalizedString(@"autoAway.footerDescription", @"Footer text to explain the meaning of the functionaly Auto-away of your chat status.");
                 titleForFooter = [titleForFooter stringByReplacingOccurrencesOfString:@"[X]" withString:[self formatHoursAndMinutes]];
             }
             break;
@@ -357,7 +359,7 @@
 - (NSString *)titleForEmptyState {
     NSString *text = @"";
     if (![MEGAReachabilityManager isReachable]) {
-        text = NSLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+        text = LocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     }
     
     return text;
@@ -366,7 +368,7 @@
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = LocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -383,7 +385,7 @@
 - (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = LocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;

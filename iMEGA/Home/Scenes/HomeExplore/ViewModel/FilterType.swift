@@ -1,3 +1,5 @@
+import MEGAL10n
+
 enum FilterType: String, CaseIterable {
     case none
     case allMedia

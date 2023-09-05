@@ -8,7 +8,7 @@
 #import "Helper.h"
 
 @import PieChart;
-
+@import MEGAL10nObjc;
 
 @interface UsageViewController () <PieChartViewDelegate, PieChartViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate>
 @end
@@ -33,7 +33,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationItem.title = NSLocalizedString(@"Storage", @"Navigate title for the storage information screen");
+    self.navigationItem.title = LocalizedString(@"Storage", @"Navigate title for the storage information screen");
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -94,7 +94,7 @@
     firstPartRange = [firstPartString rangeOfString:firstPartString];
     firstPartMutableAttributedString = [NSMutableAttributedString.alloc initWithString:firstPartString];
     
-    NSString *secondPartString = NSLocalizedString(@" %", nil);
+    NSString *secondPartString = LocalizedString(@" %", @"");
     secondPartMutableAttributedString = [NSMutableAttributedString.alloc initWithString:secondPartString];
     secondPartRange = [secondPartString rangeOfString:secondPartString];
     
@@ -114,7 +114,7 @@
             firstNumber = self.usedStorage;
             secondNumber = self.maxStorage;
             
-            tertiaryTextString = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
+            tertiaryTextString = LocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
             break;
         }
             
@@ -122,7 +122,7 @@
             firstNumber = self.transferOwnUsed;
             secondNumber = self.transferMax;
             
-            tertiaryTextString = NSLocalizedString(@"Transfer", @"Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible).");
+            tertiaryTextString = LocalizedString(@"Transfer", @"Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible).");
             break;
         }
     }

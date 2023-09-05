@@ -19,6 +19,7 @@
 #import "NSArray+MNZCategory.h"
 
 @import MEGAFoundation;
+@import MEGAL10nObjc;
 @import MEGASDKRepo;
 
 static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
@@ -185,9 +186,9 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     }
     
     if (recentActionBucket.timestamp.isToday) {
-        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Today", @"");
+        recentsTVHFV.dateLabel.text = LocalizedString(@"Today", @"");
     } else if (recentActionBucket.timestamp.isYesterday) {
-        recentsTVHFV.dateLabel.text = NSLocalizedString(@"Yesterday", @"");
+        recentsTVHFV.dateLabel.text = LocalizedString(@"Yesterday", @"");
     } else {
         NSString *dateString = [self.dateFormatter stringFromDate:recentActionBucket.timestamp];
         recentsTVHFV.dateLabel.text = dateString;
@@ -271,8 +272,8 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 
 - (UIViewController *)viewControllerForNode:(MEGANode *)node withFolderLink:(BOOL)isFolderLink {
     if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:LocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
         return alertController;
     } else {
         return [node mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:nil inViewController: self];
@@ -285,7 +286,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     EmptyStateView *emptyStateView = [EmptyStateView.alloc initForHomeWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
     [emptyStateView.descriptionButton addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
     
-    [emptyStateView.descriptionButton setTitle:NSLocalizedString(@"recents.emptyState.activityHidden.button", @"Title of the button show in Recents on the empty state when the recent activity is hidden") forState:UIControlStateNormal];
+    [emptyStateView.descriptionButton setTitle:LocalizedString(@"recents.emptyState.activityHidden.button", @"Title of the button show in Recents on the empty state when the recent activity is hidden") forState:UIControlStateNormal];
     emptyStateView.descriptionButton.hidden = RecentsPreferenceManager.showRecents;
     
     return emptyStateView;
@@ -296,9 +297,9 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 - (NSString *)titleForEmptyState {
     NSString *text;
     if (RecentsPreferenceManager.showRecents) {
-        text = (MEGAReachabilityManager.isReachable) ? NSLocalizedString(@"No recent activity", @"Message shown when the user has not recent activity in their account.") : NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+        text = (MEGAReachabilityManager.isReachable) ? LocalizedString(@"No recent activity", @"Message shown when the user has not recent activity in their account.") : LocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     } else {
-        text = NSLocalizedString(@"recents.emptyState.activityHidden.title", @"Title show in Recents on the empty state when the recent activity is hidden");
+        text = LocalizedString(@"recents.emptyState.activityHidden.title", @"Title show in Recents on the empty state when the recent activity is hidden");
     }
     
     return text;
@@ -308,7 +309,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     NSString *text = @"";
     if (RecentsPreferenceManager.showRecents) {
         if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+            text = LocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
         }
     }
     
@@ -329,7 +330,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 - (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = LocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;

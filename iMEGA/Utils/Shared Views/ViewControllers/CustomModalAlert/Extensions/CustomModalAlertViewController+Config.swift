@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureUpgradeAccountThreeButtons(_ titleText: String, _ detailText: String, _ monospaceText: String?, _ imageName: String?, hasBonusButton: Bool = true, firstButtonTitle: String = Strings.Localizable.seePlans, dismissTitle: String = Strings.Localizable.dismiss) {
@@ -15,7 +16,7 @@ extension CustomModalAlertViewController {
         }
         
         self.firstButtonTitle = firstButtonTitle
-        if MEGASdkManager.sharedMEGASdk().isAchievementsEnabled && hasBonusButton {
+        if MEGASdk.shared.isAchievementsEnabled && hasBonusButton {
             secondButtonTitle = Strings.Localizable.General.Button.getBonus
         }
         dismissButtonTitle = dismissTitle

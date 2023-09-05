@@ -17,6 +17,7 @@
 #import "UIImage+MNZCategory.h"
 #import "UsageViewController.h"
 
+@import MEGAL10nObjc;
 @import MEGASDKRepo;
 
 @interface MyAccountHallViewController () <UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
@@ -45,8 +46,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.viewAndEditProfileLabel.text = NSLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
-    self.viewAndEditProfileButton.accessibilityLabel = NSLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
+    self.viewAndEditProfileLabel.text = LocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
+    self.viewAndEditProfileButton.accessibilityLabel = LocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     
     [self registerCustomCells];
     
@@ -151,7 +152,7 @@
         self.tableFooterLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
-    [self setMenuCapableBackButtonWithMenuTitle:NSLocalizedString(@"My Account", nil)];
+    [self setMenuCapableBackButtonWithMenuTitle:LocalizedString(@"My Account", @"")];
     [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody],
                                                                      NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}
                                                           forState:UIControlStateNormal];
@@ -160,17 +161,17 @@
 }
 
 - (void)configAddPhoneNumberTexts {
-    self.addPhoneNumberTitle.text = NSLocalizedString(@"Add Your Phone Number", nil);
+    self.addPhoneNumberTitle.text = LocalizedString(@"Add Your Phone Number", @"");
     
     if (!MEGASdkManager.sharedMEGASdk.isAchievementsEnabled) {
-        self.addPhoneNumberDescription.text = NSLocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", nil);
+        self.addPhoneNumberDescription.text = LocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", @"");
     } else {
         [self.addPhoneNumberActivityIndicator startAnimating];
         [MEGASdkManager.sharedMEGASdk getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             [self.addPhoneNumberActivityIndicator stopAnimating];
             if (error.type == MEGAErrorTypeApiOk) {
                 NSString *storageText = [NSString memoryStyleStringFromByteCount:[request.megaAchievementsDetails classStorageForClassId:MEGAAchievementAddPhone]];
-                self.addPhoneNumberDescription.text = [NSString stringWithFormat:NSLocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", nil), storageText];
+                self.addPhoneNumberDescription.text = [NSString stringWithFormat:LocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", @""), storageText];
             }
         }]];
     }

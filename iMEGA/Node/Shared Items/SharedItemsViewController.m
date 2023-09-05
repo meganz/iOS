@@ -25,6 +25,8 @@
 #import "EmptyStateView.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
+
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchControllerDelegate, UISearchResultsUpdating, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate, AudioPlayerPresenterProtocol, BrowserViewControllerDelegate, TextFileEditable, MEGANavigationControllerDelegate> {
@@ -62,14 +64,14 @@
     
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
     
-    self.navigationItem.title = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
-    self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+    self.navigationItem.title = LocalizedString(@"sharedItems", @"Title of Shared Items section");
+    self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
     
     [self setNavigationBarButtons];
     
-    [self.incomingButton setTitle:NSLocalizedString(@"incoming", nil) forState:UIControlStateNormal];
-    [self.outgoingButton setTitle:NSLocalizedString(@"outgoing", nil) forState:UIControlStateNormal];
-    [self.linksButton setTitle:NSLocalizedString(@"Links", nil) forState:UIControlStateNormal];
+    [self.incomingButton setTitle:LocalizedString(@"incoming", @"") forState:UIControlStateNormal];
+    [self.outgoingButton setTitle:LocalizedString(@"outgoing", @"") forState:UIControlStateNormal];
+    [self.linksButton setTitle:LocalizedString(@"Links", @"") forState:UIControlStateNormal];
     
     self.incomingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.outgoingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
@@ -408,7 +410,7 @@
     if (self.tableView.isEditing) {
         navigationTitle = [self selectedCountTitle];
     } else {
-        navigationTitle = NSLocalizedString(@"sharedItems", @"Title of Shared Items section");
+        navigationTitle = LocalizedString(@"sharedItems", @"Title of Shared Items section");
     }
     
     self.navigationItem.title = navigationTitle;
@@ -490,7 +492,7 @@
     NSMutableArray *outSharesMutableArray = node.outShares;
     outSharesCount = outSharesMutableArray.count;
     if (outSharesCount > 1) {
-        userName = [NSString stringWithFormat:NSLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
+        userName = [NSString stringWithFormat:LocalizedString(@"sharedWithXContacts", @""), outSharesCount];
     } else {
         MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[outSharesMutableArray.firstObject user]];
         NSString *userDisplayName = user.mnz_displayName;
@@ -750,10 +752,10 @@
 
 - (IBAction)leaveShareAction:(UIBarButtonItem *)sender {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSString *alertMessage = (_selectedNodesMutableArray.count > 1) ? NSLocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : NSLocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"leaveFolder", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSString *alertMessage = (_selectedNodesMutableArray.count > 1) ? LocalizedString(@"leaveSharesAlertMessage", @"Alert message shown when the user tap on the leave share action selecting multipe inshares") : LocalizedString(@"leaveShareAlertMessage", @"Alert message shown when the user tap on the leave share action for one inshare");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"leaveFolder", @"") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self removeSelectedIncomingShares];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -785,16 +787,16 @@
         
         NSString *alertMessage;
         if ((usersMutableArray.count == 1) && (self.selectedNodesMutableArray.count == 1)) {
-            alertMessage = NSLocalizedString(@"removeOneShareOneContactMessage", nil);
+            alertMessage = LocalizedString(@"removeOneShareOneContactMessage", @"");
         } else if ((usersMutableArray.count > 1) && (self.selectedNodesMutableArray.count == 1)) {
-            alertMessage = [NSString stringWithFormat:NSLocalizedString(@"removeOneShareMultipleContactsMessage", nil), usersMutableArray.count];
+            alertMessage = [NSString stringWithFormat:LocalizedString(@"removeOneShareMultipleContactsMessage", @""), usersMutableArray.count];
         } else {
-            alertMessage = [NSString stringWithFormat:NSLocalizedString(@"removeMultipleSharesMultipleContactsMessage", nil), usersMutableArray.count];
+            alertMessage = [NSString stringWithFormat:LocalizedString(@"removeMultipleSharesMultipleContactsMessage", @""), usersMutableArray.count];
         }
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"removeSharing", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"removeSharing", @"") message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self removeSelectedOutgoingShares];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];

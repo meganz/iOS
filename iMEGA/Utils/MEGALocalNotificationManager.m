@@ -12,6 +12,8 @@
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
+@import MEGAL10nObjc;
+
 #ifdef MNZ_NOTIFICATION_EXTENSION
 #import "MEGANotifications-Swift.h"
 #else
@@ -164,11 +166,11 @@
                     }
                 } else {
                     MEGALogWarning(@"[Notification] Attachment message wiht nodelist with more than one node is not expected");
-                    body = [NSString stringWithFormat:NSLocalizedString(@"files", nil), nodeList.size.integerValue];
+                    body = [NSString stringWithFormat:LocalizedString(@"files", @""), nodeList.size.integerValue];
                 }
             } else {
                 MEGALogError(@"[Notification] Attachment message without nodelist");
-                body = NSLocalizedString(@"Not found", nil);
+                body = LocalizedString(@"Not found", @"");
             }
         }
             break;
@@ -188,7 +190,7 @@
             
         case MEGAChatMessageTypeContainsMeta:
             if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-                body = [NSString stringWithFormat:@"📍 %@", NSLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+                body = [NSString stringWithFormat:@"📍 %@", LocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
             } else {
                 body = self.message.content;
             }
@@ -196,7 +198,7 @@
             
         case MEGAChatMessageTypeNormal:
             if (self.message.isEdited) {
-                body = [NSString stringWithFormat:@"%@ %@", self.message.content, NSLocalizedString(@"edited", nil)];
+                body = [NSString stringWithFormat:@"%@ %@", self.message.content, LocalizedString(@"edited", @"")];
             } else {
                 body = self.message.content;
             }
@@ -209,7 +211,7 @@
             [sharedUserDefaults setInteger:badgeCount + 1 forKey:MEGAApplicationIconBadgeNumber];
             UIApplication.sharedApplication.applicationIconBadgeNumber = badgeCount + 1;
 #endif
-            body = NSLocalizedString(@"missedCall", @"Title of the notification for a missed call");
+            body = LocalizedString(@"missedCall", @"Title of the notification for a missed call");
             break;
         }
                     

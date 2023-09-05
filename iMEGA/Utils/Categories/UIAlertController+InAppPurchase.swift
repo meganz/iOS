@@ -1,4 +1,6 @@
- extension UIAlertController {
+import MEGAL10n
+
+extension UIAlertController {
     @objc class func inAppPurchaseAlertWithAppStoreSettingsButton(_ alertTitle: String, alertMessage: String?) -> UIAlertController {
         let alertController: UIAlertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         

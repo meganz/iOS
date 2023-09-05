@@ -3,6 +3,8 @@
 #import "OnboardingViewController.h"
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 @interface InitialLaunchViewController () <MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -21,10 +23,10 @@
     
     [self updateAppearance];
     
-    self.titleLabel.text = NSLocalizedString(@"Setup MEGA", @"Button which triggers the initial setup");
-    self.descriptionLabel.text = NSLocalizedString(@"To fully take advantage of your MEGA account we need to ask you some permissions.", @"Detailed explanation of why the user should give some permissions to MEGA");
-    [self.setupButton setTitle:NSLocalizedString(@"Setup MEGA", @"Button which triggers the initial setup") forState:UIControlStateNormal];
-    [self.skipButton setTitle:NSLocalizedString(@"skipButton", @"Button title that skips the current action") forState:UIControlStateNormal];
+    self.titleLabel.text = LocalizedString(@"Setup MEGA", @"Button which triggers the initial setup");
+    self.descriptionLabel.text = LocalizedString(@"To fully take advantage of your MEGA account we need to ask you some permissions.", @"Detailed explanation of why the user should give some permissions to MEGA");
+    [self.setupButton setTitle:LocalizedString(@"Setup MEGA", @"Button which triggers the initial setup") forState:UIControlStateNormal];
+    [self.skipButton setTitle:LocalizedString(@"skipButton", @"Button title that skips the current action") forState:UIControlStateNormal];
     
     self.setupButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     self.skipButton.titleLabel.adjustsFontForContentSizeCategory = YES;
@@ -80,12 +82,12 @@
 }
 
 - (IBAction)skipButtonPressed:(UIButton *)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"attention", @"Alert title to attract attention") message:NSLocalizedString(@"The MEGA app may not work as expected without the required permissions. Are you sure?", @"Message warning the user about the risk of not setting up permissions") preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"attention", @"Alert title to attract attention") message:LocalizedString(@"The MEGA app may not work as expected without the required permissions. Are you sure?", @"Message warning the user about the risk of not setting up permissions") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"yes", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.delegate setupFinished];
         [self.delegate readyToShowRecommendations];
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"no", @"") style:UIAlertActionStyleCancel handler:nil]];
 
     [self presentViewController:alertController animated:YES completion:nil];
 }

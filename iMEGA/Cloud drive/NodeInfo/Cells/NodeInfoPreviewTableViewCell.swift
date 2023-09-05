@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import UIKit
 
 class NodeInfoPreviewTableViewCell: UITableViewCell {
@@ -18,13 +19,13 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
         linkedView.isHidden = !node.isExported()
         if node.type == .file {
             previewImage.mnz_setThumbnail(by: node)
-            sizeLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
+            sizeLabel.text = Helper.size(for: node, api: MEGASdk.shared)
             shareStackView.isHidden = true
-            versionedView.isHidden = !MEGASdkManager.sharedMEGASdk().hasVersions(for: node)
+            versionedView.isHidden = !MEGASdk.shared.hasVersions(for: node)
             playIconImage.isHidden = node.name?.fileExtensionGroup.isVideo != true
         } else if node.type == .folder {
             previewImage.image = NodeAssetsManager.shared.icon(for: node)
-            let nodeAccess = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
+            let nodeAccess = MEGASdk.shared.accessLevel(for: node)
             shareStackView.isHidden = isNodeInRubbish || (nodeAccess != .accessOwner)
             shareButton.setTitle(Strings.Localizable.General.share.localizedUppercase, for: .normal)
             let folderSize = folderInfo?.currentSize ?? 0

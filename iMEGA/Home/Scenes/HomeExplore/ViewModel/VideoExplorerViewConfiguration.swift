@@ -1,3 +1,5 @@
+import MEGAL10n
+
 struct VideoExplorerViewConfiguration: FilesExplorerViewConfiguration {
     
     var title: String {

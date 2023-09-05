@@ -12,6 +12,8 @@
 
 #import "MEGANavigationController.h"
 
+@import MEGAL10nObjc;
+
 @interface TwoFactorAuthenticationViewController () <UITextViewDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -40,13 +42,13 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    self.navigationItem.title = NSLocalizedString(@"twoFactorAuthentication", @"");
+    self.navigationItem.title = LocalizedString(@"twoFactorAuthentication", @"");
     
-    self.descriptionLabel.text = NSLocalizedString(@"pleaseEnterTheSixDigitCode", @"A message on the Verify Login page telling the user to enter their 2FA code.");
+    self.descriptionLabel.text = LocalizedString(@"pleaseEnterTheSixDigitCode", @"A message on the Verify Login page telling the user to enter their 2FA code.");
     
-    self.invalidCodeLabel.text = NSLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
+    self.invalidCodeLabel.text = LocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
     
-    [self.lostYourAuthenticatorDeviceButton setTitle:NSLocalizedString(@"lostYourAuthenticatorDevice", @"A button to help them restore their account if they have lost their 2FA device.") forState:UIControlStateNormal];
+    [self.lostYourAuthenticatorDeviceButton setTitle:LocalizedString(@"lostYourAuthenticatorDevice", @"A button to help them restore their account if they have lost their 2FA device.") forState:UIControlStateNormal];
     if (self.twoFAMode != TwoFactorAuthenticationEnable) {
         self.lostYourAuthenticatorDeviceButton.hidden = self.lostYourAuthenticatorDeviceImage.hidden = NO;
         self.lostYourAuthenticatorDeviceButton.enabled = YES;
@@ -299,7 +301,7 @@
                 break;
                 
             default:
-                [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
+                [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
                 break;
         }
         return;
@@ -308,7 +310,7 @@
     self.invalidCode = nil;
     switch (request.type) {
         case MEGARequestTypeChangePassword: {
-            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
+            [SVProgressHUD showSuccessWithStatus:LocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
             
             if (self.twoFAMode == TwoFactorAuthenticationChangePassword) {
                 [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -338,9 +340,9 @@
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }
             } else {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"twoFactorAuthenticationDisabled", @"A message on a dialog to say that 2FA has been successfully disabled.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"twoFactorAuthenticationDisabled", @"A message on a dialog to say that 2FA has been successfully disabled.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                     [self.navigationController popViewControllerAnimated:YES];
                 }]];
                 

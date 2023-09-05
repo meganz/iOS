@@ -1,3 +1,4 @@
+import MEGAL10n
 import MessageKit
 
 class ChatViewCallCollectionCell: MessageContentCell {

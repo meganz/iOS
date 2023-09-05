@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 @objc final class CloudDriveViewModel: NSObject {
     private let router = SharedItemsViewRouter()

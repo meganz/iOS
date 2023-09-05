@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAL10n
 import MEGASDKRepo
 
 extension CustomModalAlertViewController {
@@ -13,7 +14,7 @@ extension CustomModalAlertViewController {
         
         if MEGAPurchase.sharedInstance().pricing == nil {
             SVProgressHUD.show()
-            let sdkDelegate = MEGAResultRequestDelegate { (result) in
+            let sdkDelegate = RequestDelegate { result in
                 SVProgressHUD.dismiss()
                 switch result {
                 case .success(let request):
@@ -24,7 +25,7 @@ extension CustomModalAlertViewController {
                     return
                 }
             }
-            MEGASdkManager.sharedMEGASdk().getPricingWith(sdkDelegate)
+            MEGASdk.shared.getPricingWith(sdkDelegate)
         }
     }
     
@@ -45,7 +46,7 @@ extension CustomModalAlertViewController {
     
     func configureForStorageQuotaError(_ uploading: Bool) {
         var imageName: String?
-        if let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails {
+        if let accountDetails = MEGASdk.shared.mnz_accountDetails {
             imageName = accountDetails.storageMax.int64Value > accountDetails.storageUsed.int64Value ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.storageFull.name
         }
         

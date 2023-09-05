@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import UIKit
 
@@ -423,7 +424,7 @@ extension ProfileViewController: MEGARequestDelegate {
             let paramType = MEGAUserAttribute(rawValue: request.paramType)
             if paramType == .avatar {
                 if error.type != .apiOk {
-                    SVProgressHUD.showError(withStatus: request.requestString + " " + NSLocalizedString(error.name, comment: ""))
+                    SVProgressHUD.showError(withStatus: request.requestString + " " + Strings.localized(error.name, comment: ""))
                     return
                 }
                 

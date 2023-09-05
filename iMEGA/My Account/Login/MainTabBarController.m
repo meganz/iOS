@@ -11,6 +11,8 @@
 #import "MEGA-Swift.h"
 
 #import "NSObject+Debounce.h"
+
+@import MEGAL10nObjc;
 @import PureLayout;
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGANavigationControllerDelegate, MEGAGlobalDelegate>
@@ -189,7 +191,7 @@
 - (void)showAddContact {
     InviteContactViewController *inviteContactVC = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
     MEGANavigationController *navigation = [MEGANavigationController.alloc initWithRootViewController:inviteContactVC];
-    [navigation addLeftDismissButtonWithText:NSLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")];
+    [navigation addLeftDismissButtonWithText:LocalizedString(@"close", @"A button label. The button allows the user to close the conversation.")];
     [self presentViewController:navigation animated:YES completion:nil];
 }
 

@@ -1,6 +1,7 @@
 import ChatRepo
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGARepo
 import MEGASDKRepo
 
@@ -25,7 +26,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         )
         
         let userImageUseCase = UserImageUseCase(
-            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userImageRepo: UserImageRepository(sdk: MEGASdk.shared),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
@@ -39,8 +40,8 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
             userImageUseCase: userImageUseCase,
             chatUseCase: ChatUseCase(
                 chatRepo: ChatRepository(
-                    sdk: MEGASdkManager.sharedMEGASdk(),
-                    chatSDK: MEGASdkManager.sharedMEGAChatSdk())
+                    sdk: MEGASdk.shared,
+                    chatSDK: MEGAChatSdk.shared)
             ),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),

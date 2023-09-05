@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 struct ScheduleMeetingCreationFrequencyOption {
     let name: String

@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
@@ -40,7 +41,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private lazy var chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
     
     private var createCallUseCase: CallUseCase<CallRepository> {
-        let callRepository = CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)
+        let callRepository = CallRepository(chatSdk: MEGAChatSdk.shared, callActionManager: CallActionManager.shared)
         return CallUseCase(repository: callRepository)
     }
     
@@ -66,7 +67,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func build() -> UIViewController {
         let meetingNoUserJoinedUseCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
-        let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdk.shared))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         let viewModel = MeetingContainerViewModel(router: self,
                                                   chatRoom: chatRoom,

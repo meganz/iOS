@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension VerifyCredentialsViewController {
     
     @objc func setContentMessages() {

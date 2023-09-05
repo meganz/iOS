@@ -27,6 +27,8 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAL10nObjc;
+
 @interface TransfersWidgetViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate, TransferActionViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *selectorView;
@@ -87,12 +89,12 @@ static TransfersWidgetViewController* instance = nil;
     [self registerNibWithName:@"TransferTableViewCell" identifier:@"transferCell"];
     [self registerNibWithName:@"TransferNodeTableViewCell" identifier:@"transferNodeCell"];
     
-    self.editBarButtonItem = [UIBarButtonItem.alloc initWithTitle:NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") style:UIBarButtonItemStylePlain target:self action:@selector(switchEdit)];
+    self.editBarButtonItem = [UIBarButtonItem.alloc initWithTitle:LocalizedString(@"edit", @"Caption of a button to edit the files that are selected") style:UIBarButtonItemStylePlain target:self action:@selector(switchEdit)];
     self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     
-    [self.inProgressButton setTitle:NSLocalizedString(@"In Progress", @"Title of one of the filters in the Transfers section. In this case In Progress transfers") forState:UIControlStateNormal];
-    [self.completedButton setTitle:NSLocalizedString(@"Completed",@"Title of one of the filters in the Transfers section. In this case Completed transfers") forState:UIControlStateNormal];
-    [self.clearAllButton setTitle:self.tableView.isEditing ? NSLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : NSLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
+    [self.inProgressButton setTitle:LocalizedString(@"In Progress", @"Title of one of the filters in the Transfers section. In this case In Progress transfers") forState:UIControlStateNormal];
+    [self.completedButton setTitle:LocalizedString(@"Completed",@"Title of one of the filters in the Transfers section. In this case Completed transfers") forState:UIControlStateNormal];
+    [self.clearAllButton setTitle:self.tableView.isEditing ? LocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : LocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
@@ -111,7 +113,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationItem.title = NSLocalizedString(@"transfers", @"Transfers");
+    self.navigationItem.title = LocalizedString(@"transfers", @"Transfers");
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
@@ -162,12 +164,12 @@ static TransfersWidgetViewController* instance = nil;
     
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll:
-            [self.clearAllButton setTitle:self.areTransfersPaused ? NSLocalizedString(@"Resume All", @"tool bar title used in transfer widget, allow user to resume all transfers in the list") : NSLocalizedString(@"Pause All", @"tool bar title used in transfer widget, allow user to Pause all transfers in the list")];
+            [self.clearAllButton setTitle:self.areTransfersPaused ? LocalizedString(@"Resume All", @"tool bar title used in transfer widget, allow user to resume all transfers in the list") : LocalizedString(@"Pause All", @"tool bar title used in transfer widget, allow user to Pause all transfers in the list")];
             self.clearAllButton.enabled = true;
             break;
             
         case TransfersWidgetSelectedCompleted:
-            [self.clearAllButton setTitle:self.tableView.isEditing ? NSLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : NSLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
+            [self.clearAllButton setTitle:self.tableView.isEditing ? LocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : LocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
             break;
     }
 }
@@ -302,7 +304,7 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NSLocalizedString(@"clear", @"Button title to clear something");
+    return LocalizedString(@"clear", @"Button title to clear something");
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -694,13 +696,13 @@ static TransfersWidgetViewController* instance = nil;
         case TransfersWidgetSelectedAll:
             self.completedButton.selected = NO;
             self.inProgressButton.selected = YES;
-            [self.clearAllButton setTitle:self.areTransfersPaused ? NSLocalizedString(@"Resume All", @"tool bar title used in transfer widget, allow user to resume all transfers in the list") : NSLocalizedString(@"Pause All", @"tool bar title used in transfer widget, allow user to Pause all transfers in the list")];
+            [self.clearAllButton setTitle:self.areTransfersPaused ? LocalizedString(@"Resume All", @"tool bar title used in transfer widget, allow user to resume all transfers in the list") : LocalizedString(@"Pause All", @"tool bar title used in transfer widget, allow user to Pause all transfers in the list")];
             break;
             
         case TransfersWidgetSelectedCompleted:
             self.inProgressButton.selected = NO;
             self.completedButton.selected = YES;
-            [self.clearAllButton setTitle:self.tableView.isEditing ? NSLocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : NSLocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
+            [self.clearAllButton setTitle:self.tableView.isEditing ? LocalizedString(@"Clear Selected", @"tool bar title used in transfer widget, allow user to clear the selected items in the list") : LocalizedString(@"Clear All", @"tool bar title used in transfer widget, allow user to clear all items in the list")];
             break;
             
     }
@@ -765,11 +767,11 @@ static TransfersWidgetViewController* instance = nil;
     if ((self.transfers.count == 0) && (self.uploadTransfersQueued.count == 0)) {
         return;
     }
-    NSString *transfersTypeString = NSLocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
+    NSString *transfersTypeString = LocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
     
-    UIAlertController *cancelTransfersAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"cancelTransfersTitle", @"Cancel transfers") message:[NSString stringWithFormat:NSLocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString] preferredStyle:UIAlertControllerStyleAlert];
-    [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertController *cancelTransfersAlert = [UIAlertController alertControllerWithTitle:LocalizedString(@"cancelTransfersTitle", @"Cancel transfers") message:[NSString stringWithFormat:LocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString] preferredStyle:UIAlertControllerStyleAlert];
+    [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self cancelTransfersForDirection:0];
         [self cancelTransfersForDirection:1];
         
@@ -793,13 +795,13 @@ static TransfersWidgetViewController* instance = nil;
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll:
             if (self.areTransfersPaused) {
-                text = NSLocalizedString(@"transfersEmptyState_titlePaused", nil);
+                text = LocalizedString(@"transfersEmptyState_titlePaused", @"");
             } else {
-                text = NSLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
+                text = LocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
             }
             break;
         case TransfersWidgetSelectedCompleted:
-            text = NSLocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
+            text = LocalizedString(@"transfersEmptyState_titleAll", @"Title shown when the there's no transfers and they aren't paused");
             break;
     }
     
@@ -846,7 +848,7 @@ static TransfersWidgetViewController* instance = nil;
             
         case MEGARequestTypeCancelTransfers: {
             [self reloadView];
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:NSLocalizedString(@"transfersCancelled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transfersCancelled", @"")];
             break;
         }
             
@@ -915,7 +917,7 @@ static TransfersWidgetViewController* instance = nil;
     }
     
     if (error.type == MEGAErrorTypeApiEIncomplete && [self shouldShowTransferCancelledMessageFor:transfer]) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:NSLocalizedString(@"transferCancelled", nil)];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
     }
     
     [self deleteUploadingTransfer:transfer];
@@ -936,7 +938,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)cancelQueuedUploadTransfer:(NSString *)localIdentifier {
     NSIndexPath *indexPath = [self indexPathForUploadTransferQueuedWithLocalIdentifier:localIdentifier];
     if (localIdentifier && indexPath) {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:NSLocalizedString(@"transferCancelled", nil)];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
         
         [self.uploadTransfersQueued removeObjectAtIndex:indexPath.row];
         [[MEGAStore shareInstance] deleteUploadTransferWithLocalIdentifier:localIdentifier];
@@ -1026,7 +1028,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)switchEdit {
     BOOL isEditing = [self isEditing];
     [self.tableView setEditing:isEditing animated:YES];
-    [self.editBarButtonItem setTitle:self.tableView.isEditing ? NSLocalizedString(@"done", @"") : NSLocalizedString(@"edit", @"Caption of a button to edit the files that are selected")];
+    [self.editBarButtonItem setTitle:self.tableView.isEditing ? LocalizedString(@"done", @"") : LocalizedString(@"edit", @"Caption of a button to edit the files that are selected")];
     [self updateRightBarButtonItems];
     
     [self reloadView];

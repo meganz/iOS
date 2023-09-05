@@ -1,6 +1,7 @@
 import Contacts
 import ContactsUI
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MessageUI
 import UIKit

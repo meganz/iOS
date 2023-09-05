@@ -16,6 +16,7 @@
 #import "ProductDetailViewController.h"
 #import "ProductTableViewCell.h"
 
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 
 @interface UpgradeTableViewController () <MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, MEGARestoreDelegate>
@@ -75,25 +76,25 @@
     SKProduct *product = MEGAPurchase.sharedInstance.products.firstObject;
     self.numberFormatter.locale = product.priceLocale;
     
-    NSString *navigationTitle = MEGASdkManager.sharedMEGASdk.mnz_isProAccount ? NSLocalizedString(@"Manage Account", @"account management button title in business account’s landing page") : NSLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
-    self.title = (self.isChoosingTheAccountType) ? NSLocalizedString(@"chooseYourAccountType", nil) : navigationTitle;
+    NSString *navigationTitle = MEGASdkManager.sharedMEGASdk.mnz_isProAccount ? LocalizedString(@"Manage Account", @"account management button title in business account’s landing page") : LocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+    self.title = (self.isChoosingTheAccountType) ? LocalizedString(@"chooseYourAccountType", @"") : navigationTitle;
     
     [self setMenuCapableBackButtonWithMenuTitle:self.title];
     
-    self.chooseFromOneOfThePlansLabel.text = (self.isChoosingTheAccountType) ? NSLocalizedString(@"selectOneAccountType", @"") : NSLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
+    self.chooseFromOneOfThePlansLabel.text = (self.isChoosingTheAccountType) ? LocalizedString(@"selectOneAccountType", @"") : LocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     
-    self.chooseFromOneOfThePlansProLabel.text = NSLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
+    self.chooseFromOneOfThePlansProLabel.text = LocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     
-    self.currentPlanLabel.text = NSLocalizedString(@"inAppPurchase.upgrade.label.currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
+    self.currentPlanLabel.text = LocalizedString(@"inAppPurchase.upgrade.label.currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
     
-    _autorenewableDescriptionLabel.text = NSLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
+    _autorenewableDescriptionLabel.text = LocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     
-    self.termsAndPoliciesBarButtonItem.title = NSLocalizedString(@"settings.section.termsAndPolicies", @"Title of one of the Settings sections where you can see MEGA's 'Terms and Policies'");
+    self.termsAndPoliciesBarButtonItem.title = LocalizedString(@"settings.section.termsAndPolicies", @"Title of one of the Settings sections where you can see MEGA's 'Terms and Policies'");
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
 
     if (self.presentingViewController || self.navigationController.presentingViewController.presentedViewController == self.navigationController || [self.tabBarController.presentingViewController isKindOfClass:UITabBarController.class]) {
         self.hideSkipButton = NO;
-        self.skipBarButtonItem.title = NSLocalizedString(@"skipButton", @"Button title that skips the current action");
+        self.skipBarButtonItem.title = LocalizedString(@"skipButton", @"Button title that skips the current action");
     } else {
         self.hideSkipButton = YES;
     }
@@ -101,7 +102,7 @@
     if (self.isChoosingTheAccountType) {
         self.navigationItem.rightBarButtonItem = nil;
     } else {
-        UIBarButtonItem *restoreBarButtonItem = [UIBarButtonItem.alloc initWithTitle:NSLocalizedString(@"restore", @"Button title to restore failed purchases") style:UIBarButtonItemStylePlain target:self action:@selector(restoreTouchUpInside)];
+        UIBarButtonItem *restoreBarButtonItem = [UIBarButtonItem.alloc initWithTitle:LocalizedString(@"restore", @"Button title to restore failed purchases") style:UIBarButtonItemStylePlain target:self action:@selector(restoreTouchUpInside)];
         self.navigationItem.rightBarButtonItem = restoreBarButtonItem;
         if (self.shouldHideSkipButton) {
             self.navigationItem.rightBarButtonItem = restoreBarButtonItem;
@@ -210,7 +211,7 @@
     self.footerTopLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.customPlanLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    NSString *toUpgradeYourCurrentSubscriptionString = NSLocalizedString(@"To upgrade your current subscription, please contact support for a [A]custom plan[/A].", @"When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan.");
+    NSString *toUpgradeYourCurrentSubscriptionString = LocalizedString(@"To upgrade your current subscription, please contact support for a [A]custom plan[/A].", @"When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan.");
     NSString *customPlanString = [toUpgradeYourCurrentSubscriptionString mnz_stringBetweenString:@"[A]" andString:@"[/A]"];
     toUpgradeYourCurrentSubscriptionString = toUpgradeYourCurrentSubscriptionString.mnz_removeWebclientFormatters;
     NSMutableAttributedString *customPlanMutableAttributedString = [NSMutableAttributedString.new initWithString:toUpgradeYourCurrentSubscriptionString attributes:@{NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
@@ -218,8 +219,8 @@
     self.customPlanLabel.attributedText = customPlanMutableAttributedString;
     
     self.twoMonthsFreeLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    NSMutableAttributedString *asteriskMutableAttributedString = [NSMutableAttributedString.alloc initWithString:NSLocalizedString(@"* ", nil) attributes: @{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
-    NSAttributedString *twoMonthsFreeAttributedString = [NSAttributedString.alloc initWithString:NSLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *asteriskMutableAttributedString = [NSMutableAttributedString.alloc initWithString:LocalizedString(@"* ", @"") attributes: @{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
+    NSAttributedString *twoMonthsFreeAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}];
     [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
     self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
     self.autorenewableDescriptionLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
@@ -231,7 +232,7 @@
     
     self.currentPlanImageView.image = [self imageForProLevel:self.userProLevel];
     self.currentPlanNameView.backgroundColor = [UIColor mnz_colorWithProLevel:self.userProLevel];
-    self.currentPlanNameLabel.text = NSLocalizedString([MEGAAccountDetails stringForAccountType:self.userProLevel], nil);
+    self.currentPlanNameLabel.text = LocalizedString([MEGAAccountDetails stringForAccountType:self.userProLevel], @"");
     
     if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
         self.tableView.tableHeaderView = self.chooseFromOneOfThePlansPROHeaderView;
@@ -324,7 +325,7 @@
 }
 
 - (NSAttributedString *)storageAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSString *storageString = NSLocalizedString(@"account.storageQuota", @"Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'.");
+    NSString *storageString = LocalizedString(@"account.storageQuota", @"Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'.");
     NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:index];
@@ -337,7 +338,7 @@
 }
 
 - (NSAttributedString *)bandwidthAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSString *transferQuotaString = NSLocalizedString(@"account.transferQuota.perMonth", @"Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'.");
+    NSString *transferQuotaString = LocalizedString(@"account.transferQuota.perMonth", @"Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'.");
     NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:index];
@@ -350,7 +351,7 @@
 }
 
 - (NSAttributedString *)freeStorageAttributedString {
-    NSString *freeStorageString = NSLocalizedString(@"account.storage.freePlan", @"Text listed that includes the amount of storage that a free user gets");
+    NSString *freeStorageString = LocalizedString(@"account.storage.freePlan", @"Text listed that includes the amount of storage that a free user gets");
     NSString *freeStorageValueString = [freeStorageString mnz_stringBetweenString:@"[B]" andString:@"[/B]"];
     freeStorageString = freeStorageString.mnz_removeWebclientFormatters;
     NSMutableAttributedString *freeStorageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
@@ -359,14 +360,14 @@
     NSRange freeStorageValueRange = [freeStorageString rangeOfString:freeStorageValueString];
     [freeStorageMutableAttributedString replaceCharactersInRange:freeStorageValueRange withAttributedString:storageMutableAttributedString];
     
-    NSAttributedString *superscriptOneAttributedString = [NSAttributedString.alloc initWithString:NSLocalizedString(@" ¹", nil) attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
+    NSAttributedString *superscriptOneAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@" ¹", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
     [freeStorageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
     
     return freeStorageMutableAttributedString;
 }
 
 - (NSAttributedString *)freeTransferQuotaAttributedString {
-    NSString *transferQuotaString = NSLocalizedString(@"account.transferQuota.freePlan", @"Text listed that explain that a free user gets a limited amount of transfer quota.");
+    NSString *transferQuotaString = LocalizedString(@"account.transferQuota.freePlan", @"Text listed that explain that a free user gets a limited amount of transfer quota.");
     NSString *limitedString = [transferQuotaString mnz_stringBetweenString:@"[B]" andString:@"[/B]"];
     transferQuotaString = transferQuotaString.mnz_removeWebclientFormatters;
     NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
@@ -437,12 +438,12 @@
         mailComposeVC.mailComposeDelegate = self;
         mailComposeVC.toRecipients = @[@"support@mega.nz"];
         
-        mailComposeVC.subject = NSLocalizedString(@"Upgrade to a custom plan", @"Mail title to upgrade to a custom plan");
-        [mailComposeVC setMessageBody:NSLocalizedString(@"Ask us how you can upgrade to a custom plan:", @"Mail subject to upgrade to a custom plan") isHTML:NO];
+        mailComposeVC.subject = LocalizedString(@"Upgrade to a custom plan", @"Mail title to upgrade to a custom plan");
+        [mailComposeVC setMessageBody:LocalizedString(@"Ask us how you can upgrade to a custom plan:", @"Mail subject to upgrade to a custom plan") isHTML:NO];
         
         [self presentViewController:mailComposeVC animated:YES completion:nil];
     } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:NSLocalizedString(@"noEmailAccountConfigured", @"Text shown when you want to send feedback of the app and you don't have an email account set up on your device")];
+        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:LocalizedString(@"noEmailAccountConfigured", @"Text shown when you want to send feedback of the app and you don't have an email account set up on your device")];
     }
 }
 
@@ -470,9 +471,9 @@
     ProductTableViewCell *cell;
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
-        NSMutableAttributedString *superscriptOneAttributedString = [NSMutableAttributedString.alloc initWithString:NSLocalizedString(@"¹ ", nil) attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
+        NSMutableAttributedString *superscriptOneAttributedString = [NSMutableAttributedString.alloc initWithString:LocalizedString(@"¹ ", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
         
-        NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:NSLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+        NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
         [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
         
         cell.subjectToYourParticipationLabel.attributedText = superscriptOneAttributedString;
@@ -482,7 +483,7 @@
     
     NSNumber *proLevelNumber = [self.proLevelsMutableArray objectOrNilAtIndex:indexPath.row];
     cell.productImageView.image = [self imageForProLevel:proLevelNumber.integerValue];
-    cell.productNameLabel.text = NSLocalizedString([MEGAAccountDetails stringForAccountType:proLevelNumber.integerValue], nil);
+    cell.productNameLabel.text = LocalizedString([MEGAAccountDetails stringForAccountType:proLevelNumber.integerValue], @"");
     cell.productNameView.backgroundColor = [UIColor mnz_colorWithProLevel:proLevelNumber.integerValue];
     cell.productPriceLabel.textColor = [UIColor mnz_colorForPriceLabelWithProLevel:proLevelNumber.integerValue traitCollection:self.traitCollection];
     
@@ -492,8 +493,8 @@
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:proLevelIndexNumber.integerValue];
     
-    NSString *productPriceString = [NSString stringWithFormat:NSLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self.numberFormatter stringFromNumber:product.price]];
-    NSAttributedString *asteriskAttributedString = [NSAttributedString.alloc initWithString:NSLocalizedString(@" *", nil) attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
+    NSString *productPriceString = [NSString stringWithFormat:LocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self.numberFormatter stringFromNumber:product.price]];
+    NSAttributedString *asteriskAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@" *", @"") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
     NSMutableAttributedString *productPriceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:productPriceString attributes:@{NSFontAttributeName : [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName : [UIColor mnz_colorWithProLevel:proLevelNumber.integerValue]}];
     [productPriceMutableAttributedString appendAttributedString:asteriskAttributedString];
     cell.productPriceLabel.attributedText = productPriceMutableAttributedString;
@@ -523,8 +524,8 @@
     if (!self.isPurchased) {
         self.purchased = YES;
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"thankYou_title", nil)  message:NSLocalizedString(@"purchaseRestore_message", nil) preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"thankYou_title", @"")  message:LocalizedString(@"purchaseRestore_message", @"") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (UIApplication.mnz_presentingViewController) {
                 [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:nil];
             }
@@ -536,16 +537,16 @@
 
 - (void)incompleteRestore {
     [SVProgressHUD dismiss];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"incompleteRestore_title", @"Alert title shown when a restore hasn't been completed correctly")  message:NSLocalizedString(@"incompleteRestore_message", @"Alert message shown when a restore hasn't been completed correctly") preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"incompleteRestore_title", @"Alert title shown when a restore hasn't been completed correctly")  message:LocalizedString(@"incompleteRestore_message", @"Alert message shown when a restore hasn't been completed correctly") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:nil]];
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)failedRestore:(NSInteger)errorCode message:(NSString *)errorMessage {
     [SVProgressHUD dismiss];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"failedRestore_title", @"Alert title shown when the restoring process has stopped for some reason")  message:NSLocalizedString(@"failedRestore_message", @"Alert message shown when the restoring process has stopped for some reason") preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"failedRestore_title", @"Alert title shown when the restoring process has stopped for some reason")  message:LocalizedString(@"failedRestore_message", @"Alert message shown when the restoring process has stopped for some reason") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:nil]];
     
     [self presentViewController:alertController animated:YES completion:nil];
 }

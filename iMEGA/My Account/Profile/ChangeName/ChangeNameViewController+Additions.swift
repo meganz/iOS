@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGASDKRepo
 import MEGASwift
 
@@ -34,7 +35,7 @@ extension ChangeNameViewController: UITextFieldDelegate {
                 SVProgressHUD.showSuccess(withStatus: Strings.Localizable.youHaveSuccessfullyChangedYourProfile)
                 dismiss(animated: true)
             } catch let megaError as MEGAError {
-                SVProgressHUD.showError(withStatus: NSLocalizedString(megaError.name, comment: ""))
+                SVProgressHUD.showError(withStatus: Strings.localized(megaError.name, comment: ""))
             } catch {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

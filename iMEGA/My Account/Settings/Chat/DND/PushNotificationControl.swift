@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import UIKit
 
 /// A protocol to manage PushNotifications based on user preferences
@@ -38,12 +39,12 @@ class PushNotificationControl: NSObject, MEGARequestDelegate {
     @objc init(delegate: any PushNotificationControlProtocol) {
         self.delegate = delegate
         super.init()
-        MEGASdkManager.sharedMEGASdk().add(self as (any MEGARequestDelegate))
-        MEGASdkManager.sharedMEGASdk().getPushNotificationSettings()
+        MEGASdk.shared.add(self as (any MEGARequestDelegate))
+        MEGASdk.shared.getPushNotificationSettings()
     }
     
     deinit {
-        MEGASdkManager.sharedMEGASdk().remove(self as (any MEGARequestDelegate))
+        MEGASdk.shared.remove(self as (any MEGARequestDelegate))
     }
     
     // MARK: - Interface.
@@ -101,7 +102,7 @@ extension PushNotificationControl {
         
         showProgress()
         block()
-        MEGASdkManager.sharedMEGASdk().setPushNotificationSettings(pushNotificationSettings)
+        MEGASdk.shared.setPushNotificationSettings(pushNotificationSettings)
     }
     
     func dndTimeInterval(dndTurnOnOption: DNDTurnOnOption) -> Int64? {

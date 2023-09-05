@@ -1,3 +1,4 @@
+import MEGAL10n
 import MessageKit
 
 extension ChatViewController: MessagesDataSource {
@@ -51,7 +52,7 @@ extension ChatViewController: MessagesDataSource {
     
     func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
         
-        guard MEGASdkManager.sharedMEGAChatSdk().isFullHistoryLoaded(forChat: chatRoom.chatId) else {
+        guard MEGAChatSdk.shared.isFullHistoryLoaded(forChat: chatRoom.chatId) else {
             let loadingMessagesHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: LoadingMessageReusableView.reuseIdentifier, for: indexPath)  as! LoadingMessageReusableView
             loadingMessagesHeaderView.loadingView.mnz_startShimmering()
             return loadingMessagesHeaderView
@@ -122,9 +123,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
         guard chatRoom.canAddReactions else {
             return
         }
-        guard let emojisStringList = MEGASdkManager
-            .sharedMEGAChatSdk()
-            .messageReactions(forChat: chatRoom.chatId,
+        guard let emojisStringList = MEGAChatSdk.shared.messageReactions(forChat: chatRoom.chatId,
                                  messageId: chatMessage.message.messageId) else {
                                     MEGALogDebug("Could not fetch the emoji list for a message")
                                     return

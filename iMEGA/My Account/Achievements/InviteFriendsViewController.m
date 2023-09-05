@@ -3,6 +3,8 @@
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
+@import MEGAL10nObjc;
+
 @interface InviteFriendsViewController () <UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -30,15 +32,15 @@
     [super viewDidLoad];
     [self configureNavigationBar];
     
-    self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"account.achievement.referral.title", nil);
+    self.inviteYourFriendsTitleLabel.text = LocalizedString(@"account.achievement.referral.title", @"");
     self.inviteYourFriendsSubtitleLabel.text = self.inviteYourFriendsSubtitleString;
     
-    [self.inviteButton setTitle:NSLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.") forState:UIControlStateNormal];
+    [self.inviteButton setTitle:LocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.") forState:UIControlStateNormal];
     
-    self.howItWorksLabel.text = NSLocalizedString(@"howItWorks", @"");
-    self.howItWorksFirstParagraphLabel.text = [NSLocalizedString(@"howItWorksMain", @"")  mnz_removeWebclientFormatters];
-    self.howItWorksSecondParagraphLabel.text = NSLocalizedString(@"howItWorksSecondary", @"");
-    self.howItWorksThirdParagraphLabel.text = NSLocalizedString(@"howItWorksTertiary", @"A message which is shown once someone has invited a friend as part of the achievements program.");
+    self.howItWorksLabel.text = LocalizedString(@"howItWorks", @"");
+    self.howItWorksFirstParagraphLabel.text = [LocalizedString(@"howItWorksMain", @"")  mnz_removeWebclientFormatters];
+    self.howItWorksSecondParagraphLabel.text = LocalizedString(@"howItWorksSecondary", @"");
+    self.howItWorksThirdParagraphLabel.text = LocalizedString(@"howItWorksTertiary", @"A message which is shown once someone has invited a friend as part of the achievements program.");
     
     [self updateAppearance];
 }

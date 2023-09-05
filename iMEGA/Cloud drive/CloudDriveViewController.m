@@ -47,6 +47,7 @@
 #import "UIViewController+MNZCategory.h"
 
 @import Photos;
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 @import MEGASDKRepo;
 
@@ -141,7 +142,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     _searchQueue = NSOperationQueue.new;
     self.searchQueue.name = @"searchQueue";
@@ -339,16 +340,16 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)didSelectNode:(MEGANode *)node {
     if (node.isTakenDown) {
-        NSString *alertMessage = node.isFolder ? NSLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : NSLocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
+        NSString *alertMessage = node.isFolder ? LocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : LocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
@@ -475,7 +476,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)loadPhotoAlbumBrowser {
-    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithSelectionActionType:AlbumsSelectionActionTypeUpload selectionActionDisabledText:NSLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected") completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithSelectionActionType:AlbumsSelectionActionTypeUpload selectionActionDisabledText:LocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected") completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
         if (assets.count > 0) {
             for (PHAsset *asset in assets) {
                 [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier parentNodeHandle:self.parentNode.handle];
@@ -545,7 +546,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case DisplayModeRecents:
             self.navigationItem.rightBarButtonItems = @[];
-            self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"close", @"A button label.")
+            self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:LocalizedString(@"close", @"A button label.")
                                                                                     style:UIBarButtonItemStylePlain
                                                                                    target:self
                                                                                    action:@selector(dismissSelf)];
@@ -600,7 +601,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)presentScanDocument {
     if (!VNDocumentCameraViewController.isSupported) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Document scanning is not available", @"A tooltip message which is shown when device does not support document scanning")];
+        [SVProgressHUD showErrorWithStatus:LocalizedString(@"Document scanning is not available", @"A tooltip message which is shown when device does not support document scanning")];
         return;
     }
     
@@ -774,9 +775,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     NSString *alertTitle = [self.viewModel alertTitleForRemovedFiles:numFilesAction andFolders:numFoldersAction];
     NSString *message = [self.viewModel alertMessageForRemovedFiles:numFilesAction andFolders:numFoldersAction];
     UIAlertController *removeAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:message preferredStyle:UIAlertControllerStyleAlert];
-    [removeAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [removeAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    [removeAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [removeAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:^{
             [self setEditMode:NO];
         }];
@@ -821,24 +822,24 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)createNewFolderAction {
     __weak __typeof__(self) weakSelf = self;
     
-    UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
     
     [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = NSLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
+        textField.placeholder = LocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
         [textField addTarget:weakSelf action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
             return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
         };
     }];
     
-    [newFolderAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    [newFolderAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
             MEGANode *existingChildNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:weakSelf.parentNode name:textField.text type:MEGANodeTypeFolder];
             if (existingChildNode) {
-                [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
+                [SVProgressHUD showErrorWithStatus:LocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {
                 MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                     MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
@@ -863,7 +864,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self updateNavigationBarTitle];
     
     if (editing) {
-        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
@@ -1044,7 +1045,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         vc.docs = docs.copy;
         [self presentViewController:({
             MEGANavigationController *nav = [MEGANavigationController.alloc initWithRootViewController:vc];
-            [nav addLeftDismissButtonWithText:NSLocalizedString(@"cancel", nil)];
+            [nav addLeftDismissButtonWithText:LocalizedString(@"cancel", @"")];
             nav.modalPresentationStyle = UIModalPresentationFullScreen;
             nav;
         }) animated:YES completion:nil];

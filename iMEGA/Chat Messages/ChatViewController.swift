@@ -2,6 +2,7 @@ import ChatRepo
 import Combine
 import KeyboardLayoutGuide
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGASDKRepo
 import MEGAUIKit

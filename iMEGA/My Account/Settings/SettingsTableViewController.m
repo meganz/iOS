@@ -4,6 +4,8 @@
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
+@import MEGAL10nObjc;
+
 @interface SettingsTableViewController ()
 @end
 
@@ -18,7 +20,7 @@
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     [self updateAppearance];
-    NSString *title = NSLocalizedString(@"settingsTitle", nil);
+    NSString *title = LocalizedString(@"settingsTitle", @"");
     self.navigationItem.title = title;
     [self setMenuCapableBackButtonWithMenuTitle:title];
 }

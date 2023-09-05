@@ -10,6 +10,8 @@
 #import "AchievementsTableViewCell.h"
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 @interface ReferralBonusesTableViewController () <UITableViewDataSource>
 
 @property (nonatomic) NSMutableArray *inviteAchievementsIndexesMutableArray;
@@ -26,7 +28,7 @@
     
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     
-    self.navigationItem.title = NSLocalizedString(@"account.achievement.referralBonus.title", nil);
+    self.navigationItem.title = LocalizedString(@"account.achievement.referralBonus.title", @"");
     
     self.inviteAchievementsIndexesMutableArray = [[NSMutableArray alloc] init];
     NSUInteger awardsCount = self.achievementsDetails.awardsCount;
@@ -68,7 +70,7 @@
     long long classStorageReward = [self.achievementsDetails rewardStorageByAwardId:awardId];
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? NSLocalizedString(@"— GB", nil) : [NSString memoryStyleStringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? LocalizedString(@"— GB", @"") : [NSString memoryStyleStringFromByteCount:classStorageReward];
 }
 
 #pragma mark - UITableViewDataSource

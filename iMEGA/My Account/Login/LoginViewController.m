@@ -12,6 +12,8 @@
 #import "TwoFactorAuthenticationViewController.h"
 #import "PasswordView.h"
 
+@import MEGAL10nObjc;
+
 typedef NS_ENUM(NSInteger, TextFieldTag) {
     EmailTextFieldTag = 0,
     PasswordTextFieldTag
@@ -60,7 +62,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     longPressGestureRecognizer.minimumPressDuration = 5.0f;
     self.logoImageView.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
-    self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+    self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
     
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
@@ -72,9 +74,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
     self.passwordView.passwordTextField.textContentType = UITextContentTypePassword;
     
-    [self.loginButton setTitle:NSLocalizedString(@"login", @"Login") forState:UIControlStateNormal];
+    [self.loginButton setTitle:LocalizedString(@"login", @"Login") forState:UIControlStateNormal];
 
-    NSString *forgotPasswordString = NSLocalizedString(@"forgotPassword", @"An option to reset the password.");
+    NSString *forgotPasswordString = LocalizedString(@"forgotPassword", @"An option to reset the password.");
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"?" withString:@""];
     forgotPasswordString = [forgotPasswordString stringByReplacingOccurrencesOfString:@"¿" withString:@""];
     [self.forgotPasswordButton setTitle:forgotPasswordString forState:UIControlStateNormal];
@@ -85,7 +87,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"login", nil)];
+    [self.navigationItem setTitle:LocalizedString(@"login", @"")];
     
     if (self.emailString) {
         self.emailInputView.inputTextField.text = self.emailString;
@@ -202,9 +204,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.emailInputView.inputTextField.text = self.emailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     BOOL validEmail = self.emailInputView.inputTextField.text.mnz_isValidEmail;
     if (validEmail) {
-        [self.emailInputView setErrorState:NO withText:NSLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
+        [self.emailInputView setErrorState:NO withText:LocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
     } else {
-        [self.emailInputView setErrorState:YES withText:NSLocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
+        [self.emailInputView setErrorState:YES withText:LocalizedString(@"emailInvalidFormat", @"Enter a valid email")];
     }
     
     return validEmail;
@@ -216,7 +218,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (validPassword) {
         [self.passwordView setErrorState:NO];
     } else {
-        [self.passwordView setErrorState:YES withText:NSLocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
+        [self.passwordView setErrorState:YES withText:LocalizedString(@"passwordInvalidFormat", @"Enter a valid password")];
     }
 
     return validPassword;
@@ -314,7 +316,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     switch (textField.tag) {
         case EmailTextFieldTag:
-            [self.emailInputView setErrorState:NO withText:NSLocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
+            [self.emailInputView setErrorState:NO withText:LocalizedString(@"emailPlaceholder", @"Hint text to suggest that the user has to write his email")];
             break;
             
         case PasswordTextFieldTag:
@@ -352,8 +354,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 #pragma mark - Create Account
 - (void)setCreateAccountAttributedText {
-    NSString *newToMegaString = NSLocalizedString(@"account.login.newToMega", "New to MEGA?");
-    NSString *createAccountString = NSLocalizedString(@"createAccount", "Create Account");
+    NSString *newToMegaString = LocalizedString(@"account.login.newToMega", @"New to MEGA?");
+    NSString *createAccountString = LocalizedString(@"createAccount", @"Create Account");
     
     UIFont *font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightRegular];
     NSAttributedString *newToMegaAttributedString = [NSAttributedString.alloc

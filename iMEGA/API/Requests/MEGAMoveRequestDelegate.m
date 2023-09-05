@@ -2,6 +2,8 @@
 
 #import "SVProgressHUD.h"
 
+@import MEGAL10nObjc;
+
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
 #else
@@ -67,7 +69,7 @@
         if ((error.type == MEGAErrorTypeApiEBusinessPastDue) || (error.type == MEGAErrorTypeApiEOverQuota)) {
             [SVProgressHUD dismiss];
         } else {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
         }
         return;
     }
@@ -85,25 +87,25 @@
                 NSString *message;
                 if (self.numberOfFiles == 0) {
                     if (self.numberOfFolders == 1) {
-                        message = NSLocalizedString(@"moveFolderMessage", @"Success message shown when you have moved 1 folder");
+                        message = LocalizedString(@"moveFolderMessage", @"Success message shown when you have moved 1 folder");
                     } else {
-                        message = [NSString stringWithFormat:NSLocalizedString(@"moveFoldersMessage", @"Success message shown when you have moved {1+} folders"), self.numberOfFolders];
+                        message = [NSString stringWithFormat:LocalizedString(@"moveFoldersMessage", @"Success message shown when you have moved {1+} folders"), self.numberOfFolders];
                     }
                 } else if (self.numberOfFiles == 1) {
                     if (self.numberOfFolders == 0) {
-                        message = NSLocalizedString(@"moveFileMessage", @"Success message shown when you have moved 1 file");
+                        message = LocalizedString(@"moveFileMessage", @"Success message shown when you have moved 1 file");
                     } else if (self.numberOfFolders == 1) {
-                        message = NSLocalizedString(@"moveFileFolderMessage", @"Success message shown when you have moved 1 file and 1 folder");
+                        message = LocalizedString(@"moveFileFolderMessage", @"Success message shown when you have moved 1 file and 1 folder");
                     } else {
-                        message = [NSString stringWithFormat:NSLocalizedString(@"moveFileFoldersMessage", @"Success message shown when you have moved 1 file and {1+} folders"), self.numberOfFolders];
+                        message = [NSString stringWithFormat:LocalizedString(@"moveFileFoldersMessage", @"Success message shown when you have moved 1 file and {1+} folders"), self.numberOfFolders];
                     }
                 } else {
                     if (self.numberOfFolders == 0) {
-                        message = [NSString stringWithFormat:NSLocalizedString(@"moveFilesMessage", @"Success message shown when you have moved {1+} files"), self.numberOfFiles];
+                        message = [NSString stringWithFormat:LocalizedString(@"moveFilesMessage", @"Success message shown when you have moved {1+} files"), self.numberOfFiles];
                     } else if (self.numberOfFolders == 1) {
-                        message = [NSString stringWithFormat:NSLocalizedString(@"moveFilesFolderMessage", @"Success message shown when you have moved {1+} files and 1 folder"), self.numberOfFiles];
+                        message = [NSString stringWithFormat:LocalizedString(@"moveFilesFolderMessage", @"Success message shown when you have moved {1+} files and 1 folder"), self.numberOfFiles];
                     } else {
-                        message = NSLocalizedString(@"moveFilesFoldersMessage", @"Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders");
+                        message = LocalizedString(@"moveFilesFoldersMessage", @"Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders");
                         NSString *filesString = [NSString stringWithFormat:@"%tu", self.numberOfFiles];
                         NSString *foldersString = [NSString stringWithFormat:@"%tu", self.numberOfFolders];
                         message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];

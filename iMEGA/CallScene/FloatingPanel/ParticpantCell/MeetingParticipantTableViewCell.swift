@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGAPresentation
 import UIKit
 
@@ -14,7 +15,7 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         super.awakeFromNib()
         moderatorTextLabel.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.1957759226)
         moderatorTextLabel.layer.cornerRadius = 4.0
-        moderatorTextLabel.text = "  \(NSLocalizedString("meetings.participant.moderator", comment: ""))  "
+        moderatorTextLabel.text = "  \(Strings.Localizable.Meetings.Participant.moderator)  "
     }
     
     var viewModel: MeetingParticipantViewModel? {

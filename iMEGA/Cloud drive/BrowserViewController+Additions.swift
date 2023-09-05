@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGAUIKit
 
 extension BrowserViewController {
@@ -50,7 +51,7 @@ extension BrowserViewController {
                 return (Strings.Localizable.selectDestination, false)
             } else {
                 // not sure what to do with this, it's not localized
-                return (NSLocalizedString("MEGA", comment: ""), false)
+                return (Strings.localized("MEGA", comment: ""), false)
             }
         } else {
             if isChildBrowserFromIncoming {

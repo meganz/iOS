@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGASDKRepo
 
@@ -112,7 +113,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     func meetingContextMenu(didSelect action: MeetingActionEntity) {
-        if MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall {
+        if MEGAChatSdk.shared.mnz_existsActiveCall {
             MeetingAlreadyExistsAlert.show(presenter: self)
             return
         }

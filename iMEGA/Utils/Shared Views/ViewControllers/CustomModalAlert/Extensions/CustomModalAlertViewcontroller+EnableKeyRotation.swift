@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureForEnableKeyRotation(in chatId: ChatIdEntity) {
@@ -10,7 +11,7 @@ extension CustomModalAlertViewController {
         
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
-                MEGASdkManager.sharedMEGAChatSdk().setPublicChatToPrivate(chatId)
+                MEGAChatSdk.shared.setPublicChatToPrivate(chatId)
             })
         }
     }

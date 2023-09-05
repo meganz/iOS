@@ -1,5 +1,6 @@
 import Combine
 import MEGAChatSdk
+import MEGAL10n
 import MEGAUIKit
 import SwiftUI
 

@@ -26,6 +26,7 @@
 #import "UIViewController+MNZCategory.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAL10nObjc;
 @import StoreKit;
 @import Photos;
 @import MEGAUIKit;
@@ -59,7 +60,7 @@
 #pragma mark - Lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.enableCameraUploadsButton setTitle:NSLocalizedString(@"enable", nil) forState:UIControlStateNormal];
+    [self.enableCameraUploadsButton setTitle:LocalizedString(@"enable", @"") forState:UIControlStateNormal];
     
     [self objcWrapper_configPhotosBannerView];
     
@@ -235,15 +236,15 @@
     NSString *progressText;
     if (uploadStats.pendingFilesCount == 1) {
         if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
-            progressText = NSLocalizedString(@"Upload paused because of no WiFi, 1 file pending", nil);
+            progressText = LocalizedString(@"Upload paused because of no WiFi, 1 file pending", @"");
         } else {
-            progressText = NSLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+            progressText = LocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
         }
     } else {
         if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
-            progressText = [NSString stringWithFormat:NSLocalizedString(@"Upload paused because of no WiFi, %lu files pending", nil), uploadStats.pendingFilesCount];
+            progressText = [NSString stringWithFormat:LocalizedString(@"Upload paused because of no WiFi, %lu files pending", @""), uploadStats.pendingFilesCount];
         } else {
-            progressText = [NSString stringWithFormat:NSLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
+            progressText = [NSString stringWithFormat:LocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
         }
     }
     self.photosUploadedLabel.text = progressText;
@@ -275,9 +276,9 @@
 - (void)configStateLabelByVideoPendingCount:(NSUInteger)count {
     NSString *videoMessage;
     if (count == 1) {
-        videoMessage = NSLocalizedString(@"Photos uploaded, video uploads are off, 1 video not uploaded", nil);
+        videoMessage = LocalizedString(@"Photos uploaded, video uploads are off, 1 video not uploaded", @"");
     } else {
-        videoMessage = [NSString stringWithFormat:NSLocalizedString(@"Photos uploaded, video uploads are off, %lu videos not uploaded", nil), (unsigned long)count];
+        videoMessage = [NSString stringWithFormat:LocalizedString(@"Photos uploaded, video uploads are off, %lu videos not uploaded", @""), (unsigned long)count];
     }
     
     self.stateLabel.text = videoMessage;
@@ -296,7 +297,7 @@
     
     switch (currentState) {
         case MEGACameraUploadsStateDisabled:
-            self.stateLabel.text = NSLocalizedString(@"enableCameraUploadsButton", nil);
+            self.stateLabel.text = LocalizedString(@"enableCameraUploadsButton", @"");
             self.enableCameraUploadsButton.hidden = NO;
             break;
         case MEGACameraUploadsStateUploading:
@@ -304,20 +305,20 @@
             self.progressStackView.hidden = NO;
             break;
         case MEGACameraUploadsStateCompleted:
-            self.stateLabel.text = NSLocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
+            self.stateLabel.text = LocalizedString(@"cameraUploadsComplete", @"Message shown when the camera uploads have been completed");
             break;
         case MEGACameraUploadsStateNoInternetConnection:
             if ([self.viewModel hasNoPhotos]) {
                 self.stateView.hidden = YES;
             } else {
-                self.stateLabel.text = NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
+                self.stateLabel.text = LocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it");
             }
             break;
         case MEGACameraUploadsStateEmpty:
             self.stateView.hidden = YES;
             break;
         case MEGACameraUploadsStateLoading:
-            self.stateLabel.text = NSLocalizedString(@"loading", nil);
+            self.stateLabel.text = LocalizedString(@"loading", @"");
             break;
         case MEGACameraUploadsStateEnableVideo:
             self.stateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
@@ -352,7 +353,7 @@
 }
 
 - (void)updateNavigationTitleBar {
-    self.objcWrapper_parent.navigationItem.title = NSLocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
+    self.objcWrapper_parent.navigationItem.title = LocalizedString(@"photo.navigation.title", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
 }
 
 - (void)setToolbarActionsEnabled:(BOOL)boolValue {
@@ -459,10 +460,10 @@
 - (void)showCameraUploadBoardingScreen {
     CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
     boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
-    boardingAlertVC.viewTitle = NSLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
-    boardingAlertVC.detail = NSLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
-    boardingAlertVC.firstButtonTitle = NSLocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
-    boardingAlertVC.dismissButtonTitle = NSLocalizedString(@"notNow", nil);
+    boardingAlertVC.viewTitle = LocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
+    boardingAlertVC.detail = LocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", @"");
+    boardingAlertVC.firstButtonTitle = LocalizedString(@"enable", @"Text button shown when camera upload will be enabled");
+    boardingAlertVC.dismissButtonTitle = LocalizedString(@"notNow", @"");
     
     boardingAlertVC.firstCompletion = ^{
         [self dismissViewControllerAnimated:YES completion:^{
@@ -514,15 +515,15 @@
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
             if ([self.photosByMonthYearArray count] == 0) {
-                text = NSLocalizedString(@"cameraUploadsEnabled", nil);
+                text = LocalizedString(@"cameraUploadsEnabled", @"");
             } else {
                 return nil;
             }
         } else {
-            text = NSLocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
+            text = LocalizedString(@"enableCameraUploadsButton", @"Enable Camera Uploads");
         }
     } else {
-        text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        text = LocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     return text;
@@ -531,9 +532,9 @@
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
-        text = NSLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
+        text = LocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", @"");
     } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = LocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -560,11 +561,11 @@
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (!CameraUploadManager.isCameraUploadEnabled) {
-            text = NSLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
+            text = LocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
         }
     } else {
         if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-            text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+            text = LocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
         }
     }
     

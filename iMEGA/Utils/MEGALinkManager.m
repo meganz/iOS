@@ -36,6 +36,8 @@
 #import "UnavailableLinkView.h"
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 static NSURL *linkURL;
 static NSURL *secondaryLinkURL;
 static URLType urlType;
@@ -165,12 +167,12 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
                     if (error.type == MEGAChatErrorTypeNoEnt) {
                         [SVProgressHUD dismiss];
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:NSLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
-                        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:LocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     } else {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
                     }
                     return;
                 }
@@ -238,8 +240,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     } else {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-            UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
-            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
+            UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
             
             [UIApplication.mnz_presentingViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
         }
@@ -308,8 +310,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 [MEGALinkManager resetLinkAndURLType];
 
-                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"error", nil) message:NSLocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
-                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"error", @"") message:LocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
                 
                 [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
             } else {
@@ -332,8 +334,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 MEGAQueryRecoveryLinkRequestDelegate *queryRecoveryLinkRequestDelegate = [[MEGAQueryRecoveryLinkRequestDelegate alloc] initWithRequestCompletion:nil urlType:URLTypeChangeEmailLink];
                 [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:url.mnz_MEGAURL delegate:queryRecoveryLinkRequestDelegate];
             } else {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"needToBeLoggedInToCompleteYourEmailChange", @"Error message when a user attempts to change their email without an active login session.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"needToBeLoggedInToCompleteYourEmailChange", @"Error message when a user attempts to change their email without an active login session.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                 
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             }
@@ -501,7 +503,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:unavailableLinkView];
-    viewController.navigationItem.title = NSLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid");
+    viewController.navigationItem.title = LocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid");
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
     [navigationController addRightCancelButton];
@@ -536,27 +538,27 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         MEGALinkManager.linkURL = [NSURL URLWithString:request.text];
         [MEGALinkManager processLinkURL:[NSURL URLWithString:request.text]];
     } onError:^(MEGARequest *request) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [MEGALinkManager showEncryptedLinkAlert:request.link];
         }]];
         
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:NSLocalizedString(@"If you do not have the password, contact the creator of the link.", @"This dialog message is used on the Password Decrypt dialog as an instruction for the user.") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:LocalizedString(@"If you do not have the password, contact the creator of the link.", @"This dialog message is used on the Password Decrypt dialog as an instruction for the user.") preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = NSLocalizedString(@"Enter the password", @"This placeholder text is used on the Password Decrypt dialog as an instruction for the user.");
+        textField.placeholder = LocalizedString(@"Enter the password", @"This placeholder text is used on the Password Decrypt dialog as an instruction for the user.");
         [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
             return !textField.text.mnz_isEmpty;
         };
         textField.secureTextEntry = YES;
     }];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [MEGALinkManager resetLinkAndURLType];
         MEGALinkManager.secondaryLinkURL = nil;
     }]];
@@ -671,7 +673,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeContact forKey:MEGALastPublicTypeAccessed];
         [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
     } onError:^(MEGAError *error) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
+        [SVProgressHUD showErrorWithStatus:LocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
     }];
 
     [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:handle delegate:delegate];
@@ -704,8 +706,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
-        inviteOrDismissModal.detail = [NSLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
-        inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.detail = [LocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
+        inviteOrDismissModal.firstButtonTitle = LocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         inviteOrDismissModal.firstCompletion = dismissCompletion;
     } else {
         BOOL isInOutgoingContactRequest = NO;
@@ -719,17 +721,17 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
         if (isInOutgoingContactRequest) {
             inviteOrDismissModal.image = [UIImage imageNamed:@"inviteSent"];
-            inviteOrDismissModal.viewTitle = NSLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-            NSString *detailText = NSLocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
+            inviteOrDismissModal.viewTitle = LocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+            NSString *detailText = LocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
             inviteOrDismissModal.detail = detailText;
             inviteOrDismissModal.boldInDetail = email;
-            inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"close", nil);
+            inviteOrDismissModal.firstButtonTitle = LocalizedString(@"close", @"");
             inviteOrDismissModal.firstCompletion = dismissCompletion;
         } else {
             inviteOrDismissModal.detail = email;
-            inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-            inviteOrDismissModal.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.firstButtonTitle = LocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismissButtonTitle = LocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
             inviteOrDismissModal.firstCompletion = firstCompletion;
             inviteOrDismissModal.dismissCompletion = dismissCompletion;
         }
@@ -747,12 +749,12 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:NSLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:LocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
             }
             return;
         }
@@ -770,7 +772,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (error.type) {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
                         return;
                     }
                     [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
@@ -801,17 +803,17 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:NSLocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:LocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else if (error.type == MEGAChatErrorTypeArgs)  {
                 [SVProgressHUD dismiss];
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"meetings.joinMeeting.header", @"") message:NSLocalizedString(@"meetings.joinMeeting.description", @"") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"meetings.joinMeeting.header", @"") message:LocalizedString(@"meetings.joinMeeting.description", @"") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
             }
             return;
         }
@@ -838,14 +840,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         //  meeting ended
         [SVProgressHUD dismiss];
         MEGAChatRoom *chatRoom = [[MEGAChatSdk shared] chatRoomForChatId:request.chatHandle];
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"meetings.alert.end", nil) message:NSLocalizedString(@"meetings.alert.end.description", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"meetings.alert.meetingchat", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"meetings.alert.end", @"") message:LocalizedString(@"meetings.alert.end.description", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"meetings.alert.meetingchat", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
             if (!chatRoom.isPreview && !chatRoom.isActive) {
                 MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (error.type) {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
                         return;
                     }
                     [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
@@ -857,7 +859,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
             }
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if ([MEGASdkManager sharedMEGAChatSdk].myEmail == nil || [MEGASdkManager sharedMEGAChatSdk].myEmail.mnz_isEmpty) {
                 [MEGASdkManager.sharedMEGAChatSdk logout];
                 [[[EncourageGuestUserToJoinMegaRouter alloc] initWithPresenter:UIApplication.mnz_visibleViewController] start];

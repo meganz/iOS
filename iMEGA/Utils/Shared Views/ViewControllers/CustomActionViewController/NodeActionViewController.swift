@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGASDKRepo
 import MEGASwift
 import UIKit
@@ -37,7 +38,7 @@ class NodeActionViewController: ActionSheetViewController {
         isIncoming: Bool = false,
         isBackupNode: Bool,
         sender: Any) {
-            guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: node) else { return nil }
+            guard let node = MEGASdk.shared.node(forHandle: node) else { return nil }
             self.init(node: node, delegate: delegate, displayMode: displayMode, isIncoming: isIncoming, isBackupNode: isBackupNode, sender: sender)
         }
     
@@ -48,7 +49,7 @@ class NodeActionViewController: ActionSheetViewController {
         isBackupNode: Bool = false,
         sender: Any) {
         
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return nil }
+        guard let node = MEGASdk.shared.node(forHandle: nodeHandle) else { return nil }
         self.nodes = [node]
         self.displayMode = displayMode
         self.delegate = delegate
@@ -60,7 +61,7 @@ class NodeActionViewController: ActionSheetViewController {
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
-            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
             .setIsBackupNode(isBackupNode)
             .build()
     }
@@ -184,10 +185,10 @@ class NodeActionViewController: ActionSheetViewController {
             .setDisplayMode(self.displayMode)
             .setIsPdf(node.name?.pathExtension == "pdf")
             .setIsLink(isLink)
-            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
             .setIsRestorable(isBackupNode ? false : node.mnz_isRestorable())
             .setVersionCount(node.mnz_numberOfVersions() - 1)
-            .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
+            .setIsChildVersion(MEGASdk.shared.node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
             .setIsBackupNode(isBackupNode)
             .setIsExported(node.isExported())
@@ -285,12 +286,11 @@ class NodeActionViewController: ActionSheetViewController {
         subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
         subtitleLabel.font = .preferredFont(forTextStyle: .caption1)
         subtitleLabel.adjustsFontForContentSizeCategory = true
-        
-        let sharedMEGASdk = displayMode == .folderLink || displayMode == .nodeInsideFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk()
+                
         if node.isFile() {
-            subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
+            subtitleLabel.text = sizeAndModicationDate(node.toNodeEntity())
         } else {
-            subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
+            subtitleLabel.text = getFilesAndFolders(node.toNodeEntity())
         }
         
         headerView?.addSubview(separatorLineView)
@@ -299,6 +299,26 @@ class NodeActionViewController: ActionSheetViewController {
         separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
         separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
         separatorLineView.backgroundColor = tableView.separatorColor
+    }
+    
+    private func sizeAndModicationDate(_ nodeModel: NodeEntity) -> String {
+        let modificationTime = nodeModel.modificationTime as NSDate
+        let modificationTimeString: String = modificationTime.mnz_formattedDateMediumTimeShortStyle()
+        
+        return sizeForFile(nodeModel) + " • " + modificationTimeString
+    }
+    
+    private func sizeForFile(_ nodeModel: NodeEntity) -> String {
+        return String.memoryStyleString(fromByteCount: Int64(nodeModel.size))
+    }
+    
+    private func getFilesAndFolders(_ nodeModel: NodeEntity) -> String {
+        let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+        let numberOfFilesAndFolders = nodeUseCase.getFilesAndFolders(nodeHandle: nodeModel.handle)
+        let numberOfFiles = numberOfFilesAndFolders.0
+        let numberOfFolders = numberOfFilesAndFolders.1
+        let numberOfFilesAndFoldersString = NSString.mnz_string(byFiles: numberOfFiles, andFolders: numberOfFolders)
+        return numberOfFilesAndFoldersString
     }
     
     private func setupActions(node: MEGANode, displayMode: DisplayMode, isIncoming: Bool = false, isInVersionsView: Bool = false, isBackupNode: Bool, sharedFolder: MEGAShare = MEGAShare(), shouldShowVerifyContact: Bool = false) {
@@ -313,7 +333,7 @@ class NodeActionViewController: ActionSheetViewController {
         
         self.actions = NodeActionBuilder()
             .setDisplayMode(displayMode)
-            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .setAccessLevel(MEGASdk.shared.accessLevel(for: node))
             .setIsMediaFile(isMediaFile)
             .setIsEditableTextFile(isEditableTextFile)
             .setIsFile(node.isFile())
@@ -326,7 +346,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setisIncomingShareChildView(isIncoming)
             .setIsExported(node.isExported())
             .setIsOutshare(node.isOutShare())
-            .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
+            .setIsChildVersion(MEGASdk.shared.node(forHandle: node.parentHandle)?.isFile())
             .setIsInVersionsView(isInVersionsView)
             .setIsTakedown(isTakedown)
             .setIsVerifyContact(isVerifyContact,

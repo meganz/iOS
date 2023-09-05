@@ -1,6 +1,7 @@
 import CoreGraphics
 import MEGADomain
 import MEGAFoundation
+import MEGAL10n
 import MessageKit
 
 class ChatViewIntroductionHeaderView: MessageReusableView {

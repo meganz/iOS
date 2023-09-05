@@ -13,6 +13,7 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
@@ -55,15 +56,15 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationItem.title = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+    self.navigationItem.title = LocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
     
-    self.clearRubbishBinLabel.text = NSLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account");
+    self.clearRubbishBinLabel.text = LocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account");
     [self updateClearRubbishBinDetailLabel];
     
-    self.rubbishBinCleaningSchedulerLabel.text = [NSLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
+    self.rubbishBinCleaningSchedulerLabel.text = [LocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
     [self.rubbishBinCleaningSchedulerSwitch setOn:[[MEGASdkManager sharedMEGASdk] serverSideRubbishBinAutopurgeEnabled]];
     
-    self.removeFilesOlderThanLabel.text = NSLocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.");
+    self.removeFilesOlderThanLabel.text = LocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.");
     
     [[MEGASdkManager sharedMEGASdk] getRubbishBinAutopurgePeriodWithDelegate:self];
 }
@@ -102,7 +103,7 @@
 }
 
 - (void)setLongerRetentionPeriodUpgradetoProLabel {
-    NSString *longerRetentionUpgradeToProText = NSLocalizedString(@"settings.fileManagement.rubbishBin.longerRetentionUpgrade", @"This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear.");
+    NSString *longerRetentionUpgradeToProText = LocalizedString(@"settings.fileManagement.rubbishBin.longerRetentionUpgrade", @"This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear.");
     
     NSString *semiboldAndGreenText = [longerRetentionUpgradeToProText mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     longerRetentionUpgradeToProText = longerRetentionUpgradeToProText.mnz_removeWebclientFormatters;
@@ -147,10 +148,10 @@
         } else {
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
             customModalAlertVC.image = [UIImage imageNamed:@"retention_illustration"];
-            customModalAlertVC.viewTitle = [NSLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
-            customModalAlertVC.detail = NSLocalizedString(@"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.", @"Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user");
-            customModalAlertVC.firstButtonTitle = NSLocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
-            customModalAlertVC.dismissButtonTitle = NSLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+            customModalAlertVC.viewTitle = [LocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
+            customModalAlertVC.detail = LocalizedString(@"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.", @"Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user");
+            customModalAlertVC.firstButtonTitle = LocalizedString(@"seePlans", @"Button title to see the available pro plans in MEGA");
+            customModalAlertVC.dismissButtonTitle = LocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
             customModalAlertVC.firstCompletion = ^{
                 [weakCustom dismissViewControllerAnimated:YES completion:^{
@@ -182,11 +183,11 @@
     NSString *titleFooter;
     switch (section) {
         case 0:
-            titleFooter = NSLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'");
+            titleFooter = LocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'");
             break;
             
         case 1:
-            titleFooter = ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) ? NSLocalizedString(@"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.", @"New server-side rubbish-bin cleaning scheduler description (for PRO users)") : NSLocalizedString(@"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.", @"New server-side rubbish-bin cleaning scheduler description (for Free users)");
+            titleFooter = ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) ? LocalizedString(@"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.", @"New server-side rubbish-bin cleaning scheduler description (for PRO users)") : LocalizedString(@"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.", @"New server-side rubbish-bin cleaning scheduler description (for Free users)");
             break;
     }
     
@@ -203,9 +204,9 @@
     switch (indexPath.section) {
         case 0: { //Clear Rubbish Bin
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertController *emptyRubbishBinAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UIAlertController *emptyRubbishBinAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"emptyRubbishBinAlertTitle", @"Alert title shown when you tap 'Empty Rubbish Bin'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+                [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     self.clearRubbishBinDetailLabel.hidden = YES;
                     [self.clearRubbishBinAI startAnimating];
                     [[MEGASdkManager sharedMEGASdk] cleanRubbishBinWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
@@ -226,18 +227,18 @@
         case 1: { //Remove files older than
             if (indexPath.row == 1) {
                 if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    UIAlertController *scheduleRubbishBinClearingAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *scheduleRubbishBinClearingAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                     [scheduleRubbishBinClearingAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
                         textField.keyboardType = UIKeyboardTypeNumberPad;
-                        textField.placeholder = [NSString stringWithFormat:NSLocalizedString(@"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days", @"Rubbish bin items to be removed in days placeholder")];
+                        textField.placeholder = LocalizedString(@"settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days", @"Rubbish bin items to be removed in days placeholder");
                         [textField addTarget:self action:@selector(scheduleRubbishBinClearingTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
                         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                             return textField.text.mnz_isDecimalNumber;
                         };
                     }];
                     
-                    [scheduleRubbishBinClearingAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    UIAlertAction *doneAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"done", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [scheduleRubbishBinClearingAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+                    UIAlertAction *doneAction = [UIAlertAction actionWithTitle:LocalizedString(@"done", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         NSString *days = scheduleRubbishBinClearingAlertController.textFields.firstObject.text;
                         if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
                             if (days.integerValue > 365) {

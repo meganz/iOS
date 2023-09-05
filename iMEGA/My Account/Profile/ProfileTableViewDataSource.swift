@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAFoundation
+import MEGAL10n
 import PhoneNumberKit
 import UIKit
 
@@ -74,11 +75,11 @@ final class ProfileTableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
             cell.accessoryType = .disclosureIndicator
             cell.detailLabel.text = ""
-            if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
+            if MEGASdk.shared.smsVerifiedPhoneNumber() == nil {
                 cell.nameLabel.text = Strings.Localizable.addPhoneNumber
             } else {
                 cell.nameLabel.text = Strings.Localizable.phoneNumber
-                let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
+                let phoneNumber = MEGASdk.shared.smsVerifiedPhoneNumber()
                 do {
                     let phone = try PhoneNumberKit().parse(phoneNumber ?? "")
                     cell.detailLabel.text = PhoneNumberKit().format(phone, toType: .international)
@@ -108,7 +109,7 @@ final class ProfileTableViewDataSource {
             cell.selectionStyle = .default
             cell.accessoryType = MEGAPurchase.sharedInstance()?.products?.count ?? 0 > 0 ? .disclosureIndicator : .none
             
-            guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+            guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
                 return cell
             }
             
@@ -131,7 +132,7 @@ final class ProfileTableViewDataSource {
                 cell.detailLabel.text = Strings.Localizable.proLite
                 cell.detailLabel.textColor = UIColor.systemOrange
             case .business:
-                if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
+                if MEGASdk.shared.businessStatus == .active {
                     cell.detailLabel.text = Strings.Localizable.active
                 } else {
                     cell.detailLabel.text = Strings.Localizable.paymentOverdue
@@ -153,7 +154,7 @@ final class ProfileTableViewDataSource {
             cell.selectionStyle = .default
             cell.accessoryType = MEGAPurchase.sharedInstance()?.products?.count ?? 0 > 0 ? .disclosureIndicator : .none
             
-            if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
+            if MEGASdk.shared.isMasterBusinessAccount {
                 cell.detailLabel.text = Strings.Localizable.administrator
             } else {
                 cell.detailLabel.text = Strings.Localizable.user

@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAL10n
 import XCTest
 
 class ActionViewModelTests: XCTestCase {

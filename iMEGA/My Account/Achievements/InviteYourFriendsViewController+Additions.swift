@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension InviteFriendsViewController {
     @objc
     func configureNavigationBar() {

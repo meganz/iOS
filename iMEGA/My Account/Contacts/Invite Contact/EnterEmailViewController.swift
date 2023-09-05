@@ -1,5 +1,6 @@
 import ContactsUI
 import MEGADomain
+import MEGAL10n
 import UIKit
 import WSTagsField
 

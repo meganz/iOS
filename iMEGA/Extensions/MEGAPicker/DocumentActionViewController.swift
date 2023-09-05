@@ -1,4 +1,5 @@
 import FileProviderUI
+import MEGAL10n
 import UIKit
 
 final class DocumentActionViewController: FPUIActionExtensionViewController {

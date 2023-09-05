@@ -1,4 +1,6 @@
 import CoreGraphics
+import MEGAL10n
+
 extension ShareViewController {
     @objc func addOpenAppView() {
         guard let openAppNC else {

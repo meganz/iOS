@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension CloudDriveViewController {
     @IBAction func deleteAction(sender: UIBarButtonItem) {
         guard let selectedNodes = selectedNodesArray as? [MEGANode] else {

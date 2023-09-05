@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAFoundation
+import MEGAL10n
 
 extension NotificationsTableViewController {
     

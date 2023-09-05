@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import PDFKit
 import UIKit
 import VisionKit
@@ -400,17 +401,17 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                 let appData = NSString().mnz_appData(toSaveCoordinates: path.mnz_coordinatesOfPhotoOrVideo() ?? "")
                 let startUploadTransferDelegate = MEGAStartUploadTransferDelegate { (transfer) in
                     guard let transferNodeHandle = transfer?.nodeHandle,
-                          let nodeHandle = MEGASdkManager.sharedMEGASdk().node(forHandle: transferNodeHandle)?.handle else { return }
+                          let nodeHandle = MEGASdk.shared.node(forHandle: transferNodeHandle)?.handle else { return }
                     
                     chats.forEach { chatRoom in
-                        MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: nodeHandle)
+                        MEGAChatSdk.shared.attachNode(toChat: chatRoom.chatId, node: nodeHandle)
                     }
                     users.forEach { user in
-                        if let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(byUser: user.handle) {
-                            MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: nodeHandle)
+                        if let chatRoom = MEGAChatSdk.shared.chatRoom(byUser: user.handle) {
+                            MEGAChatSdk.shared.attachNode(toChat: chatRoom.chatId, node: nodeHandle)
                         } else {
-                            MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
-                                MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: chatRoom.chatId, node: nodeHandle)
+                            MEGAChatSdk.shared.mnz_createChatRoom(userHandle: user.handle, completion: { (chatRoom) in
+                                MEGAChatSdk.shared.attachNode(toChat: chatRoom.chatId, node: nodeHandle)
                             })
                         }
                     }
@@ -423,7 +424,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                     }
                     completionCounter += 1
                 }
-                MEGASdkManager.sharedMEGASdk().startUploadForChat(withLocalPath: path, parent: myChatFilesFolderNode, appData: appData, isSourceTemporary: true, fileName: nil, delegate: startUploadTransferDelegate!)
+                MEGASdk.shared.startUploadForChat(withLocalPath: path, parent: myChatFilesFolderNode, appData: appData, isSourceTemporary: true, fileName: nil, delegate: startUploadTransferDelegate!)
             }
         }
         dismiss(animated: true, completion: nil)

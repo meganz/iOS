@@ -5,6 +5,8 @@
 #import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
 
+@import MEGAL10nObjc;
+
 @interface EnabledTwoFactorAuthenticationViewController () <MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -28,16 +30,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = NSLocalizedString(@"twoFactorAuthentication", @"A title for the Two-Factor Authentication section on the My Account - Security page.");
-    self.titleLabel.text = NSLocalizedString(@"twoFactorAuthenticationEnabled", @"A title on the mobile web client page showing that 2FA has been enabled successfully.");
-    self.firstLabel.text = NSLocalizedString(@"twoFactorAuthenticationEnabledDescription", @"A message on the dialog shown after 2FA was successfully enabled.");
-    self.secondLabel.text = NSLocalizedString(@"twoFactorAuthenticationEnabledWarning", @"An informational message on the Backup Recovery Key dialog.");
-    self.recoveryKeyTextField.text = [NSString stringWithFormat:@"%@.txt", NSLocalizedString(@"general.security.recoveryKeyFile", @"Name for the recovery key file")];
+    self.navigationItem.title = LocalizedString(@"twoFactorAuthentication", @"A title for the Two-Factor Authentication section on the My Account - Security page.");
+    self.titleLabel.text = LocalizedString(@"twoFactorAuthenticationEnabled", @"A title on the mobile web client page showing that 2FA has been enabled successfully.");
+    self.firstLabel.text = LocalizedString(@"twoFactorAuthenticationEnabledDescription", @"A message on the dialog shown after 2FA was successfully enabled.");
+    self.secondLabel.text = LocalizedString(@"twoFactorAuthenticationEnabledWarning", @"An informational message on the Backup Recovery Key dialog.");
+    self.recoveryKeyTextField.text = [NSString stringWithFormat:@"%@.txt", LocalizedString(@"general.security.recoveryKeyFile", @"Name for the recovery key file")];
 
     self.recoveryKeyView.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
-    [self.exportRecoveryButton setTitle:NSLocalizedString(@"exportRecoveryKey", @"A dialog title to export the Recovery Key for the current user.") forState:UIControlStateNormal];
-    [self.closeButton setTitle:NSLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.") forState:UIControlStateNormal];
+    [self.exportRecoveryButton setTitle:LocalizedString(@"exportRecoveryKey", @"A dialog title to export the Recovery Key for the current user.") forState:UIControlStateNormal];
+    [self.closeButton setTitle:LocalizedString(@"close", @"A button label. The button allows the user to close the conversation.") forState:UIControlStateNormal];
     self.closeButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
     [[MEGASdkManager sharedMEGASdk] isMasterKeyExportedWithDelegate:self];
@@ -68,8 +70,8 @@
 }
 
 - (void)showSaveYourRecoveryKeyAlert {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"pleaseSaveYourRecoveryKey", @"A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer.") message:nil preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"pleaseSaveYourRecoveryKey", @"A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer.") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 

@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 
 enum AlbumContentAction: ActionType {

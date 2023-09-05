@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 
 final class ReportIssueViewModel: ObservableObject {
     private let router: any ReportIssueViewRouting

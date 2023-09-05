@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 import SwiftUI
 
 struct ShortcutDetail: Hashable {

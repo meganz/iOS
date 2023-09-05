@@ -18,6 +18,7 @@
 #import "NotificationTableViewCell.h"
 #import "SharedItemsViewController.h"
 
+@import MEGAL10nObjc;
 @import MEGASDKRepo;
 
 @interface NotificationsTableViewController () <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, MEGAGlobalDelegate>
@@ -35,7 +36,7 @@
     self.tableView.emptyDataSetDelegate = self;
     self.tableView.emptyDataSetSource = self;
     
-    self.navigationItem.title = NSLocalizedString(@"notifications", nil);
+    self.navigationItem.title = LocalizedString(@"notifications", @"");
     [self fetchAlerts];
     [self logUserAlertsStatus:self.userAlertsArray];
     
@@ -95,7 +96,7 @@
         case MEGAUserAlertTypeUpdatePendingContactIncomingDenied:
         case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted:
         case MEGAUserAlertTypeUpdatePendingContactOutgoingDenied:
-            typeLabel.text = NSLocalizedString(@"contactsTitle", @"Title of the Contacts section");
+            typeLabel.text = LocalizedString(@"contactsTitle", @"Title of the Contacts section");
             typeLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             break;
             
@@ -103,35 +104,35 @@
         case MEGAUserAlertTypeDeletedShare:
         case MEGAUserAlertTypeNewShareNodes:
         case MEGAUserAlertTypeRemovedSharesNodes:
-            typeLabel.text = NSLocalizedString(@"shared", @"Title of the tab bar item for the Shared Items section");
+            typeLabel.text = LocalizedString(@"shared", @"Title of the tab bar item for the Shared Items section");
             typeLabel.textColor = UIColor.systemOrangeColor;
             break;
             
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
-            typeLabel.text = NSLocalizedString(@"Payment info", @"The header of a notification related to payments");
+            typeLabel.text = LocalizedString(@"Payment info", @"The header of a notification related to payments");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypePaymentReminder:
-            typeLabel.text = NSLocalizedString(@"PRO membership plan expiring soon", @"A title for a notification saying the user’s pricing plan will expire soon.");
+            typeLabel.text = LocalizedString(@"PRO membership plan expiring soon", @"A title for a notification saying the user’s pricing plan will expire soon.");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedown:
-            typeLabel.text = NSLocalizedString(@"Takedown notice", @"The header of a notification indicating that a file or folder has been taken down due to infringement or other reason.");
+            typeLabel.text = LocalizedString(@"Takedown notice", @"The header of a notification indicating that a file or folder has been taken down due to infringement or other reason.");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedownReinstated:
-            typeLabel.text = NSLocalizedString(@"Takedown reinstated", @"The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice.");
+            typeLabel.text = LocalizedString(@"Takedown reinstated", @"The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice.");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeScheduledMeetingNew:
         case MEGAUserAlertTypeScheduledMeetingUpdated:
         case MEGAUserAlertTypeScheduledMeetingDeleted:
-            typeLabel.text = NSLocalizedString(@"inapp.notifications.meetings.header", @"The header of a notification that is related to scheduled meetings");
+            typeLabel.text = LocalizedString(@"inapp.notifications.meetings.header", @"The header of a notification that is related to scheduled meetings");
             typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
@@ -203,68 +204,68 @@
     
     switch (userAlert.type) {
         case MEGAUserAlertTypeIncomingPendingContactRequest:
-            contentLabel.text = NSLocalizedString(@"Sent you a contact request", @"When a contact sent a contact/friend request");
+            contentLabel.text = LocalizedString(@"Sent you a contact request", @"When a contact sent a contact/friend request");
             break;
             
         case MEGAUserAlertTypeIncomingPendingContactCancelled:
-            contentLabel.text = NSLocalizedString(@"Cancelled their contact request", @"A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request.");
+            contentLabel.text = LocalizedString(@"Cancelled their contact request", @"A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request.");
             break;
             
         case MEGAUserAlertTypeIncomingPendingContactReminder:
-            contentLabel.text = NSLocalizedString(@"Reminder: You have a contact request", @"A reminder notification to remind the user to respond to the contact request.");
+            contentLabel.text = LocalizedString(@"Reminder: You have a contact request", @"A reminder notification to remind the user to respond to the contact request.");
             break;
             
         case MEGAUserAlertTypeContactChangeDeletedYou:
-            contentLabel.text = NSLocalizedString(@"Deleted you as a contact", @"A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact.");
+            contentLabel.text = LocalizedString(@"Deleted you as a contact", @"A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact.");
             break;
             
         case MEGAUserAlertTypeContactChangeContactEstablished:
-            contentLabel.text = NSLocalizedString(@"Contact relationship established", @"A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books).");
+            contentLabel.text = LocalizedString(@"Contact relationship established", @"A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books).");
             break;
             
         case MEGAUserAlertTypeContactChangeAccountDeleted:
-            contentLabel.text = NSLocalizedString(@"Account has been deleted/deactivated", @"A notification telling the user that one of their contact’s accounts has been deleted or deactivated.");
+            contentLabel.text = LocalizedString(@"Account has been deleted/deactivated", @"A notification telling the user that one of their contact’s accounts has been deleted or deactivated.");
             break;
             
         case MEGAUserAlertTypeContactChangeBlockedYou:
-            contentLabel.text = NSLocalizedString(@"Blocked you as a contact", @"A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact.");
+            contentLabel.text = LocalizedString(@"Blocked you as a contact", @"A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact.");
             break;
             
         case MEGAUserAlertTypeUpdatePendingContactIncomingIgnored:
-            contentLabel.text = NSLocalizedString(@"You ignored a contact request", @"Response text after clicking Ignore on an incoming contact request notification.");
+            contentLabel.text = LocalizedString(@"You ignored a contact request", @"Response text after clicking Ignore on an incoming contact request notification.");
             break;
             
         case MEGAUserAlertTypeUpdatePendingContactIncomingAccepted:
-            contentLabel.text = NSLocalizedString(@"You accepted a contact request", @"Response text after clicking Accept on an incoming contact request notification.");
+            contentLabel.text = LocalizedString(@"You accepted a contact request", @"Response text after clicking Accept on an incoming contact request notification.");
             break;
             
         case MEGAUserAlertTypeUpdatePendingContactIncomingDenied:
-            contentLabel.text = NSLocalizedString(@"You denied a contact request", @"Response text after clicking Deny on an incoming contact request notification.");
+            contentLabel.text = LocalizedString(@"You denied a contact request", @"Response text after clicking Deny on an incoming contact request notification.");
             break;
             
         case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted:
-            contentLabel.text = NSLocalizedString(@"Accepted your contact request", @"When somebody accepted your contact request");
+            contentLabel.text = LocalizedString(@"Accepted your contact request", @"When somebody accepted your contact request");
             break;
             
         case MEGAUserAlertTypeUpdatePendingContactOutgoingDenied:
-            contentLabel.text = NSLocalizedString(@"Denied your contact request", @"When somebody denied your contact request");
+            contentLabel.text = LocalizedString(@"Denied your contact request", @"When somebody denied your contact request");
             break;
             
         case MEGAUserAlertTypeNewShare:
-            contentLabel.text = NSLocalizedString(@"newSharedFolder", @"Notification text body shown when you have received a new shared folder");
+            contentLabel.text = LocalizedString(@"newSharedFolder", @"Notification text body shown when you have received a new shared folder");
             break;
             
         case MEGAUserAlertTypeDeletedShare: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
             if ([userAlert numberAtIndex:0] == 0) {
                 NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name ?: @""  attributes:@{ NSFontAttributeName : boldFont }];
-                NSString *text = NSLocalizedString(@"A user has left the shared folder {0}", @"notification text");
+                NSString *text = LocalizedString(@"A user has left the shared folder {0}", @"notification text");
                 NSRange range = [text rangeOfString:@"{0}"];
                 NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
                 [attributedText replaceCharactersInRange:range withAttributedString:nodeName];
                 contentLabel.attributedText = attributedText;
             } else {
-                contentLabel.text = NSLocalizedString(@"Access to folders was removed.", @"This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal).");
+                contentLabel.text = LocalizedString(@"Access to folders was removed.", @"This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal).");
             }
             break;
         }
@@ -274,28 +275,28 @@
             int64_t folderCount = [userAlert numberAtIndex:0];
             NSString *text;
             if ((folderCount > 1) && (fileCount > 1)) {
-                text = [[NSLocalizedString(@"Added [A] files and [B] folders", @"Content of a notification that informs how many files and folders have been added to a shared folder") stringByReplacingOccurrencesOfString:@"[A]" withString:[NSString stringWithFormat:@"%lld", fileCount]] stringByReplacingOccurrencesOfString:@"[B]" withString:[NSString stringWithFormat:@"%lld", folderCount]];
+                text = [[LocalizedString(@"Added [A] files and [B] folders", @"Content of a notification that informs how many files and folders have been added to a shared folder") stringByReplacingOccurrencesOfString:@"[A]" withString:[NSString stringWithFormat:@"%lld", fileCount]] stringByReplacingOccurrencesOfString:@"[B]" withString:[NSString stringWithFormat:@"%lld", folderCount]];
             }
             else if ((folderCount > 1) && (fileCount == 1)) {
-                text = [NSString stringWithFormat:NSLocalizedString(@"Added 1 file and %lld folders", @"Content of a notification that informs how many files and folders have been added to a shared folder"), folderCount];
+                text = [NSString stringWithFormat:LocalizedString(@"Added 1 file and %lld folders", @"Content of a notification that informs how many files and folders have been added to a shared folder"), folderCount];
             }
             else if ((folderCount == 1) && (fileCount > 1)) {
-                text = [NSString stringWithFormat:NSLocalizedString(@"Added %lld files and 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder"), fileCount];
+                text = [NSString stringWithFormat:LocalizedString(@"Added %lld files and 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder"), fileCount];
             }
             else if ((folderCount == 1) && (fileCount == 1)) {
-                text = NSLocalizedString(@"Added 1 file and 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder");
+                text = LocalizedString(@"Added 1 file and 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder");
             }
             else if (folderCount > 1) {
-                text = [NSString stringWithFormat:NSLocalizedString(@"Added %lld folders", @"Content of a notification that informs how many files and folders have been added to a shared folder"), folderCount];
+                text = [NSString stringWithFormat:LocalizedString(@"Added %lld folders", @"Content of a notification that informs how many files and folders have been added to a shared folder"), folderCount];
             }
             else if (fileCount > 1) {
-                text = [NSString stringWithFormat:NSLocalizedString(@"Added %lld files", @"Content of a notification that informs how many files and folders have been added to a shared folder"), fileCount];
+                text = [NSString stringWithFormat:LocalizedString(@"Added %lld files", @"Content of a notification that informs how many files and folders have been added to a shared folder"), fileCount];
             }
             else if (folderCount == 1) {
-                text = NSLocalizedString(@"Added 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder");
+                text = LocalizedString(@"Added 1 folder", @"Content of a notification that informs how many files and folders have been added to a shared folder");
             }
             else if (fileCount == 1) {
-                text = NSLocalizedString(@"Added 1 file", @"Content of a notification that informs how many files and folders have been added to a shared folder");
+                text = LocalizedString(@"Added 1 file", @"Content of a notification that informs how many files and folders have been added to a shared folder");
             } else {
                 text = userAlert.title;
             }
@@ -306,9 +307,9 @@
         case MEGAUserAlertTypeRemovedSharesNodes: {
             int64_t itemCount = [userAlert numberAtIndex:0];
             if (itemCount == 1) {
-                contentLabel.text = NSLocalizedString(@"Removed item from shared folder", @"Notification when on client side when owner of a shared folder removes folder/file from it.");
+                contentLabel.text = LocalizedString(@"Removed item from shared folder", @"Notification when on client side when owner of a shared folder removes folder/file from it.");
             } else {
-                contentLabel.text = [NSLocalizedString(@"Removed [X] items from a share", @"Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items.") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", itemCount]];
+                contentLabel.text = [LocalizedString(@"Removed [X] items from a share", @"Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items.") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%lld", itemCount]];
             }
             break;
         }
@@ -316,7 +317,7 @@
         case MEGAUserAlertTypePaymentSucceeded: {
             NSString *proPlanString = [userAlert stringAtIndex:0] ? [userAlert stringAtIndex:0] : @"";
             NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:proPlanString attributes:@{ NSFontAttributeName : boldFont }];
-            NSString *text = NSLocalizedString(@"Your payment for the %1 plan was received.", @"A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III.");
+            NSString *text = LocalizedString(@"Your payment for the %1 plan was received.", @"A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III.");
             NSRange range = [text rangeOfString:@"%1"];
             NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
             [attributedText replaceCharactersInRange:range withAttributedString:proPlan];
@@ -327,7 +328,7 @@
         case MEGAUserAlertTypePaymentFailed: {
             NSString *proPlanString = [userAlert stringAtIndex:0] ? [userAlert stringAtIndex:0] : @"";
             NSAttributedString *proPlan = [[NSAttributedString alloc] initWithString:proPlanString attributes:@{ NSFontAttributeName : boldFont }];
-            NSString *text = NSLocalizedString(@"Your payment for the %1 plan was unsuccessful.", @"A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II.");
+            NSString *text = LocalizedString(@"Your payment for the %1 plan was unsuccessful.", @"A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II.");
             NSRange range = [text rangeOfString:@"%1"];
             NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
             [attributedText replaceCharactersInRange:range withAttributedString:proPlan];
@@ -339,13 +340,13 @@
             NSInteger days = ([userAlert timestampAtIndex:1] - [NSDate date].timeIntervalSince1970) / secondsInADay;
             NSString *text;
             if (days == 1) {
-                text = NSLocalizedString(@"Your PRO membership plan will expire in 1 day.", @"The professional pricing plan which the user is currently on will expire in one day.");
+                text = LocalizedString(@"Your PRO membership plan will expire in 1 day.", @"The professional pricing plan which the user is currently on will expire in one day.");
             } else if (days >= 0) {
-                text = [NSLocalizedString(@"Your PRO membership plan will expire in %1 days.", @"The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", days]];
+                text = [LocalizedString(@"Your PRO membership plan will expire in %1 days.", @"The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", days]];
             } else if (days == -1) {
-                text = NSLocalizedString(@"Your PRO membership plan expired 1 day ago", @"The professional pricing plan which the user was on expired one day ago.");
+                text = LocalizedString(@"Your PRO membership plan expired 1 day ago", @"The professional pricing plan which the user was on expired one day ago.");
             } else {
-                text = [NSLocalizedString(@"Your PRO membership plan expired %1 days ago", @"The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", days]];
+                text = [LocalizedString(@"Your PRO membership plan expired %1 days ago", @"The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", days]];
             }
             contentLabel.text = text;
             break;
@@ -515,9 +516,9 @@
 - (NSString *)titleForEmptyState {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        text = NSLocalizedString(@"No notifications",  @"There are no notifications to display.");
+        text = LocalizedString(@"No notifications",  @"There are no notifications to display.");
     } else {
-        text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        text = LocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     return text;
 }
@@ -525,7 +526,7 @@
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = LocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -544,7 +545,7 @@
 - (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = LocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;

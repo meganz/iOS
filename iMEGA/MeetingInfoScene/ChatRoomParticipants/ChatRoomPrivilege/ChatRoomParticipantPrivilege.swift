@@ -1,3 +1,5 @@
+import MEGAL10n
+
 enum ChatRoomParticipantPrivilege: String, CaseIterable {
     case unknown
     case removed

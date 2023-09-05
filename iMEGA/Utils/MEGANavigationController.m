@@ -1,4 +1,5 @@
 #import "MEGANavigationController.h"
+@import MEGAL10nObjc;
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
@@ -55,7 +56,7 @@
 #pragma mark - Private
 
 - (UIBarButtonItem *)cancelBarButtonItem {
-    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissNavigationController)];
+    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:LocalizedString(@"cancel", @"") style:UIBarButtonItemStylePlain target:nil action:@selector(dismissNavigationController)];
     return cancelBarButtonItem;
 }
 

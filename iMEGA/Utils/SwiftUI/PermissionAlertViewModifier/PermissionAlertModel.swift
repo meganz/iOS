@@ -1,3 +1,5 @@
+import MEGAL10n
+
 struct PermissionAlertModel {
     let title: String
     let message: String

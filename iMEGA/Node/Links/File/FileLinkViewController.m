@@ -18,6 +18,7 @@
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 
 @interface FileLinkViewController ()
@@ -49,7 +50,7 @@
     [super viewDidLoad];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.cancelBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
+    self.cancelBarButtonItem.title = LocalizedString(@"close", @"A button label.");
     self.moreBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
     self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
     self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
@@ -57,8 +58,8 @@
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
     [self.navigationController setToolbarHidden:NO animated:YES];
 
-    [self.openButton setTitle:NSLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
-    [self.importButton setTitle:NSLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action") forState:UIControlStateNormal];
+    [self.openButton setTitle:LocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
+    [self.importButton setTitle:LocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action") forState:UIControlStateNormal];
     
     [self setUIItemsHidden:YES];
     
@@ -66,7 +67,7 @@
     
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     
-    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     [self updateAppearance];
     [self configureContextMenuManager];
@@ -196,12 +197,12 @@
 
 - (void)setNavigationBarTitleLabel {
     if (self.node.name != nil) {
-        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.node.name subtitle:NSLocalizedString(@"fileLink", nil) color:UIColor.mnz_label];
+        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.node.name subtitle:LocalizedString(@"fileLink", @"") color:UIColor.mnz_label];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
         self.navigationItem.titleView = self.navigationBarLabel;
     } else {
-        self.navigationItem.title = NSLocalizedString(@"fileLink", nil);
+        self.navigationItem.title = LocalizedString(@"fileLink", @"");
     }
 }
 
@@ -212,7 +213,7 @@
 
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     self.moreBarButtonItem.enabled = self.shareLinkBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
-    self.navigationBarLabel = [UILabel.new customNavigationBarLabelWithTitle:NSLocalizedString(@"fileLink", nil) subtitle:NSLocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") color:UIColor.mnz_label];
+    self.navigationBarLabel = [UILabel.new customNavigationBarLabelWithTitle:LocalizedString(@"fileLink", @"") subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") color:UIColor.mnz_label];
     self.navigationItem.titleView = self.navigationBarLabel;
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     switch (error) {
@@ -237,21 +238,21 @@
 }
 
 - (void)showDecryptionAlert {
-    UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"decryptionKeyAlertTitle", @"Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents") message:NSLocalizedString(@"decryptionKeyAlertMessage", @"Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *decryptionAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"decryptionKeyAlertTitle", @"Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents") message:LocalizedString(@"decryptionKeyAlertMessage", @"Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents") preferredStyle:UIAlertControllerStyleAlert];
     
     [decryptionAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = NSLocalizedString(@"decryptionKey", @"Hint text to suggest that the user has to write the decryption key");
+        textField.placeholder = LocalizedString(@"decryptionKey", @"Hint text to suggest that the user has to write the decryption key");
         [textField addTarget:self action:@selector(decryptionAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
             return !textField.text.mnz_isEmpty;
         };
     }];
     
-    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    [decryptionAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     
-    UIAlertAction *decryptAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"decrypt", @"Button title to try to decrypt the link") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *decryptAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"decrypt", @"Button title to try to decrypt the link") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             NSString *linkString = [MEGALinkManager buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:NO];
             
@@ -276,9 +277,9 @@
 }
 
 - (void)showDecryptionKeyNotValidAlert {
-    UIAlertController *decryptionKeyNotValidAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"decryptionKeyNotValid", @"Alert title shown when you have written a decryption key not valid") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *decryptionKeyNotValidAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"decryptionKeyNotValid", @"Alert title shown when you have written a decryption key not valid") message:nil preferredStyle:UIAlertControllerStyleAlert];
     
-    [decryptionKeyNotValidAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"nil") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [decryptionKeyNotValidAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"nil") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showDecryptionAlert];
     }]];
     

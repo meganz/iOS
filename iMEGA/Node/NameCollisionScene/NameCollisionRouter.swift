@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGARepo
 import MEGASDKRepo
 import SwiftUI

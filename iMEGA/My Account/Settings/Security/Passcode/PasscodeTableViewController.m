@@ -8,6 +8,8 @@
 
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 @interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;
 }
@@ -29,20 +31,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *title = NSLocalizedString(@"passcode", nil);
+    NSString *title = LocalizedString(@"passcode", @"");
     [self.navigationItem setTitle:title];
     [self setMenuCapableBackButtonWithMenuTitle:title];
-    [self.turnOnOffPasscodeLabel setText:NSLocalizedString(@"passcode", nil)];
-    [self.changePasscodeLabel setText:NSLocalizedString(@"changePasscodeLabel", @"Section title where you can change the app's passcode")];
-    self.requirePasscodeLabel.text = NSLocalizedString(@"Require Passcode", @"Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes");
+    [self.turnOnOffPasscodeLabel setText:LocalizedString(@"passcode", @"")];
+    [self.changePasscodeLabel setText:LocalizedString(@"changePasscodeLabel", @"Section title where you can change the app's passcode")];
+    self.requirePasscodeLabel.text = LocalizedString(@"Require Passcode", @"Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes");
 
-    self.biometricsLabel.text = NSLocalizedString(@"Touch ID", nil);
+    self.biometricsLabel.text = LocalizedString(@"Touch ID", @"");
     
     LAContext *context = [[LAContext alloc] init];
     
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
         if (context.biometryType == LABiometryTypeFaceID) {
-            self.biometricsLabel.text = NSLocalizedString(@"Face ID", nil);
+            self.biometricsLabel.text = LocalizedString(@"Face ID", @"");
         }
     }
     
@@ -82,7 +84,7 @@
             wasPasscodeAlreadyEnabled = YES;
         }
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
-        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : NSLocalizedString(@"Immediately", nil);
+        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : LocalizedString(@"Immediately", @"");
     } else {
         [self.biometricsSwitch setOn:NO];
     }

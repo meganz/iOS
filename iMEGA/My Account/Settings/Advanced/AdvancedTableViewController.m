@@ -8,6 +8,8 @@
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
+@import MEGAL10nObjc;
+
 @interface AdvancedTableViewController () <MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *savePhotosLabel;
@@ -31,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"advanced", nil)];
+    [self.navigationItem setTitle:LocalizedString(@"advanced", @"")];
     
     [self checkAuthorizationStatus];
     
@@ -41,10 +43,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.dontUseHttpLabel setText:NSLocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
-    self.savePhotosLabel.text = NSLocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
-    self.saveVideosLabel.text = NSLocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
-    self.saveMediaInGalleryLabel.text = NSLocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
+    [self.dontUseHttpLabel setText:LocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
+    self.savePhotosLabel.text = LocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
+    self.saveVideosLabel.text = LocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
+    self.saveMediaInGalleryLabel.text = LocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
     BOOL useHttpsOnly = [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
     

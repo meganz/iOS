@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGASdk
@@ -108,7 +109,7 @@ extension MEGALinkManager {
             // does it make sense to handle this error apart from early return?
             return
         }
-        let notificationText = String(format: NSLocalizedString("You have joined %@", comment: "Text shown in a notification to let the user know that has joined a public chat room after login or account creation"), chatTitle)
+        let notificationText = String(format: Strings.localized("You have joined %@", comment: "Text shown in a notification to let the user know that has joined a public chat room after login or account creation"), chatTitle)
         
         if shouldAskForNotificationsPermissions {
             SVProgressHUD.showSuccess(withStatus: notificationText)

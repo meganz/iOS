@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGASDKRepo
 import UIKit
 
@@ -106,7 +107,7 @@ class NicknameViewController: UIViewController {
 
                 updateHandler(withNickname: nickname)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: NSLocalizedString(error.name, comment: ""))
+                SVProgressHUD.showError(withStatus: Strings.localized(error.name, comment: ""))
             }
             
             dismissViewController()

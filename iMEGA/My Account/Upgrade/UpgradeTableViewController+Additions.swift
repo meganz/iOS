@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGASDKRepo
 
 extension UpgradeTableViewController {
@@ -14,7 +15,7 @@ extension UpgradeTableViewController {
     }
     
     @objc func setCurrentPlanMaxQuotaData() {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails,
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails,
               let storage = accountDetails.storageMax as? Int64,
               let transfer = accountDetails.transferMax as? Int64 else {
             return

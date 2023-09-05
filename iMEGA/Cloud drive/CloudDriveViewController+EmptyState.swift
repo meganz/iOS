@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension CloudDriveViewController: DZNEmptyDataSetSource {
     public func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
         let emptyStateView = EmptyStateView(image: imageForEmptyState(), title: titleForEmptyState(), description: descriptionForEmptyState(), buttonTitle: buttonTitleForEmptyState())

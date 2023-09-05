@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASwiftUI
+import MEGAL10n
 import SwiftUI
 
 struct ChatRoomView: View {

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import UIKit
 
 class BaseAction: NSObject {
@@ -244,7 +245,7 @@ extension NodeAction {
     
     class func labelAction(label: MEGANodeLabel) -> NodeAction {
         let labelString = MEGANode.string(for: label)
-        let detailText = NSLocalizedString(labelString!, comment: "")
+        let detailText = Strings.localized(labelString!, comment: "")
         let image = UIImage(named: labelString!)
         
         return NodeAction(title: Strings.Localizable.CloudDrive.Sort.label, detail: (label != .unknown ? detailText : nil), accessoryView: (label != .unknown ? UIImageView(image: image) : UIImageView(image: Asset.Images.Generic.standardDisclosureIndicator.image)), image: Asset.Images.NodeActions.label.image, type: .label)

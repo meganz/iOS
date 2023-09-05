@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGAL10n
 
 final class EnforceCopyrightWarningViewModel: ObservableObject {
     enum CopyrightWarningViewStatus {

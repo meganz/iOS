@@ -1,16 +1,17 @@
 import MEGADomain
+import MEGAL10n
 import MEGARepo
 import MEGASDKRepo
 
 @objc class SaveNodeUseCaseOCWrapper: NSObject {
     let saveNodeUseCase = SaveNodeUseCase(
-        offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk()),
+        offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdk.shared),
         fileCacheRepository: FileCacheRepository.newRepo,
         nodeRepository: NodeRepository.newRepo,
         photosLibraryRepository: PhotosLibraryRepository.newRepo,
         mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
         preferenceUseCase: PreferenceUseCase.default,
-        transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared))
     
     @objc func saveNodeIfNeeded(from transfer: MEGATransfer) {
         saveNodeUseCase.saveNode(from: transfer.toTransferEntity()) { result in

@@ -1,6 +1,7 @@
 import FirebaseCrashlytics
 import Foundation
 import MEGADomain
+import MEGAL10n
 
 final class BackupRegister {
     

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 extension UsageViewController {
      
@@ -43,9 +44,9 @@ extension UsageViewController {
     }
     
     @objc func initializeStorageInfo() {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else { return }
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else { return }
         
-        if let rootNode = MEGASdkManager.sharedMEGASdk().rootNode {
+        if let rootNode = MEGASdk.shared.rootNode {
             cloudDriveSize = accountDetails.storageUsed(forHandle: rootNode.handle)
         }
         
@@ -61,7 +62,7 @@ extension UsageViewController {
             backupsActivityIndicator?.isHidden = true
         }
         
-        if let rubbishNode = MEGASdkManager.sharedMEGASdk().rubbishNode {
+        if let rubbishNode = MEGASdk.shared.rubbishNode {
             rubbishBinSize = accountDetails.storageUsed(forHandle: rubbishNode.handle)
         }
         
@@ -69,8 +70,8 @@ extension UsageViewController {
         
         var incomingSharedSizeSum: Int64 = 0
         
-        MEGASdkManager.sharedMEGASdk().inShares().toNodeArray().forEach { node in
-            incomingSharedSizeSum += MEGASdkManager.sharedMEGASdk().size(for: node).int64Value
+        MEGASdk.shared.inShares().toNodeArray().forEach { node in
+            incomingSharedSizeSum += MEGASdk.shared.size(for: node).int64Value
         }
         
         incomingSharesSize = NSNumber(value: incomingSharedSizeSum)
@@ -97,14 +98,14 @@ extension UsageViewController {
     }
     
     var isShowPieChartView: Bool {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
             return true
         }
         return !(accountDetails.type == .business || accountDetails.type == .proFlexi)
     }
     
     @objc var showTransferQuota: Bool {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
             return false
         }
         return Self.shouldShowTransferQuota(accountType: accountDetails.type.toAccountTypeEntity())

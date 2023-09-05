@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAFoundation
+import MEGAL10n
 import MEGAPresentation
 import SwiftUI
 

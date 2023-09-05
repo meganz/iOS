@@ -1,4 +1,5 @@
 import Combine
+import MEGAL10n
 import SwiftUI
 
 final class ScheduleMeetingViewController: UIViewController {

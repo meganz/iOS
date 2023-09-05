@@ -1,3 +1,5 @@
+import MEGAL10n
+
 final class CreateTextFileAlertViewController: UIAlertController {
     var viewModel: CreateTextFileAlertViewModel!
     

@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAFoundation
+import MEGAL10n
 import MEGASDKRepo
 import UIKit
 
@@ -187,8 +188,8 @@ class GetLinkViewController: UIViewController {
     }
 
     private func loadNodes() {
-        if !MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
-            MEGASdkManager.sharedMEGASdk().add(self as any MEGARequestDelegate)
+        if !MEGASdk.shared.mnz_isProAccount {
+            MEGASdk.shared.add(self as any MEGARequestDelegate)
             
             MEGAPurchase.sharedInstance()?.purchaseDelegateMutableArray.add(self)
             MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.add(self)
@@ -206,7 +207,7 @@ class GetLinkViewController: UIViewController {
         super.viewWillDisappear(animated)
         SVProgressHUD.dismiss()
         
-        if isMovingFromParent && !MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
+        if isMovingFromParent && !MEGASdk.shared.mnz_isProAccount {
             removeDelegates()
         }
         
@@ -360,9 +361,9 @@ class GetLinkViewController: UIViewController {
     }
     
     private func exportNode(node: MEGANode) {
-        MEGASdkManager.sharedMEGASdk().export(node, delegate: MEGAExportRequestDelegate.init(completion: { [weak self] _ in
+        MEGASdk.shared.export(node, delegate: MEGAExportRequestDelegate.init(completion: { [weak self] _ in
             (self?.nodesToExportCount -= 1)
-            guard let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: node.handle) else {
+            guard let nodeUpdated = MEGASdk.shared.node(forHandle: node.handle) else {
                 return
             }
             self?.updateModel(forNode: nodeUpdated)
@@ -434,7 +435,7 @@ class GetLinkViewController: UIViewController {
     }
     
     private func encrypt(link: String, with password: String) {
-        MEGASdkManager.sharedMEGASdk().encryptLink(withPassword: link, password: password, delegate: MEGAPasswordLinkRequestDelegate.init(completion: {(request) in
+        MEGASdk.shared.encryptLink(withPassword: link, password: password, delegate: MEGAPasswordLinkRequestDelegate.init(completion: {(request) in
             SVProgressHUD.dismiss()
             guard let encryptedLink = request?.text else {
                 return
@@ -452,8 +453,8 @@ class GetLinkViewController: UIViewController {
     }
     
     private func setExpiryDate() {
-        MEGASdkManager.sharedMEGASdk().export(nodes[0], expireTime: getLinkVM.date ?? Date(timeInterval: 24*60*60, since: Date()), delegate: MEGAExportRequestDelegate.init(completion: { [weak self] request in
-            guard let nodeHandle = request?.nodeHandle, let nodeUpdated = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else {
+        MEGASdk.shared.export(nodes[0], expireTime: getLinkVM.date ?? Date(timeInterval: 24*60*60, since: Date()), delegate: MEGAExportRequestDelegate.init(completion: { [weak self] request in
+            guard let nodeHandle = request?.nodeHandle, let nodeUpdated = MEGASdk.shared.node(forHandle: nodeHandle) else {
                 return
             }
             SVProgressHUD.dismiss()
@@ -507,7 +508,7 @@ class GetLinkViewController: UIViewController {
     }
     
     private func removeDelegates() {
-        MEGASdkManager.sharedMEGASdk().remove(self as any MEGARequestDelegate)
+        MEGASdk.shared.remove(self as any MEGARequestDelegate)
         
         MEGAPurchase.sharedInstance()?.purchaseDelegateMutableArray.remove(self)
         MEGAPurchase.sharedInstance()?.restoreDelegateMutableArray.remove(self)
@@ -545,7 +546,7 @@ class GetLinkViewController: UIViewController {
                 return
             }
             
-            if MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
+            if MEGASdk.shared.mnz_isProAccount {
                 configureExpiryDate(isOn: sender.isOn)
             } else {
                 showUpgradeToProCustomModalAlert()
@@ -660,7 +661,7 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkSwitchOptionTableViewCell")
         }
         
-        cell.configureActivateExpiryDateCell(isOn: getLinkVM.expiryDate, isPro: MEGASdkManager.sharedMEGASdk().mnz_isProAccount, justUpgraded: justUpgradedToProAccount)
+        cell.configureActivateExpiryDateCell(isOn: getLinkVM.expiryDate, isPro: MEGASdk.shared.mnz_isProAccount, justUpgraded: justUpgradedToProAccount)
         
         return cell
     }
@@ -690,7 +691,7 @@ class GetLinkViewController: UIViewController {
             fatalError("Could not get GetLinkDetailTableViewCell")
         }
         
-        cell.configurePasswordCell(passwordActive: getLinkVM.passwordProtect, isPro: MEGASdkManager.sharedMEGASdk().mnz_isProAccount, justUpgraded: justUpgradedToProAccount)
+        cell.configurePasswordCell(passwordActive: getLinkVM.passwordProtect, isPro: MEGASdk.shared.mnz_isProAccount, justUpgraded: justUpgradedToProAccount)
         
         return cell
     }
@@ -1088,7 +1089,7 @@ extension GetLinkViewController: UITableViewDelegate {
                         return
                     }
                     
-                    if MEGASdkManager.sharedMEGASdk().mnz_isProAccount {
+                    if MEGASdk.shared.mnz_isProAccount {
                         getLinkVM.trackSetPassword()
                         present(SetLinkPasswordViewController.instantiate(withDelegate: self), animated: true, completion: nil)
                     } else {

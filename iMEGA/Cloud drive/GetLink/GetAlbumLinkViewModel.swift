@@ -1,6 +1,7 @@
 import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 
 final class GetAlbumLinkViewModel: GetLinkViewModelType {

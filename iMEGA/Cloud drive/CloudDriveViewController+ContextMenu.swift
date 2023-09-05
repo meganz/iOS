@@ -1,5 +1,6 @@
 import CoreServices
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGASDKRepo
 import UIKit
@@ -9,14 +10,14 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     func contextMenuConfiguration(parentNode: MEGANode, parentAccessLevel: NodeAccessTypeEntity) -> CMConfigEntity {
         if parentNode.isFolder(),
            displayMode == .rubbishBin,
-           parentNode.handle != MEGASdkManager.sharedMEGASdk().rubbishNode?.handle {
+           parentNode.handle != MEGASdk.shared.rubbishNode?.handle {
             return CMConfigEntity(menuType: .menu(type: .rubbishBin),
                                   viewMode: isListViewModeSelected() ? .list : .thumbnail,
                                   sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                   isRubbishBinFolder: true,
                                   isRestorable: parentNode.mnz_isRestorable())
         } else {
-            let isIncomingSharedRootChild = parentAccessLevel != .owner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
+            let isIncomingSharedRootChild = parentAccessLevel != .owner && MEGASdk.shared.parentNode(for: parentNode) == nil
             return CMConfigEntity(menuType: .menu(type: .display),
                                   viewMode: isListViewModeSelected() ? .list : .thumbnail,
                                   accessLevel: parentAccessLevel.toShareAccessLevel(),
@@ -111,7 +112,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             
             alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
             alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default) { _ in
-                MEGASdkManager.sharedMEGASdk().cleanRubbishBin()
+                MEGASdk.shared.cleanRubbishBin()
             })
             
             UIApplication.mnz_visibleViewController().present(alertController, animated: true, completion: nil)

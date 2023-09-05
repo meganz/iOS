@@ -15,6 +15,7 @@
 #import "PasswordView.h"
 #import "TwoFactorAuthenticationViewController.h"
 @import MEGASDKRepo;
+@import MEGAL10nObjc;
 
 typedef NS_ENUM(NSUInteger, TextFieldTag) {
     CurrentEmailTextFieldTag = 0,
@@ -53,13 +54,13 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.confirmButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"save", @"save password or email associated to an account.") style:UIBarButtonItemStylePlain target:self action:@selector(confirmButtonTouchUpInside:)];
+    self.confirmButton = [[UIBarButtonItem alloc] initWithTitle:LocalizedString(@"save", @"save password or email associated to an account.") style:UIBarButtonItemStylePlain target:self action:@selector(confirmButtonTouchUpInside:)];
     self.navigationItem.rightBarButtonItem = self.confirmButton;
     
     switch (self.changeType) {
         case ChangeTypePassword:
         case ChangeTypePasswordFromLogout:
-            self.navigationItem.title = NSLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password");
+            self.navigationItem.title = LocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password");
             
             self.theNewPasswordView.passwordTextField.returnKeyType = UIReturnKeyNext;
             self.theNewPasswordView.passwordTextField.delegate = self;
@@ -74,7 +75,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             break;
             
         case ChangeTypeEmail: {
-            self.navigationItem.title = NSLocalizedString(@"Change Email", @"The title of the alert dialog to change the email associated to an account.");
+            self.navigationItem.title = LocalizedString(@"Change Email", @"The title of the alert dialog to change the email associated to an account.");
             self.theNewPasswordView.hidden = self.confirmPasswordView.hidden = YES;
             self.currentEmailInputView.hidden = self.theNewEmailInputView.hidden = NO;
             
@@ -94,7 +95,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
         case ChangeTypeResetPassword:
         case ChangeTypeParkAccount:
-            self.navigationItem.title = (self.changeType == ChangeTypeResetPassword) ? NSLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") : NSLocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)");
+            self.navigationItem.title = (self.changeType == ChangeTypeResetPassword) ? LocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") : LocalizedString(@"parkAccount", @"Headline for parking an account (basically restarting from scratch)");
             self.currentEmailInputView.hidden = NO;
             
             self.currentEmailInputView.inputTextField.text = self.email;
@@ -220,26 +221,26 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 
 - (BOOL)validateNewPassword {
     if (self.theNewPasswordView.passwordTextField.text.mnz_isEmpty) {
-        [self.theNewPasswordView setErrorState:YES withText:NSLocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
+        [self.theNewPasswordView setErrorState:YES withText:LocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
         return NO;
     } else if ([MEGASdkManager.sharedMEGASdk checkPassword:self.theNewPasswordView.passwordTextField.text]) {
-        [self.theNewPasswordView setErrorState:YES withText:NSLocalizedString(@"account.changePassword.error.currentPassword", @"Account, Change Password view. Error shown when you type your current password.")];
+        [self.theNewPasswordView setErrorState:YES withText:LocalizedString(@"account.changePassword.error.currentPassword", @"Account, Change Password view. Error shown when you type your current password.")];
         return NO;
     } else if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
-        [self.theNewPasswordView setErrorState:YES withText:NSLocalizedString(@"pleaseStrengthenYourPassword", nil)];
+        [self.theNewPasswordView setErrorState:YES withText:LocalizedString(@"pleaseStrengthenYourPassword", @"")];
         return NO;
     } else {
-        [self.theNewPasswordView setErrorState:NO withText:NSLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+        [self.theNewPasswordView setErrorState:NO withText:LocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
         return YES;
     }
 }
 
 - (BOOL)validateConfirmPassword {
     if ([self.confirmPasswordView.passwordTextField.text isEqualToString:self.theNewPasswordView.passwordTextField.text]) {
-        [self.confirmPasswordView setErrorState:NO withText:NSLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
+        [self.confirmPasswordView setErrorState:NO withText:LocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
         return YES;
     } else {
-        [self.confirmPasswordView setErrorState:YES withText:NSLocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
+        [self.confirmPasswordView setErrorState:YES withText:LocalizedString(@"passwordsDoNotMatch", @"Error text shown when you have not written the same password")];
         return NO;
     }
 }
@@ -247,13 +248,13 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 - (BOOL)validateEmail {
     self.theNewEmailInputView.inputTextField.text = self.theNewEmailInputView.inputTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
     if (!self.theNewEmailInputView.inputTextField.text.mnz_isValidEmail) {
-        [self.theNewEmailInputView setErrorState:YES withText:NSLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
+        [self.theNewEmailInputView setErrorState:YES withText:LocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field")];
         return NO;
     } else if ([self.theNewEmailInputView.inputTextField.text isEqualToString:self.currentEmailInputView.inputTextField.text]) {
-        [self.theNewEmailInputView setErrorState:YES withText:NSLocalizedString(@"oldAndNewEmailMatch", @"Error message shown when the users tryes to change his/her email and writes the current one as the new one.")];
+        [self.theNewEmailInputView setErrorState:YES withText:LocalizedString(@"oldAndNewEmailMatch", @"Error message shown when the users tryes to change his/her email and writes the current one as the new one.")];
         return NO;
     } else {
-        [self.theNewEmailInputView setErrorState:NO withText:NSLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
+        [self.theNewEmailInputView setErrorState:NO withText:LocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
         return YES;
     }
 }
@@ -270,8 +271,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"processStarted" object:nil];
     
     AwaitingEmailConfirmationView *awaitingEmailConfirmationView = [[[NSBundle mainBundle] loadNibNamed:@"AwaitingEmailConfirmationView" owner:self options: nil] firstObject];
-    awaitingEmailConfirmationView.titleLabel.text = NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-    awaitingEmailConfirmationView.descriptionLabel.text = NSLocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
+    awaitingEmailConfirmationView.titleLabel.text = LocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+    awaitingEmailConfirmationView.descriptionLabel.text = LocalizedString(@"emailIsChanging_description", @"Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess");
     awaitingEmailConfirmationView.frame = self.view.bounds;
     self.view = awaitingEmailConfirmationView;
     
@@ -363,9 +364,9 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                     break;
                     
                 case ChangeTypeParkAccount: {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"startNewAccount", @"Headline of the password reset recovery procedure")  message:NSLocalizedString(@"startingFreshAccount", @"Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed 'Recovery Key')") preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"startNewAccount", @"Headline of the password reset recovery procedure")  message:LocalizedString(@"startingFreshAccount", @"Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed 'Recovery Key')") preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:nil delegate:self];
                     }]];
                     [self presentViewController:alertController animated:YES completion:nil];
@@ -438,16 +439,16 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     
     switch (textField.tag) {
         case NewEmailTextFieldTag:
-            [self.theNewEmailInputView setErrorState:NO withText:NSLocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
+            [self.theNewEmailInputView setErrorState:NO withText:LocalizedString(@"newEmail", @"Placeholder text to explain that the new email should be written on this text field.")];
             
             break;
             
         case NewPasswordTextFieldTag:
-            [self.theNewPasswordView setErrorState:NO withText:NSLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
+            [self.theNewPasswordView setErrorState:NO withText:LocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password")];
             break;
             
         case ConfirmPasswordTextFieldTag:
-            [self.confirmPasswordView setErrorState:NO withText:NSLocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
+            [self.confirmPasswordView setErrorState:NO withText:LocalizedString(@"confirmPassword", @"Hint text where the user have to re-write the new password to confirm it")];
             break;
             
         default:
@@ -540,7 +541,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     for (NSInteger i = 0 ; i < count; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue && user.changes == MEGAUserChangeTypeEmail) {
-            NSString *emailChangedString = [NSLocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:user.email];
+            NSString *emailChangedString = [LocalizedString(@"congratulationsNewEmailAddress", @"The [X] will be replaced with the e-mail address.") stringByReplacingOccurrencesOfString:@"[X]" withString:user.email];
             [SVProgressHUD showSuccessWithStatus:emailChangedString];
             [self dismissViewControllerAnimated:YES completion:nil];
         }
@@ -555,7 +556,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
                 if (request.type == MEGARequestTypeChangePassword) {
-                    [self.theNewPasswordView setErrorState:YES withText:NSLocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
+                    [self.theNewPasswordView setErrorState:YES withText:LocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
                     [self.theNewPasswordView.passwordTextField becomeFirstResponder];
                 }
                 break;
@@ -563,8 +564,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 
             case MEGAErrorTypeApiEExist: {
                 if (request.type == MEGARequestTypeGetChangeEmailLink) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.")  message:nil preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.")  message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                     [self presentViewController:alertController animated:YES completion:nil];
                 }
                 break;
@@ -572,23 +573,23 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 
             case MEGAErrorTypeApiEKey: {
                 if (request.type == MEGARequestTypeConfirmRecoveryLink) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"invalidRecoveryKey", @"An alert title where the user provided the incorrect Recovery Key.")  message:nil preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure")  message:NSLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"invalidRecoveryKey", @"An alert title where the user provided the incorrect Recovery Key.")  message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure")  message:LocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-                            textField.placeholder = NSLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
+                            textField.placeholder = LocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
                             [textField becomeFirstResponder];
                             [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
                             textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                                 return !textField.text.mnz_isEmpty;
                             };
                         }];
-                        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                                 UITextField *textField = alertController.textFields.firstObject;
                                 [textField resignFirstResponder];
                                 [self dismissViewControllerAnimated:YES completion:nil];
                         }]];
-                        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             self.masterKey = alertController.textFields.firstObject.text;
                             [self.theNewEmailInputView.inputTextField becomeFirstResponder];
                         }]];
@@ -603,7 +604,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 
             case MEGAErrorTypeApiEAccess:
                 if (request.type == MEGARequestTypeGetChangeEmailLink) {
-                    [self.theNewEmailInputView setErrorState:YES withText:NSLocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
+                    [self.theNewEmailInputView setErrorState:YES withText:LocalizedString(@"emailAlreadyInUse", @"Error shown when the user tries to change his mail to one that is already used")];
                     [self.theNewEmailInputView.inputTextField becomeFirstResponder];
                 }
                 break;
@@ -616,7 +617,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     
     switch (request.type) {
         case MEGARequestTypeChangePassword: {
-            [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
+            [SVProgressHUD showSuccessWithStatus:LocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
             
             if (self.changeType == ChangeTypePassword) {
                 [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -634,7 +635,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
         case MEGARequestTypeConfirmRecoveryLink: {
             if (self.changeType == ChangeTypePassword) {
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
+                [SVProgressHUD showSuccessWithStatus:LocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 [self.view endEditing:YES];
@@ -644,7 +645,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 if (self.changeType == ChangeTypeResetPassword) {
                     if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"passwordReset" object:nil];
-                        title = NSLocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
+                        title = LocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
                         
                         completion = ^{
                             if (self.link) {
@@ -654,21 +655,21 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                             }
                         };
                     } else {
-                        title = NSLocalizedString(@"yourPasswordHasBeenReset", nil);
+                        title = LocalizedString(@"yourPasswordHasBeenReset", @"");
                         
                         completion = ^{
                             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
                         };
                     }
                 } else if (self.changeType == ChangeTypeParkAccount) {
-                    title = NSLocalizedString(@"yourAccounHasBeenParked", nil);
+                    title = LocalizedString(@"yourAccounHasBeenParked", @"");
                     
                     completion = ^{
                         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
                     };
                 }
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     completion();
                 }]];
                 

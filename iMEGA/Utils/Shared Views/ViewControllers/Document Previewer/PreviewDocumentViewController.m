@@ -22,6 +22,8 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
+
+@import MEGAL10nObjc;
 @import PureLayout;
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
@@ -70,12 +72,12 @@
     [self configureNavigation];
     [self updateAppearance];
     
-    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
+    self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
     
-    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     if (self.showUnknownEncodeHud) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"general.textEditor.hud.unknownEncode", @"Hud info message when read unknown encode file.")];
+        [SVProgressHUD showErrorWithStatus:LocalizedString(@"general.textEditor.hud.unknownEncode", @"Hud info message when read unknown encode file.")];
     }
 }
 
@@ -262,7 +264,7 @@
 
 - (void)createOpenZipButton {
     UIButton *openZipButton = [UIButton newAutoLayoutView];
-    [openZipButton setTitle:NSLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
+    [openZipButton setTitle:LocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
     [openZipButton mnz_setupBasic:self.traitCollection];
     [self.view addSubview:openZipButton];
     [openZipButton autoSetDimension:ALDimensionWidth toSize:300];

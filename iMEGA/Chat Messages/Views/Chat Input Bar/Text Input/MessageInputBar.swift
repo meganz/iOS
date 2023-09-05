@@ -1,3 +1,4 @@
+import MEGAL10n
 import UIKit
 
 protocol MessageInputBarDelegate: AnyObject {

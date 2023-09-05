@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import RegexBuilder
 
 struct ScheduledMeetingDateBuilder {
@@ -79,14 +80,14 @@ struct ScheduledMeetingDateBuilder {
     
     private func dailyDateString(_ startDateString: String, _ endDateString: String, _ startTimeString: String, _ endTimeString: String) -> String {
         if scheduledMeeting.rules.until != nil {
-            let format = NSLocalizedString("meetings.scheduled.recurring.daily.until", comment: "")
+            let format = Strings.localized("meetings.scheduled.recurring.daily.until", comment: "")
             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                 .replacingOccurrences(of: "[StartDate]", with: startDateString)
                 .replacingOccurrences(of: "[UntilDate]", with: endDateString)
                 .replacingOccurrences(of: "[StartTime]", with: startTimeString)
                 .replacingOccurrences(of: "[EndTime]", with: endTimeString)
         } else {
-            let format = NSLocalizedString("meetings.scheduled.recurring.daily.forever", comment: "")
+            let format = Strings.localized("meetings.scheduled.recurring.daily.forever", comment: "")
             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                 .replacingOccurrences(of: "[StartDate]", with: startDateString)
                 .replacingOccurrences(of: "[StartTime]", with: startTimeString)
@@ -104,7 +105,7 @@ struct ScheduledMeetingDateBuilder {
             return dailyDateString(startDateString, endDateString, startTimeString, endTimeString)
         } else if weekDaysList.count == 1 {
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.weekly.oneDay.until", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.weekly.oneDay.until", comment: "")
                 return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                     .replacingOccurrences(of: "[WeekDay]", with: stringRepresentingWeekDayShortName(forNumber: weekDaysList.first))
                     .replacingOccurrences(of: "[StartDate]", with: startDateString)
@@ -112,7 +113,7 @@ struct ScheduledMeetingDateBuilder {
                     .replacingOccurrences(of: "[StartTime]", with: startTimeString)
                     .replacingOccurrences(of: "[EndTime]", with: endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.weekly.oneDay.forever", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.weekly.oneDay.forever", comment: "")
                 return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                     .replacingOccurrences(of: "[WeekDay]", with: stringRepresentingWeekDayShortName(forNumber: weekDaysList.first))
                     .replacingOccurrences(of: "[StartDate]", with: startDateString)
@@ -129,7 +130,7 @@ struct ScheduledMeetingDateBuilder {
                 .joined(separator: ", ")
             let lastWeekdayString = stringRepresentingWeekDayShortName(forNumber: weekDaysList.last, isAtTheStartOfSentence: false)
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.weekly.severalDays.until", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.weekly.severalDays.until", comment: "")
                 return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                     .replacingOccurrences(of: "[WeekDaysList]", with: weekdayStringList)
                     .replacingOccurrences(of: "[LastWeekDay]", with: lastWeekdayString)
@@ -138,7 +139,7 @@ struct ScheduledMeetingDateBuilder {
                     .replacingOccurrences(of: "[StartTime]", with: startTimeString)
                     .replacingOccurrences(of: "[EndTime]", with: endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.weekly.severalDays.forever", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.weekly.severalDays.forever", comment: "")
                 return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                     .replacingOccurrences(of: "[WeekDaysList]", with: weekdayStringList)
                     .replacingOccurrences(of: "[LastWeekDay]", with: lastWeekdayString)
@@ -151,7 +152,7 @@ struct ScheduledMeetingDateBuilder {
     
     private func monthlySingleDayDateString(_ dayOfTheMonth: Int, _ startDateString: String, _ endDateString: String, _ startTimeString: String, _ endTimeString: String) -> String {
         if scheduledMeeting.rules.until != nil {
-            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.singleDay.until", comment: "")
+            let format = Strings.localized("meetings.scheduled.recurring.monthly.singleDay.until", comment: "")
             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                 .replacingOccurrences(of: "[MonthDay]", with: String(dayOfTheMonth))
                 .replacingOccurrences(of: "[StartDate]", with: startDateString)
@@ -159,7 +160,7 @@ struct ScheduledMeetingDateBuilder {
                 .replacingOccurrences(of: "[StartTime]", with: startTimeString)
                 .replacingOccurrences(of: "[EndTime]", with: endTimeString)
         } else {
-            let format = NSLocalizedString("meetings.scheduled.recurring.monthly.singleDay.forever", comment: "")
+            let format = Strings.localized("meetings.scheduled.recurring.monthly.singleDay.forever", comment: "")
             return String(format: format, scheduledMeeting.rules.interval == 0 ? 1 : scheduledMeeting.rules.interval)
                 .replacingOccurrences(of: "[MonthDay]", with: String(dayOfTheMonth))
                 .replacingOccurrences(of: "[StartDate]", with: startDateString)
@@ -172,42 +173,42 @@ struct ScheduledMeetingDateBuilder {
         switch weekOfMonth {
         case .first:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.first", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.first", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .second:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.second", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.second", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .third:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.third", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.third", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fourth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fourth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fourth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fifth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.monday.fifth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.monday.fifth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         }
@@ -217,42 +218,42 @@ struct ScheduledMeetingDateBuilder {
         switch weekOfMonth {
         case .first:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.first", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.first", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .second:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.second", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.second", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .third:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.third", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.third", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fourth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fourth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fourth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fifth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.tuesday.fifth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.tuesday.fifth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         }
@@ -262,42 +263,42 @@ struct ScheduledMeetingDateBuilder {
         switch weekOfMonth {
         case .first:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.first", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.first", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .second:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.second", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.second", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .third:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.third", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.third", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fourth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fourth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fourth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fifth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.wednesday.fifth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.wednesday.fifth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         }
@@ -307,42 +308,42 @@ struct ScheduledMeetingDateBuilder {
         switch weekOfMonth {
         case .first:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.first", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.first", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .second:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.second", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.second", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .third:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.third", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.third", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fourth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fourth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fourth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fifth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.thursday.fifth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.thursday.fifth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         }
@@ -352,42 +353,42 @@ struct ScheduledMeetingDateBuilder {
         switch weekOfMonth {
         case .first:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.first", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.first", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .second:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.second", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.second", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .third:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.third", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.third", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fourth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fourth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fourth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fifth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.friday.fifth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.friday.fifth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         }
@@ -397,42 +398,42 @@ struct ScheduledMeetingDateBuilder {
         switch weekOfMonth {
         case .first:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.first", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.first", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .second:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.second", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.second", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .third:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.third", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.third", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fourth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fourth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fourth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fifth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.saturday.fifth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.saturday.fifth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         }
@@ -442,42 +443,42 @@ struct ScheduledMeetingDateBuilder {
         switch weekOfMonth {
         case .first:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.first", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.first", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .second:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.second", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.second", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .third:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.third", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.third", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fourth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fourth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fourth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         case .fifth:
             if scheduledMeeting.rules.until != nil {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.until.sunday.fifth", comment: "")
                 return monthlyUntilDateString(format, startDateString, endDateString, startTimeString, endTimeString)
             } else {
-                let format = NSLocalizedString("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth", comment: "")
+                let format = Strings.localized("meetings.scheduled.recurring.monthly.ordinalDay.forever.sunday.fifth", comment: "")
                 return monthlyForeverDateString(format, startDateString, startTimeString, endTimeString)
             }
         }

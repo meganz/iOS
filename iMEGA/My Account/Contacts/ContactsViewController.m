@@ -27,6 +27,8 @@
 #import "EmptyStateView.h"
 #import "ItemListViewController.h"
 #import "NSArray+MNZCategory.h"
+
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 @import MEGASDKRepo;
 
@@ -145,11 +147,11 @@
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
     
     if (self.contactsMode == ContactsModeChatNamingGroup) {
-        self.enterGroupNameTextField.placeholder = NSLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
+        self.enterGroupNameTextField.placeholder = LocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
         self.enterGroupNameTextFieldDelegate = EnterGroupNameTextFieldDelegate.new;
         self.enterGroupNameTextField.delegate = self.enterGroupNameTextFieldDelegate;
         [self.allowNonHostToAddParticipantsSwitch setOn:YES];
-        self.allowNonHostToAddParticipantsLabel.text = NSLocalizedString(@"meetings.addContacts.allowNonHost.message", @"Message to allow non host to add contacts in the group chat and meeting");
+        self.allowNonHostToAddParticipantsLabel.text = LocalizedString(@"meetings.addContacts.allowNonHost.message", @"Message to allow non host to add contacts in the group chat and meeting");
     }
     
     [self updateAppearance];
@@ -280,16 +282,16 @@
         }
             
         case ContactsModeShareFoldersWith: {
-            self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
+            self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"");
             [self.cancelBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             self.navigationItem.leftBarButtonItems = @[self.cancelBarButtonItem];
             
-            self.shareFolderWithBarButtonItem.title = NSLocalizedString(@"next", @"Button title which, if tapped, will show the share access level selection to proceed to sharing");
+            self.shareFolderWithBarButtonItem.title = LocalizedString(@"next", @"Button title which, if tapped, will show the share access level selection to proceed to sharing");
             [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium]} forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.shareFolderWithBarButtonItem];
             self.shareFolderWithBarButtonItem.enabled = NO;
             
-            self.insertAnEmailBarButtonItem.title = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+            self.insertAnEmailBarButtonItem.title = LocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -302,11 +304,11 @@
         }
             
         case ContactsModeFolderSharedWith: {
-            self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
+            self.editBarButtonItem.title = LocalizedString(@"select", @"Caption of a button to select files");
             self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-            self.deleteBarButtonItem.title = NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
+            self.deleteBarButtonItem.title = LocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
             [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
             self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
             [self setupContactsNotVerifiedHeader];
@@ -314,12 +316,12 @@
         }
             
         case ContactsModeChatStartConversation: {
-            self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+            self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.cancelBarButtonItem];
             if (self.visibleUsersArray.count == 0) {
-                self.noContactsLabel.text = NSLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
-                self.noContactsDescriptionLabel.text = NSLocalizedString(@"Invite contacts and start chatting securely with MEGA’s encrypted chat.", @"Text encouraging the user to invite contacts to MEGA");
-                self.inviteContactButton.titleLabel.text = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+                self.noContactsLabel.text = LocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
+                self.noContactsDescriptionLabel.text = LocalizedString(@"Invite contacts and start chatting securely with MEGA’s encrypted chat.", @"Text encouraging the user to invite contacts to MEGA");
+                self.inviteContactButton.titleLabel.text = LocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             }
             break;
         }
@@ -328,8 +330,8 @@
         case ContactsModeInviteParticipants:
         case ContactsModeScheduleMeeting:
         case ContactsModeChatAttachParticipant: {
-            self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", nil);
-            self.addParticipantBarButtonItem.title = (self.contactsMode == ContactsModeInviteParticipants) ? NSLocalizedString(@"invite", nil) : (self.contactsMode == ContactsModeScheduleMeeting) ? NSLocalizedString(@"next", nil) : NSLocalizedString(@"ok", nil);
+            self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"");
+            self.addParticipantBarButtonItem.title = (self.contactsMode == ContactsModeInviteParticipants) ? LocalizedString(@"invite", @"") : (self.contactsMode == ContactsModeScheduleMeeting) ? LocalizedString(@"next", @"") : LocalizedString(@"ok", @"");
             [self setTableViewEditing:YES animated:NO];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
             self.navigationItem.rightBarButtonItems = @[self.addParticipantBarButtonItem];
@@ -340,9 +342,9 @@
             
         case ContactsModeChatCreateGroup: {
             [self setTableViewEditing:YES animated:NO];
-            self.createGroupBarButtonItem.title = NSLocalizedString(@"next", nil);
+            self.createGroupBarButtonItem.title = LocalizedString(@"next", @"");
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium], NSFontAttributeName, nil] forState:UIControlStateNormal];
-            self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+            self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
             self.navigationController.toolbarHidden = YES;
@@ -351,10 +353,10 @@
             
         case ContactsModeChatNamingGroup: {
             
-            self.createGroupBarButtonItem.title = NSLocalizedString(@"createFolderButton", nil);
-            self.encryptedKeyRotationLabel.text = NSLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
-            self.getChatLinkLabel.text = NSLocalizedString(@"Get Chat Link", @"Label in a cell where you can get the chat link");
-            self.keyRotationFooterLabel.text = NSLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
+            self.createGroupBarButtonItem.title = LocalizedString(@"createFolderButton", @"");
+            self.encryptedKeyRotationLabel.text = LocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
+            self.getChatLinkLabel.text = LocalizedString(@"Get Chat Link", @"Label in a cell where you can get the chat link");
+            self.keyRotationFooterLabel.text = LocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium], NSFontAttributeName, nil] forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.createGroupBarButtonItem];
             [self.tableView setEditing:NO animated:YES];
@@ -368,7 +370,7 @@
 
 - (void)showInviteToolbarButton {
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    self.inviteBarButtonItem.title = NSLocalizedString(@"inviteContact", nil);
+    self.inviteBarButtonItem.title = LocalizedString(@"inviteContact", @"");
     [self.inviteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]} forState:UIControlStateNormal];
     self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.inviteBarButtonItem];
     [self.navigationController setToolbarHidden:NO];
@@ -616,16 +618,16 @@
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
     }]];
-    ActionSheetViewController *shareFolderActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:NSLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") dismissCompletion:nil sender:sender];
+    ActionSheetViewController *shareFolderActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:LocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") dismissCompletion:nil sender:sender];
     
     return shareFolderActionSheet;
 }
@@ -711,7 +713,7 @@
     [self.tableView setEditing:editing animated:animated];
     
     if (editing) {
-        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
         [self.addBarButtonItem setEnabled:NO];
         
         UITabBar *tabBar = self.tabBarController.tabBar;
@@ -742,7 +744,7 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
+        self.editBarButtonItem.title = LocalizedString(@"select", @"Caption of a button to select files");
         self.selectedUsersArray = nil;
         [self.addBarButtonItem setEnabled:YES];
         
@@ -1143,23 +1145,23 @@
     }
     
     if (self.contactsMode == ContactsModeShareFoldersWith) {
-        UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [addContactAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [addContactAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        UIAlertAction *addFromEmailAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            UIAlertController *addContactFromEmailAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *addFromEmailAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            UIAlertController *addContactFromEmailAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") message:nil preferredStyle:UIAlertControllerStyleAlert];
             
             [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-                textField.placeholder = NSLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
+                textField.placeholder = LocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
                 [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
                 textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                     return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
                 };
             }];
             
-            [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+            [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
             
-            UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
                 if (self.contactsMode == ContactsModeShareFoldersWith) {
                     [self inviteEmailToShareFolder:textField.text];
@@ -1178,7 +1180,7 @@
         }];
         [addContactAlertController addAction:addFromEmailAlertAction];
         
-        UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if (self.presentedViewController != nil) {
                 [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
                     [self showEmailContactPicker];
@@ -1189,7 +1191,7 @@
         }];
         [addContactAlertController addAction:addFromContactsAlertAction];
         
-        UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"ContactLinkQR" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
             contactLinkVC.scanCode = YES;
             contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -1290,8 +1292,8 @@
         [self.navigationController pushViewController:contactsVC animated:YES];
     } else {
         if (!self.isKeyRotationEnabled && self.chatLinkSwitch.isOn && self.enterGroupNameTextField.text.mnz_isEmpty) {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:NSLocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:LocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self.enterGroupNameTextField becomeFirstResponder];
             }]];
             [self presentViewController:alertController animated:YES completion:nil];
@@ -1557,7 +1559,7 @@
         if (section == 0) {
             if (self.recentlyAddedUsersArray.count > 0) {
                 headerView.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-                [headerView configureWithTitle:NSLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts") topDistance:17.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+                [headerView configureWithTitle:LocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts") topDistance:17.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
                 
                 return headerView;
             }
@@ -1574,10 +1576,10 @@
     
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         if (section == 0) {
-            [headerView configureWithTitle:NSLocalizedString(@"sharedWith", @"Title of the view where you see with who you have shared a folder") topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+            [headerView configureWithTitle:LocalizedString(@"sharedWith", @"Title of the view where you see with who you have shared a folder") topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
             
         } else if (section == 1 && self.pendingShareUsersArray.count > 0) {
-            [headerView configureWithTitle:NSLocalizedString(@"pending", @"Label shown when a contact request is pending") topDistance:self.pendingShareUsersArray.count > 0 ? 30.0 : 1.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+            [headerView configureWithTitle:LocalizedString(@"pending", @"Label shown when a contact request is pending") topDistance:self.pendingShareUsersArray.count > 0 ? 30.0 : 1.0 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
         } else {
             [headerView configureWithTitle:nil topDistance:1.00 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
         }
@@ -1589,12 +1591,12 @@
             || self.contactsMode == ContactsModeInviteParticipants
             || self.contactsMode == ContactsModeScheduleMeeting)) {
         headerView.contentView.backgroundColor = UIColor.mnz_background;
-        [headerView configureWithTitle:NSLocalizedString(@"contactsTitle", @"Title of the Contacts section") topDistance:14.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:LocalizedString(@"contactsTitle", @"Title of the Contacts section") topDistance:14.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
         
         return headerView;
     }
     if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
-        [headerView configureWithTitle:NSLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat") topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:LocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat") topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
         headerView.marginViewHeightConstraint.constant = 0.0;
         return headerView;
     }
@@ -1603,11 +1605,11 @@
         return headerView;
     }
     if (section == 1 && self.contactsMode == ContactsModeChatStartConversation) {
-        [headerView configureWithTitle:NSLocalizedString(@"Recents", @"Title for the recents section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:LocalizedString(@"Recents", @"Title for the recents section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
         return headerView;
     }
     if ((section == 2 && self.contactsMode == ContactsModeChatStartConversation) || (section == 1 && self.contactsMode > ContactsModeChatStartConversation)) {
-        [headerView configureWithTitle:NSLocalizedString(@"contactsTitle", @"Title of the Contacts section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
+        [headerView configureWithTitle:LocalizedString(@"contactsTitle", @"Title of the Contacts section") topDistance:10 isTopSeparatorVisible:YES isBottomSeparatorVisible:YES];
         return headerView;
     }
     
@@ -1687,11 +1689,11 @@
                 }
             } else {
                 if (!tableView.isEditing) {
-                    UIAlertController *removePendingShareAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:self.pendingShareUsersArray[indexPath.row].user preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *removePendingShareAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:self.pendingShareUsersArray[indexPath.row].user preferredStyle:UIAlertControllerStyleAlert];
                     
-                    [removePendingShareAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                    [removePendingShareAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
                     
-                    [removePendingShareAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [removePendingShareAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         MEGAShareRequestDelegate *shareRequestDelegate = [MEGAShareRequestDelegate.alloc initToChangePermissionsWithNumberOfRequests:1 completion:^{
                             [self setTableViewEditing:NO animated:NO];
                             [self reloadUI];
@@ -1882,14 +1884,14 @@
         if (self.contactsMode != ContactsModeChatNamingGroup) {
             if (self.searchController.isActive ) {
                 if (self.searchController.searchBar.text.length > 0) {
-                    text = NSLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+                    text = LocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
                 }
             } else {
-                text = NSLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
+                text = LocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
             }
         }
     } else {
-        text = NSLocalizedString(@"noInternetConnection",  @"No Internet Connection");
+        text = LocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
     return text;
@@ -1898,7 +1900,7 @@
 - (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
+        text = LocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
     return text;
@@ -1930,9 +1932,9 @@
     
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
-        text = NSLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+        text = LocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
     } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
-        text = NSLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
+        text = LocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
     return text;

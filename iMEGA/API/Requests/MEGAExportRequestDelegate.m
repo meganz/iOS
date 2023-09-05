@@ -2,6 +2,8 @@
 
 #import "SVProgressHUD.h"
 
+@import MEGAL10nObjc;
+
 @interface MEGAExportRequestDelegate ()
 
 @property (nonatomic, copy) void (^completion)(MEGARequest *request);
@@ -25,7 +27,7 @@
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     if (request.access) {
-        NSString *status = self.multipleLinks ? NSLocalizedString(@"generatingLinks", @"Message shown when some links to files and/or folders are being generated") : NSLocalizedString(@"generatingLink", @"Message shown when some links to files and/or folders are being generated");
+        NSString *status = self.multipleLinks ? LocalizedString(@"generatingLinks", @"Message shown when some links to files and/or folders are being generated") : LocalizedString(@"generatingLink", @"Message shown when some links to files and/or folders are being generated");
         [SVProgressHUD showWithStatus:status];
     } else {
         [SVProgressHUD show];
@@ -37,7 +39,7 @@
         if (error.type == MEGAErrorTypeApiEBusinessPastDue) {
             [SVProgressHUD dismiss];
         } else {
-            [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
+            [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
         }
         return;
     }

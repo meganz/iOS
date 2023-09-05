@@ -1,5 +1,6 @@
 import MapKit
 import MEGADomain
+import MEGAL10n
 import MessageKit
 
 extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
@@ -28,13 +29,13 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
     }
     
     private func showAvatarActions(for chatMessage: ChatMessage, cell: MessageContentCell) {
-        guard let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: chatMessage.message.userHandle) else {
+        guard let userEmail = MEGAChatSdk.shared.userEmailFromCache(byUserHandle: chatMessage.message.userHandle) else {
             return
         }
         
         var actions = [createInfoAction(for: chatMessage, userEmail: userEmail)]
         
-        let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: userEmail)
+        let user = MEGASdk.shared.contact(forEmail: userEmail)
         if user == nil || user?.visibility != MEGAUserVisibility.visible {
             actions.append(createAddContactsAction(forEmail: userEmail))
         }
@@ -69,14 +70,14 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
     private func createAddContactsAction(forEmail userEmail: String) -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: nil, style: .default) {
             if MEGAReachabilityManager.isReachableHUDIfNot() {
-                MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
+                MEGASdk.shared.inviteContact(withEmail: userEmail, message: "", action: .add, delegate: MEGAInviteContactRequestDelegate(numberOfRequests: 1))
             }
         }
     }
     
     private func createRemoveParticipantAction(for chatMessage: ChatMessage) -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.removeParticipant, detail: nil, image: nil, style: .default) {
-            MEGASdkManager.sharedMEGAChatSdk().remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
+            MEGAChatSdk.shared.remove(fromChat: chatMessage.chatRoom.chatId, userHandle: chatMessage.message.userHandle)
         }
     }
     
@@ -132,7 +133,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
               let transfer = chatMessage.transfer,
               transfer.state == .failed else { return }
         
-        MEGASdkManager.sharedMEGASdk().retryTransfer(transfer)
+        MEGASdk.shared.retryTransfer(transfer)
         messagesCollectionView.reloadData()
     }
     
@@ -194,7 +195,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
         if megaMessage.nodeList?.size.uintValue == 1 {
             var node = megaMessage.nodeList?.node(at: 0)
             if chatRoom.isPreview {
-                node = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
+                node = MEGASdk.shared.authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
             }
             
             if let name = node?.name,
@@ -212,7 +213,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                           }
                     
                     if chatRoom.isPreview {
-                        if let authorizedNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
+                        if let authorizedNode = MEGASdk.shared.authorizeChatNode(node, cauth: chatRoom.authorizationToken) {
                             if localChatMessage == chatMessage {
                                 foundIndex = mediaNodesArrayIndex
                             }
@@ -233,7 +234,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                 }
                 
                 let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes: NSMutableArray(array: mediaNodesArray),
-                                                                                 api: MEGASdkManager.sharedMEGASdk(),
+                                                                                 api: MEGASdk.shared,
                                                                                  displayMode: .chatAttachment,
                                                                                  preferredIndex: UInt(foundIndex ?? 0))
                 photoBrowserVC.configureMediaAttachment(forMessageId: megaMessage.messageId, inChatId: chatRoom.chatId, messagesIds: mediaMessagesArray)

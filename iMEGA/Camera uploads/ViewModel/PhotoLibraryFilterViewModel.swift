@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 
 final class PhotoLibraryFilterViewModel: ObservableObject {

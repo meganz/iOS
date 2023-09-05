@@ -1,3 +1,5 @@
+import MEGAL10n
+
 protocol FilesExplorerViewConfiguration {
     var title: String { get }
     var emptyStateType: EmptyStateType { get }

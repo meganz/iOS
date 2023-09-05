@@ -1,3 +1,5 @@
+import MEGAL10n
+
 class SendLinkToChatsDelegate: NSObject {
 
     private let link: String

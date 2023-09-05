@@ -10,6 +10,7 @@
 
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
@@ -34,10 +35,10 @@
     self.cellSize = [self.collectionView mnz_calculateCellSizeForInset:self.cellInset];
     [self.collectionView.collectionViewLayout invalidateLayout];
     
-    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
+    self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
     
     NSString *folderName = [self.api nodeForHandle:self.mediaNodes.firstObject.parentHandle].name;
-    NSString *numberOfFiles = [NSString stringWithFormat:NSLocalizedString(@"general.format.count.file", @"Subtitle shown on folders that gives you information about its file content count. e.g 1 file, 2 files"), self.mediaNodes.count];
+    NSString *numberOfFiles = [NSString stringWithFormat:LocalizedString(@"general.format.count.file", @"Subtitle shown on folders that gives you information about its file content count. e.g 1 file, 2 files"), self.mediaNodes.count];
     
     if (!folderName) {
         folderName = numberOfFiles;

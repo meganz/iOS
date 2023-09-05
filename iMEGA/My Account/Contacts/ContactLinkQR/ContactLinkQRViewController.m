@@ -16,6 +16,8 @@
 #import "UIImage+GKContact.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+
+@import MEGAL10nObjc;
 @import MEGASDKRepo;
 
 typedef NS_ENUM(NSInteger, QRSection) {
@@ -57,11 +59,11 @@ typedef NS_ENUM(NSInteger, QRSection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.segmentedControl setTitle:NSLocalizedString(@"My QR code", @"Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible).") forSegmentAtIndex:0];
-    [self.segmentedControl setTitle:NSLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") forSegmentAtIndex:1];
-    [self.linkCopyButton setTitle:NSLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
+    [self.segmentedControl setTitle:LocalizedString(@"My QR code", @"Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible).") forSegmentAtIndex:0];
+    [self.segmentedControl setTitle:LocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") forSegmentAtIndex:1];
+    [self.linkCopyButton setTitle:LocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
     
-    self.hintLabel.text = NSLocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
+    self.hintLabel.text = LocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
 
     if (self.scanCode) {
         self.segmentedControl.selectedSegmentIndex = QRSectionScanCode;
@@ -226,7 +228,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 
 - (IBAction)linkCopyButtonTapped:(UIButton *)sender {
     [UIPasteboard generalPasteboard].string = self.contactLinkLabel.text;
-    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
+    [SVProgressHUD showSuccessWithStatus:LocalizedString(@"copiedToTheClipboard", @"Text of the button after the links were copied to the clipboard")];
 }
 
 #pragma mark - QR recognizing
@@ -360,8 +362,8 @@ typedef NS_ENUM(NSInteger, QRSection) {
     
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
-        inviteOrDismissModal.detail = [NSLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
-        inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+        inviteOrDismissModal.detail = [LocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
+        inviteOrDismissModal.firstButtonTitle = LocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         inviteOrDismissModal.firstCompletion = dismissCompletion;
     } else {
         BOOL isInOutgoingContactRequest = NO;
@@ -375,17 +377,17 @@ typedef NS_ENUM(NSInteger, QRSection) {
         }
         if (isInOutgoingContactRequest) {
             inviteOrDismissModal.image = [UIImage imageNamed:@"inviteSent"];
-            inviteOrDismissModal.viewTitle = NSLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
-            NSString *detailText = NSLocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
+            inviteOrDismissModal.viewTitle = LocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+            NSString *detailText = LocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:email];
             inviteOrDismissModal.detail = detailText;
             inviteOrDismissModal.boldInDetail = email;
-            inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"close", nil);
+            inviteOrDismissModal.firstButtonTitle = LocalizedString(@"close", @"");
             inviteOrDismissModal.firstCompletion = dismissCompletion;
         } else {
             inviteOrDismissModal.detail = email;
-            inviteOrDismissModal.firstButtonTitle = NSLocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
-            inviteOrDismissModal.dismissButtonTitle = NSLocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
+            inviteOrDismissModal.firstButtonTitle = LocalizedString(@"invite", @"A button on a dialog which invites a contact to join MEGA.");
+            inviteOrDismissModal.dismissButtonTitle = LocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
             inviteOrDismissModal.firstCompletion = firstCompletion;
             inviteOrDismissModal.dismissCompletion = dismissCompletion;
         }
@@ -395,7 +397,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 }
 
 - (void)feedbackWithSuccess:(BOOL)success {
-    NSString *message = success ? NSLocalizedString(@"codeScanned", @"Success text shown in a label when the user scans a valid QR. String as short as possible.") : NSLocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
+    NSString *message = success ? LocalizedString(@"codeScanned", @"Success text shown in a label when the user scans a valid QR. String as short as possible.") : LocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
     UIColor *color = success ? [UIColor greenColor] : [UIColor redColor];
     dispatch_async(dispatch_get_main_queue(), ^{
         self.errorLabel.text = message;

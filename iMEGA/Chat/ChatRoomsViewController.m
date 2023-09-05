@@ -22,6 +22,7 @@
 #import "TransfersWidgetViewController.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
@@ -97,8 +98,8 @@
             [self.usersWithoutChatArray addObject:user];
         }
     }
-    self.addBarButtonItem.accessibilityLabel = NSLocalizedString(@"startConversation", comment: "start a chat/conversation");
-    self.moreBarButtonItem.accessibilityLabel = NSLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    self.addBarButtonItem.accessibilityLabel = LocalizedString(@"startConversation", @"start a chat/conversation");
+    self.moreBarButtonItem.accessibilityLabel = LocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault:
@@ -239,12 +240,12 @@
         self.searchController.searchBar.hidden = YES;
         self.archivedChatListItemList = MEGASdkManager.sharedMEGAChatSdk.archivedChatListItems;
         if (self.archivedChatListItemList.size) {
-            self.archivedChatEmptyStateTitle.text = NSLocalizedString(@"archivedChats", @"Title of archived chats button");
+            self.archivedChatEmptyStateTitle.text = LocalizedString(@"archivedChats", @"Title of archived chats button");
             self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
             self.archivedChatEmptyState.hidden = NO;
         }
         if (self.chatRoomsType == ChatRoomsTypeDefault) {
-            self.contactsOnMegaEmptyStateTitle.text = NSLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
+            self.contactsOnMegaEmptyStateTitle.text = LocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
             self.contactsOnMegaEmptyStateView.hidden = NO;
         }
     }
@@ -268,21 +269,21 @@
     NSString *text = @"";
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
-            text = NSLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+            text = LocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
         switch (self.chatRoomsType) {
             case ChatRoomsTypeDefault:
                 if (self.chatSelectorButton.isSelected) {
-                    text = NSLocalizedString(@"chat.chats.emptyState.title", @"Ttile for empty chats tab");
+                    text = LocalizedString(@"chat.chats.emptyState.title", @"Ttile for empty chats tab");
                 } else {
-                    text = NSLocalizedString(@"chat.meetings.emptyState.title", @"Ttile for empty meetings tab ");
+                    text = LocalizedString(@"chat.meetings.emptyState.title", @"Ttile for empty meetings tab ");
 
                 }
                 break;
                 
             case ChatRoomsTypeArchived:
-                text = NSLocalizedString(@"noArchivedChats", @"Title of empty state view for archived chats.");
+                text = LocalizedString(@"noArchivedChats", @"Title of empty state view for archived chats.");
                 break;
         }
     }
@@ -299,9 +300,9 @@
         switch (self.chatRoomsType) {
             case ChatRoomsTypeDefault:
                 if (self.chatSelectorButton.isSelected) {
-                    text = NSLocalizedString(@"chat.chats.emptyState.description", @"Description for empty chats tab");
+                    text = LocalizedString(@"chat.chats.emptyState.description", @"Description for empty chats tab");
                 } else {
-                    text = NSLocalizedString(@"chat.meetings.emptyState.description", @"Description for empty meetings tab");
+                    text = LocalizedString(@"chat.meetings.emptyState.description", @"Description for empty meetings tab");
                 }
                 break;
                 
@@ -350,9 +351,9 @@
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault:
                     if (self.chatSelectorButton.isSelected) {
-                        text = NSLocalizedString(@"chat.chats.emptyState.button.title", @"Text button for empty chats tab");
+                        text = LocalizedString(@"chat.chats.emptyState.button.title", @"Text button for empty chats tab");
                     } else {
-                        text = NSLocalizedString(@"chat.meetings.emptyState.button.title", @"Text button for empty meetings tab");
+                        text = LocalizedString(@"chat.meetings.emptyState.button.title", @"Text button for empty meetings tab");
                     }
                     break;
                 case ChatRoomsTypeArchived:
@@ -680,7 +681,7 @@
 
 - (UITableViewCell *)contactsOnMegaCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"contactsOnMegaCell" forIndexPath:indexPath];
-    cell.chatTitle.text = NSLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
+    cell.chatTitle.text = LocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
     return cell;
 }
 
@@ -689,7 +690,7 @@
     cell.avatarView.avatarImageView.image = [UIImage imageNamed:@"archiveChat"];
     cell.avatarView.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     [cell.avatarView configureWithMode:MegaAvatarViewModeSingle];
-    cell.chatTitle.text = NSLocalizedString(@"archivedChats", @"Title of archived chats button");
+    cell.chatTitle.text = LocalizedString(@"archivedChats", @"Title of archived chats button");
     cell.chatLastMessage.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
     return cell;
 }
@@ -716,30 +717,30 @@
     NSMutableArray *actions = NSMutableArray.new;
   
     if (chatListItem.unreadCount != 0) {
-        ActionSheetAction *markAsReadAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"Mark as Read", @"A button label. The button allows the user to mark a conversation as read.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"markUnread_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+        ActionSheetAction *markAsReadAction = [ActionSheetAction.alloc initWithTitle:LocalizedString(@"Mark as Read", @"A button label. The button allows the user to mark a conversation as read.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"markUnread_menu"] style:UIAlertActionStyleDefault actionHandler:^{
             [MEGASdkManager.sharedMEGAChatSdk setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
         }];
         [actions addObject:markAsReadAction];
     }
     
     if ([self.chatNotificationControl isChatDNDEnabledWithChatId:chatListItem.chatId]) {
-        ActionSheetAction *unmuteAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"unmute", @"A button label. The button allows the user to unmute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+        ActionSheetAction *unmuteAction = [ActionSheetAction.alloc initWithTitle:LocalizedString(@"unmute", @"A button label. The button allows the user to unmute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
             [self.chatNotificationControl turnOffDNDWithChatId:chatListItem.chatId];
         }];
         [actions addObject:unmuteAction];
     } else {
-        ActionSheetAction *muteAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+        ActionSheetAction *muteAction = [ActionSheetAction.alloc initWithTitle:LocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") detail:nil accessoryView:nil image:[UIImage imageNamed:@"mutedChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
             [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId isChatTypeMeeting:[self isChatTypeMeeting] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
         }];
         [actions addObject:muteAction];
     }
     
-    ActionSheetAction *infoAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil accessoryView:nil image:[UIImage imageNamed:@"info"] style:UIAlertActionStyleDefault actionHandler:^{
+    ActionSheetAction *infoAction = [ActionSheetAction.alloc initWithTitle:LocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil accessoryView:nil image:[UIImage imageNamed:@"info"] style:UIAlertActionStyleDefault actionHandler:^{
         [self presentGroupOrContactDetailsForChatListItem:chatListItem];
     }];
     [actions addObject:infoAction];
 
-    ActionSheetAction *archiveChatAction = [ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"archiveChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
+    ActionSheetAction *archiveChatAction = [ActionSheetAction.alloc initWithTitle:LocalizedString(@"archiveChat", @"Title of button to archive chats.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"archiveChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
         [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
     }];
     [actions addObject:archiveChatAction];
@@ -791,7 +792,7 @@
 - (void)updateDuration {
     if (!self.isReconnecting) {
         NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"chat.callInProgress.tapToReturnToCall", @"Message shown in a chat room for a call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]];
+        NSString *title = [NSString stringWithFormat:LocalizedString(@"chat.callInProgress.tapToReturnToCall", @"Message shown in a chat room for a call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]];
         self.topBannerLabel.text = title;
         
         [self manageCallIndicators];
@@ -811,7 +812,7 @@
 
 - (void)configureTopBannerForInProgressCall:(MEGAChatCall *)call {
     if (self.isReconnecting) {
-        self.topBannerLabel.text = NSLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.");
+        self.topBannerLabel.text = LocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.");
         self.topBannerView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
         self.topBannerMicrophoneMutedImageView.hidden = YES;
         self.topBannerCameraEnabledImageView.hidden = YES;
@@ -990,7 +991,7 @@
             NSMutableArray *menus = [NSMutableArray new];
             
             if (chatRoom.unreadCount != 0) {
-                UIAction *markAsReadAction = [UIAction actionWithTitle:NSLocalizedString(@"Mark as Read",@"A button label. The button allows the user to mark a conversation as read.") image:[UIImage imageNamed:@"markUnread_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                UIAction *markAsReadAction = [UIAction actionWithTitle:LocalizedString(@"Mark as Read",@"A button label. The button allows the user to mark a conversation as read.") image:[UIImage imageNamed:@"markUnread_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                     [MEGASdkManager.sharedMEGAChatSdk setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
                 }];
                 [menus addObject:markAsReadAction];
@@ -998,32 +999,32 @@
             
             BOOL muted = [self.chatNotificationControl isChatDNDEnabledWithChatId:chatListItem.chatId];
             if (muted) {
-                UIAction *unmuteAction = [UIAction actionWithTitle:NSLocalizedString(@"unmute", @"A button label. The button allows the user to unmute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                UIAction *unmuteAction = [UIAction actionWithTitle:LocalizedString(@"unmute", @"A button label. The button allows the user to unmute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                     [self.chatNotificationControl turnOffDNDWithChatId:chatListItem.chatId];
                 }];
                 [menus addObject:unmuteAction];
             } else {
-                UIAction *muteAction = [UIAction actionWithTitle:NSLocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                UIAction *muteAction = [UIAction actionWithTitle:LocalizedString(@"mute", @"A button label. The button allows the user to mute a conversation") image:[UIImage imageNamed:@"mutedChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                     [self.chatNotificationControl turnOnDNDWithChatId:chatListItem.chatId isChatTypeMeeting:[self isChatTypeMeeting] sender:[tableView cellForRowAtIndexPath:indexPath]];
                 }];
                 [menus addObject:muteAction];
             }
 
-            UIAction *infoAction = [UIAction actionWithTitle:NSLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"info"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            UIAction *infoAction = [UIAction actionWithTitle:LocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context. ") image:[UIImage imageNamed:@"info"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
             [menus addObject:infoAction];
             
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault: {
-                    UIAction *archiveChatAction = [UIAction actionWithTitle:NSLocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:LocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                         [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
                     }];
                     [menus addObject:archiveChatAction];
                     break;
                 }
                 case ChatRoomsTypeArchived:{
-                    UIAction *archiveChatAction = [UIAction actionWithTitle:NSLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") image:[UIImage imageNamed:@"unArchiveChat"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                    UIAction *archiveChatAction = [UIAction actionWithTitle:LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") image:[UIImage imageNamed:@"unArchiveChat"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
                         [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
                     }];
                     [menus addObject:archiveChatAction];
@@ -1342,7 +1343,7 @@
             
         case MEGAChatCallStatusConnecting:
             self.reconnecting = YES;
-            self.topBannerLabel.text = NSLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.");
+            self.topBannerLabel.text = LocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.");
             self.topBannerView.backgroundColor = UIColor.systemOrangeColor;
             self.topBannerMicrophoneMutedImageView.hidden = YES;
             self.topBannerCameraEnabledImageView.hidden = YES;

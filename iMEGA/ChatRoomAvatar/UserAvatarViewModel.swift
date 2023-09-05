@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 
 final class UserAvatarViewModel: ObservableObject {
     private let userId: MEGAHandle

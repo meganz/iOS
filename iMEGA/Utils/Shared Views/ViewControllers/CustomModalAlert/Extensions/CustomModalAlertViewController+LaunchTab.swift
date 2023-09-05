@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension CustomModalAlertViewController {
     
     func configureForChangeLaunchTab() {

@@ -1,5 +1,6 @@
 import ChatRepo
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGARepo
 import MEGASDKRepo
