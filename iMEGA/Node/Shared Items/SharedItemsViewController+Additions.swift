@@ -112,7 +112,7 @@ extension SharedItemsViewController {
         return MEGASdk.shared.contact(forEmail: share.user)
     }
 
-    @objc func addInShareSearcBarIfNeeded() {
+    @objc func addInShareSearchBarIfNeeded() {
         let inShareSize = incomingShareList?.size.intValue ?? 0
         let unverifiedInShareSize = incomingUnverifiedShareList?.size.intValue ?? 0
         
@@ -268,7 +268,7 @@ extension SharedItemsViewController {
         
         incomingButton?.setBadgeCount(value: badgeValue(shares.count))
          
-        addInShareSearcBarIfNeeded()
+        addInShareSearchBarIfNeeded()
     }
     
     @objc func updateToolbarItemsIfNeeded() {
@@ -326,14 +326,32 @@ extension SharedItemsViewController {
 
     @objc func configureContactNotVerifiedImageVisibility(
         for cell: SharedItemsTableViewCell,
-        with user: MEGAUser
+        with user: MEGAUser?,
+        tab: SharedItemsTab
     ) {
-        guard isContactVerificationEnabled() else {
-            cell.contactVerifiedImageView.isHidden = true
-            return
+        cell.contactVerifiedImageView.isHidden = !showContentVerified(for: cell, with: user, tab: tab)
+    }
+    
+    @objc enum SharedItemsTab: Int {
+        case incomingShares
+        case outgoingShares
+        case sharedLinks
+    }
+    
+    private func showContentVerified(
+        for cell: SharedItemsTableViewCell,
+        with user: MEGAUser?,
+        tab: SharedItemsTab
+    ) -> Bool {
+        guard
+            tab == .incomingShares,
+            isContactVerificationEnabled(),
+            let user
+        else {
+            return false
         }
-
-        cell.contactVerifiedImageView.isHidden = !isContactVerificationEnabled() || !isContactVerified(user)
+        
+        return isContactVerified(user)
     }
 
     @objc func isContactVerified(_ user: MEGAUser) -> Bool {

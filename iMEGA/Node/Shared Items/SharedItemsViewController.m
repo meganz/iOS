@@ -259,7 +259,7 @@
         [self.incomingNodesMutableArray addObject:node];
     }
     
-    [self addInShareSearcBarIfNeeded];
+    [self addInShareSearchBarIfNeeded];
 }
 
 - (void)allOutgoingNodes {
@@ -457,7 +457,7 @@
     
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     [self configureAccessibilityForCell:cell];
-    [self configureContactNotVerifiedImageVisibilityFor: cell with:user];
+    [self configureContactNotVerifiedImageVisibilityFor:cell with:user tab:SharedItemsTabIncomingShares];
     
     return cell;
 }
@@ -507,6 +507,7 @@
     
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     [self configureAccessibilityForCell:cell];
+    [self configureContactNotVerifiedImageVisibilityFor:cell with:nil tab:SharedItemsTabOutgoingShares];
     
     return cell;
 }
