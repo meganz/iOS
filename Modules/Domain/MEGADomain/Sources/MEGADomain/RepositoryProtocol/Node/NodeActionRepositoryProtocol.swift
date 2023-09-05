@@ -1,5 +1,5 @@
 public protocol NodeActionRepositoryProtocol: RepositoryProtocol {
-    func fetchnodes() async throws
+    func fetchNodes() async throws
     func createFolder(name: String, parent: NodeEntity) async throws -> NodeEntity
     func rename(node: NodeEntity, name: String) async throws -> NodeEntity
     func trash(node: NodeEntity) async throws -> NodeEntity

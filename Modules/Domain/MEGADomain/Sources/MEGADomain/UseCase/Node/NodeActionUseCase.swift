@@ -1,7 +1,7 @@
 public protocol NodeActionUseCaseProtocol {
     
     /// Fetch the filesystem in MEGA
-    func fetchnodes() async throws
+    func fetchNodes() async throws
     
     /// Create a folder in the MEGA account
     /// - Parameters:
@@ -51,8 +51,8 @@ public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseC
         self.repo = repo
     }
     
-    public func fetchnodes() async throws {
-        try await repo.fetchnodes()
+    public func fetchNodes() async throws {
+        try await repo.fetchNodes()
     }
     
     public func createFolder(name: String, parent: NodeEntity) async throws -> NodeEntity {

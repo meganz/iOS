@@ -11,7 +11,7 @@ public final class MockNodeActionRepository: NodeActionRepositoryProtocol {
         self.createFolderResult = createFolderResult
     }
     
-    public func fetchnodes() async throws {}
+    public func fetchNodes() async throws {}
     
     public func createFolder(name: String, parent: NodeEntity) async throws -> NodeEntity {
         createFolderName = name

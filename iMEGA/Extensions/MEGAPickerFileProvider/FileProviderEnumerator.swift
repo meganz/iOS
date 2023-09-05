@@ -30,7 +30,7 @@ final class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
                     
                     let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
                     
-                    try await nodeActionUseCase.fetchnodes()
+                    try await nodeActionUseCase.fetchNodes()
                 }
                 
                 let items = try fetchItems()
