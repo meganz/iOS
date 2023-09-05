@@ -1,21 +1,22 @@
 import MEGADomain
 import Photos
 
-struct PhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
-    static var newRepo: PhotosLibraryRepository {
+public struct PhotosLibraryRepository: PhotosLibraryRepositoryProtocol {
+    public static var newRepo: PhotosLibraryRepository {
         PhotosLibraryRepository()
     }
-    
-    var completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?
-    let options: PHAssetResourceCreationOptions = {
+
+    private let options: PHAssetResourceCreationOptions = {
         let options = PHAssetResourceCreationOptions()
         options.shouldMoveFile = true
         return options
     }()
-    
-    func copyMediaFileToPhotos(at url: URL, completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?) {
+
+    private let library = PHPhotoLibrary.shared()
+
+    public func copyMediaFileToPhotos(at url: URL, completion: ((SaveMediaToPhotosErrorEntity?) -> Void)?) {
         let type: PHAssetResourceType = url.fileExtensionGroup.isImage ? .photo : .video
-        PHPhotoLibrary.shared().performChanges {
+        library.performChanges {
             PHAssetCreationRequest.forAsset().addResource(with: type, fileURL: url, options: self.options)
         } completionHandler: { success, _ in
             if success {

@@ -1062,7 +1062,6 @@
 		83C49BC2265262AD00A7764B /* CallParticipantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83C49BC1265262AD00A7764B /* CallParticipantCell.xib */; };
 		83C7776A2A45C9B300C64B90 /* ChatMessageScheduledMeetingChangeType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C777692A45C9B300C64B90 /* ChatMessageScheduledMeetingChangeType+Mapper.swift */; };
 		83C7C84827EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C7C84727EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift */; };
-		83C7C85227EDE81F00CFB5E6 /* PhotosLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C7C85127EDE81F00CFB5E6 /* PhotosLibraryRepository.swift */; };
 		83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */; };
 		83C9CE772A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE762A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift */; };
 		83C9CE7D2A278F750009549B /* RecurrenceOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE7C2A278F750009549B /* RecurrenceOptionView.swift */; };
@@ -3637,7 +3636,6 @@
 		83C49BC1265262AD00A7764B /* CallParticipantCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CallParticipantCell.xib; sourceTree = "<group>"; };
 		83C777692A45C9B300C64B90 /* ChatMessageScheduledMeetingChangeType+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageScheduledMeetingChangeType+Mapper.swift"; sourceTree = "<group>"; };
 		83C7C84727EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveMediaUseCaseOCWrapper.swift; sourceTree = "<group>"; };
-		83C7C85127EDE81F00CFB5E6 /* PhotosLibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosLibraryRepository.swift; sourceTree = "<group>"; };
 		83C8372727D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouterOCWrapper.swift; sourceTree = "<group>"; };
 		83C9CE762A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsView.swift; sourceTree = "<group>"; };
 		83C9CE7C2A278F750009549B /* RecurrenceOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceOptionView.swift; sourceTree = "<group>"; };
@@ -8650,8 +8648,6 @@
 		8396FBC525D6894D00EB50FD /* User */ = {
 			isa = PBXGroup;
 			children = (
-				9450A38E299E62620031BBEB /* UserAttributeRepository.swift */,
-				BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */,
 				BF90C7A626040930006061F8 /* UserStoreRepository.swift */,
 			);
 			path = User;
@@ -8799,7 +8795,6 @@
 		83C7C85027EDE80200CFB5E6 /* PhotosLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				83C7C85127EDE81F00CFB5E6 /* PhotosLibraryRepository.swift */,
 			);
 			path = PhotosLibrary;
 			sourceTree = "<group>";
@@ -14140,7 +14135,6 @@
 				12E14BA2278CB38700AE1BE8 /* PhotoSelection.swift in Sources */,
 				B6F853442794C97300028D51 /* PhotoSelectionAdapter.swift in Sources */,
 				122B956E287CC7AA00860FE1 /* PhotosFilterOptions.swift in Sources */,
-				83C7C85227EDE81F00CFB5E6 /* PhotosLibraryRepository.swift in Sources */,
 				12397E2C2820C75900A30CCC /* PhotosPageViewController.swift in Sources */,
 				B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */,
 				B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */,
@@ -14524,10 +14518,6 @@
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCase+Additions.swift in Sources */,
 				8313914B293519F900E20170 /* UserAvatarView.swift in Sources */,
 				83139149293511F300E20170 /* UserAvatarViewModel.swift in Sources */,
-				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
-				BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */,
-				BF90C7802603FD4A006061F8 /* UserImageRepository.swift in Sources */,
-				BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */,
 				BF90C795260406FC006061F8 /* UserImageUseCase.swift in Sources */,
 				BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */,
 				B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */,
@@ -14905,8 +14895,6 @@
 				A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
 				A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
-				A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */,
-				A854C21D29AE1FB800CB37E7 /* NodeAttributeRepository.swift in Sources */,
 				A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
