@@ -76,9 +76,14 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             }
         }
 
-        userImageRepo.loadUserImage(withUserHandle: base64Handle,
-                                    destinationPath: destinationURLPath,
-                                    completion: completion)
+        userImageRepo.loadUserImage(withUserHandle: base64Handle, destinationPath: destinationURLPath) { result in
+            guard case .success(let filePath) = result, let image = UIImage(contentsOfFile: filePath) else {
+                completion(.failure(.unableToFetch))
+                return
+            }
+
+            completion(.success(image))
+        }
     }
     
     func clearAvatarCache(withUserHandle handle: HandleEntity,
@@ -93,7 +98,13 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         if let image = fetchImage(fromPath: destinationURLPath), !forceDownload {
             return image
         } else {
-            return try await userImageRepo.avatar(forUserHandle: base64Handle, destinationPath: destinationURLPath)
+            let imageFilePath = try await userImageRepo.avatar(forUserHandle: base64Handle, destinationPath: destinationURLPath)
+
+            guard let image = UIImage(contentsOfFile: imageFilePath) else {
+                throw UserImageLoadErrorEntity.unableToFetch
+            }
+
+            return image
         }
     }
     

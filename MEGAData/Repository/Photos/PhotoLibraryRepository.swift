@@ -49,7 +49,7 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
             return try await mediaUploadNode()
         }
     }
-    
+
     private func cameraUploadNode() async throws -> NodeEntity? {
         try await withCheckedThrowingContinuation { continuation in
             CameraUploadNodeAccess.shared.loadNode { node, error in
@@ -58,7 +58,7 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
                     continuation.resume(throwing: CancellationError())
                     return
                 }
-                
+
                 if let node {
                     continuation.resume(returning: node.toNodeEntity())
                 } else if let error = error {
@@ -79,7 +79,7 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
                     continuation.resume(throwing: CancellationError())
                     return
                 }
-                
+
                 if let node {
                     continuation.resume(returning: node.toNodeEntity())
                 } else if let error {
