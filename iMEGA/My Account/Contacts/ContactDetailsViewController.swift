@@ -4,7 +4,7 @@ import MEGAL10n
 extension ContactDetailsViewController {
     @objc func joinMeeting(withChatRoom chatRoom: MEGAChatRoom) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
-        let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
+        let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
         MeetingContainerRouter(presenter: self,
                                chatRoom: chatRoom.toChatRoomEntity(),
                                call: call.toCallEntity(),

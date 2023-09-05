@@ -2,21 +2,6 @@
 
 @implementation AVAudioSession (MNZCategory)
 
-- (BOOL)mnz_isOutputEqualToPortType:(AVAudioSessionPort)portType {
-    BOOL ret = NO;
-    if (AVAudioSession.sharedInstance.currentRoute.outputs.count > 0) {
-        AVAudioSessionPortDescription *audioSessionPortDestription = AVAudioSession.sharedInstance.currentRoute.outputs.firstObject;
-        if ([audioSessionPortDestription.portType isEqualToString:portType]) {
-            ret = YES;
-        }
-    } else {
-        MEGALogWarning(@"[AVAudioSession] Array of audio outputs is empty");
-    }
-    
-    MEGALogDebug(@"[AVAudioSession] Is the output equal to %@? %@", portType, ret ? @"YES" : @"NO");
-    return ret;
-}
-
 - (BOOL)mnz_isBluetoothAudioConnected {
     BOOL ret = NO;
     NSArray *outputs = AVAudioSession.sharedInstance.currentRoute.outputs;
@@ -31,19 +16,6 @@
     
     MEGALogDebug(@"[AVAudioSession] Is there any bluetooth audio connected? %@", ret ? @"YES" : @"NO");
     return ret;
-}
-
-- (BOOL)mnz_isBluetoothAudioRouteAvailable {
-    __block BOOL isBluetoothAudioRouteAvailable = NO;
-    [AVAudioSession.sharedInstance.availableInputs enumerateObjectsUsingBlock:^(AVAudioSessionPortDescription *description, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([@[AVAudioSessionPortBluetoothA2DP, AVAudioSessionPortBluetoothLE, AVAudioSessionPortBluetoothHFP] containsObject:description.portType]) {
-            isBluetoothAudioRouteAvailable = YES;
-            *stop = YES;
-        }
-    }];
-    
-    MEGALogDebug(@"[AVAudioSession] Is there any bluetooth audio available? %@", isBluetoothAudioRouteAvailable ? @"YES" : @"NO");
-    return isBluetoothAudioRouteAvailable;
 }
 
 - (NSString *)stringForAVAudioSessionRouteChangeReason:(AVAudioSessionRouteChangeReason)reason {
