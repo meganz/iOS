@@ -1,5 +1,5 @@
-@testable import MEGA
 import MEGADomain
+import MEGASDKRepo
 import MEGASDKRepoMock
 import XCTest
 
@@ -25,8 +25,7 @@ final class RubbishBinRepositoryTests: XCTestCase {
         sdk = MockSdk(nodes: testNodesArray,
                       syncDebrisNodes: syncDebrisNodes,
                       rubbishBinNode: rubbishBinNode)
-        repo = RubbishBinRepository(sdk: sdk,
-                                    nodeValidationRepository: NodeValidationRepository(sdk: sdk))
+        repo = RubbishBinRepository(sdk: sdk)
     }
     
     func test_isSyncDebrisNode() async throws {
