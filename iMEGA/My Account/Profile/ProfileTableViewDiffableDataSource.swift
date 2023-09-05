@@ -1,4 +1,6 @@
 import MEGAFoundation
+import MEGAL10n
+import MEGASDKRepo
 import UIKit
 
 final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<ProfileSection, ProfileSectionRow> {
@@ -19,7 +21,7 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
         case .security:
             return Strings.Localizable.ifYouLoseThisRecoveryKeyAndForgetYourPasswordBAllYourFilesFoldersAndMessagesWillBeInaccessibleEvenByMEGAB.replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "")
         case .plan:
-            guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+            guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
                 return nil
             }
             var planFooterString = ""
@@ -35,11 +37,11 @@ final class ProfileTableViewDiffableDataSource: UITableViewDiffableDataSource<Pr
             }
             return planFooterString
         case .session:
-            if FileManager.default.mnz_existsOfflineFiles() && MEGASdkManager.sharedMEGASdk().transfers.size != 0 {
+            if FileManager.default.mnz_existsOfflineFiles() && MEGASdk.shared.transfers.size != 0 {
                 return Strings.Localizable.whenYouLogoutFilesFromYourOfflineSectionWillBeDeletedFromYourDeviceAndOngoingTransfersWillBeCancelled
             } else if FileManager.default.mnz_existsOfflineFiles() {
                 return Strings.Localizable.whenYouLogoutFilesFromYourOfflineSectionWillBeDeletedFromYourDevice
-            } else if MEGASdkManager.sharedMEGASdk().transfers.size != 0 {
+            } else if MEGASdk.shared.transfers.size != 0 {
                 return Strings.Localizable.whenYouLogoutOngoingTransfersWillBeCancelled
             } else {
                 return nil

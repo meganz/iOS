@@ -1,6 +1,7 @@
 
 import Foundation
 import MEGADomain
+import MEGAL10n
 
 class FolderLinkTableViewController: UIViewController {
     
@@ -126,14 +127,14 @@ extension FolderLinkTableViewController: UITableViewDataSource {
     private func config(_ cell: NodeTableViewCell, by node: MEGANode, at indexPath: IndexPath) {
         if node.isFile() {
             if node.hasThumbnail() {
-                Helper.thumbnail(for: node, api: MEGASdkManager.sharedMEGASdkFolder(), cell: cell)
+                Helper.thumbnail(for: node, api: MEGASdk.sharedFolderLink, cell: cell)
             } else {
                 cell.thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
             }
-            cell.infoLabel.text = Helper.sizeAndModicationDate(for: node, api: MEGASdkManager.sharedMEGASdkFolder())
+            cell.infoLabel.text = Helper.sizeAndModicationDate(for: node, api: MEGASdk.sharedFolderLink)
         } else if node.isFolder() {
             cell.thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
-            cell.infoLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdkFolder())
+            cell.infoLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdk.sharedFolderLink)
         }
         
         cell.thumbnailPlayImageView.isHidden = node.name?.fileExtensionGroup.isVideo != true

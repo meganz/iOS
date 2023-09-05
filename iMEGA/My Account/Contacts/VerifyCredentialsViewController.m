@@ -6,6 +6,8 @@
 #import "MEGA-Swift.h"
 #import "MEGAGenericRequestDelegate.h"
 
+@import MEGAL10nObjc;
+
 @interface VerifyCredentialsViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *userCredentialsView;
@@ -59,7 +61,7 @@
     
     MEGAGenericRequestDelegate *userCredentialsDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
         } else {
             NSString *userCredentials = request.password;
             if (userCredentials.length == 40) {
@@ -78,7 +80,7 @@
     }];
     [MEGASdkManager.sharedMEGASdk getUserCredentials:self.user delegate:userCredentialsDelegate];
     
-    self.yourCredentialsLabel.text = NSLocalizedString(@"verifyCredentials.yourCredentials.title", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
+    self.yourCredentialsLabel.text = LocalizedString(@"verifyCredentials.yourCredentials.title", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
     NSString *yourCredentials = MEGASdkManager.sharedMEGASdk.myCredentials;
     if (yourCredentials.length == 40) {
         self.firstPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(0, length)];
@@ -135,10 +137,10 @@
 
 - (void)updateVerifyOrResetButton {
     if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
-        [self.verifyOrResetButton setTitle:NSLocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
+        [self.verifyOrResetButton setTitle:LocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
     } else {
-        [self.verifyOrResetButton setTitle:NSLocalizedString(@"approve", @"Button title") forState:UIControlStateNormal];
+        [self.verifyOrResetButton setTitle:LocalizedString(@"approve", @"Button title") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupPrimary:self.traitCollection];
     }
 }
@@ -149,7 +151,7 @@
     if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
         MEGAGenericRequestDelegate *resetCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             if (error.type) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
             } else {
                 [self updateVerifyOrResetButton];
                 self.statusUpdateCompletionBlock();
@@ -159,9 +161,9 @@
     } else {
         MEGAGenericRequestDelegate *verifyCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             if (error.type) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
             } else {
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"verified", @"Button title")];
+                [SVProgressHUD showSuccessWithStatus:LocalizedString(@"verified", @"Button title")];
                 
                 [self updateVerifyOrResetButton];
                 self.statusUpdateCompletionBlock();

@@ -1,3 +1,4 @@
+import MEGAL10n
 import UIKit
 
 class AccountExpiredViewController: UIViewController {
@@ -64,6 +65,8 @@ class AccountExpiredViewController: UIViewController {
     }
     
     func configBusinessAccount() {
+        titleLabel.text = Strings.Localizable.yourBusinessAccountIsExpired
+        dismissButton.setTitle(Strings.Localizable.dismiss, for: .normal)
         titleLabel.text = Strings.Localizable.yourBusinessAccountIsExpired
         dismissButton.setTitle(Strings.Localizable.dismiss, for: .normal)
         if MEGASdk.shared.isMasterBusinessAccount {

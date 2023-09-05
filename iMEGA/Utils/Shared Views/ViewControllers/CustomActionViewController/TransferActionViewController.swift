@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import UIKit
 
 @objc protocol TransferActionViewControllerDelegate: NodeActionViewControllerDelegate {
@@ -31,7 +32,7 @@ class TransferActionViewController: NodeActionViewController {
             guard let error = transfer.lastErrorExtended, let errorString = MEGAError.errorStringWithErrorCode(error.type.rawValue, context: .upload) else {
                 return
             }
-            subtitleLabel.text = "\(transferFailed) \(NSLocalizedString(errorString, comment: ""))"
+            subtitleLabel.text = "\(transferFailed) \(Strings.localized(errorString, comment: ""))"
 
         default:
             break

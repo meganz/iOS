@@ -4,6 +4,8 @@
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
+@import MEGAL10nObjc;
+
 @interface AboutTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
@@ -26,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.versionLabel.text = NSLocalizedString(@"App Version", @"App means “Application”");
+    self.versionLabel.text = LocalizedString(@"App Version", @"App means “Application”");
     self.versionNumberLabel.text = [NSString stringWithFormat:@"%@ (%@)",
                                     [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
                                     [NSBundle.mainBundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
@@ -36,16 +38,16 @@
     longPressGestureRecognizer.minimumPressDuration = 5.0f;
     self.versionCell.gestureRecognizers = @[tapGestureRecognizer, longPressGestureRecognizer];
     
-    self.sdkVersionLabel.text = NSLocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
+    self.sdkVersionLabel.text = LocalizedString(@"sdkVersion", @"Title of the label where the SDK version is shown");
     
     self.sdkVersionSHALabel.text = NSBundle.mainBundle.infoDictionary[@"SDK_GIT_COMMIT_HASH"];
     
-    self.megachatSdkVersionLabel.text = NSLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
+    self.megachatSdkVersionLabel.text = LocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
     self.megachatSdkSHALabel.text = NSBundle.mainBundle.infoDictionary[@"CHAT_SDK_GIT_COMMIT_HASH"];
     
-    self.viewSourceCodeLabel.text = NSLocalizedString(@"View Source Code", @"Link to the public code of the ap");
+    self.viewSourceCodeLabel.text = LocalizedString(@"View Source Code", @"Link to the public code of the ap");
     
-    [self.acknowledgementsLabel setText:NSLocalizedString(@"acknowledgements", nil)];
+    [self.acknowledgementsLabel setText:LocalizedString(@"acknowledgements", @"")];
     
     [self updateAppearance];
 }
@@ -53,7 +55,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"about", nil)];
+    [self.navigationItem setTitle:LocalizedString(@"about", @"")];
     
 }
 

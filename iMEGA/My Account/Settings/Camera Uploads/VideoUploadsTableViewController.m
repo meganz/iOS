@@ -1,8 +1,8 @@
 #import "VideoUploadsTableViewController.h"
-
 #import "MEGA-Swift.h"
-
 #import "CameraUploadManager+Settings.h"
+
+@import MEGAL10nObjc;
 
 typedef NS_ENUM(NSUInteger, VideoUploadsSection) {
     VideoUploadsSectionFeatureSwitch,
@@ -37,8 +37,8 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.uploadVideosLabel setText:NSLocalizedString(@"uploadVideosLabel", @"Title to switch on/off video uploads")];
-    self.videoQualityLabel.text = NSLocalizedString(@"videoQuality", @"Title that refers to the video compression quality when to transcode from HEVC to H.264 codec");
+    [self.uploadVideosLabel setText:LocalizedString(@"uploadVideosLabel", @"Title to switch on/off video uploads")];
+    self.videoQualityLabel.text = LocalizedString(@"videoQuality", @"Title that refers to the video compression quality when to transcode from HEVC to H.264 codec");
     [self configVideoFormatTexts];
     
     [self updateNavigationTitle];
@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : UIColor.mnz_label};
     
     NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", H264Format] attributes:formatAttributes];
-    [H264AttributedString appendAttributedString:[NSAttributedString.alloc initWithString:NSLocalizedString(@"(Recommended)", nil) attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}]];
+    [H264AttributedString appendAttributedString:[NSAttributedString.alloc initWithString:LocalizedString(@"(Recommended)", @"") attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}]];
     self.H264Label.attributedText = H264AttributedString;
     
     self.HEVCLabel.attributedText = [[NSAttributedString alloc] initWithString:HEVCFormat attributes:formatAttributes];
@@ -87,16 +87,16 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     NSString *videoQualityString;
     switch (CameraUploadManager.HEVCToH264CompressionQuality) {
         case CameraUploadVideoQualityLow:
-            videoQualityString = NSLocalizedString(@"media.quality.low", @"Low");
+            videoQualityString = LocalizedString(@"media.quality.low", @"Low");
             break;
         case CameraUploadVideoQualityMedium:
-            videoQualityString = NSLocalizedString(@"media.quality.medium", @"Medium");
+            videoQualityString = LocalizedString(@"media.quality.medium", @"Medium");
             break;
         case CameraUploadVideoQualityHigh:
-            videoQualityString = NSLocalizedString(@"media.quality.high", @"High");
+            videoQualityString = LocalizedString(@"media.quality.high", @"High");
             break;
         case CameraUploadVideoQualityOriginal:
-            videoQualityString = NSLocalizedString(@"media.quality.original", @"Original");
+            videoQualityString = LocalizedString(@"media.quality.original", @"Original");
             break;
         default:
             break;
@@ -175,7 +175,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     NSString *title;
     switch (section) {
         case VideoUploadsSectionFormat:
-            title = NSLocalizedString(@"SAVE HEVC VIDEOS AS", nil);
+            title = LocalizedString(@"SAVE HEVC VIDEOS AS", @"");
             break;
         default:
             break;
@@ -189,16 +189,16 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     switch (section) {
         case VideoUploadsSectionFeatureSwitch:
             if (CameraUploadManager.isVideoUploadEnabled) {
-                title = NSLocalizedString(@"Videos will be uploaded to the Camera Uploads folder.", nil);
+                title = LocalizedString(@"Videos will be uploaded to the Camera Uploads folder.", @"");
             } else {
-                title = NSLocalizedString(@"When enabled, videos will be uploaded.", nil);
+                title = LocalizedString(@"When enabled, videos will be uploaded.", @"");
             }
             break;
         case VideoUploadsSectionFormat:
-            title = NSLocalizedString(@"We recommend H.264, as its the most compatible format for videos.", nil);
+            title = LocalizedString(@"We recommend H.264, as its the most compatible format for videos.", @"");
             break;
         case VideoUploadsSectionQuality:
-            title = NSLocalizedString(@"Compression quality when to transcode HEVC videos to H.264 format.", nil);
+            title = LocalizedString(@"Compression quality when to transcode HEVC videos to H.264 format.", @"");
             break;
         default:
             break;

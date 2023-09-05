@@ -1,5 +1,7 @@
 #import "ContactTableViewCell.h"
 
+@import MEGAL10nObjc;
+
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
 #else
@@ -93,7 +95,7 @@
 - (NSString *)userNameForUser:(MEGAUser *)user {
     NSString *userName;
     if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue) {
-        userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", NSLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
+        userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", LocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
     } else {
         userName = user.mnz_displayName;
     }
@@ -117,7 +119,7 @@
     
     if (newUser) {
         self.contactNewView.hidden = NO;
-        self.contactNewLabel.text = NSLocalizedString(@"New", @"Label shown inside an unseen notification");
+        self.contactNewLabel.text = LocalizedString(@"New", @"Label shown inside an unseen notification");
         self.contactNewLabel.textColor = UIColor.whiteColor;
         self.contactNewLabelView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     } else {
@@ -133,7 +135,7 @@
         if (indexPath.row == 0) {
             self.permissionsImageView.hidden = YES;
             self.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
-            self.nameLabel.text = NSLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list");
+            self.nameLabel.text = LocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list");
             self.shareLabel.hidden = YES;
         } else {
             NSString *userName = [self userNameForUser:user];
@@ -157,15 +159,15 @@
     self.permissionsImageView.hidden = YES;
     switch (option) {
         case ContactsStartConversationNewGroupChat:
-            self.nameLabel.text = NSLocalizedString(@"New Group Chat", @"Text button for init a group chat");
+            self.nameLabel.text = LocalizedString(@"New Group Chat", @"Text button for init a group chat");
             self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
             break;
         case ContactsStartConversationNewMeeting:
-            self.nameLabel.text = NSLocalizedString(@"meetings.create.newMeeting", @"Text button for init a Meeting.");
+            self.nameLabel.text = LocalizedString(@"meetings.create.newMeeting", @"Text button for init a Meeting.");
             self.avatarImageView.image = [UIImage imageNamed:@"newMeeting"];
             break;
         case ContactsStartConversationJoinMeeting:
-            self.nameLabel.text = NSLocalizedString(@"meetings.link.loggedInUser.joinButtonText", @"Text button for joining a Meeting.");
+            self.nameLabel.text = LocalizedString(@"meetings.link.loggedInUser.joinButtonText", @"Text button for joining a Meeting.");
             self.avatarImageView.image = [UIImage imageNamed:@"joinMeeting"];
             break;
     }

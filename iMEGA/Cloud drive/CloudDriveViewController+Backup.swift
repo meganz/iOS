@@ -1,11 +1,12 @@
 import MEGADomain
+import MEGAL10n
 
 extension CloudDriveViewController {
     private func contextMenuBackupConfiguration() -> CMConfigEntity? {
         guard let parentNode else { return nil }
         
-        let parentNodeAccessLevel = MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
-        let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdkManager.sharedMEGASdk().parentNode(for: parentNode) == nil
+        let parentNodeAccessLevel = MEGASdk.shared.accessLevel(for: parentNode)
+        let isIncomingSharedRootChild = parentNodeAccessLevel != .accessOwner && MEGASdk.shared.parentNode(for: parentNode) == nil
         let parentNodeEntity = parentNode.toNodeEntity()
         let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupsNode = backupsUseCase.isBackupsRootNode(parentNodeEntity)
@@ -38,7 +39,7 @@ extension CloudDriveViewController {
            displayMode != .backup,
            !isFromViewInFolder,
            let parentNode = parentNode,
-           MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode) != .accessRead {
+           MEGASdk.shared.accessLevel(for: parentNode) != .accessRead {
             guard let menuConfig = uploadAddMenuConfiguration() else { return }
             uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
                                                      menu: contextMenuManager?.contextMenu(with: menuConfig))
@@ -66,7 +67,7 @@ extension CloudDriveViewController {
         
         let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUseCase.isBackupNode(node.toNodeEntity())
-        let shareType: MEGAShareType = isBackupNode ? .accessRead : MEGASdkManager.sharedMEGASdk().accessLevel(for: parentNode)
+        let shareType: MEGAShareType = isBackupNode ? .accessRead : MEGASdk.shared.accessLevel(for: parentNode)
         
         toolbarActions(for: shareType, isBackupNode: isBackupNode)
     }

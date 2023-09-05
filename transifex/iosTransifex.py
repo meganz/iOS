@@ -41,7 +41,7 @@ if not gitlab_token:
     sys.exit(1)
 
 BASE_URL = "https://rest.api.transifex.com"
-GITLAB_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/iMEGA%2FLanguages%2FBase.lproj%2F$file/raw?ref=develop"
+GITLAB_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/Modules%2FLocalization%2FMEGAL10n%2FSources%2FMEGAL10n%2FResources%2FBase.lproj%2F$file/raw?ref=develop"
 PROJECT_ID = "o:meganz-1:p:ios-35"
 STORES_IOS_ID = "o:meganz-1:p:stores:r:app_store_ios"
 HEADER = {
@@ -58,7 +58,7 @@ DOWNLOAD_FOLDER = os.getcwd() + "/download/"
 git_path = os.getcwd()
 if "/transifex" in git_path:
     git_path = git_path + "/.."
-PROD_FOLDER = git_path + "/iMEGA/Languages/"
+PROD_FOLDER = git_path + "/Modules/Localization/MEGAL10n/Sources/MEGAL10n/Resources/"
 if not os.path.isdir(PROD_FOLDER):
     os.makedirs(PROD_FOLDER)
 if not os.path.isdir(DOWNLOAD_FOLDER):
@@ -1463,9 +1463,11 @@ def store_file(resource, content, lang = "Base"):
     file_path = PROD_FOLDER
     if "LTHPasscodeViewController" in resource:
         if lang == "Base":
-            file_path += "../Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/" + lang + ".lproj/LTHPasscodeViewController.strings"
+            file_path = git_path + "/iMEGA/Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/" + lang + ".lproj/LTHPasscodeViewController.strings"
         else:
             file_path = DOWNLOAD_FOLDER + "LTHPasscodeViewController.strings-" + lang
+    elif "InfoPlist" in resource:
+        file_path = git_path + "/iMEGA/Languages/" + lang + ".lproj/" + get_file_basename(resource)
     elif "Changelogs" in resource:
         file_path = DOWNLOAD_FOLDER + "Changelogs.strings-" + lang
     else:
@@ -1583,11 +1585,13 @@ def main():
                 resource = args.resource[0]
                 file_name = get_file_basename(resource)
                 if "LTHPasscodeViewController" in resource:
-                    file_path = PROD_FOLDER + "../Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/Base.lproj/" + file_name
+                    file_path = git_path + "/iMEGA/Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/Base.lproj/" + file_name
                     branch = False
                 elif "Changelogs" in resource:
                     file_path = DOWNLOAD_FOLDER + "Changelogs.strings-Base"
                     branch = False
+                elif "InfoPlist" in resource:
+                    file_path = git_path + "/iMEGA/Languages/" + "Base.lproj/" + file_name
                 else:
                     file_path = PROD_FOLDER + "Base.lproj/" + file_name
                 if args.file:
@@ -1677,11 +1681,13 @@ def main():
             resource = args.resource[0]
             file_name = get_file_basename(resource)
             if "LTHPasscodeViewController" in resource:
-                file_path = PROD_FOLDER + "../Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/Base.lproj/" + file_name
+                file_path = git_path + "/iMEGA/Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/Base.lproj/" + file_name
                 branch = False
             elif "Changelogs" in resource:
                 file_path = DOWNLOAD_FOLDER + "Changelogs.strings-Base"
                 branch = False
+            elif "InfoPlist" in resource:
+                file_path = git_path + "/iMEGA/Languages/" + "Base.lproj/" + file_name
             else:
                 file_path = PROD_FOLDER + "Base.lproj/" + file_name
             if args.file:

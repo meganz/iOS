@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
     class var identifier: AnyHashable {

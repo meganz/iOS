@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGASDKRepo
 
 struct ToggleSecureFingerprintFlagUIAlertAdapter {
@@ -7,7 +8,7 @@ struct ToggleSecureFingerprintFlagUIAlertAdapter {
         let alertController = UIAlertController(title: nil,
                                                 message: "Mandatory Contact Fingerprint Verification \(manager.secureFingerprintStatus())",
                                                 preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""),
+        alertController.addAction(UIAlertAction(title: Strings.localized("ok", comment: ""),
                                                 style: .cancel,
                                                 handler: nil))
         UIApplication.mnz_visibleViewController().present(alertController, animated: true)

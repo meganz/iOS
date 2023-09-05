@@ -1,4 +1,5 @@
-
+import ChatRepo
+import MEGAL10n
 import MEGAUIKit
 import UIKit
 
@@ -50,7 +51,7 @@ class ContactsGroupsViewController: UIViewController {
     }
 
     func fetchGroupChatsList() {
-        guard let chatListItems = MEGASdkManager.sharedMEGAChatSdk().chatListItems else {
+        guard let chatListItems = MEGAChatSdk.shared.chatListItems else {
             return
         }
         
@@ -66,7 +67,7 @@ class ContactsGroupsViewController: UIViewController {
     }
     
     func addNewChatToList(chatRoom: MEGAChatRoom) {
-        guard let newChatListItem = MEGASdkManager.sharedMEGAChatSdk().chatListItem(forChatId: chatRoom.chatId) else {
+        guard let newChatListItem = MEGAChatSdk.shared.chatListItem(forChatId: chatRoom.chatId) else {
             return
         }
         groupChats.append(newChatListItem)
@@ -79,7 +80,7 @@ class ContactsGroupsViewController: UIViewController {
     
     func showGroupChatRoom(at indexPath: IndexPath) {
         let chatListItem = searchingGroupChats.isNotEmpty ? searchingGroupChats[indexPath.row] : groupChats[indexPath.row]
-        guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatListItem.chatId) else {
+        guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatListItem.chatId) else {
             return
         }
         let messagesVC = ChatViewController(chatRoom: chatRoom)
@@ -98,7 +99,7 @@ class ContactsGroupsViewController: UIViewController {
             }
             
             if keyRotation {
-                MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(
+                MEGAChatSdk.shared.mnz_createChatRoom(
                     usersArray: users,
                     title: groupName,
                     allowNonHostToAddParticipants: allowNonHostToAddParticipants,
@@ -110,35 +111,36 @@ class ContactsGroupsViewController: UIViewController {
                         }
                     })
             } else {
-                MEGASdkManager.sharedMEGAChatSdk().createPublicChat(
+                MEGAChatSdk.shared.createPublicChat(
                     withPeers: MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: users),
                     title: groupName,
                     speakRequest: false,
                     waitingRoom: false,
                     openInvite: allowNonHostToAddParticipants,
-                    delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
-                        guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle) else {
+                    delegate: ChatRequestDelegate { result in
+                        guard case let .success(request) = result,
+                              let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: request.chatHandle) else {
                             return
                         }
                         DispatchQueue.main.async {
                             self?.addNewChatToList(chatRoom: chatRoom)
                         }
                         if getChatlink {
-                            MEGASdkManager.sharedMEGAChatSdk().createChatLink(chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
-                                if error.type == .MEGAChatErrorTypeOk {
+                            MEGAChatSdk.shared.createChatLink(chatRoom.chatId, delegate: ChatRequestDelegate { result in
+                                if case .success = result {
                                     let messagesVC = ChatViewController(chatRoom: chatRoom)
                                     messagesVC.publicChatWithLinkCreated = true
                                     messagesVC.publicChatLink = URL(string: request.text)
                                     self?.navigationController?.pushViewController(messagesVC, animated: true)
                                 }
-                            }))
+                            })
                         } else {
                             DispatchQueue.main.async {
                                 let messagesVC = ChatViewController(chatRoom: chatRoom)
                                 self?.navigationController?.pushViewController(messagesVC, animated: true)
                             }
                         }
-                    }))
+                    })
             }
         }
         

@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADomain
+import MEGAL10n
 import XCTest
 
 final class SlideShowOptionViewModelTests: XCTestCase {

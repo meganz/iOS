@@ -14,6 +14,7 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
+@import MEGAL10nObjc;
 @import MEGASDKRepo;
 
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, NodeActionViewControllerDelegate, MEGADelegate> {
@@ -38,9 +39,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = NSLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
-    self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
-    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
+    self.title = LocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
+    self.editBarButtonItem.title = LocalizedString(@"select", @"Caption of a button to select files");
+    self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
 
     [self configureToolbarItems];
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
@@ -214,9 +215,9 @@
     GenericHeaderFooterView *sectionHeader = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
     
     if (section == 0) {
-        [sectionHeader configureWithTitle:NSLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+        [sectionHeader configureWithTitle:LocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file") topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     } else {
-        [sectionHeader configureWithTitle:NSLocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file") detail:[NSString memoryStyleStringFromByteCount:self.node.mnz_versionsSize] topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
+        [sectionHeader configureWithTitle:LocalizedString(@"previousVersions", @"A button label which opens a dialog to display the full version history of the selected file") detail:[NSString memoryStyleStringFromByteCount:self.node.mnz_versionsSize] topDistance:30.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
     return sectionHeader;
 }
@@ -279,7 +280,7 @@
     if (self.tableView.isEditing) {
         navigationTitle = [self selectedCountTitle];
     } else {
-        navigationTitle = NSLocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
+        navigationTitle = LocalizedString(@"versions", @"Title of section to display number of all historical versions of files.");
     }
     
     self.navigationItem.title = navigationTitle;
@@ -292,7 +293,7 @@
     [self updateNavigationBarTitle];
     
     if (editing) {
-        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         [self.navigationController setToolbarHidden:NO animated:YES];
@@ -303,7 +304,7 @@
             cell.selectedBackgroundView = view;
         }
     } else {
-        self.editBarButtonItem.title = NSLocalizedString(@"select", @"Caption of a button to select files");
+        self.editBarButtonItem.title = LocalizedString(@"select", @"Caption of a button to select files");
 
         allNodesSelected = NO;
         self.selectedNodesArray = nil;
@@ -347,12 +348,12 @@
     MEGANode *node = self.selectedNodesArray.firstObject;
     
     if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:node] == MEGAShareTypeAccessReadWrite) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions") message:NSLocalizedString(@"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?", @"Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share.") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Create new file", @"Text shown for the action create new file") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions") message:LocalizedString(@"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?", @"Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share.") preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"Create new file", @"Text shown for the action create new file") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [MEGASdkManager.sharedMEGASdk restoreVersionNode:node delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
                 if (error.type == MEGAErrorTypeApiOk) {
-                    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Version created as a new file successfully.", @"Text shown when the creation of a version as a new file was successful")];
+                    [SVProgressHUD showSuccessWithStatus:LocalizedString(@"Version created as a new file successfully.", @"Text shown when the creation of a version as a new file was successful")];
                 }
             }]];
         }]];
@@ -365,9 +366,9 @@
 }
 
 - (IBAction)removeAction:(id)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"deleteVersion", @"Question to ensure user wants to delete file version") message:NSLocalizedString(@"permanentlyRemoved", @"Message to notify user the file version will be permanently removed") preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"delete", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"deleteVersion", @"Question to ensure user wants to delete file version") message:LocalizedString(@"permanentlyRemoved", @"Message to notify user the file version will be permanently removed") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"delete", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         for (MEGANode *node in self.selectedNodesArray) {
             [[MEGASdkManager sharedMEGASdk] removeVersionNode:node];
         }
@@ -511,12 +512,12 @@
     if (error.type) {
         if (error.type == MEGAErrorTypeApiEAccess) {
             if (transfer.type ==  MEGATransferTypeUpload) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"permissionTitle", nil) message:NSLocalizedString(@"permissionMessage", nil) preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"permissionTitle", @"") message:LocalizedString(@"permissionMessage", @"") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                 [self presentViewController:alertController animated:YES completion:nil];
             }
         } else if (error.type == MEGAErrorTypeApiEIncomplete) {
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:NSLocalizedString(@"transferCancelled", nil)];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
             NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
             if (indexPath != nil) {

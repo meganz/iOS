@@ -1,8 +1,9 @@
 import MEGADomain
+import MEGAL10n
 
 extension AppDelegate {
     @objc func expiredAccountTitle() -> String {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
             return ""
         }
         switch accountDetails.type {
@@ -14,14 +15,14 @@ extension AppDelegate {
     }
     
     @objc func expiredAccountMessage() -> String {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
             return ""
         }
         switch accountDetails.type {
         case .proFlexi:
             return Strings.Localizable.Account.Expired.ProFlexi.message
         default:
-            if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
+            if MEGASdk.shared.isMasterBusinessAccount {
                 return Strings.Localizable.ThereHasBeenAProblemProcessingYourPayment.megaIsLimitedToViewOnlyUntilThisIssueHasBeenFixedInADesktopWebBrowser
             } else {
                 let message = Strings.Localizable.YourAccountIsCurrentlyBSuspendedB.youCanOnlyBrowseYourData

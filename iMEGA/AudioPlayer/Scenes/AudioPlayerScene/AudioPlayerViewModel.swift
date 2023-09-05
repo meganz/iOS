@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAFoundation
+import MEGAL10n
 import MEGAPresentation
 
 enum AudioPlayerAction: ActionType {

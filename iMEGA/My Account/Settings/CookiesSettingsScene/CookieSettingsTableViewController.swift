@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 enum CookieSettingsSection: Int {
     case acceptCookies

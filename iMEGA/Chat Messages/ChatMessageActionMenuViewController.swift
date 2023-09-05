@@ -1,4 +1,5 @@
 import Haptica
+import MEGAL10n
 import UIKit
 
 class ChatMessageActionMenuViewController: ActionSheetViewController {
@@ -254,11 +255,11 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         actions = [forwardAction, exportMessagesAction, selectAction]
      
         if chatMessage.message.usersCount == 1 {
-            if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
+            if let email = chatMessage.message.userEmail(at: 0), let user = MEGASdk.shared.contact(forEmail: email), user.visibility != .visible {
                 actions.append(contentsOf: [addContactAction])
             } else {
                 for index in 0..<chatMessage.message.usersCount {
-                    if let email = chatMessage.message.userEmail(at: index), let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: email), user.visibility != .visible {
+                    if let email = chatMessage.message.userEmail(at: index), let user = MEGASdk.shared.contact(forEmail: email), user.visibility != .visible {
                         return
                     }
                 }
@@ -347,7 +348,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                   return
               }
         
-        MEGASdkManager.sharedMEGAChatSdk().addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: messageId, reaction: emoji)
+        MEGAChatSdk.shared.addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: messageId, reaction: emoji)
         dismiss(animated: true, completion: nil)
     }
     
@@ -365,7 +366,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     // MARK: - Internal methods used by the extension of this class
 
     func isFromCurrentSender(message: ChatMessage) -> Bool {
-        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk().myUserHandle
+        return UInt64(message.sender.senderId) == MEGAChatSdk.shared.myUserHandle
     }
 
 }

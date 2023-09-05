@@ -23,6 +23,7 @@
 #import "OfflineTableViewCell.h"
 #import "UIViewController+MNZCategory.h"
 #import "NSArray+MNZCategory.h"
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 
 static NSString *kFileName = @"kFileName";
@@ -263,7 +264,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableID"];
     self.offlineTableView.offline = self;
    
-    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineTableView bannerMessage:NSLocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
+    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineTableView bannerMessage:LocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
     [self add:bannerContainerVC container:self.containerView animate:NO];
     
     self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -287,7 +288,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
     self.offlineCollectionView.offline = self;
     
-    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineCollectionView bannerMessage:NSLocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
+    UIViewController *bannerContainerVC = [[BannerContainerViewRouter.alloc initWithContentViewController:self.offlineCollectionView bannerMessage:LocalizedString(@"offline.logOut.warning.message", @"Offline log out warning message") bannerType:BannerTypeWarning] build];
     [self add:bannerContainerVC container:self.containerView animate:NO];
     
     self.offlineCollectionView.collectionView.emptyDataSetDelegate = self;
@@ -783,7 +784,7 @@ static NSString *kisDirectory = @"kisDirectory";
     if (editing) {
         
         self.navigationItem.rightBarButtonItem = self.editBarButtonItem;
-        self.editBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
+        self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.leftBarButtonItems = @[self.selectAllBarButtonItem];
         
         UITabBar *tabBar = self.tabBarController.tabBar;
@@ -891,7 +892,7 @@ static NSString *kisDirectory = @"kisDirectory";
         navigationTitle = [self selectedCountTitle];
     } else {
         if (self.folderPathFromOffline == nil) {
-            navigationTitle = NSLocalizedString(@"offline", @"Offline");
+            navigationTitle = LocalizedString(@"offline", @"Offline");
         } else {
             navigationTitle = self.folderPathFromOffline.lastPathComponent;
         }
@@ -923,16 +924,16 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)showRemoveAlertWithConfirmAction:(void (^)(void))confirmAction andCancelAction:(void (^ _Nullable)(void))cancelAction{
     NSString *message;
     if (self.selectedItems.count > 1) {
-        message = NSLocalizedString(@"removeItemsFromOffline", nil);
+        message = LocalizedString(@"removeItemsFromOffline", @"");
     } else {
-        message = NSLocalizedString(@"removeItemFromOffline", nil);
+        message = LocalizedString(@"removeItemFromOffline", @"");
     }
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"remove", @"") message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         confirmAction();
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         if (cancelAction) {
             cancelAction();
         }
@@ -944,7 +945,7 @@ static NSString *kisDirectory = @"kisDirectory";
     __weak __typeof__(self) weakSelf = self;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:NSLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         [self showRemoveAlertWithConfirmAction:^{
             [self removeOfflineNodeCell:itemPath];
         } andCancelAction:nil];
@@ -954,9 +955,9 @@ static NSString *kisDirectory = @"kisDirectory";
     NSString *title;
     BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
     if (isDirectory) {
-        title = NSLocalizedString(@"general.export", @"Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app");
+        title = LocalizedString(@"general.export", @"Button title which, if tapped, will trigger the action to export something from MEGA with the objective of sharing it outside of the app");
     } else {
-        NSString *exportFileFormat = NSLocalizedString(@"general.menuAction.exportFile.title", @"Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu");
+        NSString *exportFileFormat = LocalizedString(@"general.menuAction.exportFile.title", @"Button title which, if tapped, will trigger the action of downloading the node and after that the user will be able to share through the iOS share menu");
         title = [NSString stringWithFormat:exportFileFormat, 1];
     }
     if (fileExistsAtPath) {
@@ -1033,13 +1034,13 @@ static NSString *kisDirectory = @"kisDirectory";
     NSString *text = @"";
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
-            text = NSLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+            text = LocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
         if (self.folderPathFromOffline) {
-            text = NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+            text = LocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
         } else {
-            text = NSLocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.");
+            text = LocalizedString(@"offlineEmptyState_title", @"Title shown when the Offline section is empty, when you don't have download any files. Keep the upper.");
         }
     }
     

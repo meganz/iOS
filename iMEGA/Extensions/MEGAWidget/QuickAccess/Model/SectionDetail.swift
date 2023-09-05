@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 struct SectionDetail: Hashable {
     let title: String

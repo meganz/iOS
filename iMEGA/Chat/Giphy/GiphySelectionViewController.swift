@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGAUIKit
 import UIKit
 
@@ -28,13 +29,13 @@ class GiphySelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = NSLocalizedString("Send GIF", comment: "")
+        title = Strings.localized("Send GIF", comment: "")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
 
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.showsCancelButton = false
-        searchController.searchBar.placeholder = NSLocalizedString("Search GIPHY", comment: "")
+        searchController.searchBar.placeholder = Strings.localized("Search GIPHY", comment: "")
         definesPresentationContext = true
         
         searchController.searchBar.delegate = mainView

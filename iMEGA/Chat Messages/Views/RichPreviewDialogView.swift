@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGAL10n
 import UIKit
 
 class RichPreviewDialogView: UIView {

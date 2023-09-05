@@ -5,6 +5,8 @@
 #import "UIApplication+MNZCategory.h"
 #import "MEGANavigationController.h"
 
+@import MEGAL10nObjc;
+
 @implementation MainTabBarController (CameraUpload)
 
 #pragma mark - Camera Upload v2 migration
@@ -16,10 +18,10 @@
     
     CustomModalAlertViewController *migrationVC = [[CustomModalAlertViewController alloc] init];
     migrationVC.image = [UIImage imageNamed:@"cameraUploadsV2Migration"];
-    migrationVC.viewTitle = NSLocalizedString(@"New Camera Upload!", nil);
-    migrationVC.detail = NSLocalizedString(@"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.", nil);
-    migrationVC.firstButtonTitle = NSLocalizedString(@"Use Most Compatible Formats", nil);
-    migrationVC.dismissButtonTitle = NSLocalizedString(@"Custom Settings", nil);
+    migrationVC.viewTitle = LocalizedString(@"New Camera Upload!", @"");
+    migrationVC.detail = LocalizedString(@"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.", @"");
+    migrationVC.firstButtonTitle = LocalizedString(@"Use Most Compatible Formats", @"");
+    migrationVC.dismissButtonTitle = LocalizedString(@"Custom Settings", @"");
     
     __weak __typeof__(CustomModalAlertViewController) *weakCustom = migrationVC;
     migrationVC.firstCompletion = ^{

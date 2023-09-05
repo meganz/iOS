@@ -179,7 +179,8 @@ included: # Paths to include during linting. `--path` is ignored if present.
   - Modules
 
 excluded: # Paths to ignore during linting. Takes precedence over `included`.
-  - iMEGA/SwiftGen
+  - Modules/Localization/MEGAL10n/Sources/MEGAL10n/Strings+Generated.swift
+  - Modules/Localization/MEGAL10n/SwiftGen
   - SwiftGen
   - transifex
   - Xcode Templates

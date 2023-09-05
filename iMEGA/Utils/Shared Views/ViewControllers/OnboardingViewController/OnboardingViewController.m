@@ -2,6 +2,8 @@
 #import "OnboardingView.h"
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 @interface OnboardingViewController () <UIScrollViewDelegate>
 
 @property (nonatomic) OnboardingType type;
@@ -43,12 +45,12 @@
         case OnboardingTypeDefault:
             [self.pageControl addTarget:self action:@selector(pageControlValueChanged) forControlEvents:UIControlEventValueChanged];
             
-            [self.primaryButton setTitle:NSLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
+            [self.primaryButton setTitle:LocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
             
-            [self.secondaryButton setTitle:NSLocalizedString(@"login", @"Button title which triggers the action to login in your MEGA account") forState:UIControlStateNormal];
+            [self.secondaryButton setTitle:LocalizedString(@"login", @"Button title which triggers the action to login in your MEGA account") forState:UIControlStateNormal];
 
             [self setupTertiaryButton];
-            [self.tertiaryButton setTitle:NSLocalizedString(@"general.joinMeetingAsGuest", @"Button title which triggers the action to join meeting as Guest") forState:UIControlStateNormal];
+            [self.tertiaryButton setTitle:LocalizedString(@"general.joinMeetingAsGuest", @"Button title which triggers the action to join meeting as Guest") forState:UIControlStateNormal];
 
             if (self.scrollView.subviews.firstObject.subviews.count == 4) {
                 OnboardingView *onboardingViewEncryption = self.scrollView.subviews.firstObject.subviews.firstObject;
@@ -68,7 +70,7 @@
             self.pageControl.hidden = YES;
             self.secondaryButton.hidden = YES;
             self.tertiaryButton.hidden = YES;
-            [self.primaryButton setTitle:NSLocalizedString(@"continue", @"'Next' button in a dialog") forState:UIControlStateNormal];
+            [self.primaryButton setTitle:LocalizedString(@"continue", @"'Next' button in a dialog") forState:UIControlStateNormal];
             
             
             int nextIndex = 0;
@@ -152,7 +154,7 @@
     
     OnboardingView *currentView = self.scrollView.subviews.firstObject.subviews[page];
     if (currentView.type == OnboardingViewTypeNotificationsPermission) {
-        [self.primaryButton setTitle:NSLocalizedString(@"continue", @"'Next' button in a dialog") forState:UIControlStateNormal];
+        [self.primaryButton setTitle:LocalizedString(@"continue", @"'Next' button in a dialog") forState:UIControlStateNormal];
         self.secondaryButton.hidden = YES;
     }
 }

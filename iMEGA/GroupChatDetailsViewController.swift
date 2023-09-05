@@ -1,23 +1,24 @@
 import Foundation
 import MEGADomain
+import MEGAL10n
 import MEGASDKRepo
 
 extension GroupChatDetailsViewController {
     
     @objc func addChatCallDelegate() {
-        MEGASdkManager.sharedMEGAChatSdk().add(self as (any MEGAChatCallDelegate))
+        MEGAChatSdk.shared.add(self as (any MEGAChatCallDelegate))
     }
     
     @objc func removeChatCallDelegate() {
-        MEGASdkManager.sharedMEGAChatSdk().remove(self as (any MEGAChatCallDelegate))
+        MEGAChatSdk.shared.remove(self as (any MEGAChatCallDelegate))
     }
     
     @objc func addChatRoomDelegate() {
-        MEGASdkManager.sharedMEGAChatSdk().addChatRoomDelegate(chatRoom.chatId, delegate: self)
+        MEGAChatSdk.shared.addChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
     @objc func removeChatRoomDelegate() {
-        MEGASdkManager.sharedMEGAChatSdk().removeChatRoomDelegate(chatRoom.chatId, delegate: self)
+        MEGAChatSdk.shared.removeChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
     @objc func shouldShowAddParticipants() -> Bool {
@@ -44,14 +45,14 @@ extension GroupChatDetailsViewController {
             self?.endCallDialog = nil
         } endCallAction: { [weak self] in
             guard let self = self,
-                  let call = MEGASdkManager.sharedMEGAChatSdk().chatCall(forChatId: self.chatRoom.chatId) else {
+                  let call = MEGAChatSdk.shared.chatCall(forChatId: self.chatRoom.chatId) else {
                 return
             }
             
-            let statsRepoSitory = AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+            let statsRepoSitory = AnalyticsRepository(sdk: MEGASdk.shared)
             AnalyticsEventUseCase(repository: statsRepoSitory).sendAnalyticsEvent(.meetings(.endCallForAll))
             
-            MEGASdkManager.sharedMEGAChatSdk().endChatCall(call.callId)
+            MEGAChatSdk.shared.endChatCall(call.callId)
             self.navigationController?.popViewController(animated: true)
         }
         
@@ -101,7 +102,7 @@ extension GroupChatDetailsViewController {
         ) { [weak self] handles in
             guard let self = self else { return }
             for handle in handles {
-                MEGASdkManager.sharedMEGAChatSdk().invite(
+                MEGAChatSdk.shared.invite(
                     toChat: self.chatRoom.chatId,
                     user: handle,
                     privilege: MEGAChatRoomPrivilege.standard.rawValue
@@ -152,7 +153,7 @@ extension GroupChatDetailsViewController: GroupChatDetailsViewTableViewCellDeleg
         case GroupChatDetailsSection.chatNotifications.rawValue:
             changeChatNotificationStatus(sender: sender)
         case GroupChatDetailsSection.allowNonHostToAddParticipants.rawValue:
-            MEGASdkManager.sharedMEGAChatSdk().openInvite(sender.isOn, chatId: chatRoom.chatId)
+            MEGAChatSdk.shared.openInvite(sender.isOn, chatId: chatRoom.chatId)
         default:
             break
         }

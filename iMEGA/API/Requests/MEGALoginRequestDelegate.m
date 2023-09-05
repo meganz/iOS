@@ -6,6 +6,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
+@import MEGAL10nObjc;
 @import SAMKeychain;
 
 @interface MEGALoginRequestDelegate ()
@@ -64,7 +65,7 @@
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs:
             case MEGAErrorTypeApiENoent:
-                message = NSLocalizedString(@"invalidMailOrPassword", @"Message shown when the user writes a wrong email or password on login");
+                message = LocalizedString(@"invalidMailOrPassword", @"Message shown when the user writes a wrong email or password on login");
                 
                 // The email or password have been changed in other client while the app requires the 2fa code
                 if ((error.type == MEGAErrorTypeApiENoent) && request.text) {
@@ -79,7 +80,7 @@
                     self.errorCompletion(error);
                     return;
                 } else {
-                    message = [NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)];
+                    message = [NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")];
                     break;
                 }
             }
@@ -89,11 +90,11 @@
                 return;
                 
             case MEGAErrorTypeApiETooMany:
-                message = [NSString stringWithFormat:NSLocalizedString(@"tooManyAttemptsLogin", @"Error message when to many attempts to login"), [self timeFormatted:3600]];
+                message = [NSString stringWithFormat:LocalizedString(@"tooManyAttemptsLogin", @"Error message when to many attempts to login"), [self timeFormatted:3600]];
                 break;
                 
             case MEGAErrorTypeApiEIncomplete:
-                message = NSLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
+                message = LocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
                 break;
             
             case MEGAErrorTypeApiESid:
@@ -105,12 +106,12 @@
                 return;
                 
             default:
-                message = [NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)];
+                message = [NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")];
                 break;
         }
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"error", @"") message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
         
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         

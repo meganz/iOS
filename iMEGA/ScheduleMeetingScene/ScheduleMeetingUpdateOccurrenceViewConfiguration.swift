@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 final class ScheduleMeetingUpdateOccurrenceViewConfiguration: ScheduleMeetingUpdateViewConfiguration {
     let occurrence: ScheduledMeetingOccurrenceEntity

@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGAPresentation
 import UIKit
 
@@ -51,13 +52,13 @@ class DeleteAccountRouter: Routing {
     
     private func deleteActionForTwoFactorAuthDisabled() {
         guard let settingsVc = presenter as? SettingsTableViewController else { return }
-        MEGASdkManager.sharedMEGASdk().cancelAccount(with: settingsVc)
+        MEGASdk.shared.cancelAccount(with: settingsVc)
     }
     
     private func getMultiFactorAuthenticationStatus(completion: @escaping (Bool) -> Void) {
         guard MEGAReachabilityManager.isReachable() else { return }
         guard let myEmail = MEGASdk.currentUserEmail else { return }
-        MEGASdkManager.sharedMEGASdk()
+        MEGASdk.shared
             .multiFactorAuthCheck(withEmail: myEmail,
                                   delegate: MEGAMultiFactorAuthCheckRequestDelegate { (request, _) in
                 guard let authRequest = request else { return }

@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGAPermissions
 import MEGAUIKit
 import Photos

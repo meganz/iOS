@@ -3,6 +3,7 @@ import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGAPresentation
 import XCTest
 

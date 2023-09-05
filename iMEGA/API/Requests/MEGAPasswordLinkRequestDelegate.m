@@ -1,6 +1,7 @@
 #import "MEGAPasswordLinkRequestDelegate.h"
 
 #import "SVProgressHUD.h"
+@import MEGAL10nObjc;
 
 @interface MEGAPasswordLinkRequestDelegate ()
 
@@ -37,14 +38,14 @@
 
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     if (!self.forDecryption) {
-        NSString *status = self.multipleLinks ? NSLocalizedString(@"generatingLinks", nil) : NSLocalizedString(@"generatingLink", nil);
+        NSString *status = self.multipleLinks ? LocalizedString(@"generatingLinks", @"") : LocalizedString(@"generatingLink", @"");
         [SVProgressHUD showWithStatus:status];
     }
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type] && !self.forDecryption) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(error.name, nil)];
+        [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
         return;
     }
     

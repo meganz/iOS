@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGASwiftUI
 
 @objc enum MyAccountSection: Int, CaseIterable {

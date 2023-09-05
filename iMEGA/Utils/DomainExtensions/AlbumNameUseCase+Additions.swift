@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 extension AlbumNameUseCaseProtocol {
     func reservedAlbumNames() async -> [String] {

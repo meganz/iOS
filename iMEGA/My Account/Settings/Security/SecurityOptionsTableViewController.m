@@ -12,6 +12,8 @@
 #import "SetupTwoFactorAuthenticationTableViewController.h"
 #import "QRSettingsTableViewController.h"
 
+@import MEGAL10nObjc;
+
 @interface SecurityOptionsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *twoFactorAuthenticationLabel;
@@ -34,19 +36,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *title = NSLocalizedString(@"settings.section.security", @"Title for Security section");
+    NSString *title = LocalizedString(@"settings.section.security", @"Title for Security section");
     [self.navigationItem setTitle:title];
     [self setMenuCapableBackButtonWithMenuTitle:title];
     
-    self.twoFactorAuthenticationLabel.text = NSLocalizedString(@"twoFactorAuthentication", @"");
+    self.twoFactorAuthenticationLabel.text = LocalizedString(@"twoFactorAuthentication", @"");
     self.twoFactorAuthenticationRightDetailLabel.text = @"";
     
-    self.passcodeLabel.text = NSLocalizedString(@"passcode", @"");
+    self.passcodeLabel.text = LocalizedString(@"passcode", @"");
     self.passcodeDetailLabel.text = @"";
     
-    self.qrCodeLabel.text = NSLocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
+    self.qrCodeLabel.text = LocalizedString(@"qrCode", @"QR Code label, used in Settings as title. String as short as possible");
     
-    self.closeOtherSessionsLabel.text = NSLocalizedString(@"closeOtherSessions", @"Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session.");
+    self.closeOtherSessionsLabel.text = LocalizedString(@"closeOtherSessions", @"Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session.");
     
     [self updateAppearance];
 }
@@ -86,14 +88,14 @@
 - (void)twoFactorAuthenticationStatus {
     MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         self.twoFactorAuthenticationEnabled = request.flag;
-        self.twoFactorAuthenticationRightDetailLabel.text = self.twoFactorAuthenticationEnabled ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
+        self.twoFactorAuthenticationRightDetailLabel.text = self.twoFactorAuthenticationEnabled ? LocalizedString(@"on", @"") : LocalizedString(@"off", @"");
         [self.tableView reloadData];
     }];
     [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
 }
 
 - (void)configPasscodeView {
-    self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil));
+    self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? LocalizedString(@"on", @"") : LocalizedString(@"off", @""));
 }
 
 - (void)pushQRSettings {
@@ -135,17 +137,17 @@
             
         case 3: { //Close other sessions
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:NSLocalizedString(@"Do you want to close all other sessions? This will log you out on all other active sessions except the current one.", @"Confirmation dialog for the button that logs the user out of all sessions except the current one.") preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:LocalizedString(@"Do you want to close all other sessions? This will log you out on all other active sessions except the current one.", @"Confirmation dialog for the button that logs the user out of all sessions except the current one.") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                         if (error.type) {
-                            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", NSLocalizedString(error.name, nil)]];
+                            [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
                         }
-                        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"sessionsClosed", @"Message shown when you click on 'Close other session' to block every session that is opened on other devices except the current one")];
+                        [SVProgressHUD showSuccessWithStatus:LocalizedString(@"sessionsClosed", @"Message shown when you click on 'Close other session' to block every session that is opened on other devices except the current one")];
                     }];
                     [MEGASdkManager.sharedMEGASdk killSession:-1 delegate:delegate];
                 }]];
-                [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
                 [self presentViewController:alertController animated:YES completion:nil];
                 
                 break;

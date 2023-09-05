@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 extension UIAlertController {
     convenience init(alert: TextFieldAlertViewModel) {

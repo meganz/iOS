@@ -2,6 +2,8 @@
 
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 @implementation InputView
 
 #pragma mark - Initialization
@@ -87,11 +89,7 @@
 
 - (void)setTopLabelTextKey:(NSString *)topLabelTextKey {
     _topLabelTextKey = topLabelTextKey;
-#ifdef TARGET_INTERFACE_BUILDER
-    self.topLabel.text = [[NSBundle bundleForClass:self.class] localizedStringForKey:self.topLabelTextKey value:nil table:nil];
-#else
-    self.topLabel.text = NSLocalizedString(self.topLabelTextKey, nil);
-#endif
+    self.topLabel.text = LocalizedString(topLabelTextKey, @"");
 }
 
 @end

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
     let scheduledMeeting: ScheduledMeetingEntity

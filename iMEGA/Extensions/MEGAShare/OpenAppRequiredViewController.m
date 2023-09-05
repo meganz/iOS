@@ -3,6 +3,8 @@
 
 #import "MEGAShare-Swift.h"
 
+@import MEGAL10nObjc;
+
 @interface OpenAppRequiredViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -18,12 +20,12 @@
     [super viewDidLoad];
     
     if (self.isLoginRequired) {
-        self.descriptionLabel.text = NSLocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
+        self.descriptionLabel.text = LocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
     } else {
-        self.descriptionLabel.text = NSLocalizedString(@"extensions.OpenApp.Message", nil);
+        self.descriptionLabel.text = LocalizedString(@"extensions.OpenApp.Message", @"");
     }
     
-    [self.openButton setTitle:NSLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
+    [self.openButton setTitle:LocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

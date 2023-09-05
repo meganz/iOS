@@ -1,3 +1,5 @@
+import MEGAL10n
+import MEGASDKRepo
 import UIKit
 
 class VerifyEmailViewController: UIViewController {
@@ -108,20 +110,21 @@ class VerifyEmailViewController: UIViewController {
     }
 
     @objc func checkIfBlocked() {
-        let whyAmIBlockedRequestDelegate = MEGAGenericRequestDelegate.init { (request, error) in
-            if error.type == .apiOk && request.number == 0 {
-
-                if MEGASdkManager.sharedMEGASdk().rootNode == nil {
-                    guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else { return }
-                    let loginRequestDelegate = MEGALoginRequestDelegate.init()
-                    MEGASdkManager.sharedMEGASdk().fastLogin(withSession: session, delegate: loginRequestDelegate)
-                }
-
-                self.presentedViewController?.dismiss(animated: true, completion: nil)
-                self.dismiss(animated: true, completion: nil)
+        let whyAmIBlockedRequestDelegate = RequestDelegate { result in
+            guard case let .success(request) = result, request.number == 0 else {
+                return
             }
+            
+            if MEGASdk.shared.rootNode == nil {
+                guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else { return }
+                let loginRequestDelegate = MEGALoginRequestDelegate.init()
+                MEGASdk.shared.fastLogin(withSession: session, delegate: loginRequestDelegate)
+            }
+            
+            self.presentedViewController?.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
         }
-        MEGASdkManager.sharedMEGASdk().whyAmIBlocked(with: whyAmIBlockedRequestDelegate)
+        MEGASdk.shared.whyAmIBlocked(with: whyAmIBlockedRequestDelegate)
     }
 
     // MARK: Actions
@@ -133,19 +136,19 @@ class VerifyEmailViewController: UIViewController {
     @IBAction func tapResendButton(_ sender: Any) {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             SVProgressHUD.show()
-            let resendVerificationEmailDelegate = MEGAGenericRequestDelegate.init { (_, error) in
+            let resendVerificationEmailDelegate = RequestDelegate(successCodes: [.apiOk, .apiEArgs]) { result in
                 SVProgressHUD.dismiss()
-                if error.type == .apiOk || error.type == .apiEArgs {
+                if case .success = result {
                     self.hintLabel.isHidden = false
                 } else {
                     SVProgressHUD.showError(withStatus: Strings.Localizable.EmailAlreadySent.pleaseWaitAFewMinutesBeforeTryingAgain)
                 }
             }
-            MEGASdkManager.sharedMEGASdk().resendVerificationEmail(with: resendVerificationEmailDelegate)
+            MEGASdk.shared.resendVerificationEmail(with: resendVerificationEmailDelegate)
         }
     }
 
     @IBAction func tapLogoutButton(_ sender: Any) {
-        MEGASdkManager.sharedMEGASdk().logout()
+        MEGASdk.shared.logout()
     }
 }

@@ -10,6 +10,8 @@
 #import "MEGA-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+
+@import MEGAL10nObjc;
 @import MEGASDKRepo;
 
 typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
@@ -47,7 +49,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *title = NSLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
+    NSString *title = LocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
     self.navigationItem.title = title;
     [self setMenuCapableBackButtonWithMenuTitle: title];
     
@@ -60,15 +62,15 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.clearOfflineFilesLabel.text = NSLocalizedString(@"clearOfflineFiles", @"Section title where you can 'Clear Offline files' of your MEGA app");
-    self.clearCacheLabel.text = NSLocalizedString(@"clearCache", @"Section title where you can 'Clear Cache' of your MEGA app");
+    self.clearOfflineFilesLabel.text = LocalizedString(@"clearOfflineFiles", @"Section title where you can 'Clear Offline files' of your MEGA app");
+    self.clearCacheLabel.text = LocalizedString(@"clearCache", @"Section title where you can 'Clear Cache' of your MEGA app");
     
-    self.rubbishBinLabel.text = NSLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+    self.rubbishBinLabel.text = LocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
     
-    self.fileVersioningLabel.text = NSLocalizedString(@"File versioning", @"Title of the option to enable or disable file versioning on Settings section");
+    self.fileVersioningLabel.text = LocalizedString(@"File versioning", @"Title of the option to enable or disable file versioning on Settings section");
     [[MEGASdkManager sharedMEGASdk] getFileVersionsOptionWithDelegate:self];
     
-    self.useMobileDataLabel.text = NSLocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
+    self.useMobileDataLabel.text = LocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     self.useMobileDataSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
@@ -140,10 +142,10 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 }
 
 - (void)showClearAllOfflineFilesActionSheet:(UIView *)sender {
-    UIAlertController *clearAllOfflineFilesAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"settings.fileManagement.alert.clearAllOfflineFiles", @"Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [clearAllOfflineFilesAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    UIAlertController *clearAllOfflineFilesAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"settings.fileManagement.alert.clearAllOfflineFiles", @"Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [clearAllOfflineFilesAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    UIAlertAction *clearAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"clear", @"Button title to clear something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *clearAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"clear", @"Button title to clear something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self clearOfflineFiles];
     }];
     [clearAllOfflineFilesAlertController addAction:clearAlertAction];
@@ -182,14 +184,14 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     NSString *titleHeader;
     switch (section) {
         case FileManagementTableSectionMobileData:
-            titleHeader = NSLocalizedString(@"settings.fileManagement.useMobileData.header", @"Header of a Use Mobile Data setting to load preview of images in hight resolution");
+            titleHeader = LocalizedString(@"settings.fileManagement.useMobileData.header", @"Header of a Use Mobile Data setting to load preview of images in hight resolution");
             break;
         case FileManagementTableSectionOnYourDevice:
-            titleHeader = NSLocalizedString(@"onYourDevice", @"Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section");
+            titleHeader = LocalizedString(@"onYourDevice", @"Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section");
             break;
             
         case FileManagementTableSectionOnMEGA:
-            titleHeader = NSLocalizedString(@"onMEGA", @"Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section");
+            titleHeader = LocalizedString(@"onMEGA", @"Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section");
             break;
     }
     
@@ -200,18 +202,18 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     NSString *titleFooter;
     switch (section) {
         case FileManagementTableSectionMobileData: {
-            titleFooter = NSLocalizedString(@"settings.fileManagement.useMobileData.footer", @"Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works");
+            titleFooter = LocalizedString(@"settings.fileManagement.useMobileData.footer", @"Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works");
             break;
         }
         case FileManagementTableSectionOnYourDevice: {
-            NSString *currentlyUsingString = NSLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
+            NSString *currentlyUsingString = LocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.offlineSizeString];
             titleFooter = currentlyUsingString;
             break;
         }
             
         case FileManagementTableSectionClearCache: {
-            NSString *currentlyUsingString = NSLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
+            NSString *currentlyUsingString = LocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.cacheSizeString];
             titleFooter = currentlyUsingString;
             break;
@@ -221,7 +223,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
             stringFromByteCount = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
-            NSString *currentlyUsingString = NSLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
+            NSString *currentlyUsingString = LocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:stringFromByteCount];
             titleFooter = currentlyUsingString;
             break;
@@ -311,7 +313,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ((request.type == MEGARequestTypeGetAttrUser) && (request.paramType == MEGAUserAttributeDisableVersions)) {
         if (!error.type || error.type == MEGAErrorTypeApiENoent) {
-            self.fileVersioningDetail.text = !request.flag ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
+            self.fileVersioningDetail.text = !request.flag ? LocalizedString(@"on", @"") : LocalizedString(@"off", @"");
         }
     }
 }

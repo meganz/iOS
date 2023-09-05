@@ -1,3 +1,4 @@
+import MEGAL10n
 import UIKit
 
 protocol SetLinkPasswordViewControllerDelegate {
@@ -83,7 +84,7 @@ class SetLinkPasswordViewController: UIViewController {
         if password.mnz_isEmpty() {
             passwordView.setErrorState(true, withText: Strings.Localizable.passwordInvalidFormat)
             return false
-        } else if MEGASdkManager.sharedMEGASdk().passwordStrength(password as String) == .veryWeak {
+        } else if MEGASdk.shared.passwordStrength(password as String) == .veryWeak {
             passwordView.setErrorState(true, withText: Strings.Localizable.pleaseStrengthenYourPassword)
             return false
         } else {
@@ -129,7 +130,7 @@ extension SetLinkPasswordViewController: UITextFieldDelegate {
             } else {
                 passwordStrenghtIndicatorHeightConstraint.constant = 44.5
                 passwordView.setErrorState(false, withText: Strings.Localizable.passwordPlaceholder)
-                passwordStrenghtIndicatorView.update(with: MEGASdkManager.sharedMEGASdk().passwordStrength(text), updateDescription: false)
+                passwordStrenghtIndicatorView.update(with: MEGASdk.shared.passwordStrength(text), updateDescription: false)
             }
         } else if textField == confirmPasswordView.passwordTextField {
             confirmPasswordView.setErrorState(false, withText: Strings.Localizable.confirmPassword)

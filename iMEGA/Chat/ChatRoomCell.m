@@ -12,6 +12,8 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 
+@import MEGAL10nObjc;
+
 @interface ChatRoomCell ()
 
 @property (strong, nonatomic) NSTimer *timer;
@@ -76,7 +78,7 @@
     
     self.chatLastTime.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
-    BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:NSLocalizedString(@"archived", @"Title of flag of archived chats.")];
+    BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:LocalizedString(@"archived", @"Title of flag of archived chats.")];
     self.unreadView.backgroundColor = chatRoomsTypeArchived ? [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.unreadCount.textColor = UIColor.whiteColor;
     
@@ -117,7 +119,7 @@
     self.unreadView.hidden = NO;
     self.unreadView.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     self.unreadCount.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium];
-    self.unreadCount.text = NSLocalizedString(@"archived", @"Title of flag of archived chats.");
+    self.unreadCount.text = LocalizedString(@"archived", @"Title of flag of archived chats.");
     self.unreadCountLabelHorizontalMarginConstraint.constant = 7;
     self.activeCallImageView.hidden = YES;
 }
@@ -153,7 +155,7 @@
             switch (call.status) {
                 case MEGAChatCallStatusInProgress:
                     self.onCallDuration.hidden = NO;
-                    self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
+                    self.chatLastMessage.text = LocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
                     self.chatLastMessage.text = [self.chatLastMessage.text stringByAppendingString:@" •"];
                     self.activeCallImageView.hidden = NO;
                     break;
@@ -161,9 +163,9 @@
                 case MEGAChatCallStatusUserNoPresent:
                     self.activeCallImageView.hidden = NO;
                     if (call.isRinging) {
-                        self.chatLastMessage.text = NSLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                        self.chatLastMessage.text = LocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
                     } else {
-                        self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
+                        self.chatLastMessage.text = LocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
                     }
                     break;
                     
@@ -171,7 +173,7 @@
                 case MEGAChatCallStatusConnecting:
                 case MEGAChatCallStatusJoining:
                     if (!call.isRinging) {
-                        self.chatLastMessage.text = NSLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
+                        self.chatLastMessage.text = LocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
                     }
                     break;
 
@@ -200,7 +202,7 @@
     self.privateChatImageView.hidden = YES;
     
     self.chatTitle.text = user.mnz_displayName;
-    self.chatLastMessage.text = NSLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
+    self.chatLastMessage.text = LocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
     
     [self.avatarView.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
     [self.avatarView configureWithMode:MegaAvatarViewModeSingle];
@@ -247,13 +249,13 @@
     switch (item.lastMessageType) {
             
         case 255: {
-            self.chatLastMessage.text = NSLocalizedString(@"loading", @"state previous to import a file");
+            self.chatLastMessage.text = LocalizedString(@"loading", @"state previous to import a file");
             self.chatLastTime.hidden = YES;
             break;
         }
             
         case MEGAChatMessageTypeInvalid: {
-            self.chatLastMessage.text = NSLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
+            self.chatLastMessage.text = LocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
             self.chatLastTime.hidden = YES;
             break;
         }
@@ -266,10 +268,10 @@
             NSString *lastMessageString = item.lastMessage;
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
             if (componentsArray.count == 1) {
-                NSString *attachedFileString = NSLocalizedString(@"attachedFile", @"A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file.");
+                NSString *attachedFileString = LocalizedString(@"attachedFile", @"A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file.");
                 lastMessageString = [attachedFileString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
             } else {
-                lastMessageString = NSLocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
+                lastMessageString = LocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
             }
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
@@ -289,7 +291,7 @@
                 NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
                 durationString = [NSString mnz_stringFromTimeInterval:duration];
             } else {
-                durationString = NSLocalizedString(@"00:00", nil);
+                durationString = LocalizedString(@"00:00", @"");
             }
             
             NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;
@@ -311,10 +313,10 @@
             NSString *lastMessageString = item.lastMessage;
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
             if (componentsArray.count == 1) {
-                NSString *sentContactString = NSLocalizedString(@"sentContact", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
+                NSString *sentContactString = LocalizedString(@"sentContact", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
                 lastMessageString = [sentContactString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
             } else {
-                lastMessageString = NSLocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
+                lastMessageString = LocalizedString(@"sentXContacts", @"A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent.");
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
             }
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessageString] : lastMessageString;
@@ -323,7 +325,7 @@
             
         case MEGAChatMessageTypeTruncate: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            NSString *lastMessageString = NSLocalizedString(@"clearedTheChatHistory", @"A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history.");
+            NSString *lastMessageString = LocalizedString(@"clearedTheChatHistory", @"A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history.");
             lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"[A]" withString:senderString];
             self.chatLastMessage.text = lastMessageString;
             break;
@@ -342,15 +344,15 @@
             NSString *wasChangedToBy;
             switch (item.lastMessagePriv) {
                 case 0:
-                    wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.readOnly", @"A log message in a chat to display that a participant's permission was changed to read-only and by whom");
+                    wasChangedToBy = LocalizedString(@"chat.message.changedRole.readOnly", @"A log message in a chat to display that a participant's permission was changed to read-only and by whom");
                     break;
                     
                 case 2:
-                    wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.standard", @"A log message in a chat to display that a participant's permission was changed to standard role and by whom");
+                    wasChangedToBy = LocalizedString(@"chat.message.changedRole.standard", @"A log message in a chat to display that a participant's permission was changed to standard role and by whom");
                     break;
                     
                 case 3:
-                    wasChangedToBy = NSLocalizedString(@"chat.message.changedRole.host", @"A log message in a chat to display that a participant's permission was changed to host role and by whom");
+                    wasChangedToBy = LocalizedString(@"chat.message.changedRole.host", @"A log message in a chat to display that a participant's permission was changed to host role and by whom");
                     break;
                     
                 default:
@@ -376,12 +378,12 @@
             switch (item.lastMessagePriv) {
                 case -1: {
                     if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
-                        NSString *wasRemovedFromTheGroupChatBy = NSLocalizedString(@"wasRemovedFromTheGroupChatBy", @"A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank.");
+                        NSString *wasRemovedFromTheGroupChatBy = LocalizedString(@"wasRemovedFromTheGroupChatBy", @"A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank.");
                         wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
                         wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
                         self.chatLastMessage.text = wasRemovedFromTheGroupChatBy;
                     } else {
-                        NSString *leftTheGroupChat = NSLocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
+                        NSString *leftTheGroupChat = LocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
                         leftTheGroupChat = [leftTheGroupChat stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
                         self.chatLastMessage.text = leftTheGroupChat;
                     }
@@ -390,12 +392,12 @@
                     
                 case -2: {
                     if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
-                        NSString *joinedTheGroupChatByInvitationFrom = NSLocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
+                        NSString *joinedTheGroupChatByInvitationFrom = LocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
                         joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
                         joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
                         self.chatLastMessage.text = joinedTheGroupChatByInvitationFrom;
                     } else {
-                        NSString *joinedTheGroupChat = [NSString stringWithFormat:NSLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
+                        NSString *joinedTheGroupChat = [NSString stringWithFormat:LocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
                         self.chatLastMessage.text = joinedTheGroupChat;
                     }
                     break;
@@ -412,12 +414,12 @@
             NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
             MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.chatId];
             if (chatRoom.retentionTime <= 0) {
-                text = NSLocalizedString(@"[A]%1$s[/A][B] disabled message clearing.[/B]", @"System message that is shown to all chat participants upon disabling the Retention history.");
+                text = LocalizedString(@"[A]%1$s[/A][B] disabled message clearing.[/B]", @"System message that is shown to all chat participants upon disabling the Retention history.");
                 text = text.mnz_removeWebclientFormatters;
                 
                 text = [text stringByReplacingOccurrencesOfString:@"%1$s" withString:fullNameDidAction];
             } else {
-                text = NSLocalizedString(@"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]", @"System message displayed to all chat participants when one of them enables retention history");
+                text = LocalizedString(@"[A]%1$s[/A][B] changed the message clearing time to[/B][A] %2$s[/A][B].[/B]", @"System message displayed to all chat participants when one of them enables retention history");
                 text = text.mnz_removeWebclientFormatters;
                 
                 text = [text stringByReplacingOccurrencesOfString:@"%1$s" withString:fullNameDidAction];
@@ -433,7 +435,7 @@
         
         case MEGAChatMessageTypeChatTitle: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            NSString *changedGroupChatNameTo = NSLocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
+            NSString *changedGroupChatNameTo = LocalizedString(@"changedGroupChatNameTo", @"A hint message in a group chat to indicate the group chat name is changed to a new one. Please keep %s when translating this string which will be replaced with the name at runtime.");
             changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[A]" withString:senderString];
             changedGroupChatNameTo = [changedGroupChatNameTo stringByReplacingOccurrencesOfString:@"[B]" withString:(item.lastMessage ? item.lastMessage : @" ")];
             self.chatLastMessage.text = changedGroupChatNameTo;
@@ -452,34 +454,34 @@
         }
             
         case MEGAChatMessageTypeCallStarted: {
-            self.chatLastMessage.text = NSLocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
+            self.chatLastMessage.text = LocalizedString(@"Ongoing Call", @"Text to inform the user there is an active call and is not participating");
             break;
         }
 
         case MEGAChatMessageTypePublicHandleCreate: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            NSString *publicHandleCreated = [NSString stringWithFormat:NSLocalizedString(@"%@ created a public link for the chat.", @"Management message shown in a chat when the user %@ creates a public link for the chat"), senderString];
+            NSString *publicHandleCreated = [NSString stringWithFormat:LocalizedString(@"%@ created a public link for the chat.", @"Management message shown in a chat when the user %@ creates a public link for the chat"), senderString];
             self.chatLastMessage.text = publicHandleCreated;
             break;
         }
             
         case MEGAChatMessageTypePublicHandleDelete: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            NSString *publicHandleRemoved = [NSString stringWithFormat:NSLocalizedString(@"%@ removed a public link for the chat.", @"Management message shown in a chat when the user %@ removes a public link for the chat"), senderString];
+            NSString *publicHandleRemoved = [NSString stringWithFormat:LocalizedString(@"%@ removed a public link for the chat.", @"Management message shown in a chat when the user %@ removes a public link for the chat"), senderString];
             self.chatLastMessage.text = publicHandleRemoved;
             break;
         }
             
         case MEGAChatMessageTypeSetPrivateMode: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            NSString *setPrivateMode = [NSString stringWithFormat:NSLocalizedString(@"%@ enabled Encrypted Key Rotation", @"Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation'"), senderString];
+            NSString *setPrivateMode = [NSString stringWithFormat:LocalizedString(@"%@ enabled Encrypted Key Rotation", @"Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation'"), senderString];
             self.chatLastMessage.text = setPrivateMode;
             break;
         }
             
         case MEGAChatMessageTypeScheduledMeeting: {
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            NSString *meetingCancelledString = [NSString stringWithFormat:NSLocalizedString(@"meetings.scheduled.managementMessages.updated", @"A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting "), senderString];
+            NSString *meetingCancelledString = [NSString stringWithFormat:LocalizedString(@"meetings.scheduled.managementMessages.updated", @"A log message in the chat conversation to tell the reader that a participant [A] cancelled the meeting. For example: Zadie Smith cancelled this meeting "), senderString];
             self.chatLastMessage.text = meetingCancelledString;
             break;
         }
@@ -496,7 +498,7 @@
                     NSString *locationMessageImageName = self.chatListItem.unreadCount ? @"locationMessage" : @"locationMessageGrey";
                     NSAttributedString *pinImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:locationMessageImageName fontCapHeight:self.chatLastMessage.font.capHeight];
                     [lastMessageMutableAttributedString appendAttributedString:pinImageAttributedString];
-                    [lastMessageMutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Pinned Location", @"Text shown in location-type messages")]];
+                    [lastMessageMutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:LocalizedString(@"Pinned Location", @"Text shown in location-type messages")]];
 
                     self.chatLastMessage.attributedText = lastMessageMutableAttributedString;
                     
@@ -516,7 +518,7 @@
 - (NSString *)actionAuthorNameInChatListItem:(MEGAChatListItem *)item pronoumForMe:(BOOL)me {
     NSString *actionAuthor;
     if (item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        actionAuthor = me ? NSLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.") : MEGASdkManager.sharedMEGAChatSdk.myFullname;
+        actionAuthor = me ? LocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.") : MEGASdkManager.sharedMEGAChatSdk.myFullname;
     } else {
         MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.chatId];
         actionAuthor = [chatRoom userDisplayNameForUserHandle:item.lastMessageSender];

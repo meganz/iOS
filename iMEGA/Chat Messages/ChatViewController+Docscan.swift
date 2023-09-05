@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 import VisionKit
 
 extension ChatViewController: VNDocumentCameraViewControllerDelegate {
@@ -18,7 +19,7 @@ extension ChatViewController: VNDocumentCameraViewControllerDelegate {
             vc.chatRoom = self.chatRoom
             let nav = MEGANavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
-            nav.addLeftDismissButton(withText: NSLocalizedString("cancel", comment: ""))
+            nav.addLeftDismissButton(withText: Strings.localized("cancel", comment: ""))
             self.present(viewController: nav)
         }
     }

@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGASwift
 
 extension OfflineCollectionViewController {

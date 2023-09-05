@@ -9,6 +9,8 @@
 #import "UIApplication+MNZCategory.h"
 #import "MEGASdkManager.h"
 
+@import MEGAL10nObjc;
+
 @interface MEGAReachabilityManager ()
 
 @property (nonatomic, strong) Reachability *reachability;
@@ -76,7 +78,7 @@
             case kCTCellularDataRestrictedStateUnknown:
             case kCTCellularDataNotRestricted:
 #if defined(SV_APP_EXTENSIONS) || defined(MAIN_APP_TARGET)
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:LocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it")];
 #endif
                 break;
         }
@@ -205,11 +207,11 @@
 
 - (void)mobileDataIsTurnedOffAlert {
 #ifdef MAIN_APP_TARGET
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.") message:NSLocalizedString(@"You can turn on mobile data for this app in Settings.", @"Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.") preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.") message:LocalizedString(@"You can turn on mobile data for this app in Settings.", @"Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:nil]];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];

@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGASDKRepo
 import SwiftUI
@@ -11,7 +12,7 @@ final class CallsSettingsViewRouter: Routing {
     }
     
     func build() -> UIViewController {
-        let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdk.shared))
         let viewModel = CallsSettingsViewModel(analyticsEventUseCase: analyticsEventUseCase)
         let callsSettingsView = CallsSettingsView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: callsSettingsView)

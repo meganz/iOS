@@ -1,4 +1,5 @@
 import FlexLayout
+import MEGAL10n
 import PinLayout
 import UIKit
 
@@ -193,7 +194,7 @@ extension GiphySelectionView: CHTCollectionViewDelegateWaterfallLayout, UICollec
             let srcWebp = gif.webp.replacingOccurrences(of: ServiceManager.shared.BASE_URL, with: ServiceManager.shared.GIPHY_URL)
             let srcMp4 = gif.mp4.replacingOccurrences(of: ServiceManager.shared.BASE_URL, with: ServiceManager.shared.GIPHY_URL)
 
-            MEGASdkManager.sharedMEGAChatSdk().sendGiphy(toChat: self.controller.chatRoom.chatId, srcMp4: srcMp4, srcWebp: srcWebp, sizeMp4: sizeMp4, sizeWebp: sizeWebp, width: width, height: height, title: gif.title)
+            MEGAChatSdk.shared.sendGiphy(toChat: self.controller.chatRoom.chatId, srcMp4: srcMp4, srcWebp: srcWebp, sizeMp4: sizeMp4, sizeWebp: sizeWebp, width: width, height: height, title: gif.title)
             self.controller.navigationController?.dismiss(animated: true, completion: nil)
         }
         controller.navigationController?.pushViewController(previewVC, animated: true)
@@ -256,7 +257,7 @@ extension GiphySelectionView: UISearchBarDelegate, UISearchControllerDelegate {
 
 extension GiphySelectionView: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     func title(forEmptyDataSet _: UIScrollView) -> NSAttributedString? {
-        let title = NSAttributedString(string: NSLocalizedString("No GIFs found", comment: ""),
+        let title = NSAttributedString(string: Strings.localized("No GIFs found", comment: ""),
                                        attributes: [
                                         NSAttributedString.Key.foregroundColor: UIColor.mnz_label().withAlphaComponent(0.5),
                                         NSAttributedString.Key.font: UIFont.preferredFont(style: .body, weight: .semibold)

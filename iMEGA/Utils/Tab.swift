@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 @objc enum TabType: Int, CaseIterable {
     case cloudDrive

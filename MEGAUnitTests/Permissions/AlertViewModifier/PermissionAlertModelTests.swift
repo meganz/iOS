@@ -1,5 +1,6 @@
 import Foundation
 @testable import MEGA
+import MEGAL10n
 import XCTest
 
 class PermissionAlertModelTests: XCTestCase {

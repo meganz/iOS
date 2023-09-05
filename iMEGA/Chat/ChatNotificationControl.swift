@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import UIKit
 
 @objc protocol ChatNotificationControlCellProtocol {

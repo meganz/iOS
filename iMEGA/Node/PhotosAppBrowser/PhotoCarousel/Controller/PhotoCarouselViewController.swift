@@ -1,5 +1,6 @@
 import AVKit
 import Combine
+import MEGAL10n
 import Photos
 import UIKit
 
@@ -165,7 +166,7 @@ final class PhotoCarouselViewController: UIViewController {
                         let alertController = UIAlertController(title: nil,
                                                                 message: error.localizedDescription,
                                                                 preferredStyle: .alert)
-                        alertController.addAction(UIAlertAction(title: NSLocalizedString("ok", comment: ""), style: .cancel, handler: nil))
+                        alertController.addAction(UIAlertAction(title: Strings.localized("ok", comment: ""), style: .cancel, handler: nil))
                         self?.present(alertController, animated: true, completion: nil)
                         MEGALogError("[Photo Carousel View] unable to play video \(error.localizedDescription)")
                         return

@@ -1,3 +1,5 @@
+import MEGAL10n
+
 final class ActionViewModel: ObservableObject {
     
     let actionItem: NameCollisionAction

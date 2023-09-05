@@ -1,3 +1,5 @@
+import MEGAL10n
+
 // MARK: UITableViewDelegate
 extension SettingsTableViewController {
     

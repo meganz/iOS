@@ -25,6 +25,7 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 @import MEGASDKRepo;
 
@@ -137,7 +138,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             {
                 UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
                 [self.toolbar setItems:@[self.exportFileToolbarItem, flexibleItem, self.importToolbarItem, flexibleItem,  self.forwardToolbarItem, flexibleItem, self.customActionsButton]];
-                self.allMediaToolBarItem.title = NSLocalizedString(@"All Media", @"");
+                self.allMediaToolBarItem.title = LocalizedString(@"All Media", @"");
                 self.navigationItem.rightBarButtonItem = self.allMediaToolBarItem;
             }
             break;
@@ -151,7 +152,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
     
-    self.closeBarButtonItem.title = NSLocalizedString(@"close", @"A button label.");
+    self.closeBarButtonItem.title = LocalizedString(@"close", @"A button label.");
     
     [self updateAppearance];
 }

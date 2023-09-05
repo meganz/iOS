@@ -1,3 +1,5 @@
+import MEGAL10n
+
 enum WarningType: CustomStringConvertible {
     case noInternetConnection
     case limitedPhotoAccess

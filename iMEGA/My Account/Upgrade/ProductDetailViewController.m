@@ -7,6 +7,7 @@
 #import "ProductDetailTableViewCell.h"
 #import "UIApplication+MNZCategory.h"
 
+@import MEGAL10nObjc;
 @import MEGAUIKit;
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UITableViewDataSource, UITableViewDelegate> {
@@ -38,26 +39,26 @@
         case MEGAAccountTypeLite:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
             self.headerView.backgroundColor = UIColor.mnz_proLITE;
-            title = NSLocalizedString(@"Pro Lite", nil);
+            title = LocalizedString(@"Pro Lite", @"");
             self.selectMembershiptLabel.textColor = UIColor.mnz_proLITE;
             break;
             
         case MEGAAccountTypeProI:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROI"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProI];
-            title = NSLocalizedString(@"Pro I", nil);
+            title = LocalizedString(@"Pro I", @"");
             break;
             
         case MEGAAccountTypeProII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROII"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProII];
-            title = NSLocalizedString(@"Pro II", nil);
+            title = LocalizedString(@"Pro II", @"");
             break;
             
         case MEGAAccountTypeProIII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROIII"]];
             [_headerView setBackgroundColor:UIColor.mnz_redProIII];
-            title = NSLocalizedString(@"Pro III", nil);
+            title = LocalizedString(@"Pro III", @"");
             break;
             
         default:
@@ -66,7 +67,7 @@
     }
     
     if (self.currentAccountType == self.megaAccountType) {
-        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:NSLocalizedString(@"inAppPurchase.productDetail.navigation.currentPlan", @"A label which shows the user's current PRO plan.") subtitle:title color:UIColor.mnz_label];
+        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:LocalizedString(@"inAppPurchase.productDetail.navigation.currentPlan", @"A label which shows the user's current PRO plan.") subtitle:title color:UIColor.mnz_label];
         label.adjustsFontSizeToFitWidth = YES;
         label.minimumScaleFactor = 0.8f;
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
@@ -79,17 +80,17 @@
     [_bandwidthSizeLabel setText:_bandwidthString];
     
     if (!self.isChoosingTheAccountType) {
-        UIBarButtonItem *manageBarButtonItem = [UIBarButtonItem.alloc initWithTitle:NSLocalizedString(@"Manage", @"Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache.") style:UIBarButtonItemStylePlain target:self action:@selector(manageSubscriptions)];
+        UIBarButtonItem *manageBarButtonItem = [UIBarButtonItem.alloc initWithTitle:LocalizedString(@"Manage", @"Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache.") style:UIBarButtonItemStylePlain target:self action:@selector(manageSubscriptions)];
         self.navigationItem.rightBarButtonItem = manageBarButtonItem;
     }
     
     [MEGAPurchase.sharedInstance.purchaseDelegateMutableArray addObject:self];
     isPurchased = NO;
     
-    self.storageLabel.text = NSLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
-    self.bandwidthLabel.text = NSLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
-    [_selectMembershiptLabel setText:NSLocalizedString(@"selectMembership", nil)];
-    [_save17Label setText:NSLocalizedString(@"save17", nil)];
+    self.storageLabel.text = LocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
+    self.bandwidthLabel.text = LocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
+    [_selectMembershiptLabel setText:LocalizedString(@"selectMembership", @"")];
+    [_save17Label setText:LocalizedString(@"save17", @"")];
     
     [self updateAppearance];
     [self.tableView sizeHeaderToFit];
@@ -132,7 +133,7 @@
 }
 
 - (void)presentProductUnavailableAlertController {
-    UIAlertController *alertController = [UIAlertController inAppPurchaseAlertWithAppStoreSettingsButton:NSLocalizedString(@"inAppPurchase.error.alert.title.notAvailable", @"Alert title to remenber the user that needs to enable purchases") alertMessage:nil];
+    UIAlertController *alertController = [UIAlertController inAppPurchaseAlertWithAppStoreSettingsButton:LocalizedString(@"inAppPurchase.error.alert.title.notAvailable", @"Alert title to remenber the user that needs to enable purchases") alertMessage:nil];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -143,21 +144,21 @@
 - (void)presentAlreadyHaveActiveSubscriptionAlertWithProduct:(SKProduct *)product {
     MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
     
-    NSString *title = NSLocalizedString(@"account.upgrade.alreadyHaveASubscription.title", nil);
+    NSString *title = LocalizedString(@"account.upgrade.alreadyHaveASubscription.title", @"");
     NSString *message;
     BOOL canCancelSubscription = (accountDetails.subscriptionMethodId == MEGAPaymentMethodECP) || (accountDetails.subscriptionMethodId == MEGAPaymentMethodSabadell) || (accountDetails.subscriptionMethodId == MEGAPaymentMethodStripe2);
     
     if (canCancelSubscription) {
-        message = NSLocalizedString(@"account.upgrade.alreadyHaveACancellableSubscription.message", nil);
+        message = LocalizedString(@"account.upgrade.alreadyHaveACancellableSubscription.message", @"");
     } else {
-        message = NSLocalizedString(@"account.upgrade.alreadyHaveASubscription.message", nil);
+        message = LocalizedString(@"account.upgrade.alreadyHaveASubscription.message", @"");
     }
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
     if (canCancelSubscription) {
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"no", @"") style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"yes", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [MEGASdkManager.sharedMEGASdk creditCardCancelSubscriptions:nil delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
                 if (error.type == MEGAErrorTypeApiOk) {
                     [[MEGAPurchase sharedInstance] purchaseProduct:product];
@@ -165,7 +166,7 @@
             }]];
         }]];
     } else {
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
     }
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -180,10 +181,10 @@
     ProductDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productDetailCell" forIndexPath:indexPath];
     
     if (indexPath.row == 0) {
-        cell.periodLabel.text = NSLocalizedString(@"monthly", nil);
+        cell.periodLabel.text = LocalizedString(@"monthly", @"");
         cell.priceLabel.text = _priceMonthString;
     } else {
-        cell.periodLabel.text = NSLocalizedString(@"yearly", nil);
+        cell.periodLabel.text = LocalizedString(@"yearly", @"");
         cell.priceLabel.text = _priceYearlyString;
     }
     return cell;
@@ -236,8 +237,8 @@
 - (void)failedPurchase:(NSInteger)errorCode message:(NSString *)errorMessage {
     if ([self isPurchaseCancelledWithErrorCode:errorCode]) { return; }
 
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"failedPurchase_title", nil)  message:NSLocalizedString(@"failedPurchase_message", nil) preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"failedPurchase_title", @"")  message:LocalizedString(@"failedPurchase_message", @"") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

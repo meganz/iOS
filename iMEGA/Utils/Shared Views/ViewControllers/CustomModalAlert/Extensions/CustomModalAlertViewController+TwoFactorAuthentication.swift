@@ -1,4 +1,6 @@
 import Foundation
+import MEGAL10n
+import MEGASDKRepo
 
 extension CustomModalAlertViewController {
     @objc func configureForTwoFactorAuthentication(requestedByUser: Bool) {
@@ -16,9 +18,11 @@ extension CustomModalAlertViewController {
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true) {
                 SVProgressHUD.show()
-                MEGASdkManager.sharedMEGASdk().multiFactorAuthGetCode(with: MEGAGenericRequestDelegate.init(completion: { (request, error) in
-                    if error.type != .apiOk {
-                        SVProgressHUD.showError(withStatus: NSLocalizedString(error.name, comment: ""))
+                MEGASdk.shared.multiFactorAuthGetCode(with: RequestDelegate { result in
+                    guard case let .success(request) = result else {
+                        if case let .failure(error) = result {
+                            SVProgressHUD.showError(withStatus: Strings.localized(error.name, comment: ""))
+                        }
                         return
                     }
 
@@ -28,7 +32,7 @@ extension CustomModalAlertViewController {
                     enablingTwoFactorAuthenticationVC.hidesBottomBarWhenPushed = true
                     
                     UIApplication.mnz_visibleViewController().navigationController?.pushViewController(enablingTwoFactorAuthenticationVC, animated: true)
-                }))
+                })
             }
         }
 

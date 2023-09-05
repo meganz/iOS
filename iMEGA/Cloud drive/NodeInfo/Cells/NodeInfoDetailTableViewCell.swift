@@ -1,3 +1,4 @@
+import MEGAL10n
 import UIKit
 
 class NodeInfoDetailTableViewCell: UITableViewCell {
@@ -40,7 +41,7 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     
     private func configureAsLocation(withNode node: MEGANode) {
         keyLabel.text = Strings.Localizable.CloudDrive.Info.Node.location
-        guard let parentNode = MEGASdkManager.sharedMEGASdk().parentNode(for: node) else {
+        guard let parentNode = MEGASdk.shared.parentNode(for: node) else {
             return
         }
         if parentNode.type == .root {
@@ -61,12 +62,12 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     
     private func configureAsFileSize(withNode node: MEGANode) {
         keyLabel.text = Strings.Localizable.totalSize
-        valueLabel.text = node.mnz_numberOfVersions() == 0 ? Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk()) : String.memoryStyleString(fromByteCount: node.mnz_versionsSize())
+        valueLabel.text = node.mnz_numberOfVersions() == 0 ? Helper.size(for: node, api: MEGASdk.shared) : String.memoryStyleString(fromByteCount: node.mnz_versionsSize())
     }
     
     private func configureAsFileVersionSize(withNode node: MEGANode) {
         keyLabel.text = Strings.Localizable.currentVersion
-        valueLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
+        valueLabel.text = Helper.size(for: node, api: MEGASdk.shared)
     }
     
     private func configureAsFileType(withNode node: MEGANode) {

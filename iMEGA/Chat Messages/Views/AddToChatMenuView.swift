@@ -1,3 +1,4 @@
+import MEGAL10n
 import UIKit
 
 class AddToChatMenuView: UIView {
@@ -18,7 +19,7 @@ class AddToChatMenuView: UIView {
             }
             
             imageView.image = UIImage(named: menu.imageKey)
-            label.text = NSLocalizedString(menu.nameKey, comment: "")
+            label.text = Strings.localized(menu.nameKey, comment: "")
             imageBackgroundView.isHidden = false
         }
     }

@@ -11,6 +11,8 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 static const NSUInteger MIN_SECOND = 10; // Save only where the users were playing the file, if the streaming second is greater than this value.
 
 @interface MEGAAVViewController () <AVPlayerViewControllerDelegate>
@@ -85,14 +87,14 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
             MOMediaDestination *mediaDestination = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint];
             if (mediaDestination.destination.longLongValue > 0 && mediaDestination.timescale.intValue > 0) {
                 if ([FileExtensionGroupOCWrapper verifyIsVideo:[self fileName]]) {
-                    NSString *infoVideoDestination = NSLocalizedString(@"video.alert.resumeVideo.message", @"Message to show the user info (video name and time) about the resume of the video");
+                    NSString *infoVideoDestination = LocalizedString(@"video.alert.resumeVideo.message", @"Message to show the user info (video name and time) about the resume of the video");
                     infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%1$s" withString:[self fileName]];
                     infoVideoDestination = [infoVideoDestination stringByReplacingOccurrencesOfString:@"%2$s" withString:[self timeForMediaDestination:mediaDestination]];
-                    UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"video.alert.resumeVideo.title", @"Alert title shown for video with options to resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
-                    [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"video.alert.resumeVideo.button.resume", @"Alert button title that will resume playing the video") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    UIAlertController *resumeOrRestartAlert = [UIAlertController alertControllerWithTitle:LocalizedString(@"video.alert.resumeVideo.title", @"Alert title shown for video with options to resume playing the video or start from the beginning") message:infoVideoDestination preferredStyle:UIAlertControllerStyleAlert];
+                    [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"video.alert.resumeVideo.button.resume", @"Alert button title that will resume playing the video") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         [self seekToDestination:mediaDestination play:YES];
                     }]];
-                    [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"video.alert.resumeVideo.button.restart", @"Alert button title that will start playing the video from the beginning") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [resumeOrRestartAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"video.alert.resumeVideo.button.restart", @"Alert button title that will start playing the video from the beginning") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         [self seekToDestination:nil play:YES];
                     }]];
                     [self presentViewController:resumeOrRestartAlert animated:YES completion:nil];
@@ -135,7 +137,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         [[LTHPasscodeViewController sharedUser] showLockScreenOver:UIApplication.mnz_presentingViewController.view
                                                      withAnimation:YES
                                                         withLogout:YES
-                                                    andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
+                                                    andLogoutTitle:LocalizedString(@"logoutLabel", @"")];
     }
     
     [self deallocPlayer];

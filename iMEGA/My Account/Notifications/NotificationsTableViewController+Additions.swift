@@ -1,9 +1,10 @@
 import MEGADomain
+import MEGAL10n
 
 extension NotificationsTableViewController {
     
     @objc func contentForTakedownReinstatedNode(withHandle handle: HandleEntity, nodeFont: UIFont) -> NSAttributedString? {
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: handle) else { return nil }
+        guard let node = MEGASdk.shared.node(forHandle: handle) else { return nil }
         let nodeName = node.name ?? ""
         switch node.type {
         case .file:
@@ -19,7 +20,7 @@ extension NotificationsTableViewController {
     }
     
     @objc func contentForTakedownPubliclySharedNode(withHandle handle: HandleEntity, nodeFont: UIFont) -> NSAttributedString? {
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: handle) else { return nil }
+        guard let node = MEGASdk.shared.node(forHandle: handle) else { return nil }
         let nodeName = node.name ?? ""
         switch node.type {
         case .file:

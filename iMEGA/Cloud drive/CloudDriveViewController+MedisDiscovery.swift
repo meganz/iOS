@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 extension CloudDriveViewController {
     @objc func shouldShowMediaDiscovery() -> Bool {

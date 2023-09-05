@@ -11,6 +11,7 @@
 #import "NSArray+MNZCategory.h"
 
 @import MEGAUIKit;
+@import MEGAL10nObjc;
 
 @interface AchievementsViewController () <UITableViewDataSource, UITableViewDelegate, MEGARequestDelegate>
 
@@ -50,22 +51,22 @@
     
     [self.tableView sizeHeaderToFit];
     
-    self.navigationItem.title = NSLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
+    self.navigationItem.title = LocalizedString(@"achievementsTitle", @"Title of the Achievements section");
     [self configureBackButton];
     
-    self.inviteYourFriendsTitleLabel.text = NSLocalizedString(@"account.achievement.referral.title", nil);
+    self.inviteYourFriendsTitleLabel.text = LocalizedString(@"account.achievement.referral.title", @"");
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
     self.disclosureIndicatorImageView.image = self.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
-    self.unlockedBonusesLabel.text = NSLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
-    self.storageQuotaLabel.text = NSLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
+    self.unlockedBonusesLabel.text = LocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
+    self.storageQuotaLabel.text = LocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
     
     [[MEGASdkManager sharedMEGASdk] getAccountAchievementsWithDelegate:self];
     
     if (self.enableCloseBarButton) { //For modal presentations
-        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"skipButton", @"Button title that skips the current action")
+        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:LocalizedString(@"skipButton", @"Button title that skips the current action")
                                                                            style:UIBarButtonItemStyleDone
                                                                           target:self
                                                                           action:@selector(dismissViewController)];
@@ -144,7 +145,7 @@
     }
     
     cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
-    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? NSLocalizedString(@"— GB", nil) : [NSString memoryStyleStringFromByteCount:classStorageReward];
+    cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? LocalizedString(@"— GB", @"") : [NSString memoryStyleStringFromByteCount:classStorageReward];
 }
 
 - (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath achievementClass:(MEGAAchievement)achievementClass {
@@ -204,7 +205,7 @@
     ]];
 
     NSString *inviteStorageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:MEGAAchievementInvite]];
-    self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.referral.subtitle", nil), inviteStorageString];
+    self.inviteYourFriendsSubtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.referral.subtitle", @""), inviteStorageString];
 
     self.unlockedStorageQuotaLabel.attributedText = [self textForUnlockedBonuses:self.achievementsDetails.currentStorage];
 
@@ -226,22 +227,22 @@
 
     switch (achievementClass) {
         case MEGAAchievementInvite: {
-            cell.titleLabel.text = NSLocalizedString(@"account.achievement.referralBonus.title", nil);
+            cell.titleLabel.text = LocalizedString(@"account.achievement.referralBonus.title", @"");
             break;
         }
             
         case MEGAAchievementWelcome: {
-            cell.titleLabel.text = NSLocalizedString(@"account.achievement.registration.title", nil);
+            cell.titleLabel.text = LocalizedString(@"account.achievement.registration.title", @"");
             break;
         }
             
         case MEGAAchievementDesktopInstall: {
-            cell.titleLabel.text = NSLocalizedString(@"account.achievement.desktopApp.title", nil);
+            cell.titleLabel.text = LocalizedString(@"account.achievement.desktopApp.title", @"");
             break;
         }
             
         case MEGAAchievementMobileInstall: {
-            cell.titleLabel.text = NSLocalizedString(@"account.achievement.mobileApp.title", nil);
+            cell.titleLabel.text = LocalizedString(@"account.achievement.mobileApp.title", @"");
             break;
         }
             
@@ -266,7 +267,7 @@
             cell.storageQuotaRewardLabel.text = storageString;
             cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
             
-            cell.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"account.achievement.incomplete.subtitle", nil), storageString];
+            cell.subtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.incomplete.subtitle", @""), storageString];
             cell.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         }
     }

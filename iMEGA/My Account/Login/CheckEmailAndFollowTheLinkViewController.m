@@ -10,6 +10,8 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 @interface CheckEmailAndFollowTheLinkViewController () <UITextFieldDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *mailImageView;
@@ -39,15 +41,15 @@
     self.name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
     self.password = [SAMKeychain passwordForService:@"MEGA" account:@"password"];
 
-    self.awaitingEmailConfirmationLabel.text = NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
-    self.checkYourEmailLabel.text = NSLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
+    self.awaitingEmailConfirmationLabel.text = LocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
+    self.checkYourEmailLabel.text = LocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
     
     self.emailInputView.inputTextField.text = self.email;
     
-    self.misspelledLabel.text = NSLocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
-    [self.resendButton setTitle:NSLocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
+    self.misspelledLabel.text = LocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
+    [self.resendButton setTitle:LocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
     
-    [self.cancelButton setTitle:NSLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
+    [self.cancelButton setTitle:LocalizedString(@"cancel", @"") forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -85,11 +87,11 @@
 
 - (void)setErrorState:(BOOL)error {
     if (error) {
-        self.emailInputView.topLabel.text = NSLocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field");
+        self.emailInputView.topLabel.text = LocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field");
         self.emailInputView.topLabel.textColor = UIColor.mnz_redError;
         self.emailInputView.inputTextField.textColor = UIColor.mnz_redError;
     } else {
-        self.emailInputView.topLabel.text = NSLocalizedString(@"emailPlaceholder", nil);
+        self.emailInputView.topLabel.text = LocalizedString(@"emailPlaceholder", @"");
         self.emailInputView.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
         self.emailInputView.inputTextField.textColor = UIColor.mnz_label;
     }
@@ -111,10 +113,10 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIButton *)sender {
-    NSString *message = NSLocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
+    NSString *message = LocalizedString(@"areYouSureYouWantToAbortTheRegistration", @"Asking whether the user really wants to abort/stop the registration process or continue on.");
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [MEGASdkManager.sharedMEGASdk cancelCreateAccount];        
         [Helper clearEphemeralSession];
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -135,29 +137,29 @@
                     switch (error.type) {
                         case MEGAErrorTypeApiEExist:
                             title = @"";
-                            message = NSLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
+                            message = LocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
                             break;
                             
                         case MEGAErrorTypeApiEFailed:
                             title = @"";
-                            message = NSLocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.");
+                            message = LocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.");
                             break;
                             
                         default:
-                            title = NSLocalizedString(@"error", nil);
-                            message = [NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)];
+                            title = LocalizedString(@"error", @"");
+                            message = [NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")];
                             break;
                     }
                     
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                     
                     [self presentViewController:alertController animated:YES completion:nil];
                     
                     return;
                 } else {
                     [SAMKeychain setPassword:request.email forService:@"MEGA" account:@"email"];
-                    [SVProgressHUD showInfoWithStatus:NSLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email")];
+                    [SVProgressHUD showInfoWithStatus:LocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email")];
                 }
             }];
             [MEGASdkManager.sharedMEGASdk resendSignupLinkWithEmail:self.emailInputView.inputTextField.text

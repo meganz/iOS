@@ -18,6 +18,7 @@
 #endif
 
 @import MEGASDKRepo;
+@import MEGAL10nObjc;
 
 @interface NodeTableViewCell()
 
@@ -229,7 +230,7 @@
         self.infoStringRightLabel.lineBreakMode = NSLineBreakByTruncatingHead;
         BOOL shouldIncludeRootFolder = self.node.isInShare
         || (self.node.parentHandle == MEGASdkManager.sharedMEGASdk.rootNode.handle);
-        self.infoLabel.text = shouldIncludeRootFolder ? NSLocalizedString(@"", nil) : NSLocalizedString(@"> ", nil);
+        self.infoLabel.text = shouldIncludeRootFolder ? LocalizedString(@"", @"") : LocalizedString(@"> ", @"");
         self.infoStringRightLabel.text = [self.node filePathWithDelimeter:@" > "
                                                             sdk:MEGASdkManager.sharedMEGASdk
                                           includeRootFolderName:shouldIncludeRootFolder

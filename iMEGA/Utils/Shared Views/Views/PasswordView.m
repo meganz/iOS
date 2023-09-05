@@ -2,6 +2,8 @@
 
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 @implementation PasswordView
 
 - (id)initWithFrame:(CGRect)frame {
@@ -64,7 +66,7 @@
 }
 
 - (void)setErrorState:(BOOL)error {
-    NSString *text = error ? NSLocalizedString(@"passwordWrong", @"Wrong password") : NSLocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
+    NSString *text = error ? LocalizedString(@"passwordWrong", @"Wrong password") : LocalizedString(@"passwordPlaceholder", @"Hint text to suggest that the user has to write his password");
     [self setErrorState:error withText:text];
 }
 
@@ -127,11 +129,7 @@
 
 - (void)setTopLabelTextKey:(NSString *)topLabelTextKey {
     _topLabelTextKey = topLabelTextKey;
-#ifdef TARGET_INTERFACE_BUILDER
-    self.topLabel.text = [[NSBundle bundleForClass:self.class] localizedStringForKey:self.topLabelTextKey value:nil table:nil];
-#else
-    self.topLabel.text = NSLocalizedString(self.topLabelTextKey, nil);
-#endif
+    self.topLabel.text = LocalizedString(topLabelTextKey, @"");
 }
 
 @end

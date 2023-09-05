@@ -11,6 +11,8 @@
 #import "MEGA-Swift.h"
 #import "TransferSessionManager.h"
 
+@import MEGAL10nObjc;
+
 @interface CameraUploadsTableViewController () <BrowserViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
@@ -64,17 +66,17 @@
     [super viewDidLoad];
     
     [self configureNavigationBar];
-    [self.enableCameraUploadsLabel setText:NSLocalizedString(@"cameraUploadsLabel", nil)];
+    [self.enableCameraUploadsLabel setText:LocalizedString(@"cameraUploadsLabel", @"")];
     
-    [self.uploadVideosInfoLabel setText:NSLocalizedString(@"uploadVideosLabel", nil)];
-    [self.uploadVideosLabel setText:NSLocalizedString(@"uploadVideosLabel", nil)];
+    [self.uploadVideosInfoLabel setText:LocalizedString(@"uploadVideosLabel", @"")];
+    [self.uploadVideosLabel setText:LocalizedString(@"uploadVideosLabel", @"")];
     
-    self.useCellularConnectionLabel.text = NSLocalizedString(@"useMobileData", nil);
-    self.useCellularConnectionForVideosLabel.text = NSLocalizedString(@"Use Mobile Data for Videos", nil);
+    self.useCellularConnectionLabel.text = LocalizedString(@"useMobileData", @"");
+    self.useCellularConnectionForVideosLabel.text = LocalizedString(@"Use Mobile Data for Videos", @"");
 
-    self.advancedLabel.text = NSLocalizedString(@"advanced", nil);
+    self.advancedLabel.text = LocalizedString(@"advanced", @"");
     
-    self.includeGPSTagsLabel.text = NSLocalizedString(@"Include Location Tags", @"Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file");
+    self.includeGPSTagsLabel.text = LocalizedString(@"Include Location Tags", @"Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file");
 
     [self configImageFormatTexts];
     
@@ -115,7 +117,7 @@
     
     NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", JPGFormat] attributes:formatAttributes];
     
-    [JPGAttributedString appendAttributedString:[NSAttributedString.alloc initWithString:NSLocalizedString(@"(Recommended)", nil) attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}]];
+    [JPGAttributedString appendAttributedString:[NSAttributedString.alloc initWithString:LocalizedString(@"(Recommended)", @"") attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}]];
     self.JPGLabel.attributedText = JPGAttributedString;
     
     self.HEICLabel.attributedText = [[NSAttributedString alloc] initWithString:HEICFormat attributes:formatAttributes];
@@ -124,7 +126,7 @@
 - (void)configUI {
     self.enableCameraUploadsSwitch.on = CameraUploadManager.isCameraUploadEnabled;
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
-    self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? NSLocalizedString(@"on", nil) : NSLocalizedString(@"off", nil);
+    self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? LocalizedString(@"on", @"") : LocalizedString(@"off", @"");
     self.includeGPSTagsSwitch.on = CameraUploadManager.includeGPSTags;
     
     [self configTargetFolder];
@@ -191,18 +193,18 @@
     
     // photo format section
     [sections addObject:@[self.HEICCell, self.JPGCell]];
-    [headerTitles addObject:NSLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos")];
-    [footerTitles addObject:NSLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil)];
+    [headerTitles addObject:LocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos")];
+    [footerTitles addObject:LocalizedString(@"We recommend JPG, as its the most compatible format for photos.", @"")];
     
     // Target folder
     [sections addObject:@[self.targetFolderCell]];
-    [headerTitles addObject:NSLocalizedString(@"MEGA CAMERA UPLOADS FOLDER", nil)];
+    [headerTitles addObject:LocalizedString(@"MEGA CAMERA UPLOADS FOLDER", @"")];
     [footerTitles addObject:@""];
     
     // Include GPS info cell.
     [sections addObject:@[self.includeGPSTagsCell]];
     [headerTitles addObject:@""];
-    [footerTitles addObject:NSLocalizedString(@"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.", nil)];
+    [footerTitles addObject:LocalizedString(@"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.", @"")];
     
     // options section
     NSMutableArray *optionSection = [NSMutableArray array];
@@ -214,7 +216,7 @@
     }
     [optionSection addObjectsFromArray:@[self.advancedCell]];
     [sections addObject:[optionSection copy]];
-    [headerTitles addObject:NSLocalizedString(@"options", @"Camera Upload options")];
+    [headerTitles addObject:LocalizedString(@"options", @"Camera Upload options")];
     [footerTitles addObject:@""];
     
     self.tableSections = [sections copy];
@@ -226,12 +228,12 @@
     NSString *title;
     if (CameraUploadManager.isCameraUploadEnabled) {
         if (CameraUploadManager.isVideoUploadEnabled) {
-            title = NSLocalizedString(@"Photos and videos will be uploaded to Camera Uploads folder.", nil);
+            title = LocalizedString(@"Photos and videos will be uploaded to Camera Uploads folder.", @"");
         } else {
-            title = NSLocalizedString(@"Photos will be uploaded to Camera Uploads folder.", nil);
+            title = LocalizedString(@"Photos will be uploaded to Camera Uploads folder.", @"");
         }
     } else {
-        title = NSLocalizedString(@"When enabled, photos will be uploaded.", nil);
+        title = LocalizedString(@"When enabled, photos will be uploaded.", @"");
     }
     
     return title;
@@ -257,9 +259,9 @@
                 if (granted) {
                     if ([MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness] &&
                         !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:NSLocalizedString(@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account", @"Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data.") preferredStyle:UIAlertControllerStyleAlert];
-                        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-                        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"enable", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:LocalizedString(@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account", @"Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data.") preferredStyle:UIAlertControllerStyleAlert];
+                        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
+                        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"enable", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             [CameraUploadManager.shared enableCameraUpload];
                             if (self.cameraUploadSettingChanged != nil) {
                                 self.cameraUploadSettingChanged();

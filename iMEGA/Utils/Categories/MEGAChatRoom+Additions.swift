@@ -1,5 +1,6 @@
 import Foundation
 import MEGAFoundation
+import MEGAL10n
 import MEGASwift
 
 extension MEGAChatRoom {

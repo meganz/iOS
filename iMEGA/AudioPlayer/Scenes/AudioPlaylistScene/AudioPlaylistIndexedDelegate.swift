@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 protocol AudioPlaylistDelegate: AnyObject {
     func didSelect(item: AudioPlayerItem)

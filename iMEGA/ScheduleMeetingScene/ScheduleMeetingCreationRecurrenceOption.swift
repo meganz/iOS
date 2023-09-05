@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 enum ScheduleMeetingCreationRecurrenceOption: Identifiable {
     var id: Self { self }

@@ -1,3 +1,5 @@
+import MEGAL10n
+
 @objc enum AlbumsSelectionActionType: Int, CaseIterable {
     case send
     case upload

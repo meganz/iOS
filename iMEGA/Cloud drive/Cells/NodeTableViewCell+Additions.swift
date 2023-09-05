@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension NodeTableViewCell {
     
     @objc func setTitleAndFolderName(for recentActionBucket: MEGARecentActionBucket,

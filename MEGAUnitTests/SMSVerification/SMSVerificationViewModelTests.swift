@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import XCTest
 
 final class SMSVerificationViewModelTests: XCTestCase {

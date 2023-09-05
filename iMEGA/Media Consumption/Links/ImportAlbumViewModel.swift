@@ -1,6 +1,7 @@
 import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGASwift

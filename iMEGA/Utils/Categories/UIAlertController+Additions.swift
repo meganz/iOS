@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension UIAlertController {
     
     // MARK: - UIAlertController for interactive dismissal

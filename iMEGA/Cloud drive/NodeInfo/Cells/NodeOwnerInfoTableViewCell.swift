@@ -1,4 +1,5 @@
 import MEGAChatSdk
+import MEGAL10n
 import UIKit
 
 class NodeOwnerInfoTableViewCell: UITableViewCell {

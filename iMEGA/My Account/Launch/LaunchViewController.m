@@ -2,6 +2,7 @@
 #import "MEGASdkManager.h"
 
 @import MEGASDKRepo;
+@import MEGAL10nObjc;
 
 @interface LaunchViewController () <MEGARequestDelegate>
 
@@ -80,19 +81,19 @@
     NSString *message;
     switch (MEGASdkManager.sharedMEGASdk.waiting) {
         case RetryConnectivity:
-            message = NSLocalizedString(@"unableToReachMega", @"Message shown when the app is waiting for the server to complete a request due to connectivity issue.");
+            message = LocalizedString(@"unableToReachMega", @"Message shown when the app is waiting for the server to complete a request due to connectivity issue.");
             break;
             
         case RetryServersBusy:
-            message = NSLocalizedString(@"serversAreTooBusy", @"Message shown when the app is waiting for the server to complete a request due to a HTTP error 500.");
+            message = LocalizedString(@"serversAreTooBusy", @"Message shown when the app is waiting for the server to complete a request due to a HTTP error 500.");
             break;
             
         case RetryApiLock:
-            message = NSLocalizedString(@"takingLongerThanExpected", @"Message shown when the app is waiting for the server to complete a request due to an API lock (error -3).");
+            message = LocalizedString(@"takingLongerThanExpected", @"Message shown when the app is waiting for the server to complete a request due to an API lock (error -3).");
             break;
             
         case RetryRateLimit:
-            message = NSLocalizedString(@"tooManyRequest", @"Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4).");
+            message = LocalizedString(@"tooManyRequest", @"Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4).");
             break;
             
         default:

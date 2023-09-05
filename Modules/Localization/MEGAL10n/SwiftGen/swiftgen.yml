@@ -1,0 +1,14 @@
+input_dir: ../Sources/MEGAL10n/
+output_dir: ../Sources/MEGAL10n
+
+## Strings
+strings:
+  inputs:
+    - Resources/Base.lproj
+  outputs:
+    - templateName: structured-swift5
+      params:
+        forceFileNameEnum: true
+        publicAccess: true
+        enumName: Strings
+      output: Strings+Generated.swift

@@ -5,6 +5,8 @@
 #import "SelectableTableViewCell.h"
 #import "CameraUploadManager+Settings.h"
 
+@import MEGAL10nObjc;
+
 @interface VideoUploadsQualityTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *lowLabel;
@@ -23,12 +25,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = NSLocalizedString(@"videoQuality", @"Title that refers to the quality of the chat (Either Online or Offline)");
+    self.navigationItem.title = LocalizedString(@"videoQuality", @"Title that refers to the quality of the chat (Either Online or Offline)");
     
-    self.lowLabel.text = NSLocalizedString(@"media.quality.low", @"Low");
-    self.mediumLabel.text = NSLocalizedString(@"media.quality.medium", @"Medium");
-    self.highLabel.text = NSLocalizedString(@"media.quality.high", @"High");
-    self.originalLabel.text = NSLocalizedString(@"media.quality.original", @"Original");
+    self.lowLabel.text = LocalizedString(@"media.quality.low", @"Low");
+    self.mediumLabel.text = LocalizedString(@"media.quality.medium", @"Medium");
+    self.highLabel.text = LocalizedString(@"media.quality.high", @"High");
+    self.originalLabel.text = LocalizedString(@"media.quality.original", @"Original");
     
     [self updateAppearance];
 }

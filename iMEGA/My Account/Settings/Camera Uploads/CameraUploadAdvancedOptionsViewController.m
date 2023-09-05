@@ -4,6 +4,8 @@
 #import "CameraScanner.h"
 #import "MEGA-Swift.h"
 
+@import MEGAL10nObjc;
+
 typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     AdvancedOptionSectionLivePhoto,
     AdvancedOptionSectionBurstPhoto,
@@ -38,17 +40,17 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:NSLocalizedString(@"advanced", nil)];
+    [self.navigationItem setTitle:LocalizedString(@"advanced", @"")];
     
-    self.uploadVideosForLivePhotosLabel.text = NSLocalizedString(@"Upload Videos for Live Photos", @"Title of the switch to config whether to upload videos for Live Photos");
+    self.uploadVideosForLivePhotosLabel.text = LocalizedString(@"Upload Videos for Live Photos", @"Title of the switch to config whether to upload videos for Live Photos");
     self.uploadVideosForlivePhotosSwitch.on = CameraUploadManager.shouldUploadVideosForLivePhotos;
-    self.uploadAllBurstPhotosLabel.text = NSLocalizedString(@"Upload All Burst Photos", @"Title of the switch to config whether to upload all burst photos");
+    self.uploadAllBurstPhotosLabel.text = LocalizedString(@"Upload All Burst Photos", @"Title of the switch to config whether to upload all burst photos");
     self.uploadAllBurstPhotosSwitch.on = CameraUploadManager.shouldUploadAllBurstPhotos;
-    self.uploadHiddenAlbumLabel.text = NSLocalizedString(@"Upload Hidden Album", nil);
+    self.uploadHiddenAlbumLabel.text = LocalizedString(@"Upload Hidden Album", @"");
     self.uploadHiddenAlbumSwitch.on = CameraUploadManager.shouldUploadHiddenAlbum;
-    self.uploadSharedAlbumsLabel.text = NSLocalizedString(@"Upload Shared Albums", nil);
+    self.uploadSharedAlbumsLabel.text = LocalizedString(@"Upload Shared Albums", @"");
     self.uploadSharedAlbumsSwitch.on = CameraUploadManager.shouldUploadSharedAlbums;
-    self.uploadSyncedAlbumsLabel.text = NSLocalizedString(@"Upload Albums Synced from iTunes", @"Title of the switch to config whether to upload synced albums");
+    self.uploadSyncedAlbumsLabel.text = LocalizedString(@"Upload Albums Synced from iTunes", @"Title of the switch to config whether to upload synced albums");
     self.uploadSyncedAlbumsSwitch.on = CameraUploadManager.shouldUploadSyncedAlbums;
     
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
@@ -112,30 +114,30 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     switch (section) {
         case AdvancedOptionSectionLivePhoto:
             if (self.uploadVideosForlivePhotosSwitch.isOn) {
-                title = NSLocalizedString(@"The video and the photo in each Live Photo will be uploaded.", nil);
+                title = LocalizedString(@"The video and the photo in each Live Photo will be uploaded.", @"");
             } else {
-                title = NSLocalizedString(@"Only the photo in each Live Photo will be uploaded.", nil);
+                title = LocalizedString(@"Only the photo in each Live Photo will be uploaded.", @"");
             }
             break;
         case AdvancedOptionSectionBurstPhoto:
             if (self.uploadAllBurstPhotosSwitch.isOn) {
-                title = NSLocalizedString(@"All the photos from your burst photo sequences will be uploaded.", nil);
+                title = LocalizedString(@"All the photos from your burst photo sequences will be uploaded.", @"");
             } else {
-                title = NSLocalizedString(@"Only the representative photos from your burst photo sequences will be uploaded.", nil);
+                title = LocalizedString(@"Only the representative photos from your burst photo sequences will be uploaded.", @"");
             }
             break;
         case AdvancedOptionSectionHiddenAlbum:
-            title = NSLocalizedString(@"The Hidden Album is where you hide photos or videos in your device Photos app.", nil);
+            title = LocalizedString(@"The Hidden Album is where you hide photos or videos in your device Photos app.", @"");
             break;
         case AdvancedOptionSectionSharedAlbums:
             if (self.uploadSharedAlbumsSwitch.isOn) {
-                title = NSLocalizedString(@"Shared Albums from your device's Photos app will be uploaded.", nil);
+                title = LocalizedString(@"Shared Albums from your device's Photos app will be uploaded.", @"");
             } else {
-                title = NSLocalizedString(@"Shared Albums from your device's Photos app will not be uploaded.", nil);
+                title = LocalizedString(@"Shared Albums from your device's Photos app will not be uploaded.", @"");
             }
             break;
         case AdvancedOptionSectionSyncedAlbums:
-            title = NSLocalizedString(@"Synced albums are where you sync photos or videos to your device's Photos app from iTunes.", nil);
+            title = LocalizedString(@"Synced albums are where you sync photos or videos to your device's Photos app from iTunes.", @"");
             break;
         default:
             break;

@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 final class CameraUploadNodeAccess: NodeAccess {
     @objc static let shared = CameraUploadNodeAccess(
@@ -6,10 +7,10 @@ final class CameraUploadNodeAccess: NodeAccess {
             autoCreate: { CameraUploadManager.isCameraUploadEnabled },
             updateInMemoryNotificationName: .MEGACameraUploadTargetFolderUpdatedInMemory,
             updateInRemoteNotificationName: .MEGACameraUploadTargetFolderChangedInRemote,
-            loadNodeRequest: MEGASdkManager.sharedMEGASdk().getCameraUploadsFolder,
-            setNodeRequest: MEGASdkManager.sharedMEGASdk().setCameraUploadsFolderWithHandle,
+            loadNodeRequest: MEGASdk.shared.getCameraUploadsFolder,
+            setNodeRequest: MEGASdk.shared.setCameraUploadsFolderWithHandle,
             nodeName: Strings.Localizable.cameraUploadsLabel,
-            createNodeRequest: MEGASdkManager.sharedMEGASdk().createFolder
+            createNodeRequest: MEGASdk.shared.createFolder
         )
     )
 }

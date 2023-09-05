@@ -10,6 +10,8 @@
 #import "NSString+MNZCategory.h"
 @import MEGASDKRepo;
 
+@import MEGAL10nObjc;
+
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *firstNameView;
@@ -33,24 +35,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = NSLocalizedString(@"changeName", @"Button title that allows the user change his name");
+    self.navigationItem.title = LocalizedString(@"changeName", @"Button title that allows the user change his name");
     
     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
     self.firstName = moUser.firstname;
     self.lastName = moUser.lastname;
     
-    self.firstName ? (self.firstNameTextField.text = self.firstName) : (self.firstNameTextField.placeholder = NSLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)"));
-    self.lastName ? (self.lastNameTextField.text = self.lastName) : (self.lastNameTextField.placeholder = NSLocalizedString(@"lastName", @"Hint text for the last name (Placeholder)"));
+    self.firstName ? (self.firstNameTextField.text = self.firstName) : (self.firstNameTextField.placeholder = LocalizedString(@"firstName", @"Hint text for the first name (Placeholder)"));
+    self.lastName ? (self.lastNameTextField.text = self.lastName) : (self.lastNameTextField.placeholder = LocalizedString(@"lastName", @"Hint text for the last name (Placeholder)"));
     
     self.firstNameTextField.textContentType = UITextContentTypeGivenName;
     self.lastNameTextField.textContentType = UITextContentTypeFamilyName;
     
-    self.cancelBarButtonItem.title = NSLocalizedString(@"cancel", @"Button title to cancel something");
-    [self.saveButton setTitle:NSLocalizedString(@"save", @"Button title to 'Save' the selected option")];
+    self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
+    [self.saveButton setTitle:LocalizedString(@"save", @"Button title to 'Save' the selected option")];
     [self.saveButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium]} forState:UIControlStateNormal];
     
-    self.firstNameLabel.text = NSLocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
-    self.lastNameLabel.text = NSLocalizedString(@"lastName", @"Hint text for the first name (Placeholder)");
+    self.firstNameLabel.text = LocalizedString(@"firstName", @"Hint text for the first name (Placeholder)");
+    self.lastNameLabel.text = LocalizedString(@"lastName", @"Hint text for the first name (Placeholder)");
     
     [self updateAppearance];
 }

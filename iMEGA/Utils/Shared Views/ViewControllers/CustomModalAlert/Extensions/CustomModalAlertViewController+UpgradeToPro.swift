@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureUpgradeToPro(onConfirm: @escaping () -> Void, onCancel: @escaping () -> Void) {

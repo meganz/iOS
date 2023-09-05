@@ -27,6 +27,7 @@
 
 @import Firebase;
 @import MEGASDKRepo;
+@import MEGAL10nObjc;
 
 #define MNZ_ANIMATION_TIME 0.35
 
@@ -289,7 +290,7 @@
 }
 
 - (void)loginToMEGA {
-    self.navigationItem.title = NSLocalizedString(@"MEGA", nil);
+    self.navigationItem.title = LocalizedString(@"MEGA", @"");
     
     LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
     launchVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
@@ -340,7 +341,7 @@
         [passcodeVC showLockScreenOver:self.view.superview
                          withAnimation:YES
                             withLogout:YES
-                        andLogoutTitle:NSLocalizedString(@"logoutLabel", nil)];
+                        andLogoutTitle:LocalizedString(@"logoutLabel", @"")];
         
         [passcodeVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
         passcodeVC.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -436,8 +437,8 @@
                         [Helper logout];
                         [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
                         if (sessionInvalidateInOtherClient) {
-                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"loggedOut_alertTitle", nil) message:NSLocalizedString(@"loggedOutFromAnotherLocation", nil) preferredStyle:UIAlertControllerStyleAlert];
-                            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                            UIAlertController *alert = [UIAlertController alertControllerWithTitle:LocalizedString(@"loggedOut_alertTitle", @"") message:LocalizedString(@"loggedOutFromAnotherLocation", @"") preferredStyle:UIAlertControllerStyleAlert];
+                            [alert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                                 [weakSelf dismissViewControllerAnimated:YES completion:^{
                                     [weakSelf.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
                                 }];
@@ -845,9 +846,9 @@
     }
     
     if (self.unsupportedAssets > 0) {
-        NSString *message = NSLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+        NSString *message = LocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (self.pendingAssets == self.unsupportedAssets) {
                 [self hideViewWithCompletion:^{
                     [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
@@ -882,7 +883,7 @@
 }
 
 - (void)logout {
-    [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
     [[MEGASdkManager sharedMEGASdk] logout];
 }
 
@@ -929,7 +930,7 @@
         case MEGARequestTypeLogout: {
       
             if (request.paramType != MEGAErrorTypeApiESSL) {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:NSLocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
             }
             break;
         }
@@ -987,7 +988,7 @@
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (error.type) {
         [self oneUnsupportedMore];
-        MEGALogError(@"Transfer finished with error: %@", NSLocalizedString(error.name, nil));
+        MEGALogError(@"Transfer finished with error: %@", LocalizedString(error.name, @""));
         return;
     }
     

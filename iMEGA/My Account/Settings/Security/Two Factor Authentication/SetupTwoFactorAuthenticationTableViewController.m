@@ -8,6 +8,8 @@
 #import "MEGA-Swift.h"
 #import "TwoFactorAuthenticationViewController.h"
 
+@import MEGAL10nObjc;
+
 @interface SetupTwoFactorAuthenticationTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *twoFactorAuthenticationSwitch;
@@ -24,11 +26,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *title = NSLocalizedString(@"twoFactorAuthentication", @"");
+    NSString *title = LocalizedString(@"twoFactorAuthentication", @"");
     self.navigationItem.title = title;
     [self setMenuCapableBackButtonWithMenuTitle:title];
     
-    self.twoFactorAuthenticationLabel.text = NSLocalizedString(@"twoFactorAuthentication", @"");
+    self.twoFactorAuthenticationLabel.text = LocalizedString(@"twoFactorAuthentication", @"");
     
     [self updateAppearance];
 }
@@ -82,7 +84,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return NSLocalizedString(@"whatIsTwoFactorAuthentication", @"Text shown as explanation of what is Two-Factor Authentication");
+            return LocalizedString(@"whatIsTwoFactorAuthentication", @"Text shown as explanation of what is Two-Factor Authentication");
             
         default:
             return @"";

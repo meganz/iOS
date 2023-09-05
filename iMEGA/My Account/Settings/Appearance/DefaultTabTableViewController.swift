@@ -1,3 +1,4 @@
+import MEGAL10n
 import UIKit
 
 final class DefaultTabTableViewController: UITableViewController {
@@ -23,7 +24,7 @@ final class DefaultTabTableViewController: UITableViewController {
             let tab = Tab(tabType: tabType)
             cell.imageView?.image = tab.icon?.withTintColor(UIColor.mnz_primaryGray(for: traitCollection))
             let title = tab.title
-            cell.textLabel?.text = NSLocalizedString(title, comment: title)
+            cell.textLabel?.text = Strings.localized(title, comment: title)
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         }
         cell.accessoryView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)

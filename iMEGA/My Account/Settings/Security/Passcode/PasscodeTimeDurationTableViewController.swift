@@ -1,3 +1,4 @@
+import MEGAL10n
 import UIKit
 
 @objc enum RequirePasscodeAfter: Int {

@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension MEGAChatMessage {
     
     @objc(contactNameAtIndex:) func contactName(at index: UInt) -> String? {

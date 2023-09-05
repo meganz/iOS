@@ -14,6 +14,7 @@
 #import "NodeTableViewCell.h"
 
 @import MEGAFoundation;
+@import MEGAL10nObjc;
 
 @interface CloudDriveTableViewController () <UITableViewDelegate, UITableViewDataSource>
 @end
@@ -72,9 +73,9 @@
     
     NSString *dateString;
     if (self.cloudDrive.recentActionBucket.timestamp.isToday) {
-        dateString = NSLocalizedString(@"Today", @"");
+        dateString = LocalizedString(@"Today", @"");
     } else if (self.cloudDrive.recentActionBucket.timestamp.isYesterday) {
-        dateString = NSLocalizedString(@"Yesterday", @"");
+        dateString = LocalizedString(@"Yesterday", @"");
     } else {
         dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
     }
@@ -287,7 +288,7 @@ contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
             return nil;
         }
     } actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
-        UIAction *selectAction = [UIAction actionWithTitle:NSLocalizedString(@"select", nil)
+        UIAction *selectAction = [UIAction actionWithTitle:LocalizedString(@"select", @"")
                                                      image:[UIImage imageNamed:@"select"]
                                                 identifier:nil
                                                    handler:^(__kindof UIAction * _Nonnull action) {

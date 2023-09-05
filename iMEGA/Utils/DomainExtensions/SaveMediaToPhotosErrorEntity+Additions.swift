@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAL10n
 
 extension SaveMediaToPhotosErrorEntity: LocalizedError {
     public var errorDescription: String? {

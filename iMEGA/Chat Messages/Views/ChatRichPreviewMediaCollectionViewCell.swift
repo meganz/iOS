@@ -1,4 +1,7 @@
+import ChatRepo
 import Foundation
+import MEGAL10n
+import MEGASDKRepo
 import MessageKit
 
 struct ConcreteMessageType: MessageType {
@@ -27,12 +30,12 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdk.shared.add(self)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdk.shared.add(self)
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -58,7 +61,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         case .fileLink:
             if megaMessage.richNumber == nil {
                 
-                MEGASdkManager.sharedMEGASdk().publicNode(forMegaFileLink: megaLink.mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
+                MEGASdk.shared.publicNode(forMegaFileLink: megaLink.mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
                     guard visibleIndexPaths.contains(indexPath), error?.type == .apiOk else {
                         return
@@ -79,11 +82,13 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         case .folderLink:
             if megaMessage.richNumber == nil {
                 
-                MEGASdkManager.sharedMEGASdk().getPublicLinkInformation(withFolderLink: megaLink.mnz_MEGAURL(), delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
+                MEGASdk.shared.getPublicLinkInformation(withFolderLink: megaLink.mnz_MEGAURL(), delegate: RequestDelegate { result in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    guard visibleIndexPaths.contains(indexPath), error.type == .apiOk else {
+                    
+                    guard visibleIndexPaths.contains(indexPath), case let .success(request) = result else {
                         return
                     }
+                    
                     let totalNumberOfFiles = request.megaFolderInfo.files
                     let numOfVersionedFiles = request.megaFolderInfo.versions
                     let totalFileSize = request.megaFolderInfo.currentSize
@@ -99,16 +104,15 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                     } else {
                         messagesCollectionView.reloadItems(at: [indexPath])
                     }
-                }))
+                })
                 return
             }
             richPreviewContentView.isHidden = false
         case .publicChatLink:
             if megaMessage.richNumber == nil {
-                
-                MEGASdkManager.sharedMEGAChatSdk().checkChatLink(megaLinkURL, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                MEGAChatSdk.shared.checkChatLink(megaLinkURL, delegate: ChatRequestDelegate(successCodes: [.MEGAChatErrorTypeOk, .MegaChatErrorTypeExist]) { result in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    guard visibleIndexPaths.contains(indexPath), (error.type == .MEGAChatErrorTypeOk || error.type == .MegaChatErrorTypeExist) else {
+                    guard visibleIndexPaths.contains(indexPath), case let .success(request) = result else {
                         return
                     }
                     megaMessage.richString = request.text
@@ -119,7 +123,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                     } else {
                         messagesCollectionView.reloadItems(at: [indexPath])
                     }
-                }))
+                })
                 return
             }
             richPreviewContentView.isHidden = false

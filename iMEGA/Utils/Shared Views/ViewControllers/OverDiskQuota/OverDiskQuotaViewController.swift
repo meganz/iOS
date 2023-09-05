@@ -1,4 +1,5 @@
 import MEGAFoundation
+import MEGAL10n
 import MEGAUIKit
 import UIKit
 

@@ -9,6 +9,8 @@
 #import "MEGAUser+MNZCategory.h"
 #import <CoreMedia/CoreMedia.h>
 
+@import MEGAL10nObjc;
+
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
 #elif MNZ_NOTIFICATION_EXTENSION
@@ -122,43 +124,43 @@ static NSString* const B = @"[B]";
 
 + (NSString *)mnz_stringByFiles:(NSInteger)files andFolders:(NSInteger)folders {
     if (files > 0 && folders > 0) {
-        NSString *foldersFormat = NSLocalizedString(@"general.format.count.folderAndFile.folder", @"Subtitle shown on folders that shows its folder and file content count. Two strings will be used to make the full sentence to accommodate the multiple plural need. Full sentence examples: 1 folder • 1 file, 2 folders • 2 files, etc");
+        NSString *foldersFormat = LocalizedString(@"general.format.count.folderAndFile.folder", @"Subtitle shown on folders that shows its folder and file content count. Two strings will be used to make the full sentence to accommodate the multiple plural need. Full sentence examples: 1 folder • 1 file, 2 folders • 2 files, etc");
         NSString *folderCount = [NSString stringWithFormat:foldersFormat, folders];
         
-        NSString *filesFormat = NSLocalizedString(@"general.format.count.folderAndFile.file", @"Subtitle shown on folders that shows its folder and file content count. Two strings will be used to make the full sentence to accommodate the multiple plural need. Full sentence examples: 1 folder • 1 file, 2 folders • 2 files, etc");
+        NSString *filesFormat = LocalizedString(@"general.format.count.folderAndFile.file", @"Subtitle shown on folders that shows its folder and file content count. Two strings will be used to make the full sentence to accommodate the multiple plural need. Full sentence examples: 1 folder • 1 file, 2 folders • 2 files, etc");
         NSString *fileCount = [NSString stringWithFormat:filesFormat, files];
         
         return [NSString stringWithFormat:@"%@ %@", folderCount, fileCount];
     }
     
     if (!files && folders > 0) {
-        return [NSString stringWithFormat:NSLocalizedString(@"general.format.count.folder", @"Subtitle shown on folders that gives you information about its folder content count. e.g 1 folder, 2 folders"), folders];
+        return [NSString stringWithFormat:LocalizedString(@"general.format.count.folder", @"Subtitle shown on folders that gives you information about its folder content count. e.g 1 folder, 2 folders"), folders];
     }
     
     if (files > 0 && !folders) {
-        return [NSString stringWithFormat:NSLocalizedString(@"general.format.count.file", @"Subtitle shown on folders that gives you information about its file content count. e.g 1 file, 2 files"), files];
+        return [NSString stringWithFormat:LocalizedString(@"general.format.count.file", @"Subtitle shown on folders that gives you information about its file content count. e.g 1 file, 2 files"), files];
     }
     
-    return NSLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
+    return LocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
 }
 
 + (NSString * _Nullable)chatStatusString:(MEGAChatStatus)onlineStatus {
     NSString *onlineStatusString;
     switch (onlineStatus) {
         case MEGAChatStatusOffline:
-            onlineStatusString = NSLocalizedString(@"offline", @"Title of the Offline section");
+            onlineStatusString = LocalizedString(@"offline", @"Title of the Offline section");
             break;
             
         case MEGAChatStatusAway:
-            onlineStatusString = NSLocalizedString(@"away", nil);
+            onlineStatusString = LocalizedString(@"away", @"");
             break;
             
         case MEGAChatStatusOnline:
-            onlineStatusString = NSLocalizedString(@"online", nil);
+            onlineStatusString = LocalizedString(@"online", @"");
             break;
             
         case MEGAChatStatusBusy:
-            onlineStatusString = NSLocalizedString(@"busy", nil);
+            onlineStatusString = LocalizedString(@"busy", @"");
             break;
             
         default:
@@ -176,38 +178,38 @@ static NSString* const B = @"[B]";
         case MEGAChatMessageEndCallReasonEnded: {
             if (isGroup) {
                 if (duration != nil && ![duration isEqual: @0]) {
-                    endCallReasonString = [[NSLocalizedString(@"[A]Group call ended[/A][C]. Duration: [/C]", @"When an active goup call is ended (with duration)") stringByReplacingOccurrencesOfString:@"[/C]" withString:[NSString mnz_stringFromCallDuration:duration.integerValue]] mnz_removeWebclientFormatters];
+                    endCallReasonString = [[LocalizedString(@"[A]Group call ended[/A][C]. Duration: [/C]", @"When an active goup call is ended (with duration)") stringByReplacingOccurrencesOfString:@"[/C]" withString:[NSString mnz_stringFromCallDuration:duration.integerValue]] mnz_removeWebclientFormatters];
                 } else {
-                    endCallReasonString = NSLocalizedString(@"Group call ended", @"When an active goup call is ended");
+                    endCallReasonString = LocalizedString(@"Group call ended", @"When an active goup call is ended");
                 }
             } else {
-                endCallReasonString = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"callEnded", @"When an active call of user A with user B had ended"), [NSString stringWithFormat:NSLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]]];
+                endCallReasonString = [NSString stringWithFormat:@"%@ %@", LocalizedString(@"callEnded", @"When an active call of user A with user B had ended"), [NSString stringWithFormat:LocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]]];
             }
             break;
         }
             
         case MEGAChatMessageEndCallReasonRejected:
-            endCallReasonString = NSLocalizedString(@"callWasRejected", @"When an outgoing call of user A with user B had been rejected by user B");
+            endCallReasonString = LocalizedString(@"callWasRejected", @"When an outgoing call of user A with user B had been rejected by user B");
             break;
             
         case MEGAChatMessageEndCallReasonNoAnswer:
             if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
-                endCallReasonString = NSLocalizedString(@"callWasNotAnswered", @"When an active call of user A with user B had not answered");
+                endCallReasonString = LocalizedString(@"callWasNotAnswered", @"When an active call of user A with user B had not answered");
             } else {
-                endCallReasonString = NSLocalizedString(@"missedCall", @"Title of the notification for a missed call");
+                endCallReasonString = LocalizedString(@"missedCall", @"Title of the notification for a missed call");
             }
             
             break;
             
         case MEGAChatMessageEndCallReasonFailed:
-            endCallReasonString = NSLocalizedString(@"callFailed", @"When an active call of user A with user B had failed");
+            endCallReasonString = LocalizedString(@"callFailed", @"When an active call of user A with user B had failed");
             break;
             
         case MEGAChatMessageEndCallReasonCancelled:
             if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
-                endCallReasonString = NSLocalizedString(@"callWasCancelled", @"When an active call of user A with user B had cancelled");
+                endCallReasonString = LocalizedString(@"callWasCancelled", @"When an active call of user A with user B had cancelled");
             } else {
-                endCallReasonString = NSLocalizedString(@"missedCall", @"Title of the notification for a missed call");
+                endCallReasonString = LocalizedString(@"missedCall", @"Title of the notification for a missed call");
             }
             break;
             
@@ -226,31 +228,31 @@ static NSString* const B = @"[B]";
     NSUInteger yearModulo = seconds % secondsInAYear;
     
     if (yearModulo == 0) {
-        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.year", @"The number of years e.g. 1 year, 5 years etc.");
+        NSString *format = LocalizedString(@"general.format.retentionPeriod.year", @"The number of years e.g. 1 year, 5 years etc.");
         return [NSString stringWithFormat:format, 1];
     }
     
     if (monthsModulo == 0) {
         NSUInteger months = seconds / secondsInAMonth_30;
-        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.month", @"The number of months e.g. 1 month, 5 months etc.");
+        NSString *format = LocalizedString(@"general.format.retentionPeriod.month", @"The number of months e.g. 1 month, 5 months etc.");
         return [NSString stringWithFormat:format, months];
     }
     
     if (weeksModulo == 0) {
         NSUInteger weeks = seconds / secondsInAWeek;
-        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.week", @"The number of weeks e.g. 1 week, 5 weeks etc.");
+        NSString *format = LocalizedString(@"general.format.retentionPeriod.week", @"The number of weeks e.g. 1 week, 5 weeks etc.");
         return [NSString stringWithFormat:format, weeks];
     }
     
     if (daysModulo == 0) {
         NSUInteger days = seconds / secondsInADay;
-        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.day", @"The number of days e.g. 1 day, 5 days etc.");
+        NSString *format = LocalizedString(@"general.format.retentionPeriod.day", @"The number of days e.g. 1 day, 5 days etc.");
         return [NSString stringWithFormat:format, days];
     }
     
     if (hoursModulo == 0) {
         NSUInteger hours = seconds / secondsInAHour;
-        NSString *format = NSLocalizedString(@"general.format.retentionPeriod.hour", @"The number of hours e.g. 1 hour, 5 hours etc.");
+        NSString *format = LocalizedString(@"general.format.retentionPeriod.hour", @"The number of hours e.g. 1 hour, 5 hours etc.");
         return [NSString stringWithFormat:format, hours];
     }
     
@@ -260,28 +262,28 @@ static NSString* const B = @"[B]";
 + (NSString *)localizedSortOrderType:(MEGASortOrderType)sortOrderType {
     switch (sortOrderType) {
         case MEGASortOrderTypeDefaultDesc:
-            return NSLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order");
+            return LocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order");
             
         case MEGASortOrderTypeSizeDesc:
-            return NSLocalizedString(@"largest", @"Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size");
+            return LocalizedString(@"largest", @"Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size");
             
         case MEGASortOrderTypeSizeAsc:
-            return NSLocalizedString(@"smallest", @"Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size");
+            return LocalizedString(@"smallest", @"Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size");
             
         case MEGASortOrderTypeModificationDesc:
-            return NSLocalizedString(@"newest", @"Sort by option (5/6). This one order the files by its modification date, newer first");
+            return LocalizedString(@"newest", @"Sort by option (5/6). This one order the files by its modification date, newer first");
             
         case MEGASortOrderTypeModificationAsc:
-            return NSLocalizedString(@"oldest", @"Sort by option (6/6). This one order the files by its modification date, older first");
+            return LocalizedString(@"oldest", @"Sort by option (6/6). This one order the files by its modification date, older first");
             
         case MEGASortOrderTypeLabelAsc:
-            return NSLocalizedString(@"cloudDrive.sort.label", @"A menu item in the left panel drop down menu to allow sorting by label.");
+            return LocalizedString(@"cloudDrive.sort.label", @"A menu item in the left panel drop down menu to allow sorting by label.");
             
         case MEGASortOrderTypeFavouriteAsc:
-            return NSLocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites");
+            return LocalizedString(@"Favourite", @"Context menu item. Allows user to add file/folder to favourites");
             
         default:
-            return NSLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically");
+            return LocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically");
     }
 }
 
@@ -348,22 +350,22 @@ static NSString* const B = @"[B]";
     NSInteger hours = (ti / 3600);
     if (hours > 0) {
         if (minutes == 0) {
-            NSString *format = NSLocalizedString(@"call.duration.hour", nil);
+            NSString *format = LocalizedString(@"call.duration.hour", @"");
             return [NSString stringWithFormat:format, hours];
         } else {
-            NSString *hourFormat = NSLocalizedString(@"call.duration.hourAndMinute.hour", nil);
+            NSString *hourFormat = LocalizedString(@"call.duration.hourAndMinute.hour", @"");
             NSString *hourString = [NSString stringWithFormat:hourFormat, hours];
 
-            NSString *minuteFormat = NSLocalizedString(@"call.duration.hourAndMinute.minute", nil);
+            NSString *minuteFormat = LocalizedString(@"call.duration.hourAndMinute.minute", @"");
             NSString *minuteString = [NSString stringWithFormat:minuteFormat, minutes];
 
             return [NSString stringWithFormat:@"%@%@", hourString, minuteString];
         }
     } else if (minutes > 0) {
-        NSString *format = NSLocalizedString(@"call.duration.minute", nil);
+        NSString *format = LocalizedString(@"call.duration.minute", @"");
         return [NSString stringWithFormat:format, minutes];
     } else {
-        NSString *format = NSLocalizedString(@"call.duration.second", nil);
+        NSString *format = LocalizedString(@"call.duration.second", @"");
         return [NSString stringWithFormat:format, seconds];
     }
 }
@@ -726,13 +728,13 @@ static NSString* const B = @"[B]";
         NSString *timeString = dateLastSeen.mnz_formattedHourAndMinutes;
         NSString *dateString;
         if ([[NSCalendar currentCalendar] isDateInToday:dateLastSeen]) {
-            dateString = NSLocalizedString(@"Today", @"");
+            dateString = LocalizedString(@"Today", @"");
         } else if ([[NSCalendar currentCalendar] isDateInYesterday:dateLastSeen]) {
-            dateString = NSLocalizedString(@"Yesterday", @"");
+            dateString = LocalizedString(@"Yesterday", @"");
         } else {
             dateString = [dateLastSeen formattedDateWithFormat:@"dd MMM"];
         }
-        lastSeenMessage = NSLocalizedString(@"Last seen %s", @"Shown when viewing a 1on1 chat (at least for now), if the user is offline.");
+        lastSeenMessage = LocalizedString(@"Last seen %s", @"Shown when viewing a 1on1 chat (at least for now), if the user is offline.");
 
         BOOL isRTLLanguage;
         if ([[[[NSBundle mainBundle] bundlePath] pathExtension] isEqualToString:@"appex"]) {
@@ -749,7 +751,7 @@ static NSString* const B = @"[B]";
             lastSeenMessage = [lastSeenMessage stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%@ %@", dateString, timeString]];
         }
     } else {
-        lastSeenMessage = NSLocalizedString(@"Last seen a long time ago", @"Text to inform the user the 'Last seen' time of a contact is a long time ago (more than 65535 minutes)");
+        lastSeenMessage = LocalizedString(@"Last seen a long time ago", @"Text to inform the user the 'Last seen' time of a contact is a long time ago (more than 65535 minutes)");
     }
     return lastSeenMessage;
 }
@@ -790,9 +792,9 @@ static NSString* const B = @"[B]";
     }
     
     if (recentActionBucket.isUpdate) {
-        addebByString = [NSString stringWithFormat:NSLocalizedString(@"home.recent.modifiedByLabel", @"Label that indicates who modified a file into a recents bucket. %1 is a placeholder for a name, eg: Haley"), userNameThatMadeTheAction];
+        addebByString = [NSString stringWithFormat:LocalizedString(@"home.recent.modifiedByLabel", @"Label that indicates who modified a file into a recents bucket. %1 is a placeholder for a name, eg: Haley"), userNameThatMadeTheAction];
     } else {
-        addebByString = [NSString stringWithFormat:NSLocalizedString(@"home.recent.createdByLabel", @"Label that indicates who uploaded a file into a recents bucket. %1 is a placeholder for a name, eg: Haley"), userNameThatMadeTheAction];
+        addebByString = [NSString stringWithFormat:LocalizedString(@"home.recent.createdByLabel", @"Label that indicates who uploaded a file into a recents bucket. %1 is a placeholder for a name, eg: Haley"), userNameThatMadeTheAction];
     }
     
     return addebByString;

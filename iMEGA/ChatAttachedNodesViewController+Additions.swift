@@ -1,4 +1,5 @@
 import Foundation
+import MEGAL10n
 
 extension ChatAttachedNodesViewController {
     @objc func nodeCountTitle(_ count: Int) -> String {

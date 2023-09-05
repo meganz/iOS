@@ -1,4 +1,5 @@
-
+import MEGAL10n
+import MEGASDKRepo
 import PhoneNumberKit
 import UIKit
 
@@ -33,7 +34,7 @@ class PhoneNumberViewController: UITableViewController {
         modifyNumberLabel.text = Strings.Localizable.modifyPhoneNumber
         removeNumberLabel.text = Strings.Localizable.removePhoneNumber
         
-        guard let verifiedPhone = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() else {
+        guard let verifiedPhone = MEGASdk.shared.smsVerifiedPhoneNumber() else {
             fatalError("Can not fetch verified phone number")
         }
         
@@ -68,8 +69,8 @@ class PhoneNumberViewController: UITableViewController {
     private func showModifyPhoneAlert() {
         let modifyPhoneNumberAlert = UIAlertController(title: Strings.Localizable.modifyPhoneNumber, message: Strings.Localizable.thisOperationWillRemoveYourCurrentPhoneNumberAndStartTheProcessOfAssociatingANewPhoneNumberWithYourAccount, preferredStyle: .alert)
         modifyPhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
-            MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (_, error) in
-                if error.type == .apiOk {
+            MEGASdk.shared.resetSmsVerifiedPhoneNumber(with: RequestDelegate { result in
+                if case .success = result {
                     let presenter = self.presentingViewController
                     self.dismiss(animated: true, completion: {
                         if let presenter = presenter {
@@ -79,7 +80,7 @@ class PhoneNumberViewController: UITableViewController {
                 } else {
                     SVProgressHUD.showError(withStatus: Strings.Localizable.failedToRemoveYourPhoneNumberPleaseTryAgainLater)
                 }
-            }))
+            })
         }))
         modifyPhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
         present(modifyPhoneNumberAlert, animated: true, completion: nil)
@@ -88,15 +89,15 @@ class PhoneNumberViewController: UITableViewController {
     private func showRemovePhoneAlert() {
         let removePhoneNumberAlert = UIAlertController(title: Strings.Localizable.removePhoneNumber, message: Strings.Localizable.ThisWillRemoveYourAssociatedPhoneNumberFromYourAccount.ifYouLaterChooseToAddAPhoneNumberYouWillBeRequiredToVerifyIt, preferredStyle: .alert)
         removePhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default, handler: { _ in
-            MEGASdkManager.sharedMEGASdk().resetSmsVerifiedPhoneNumber(with: MEGAGenericRequestDelegate(completion: { (_, error) in
-                if error.type == .apiOk {
+            MEGASdk.shared.resetSmsVerifiedPhoneNumber(with: RequestDelegate { result in
+                if case .success = result {
                     self.dismiss(animated: true, completion: {
                         SVProgressHUD.showInfo(withStatus: Strings.Localizable.yourPhoneNumberHasBeenRemovedSuccessfully)
                     })
                 } else {
                     SVProgressHUD.showError(withStatus: Strings.Localizable.failedToRemoveYourPhoneNumberPleaseTryAgainLater)
                 }
-            }))
+            })
         }))
         removePhoneNumberAlert.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil))
         present(removePhoneNumberAlert, animated: true, completion: nil)

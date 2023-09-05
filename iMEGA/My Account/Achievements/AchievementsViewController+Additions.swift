@@ -1,3 +1,5 @@
+import MEGAL10n
+
 extension AchievementsViewController {
     
     open override func viewDidLayoutSubviews() {

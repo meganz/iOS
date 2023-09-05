@@ -1,17 +1,6 @@
 input_dir: ../iMEGA/
 output_dir: ${DERIVED_SOURCES_DIR}
 
-## Strings
-strings:
-  inputs:
-    - Languages/Base.lproj
-  outputs:
-    - templateName: structured-swift5
-      params:
-        publicAccess: true
-        enumName: Strings
-      output: Strings+Generated.swift
-
 xcassets:
   - inputs: Colors.xcassets
     outputs:

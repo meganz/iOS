@@ -12,6 +12,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
+@import MEGAL10nObjc;
 @import SAMKeychain;
 
 @interface MEGAQueryRecoveryLinkRequestDelegate ()
@@ -73,12 +74,12 @@
             case MEGAErrorTypeApiEExpired: {
                 NSString *alertTitle;
                 if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
-                    alertTitle = NSLocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)");
+                    alertTitle = LocalizedString(@"cancellationLinkHasExpired", @"During account cancellation (deletion)");
                 } else if (MEGALinkManager.urlType == URLTypeRecoverLink) {
-                    alertTitle = NSLocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired");
+                    alertTitle = LocalizedString(@"recoveryLinkHasExpired", @"Message shown during forgot your password process if the link to reset password has expired");
                 }
                 UIAlertController *linkHasExpiredAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:nil preferredStyle:UIAlertControllerStyleAlert];
-                [linkHasExpiredAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [linkHasExpiredAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
                 
                 [UIApplication.mnz_presentingViewController presentViewController:linkHasExpiredAlertController animated:YES completion:nil];
                 break;
@@ -90,8 +91,8 @@
             }
                 
             case MEGAErrorTypeApiEAccess: {
-                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"error", nil) message:NSLocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
-                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"error", @"") message:LocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
 
                 [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
                 break;
@@ -99,7 +100,7 @@
                 
             default: {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
                 break;
             }
         }
@@ -112,11 +113,11 @@
             if (request.flag) {
                 UIAlertController *masterKeyLoggedInAlertController;
                 if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-                    masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:NSLocalizedString(@"youRecoveryKeyIsGoingTo", @"Text of the alert after opening the recovery link to reset pass being logged.") preferredStyle:UIAlertControllerStyleAlert];
+                    masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:LocalizedString(@"youRecoveryKeyIsGoingTo", @"Text of the alert after opening the recovery link to reset pass being logged.") preferredStyle:UIAlertControllerStyleAlert];
                 } else {
-                    masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:NSLocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
+                    masterKeyLoggedInAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"passwordReset", @"Headline of the password reset recovery procedure") message:LocalizedString(@"pleaseEnterYourRecoveryKey", @"A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process.") preferredStyle:UIAlertControllerStyleAlert];
                     [masterKeyLoggedInAlertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-                        textField.placeholder = NSLocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
+                        textField.placeholder = LocalizedString(@"recoveryKey", @"Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password.");
                         [textField addTarget:self action:@selector(alertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
                         textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                             return !textField.text.mnz_isEmpty;
@@ -124,9 +125,9 @@
                     }];
                 }
                 
-                [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
                 
-                UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields.firstObject.text : MEGASdkManager.sharedMEGASdk.masterKey;
                     [self presentChangeViewType:ChangeTypeResetPassword email:MEGALinkManager.emailOfNewSignUpLink masterKey:masterKey link:request.link];
                     MEGALinkManager.emailOfNewSignUpLink = nil;

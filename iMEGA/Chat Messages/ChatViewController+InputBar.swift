@@ -1,6 +1,9 @@
+import ChatRepo
 import CoreServices
 import Foundation
 import ISEmojiView
+import MEGAL10n
+import MEGASDKRepo
 import MessageKit
 import VisionKit
 
@@ -127,14 +130,15 @@ extension ChatViewController {
     
     // MARK: - Private methods.
     private func join(button: UIButton) {
-        if MEGASdkManager.sharedMEGAChatSdk().initState() == .anonymous {
+        if MEGAChatSdk.shared.initState() == .anonymous {
             MEGALinkManager.secondaryLinkURL = publicChatLink
             MEGALinkManager.selectedOption = .joinChatLink
             dismissChatRoom()
         } else {
-            let delegate = MEGAChatGenericRequestDelegate { (request, _) in
-                guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle) else {
-                    MEGALogDebug("ChatRoom not found with chat handle \(request.chatHandle)")
+            let delegate = ChatRequestDelegate { result in
+                guard case let .success(request) = result,
+                      let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: request.chatHandle) else {
+                    MEGALogDebug("ChatRoom not found with chat handle")
                     return
                 }
                 let chatViewController = ChatViewController(chatRoom: chatRoom)
@@ -145,7 +149,7 @@ extension ChatViewController {
                 self.updateJoinView()
 
             }
-            MEGASdkManager.sharedMEGAChatSdk().autojoinPublicChat(chatRoom.chatId, delegate: delegate)
+            MEGAChatSdk.shared.autojoinPublicChat(chatRoom.chatId, delegate: delegate)
             if let handle = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) {
                 MEGALinkManager.joiningOrLeavingChatBase64Handles.add(handle)
             }
@@ -216,7 +220,7 @@ extension ChatViewController {
         selectedUsers.forEach { peerlist.addPeer(withHandle: $0.handle, privilege: 2)}
         
         if keyRotationEnabled {
-            MEGASdkManager.sharedMEGAChatSdk().mnz_createChatRoom(
+            MEGAChatSdk.shared.mnz_createChatRoom(
                 usersArray: selectedUsers,
                 title: groupName,
                 allowNonHostToAddParticipants: allowNonHostToAddParticipants
@@ -226,14 +230,15 @@ extension ChatViewController {
                 }
             }
         } else {
-            let createChatGroupRequestDelegate = MEGAChatGenericRequestDelegate { request, error in
-                guard let newChatRoom = MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: request.chatHandle) else {
-                    MEGALogDebug("Cannot find chatRoom chat id \(request.chatHandle)")
+            let createChatGroupRequestDelegate = ChatRequestDelegate { result in
+                guard case let .success(request) = result,
+                        let newChatRoom = MEGAChatSdk.shared.chatRoom(forChatId: request.chatHandle) else {
+                    MEGALogDebug("Cannot find chatRoom")
                     return
                 }
                 if getChatLink {
-                    let genericRequestDelegate = MEGAChatGenericRequestDelegate { (request, error) in
-                        if error.type == .MEGAChatErrorTypeOk {
+                    let genericRequestDelegate = ChatRequestDelegate { result in
+                        if case let .success(request) = result {
                             let chatViewController = ChatViewController(chatRoom: newChatRoom)
                             chatViewController.publicChatWithLinkCreated = true
                             chatViewController.publicChatLink = URL(string: request.text)
@@ -243,14 +248,14 @@ extension ChatViewController {
                         }
                     }
                     
-                    MEGASdkManager.sharedMEGAChatSdk().createChatLink(newChatRoom.chatId, delegate: genericRequestDelegate)
+                    MEGAChatSdk.shared.createChatLink(newChatRoom.chatId, delegate: genericRequestDelegate)
                 } else {
                     DispatchQueue.main.async {
                         self.open(chatRoom: newChatRoom)
                     }
                 }
             }
-            MEGASdkManager.sharedMEGAChatSdk().createPublicChat(withPeers: peerlist,
+            MEGAChatSdk.shared.createPublicChat(withPeers: peerlist,
                                                                 title: groupName,
                                                                 speakRequest: false,
                                                                 waitingRoom: false,
@@ -425,13 +430,13 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func tappedSendButton(withText text: String) {
-        MEGASdkManager.sharedMEGAChatSdk().sendStopTypingNotification(forChat: chatRoom.chatId)
+        MEGAChatSdk.shared.sendStopTypingNotification(forChat: chatRoom.chatId)
         
         if let editMessage = editMessage {
             let messageId = (editMessage.message.status == .sending) ? editMessage.message.temporalId : editMessage.message.messageId
             
             if editMessage.message.content != text,
-                let message = MEGASdkManager.sharedMEGAChatSdk().editMessage(forChat: chatRoom.chatId, messageId: messageId, message: text) {
+                let message = MEGAChatSdk.shared.editMessage(forChat: chatRoom.chatId, messageId: messageId, message: text) {
                 message.chatId = chatRoom.chatId
                                 
                 let firstIndex = messages.firstIndex { message -> Bool in
@@ -452,7 +457,7 @@ extension ChatViewController: ChatInputBarDelegate {
             }
             
             self.editMessage = nil
-        } else if let message = MEGASdkManager.sharedMEGAChatSdk().sendMessage(toChat: chatRoom.chatId, message: text) {
+        } else if let message = MEGAChatSdk.shared.sendMessage(toChat: chatRoom.chatId, message: text) {
             chatRoomDelegate.updateUnreadMessagesLabel(unreads: 0)
             chatRoomDelegate.insertMessage(message, scrollToBottom: true)
             checkDialogs(message)
@@ -465,7 +470,7 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func checkDialogs(_ message: MEGAChatMessage) {
         if let content = message.content, MEGAChatSdk.hasUrl(content) {
-            MEGASdkManager.sharedMEGASdk().shouldShowRichLinkWarning(with: MEGAGetAttrUserRequestDelegate(completion: { (request) in
+            MEGASdk.shared.shouldShowRichLinkWarning(with: MEGAGetAttrUserRequestDelegate(completion: { (request) in
                 if let request = request, request.flag {
                     message.warningDialog = (request.number.intValue >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
                     self.richLinkWarningCounterValue = request.number.uintValue
@@ -494,7 +499,7 @@ extension ChatViewController: ChatInputBarDelegate {
                         
             let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: true)
             
-            if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk().node(forPath: MEGAVoiceMessagesFolderName, node: myChatFilesFolderNode) {
+            if let voiceMessagesNode = MEGASdk.shared.node(forPath: MEGAVoiceMessagesFolderName, node: myChatFilesFolderNode) {
                 ChatUploader.sharedInstance.upload(filepath: path,
                                                    appData: appData,
                                                    chatRoomId: self.chatRoom.chatId,
@@ -507,7 +512,7 @@ extension ChatViewController: ChatInputBarDelegate {
                         fatalError("request object should not be nil")
                     }
                     
-                    if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk().node(forHandle: request.nodeHandle) {
+                    if let voiceMessagesNode = MEGASdk.shared.node(forHandle: request.nodeHandle) {
                         ChatUploader.sharedInstance.upload(filepath: path,
                                                            appData: appData,
                                                            chatRoomId: self.chatRoom.chatId,
@@ -519,7 +524,7 @@ extension ChatViewController: ChatInputBarDelegate {
                     }
                 }
                 
-                MEGASdkManager.sharedMEGASdk().createFolder(withName: MEGAVoiceMessagesFolderName,
+                MEGASdk.shared.createFolder(withName: MEGAVoiceMessagesFolderName,
                                                              parent: myChatFilesFolderNode,
                                                              delegate: requestDelegate)
             }
@@ -544,7 +549,7 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func typing(withText text: String) {
         if text.isEmpty {
-            MEGASdkManager.sharedMEGAChatSdk().sendStopTypingNotification(forChat: chatRoom.chatId)
+            MEGAChatSdk.shared.sendStopTypingNotification(forChat: chatRoom.chatId)
             if sendTypingTimer != nil {
                 self.sendTypingTimer?.invalidate()
                 self.sendTypingTimer = nil
@@ -559,7 +564,7 @@ extension ChatViewController: ChatInputBarDelegate {
                 timer.invalidate()
                 self.sendTypingTimer = nil
             }
-            MEGASdkManager.sharedMEGAChatSdk().sendTypingNotification(forChat: chatRoom.chatId)
+            MEGAChatSdk.shared.sendTypingNotification(forChat: chatRoom.chatId)
         }
     }
     
@@ -688,7 +693,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 
                 selectedNodes.forEach { node in
                     Helper.import(node) { newNode in
-                        MEGASdkManager.sharedMEGAChatSdk().attachNode(toChat: self.chatRoom.chatId, node: newNode.handle)
+                        MEGAChatSdk.shared.attachNode(toChat: self.chatRoom.chatId, node: newNode.handle)
                     }
                 }
             }
@@ -713,7 +718,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 return
             }
             
-            if let message = MEGASdkManager.sharedMEGAChatSdk().attachContacts(toChat: self.chatRoom.chatId,
+            if let message = MEGAChatSdk.shared.attachContacts(toChat: self.chatRoom.chatId,
                                                                                 contacts: users) {
                 self.chatRoomDelegate.insertMessage(message)
             }
@@ -723,8 +728,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showLocation() {
-        let genericRequestDelegate = MEGAGenericRequestDelegate { (_, error) in
-            if error.type != .apiOk {
+        let genericRequestDelegate = RequestDelegate { result in
+            if case .success = result {
                 let title = Strings.Localizable.sendLocation
                 
                 let message = Strings.Localizable.thisLocationWillBeOpenedUsingAThirdPartyMapsProviderOutsideTheEndToEndEncryptedMEGAPlatform
@@ -732,8 +737,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 let cancelAction = UIAlertAction(title: Strings.Localizable.cancel, style: .cancel, handler: nil)
                 
                 let continueAction = UIAlertAction(title: Strings.Localizable.continue, style: .default) { _ in
-                    let enableGeolocationDelegate = MEGAGenericRequestDelegate { (_, error) in
-                        if error.type != .apiOk {
+                    let enableGeolocationDelegate = RequestDelegate { result in
+                        if case let .failure(error) = result {
                             let alertTitle = Strings.Localizable.error
                             let errorName = error.name ?? Strings.Localizable.somethingWentWrong
                             let alertMessage = Strings.Localizable.Chat.Map.Location.enableGeolocationFailedError(errorName)
@@ -750,7 +755,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                             self.presentShareLocation()
                         }
                     }
-                    MEGASdkManager.sharedMEGASdk().enableGeolocation(with: enableGeolocationDelegate)
+                    MEGASdk.shared.enableGeolocation(with: enableGeolocationDelegate)
                 }
                 
                 let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -761,7 +766,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 self.presentShareLocation()
             }
         }
-        MEGASdkManager.sharedMEGASdk().isGeolocationEnabled(with: genericRequestDelegate)
+        MEGASdk.shared.isGeolocationEnabled(with: genericRequestDelegate)
     }
     
     var canRecordAudio: Bool {

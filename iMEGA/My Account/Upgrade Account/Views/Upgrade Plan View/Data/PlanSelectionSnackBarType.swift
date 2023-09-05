@@ -1,3 +1,5 @@
+import MEGAL10n
+
 enum PlanSelectionSnackBarType {
     case currentRecurringPlanSelected, none
     

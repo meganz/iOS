@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
     private weak var baseViewController: UIViewController?
@@ -9,7 +10,7 @@ final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
+        let sdk = MEGASdk.shared
         let repo = FileVersionsRepository(sdk: sdk)
         let useCase = FileVersionsUseCase(repo: repo)
         let accountRepo = AccountRepository(sdk: sdk)

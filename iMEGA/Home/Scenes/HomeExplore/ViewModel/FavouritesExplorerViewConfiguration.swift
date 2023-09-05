@@ -1,3 +1,5 @@
+import MEGAL10n
+
 struct FavouritesExplorerViewConfiguration: FilesExplorerViewConfiguration {
     
     var title: String {

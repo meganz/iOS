@@ -5,6 +5,8 @@
 #import "SVProgressHUD.h"
 #import "CustomModalAlertViewController.h"
 #import "UIApplication+MNZCategory.h"
+
+@import MEGAL10nObjc;
 @import MEGASDKRepo;
 
 @interface MEGAInviteContactRequestDelegate ()
@@ -52,7 +54,7 @@
         switch (error.type) {
             case MEGAErrorTypeApiEArgs:
                 if ([request.email isEqualToString:MEGASdk.currentUserEmail]) {
-                    [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
+                    [SVProgressHUD showErrorWithStatus:LocalizedString(@"noNeedToAddYourOwnEmailAddress", @"Add contacts and share dialog error message when user try to add your own email address")];
                 }
                 break;
                 
@@ -61,7 +63,7 @@
                 if (user && user.visibility == MEGAUserVisibilityVisible) {
                     
                     [SVProgressHUD showErrorWithStatus:({
-                        [NSLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:request.email];
+                        [LocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:request.email];
                     })];
                     
                 } else {
@@ -75,7 +77,7 @@
                         }
                     }
                     if (isInOutgoingContactRequest) {
-                        NSString *statusText = NSLocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
+                        NSString *statusText = LocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
                         statusText = [statusText stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
                         [SVProgressHUD showErrorWithStatus:statusText];
                     }
@@ -86,7 +88,7 @@
             }
                 
             default:
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, NSLocalizedString(error.name, nil)]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
                 break;
         }
         
@@ -99,18 +101,18 @@
         
         NSString *detailText;
         if (self.totalRequests > 1) {
-            detailText = NSLocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
+            detailText = LocalizedString(@"theUsersHaveBeenInvited", @"Success message shown when some contacts have been invited");
         } else {
-            detailText = NSLocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
+            detailText = LocalizedString(@"dialog.inviteContact.outgoingContactRequest", @"Detail message shown when a contact has been invited. The [X] placeholder will be replaced on runtime for the email of the invited user");
             detailText = [detailText stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
         }
         
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
         customModalAlertVC.image = [UIImage imageNamed:@"inviteSent"];
-        customModalAlertVC.viewTitle = NSLocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
+        customModalAlertVC.viewTitle = LocalizedString(@"inviteSent", @"Title shown when the user sends a contact invitation");
         customModalAlertVC.detail = detailText;
         customModalAlertVC.boldInDetail = request.email;
-        customModalAlertVC.firstButtonTitle = NSLocalizedString(@"close", nil);
+        customModalAlertVC.firstButtonTitle = LocalizedString(@"close", @"");
         __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
         customModalAlertVC.firstCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{

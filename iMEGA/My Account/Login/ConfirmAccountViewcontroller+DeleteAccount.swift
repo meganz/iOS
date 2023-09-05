@@ -1,6 +1,8 @@
+import MEGAL10n
+
 extension ConfirmAccountViewController {
     @objc func showSubscriptionDialogIfNeeded() {
-        guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails,
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails,
               accountDetails.type != .free else {
                   return
               }

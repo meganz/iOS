@@ -1,3 +1,5 @@
+import MEGAL10n
+
 enum WeekNumberInformation {
     private static let weekNumbers = [
         Strings.Localizable.Meetings.ScheduleMeeting.Create.Monthly.WeekNumber.first,
