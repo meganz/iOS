@@ -1156,6 +1156,7 @@
 		94282D4028A3B29200F794BA /* MyAccountHallTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */; };
 		94282D4228A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */; };
 		94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */; };
+		9428430D2AA7CFDD00278048 /* AudioSessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9428430C2AA7CFDD00278048 /* AudioSessionRepository.swift */; };
 		9428B9A02819499A00DB7250 /* ContextMenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9428B99F2819499A00DB7250 /* ContextMenuManager.swift */; };
 		942A64F729C390410017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
 		942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
@@ -1219,7 +1220,6 @@
 		94614C752910554200503174 /* TransferNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94614C742910554200503174 /* TransferNodeTableViewCell.xib */; };
 		94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
 		94624CFC1F50516900D52504 /* MEGAExportRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */; };
-		9464C2F528C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464C2F428C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift */; };
 		946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */; };
 		9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */; };
 		946ACCC3299C0ADD00E6C0F5 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = 946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */; };
@@ -2141,8 +2141,6 @@
 		BFAB115123CEA5C300BCE72D /* AlbumTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB113523CEA5C300BCE72D /* AlbumTableViewCell.swift */; };
 		BFAB115223CEA5C300BCE72D /* AlbumTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAB113623CEA5C300BCE72D /* AlbumTableViewCell.xib */; };
 		BFAB115323CEA5C300BCE72D /* AlbumsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB113723CEA5C300BCE72D /* AlbumsTableViewDataSource.swift */; };
-		BFAC873925FEF26C009CA3F6 /* AudioSessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC873825FEF26C009CA3F6 /* AudioSessionRepository.swift */; };
-		BFAC87972600041C009CA3F6 /* CaptureDeviceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC87962600041C009CA3F6 /* CaptureDeviceRepository.swift */; };
 		BFAD0F982A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F972A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift */; };
 		BFAD0F9A2A297DEA003F5F83 /* ScheduleMeetingCreationCustomOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F992A297DEA003F5F83 /* ScheduleMeetingCreationCustomOptionsView.swift */; };
 		BFAD0F9C2A297DF3003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0F9B2A297DF3003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModel.swift */; };
@@ -3710,6 +3708,7 @@
 		94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+TableViewDataSource.swift"; sourceTree = "<group>"; };
 		94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Backups.swift"; sourceTree = "<group>"; };
+		9428430C2AA7CFDD00278048 /* AudioSessionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSessionRepository.swift; sourceTree = "<group>"; };
 		9428B99F2819499A00DB7250 /* ContextMenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuManager.swift; sourceTree = "<group>"; };
 		942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+TargetAction.swift"; sourceTree = "<group>"; };
 		942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGASdk+MNZCategory.h"; sourceTree = "<group>"; };
@@ -3787,7 +3786,6 @@
 		94614C742910554200503174 /* TransferNodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferNodeTableViewCell.xib; sourceTree = "<group>"; };
 		94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAExportRequestDelegate.h; path = API/Requests/MEGAExportRequestDelegate.h; sourceTree = "<group>"; };
 		94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAExportRequestDelegate.m; path = API/Requests/MEGAExportRequestDelegate.m; sourceTree = "<group>"; };
-		9464C2F428C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraPositionEntity+Mapper.swift"; sourceTree = "<group>"; };
 		946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouterTests.swift; sourceTree = "<group>"; };
 		9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeEntityMappingTests.swift; sourceTree = "<group>"; };
 		946ACCC1299C099900E6C0F5 /* MEGAPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPresentation; sourceTree = "<group>"; };
@@ -4725,8 +4723,6 @@
 		BFAB113523CEA5C300BCE72D /* AlbumTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumTableViewCell.swift; sourceTree = "<group>"; };
 		BFAB113623CEA5C300BCE72D /* AlbumTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumTableViewCell.xib; sourceTree = "<group>"; };
 		BFAB113723CEA5C300BCE72D /* AlbumsTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumsTableViewDataSource.swift; sourceTree = "<group>"; };
-		BFAC873825FEF26C009CA3F6 /* AudioSessionRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionRepository.swift; sourceTree = "<group>"; };
-		BFAC87962600041C009CA3F6 /* CaptureDeviceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureDeviceRepository.swift; sourceTree = "<group>"; };
 		BFAD0F972A2978D2003F5F83 /* ScheduleMeetingCreationCustomOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsRouter.swift; sourceTree = "<group>"; };
 		BFAD0F992A297DEA003F5F83 /* ScheduleMeetingCreationCustomOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsView.swift; sourceTree = "<group>"; };
 		BFAD0F9B2A297DF3003F5F83 /* ScheduleMeetingCreationCustomOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsViewModel.swift; sourceTree = "<group>"; };
@@ -9470,7 +9466,6 @@
 			children = (
 				BF66E036261420A000066F35 /* CallEntity+Mapper.swift */,
 				838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */,
-				9464C2F428C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift */,
 				838838702A97769300148640 /* WaitingRoomEntity+Mapper.swift */,
 			);
 			path = Call;
@@ -11482,8 +11477,7 @@
 		BFAC873525FEF1F3009CA3F6 /* AudioVideo */ = {
 			isa = PBXGroup;
 			children = (
-				BFAC873825FEF26C009CA3F6 /* AudioSessionRepository.swift */,
-				BFAC87962600041C009CA3F6 /* CaptureDeviceRepository.swift */,
+				9428430C2AA7CFDD00278048 /* AudioSessionRepository.swift */,
 			);
 			path = AudioVideo;
 			sourceTree = "<group>";
@@ -13105,7 +13099,7 @@
 				C44D6DF725701415003D1723 /* AudioPlaylistViewRouter.swift in Sources */,
 				BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */,
 				BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */,
-				BFAC873925FEF26C009CA3F6 /* AudioSessionRepository.swift in Sources */,
+				9428430D2AA7CFDD00278048 /* AudioSessionRepository.swift in Sources */,
 				94312E5029352329005F0F1C /* AudioSessionUseCase+Additions.swift in Sources */,
 				940DB9142924D844004E7349 /* AudioSessionUseCaseOCWrapper.swift in Sources */,
 				BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */,
@@ -13160,7 +13154,6 @@
 				8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */,
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
-				9464C2F528C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
@@ -13189,7 +13182,6 @@
 				831CDAFC27E0F2DE00A9D367 /* CancellableTransferType.swift in Sources */,
 				83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */,
 				83D374E82A431ED400F7B07C /* CancelMeetingAlertDataModel.swift in Sources */,
-				BFAC87972600041C009CA3F6 /* CaptureDeviceRepository.swift in Sources */,
 				B6E5D251274C5FED00C8AB96 /* CardImage.swift in Sources */,
 				5D3AD46F252C370C006986AF /* CellConfiguration.swift in Sources */,
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
