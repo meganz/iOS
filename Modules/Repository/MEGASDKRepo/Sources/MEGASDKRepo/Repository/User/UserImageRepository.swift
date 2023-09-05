@@ -1,61 +1,63 @@
 import Combine
 import MEGADomain
+import MEGASdk
 
-struct UserImageRepository: UserImageRepositoryProtocol {
-    static var newRepo: UserImageRepository {
-        UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk())
+public struct UserImageRepository: UserImageRepositoryProtocol {
+    public static var newRepo: UserImageRepository {
+        UserImageRepository(sdk: MEGASdk.sharedSdk)
     }
-    
+
     private let sdk: MEGASdk
     private var userAvatarChangeSubscriber: UserAvatarChangeSubscriber?
-    
-    init(sdk: MEGASdk) {
+
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
     }
-    
-    func loadUserImage(withUserHandle handle: String?,
-                       destinationPath: String,
-                       completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void) {
-        
-        let thumbnailRequestDelegate = MEGAGetThumbnailRequestDelegate { request in
-            if let filePath = request.file, let image = UIImage(contentsOfFile: filePath) {
-                completion(.success(image))
-            } else {
+
+    public func loadUserImage(withUserHandle handle: String?,
+                              destinationPath: String,
+                              completion: @escaping (Result<ImageFilePathEntity, UserImageLoadErrorEntity>) -> Void) {
+
+        let thumbnailRequestDelegate = RequestDelegate { result in
+            guard case .success(let request) = result else {
                 completion(.failure(.unableToFetch))
+                return
             }
+
+            completion(.success(request.file))
         }
-        
+
         sdk.getAvatarUser(withEmailOrHandle: handle,
                           destinationFilePath: destinationPath,
                           delegate: thumbnailRequestDelegate)
     }
-    
-    func avatar(forUserHandle handle: String?, destinationPath: String) async throws -> UIImage {
+
+    public func avatar(forUserHandle handle: String?, destinationPath: String) async throws -> ImageFilePathEntity {
         try await withCheckedThrowingContinuation { continuation in
             let thumbnailRequestDelegate = AvatarRequestDelegate { request in
-                if let filePath = request.file, let image = UIImage(contentsOfFile: filePath) {
+                if let filePath = request.file {
                     guard Task.isCancelled == false else {
                         continuation.resume(throwing: CancellationError())
                         return
                     }
-                    continuation.resume(returning: image)
+                    continuation.resume(returning: filePath)
                 } else {
                     continuation.resume(throwing: UserImageLoadErrorEntity.unableToFetch)
                 }
             }
-            
+
             sdk.getAvatarUser(withEmailOrHandle: handle,
                               destinationFilePath: destinationPath,
                               delegate: thumbnailRequestDelegate,
                               queueType: .globalBackground)
         }
     }
-    
-    func avatarColorHex(forBase64UserHandle handle: Base64HandleEntity) -> String? {
+
+    public func avatarColorHex(forBase64UserHandle handle: Base64HandleEntity) -> String? {
         MEGASdk.avatarColor(forBase64UserHandle: handle)
     }
-    
-    mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
+
+   public mutating func requestAvatarChangeNotification(forUserHandles handles: [HandleEntity]) -> AnyPublisher<[HandleEntity], Never> {
         let userAvatarChangeSubscriber = UserAvatarChangeSubscriber(sdk: sdk, handles: handles)
         self.userAvatarChangeSubscriber = userAvatarChangeSubscriber
         return userAvatarChangeSubscriber.monitor
@@ -64,12 +66,12 @@ struct UserImageRepository: UserImageRepositoryProtocol {
 
 private final class AvatarRequestDelegate: NSObject, MEGARequestDelegate {
     private let completion: (MEGARequest) -> Void
-    
+
     init(completion: @escaping (MEGARequest) -> Void) {
         self.completion = completion
         super.init()
     }
-    
+
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         completion(request)
     }
@@ -78,20 +80,20 @@ private final class AvatarRequestDelegate: NSObject, MEGARequestDelegate {
 private final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate {
     private let handles: [HandleEntity]
     private let source: PassthroughSubject<[HandleEntity], Never>
-    
+
     var monitor: AnyPublisher<[HandleEntity], Never> {
         source.eraseToAnyPublisher()
     }
-    
+
     init(sdk: MEGASdk, handles: [HandleEntity]) {
         self.handles = handles
         self.source = PassthroughSubject<[HandleEntity], Never>()
-        
+
         super.init()
-        
+
         sdk.add(self, queueType: .globalBackground)
     }
-    
+
     func onUsersUpdate(_ api: MEGASdk, userList: MEGAUserList) {
         guard let userListSize = userList.size else { return }
         let users = (0..<userListSize.intValue)
@@ -101,7 +103,7 @@ private final class UserAvatarChangeSubscriber: NSObject, MEGAGlobalDelegate {
                 $0.hasChangedType(.avatar)
                 && handles.contains($0.handle)
             }
-        
+
         if users.isNotEmpty {
             source.send(users.map(\.handle))
         }

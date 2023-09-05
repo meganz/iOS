@@ -1264,9 +1264,6 @@
 		9495DBBD2A40C08300FA22EE /* UIApplication+PermissionModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */; };
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
 		94A1A26F2A83B11F00669C41 /* UserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C794260406FC006061F8 /* UserImageUseCase.swift */; };
-		94A1A2712A83B14E00669C41 /* UserImageLoadErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */; };
-		94A1A2732A83B16000669C41 /* UserImageRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7632603FB42006061F8 /* UserImageRepositoryProtocol.swift */; };
-		94A1A2752A83B1B900669C41 /* UserImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */; };
 		94A1A2782A83B29000669C41 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
 		94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94A220172A696502004130C4 /* MEGAAnalyticsiOS */; };
 		94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */; };
@@ -2053,7 +2050,6 @@
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
-		BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */; };
 		BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */; };
 		BF7D43BB253D0930003DF1DA /* Sequence+MEGANode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */; };
 		BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */; };
@@ -2082,8 +2078,6 @@
 		BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */; };
 		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
 		BF8B02F32835A09E009AC794 /* MEGAProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */; };
-		BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7632603FB42006061F8 /* UserImageRepositoryProtocol.swift */; };
-		BF90C7802603FD4A006061F8 /* UserImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */; };
 		BF90C795260406FC006061F8 /* UserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C794260406FC006061F8 /* UserImageUseCase.swift */; };
 		BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
 		BF923EC72A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */; };
@@ -4649,7 +4643,6 @@
 		BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatImageCell.xib; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
-		BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserImageLoadErrorEntity.swift; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
 		BF7D43BA253D0930003DF1DA /* Sequence+MEGANode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+MEGANode.swift"; sourceTree = "<group>"; };
 		BF7D43D7253D31D7003DF1DA /* SDKTransferListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKTransferListenerRepository.swift; sourceTree = "<group>"; };
@@ -4678,8 +4671,6 @@
 		BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BF8B02EB28359EDD009AC794 /* callEnded.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = callEnded.wav; sourceTree = "<group>"; };
 		BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MEGAProviderDelegate.swift; path = Chat/MEGAProviderDelegate.swift; sourceTree = "<group>"; };
-		BF90C7632603FB42006061F8 /* UserImageRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageRepositoryProtocol.swift; sourceTree = "<group>"; };
-		BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageRepository.swift; sourceTree = "<group>"; };
 		BF90C794260406FC006061F8 /* UserImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageUseCase.swift; sourceTree = "<group>"; };
 		BF90C7A626040930006061F8 /* UserStoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreRepository.swift; sourceTree = "<group>"; };
 		BF923EC62A007DEB00C4D8B0 /* ScheduleMeetingCreationRecurrenceOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOptionsView.swift; sourceTree = "<group>"; };
@@ -8666,15 +8657,8 @@
 			isa = PBXGroup;
 			children = (
 				BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */,
+				9450A38E299E62620031BBEB /* UserAttributeRepository.swift */,
 				BF90C7A626040930006061F8 /* UserStoreRepository.swift */,
-			);
-			path = User;
-			sourceTree = "<group>";
-		};
-		8396FBE225D68E4C00EB50FD /* User */ = {
-			isa = PBXGroup;
-			children = (
-				BF90C7632603FB42006061F8 /* UserImageRepositoryProtocol.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -10402,7 +10386,6 @@
 			isa = PBXGroup;
 			children = (
 				838A7B7A25D5679100767DB0 /* Calls */,
-				8396FBE225D68E4C00EB50FD /* User */,
 			);
 			path = RepositoryProtocol;
 			sourceTree = "<group>";
@@ -11254,7 +11237,6 @@
 			children = (
 				BFBB88D428C6D84100E8B482 /* AllowNonHostToAddParticipantsErrorEntity.swift */,
 				125E606D285A87C2003C7BB5 /* SearchResultErrorEntity.swift */,
-				BF782D44269BA4BA0001D169 /* UserImageLoadErrorEntity.swift */,
 				99F300972A7A2DDF0087AE7E /* WaitingRoomErrorEntity.swift */,
 			);
 			path = Error;
@@ -14552,6 +14534,7 @@
 				BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */,
 				BF90C7802603FD4A006061F8 /* UserImageRepository.swift in Sources */,
 				BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */,
+				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
 				BF90C795260406FC006061F8 /* UserImageUseCase.swift in Sources */,
 				BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */,
 				B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */,
@@ -14901,9 +14884,6 @@
 				BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				83CCBC47279595D300B90EF2 /* UploadFileRepository.swift in Sources */,
-				94A1A2712A83B14E00669C41 /* UserImageLoadErrorEntity.swift in Sources */,
-				94A1A2752A83B1B900669C41 /* UserImageRepository.swift in Sources */,
-				94A1A2732A83B16000669C41 /* UserImageRepositoryProtocol.swift in Sources */,
 				94A1A26F2A83B11F00669C41 /* UserImageUseCase.swift in Sources */,
 				94A1A2782A83B29000669C41 /* UserStoreRepository.swift in Sources */,
 				940CEE352A83D8C2007DD202 /* WarningView.swift in Sources */,
