@@ -66,7 +66,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     
     @objc func proximityChanged() {
         DispatchQueue.main.async {
-            guard !AVAudioSession.sharedInstance().mnz_isBluetoothAudioRouteAvailable else {
+            guard !AVAudioSession.sharedInstance().isBluetoothAudioRouteAvailable else {
                 return
             }
             let audioSessionUC = AudioSessionUseCase.default
@@ -179,7 +179,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         }
         
         if AudioPlayerManager.shared.isPlayerAlive() {
-            let activeCall = MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+            let activeCall = MEGAChatSdk.shared.mnz_existsActiveCall
             AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(!activeCall)
         }
     }
@@ -211,7 +211,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         setProximitySensorEnabled(false)
         
         if AudioPlayerManager.shared.isPlayerAlive() {
-            let activeCall = MEGASdkManager.sharedMEGAChatSdk().mnz_existsActiveCall
+            let activeCall = MEGAChatSdk.shared.mnz_existsActiveCall
             AudioPlayerManager.shared.audioInterruptionDidEndNeedToResume(!activeCall)
         }
     }

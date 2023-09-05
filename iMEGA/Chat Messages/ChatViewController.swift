@@ -1225,7 +1225,7 @@ class ChatViewController: MessagesViewController {
         if activeCall.status == .userNoPresent {
             startOutGoingCall(isVideoEnabled: isVideoEnabled)
         } else {
-            let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
+            let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
             startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: isSpeakerEnabled)
         }
     }

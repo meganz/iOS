@@ -8,7 +8,7 @@ extension ChatRoomsViewController {
             return
         }
         
-        let isSpeakerEnabled = AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)
+        let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
         MeetingContainerRouter(presenter: self,
                                chatRoom: chatRoom.toChatRoomEntity(),
                                call: call.toCallEntity(),

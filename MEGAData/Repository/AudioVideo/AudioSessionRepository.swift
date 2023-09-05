@@ -7,7 +7,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
     var routeChanged: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?
     
     var isBluetoothAudioRouteAvailable: Bool {
-        audioSession.mnz_isBluetoothAudioRouteAvailable
+        audioSession.isBluetoothAudioRouteAvailable
     }
     
     var currentSelectedAudioPort: AudioPort {
@@ -137,7 +137,7 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
             return false
         }
         
-        return audioSession.mnz_isOutputEqual(toPortType: avAudioSessionPort)
+        return audioSession.isOutputEqualToPortType(avAudioSessionPort)
     }
     
     // MARK: - Private methods

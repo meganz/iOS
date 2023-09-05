@@ -388,7 +388,7 @@ extension AppDelegate {
             return
         }
         
-        performCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, isSpeakerEnabled: AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker))
+        performCall(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, isSpeakerEnabled: AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker))
     }
     
     @objc func registerCustomActionsForStartScheduledMeetingNotification() {

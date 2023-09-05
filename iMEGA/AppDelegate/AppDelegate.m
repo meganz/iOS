@@ -51,6 +51,7 @@
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
 @import SDWebImageWebPCoder;
+@import MEGAFoundation;
 #import "MEGA-Swift.h"
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
@@ -432,7 +433,7 @@
                         MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
                         if (call.status == MEGAChatCallStatusInProgress) {
                             MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                            BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
+                            BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
                             [self performCallWithPresenter:UIApplication.mnz_presentingViewController
                                                   chatRoom:self.chatRoom
                                           isSpeakerEnabled:isSpeakerEnabled];
@@ -465,7 +466,7 @@
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
                     MEGALogDebug(@"call id %llu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
-                    BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
+                    BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
                     [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isSpeakerEnabled:isSpeakerEnabled];
                     self.chatRoom = nil;
                 } else {
