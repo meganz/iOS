@@ -19,6 +19,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let emptyStateAssets: EmptyStateAssets
     private let searchAssets: SearchAssets
     private let backupStatuses: [BackupStatus]
+    private let deviceCenterActions: [DeviceCenterAction]
     
     public init(
         selectedDeviceId: String,
@@ -31,7 +32,8 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         backupListAssets: BackupListAssets,
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
-        backupStatuses: [BackupStatus]
+        backupStatuses: [BackupStatus],
+        deviceCenterActions: [DeviceCenterAction]
     ) {
         self.selectedDeviceId = selectedDeviceId
         self.selectedDeviceName = selectedDeviceName
@@ -44,6 +46,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         self.emptyStateAssets = emptyStateAssets
         self.searchAssets = searchAssets
         self.backupStatuses = backupStatuses
+        self.deviceCenterActions = deviceCenterActions
     }
     
     public func build() -> UIViewController {
@@ -57,7 +60,8 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             backupListAssets: backupListAssets,
             emptyStateAssets: emptyStateAssets,
             searchAssets: searchAssets,
-            backupStatuses: backupStatuses
+            backupStatuses: backupStatuses,
+            deviceCenterActions: deviceCenterActions
         )
         let backupListView = BackupListView(viewModel: backupListViewModel)
         let hostingController = UIHostingController(rootView: backupListView)

@@ -206,7 +206,45 @@ extension MyAccountHallViewController: UITableViewDelegate {
                         colorName: Colors.General.Red.ff3B30.name,
                         iconName: Asset.Images.BackupStatus.disabled.name
                     )
-                ]
+                ],
+            deviceCenterActions: [
+                DeviceCenterAction(
+                    type: .cameraUploads,
+                    title: Strings.Localizable.cameraUploadsLabel,
+                    subtitle: "",
+                    icon: Asset.Images.Settings.cameraUploadsSettings.name,
+                    action: {
+                    }
+                ),
+                DeviceCenterAction(
+                    type: .info,
+                    title: Strings.Localizable.info,
+                    icon: Asset.Images.Generic.info.name,
+                    action: {
+                    }
+                ),
+                DeviceCenterAction(
+                    type: .rename,
+                    title: Strings.Localizable.rename,
+                    icon: Asset.Images.Generic.rename.name,
+                    action: {
+                    }
+                ),
+                DeviceCenterAction(
+                    type: .showInCD,
+                    title: Strings.Localizable.Device.Center.Show.In.Cloud.Drive.Action.title,
+                    icon: Asset.Images.ActionSheetIcons.cloudDriveFolder.name,
+                    action: {
+                    }
+                ),
+                DeviceCenterAction(
+                    type: .showInBackups,
+                    title: Strings.Localizable.Device.Center.Show.In.Backups.Action.title,
+                    icon: Asset.Images.MyAccount.backups.name,
+                    action: {
+                    }
+                )
+            ]
         )
     }
 }

@@ -107,7 +107,7 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(foundBackupNames2, expectedBackupNames2)
     }
     
-    func testUpdateDeviceStatusesAndNotify_FetchesAndUpdateDevices() async {
+    func testUpdateDeviceStatusesAndNotify_fetchesAndUpdateDevices() async {
         let backups = backups()
         let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
         let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
@@ -144,6 +144,108 @@ final class BackupListViewModelTests: XCTestCase {
         task.cancel()
         
         XCTAssertTrue(task.isCancelled, "Task should be cancelled")
+    }
+    
+    func testActionsForBackup_cameraUploadBackupType_returnsCorrectActions() {
+        let backup = BackupEntity(
+            id: 1,
+            name: "backup1",
+            deviceId: mockCurrentDeviceId,
+            type: .cameraUpload
+        )
+        
+        let backups = [backup]
+        let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
+        let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
+        
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
+            deviceCenterUseCase: mockUseCase
+        )
+        
+        let actions = viewModel.actionsForBackup(backup)
+        let actionsType = actions?.compactMap {$0.type}
+        let expectedActions: [DeviceCenterActionType] = [.showInCD, .info]
+        
+        XCTAssertEqual(actionsType, expectedActions, "Actions for camera upload backup are incorrect")
+    }
+ 
+    func testActionsForBackup_otherBackupType_returnsCorrectActions() {
+        let backup = BackupEntity(
+            id: 1,
+            name: "backup1",
+            deviceId: mockCurrentDeviceId,
+            type: .downSync
+        )
+        
+        let backups = [backup]
+        let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
+        let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
+        
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
+            deviceCenterUseCase: mockUseCase
+        )
+        
+        let actions = viewModel.actionsForBackup(backup)
+        let actionsType = actions?.compactMap {$0.type}
+        let expectedActions: [DeviceCenterActionType] = [.showInBackups, .info]
+        
+        XCTAssertEqual(actionsType, expectedActions, "Actions for backup are incorrect")
+    }
+    
+    func testActionsForDevice_currentDeviceWithCameraUpload_returnsCorrectActions() {
+        let backup = BackupEntity(
+            id: 1,
+            name: "backup1",
+            deviceId: mockCurrentDeviceId,
+            type: .cameraUpload
+        )
+        
+        let backups = [backup]
+        
+        let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
+        let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
+        
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
+            deviceCenterUseCase: mockUseCase
+        )
+        
+        let actions = viewModel.actionsForDevice()
+        
+        let expectedActions: [DeviceCenterActionType] = [.rename, .info, .cameraUploads]
+        let actionsType = actions.compactMap {$0.type}
+        XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
+    }
+    
+    func testActionsForDevice_currentDeviceWithoutCameraUpload_returnsCorrectActions() {
+        let backup = BackupEntity(
+            id: 1,
+            name: "backup1",
+            deviceId: mockCurrentDeviceId,
+            type: .upSync
+        )
+        
+        let backups = [backup]
+        
+        let userGroupedBackups = Dictionary(grouping: backups, by: \.deviceId)
+        let mockUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
+        
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
+            deviceCenterUseCase: mockUseCase
+        )
+        
+        let actions = viewModel.actionsForDevice()
+        
+        let expectedActions: [DeviceCenterActionType] = [.rename, .info]
+        let actionsType = actions.compactMap {$0.type}
+        XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
     }
     
     private func backups() -> [BackupEntity] {
@@ -239,7 +341,24 @@ final class BackupListViewModelTests: XCTestCase {
                 placeHolder: "",
                 cancelTitle: ""
             ),
-            backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) }
+            backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
+            deviceCenterActions: [
+                DeviceCenterAction(
+                    type: .cameraUploads
+                ),
+                DeviceCenterAction(
+                    type: .info
+                ),
+                DeviceCenterAction(
+                    type: .rename
+                ),
+                DeviceCenterAction(
+                    type: .showInBackups
+                ),
+                DeviceCenterAction(
+                    type: .showInCD
+                )
+            ]
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)

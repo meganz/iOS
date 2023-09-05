@@ -37,7 +37,8 @@ final class DeviceListViewRouterTests: XCTestCase {
                     title: "Device List",
                     currentDeviceTitle: "This device",
                     otherDevicesTitle: "Other devices",
-                    deviceDefaultName: "Unknown Device"),
+                    deviceDefaultName: "Unknown Device"
+                ),
             backupListAssets:
                 BackupListAssets(
                     backupTypes: [
@@ -55,7 +56,8 @@ final class DeviceListViewRouterTests: XCTestCase {
             ),
             backupStatuses: [
                 BackupStatus(status: .upToDate, title: "", colorName: "blue", iconName: "circle.fill")
-            ]
+            ],
+            deviceCenterActions: []
         )
         
         let sut = DeviceListViewRouter(

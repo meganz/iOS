@@ -40,7 +40,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             deviceListAssets: deviceCenterAssets.deviceListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
             searchAssets: deviceCenterAssets.searchAssets,
-            backupStatuses: deviceCenterAssets.backupStatuses
+            backupStatuses: deviceCenterAssets.backupStatuses,
+            deviceCenterActions: deviceCenterAssets.deviceCenterActions
         )
         let deviceListView = DeviceListView(viewModel: deviceListViewModel)
         let hostingController = UIHostingController(rootView: deviceListView)
@@ -69,7 +70,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             backupListAssets: deviceCenterAssets.backupListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
             searchAssets: deviceCenterAssets.searchAssets,
-            backupStatuses: deviceCenterAssets.backupStatuses
+            backupStatuses: deviceCenterAssets.backupStatuses,
+            deviceCenterActions: deviceCenterAssets.deviceCenterActions
         ).start()
     }
 }

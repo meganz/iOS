@@ -18,32 +18,45 @@ struct DeviceListView: View {
 
 struct DeviceListContentView: View {
     @ObservedObject var viewModel: DeviceListViewModel
+    @State private var selectedViewModel: DeviceCenterItemViewModel?
     
     var body: some View {
-        List {
-            if viewModel.isFiltered {
-                ForEach(viewModel.filteredDevices) { deviceViewModel in
-                    DeviceCenterItemView(viewModel: deviceViewModel)
-                }
-            } else {
-                Section(header: Text(viewModel.deviceListAssets.currentDeviceTitle)) {
-                    if let currentDeviceVM = viewModel.currentDevice {
-                        DeviceCenterItemView(viewModel: currentDeviceVM)
-                    }
-                }
-                
-                if viewModel.otherDevices.isNotEmpty {
-                    Section(header: Text(viewModel.deviceListAssets.otherDevicesTitle)) {
-                        ForEach(viewModel.otherDevices) { deviceViewModel in
-                            DeviceCenterItemView(viewModel: deviceViewModel)
+        ListViewContainer(
+            selectedItem: $selectedViewModel) {
+                List {
+                    if viewModel.isFiltered {
+                        ForEach(viewModel.filteredDevices) { deviceViewModel in
+                            DeviceCenterItemView(
+                                viewModel: deviceViewModel,
+                                selectedViewModel: $selectedViewModel
+                            )
+                        }
+                    } else {
+                        Section(header: Text(viewModel.deviceListAssets.currentDeviceTitle)) {
+                            if let currentDeviceVM = viewModel.currentDevice {
+                                DeviceCenterItemView(
+                                    viewModel: currentDeviceVM,
+                                    selectedViewModel: $selectedViewModel
+                                )
+                            }
+                        }
+                        
+                        if viewModel.otherDevices.isNotEmpty {
+                            Section(header: Text(viewModel.deviceListAssets.otherDevicesTitle)) {
+                                ForEach(viewModel.otherDevices) { deviceViewModel in
+                                    DeviceCenterItemView(
+                                        viewModel: deviceViewModel,
+                                        selectedViewModel: $selectedViewModel
+                                    )
+                                }
+                            }
                         }
                     }
                 }
+                .listStyle(.plain)
+                .throwingTaskForiOS14 {
+                    try await viewModel.startAutoRefreshUserDevices()
+                }
             }
-        }
-        .listStyle(.plain)
-        .throwingTaskForiOS14 {
-            try await viewModel.startAutoRefreshUserDevices()
-        }
     }
 }

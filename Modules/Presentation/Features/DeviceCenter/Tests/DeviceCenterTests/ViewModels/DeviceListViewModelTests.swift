@@ -9,6 +9,7 @@ import XCTest
 
 final class DeviceListViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
+    let mockAuxDeviceId = "2"
     
     func testLoadUserDevices_returnsUserDevices() async {
         let devices = devices()
@@ -139,6 +140,46 @@ final class DeviceListViewModelTests: XCTestCase {
         XCTAssertTrue(task.isCancelled, "Task should be cancelled")
     }
     
+    func testActionsForDevice_selectedMobileDevice_returnsCorrectActions() async throws {
+        let devices = devices()
+        
+        let viewModel = makeSUT(
+            devices: devices,
+            currentDeviceId: mockCurrentDeviceId
+        )
+        
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
+        
+        let selectedDevice = try XCTUnwrap(devices.first {$0.id == mockCurrentDeviceId})
+        
+        let actions = viewModel.actionsForDevice(selectedDevice)
+        
+        let expectedActions: [DeviceCenterActionType] = [.cameraUploads, .rename, .info]
+        let actionsType = actions?.compactMap {$0.type}
+        XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
+    }
+    
+    func testActionsForDevice_selectedOtherDevice_returnsCorrectActions() async throws {
+        let devices = devices()
+        
+        let viewModel = makeSUT(
+            devices: devices,
+            currentDeviceId: mockAuxDeviceId
+        )
+        
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
+        
+        let selectedDevice = try XCTUnwrap(devices.first {$0.id == mockAuxDeviceId})
+        
+        let actions = viewModel.actionsForDevice(selectedDevice)
+        
+        let expectedActions: [DeviceCenterActionType] = [.rename, .info]
+        let actionsType = actions?.compactMap {$0.type}
+        XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
+    }
+    
     private func filteredDevices(by text: String) -> [DeviceEntity] {
         devices().filter {
             $0.name.lowercased().contains(text.lowercased())
@@ -146,9 +187,9 @@ final class DeviceListViewModelTests: XCTestCase {
     }
     
     private func devices() -> [DeviceEntity] {
-        var backup1 = BackupEntity(id: 1, name: "backup1")
+        var backup1 = BackupEntity(id: 1, name: "backup1", type: .cameraUpload)
         backup1.backupStatus = .upToDate
-        var backup2 = BackupEntity(id: 2, name: "backup2")
+        var backup2 = BackupEntity(id: 2, name: "backup2", type: .upSync)
         backup2.backupStatus = .upToDate
         
         let device1 = DeviceEntity(
@@ -161,7 +202,7 @@ final class DeviceListViewModelTests: XCTestCase {
         )
         
         let device2 = DeviceEntity(
-            id: "2",
+            id: mockAuxDeviceId,
             name: "device2",
             backups: [
                 backup2
@@ -207,7 +248,24 @@ final class DeviceListViewModelTests: XCTestCase {
                 placeHolder: "",
                 cancelTitle: ""
             ),
-            backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) }
+            backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
+            deviceCenterActions: [
+                DeviceCenterAction(
+                    type: .cameraUploads
+                ),
+                DeviceCenterAction(
+                    type: .info
+                ),
+                DeviceCenterAction(
+                    type: .rename
+                ),
+                DeviceCenterAction(
+                    type: .showInBackups
+                ),
+                DeviceCenterAction(
+                    type: .showInCD
+                )
+            ]
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)
