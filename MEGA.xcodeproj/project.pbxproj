@@ -5706,8 +5706,8 @@
 				24A6ADD82A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift */,
 				24A6ADD52A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift */,
 				24A6ADDB2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift */,
-				24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */,
 				246ACEB42AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift */,
+				24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */,
 			);
 			path = AudioPlayerScenes;
 			sourceTree = "<group>";
@@ -8656,8 +8656,8 @@
 		8396FBC525D6894D00EB50FD /* User */ = {
 			isa = PBXGroup;
 			children = (
-				BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */,
 				9450A38E299E62620031BBEB /* UserAttributeRepository.swift */,
+				BF90C77F2603FD4A006061F8 /* UserImageRepository.swift */,
 				BF90C7A626040930006061F8 /* UserStoreRepository.swift */,
 			);
 			path = User;
@@ -13107,6 +13107,7 @@
 				C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */,
 				C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */,
 				C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */,
+				246ACEB92AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift in Sources */,
 				C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */,
 				C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */,
 				C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */,
@@ -13465,7 +13466,6 @@
 				8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */,
 				A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */,
 				83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */,
-				246ACEB92AA2DAEE000BD2A8 /* AudioPlayerViewRouterNodeActionAdapter.swift in Sources */,
 				83850A4026B2AACD00C62304 /* EnterMeetingLinkRouter.swift in Sources */,
 				83850A4126B2AACD00C62304 /* EnterMeetingLinkViewModel.swift in Sources */,
 				5D31674024FC97810032492F /* ErrorHandling.swift in Sources */,
@@ -14531,10 +14531,10 @@
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCase+Additions.swift in Sources */,
 				8313914B293519F900E20170 /* UserAvatarView.swift in Sources */,
 				83139149293511F300E20170 /* UserAvatarViewModel.swift in Sources */,
+				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
 				BF782D6D269BA4BB0001D169 /* UserImageLoadErrorEntity.swift in Sources */,
 				BF90C7802603FD4A006061F8 /* UserImageRepository.swift in Sources */,
 				BF90C7642603FB42006061F8 /* UserImageRepositoryProtocol.swift in Sources */,
-				5D83042F256392370082CA18 /* UserBannerUseCase.swift in Sources */,
 				BF90C795260406FC006061F8 /* UserImageUseCase.swift in Sources */,
 				BF90C7A726040930006061F8 /* UserStoreRepository.swift in Sources */,
 				B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */,
@@ -14912,8 +14912,8 @@
 				A8C47595299D03EE0074511F /* MEGAConstants.m in Sources */,
 				A899467029716B4A008448C4 /* MEGAFunctions.swift in Sources */,
 				A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
-				A854C21D29AE1FB800CB37E7 /* NodeAttributeRepository.swift in Sources */,
 				A8C4754E299A78DD0074511F /* NodeActionRepository.swift in Sources */,
+				A854C21D29AE1FB800CB37E7 /* NodeAttributeRepository.swift in Sources */,
 				A8B09DE929B0CBD600C922B9 /* PickerConstant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14934,7 +14934,6 @@
 				6D5A19B02A10D33E00FDD5B3 /* AccountHallViewModelTests.swift in Sources */,
 				B5663EE629F8FBEC0080FFDA /* AccountPlanPurchaseRepositoryTests.swift in Sources */,
 				B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */,
-				246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */,
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
@@ -14963,6 +14962,7 @@
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				24A6ADDC2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
+				246ACEB52AA2D9C5000BD2A8 /* AudioPlayerViewRouterNodeActionAdapterTests.swift in Sources */,
 				24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */,
 				C45A2DF525D2B97F00915A83 /* AudioPlaylistViewModelTests.swift in Sources */,
 				2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */,

@@ -3,6 +3,7 @@ import SwiftUI
 struct DeviceCenterItemView: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: DeviceCenterItemViewModel
+    @Binding var selectedViewModel: DeviceCenterItemViewModel?
     
     var body: some View {
         HStack {
@@ -43,12 +44,14 @@ struct DeviceCenterItemView: View {
             }
             Spacer()
             Button {
-                // Add button action here
+                selectedViewModel = viewModel
             } label: {
                 Image("moreList")
                     .scaledToFit()
                     .frame(width: 28, height: 28)
-            }.buttonStyle(.borderless)
+            }
+            .buttonStyle(.borderless)
+            .frame(width: 60, height: 60)
         }
         .contentShape(Rectangle())
         .onTapGesture {

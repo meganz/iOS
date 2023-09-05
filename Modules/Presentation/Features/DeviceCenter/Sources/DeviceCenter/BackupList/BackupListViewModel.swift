@@ -8,6 +8,7 @@ public final class BackupListViewModel: ObservableObject {
     private let router: any BackupListRouting
     private let backupListAssets: BackupListAssets
     private let backupStatuses: [BackupStatus]
+    private let deviceCenterActions: [DeviceCenterAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
     private(set) var backups: [BackupEntity]
@@ -16,6 +17,9 @@ public final class BackupListViewModel: ObservableObject {
     }
     private var sortedBackupTypes: [BackupTypeEntity: BackupType] {
         Dictionary(uniqueKeysWithValues: backupListAssets.backupTypes.map { ($0.type, $0) })
+    }
+    private var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]] {
+        Dictionary(grouping: deviceCenterActions, by: \.type)
     }
     private var backupsPreloaded: Bool = false
     
@@ -48,7 +52,8 @@ public final class BackupListViewModel: ObservableObject {
         backupListAssets: BackupListAssets,
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
-        backupStatuses: [BackupStatus]
+        backupStatuses: [BackupStatus],
+        deviceCenterActions: [DeviceCenterAction]
     ) {
         self.selectedDeviceId = selectedDeviceId
         self.devicesUpdatePublisher = devicesUpdatePublisher
@@ -60,6 +65,7 @@ public final class BackupListViewModel: ObservableObject {
         self.emptyStateAssets = emptyStateAssets
         self.searchAssets = searchAssets
         self.backupStatuses = backupStatuses
+        self.deviceCenterActions = deviceCenterActions
         self.isSearchActive = false
         self.searchText = ""
         
@@ -112,10 +118,12 @@ public final class BackupListViewModel: ObservableObject {
     func loadBackupsModels() {
         backupModels = backups
             .compactMap { backup in
-                if let assets = loadAssets(for: backup) {
+                if let assets = loadAssets(for: backup),
+                   let availableActions = actionsForBackup(backup) {
                     return DeviceCenterItemViewModel(
                         itemType: .backup(backup),
-                        assets: assets
+                        assets: assets,
+                        availableActions: availableActions
                     )
                 }
                 return nil
@@ -133,5 +141,39 @@ public final class BackupListViewModel: ObservableObject {
             iconName: backupType.iconName,
             status: status
         )
+    }
+    
+    func actionsForBackup(_ backup: BackupEntity) -> [DeviceCenterAction]? {
+        var actionTypes = [DeviceCenterActionType]()
+        
+        if backup.type == .cameraUpload || backup.type == .mediaUpload {
+            actionTypes.append(.showInCD)
+        } else {
+            actionTypes.append(.showInBackups)
+        }
+        
+        actionTypes.append(.info)
+        
+        return actionTypes.compactMap { type in
+            sortedAvailableActions[type]?.first
+        }
+    }
+    
+    func actionsForDevice() -> [DeviceCenterAction] {
+        let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
+        let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
+        let isMobileDevice = backups.contains {
+            $0.type == .cameraUpload || $0.type == .mediaUpload
+        }
+        
+        var actionTypes: [DeviceCenterActionType] = [.rename, .info]
+
+        if selectedDeviceId == currentDeviceUUID || (selectedDeviceId == currentDeviceId && isMobileDevice) {
+            actionTypes.append(.cameraUploads)
+        }
+        
+        return actionTypes.compactMap { type in
+            sortedAvailableActions[type]?.first
+        }
     }
 }

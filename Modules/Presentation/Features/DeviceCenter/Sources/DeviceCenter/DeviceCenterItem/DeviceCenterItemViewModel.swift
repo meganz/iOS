@@ -1,15 +1,11 @@
 import MEGADomain
 import SwiftUI
 
-public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
-    enum ItemType {
-        case backup(BackupEntity)
-        case device(DeviceEntity)
-    }
-    
+public class DeviceCenterItemViewModel: ObservableObject, Identifiable {    
     private let router: (any DeviceListRouting)?
-    private var itemType: ItemType
+    private var itemType: DeviceCenterItemType
     var assets: ItemAssets
+    var availableActions: [DeviceCenterAction]
     
     @Published var name: String = ""
     @Published var iconName: String?
@@ -20,11 +16,13 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     @Published var backupPercentage: String = ""
     
     init(router: (any DeviceListRouting)? = nil,
-         itemType: ItemType,
-         assets: ItemAssets) {
+         itemType: DeviceCenterItemType,
+         assets: ItemAssets,
+         availableActions: [DeviceCenterAction]) {
         self.router = router
         self.itemType = itemType
         self.assets = assets
+        self.availableActions = availableActions
         
         self.configure()
     }

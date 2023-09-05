@@ -60,7 +60,8 @@ final class BackupListsViewRouterTests: XCTestCase {
             ),
             backupStatuses: [
                 BackupStatus(status: .upToDate, title: "", colorName: "blue", iconName: "circle.fill")
-            ]
+            ],
+            deviceCenterActions: []
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)
