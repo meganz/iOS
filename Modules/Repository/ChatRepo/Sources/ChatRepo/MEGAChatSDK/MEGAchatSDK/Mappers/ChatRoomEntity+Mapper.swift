@@ -1,14 +1,15 @@
+import MEGAChatSdk
 import MEGADomain
 
-extension MEGAChatRoom {
+public extension MEGAChatRoom {
     func toChatRoomEntity() -> ChatRoomEntity {
         ChatRoomEntity(with: self)
     }
 }
 
-extension ChatRoomEntity {
+public extension ChatRoomEntity {
     func toMEGAChatRoom() -> MEGAChatRoom? {
-        MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId)
+        MEGAChatSdk.sharedChatSdk.chatRoom(forChatId: chatId)
     }
 }
 
@@ -38,7 +39,7 @@ fileprivate extension ChatRoomEntity {
     }
 }
 
-extension MEGAChatRoomPrivilege {
+public extension MEGAChatRoomPrivilege {
     func toOwnPrivilegeEntity() -> ChatRoomPrivilegeEntity {
         switch self {
         case .unknown:
@@ -57,7 +58,7 @@ extension MEGAChatRoomPrivilege {
     }
 }
 
-extension MEGAChatRoomChangeType {
+public extension MEGAChatRoomChangeType {
     func toChatRoomChangeTypeEntity() -> ChatRoomEntity.ChangeType {
         switch self {
         case .status:
