@@ -939,7 +939,6 @@
 		836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AEDDF20188F3C00868FC7 /* TestPasswordViewController.m */; };
 		836AEDE22018AD0C00868FC7 /* PasswordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 836AEDE12018AD0C00868FC7 /* PasswordView.xib */; };
 		836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AEDE42018AD1F00868FC7 /* PasswordView.m */; };
-		836B091129224BD70058D53C /* ChatLinkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B091029224BD70058D53C /* ChatLinkRepository.swift */; };
 		836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B956E2063EADE003E279B /* SearchInPdfViewController.m */; };
 		836BCF1A28EDC83D00515E18 /* ChatTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1928EDC83D00515E18 /* ChatTypeEntity+Mapper.swift */; };
 		836BCF1C28EDD12100515E18 /* ChatListItemEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1B28EDD12100515E18 /* ChatListItemEntity+Mapper.swift */; };
@@ -3509,7 +3508,6 @@
 		836AEDE12018AD0C00868FC7 /* PasswordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PasswordView.xib; sourceTree = "<group>"; };
 		836AEDE32018AD1F00868FC7 /* PasswordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasswordView.h; sourceTree = "<group>"; };
 		836AEDE42018AD1F00868FC7 /* PasswordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PasswordView.m; sourceTree = "<group>"; };
-		836B091029224BD70058D53C /* ChatLinkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkRepository.swift; sourceTree = "<group>"; };
 		836B956D2063EADE003E279B /* SearchInPdfViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchInPdfViewController.h; sourceTree = "<group>"; };
 		836B956E2063EADE003E279B /* SearchInPdfViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchInPdfViewController.m; sourceTree = "<group>"; };
 		836BCF1928EDC83D00515E18 /* ChatTypeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatTypeEntity+Mapper.swift"; sourceTree = "<group>"; };
@@ -7050,7 +7048,6 @@
 		5BC47E2C253F0F7200853323 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				836B091029224BD70058D53C /* ChatLinkRepository.swift */,
 				83DE9D2528EC823400F24DF4 /* ChatRepository.swift */,
 				BF66DF152612C20200066F35 /* ChatRoomRepository.swift */,
 				5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */,
@@ -13201,7 +13198,6 @@
 				2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */,
 				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */,
-				836B091129224BD70058D53C /* ChatLinkRepository.swift in Sources */,
 				836BCF1C28EDD12100515E18 /* ChatListItemEntity+Mapper.swift in Sources */,
 				2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */,
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
