@@ -1,8 +1,7 @@
 import Combine
-import MEGADomain
+import Foundation
 
-protocol MeetingNoUserJoinedRepositoryProtocol {
-    static var sharedRepo: Self { get }
+public protocol MeetingNoUserJoinedRepositoryProtocol: RepositoryProtocol {
     var monitor: AnyPublisher<Void, Never> { get }
     func start(timerDuration duration: TimeInterval, chatId: HandleEntity)
 }
