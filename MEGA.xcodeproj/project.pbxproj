@@ -5053,7 +5053,6 @@
 				B65D17CF2899E16400D5AD33 /* MEGAUIKit in Frameworks */,
 				BF1163BB27F12ED000E5C5A4 /* MessageKit in Frameworks */,
 				BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */,
-				945928F52AA23C1B0037694C /* Search in Frameworks */,
 				BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */,
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
@@ -5061,6 +5060,7 @@
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
+				945928F52AA23C1B0037694C /* Search in Frameworks */,
 				940931FE2A56ED680093C169 /* Settings in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
 			);
@@ -5174,10 +5174,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94004A792AA24040004C873B /* Search in Frameworks */,
-				94004A762AA23FDB004C873B /* SearchMock in Frameworks */,
 				9418DB2B2A4EE611002B0077 /* MEGAPermissionsMock in Frameworks */,
 				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
+				94004A792AA24040004C873B /* Search in Frameworks */,
+				94004A762AA23FDB004C873B /* SearchMock in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9500,8 +9500,8 @@
 		A861B8332907F5DB00AB06D4 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				945928F22AA23B1A0037694C /* Search */,
 				94F568C12A56E7A6005CE9F2 /* DeviceCenter */,
+				945928F22AA23B1A0037694C /* Search */,
 				94F568BD2A56E412005CE9F2 /* Settings */,
 			);
 			path = Features;
