@@ -82,6 +82,12 @@ struct ImportAlbumView: View, DismissibleContentView {
         .onReceive(viewModel.$showLoading.dropFirst()) {
             $0 ? SVProgressHUD.show() : SVProgressHUD.dismiss()
         }
+        .onReceive(viewModel.$showNoInternetConnection.dropFirst()) {
+            guard $0 else { return }
+            SVProgressHUD.dismiss()
+            SVProgressHUD.show(Asset.Images.Hud.hudForbidden.image,
+                               status: Strings.Localizable.noInternetConnection)
+        }
     }
     
     private var navigationBar: some View {
