@@ -29,27 +29,28 @@ final class WaitingRoomViewModelTests: XCTestCase {
         XCTAssertEqual(sut.viewState, .guestJoin)
     }
     
-    func testViewState_onLoadWaitingRoomAndIsNotGuestAndCallNotActive_shouldBeWaitForHostToStartState() {
-        let sut = WaitingRoomViewModel()
+    func testViewState_onLoadWaitingRoomAndIsNotGuestAndMeetingNotStart_shouldBeWaitForHostToStartState() {
+        let callUseCase = MockCallUseCase(call: nil)
+        let sut = WaitingRoomViewModel(callUseCase: callUseCase)
         XCTAssertEqual(sut.viewState, .waitForHostToStart)
     }
     
-    func testViewState_onLoadWaitingRoomAndIsNotGuestAndCallIsActive_shouldBeWaitForHostToStartState() {
-        let chatUseCase = MockChatUseCase(isCallActive: true)
-        let sut = WaitingRoomViewModel(chatUseCase: chatUseCase)
+    func testViewState_onLoadWaitingRoomAndIsNotGuestAndMeetingDidStart_shouldBeWaitForHostToStartState() {
+        let sut = WaitingRoomViewModel()
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
     }
     
-    func testViewState_onCallIsNotActiveTransitsToCallIsActive_shouldChangeFromWaitForHostToStartToWaitForHostToLetIn() {
+    func testViewState_onMeetingNotStartTransitsToMeetingDidStart_shouldChangeFromWaitForHostToStartToWaitForHostToLetIn() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let chatCallStatusUpdatePublisher = PassthroughSubject<CallEntity, Never>()
         let chatUseCase = MockChatUseCase(chatCallStatusUpdatePublisher: chatCallStatusUpdatePublisher)
         let callEntity = CallEntity(status: .connecting, chatId: 100)
-        let callUseCase = MockCallUseCase(callCompletion: .success(callEntity))
+        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(callEntity))
         let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatUseCase: chatUseCase, callUseCase: callUseCase)
         
         XCTAssertEqual(sut.viewState, .waitForHostToStart)
         
+        callUseCase.call = callEntity
         chatCallStatusUpdatePublisher.send(callEntity)
         
         evaluate {
@@ -57,14 +58,16 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
-    func testViewState_onCallIsActiveTransitsToCallIsNotActive_shouldChangeFromWaitForHostToLetInToWaitForHostToStart() {
+    func testViewState_onMeetingDidStartTransitsToMeetingNotStart_shouldChangeFromWaitForHostToLetInToWaitForHostToStart() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let chatCallStatusUpdatePublisher = PassthroughSubject<CallEntity, Never>()
         let chatUseCase = MockChatUseCase(isCallActive: true, chatCallStatusUpdatePublisher: chatCallStatusUpdatePublisher)
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatUseCase: chatUseCase)
+        let callUseCase = MockCallUseCase()
+        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatUseCase: chatUseCase, callUseCase: callUseCase)
         
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
         
+        callUseCase.call = nil
         chatCallStatusUpdatePublisher.send(CallEntity(status: .terminatingUserParticipation, chatId: 100))
         
         evaluate {
@@ -124,13 +127,13 @@ final class WaitingRoomViewModelTests: XCTestCase {
     func testCalculateBottomPanelHeight_portraitModeAndGuestJoin_shouldMatch() {
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(accountUseCase: accountUseCase)
-                
+        
         XCTAssertEqual(sut.calculateBottomPanelHeight(), 142.0)
     }
     
     func testCalculateBottomPanelHeight_portraitModeAndWaitForHostToLetIn_shouldMatch() {
         let sut = WaitingRoomViewModel()
-
+        
         XCTAssertEqual(sut.calculateBottomPanelHeight(), 100.0)
     }
     
@@ -140,7 +143,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(accountUseCase: accountUseCase)
         sut.screenSize = CGSize(width: screenWidth, height: screenHeight)
-
+        
         XCTAssertEqual(sut.calculateBottomPanelHeight(), 142.0)
     }
     
@@ -149,7 +152,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let screenWidth = 424.0
         let sut = WaitingRoomViewModel()
         sut.screenSize = CGSize(width: screenWidth, height: screenHeight)
-
+        
         XCTAssertEqual(sut.calculateBottomPanelHeight(), 8.0)
     }
     
@@ -175,17 +178,52 @@ final class WaitingRoomViewModelTests: XCTestCase {
     }
     
     func testWaitingRoomMessage_whenWaitForHostToStart_shouldMatch() {
-        let chatUseCase = MockChatUseCase(isCallActive: false)
-        let sut = WaitingRoomViewModel(chatUseCase: chatUseCase)
+        let callUseCase = MockCallUseCase(call: nil)
+        let sut = WaitingRoomViewModel(callUseCase: callUseCase)
         
-        XCTAssertEqual(sut.waitingRoomMessage, "Wait for host to start the meeting")
+        XCTAssertEqual(sut.waitingRoomMessage, Strings.Localizable.Meetings.WaitingRoom.Message.waitForHostToStartTheMeeting)
     }
     
     func testWaitingRoomMessage_whenWaitForHostToLetIn_shouldMatch() {
-        let chatUseCase = MockChatUseCase(isCallActive: true)
-        let sut = WaitingRoomViewModel(chatUseCase: chatUseCase)
+        let sut = WaitingRoomViewModel()
         
         XCTAssertEqual(sut.waitingRoomMessage, Strings.Localizable.Meetings.WaitingRoom.Message.waitForHostToLetYouIn)
+    }
+    
+    func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingDidStart_shoudBecomeWaitForHostToLetIn() {
+        let callUseCase = MockCallUseCase(call: CallEntity(), answerCallCompletion: .success(CallEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(createEpehemeralAccountCompletion: .success, joinChatCompletion: .success(ChatRoomEntity()))
+        let accountUseCase = MockAccountUseCase(isGuest: true)
+        let sut = WaitingRoomViewModel(callUseCase: callUseCase,
+                                       meetingUseCase: meetingUseCase,
+                                       accountUseCase: accountUseCase,
+                                       chatLink: "Test chatLink")
+        
+        XCTAssertEqual(sut.viewState, .guestJoin)
+        
+        sut.tapJoinAction(firstName: "First", lastName: "Last")
+        
+        evaluate {
+            sut.viewState == .waitForHostToLetIn
+        }
+    }
+    
+    func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingNotStart_shoudBecomeWaitForHostToStart() {
+        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(createEpehemeralAccountCompletion: .success, joinChatCompletion: .success(ChatRoomEntity()))
+        let accountUseCase = MockAccountUseCase(isGuest: true)
+        let sut = WaitingRoomViewModel(callUseCase: callUseCase,
+                                       meetingUseCase: meetingUseCase,
+                                       accountUseCase: accountUseCase,
+                                       chatLink: "Test chatLink")
+        
+        XCTAssertEqual(sut.viewState, .guestJoin)
+        
+        sut.tapJoinAction(firstName: "First", lastName: "Last")
+        
+        evaluate {
+            sut.viewState == .waitForHostToStart
+        }
     }
     
     // MARK: - Private methods
@@ -220,7 +258,7 @@ final class MockWaitingRoomViewRouter: WaitingRoomViewRouting {
     var showHostDenyAlert_calledTimes = 0
     var hostAllowToJoin_calledTimes = 0
     
-    func dismiss() {
+    func dismiss(completion: (() -> Void)?) {
         dismiss_calledTimes += 1
     }
     

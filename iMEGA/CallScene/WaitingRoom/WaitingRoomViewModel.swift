@@ -6,7 +6,7 @@ import MEGAPresentation
 import MEGASDKRepo
 
 protocol WaitingRoomViewRouting: Routing {
-    func dismiss()
+    func dismiss(completion: (() -> Void)?)
     func showLeaveAlert(leaveAction: @escaping () -> Void)
     func showMeetingInfo()
     func showVideoPermissionError()
@@ -21,6 +21,8 @@ final class WaitingRoomViewModel: ObservableObject {
     private let chatUseCase: any ChatUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
+    private let meetingUseCase: any MeetingCreatingUseCaseProtocol
+    private let authUseCase: any AuthUseCaseProtocol
     private let waitingRoomUseCase: any WaitingRoomUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
@@ -29,6 +31,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
+    private let chatLink: String?
     
     var meetingTitle: String { scheduledMeeting.title }
     
@@ -71,6 +74,9 @@ final class WaitingRoomViewModel: ObservableObject {
     private var call: CallEntity? {
         callUseCase.call(for: scheduledMeeting.chatId)
     }
+    private var isMeetingStart: Bool {
+        call != nil
+    }
     private var isCallActive: Bool {
         chatUseCase.isCallActive(for: scheduledMeeting.chatId)
     }
@@ -84,6 +90,8 @@ final class WaitingRoomViewModel: ObservableObject {
          chatUseCase: some ChatUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
          callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
+         meetingUseCase: some MeetingCreatingUseCaseProtocol,
+         authUseCase: some AuthUseCaseProtocol,
          waitingRoomUseCase: some WaitingRoomUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
@@ -91,12 +99,15 @@ final class WaitingRoomViewModel: ObservableObject {
          localVideoUseCase: some CallLocalVideoUseCaseProtocol,
          captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
          audioSessionUseCase: some AudioSessionUseCaseProtocol,
-         permissionHandler: some DevicePermissionsHandling) {
+         permissionHandler: some DevicePermissionsHandling,
+         chatLink: String? = nil) {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatUseCase = chatUseCase
         self.callUseCase = callUseCase
         self.callCoordinatorUseCase = callCoordinatorUseCase
+        self.meetingUseCase = meetingUseCase
+        self.authUseCase = authUseCase
         self.waitingRoomUseCase = waitingRoomUseCase
         self.accountUseCase = accountUseCase
         self.megaHandleUseCase = megaHandleUseCase
@@ -105,6 +116,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.permissionHandler = permissionHandler
+        self.chatLink = chatLink
         initializeState()
         initSubscriptions()
         fetchInitialValues()
@@ -165,9 +177,7 @@ final class WaitingRoomViewModel: ObservableObject {
     func leaveButtonTapped() {
         router.showLeaveAlert { [weak self] in
             guard let self else { return }
-            callUseCase.stopListeningForCall()
-            dismissCall()
-            router.dismiss()
+            dismiss()
         }
     }
     
@@ -175,15 +185,10 @@ final class WaitingRoomViewModel: ObservableObject {
         router.showMeetingInfo()
     }
     
-    func tapJoinAction() {
+    func tapJoinAction(firstName: String, lastName: String) {
         guard viewState == .guestJoin else { return }
         viewState = .guestJoining
-        Task { @MainActor in
-            // This wait is a temporal workaround for demo propose
-            // It will be replace in the next ticket when the API is ready
-            try await Task.sleep(nanoseconds: 2_000_000_000)
-            viewState = .waitForHostToLetIn
-        }
+        createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName)
     }
     
     func calculateVideoSize() -> CGSize {
@@ -205,11 +210,13 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     // MARK: - Private
+    
     private func initializeState() {
         if accountUseCase.isGuest {
             viewState = .guestJoin
-        } else if isCallActive {
+        } else if isMeetingStart {
             viewState = .waitForHostToLetIn
+            answerCall()
         } else {
             viewState = .waitForHostToStart
         }
@@ -238,14 +245,11 @@ final class WaitingRoomViewModel: ObservableObject {
                 guard let self,
                       viewState != .guestJoin && viewState != .guestJoining,
                       call.chatId == scheduledMeeting.chatId else { return }
-                switch call.status {
-                case .initial, .joining, .userNoPresent, .connecting, .waitingRoom:
+                if isMeetingStart {
                     if !isCallActive {
                         answerCall()
-                    } else {
-                        viewState = .waitForHostToLetIn
                     }
-                default:
+                } else {
                     if isCallActive {
                         dismissCall()
                     }
@@ -266,18 +270,6 @@ final class WaitingRoomViewModel: ObservableObject {
         permissionHandler.requestAudioPermission()
         selectFrontCameraIfNeeded()
         fetchUserAvatar()
-    }
-    
-    private func answerCall() {
-        callUseCase.answerCall(for: scheduledMeeting.chatId) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
-                viewState = .waitForHostToLetIn
-            case .failure:
-                MEGALogDebug("Cannot answer call")
-            }
-        }
     }
     
     private func updateSpeakerInfo() {
@@ -346,16 +338,47 @@ final class WaitingRoomViewModel: ObservableObject {
               let avatarBackgroundHexColor = userImageUseCase.avatarColorHex(forBase64UserHandle: base64Handle) else {
             return
         }
-        userImageUseCase.fetchUserAvatar(withUserHandle: myHandle,
-                                         base64Handle: base64Handle,
-                                         avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                         name: waitingRoomUseCase.userName()) { [weak self] result in
+        userImageUseCase.fetchUserAvatar(
+            withUserHandle: myHandle,
+            base64Handle: base64Handle,
+            avatarBackgroundHexColor: avatarBackgroundHexColor,
+            name: waitingRoomUseCase.userName()
+        ) { [weak self] result in
+            guard let self else { return }
+            if case let .success(image) = result {
+                userAvatar = image
+            }
+        }
+    }
+    
+    private func disableLocalVideo() {
+        if isVideoEnabled {
+            localVideoUseCase.removeLocalVideo(for: MEGAInvalidHandle, callbacksDelegate: self)
+        }
+    }
+    
+    private func dismiss() {
+        router.dismiss { [weak self] in
+            guard let self else { return }
+            if accountUseCase.isGuest {
+                authUseCase.logout()
+            }
+            disableLocalVideo()
+            callUseCase.stopListeningForCall()
+            dismissCall()
+        }
+    }
+    
+    // MARK: - Chat and call related methods
+    
+    private func answerCall() {
+        callUseCase.answerCall(for: scheduledMeeting.chatId) { [weak self] result in
             guard let self else { return }
             switch result {
-            case .success(let image):
-                userAvatar = image
-            default:
-                break
+            case .success:
+                viewState = .waitForHostToLetIn
+            case .failure:
+                MEGALogDebug("Cannot answer call")
             }
         }
     }
@@ -365,6 +388,39 @@ final class WaitingRoomViewModel: ObservableObject {
         callCoordinatorUseCase.removeCallRemovedHandler()
         callUseCase.hangCall(for: call.callId)
         callCoordinatorUseCase.endCall(call)
+    }
+    
+    private func createEphemeralAccountAndJoinChat(firstName: String, lastName: String) {
+        guard let chatLink else { return }
+        meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: chatLink) { [weak self] result in
+            guard let self else { return }
+            if case .success = result {
+                joinChatCall()
+            }
+        } karereInitCompletion: { [weak self] in
+            guard let self else { return }
+            if isVideoEnabled {
+                enableLocalVideo(enabled: true)
+            }
+        }
+    }
+    
+    private func joinChatCall() {
+        meetingUseCase.joinChat(forChatId: scheduledMeeting.chatId,
+                                userHandle: chatUseCase.myUserHandle()
+        ) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success:
+                if isMeetingStart {
+                    answerCall()
+                } else {
+                    viewState = .waitForHostToStart
+                }
+            case .failure:
+                dismiss()
+            }
+        }
     }
 }
 

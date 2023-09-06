@@ -827,15 +827,12 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)openMeetingWithRequest:(MEGAChatRequest * _Nonnull)request  chatLinkURL:(NSURL * _Nonnull)chatLinkUrl {
-    // "It's a meeting, open join call"
-    MEGAHandleList *list = request.megaHandleList;
-
-    if (list.size > 0 && [list megaHandleAtIndex:0] != 0) {
+    if ([self shouldOpenWaitingRoomForChatOptions:request.privilege]) {
+        [SVProgressHUD dismiss];
+        [self openWaitingRoomFor:request.chatHandle chatLink:chatLinkUrl.absoluteString];
+    } else if ([self hasActiveMeetingFor:request]) {
         [self createMeetingAndShow:request.chatHandle userhandle:request.userHandle publicChatLink:chatLinkUrl];
         [SVProgressHUD dismiss];
-    } else if ([self shouldOpenWaitingRoomForChatOptions:request.privilege]) {
-        [SVProgressHUD dismiss];
-        [self openWaitingRoomFor:request.chatHandle];
     } else {
         //  meeting ended
         [SVProgressHUD dismiss];

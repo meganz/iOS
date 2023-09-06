@@ -86,7 +86,7 @@ final class ChatContentViewModel: ViewModelType {
 
     func shouldOpenWaitingRoom() -> Bool {
         let isModerator = chatRoom.ownPrivilege == .moderator
-        return !isModerator && chatRoom.isWaitingRoomEnabled
+        return !isModerator && chatRoom.isWaitingRoomEnabled && isWaitingRoomFeatureEnabled
     }
     
     // MARK: - Private

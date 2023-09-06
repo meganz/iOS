@@ -4,14 +4,22 @@ import MEGADomain
 final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     let userName: String
     var chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity>
-    var createEpehemeralAccountCompletion: Result<Void, MEGASDKErrorType>?
-    var joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic)
-
+    var createEpehemeralAccountCompletion: Result<Void, MEGASDKErrorType>
+    var joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity>
+    var joinChatCompletion: Result<ChatRoomEntity, CallErrorEntity>
+    
     var createChatLink_calledTimes = 0
     
-    init(userName: String, chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic)) {
+    init(userName: String = "Test Name",
+         chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic),
+         createEpehemeralAccountCompletion: Result<Void, MEGASDKErrorType> = .failure(.unexpected),
+         joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic),
+         joinChatCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic)) {
         self.userName = userName
         self.chatCallCompletion = chatCallCompletion
+        self.createEpehemeralAccountCompletion = createEpehemeralAccountCompletion
+        self.joinCallCompletion = joinCallCompletion
+        self.joinChatCompletion = joinChatCompletion
     }
     
     func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
@@ -20,6 +28,10 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         completion(joinCallCompletion)
+    }
+    
+    func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<MEGADomain.ChatRoomEntity, MEGADomain.CallErrorEntity>) -> Void) {
+        completion(joinChatCompletion)
     }
     
     func getUsername() -> String {
@@ -33,11 +45,9 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         completion(chatCallCompletion)
     }
- 
+    
     func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void, karereInitCompletion: @escaping () -> Void) {
-        if let completionBlock = createEpehemeralAccountCompletion {
-            completion(completionBlock)
-        }
+        completion(createEpehemeralAccountCompletion)
     }
     
     func createChatLink(forChatId chatId: UInt64) {

@@ -172,12 +172,22 @@ extension MEGALinkManager {
         )
     }
     
+    @objc class func hasActiveMeeting(for request: MEGAChatRequest) -> Bool {
+        let list = request.megaHandleList
+        guard let list else { return false }
+        return list.size > 0 && list.megaHandle(at: 0) != 0
+    }
+    
     @objc class func shouldOpenWaitingRoom(forChatOptions bitMask: Int) -> Bool {
         MEGAChatSdk.shared.hasChatOptionEnabled(for: .waitingRoom, chatOptionsBitMask: bitMask)
     }
     
-    @objc class func openWaitingRoom(for chatId: ChatIdEntity) {
+    @objc class func openWaitingRoom(for chatId: ChatIdEntity, chatLink: String) {
         guard let scheduledMeeting = MEGAChatSdk.shared.scheduledMeetings(byChat: chatId).first?.toScheduledMeetingEntity() else { return }
-        WaitingRoomViewRouter(presenter: UIApplication.mnz_visibleViewController(), scheduledMeeting: scheduledMeeting).start()
+        WaitingRoomViewRouter(
+            presenter: UIApplication.mnz_visibleViewController(),
+            scheduledMeeting: scheduledMeeting,
+            chatLink: chatLink
+        ).start()
     }
 }

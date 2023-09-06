@@ -3,7 +3,7 @@ import MEGASwiftUI
 import SwiftUI
 
 struct WaitingRoomJoinPanelView: View {
-    let tapJoinAction: () -> Void
+    let tapJoinAction: (String, String) -> Void
     let appearFocused: Bool
     @State private var firstName: String = ""
     @State private var lastName: String = ""
@@ -29,7 +29,7 @@ struct WaitingRoomJoinPanelView: View {
                 .frame(maxWidth: 120)
             }
             Button {
-                tapJoinAction()
+                tapJoinAction(firstName, lastName)
                 hideKeyboard()
             } label: {
                 Text(Strings.Localizable.Meetings.WaitingRoom.Guest.join)
@@ -68,7 +68,9 @@ struct WaitingRoomJoinPanelView_Previews: PreviewProvider {
         VStack {
             Spacer()
             ZStack {
-                WaitingRoomJoinPanelView(tapJoinAction: {}, appearFocused: false)
+                WaitingRoomJoinPanelView(tapJoinAction: {firstName, lastName in
+                    MEGALogDebug("firstName: \(firstName), lastName: \(lastName)")
+                }, appearFocused: false)
             }
             .frame(height: 142)
         }

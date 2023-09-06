@@ -16,14 +16,6 @@ struct WaitingRoomView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea()
-            .overlay(
-                waitingRoomMessageView()
-                , alignment: .top
-            )
-            .overlay(
-                waitingRoomBottomView()
-                , alignment: .bottom
-            )
             .onAppear {
                 viewModel.screenSize = proxy.size
             }
@@ -31,6 +23,15 @@ struct WaitingRoomView: View {
                 viewModel.screenSize = newSize
             }
         }
+        .ignoresSafeArea(.keyboard)
+        .overlay(
+            waitingRoomMessageView()
+            , alignment: .top
+        )
+        .overlay(
+            waitingRoomBottomView()
+            , alignment: .bottom
+        )
     }
 
     @ViewBuilder
@@ -81,7 +82,9 @@ struct WaitingRoomView: View {
                 ProgressView()
                     .opacity(viewModel.viewState == .guestJoining ? 1 : 0)
                 
-                WaitingRoomJoinPanelView(tapJoinAction: viewModel.tapJoinAction, appearFocused: viewModel.viewState == .guestJoin)
+                WaitingRoomJoinPanelView(
+                    tapJoinAction: viewModel.tapJoinAction,
+                    appearFocused: viewModel.viewState == .guestJoin)
                 .opacity(viewModel.viewState == .guestJoin ? 1 : 0)
             }
             .frame(height: viewModel.calculateBottomPanelHeight())

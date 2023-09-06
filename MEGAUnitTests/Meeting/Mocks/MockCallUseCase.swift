@@ -4,7 +4,6 @@ import MEGADomain
 final class MockCallUseCase: CallUseCaseProtocol {
     var startListeningForCall_CalledTimes = 0
     var stopListeningForCall_CalledTimes = 0
-    var callCompletion: Result<CallEntity, CallErrorEntity>
     var createActiveSessions_calledTimes = 0
     var hangCall_CalledTimes = 0
     var endCall_CalledTimes = 0
@@ -15,7 +14,10 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var pushUsersIntoWaitingRoom_CalledTimes = 0
     var makePeerAsModerator_CalledTimes = 0
     var removePeerAsModerator_CalledTimes = 0
-    var call: CallEntity
+    
+    var call: CallEntity?
+    var callCompletion: Result<CallEntity, CallErrorEntity>
+    var answerCallCompletion: Result<CallEntity, CallErrorEntity>
     
     var callbacksDelegate: (any CallCallbacksUseCaseProtocol)?
     var networkQuality: NetworkQuality = .bad
@@ -25,10 +27,12 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var chatSession: ChatSessionEntity?
     var participantHandle: HandleEntity = .invalid
     
-    init(call: CallEntity = CallEntity(),
-         callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic)) {
+    init(call: CallEntity? = CallEntity(),
+         callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
+         answerCallCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic)) {
         self.call = call
         self.callCompletion = callCompletion
+        self.answerCallCompletion = answerCallCompletion
     }
     
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
@@ -44,7 +48,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
     }
     
     func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        completion(callCompletion)
+        completion(answerCallCompletion)
     }
     
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
@@ -166,7 +170,7 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
     }
     
     func callTerminated(_ call: CallEntity) {
-        callbacksDelegate?.callTerminated(self.call)
+        callbacksDelegate?.callTerminated(call)
     }
     
     func ownPrivilegeChanged(to privilege: ChatRoomPrivilegeEntity, in chatRoom: ChatRoomEntity) {
