@@ -1,3 +1,4 @@
+import ChatRepo
 import Combine
 import MEGADomain
 import MEGAL10n
@@ -117,8 +118,8 @@ extension ChatViewController {
     }
 
     func subscribeToNoUserJoinedNotification() {
-        let usecase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
-        noUserJoinedSubscription = usecase
+        let useCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo)
+        noUserJoinedSubscription = useCase
             .monitor
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -131,7 +132,7 @@ extension ChatViewController {
                 self.showCallEndDialog(withCall: call.toCallEntity())
             }
         
-        self.meetingNoUserJoinedUseCase = usecase
+        self.meetingNoUserJoinedUseCase = useCase
     }
     
     func showCallEndTimerIfNeeded(call: CallEntity) {

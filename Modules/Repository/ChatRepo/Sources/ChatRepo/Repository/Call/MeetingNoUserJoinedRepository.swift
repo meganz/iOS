@@ -1,16 +1,19 @@
 import Combine
+import MEGAChatSdk
 import MEGADomain
 
-final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedRepositoryProtocol {
-    static var sharedRepo = MeetingNoUserJoinedRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk())
-    
+public final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedRepositoryProtocol {
+    public static var newRepo: MeetingNoUserJoinedRepository {
+        MeetingNoUserJoinedRepository(chatSDK: .sharedChatSdk)
+    }
+
     private var subscription: AnyCancellable?
         
     private let chatSDK: MEGAChatSdk
     private(set) var chatId: HandleEntity?
     private let source = PassthroughSubject<Void, Never>()
         
-    var monitor: AnyPublisher<Void, Never> {
+    public var monitor: AnyPublisher<Void, Never> {
         source.eraseToAnyPublisher()
     }
     
@@ -24,7 +27,7 @@ final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedReposito
         chatSDK.remove(self as (any MEGAChatCallDelegate))
     }
 
-    func start(timerDuration duration: TimeInterval, chatId: HandleEntity) {
+    public func start(timerDuration duration: TimeInterval, chatId: HandleEntity) {
         self.chatId = chatId
         subscription = Just(Void.self)
             .delay(for: .seconds(duration), scheduler: DispatchQueue.global())
@@ -42,7 +45,7 @@ final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedReposito
 }
 
 extension MeetingNoUserJoinedRepository: MEGAChatCallDelegate {
-    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+    public func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
         if call.status == .inProgress,
            call.callCompositionChange == .peerAdded,
            call.chatId == chatId,

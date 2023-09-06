@@ -2233,8 +2233,6 @@
 		BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6557425F59EC600052DE8 /* CircularView.swift */; };
 		BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */; };
 		BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */; };
-		BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D228569B6B003949FF /* MeetingNoUserJoinedRepository.swift */; };
-		BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */; };
 		BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */; };
 		BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */; };
 		BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */; };
@@ -4805,8 +4803,6 @@
 		BFD6557425F59EC600052DE8 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingQuickActionView.swift; sourceTree = "<group>"; };
 		BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Meetings.swift"; sourceTree = "<group>"; };
-		BFE3B9D228569B6B003949FF /* MeetingNoUserJoinedRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedRepository.swift; sourceTree = "<group>"; };
-		BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedRepositoryProtocol.swift; sourceTree = "<group>"; };
 		BFE3B9D828569C04003949FF /* MeetingNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
 		BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
 		BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingContainerViewModel+Additions.swift"; sourceTree = "<group>"; };
@@ -8591,7 +8587,6 @@
 			children = (
 				838A7B6825D5678C00767DB0 /* CallRepository.swift */,
 				2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */,
-				BFE3B9D228569B6B003949FF /* MeetingNoUserJoinedRepository.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -8600,7 +8595,6 @@
 			isa = PBXGroup;
 			children = (
 				2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */,
-				BFE3B9D628569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -13668,8 +13662,6 @@
 				83BFDBD3291BE67900FFFEA0 /* MeetingInfoViewModel.swift in Sources */,
 				996F742C2A794B9D007209F0 /* MeetingInfoWaitingRoomSettingView.swift in Sources */,
 				99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */,
-				BFE3B9D328569B6B003949FF /* MeetingNoUserJoinedRepository.swift in Sources */,
-				BFE3B9D728569BAD003949FF /* MeetingNoUserJoinedRepositoryProtocol.swift in Sources */,
 				BFE3B9D928569C04003949FF /* MeetingNoUserJoinedUseCase.swift in Sources */,
 				839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */,
 				839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */,

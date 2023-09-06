@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 
 @objc final class CallActionManager: NSObject {
@@ -44,7 +45,7 @@ import MEGADomain
             self.startCallRequestDelegate = MEGAChatStartCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
                     self.notifyStartCallToCallKit(chatId: chatId)
-                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
+                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo).start(chatId: chatId)
                 }
                 delegate.completion(error)
             }
@@ -68,7 +69,7 @@ import MEGADomain
             self.startCallRequestDelegate = MEGAChatStartCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
                     self.notifyStartCallToCallKit(chatId: chatId)
-                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
+                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo).start(chatId: chatId)
                 }
                 delegate.completion(error)
             }
@@ -93,7 +94,7 @@ import MEGADomain
                 guard let self else { return }
                 if error.type == .MEGAChatErrorTypeOk {
                     notifyStartCallToCallKit(chatId: chatId)
-                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
+                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo).start(chatId: chatId)
                 }
                 delegate.completion(error)
             }
