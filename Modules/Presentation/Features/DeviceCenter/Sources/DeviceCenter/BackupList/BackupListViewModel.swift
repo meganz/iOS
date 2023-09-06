@@ -77,7 +77,7 @@ public final class BackupListViewModel: ObservableObject {
         backupsPreloaded = true
     }
     
-    private func resetFilteredBackups() {
+    private func resetBackups() {
         filteredBackups = backupModels
     }
     
@@ -85,12 +85,12 @@ public final class BackupListViewModel: ObservableObject {
         let hasSearchQuery = searchText.isNotEmpty
         isSearchActive = hasSearchQuery
         if hasSearchQuery {
-            resetFilteredBackups()
+            resetBackups()
             filteredBackups = filteredBackups.filter {
                 $0.name.lowercased().contains(searchText.lowercased())
             }
         } else {
-            resetFilteredBackups()
+            resetBackups()
         }
     }
     

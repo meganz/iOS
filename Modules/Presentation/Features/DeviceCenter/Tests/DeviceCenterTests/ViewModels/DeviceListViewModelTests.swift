@@ -40,32 +40,41 @@ final class DeviceListViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.otherDevices.isNotEmpty)
         XCTAssertTrue(viewModel.otherDevices.count == 1)
     }
-        
-    func testFilterDevices_withSearchText_matchingDeviceName() async {
-        let devices = devices()
-        
-        let viewModel = makeSUT(
-            devices: devices,
-            currentDeviceId: mockCurrentDeviceId
-        )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        viewModel.searchText = "device"
+
+    func testFilterDevices_withSearchText_matchingPartialDeviceName() async {
+        let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "device")
         
         let expectedDeviceNames = ["device1", "device2"]
+        
+        await fulfillment(of: [expectation], timeout: 2.0)
+        
         let foundDeviceNames = viewModel.filteredDevices.map(\.name)
         XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
         
-        viewModel.searchText = "1"
-        
-        let expectedDeviceNames2 = ["device1"]
-        let foundDeviceNames2 = viewModel.filteredDevices.map(\.name)
-        XCTAssertEqual(foundDeviceNames2, expectedDeviceNames2)
+        cancellables.forEach { $0.cancel() }
+    }
 
-        viewModel.searchText = "fake_name"
+    func testFilterDevices_withSearchText_matchingDeviceName() async {
+        let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "device1")
+        
+        let expectedDeviceNames = ["device1"]
+        
+        await fulfillment(of: [expectation], timeout: 2.0)
+        
+        let foundDeviceNames = viewModel.filteredDevices.map(\.name)
+        XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
+        
+        cancellables.forEach { $0.cancel() }
+    }
+
+    func testFilterDevices_withSearchText_whenNoMatchFound() async {
+        let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "fake_name")
+        
+        await fulfillment(of: [expectation], timeout: 2.0)
+        
         XCTAssertTrue(viewModel.filteredDevices.isEmpty)
+        
+        cancellables.forEach { $0.cancel() }
     }
     
     func testFilterDevices_withEmptySearchText_shouldReturnTheSameDevices() async {
@@ -215,6 +224,40 @@ final class DeviceListViewModelTests: XCTestCase {
     
     private func backupStatusEntities() -> [BackupStatusEntity] {
         [.upToDate, .offline, .blocked, .outOfQuota, .error, .disabled, .paused, .updating, .scanning, .initialising, .backupStopped, .noCameraUploads]
+    }
+    
+    private func makeSUTForSearch(
+        searchText: String? = nil
+    ) async -> (
+        viewModel: DeviceListViewModel,
+        expectation: XCTestExpectation,
+        cancellables: Set<AnyCancellable>
+    ) {
+        let devices = devices()
+        let viewModel = makeSUT(
+            devices: devices,
+            currentDeviceId: mockCurrentDeviceId
+        )
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
+        
+        var cancellables = Set<AnyCancellable>()
+        var expectationDescription = "Filtered devices should update"
+        
+        if let searchText = searchText {
+            expectationDescription += " when searching for '\(searchText)'"
+            viewModel.searchText = searchText
+        }
+        
+        let expectation = XCTestExpectation(description: expectationDescription)
+        
+        viewModel.$filteredDevices
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+        
+        return (viewModel, expectation, cancellables)
     }
     
     private func makeSUT(

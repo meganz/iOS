@@ -43,26 +43,40 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(foundBackupNames, expectedBackupNames)
     }
     
-    func testFilterBackups_withSearchText_matchingBackupName() {
-        let viewModel = makeSUT(
-            currentDeviceId: mockCurrentDeviceId,
-            backups: backups()
-        )
+    func testFilterBackups_withSearchText_matchingPartialDeviceName() async {
+        let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "backup")
         
-        viewModel.searchText = "1"
+        let expectedDeviceNames = ["backup1", "backup2", "backup3"]
         
-        let expectedBackupNames = ["backup1"]
-        let foundBackupNames = viewModel.filteredBackups.map(\.name)
-        XCTAssertEqual(expectedBackupNames, foundBackupNames)
+        await fulfillment(of: [expectation], timeout: 2.0)
         
-        viewModel.searchText = "2"
+        let foundDeviceNames = viewModel.filteredBackups.map(\.name)
+        XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
         
-        let expectedBackupNames2 = ["backup2"]
-        let foundBackupNames2 = viewModel.filteredBackups.map(\.name)
-        XCTAssertEqual(expectedBackupNames2, foundBackupNames2)
+        cancellables.forEach { $0.cancel() }
+    }
+
+    func testFilterBackups_withSearchText_matchingDeviceName() async {
+        let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "backup1")
         
-        viewModel.searchText = "fake_name"
+        let expectedDeviceNames = ["backup1"]
+        
+        await fulfillment(of: [expectation], timeout: 2.0)
+        
+        let foundDeviceNames = viewModel.filteredBackups.map(\.name)
+        XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
+        
+        cancellables.forEach { $0.cancel() }
+    }
+
+    func testFilterBackups_withSearchText_whenNoMatchFound() async {
+        let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "fake_name")
+        
+        await fulfillment(of: [expectation], timeout: 2.0)
+        
         XCTAssertTrue(viewModel.filteredBackups.isEmpty)
+        
+        cancellables.forEach { $0.cancel() }
     }
     
     func testFilterBackups_withEmptySearchText_shouldReturnTheSameBackups() {
@@ -308,6 +322,38 @@ final class BackupListViewModelTests: XCTestCase {
         let assets = viewModel.loadAssets(for: backupEntity)
         XCTAssertNotNil(assets)
         XCTAssertEqual(assets?.backupStatus.status, backupEntity.backupStatus)
+    }
+    
+    private func makeSUTForSearch(
+        searchText: String? = nil
+    ) async -> (
+        viewModel: BackupListViewModel,
+        expectation: XCTestExpectation,
+        cancellables: Set<AnyCancellable>
+    ) {
+        let backups = backups()
+        let viewModel = makeSUT(
+            currentDeviceId: mockCurrentDeviceId,
+            backups: backups
+        )
+        
+        var cancellables = Set<AnyCancellable>()
+        var expectationDescription = "Filtered backups should update"
+        
+        if let searchText = searchText {
+            expectationDescription += " when searching for '\(searchText)'"
+            viewModel.searchText = searchText
+        }
+        
+        let expectation = XCTestExpectation(description: expectationDescription)
+        
+        viewModel.$filteredBackups
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &cancellables)
+        
+        return (viewModel, expectation, cancellables)
     }
     
     private func makeSUT(

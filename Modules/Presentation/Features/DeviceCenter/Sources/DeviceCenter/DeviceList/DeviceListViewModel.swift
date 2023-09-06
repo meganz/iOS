@@ -75,22 +75,23 @@ public final class DeviceListViewModel: ObservableObject {
         }
     }
     
-    private func resetFilteredDevices() {
+    private func allDevices() -> [DeviceCenterItemViewModel] {
         if let currentDevice {
-            filteredDevices = [currentDevice] + otherDevices
+            return [currentDevice] + otherDevices
         }
+        
+        return otherDevices
     }
     
     private func filterDevices() {
         if searchText.isNotEmpty {
             isSearchActive = true
-            resetFilteredDevices()
-            filteredDevices = filteredDevices.filter {
+            filteredDevices = allDevices().filter {
                 $0.name.lowercased().contains(searchText.lowercased())
             }
         } else {
             isSearchActive = false
-            resetFilteredDevices()
+            filteredDevices = allDevices()
         }
     }
     
@@ -170,8 +171,6 @@ public final class DeviceListViewModel: ObservableObject {
         otherDevices = devices
             .filter { $0.id != currentDeviceId }
             .compactMap(loadDeviceViewModel)
-        
-        resetFilteredDevices()
     }
     
     func actionsForDevice(_ device: DeviceEntity) -> [DeviceCenterAction]? {
