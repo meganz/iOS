@@ -124,7 +124,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
         if isMyUser {
             participantPrivilege = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege()
         } else {
-            participantPrivilege = chatRoomUseCase.peerPrivilege(forUserHandle: chatParticipantId, chatRoom: chatRoom)?.toChatRoomParticipantPrivilege() ?? .unknown
+            participantPrivilege = chatRoomUseCase.peerPrivilege(forUserHandle: chatParticipantId, chatRoom: chatRoom).toChatRoomParticipantPrivilege()
         }
     }
     

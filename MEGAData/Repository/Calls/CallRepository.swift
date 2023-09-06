@@ -15,6 +15,8 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     private var call: CallEntity?
     
     private var callUpdateListeners = [CallUpdateListener]()
+    private var callWaitingRoomUsersUpdateListener: CallWaitingRoomUsersUpdateListener?
+    private var onCallUpdateListener: OnCallUpdateListener?
 
     init(chatSdk: MEGAChatSdk, callActionManager: CallActionManager) {
         self.chatSdk = chatSdk
@@ -172,7 +174,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     }
     
     func kickUsersFromCall(_ call: CallEntity, users: [UInt64]) {
-        chatSdk.kickUsers(fromCall: call.callId, usersHandles: users.map(NSNumber.init(value:)))
+        chatSdk.kickUsers(fromCall: call.chatId, usersHandles: users.map(NSNumber.init(value:)))
     }
     
     func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [UInt64]) {
@@ -198,7 +200,23 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             .monitor
             .eraseToAnyPublisher()
     }
+    
+    func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
+        let callWaitingRoomUsersUpdate = CallWaitingRoomUsersUpdateListener(sdk: chatSdk, callId: call.callId)
+        callWaitingRoomUsersUpdateListener = callWaitingRoomUsersUpdate
 
+        return callWaitingRoomUsersUpdate
+            .monitor
+    }
+    
+    func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
+        let onCallUpdate = OnCallUpdateListener(sdk: chatSdk)
+        onCallUpdateListener = onCallUpdate
+
+        return onCallUpdate
+            .monitor
+    }
+    
     private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
         guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {
             let callUpdateListener = CallUpdateListener(sdk: chatSdk, callId: callId, changeType: change)
@@ -393,5 +411,64 @@ extension CallRepository: MEGAChatDelegate {
         default:
             break
         }
+    }
+}
+
+private final class CallWaitingRoomUsersUpdateListener: NSObject, MEGAChatCallDelegate {
+    private let sdk: MEGAChatSdk
+    let callId: HandleEntity
+    private let source = PassthroughSubject<CallEntity, Never>()
+    
+    var monitor: AnyPublisher<CallEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk, callId: HandleEntity) {
+        self.sdk = sdk
+        self.callId = callId
+        super.init()
+        sdk.add(self, queueType: .globalBackground)
+    }
+    
+    deinit {
+        sdk.remove(self)
+    }
+    
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        let waitingRoomChanges: Set<Bool> = [
+            call.hasChanged(for: .waitingRoomComposition),
+            call.hasChanged(for: .waitingRoomUsersEntered),
+            call.hasChanged(for: .waitingRoomUsersDeny),
+            call.hasChanged(for: .waitingRoomUsersAllow),
+            call.hasChanged(for: .waitingRoomUsersLeave)
+        ]
+        
+        if callId == call.callId,
+           waitingRoomChanges.contains(true) {
+            source.send(call.toCallEntity())
+        }
+    }
+}
+
+private final class OnCallUpdateListener: NSObject, MEGAChatCallDelegate {
+    private let sdk: MEGAChatSdk
+    private let source = PassthroughSubject<CallEntity, Never>()
+    
+    var monitor: AnyPublisher<CallEntity, Never> {
+        source.eraseToAnyPublisher()
+    }
+    
+    init(sdk: MEGAChatSdk) {
+        self.sdk = sdk
+        super.init()
+        sdk.add(self, queueType: .globalBackground)
+    }
+    
+    deinit {
+        sdk.remove(self)
+    }
+    
+    func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
+        source.send(call.toCallEntity())
     }
 }

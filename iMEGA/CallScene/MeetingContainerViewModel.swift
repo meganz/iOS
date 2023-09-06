@@ -47,6 +47,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
     private var muteUnmuteFailedNotificationsSubscription: AnyCancellable?
+    private var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
 
     private var call: CallEntity? {
         callUseCase.call(for: chatRoom.chatId)
@@ -97,22 +98,22 @@ final class MeetingContainerViewModel: ViewModelType {
                 muteMicSubscription = Just(Void.self)
                     .delay(for: .seconds(Constants.muteMicTimerDuration), scheduler: RunLoop.main)
                     .sink { [weak self] _ in
-                        guard let self = self else { return }
+                        guard let self else { return }
 
-                        self.muteMicrophoneIfNoOtherParticipantsArePresent()
-                        self.muteMicSubscription = nil
+                        muteMicrophoneIfNoOtherParticipantsArePresent()
+                        muteMicSubscription = nil
                     }
                 
                 noUserJoinedSubscription = noUserJoinedUseCase
                     .monitor
                     .receive(on: DispatchQueue.main)
                     .sink { [weak self] in
-                        guard let self = self else { return }
+                        guard let self else { return }
                         
-                        self.showEndCallDialogIfNeeded {
+                        showEndCallDialogIfNeeded {
                             self.cancelNoUserJoinedSubscription()
                         }
-                        self.noUserJoinedSubscription = nil
+                        noUserJoinedSubscription = nil
                 }
             }
         case .hangCall(let presenter, let sender):
@@ -128,16 +129,16 @@ final class MeetingContainerViewModel: ViewModelType {
             router.toggleFloatingPanel(containerViewModel: self)
         case .shareLink(let presenter, let sender, let completion):
             chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch result {
                 case .success(let link):
-                    self.router.shareLink(presenter: presenter,
+                    router.shareLink(presenter: presenter,
                                           sender: sender,
                                           link: link,
-                                          isGuestAccount: self.accountUseCase.isGuest,
+                                          isGuestAccount: accountUseCase.isGuest,
                                           completion: completion)
                 case .failure:
-                    self.router.showShareMeetingError()
+                    router.showShareMeetingError()
                 }
             }
         case .renameChat:
@@ -309,5 +310,4 @@ final class MeetingContainerViewModel: ViewModelType {
         cancelNoUserJoinedSubscription()
         self.callCoordinatorUseCase.removeCallRemovedHandler()
     }
-    
 }

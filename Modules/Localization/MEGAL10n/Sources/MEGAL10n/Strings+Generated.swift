@@ -3079,6 +3079,10 @@ public enum Strings {
         }
         public enum WaitingRoom {
           public enum Alert {
+            /// Plural format key: "%#@count@"
+            public static func message(_ p1: Int) -> String {
+              return Strings.tr("Localizable", "chat.call.waitingRoom.alert.message", p1, fallback: "Plural format key: \"%#@count@\"")
+            }
             public enum Button {
               /// Call waiting room alert button to admit access
               public static let admit = Strings.tr("Localizable", "chat.call.waitingRoom.alert.button.admit", fallback: "Admit")
@@ -3102,21 +3106,11 @@ public enum Strings {
               public static func one(_ p1: Any) -> String {
                 return Strings.tr("Localizable", "chat.call.waitingRoom.alert.message.one", String(describing: p1), fallback: "%@ is waiting to join the call")
               }
-              /// Call waiting room alert message text to notify host that several participants are waiting to join
-              public static func several(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "chat.call.waitingRoom.alert.message.several", String(describing: p1), fallback: "%@ participants are waiting to join the call")
-              }
             }
             public enum OutsideCallUI {
-              public enum Message {
-                /// Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible)
-                public static func one(_ p1: Any, _ p2: Any) -> String {
-                  return Strings.tr("Localizable", "chat.call.waitingRoom.alert.outsideCallUI.message.one", String(describing: p1), String(describing: p2), fallback: "%@ is waiting to join “%@”")
-                }
-                /// Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible)
-                public static func several(_ p1: Any, _ p2: Any) -> String {
-                  return Strings.tr("Localizable", "chat.call.waitingRoom.alert.outsideCallUI.message.several", String(describing: p1), String(describing: p2), fallback: "%@ participants are waiting to join “%@”")
-                }
+              /// Plural format key: "%#@count@"
+              public static func message(_ p1: Int) -> String {
+                return Strings.tr("Localizable", "chat.call.waitingRoom.alert.outsideCallUI.message", p1, fallback: "Plural format key: \"%#@count@\"")
               }
             }
           }
@@ -5477,7 +5471,7 @@ public enum Strings {
           /// Meeting waiting room alert action of ok got it
           public static let okGotIt = Strings.tr("Localizable", "meetings.waitingRoom.alert.okGotIt", fallback: "OK, got it")
           /// Meeting waiting room alert message of You'll be removed from the waiting room
-          public static let youWillBeRemovedFromTheWaitingRoom = Strings.tr("Localizable", "meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom", fallback: "You'll be removed from the waiting room")
+          public static let youWillBeRemovedFromTheWaitingRoom = Strings.tr("Localizable", "meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom", fallback: "You’ll be removed from the waiting room")
         }
         public enum Guest {
           /// Meeting waiting room guest join first name textfield

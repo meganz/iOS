@@ -720,7 +720,6 @@
         if (completion) completion();
     }];
     
-    [MEGASdkManager.sharedMEGAChatSdk removeChatCallDelegate:self.mainTBC];
     [MEGASdkManager.sharedMEGAChatSdk removeChatDelegate:self.mainTBC];
     self.mainTBC = nil;
 }

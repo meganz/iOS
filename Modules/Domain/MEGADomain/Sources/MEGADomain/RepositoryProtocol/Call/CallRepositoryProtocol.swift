@@ -24,6 +24,8 @@ public protocol CallRepositoryProtocol {
     func createActiveSessions()
     func localAvFlagsChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
     func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
+    func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
+    func onCallUpdate() -> AnyPublisher<CallEntity, Never>
 }
 
 public protocol CallCallbacksRepositoryProtocol {

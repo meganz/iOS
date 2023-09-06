@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 
@@ -26,6 +27,8 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var audio: Bool = false
     var chatSession: ChatSessionEntity?
     var participantHandle: HandleEntity = .invalid
+    var callWaitingRoomUsersUpdateSubject = PassthroughSubject<CallEntity, Never>()
+    var callUpdateSubject = PassthroughSubject<CallEntity, Never>()
     
     init(call: CallEntity? = CallEntity(),
          callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
@@ -34,7 +37,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
         self.callCompletion = callCompletion
         self.answerCallCompletion = answerCallCompletion
     }
-    
+
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
         startListeningForCall_CalledTimes += 1
     }
@@ -132,6 +135,13 @@ final class MockCallUseCase: CallUseCaseProtocol {
     
     func removePeerAsModerator(inCall call: CallEntity, peerId: UInt64) {
         removePeerAsModerator_CalledTimes += 1
+    }
+    func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
+        callWaitingRoomUsersUpdateSubject.eraseToAnyPublisher()
+    }
+    
+    func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
+        callUpdateSubject.eraseToAnyPublisher()
     }
 }
 

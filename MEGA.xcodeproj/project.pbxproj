@@ -794,6 +794,7 @@
 		8313915329351AA300E20170 /* ChatRoomParticipantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313915229351AA300E20170 /* ChatRoomParticipantViewModel.swift */; };
 		83143B722604AB380033161A /* CallLocalVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83143B712604AB380033161A /* CallLocalVideoUseCase.swift */; };
 		8315F6132A445E1600C98BCE /* ChatSourceEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315F6122A445E1600C98BCE /* ChatSourceEntity+Mapper.swift */; };
+		831807B92AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */; };
 		8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */; };
 		83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8319C15E22A138D70048B8A3 /* UIView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319C15D22A138D70048B8A3 /* UIView+MNZCategory.m */; };
@@ -913,6 +914,7 @@
 		83655AD525938662001A0846 /* MEGACoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = B63F319F223BA8FA00B0C6A6 /* MEGACoreDataStack.m */; };
 		83655AE7259387F6001A0846 /* MOOfflineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */; };
 		83655AF025938838001A0846 /* MEGACD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4147C2CF1B4EE8A400A37044 /* MEGACD.xcdatamodeld */; };
+		83663F602AA63869000A1115 /* MainTabBarCallsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83663F5F2AA63869000A1115 /* MainTabBarCallsViewModel.swift */; };
 		836651502649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */; };
 		836651512649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */; };
 		836651532649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */; };
@@ -1108,6 +1110,7 @@
 		83ECE1722488F20E00E9E264 /* ContactsGroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */; };
 		83ECE1742488F23900E9E264 /* ContactsGroups.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */; };
 		83ECE176248900E000E9E264 /* ContactsGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */; };
+		83F79CBB2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */; };
 		83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */; };
 		83FB1434219AC7DD00418BE6 /* OfflineCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1433219AC7DD00418BE6 /* OfflineCollectionViewController.m */; };
 		83FB1439219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1437219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m */; };
@@ -3363,6 +3366,7 @@
 		8313915229351AA300E20170 /* ChatRoomParticipantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantViewModel.swift; sourceTree = "<group>"; };
 		83143B712604AB380033161A /* CallLocalVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLocalVideoUseCase.swift; sourceTree = "<group>"; };
 		8315F6122A445E1600C98BCE /* ChatSourceEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatSourceEntity+Mapper.swift"; sourceTree = "<group>"; };
+		831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWaitingRoomUsersDialog.swift; sourceTree = "<group>"; };
 		8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWidget.swift; sourceTree = "<group>"; };
 		83199F1125556CD900344531 /* MEGAWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		83199F1225556CD900344531 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -3482,6 +3486,7 @@
 		836370362461D2EA00842E38 /* SendLinkToChatsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SendLinkToChatsDelegate.swift; path = Chat/SendLinkToChatsDelegate.swift; sourceTree = "<group>"; };
 		8364742620723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAShowPasswordReminderRequestDelegate.h; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.h; sourceTree = "<group>"; };
 		8364742720723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAShowPasswordReminderRequestDelegate.m; path = API/Requests/MEGAShowPasswordReminderRequestDelegate.m; sourceTree = "<group>"; };
+		83663F5F2AA63869000A1115 /* MainTabBarCallsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsViewModel.swift; sourceTree = "<group>"; };
 		8366514C2649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewController.swift; sourceTree = "<group>"; };
 		8366514D2649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModel.swift; sourceTree = "<group>"; };
 		8366514F2649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutRouter.swift; sourceTree = "<group>"; };
@@ -3675,6 +3680,7 @@
 		83ECE1712488F20E00E9E264 /* ContactsGroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupsViewController.swift; sourceTree = "<group>"; };
 		83ECE1732488F23900E9E264 /* ContactsGroups.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ContactsGroups.storyboard; sourceTree = "<group>"; };
 		83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsGroupTableViewCell.swift; sourceTree = "<group>"; };
+		83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsRouter.swift; sourceTree = "<group>"; };
 		83FB142F219AC7CD00418BE6 /* OfflineTableViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewViewController.h; sourceTree = "<group>"; };
 		83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfflineTableViewViewController.m; sourceTree = "<group>"; };
 		83FB1432219AC7DD00418BE6 /* OfflineCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfflineCollectionViewController.h; sourceTree = "<group>"; };
@@ -6167,6 +6173,7 @@
 		415226781A692ECC00EC7BB6 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				83F79CC42AA7789E00D2DE64 /* MainTabBar */,
 				A8F5D6781ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.h */,
 				A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */,
 				B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */,
@@ -8926,6 +8933,7 @@
 				836651272649374B00BC02F0 /* ParticipantsLayout */,
 				2FFCF39E25FB1A1500E1718D /* StartMeetingScene */,
 				9911BA892A8B209F00B88F28 /* WaitingRoom */,
+				831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */,
 				BF5455E82844377600544A53 /* EndCallDialog.swift */,
 				BF66E00826140BE900066F35 /* MeetingContainerRouter.swift */,
 				BF66DFFE26140B3D00066F35 /* MeetingContainerViewController.swift */,
@@ -8980,6 +8988,15 @@
 				83ECE175248900E000E9E264 /* ContactsGroupTableViewCell.swift */,
 			);
 			path = ContactsGroups;
+			sourceTree = "<group>";
+		};
+		83F79CC42AA7789E00D2DE64 /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */,
+				83663F5F2AA63869000A1115 /* MainTabBarCallsViewModel.swift */,
+			);
+			path = MainTabBar;
 			sourceTree = "<group>";
 		};
 		9405E70C28A3AC43005A16D1 /* BackupNodesValidator */ = {
@@ -13153,6 +13170,8 @@
 				8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */,
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
+				831807B92AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift in Sources */,
+				9464C2F528C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
@@ -13643,6 +13662,8 @@
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
+				83F79CBB2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift in Sources */,
+				83663F602AA63869000A1115 /* MainTabBarCallsViewModel.swift in Sources */,
 				948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */,
 				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,
 				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,

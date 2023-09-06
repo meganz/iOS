@@ -24,4 +24,13 @@ extension ChatRoomPrivilegeEntity {
             return true
         }
     }
+    
+    public var isUserInWaitingRoom: Bool {
+        switch self {
+        case .unknown, .removed, .moderator:
+            return false
+        case .readOnly, .standard:
+            return true
+        }
+    }
 }

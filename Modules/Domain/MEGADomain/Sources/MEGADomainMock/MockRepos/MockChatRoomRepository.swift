@@ -6,7 +6,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     
     private let chatRoom: ChatRoomEntity?
     private let peerHandles: [MEGADomain.HandleEntity]
-    private let peerPrivilege: MEGADomain.ChatRoomPrivilegeEntity?
+    private let peerPrivilege: MEGADomain.ChatRoomPrivilegeEntity
     private let userStatus: MEGADomain.ChatStatusEntity
     private let createChatRoomResult: Result<MEGADomain.ChatRoomEntity, MEGADomain.ChatRoomErrorEntity>
     private let createPublicLinkResult: Result<String, MEGADomain.ChatLinkErrorEntity>
@@ -28,7 +28,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     public init(
         chatRoom: ChatRoomEntity? = nil,
         peerHandles: [MEGADomain.HandleEntity] = [],
-        peerPrivilege: MEGADomain.ChatRoomPrivilegeEntity? = nil,
+        peerPrivilege: MEGADomain.ChatRoomPrivilegeEntity = .unknown,
         userStatus: MEGADomain.ChatStatusEntity = .online,
         createChatRoomResult: Result<MEGADomain.ChatRoomEntity, MEGADomain.ChatRoomErrorEntity> = .failure(.generic),
         createPublicLinkResult: Result<String, MEGADomain.ChatLinkErrorEntity> = .failure(.generic),
@@ -81,7 +81,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         peerHandles
     }
     
-    public func peerPrivilege(forUserHandle userHandle: MEGADomain.HandleEntity, chatRoom: MEGADomain.ChatRoomEntity) -> MEGADomain.ChatRoomPrivilegeEntity? {
+    public func peerPrivilege(forUserHandle userHandle: MEGADomain.HandleEntity, chatRoom: MEGADomain.ChatRoomEntity) -> MEGADomain.ChatRoomPrivilegeEntity {
         peerPrivilege
     }
     
