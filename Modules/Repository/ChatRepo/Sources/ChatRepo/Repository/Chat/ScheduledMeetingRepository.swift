@@ -1,11 +1,11 @@
-import ChatRepo
 import Combine
+import MEGAChatSdk
 import MEGADomain
 import MEGASwift
 
 public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtocol {
     public static var newRepo: ScheduledMeetingRepository {
-        ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)
+        ScheduledMeetingRepository(chatSDK: MEGAChatSdk.sharedChatSdk)
     }
     
     private let chatSDK: MEGAChatSdk
@@ -18,12 +18,15 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     public func scheduledMeetings() -> [ScheduledMeetingEntity] {
         chatSDK
             .getAllScheduledMeetings()
-            .compactMap { scheduledMeeting in
-                guard !scheduledMeeting.isCancelled,
-                      let chatRoom = chatSDK.chatRoom(forChatId: scheduledMeeting.chatId),
-                      !chatRoom.isArchived, chatRoom.ownPrivilege.toOwnPrivilegeEntity().isUserInChat else {
+            .compactMap { (scheduledMeeting: MEGAChatScheduledMeeting) -> ScheduledMeetingEntity? in
+                guard
+                    !scheduledMeeting.isCancelled,
+                    let chatRoom = chatSDK.chatRoom(forChatId: scheduledMeeting.chatId),
+                    !chatRoom.isArchived, chatRoom.ownPrivilege.toOwnPrivilegeEntity().isUserInChat
+                else {
                     return nil
                 }
+
                 return scheduledMeeting.toScheduledMeetingEntity()
             }
     }
@@ -41,48 +44,13 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     }
     
     public func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity) async throws -> [ScheduledMeetingOccurrenceEntity] {
-        try Task.checkCancellation()
-        return try await withCheckedThrowingContinuation { continuation in
-            chatSDK
-                .fetchScheduledMeetingOccurrences(byChat: chatId, delegate: ChatRequestDelegate { result in
-                    guard Task.isCancelled == false else {
-                        continuation.resume(throwing: CancellationError())
-                        return
-                    }
-                    
-                    if case .success(let request) = result {
-                        let occurrences = request.chatScheduledMeetingOccurrences.map { $0.toScheduledMeetingOccurrenceEntity() }
-                        continuation.resume(returning: occurrences)
-                    } else {
-                        continuation.resume(throwing: ChatRoomErrorEntity.noChatRoomFound)
-                    }
-                })
-        }
+        try await fetchScheduledMeetings(chatId: chatId)
     }
     
     public func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity, since: Date) async throws -> [ScheduledMeetingOccurrenceEntity] {
-        return try await withCheckedThrowingContinuation { continuation in
-            guard Task.isCancelled == false else {
-                continuation.resume(throwing: CancellationError())
-                return
-            }
-            chatSDK
-                .fetchScheduledMeetingOccurrences(byChat: chatId, since: UInt64(since.timeIntervalSince1970), delegate: ChatRequestDelegate { result in
-                    guard Task.isCancelled == false else {
-                        continuation.resume(throwing: CancellationError())
-                        return
-                    }
-                    
-                    if case .success(let request) = result {
-                        let occurrences = request.chatScheduledMeetingOccurrences.map { $0.toScheduledMeetingOccurrenceEntity() }
-                        continuation.resume(returning: occurrences)
-                    } else {
-                        continuation.resume(throwing: ChatRoomErrorEntity.noChatRoomFound)
-                    }
-                })
-        }
+        try await fetchScheduledMeetings(chatId: chatId, since: since)
     }
-    
+
     public func createScheduleMeeting(_ meeting: ScheduleMeetingProxyEntity) async throws -> ScheduledMeetingEntity {
         let peerlist = MEGAChatPeerList()
         meeting.participantHandleList.forEach { peerlist.addPeer(withHandle: $0, privilege: 2)}
@@ -166,6 +134,25 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 completion(.failure(error))
             } else {
                 completion(.failure(GenericErrorEntity()))
+            }
+        }
+    }
+
+    private func fetchScheduledMeetings(chatId: ChatIdEntity, since: Date? = nil) async throws -> [ScheduledMeetingOccurrenceEntity] {
+        try await withAsyncThrowingValue { completion in
+            let delegate = ChatRequestDelegate { result in
+                if case .success(let request) = result {
+                    let occurrences = request.chatScheduledMeetingOccurrences.map { $0.toScheduledMeetingOccurrenceEntity() }
+                    completion(.success(occurrences))
+                } else {
+                    completion(.failure(ChatRoomErrorEntity.noChatRoomFound))
+                }
+            }
+
+            if let since = since {
+                return chatSDK.fetchScheduledMeetingOccurrences(byChat: chatId, since: UInt64(since.timeIntervalSince1970), delegate: delegate)
+            } else {
+                return chatSDK.fetchScheduledMeetingOccurrences(byChat: chatId, delegate: delegate)
             }
         }
     }

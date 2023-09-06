@@ -1,6 +1,7 @@
+import MEGAChatSdk
 import MEGADomain
 
-extension MEGAChatScheduledMeeting {
+public extension MEGAChatScheduledMeeting {
     func toScheduledMeetingEntity() -> ScheduledMeetingEntity {
         ScheduledMeetingEntity(with: self)
     }

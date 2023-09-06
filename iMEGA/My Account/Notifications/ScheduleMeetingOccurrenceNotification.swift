@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAL10n
 
