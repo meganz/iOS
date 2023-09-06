@@ -2399,7 +2399,7 @@
 /* Text to indicate the user to reset/change the password of a link */
 "Reset Password"="Resetar senha";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
-"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Este link não está disponível porque a conta do usuário que o criou foi encerrada devido a uma grave violação dos [A]Termos de serviço[/A] do MEGA.";
+"This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Este link não está disponível porque a conta do usuário que o criou foi encerrada devido a uma grave infração dos [A]Termos de serviço[/A] do MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
 "Taken down due to severe violation of our terms of service"="Este arquivo ou pasta foi denunciado por armazenar conteúdo censurável, como material relacionado à exploração infantil, extremismo violento ou bestialidade. A conta do usuário que criou este link foi encerrada e as informações desta conta, incluindo o endereço IP, foram proporcionadas às autoridades competentes.";
 /* Text used to show the user that some resource is not available */
@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="Atualizar";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="O arquivo será atualizado com uma nova versão.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Aplicar a todos os %@ duplicados";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Não tem mais ninguém aqui";
 /* Meetings end call dialog description */
@@ -3442,6 +3440,10 @@
 "device.center.backup.blocked.status.message"="Bloqueado";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Dispositivo desconhecido";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="Mostrar na Nuvem de arquivos";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Mostrar nos Backups";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Deixar de repetir";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3684,3 +3686,35 @@
 "meetings.waitingRoom.guest.join"="Entrar";
 /* Meeting waiting room message of wait for host to let you in */
 "meetings.waitingRoom.message.waitForHostToLetYouIn"="Espere até que o host deixe você entrar";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="Espere até que o host inicie a reunião";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="O anfitrião não deixou você entrar";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Você será removido da sala de espera";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="Entendi";
+/* Call waiting room alert message text to notify host that someone is waiting to join */
+"chat.call.waitingRoom.alert.message.one"="%@ está esperando para entrar na chamada";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.deny"="Rejeitar";
+/* Call waiting room alert button to admit access */
+"chat.call.waitingRoom.alert.button.admit"="Aceitar";
+/* Call waiting room alert message text to notify host that several participants are waiting to join */
+"chat.call.waitingRoom.alert.message.several"="";
+/* Call waiting room alert button to open waiting room UI */
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="Ver sala de espera";
+/* Call waiting room alert button to allow access to everyone */
+"chat.call.waitingRoom.alert.button.admitAll"="Aceitar a todos";
+/* Call waiting room alert message text to confirm deny access from host */
+"chat.call.waitingRoom.alert.message.denyAcces"="Não permitir o acesso de %@?";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.confirmDeny"="Não permitir o acesso";
+/* Call waiting room alert button to allow access */
+"chat.call.waitingRoom.alert.button.cancel"="Cancelar";
+/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ está esperando para entrar em “%@”";
+/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open"="Abrir no MEGA";

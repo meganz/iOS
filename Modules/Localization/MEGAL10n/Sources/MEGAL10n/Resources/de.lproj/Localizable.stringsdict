@@ -2653,9 +2653,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every month on day [cardinalNumber]</string>
+        <string>Jeden Monat am [cardinalNumber].</string>
         <key>other</key>
-        <string>Every %d months on day [cardinalNumber]</string>
+        <string>Alle %d Monate am [cardinalNumber].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -2704,6 +2704,38 @@
         <string>%d Datei im Cloud Drive gespeichert</string>
         <key>other</key>
         <string>%d Dateien im Cloud Drive gespeichert</string>
+      </dict>
+    </dict>
+    <key>general.saveToPhotos.started</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Download gestartet</string>
+        <key>other</key>
+        <string>%d Downloads gestartet</string>
+      </dict>
+    </dict>
+    <key>general.format.itemsSelected</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item selected</string>
+        <key>other</key>
+        <string>%d items selected</string>
       </dict>
     </dict>
   </dict>

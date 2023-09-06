@@ -2731,9 +2731,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Sent [A] to chat</string>
+        <string>A trimis [A] la chat</string>
+        <key>few</key>
+        <string>A trimis [A] la toate chat-urile</string>
         <key>other</key>
-        <string>Sent [A] to all chats</string>
+        <string>A trimis [A] la toate chat-urile</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.daily.interval</key>
@@ -2801,9 +2803,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every day.</string>
+        <string>Întâlnirile vor avea loc în fiecare zi.</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d zile.</string>
         <key>other</key>
-        <string>Meeting will occur every %d days.</string>
+        <string>Întâlnirea va avea loc la fiecare %d zile.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.singleDay.footerNote</key>
@@ -2817,9 +2821,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every week on [weekDayName].</string>
+        <string>Întâlnirea va avea loc în fiecare săptămână, [weekDayName].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d săptămâni, [weekDayName]</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayName].</string>
+        <string>Întâlnirea va avea loc la fiecare %d săptămâni, [weekDayName]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.multipleDays.footerNote</key>
@@ -2833,9 +2839,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every week on [weekDayNames] and [lastWeekDayName].</string>
+        <string>Întâlnirea va avea loc în fiecare săptămână, [weekDayNames] și [lastWeekDayName].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d săptămâni, [weekDayNames] și [lastWeekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d weeks on [weekDayNames] and [lastWeekDayName].</string>
+        <string>Întâlnirea va avea loc la fiecare %d săptămâni, [weekDayNames] și [lastWeekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDay.footerNote</key>
@@ -2849,9 +2857,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDay].</string>
+        <string>Întâlnirea va avea loc în fiecare lună în zilele [ordinalDay].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni în zilele [ordinalDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDay].</string>
+        <string>Întâlnirea va avea loc la fiecare %d luni în zilele [ordinalDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDays.footerNote</key>
@@ -2865,9 +2875,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [ordinalDays] and [ordinalLastDay].</string>
+        <string>Întâlnirea va avea loc în fiecare lună în zilele [ordinalDays] și [ordinalLastDay].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni în zilele [ordinalDays] și [ordinalLastDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [ordinalDays] and [ordinalLastDay].</string>
+        <string>Întâlnirea va avea loc la fiecare %d luni în zilele [ordinalDays] și [ordinalLastDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
@@ -2881,9 +2893,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on day [cardinalDay].</string>
+        <string>Întâlnirea va avea loc în fiecare lună în ziua [cardinalDay].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni în ziua [cardinalDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on day [cardinalDay].</string>
+        <string>Întâlnirea va avea loc la fiecare %d luni în ziua [cardinalDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
@@ -2897,9 +2911,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on day [cardinalDays] and day [cardinalLastDay].</string>
+        <string>Întâlnirea va avea loc în fiecare lună în ziua [cardinalDays] și în ziua [cardinalLastDay].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni în ziua [cardinalDays] și în ziua [cardinalLastDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on day [cardinalDays] and day [cardinalLastDay].</string>
+        <string>Întâlnirea va avea loc la fiecare %d luni în ziua [cardinalDays] și în ziua [cardinalLastDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -2913,9 +2929,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on the [weekNumber] [weekDayName].</string>
+        <string>Întâlnirea va avea loc în fiecare lună, în [weekNumber] [weekDayName].</string>
+        <key>few</key>
+        <string>Întâlnirea va avea loc la fiecare %d luni, în [weekNumber] [weekDayName].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on the [weekNumber] [weekDayName].</string>
+        <string>Întâlnirea va avea loc la fiecare %d luni, în [weekNumber] [weekDayName].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.weekly.selectedFrequency</key>
@@ -2929,9 +2947,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every week on [weekDayNames]</string>
+        <string>În fiecare săptămână, [weekDayNames]</string>
+        <key>few</key>
+        <string>La fiecare %d săptămâni, [weekDayNames]</string>
         <key>other</key>
-        <string>Every %d weeks on [weekDayNames]</string>
+        <string>La fiecare %d săptămâni, [weekDayNames]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDay.selectedFrequency</key>
@@ -2945,9 +2965,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every month on the [ordinalNumber]</string>
+        <string>În fiecare lună pe [ordinalNumber]</string>
+        <key>few</key>
+        <string>La fiecare %d luni pe [ordinalNumber]</string>
         <key>other</key>
-        <string>Every %d months on the [ordinalNumber]</string>
+        <string>La fiecare %d luni pe [ordinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekDayCardinal.selectedFrequency</key>
@@ -2961,9 +2983,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every month on day [cardinalNumber]</string>
+        <string>În fiecare lună, în ziua [cardinalNumber]</string>
+        <key>few</key>
+        <string>La fiecare %d luni, în ziua [cardinalNumber]</string>
         <key>other</key>
-        <string>Every %d months on day [cardinalNumber]</string>
+        <string>La fiecare %d luni, în ziua [cardinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -2977,9 +3001,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every month, [ordinalNumber] [weekDayName]</string>
+        <string>În fiecare lună, în [ordinalNumber][weekDayName]</string>
+        <key>few</key>
+        <string>La fiecare %d luni, în [ordinalNumber] [weekDayName]</string>
         <key>other</key>
-        <string>Every %d months, [ordinalNumber] [weekDayName]</string>
+        <string>La fiecare %d luni, în [ordinalNumber] [weekDayName]</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2993,9 +3019,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Daily</string>
+        <string>Zilnică</string>
+        <key>few</key>
+        <string>Fiecare %d zile</string>
         <key>other</key>
-        <string>Every %d days</string>
+        <string>Fiecare %d zile</string>
       </dict>
     </dict>
     <key>albumLink.alert.message.filesSaveToCloudDrive</key>
@@ -3009,9 +3037,47 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file saved to Cloud drive</string>
+        <string>%d fișier a fost salvat pe Unitatea cloud</string>
+        <key>few</key>
+        <string>%d fișiere au fost salvate pe Unitatea cloud</string>
         <key>other</key>
-        <string>%d files saved to Cloud drive</string>
+        <string>%d de fișiere au fost salvate pe Unitatea cloud</string>
+      </dict>
+    </dict>
+    <key>general.saveToPhotos.started</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Descărcarea a început</string>
+        <key>few</key>
+        <string>%d descărcări au început</string>
+        <key>other</key>
+        <string>%d de descărcări au început</string>
+      </dict>
+    </dict>
+    <key>general.format.itemsSelected</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d element selectat</string>
+        <key>few</key>
+        <string>%d elemente selectate</string>
+        <key>other</key>
+        <string>%d de elemente selectate</string>
       </dict>
     </dict>
   </dict>
