@@ -3,34 +3,33 @@ import SwiftUI
 
 struct SearchResultRowView: View {
     @StateObject var viewModel: SearchResultRowViewModel
-
-    public var body: some View {
-        HStack(spacing: 8) {
-            thumbnail
+    
+    var body: some View {
+        HStack {
             HStack {
+                thumbnail
                 titleAndDescription
                 Spacer()
-                more
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                viewModel.selectionAction()
+            }
+            moreButton
         }
-        .padding([.leading, .trailing])
-        .frame(height: 65)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            viewModel.selectionAction()
-        }
+        .padding()
         .taskForiOS14 {
             await viewModel.loadThumbnail()
         }
     }
-
+    
     private var thumbnail: some View {
         Image(uiImage: viewModel.thumbnailImage)
             .resizable()
             .scaledToFit()
             .frame(width: 40, height: 40)
     }
-
+    
     private var titleAndDescription: some View {
         VStack(alignment: .leading, spacing: .zero) {
             Text(viewModel.title)
@@ -43,18 +42,20 @@ struct SearchResultRowView: View {
         }
         .frame(height: 40)
     }
-
-    private var more: some View {
-        Image("moreList")
-            .onTapGesture {
-                viewModel.contextAction()
-            }
+    
+    private var moreButton: some View {
+        UIButtonWrapper(
+            image: UIImage(named: "moreList") ?? UIImage()
+        ) { button in
+            viewModel.contextAction(button)
+        }
+        .frame(width: 50, height: 50)
     }
 }
 
-struct SearchResultRowView_Previews: PreviewProvider {
+ struct SearchResultRowView_Previews: PreviewProvider {
     static var previews: some View {
-        let id = ResultId(id: "1")
+        let id = ResultId(1)
 
         return SearchResultRowView(
             viewModel: .init(
@@ -63,12 +64,12 @@ struct SearchResultRowView_Previews: PreviewProvider {
                     title: "title_\(id)",
                     description: "subtitle_\(id)",
                     properties: [],
-                    thumbnailImageData: { UIImage(systemName: "placeholder")?.pngData() ?? Data() },
+                    thumbnailImageData: { UIImage(systemName: "scribble")?.pngData() ?? Data() },
                     type: .node
                 ),
-                contextAction: { },
+                contextAction: { _ in },
                 selectionAction: { }
             )
         )
     }
-}
+ }

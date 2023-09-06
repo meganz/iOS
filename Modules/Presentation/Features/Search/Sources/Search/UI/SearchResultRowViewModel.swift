@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable {
     static func == (lhs: SearchResultRowViewModel, rhs: SearchResultRowViewModel) -> Bool {
@@ -20,12 +21,12 @@ final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable 
     }
 
     private let result: SearchResult
-    let contextAction: () -> Void
+    let contextAction: (UIButton) -> Void
     let selectionAction: () -> Void
 
     init(
         with result: SearchResult,
-        contextAction: @escaping () -> Void,
+        contextAction: @escaping (UIButton) -> Void,
         selectionAction: @escaping () -> Void
     ) {
         self.result = result

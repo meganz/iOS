@@ -65,7 +65,7 @@ final class HomeScreenFactory: NSObject {
             saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(
                 downloadFileRepository: DownloadFileRepository(sdk: sdk),
                 fileCacheRepository: FileCacheRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo
+                nodeRepository: makeNodeRepo()
             )
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(
@@ -105,6 +105,10 @@ final class HomeScreenFactory: NSObject {
 
         return navigationController
     }
+    
+    private func makeNodeRepo() -> some NodeRepositoryProtocol {
+        NodeRepository.newRepo
+    }
 
     private func makeSearchResultViewController(
         with navigationController: UINavigationController,
@@ -137,19 +141,15 @@ final class HomeScreenFactory: NSObject {
             )
         )
         
-        // put some real value here to make it work
-        // this is put here until we have real API calls and real data
-        let fakeNode: HandleEntity = 221064586114322
-        
         // this bridge is needed to do a searchBar <-> searchResults -> homeScreen communication without coupling this to
         // MEGA app level delegates. Using simple closures to pass data back and forth
         let searchBridge = SearchBridge(
-            selection: { _ in
-                router.didTapNode(fakeNode)
+            selection: { result in
+                router.didTapNode(result.id)
             },
-            context: { _ in
-                // will try to remove the dummy button required by the API on later MR's
-                router.didTapMoreAction(on: fakeNode, button: UIButton())
+            context: { result, button in
+                // button reference is required to position popover on the iPad correctly
+                router.didTapMoreAction(on: result.id, button: button)
             }
         )
         
@@ -165,11 +165,39 @@ final class HomeScreenFactory: NSObject {
             searchBridge?.searchCancelled()
         }
         
+        bridge.updateBottomInsetTrampoline = { [weak searchBridge] inset in
+            searchBridge?.updateBottomInset(inset)
+        }
+        
         let vm = SearchResultsViewModel(
-            resultsProvider: NonProductionTestResultsProvider(),
+            resultsProvider: HomeSearchResultsProvider(
+                searchFileUseCase: makeSearchFileUseCase(),
+                nodeDetailUseCase: makeNodeDetailUseCase(),
+                nodeRepository: makeNodeRepo()
+            ),
             bridge: searchBridge
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
+    }
+    
+    private func makeNodeDetailUseCase() -> some NodeDetailUseCaseProtocol {
+        NodeDetailUseCase(
+            sdkNodeClient: .live,
+            nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCase(
+                sdkNodeClient: .live,
+                fileSystemClient: .live,
+                thumbnailRepo: ThumbnailRepository.newRepo
+            )
+        )
+    }
+    
+    private func makeSearchFileUseCase() -> some SearchFileUseCaseProtocol {
+        SearchFileUseCase(
+            nodeSearchClient: .live,
+            searchFileHistoryUseCase: SearchFileHistoryUseCase(
+                fileSearchHistoryRepository: .live
+            )
+        )
     }
     
     private func makeLegacySearchResultsViewController(
@@ -177,23 +205,11 @@ final class HomeScreenFactory: NSObject {
         bridge: SearchResultsBridge
     ) -> UIViewController {
         let searchResultViewModel = HomeSearchResultViewModel(
-            searchFileUseCase: SearchFileUseCase(
-                nodeSearchClient: .live,
-                searchFileHistoryUseCase: SearchFileHistoryUseCase(
-                    fileSearchHistoryRepository: .live
-                )
-            ),
+            searchFileUseCase: makeSearchFileUseCase(),
             searchFileHistoryUseCase: SearchFileHistoryUseCase(
                 fileSearchHistoryRepository: .live
             ),
-            nodeDetailUseCase: NodeDetailUseCase(
-                sdkNodeClient: .live,
-                nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCase(
-                    sdkNodeClient: .live,
-                    fileSystemClient: .live,
-                    thumbnailRepo: ThumbnailRepository.newRepo
-                )
-            ),
+            nodeDetailUseCase: makeNodeDetailUseCase(),
             router: HomeSearchResultRouter(
                 navigationController: navigationController,
                 nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(

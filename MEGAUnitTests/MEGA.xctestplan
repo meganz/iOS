@@ -259,8 +259,9 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:Modules\/Features\/Search",
+        "containerPath" : "container:Modules\/Presentation\/Features\/Search",
         "identifier" : "SearchTests",
         "name" : "SearchTests"
       }

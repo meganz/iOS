@@ -142,6 +142,12 @@ struct NodeRepository: NodeRepositoryProtocol {
         return await parentTreeTask.value
     }
     
+    func children(of node: NodeEntity) async -> [NodeEntity] {
+        guard let node = node.toMEGANode(in: sdk) else { return [] }
+        let nodeList = sdk.children(forParent: node)
+        return nodeList.toNodeEntities()
+    }
+    
     // MARK: - Private
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {
         let nodeList = sdk.children(forParent: node)

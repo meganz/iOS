@@ -12,12 +12,12 @@ public protocol SearchResultProtocol: Identifiable {
     var type: ResultType { get }
 }
 
-public struct SearchResult: Identifiable {
+public struct SearchResult: Identifiable, Sendable {
     public let id: ResultId
     public let title: String
     public let description: String
     public let properties: [Property]
-    public let thumbnailImageData: () async -> Data
+    public let thumbnailImageData: @Sendable () async -> Data
     public let type: ResultType
     
     public init(
@@ -25,7 +25,7 @@ public struct SearchResult: Identifiable {
         title: String,
         description: String,
         properties: [Property],
-        thumbnailImageData: @escaping () async -> Data,
+        thumbnailImageData: @Sendable @escaping () async -> Data,
         type: ResultType
     ) {
         self.id = id
@@ -37,21 +37,7 @@ public struct SearchResult: Identifiable {
     }
 }
 
-public struct ResultId: Hashable {
-    let id: String
-}
-
-extension ResultId: ExpressibleByStringLiteral {
-    public init(stringLiteral value: String) {
-        id = value
-    }
-}
-
-extension ResultId: CustomStringConvertible {
-    public var description: String {
-        id
-    }
-}
+public typealias ResultId = UInt64
 
 extension SearchResult: Equatable {
     public static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
@@ -68,4 +54,3 @@ extension Property: Equatable {
         lhs.icon == rhs.icon
     }
 }
-

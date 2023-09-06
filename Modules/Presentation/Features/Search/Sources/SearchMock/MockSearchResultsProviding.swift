@@ -22,21 +22,8 @@ public class MockSearchResultsProviding: SearchResultsProviding {
 extension SearchResultsEntity {
     static var defaultTestResult: Self {
         .init(
-            results: [.resultWith(id: "1")],
+            results: [.resultWith(id: 1)],
             chips: [.chipWith(id: "2")]
-        )
-    }
-}
-
-extension SearchResult {
-    static func resultWith(id: ResultId) -> Self {
-        .init(
-            id: id,
-            title: "title_\(id)",
-            description: "subtitle_\(id)",
-            properties: [],
-            thumbnailImageData: { .init() },
-            type: .node
         )
     }
 }

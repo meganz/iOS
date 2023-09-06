@@ -24,9 +24,16 @@ class SearchResultsBridge: MEGASearchBarViewEditingDelegate, HomeSearchControlle
     func didFinishSearching() {
         didFinishSearchingTrampoline?()
     }
+    
+    /// for adjusting bottom scroll indicator inset for when minified audio player is presented or not
+    func update(bottomInset: CGFloat) {
+        updateBottomInsetTrampoline?(bottomInset)
+    }
+    
     var didFinishSearchingTrampoline: (() -> Void)?
     var didHighlightTrampoline: (() -> Void)?
     var didSelectTextTrampoline: ((String) -> Void)?
     var didInputTextTrampoline: ((String) -> Void)?
     var didClearTrampoline: (() -> Void)?
+    var updateBottomInsetTrampoline: ((CGFloat) -> Void)?
 }
