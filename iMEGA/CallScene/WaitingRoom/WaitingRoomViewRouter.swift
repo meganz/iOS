@@ -9,14 +9,18 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     private(set) var presenter: UIViewController?
     private let scheduledMeeting: ScheduledMeetingEntity
     private weak var baseViewController: UIViewController?
+    private let chatLink: String?
 
     private var permissionRouter: PermissionAlertRouter {
         .makeRouter(deviceHandler: DevicePermissionsHandler.makeHandler())
     }
 
-    init(presenter: UIViewController?, scheduledMeeting: ScheduledMeetingEntity) {
+    init(presenter: UIViewController?,
+         scheduledMeeting: ScheduledMeetingEntity,
+         chatLink: String? = nil) {
         self.presenter = presenter
         self.scheduledMeeting = scheduledMeeting
+        self.chatLink = chatLink
     }
     
     // MARK: - Public
@@ -36,6 +40,8 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             callCoordinatorUseCase: CallCoordinatorUseCase(),
+            meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository(chatSdk: .shared, sdk: .shared, callActionManager: .shared)),
+            authUseCase: AuthUseCase(repo: AuthRepository.newRepo, credentialRepo: CredentialRepository.newRepo),
             waitingRoomUseCase: WaitingRoomUseCase(waitingRoomRepo: WaitingRoomRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
@@ -43,7 +49,8 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
-            permissionHandler: DevicePermissionsHandler.makeHandler()
+            permissionHandler: DevicePermissionsHandler.makeHandler(),
+            chatLink: chatLink
         )
         let viewController = WaitingRoomViewController(viewModel: viewModel)
         baseViewController = viewController
@@ -58,8 +65,8 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         presenter.present(nav, animated: true)
     }
     
-    func dismiss() {
-        baseViewController?.dismiss(animated: true)
+    func dismiss(completion: (() -> Void)?) {
+        baseViewController?.dismiss(animated: true, completion: completion)
     }
     
     func showLeaveAlert(leaveAction: @escaping () -> Void) {

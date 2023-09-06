@@ -1201,12 +1201,8 @@ class ChatViewController: MessagesViewController {
             updateNavigationBarButtonsBeforeStartCall()
             switch result {
             case .success:
-                if chatContentViewModel.shouldOpenWaitingRoom() {
-                    openWaitingRoom()
-                } else {
-                    startMeetingUI(isVideoEnabled: false,
-                                   isSpeakerEnabled: false)
-                }
+                startMeetingUI(isVideoEnabled: false,
+                               isSpeakerEnabled: false)
             case .failure:
                 MEGALogDebug("Cannot answer call")
             }
@@ -1275,7 +1271,9 @@ class ChatViewController: MessagesViewController {
             return
         }
         
-        if call.isRinging || call.status == .userNoPresent {
+        if chatContentViewModel.shouldOpenWaitingRoom() {
+            openWaitingRoom()
+        } else if call.isRinging || call.status == .userNoPresent {
             answerCall()
         } else {
             joinActiveCall(isVideoEnabled: videoCall)

@@ -11,6 +11,8 @@ extension WaitingRoomViewModel {
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
+        meetingUseCase: some MeetingCreatingUseCaseProtocol = MockMeetingCreatingUseCase(),
+        authUseCase: some AuthUseCaseProtocol = MockAuthUseCase(),
         waitingRoomUseCase: some WaitingRoomUseCaseProtocol = MockWaitingRoomUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
@@ -24,6 +26,7 @@ extension WaitingRoomViewModel {
                 audioAuthorized: true,
                 videoAuthorized: true
             ),
+        chatLink: String? = nil,
         isTesting: Bool = true
     ) {
         self.init(
@@ -32,6 +35,8 @@ extension WaitingRoomViewModel {
             chatUseCase: chatUseCase,
             callUseCase: callUseCase,
             callCoordinatorUseCase: callCoordinatorUseCase,
+            meetingUseCase: meetingUseCase,
+            authUseCase: authUseCase,
             waitingRoomUseCase: waitingRoomUseCase,
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase,
@@ -39,7 +44,8 @@ extension WaitingRoomViewModel {
             localVideoUseCase: localVideoUseCase,
             captureDeviceUseCase: captureDeviceUseCase,
             audioSessionUseCase: audioSessionUseCase,
-            permissionHandler: permissionHandler
+            permissionHandler: permissionHandler,
+            chatLink: chatLink
         )
     }
 }

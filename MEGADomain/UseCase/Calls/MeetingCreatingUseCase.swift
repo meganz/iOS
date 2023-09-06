@@ -4,6 +4,7 @@ import MEGADomain
 protocol MeetingCreatingUseCaseProtocol {
     func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
+    func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
     func getUsername() -> String
     func getCall(forChatId chatId: UInt64) -> CallEntity?
     func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void, karereInitCompletion: @escaping () -> Void)
@@ -26,6 +27,10 @@ struct MeetingCreatingUseCase<T: MeetingCreatingRepositoryProtocol>: MeetingCrea
     
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
         repository.joinChatCall(forChatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, userHandle: userHandle, completion: completion)
+    }
+    
+    func joinChat(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
+        repository.joinChatWithoutAnswerCall(forChatId: chatId, userHandle: userHandle, completion: completion)
     }
     
     func getUsername() -> String {
