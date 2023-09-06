@@ -998,7 +998,6 @@
 		838838712A97769300148640 /* WaitingRoomEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838838702A97769300148640 /* WaitingRoomEntity+Mapper.swift */; };
 		838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B5525D55EFA00767DB0 /* CallUseCase.swift */; };
 		838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B6825D5678C00767DB0 /* CallRepository.swift */; };
-		838A849D2631C987004804A4 /* MegaChatResultRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A849C2631C987004804A4 /* MegaChatResultRequestDelegate.swift */; };
 		838B976826B1615F000E480E /* CallParticipantEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */; };
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
 		838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */; };
@@ -3571,7 +3570,6 @@
 		838838702A97769300148640 /* WaitingRoomEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaitingRoomEntity+Mapper.swift"; sourceTree = "<group>"; };
 		838A7B5525D55EFA00767DB0 /* CallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallUseCase.swift; sourceTree = "<group>"; };
 		838A7B6825D5678C00767DB0 /* CallRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRepository.swift; sourceTree = "<group>"; };
-		838A849C2631C987004804A4 /* MegaChatResultRequestDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaChatResultRequestDelegate.swift; sourceTree = "<group>"; };
 		838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallParticipantEntity+Mapping.swift"; sourceTree = "<group>"; };
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
 		838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift; sourceTree = "<group>"; };
@@ -7051,8 +7049,6 @@
 				83DE9D2528EC823400F24DF4 /* ChatRepository.swift */,
 				BF66DF152612C20200066F35 /* ChatRoomRepository.swift */,
 				5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */,
-				836A04DD29813E62009C9405 /* ScheduledMeetingRepository.swift */,
-				5BFA962F252E1119003653EB /* ManageChatHistoryRepository.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -8596,14 +8592,6 @@
 			path = Calls;
 			sourceTree = "<group>";
 		};
-		838A84992631C94C004804A4 /* Karere */ = {
-			isa = PBXGroup;
-			children = (
-				838A849C2631C987004804A4 /* MegaChatResultRequestDelegate.swift */,
-			);
-			path = Karere;
-			sourceTree = "<group>";
-		};
 		838B976426B15318000E480E /* Call */ = {
 			isa = PBXGroup;
 			children = (
@@ -8776,13 +8764,6 @@
 				83C49BAD2652627400A7764B /* CallTitleView.xib */,
 			);
 			path = TitleView;
-			sourceTree = "<group>";
-		};
-		83C7C85027EDE80200CFB5E6 /* PhotosLibrary */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = PhotosLibrary;
 			sourceTree = "<group>";
 		};
 		83CCBC3B2795954E00B90EF2 /* CancellableTransfer */ = {
@@ -9406,7 +9387,6 @@
 			children = (
 				A859043129F2CE9D00632F0C /* Call */,
 				A843036328F953AA00F81901 /* Messages */,
-				A859043229F2CED300632F0C /* ScheduleMeeting */,
 				BFE444452914FE1E00AAF882 /* ChatConnectionStatus+Mapper.swift */,
 				836BCF1B28EDD12100515E18 /* ChatListItemEntity+Mapper.swift */,
 				8358332F29487FEA00394F1A /* ChatRoomPrivilegeEntity+Mapper.swift */,
@@ -9467,13 +9447,6 @@
 				838838702A97769300148640 /* WaitingRoomEntity+Mapper.swift */,
 			);
 			path = Call;
-			sourceTree = "<group>";
-		};
-		A859043229F2CED300632F0C /* ScheduleMeeting */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ScheduleMeeting;
 			sourceTree = "<group>";
 		};
 		A859043329F2D14300632F0C /* Preference */ = {
@@ -10241,10 +10214,8 @@
 				5BC47E2C253F0F7200853323 /* Chat */,
 				830C266F25DFC70B00E9B56E /* Favourites */,
 				83E3463B25B6DE56006F2AD6 /* Files */,
-				838A84992631C94C004804A4 /* Karere */,
 				0D213E8C263A611500B43723 /* Node */,
 				32CB4912284EF55900697BA9 /* Photos */,
-				83C7C85027EDE80200CFB5E6 /* PhotosLibrary */,
 				830C26C025DFDCB400E9B56E /* Recents */,
 				945A8AE7297EC442007F76DA /* Settings */,
 				0D7E5FA42634E1CE00C5CB2A /* Transfer */,
@@ -13149,7 +13120,6 @@
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
 				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
 				831807B92AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift in Sources */,
-				9464C2F528C65CDA00F8B082 /* CameraPositionEntity+Mapper.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
@@ -13728,7 +13698,6 @@
 				A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */,
 				834AFD1D2492567A005DF37C /* MEGAChatPeerList+Additions.swift in Sources */,
 				83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */,
-				838A849D2631C987004804A4 /* MegaChatResultRequestDelegate.swift in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */,
 				A84F4A96298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift in Sources */,
