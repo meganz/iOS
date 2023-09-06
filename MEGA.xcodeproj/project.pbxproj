@@ -530,7 +530,6 @@
 		5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */; };
 		5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
-		5BFA9630252E1119003653EB /* ManageChatHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA962F252E1119003653EB /* ManageChatHistoryRepository.swift */; };
 		5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D01995624AD64C1006ED2A0 /* InterfaceStyle.swift */; };
 		5D038F082511D5AF00DAA2E6 /* HomeSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D038F062511D5AF00DAA2E6 /* HomeSearchResultViewController.swift */; };
 		5D038F092511D5AF00DAA2E6 /* HomeSearchResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D038F072511D5AF00DAA2E6 /* HomeSearchResultViewController.xib */; };
@@ -3097,7 +3096,6 @@
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
-		5BFA962F252E1119003653EB /* ManageChatHistoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageChatHistoryRepository.swift; sourceTree = "<group>"; };
 		5D01995624AD64C1006ED2A0 /* InterfaceStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceStyle.swift; sourceTree = "<group>"; };
 		5D038F062511D5AF00DAA2E6 /* HomeSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchResultViewController.swift; sourceTree = "<group>"; };
 		5D038F072511D5AF00DAA2E6 /* HomeSearchResultViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeSearchResultViewController.xib; sourceTree = "<group>"; };
@@ -7061,7 +7059,6 @@
 				83DE9D2528EC823400F24DF4 /* ChatRepository.swift */,
 				BF66DF152612C20200066F35 /* ChatRoomRepository.swift */,
 				5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */,
-				5BFA962F252E1119003653EB /* ManageChatHistoryRepository.swift */,
 				836A04DD29813E62009C9405 /* ScheduledMeetingRepository.swift */,
 			);
 			path = Chat;
@@ -13652,7 +13649,6 @@
 				B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */,
 				943FF9EF292FA33E00B744C8 /* MainTabBarController+SnackBar.swift in Sources */,
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
-				5BFA9630252E1119003653EB /* ManageChatHistoryRepository.swift in Sources */,
 				B69AF66828A1E5190022B094 /* ManageChatHistoryTableViewController.swift in Sources */,
 				B69AF66B28A1E5190022B094 /* ManageChatHistoryViewModel.swift in Sources */,
 				B69AF66228A1E5190022B094 /* ManageChatHistoryViewRouter.swift in Sources */,
