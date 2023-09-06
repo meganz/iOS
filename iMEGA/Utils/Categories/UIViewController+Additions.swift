@@ -53,4 +53,23 @@ extension UIViewController {
     @objc func isViewReady() -> Bool {
         isViewLoaded && (view.window != nil)
     }
+    
+    func presenterViewController() -> UIViewController? {
+        guard var viewController = presentedViewController else {
+            return self
+        }
+        
+        while let presentedViewController = viewController.presentedViewController {
+            viewController = presentedViewController
+        }
+        
+        if viewController.isKind(of: UIAlertController.self) {
+            guard let presentingViewController = viewController.presentingViewController else {
+                return viewController
+            }
+            viewController = presentingViewController
+        }
+        
+        return viewController
+    }
 }

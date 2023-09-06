@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MainTabBarController : UITabBarController <MEGAChatDelegate, MEGAChatCallDelegate>
+@interface MainTabBarController : UITabBarController <MEGAChatDelegate>
 
 @property (nonatomic, strong, nullable) UIView *bottomView;
 @property (nonatomic, strong, nullable) UIView *snackBarContainerView;
@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSLayoutConstraint *snackBarViewBottomConstraint;
 @property (nonatomic, strong, nullable) AudioPlayer *player;
 @property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
+@property (nonatomic, strong) UIImageView *phoneBadgeImageView;
+@property (nonatomic, assign) NSInteger unreadMessages;
 
 - (void)openChatRoomNumber:(nullable NSNumber *)chatNumber;
 

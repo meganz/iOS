@@ -17,10 +17,8 @@
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGANavigationControllerDelegate, MEGAGlobalDelegate>
 
-@property (nonatomic, assign) NSInteger unreadMessages;
-@property (nonatomic, strong) UIImageView *phoneBadgeImageView;
-
 @property (nonatomic, strong) PSAViewModel *psaViewModel;
+@property (nonatomic, strong) MainTabBarCallsViewModel *mainTabBarViewModel;
 
 @end
 
@@ -53,7 +51,6 @@
     [self setDelegate:self];
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     
     [self configProgressView];
     
@@ -65,6 +62,8 @@
     [self showPSAViewIfNeeded];
     
     [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
+    
+    self.mainTabBarViewModel = [self createMainTabBarViewModel];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -321,24 +320,6 @@
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
         [self debounce:@selector(setBadgeValueForChats) delay:0.1];
         [self updateUnreadChatsOnBackButton];
-    }
-}
-
-#pragma mark - MEGAChatDelegate
-
-- (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
-    switch (call.status) {
-        case MEGAChatCallStatusInProgress:
-            self.phoneBadgeImageView.hidden = self.unreadMessages > 0;
-            break;
-            
-        case MEGAChatCallStatusDestroyed:
-        case MEGAChatCallStatusTerminatingUserParticipation:
-            self.phoneBadgeImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] mnz_existsActiveCall];
-            break;
-            
-        default:
-            break;
     }
 }
 

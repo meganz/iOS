@@ -6,7 +6,9 @@ import MEGASwift
 
 final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
-    static var sharedRepo = ChatRoomRepository(sdk: MEGASdkManager.sharedMEGAChatSdk())
+    static var sharedRepo: ChatRoomRepository {
+        ChatRoomRepository(sdk: .shared)
+    }
     
     private let sdk: MEGAChatSdk
     private var chatRoomUpdateListeners = [ChatRoomUpdateListener]()
@@ -37,10 +39,10 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         chatRoom.peers.map(\.handle)
     }
     
-    func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity? {
+    func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity {
         guard let megaChatRoom = sdk.chatRoom(forChatId: chatRoom.chatId),
               let privilege = MEGAChatRoomPrivilege(rawValue: megaChatRoom.peerPrivilege(byHandle: userHandle))?.toOwnPrivilegeEntity() else {
-            return nil
+            return .unknown
         }
         return privilege
     }
@@ -60,13 +62,14 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     }
     
     func createPublicLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
-        let publicChatLinkCreationDelegate = MEGAChatGenericRequestDelegate { (request, error) in
-            guard error.type == .MEGAChatErrorTypeOk else {
+        let publicChatLinkCreationDelegate = ChatRequestDelegate { result in
+            switch result {
+            case .success(let request):
+                completion(.success(request.text))
+            case .failure(let error):
+                MEGALogDebug("Create pulic chat link for \(chatRoom.title ?? "Unknown name") failed with error \(error)")
                 completion(.failure(.generic))
-                return
             }
-            
-            completion(.success(request.text))
         }
         
         sdk.createChatLink(chatRoom.chatId, delegate: publicChatLinkCreationDelegate)
@@ -95,20 +98,20 @@ final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     func renameChatRoom(_ chatRoom: ChatRoomEntity, title: String, completion: @escaping (Result<String, ChatRoomErrorEntity>) -> Void) {
         MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "No name") with title \(title)")
-        sdk.setChatTitle(chatRoom.chatId, title: title, delegate: MEGAChatGenericRequestDelegate { (request, error) in
-            guard error.type == .MEGAChatErrorTypeOk else {
+        sdk.setChatTitle(chatRoom.chatId, title: title, delegate: ChatRequestDelegate { result in
+            switch result {
+            case .success(let request):
+                guard let text = request.text else {
+                    MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "No name") with title \(title) with text nil")
+                    completion(.failure(.emptyTextResponse))
+                    return
+                }
+                
+                completion(.success(text))
+            case .failure(let error):
                 MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "No name") with title \(title) failed with error \(error)")
                 completion(.failure(.generic))
-                return
             }
-            
-            guard let text = request.text else {
-                MEGALogDebug("Renaming the chat for \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "No name") with title \(title) with text nil")
-                completion(.failure(.emptyTextResponse))
-                return
-            }
-            
-            completion(.success(text))
         })
     }
     

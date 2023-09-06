@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 
 protocol CallUseCaseProtocol {
@@ -22,6 +23,8 @@ protocol CallUseCaseProtocol {
     func pushUsersIntoWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity, users: [HandleEntity])
     func makePeerAModerator(inCall call: CallEntity, peerId: HandleEntity)
     func removePeerAsModerator(inCall call: CallEntity, peerId: HandleEntity)
+    func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
+    func onCallUpdate() -> AnyPublisher<CallEntity, Never>
 }
 
 protocol CallCallbacksUseCaseProtocol: AnyObject {
@@ -156,6 +159,14 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
     
     func removePeerAsModerator(inCall call: CallEntity, peerId: HandleEntity) {
         repository.removePeerAsModerator(inCall: call, peerId: peerId)
+    }
+    
+    func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never> {
+        repository.callWaitingRoomUsersUpdate(forCall: call)
+    }
+    
+    func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
+        repository.onCallUpdate()
     }
 }
 

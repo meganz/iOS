@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -33,6 +34,32 @@ extension MainTabBarController {
         
         if let chatVC = existingChatRoomsListViewController {
             chatVC.assignBackButton()
+        }
+    }
+    
+    @objc func createMainTabBarViewModel() -> MainTabBarCallsViewModel {
+        let router = MainTabBarCallsRouter(baseViewController: self)
+        let mainTabBarCallsViewModel = MainTabBarCallsViewModel(router: router,
+                                                                chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+                                                                callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
+                                                                chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+                                                                chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo))
+        
+        mainTabBarCallsViewModel.invokeCommand = { [weak self] command in
+            guard let self else { return }
+            
+            excuteCommand(command)
+        }
+        
+        return mainTabBarCallsViewModel
+    }
+    
+    private func excuteCommand(_ command: MainTabBarCallsViewModel.Command) {
+        switch command {
+        case .showActiveCallIcon:
+            phoneBadgeImageView.isHidden = unreadMessages > 0
+        case .hideActiveCallIcon:
+            phoneBadgeImageView.isHidden = true
         }
     }
 }
