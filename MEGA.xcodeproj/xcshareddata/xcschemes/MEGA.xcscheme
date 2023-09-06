@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "945222FC2A98AB1700C9DFAF"
+               BlueprintIdentifier = "94D97AA42AA20B0500FE40F4"
                BuildableName = "SearchDemo.app"
                BlueprintName = "SearchDemo"
                ReferencedContainer = "container:MEGA.xcodeproj">

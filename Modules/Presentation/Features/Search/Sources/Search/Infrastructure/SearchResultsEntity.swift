@@ -1,7 +1,7 @@
 /// Represents a full response from search provider with given search query
 ///  contains a collection of results
 ///  and collection of chips (those are static but have potential be dynamically adjust depending on the context)
-public struct SearchResultsEntity {
+public struct SearchResultsEntity: Sendable {
     public let results: [SearchResult]
     public let chips: [SearchChipEntity]
     

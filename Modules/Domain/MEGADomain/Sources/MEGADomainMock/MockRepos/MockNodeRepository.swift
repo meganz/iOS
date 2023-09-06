@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 
 public struct MockNodeRepository: NodeRepositoryProtocol {
+    
     public static let newRepo = MockNodeRepository()
     
     private let node: NodeEntity?
@@ -13,16 +14,20 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     private let images: [NodeEntity]
     private let fileLinkNode: NodeEntity?
     private let childNodes: [String: NodeEntity]
-
-    public init(node: NodeEntity? = nil,
-                rubbishNode: NodeEntity? = nil,
-                nodeRoot: NodeEntity? = nil,
-                nodeAccessLevel: NodeAccessTypeEntity = .unknown,
-                childNodeNamed: NodeEntity? = nil,
-                childNode: NodeEntity? = nil,
-                images: [NodeEntity] = [],
-                fileLinkNode: NodeEntity? = nil,
-                childNodes: [String: NodeEntity] = [:]) {
+    private let childrenNodes: [NodeEntity]
+    
+    public init(
+        node: NodeEntity? = nil,
+        rubbishNode: NodeEntity? = nil,
+        nodeRoot: NodeEntity? = nil,
+        nodeAccessLevel: NodeAccessTypeEntity = .unknown,
+        childNodeNamed: NodeEntity? = nil,
+        childNode: NodeEntity? = nil,
+        images: [NodeEntity] = [],
+        fileLinkNode: NodeEntity? = nil,
+        childNodes: [String: NodeEntity] = [:],
+        childrenNodes: [NodeEntity] = []
+    ) {
         self.node = node
         self.rubbisNode = rubbishNode
         self.nodeRoot = nodeRoot
@@ -32,6 +37,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         self.images = images
         self.fileLinkNode = fileLinkNode
         self.childNodes = childNodes
+        self.childrenNodes = childrenNodes
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
@@ -85,5 +91,9 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     
     public func parents(of node: NodeEntity) async -> [NodeEntity] {
         []
+    }
+    
+    public func children(of node: MEGADomain.NodeEntity) async -> [NodeEntity] {
+        childrenNodes
     }
 }

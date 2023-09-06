@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 public struct SearchResultsView: View {
@@ -6,8 +7,9 @@ public struct SearchResultsView: View {
     }
     
     @StateObject var viewModel: SearchResultsViewModel
-    
+
     public var body: some View {
+        
         ScrollView {
             LazyVStack {
                 ForEach(viewModel.listItems) { item in
@@ -23,17 +25,17 @@ public struct SearchResultsView: View {
                 alignment: .topLeading
             )
         }
+        .padding(.bottom, viewModel.bottomInset)
+        .taskForiOS14 {
+            viewModel.task()
+        }
     }
     
     @ViewBuilder
     var emptyView: some View {
-        if viewModel.listItems.isEmpty {
-            VStack {
-                Spacer()
-                Text("No results")
-                Spacer()
-            }
-        }
+        // empty state handling will be added
+        // in the FM-800
+        EmptyView()
     }
 }
 
@@ -44,7 +46,7 @@ struct SearchResultsViewPreviews: PreviewProvider {
         @State var text: String = ""
         @StateObject var viewModel = SearchResultsViewModel(
             resultsProvider: NonProductionTestResultsProvider(),
-            bridge: .init(selection: { _ in }, context: {_ in })
+            bridge: .init(selection: { _ in }, context: {_, _ in })
         )
         var body: some View {
             SearchResultsView(
