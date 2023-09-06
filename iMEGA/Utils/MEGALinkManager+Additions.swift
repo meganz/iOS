@@ -72,7 +72,8 @@ extension MEGALinkManager {
                 nodeRepository: nodeRepository),
             transferWidgetResponder: TransfersWidgetViewController.sharedTransfer(),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
-            tracker: DIContainer.tracker)
+            tracker: DIContainer.tracker,
+            monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()))
         
         let viewController = UIHostingController(dismissibleView: ImportAlbumView(
             viewModel: vm))

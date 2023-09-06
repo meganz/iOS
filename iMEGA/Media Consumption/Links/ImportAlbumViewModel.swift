@@ -20,7 +20,8 @@ final class ImportAlbumViewModel: ObservableObject {
     private let permissionHandler: any DevicePermissionsHandling
     private let tracker: any AnalyticsTracking
     private weak var transferWidgetResponder: (any TransferWidgetResponderProtocol)?
-
+    private let monitorUseCase: any NetworkMonitorUseCaseProtocol
+    
     private var publicLinkWithDecryptionKey: URL?
     private var subscriptions = Set<AnyCancellable>()
     private var showSnackBarSubscription: AnyCancellable?
@@ -50,6 +51,7 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published var importFolderLocation: NodeEntity?
     @Published var showRenameAlbumAlert = false
     @Published var showPhotoPermissionAlert = false
+    @Published var showNoInternetConnection = false
     @Published private(set) var isSelectionEnabled = false
     @Published private(set) var selectButtonOpacity = 0.0
     @Published private(set) var publicAlbumName: String?
@@ -93,7 +95,8 @@ final class ImportAlbumViewModel: ObservableObject {
          saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol,
          transferWidgetResponder: (some TransferWidgetResponderProtocol)?,
          permissionHandler: some DevicePermissionsHandling,
-         tracker: some AnalyticsTracking) {
+         tracker: some AnalyticsTracking,
+         monitorUseCase: some NetworkMonitorUseCaseProtocol) {
         self.publicLink = publicLink
         self.publicAlbumUseCase = publicAlbumUseCase
         self.albumNameUseCase = albumNameUseCase
@@ -103,6 +106,7 @@ final class ImportAlbumViewModel: ObservableObject {
         self.transferWidgetResponder = transferWidgetResponder
         self.permissionHandler = permissionHandler
         self.tracker = tracker
+        self.monitorUseCase = monitorUseCase
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(),
                                                                     contentMode: .albumLink)
@@ -152,6 +156,10 @@ final class ImportAlbumViewModel: ObservableObject {
     
     @MainActor
     func importAlbum() async {
+        guard monitorUseCase.isConnected() else {
+            showNoInternetConnection = true
+            return
+        }
         do {
             try await accountStorageUseCase.refreshCurrentAccountDetails()
         } catch {
@@ -174,6 +182,10 @@ final class ImportAlbumViewModel: ObservableObject {
     
     @MainActor
     func saveToPhotos() async {
+        guard monitorUseCase.isConnected() else {
+            showNoInternetConnection = true
+            return
+        }
         let photosToSave = photoLibraryContentViewModel.photosToAction
                 
         guard photosToSave.isNotEmpty else {
@@ -204,6 +216,10 @@ final class ImportAlbumViewModel: ObservableObject {
     }
 
     func renameAlbum(newName: String) {
+        guard monitorUseCase.isConnected() else {
+            showNoInternetConnection = true
+            return
+        }
         renamedAlbum = newName
         showImportAlbumLocation.toggle()
     }
@@ -357,6 +373,10 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     private func handleImportFolderSelection(folder: NodeEntity) {
+        guard monitorUseCase.isConnected() else {
+            showNoInternetConnection = true
+            return
+        }
         guard let albumName else { return }
         let photos = photoLibraryContentViewModel.photosToAction
         

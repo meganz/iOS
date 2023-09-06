@@ -321,6 +321,18 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertFalse(sut.showStorageQuotaWillExceed)
     }
     
+    func testImportAlbum_internetNotConnected_shouldToggleShowNoInternetConnection() async throws {
+        let monitorUseCase = MockNetworkMonitorUseCase(connected: false)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           monitorUseCase: monitorUseCase)
+        await sut.loadPublicAlbum()
+        XCTAssertFalse(sut.showNoInternetConnection)
+        
+        await sut.importAlbum()
+        
+        XCTAssertTrue(sut.showNoInternetConnection)
+    }
+    
     func testImportFolderLocation_onFolderSelected_shouldImportAlbumPhotosAndShowSnackbar() async throws {
         let albumName = "New Album (1)"
         let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: albumName, nodes: try makePhotos())
@@ -411,6 +423,17 @@ final class ImportAlbumViewModelTests: XCTestCase {
                        SnackBar(message: Strings.Localizable.AlbumLink.Alert.Message.filesSaveToCloudDrive(selectedPhotos.count)))
     }
     
+    func testImportFolderLocation_noInternetConnection_shouldToggleShowNoInternetConnection() throws {
+        let monitorUseCase = MockNetworkMonitorUseCase(connected: false)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           monitorUseCase: monitorUseCase)
+        XCTAssertFalse(sut.showNoInternetConnection)
+        
+        sut.importFolderLocation = NodeEntity(handle: 24, isFolder: true)
+        
+        XCTAssertTrue(sut.showNoInternetConnection)
+    }
+    
     func testShowImportToolbarButton_userNotLoggedIn_shouldNotShowImportBarButtonAndToggleWithSelection() throws {
         let accountUseCase = MockAccountUseCase(isLoggedIn: false)
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
@@ -468,6 +491,17 @@ final class ImportAlbumViewModelTests: XCTestCase {
         let alertViewModel = sut.renameAlbumAlertViewModel()
         
         XCTAssertEqual(alertViewModel, expectedAlertViewModel)
+    }
+    
+    func testRenameAlbum_noInternetConnection_shouldToggleNoInternetConnection() throws {
+        let monitorUseCase = MockNetworkMonitorUseCase(connected: false)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           monitorUseCase: monitorUseCase)
+        XCTAssertFalse(sut.showNoInternetConnection)
+        
+        sut.renameAlbum(newName: "Album name")
+        
+        XCTAssertTrue(sut.showNoInternetConnection)
     }
     
     func testsShouldShowEmptyAlbumView_noPhotos_shouldReturnTrue() async throws {
@@ -599,7 +633,18 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertNil(sut.snackBarViewModel?.snackBar)
         XCTAssertTrue(sut.showPhotoPermissionAlert)
     }
+    
+    func testSaveToPhotos_noInterNetConnection_shouldToggleNoInternetConnection() async throws {
+        let monitorUseCase = MockNetworkMonitorUseCase(connected: false)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           monitorUseCase: monitorUseCase)
+        XCTAssertFalse(sut.showNoInternetConnection)
         
+        await sut.saveToPhotos()
+        
+        XCTAssertTrue(sut.showNoInternetConnection)
+    }
+    
     // MARK: - Private
     
     private func makeImportAlbumViewModel(publicLink: URL,
@@ -611,7 +656,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
                                           saveMediaUseCase: some SaveMediaToPhotosUseCaseProtocol = MockSaveMediaToPhotosUseCase(),
                                           transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
                                           permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
-                                          tracker: some AnalyticsTracking = MockTracker()
+                                          tracker: some AnalyticsTracking = MockTracker(),
+                                          monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase()
     ) -> ImportAlbumViewModel {
         let sut = ImportAlbumViewModel(
             publicLink: publicLink,
@@ -623,7 +669,8 @@ final class ImportAlbumViewModelTests: XCTestCase {
             saveMediaUseCase: saveMediaUseCase,
             transferWidgetResponder: transferWidgetResponder,
             permissionHandler: permissionHandler,
-            tracker: tracker)
+            tracker: tracker,
+            monitorUseCase: monitorUseCase)
         trackForMemoryLeaks(on: sut)
         return sut
     }
