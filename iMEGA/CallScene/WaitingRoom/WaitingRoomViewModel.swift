@@ -132,7 +132,7 @@ final class WaitingRoomViewModel: ObservableObject {
         let startDate = scheduledMeeting.startDate
         let endDate = scheduledMeeting.endDate
         
-        let timeFormatter = DateFormatter.fromTemplate("HH:mm")
+        let timeFormatter = DateFormatter.timeShort()
 
         let weekDayString = DateFormatter.fromTemplate("E").localisedString(from: startDate)
         let startDateString = DateFormatter.fromTemplate("ddMMM").localisedString(from: startDate)
