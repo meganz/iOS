@@ -1821,7 +1821,7 @@
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
 "Enable Encrypted Key Rotation"="Activer la rotation de la clé de chiffrement";
 /* Label in a cell where you can get the chat link */
-"Get Chat Link"="Obtenir le lien de conversation";
+"Get Chat Link"="Obtenir le lien de la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé de chiffrement est un peu plus sûre, mais elle ne vous permet pas de créer un lien de conversation, et les nouveaux participants ne verront pas les anciens messages.";
 /* Footer to explain why key rotation is disabled for public chats with many participants */
@@ -1841,7 +1841,7 @@
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
 "%@ created a public link for the chat."="%@ a créé un lien de conversation";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ a supprimé le lien de conversation";
+"%@ removed a public link for the chat."="%@ a supprimé le lien de la conversation";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ fait partie de la conversation de groupe.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -2009,7 +2009,7 @@
 /* Message shown when the user has not recent activity in their account. */
 "No recent activity"="Aucune activité récente";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat Link Unavailable"="Le lien de conversation n’est pas disponible";
+"Chat Link Unavailable"="Le lien de la conversation est inaccessible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Ce lien de conversation n’est plus accessible";
 /* Text explaining users how the chat links work. */
@@ -2017,7 +2017,7 @@
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Touchez ici pour obtenir des renseignements";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
-"No chat link available."="Aucun lien de conversation n’est disponible.";
+"No chat link available."="Aucun lien de conversation n’est proposé";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="Veuillez accorder l’accès";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
@@ -2055,13 +2055,13 @@
 /*  */
 "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Si vous perdez votre Clé de récupération et oubliez votre mot de passe, [B]tous vos fichiers, dossiers et messages seront inaccessibles, même pour MEGA[/B].";
 /*  */
-"Business"="Pour entreprise";
+"Business"="Pour entreprise";
 /*  */
 "Administrator"="Administrateur";
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfert";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="Vous ne pouvez pas supprimer %1$s de vos contacts, car ce contact fait parti de votre compte Pour entreprise.";
+"You cannot remove %1$s as a contact because they are part of your Business account."="Vous ne pouvez pas supprimer %1$s de vos contacts, car ce contact fait parti de votre compte Pour entreprise.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require Passcode"="Exiger le code d’accès";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2079,11 +2079,11 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Le compte est désactivé";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Votre compte Pour entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte. Pour effectuer un paiement et réactiver votre abonnement, connectez-vous à MEGA dans un navigateur.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Votre compte Pour entreprise a été désactivé pour défaut de paiement. Vous ne pourrez plus accéder aux données stockées dans votre compte. Pour effectuer un paiement et réactiver votre abonnement, connectez-vous à MEGA dans un navigateur.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
 "Your account is currently [B]suspended[/B]. You can only browse your data."="Votre compte est actuellement [B]désactivé[/B]. Vous ne pouvez que parcourir vos données.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA ne peut pas accéder à vos données. Cependant, l’administrateur de votre compte Pour entreprise peut accéder à vos Téléversements de l’appareil photo.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA ne peut pas accéder à vos données. Cependant, l’administrateur de votre compte Pour entreprise peut accéder à vos Téléversements de l’appareil photo.";
 /*  */
 "Something went wrong"="Quelque chose a mal tourné";
 /* Title of the "Links" Shared Items. */
@@ -2095,7 +2095,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partager avec";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Contact your business account administrator to resolve the issue and activate your account."="Contactez l’administrateur de votre compte Pour entreprise pour résoudre la situation et activer votre compte.";
+"Contact your business account administrator to resolve the issue and activate your account."="Contactez l’administrateur de votre compte Pour entreprise pour résoudre la situation et activer votre compte.";
 /* Chat Notifications DND: Option to turn the DND on until this morning 8 AM */
 "Until this morning"="Jusqu’à ce matin";
 /* Chat Notifications DND: Option to turn the DND on until tomorrow morning 8 AM */
@@ -2227,9 +2227,9 @@
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Type de fichier";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
-"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Votre compte a été désactivé par votre administrateur. Veuillez contacter l’administrateur de votre compte Pour entreprise pour obtenir plus de précisions.";
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Votre compte a été désactivé par votre administrateur. Veuillez contacter l’administrateur de votre compte Pour entreprise pour obtenir plus de précisions.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
-"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Votre compte a été supprimé par votre administrateur. Veuillez contacter l’administrateur de votre compte Pour entreprise pour plus de précisions.";
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Votre compte a été supprimé par votre administrateur. Veuillez contacter l’administrateur de votre compte Pour entreprise pour plus de précisions.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Saisissez le nom du groupe";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="Mettre à jour";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Le fichier sera mis à jour par une nouvelle version.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Appliquer à tous les %@ doublons";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Vous êtes la seule personne ici";
 /* Meetings end call dialog description */
@@ -3213,7 +3211,7 @@
 /* Title for a button to send a file to a chat */
 "meetings.info.shareOptions.sendToChat"="Envoyer vers une conversation";
 /* Title for share chat link option in meeting info */
-"meetings.info.shareChatLink"="Partager le lien de conversation";
+"meetings.info.shareChatLink"="Partager le lien de la conversation";
 /* Button title to load more participants in meeting info view */
 "meetings.info.participants.seeMore"="Afficher davantage";
 /* Button title to see less participants in meeting info view */
@@ -3442,6 +3440,10 @@
 "device.center.backup.blocked.status.message"="Bloqué";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Appareil inconnu";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="Afficher dans le Disque nuagique";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Afficher dans Sauvegardes";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Fin de la récurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3684,3 +3686,35 @@
 "meetings.waitingRoom.guest.join"="Me joindre";
 /* Meeting waiting room message of wait for host to let you in */
 "meetings.waitingRoom.message.waitForHostToLetYouIn"="Attendre que l’hôte vous accueille";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="Attendre que l’hôte commence la réunion";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="L’hôte ne vous a pas accueilli";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Vous quitterez la salle d’attente.";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="D’accord, j’ai compris";
+/* Call waiting room alert message text to notify host that someone is waiting to join */
+"chat.call.waitingRoom.alert.message.one"="%@ attend de se joindre à l’appel";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.deny"="Refuser";
+/* Call waiting room alert button to admit access */
+"chat.call.waitingRoom.alert.button.admit"="L’accueillir";
+/* Call waiting room alert message text to notify host that several participants are waiting to join */
+"chat.call.waitingRoom.alert.message.several"="";
+/* Call waiting room alert button to open waiting room UI */
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="Afficher la salle d’attente";
+/* Call waiting room alert button to allow access to everyone */
+"chat.call.waitingRoom.alert.button.admitAll"="Les accueillir";
+/* Call waiting room alert message text to confirm deny access from host */
+"chat.call.waitingRoom.alert.message.denyAcces"="Refuser l’entrée à %@ ?";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.confirmDeny"="Refuser l’entrée";
+/* Call waiting room alert button to allow access */
+"chat.call.waitingRoom.alert.button.cancel"="Annuler";
+/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ attend de se joindre à « %@ »";
+/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open"="Ouvrir dans MEGA";

@@ -85,7 +85,7 @@
 /* Message for login option on Create Account screen */
 "account.createAccount.alreadyHaveAnAccount"="Уже есть аккаунт?";
 /* Button title which triggers the action to create a MEGA account */
-"createAccount"="Регистрация";
+"createAccount"="Зарегистрироваться";
 /* Message on login screen for Create Account */
 "account.login.newToMega"="Впервые в MEGA?";
 /* Button title which triggers the action to join meeting as Guest */
@@ -99,7 +99,7 @@
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Ваш аккаунт был заблокирован из-за нарушения условий использования MEGA, включая, помимо прочего, пункт 15.";
 /* Message shown when the user writes an invalid format in the email field */
-"emailInvalidFormat"="Введите правильный email";
+"emailInvalidFormat"="Введите правильный адрес";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="Похоже, что email некорректен";
 /* Message shown when the user enters a wrong password */
@@ -177,7 +177,7 @@
 /*  */
 "fileLinkUnavailableText4"="Файл был удалён пользователем.";
 /* Message shown when a download starts */
-"downloadStarted"="Скачавание запущено";
+"downloadStarted"="Скачивание запущено";
 /* Title for the folder link view */
 "folderLink"="Ссылка на папку";
 /* Title for the album/collection link view */
@@ -525,7 +525,7 @@
 /* Message shown when some files have been imported */
 "filesImported"="Файлы импортированы";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
-"selectTitle"="Выбрать элементы";
+"selectTitle"="Выбор элементов";
 /* Button title that skips the current action */
 "skipButton"="Пропустить";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -635,7 +635,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="Папок: %d";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Ввести email";
+"addFromEmail"="Ввести адрес электронной почты";
 /* Title of Shared Items section */
 "sharedItems"="Общие элементы";
 /* Title of the tab bar item for the Shared Items section */
@@ -1325,7 +1325,7 @@
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Выйти";
 /* Top menu option which opens more menu options in a context menu. */
-"more"="Больше";
+"more"="Ещё";
 /* A button label. The button allows the user to mute a conversation. */
 "mute"="Приглушить";
 /* A button label. The button allows the user to unmute a conversation. */
@@ -2043,7 +2043,7 @@
 /* Text showing the user how many contacts would be invited */
 "Invite [X] contacts"="Пригласить контакты ([X])";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
-"Tap space to enter multiple emails"="Нажмите пробел, чтобы ввести несколько электронных писем";
+"Tap space to enter multiple emails"="Нажмите пробел, чтобы ввести несколько адресов";
 /* Text used as a section title or similar */
 "Enter Email"="Введите email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="Изменить";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Этот файл будет заменён новой версией.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Применить ко всем %@ дубликатам";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Здесь только вы";
 /* Meetings end call dialog description */
@@ -3442,6 +3440,10 @@
 "device.center.backup.blocked.status.message"="Заблокировано";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Неизвестное устройство";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="Показать в облачном диске";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Show in Backups";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Заканчивается";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3629,7 +3631,7 @@
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
 "chat.backButton.oneToOne.menu"="Чат с %@";
 /* Schedule meeting waiting room setting title */
-"meetings.scheduleMeeting.waitingRoom"="Зал ожидания";
+"meetings.scheduleMeeting.waitingRoom"="Комната ожидания";
 /* Schedule meeting waiting room setting description */
 "meetings.scheduleMeeting.waitingRoom.description"="К встрече могут присоединиться только пользователи, допущенные организатором.";
 /* Schedule meeting waiting room warning banner title */
@@ -3684,3 +3686,35 @@
 "meetings.waitingRoom.guest.join"="Войти";
 /* Meeting waiting room message of wait for host to let you in */
 "meetings.waitingRoom.message.waitForHostToLetYouIn"="Подождите, пока организатор впустит вас";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="Подождите, пока организатор начнёт встречу";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="Организатор не пустил вас";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="Понятно";
+/* Call waiting room alert message text to notify host that someone is waiting to join */
+"chat.call.waitingRoom.alert.message.one"="%@ ждёт подключения к звонку";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.deny"="Отказать";
+/* Call waiting room alert button to admit access */
+"chat.call.waitingRoom.alert.button.admit"="Пустить";
+/* Call waiting room alert message text to notify host that several participants are waiting to join */
+"chat.call.waitingRoom.alert.message.several"="";
+/* Call waiting room alert button to open waiting room UI */
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="Посмотреть комнату ожидания";
+/* Call waiting room alert button to allow access to everyone */
+"chat.call.waitingRoom.alert.button.admitAll"="Пустить всех";
+/* Call waiting room alert message text to confirm deny access from host */
+"chat.call.waitingRoom.alert.message.denyAcces"="Не пускать %@?";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.confirmDeny"="Не пускать";
+/* Call waiting room alert button to allow access */
+"chat.call.waitingRoom.alert.button.cancel"="Отмена";
+/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ ждёт подключения к звонку «%@»";
+/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open"="Открыть в MEGA";

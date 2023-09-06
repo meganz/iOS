@@ -3044,5 +3044,41 @@
         <string>%d arquivos foram salvos na Nuvem de arquivos</string>
       </dict>
     </dict>
+    <key>general.saveToPhotos.started</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Download iniciado</string>
+        <key>many</key>
+        <string>%d de downloads foram iniciados</string>
+        <key>other</key>
+        <string>%d downloads foram iniciados</string>
+      </dict>
+    </dict>
+    <key>general.format.itemsSelected</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item selecionado</string>
+        <key>many</key>
+        <string>%d de itens selecionados</string>
+        <key>other</key>
+        <string>%d itens selecionados</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

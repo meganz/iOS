@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="Update";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Het bestand wordt bijgewerkt met een nieuwe versie.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Toepassen op alle %@ duplicaten";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="U bent de enige hier";
 /* Meetings end call dialog description */
@@ -3442,6 +3440,10 @@
 "device.center.backup.blocked.status.message"="Geblokkeerd";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Onbekend apparaat";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="Weergeven in Cloud Schijf";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Weergeven in Backups";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Herhaling beëindigen";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3684,3 +3686,35 @@
 "meetings.waitingRoom.guest.join"="Aansluiten";
 /* Meeting waiting room message of wait for host to let you in */
 "meetings.waitingRoom.message.waitForHostToLetYouIn"="Wacht tot de host u binnenlaat";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="Wacht tot de host de vergadering start";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="De host heeft u niet binnengelaten";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="OK, ik snap het";
+/* Call waiting room alert message text to notify host that someone is waiting to join */
+"chat.call.waitingRoom.alert.message.one"="%@ wacht om deel te nemen aan het gesprek";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.deny"="Afwijzen";
+/* Call waiting room alert button to admit access */
+"chat.call.waitingRoom.alert.button.admit"="Toelaten";
+/* Call waiting room alert message text to notify host that several participants are waiting to join */
+"chat.call.waitingRoom.alert.message.several"="";
+/* Call waiting room alert button to open waiting room UI */
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="Zie wachtkamer";
+/* Call waiting room alert button to allow access to everyone */
+"chat.call.waitingRoom.alert.button.admitAll"="Iedereen toelaten";
+/* Call waiting room alert message text to confirm deny access from host */
+"chat.call.waitingRoom.alert.message.denyAcces"="%@  de toegang weigeren?";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.confirmDeny"="Toegang weigeren";
+/* Call waiting room alert button to allow access */
+"chat.call.waitingRoom.alert.button.cancel"="Annuleren";
+/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ wacht om lid te worden van de “%@”";
+/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open"="Openen in MEGA";

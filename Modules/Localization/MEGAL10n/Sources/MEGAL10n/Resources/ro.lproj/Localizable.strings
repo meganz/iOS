@@ -211,7 +211,7 @@
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Folder gol";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
-"cloudDriveEmptyState_title"="Niciun fișier în unitatea cloud";
+"cloudDriveEmptyState_title"="Niciun fișier în Unitatea cloud";
 /* Button title shown in empty views when you can 'Add files' */
 "addFiles"="Adaugă fișiere";
 /* Title shown when you make a search and there is 'No Results' */
@@ -353,7 +353,7 @@
 /* A tooltip message which shows when a file name is duplicated during renaming. */
 "There is already a file with the same name"="Există deja un fișier cu același nume";
 /* Browser save to cloud drive select button title */
-"cloudDrive.browser.saveToCloudDrive.title"="Salvează în unitatea cloud";
+"cloudDrive.browser.saveToCloudDrive.title"="Salvează în Unitatea cloud";
 /* List option shown on the details of a file or folder after the user has copied it */
 "cloudDrive.browser.paste"="Lipește";
 /* Tapping on this button open Files.app and allow users select files to upload them to MEGA */
@@ -529,7 +529,7 @@
 /* Button title that skips the current action */
 "skipButton"="Omite";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Fă backup automat fotografiilor și videoclipurilor în unitatea cloud.";
+"Automatically backup your photos and videos to the Cloud Drive."="Fă backup automat fotografiilor și videoclipurilor în Unitatea cloud.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activează Încărcări cameră";
 /* Success message shown when Camera Uploads has been enabled */
@@ -1249,7 +1249,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] a părăsit chatul de grup";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A] s-a alăturat chatului de grup prin invitație de la [B].";
+"joinedTheGroupChatByInvitationFrom"="[A] s-a alăturat chatului de grup la invitația [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A] a golit istoricul chatului.";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -1375,7 +1375,7 @@
 /* Button which allows to delete message in chat conversation. */
 "deleteMessage"="Șterge mesajul";
 /*  */
-"fromCloudDrive"="Din unitatea cloud";
+"fromCloudDrive"="Din Unitatea cloud";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Trimite contacte";
 /*  */
@@ -1687,7 +1687,7 @@
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "youNeedATwoFactorAuthenticationApp"="Ne pare rău, autentificarea cu doi factori nu poate fi activată pe dispozitiv. Te rugăm să deschizi App Store pentru a instala o aplicație de autentificare.";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Ai nevoie de o aplicație de autentificare pentru a activa 2FA pe MEGA. Poți descărca și instala aplicația Google Authenticator, Duo Mobile, Authy sau Microsoft Authenticator pentru telefon sau tabletă.";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="Ai nevoie de o aplicație de autentificare pentru a activa A2F pe MEGA. Poți descărca și instala aplicația Google Authenticator, Duo Mobile, Authy sau Microsoft Authenticator pentru telefon sau tabletă.";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
 "twoFactorAuthenticationEnabled"="Autentificarea cu doi factori activată";
 /* A message on the dialog shown after 2FA was successfully enabled. */
@@ -1695,7 +1695,7 @@
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Te rugăm să salvezi cheia de recuperare într-o locație sigură";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="Dacă pierzi accesul la contul tău după ce ai activat 2FA și nu ai făcut un backup al cheii de recuperare, MEGA nu te poate ajuta să obții din nou accesul la acesta.";
+"twoFactorAuthenticationEnabledWarning"="Dacă pierzi accesul la contul tău după ce ai activat A2F și nu ai făcut un backup al cheii de recuperare, MEGA nu te poate ajuta să obții din nou accesul la acesta.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Autentificarea cu doi factori dezactivată";
 /* A message on the setup two-factor authentication page on the mobile web client. */
@@ -1723,7 +1723,7 @@
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="Chat criptat";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Chat complet criptat cu apeluri vocale și video, mesagerie de grup și integrare pentru partajarea de fișiere din unitatea cloud.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Chat complet criptat cu apeluri vocale și video, mesagerie de grup și integrare pentru partajarea de fișiere din Unitatea cloud.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Creează-ți rețeaua";
 /* Description shown in a page of the onboarding screens explaining contacts */
@@ -2931,7 +2931,7 @@
 /* No backups and old inbox files in the account message */
 "backups.empty.state.message"="Niciun element în backupuri";
 /* No backups and old inbox files in the account description message */
-"backups.empty.state.description"="Aici sunt stocate fișierele și folderele pentru care s-a făcut backup. Elementele pentru care s-a făcut backup sunt de tip „numai citire” pentru a le proteja împotriva modificării accidentale în unitatea cloud.\nPoți face backupuri ale elementelor de pe calculator pe MEGA folosind aplicația noastră desktop.";
+"backups.empty.state.description"="Aici sunt stocate fișierele și folderele pentru care s-a făcut backup. Elementele pentru care s-a făcut backup sunt de tip „numai citire” pentru a le proteja împotriva modificării accidentale în Unitatea cloud.\nPoți face backupuri ale elementelor de pe calculator pe MEGA folosind aplicația noastră desktop.";
 /* Title of the alert shown when you confirm to cancel pending transfers */
 "transfers.cancellable.title"="Anulezi transferurile?";
 /* Message for action of cancelling a transfer */
@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="Actualizează";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Fișierul va fi actualizat cu o nouă versiune.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Aplică la toate cele %@ de duplicate";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Ești singura persoană de aici";
 /* Meetings end call dialog description */
@@ -3442,6 +3440,10 @@
 "device.center.backup.blocked.status.message"="Blocat";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Dispozitiv necunoscut";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="Afișează în Unitatea cloud";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Afișează în Backups";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Încheiați recurența";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3641,7 +3643,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="„%@” nu poate fi salvat pe Unitatea cloud. Încercați din nou mai târziu și dacă problema continuă, contactați persoana care a partajat linkul cu dvs.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Unele persoane de contact cu care partajați informații nu au fost aprobate de dvs. Pentru a asigura un plus de securitate, vă recomandăm să aprobați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl aprobați.";
+"shareFolder.contactsNotVerified"="Unele contacte cu care partajați informații nu au fost aprobate de dvs. Pentru a asigura un plus de securitate, vă recomandăm să aprobați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl aprobați.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Redenumește albumul";
 /* Rename public album alert message */
@@ -3684,3 +3686,35 @@
 "meetings.waitingRoom.guest.join"="Alătură-te";
 /* Meeting waiting room message of wait for host to let you in */
 "meetings.waitingRoom.message.waitForHostToLetYouIn"="Așteptați ca gazda să vă lase să intrați";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="Așteptați ca gazda să înceapă întâlnirea";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="Gazda nu v-a lăsat să intre";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Veți părăsi sala de așteptare";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="OK, am înțeles";
+/* Call waiting room alert message text to notify host that someone is waiting to join */
+"chat.call.waitingRoom.alert.message.one"="%@ așteaptă să se alăture apelului";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.deny"="Refuză";
+/* Call waiting room alert button to admit access */
+"chat.call.waitingRoom.alert.button.admit"="Admite";
+/* Call waiting room alert message text to notify host that several participants are waiting to join */
+"chat.call.waitingRoom.alert.message.several"="";
+/* Call waiting room alert button to open waiting room UI */
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="Vezi sala de așteptare";
+/* Call waiting room alert button to allow access to everyone */
+"chat.call.waitingRoom.alert.button.admitAll"="Admite toate";
+/* Call waiting room alert message text to confirm deny access from host */
+"chat.call.waitingRoom.alert.message.denyAcces"="Să-i refuzi intrarea %@?";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.confirmDeny"="Refuzați intrarea";
+/* Call waiting room alert button to allow access */
+"chat.call.waitingRoom.alert.button.cancel"="Anulează";
+/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ așteaptă să se alăture la „%@”";
+/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open"="Deschide în MEGA";

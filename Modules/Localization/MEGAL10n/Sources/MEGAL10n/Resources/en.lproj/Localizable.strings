@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="Update";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="The file will be updated with a new version.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Apply to all %@ duplicates";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="You’re the only one here";
 /* Meetings end call dialog description */
@@ -3693,7 +3691,7 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="Host didn’t let you in";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You'll be removed from the waiting room";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="OK, got it";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3719,4 +3717,4 @@
 /* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
 "chat.call.waitingRoom.alert.outsideCallUI.message.several"="%@ participants are waiting to join “%@”";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
-"fileProviderExtension.action.open" = "Open in MEGA";
+"fileProviderExtension.action.open"="Open in MEGA";

@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Nâng cấp lên hạng Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Access Pro only features like setting password protection and expiry dates for public links.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Sử dụng các tính mà chỉ có hạng Pro mới có, như đặt mật khẩu và đặt thời gian hết hạn truy cập cho từng đường liên kết chia sẻ công khai.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Bật chế độ debug";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1517,7 +1517,7 @@
 /* SDK error returned upon a HTTP error */
 "HTTP error"="Lỗi HTTP";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
-"Unknown error"="Lỗi không xác định được";
+"Unknown error"="Lỗi không xác định được";
 /* Label shown when you call someone (outgoing call), before the call starts. */
 "calling..."="Đang gọi…";
 /* notification subtitle of incoming calls */
@@ -1849,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Không thể bật video cho cuộc gọi này được vì quá mức số lượng thành viên tham gia cuộc gọi đang sử dụng video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start the call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Không thể bắt đầu cuộc gọi do vượt quá số lượng thành viên.";
 /* Label shown while joining a public chat */
 "Joining..."="Đang tham gia…";
 /* Label shown while leaving a public chat */
@@ -1937,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Thao tác này không thể hoàn tất bởi vì toàn bộ không gian lưu trữ sẽ bị dùng hết";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Your upload cannot proceed because your Cloud storage is full";
+"Your upload(s) cannot proceed because your account is full"="Phiên tải lên không thể tiến hành vì không gian Ổ Mây của bạn đã bị đầy";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Cho phép các tên trong liên lạc biết được lần thấy cuối bạn ở MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Nhập Email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Bạn có một lời đang chờ bạn hồi âm trên MEGA Chat. Đăng ký một tài khoản trên MEGA và nhận 20 GB không gian lưu trữ miễn phí vô thời hạn.";
 /* Destination folder name of chat files */
 "My chat files"="Tệp đã gửi trong chát";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2585,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Quý khách đã không giải quyết tình trạng tài khoản của mình trong <b>%@</b> từ khi chúng tôi gửi email thông báo tới địa chỉ <b>%@</b> của quý khách, vào ngày <b>%@</b>. Quý khách hiện vẫn đang dùng <b>%@</b> trong không gian lưu trữ, vượt quá mức hạn của tài khoản miễn phí. Xin kiểm tra hộp thư email để xem thư chúng tôi đã gửi để biết thêm chi tiết và các cách xử lý.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Your data will be deleted tomorrow if your account has not been upgraded.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Dữ liệu của bạn sẽ bị xóa vào ngày mai nếu tài khoản của bạn không có được nâng cấp.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Nâng cấp trong vòng <warn>%@</warn> để tránh tình trạng dữ liệu bị xóa bỏ.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Upgrade today if you wish to keep your data.</warn></body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Nâng cấp tài khoản ngay hôm nay nếu muốn lưu giữ dữ liệu của mình.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Nhận thêm Thưởng";
 /* Backup setup warning title */
@@ -2599,7 +2599,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Di chuyển “%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder. Please remember where it is located so that you can find it in the future.";
+"dialog.root.backup.folder.location.warning.message"="Bạn đang tiến hành thay đổi vị trí mặc định của thư mục lưu trữ sao lưu. Việc này có thể ảnh hưởng đến khả năng truy tìm thư mục lưu trữ sao lưu. Xin ghi nhớ vị trí mà bạn dời thư mục đi để không bị lạc mất dữ liệu trong tương lai.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Di chuyển thư mục này sẽ thay đổi vị trí của việc lưu dự phòng, và sẽ bị tắt đi để đảm bảo an toàn. Có chắc chắn đây là điều bạn muốn thực hiện hay không? Việc lưu dự phòng có thể được bật lại trong App MEGA cho Máy Tính.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="Cập nhật";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="Tệp tin sẽ được cập nhật với phiên bản mới.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Áp dụng cho tất cả %@ mục trùng lặp";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Bạn là người duy nhất ở đây";
 /* Meetings end call dialog description */
@@ -3153,9 +3151,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Đặt hẹn cuộc họp";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="Tài khoản MEGA của quý vị đã bị đình chỉ do đã nhiều lần bị cáo buộc vi phạm bản quyền. Điều này có nghĩa là quý vị không được phép truy cập tài khoản của mình hoặc bất cứ dữ liệu bên trong.\n\nKiểm tra email của quý vị để biết thêm thông tin và về cách gửi đơn phản đối.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to register a new MEGA account.";
+"account.suspension.message.nonCopyright"="Tài khoản của quý vị đã bị chấm dứt do vi phạm Điều Khoản Dịch Vụ của MEGA.\n\nQuý vị sẽ không thể lấy lại quyền truy cập vào dữ liệu đã được lưu trữ của mình hoặc được phép đăng ký tài khoản MEGA mới.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Mở app MEGA và đăng nhập để tiếp tục.";
 /* Account Storage title label of used storage size */
@@ -3175,17 +3173,17 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Các cuộc họp trước đây";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Approve %@";
+"general.menuAction.verifyContact.title"="Chấp nhận %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you share information with before they can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn chấp nhận các tên liên lạc mà bạn chia sẻ thông tin trước khi họ được cấp quyền truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
 "sharedItems.contactVerification.section.myCredentials.message"="Để chấp nhận tên liên lạc, đảm bảo rằng chứng chỉ bạn thấy dưới đây trùng khớp với chứng chỉ tài khoản của họ. Bạn có thể hỏi người đó chia sẻ chứng chỉ cho bạn.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you receive information from before you can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn chấp nhận các tên liên lạc mà bạn có nhận thông tin trước khi bạn truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t approved. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ là mục được chia sẻ từ một tên liên lạc chưa được bạn chấp nhận. Để đảm bảo an toàn hơn, chúng tôi khuyên bạn nên chấp nhận chứng chỉ đăng nhập của họ trong Sổ Liên Lạc bằng cách nhấn vào ⓘ bên cạnh tên liên lạc bạn muốn chấp nhận.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Chứng thực của bạn";
 /* Title of the header label in contact verification screen. */
@@ -3319,7 +3317,7 @@
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Không thể chấp nhận tên liên lạc";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t approve %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Bạn không thể chấp nhận %@ vì họ không có trong sổ liên lạc của bạn. Hãy chờ đến khi họ chấp nhận lời mời của bạn trước.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Tắt mật mã MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3442,6 +3440,10 @@
 "device.center.backup.blocked.status.message"="Bị chặn";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Không rõ thiết bị";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="Hiện vị trí trong Ổ Mây";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Show in Backups";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Ngừng tái diễn";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3641,7 +3643,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="Không thể lưu “%@” vào Ổ Mây. Hãy thử lại sau và nếu sự cố vẫn tiếp diễn, hãy liên hệ với người đã chia sẻ đường liên kết cho bạn.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been approved by you. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
+"shareFolder.contactsNotVerified"="Một số tên liên lạc mà bạn đang chia sẻ thông tin chưa được bạn đã chấp nhận. Để đảm bảo an toàn hơn, chúng tôi khuyên bạn nên chấp nhận chứng chỉ đăng nhập của họ trong Sổ Liên Lạc bằng cách vào dấu ⓘ bên cạnh tên liên lạc bạn muốn chấp nhận.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Đổi tên album";
 /* Rename public album alert message */
@@ -3684,3 +3686,35 @@
 "meetings.waitingRoom.guest.join"="Tham gia";
 /* Meeting waiting room message of wait for host to let you in */
 "meetings.waitingRoom.message.waitForHostToLetYouIn"="Đợi cho người chủ trì cho bạn vào";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="Đợi cho người chủ trì bắt đầu cuộc họp";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="Người chủ trì đã không cho bạn vào";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="OK, hiểu rồi";
+/* Call waiting room alert message text to notify host that someone is waiting to join */
+"chat.call.waitingRoom.alert.message.one"="%@ đang chờ để tham gia cuộc gọi";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.deny"="Từ chối";
+/* Call waiting room alert button to admit access */
+"chat.call.waitingRoom.alert.button.admit"="Chấp nhận";
+/* Call waiting room alert message text to notify host that several participants are waiting to join */
+"chat.call.waitingRoom.alert.message.several"="";
+/* Call waiting room alert button to open waiting room UI */
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="Xem phòng chờ";
+/* Call waiting room alert button to allow access to everyone */
+"chat.call.waitingRoom.alert.button.admitAll"="Chấp nhận tất cả";
+/* Call waiting room alert message text to confirm deny access from host */
+"chat.call.waitingRoom.alert.message.denyAcces"="Từ chối %@ tham gia?";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.confirmDeny"="Từ chối tham gia";
+/* Call waiting room alert button to allow access */
+"chat.call.waitingRoom.alert.button.cancel"="Hủy";
+/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ đang chờ để tham gia “%@”";
+/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open"="Mở trong MEGA";

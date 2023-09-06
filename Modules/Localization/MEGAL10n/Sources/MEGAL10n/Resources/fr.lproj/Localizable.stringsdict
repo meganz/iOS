@@ -3044,5 +3044,41 @@
         <string>%d fichiers ont été enregistrés dans le Disque nuagique.</string>
       </dict>
     </dict>
+    <key>general.saveToPhotos.started</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Le téléchargement est lancé</string>
+        <key>many</key>
+        <string>%d de téléchargements sont lancés</string>
+        <key>other</key>
+        <string>%d téléchargements sont lancés</string>
+      </dict>
+    </dict>
+    <key>general.format.itemsSelected</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d élément a été sélectionné.</string>
+        <key>many</key>
+        <string>%d d’éléments ont été sélectionnés</string>
+        <key>other</key>
+        <string>%d éléments ont été sélectionnés</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

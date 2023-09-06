@@ -1057,7 +1057,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ مساحة تخزين";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 غيغابايت+[/B] من مساحة تخزين";
+"account.storage.freePlan"="[B]20+ غيغابايت[/B] من مساحة تخزين";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="تراسل المعطيات";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="أدخل البريد الإلكتروني";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="لديك طلب لمحادثة ميغا MEGA الآمنة في الانتظار. قم بتسجيل حساب على ميغا MEGA واحصل على 20 غيغابايت من مساحة التخزين المجانية مدى الحياة.";
 /* Destination folder name of chat files */
 "My chat files"="ملفات المحادثة الخاصة بي";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2683,7 +2683,7 @@
 /* Guest user join Mega: paragraph 1 description */
 "meetings.joinMega.paragraph1.description"="انضم إلى أكبر منصة تخزين وتعاون سحابية آمنة في العالم.";
 /* Guest user join Mega: paragraph 2 title */
-"meetings.joinMega.paragraph2.title"="احصل على 20 جيجابايت مجاناً";
+"meetings.joinMega.paragraph2.title"="احصل على 20 غيغابايت مجاناً";
 /* Guest user join Mega: paragraph 2 description */
 "meetings.joinMega.paragraph2.description"="اشترك الآن واستمتع بميزات التعاون المتقدمة مجانًا.";
 /* Message shown when the user privilege is changed to moderator */
@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="تحديث";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="سيتم استبدال الملف بالنسخة الجديدة.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="طبق على كل الـ %@ المكررين";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="انت الوحيد هنا";
 /* Meetings end call dialog description */
@@ -3442,6 +3440,10 @@
 "device.center.backup.blocked.status.message"="محظور";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Unknown device";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="عرض في السواقة السحابية";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Show in Backups";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="إنهاء التكرار";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3684,3 +3686,35 @@
 "meetings.waitingRoom.guest.join"="انضمام";
 /* Meeting waiting room message of wait for host to let you in */
 "meetings.waitingRoom.message.waitForHostToLetYouIn"="انتظر حتى يسمح لك المضيف بالدخول";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="انتظر المضيف لبدء الاجتماع";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="المضيف لم يسمح لك بالدخول";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="حسنًا، فهمت ذلك";
+/* Call waiting room alert message text to notify host that someone is waiting to join */
+"chat.call.waitingRoom.alert.message.one"="%@ is waiting to join the call";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.deny"="رفض";
+/* Call waiting room alert button to admit access */
+"chat.call.waitingRoom.alert.button.admit"="اسمح";
+/* Call waiting room alert message text to notify host that several participants are waiting to join */
+"chat.call.waitingRoom.alert.message.several"="";
+/* Call waiting room alert button to open waiting room UI */
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="See waiting room";
+/* Call waiting room alert button to allow access to everyone */
+"chat.call.waitingRoom.alert.button.admitAll"="اسمح للكل";
+/* Call waiting room alert message text to confirm deny access from host */
+"chat.call.waitingRoom.alert.message.denyAcces"="Deny %@ entry?";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.confirmDeny"="Deny entry";
+/* Call waiting room alert button to allow access */
+"chat.call.waitingRoom.alert.button.cancel"="إلغاء";
+/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ is waiting to join “%@”";
+/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open"="Open in MEGA";

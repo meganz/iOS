@@ -26,10 +26,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d item removed</string>
         <key>other</key>
-        <string>%d items removed</string>
+        <string>%d item dihapus </string>
       </dict>
     </dict>
     <key>sharedItems.rubbish.confirmation.fileCount</key>
@@ -938,10 +936,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Setiap %d hari efektif [B][StartDate] sampai [UntilDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -954,10 +950,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Setiap %d hari efektif [B][StartDate][/B] dari [B][StartTime] hingga [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -2258,10 +2252,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every month on day [cardinalDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on day [cardinalDay].</string>
+        <string>Pertemuan akan terjadi setiap %d bulan pada hari [cardinalDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
@@ -2274,10 +2266,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Meeting will occur every month on day [cardinalDays] and day [cardinalLastDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on day [cardinalDays] and day [cardinalLastDay].</string>
+        <string>Pertemuan akan terjadi setiap %d bulan pada hari [cardinalDays] dan hari [cardinalLastDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -2332,10 +2322,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Every month on day [cardinalNumber]</string>
         <key>other</key>
-        <string>Every %d months on day [cardinalNumber]</string>
+        <string>Setiap %d bulan pada hari [cardinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -2376,10 +2364,38 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d file saved to Cloud drive</string>
         <key>other</key>
-        <string>%d files saved to Cloud drive</string>
+        <string>%d file disimpan ke drive Cloud </string>
+      </dict>
+    </dict>
+    <key>general.saveToPhotos.started</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d pengunduhan dimulai </string>
+      </dict>
+    </dict>
+    <key>general.format.itemsSelected</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item selected</string>
+        <key>other</key>
+        <string>%d items selected</string>
       </dict>
     </dict>
   </dict>

@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="Upgrade ke Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Access Pro only features like setting password protection and expiry dates for public links.";
+"Access Pro only features like setting password protection and expiry dates for public files."="Akses hanya fitur Pro seperti mengatur perlindungan kata sandi dan tanggal kedaluwarsa untuk tautan publik.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Nyalakan mode debug";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Setujui";
 /* Button title */
-"verified"="Approved";
+"verified"="Disetujui";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Hapus Riwayat Chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1849,7 +1849,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Anda tidak diizinkan untuk mengaktifkan video karena panggilan ini telah mencapai jumlah maksimum peserta menggunakan video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start the call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Tidak dapat memulai panggilan karena batas peserta terlampaui.";
 /* Label shown while joining a public chat */
 "Joining..."="Bergabung…";
 /* Label shown while leaving a public chat */
@@ -1937,7 +1937,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Tindakan ini tidak dapat diselesaikan karena akan membawa anda melebihi batas penyimpanan anda saat ini";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Your upload cannot proceed because your Cloud storage is full";
+"Your upload(s) cannot proceed because your account is full"="Pengunggahan anda tidak dapat dilanjutkan karena penyimpanan Cloud anda penuh";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Izinkan kontak Anda melihat terakhir kali Anda aktif di MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2047,7 +2047,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Masukan Email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Anda memiliki permintaan Obrolan MEGA yang menunggu. Daftarkan akun di MEGA Chat dan dapatkan 20 GB penyimpanan gratis seumur hidup.";
 /* Destination folder name of chat files */
 "My chat files"="File obrolan saya";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2585,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Sayangnya anda belum mengambil tindakan di <b>%@</b> sejak email kami dikirim ke <b>%@</b>, pada <b>%@</b>. Anda masih menggunakan <b>%@</b> penyimpanan, yang melebihi batas gratis anda. Silakan lihat email yang kami kirimkan kepada anda untuk informasi lebih lanjut tentang apa yang perlu anda lakukan.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Your data will be deleted tomorrow if your account has not been upgraded.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>Data anda akan dihapus besok jika akun anda belum ditingkatkan.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Tingkatkan dalam <warn>%@</warn> untuk menghindari data anda terhapus.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Upgrade today if you wish to keep your data.</warn></body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Tingkatkan hari ini jika anda ingin menyimpan data anda.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Dapatkan Bonus";
 /* Backup setup warning title */
@@ -2599,7 +2599,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Pindahkan “%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder. Please remember where it is located so that you can find it in the future.";
+"dialog.root.backup.folder.location.warning.message"="Anda mengubah lokasi folder cadangan default. Hal ini mungkin memengaruhi kemampuan anda untuk menemukan folder cadangan. Harap ingat di mana lokasinya sehingga anda dapat menemukannya di masa mendatang.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Memindahkan folder ini mengubah tujuan pencadangan. Pencadangan akan dimatikan demi keamanan. Apakah ini yang ingin anda lakukan? Pencadangan dapat diaktifkan kembali dengan Aplikasi Desktop MEGA.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2643,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Rapat Berakhir";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="View chat history";
+"meetings.alert.meetingchat"="Lihat riwayat obrolan";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="Rapat yang anda coba ikuti telah berakhir. Anda masih dapat melihat riwayat obrolan rapat.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -3054,8 +3054,6 @@
 "nameCollision.files.action.update.title"="Perbarui";
 /* Text description for the update action when upload and already exists in destination */
 "nameCollision.files.action.update.description"="File akan diperbarui dengan versi baru.";
-/* Text to indicate the user that action selected will be applied to all duplicated transfers */
-"nameCollision.applyToAll"="Terapkan ke semua %@ duplikat ";
 /* Meetings end call dialog title */
 "meetings.endCallDialog.title"="Anda satu-satunya di sini";
 /* Meetings end call dialog description */
@@ -3153,9 +3151,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Jadwalkan pertemuan";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="Akun MEGA anda telah ditangguhkan karena tuduhan pelanggaran hak cipta berulang kali. Ini berarti anda tidak dapat mengakses akun atau data anda di dalamnya.\n\nPeriksa email anda untuk informasi lebih lanjut tentang cara mengajukan pemberitahuan tanggapan.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to register a new MEGA account.";
+"account.suspension.message.nonCopyright"="Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.\n\nAnda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftarkan akun MEGA baru.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Buka aplikasi MEGA dan masuk untuk melanjutkan.";
 /* Account Storage title label of used storage size */
@@ -3175,21 +3173,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Pertemuan sebelumnya";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Approve %@";
+"general.menuAction.verifyContact.title"="Disetujui %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you share information with before they can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Kami melindungi data anda dengan enkripsi tanpa pengetahuan. Untuk memastikan keamanan ekstra, kami meminta anda untuk menyetujui kontak yang anda bagikan informasi sebelum mereka dapat mengakses folder bersama.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="To approve your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
+"sharedItems.contactVerification.section.myCredentials.message"="Untuk menyetujui kontak anda, pastikan kredensial yang anda lihat di atas cocok dengan kredensial akun mereka. Anda dapat meminta mereka untuk membagikan kredensialnya kepada anda.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you receive information from before you can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Kami melindungi data anda dengan enkripsi tanpa pengetahuan. Untuk memastikan keamanan ekstra, kami meminta anda menyetujui kontak yang informasinya anda terima sebelum anda dapat mengakses folder bersama.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t approved. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ dibagikan oleh kontak yang belum anda setujui. Untuk memastikan keamanan ekstra, kami menyarankan anda menyetujui kredensial mereka di Kontak dengan mengetuk ⓘ di samping kontak yang ingin anda setujui.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Kredensial Anda";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="We protect your data with zero-knowledge encryption so all the information you store, share, and receive on MEGA is secure. To ensure extra security, we ask you to approve the contacts you share information with or receive data from.";
+"verifyCredentials.headerMessage"="Kami melindungi data anda dengan enkripsi tanpa pengetahuan sehingga semua informasi yang anda simpan, bagikan, dan terima di MEGA aman. Untuk memastikan keamanan ekstra, kami meminta anda untuk menyetujui kontak yang anda bagikan informasi atau terima datanya.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Folder tidak terdekripsi]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3317,9 +3315,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="bulanan";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot approve contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Tidak dapat menyetujui kontak";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t approve %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Anda tidak dapat menyetujui %@ karena mereka tidak ada dalam daftar kontak anda. Tunggu hingga mereka menerima undangan anda terlebih dahulu.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Nonaktifkan kode sandi MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3441,7 +3439,11 @@
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="Terblokir";
 /* Default device name in case the device name cannot be obtained */
-"device.center.default.device.title"="Unknown device";
+"device.center.default.device.title"="Perangkat tidak dikenal";
+/* Show in Cloud Drive section action title */
+"device.center.show.in.cloud.drive.action.title"="Tunjukkan di Cloud Drive";
+/* Show in Backups section action title */
+"device.center.show.in.backups.action.title"="Show in Backups";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Akhiri pengulangan";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3611,41 +3613,41 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Mengubah rapat";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invite to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="Kirimkan undangan kalender melalui email kepada peserta sehingga mereka dapat menambahkan rapat ke kalender mereka.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Mulai pertemuan";
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="Kejadian";
 /* Change SFU server alert title. */
-"settings.about.sfu.changeAlert.title"="Change SFU server";
+"settings.about.sfu.changeAlert.title"="Ubah server SFU";
 /* Change SFU server alert message. */
-"settings.about.sfu.changeAlert.message"="Default is -1";
+"settings.about.sfu.changeAlert.message"="Standarnya adalah -1";
 /* Change SFU server alert test field placeholder. */
-"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+"settings.about.sfu.changeAlert.placeholder"="Masukan ID SFU";
 /* Change SFU server alert cancel button. */
 "settings.about.sfu.changeAlert.cancelButton"="Batal";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="Ganti";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chat with %@";
+"chat.backButton.oneToOne.menu"="Obrolan dengan %@";
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Ruang tunggu";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Only users admitted by the host can join the meeting.";
+"meetings.scheduleMeeting.waitingRoom.description"="Hanya pengguna yang diakui oleh penyelenggara yang dapat bergabung dalam rapat.";
 /* Schedule meeting waiting room warning banner title */
-"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Peserta yang ditambahkan oleh non-host selama panggilan tidak akan dikirim ke ruang tunggu.";
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Belajar lagi";
 /* Album saved to cloud drive alert message */
-"albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@” disimpan ke drive Cloud";
 /* Album failed to save to cloud drive alert message */
-"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” tidak dapat disimpan ke drive Cloud. Coba lagi nanti dan jika masalah berlanjut, hubungi orang yang membagikan tautan tersebut kepada anda.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been approved by you. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
+"shareFolder.contactsNotVerified"="Beberapa kontak yang anda bagikan informasi belum anda setujui. Untuk memastikan keamanan ekstra, kami menyarankan anda menyetujui kredensial mereka di Kontak dengan mengetuk ⓘ di samping kontak yang ingin anda setujui.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Ganti nama album";
 /* Rename public album alert message */
-"albumLink.alert.renameAlbum.message"="An album named “%@” already exists in your Albums. Enter a new name for the album you’re saving.";
+"albumLink.alert.renameAlbum.message"="Sebuah album bernama “%@” sudah ada di Album anda. Masukkan nama baru untuk album yang anda simpan.";
 /* Button title of the dialog for transfer quota error that will direct to upgrade plan */
 "transferQuotaError.button.upgrade"="Tingkatkan";
 /* Button title of the dialog for transfer quota error that will dismiss dialog */
@@ -3653,21 +3655,21 @@
 /* Button title of the dialog for transfer quota error to buy new plan */
 "transferQuotaError.button.buyNewPlan"="Beli paket baru";
 /* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
-"transferQuotaError.footerMessage.quotaUsage"="[A]%% of [B] TB used";
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% dari [B] TB terpakai";
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
 "transferQuotaError.downloadLimitedQuota.title"="Quota transfer tersedia terbatas";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
-"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Downloading may be interrupted as you’ve used most of your transfer quota for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Pengunduhan mungkin terhenti karena anda telah menggunakan sebagian besar kuota transfer untuk alamat IP ini. Untuk mendapatkan lebih banyak kuota, upgrade ke paket Pro atau tunggu %@ hingga lebih banyak kuota gratis tersedia di alamat IP anda. [A]Pelajari selengkapnya[/A] tentang kuota transfer.";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
 "transferQuotaError.downloadLimitedQuota.proAccount.message"="Pengunduhan mungkin terhenti karena anda telah menggunakan sebagian besar kuota transfer di akun ini. Untuk mendapatkan lebih banyak kuota, beli paket baru, atau jika anda memiliki langganan berulang dengan MEGA, anda dapat menunggu perpanjangan paket.";
 /* Title of the dialog for transfer quota error with exceeded quota */
 "transferQuotaError.downloadExceededQuota.title"="Kuota transfer telah terlewati";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
-"transferQuotaError.downloadExceededQuota.freeAccount.message"="You can’t continue downloading as you don’t have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="Anda tidak dapat melanjutkan pengunduhan karena tidak ada sisa kuota transfer untuk alamat IP ini. Untuk mendapatkan lebih banyak kuota, upgrade ke paket Pro atau tunggu %@ hingga lebih banyak kuota gratis tersedia di alamat IP anda. [A]Pelajari selengkapnya[/A] tentang kuota transfer.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.downloadExceededQuota.proAccount.message"="Anda tidak dapat melanjutkan pengunduhan karena anda tidak memiliki sisa kuota transfer di akun ini. Untuk mendapatkan lebih banyak kuota, beli paket baru, atau jika anda memiliki langganan berulang dengan MEGA, anda dapat menunggu perpanjangan paket.";
 /* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
-"transferQuotaError.streamingExceededQuota.freeAccount.message"="Your media stopped playing as you don’t have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Media anda berhenti diputar karena anda tidak memiliki sisa kuota transfer untuk alamat IP ini. Untuk mendapatkan lebih banyak kuota, upgrade ke paket Pro atau tunggu %@ hingga lebih banyak kuota gratis tersedia di alamat IP anda. [A]Pelajari selengkapnya[/A] tentang kuota transfer.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.streamingExceededQuota.proAccount.message"="Media anda berhenti diputar karena anda tidak memiliki sisa kuota transfer di akun ini. Untuk mendapatkan lebih banyak kuota, beli paket baru, atau jika anda memiliki langganan berulang dengan MEGA, anda dapat menunggu perpanjangan paket.";
 /* Meeting waiting room leave button */
@@ -3675,7 +3677,7 @@
 /* Meeting waiting room leave alert message */
 "meetings.waitingRoom.alert.leaveMeeting"="Keluar dari rapat?";
 /* Meeting waiting room don't leave button */
-"meetings.waitingRoom.alert.dontLeave"="Don’t leave";
+"meetings.waitingRoom.alert.dontLeave"="Jangan pergi";
 /* Meeting waiting room guest join first name textfield */
 "meetings.waitingRoom.guest.firstName"="Nama depan";
 /* Meeting waiting room guest join last name textfield */
@@ -3683,4 +3685,36 @@
 /* Meeting waiting room guest join button */
 "meetings.waitingRoom.guest.join"="Gabung";
 /* Meeting waiting room message of wait for host to let you in */
-"meetings.waitingRoom.message.waitForHostToLetYouIn"="Wait for host to let you in";
+"meetings.waitingRoom.message.waitForHostToLetYouIn"="Tunggu tuan rumah mengizinkan anda masuk";
+/* Meeting waiting room message of wait for host to start the meeting */
+"meetings.waitingRoom.message.waitForHostToStartTheMeeting"="Tunggu tuan rumah memulai pertemuan";
+/* Meeting waiting room alert title of Host didn’t let you in */
+"meetings.waitingRoom.alert.hostDidNotLetYouIn"="Host didn’t let you in";
+/* Meeting waiting room alert message of You'll be removed from the waiting room */
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room";
+/* Meeting waiting room alert action of ok got it */
+"meetings.waitingRoom.alert.okGotIt"="OK, mengerti";
+/* Call waiting room alert message text to notify host that someone is waiting to join */
+"chat.call.waitingRoom.alert.message.one"="%@ sedang menunggu untuk bergabung dalam panggilan tersebut ";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.deny"="Tolak";
+/* Call waiting room alert button to admit access */
+"chat.call.waitingRoom.alert.button.admit"="Akui";
+/* Call waiting room alert message text to notify host that several participants are waiting to join */
+"chat.call.waitingRoom.alert.message.several"="";
+/* Call waiting room alert button to open waiting room UI */
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="Lihat ruang tunggu";
+/* Call waiting room alert button to allow access to everyone */
+"chat.call.waitingRoom.alert.button.admitAll"="Akui semuanya";
+/* Call waiting room alert message text to confirm deny access from host */
+"chat.call.waitingRoom.alert.message.denyAcces"="Tolak %@ masuk?";
+/* Call waiting room alert button to deny access */
+"chat.call.waitingRoom.alert.button.confirmDeny"="Tolak masuk";
+/* Call waiting room alert button to allow access */
+"chat.call.waitingRoom.alert.button.cancel"="Batal";
+/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ sedang menunggu untuk bergabung “%@”";
+/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
+"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
+/* Context menu action seen from native files application when selecting a file that's also present on MEGA */
+"fileProviderExtension.action.open"="Buka di MEGA";

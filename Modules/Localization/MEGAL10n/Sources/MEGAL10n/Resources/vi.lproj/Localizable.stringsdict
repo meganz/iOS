@@ -2368,5 +2368,35 @@
         <string>%d tệp tin đã được lưu vào Ổ Mây</string>
       </dict>
     </dict>
+    <key>general.saveToPhotos.started</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d phiên tải xuống đã được bắt đầu</string>
+      </dict>
+    </dict>
+    <key>general.format.itemsSelected</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d item selected</string>
+        <key>other</key>
+        <string>%d items selected</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
