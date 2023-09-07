@@ -256,6 +256,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self initCollection];
             self.shouldDetermineViewMode = NO;
             return;
+        case ViewModePreferenceMediaDiscovery:
+            break;
     }
     
     CloudAppearancePreference *cloudAppearancePreference = [MEGAStore.shareInstance fetchCloudAppearancePreferenceWithHandle:self.parentNode.handle];
@@ -298,10 +300,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)initTable {
-    [self.cdCollectionView willMoveToParentViewController:nil];
-    [self.cdCollectionView.view removeFromSuperview];
-    [self.cdCollectionView removeFromParentViewController];
-    self.cdCollectionView = nil;
+    [self clearViewModeChildren];
     
     self.viewModePreference = ViewModePreferenceList;
     
@@ -318,10 +317,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)initCollection {
-    [self.cdTableView willMoveToParentViewController:nil];
-    [self.cdTableView.view removeFromSuperview];
-    [self.cdTableView removeFromParentViewController];
-    self.cdTableView = nil;
+    [self clearViewModeChildren];
     
     self.viewModePreference = ViewModePreferenceThumbnail;
     
@@ -378,15 +374,51 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     return self.viewModePreference == ViewModePreferenceList;
 }
 
-- (void)changeViewModePreference {
-    self.viewModePreference = (self.viewModePreference == ViewModePreferenceList) ? ViewModePreferenceThumbnail : ViewModePreferenceList;
-    if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
-        [MEGAStore.shareInstance insertOrUpdateCloudViewModeWithHandle:self.parentNode.handle viewMode:self.viewModePreference];
-    } else {
-        [NSUserDefaults.standardUserDefaults setInteger:self.viewModePreference forKey:MEGAViewModePreference];
+- (BOOL)isThumbnailViewModeSelected {
+    return self.viewModePreference == ViewModePreferenceThumbnail;
+}
+
+- (BOOL)isMediaDiscoveryViewModeSelected {
+    return self.viewModePreference == ViewModePreferenceMediaDiscovery;
+}
+
+-(void)changeModeToListView {
+    [self change: ViewModePreferenceList];
+}
+
+-(void)changeModeToThumbnail {
+    [self change: ViewModePreferenceThumbnail];
+}
+
+-(void)changeModeToMediaDiscovery {
+    [self change: ViewModePreferenceMediaDiscovery];
+}
+
+/// With the passed in viewMode, this function will attempt to update and change the viewMode for the screen.
+/// If the viewMode is the same as it was previously, no change will be made, and exit early
+/// - If the passed in viewMode change is of type ViewModePreferenceMediaDiscovery, this function will not save this preference to the device to be used with parent nodes and future sub folder viewModes
+///   therefore current parent nodes in the view stack will not receive a change notification.
+/// - If the current accounts viewMode preference is set to ViewModePreferencePerFolder, this function will update the viewModePreference at this parent node level to be  used again in the future reentry to this screen for this parent node.
+/// - All other cases will save the changed viewModePreference to the user storage, and post a notification to listeners that viewMode change has occurred. The posting of ViewModePreferenceMediaDiscovery is skipped, as no change should occur outside this parent node.
+/// - Parameter viewModePreference: The viewMode this screen would like to transition to.
+- (void)change:(ViewModePreference) viewModePreference {
+    
+    if(self.viewModePreference == viewModePreference) {
+        return;
     }
     
-    [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
+    self.viewModePreference = viewModePreference;
+    
+    if(viewModePreference == ViewModePreferenceMediaDiscovery) {
+        [self configureMediaDiscoveryViewMode];
+        self.shouldDetermineViewMode = NO;
+    } else if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
+        [MEGAStore.shareInstance insertOrUpdateCloudViewModeWithHandle:self.parentNode.handle viewMode:self.viewModePreference];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
+    } else {
+        [NSUserDefaults.standardUserDefaults setInteger:self.viewModePreference forKey:MEGAViewModePreference];
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
+    }
 }
 
 - (void)nodesSortTypeHasChanged {

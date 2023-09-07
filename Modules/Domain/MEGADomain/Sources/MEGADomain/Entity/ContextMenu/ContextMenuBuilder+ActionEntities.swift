@@ -51,7 +51,10 @@ extension ContextMenuBuilder {
     }
     
     var mediaDiscovery: CMActionEntity {
-        CMActionEntity(type: .display(actionType: .mediaDiscovery))
+        let state: CMActionState = currentViewMode() == .mediaDiscovery ? .on : .off
+        return CMActionEntity(
+            type: .display(actionType: .mediaDiscovery),
+            state: currentMediaDiscoveryStateCanChange() ? state : .off)
     }
     
     // MARK: - Sort Actions

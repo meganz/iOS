@@ -97,8 +97,7 @@ final class ContextMenuManager: NSObject {
             
         case .display(let action):
             displayMenuDelegate?.displayMenu(didSelect: action,
-                                             needToRefreshMenu: action == .listView ||
-                                             action == .thumbnailView)
+                                             needToRefreshMenu: [.listView, .thumbnailView, .mediaDiscovery].contains(action))
         case .sort(let option):
             displayMenuDelegate?.sortMenu(didSelect: option.toSortOrderType())
             
@@ -116,7 +115,7 @@ final class ContextMenuManager: NSObject {
             rubbishBinMenuDelegate?.rubbishBinMenu(didSelect: action)
             
         case .chatStatus(let action):
-            let currentStatus = MEGASdkManager.sharedMEGAChatSdk().onlineStatus()
+            let currentStatus =  MEGAChatSdk.shared.onlineStatus()
             guard ChatStatus(rawValue: currentStatus.rawValue) != action.toChatStatus() else { return }
             
             chatMenuDelegate?.chatStatusMenu(didSelect: action)

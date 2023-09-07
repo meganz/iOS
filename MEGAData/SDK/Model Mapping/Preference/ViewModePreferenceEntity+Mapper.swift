@@ -9,6 +9,8 @@ extension ViewModePreferenceEntity {
             return .list
         case .thumbnail:
             return .thumbnail
+        case .mediaDiscovery:
+            return .mediaDiscovery
         }
     }
 }
@@ -22,7 +24,8 @@ extension ViewModePreference {
             return .list
         case .thumbnail:
             return .thumbnail
+        case .mediaDiscovery:
+            return .mediaDiscovery
         }
-        
     }
 }

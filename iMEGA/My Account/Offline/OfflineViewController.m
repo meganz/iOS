@@ -195,6 +195,8 @@ static NSString *kisDirectory = @"kisDirectory";
         case ViewModePreferenceThumbnail:
             [self initCollection];
             return;
+        case ViewModePreferenceMediaDiscovery:
+            break;
     }
 
     NSString *relativePath = [[self currentOfflinePath] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()]  withString:@""];
@@ -565,6 +567,8 @@ static NSString *kisDirectory = @"kisDirectory";
         case ViewModePreferenceThumbnail:
             [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
             break;
+        case ViewModePreferenceMediaDiscovery:
+            break;
     }
     
     return previewController;
@@ -615,6 +619,8 @@ static NSString *kisDirectory = @"kisDirectory";
             
         case ViewModePreferenceThumbnail:
             [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
+            break;
+        case ViewModePreferenceMediaDiscovery:
             break;
     }
     return navigationController;

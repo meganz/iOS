@@ -32,6 +32,7 @@ public final class ContextMenuBuilder {
     private var timeRemainingToDeactiveDND: String?
     private var versionsCount: Int = 0
     private var showMediaDiscovery: Bool = false
+    private var mediaDiscoveryStateCanChange = false
     private var chatStatus: ChatStatusEntity = .invalid
     private var shouldScheduleMeeting = false
     private var sharedLinkStatus: SharedLinkStatusEntity = .unavailable
@@ -205,6 +206,11 @@ public final class ContextMenuBuilder {
         return self
     }
     
+    public func setMediaDiscoveryStateCanChange(_ stateCanChange: Bool) -> ContextMenuBuilder {
+        mediaDiscoveryStateCanChange = stateCanChange
+        return self
+    }
+    
     public func setChatStatus(_ chatStatus: ChatStatusEntity) -> ContextMenuBuilder {
         self.chatStatus = chatStatus
         return self
@@ -279,6 +285,10 @@ public final class ContextMenuBuilder {
     
     func currentTimeRemainingToDeactiveDND() -> String? {
         timeRemainingToDeactiveDND
+    }
+    
+    func currentMediaDiscoveryStateCanChange() -> Bool {
+        mediaDiscoveryStateCanChange
     }
 
     // MARK: - Upload Add Context Actions grouping functions
