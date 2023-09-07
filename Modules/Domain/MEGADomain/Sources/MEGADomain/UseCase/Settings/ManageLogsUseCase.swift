@@ -1,5 +1,5 @@
 public protocol ManageLogsUseCaseProtocol {
-    func toggleLogs()
+    func toggleLogs(with logMetadata: LogMetadataEntity)
 }
 
 public struct ManageLogsUseCase: ManageLogsUseCaseProtocol {
@@ -14,7 +14,7 @@ public struct ManageLogsUseCase: ManageLogsUseCaseProtocol {
         $isLoggingEnabled.useCase = preferenceUseCase
     }
     
-    public func toggleLogs() {
-        repository.toggleLogs(enable: isLoggingEnabled)
+    public func toggleLogs(with logMetadata: LogMetadataEntity) {
+        repository.toggleLogs(enable: isLoggingEnabled, with: logMetadata)
     }
 }

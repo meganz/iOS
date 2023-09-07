@@ -14,12 +14,15 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
-        .package(path: "../../MEGAPresentation")
+        .package(path: "../../MEGAPresentation"),
+        .package(path: "../../../Localization/MEGAL10n"),
+        .package(path: "../../../Repository/ChatRepo"),
+        .package(path: "../../Repository/LogRepo")
     ],
     targets: [
         .target(
             name: "Settings",
-            dependencies: ["MEGADomain", "MEGAPresentation"]),
+            dependencies: ["MEGADomain", "MEGAPresentation", "MEGAL10n", "ChatRepo", "LogRepo"]),
         .testTarget(
             name: "SettingsTests",
             dependencies: ["Settings",

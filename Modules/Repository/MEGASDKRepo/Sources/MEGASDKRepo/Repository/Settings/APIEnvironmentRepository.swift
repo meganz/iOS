@@ -1,17 +1,17 @@
 import MEGADomain
-import MEGASDKRepo
+import MEGARepo
+import MEGASdk
 
-struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
-    static var newRepo: APIEnvironmentRepository {
-        APIEnvironmentRepository(sdk: MEGASdk.shared, folderSdk: MEGASdk.sharedFolderLink, chatSdk: MEGAChatSdk.shared, credentialRepository: CredentialRepository.newRepo)
+public struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
+    public static var newRepo: APIEnvironmentRepository {
+        APIEnvironmentRepository(sdk: .sharedSdk, folderSdk: .sharedFolderLinkSdk, credentialRepository: CredentialRepository.newRepo)
     }
     
     private let sdk: MEGASdk
     private let folderSdk: MEGASdk
-    private let chatSdk: MEGAChatSdk
     private let credentialRepository: any CredentialRepositoryProtocol
     
-    @PreferenceWrapper(key: .apiEnvironment, defaultValue: 0, useCase: PreferenceUseCase.default)
+    @PreferenceWrapper(key: .apiEnvironment, defaultValue: 0, useCase: PreferenceUseCase(repository: PreferenceRepository.newRepo))
     private var apiEnvironment: Int
     
     private enum Constants {
@@ -21,14 +21,13 @@ struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
         static let sandbox3SDKUrl = "https://api-sandbox3.developers.mega.co.nz/"
     }
     
-    init(sdk: MEGASdk, folderSdk: MEGASdk, chatSdk: MEGAChatSdk, credentialRepository: any CredentialRepositoryProtocol) {
+    public init(sdk: MEGASdk, folderSdk: MEGASdk, credentialRepository: any CredentialRepositoryProtocol) {
         self.sdk = sdk
         self.folderSdk = folderSdk
-        self.chatSdk = chatSdk
         self.credentialRepository = credentialRepository
     }
     
-    func changeAPIURL(_ environment: APIEnvironmentEntity) {
+    public func changeAPIURL(_ environment: APIEnvironmentEntity, onUserSessionAvailable: () -> Void) {
         switch environment {
         case .production:
             sdk.changeApiUrl(Constants.productionSDKUrl, disablepkp: false)
@@ -48,7 +47,7 @@ struct APIEnvironmentRepository: APIEnvironmentRepositoryProtocol {
         
         if let sessionId = credentialRepository.sessionId() {
             sdk.fastLogin(withSession: sessionId)
-            chatSdk.refreshUrls()
+            onUserSessionAvailable()
         }
     }
 }

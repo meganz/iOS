@@ -3,13 +3,17 @@ public protocol APIEnvironmentUseCaseProtocol {
 }
 
 public struct APIEnvironmentUseCase: APIEnvironmentUseCaseProtocol {
-    private var repository: any APIEnvironmentRepositoryProtocol
+    private var apiEnvironmentRepository: any APIEnvironmentRepositoryProtocol
+    private var chatURLRepository: any ChatURLRespositoryProtocol
     
-    public init(repository: any APIEnvironmentRepositoryProtocol) {
-        self.repository = repository
+    public init(apiEnvironmentRepository: some APIEnvironmentRepositoryProtocol, chatURLRepository: some ChatURLRespositoryProtocol) {
+        self.apiEnvironmentRepository = apiEnvironmentRepository
+        self.chatURLRepository = chatURLRepository
     }
     
     public func changeAPIURL(_ environment: APIEnvironmentEntity) {
-        repository.changeAPIURL(environment)
+        apiEnvironmentRepository.changeAPIURL(environment) {
+            chatURLRepository.refreshUrls()
+        }
     }
 }
