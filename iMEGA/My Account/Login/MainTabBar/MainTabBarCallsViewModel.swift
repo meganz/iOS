@@ -3,9 +3,10 @@ import MEGADomain
 import MEGAPresentation
 
 protocol MainTabBarCallsRouting: AnyObject {
-    func showOneUserWaitingRoomDialog(for username: String, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void)
-    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void)
+    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void)
+    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void)
     func dismissWaitingRoomDialog(animated: Bool)
+    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void)
 }
 
 enum MainTabBarCallsAction: ActionType { }
@@ -18,6 +19,8 @@ enum MainTabBarCallsAction: ActionType { }
     }
     var invokeCommand: ((Command) -> Void)?
 
+    private let tonePlayer = TonePlayer()
+
     private let router: any MainTabBarCallsRouting
     private let chatUseCase: any ChatUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
@@ -25,7 +28,10 @@ enum MainTabBarCallsAction: ActionType { }
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
 
     private var callUpdateSubscription: AnyCancellable?
-    private var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
+    private (set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
+    
+    @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    var isCallUIVisible: Bool
     
     init(
         router: some MainTabBarCallsRouting,
@@ -103,24 +109,40 @@ enum MainTabBarCallsAction: ActionType { }
         
         if waitingRoomNonModeratorHandles.count == 1 {
             guard let userHandle = waitingRoomNonModeratorHandles.first else { return }
-            Task { @MainActor in
-                do {
-                    let username = try await chatRoomUserUseCase.userDisplayName(forPeerId: userHandle, in: chatRoom)
-                    router.showOneUserWaitingRoomDialog(for: username) { [weak self] in
-                        self?.callUseCase.allowUsersJoinCall(call, users: [userHandle])
-                    } denyAction: { [weak self] in
-                        self?.callUseCase.kickUsersFromCall(call, users: [userHandle])
-                    }
-                } catch {
-                    MEGALogError("Failed to get username for participant in call waiting room")
-                }
-            }
+            showOneUserWaitingRoomAlert(withUserHandle: userHandle, inChatRoom: chatRoom, forCall: call)
         } else {
-            router.showSeveralUsersWaitingRoomDialog(for: waitingRoomNonModeratorHandles.count) { [weak self] in
-                self?.callUseCase.allowUsersJoinCall(call, users: waitingRoomNonModeratorHandles)
-            } seeWaitingRoomAction: {
-                // Waiting Room UI will be implemented in next tickets
+            showSeveralUsersWaitingRoomAlert(userHandles: waitingRoomNonModeratorHandles, inChatRoom: chatRoom, forCall: call)
+        }
+    }
+    
+    private func showOneUserWaitingRoomAlert(withUserHandle userHandle: UInt64, inChatRoom chatRoom: ChatRoomEntity, forCall call: CallEntity) {
+        Task { @MainActor in
+            do {
+                let username = try await chatRoomUserUseCase.userDisplayName(forPeerId: userHandle, in: chatRoom)
+                router.showOneUserWaitingRoomDialog(for: username, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible) { [weak self] in
+                    self?.callUseCase.allowUsersJoinCall(call, users: [userHandle])
+                } denyAction: { [weak self] in
+                    self?.showConfirmDenyWaitingRoomAlert(for: username, userHandle: userHandle, call: call)
+                }
+                tonePlayer.play(tone: .waitingRoomEvent)
+            } catch {
+                MEGALogError("Failed to get username for participant in call waiting room")
             }
         }
+    }
+    
+    private func showSeveralUsersWaitingRoomAlert(userHandles: [UInt64], inChatRoom chatRoom: ChatRoomEntity, forCall call: CallEntity) {
+        router.showSeveralUsersWaitingRoomDialog(for: userHandles.count, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible) { [weak self] in
+            self?.callUseCase.allowUsersJoinCall(call, users: userHandles)
+        } seeWaitingRoomAction: {
+            // Waiting Room UI will be implemented in next tickets
+        }
+        tonePlayer.play(tone: .waitingRoomEvent)
+    }
+    
+    private func showConfirmDenyWaitingRoomAlert(for username: String, userHandle: UInt64, call: CallEntity) {
+        router.showConfirmDenyAction(for: username, isCallUIVisible: isCallUIVisible, confirmDenyAction: { [weak self] in
+            self?.callUseCase.kickUsersFromCall(call, users: [userHandle])
+        })
     }
 }

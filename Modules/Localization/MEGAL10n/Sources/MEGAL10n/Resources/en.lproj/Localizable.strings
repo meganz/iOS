@@ -3705,7 +3705,7 @@
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Admit all";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="Deny %@ entry?";
+"chat.call.waitingRoom.alert.message.denyAccess"="Deny %@ entry?";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="Deny entry";
 /* Call waiting room alert button to allow access */

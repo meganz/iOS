@@ -892,6 +892,8 @@
 		8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */; };
 		835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */; };
 		835B1B90245AD23C00E41FBE /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
+		835CE8492AA886B200861544 /* waitingRoomEvent.wav in Resources */ = {isa = PBXBuildFile; fileRef = 835CE8482AA886B200861544 /* waitingRoomEvent.wav */; };
+		835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */; };
 		835E624B2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */; };
 		835EE371258120C200D8E3B8 /* QuickAccessWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */; };
 		8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */; };
@@ -3466,6 +3468,8 @@
 		8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetAction.swift; sourceTree = "<group>"; };
 		8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatus.swift; sourceTree = "<group>"; };
 		835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
+		835CE8482AA886B200861544 /* waitingRoomEvent.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waitingRoomEvent.wav; sourceTree = "<group>"; };
+		835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsViewModelTests.swift; sourceTree = "<group>"; };
 		835E62492085ED56007470A2 /* MEGAPauseTransferRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPauseTransferRequestDelegate.h; sourceTree = "<group>"; };
 		835E624A2085ED56007470A2 /* MEGAPauseTransferRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPauseTransferRequestDelegate.m; sourceTree = "<group>"; };
 		835EE35F25811D8600D8E3B8 /* QuickAccessWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetEntry.swift; sourceTree = "<group>"; };
@@ -8339,6 +8343,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		835CE84C2AA88E7E00861544 /* MainTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */,
+			);
+			path = MainTabBar;
+			sourceTree = "<group>";
+		};
 		835EE35425811D4400D8E3B8 /* QuickAccess */ = {
 			isa = PBXGroup;
 			children = (
@@ -9674,6 +9686,7 @@
 				BF49DFA2282B230800DE3742 /* participantJoined.wav */,
 				BF49DFA6282B231300DE3742 /* participantLeft.wav */,
 				839B9FCE283D2DCA001A49DF /* reconnecting.wav */,
+				835CE8482AA886B200861544 /* waitingRoomEvent.wav */,
 			);
 			path = Audios;
 			sourceTree = "<group>";
@@ -10696,6 +10709,7 @@
 				5DFC8DC324ECF35C00DDA006 /* Home */,
 				B6AF22DD26097F200008FF72 /* Launching */,
 				837B17A128819CB900A4D01B /* Links */,
+				835CE84C2AA88E7E00861544 /* MainTabBar */,
 				BFF0EE2E2630E34300FAEFF9 /* Meeting */,
 				5D52C744250C4EED00286A43 /* Mocks */,
 				8361D9EE283E7B2B0001FAC1 /* NameCollision */,
@@ -12693,6 +12707,7 @@
 				837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */,
 				BFAAF718252E85810053A9BF /* VideoExplorerTableViewCell.xib in Resources */,
 				BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */,
+				835CE8492AA886B200861544 /* waitingRoomEvent.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14951,6 +14966,7 @@
 				8340CB1C284F5507007C3B39 /* HeaderViewModelTests.swift in Sources */,
 				94712EF42A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
+				835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */,
 				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */,

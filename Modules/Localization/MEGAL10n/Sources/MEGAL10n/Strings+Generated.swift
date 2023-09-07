@@ -3099,8 +3099,8 @@ public enum Strings {
             }
             public enum Message {
               /// Call waiting room alert message text to confirm deny access from host
-              public static func denyAcces(_ p1: Any) -> String {
-                return Strings.tr("Localizable", "chat.call.waitingRoom.alert.message.denyAcces", String(describing: p1), fallback: "Deny %@ entry?")
+              public static func denyAccess(_ p1: Any) -> String {
+                return Strings.tr("Localizable", "chat.call.waitingRoom.alert.message.denyAccess", String(describing: p1), fallback: "Deny %@ entry?")
               }
               /// Call waiting room alert message text to notify host that someone is waiting to join
               public static func one(_ p1: Any) -> String {

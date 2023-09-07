@@ -29,4 +29,5 @@ public enum PreferenceKeyEntity: String {
     case lastCopyActionTargetDate
     case agreedCopywriteWarning
     case waitingRoomWarningBannerDismissed
+    case isCallUIVisible
 }
