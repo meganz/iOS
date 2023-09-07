@@ -172,6 +172,8 @@ public final class BackupListViewModel: ObservableObject {
             actionTypes.append(.cameraUploads)
         }
         
+        actionTypes.append(.sort)
+        
         return actionTypes.compactMap { type in
             sortedAvailableActions[type]?.first
         }

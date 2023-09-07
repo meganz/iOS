@@ -164,7 +164,7 @@ final class DeviceListViewModelTests: XCTestCase {
         
         let actions = viewModel.actionsForDevice(selectedDevice)
         
-        let expectedActions: [DeviceCenterActionType] = [.cameraUploads, .rename, .info]
+        let expectedActions: [DeviceCenterActionType] = [.cameraUploads, .info, .rename]
         let actionsType = actions?.compactMap {$0.type}
         XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
     }
@@ -184,7 +184,7 @@ final class DeviceListViewModelTests: XCTestCase {
         
         let actions = viewModel.actionsForDevice(selectedDevice)
         
-        let expectedActions: [DeviceCenterActionType] = [.rename, .info]
+        let expectedActions: [DeviceCenterActionType] = [.info, .rename]
         let actionsType = actions?.compactMap {$0.type}
         XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
     }
@@ -307,6 +307,9 @@ final class DeviceListViewModelTests: XCTestCase {
                 ),
                 DeviceCenterAction(
                     type: .showInCD
+                ),
+                DeviceCenterAction(
+                    type: .sort
                 )
             ]
         )
