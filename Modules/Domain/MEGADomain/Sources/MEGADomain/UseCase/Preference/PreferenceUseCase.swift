@@ -12,7 +12,7 @@ public struct PreferenceUseCase<T: PreferenceRepositoryProtocol>: PreferenceUseC
         repo = repository
     }
     
-    public subscript<T>(key: PreferenceKeyEntity) -> T? {
+    public subscript<V>(key: PreferenceKeyEntity) -> V? {
         get {
             repo[key.rawValue]
         }
