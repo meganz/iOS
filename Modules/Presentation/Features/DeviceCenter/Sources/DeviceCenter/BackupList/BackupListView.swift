@@ -37,25 +37,45 @@ struct BackupListContentView: View {
                 }
             }.toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        let menuOptions = viewModel.actionsForDevice()
-                        ForEach(menuOptions.indices, id: \.self) { index in
-                            let contextMenuOption = menuOptions[index]
-                            if contextMenuOption.type == .cameraUploads {
-                                Divider()
-                            }
-                            Button {
-                                contextMenuOption.action()
-                            } label: {
-                                Label(contextMenuOption.title, image: contextMenuOption.icon)
-                            }
-                        }
+                    DeviceCenterMenu(menuIconName: "moreList", menuOptions: viewModel.actionsForDevice())
+                }
+            }
+    }
+}
+
+struct DeviceCenterMenu: View {
+    var title: String = ""
+    let menuIconName: String
+    let menuOptions: [DeviceCenterAction]
+
+    var body: some View {
+        Menu {
+            ForEach(menuOptions.indices, id: \.self) { index in
+                let contextMenuOption = menuOptions[index]
+                
+                if contextMenuOption.type == .cameraUploads ||
+                    contextMenuOption.type == .sort {
+                    Divider()
+                }
+
+                if let subActions = contextMenuOption.subActions {
+                    DeviceCenterMenu(title: contextMenuOption.title, menuIconName: contextMenuOption.icon, menuOptions: subActions)
+                } else {
+                    Button {
+                        contextMenuOption.action()
                     } label: {
-                        Image("moreList")
-                            .scaledToFit()
-                            .frame(width: 28, height: 28)
+                        Label(contextMenuOption.title, image: contextMenuOption.icon)
                     }
-                 }
-             }
+                }
+            }
+        } label: {
+            if title.isEmpty {
+                Image(menuIconName)
+                    .scaledToFit()
+                    .frame(width: 28, height: 28)
+            } else {
+                Label(title, image: menuIconName)
+            }
+        }
     }
 }

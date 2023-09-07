@@ -243,6 +243,28 @@ extension MyAccountHallViewController: UITableViewDelegate {
                     icon: Asset.Images.MyAccount.backups.name,
                     action: {
                     }
+                ),
+                DeviceCenterAction(
+                    type: .sort,
+                    title: Strings.Localizable.sortTitle,
+                    icon: Asset.Images.ActionSheetIcons.sort.name,
+                    action: {},
+                    subActions: [
+                        DeviceCenterAction(
+                            type: .sortAscending,
+                            title: Strings.Localizable.nameAscending,
+                            icon: Asset.Images.ActionSheetIcons.SortBy.ascending.name,
+                            action: {
+                            }
+                        ),
+                        DeviceCenterAction(
+                            type: .sortDescending,
+                            title: Strings.Localizable.nameDescending,
+                            icon: Asset.Images.ActionSheetIcons.SortBy.descending.name,
+                            action: {
+                            }
+                        )
+                    ]
                 )
             ]
         )

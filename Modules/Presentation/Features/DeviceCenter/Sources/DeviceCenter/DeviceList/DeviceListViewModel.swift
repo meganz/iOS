@@ -180,7 +180,7 @@ public final class DeviceListViewModel: ObservableObject {
             actionTypes.append(.cameraUploads)
         }
         
-        actionTypes.append(contentsOf: [.rename, .info])
+        actionTypes.append(contentsOf: [.info, .rename])
         
         return actionTypes.compactMap { type in
             sortedAvailableActions[type]?.first
