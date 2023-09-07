@@ -50,6 +50,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         MeetingContainerViewController.isAlreadyPresented
     }
     
+    @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    var isCallUIVisible: Bool
+    
     init(presenter: UIViewController,
          chatRoom: ChatRoomEntity,
          call: CallEntity,
@@ -103,10 +106,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showCallViewRouter(containerViewModel: containerViewModel)
         showFloatingPanel(containerViewModel: containerViewModel)
+        isCallUIVisible = true
         UIApplication.shared.isIdleTimerDisabled = true
     }
     
     func dismiss(animated: Bool, completion: (() -> Void)?) {
+        isCallUIVisible = false
         if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
             MEGALogDebug("Meeting ended for call \(callId) - dismiss called will animated \(animated)")
         }
