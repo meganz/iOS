@@ -4,7 +4,7 @@ public struct MockManageLogsUseCase: ManageLogsUseCaseProtocol {
     
     public init() {}
     
-    public func toggleLogs() {
+    public func toggleLogs(with logMetadata: LogMetadataEntity) {
         
     }
 }

@@ -1,6 +1,7 @@
 import ChatRepo
 import Combine
 import Foundation
+import LogRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions

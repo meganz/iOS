@@ -1,34 +1,30 @@
 // swift-tools-version: 5.8
-
 import PackageDescription
 
-let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
-
 let package = Package(
-    name: "ChatRepo",
+    name: "LogRepo",
     platforms: [
         .macOS(.v10_15), .iOS(.v14)
     ],
     products: [
         .library(
-            name: "ChatRepo",
-            targets: ["ChatRepo"]
-        )
+            name: "LogRepo",
+            targets: ["LogRepo"]),
     ],
     dependencies: [
         .package(path: "../../DataSource/MEGAChatSdk"),
         .package(path: "../../Domain/MEGADomain"),
-        .package(path: "../../Repository/MEGASDKRepo")
+        .package(url: "https://github.com/CocoaLumberjack/CocoaLumberjack.git", from: "3.0.0")
     ],
     targets: [
         .target(
-            name: "ChatRepo",
+            name: "LogRepo",
             dependencies: [
-                "MEGADomain",
                 "MEGAChatSdk",
-                "MEGASDKRepo"
-            ],
-            swiftSettings: settings
+                "MEGADomain",
+                "CocoaLumberjack",
+                .product(name: "CocoaLumberjackSwift", package: "CocoaLumberjack")
+            ]
         )
     ]
 )

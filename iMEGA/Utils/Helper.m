@@ -31,6 +31,7 @@
 #import "NodeTableViewCell.h"
 #import "PhotoCollectionViewCell.h"
 
+@import LogRepo;
 @import MEGAL10nObjc;
 
 @implementation Helper
@@ -625,7 +626,7 @@
             
 #if MAIN_APP_TARGET
             [MEGAChatSdk setLogObject:nil];
-            [Logger.shared removeLogsDirectory];
+            [self removeLogsDirectory];
 #endif
         }
     }]];

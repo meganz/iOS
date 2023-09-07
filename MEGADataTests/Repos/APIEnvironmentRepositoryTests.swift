@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGASDKRepo
 import MEGASDKRepoMock
 import XCTest
 
@@ -23,12 +24,11 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
         
         repo = APIEnvironmentRepository(sdk: sdk,
                                 folderSdk: folderSdk,
-                                chatSdk: chatSdk,
                                 credentialRepository: MockCredentialRepository.newRepo)
     }
     
     func testChangeAPIURL_production() throws {
-        repo.changeAPIURL(.production)
+        repo.changeAPIURL(.production) {}
         XCTAssertEqual(sdk.apiURL, Constants.productionSDKUrl)
         disablepkp = try XCTUnwrap(sdk.disablepkp)
         XCTAssertFalse(disablepkp)
@@ -38,7 +38,7 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
     }
     
     func testChangeAPIURL_staging() throws {
-        repo.changeAPIURL(.staging)
+        repo.changeAPIURL(.staging) {}
         XCTAssertEqual(sdk.apiURL, Constants.stagingSDKUrl)
         disablepkp = try XCTUnwrap(sdk.disablepkp)
         XCTAssertFalse(disablepkp)
@@ -48,7 +48,7 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
     }
     
     func testChangeAPIURL_staging444() throws {
-        repo.changeAPIURL(.staging444)
+        repo.changeAPIURL(.staging444) {}
         XCTAssertEqual(sdk.apiURL, Constants.staging444SDKUrl)
         disablepkp = try XCTUnwrap(sdk.disablepkp)
         XCTAssertTrue(disablepkp)
@@ -58,7 +58,7 @@ final class APIEnvironmentRepositoryTests: XCTestCase {
     }
      
     func testChangeAPIURL_sandbox() throws {
-        repo.changeAPIURL(.sandbox3)
+        repo.changeAPIURL(.sandbox3) {}
         XCTAssertEqual(sdk.apiURL, Constants.sandbox3SDKUrl)
         disablepkp = try XCTUnwrap(sdk.disablepkp)
         XCTAssertTrue(disablepkp)
