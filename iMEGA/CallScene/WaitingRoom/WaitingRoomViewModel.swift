@@ -399,6 +399,7 @@ final class WaitingRoomViewModel: ObservableObject {
             }
         } karereInitCompletion: { [weak self] in
             guard let self else { return }
+            selectFrontCameraIfNeeded()
             if isVideoEnabled {
                 enableLocalVideo(enabled: true)
             }
