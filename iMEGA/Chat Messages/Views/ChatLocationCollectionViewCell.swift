@@ -22,7 +22,7 @@ class ChatLocationCollectionViewCell: MessageContentCell {
         setupConstraints()
     }
     
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard let chatMessage = message as? ChatMessage else {
             return
@@ -61,11 +61,11 @@ open class ChatlocationCollectionViewSizeCalculator: MessageSizeCalculator {
         configureAccessoryView()
     }
     
-    open override func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+    open override func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
         min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), 260)
     }
     
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType) -> CGSize {
         switch message.kind {
         case .custom:
             let fitSize = CGSize(width: messageContainerMaxWidth(for: message), height: .greatestFiniteMagnitude)
@@ -75,7 +75,7 @@ open class ChatlocationCollectionViewSizeCalculator: MessageSizeCalculator {
         }
     }
     
-    private func calculateDynamicSize(for message: MessageType, fitSize: CGSize) -> CGSize {
+    private func calculateDynamicSize(for message: any MessageType, fitSize: CGSize) -> CGSize {
         calculateTitleLabel.font = UIFont.preferredFont(style: .subheadline, weight: .medium)
         calculateTitleLabel.text = Strings.Localizable.pinnedLocation
         calculateSubtitleLabel.font = UIFont.preferredFont(forTextStyle: .footnote)

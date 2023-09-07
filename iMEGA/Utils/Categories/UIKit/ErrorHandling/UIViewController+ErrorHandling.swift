@@ -3,7 +3,7 @@ import Foundation
 extension UIViewController {
 
     func handle(
-        _ error: Error,
+        _ error: some Error,
         retryHandler: (() -> Void)? = nil
     ) {
         if let devicePermissionError = error as? DevicePermissionDeniedError {

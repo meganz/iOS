@@ -34,7 +34,7 @@ final class MyAvatarViewModel: NSObject {
 
     // MARK: - View States
 
-    var avatarImage: Result<UIImage, Error>?
+    var avatarImage: Result<UIImage, any Error>?
 
     var userAlertCount: Int = 0
 

@@ -33,7 +33,7 @@ extension AboutTableViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    private func showAlert(withError error: Error) {
+    private func showAlert(withError error: some Error) {
         let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         
         alertController.addAction(

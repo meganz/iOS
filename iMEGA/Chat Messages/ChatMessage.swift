@@ -23,7 +23,7 @@ struct ChatMessage {
 }
 
 extension ChatMessage: MessageType {
-    var sender: SenderType {
+    var sender: any SenderType {
         return self
     }
 
@@ -68,14 +68,14 @@ extension ChatMessage: SenderType {
         }
         
         if transfer?.type == .upload {
-            return String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk().myUserHandle)
+            return String(format: "%llu", MEGAChatSdk.shared.myUserHandle)
         }
         
         return String(format: "%llu", message.userHandle)
     }
 
     var displayName: String {
-        let userEmail = MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: message.userHandle) ?? ""
+        let userEmail = MEGAChatSdk.shared.userEmailFromCache(byUserHandle: message.userHandle) ?? ""
         let userName = chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? userEmail
         return userName
     }

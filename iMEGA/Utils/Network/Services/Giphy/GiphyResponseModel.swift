@@ -24,7 +24,7 @@ struct GiphyResponseModel: Decodable {
         case mp4_size
     }
     
-    init(from decoder: Decoder) throws {
+    init(from decoder: any Decoder) throws {
         let keyedContainer = try decoder.container(keyedBy: CodingKeys.self)
         title = (try? keyedContainer.decode(String.self, forKey: CodingKeys.title)) ?? ""
         let images = try? keyedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: CodingKeys.images)

@@ -3,7 +3,7 @@ import Foundation
 extension UIResponder: ErrorHandling {
 
     @objc func handle(
-        _ error: Error,
+        _ error: any Error,
         from viewController: UIViewController,
         retryHandler: (() -> Void)? = nil
     ) {

@@ -5,7 +5,7 @@ final class CreateAlbumCellViewModel: ObservableObject {
     @Published var orientation = UIDevice.current.orientation
     @Published var plusIconSize: CGFloat = 0
     
-    private var cancellable: Cancellable?
+    private var cancellable: (any Cancellable)?
     
     private var isLandscape: Bool {
         orientation == .landscapeLeft || orientation == .landscapeRight

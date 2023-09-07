@@ -65,7 +65,7 @@ final class QASettingsViewModel {
         )
     }
     
-    private func show(error: Error) {
+    private func show(error: some Error) {
         router.showAlert(withError: error)
     }
     

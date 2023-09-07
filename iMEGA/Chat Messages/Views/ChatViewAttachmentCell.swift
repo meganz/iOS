@@ -71,7 +71,7 @@ class ChatViewAttachmentCell: MessageContentCell {
         attachmentViewModel.set(imageView: imageView)
     }
     
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         
         guard let chatMessage = message as? ChatMessage else {
@@ -117,7 +117,7 @@ open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
         configureAccessoryView()
     }
 
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType) -> CGSize {
        guard let chatMessage = message as? ChatMessage else {
             fatalError("ChatViewAttachmentCellCalculator: wrong type message passed.")
         }

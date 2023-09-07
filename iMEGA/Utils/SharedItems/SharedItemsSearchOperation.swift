@@ -6,9 +6,9 @@ final class SharedItemsSearchOperation: MEGAOperation {
     private let text: String
     private let cancelToken: MEGACancelToken
     private let sortType: SortOrderEntity
-    private let completion: (Result<[NodeEntity], Error>) -> Void
+    private let completion: (Result<[NodeEntity], any Error>) -> Void
     
-    init(sdk: MEGASdk, type: SearchNodeTypeEntity, text: String, cancelToken: MEGACancelToken, sortType: SortOrderEntity, completion: @escaping (Result<[NodeEntity], Error>) -> Void) {
+    init(sdk: MEGASdk, type: SearchNodeTypeEntity, text: String, cancelToken: MEGACancelToken, sortType: SortOrderEntity, completion: @escaping (Result<[NodeEntity], any Error>) -> Void) {
         self.sdk = sdk
         self.type = type
         self.text = text
@@ -42,7 +42,7 @@ final class SharedItemsSearchOperation: MEGAOperation {
         finishOperation(nodes: nodeList.toNodeEntities(), error: nil)
     }
     
-    private func finishOperation(nodes: [NodeEntity]?, error: Error?) {
+    private func finishOperation(nodes: [NodeEntity]?, error: (any Error)?) {
         if let error {
             completion(.failure(error))
         } else {

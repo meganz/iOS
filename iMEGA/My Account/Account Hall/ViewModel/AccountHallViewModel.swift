@@ -253,7 +253,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
             .store(in: &subscriptions)
     }
     
-    private func handleRequestResult(_ result: Result<AccountRequestEntity, Error>) {
+    private func handleRequestResult(_ result: Result<AccountRequestEntity, any Error>) {
         if case .success(let request) = result {
             switch request.type {
             case .accountDetails:

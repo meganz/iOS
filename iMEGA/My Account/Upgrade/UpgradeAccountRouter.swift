@@ -79,7 +79,7 @@ final class UpgradeAccountRouter {
         return products.isNotEmpty
     }
     
-    private func handle(error: Error) {
+    private func handle(error: any Error) {
         switch error {
         case UpgradeAccountError.reachability:
             MEGAReachabilityManager.isReachableHUDIfNot()

@@ -23,7 +23,7 @@ extension ChatNotificationMessage: SenderType {
 }
 
 extension ChatNotificationMessage: MessageType {
-    var sender: SenderType {
+    var sender: any SenderType {
         return self
     }
     

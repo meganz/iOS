@@ -7,7 +7,7 @@ extension SearchOperation {
                      cancelToken: MEGACancelToken,
                      sortOrderType: MEGASortOrderType,
                      nodeFormatType: MEGANodeFormatType,
-                     completion: @escaping (Result<[MEGANode], Error>) -> Void) {
+                     completion: @escaping (Result<[MEGANode], any Error>) -> Void) {
         self.init(
             parentNode: node,
             text: text,
