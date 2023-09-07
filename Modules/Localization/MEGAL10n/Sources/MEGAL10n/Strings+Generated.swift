@@ -5477,7 +5477,7 @@ public enum Strings {
           /// Meeting waiting room alert action of ok got it
           public static let okGotIt = Strings.tr("Localizable", "meetings.waitingRoom.alert.okGotIt", fallback: "OK, got it")
           /// Meeting waiting room alert message of You'll be removed from the waiting room
-          public static let youWillBeRemovedFromTheWaitingRoom = Strings.tr("Localizable", "meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom", fallback: "You'll be removed from the waiting room")
+          public static let youWillBeRemovedFromTheWaitingRoom = Strings.tr("Localizable", "meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom", fallback: "You’ll be removed from the waiting room")
         }
         public enum Guest {
           /// Meeting waiting room guest join first name textfield
