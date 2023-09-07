@@ -1,3 +1,3 @@
 public protocol APIEnvironmentRepositoryProtocol: RepositoryProtocol {
-    func changeAPIURL(_ environment: APIEnvironmentEntity)
+    func changeAPIURL(_ environment: APIEnvironmentEntity, onUserSessionAvailable: () -> Void) 
 }

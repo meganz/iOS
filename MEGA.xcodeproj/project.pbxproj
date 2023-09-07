@@ -1207,8 +1207,6 @@
 		9440D6C128BE6D390010D167 /* ViewModePreferenceEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9440D6C028BE6D390010D167 /* ViewModePreferenceEntity+Mapper.swift */; };
 		9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */; };
 		9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */; };
-		9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */; };
-		9442009F2982EAA6005521C2 /* LogSettingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9442009E2982EAA6005521C2 /* LogSettingRepository.swift */; };
 		9444859C2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */; };
 		9444D0DD28C74B2D001F681C /* AudioPlayerConfigEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9444D0DC28C74B2D001F681C /* AudioPlayerConfigEntity.swift */; };
 		94478A432A80F43B003B9BCE /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
@@ -1414,7 +1412,6 @@
 		A8399F63296C43F90062B6BC /* MEGAPicker.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A8399F59296C43F80062B6BC /* MEGAPicker.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A8399FB9296DD5A70062B6BC /* SAMKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FB8296DD5A70062B6BC /* SAMKeychain */; };
 		A8399FBB296DD5F10062B6BC /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A8399FBA296DD5F10062B6BC /* MEGADomain */; };
-		A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */; };
 		A84E92E326FB5F7400606AA7 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		A84E92EB26FB7EF200606AA7 /* FileVersioningTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */; };
 		A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
@@ -1500,7 +1497,6 @@
 		A8DF55682A5F0F6900CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55672A5F0F6900CA33E5 /* MEGASDKRepo */; };
 		A8DF556A2A5F0F8100CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55692A5F0F8100CA33E5 /* MEGASDKRepo */; };
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
-		A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D8EA277F316E009093C5 /* Logger.swift */; };
 		A8E5E51828296509007155CA /* OfflineViewController+ExtensionLogFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */; };
 		A8E5E52B282A913F007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */; };
 		A8E5E52F282A917D007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */; };
@@ -1952,7 +1948,6 @@
 		BF1163C227F1305400E5C5A4 /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = BF1163C127F1305400E5C5A4 /* PanModal */; };
 		BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */ = {isa = PBXBuildFile; productRef = BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */; };
 		BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = BF11647C27F6734C00E5C5A4 /* PhoneNumberKit */; };
-		BF11648227F6764B00E5C5A4 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BF11648127F6764B00E5C5A4 /* CocoaLumberjackSwift */; };
 		BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */; };
 		BF1164B827F6908500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */; };
 		BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */; };
@@ -2057,6 +2052,8 @@
 		BF66E04B2614269000066F35 /* ChatSessionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66E04A2614269000066F35 /* ChatSessionEntity+Mapper.swift */; };
 		BF67C50B264B9A68003CE3C6 /* ChatRoomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67C50A264B9A67003CE3C6 /* ChatRoomsViewController.swift */; };
 		BF67C527264CB0A7003CE3C6 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */; };
+		BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF67F7F72AB4171A00AC127E /* LogRepo */; };
+		BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF67F7F92AB4172100AC127E /* LogRepo */; };
 		BF68244725E84D9F00A7740C /* MeetingFloatingPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */; };
 		BF68244825E84D9F00A7740C /* MeetingFloatingPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */; };
 		BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */; };
@@ -3774,8 +3771,6 @@
 		9440D6C028BE6D390010D167 /* ViewModePreferenceEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModePreferenceEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9441533128E460DF005EF5F9 /* ReportIssueAlertTypeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertTypeModel.swift; sourceTree = "<group>"; };
 		9441533228E460DF005EF5F9 /* ReportIssueAlertDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportIssueAlertDataModel.swift; sourceTree = "<group>"; };
-		9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnvironmentRepository.swift; sourceTree = "<group>"; };
-		9442009E2982EAA6005521C2 /* LogSettingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSettingRepository.swift; sourceTree = "<group>"; };
 		9444859B2A2CAF1E006DA2B8 /* GetLinkAccessInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLinkAccessInfoTableViewCell.swift; sourceTree = "<group>"; };
 		9444D0DC28C74B2D001F681C /* AudioPlayerConfigEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntity.swift; sourceTree = "<group>"; };
 		94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNodeRepository.swift; sourceTree = "<group>"; };
@@ -3981,7 +3976,6 @@
 		A8399F5E296C43F90062B6BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		A8399F60296C43F90062B6BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8399F8A296C7A250062B6BC /* MEGAPickerFileProvider-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAPickerFileProvider-Bridging-Header.h"; sourceTree = "<group>"; };
-		A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDDLogFormatter.swift; sourceTree = "<group>"; };
 		A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersionsRepository.swift; sourceTree = "<group>"; };
 		A84E92E926FB7EF200606AA7 /* FileVersioningTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningTableViewController.swift; sourceTree = "<group>"; };
 		A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SharedInstanceWrapper.swift"; sourceTree = "<group>"; };
@@ -4084,7 +4078,6 @@
 		A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountExpiredViewController.xib; sourceTree = "<group>"; };
 		A8E10D7D21A5677900ACD42F /* ShareLocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShareLocationViewController.h; path = Chat/ShareLocationViewController.h; sourceTree = "<group>"; };
 		A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ShareLocationViewController.m; path = Chat/ShareLocationViewController.m; sourceTree = "<group>"; };
-		A8E1D8EA277F316E009093C5 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A8E5E51728296509007155CA /* OfflineViewController+ExtensionLogFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ExtensionLogFiles.swift"; sourceTree = "<group>"; };
 		A8E5E52A282A913F007155CA /* MEGASdk+SynchronousBGThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+SynchronousBGThread.swift"; sourceTree = "<group>"; };
 		A8EC55B21F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetPreviewRequestDelegate.h; path = API/Requests/MEGAGetPreviewRequestDelegate.h; sourceTree = "<group>"; };
@@ -4646,6 +4639,7 @@
 		BF66E04A2614269000066F35 /* ChatSessionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatSessionEntity+Mapper.swift"; sourceTree = "<group>"; };
 		BF67C50A264B9A67003CE3C6 /* ChatRoomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsViewController.swift; sourceTree = "<group>"; };
 		BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
+		BF67F7EC2AB3EF0E00AC127E /* LogRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogRepo; sourceTree = "<group>"; };
 		BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewController.swift; sourceTree = "<group>"; };
 		BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFloatingPanelViewController.xib; sourceTree = "<group>"; };
 		BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift; sourceTree = "<group>"; };
@@ -5035,7 +5029,6 @@
 			files = (
 				A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
-				BF11648227F6764B00E5C5A4 /* CocoaLumberjackSwift in Frameworks */,
 				940931FC2A56ED5F0093C169 /* DeviceCenter in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */,
@@ -5048,6 +5041,7 @@
 				A8B51ADC27F3534F0030F1EA /* Haptica in Frameworks */,
 				A8F5155827F6F24F00AEE4D6 /* ISEmojiView in Frameworks */,
 				BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */,
+				BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */,
 				94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */,
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
@@ -5133,6 +5127,7 @@
 				A8F5157827F6F92800AEE4D6 /* DZNEmptyDataSet in Frameworks */,
 				A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */,
 				BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */,
+				BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */,
 				A812CB3D2A4B0FBE00F99382 /* MEGAChatSdk in Frameworks */,
 				B610447228979E9B00AAECF4 /* MEGADomain in Frameworks */,
 				B6A01BB0289A623C00B503FD /* MEGAFoundation in Frameworks */,
@@ -9234,15 +9229,6 @@
 			path = Snackbar;
 			sourceTree = "<group>";
 		};
-		945A8AE7297EC442007F76DA /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				9442009C2982EA92005521C2 /* APIEnvironmentRepository.swift */,
-				9442009E2982EAA6005521C2 /* LogSettingRepository.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		9464C2EB28C5EF1900F8B082 /* SortOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -9558,9 +9544,7 @@
 				A8A923A52861DFAC006F66C3 /* CompressingLogFileManager+additions.swift */,
 				A899F0E4278F3567001A2D43 /* CompressingLogFileManager.h */,
 				A899F0E7278F3567001A2D43 /* CompressingLogFileManager.m */,
-				A841886D27832CD100291F4C /* CustomDDLogFormatter.swift */,
 				A8812BAA27957BBC00F0D2DB /* LogFileCompressor.swift */,
-				A8E1D8EA277F316E009093C5 /* Logger.swift */,
 				41A4204D1C4EA02C002E192E /* MEGALogger.h */,
 				41A4204E1C4EA02C002E192E /* MEGALogger.m */,
 				416796CD1CC10CB6002CFE93 /* MEGALogMacros.h */,
@@ -10392,7 +10376,6 @@
 				0D213E8C263A611500B43723 /* Node */,
 				32CB4912284EF55900697BA9 /* Photos */,
 				830C26C025DFDCB400E9B56E /* Recents */,
-				945A8AE7297EC442007F76DA /* Settings */,
 				0D7E5FA42634E1CE00C5CB2A /* Transfer */,
 				8396FBC525D6894D00EB50FD /* User */,
 				A84E92E126FB5F6300606AA7 /* Versions */,
@@ -11207,6 +11190,7 @@
 			isa = PBXGroup;
 			children = (
 				A8868B1C2A71794700F4BE98 /* ChatRepo */,
+				BF67F7EC2AB3EF0E00AC127E /* LogRepo */,
 				944917CF2A83C159006234D9 /* MEGAPickerFileProviderRepo */,
 				A80550302A7BCA3900BC3725 /* MEGARepo */,
 				A8C8E6B82A5F0E4100A00A57 /* MEGASDKRepo */,
@@ -12273,7 +12257,6 @@
 			name = MEGA;
 			packageProductDependencies = (
 				BF11643027F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC */,
-				BF11648127F6764B00E5C5A4 /* CocoaLumberjackSwift */,
 				A8F5157327F6F87A00AEE4D6 /* DZNEmptyDataSet */,
 				A8F5156A27F6F58300AEE4D6 /* FLEX */,
 				BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */,
@@ -12314,6 +12297,7 @@
 				A85CF69C2A7180A90018FEF1 /* ChatRepo */,
 				BF6149512A9FF33300AB051A /* MEGAL10n */,
 				BF6149532A9FF33300AB051A /* MEGAL10nObjc */,
+				BF67F7F72AB4171A00AC127E /* LogRepo */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -12440,6 +12424,7 @@
 				A855D23D2A796634001D2168 /* ChatRepo */,
 				BF6149652A9FF38400AB051A /* MEGAL10n */,
 				BF6149672A9FF38400AB051A /* MEGAL10nObjc */,
+				BF67F7F92AB4172100AC127E /* LogRepo */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -12664,7 +12649,6 @@
 			mainGroup = 137361811A6664C300B740E8;
 			packageReferences = (
 				BF11642F27F6612A00E5C5A4 /* XCRemoteSwiftPackageReference "CHTCollectionViewWaterfallLayout" */,
-				BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
 				A8F5157227F6F87900AEE4D6 /* XCRemoteSwiftPackageReference "DZNEmptyDataSet" */,
 				A8F5156927F6F58200AEE4D6 /* XCRemoteSwiftPackageReference "FLEX" */,
 				A8F5158327F6FF4F00AEE4D6 /* XCRemoteSwiftPackageReference "FlexLayout" */,
@@ -13198,8 +13182,7 @@
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
-				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
-				9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */,
+                832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,            
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */,
@@ -13504,7 +13487,6 @@
 				1246682F275DBE0500C94335 /* CreateTextFileAlertViewController.swift in Sources */,
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
-				A841886E27832CD100291F4C /* CustomDDLogFormatter.swift in Sources */,
 				12466802275DB82000C94335 /* CustomModalAlertContactsRouter.swift in Sources */,
 				12466804275DB82000C94335 /* CustomModalAlertRouter.swift in Sources */,
 				12466803275DB82000C94335 /* CustomModalAlertStorageRouter.swift in Sources */,
@@ -13776,12 +13758,10 @@
 				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
 				A8812BAB27957BBC00F0D2DB /* LogFileCompressor.swift in Sources */,
-				A8E1D8EB277F316E009093C5 /* Logger.swift in Sources */,
 				9448661429AF55C300CE3228 /* LoginViewController+Additions.swift in Sources */,
 				415226931A692ECC00EC7BB6 /* LoginViewController.m in Sources */,
 				2F9F11162508A3E800896DFF /* LogManager.swift in Sources */,
 				A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */,
-				9442009F2982EAA6005521C2 /* LogSettingRepository.swift in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
@@ -17161,14 +17141,6 @@
 				version = 3.6.6;
 			};
 		};
-		BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageWebPCoder.git";
@@ -17578,11 +17550,6 @@
 			package = BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
 			productName = PhoneNumberKit;
 		};
-		BF11648127F6764B00E5C5A4 /* CocoaLumberjackSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF11648027F6764B00E5C5A4 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjackSwift;
-		};
 		BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */;
@@ -17677,6 +17644,14 @@
 		BF61496B2A9FF39500AB051A /* MEGAL10nObjc */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAL10nObjc;
+		};
+		BF67F7F72AB4171A00AC127E /* LogRepo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LogRepo;
+		};
+		BF67F7F92AB4172100AC127E /* LogRepo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LogRepo;
 		};
 		BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */ = {
 			isa = XCSwiftPackageProductDependency;

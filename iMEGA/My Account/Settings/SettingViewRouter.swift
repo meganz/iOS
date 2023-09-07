@@ -9,30 +9,6 @@ class SettingViewRouter: Routing {
     private weak var presenter: UINavigationController?
     private weak var viewController: UIViewController?
     
-    private enum Constants {
-        static let bundleSortVersionKey = "CFBundleShortVersionString"
-        static let sdkGitCommitHashKey = "SDK_GIT_COMMIT_HASH"
-        static let chatSdkGitCommitHashKey = "CHAT_SDK_GIT_COMMIT_HASH"
-        
-        static let sourceCodeURL = "https://github.com/meganz/iOS"
-        static let acknowledgementsURL = "https://github.com/meganz/iOS3/blob/master/CREDITS.md"
-    }
-    
-    private lazy var appVersion: String = {
-        guard let bundleShortVersion = Bundle.main.infoDictionary?[Constants.bundleSortVersionKey] as? String,
-              let bundleVersion = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String else { return "" }
-        
-        return "\(bundleShortVersion) (\(bundleVersion))"
-    }()
-    
-    private lazy var sdkVersion: String = {
-        Bundle.main.infoDictionary?[Constants.sdkGitCommitHashKey] as? String ?? ""
-    }()
-    
-    private lazy var chatSdkVersion: String = {
-        Bundle.main.infoDictionary?[Constants.chatSdkGitCommitHashKey] as? String ?? ""
-    }()
-    
     init(presenter: UINavigationController?) {
         self.presenter = presenter
     }
@@ -122,13 +98,9 @@ extension SettingViewRouter {
             SettingCellViewModel(image: Asset.Images.Settings.aboutSettings,
                                  title: Strings.Localizable.about,
                                  router: AboutViewRouter(presenter: presenter,
-                                                         aboutViewModel: AboutViewModel(preferenceUC: PreferenceUseCase.default,
-                                                                                        apiEnvironmentUC: APIEnvironmentUseCase(repository: APIEnvironmentRepository.newRepo),
-                                                                                        manageLogsUC: ManageLogsUseCase(repository: LogSettingRepository.newRepo,
-                                                                                                                        preferenceUseCase: PreferenceUseCase.default),
-                                                                                        changeSfuServerUC: ChangeSfuServerUseCase(repository: ChangeSfuServerRepository.newRepo),
-                                                                                        aboutSetting: makeAboutSetting()),
-                                                         title: Strings.Localizable.about))
+                                                         appBundle: .main,
+                                                         systemVersion: UIDevice.current.systemVersion,
+                                                         deviceName: UIDevice.current.deviceName() ?? ""))
             
             SettingCellViewModel(image: Asset.Images.Settings.termsAndPoliciesSettings,
                                  title: Strings.Localizable.Settings.Section.termsAndPolicies,
@@ -153,77 +125,6 @@ extension SettingViewRouter {
                                  router: QASettingsRouter(presenter: presenter))
         }
 #endif
-    }
-    
-    private func makeAboutSetting() -> AboutSetting {
-        AboutSetting(
-            appVersion:
-                AppVersion(
-                    title: Strings.Localizable.appVersion,
-                    message: appVersion
-                ),
-            sdkVersion:
-                AppVersion(
-                    title: Strings.Localizable.sdkVersion,
-                    message: sdkVersion
-                ),
-            chatSDKVersion:
-                AppVersion(
-                    title: Strings.Localizable.megachatSdkVersion,
-                    message: chatSdkVersion
-                ),
-            viewSourceLink:
-                SettingsLink(
-                    title: Strings.Localizable.viewSourceCode,
-                    url: URL(string: Constants.sourceCodeURL) ?? URL(fileURLWithPath: "")
-                ),
-            acknowledgementsLink:
-                SettingsLink(
-                    title: Strings.Localizable.acknowledgements,
-                    url: URL(string: Constants.acknowledgementsURL) ?? URL(fileURLWithPath: "")
-                ),
-            apiEnvironment:
-                APIEnvironmentChangingAlert(
-                    title: Strings.Localizable.changeToATestServer,
-                    message: Strings.Localizable.areYouSureYouWantToChangeToATestServerYourAccountMaySufferIrrecoverableProblems,
-                    cancelActionTitle: Strings.Localizable.cancel,
-                    actions: [
-                        APIEnvironment(
-                            title: APIEnvironmentEntity.production.rawValue,
-                            environment: .production
-                        ),
-                        APIEnvironment(
-                            title: APIEnvironmentEntity.staging.rawValue,
-                            environment: .staging
-                        ),
-                        APIEnvironment(
-                            title: APIEnvironmentEntity.staging444.rawValue,
-                            environment: .staging444
-                        ),
-                        APIEnvironment(
-                            title: APIEnvironmentEntity.sandbox3.rawValue,
-                            environment: .sandbox3
-                        )
-                    ]
-                ),
-            toggleLogs:
-                LogTogglingAlert(
-                    enableTitle: Strings.Localizable.enableDebugModeTitle,
-                    enableMessage: Strings.Localizable.enableDebugModeMessage,
-                    disableTitle: Strings.Localizable.disableDebugModeTitle,
-                    disableMessage: Strings.Localizable.disableDebugModeMessage,
-                    mainActionTitle: Strings.Localizable.ok,
-                    cancelActionTitle: Strings.Localizable.cancel
-                ),
-            changeSfuServer:
-                ChangeSfuServerAlert(
-                    title: Strings.Localizable.Settings.About.Sfu.ChangeAlert.title,
-                    message: Strings.Localizable.Settings.About.Sfu.ChangeAlert.message,
-                    placeholder: Strings.Localizable.Settings.About.Sfu.ChangeAlert.placeholder,
-                    cancelButton: Strings.Localizable.Settings.About.Sfu.ChangeAlert.cancelButton,
-                    changeButton: Strings.Localizable.Settings.About.Sfu.ChangeAlert.changeButton
-                )
-        )
     }
 }
 
