@@ -73,6 +73,7 @@ public struct CMConfigEntity {
     public var timeRemainingToDeactiveDND: String?
     public var versionsCount: Int
     public var showMediaDiscovery: Bool
+    public var setMediaDiscoveryStateCanChange: Bool
     public var chatStatus: ChatStatusEntity
     public var shouldStartMeeting: Bool
     public var shouldJoiningMeeting: Bool
@@ -81,7 +82,7 @@ public struct CMConfigEntity {
     public var isArchivedChatsVisible: Bool = false
     public var isMediaFile: Bool = false
 
-    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, filterType: FilterEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, albumType: AlbumEntityType? = nil, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isBackupsRootNode: Bool = false, isBackupsChild: Bool = false, isSelectHidden: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false, sharedLinkStatus: SharedLinkStatusEntity? = nil, isArchivedChatsVisible: Bool = false, isMediaFile: Bool = false) {
+    public init(menuType: CMElementTypeEntity, viewMode: ViewModePreferenceEntity? = nil, accessLevel: ShareAccessLevelEntity? = nil, sortType: SortOrderEntity? = nil, filterType: FilterEntity? = nil, isAFolder: Bool = false, isRubbishBinFolder: Bool = false, isViewInFolder: Bool = false, isRestorable: Bool = false, isInVersionsView: Bool = false, isOfflineFolder: Bool = false, isSharedItems: Bool = false, isIncomingShareChild: Bool = false, isHome: Bool = false, isFavouritesExplorer: Bool = false, isDocumentExplorer: Bool = false, isAudiosExplorer: Bool = false, isVideosExplorer: Bool = false, isCameraUploadExplorer: Bool = false, albumType: AlbumEntityType? = nil, isFilterEnabled: Bool = false, isDoNotDisturbEnabled: Bool = false, isBackupsRootNode: Bool = false, isBackupsChild: Bool = false, isSelectHidden: Bool = false, isShareAvailable: Bool = false, isSharedItemsChild: Bool = false, isOutShare: Bool = false, isExported: Bool = false, isEmptyState: Bool = false, timeRemainingToDeactiveDND: String? = nil, versionsCount: Int = 0, showMediaDiscovery: Bool = false, setMediaDiscoveryStateCanChange: Bool = false, chatStatus: ChatStatusEntity = .invalid, shouldStartMeeting: Bool = false, shouldJoiningMeeting: Bool = false, shouldScheduleMeeting: Bool = false, sharedLinkStatus: SharedLinkStatusEntity? = nil, isArchivedChatsVisible: Bool = false, isMediaFile: Bool = false) {
         self.menuType = menuType
         self.viewMode = viewMode
         self.accessLevel = accessLevel
@@ -115,6 +116,7 @@ public struct CMConfigEntity {
         self.timeRemainingToDeactiveDND = timeRemainingToDeactiveDND
         self.versionsCount = versionsCount
         self.showMediaDiscovery = showMediaDiscovery
+        self.setMediaDiscoveryStateCanChange = setMediaDiscoveryStateCanChange
         self.chatStatus = chatStatus
         self.shouldStartMeeting = shouldStartMeeting
         self.shouldJoiningMeeting = shouldJoiningMeeting

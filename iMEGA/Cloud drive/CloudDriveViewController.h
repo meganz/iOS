@@ -68,12 +68,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showNodeInfo:(MEGANode *)node;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath;
 - (void)toolbarActionsForShareType:(MEGAShareType)shareType isBackupNode:(BOOL)isBackupNode;
+
 - (BOOL)isListViewModeSelected;
-- (void)changeViewModePreference;
+- (BOOL)isThumbnailViewModeSelected;
+- (BOOL)isMediaDiscoveryViewModeSelected;
+
+-(void)changeModeToListView;
+-(void)changeModeToThumbnail;
+-(void)changeModeToMediaDiscovery;
+
 - (void)nodesSortTypeHasChanged;
 - (void)createNewFolderAction;
 - (void)reloadUI:(MEGANodeList * _Nullable)nodeList;
 - (void)loadPhotoAlbumBrowser;
+
 @end
 
 NS_ASSUME_NONNULL_END

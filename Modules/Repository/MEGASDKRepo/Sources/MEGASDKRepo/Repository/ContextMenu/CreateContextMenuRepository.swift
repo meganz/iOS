@@ -31,6 +31,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setIsFilterEnabled(config.isFilterEnabled)
                         .setIsHome(config.isHome)
                         .setShowMediaDiscovery(config.showMediaDiscovery)
+                        .setMediaDiscoveryStateCanChange(config.setMediaDiscoveryStateCanChange)
                         .setChatStatus(config.chatStatus)
                         .setIsDoNotDisturbEnabled(config.isDoNotDisturbEnabled)
                         .setTimeRemainingToDeactiveDND(config.timeRemainingToDeactiveDND)

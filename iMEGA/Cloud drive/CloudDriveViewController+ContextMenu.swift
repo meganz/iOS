@@ -2,6 +2,7 @@ import CoreServices
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPresentation
 import MEGASDKRepo
 import UIKit
 
@@ -10,16 +11,16 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     func contextMenuConfiguration(parentNode: MEGANode, parentAccessLevel: NodeAccessTypeEntity) -> CMConfigEntity {
         if parentNode.isFolder(),
            displayMode == .rubbishBin,
-           parentNode.handle != MEGASdk.shared.rubbishNode?.handle {
+           parentNode.handle != MEGASdk.sharedSdk.rubbishNode?.handle {
             return CMConfigEntity(menuType: .menu(type: .rubbishBin),
-                                  viewMode: isListViewModeSelected() ? .list : .thumbnail,
+                                  viewMode: currentViewModePreference.toViewModePreferenceEntity(),
                                   sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                   isRubbishBinFolder: true,
                                   isRestorable: parentNode.mnz_isRestorable())
         } else {
-            let isIncomingSharedRootChild = parentAccessLevel != .owner && MEGASdk.shared.parentNode(for: parentNode) == nil
+            let isIncomingSharedRootChild = parentAccessLevel != .owner && MEGASdk.sharedSdk.parentNode(for: parentNode) == nil
             return CMConfigEntity(menuType: .menu(type: .display),
-                                  viewMode: isListViewModeSelected() ? .list : .thumbnail,
+                                  viewMode: currentViewModePreference.toViewModePreferenceEntity(),
                                   accessLevel: parentAccessLevel.toShareAccessLevel(),
                                   sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                   isAFolder: parentNode.type != .root,
@@ -28,7 +29,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                   isIncomingShareChild: isIncomingSharedRootChild,
                                   isOutShare: parentNode.isOutShare(),
                                   isExported: parentNode.isExported(),
-                                  showMediaDiscovery: shouldShowMediaDiscovery())
+                                  showMediaDiscovery: shouldShowMediaDiscovery(),
+                                  setMediaDiscoveryStateCanChange: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveMediaDiscoveryIntegration))
         }
     }
     
@@ -102,24 +104,31 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .select:
             guard let enableEditing = cdTableView?.tableView?.isEditing ?? cdCollectionView?.collectionView?.allowsMultipleSelection else { return }
             setEditMode(!enableEditing)
-        case .thumbnailView, .listView:
-            if isListViewModeSelected() && action == .thumbnailView || !isListViewModeSelected() && action == .listView {
-                changeViewModePreference()
-            }
-            
+        case .thumbnailView:
+            changeModeToThumbnail()
+        case .listView:
+            changeModeToListView()
         case .clearRubbishBin:
             let alertController = UIAlertController(title: Strings.Localizable.emptyRubbishBinAlertTitle, message: nil, preferredStyle: .alert)
             
             alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
             alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default) { _ in
-                MEGASdk.shared.cleanRubbishBin()
+                MEGASdk.sharedSdk.cleanRubbishBin()
             })
             
             UIApplication.mnz_visibleViewController().present(alertController, animated: true, completion: nil)
         case .mediaDiscovery:
             guard let parentNode = parentNode else { return }
-            MediaDiscoveryRouter(viewController: self, parentNode: parentNode).start()
-        default: break
+            
+            guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveMediaDiscoveryIntegration) else {
+                MediaDiscoveryRouter(viewController: self, parentNode: parentNode)
+                    .start()
+                return
+            }
+                        
+            changeModeToMediaDiscovery()
+        default:
+            break
         }
         
         if needToRefreshMenu {
