@@ -1,4 +1,5 @@
 import Foundation
+import LogRepo
 import MEGADomain
 import MEGASDKRepo
 
@@ -13,5 +14,9 @@ extension Helper {
     
     @objc static func markAppAsLaunched() {
         AppFirstLaunchUseCase(preferenceUserCase: PreferenceUseCase.group).markAppAsLaunched()
+    }
+    
+    @objc static func removeLogsDirectory() {
+        Logger.shared().removeLogsDirectory()
     }
 }

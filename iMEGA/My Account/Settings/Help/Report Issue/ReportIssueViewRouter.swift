@@ -1,3 +1,5 @@
+import ChatRepo
+import LogRepo
 import MEGADomain
 import MEGAPresentation
 import MEGARepo

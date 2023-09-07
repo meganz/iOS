@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct AboutItemView: View {
-    var title: String
-    var subtitle: String
+    let title: String
+    let subtitle: String
     
     var body: some View {
         VStack(alignment: .leading) {

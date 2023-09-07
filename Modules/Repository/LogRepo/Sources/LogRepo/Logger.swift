@@ -1,12 +1,14 @@
 import CocoaLumberjackSwift
 import Foundation
+import MEGAChatSdk
+import MEGASdk
 
-@objc final class Logger: NSObject {
+@objc public final class Logger: NSObject {
     private let fileLogger: DDFileLogger
     
-    @objc lazy var logsDirectoryUrl = URL(fileURLWithPath: fileLogger.logFileManager.logsDirectory)
+    @objc public lazy var logsDirectoryUrl = URL(fileURLWithPath: fileLogger.logFileManager.logsDirectory)
     
-    @objc class func shared() -> Logger {
+    @objc public class func shared() -> Logger {
         return sharedLogger
     }
     
@@ -29,11 +31,11 @@ import Foundation
         self.fileLogger = fileLogger
     }
     
-    @objc func removeLogsDirectory() {
+    @objc public func removeLogsDirectory( _ file: String = #file, _ line: Int = #line) {
         do {
             try FileManager.default.removeItem(at: logsDirectoryUrl)
         } catch {
-            MEGALogError(error.localizedDescription)
+            MEGASdk.log(with: .error, message: "[iOS] \(error.localizedDescription)", filename: file, line: line)
         }
     }
 }
@@ -41,20 +43,20 @@ import Foundation
 // MARK: - MEGALoggerDelegate
 
 extension Logger: MEGALoggerDelegate {
-    func log(withTime time: String, logLevel: MEGALogLevel, source: String, message: String) {
+    public func log(withTime time: String, logLevel: MEGALogLevel, source: String, message: String) {
         switch logLevel {
         case .fatal, .error:
-            DDLogError(message)
+            DDLogError(message.logMessageFormat)
         case .warning:
-            DDLogWarn(message)
+            DDLogWarn(message.logMessageFormat)
         case .info:
-            DDLogInfo(message)
+            DDLogInfo(message.logMessageFormat)
         case .debug:
-            DDLogDebug(message)
+            DDLogDebug(message.logMessageFormat)
         case .max:
-            DDLogVerbose(message)
+            DDLogVerbose(message.logMessageFormat)
         default:
-            DDLogVerbose(message)
+            DDLogVerbose(message.logMessageFormat)
         }
     }
 }
@@ -62,20 +64,26 @@ extension Logger: MEGALoggerDelegate {
 // MARK: - MEGAChatLoggerDelegate
 
 extension Logger: MEGAChatLoggerDelegate {
-    func log(with logLevel: MEGAChatLogLevel, message: String) {
+    public func log(with logLevel: MEGAChatLogLevel, message: String) {
         switch logLevel {
         case .fatal, .error:
-            DDLogError(message)
+            DDLogError(message.logMessageFormat)
         case .warning:
-            DDLogWarn(message)
+            DDLogWarn(message.logMessageFormat)
         case .info:
-            DDLogInfo(message)
+            DDLogInfo(message.logMessageFormat)
         case .debug:
-            DDLogDebug(message)
+            DDLogDebug(message.logMessageFormat)
         case .verbose, .max:
-            DDLogVerbose(message)
+            DDLogVerbose(message.logMessageFormat)
         default:
-            DDLogVerbose(message)
+            DDLogVerbose(message.logMessageFormat)
         }
+    }
+}
+
+private extension String {
+    var logMessageFormat: DDLogMessageFormat {
+        DDLogMessageFormat(stringLiteral: self)
     }
 }
