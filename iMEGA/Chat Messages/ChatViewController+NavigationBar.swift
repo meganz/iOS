@@ -150,7 +150,7 @@ extension ChatViewController {
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatRoom: chatRoom.toChatRoomEntity()
         )
     }

@@ -1,6 +1,6 @@
 import Combine
 
-public protocol ChatRoomRepositoryProtocol {
+public protocol ChatRoomRepositoryProtocol: RepositoryProtocol {
     func chatRoom(forChatId chatId: HandleEntity) -> ChatRoomEntity?
     func chatRoom(forUserHandle userHandle: HandleEntity) -> ChatRoomEntity?
     func peerHandles(forChatRoom chatRoom: ChatRoomEntity) -> [HandleEntity]

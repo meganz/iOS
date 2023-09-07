@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAChatSdk
 
 extension MEGAChatGiphy {
     func toChatGiphyEntity() -> ChatGiphyEntity {

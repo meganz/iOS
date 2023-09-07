@@ -39,7 +39,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private var appDidBecomeActiveSubscription: AnyCancellable?
     private weak var containerViewModel: MeetingContainerViewModel?
     private var endCallDialog: EndCallDialog?
-    private lazy var chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+    private lazy var chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
     
     private var createCallUseCase: CallUseCase<CallRepository> {
         let callRepository = CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)

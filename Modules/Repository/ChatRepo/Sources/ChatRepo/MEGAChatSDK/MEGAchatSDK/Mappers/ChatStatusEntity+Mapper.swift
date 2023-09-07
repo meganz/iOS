@@ -1,7 +1,8 @@
+import MEGAChatSdk
 import MEGADomain
 
-extension ChatStatusEntity {
-    func toChatStatus() -> ChatStatus {
+public extension ChatStatusEntity {
+    func toMEGASChatStatus() -> MEGAChatStatus {
         switch self {
         case .offline:
             return .offline
@@ -17,7 +18,7 @@ extension ChatStatusEntity {
     }
 }
 
-extension ChatStatus {
+public extension MEGAChatStatus {
     func toChatStatusEntity() -> ChatStatusEntity {
         switch self {
         case .offline:
@@ -29,6 +30,8 @@ extension ChatStatus {
         case .busy:
             return.busy
         case .invalid:
+            return .invalid
+        @unknown default:
             return .invalid
         }
     }

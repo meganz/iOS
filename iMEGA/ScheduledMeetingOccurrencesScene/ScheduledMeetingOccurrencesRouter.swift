@@ -15,7 +15,7 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
     }
     
     func build() -> UIViewController {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         
         let chatRoomUserUseCase = ChatRoomUserUseCase(
             chatRoomRepo: ChatRoomUserRepository.newRepo,
@@ -86,7 +86,7 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
         let viewConfiguration = ScheduleMeetingUpdateOccurrenceViewConfiguration(
             occurrence: occurrence,
             scheduledMeeting: scheduledMeeting,
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
         )

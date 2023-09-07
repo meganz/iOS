@@ -1,6 +1,7 @@
+import MEGAChatSdk
 import MEGADomain
 
-extension MEGAChatListItem {
+public extension MEGAChatListItem {
     func toChatListItemEntity() -> ChatListItemEntity {
         ChatListItemEntity(with: self)
     }
@@ -33,7 +34,7 @@ fileprivate extension ChatListItemEntity {
     }
 }
 
-extension MEGAChatListItemChangeType {
+public extension MEGAChatListItemChangeType {
     func toChatListItemChangeEntity() -> ChatListItemEntity.ChangeType {
         switch self {
         case .status:

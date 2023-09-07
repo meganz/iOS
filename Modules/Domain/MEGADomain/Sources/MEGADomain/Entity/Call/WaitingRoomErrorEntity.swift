@@ -1,4 +1,4 @@
-enum WaitingRoomErrorEntity: Error {
+public enum WaitingRoomErrorEntity: Error {
     case generic
     case chatRoomDoesNoExists
     case oneToOneChatRoom

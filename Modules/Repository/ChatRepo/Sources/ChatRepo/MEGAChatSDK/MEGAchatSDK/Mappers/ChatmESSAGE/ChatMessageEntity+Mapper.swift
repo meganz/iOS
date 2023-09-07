@@ -1,5 +1,5 @@
+import MEGAChatSdk
 import MEGADomain
-import MEGASDKRepo
 
 extension ChatMessageEntity.Peer {
     init(chatMessage: MEGAChatMessage, index: UInt) {
@@ -10,7 +10,7 @@ extension ChatMessageEntity.Peer {
     }
 }
 
-extension MEGAChatMessage {
+public extension MEGAChatMessage {
     func toChatMessageEntity() -> ChatMessageEntity {
         ChatMessageEntity(
             status: status.toChatMessageStatusEntity(),
