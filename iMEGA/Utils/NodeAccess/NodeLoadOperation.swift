@@ -21,7 +21,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     
     // MARK: - Init
     init(autoCreate: (() -> Bool)?,
-         sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
+         sdk: MEGASdk = .shared,
          loadNodeRequest: @escaping (any MEGARequestDelegate) -> Void,
          newNodeName: String? = nil,
          createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)? = nil,
@@ -48,7 +48,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
         loadNodeFromRemote()
     }
     
-    func finishOperation(node: MEGANode?, error: Error?) {
+    func finishOperation(node: MEGANode?, error: (any Error)?) {
         completion(node, error)
         finish()
     }

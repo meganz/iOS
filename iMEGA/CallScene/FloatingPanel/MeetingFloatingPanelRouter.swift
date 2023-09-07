@@ -70,18 +70,18 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             chatRoom: chatRoom,
             isSpeakerEnabled: isSpeakerEnabled,
             callCoordinatorUseCase: CallCoordinatorUseCase(),
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
             megaHandleUseCase: megaHandleUseCase
         )
         
         let userImageUseCase = UserImageUseCase(
-            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userImageRepo: UserImageRepository.newRepo,
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
@@ -99,7 +99,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     }
     
     func start() {
-        guard let viewController = build() as? PanModalPresentable & UIViewController else { return }
+        guard let viewController = build() as? any PanModalPresentable & UIViewController else { return }
         viewController.modalPresentationStyle = .custom
         viewController.modalPresentationCapturesStatusBarAppearance = true
         viewController.transitioningDelegate = PanModalPresentationDelegate.default

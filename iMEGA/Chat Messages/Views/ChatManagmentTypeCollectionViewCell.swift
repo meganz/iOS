@@ -7,7 +7,7 @@ class ChatManagmentTypeCollectionViewCell: TextMessageCell {
         avatarView.backgroundColor = .clear
     }
     
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         guard let chatMessage = message as? ChatMessage else { return }
         super.configure(with: ConcreteMessageType(chatMessage: chatMessage), at: indexPath, and: messagesCollectionView)
     }
@@ -15,7 +15,7 @@ class ChatManagmentTypeCollectionViewCell: TextMessageCell {
 
 open class ChatManagmentTypeCollectionViewSizeCalculator: TextMessageSizeCalculator {
    
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType) -> CGSize {
         guard let chatMessage = message as? ChatMessage else { return .zero }
         return super.messageContainerSize(for: ConcreteMessageType(chatMessage: chatMessage))
     }

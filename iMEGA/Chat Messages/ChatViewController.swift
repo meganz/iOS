@@ -119,7 +119,7 @@ class ChatViewController: MessagesViewController {
         return view
     }()
     
-    var messages: [MessageType] {
+    var messages: [any MessageType] {
         return chatRoomDelegate.messages
     }
     
@@ -484,7 +484,7 @@ class ChatViewController: MessagesViewController {
         return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
     }
     
-    func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
+    func customCell(for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
         
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError("Ouch. nil data source for messages")
@@ -693,7 +693,7 @@ class ChatViewController: MessagesViewController {
     
     // MARK: - Internal methods used by the extension of this class
     
-    func isFromCurrentSender(message: MessageType) -> Bool {
+    func isFromCurrentSender(message: some MessageType) -> Bool {
         return UInt64(message.sender.senderId) == MEGAChatSdk.shared.myUserHandle
     }
     
@@ -757,14 +757,14 @@ class ChatViewController: MessagesViewController {
         return currentSenderId == previousSenderId
     }
     
-    func avatarImage(for message: MessageType) -> UIImage? {
+    func avatarImage(for message: some MessageType) -> UIImage? {
         guard let userHandle = UInt64(message.sender.senderId) else { return nil }
         
         return UIImage.mnz_image(forUserHandle: userHandle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: RequestDelegate(completion: { _ in
         }))
     }
     
-    func initials(for message: MessageType) -> String {
+    func initials(for message: some MessageType) -> String {
         guard let userHandle = UInt64(message.sender.senderId) else {
             return ""
         }

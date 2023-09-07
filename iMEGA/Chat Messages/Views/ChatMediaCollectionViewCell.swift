@@ -68,12 +68,12 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdk.sharedSdk.add(self)
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        MEGASdkManager.sharedMEGASdk().add(self)
+        MEGASdk.sharedSdk.add(self)
     }
 
     // MARK: - Methods
@@ -108,7 +108,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         setupConstraints()
     }
 
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
         guard let chatMessage = message as? ChatMessage else {
@@ -220,11 +220,11 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
         configureAccessoryView()
     }
 
-    override open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+    override open func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
         return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
     }
 
-    override open func messageContainerSize(for message: MessageType) -> CGSize {
+    override open func messageContainerSize(for message: any MessageType) -> CGSize {
         switch message.kind {
         case .custom:
             let maxWidth = min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), messageContainerMaxWidth(for: message))

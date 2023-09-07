@@ -6,7 +6,7 @@ import SwiftUI
 
 protocol QASettingsRouting: Routing {
     func showAlert(withTitle title: String, message: String, actions: [UIAlertAction])
-    func showAlert(withError error: Error)
+    func showAlert(withError error: any Error)
 }
 
 struct QASettingsRouter: QASettingsRouting {
@@ -48,7 +48,7 @@ struct QASettingsRouter: QASettingsRouting {
         presenter?.present(alertController, animated: true, completion: nil)
     }
     
-    func showAlert(withError error: Error) {
+    func showAlert(withError error: some Error) {
         showAlert(
             withTitle: Constants.errorAlertTitle,
             message: error.localizedDescription,

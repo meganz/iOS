@@ -125,7 +125,7 @@ final class NodeCellViewModel: ViewModelType {
     private func iconForNode() {
         if nodeModel.isFolder {
             if nodeModel.name == Strings.Localizable.cameraUploadsLabel {
-                let cameraUploadsFolderImageName = "folder_image"
+                let cameraUploadsFolderImageName = "folder_camera"
                 self.invokeCommand?(.setIcon(cameraUploadsFolderImageName))
             } else if nodeModel.name == Strings.Localizable.myChatFiles {
                 accountUseCase.getMyChatFilesFolder { [weak self] in

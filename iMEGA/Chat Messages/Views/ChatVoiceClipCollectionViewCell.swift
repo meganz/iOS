@@ -66,7 +66,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         durationLabel.adjustsFontForContentSizeCategory = true
     }
     
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard let chatMessage = message as? ChatMessage else {
             return
@@ -165,12 +165,12 @@ open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
         incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 0))
     }
     
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType) -> CGSize {
         let fitSize = CGSize(width: messageContainerMaxWidth(for: message), height: .greatestFiniteMagnitude)
         return calculateDynamicSize(for: message, fitSize: fitSize)
     }
     
-    private func calculateDynamicSize(for message: MessageType, fitSize: CGSize) -> CGSize {
+    private func calculateDynamicSize(for message: some MessageType, fitSize: CGSize) -> CGSize {
         calculateDurationLabel.textAlignment = .left
         calculateDurationLabel.font = .preferredFont(forTextStyle: .subheadline)
         calculateDurationLabel.text = "00:00"

@@ -17,7 +17,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         return !chatMessage.message.isManagementMessage
     }
     
-    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+    func cellTopLabelHeight(for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         guard !(message is ChatNotificationMessage) && !indexPath.isEmpty else {
             return 0.0
         }
@@ -25,7 +25,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         return isDateLabelVisible(for: indexPath) ? 30.0 : 0.0
     }
 
-    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+    func messageTopLabelHeight(for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         if message is ChatNotificationMessage {
             return 0.0
         }
@@ -58,7 +58,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         guard let message = messages[section] as? ChatMessage else {
             return .zero
         }
-        let list = MEGASdkManager.sharedMEGAChatSdk().messageReactions(forChat: message.chatRoom.chatId, messageId: message.message.messageId)
+        let list = MEGAChatSdk.shared.messageReactions(forChat: message.chatRoom.chatId, messageId: message.message.messageId)
 
         if message.message.isManagementMessage || list?.size == 0 {
             return .zero
@@ -70,7 +70,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         
     }
     
-    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+    func messageBottomLabelHeight(for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         guard let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed else {
            return 0
         }

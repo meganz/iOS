@@ -5,7 +5,7 @@ import MEGASDKRepo
 import MessageKit
 
 struct ConcreteMessageType: MessageType {
-    let sender: SenderType
+    let sender: any SenderType
     let messageId: String
     let sentDate: Date
     var kind: MessageKind
@@ -38,7 +38,7 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         MEGASdk.shared.add(self)
     }
     
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         guard let chatMessage = message as? ChatMessage else {
             return
         }
@@ -178,11 +178,11 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
         configureAccessoryView()
     }
     
-    override open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+    override open func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
         return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
     }
 
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType) -> CGSize {
         guard let chatMessage = message as? ChatMessage else {
             return .zero
         }
