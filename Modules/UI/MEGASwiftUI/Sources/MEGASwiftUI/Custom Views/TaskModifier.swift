@@ -45,7 +45,7 @@ public struct ThrowingTaskModifier: ViewModifier {
         self.action = action
     }
 
-    @State private var task: Task<Void, Error>?
+    @State private var task: Task<Void, any Error>?
     
     private func cancelTask() {
         task?.cancel()

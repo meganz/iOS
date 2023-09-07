@@ -5,7 +5,7 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var bottomInset: CGFloat = 0.0
 
     public let bridge: SearchBridge
-    private var searchingTask: Task<Void, Error>?
+    private var searchingTask: Task<Void, any Error>?
 
     private let resultsProvider: any SearchResultsProviding
     
