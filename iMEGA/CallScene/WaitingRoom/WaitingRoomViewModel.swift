@@ -269,7 +269,9 @@ final class WaitingRoomViewModel: ObservableObject {
         }
         permissionHandler.requestAudioPermission()
         selectFrontCameraIfNeeded()
-        fetchUserAvatar()
+        if !accountUseCase.isGuest {
+            fetchUserAvatar()
+        }
     }
     
     private func updateSpeakerInfo() {
@@ -333,8 +335,8 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func fetchUserAvatar() {
-        guard let myHandle = accountUseCase.currentUserHandle,
-              let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: myHandle),
+        let myHandle = chatUseCase.myUserHandle()
+        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: myHandle),
               let avatarBackgroundHexColor = userImageUseCase.avatarColorHex(forBase64UserHandle: base64Handle) else {
             return
         }
@@ -413,6 +415,7 @@ final class WaitingRoomViewModel: ObservableObject {
             guard let self else { return }
             switch result {
             case .success:
+                fetchUserAvatar()
                 if isMeetingStart {
                     answerCall()
                 } else {

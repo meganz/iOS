@@ -226,6 +226,51 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    func testUserAvatar_onLoadWaitingRoomAndIsNotGuest_shouldShowAvatar() {
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
+        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let sut = WaitingRoomViewModel(megaHandleUseCase: megaHandleUseCase, userImageUseCase: userImageUseCase)
+        
+        evaluate {
+            sut.userAvatar != nil
+        }
+    }
+    
+    func testUserAvatar_onLoadWaitingRoomAndIsGuest_shouldNotShowAvatar() {
+        let accountUseCase = MockAccountUseCase(isGuest: true)
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
+        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let sut = WaitingRoomViewModel(accountUseCase: accountUseCase,
+                                       megaHandleUseCase: megaHandleUseCase,
+                                       userImageUseCase: userImageUseCase)
+        
+        evaluate {
+            sut.userAvatar == nil
+        }
+    }
+    
+    func testUserAvatar_onLoadWaitingRoomAndIsGuestAndJoinsTheChat_shouldShowAvatar() {
+        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(createEpehemeralAccountCompletion: .success, joinChatCompletion: .success(ChatRoomEntity()))
+        let accountUseCase = MockAccountUseCase(isGuest: true)
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
+        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let sut = WaitingRoomViewModel(callUseCase: callUseCase,
+                                       meetingUseCase: meetingUseCase,
+                                       accountUseCase: accountUseCase,
+                                       megaHandleUseCase: megaHandleUseCase,
+                                       userImageUseCase: userImageUseCase,
+                                       chatLink: "Test chatLink")
+        
+        XCTAssertEqual(sut.viewState, .guestJoin)
+        
+        sut.tapJoinAction(firstName: "First", lastName: "Last")
+        
+        evaluate {
+            sut.userAvatar != nil
+        }
+    }
+    
     // MARK: - Private methods
     
     private func sampleDate(from string: String = "12/06/2023 09:10") -> Date? {
