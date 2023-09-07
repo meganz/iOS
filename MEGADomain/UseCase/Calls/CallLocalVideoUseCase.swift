@@ -6,7 +6,7 @@ protocol CallLocalVideoUseCaseProtocol {
     func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol)
     func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol)
     func videoDeviceSelected() -> String?
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, Error>) -> Void)
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, any Error>) -> Void)
     func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
 }
@@ -47,7 +47,7 @@ final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: NSObject
         repository.videoDeviceSelected()
     }
     
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         repository.selectCamera(withLocalizedName: localizedName, completion: completion)
     }
     

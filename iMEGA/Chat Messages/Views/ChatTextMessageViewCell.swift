@@ -6,7 +6,7 @@ class ChatTextMessageViewCell: TextMessageCell {
         super.setupSubviews()
     }
 
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         guard let chatMessage = message as? ChatMessage, chatMessage.message.content != nil else {
             return
         }
@@ -38,11 +38,11 @@ class ChatTextMessageSizeCalculator: TextMessageSizeCalculator {
         outgoingMessageLabelInsets = UIEdgeInsets(top: 10, left: 18, bottom: 10, right: 18)
     }
 
-    override open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+    override open func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
         return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
     }
 
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType) -> CGSize {
         guard let chatMessage = message as? ChatMessage, chatMessage.message.content != nil else {
             return .zero
         }

@@ -34,7 +34,7 @@ class ChatGiphyCollectionViewCell: MessageContentCell {
         setupConstraints()
     }
 
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard let chatMessage = message as? ChatMessage else {
             return
@@ -59,7 +59,7 @@ open class ChatGiphyCollectionViewSizeCalculator: MessageSizeCalculator {
         configureAccessoryView()
     }
 
-    override open func messageContainerSize(for message: MessageType) -> CGSize {
+    override open func messageContainerSize(for message: any MessageType) -> CGSize {
         switch message.kind {
         case .custom:
             return size(for: message)
@@ -68,7 +68,7 @@ open class ChatGiphyCollectionViewSizeCalculator: MessageSizeCalculator {
         }
     }
     
-    private func size(for message: MessageType) -> CGSize {
+    private func size(for message: some MessageType) -> CGSize {
         let maxHeight = UIDevice.current.mnz_maxSideForChatBubble(withMedia: true)
         let maxWidth = min(maxHeight, messageContainerMaxWidth(for: message))
         

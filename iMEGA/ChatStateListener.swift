@@ -1,7 +1,7 @@
 import MEGADomain
 
 final class ChatStateListener: NSObject, MEGAChatDelegate {
-    private var continuation: CheckedContinuation<Void, Error>?
+    private var continuation: CheckedContinuation<Void, any Error>?
     
     let chatId: ChatIdEntity
     let connectionState: ChatConnectionStatus

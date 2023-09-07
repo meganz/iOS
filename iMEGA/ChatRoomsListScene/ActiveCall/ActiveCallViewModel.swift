@@ -15,7 +15,7 @@ final class ActiveCallViewModel: ObservableObject {
 
     private var baseDate = Date()
 
-    private var cancellableTimer: Cancellable?
+    private var cancellableTimer: (any Cancellable)?
 
     private let timer = Timer.publish(every: 1, on: .main, in: .common)
 

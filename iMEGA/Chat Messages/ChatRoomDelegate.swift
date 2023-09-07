@@ -9,8 +9,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
     var transfers: [ChatMessage] = []
     var chatRoom: MEGAChatRoom
     weak var chatViewController: ChatViewController?
-    var chatMessages: [MessageType] = []
-    var messages: [MessageType] {
+    var chatMessages: [any MessageType] = []
+    var messages: [any MessageType] {
         return chatMessages + transfers
     }
     
@@ -734,7 +734,7 @@ extension ChatRoomDelegate: MEGATransferDelegate {
         } else if appData.contains("downloadAttachToMessageID") {
             let messageID = transfer.mnz_extractMessageIDFromAppData()
             
-            chatMessages = chatMessages.map({ (chatMessage) -> MessageType in
+            chatMessages = chatMessages.map({ (chatMessage) -> any MessageType in
                 
                 if var chatMessage = chatMessage as? ChatMessage, chatMessage.messageId ==  messageID {
                     chatMessage.transfer = transfer
@@ -767,7 +767,7 @@ extension ChatRoomDelegate: MEGATransferDelegate {
         } else if appData.contains("downloadAttachToMessageID") {
             let messageID = transfer.mnz_extractMessageIDFromAppData()
             
-            chatMessages = chatMessages.map({ (chatMessage) -> MessageType in
+            chatMessages = chatMessages.map({ (chatMessage) -> any MessageType in
                 
                 if var chatMessage = chatMessage as? ChatMessage, chatMessage.messageId ==  messageID {
                     chatMessage.transfer = transfer

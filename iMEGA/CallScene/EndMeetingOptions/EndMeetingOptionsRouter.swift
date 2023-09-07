@@ -26,7 +26,7 @@ final class EndMeetingOptionsRouter: EndMeetingOptionsRouting {
     }
     
     func start() {
-        guard let viewController = build() as? PanModalPresentable & UIViewController else { return }
+        guard let viewController = build() as? any PanModalPresentable & UIViewController else { return }
         if let sender = sender, UIDevice.current.iPad {
             viewController.modalPresentationStyle = .popover
             viewController.popoverPresentationController?.sourceView = sender

@@ -9,5 +9,5 @@ protocol ErrorHandling: NSObject {
     ///   - error: The `Error` to be handled.
     ///   - viewController: The view controller instance where the error is originated.
     ///   - retryHandler: An optional handler function that will be triggered with a retry.
-    func handle(_ error: Error, from viewController: UIViewController, retryHandler: (() -> Void)?)
+    func handle(_ error: any Error, from viewController: UIViewController, retryHandler: (() -> Void)?)
 }

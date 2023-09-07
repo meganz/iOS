@@ -2,7 +2,7 @@ import MessageKit
 
 extension ChatViewController: MessagesDisplayDelegate {
     
-    func backgroundColor(for message: MessageType,
+    func backgroundColor(for message: some MessageType,
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
         
@@ -34,11 +34,11 @@ extension ChatViewController: MessagesDisplayDelegate {
         
     }
 
-    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+    func textColor(for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .white : .mnz_label()
     }
 
-    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+    func messageStyle(for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         return .custom { [weak self] containerView in
             guard let `self` = self else {
                 return
@@ -86,7 +86,7 @@ extension ChatViewController: MessagesDisplayDelegate {
         }
     }
 
-    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+    func configureAccessoryView(_ accessoryView: UIView, for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         // Cells are reused, so only add a button here once. For real use you would need to
         // ensure any subviews are removed if not needed
         accessoryView.subviews.forEach { $0.removeFromSuperview() }
@@ -109,7 +109,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     }
     
     func configureAvatarView(_ avatarView: AvatarView,
-                             for message: MessageType,
+                             for message: some MessageType,
                              at indexPath: IndexPath,
                              in messagesCollectionView: MessagesCollectionView) {
         
@@ -131,7 +131,7 @@ extension ChatViewController: MessagesDisplayDelegate {
         }
     }
     
-    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
+    func detectorAttributes(for detector: DetectorType, and message: some MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
         let color = textColor(for: message, at: indexPath, in: messagesCollectionView)
         return [.foregroundColor: color,
                 .underlineStyle: NSUnderlineStyle.single.rawValue,
@@ -140,17 +140,17 @@ extension ChatViewController: MessagesDisplayDelegate {
         
     }
     
-    func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
+    func enabledDetectors(for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
         return [.url, .address, .phoneNumber, .transitInformation, .mention, .hashtag]
     }
     
     // MARK: - Audio Messages
     
-    func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+    func audioTintColor(for message: some MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .white : .mnz_label()
     }
     
-    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
+    func configureAudioCell(_ cell: AudioMessageCell, message: some MessageType) {
         audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
     }
     
@@ -160,7 +160,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     
     // MARK: - Private methods
     
-    private func shouldShowAccessoryView(for message: MessageType) -> Bool {
+    private func shouldShowAccessoryView(for message: some MessageType) -> Bool {
         guard let chatMessage = message as? ChatMessage,
             !isEditing
             else { return false }

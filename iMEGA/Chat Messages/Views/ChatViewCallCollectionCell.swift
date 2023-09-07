@@ -54,7 +54,7 @@ class ChatViewCallCollectionCell: MessageContentCell {
     }
 
     override func configure(
-        with message: MessageType,
+        with message: any MessageType,
         at indexPath: IndexPath,
         and messagesCollectionView: MessagesCollectionView
     ) {
@@ -97,7 +97,7 @@ class ChatViewCallCollectionCellCalculator: MessageSizeCalculator {
         incomingMessagePadding = .zero
     }
     
-    override func messageContainerSize(for message: MessageType) -> CGSize {
+    override func messageContainerSize(for message: any MessageType) -> CGSize {
         guard let layout = layout else { return .zero }
 
         let collectionViewWidth = layout.collectionView?.bounds.width ?? .zero
