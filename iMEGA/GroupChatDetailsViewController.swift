@@ -1,3 +1,4 @@
+import ChatRepo
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -28,12 +29,12 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func openChatRoom(chatId: HandleEntity, delegate: any MEGAChatRoomDelegate) {
-        guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chatId) else { return }
+        guard let chatRoom = ChatRoomRepository.newRepo.chatRoom(forChatId: chatId) else { return }
         
-        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatRoom) {
-            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatRoom.chatId, delegate: delegate)
+        if ChatRoomRepository.newRepo.isChatRoomOpen(chatRoom) {
+            ChatRoomRepository.newRepo.closeChatRoom(chatId: chatRoom.chatId, delegate: delegate)
         }
-        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatRoom.chatId, delegate: delegate)
+        try? ChatRoomRepository.newRepo.openChatRoom(chatId: chatRoom.chatId, delegate: delegate)
     }
     
     @objc func showEndCallForAll() {
@@ -63,7 +64,7 @@ extension GroupChatDetailsViewController {
     private func createParticipantsAddingViewFactory() -> ParticipantsAddingViewFactory {
         ParticipantsAddingViewFactory(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatRoom: chatRoom.toChatRoomEntity()
         )
     }

@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -240,7 +241,7 @@ extension NotificationsTableViewController {
         startTime: Date? = nil,
         endTime: Date? = nil
     ) -> String? {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         
         guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatId) else { return nil }
         

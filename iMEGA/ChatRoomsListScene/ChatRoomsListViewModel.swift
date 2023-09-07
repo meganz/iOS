@@ -603,7 +603,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     private func constructChatRoomViewModel(forChatListItem chatListItem: ChatListItemEntity) -> ChatRoomViewModel {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
@@ -633,7 +633,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         for scheduledMeetingEntity: ScheduledMeetingEntity,
         nextOccurrence: ScheduledMeetingOccurrenceEntity?
     ) -> FutureMeetingRoomViewModel {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
                                                       userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)

@@ -42,7 +42,7 @@ extension MainTabBarController {
         let mainTabBarCallsViewModel = MainTabBarCallsViewModel(router: router,
                                                                 chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
                                                                 callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
-                                                                chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+                                                                chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
                                                                 chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo))
         
         mainTabBarCallsViewModel.invokeCommand = { [weak self] command in

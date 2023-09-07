@@ -16,7 +16,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     }
     
     func build() -> UIViewController {
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         let permissionHandler = DevicePermissionsHandler.makeHandler()
         let viewModel = ChatRoomsListViewModel(
             router: self,
@@ -74,7 +74,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     func presentScheduleMeeting() {
         guard let navigationController else { return }
         let viewConfiguration = ScheduleMeetingNewViewConfiguration(
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
         )
@@ -257,7 +257,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         let viewConfiguration = ScheduleMeetingUpdateViewConfiguration(
             scheduledMeeting: scheduledMeeting,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
         )

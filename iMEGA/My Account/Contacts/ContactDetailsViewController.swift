@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAL10n
 
@@ -12,11 +13,13 @@ extension ContactDetailsViewController {
     }
     
     @objc func openChatRoom(chatId: HandleEntity, delegate: any MEGAChatRoomDelegate) {
-        guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chatId) else { return }
-        if ChatRoomRepository.sharedRepo.isChatRoomOpen(chatRoom) {
-            ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatId, delegate: delegate)
+        let chatRoomRepository = ChatRoomRepository.newRepo
+
+        guard let chatRoom = chatRoomRepository.chatRoom(forChatId: chatId) else { return }
+        if chatRoomRepository.isChatRoomOpen(chatRoom) {
+            chatRoomRepository.closeChatRoom(chatId: chatId, delegate: delegate)
         }
-        try? ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatId, delegate: delegate)
+        try? chatRoomRepository.openChatRoom(chatId: chatId, delegate: delegate)
     }
     
     open override func viewDidLayoutSubviews() {

@@ -1,3 +1,4 @@
+import MEGAChatSdk
 import MEGADomain
 
 extension MEGAChatMessageStatus {

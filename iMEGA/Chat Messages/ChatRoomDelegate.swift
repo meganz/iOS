@@ -1,3 +1,4 @@
+import ChatRepo
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -137,8 +138,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                 chatViewController?.updateJoinView()
                 SVProgressHUD.showInfo(withStatus: Strings.Localizable.Chat.Link.linkRemoved)
             } else {
-                guard let chatRoom = ChatRoomRepository.sharedRepo.chatRoom(forChatId: chat.chatId) else { return }
-                ChatRoomRepository.sharedRepo.closeChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
+                let chatRoomRepository = ChatRoomRepository.newRepo
+                guard let chatRoom = chatRoomRepository.chatRoom(forChatId: chat.chatId) else { return }
+                chatRoomRepository.closeChatRoom(chatRoom, delegate: ChatRoomDelegateEntity())
                 chatViewController?.navigationController?.popViewController(animated: true)
             }
         case .updatePreviewers:
@@ -435,7 +437,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             MEGAChatSdk.shared.add(self)
             
             do {
-                try ChatRoomRepository.sharedRepo.openChatRoom(chatId: chatRoom.chatId, delegate: self)
+                try ChatRoomRepository.newRepo.openChatRoom(chatId: chatRoom.chatId, delegate: self)
                 isChatRoomOpen = true
                 loadingState = true
                 
@@ -462,7 +464,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         isChatRoomOpen = false
         chatMessages = []
         chatViewController?.messagesCollectionView.reloadData()
-        ChatRoomRepository.sharedRepo.closeChatRoom(chatId: chatRoom.chatId, delegate: self)
+        ChatRoomRepository.newRepo.closeChatRoom(chatId: chatRoom.chatId, delegate: self)
     }
     
     func updateUnreadMessagesLabel(unreads: Int) {

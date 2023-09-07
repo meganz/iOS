@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 
 extension MainTabBarController {
@@ -24,11 +25,11 @@ extension MainTabBarController {
             return
         }
         
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.sharedRepo)
+        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
         let chatUseCase = ChatUseCase(
             chatRepo: ChatRepository(
-                sdk: MEGASdkManager.sharedMEGASdk(),
-                chatSDK: MEGASdkManager.sharedMEGAChatSdk()
+                sdk: MEGASdk.shared,
+                chatSDK: MEGAChatSdk.shared
             )
         )
         
