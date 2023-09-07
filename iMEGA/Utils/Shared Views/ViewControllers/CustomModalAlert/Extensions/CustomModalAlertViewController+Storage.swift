@@ -5,7 +5,7 @@ import MEGASDKRepo
 
 extension CustomModalAlertViewController {
     func configureForStorageEvent(_ event: MEGAEvent) {
-        let imageName = event.number == StorageState.orange.rawValue ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.storageFull.name
+        let imageName = event.number == StorageState.orange.rawValue ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.warningStorageFull.name
         
         let title = event.number == StorageState.orange.rawValue ? Strings.Localizable.upgradeAccount : Strings.Localizable.Dialog.Storage.Odq.title
         
@@ -47,7 +47,7 @@ extension CustomModalAlertViewController {
     func configureForStorageQuotaError(_ uploading: Bool) {
         var imageName: String?
         if let accountDetails = MEGASdk.shared.mnz_accountDetails {
-            imageName = accountDetails.storageMax.int64Value > accountDetails.storageUsed.int64Value ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.storageFull.name
+            imageName = accountDetails.storageMax.int64Value > accountDetails.storageUsed.int64Value ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.warningStorageFull.name
         }
         
         let title = Strings.Localizable.upgradeAccount
@@ -66,7 +66,7 @@ extension CustomModalAlertViewController {
         case .albumLink:
             title = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.title
             detailText = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.detail
-            imageName = Asset.Images.WarningStorageAlmostFull.storageFull
+            imageName = Asset.Images.WarningStorageAlmostFull.warningStorageFull
         }
         
         configureUpgradeAccountThreeButtons(

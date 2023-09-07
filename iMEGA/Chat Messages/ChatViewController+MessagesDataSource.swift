@@ -2,8 +2,7 @@ import MEGAL10n
 import MessageKit
 
 extension ChatViewController: MessagesDataSource {
-
-    public func currentSender() -> SenderType {
+    public func currentSender() -> any SenderType {
         return myUser
     }
 
@@ -12,11 +11,11 @@ extension ChatViewController: MessagesDataSource {
     }
 
     public func messageForItem(at indexPath: IndexPath,
-                               in messagesCollectionView: MessagesCollectionView) -> MessageType {
+                               in messagesCollectionView: MessagesCollectionView) -> any MessageType {
         return messages[safe: indexPath.section] ?? ConcreteMessageType(sender: User(senderId: "", displayName: ""), messageId: "", sentDate: Date(), kind: .text(""))
     }
     
-    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+    func messageTopLabelAttributedText(for message: some MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         guard let message = messages[safe: indexPath.section],
               let chatMessage = message as? ChatMessage else {
             return nil
@@ -38,7 +37,7 @@ extension ChatViewController: MessagesDataSource {
         return nil
     }
 
-    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+    func cellTopLabelAttributedText(for message: some MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isDateLabelVisible(for: indexPath) {
             return NSAttributedString(
                 string: NSCalendar.current.isDateInToday(message.sentDate) ? Strings.Localizable.today : message.sentDate.string(withDateFormat: "E dd MMM"),
@@ -77,7 +76,7 @@ extension ChatViewController: MessagesDataSource {
         return chatMessageReactionView
     }
     
-    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+    func messageBottomLabelAttributedText(for message: some MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         guard let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed else {
            return nil
         }

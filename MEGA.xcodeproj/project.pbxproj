@@ -12816,6 +12816,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}",
 			);
 			name = "Run Script: Automatically sets SDK and chat SDK commit hashes";
 			outputFileListPaths = (
@@ -12824,7 +12825,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# This script automatically sets the SDK and Chat SDK commit hashes (where the application points to) in the AboutTableViewController\ncd ${SRCROOT}/iMEGA/Vendor/SDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\ncd ${SRCROOT}/iMEGA/Vendor/Karere\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" \"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# This script automatically sets the SDK and Chat SDK commit hashes (where the application points to) in the AboutTableViewController\ncd ${SRCROOT}/Modules/DataSource/MEGASDK/Sources/MEGASDK\n/usr/libexec/PlistBuddy -c \"Set :SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" $SCRIPT_INPUT_FILE_0\ncd ${SRCROOT}/Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK\n/usr/libexec/PlistBuddy -c \"Set :CHAT_SDK_GIT_COMMIT_HASH `git rev-parse --short HEAD`\" $SCRIPT_INPUT_FILE_0\n";
 		};
 		B67FFF9329D530F500E830FA /* Run Script: Copy GoogleService-Info */ = {
 			isa = PBXShellScriptBuildPhase;

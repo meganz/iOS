@@ -93,7 +93,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
                         supportCancel: Bool,
                         sortOrderType: SortOrderEntity,
                         formatType: NodeFormatEntity,
-                        completion: @escaping (Result<[NodeEntity], Error>) -> Void) {
+                        completion: @escaping (Result<[NodeEntity], any Error>) -> Void) {
         guard let parent = node?.toMEGANode(in: sdk) ?? sdk.rootNode else {
             return completion(.failure(NodeSearchResultErrorEntity.noDataAvailable))
         }

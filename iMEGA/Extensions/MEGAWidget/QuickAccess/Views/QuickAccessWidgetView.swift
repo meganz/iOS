@@ -98,7 +98,7 @@ struct QuickAccessWidgetView: View {
                 Spacer()
                 Text(Strings.Localizable.login)
                     .font(.system(size: 17, weight: .semibold, design: .default))
-                    .foregroundColor(Color("#00A886"))
+                    .foregroundColor(Color("00A886"))
                 Spacer()
             }
             .frame(maxWidth: .infinity, minHeight: 44)

@@ -36,7 +36,7 @@ struct ResponseModel<T: Decodable>: Decodable {
     }
     var request: RequestModel?
     
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let keyedContainer = try decoder.container(keyedBy: CodingKeys.self)
         
         data = try? keyedContainer.decode([T].self, forKey: CodingKeys.data)

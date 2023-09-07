@@ -2,7 +2,7 @@ import Foundation
 import MEGADomain
 import MEGASDKRepo
 
-typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: Error?) -> Void
+typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: (any Error)?) -> Void
 
 struct NodeAccessConfiguration {
     var autoCreate: (() -> Bool)?
@@ -97,7 +97,7 @@ class NodeAccess: NSObject {
         }
     }
     
-    private func updateHandle(_ node: MEGANode?, error: Error?, completion: NodeLoadCompletion?) {
+    private func updateHandle(_ node: MEGANode?, error: (any Error)?, completion: NodeLoadCompletion?) {
         self.handle = node?.handle
         if let node {
             self.nodePath = sdk.nodePath(for: node)

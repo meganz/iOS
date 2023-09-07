@@ -10,7 +10,7 @@ class ContactLinkCollectionViewCell: TextMessageCell {
         return view
     }()
     
-    override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         guard let chatMessage = message as? ChatMessage else {
             return
         }
@@ -95,11 +95,11 @@ open class ChatContactLinkCollectionViewSizeCalculator: TextMessageSizeCalculato
         configureAccessoryView()
     }
     
-    override open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+    override open func messageContainerMaxWidth(for message: any MessageType) -> CGFloat {
         min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
     }
 
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: any MessageType) -> CGSize {
         guard let chatMessage = message as? ChatMessage else {
             return .zero
         }

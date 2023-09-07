@@ -28,9 +28,9 @@ extension AudioPlayer: AudioPlayerMetadataLoaderProtocol {
 
 final class AudioPlayerMetadataOperation: MEGAOperation {
     private let item: AudioPlayerItem
-    private let completion: (Result<Void, Error>) -> Void
+    private let completion: (Result<Void, any Error>) -> Void
     
-    init(item: AudioPlayerItem, completion: @escaping (Result<Void, Error>) -> Void) {
+    init(item: AudioPlayerItem, completion: @escaping (Result<Void, any Error>) -> Void) {
         self.item = item
         self.completion = completion
     }
@@ -44,7 +44,7 @@ final class AudioPlayerMetadataOperation: MEGAOperation {
         loadItemMetadata()
     }
     
-    private func finishOperation(error: Error?) {
+    private func finishOperation(error: (any Error)?) {
         if let error = error {
             completion(.failure(error))
         } else {

@@ -251,7 +251,7 @@
 }
 
 + (UIImage *)mnz_folderCameraUploadsImage {
-    return [UIImage imageNamed:@"folder_image"];
+    return [UIImage imageNamed:@"folder_camera"];
 }
 
 + (UIImage *)mnz_folderMyChatFilesImage {
