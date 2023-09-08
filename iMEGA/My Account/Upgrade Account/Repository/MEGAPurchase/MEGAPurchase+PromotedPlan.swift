@@ -11,9 +11,12 @@ extension MEGAPurchase {
     
     // MARK: - Promoted plan purchase
     @objc func shouldAddStorePayment(for product: SKProduct) -> Bool {
+        SVProgressHUD.show()
         do {
             return try canProcessStorePayment(for: product)
         } catch {
+            SVProgressHUD.dismiss()
+            
             guard let error = error as? InAppPurchaseStoreError else { return false }
             if error == .noLoggedInUser {
                 // Defer until user has logged in, save the product and return false
