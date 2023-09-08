@@ -1,5 +1,5 @@
 input_dir: ../Sources/MEGAL10n/
-output_dir: ../Sources/MEGAL10n
+output_dir: ${DERIVED_SOURCES_DIR}
 
 ## Strings
 strings:
