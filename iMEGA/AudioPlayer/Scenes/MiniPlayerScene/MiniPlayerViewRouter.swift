@@ -20,7 +20,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
         
         vc.viewModel = MiniPlayerViewModel(
             configEntity: configEntity,
-            router: self,
+            router: MiniPlayerViewRouterMainQueueDispatchDecorator(decoratee: self),
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
             offlineInfoUseCase: configEntity.relatedFiles != nil ? OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()) : nil,
@@ -62,5 +62,47 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
                 
         AudioPlayerManager.shared.initFullScreenPlayer(node: node, fileLink: filePath, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, messageId: .invalid, chatId: .invalid, allNodes: nil)
 
+    }
+}
+
+final class MiniPlayerViewRouterMainQueueDispatchDecorator: MiniPlayerViewRouting {
+    private let decoratee: any MiniPlayerViewRouting
+    
+    init(decoratee: some MiniPlayerViewRouting) {
+        self.decoratee = decoratee
+    }
+    
+    func dismiss() {
+        runOnMainThread { [weak self] in
+            self?.decoratee.dismiss()
+        }
+    }
+    
+    func showPlayer(node: MEGANode?, filePath: String?) {
+        runOnMainThread { [weak self] in
+            self?.decoratee.showPlayer(node: node, filePath: filePath)
+        }
+    }
+    
+    func isAFolderLinkPresenter() -> Bool {
+        decoratee.isAFolderLinkPresenter()
+    }
+    
+    func build() -> UIViewController {
+        decoratee.build()
+    }
+    
+    func start() {
+        runOnMainThread { [weak self] in
+            self?.decoratee.start()
+        }
+    }
+    
+    private func runOnMainThread(completion: @escaping () -> Void) {
+        guard Thread.isMainThread else {
+            DispatchQueue.main.async { completion() }
+            return
+        }
+        completion()
     }
 }

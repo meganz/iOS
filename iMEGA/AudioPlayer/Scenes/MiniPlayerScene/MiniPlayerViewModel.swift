@@ -60,7 +60,103 @@ final class MiniPlayerViewModel: ViewModelType {
         self.shouldInitializePlayer = configEntity.shouldResetPlayer
     }
     
+    // MARK: - Dispatch action
+    func dispatch(_ action: MiniPlayerAction) {
+        switch action {
+        case .onViewDidLoad:
+            invokeCommand?(.showLoading(shouldInitializePlayer))
+            determinePlayerSetupOnViewDidLoad()
+        case .onPlayPause:
+            configEntity.playerHandler.playerTogglePlay()
+        case .playItem(let item):
+            if configEntity.playerHandler.currentRepeatMode() == .repeatOne {
+                configEntity.playerHandler.playerRepeatAll(active: true)
+            }
+            configEntity.playerHandler.play(item: item)
+        case .onClose:
+            closeMiniPlayer()
+        case .deinit:
+            deInitActions()
+        case .showPlayer(let node, let filePath):
+            showFullScreenPlayer(node, path: filePath)
+        }
+    }
+    
+    private func determinePlayerSetupOnViewDidLoad() {
+        guard shouldInitializePlayer else {
+            configurePlayer()
+            return
+        }
+        
+        dispatchQueue.async(qos: .userInteractive) { [weak self] in
+            self?.preparePlayer()
+        }
+    }
+    
+    private func preparePlayer() {
+        guard configEntity.playerType == .offline else {
+            preparePlayerForNonOfflinePlayerType()
+            return
+        }
+        preparePlayerForOfflinePlayerType()
+    }
+    
+    private func preparePlayerForOfflinePlayerType() {
+        guard let offlineFilePaths = configEntity.relatedFiles else {
+            router.dismiss()
+            return
+        }
+        
+        guard
+            let currentItem = configEntity.playerHandler.playerCurrentItem(),
+            currentItem.url.path == configEntity.fileLink,
+            currentItem.node == configEntity.node
+        else {
+            initialize(with: offlineFilePaths)
+            return
+        }
+        configurePlayer()
+        configEntity.playerHandler.resetCurrentItem()
+    }
+    
+    private func preparePlayerForNonOfflinePlayerType() {
+        guard let node = configEntity.node else {
+            router.dismiss()
+            return
+        }
+        
+        if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
+            streamingInfoUseCase?.startServer()
+        }
+        
+        guard
+            let currentItem = configEntity.playerHandler.playerCurrentItem(),
+            currentItem.node == node
+        else {
+            initialize(with: node)
+            return
+        }
+        configurePlayer()
+        configEntity.playerHandler.resetCurrentItem()
+    }
+    
+    private func configurePlayer() {
+        configEntity.playerHandler.addPlayer(listener: self)
+        
+        guard !configEntity.playerHandler.isPlayerEmpty(), let currentItem = configEntity.playerHandler.playerCurrentItem() else {
+            router.dismiss()
+            return
+        }
+        invokeCommand?(.initTracks(currentItem: currentItem, queue: configEntity.playerHandler.playerPlaylistItems(), loopMode: configEntity.playerHandler.currentRepeatMode() == .loop))
+        if let artworkImage = currentItem.artwork {
+            invokeCommand?(.reloadNodeInfo(thumbnail: artworkImage))
+        }
+        
+        configEntity.playerHandler.refreshCurrentItemState()
+    }
+    
     // MARK: - Node Init
+    
     private func initialize(with node: MEGANode) {
         if configEntity.isFileLink {
             guard let track = streamingInfoUseCase?.info(from: node) else {
@@ -85,10 +181,13 @@ final class MiniPlayerViewModel: ViewModelType {
     }
     
     // MARK: - Offline Files Init
+    
     private func initialize(with offlineFilePaths: [String]) {
-        guard let files = offlineInfoUseCase?.info(from: offlineFilePaths),
-              let currentFilePath = configEntity.fileLink,
-              let currentTrack = files.first(where: { $0.url.path == currentFilePath }) else {
+        guard
+            let files = offlineInfoUseCase?.info(from: offlineFilePaths),
+            let currentFilePath = configEntity.fileLink,
+            let currentTrack = files.first(where: { $0.url.path == currentFilePath })
+        else {
             router.dismiss()
             return
         }
@@ -96,6 +195,7 @@ final class MiniPlayerViewModel: ViewModelType {
     }
     
     // MARK: - Private functions
+    
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
         CrashlyticsLogger.log("[AudioPlayer] type: , \(configEntity.playerType)")
@@ -103,6 +203,11 @@ final class MiniPlayerViewModel: ViewModelType {
         configEntity.playerHandler.autoPlay(enable: configEntity.playerType != .fileLink)
         configEntity.playerHandler.addPlayer(tracks: mutableTracks)
         configurePlayer()
+    }
+
+    private func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) -> [AudioPlayerItem] {
+        guard tracks.contains(startItem) else { return tracks }
+        return tracks.shifted(tracks.firstIndex(of: startItem) ?? 0)
     }
     
     private func resetConfigurationIfNeeded(nextCurrentTrack: AudioPlayerItem) {
@@ -126,87 +231,6 @@ final class MiniPlayerViewModel: ViewModelType {
         }
         
         configEntity.playerHandler.resetAudioPlayerConfiguration()
-    }
-
-    private func shift(tracks: [AudioPlayerItem], startItem: AudioPlayerItem) -> [AudioPlayerItem] {
-        guard tracks.contains(startItem) else { return tracks }
-        return tracks.shifted(tracks.firstIndex(of: startItem) ?? 0)
-    }
-    
-    private func preparePlayer() {
-        if configEntity.playerType == .offline {
-            guard let offlineFilePaths = configEntity.relatedFiles else {
-                router.dismiss()
-                return
-            }
-            
-            if let currentItem = configEntity.playerHandler.playerCurrentItem(), currentItem.url.path == configEntity.fileLink, currentItem.node == configEntity.node {
-                configurePlayer()
-                configEntity.playerHandler.resetCurrentItem()
-            } else {
-                initialize(with: offlineFilePaths)
-            }
-        } else {
-            guard let node = configEntity.node else {
-                router.dismiss()
-                return
-            }
-            
-            if !(streamingInfoUseCase?.isLocalHTTPProxyServerRunning() ?? true) {
-                streamingInfoUseCase?.startServer()
-            }
-            
-            if let currentItem = configEntity.playerHandler.playerCurrentItem(), currentItem.node == node {
-                configurePlayer()
-                configEntity.playerHandler.resetCurrentItem()
-            } else {
-                initialize(with: node)
-            }
-        }
-    }
-    
-    private func configurePlayer() {
-        configEntity.playerHandler.addPlayer(listener: self)
-        
-        guard !configEntity.playerHandler.isPlayerEmpty(), let currentItem = configEntity.playerHandler.playerCurrentItem() else {
-            DispatchQueue.main.async { [weak self] in
-                self?.router.dismiss()
-            }
-            return
-        }
-        invokeCommand?(.initTracks(currentItem: currentItem, queue: configEntity.playerHandler.playerPlaylistItems(), loopMode: configEntity.playerHandler.currentRepeatMode() == .loop))
-        if let artworkImage = currentItem.artwork {
-            invokeCommand?(.reloadNodeInfo(thumbnail: artworkImage))
-        }
-        
-        configEntity.playerHandler.refreshCurrentItemState()
-    }
-    
-    private func loadNode(from handle: HandleEntity, url: String?, completion: ((MEGANode?) -> Void)? = nil) {
-        if let fileLink = configEntity.fileLink {
-            nodeInfoUseCase?.publicNode(fromFileLink: fileLink) { [weak self] node in
-                self?.configEntity.node = node
-                completion?(node)
-            }
-        } else if configEntity.isFolderLink {
-            guard let node = nodeInfoUseCase?.folderAuthNode(fromHandle: handle) else {
-                nodeInfoUseCase?.publicNode(fromFileLink: url ?? "") { [weak self] node in
-                    self?.configEntity.node = node
-                    completion?(node)
-                }
-                return
-            }
-            completion?(node)
-        } else {
-            if let node = nodeInfoUseCase?.node(fromHandle: handle) ?? streamingInfoUseCase?.info(from: handle) {
-                completion?(node)
-            } else {
-                nodeInfoUseCase?.publicNode(fromFileLink: url ?? "") { [weak self] node in
-                    self?.configEntity.node = node
-                    completion?(node)
-                }
-            }
-        }
     }
     
     private func showFullScreenPlayer(_ node: MEGANode?, path: String?) {
@@ -232,34 +256,6 @@ final class MiniPlayerViewModel: ViewModelType {
         
         if configEntity.isFolderLink, !router.isAFolderLinkPresenter() {
             nodeInfoUseCase?.folderLinkLogout()
-        }
-    }
-    
-    // MARK: - Dispatch action
-    func dispatch(_ action: MiniPlayerAction) {
-        switch action {
-        case .onViewDidLoad:
-            invokeCommand?(.showLoading(shouldInitializePlayer))
-            if shouldInitializePlayer {
-                dispatchQueue.async(qos: .userInteractive) {
-                    self.preparePlayer()
-                }
-            } else {
-                configurePlayer()
-            }
-        case .onPlayPause:
-            configEntity.playerHandler.playerTogglePlay()
-        case .playItem(let item):
-            if configEntity.playerHandler.currentRepeatMode() == .repeatOne {
-                configEntity.playerHandler.playerRepeatAll(active: true)
-            }
-            configEntity.playerHandler.play(item: item)
-        case .onClose:
-            closeMiniPlayer()
-        case .deinit:
-            deInitActions()
-        case .showPlayer(let node, let filePath):
-            showFullScreenPlayer(node, path: filePath)
         }
     }
 }

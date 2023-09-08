@@ -26,6 +26,9 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     var changePlayerRate_calledTimes = 0
     var setCurrent_callTimes = 0
     var initMiniPlayerCallCount = 0
+    var refreshCurrentItemState_calledTimes = 0
+    var autoPlay_calledTimes = 0
+    var repeatMode = RepeatMode.none
     
     private var _isPlayerDefined = false
     
@@ -155,9 +158,13 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
     func addMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
     func removeMiniPlayerHandler(_ handler: any AudioMiniPlayerHandlerProtocol) {}
     func isShuffleEnabled() -> Bool { false }
-    func currentRepeatMode() -> RepeatMode { RepeatMode.none }
-    func refreshCurrentItemState() {}
-    func autoPlay(enable: Bool) {}
+    func currentRepeatMode() -> RepeatMode { repeatMode }
+    func refreshCurrentItemState() {
+        refreshCurrentItemState_calledTimes += 1
+    }
+    func autoPlay(enable: Bool) {
+        autoPlay_calledTimes += 1
+    }
     func audioInterruptionDidStart() {}
     func audioInterruptionDidEndNeedToResume(_ resume: Bool) {}
     func remoteCommandEnabled(_ enabled: Bool) {}
@@ -167,4 +174,10 @@ final class MockAudioPlayerHandler: AudioPlayerHandlerProtocol {
         setCurrent_callTimes += 1
     }
     func currentSpeedMode() -> SpeedMode { .normal }
+}
+
+extension MockAudioPlayerHandler {
+    func setCurrentRepeatMode(_ repeatMode: RepeatMode) {
+        self.repeatMode = repeatMode
+    }
 }
