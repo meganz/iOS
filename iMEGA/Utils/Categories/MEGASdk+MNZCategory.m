@@ -2,7 +2,6 @@
 #import <objc/runtime.h>
 
 static const void *mnz_accountDetailsKey = &mnz_accountDetailsKey;
-static const void *mnz_completedTransfersKey = &mnz_completedTransfersKey;
 
 @implementation MEGASdk (MNZCategory)
 
@@ -14,15 +13,6 @@ static const void *mnz_completedTransfersKey = &mnz_completedTransfersKey;
 
 - (void)mnz_setAccountDetails:(MEGAAccountDetails *)newAccountDetails {
     objc_setAssociatedObject(self, &mnz_accountDetailsKey, newAccountDetails, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSMutableArray *)completedTransfers {
-    NSMutableArray *completedTransfers = objc_getAssociatedObject(self, mnz_completedTransfersKey);
-    if (!completedTransfers) {
-        completedTransfers = NSMutableArray.new;
-        objc_setAssociatedObject(self, &mnz_completedTransfersKey, completedTransfers, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return completedTransfers;
 }
 
 - (BOOL)mnz_isProAccount {
