@@ -1,6 +1,21 @@
 import MEGASdk
 
 public extension MEGASdk {
+    /// Associates a `NSMutableArray` of completed transfers with every **instance** of `MEGASdk`
+    private static var completedTransfers = [ObjectIdentifier: NSMutableArray]()
+
+    @objc var completedTransfers: NSMutableArray {
+        let key = ObjectIdentifier(self)
+
+        if let completedTransfers = MEGASdk.completedTransfers[key] {
+            return completedTransfers
+        }
+
+        let completedTransfers = NSMutableArray()
+        MEGASdk.completedTransfers[key] = completedTransfers
+        return completedTransfers
+    }
+
     @objc static func currentUserHandle() -> NSNumber? {
         CurrentUserSource.shared.currentUserHandle.map {
             NSNumber(value: $0)
@@ -18,7 +33,7 @@ public extension MEGASdk {
     @objc static var isLoggedIn: Bool {
         CurrentUserSource.shared.isLoggedIn
     }
-    
+
     @objc func removeMEGADelegateAsync(_ delegate: any MEGADelegate) {
         Task.detached {
             MEGASdk.sharedSdk.remove(delegate)
