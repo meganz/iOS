@@ -1291,9 +1291,9 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Send message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Approve credentials";
+"verifyCredentials"="Verify credentials";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Approve";
+"verify"="Mark as verified";
 /* Button title */
 "verified"="Approved";
 /* A button title to delete the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="My credentials";
 /* Button to reset the password */
 "reset"="Reset";
-/* Button title */
-"approve"="Approve";
 /* start a chat/conversation */
 "startConversation"="Start conversation";
 /* Label title for a group chat */
