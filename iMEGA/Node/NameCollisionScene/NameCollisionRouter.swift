@@ -49,7 +49,7 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
         baseViewController = viewController
         viewModel?.checkNameCollisions()
     }
-    
+
     func dismiss() {
         SVProgressHUD.setDefaultMaskType(.none)
         SVProgressHUD.dismiss()
@@ -78,13 +78,13 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
     }
 
     @MainActor
-    func showCopyOrMoveSuccess() {
+    func showCopyOrMoveSuccess() async {
         dismiss()
         SVProgressHUD.showSuccess(withStatus: Strings.Localizable.completed)
     }
 
     @MainActor
-    func showCopyOrMoveError() {
+    func showCopyOrMoveError() async {
         dismiss()
         SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
     }
