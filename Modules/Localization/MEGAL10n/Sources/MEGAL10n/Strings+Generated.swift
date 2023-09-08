@@ -2769,6 +2769,10 @@ public enum Strings {
           /// Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform.
           public static let title = Strings.tr("Localizable", "account.upgrade.alreadyHaveASubscription.title", fallback: "You already have an active subscription")
         }
+        public enum NotAvailableWithCurrentPlan {
+          /// Error message shown when a user tries to purchase plan that is not available with their current plan
+          public static let message = Strings.tr("Localizable", "account.upgrade.notAvailableWithCurrentPlan.message", fallback: "Not available with your current plan")
+        }
       }
       public enum UpgradeSecurity {
         /// Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account.
