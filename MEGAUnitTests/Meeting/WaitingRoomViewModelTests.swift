@@ -42,16 +42,15 @@ final class WaitingRoomViewModelTests: XCTestCase {
     
     func testViewState_onMeetingNotStartTransitsToMeetingDidStart_shouldChangeFromWaitForHostToStartToWaitForHostToLetIn() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
-        let chatCallStatusUpdatePublisher = PassthroughSubject<CallEntity, Never>()
-        let chatUseCase = MockChatUseCase(chatCallStatusUpdatePublisher: chatCallStatusUpdatePublisher)
         let callEntity = CallEntity(status: .connecting, chatId: 100)
-        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(callEntity))
-        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatUseCase: chatUseCase, callUseCase: callUseCase)
+        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
+        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(callEntity), callUpdateSubject: callUpdateSubject)
+        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, callUseCase: callUseCase)
         
         XCTAssertEqual(sut.viewState, .waitForHostToStart)
         
         callUseCase.call = callEntity
-        chatCallStatusUpdatePublisher.send(callEntity)
+        callUpdateSubject.send(callEntity)
         
         evaluate {
             sut.viewState == .waitForHostToLetIn
@@ -60,15 +59,15 @@ final class WaitingRoomViewModelTests: XCTestCase {
     
     func testViewState_onMeetingDidStartTransitsToMeetingNotStart_shouldChangeFromWaitForHostToLetInToWaitForHostToStart() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
-        let chatCallStatusUpdatePublisher = PassthroughSubject<CallEntity, Never>()
-        let chatUseCase = MockChatUseCase(isCallActive: true, chatCallStatusUpdatePublisher: chatCallStatusUpdatePublisher)
-        let callUseCase = MockCallUseCase()
+        let chatUseCase = MockChatUseCase(isCallActive: true)
+        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
+        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
         let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatUseCase: chatUseCase, callUseCase: callUseCase)
         
         XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
         
         callUseCase.call = nil
-        chatCallStatusUpdatePublisher.send(CallEntity(status: .terminatingUserParticipation, chatId: 100))
+        callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, chatId: 100))
         
         evaluate {
             sut.viewState == .waitForHostToStart

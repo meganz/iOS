@@ -28,14 +28,16 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var chatSession: ChatSessionEntity?
     var participantHandle: HandleEntity = .invalid
     var callWaitingRoomUsersUpdateSubject = PassthroughSubject<CallEntity, Never>()
-    var callUpdateSubject = PassthroughSubject<CallEntity, Never>()
+    var callUpdateSubject: PassthroughSubject<CallEntity, Never>
     
     init(call: CallEntity? = CallEntity(),
          callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
-         answerCallCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic)) {
+         answerCallCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
+         callUpdateSubject: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>()) {
         self.call = call
         self.callCompletion = callCompletion
         self.answerCallCompletion = answerCallCompletion
+        self.callUpdateSubject = callUpdateSubject
     }
 
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
