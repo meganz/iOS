@@ -1,8 +1,15 @@
 @testable import MEGA
 
 final class MockMiniPlayerViewRouter: MiniPlayerViewRouting {
+    
     var dismiss_calledTimes = 0
     var showPlayer_calledTimes = 0
+    
+    private let isFolderLinkPresenter: Bool
+    
+    init(isFolderLinkPresenter: Bool = true) {
+        self.isFolderLinkPresenter = isFolderLinkPresenter
+    }
     
     func dismiss() {
         dismiss_calledTimes += 1
@@ -13,6 +20,6 @@ final class MockMiniPlayerViewRouter: MiniPlayerViewRouting {
     }
     
     func isAFolderLinkPresenter() -> Bool {
-        true
+        isFolderLinkPresenter
     }
 }

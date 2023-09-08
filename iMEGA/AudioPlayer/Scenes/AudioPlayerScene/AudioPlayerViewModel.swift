@@ -42,7 +42,7 @@ protocol AudioPlayerViewRouting: Routing {
     func showAction(for node: MEGANode, sender: Any)
 }
 
-@objc enum RepeatMode: Int {
+@objc enum RepeatMode: Int, CaseIterable {
     case none, loop, repeatOne
 }
 
@@ -50,7 +50,7 @@ protocol AudioPlayerViewRouting: Routing {
     case normal, oneAndAHalf, double, half
 }
 
-enum PlayerType: String {
+enum PlayerType: String, CaseIterable {
     case `default`, folderLink, fileLink, offline
 }
 

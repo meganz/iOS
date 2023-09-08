@@ -14,7 +14,7 @@ public final class MockNode: MEGANode {
     private let videoDuration: Int
     private let _label: MEGANodeLabel
     private let _isFavourite: Bool
-    private let _fingerprint: String
+    private let _fingerprint: String?
     private let _hasPreview: Bool
     let nodePath: String?
     
@@ -31,7 +31,7 @@ public final class MockNode: MEGANode {
                 duration: Int = 0,
                 label: MEGANodeLabel = .unknown,
                 isFavourite: Bool = false,
-                fingerprint: String = "",
+                fingerprint: String? = nil,
                 hasPreview: Bool = false
     ) {
         nodeHandle = handle
