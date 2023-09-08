@@ -28,14 +28,13 @@ let package = Package(
                 "Localization.m"
             ],
             plugins: [
-                .plugin(name: "SwiftGen", package: "MEGAPlugins"),
+                .plugin(name: "SwiftGen", package: "MEGAPlugins")
             ]
         ),
         .target(
             name: "MEGAL10nObjc",
             path: "Sources/MEGAL10n",
             exclude: [
-                "Strings+Generated.swift",
                 "Localization.swift"
             ],
             publicHeadersPath: "."
