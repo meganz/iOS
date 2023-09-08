@@ -33,18 +33,7 @@ struct ImportAlbumView: View, DismissibleContentView {
             VStack(spacing: 0) {
                 navigationBar
                 
-                if viewModel.shouldShowEmptyAlbumView {
-                    EmptyAlbumView()
-                        .frame(maxHeight: .infinity, alignment: .center)
-                } else {
-                    PhotoLibraryContentView(
-                        viewModel: viewModel.photoLibraryContentViewModel,
-                        router: PhotoLibraryContentViewRouter(contentMode: .albumLink),
-                        onFilterUpdate: nil
-                    )
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    .opacity(viewModel.isPhotosLoaded ? 1.0 : 0)
-                }
+                content()
                 
                 bottomToolbar
                     .overlay(
@@ -53,28 +42,6 @@ struct ImportAlbumView: View, DismissibleContentView {
                         },
                         alignment: .top)
             }
-        }
-        .taskForiOS14 {
-            await viewModel.loadPublicAlbum()
-        }
-        .alert(isPresented: $viewModel.showRenameAlbumAlert,
-               viewModel.renameAlbumAlertViewModel())
-        .alert(isPresented: $viewModel.showCannotAccessAlbumAlert) {
-            Alert(title: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.title),
-                  message: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message),
-                  dismissButton: .cancel(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
-                                         action: dismissImportAlbumScreen))
-        }
-        .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
-        .sheet(isPresented: $viewModel.showImportAlbumLocation) {
-            BrowserView(browserAction: .saveToCloudDrive,
-                        isChildBrowser: true,
-                        parentNode: MEGASdk.shared.rootNode,
-                        selectedNode: $viewModel.importFolderLocation)
-            .ignoresSafeArea(edges: .bottom)
-        }
-        .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
-            CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
         }
         .onAppear {
             viewModel.onViewAppear()
@@ -87,6 +54,33 @@ struct ImportAlbumView: View, DismissibleContentView {
             SVProgressHUD.dismiss()
             SVProgressHUD.show(Asset.Images.Hud.hudForbidden.image,
                                status: Strings.Localizable.noInternetConnection)
+        }
+    }
+    
+    @ViewBuilder
+    private func content() -> some View {
+        ZStack {
+            if viewModel.shouldShowEmptyAlbumView {
+                EmptyAlbumView()
+                    .frame(maxHeight: .infinity, alignment: .center)
+            } else {
+                PhotoLibraryContentView(
+                    viewModel: viewModel.photoLibraryContentViewModel,
+                    router: PhotoLibraryContentViewRouter(contentMode: .albumLink),
+                    onFilterUpdate: nil
+                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .opacity(viewModel.isPhotosLoaded ? 1.0 : 0)
+            }
+        }
+        .alert(isPresented: $viewModel.showCannotAccessAlbumAlert) {
+            Alert(title: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.title),
+                  message: Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.message),
+                  dismissButton: .cancel(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
+                                         action: dismissImportAlbumScreen))
+        }
+        .taskForiOS14 {
+            await viewModel.loadPublicAlbum()
         }
     }
     
@@ -165,22 +159,45 @@ struct ImportAlbumView: View, DismissibleContentView {
     private var bottomToolbar: some View {
         HStack(alignment: .top) {
             if viewModel.showImportToolbarButton {
-                ToolbarImageButton(image: Asset.Images.InfoActions.import.image,
-                                   isDisabled: viewModel.isToolbarButtonsDisabled) {
-                    Task { await viewModel.importAlbum() }
-                }
+                importAlbumToolbarButton()
                 Spacer()
             }
-            ToolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image,
-                               isDisabled: viewModel.isToolbarButtonsDisabled) {
-                Task { await viewModel.saveToPhotos() }
-            }
+            saveToPhotosToolbarButton()
             Spacer()
             shareLinkButton()
         }
         .frame(maxHeight: 64)
         .background(Color(Colors.General.Gray.navigationBgColor.color)
             .edgesIgnoringSafeArea(.bottom))
+    }
+    
+    private func importAlbumToolbarButton() -> some View {
+        ToolbarImageButton(image: Asset.Images.InfoActions.import.image,
+                           isDisabled: viewModel.isToolbarButtonsDisabled,
+                           action: {
+            Task { await viewModel.importAlbum() }
+        })
+        .fullScreenCover(isPresented: $viewModel.showStorageQuotaWillExceed) {
+            CustomModalAlertView(mode: .storageQuotaWillExceed(displayMode: .albumLink))
+        }
+        .alert(isPresented: $viewModel.showRenameAlbumAlert,
+               viewModel.renameAlbumAlertViewModel())
+        .sheet(isPresented: $viewModel.showImportAlbumLocation) {
+            BrowserView(browserAction: .saveToCloudDrive,
+                        isChildBrowser: true,
+                        parentNode: MEGASdk.shared.rootNode,
+                        selectedNode: $viewModel.importFolderLocation)
+            .ignoresSafeArea(edges: .bottom)
+        }
+    }
+    
+    private func saveToPhotosToolbarButton() -> some View {
+        ToolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image,
+                           isDisabled: viewModel.isToolbarButtonsDisabled,
+                           action: {
+            Task { await viewModel.saveToPhotos() }
+        })
+        .alertPhotosPermission(isPresented: $viewModel.showPhotoPermissionAlert)
     }
     
     @ViewBuilder
