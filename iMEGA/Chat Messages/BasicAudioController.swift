@@ -91,7 +91,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     ///
     /// - Note:
     ///   This protocol method is called by MessageKit every time an audio cell needs to be configure
-    open func configureAudioCell(_ cell: AudioMessageCell, message: some MessageType) {
+    open func configureAudioCell(_ cell: AudioMessageCell, message: any MessageType) {
         
         if isPlayingSameMessage(message),
            let collectionView = messageCollectionView,
@@ -113,7 +113,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     /// - Parameters:
     ///   - message: The `MessageType` that contain the audio item to be played.
     ///   - audioCell: The `AudioMessageCell` that needs to be updated while audio is playing.
-    open func playSound(for message: some MessageType, in audioCell: AudioMessageCell) {
+    open func playSound(for message: any MessageType, in audioCell: AudioMessageCell) {
         
         if AudioPlayerManager.shared.isPlayerAlive() {
             AudioPlayerManager.shared.audioInterruptionDidStart()
@@ -164,7 +164,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     /// - Parameters:
     ///   - message: The `MessageType` that contain the audio item to be pause.
     ///   - audioCell: The `AudioMessageCell` that needs to be updated by the pause action.
-    open func pauseSound(for message: some MessageType, in audioCell: AudioMessageCell) {
+    open func pauseSound(for message: any MessageType, in audioCell: AudioMessageCell) {
         guard let audioCell = audioCell as? ChatVoiceClipCollectionViewCell else {
             return
         }
@@ -261,7 +261,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    func isPlayingSameMessage(_ message: some MessageType) -> Bool {
+    func isPlayingSameMessage(_ message: any MessageType) -> Bool {
         if let playingMessage = playingMessage as? ChatMessage,
            let currentMessage = message as? ChatMessage,
            (playingMessage.messageId == currentMessage.messageId || currentMessage.message.nodeList?.node(at: 0)?.name == playingMessage.transfer?.fileName) {

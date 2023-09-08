@@ -35,7 +35,7 @@ class MessageReactionReusableView: MessageReusableView {
         reactionContainerView.pin.vertically().horizontally(pin.safeArea)
     }
 
-    func isFromCurrentSender(message: some MessageType) -> Bool {
+    func isFromCurrentSender(message: any MessageType) -> Bool {
         return UInt64(message.sender.senderId) == MEGAChatSdk.shared.myUserHandle
     }
     
