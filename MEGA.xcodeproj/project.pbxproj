@@ -11007,9 +11007,9 @@
 				5B8DE74927A00F3700B265EB /* MockExportNodeUseCase.swift */,
 				5BBC13E726CE68380010115B /* MockFavouriteNodesUseCase.swift */,
 				12B1E57F28751B0700D23A58 /* MockMediaDiscoveryAnalyticsUseCase.swift */,
-				0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */,
 				24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */,
 				24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */,
+				0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -11744,8 +11744,8 @@
 			children = (
 				C47E7BF625D1731200DB6FF5 /* AudioPlayerViewModelTests.swift */,
 				C45A2DF425D2B97F00915A83 /* AudioPlaylistViewModelTests.swift */,
-				C45A2E2225D2E05100915A83 /* MiniPlayerViewModelTests.swift */,
 				24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */,
+				C45A2E2225D2E05100915A83 /* MiniPlayerViewModelTests.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -14894,7 +14894,6 @@
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
 				0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */,
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
-				24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
 				94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,
@@ -14936,7 +14935,6 @@
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
 				B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */,
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
-				24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
 				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,
@@ -14987,6 +14985,7 @@
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
+				24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
 				B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */,
@@ -15013,6 +15012,7 @@
 				C45A2E2D25D2E09C00915A83 /* MockMiniPlayerViewRouter.swift in Sources */,
 				94712EFA2A9C9F5700B5F2C9 /* MockNodeDetailsUseCase.swift in Sources */,
 				C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */,
+				24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */,
 				BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */,
@@ -15024,6 +15024,7 @@
 				B5663EE229F8F7FC0080FFDA /* MockSKProduct.swift in Sources */,
 				32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */,
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
+				24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */,
 				25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,
@@ -15104,7 +15105,6 @@
 				3232AD012900F7A500FF7416 /* SlideshowDataSourceTests.swift in Sources */,
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
-				24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
 				C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */,
 				C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */,

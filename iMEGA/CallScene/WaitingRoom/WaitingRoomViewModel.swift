@@ -238,25 +238,15 @@ final class WaitingRoomViewModel: ObservableObject {
                 self?.removeRouteChangedListener()
             }
         
-        chatUseCase
-            .monitorChatCallStatusUpdate()
+        callUseCase
+            .onCallUpdate()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] call in
                 guard let self,
-                      viewState != .guestJoin && viewState != .guestJoining,
-                      call.chatId == scheduledMeeting.chatId else { return }
-                if isMeetingStart {
-                    if !isCallActive {
-                        answerCall()
-                    }
-                } else {
-                    if isCallActive {
-                        dismissCall()
-                    }
-                    viewState = .waitForHostToStart
-                }
-            }
-            .store(in: &subscriptions)
+                      call.chatId == scheduledMeeting.chatId,
+                      viewState != .guestJoin && viewState != .guestJoining else { return }
+                updateCallStatus()
+            }.store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
@@ -360,18 +350,31 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func dismiss() {
+        disableLocalVideo()
+        callUseCase.stopListeningForCall()
         router.dismiss { [weak self] in
             guard let self else { return }
             if accountUseCase.isGuest {
                 authUseCase.logout()
             }
-            disableLocalVideo()
-            callUseCase.stopListeningForCall()
             dismissCall()
         }
     }
     
     // MARK: - Chat and call related methods
+    
+    private func updateCallStatus() {
+        if isMeetingStart {
+            if !isCallActive {
+                answerCall()
+            }
+        } else {
+            if isCallActive {
+                dismissCall()
+            }
+            viewState = .waitForHostToStart
+        }
+    }
     
     private func answerCall() {
         callUseCase.answerCall(for: scheduledMeeting.chatId) { [weak self] result in
@@ -416,10 +419,12 @@ final class WaitingRoomViewModel: ObservableObject {
             switch result {
             case .success:
                 fetchUserAvatar()
-                if isMeetingStart {
-                    answerCall()
-                } else {
-                    viewState = .waitForHostToStart
+                // There is a delay for a call to update its status after joining a meeting
+                // We can't check whether the meeting is started or not immediately after joining a meeting
+                // So the wait is used here to wait for the call's update
+                // Note that if the call is updated faster than the wait, it will do the logic without the wait
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.updateCallStatus()
                 }
             case .failure:
                 dismiss()
