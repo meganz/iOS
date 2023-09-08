@@ -48,7 +48,7 @@ struct QASettingsRouter: QASettingsRouting {
         presenter?.present(alertController, animated: true, completion: nil)
     }
     
-    func showAlert(withError error: some Error) {
+    func showAlert(withError error: any Error) {
         showAlert(
             withTitle: Constants.errorAlertTitle,
             message: error.localizedDescription,
