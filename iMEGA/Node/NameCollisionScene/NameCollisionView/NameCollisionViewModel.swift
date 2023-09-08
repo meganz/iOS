@@ -5,8 +5,8 @@ protocol NameCollisionViewRouting: Routing {
     func showNameCollisionsView()
     func resolvedUploadCollisions(_ transfers: [CancellableTransfer])
     func dismiss()
-    func showCopyOrMoveSuccess()
-    func showCopyOrMoveError()
+    func showCopyOrMoveSuccess() async
+    func showCopyOrMoveError() async
     func showProgressIndicator()
 }
 
@@ -247,26 +247,26 @@ final class NameCollisionViewModel: ObservableObject {
     private func processMoveCollisions() async {
         do {
             let moveNodeHandles = try await nameCollisionUseCase.moveNodesFromResolvedCollisions(collisions)
-            finishedTask(for: moveNodeHandles)
+            await finishedTask(for: moveNodeHandles)
         } catch {
-            router.showCopyOrMoveError()
+           await router.showCopyOrMoveError()
         }
     }
 
     private func processCopyCollisions() async {
         do {
             let copyNodeHandles = try await nameCollisionUseCase.copyNodesFromResolvedCollisions(collisions, isFolderLink: isFolderLink)
-            finishedTask(for: copyNodeHandles)
+            await finishedTask(for: copyNodeHandles)
         } catch {
-            router.showCopyOrMoveError()
+            await router.showCopyOrMoveError()
         }
     }
 
-    private func finishedTask(for handles: [HandleEntity]) {
+    private func finishedTask(for handles: [HandleEntity]) async {
         if handles.count == collisions.count {
-            router.showCopyOrMoveSuccess()
+           await router.showCopyOrMoveSuccess()
         } else {
-            router.showCopyOrMoveError()
+           await router.showCopyOrMoveError()
         }
     }
     
