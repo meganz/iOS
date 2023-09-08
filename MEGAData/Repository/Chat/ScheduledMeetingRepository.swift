@@ -153,7 +153,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     
     // MARK: - Private methods
     
-    private func makeChatRequestDelegate(withCompletion completion: @escaping (Result<ScheduledMeetingEntity, Error>) -> Void) -> ChatRequestDelegate {
+    private func makeChatRequestDelegate(withCompletion completion: @escaping (Result<ScheduledMeetingEntity, any Error>) -> Void) -> ChatRequestDelegate {
         ChatRequestDelegate { result in
             if case .success(let request) = result {
                 guard let scheduledMeeting = request.scheduledMeetingList.first?.toScheduledMeetingEntity() else {
