@@ -45,6 +45,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### submit_review
+
+```sh
+[bundle exec] fastlane submit_review
+```
+
+
+
+### app_store_api_key
+
+```sh
+[bundle exec] fastlane app_store_api_key
+```
+
+
+
 ----
 
 

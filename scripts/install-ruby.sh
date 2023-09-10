@@ -27,8 +27,6 @@ else
     else
       add_content_to_new_line 'eval "$(~/.rbenv/bin/rbenv init - bash)"' ~/.bash_profile
     fi
-
-    eval "$(~/.rbenv/bin/rbenv init -)"
 fi
 
 desired_ruby_version=$(rbenv local)
@@ -37,6 +35,8 @@ desired_ruby_version=$(rbenv local)
 if rbenv versions | grep -q "$desired_ruby_version"; then
     echo "Ruby version $desired_ruby_version is already installed."
 else
+    eval "$(~/.rbenv/bin/rbenv init -)"
+
     echo "Installing Ruby $desired_ruby_version"
     if ! rbenv install "$desired_ruby_version"; then
         echo "Failed to install Ruby $desired_ruby_version. Exiting."
