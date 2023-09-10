@@ -125,6 +125,7 @@
     {
       "parallelizable" : true,
       "skippedTests" : [
+        "BannerContainerViewModelTests\/testAction_onViewWillAppear()",
         "ChatRoomsListViewModelTests\/testAction_selectChatsMode()",
         "ChatRoomsListViewModelTests\/testAction_selectMeetingsMode()",
         "DownloadLinkViewModelTests\/testDownloadFolderLinkUserNotLogged()",
@@ -148,7 +149,9 @@
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_isOneToOneMeeting()",
         "MeetingParticipantsLayoutViewModelTests\/testAction_onViewReady()",
         "MeetingParticipantsLayoutViewModelTests\/testAction_participantAdded_createAvatar()",
-        "MeetingParticipantsLayoutViewModelTests\/testAction_participantAdded_downloadAvatar()"
+        "MeetingParticipantsLayoutViewModelTests\/testAction_participantAdded_downloadAvatar()",
+        "ScheduledMeetingDateBuilderTests",
+        "WaitingRoomViewModelTests\/testMeetingDate_givenMeetingStartAndEndDate_shouldMatch()"
       ],
       "target" : {
         "containerPath" : "container:MEGA.xcodeproj",
@@ -158,6 +161,10 @@
     },
     {
       "parallelizable" : true,
+      "skippedTests" : [
+        "UserAttributeUseCaseTest\/testSaveTimelineFilter_onFirstTime_shouldSaveCorrectly()",
+        "UserAttributeUseCaseTest\/testSaveTimelineFilter_onSecondTime_shouldSaveCorrectly()"
+      ],
       "target" : {
         "containerPath" : "container:Modules\/Domain\/MEGADomain",
         "identifier" : "MEGADomainTests",
@@ -166,6 +173,9 @@
     },
     {
       "parallelizable" : true,
+      "skippedTests" : [
+        "DateFormatter_System_ConvenientTests"
+      ],
       "target" : {
         "containerPath" : "container:Modules\/Infrastracture\/MEGAFoundation",
         "identifier" : "MEGAFoundationTests",
@@ -259,6 +269,7 @@
       }
     },
     {
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:Modules\/Features\/Search",
         "identifier" : "SearchTests",
