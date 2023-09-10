@@ -133,6 +133,10 @@ final class ImportAlbumViewModel: ObservableObject {
     
     @MainActor
     func loadWithNewDecryptionKey() async {
+        guard monitorUseCase.isConnected() else {
+            showNoInternetConnection = true
+            return
+        }
         guard publicLinkDecryptionKey.isNotEmpty,
               let linkWithDecryption = URL(string: publicLink.absoluteString + "#" + publicLinkDecryptionKey) else {
             setLinkToInvalid()

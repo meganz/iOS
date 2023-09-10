@@ -88,6 +88,8 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func saveToPhotos(node: MEGANode) {
+        guard MEGAReachabilityManager.isReachableHUDIfNot() else { return }
+        
         permissionHandler.photosPermissionWithCompletionHandler {[weak self] granted in
             guard let self else { return }
             if granted {

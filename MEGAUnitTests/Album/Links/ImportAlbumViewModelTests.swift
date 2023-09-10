@@ -162,6 +162,20 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(sut.publicLinkStatus, .invalid)
     }
     
+    func testLoadWithNewDecryptionKey_noInternetConnection_shouldShowNoInternetConnection() async throws {
+        let networkMonitorUseCase = MockNetworkMonitorUseCase(connected: false)
+        let sut = makeImportAlbumViewModel(
+            publicLink: try requireDecryptionKeyAlbumLink,
+            monitorUseCase: networkMonitorUseCase)
+        sut.publicLinkStatus = .requireDecryptionKey
+        sut.publicLinkDecryptionKey = "valid-key"
+        XCTAssertFalse(sut.showNoInternetConnection)
+        
+        await sut.loadWithNewDecryptionKey()
+        
+        XCTAssertTrue(sut.showNoInternetConnection)
+    }
+    
     func testEnablePhotoLibraryEditMode_onEditModeChange_shouldUpdateisSelectionEnabled() throws {
         let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink)
         XCTAssertFalse(sut.isSelectionEnabled)
