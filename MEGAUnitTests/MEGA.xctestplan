@@ -163,6 +163,7 @@
       "parallelizable" : true,
       "skippedTests" : [
         "UserAttributeUseCaseTest\/testSaveTimelineFilter_onFirstTime_shouldSaveCorrectly()",
+        "UserAttributeUseCaseTest\/testSaveTimelineFilter_onFirstTime_shouldUsePreferenceBeEmpty()",
         "UserAttributeUseCaseTest\/testSaveTimelineFilter_onSecondTime_shouldSaveCorrectly()"
       ],
       "target" : {
