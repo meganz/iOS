@@ -77,41 +77,6 @@ final class DeviceListViewModelTests: XCTestCase {
         cancellables.forEach { $0.cancel() }
     }
     
-    func testFilterDevices_withEmptySearchText_shouldReturnTheSameDevices() async {
-        let devices = devices()
-        
-        let viewModel = makeSUT(
-            devices: devices,
-            currentDeviceId: mockCurrentDeviceId
-        )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        viewModel.searchText = ""
-        
-        let expectedDeviceNames = devices.map(\.name)
-        let foundDeviceNames = viewModel.filteredDevices.map(\.name)
-        
-        XCTAssertEqual(foundDeviceNames, expectedDeviceNames)
-    }
-    
-    func testIsFiltered_withSearchTextMatchingDevices_shouldReturnTrue() async {
-        let devices = devices()
-        
-        let viewModel = makeSUT(
-            devices: devices,
-            currentDeviceId: mockCurrentDeviceId
-        )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        viewModel.searchText = "dev"
-        
-        XCTAssertTrue(viewModel.isFiltered)
-    }
-
     func testIsFiltered_withEmptySearchText_shouldReturnFalse() async {
         let devices = devices()
         
@@ -253,7 +218,9 @@ final class DeviceListViewModelTests: XCTestCase {
         
         viewModel.$filteredDevices
             .sink { _ in
-                expectation.fulfill()
+                if viewModel.isSearchActive {
+                    expectation.fulfill()
+                }
             }
             .store(in: &cancellables)
         

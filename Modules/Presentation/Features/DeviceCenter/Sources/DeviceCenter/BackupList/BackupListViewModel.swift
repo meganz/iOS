@@ -23,6 +23,7 @@ public final class BackupListViewModel: ObservableObject {
         Dictionary(grouping: deviceCenterActions, by: \.type)
     }
     private var backupsPreloaded: Bool = false
+    private var searchCancellable: AnyCancellable?
     
     var isFilteredBackupsEmpty: Bool {
         filteredBackups.isEmpty
@@ -37,11 +38,7 @@ public final class BackupListViewModel: ObservableObject {
     @Published private(set) var emptyStateAssets: EmptyStateAssets
     @Published private(set) var searchAssets: SearchAssets
     @Published var isSearchActive: Bool
-    @Published var searchText: String {
-        didSet {
-            filterBackups()
-        }
-    }
+    @Published var searchText: String = ""
     
     init(
         selectedDeviceId: String,
@@ -72,7 +69,16 @@ public final class BackupListViewModel: ObservableObject {
         self.isSearchActive = false
         self.searchText = ""
         
+        setupSearchCancellable()
         loadBackupsInitialStatus()
+    }
+    
+    private func setupSearchCancellable() {
+        searchCancellable = $searchText
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.filterBackups()
+            }
     }
     
     private func loadBackupsInitialStatus() {
@@ -88,8 +94,7 @@ public final class BackupListViewModel: ObservableObject {
         let hasSearchQuery = searchText.isNotEmpty
         isSearchActive = hasSearchQuery
         if hasSearchQuery {
-            resetBackups()
-            filteredBackups = filteredBackups.filter {
+            filteredBackups = backupModels.filter {
                 $0.name.lowercased().contains(searchText.lowercased())
             }
         } else {
