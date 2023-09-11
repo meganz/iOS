@@ -30,9 +30,13 @@ final class ShareAttachmentCellViewModel: ObservableObject {
 
     // MARK: - Public
     func saveNewFileName() {
-        guard let attachment = ShareAttachment.attachmentsArray().object(at: index) as? ShareAttachment,
-              let fileName = fileName.trim else { return }
-        let fullFileName = fileName + fileExtension
+        guard let attachments = ShareAttachment.attachmentsArray() as? [ShareAttachment],
+              let attachment = attachments[safe: index],
+              let trimmedFileName = fileName.trim else {
+            return
+        }
+
+        let fullFileName = trimmedFileName + fileExtension
         attachment.name = fullFileName
     }
 }
