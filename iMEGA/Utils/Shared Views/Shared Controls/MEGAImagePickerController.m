@@ -22,6 +22,7 @@
 
 @property (nonatomic, getter=toUploadSomething) BOOL uploadSomething;
 @property (nonatomic) MEGANode *parentNode;
+@property (nonatomic) AssetCreationRequestLocationManagerOCWrapper *assetCreationRequestLocationManager;
 
 @property (nonatomic, getter=toChangeAvatar) BOOL changeAvatar;
 
@@ -88,6 +89,18 @@
     self.mediaTypes = [self mediaTypes];
     self.videoQuality = UIImagePickerControllerQualityTypeHigh;
     self.delegate = self;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self initializeAndRequestCameraLocationPermission];
+}
+
+- (void)initializeAndRequestCameraLocationPermission {
+    if (_assetCreationRequestLocationManager == nil) {
+        _assetCreationRequestLocationManager = [[AssetCreationRequestLocationManagerOCWrapper alloc] init];
+    }
+    [self.assetCreationRequestLocationManager requestWhenInUseAuthorization];
 }
 
 #pragma mark - Private
@@ -168,6 +181,7 @@
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
         PHAssetCreationRequest *assetCreationRequest = [PHAssetCreationRequest creationRequestForAsset];
         [assetCreationRequest addResourceWithType:type fileURL:fileURL options:nil];
+        [self.assetCreationRequestLocationManager registerLocationMetaDataTo:assetCreationRequest];
     } completionHandler:^(BOOL success, NSError * _Nullable nserror) {
         if (success) {
             dispatch_async(dispatch_get_main_queue(), ^{

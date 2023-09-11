@@ -4,6 +4,7 @@ import UIKit
 
 final class UploadImagePickerViewController: UIImagePickerController {
 
+    private var assetCreationRequestLocationManager: AssetCreationRequestLocationManager?
     var completion: ((Result<String, ImagePickingError>) -> Void)?
 
     override func viewDidLoad() {
@@ -11,6 +12,18 @@ final class UploadImagePickerViewController: UIImagePickerController {
         self.modalPresentationStyle = .currentContext
         videoQuality = .typeHigh
         delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        initializeAndRequestCameraLocationPermission()
+    }
+    
+    private func initializeAndRequestCameraLocationPermission() {
+        if assetCreationRequestLocationManager == nil {
+            assetCreationRequestLocationManager = AssetCreationRequestLocationManager()
+        }
+        assetCreationRequestLocationManager?.requestWhenInUseAuthorization()
     }
 
     // MARK: - Public
@@ -145,9 +158,11 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
 
         let assetURL = URL(fileURLWithPath: filePath)
 
-        PHPhotoLibrary.shared().performChanges({
+        PHPhotoLibrary.shared().performChanges({ [weak self] in
+            guard let self else { return }
             let assetCreationRequest = PHAssetCreationRequest.forAsset()
             assetCreationRequest.addResource(with: assetType, fileURL: assetURL, options: nil)
+            assetCreationRequestLocationManager?.registerLocationMetaData(to: assetCreationRequest)
         }, completionHandler: { [completion] (success, _) in
             guard success else {
                 completion?(.success(relativeLocalPath(filePath)))
