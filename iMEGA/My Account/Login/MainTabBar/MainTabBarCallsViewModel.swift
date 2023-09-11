@@ -1,12 +1,14 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 
 protocol MainTabBarCallsRouting: AnyObject {
     func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void)
     func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void)
     func dismissWaitingRoomDialog(animated: Bool)
-    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void)
+    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
+    func showParticipantsJoinedTheCall(message: String)
 }
 
 enum MainTabBarCallsAction: ActionType { }
@@ -67,7 +69,7 @@ enum MainTabBarCallsAction: ActionType { }
     
     private func configureWaitingRoomListener(forCall call: CallEntity) {
         callWaitingRoomUsersUpdateSubscription = callUseCase.callWaitingRoomUsersUpdate(forCall: call)
-            .throttle(for: 1, scheduler: DispatchQueue.main, latest: true)
+            .debounce(for: 1, scheduler: DispatchQueue.main)
             .sink { [weak self] call in
                 self?.manageWaitingRoom(for: call)
             }
@@ -85,6 +87,7 @@ enum MainTabBarCallsAction: ActionType { }
             guard callWaitingRoomUsersUpdateSubscription == nil, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
             if chatRoom.isWaitingRoomEnabled && chatRoom.ownPrivilege == .moderator {
                 configureWaitingRoomListener(forCall: call)
+                manageWaitingRoom(for: call)
             }
             
         case .destroyed, .terminatingUserParticipation:
@@ -133,7 +136,11 @@ enum MainTabBarCallsAction: ActionType { }
     
     private func showSeveralUsersWaitingRoomAlert(userHandles: [UInt64], inChatRoom chatRoom: ChatRoomEntity, forCall call: CallEntity) {
         router.showSeveralUsersWaitingRoomDialog(for: userHandles.count, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible) { [weak self] in
-            self?.callUseCase.allowUsersJoinCall(call, users: userHandles)
+            guard let self else { return}
+            callUseCase.allowUsersJoinCall(call, users: userHandles)
+            if !isCallUIVisible {
+                showParticipantsJoinedMessage(for: userHandles, in: chatRoom)
+            }
         } seeWaitingRoomAction: {
             // Waiting Room UI will be implemented in next tickets
         }
@@ -141,8 +148,27 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func showConfirmDenyWaitingRoomAlert(for username: String, userHandle: UInt64, call: CallEntity) {
-        router.showConfirmDenyAction(for: username, isCallUIVisible: isCallUIVisible, confirmDenyAction: { [weak self] in
+        router.showConfirmDenyAction(for: username, isCallUIVisible: isCallUIVisible) { [weak self] in
             self?.callUseCase.kickUsersFromCall(call, users: [userHandle])
-        })
+        } cancelDenyAction: { [weak self] in
+            self?.manageWaitingRoom(for: call)
+        }
+    }
+    
+    private func showParticipantsJoinedMessage(for userHandles: [UInt64], in chatRoom: ChatRoomEntity) {
+        guard let firstUserHandle = userHandles[safe: 0], let secondUserHandle = userHandles[safe: 1] else { return }
+        Task { @MainActor in
+            do {
+                let firstUsername = try await chatRoomUserUseCase.userDisplayName(forPeerId: firstUserHandle, in: chatRoom)
+                if userHandles.count == 2 {
+                    let secondUsername = try await chatRoomUserUseCase.userDisplayName(forPeerId: secondUserHandle, in: chatRoom)
+                    router.showParticipantsJoinedTheCall(message: Strings.Localizable.Meetings.Notification.twoUsersJoined(firstUsername, secondUsername))
+                } else {
+                    router.showParticipantsJoinedTheCall(message: Strings.Localizable.Meetings.Notification.moreThanTwoUsersLeft(firstUsername, userHandles.count - 1))
+                }
+            } catch {
+                MEGALogError("Failed to get username for participant(s) in call waiting room")
+            }
+        }
     }
 }

@@ -32,14 +32,15 @@ final class CallWaitingRoomUsersDialog {
     func showAlertForConfirmDeny(isCallUIVisible: Bool,
                                  named: String,
                                  presenterViewController: UIViewController,
-                                 confirmAction: @escaping () -> Void) {
+                                 confirmAction: @escaping () -> Void,
+                                 cancelAction: @escaping () -> Void) {
         presenter = presenterViewController
         guard callWaitingRoomDialogViewController != nil else {
-            prepareAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: named, confirmAction: confirmAction)
+            prepareAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: named, confirmAction: confirmAction, cancelAction: cancelAction)
             return
         }
         dismiss(animated: false) { [weak self] in
-            self?.prepareAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: named, confirmAction: confirmAction)
+            self?.prepareAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: named, confirmAction: confirmAction, cancelAction: cancelAction)
         }
     }
     
@@ -74,12 +75,12 @@ final class CallWaitingRoomUsersDialog {
         message = message
             .replacingOccurrences(of: "[UserName]", with: named)
         
-        let callWaitingRoomDialogViewController = createDialog(isCallUIVisible: isCallUIVisible,
-                                                               message: message,
-                                                               admitTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admit,
-                                                               denyTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.deny,
-                                                               admitAction: admitUserAction,
-                                                               denyAction: denyUserAction)
+        let callWaitingRoomDialogViewController =  UIAlertController.createAlert(forceDarkMode: isCallUIVisible,
+                                                                                  message: message,
+                                                                                  preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admit,
+                                                                                  secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.deny,
+                                                                                  preferredAction: admitUserAction,
+                                                                                  secondaryAction: denyUserAction)
         
         self.callWaitingRoomDialogViewController = callWaitingRoomDialogViewController
         show(callWaitingRoomDialogViewController)
@@ -87,14 +88,14 @@ final class CallWaitingRoomUsersDialog {
     
     private func prepareAlertForConfirmDeny(isCallUIVisible: Bool,
                                             named: String,
-                                            confirmAction: @escaping () -> Void) {
-        let callWaitingRoomDialogViewController = createDialog(isCallUIVisible: isCallUIVisible,
-                                                               message: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Message.denyAccess(named),
-                                                               admitTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.confirmDeny,
-                                                               denyTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.cancel,
-                                                               admitAction: confirmAction) { [weak self] in
-            self?.dismiss(animated: true)
-        }
+                                            confirmAction: @escaping () -> Void,
+                                            cancelAction: @escaping () -> Void) {
+        let callWaitingRoomDialogViewController =  UIAlertController.createAlert(forceDarkMode: isCallUIVisible,
+                                                                                  message: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Message.denyAccess(named),
+                                                                                  preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.confirmDeny,
+                                                                                  secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.cancel,
+                                                                                  preferredAction: confirmAction,
+                                                                                  secondaryAction: cancelAction)
         
         self.callWaitingRoomDialogViewController = callWaitingRoomDialogViewController
         show(callWaitingRoomDialogViewController)
@@ -109,12 +110,12 @@ final class CallWaitingRoomUsersDialog {
         Strings.Localizable.Chat.Call.WaitingRoom.Alert.message(count) :
         Strings.Localizable.Chat.Call.WaitingRoom.Alert.OutsideCallUI.message(count)
             .replacingOccurrences(of: "[MeetingName]", with: chatName)
-        let callWaitingRoomDialogViewController = createDialog(isCallUIVisible: isCallUIVisible,
-                                                               message: message,
-                                                               admitTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll,
-                                                               denyTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.seeWaitingRoom,
-                                                               admitAction: admitAllAction,
-                                                               denyAction: seeWaitingRoomAction)
+        let callWaitingRoomDialogViewController = UIAlertController.createAlert(forceDarkMode: isCallUIVisible,
+                                                                                 message: message,
+                                                                                 preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.seeWaitingRoom,
+                                                                                 secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll,
+                                                                                 preferredAction: seeWaitingRoomAction,
+                                                                                 secondaryAction: admitAllAction)
         
         self.callWaitingRoomDialogViewController = callWaitingRoomDialogViewController
         show(callWaitingRoomDialogViewController)
@@ -122,42 +123,5 @@ final class CallWaitingRoomUsersDialog {
     
     private func show(_ alert: UIAlertController, animated: Bool = true) {
         presenter?.present(alert, animated: animated)
-    }
-    
-    private func createDialog(isCallUIVisible: Bool,
-                              message: String,
-                              admitTitle: String,
-                              denyTitle: String,
-                              admitAction: @escaping () -> Void,
-                              denyAction: @escaping () -> Void) -> UIAlertController {
-        let alert = UIAlertController(
-            title: nil,
-            message: message,
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(
-            UIAlertAction(
-                title: denyTitle,
-                style: .default
-            ) { _ in
-                denyAction()
-            }
-        )
-        
-        alert.addAction(
-            UIAlertAction(
-                title: admitTitle,
-                style: .default
-            ) { _ in
-                admitAction()
-            }
-        )
-        
-        if isCallUIVisible {
-            alert.overrideUserInterfaceStyle = .dark
-        }
-        
-        return alert
     }
 }
