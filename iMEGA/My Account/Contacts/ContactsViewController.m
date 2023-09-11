@@ -1010,8 +1010,7 @@
     contactPickerController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
     contactPickerController.delegate = self;
 
-    MEGANavigationController *contactsPickerNavigation = [[MEGANavigationController alloc] initWithRootViewController:contactPickerController];
-    [self presentViewController:contactsPickerNavigation animated:YES completion:nil];
+    [self presentViewController:contactPickerController animated:YES completion:nil];
 }
 
 - (void)selectUser:(MEGAUser *)user {

@@ -209,8 +209,7 @@ class EnterEmailViewController: UIViewController {
     }
     
     private func showContactsPicker() {
-        let contactsPickerNavigation = MEGANavigationController(rootViewController: contactPickerViewController)
-        present(contactsPickerNavigation, animated: true, completion: nil)
+        present(contactPickerViewController, animated: true, completion: nil)
     }
 }
 
