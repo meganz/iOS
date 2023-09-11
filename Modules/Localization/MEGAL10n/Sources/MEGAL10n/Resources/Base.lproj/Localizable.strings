@@ -3712,3 +3712,11 @@
 "chat.call.waitingRoom.alert.button.cancel"="Cancel";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="Open in MEGA";
+/* Filter name for searching on the home screen*/
+"home.search.filter.docs" = "Docs";
+/* Filter name for searching on the home screen*/
+"home.search.filter.images" = "Images";
+/* Filter name for searching on the home screen*/
+"home.search.filter.audio" = "Audio";
+/* Filter name for searching on the home screen*/
+"home.search.filter.video" = "Video";

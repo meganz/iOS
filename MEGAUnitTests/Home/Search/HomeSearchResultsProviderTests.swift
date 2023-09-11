@@ -14,6 +14,7 @@ class HomeSearchProviderTests: XCTestCase {
         
         init(
             _ testCase: XCTestCase,
+            rootNode: NodeEntity? = nil,
             nodes: [NodeEntity] = [],
             childrenNodes: [NodeEntity] = [],
             file: StaticString = #filePath,
@@ -29,6 +30,7 @@ class HomeSearchProviderTests: XCTestCase {
             )
             
             nodeRepo = MockNodeRepository(
+                nodeRoot: rootNode,
                 childrenNodes: childrenNodes
             )
             
@@ -50,7 +52,7 @@ class HomeSearchProviderTests: XCTestCase {
         ])
 
         let searchResults = try await harness.sut.search(
-            queryRequest: .query("node 1") // we should match `node 1` and `node 10`
+            queryRequest: .userSupplied(.query("node 1")) // we should match `node 1` and `node 10`
         )
 
         XCTAssertEqual(searchResults.results.map(\.id), [1, 10])
@@ -60,17 +62,28 @@ class HomeSearchProviderTests: XCTestCase {
         let harness = Harness(self)
 
         let searchResults = try await harness.sut.search(
-            queryRequest: .query("node 1")
+            queryRequest: .userSupplied(.query("node 1"))
         )
 
         XCTAssertEqual(searchResults.results, [])
     }
     
-    func testSearch_whenEmptyQuery_returnsEmptyResults() async throws {
+    func testSearch_whenInitialQuery_returnsContentsOfRoot() async throws {
         let root = NodeEntity(handle: 1)
-        let child = NodeEntity(handle: 2)
-        let harness = Harness(self, nodes: [root], childrenNodes: [child])
-        let response = try await harness.sut.search(queryRequest: .query(""))
-        XCTAssertEqual(response.results, [])
+        let children = [NodeEntity(handle: 2), NodeEntity(handle: 3), NodeEntity(handle: 4)]
+        
+        let harness = Harness(self, rootNode: root, childrenNodes: children)
+        
+        let response = try await harness.sut.search(queryRequest: .initial)
+        XCTAssertEqual(response.results.map(\.id), [2, 3, 4])
+    }
+    
+    func testSearch_whenEmptyQuery_returnsContentsOfRoot() async throws {
+        let root = NodeEntity(handle: 1)
+        let children = [NodeEntity(handle: 6), NodeEntity(handle: 7), NodeEntity(handle: 8)]
+        let harness = Harness(self, rootNode: root, childrenNodes: children)
+        
+        let response = try await harness.sut.search(queryRequest: .userSupplied(.query("")))
+        XCTAssertEqual(response.results.map(\.id), [6, 7, 8])
     }
 }

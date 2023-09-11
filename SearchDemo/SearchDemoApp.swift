@@ -20,7 +20,15 @@ struct ContentView: View {
         @State var text: String = ""
         @StateObject var viewModel = SearchResultsViewModel(
             resultsProvider: NonProductionTestResultsProvider(),
-            bridge: .init(selection: { _ in }, context: { _, _ in })
+            bridge: .init(selection: { _ in }, context: { _, _ in }),
+            config: .init(
+                chipAssets: .init(
+                    selectedForeground: .white,
+                    selectedBackground: .green,
+                    normalForeground: .black,
+                    normalBackground: .gray
+                )
+            )
         )
         var body: some View {
             SearchResultsView(

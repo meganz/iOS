@@ -1,7 +1,9 @@
 import MEGADomain
+import MEGAL10n
 import MEGASwift
 import Search
 
+/// abstraction into a search results 
 final class HomeSearchResultsProvider: SearchResultsProviding {
     private let searchFileUseCase: any SearchFileUseCaseProtocol
     private let nodeDetailUseCase: any NodeDetailUseCaseProtocol
@@ -17,13 +19,30 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.nodeRepository = nodeRepository
     }
     
-    func search(queryRequest: SearchQueryEntity) async throws -> SearchResultsEntity {
+    func search(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
         // the requirement is to return children/contents of the
         // folder being searched when query is empty, no chips etc
-        if queryRequest.isRootDefaultPreviewRequest {
+        
+        switch queryRequest {
+        case .initial:
             return await childrenOfRoot()
+        case .userSupplied(let query):
+            if shouldShowRoot(for: query) {
+                return await childrenOfRoot()
+            } else {
+                return try await fullSearch(with: query)
+            }
         }
-        return try await fullSearch(with: queryRequest)
+    }
+    
+    private func shouldShowRoot(for queryRequest: SearchQueryEntity) -> Bool {
+        if queryRequest == .initialRootQuery {
+            return true
+        }
+        if queryRequest.query == "" && queryRequest.chips == [] {
+            return true
+        }
+        return false
     }
     
     @MainActor
@@ -34,14 +53,18 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         let children = await nodeRepository.children(of: root)
         return .init(
             results: children.map { self.mapNodeToSearchResult($0) },
-            chips: []
+            availableChips: SearchChipEntity.allChips,
+            appliedChips: []
         )
     }
     
     func fullSearch(with queryRequest: SearchQueryEntity) async throws -> SearchResultsEntity {
-        try await withAsyncThrowingValue(in: { completion in
+        // SDK does not support empty query and MEGANodeFormatType.unknown
+        assert(!(queryRequest.query == "" && queryRequest.chips == []))
+        return try await withAsyncThrowingValue(in: { completion in
             searchFileUseCase.searchFiles(
                 withName: queryRequest.query,
+                nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
                 searchPath: .root,
                 completion: { result in
                     completion(
@@ -49,13 +72,38 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
                             .init(
                                 results: result.map { self.mapNodeToSearchResult($0) },
                                 // will implement that in FM-797
-                                chips: []
+                                availableChips: SearchChipEntity.allChips,
+                                appliedChips: self.chipsFor(query: queryRequest)
                             )
                         )
                     )
                 }
             )
         })
+    }
+    
+    private func chipsFor(query: SearchQueryEntity) -> [SearchChipEntity] {
+        SearchChipEntity.allChips.filter {
+            query.chips.contains($0)
+        }
+    }
+    
+    private func nodeFormatFrom(chip: SearchChipEntity?) -> MEGANodeFormatType {
+        guard let chip else {
+            return .unknown
+        }
+        let found = SearchChipEntity.allChips.first {
+            $0.id == chip.id
+        }
+        
+        guard
+            let found,
+            let formatType = MEGANodeFormatType(rawValue: found.id)
+        else {
+            return .unknown
+        }
+        
+        return formatType
     }
     
     private func mapNodeToSearchResult(_ node: NodeEntity) -> SearchResult {
@@ -82,17 +130,54 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     }
 }
 
+extension SearchChipEntity {
+    public static let images = SearchChipEntity(
+        id: ChipId(MEGANodeFormatType.photo.rawValue),
+        title: Strings.Localizable.Home.Search.Filter.images,
+        icon: nil
+    )
+    public static let docs = SearchChipEntity(
+        id: ChipId(MEGANodeFormatType.document.rawValue),
+        title: Strings.Localizable.Home.Search.Filter.docs,
+        icon: nil
+    )
+    public static let audio = SearchChipEntity(
+        id: ChipId(MEGANodeFormatType.audio.rawValue),
+        title: Strings.Localizable.Home.Search.Filter.audio,
+        icon: nil
+    )
+    public static let video = SearchChipEntity(
+        id: ChipId(MEGANodeFormatType.video.rawValue),
+        title: Strings.Localizable.Home.Search.Filter.video,
+        icon: nil
+    )
+    
+    public static var allChips: [Self] {
+        [
+            .images,
+            .docs,
+            .audio,
+            .video
+        ]
+    }
+}
+
 extension SearchQueryEntity {
-    var isRootDefaultPreviewRequest: Bool {
-        query == "" &&
-        chips == [] &&
-        sorting == .automatic &&
-        mode == .home
+    
+    /// this checks if we are doing initial search query (or empty search query ) and should results contents of the home folder
+    public var isRootDefaultPreviewRequest: Bool {
+        self == .initialRootQuery
+    }
+    /// default search query performed on the appear of the screen results screen
+    public static var initialRootQuery: Self {
+        SearchQueryEntity(query: "", sorting: .automatic, mode: .home, chips: [])
     }
 }
 
 extension SearchResultsEntity {
-    static var empty: Self {
-        .init(results: [], chips: [])
+    /// used as results return when no root folder of the account is found
+    ///  we try to get root folder when performing initial or empty search query
+    public static var empty: Self {
+        .init(results: [], availableChips: [], appliedChips: [])
     }
 }

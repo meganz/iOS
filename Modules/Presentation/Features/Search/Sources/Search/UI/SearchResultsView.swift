@@ -9,33 +9,51 @@ public struct SearchResultsView: View {
     @StateObject var viewModel: SearchResultsViewModel
 
     public var body: some View {
-        
-        ScrollView {
-            LazyVStack {
-                ForEach(viewModel.listItems) { item in
-                    SearchResultRowView(viewModel: item)
-                }
-            }
-            .overlay(
-                emptyView
-            )
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .topLeading
-            )
+        VStack(spacing: .zero) {
+            chipsView
+            content
         }
         .padding(.bottom, viewModel.bottomInset)
         .taskForiOS14 {
-            viewModel.task()
+            await viewModel.task()
         }
     }
     
-    @ViewBuilder
-    var emptyView: some View {
-        // empty state handling will be added
-        // in the FM-800
+    private var chipsView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(viewModel.chipsItems) { chip in
+                    PillView(viewModel: chip.pill)
+                        .onTapGesture {
+                            Task {
+                                await chip.select()
+                            }
+                        }
+                }
+                Spacer()
+            }
+        }
+        .padding([.leading, .trailing, .top, .bottom])
+    }
+    
+    private var emptyView: some View {
+        // placeholder for [FM-800]
         EmptyView()
+    }
+    
+    private var content: some View {
+        VStack(spacing: .zero) {
+            ScrollView {
+                LazyVStack {
+                    ForEach(viewModel.listItems) { item in
+                        SearchResultRowView(viewModel: item)
+                    }
+                }
+                .overlay(
+                    emptyView
+                )
+            }
+        }
     }
 }
 
@@ -46,7 +64,16 @@ struct SearchResultsViewPreviews: PreviewProvider {
         @State var text: String = ""
         @StateObject var viewModel = SearchResultsViewModel(
             resultsProvider: NonProductionTestResultsProvider(),
-            bridge: .init(selection: { _ in }, context: {_, _ in })
+            bridge: .init(selection: { _ in }, context: {_, _ in }),
+            config: .init(
+                chipAssets: .init(
+                    selectedForeground: .white,
+                    selectedBackground: .green,
+                    normalForeground: .black,
+                    normalBackground: .gray
+                )
+            )
+            
         )
         var body: some View {
             SearchResultsView(

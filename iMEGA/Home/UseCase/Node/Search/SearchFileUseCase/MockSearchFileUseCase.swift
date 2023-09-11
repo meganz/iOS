@@ -14,6 +14,7 @@ final class MockSearchFileUseCase: SearchFileUseCaseProtocol {
 
     func searchFiles(
         withName name: String,
+        nodeFormat: MEGANodeFormatType?,
         searchPath: SearchFileRootPath,
         completion: @escaping ([NodeEntity]) -> Void
     ) {

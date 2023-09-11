@@ -1,4 +1,4 @@
-/// Represents a single search request
+/// Represents a single search request with some properties
 public struct SearchQueryEntity: Equatable {
     public let query: String
     public let sorting: SortOrderEntity

@@ -1,17 +1,5 @@
 import Foundation
 
-/// Represents a single results of search action
-/// still deciding which one to use
-/// protocol or struct
-public protocol SearchResultProtocol: Identifiable {
-    var id: ResultId { get }
-    var title: String { get }
-    var description: String { get }
-    var properties: [Property] { get }
-    func loadThumbnailImageData() async throws -> Data
-    var type: ResultType { get }
-}
-
 public struct SearchResult: Identifiable, Sendable {
     public let id: ResultId
     public let title: String
