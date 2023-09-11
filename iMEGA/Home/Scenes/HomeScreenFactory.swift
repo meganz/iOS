@@ -153,7 +153,7 @@ final class HomeScreenFactory: NSObject {
             }
         )
         
-        bridge.didInputTextTrampoline = { [weak searchBridge] text in
+        bridge.didInputTextTrampoline = { [weak searchBridge]text in
             searchBridge?.queryChanged(text)
         }
         
@@ -175,7 +175,8 @@ final class HomeScreenFactory: NSObject {
                 nodeDetailUseCase: makeNodeDetailUseCase(),
                 nodeRepository: makeNodeRepo()
             ),
-            bridge: searchBridge
+            bridge: searchBridge,
+            config: .searchConfig
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
     }
@@ -258,5 +259,18 @@ final class HomeScreenFactory: NSObject {
         }
         
         return homeSearchResultViewController
+    }
+}
+
+extension SearchConfig {
+    static var searchConfig: Self {
+        .init(
+            chipAssets: .init(
+                selectedForeground: .white,
+                selectedBackground: Colors.Photos.filterTypeSelectionBackground.swiftUIColor,
+                normalForeground: Colors.Photos.filterNormalTextForeground.swiftUIColor,
+                normalBackground: Colors.Photos.filterTypeNormalBackground.swiftUIColor
+            )
+        )
     }
 }

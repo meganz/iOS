@@ -19,13 +19,17 @@ let package = Package(
         
     ],
     dependencies: [
+        .package(path: "../../../Infrastructure/MEGASwift"),
+        .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../UI/MEGASwiftUI")
     ],
     targets: [
         .target(
             name: "Search",
             dependencies: [
-                "MEGASwiftUI"
+                "MEGASwiftUI",
+                "MEGAL10n",
+                "MEGASwift"
             ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         ),

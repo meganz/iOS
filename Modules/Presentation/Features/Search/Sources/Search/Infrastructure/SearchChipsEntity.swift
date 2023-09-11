@@ -30,18 +30,4 @@ public struct SearchChipEntity: Equatable, Sendable {
     }
 }
 
-public struct ChipId: Equatable, Sendable {
-    let id: String
-}
-
-extension ChipId: ExpressibleByStringLiteral {
-    public init(stringLiteral value: String) {
-        id = value
-    }
-}
-
-extension ChipId: CustomStringConvertible {
-    public var description: String {
-        id
-    }
-}
+public typealias ChipId = Int

@@ -3,13 +3,22 @@
 ///  and collection of chips (those are static but have potential be dynamically adjust depending on the context)
 public struct SearchResultsEntity: Sendable {
     public let results: [SearchResult]
-    public let chips: [SearchChipEntity]
+    public let availableChips: [SearchChipEntity] // represents all chips that can be selected
+    public let appliedChips: [SearchChipEntity] // which chips where applied in the given results
     
     public init(
         results: [SearchResult],
-        chips: [SearchChipEntity]
+        availableChips: [SearchChipEntity],
+        appliedChips: [SearchChipEntity]
     ) {
         self.results = results
-        self.chips = chips
+        self.availableChips = availableChips
+        self.appliedChips = appliedChips
+    }
+}
+
+extension SearchResultsEntity {
+    func isApplied(chip: SearchChipEntity) -> Bool {
+        appliedChips.map(\.id).contains(chip.id)
     }
 }

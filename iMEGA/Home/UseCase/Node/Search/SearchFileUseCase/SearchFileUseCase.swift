@@ -11,6 +11,7 @@ protocol SearchFileUseCaseProtocol {
 
     func searchFiles(
         withName name: String,
+        nodeFormat: MEGANodeFormatType?,
         searchPath: SearchFileRootPath,
         completion: @escaping ([NodeEntity]) -> Void
     )
@@ -46,6 +47,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
 
     func searchFiles(
         withName fileName: String,
+        nodeFormat: MEGANodeFormatType?,
         searchPath: SearchFileRootPath,
         completion: @escaping ([NodeEntity]) -> Void
     ) {
@@ -54,6 +56,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
 
             self.startSearchingFiles(
                 withName: fileName,
+                nodeFormat: nodeFormat ?? .unknown,
                 searchPath: searchPath,
                 completion: completion
             )
@@ -62,15 +65,16 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
 
     private func startSearchingFiles(
         withName fileName: String,
+        nodeFormat: MEGANodeFormatType,
         searchPath: SearchFileRootPath,
         completion: @escaping ([NodeEntity]) -> Void
     ) {
         cancelAction?()
         switch searchPath {
         case .root:
-            return cancelAction = nodeSearchClient.search(fileName, nil, completion)
+            return cancelAction = nodeSearchClient.search(fileName, nodeFormat, nil, completion)
         case .specific(let searchRootHandle):
-            return cancelAction = nodeSearchClient.search(fileName, searchRootHandle, completion)
+            return cancelAction = nodeSearchClient.search(fileName, nodeFormat, searchRootHandle, completion)
         }
     }
 

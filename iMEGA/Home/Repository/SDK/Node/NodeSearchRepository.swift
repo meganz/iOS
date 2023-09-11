@@ -5,6 +5,7 @@ struct NodeSearchRepository {
 
     var search: (
         _ filename: String,
+        _ nodeFormat: MEGANodeFormatType,
         _ rootNodeHandle: HandleEntity?,
         _ completion: (@escaping ([NodeEntity]) -> Void)
     ) -> () -> Void
@@ -15,14 +16,14 @@ struct NodeSearchRepository {
 extension NodeSearchRepository {
 
     static var live: Self {
-        let sdk  = MEGASdkManager.sharedMEGASdk()
+        let sdk  = MEGASdk.shared
 
         let searchQueue = OperationQueue()
         searchQueue.name = "searchQueue"
         searchQueue.qualityOfService = .userInteractive
         
         return Self(
-            search: { (searchText: String, nodeHandle: HandleEntity?, completionAction: (@escaping ([NodeEntity]) -> Void)) -> () -> Void in
+            search: { (searchText: String, nodeFormat: MEGANodeFormatType?, nodeHandle: HandleEntity?, completionAction: (@escaping ([NodeEntity]) -> Void)) -> () -> Void in
                 let searchRootNode: MEGANode?
                 if let handle = nodeHandle {
                     searchRootNode = sdk.node(forHandle: handle)
@@ -40,7 +41,9 @@ extension NodeSearchRepository {
                 let searchOperation = SearchOperation(
                     parentNode: rootNode,
                     text: searchText,
-                    cancelToken: cancelToken
+                    cancelToken: cancelToken,
+                    sortOrderType: .creationAsc,
+                    nodeFormatType: nodeFormat ?? MEGANodeFormatType.unknown
                 ) { (foundNodes, _) -> Void in
                     guard let foundNodes = foundNodes else {
                         completionAction([])

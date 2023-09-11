@@ -2,17 +2,17 @@ import Search
 
 public class MockSearchResultsProviding: SearchResultsProviding {
     
-    public var passedInQueries: [SearchQueryEntity] = []
-    public var resultFactory: (_ query: SearchQueryEntity) async throws -> SearchResultsEntity
+    public var passedInQueries: [SearchQuery] = []
+    public var resultFactory: (_ query: SearchQuery) async throws -> SearchResultsEntity
     
     public init() {
         resultFactory = { _ in
-            .defaultTestResult
+            .resultWithNoItemsAndSingleChip
         }
     }
     
     public func search(
-        queryRequest: SearchQueryEntity
+        queryRequest: SearchQuery
     ) async throws -> SearchResultsEntity {
         passedInQueries.append(queryRequest)
         return try await resultFactory(queryRequest)
@@ -20,16 +20,24 @@ public class MockSearchResultsProviding: SearchResultsProviding {
 }
 
 extension SearchResultsEntity {
-    static var defaultTestResult: Self {
+    public static var resultWithSingleItemAndChip: Self {
         .init(
             results: [.resultWith(id: 1)],
-            chips: [.chipWith(id: "2")]
+            availableChips: [.chipWith(id: 2)],
+            appliedChips: []
+        )
+    }
+    public static var resultWithNoItemsAndSingleChip: Self {
+        .init(
+            results: [],
+            availableChips: [.chipWith(id: 2)],
+            appliedChips: []
         )
     }
 }
 
 extension SearchChipEntity {
-    static func chipWith(id: ChipId) -> Self {
+    public static func chipWith(id: ChipId) -> Self {
         .init(
             id: id,
             title: "chip_\(id)",
