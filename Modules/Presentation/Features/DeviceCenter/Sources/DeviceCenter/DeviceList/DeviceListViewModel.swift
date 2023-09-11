@@ -16,6 +16,8 @@ public final class DeviceListViewModel: ObservableObject {
     }
     private var cancellable: Set<AnyCancellable> = []
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
+    private var searchTextPublisher = PassthroughSubject<String, Never>()
+    private var searchCancellable: AnyCancellable?
     private let updateInterval: UInt64
     private var currentDeviceId: String?
     private let currentDeviceUUID: String
@@ -35,11 +37,7 @@ public final class DeviceListViewModel: ObservableObject {
     @Published private(set) var emptyStateAssets: EmptyStateAssets
     @Published private(set) var searchAssets: SearchAssets
     @Published var isSearchActive: Bool
-    @Published var searchText: String {
-        didSet {
-            filterDevices()
-        }
-    }
+    @Published var searchText: String = ""
     
     init(
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
@@ -67,8 +65,17 @@ public final class DeviceListViewModel: ObservableObject {
         self.searchText = ""
         self.currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
         
+        setupSearchCancellable()
         setupDevicesUpdateSubscription()
         loadUserDevices()
+    }
+    
+    private func setupSearchCancellable() {
+        searchCancellable = $searchText
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.filterDevices()
+            }
     }
     
     private func loadUserDevices() {

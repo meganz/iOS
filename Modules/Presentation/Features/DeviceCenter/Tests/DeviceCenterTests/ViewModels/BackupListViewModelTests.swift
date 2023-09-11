@@ -8,7 +8,6 @@ import XCTest
 final class BackupListViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
     let mockAuxDeviceId = "2"
-    let devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
     
     func test_loadAssets_matchesBackupStatuses() {
         var backup = BackupEntity(
@@ -43,28 +42,28 @@ final class BackupListViewModelTests: XCTestCase {
         XCTAssertEqual(foundBackupNames, expectedBackupNames)
     }
     
-    func testFilterBackups_withSearchText_matchingPartialDeviceName() async {
+    func testFilterBackups_withSearchText_matchingPartialBackupName() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "backup")
         
-        let expectedDeviceNames = ["backup1", "backup2", "backup3"]
+        let expectedBackupNames = ["backup1", "backup2", "backup3"]
         
         await fulfillment(of: [expectation], timeout: 2.0)
         
-        let foundDeviceNames = viewModel.filteredBackups.map(\.name)
-        XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
+        let foundBackupNames = viewModel.filteredBackups.map(\.name)
+        XCTAssertEqual(expectedBackupNames, foundBackupNames)
         
         cancellables.forEach { $0.cancel() }
     }
 
-    func testFilterBackups_withSearchText_matchingDeviceName() async {
+    func testFilterBackups_withSearchText_matchingBackupName() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "backup1")
         
-        let expectedDeviceNames = ["backup1"]
+        let expectedBackupNames = ["backup1"]
         
         await fulfillment(of: [expectation], timeout: 2.0)
         
-        let foundDeviceNames = viewModel.filteredBackups.map(\.name)
-        XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
+        let foundBackupNames = viewModel.filteredBackups.map(\.name)
+        XCTAssertEqual(expectedBackupNames, foundBackupNames)
         
         cancellables.forEach { $0.cancel() }
     }
@@ -349,7 +348,9 @@ final class BackupListViewModelTests: XCTestCase {
         
         viewModel.$filteredBackups
             .sink { _ in
-                expectation.fulfill()
+                if viewModel.isSearchActive {
+                    expectation.fulfill()
+                }
             }
             .store(in: &cancellables)
         
@@ -369,7 +370,7 @@ final class BackupListViewModelTests: XCTestCase {
         let backupTypeEntities = backupTypeEntities()
         let sut = BackupListViewModel(
             selectedDeviceId: currentDeviceId,
-            devicesUpdatePublisher: devicesUpdatePublisher,
+            devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
             router: MockBackupListViewRouter(),
