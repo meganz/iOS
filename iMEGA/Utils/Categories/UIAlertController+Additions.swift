@@ -28,4 +28,43 @@ extension UIAlertController {
         
         return alert
     }
+    
+    class func createAlert(forceDarkMode: Bool,
+                           message: String,
+                           preferredActionTitle: String,
+                           secondaryActionTitle: String,
+                           preferredAction: @escaping () -> Void,
+                           secondaryAction: @escaping () -> Void) -> UIAlertController {
+        let alert = UIAlertController(
+            title: nil,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(
+            UIAlertAction(
+                title: secondaryActionTitle,
+                style: .default
+            ) { _ in
+                secondaryAction()
+            }
+        )
+        
+        let preferredAction = UIAlertAction(
+            title: preferredActionTitle,
+            style: .default
+        ) { _ in
+            preferredAction()
+        }
+        
+        alert.addAction(preferredAction)
+        
+        alert.preferredAction = preferredAction
+        
+        if forceDarkMode {
+            alert.overrideUserInterfaceStyle = .dark
+        }
+        
+        return alert
+    }
 }

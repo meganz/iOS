@@ -31,9 +31,13 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         callWaitingRoomDialog.dismiss(animated: animated)
     }
     
-    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void) {
+    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void) {
         guard let presenter = baseViewController.presenterViewController() else { return }
 
-        callWaitingRoomDialog.showAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: username, presenterViewController: presenter, confirmAction: confirmDenyAction)
+        callWaitingRoomDialog.showAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: username, presenterViewController: presenter, confirmAction: confirmDenyAction, cancelAction: cancelDenyAction)
+    }
+    
+    func showParticipantsJoinedTheCall(message: String) {
+        SVProgressHUD.showSuccess(withStatus: message)
     }
 }
