@@ -62,6 +62,7 @@ final class DeviceListViewRouterTests: XCTestCase {
         
         let sut = DeviceListViewRouter(
             navigationController: mockPresenter,
+            deviceCenterBridge: DeviceCenterBridge(),
             deviceCenterUseCase: deviceCenterUseCase,
             deviceCenterAssets: deviceListAssets
         )

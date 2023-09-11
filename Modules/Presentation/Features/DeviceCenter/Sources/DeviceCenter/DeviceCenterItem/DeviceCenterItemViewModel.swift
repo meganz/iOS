@@ -3,6 +3,7 @@ import SwiftUI
 
 public class DeviceCenterItemViewModel: ObservableObject, Identifiable {    
     private let router: (any DeviceListRouting)?
+    private let deviceCenterBridge: DeviceCenterBridge
     private var itemType: DeviceCenterItemType
     var assets: ItemAssets
     var availableActions: [DeviceCenterAction]
@@ -16,10 +17,12 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     @Published var backupPercentage: String = ""
     
     init(router: (any DeviceListRouting)? = nil,
+         deviceCenterBridge: DeviceCenterBridge,
          itemType: DeviceCenterItemType,
          assets: ItemAssets,
          availableActions: [DeviceCenterAction]) {
         self.router = router
+        self.deviceCenterBridge = deviceCenterBridge
         self.itemType = itemType
         self.assets = assets
         self.availableActions = availableActions
@@ -69,6 +72,23 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         guard let router else { return }
         if case let .device(device) = itemType {
             router.showDeviceBackups(device)
+        }
+    }
+    
+    func executeAction(_ type: DeviceCenterActionType) {
+        switch itemType {
+        case .backup:
+            switch type {
+            case .cameraUploads:
+                deviceCenterBridge.cameraUploadActionTapped()
+            default: break
+            }
+        case .device:
+            switch type {
+            case .cameraUploads:
+                deviceCenterBridge.cameraUploadActionTapped()
+            default: break
+            }
         }
     }
 }

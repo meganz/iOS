@@ -37,6 +37,7 @@ public struct ActionSheetContentView<HeaderView: View>: View {
 }
 
 public struct ActionSheetButton: View, Hashable {
+    @Environment(\.presentationMode) var presentationMode
     var icon: String
     var title: String
     var subtitle: String?
@@ -61,28 +62,30 @@ public struct ActionSheetButton: View, Hashable {
 
     public var body: some View {
         VStack(spacing: 0) {
-            Button(action: action) {
-                HStack {
-                    Image(icon)
-                        .frame(width: 28, height: 28)
-                        .padding(16)
-                    
-                    Text(title)
+            HStack {
+                Image(icon)
+                    .frame(width: 28, height: 28)
+                    .padding(16)
+                
+                Text(title)
+                    .font(.body)
+                
+                Spacer()
+                if let subtitle = subtitle {
+                    Text(subtitle)
                         .font(.body)
                     
-                    Spacer()
-                    if let subtitle = subtitle {
-                        Text(subtitle)
-                            .font(.body)
-                        
-                        Image("standardDisclosureIndicator")
-                            .padding([.trailing], 16)
-                            .padding([.leading], 5)
-                    }
+                    Image("standardDisclosureIndicator")
+                        .padding([.trailing], 16)
+                        .padding([.leading], 5)
                 }
-                .frame(maxWidth: .infinity)
             }
-            .buttonStyle(PlainButtonStyle())
+            .frame(maxWidth: .infinity)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                action()
+                presentationMode.wrappedValue.dismiss()
+            }
             Divider()
                 .padding([.leading], 60)
         }

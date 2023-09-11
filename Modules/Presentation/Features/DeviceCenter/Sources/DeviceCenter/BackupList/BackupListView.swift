@@ -37,13 +37,15 @@ struct BackupListContentView: View {
                 }
             }.toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    DeviceCenterMenu(menuIconName: "moreList", menuOptions: viewModel.actionsForDevice())
+                    DeviceCenterMenu(viewModel: viewModel, menuIconName: "moreList", menuOptions: viewModel.actionsForDevice())
                 }
             }
     }
 }
 
 struct DeviceCenterMenu: View {
+    @ObservedObject var viewModel: BackupListViewModel
+    
     var title: String = ""
     let menuIconName: String
     let menuOptions: [DeviceCenterAction]
@@ -51,20 +53,20 @@ struct DeviceCenterMenu: View {
     var body: some View {
         Menu {
             ForEach(menuOptions.indices, id: \.self) { index in
-                let contextMenuOption = menuOptions[index]
+                let option = menuOptions[index]
                 
-                if contextMenuOption.type == .cameraUploads ||
-                    contextMenuOption.type == .sort {
+                if option.type == .cameraUploads ||
+                    option.type == .sort {
                     Divider()
                 }
 
-                if let subActions = contextMenuOption.subActions {
-                    DeviceCenterMenu(title: contextMenuOption.title, menuIconName: contextMenuOption.icon, menuOptions: subActions)
+                if let subActions = option.subActions {
+                    DeviceCenterMenu(viewModel: viewModel, title: option.title, menuIconName: option.icon, menuOptions: subActions)
                 } else {
                     Button {
-                        contextMenuOption.action()
+                        viewModel.executeDeviceAction(type: option.type)
                     } label: {
-                        Label(contextMenuOption.title, image: contextMenuOption.icon)
+                        Label(option.title, image: option.icon)
                     }
                 }
             }

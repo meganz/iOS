@@ -11,6 +11,7 @@ public protocol DeviceListRouting: Routing {
 public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
+    private let deviceCenterBridge: DeviceCenterBridge
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
     private let deviceCenterAssets: DeviceCenterAssets
@@ -18,10 +19,12 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     
     public init(
         navigationController: UINavigationController?,
+        deviceCenterBridge: DeviceCenterBridge,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
         deviceCenterAssets: DeviceCenterAssets
     ) {
         self.navigationController = navigationController
+        self.deviceCenterBridge = deviceCenterBridge
         self.deviceCenterAssets = deviceCenterAssets
         self.deviceCenterUseCase = deviceCenterUseCase
         
@@ -36,6 +39,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             router: self,
+            deviceCenterBridge: deviceCenterBridge,
             deviceCenterUseCase: deviceCenterUseCase,
             deviceListAssets: deviceCenterAssets.deviceListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
@@ -67,6 +71,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             backups: backups,
             deviceCenterUseCase: deviceCenterUseCase,
             navigationController: navigationController,
+            deviceCenterBridge: deviceCenterBridge,
             backupListAssets: deviceCenterAssets.backupListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
             searchAssets: deviceCenterAssets.searchAssets,

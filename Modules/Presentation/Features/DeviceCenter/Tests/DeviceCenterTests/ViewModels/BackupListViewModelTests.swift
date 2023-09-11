@@ -373,6 +373,7 @@ final class BackupListViewModelTests: XCTestCase {
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
             router: MockBackupListViewRouter(),
+            deviceCenterBridge: DeviceCenterBridge(),
             backups: backups,
             backupListAssets:
                 BackupListAssets(

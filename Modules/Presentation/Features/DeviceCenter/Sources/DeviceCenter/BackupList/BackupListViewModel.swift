@@ -6,6 +6,7 @@ public final class BackupListViewModel: ObservableObject {
     private let selectedDeviceId: String
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let router: any BackupListRouting
+    private let deviceCenterBridge: DeviceCenterBridge
     private let backupListAssets: BackupListAssets
     private let backupStatuses: [BackupStatus]
     private let deviceCenterActions: [DeviceCenterAction]
@@ -48,6 +49,7 @@ public final class BackupListViewModel: ObservableObject {
         updateInterval: UInt64,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
         router: any BackupListRouting,
+        deviceCenterBridge: DeviceCenterBridge,
         backups: [BackupEntity],
         backupListAssets: BackupListAssets,
         emptyStateAssets: EmptyStateAssets,
@@ -60,6 +62,7 @@ public final class BackupListViewModel: ObservableObject {
         self.updateInterval = updateInterval
         self.deviceCenterUseCase = deviceCenterUseCase
         self.router = router
+        self.deviceCenterBridge = deviceCenterBridge
         self.backups = backups
         self.backupListAssets = backupListAssets
         self.emptyStateAssets = emptyStateAssets
@@ -121,6 +124,7 @@ public final class BackupListViewModel: ObservableObject {
                 if let assets = loadAssets(for: backup),
                    let availableActions = actionsForBackup(backup) {
                     return DeviceCenterItemViewModel(
+                        deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
                         assets: assets,
                         availableActions: availableActions
@@ -176,6 +180,14 @@ public final class BackupListViewModel: ObservableObject {
         
         return actionTypes.compactMap { type in
             sortedAvailableActions[type]?.first
+        }
+    }
+    
+    func executeDeviceAction(type: DeviceCenterActionType) {
+        switch type {
+        case .cameraUploads:
+            deviceCenterBridge.cameraUploadActionTapped()
+        default: break
         }
     }
 }

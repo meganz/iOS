@@ -43,6 +43,7 @@ final class BackupListsViewRouterTests: XCTestCase {
             backups: [],
             deviceCenterUseCase: MockDeviceCenterUseCase(),
             navigationController: mockPresenter,
+            deviceCenterBridge: DeviceCenterBridge(),
             backupListAssets:
                 BackupListAssets(
                     backupTypes: [
