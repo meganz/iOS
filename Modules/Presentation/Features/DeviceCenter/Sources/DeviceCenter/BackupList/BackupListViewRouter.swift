@@ -9,6 +9,7 @@ public protocol BackupListRouting: Routing {
 public final class BackupListViewRouter: NSObject, BackupListRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
+    private let deviceCenterBridge: DeviceCenterBridge
     private let selectedDeviceId: String
     private let selectedDeviceName: String
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
@@ -29,6 +30,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         backups: [BackupEntity],
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
         navigationController: UINavigationController?,
+        deviceCenterBridge: DeviceCenterBridge,
         backupListAssets: BackupListAssets,
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
@@ -42,6 +44,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         self.backups = backups
         self.deviceCenterUseCase = deviceCenterUseCase
         self.navigationController = navigationController
+        self.deviceCenterBridge = deviceCenterBridge
         self.backupListAssets = backupListAssets
         self.emptyStateAssets = emptyStateAssets
         self.searchAssets = searchAssets
@@ -56,6 +59,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
             router: self,
+            deviceCenterBridge: deviceCenterBridge,
             backups: backups,
             backupListAssets: backupListAssets,
             emptyStateAssets: emptyStateAssets,

@@ -4,6 +4,7 @@ import SwiftUI
 
 public final class DeviceListViewModel: ObservableObject {
     private let router: any DeviceListRouting
+    private let deviceCenterBridge: DeviceCenterBridge
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let backupStatuses: [BackupStatus]
     private let deviceCenterActions: [DeviceCenterAction]
@@ -44,6 +45,7 @@ public final class DeviceListViewModel: ObservableObject {
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
         router: any DeviceListRouting,
+        deviceCenterBridge: DeviceCenterBridge,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
         deviceListAssets: DeviceListAssets,
         emptyStateAssets: EmptyStateAssets,
@@ -54,6 +56,7 @@ public final class DeviceListViewModel: ObservableObject {
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.updateInterval = updateInterval
         self.router = router
+        self.deviceCenterBridge = deviceCenterBridge
         self.deviceCenterUseCase = deviceCenterUseCase
         self.deviceListAssets = deviceListAssets
         self.emptyStateAssets = emptyStateAssets
@@ -103,6 +106,7 @@ public final class DeviceListViewModel: ObservableObject {
         
         return DeviceCenterItemViewModel(
             router: router,
+            deviceCenterBridge: deviceCenterBridge,
             itemType: .device(device),
             assets: deviceAssets,
             availableActions: availableActions

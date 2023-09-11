@@ -39,12 +39,14 @@ struct ListViewContainer<Content>: View where Content: View {
                     subtitleColorName: selectedItem.statusColorName
                 ),
             actionButtons: {
-                selectedItem.availableActions.compactMap {
+                selectedItem.availableActions.compactMap { action in
                     ActionSheetButton(
-                        icon: $0.icon,
-                        title: $0.title,
-                        subtitle: $0.subtitle,
-                        action: $0.action
+                        icon: action.icon,
+                        title: action.title,
+                        subtitle: action.subtitle,
+                        action: {
+                            selectedItem.executeAction(action.type)
+                        }
                     )
                 }
             }()

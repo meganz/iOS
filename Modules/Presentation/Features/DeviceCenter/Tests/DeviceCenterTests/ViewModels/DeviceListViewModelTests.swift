@@ -274,6 +274,7 @@ final class DeviceListViewModelTests: XCTestCase {
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             updateInterval: updateInterval,
             router: MockDeviceListViewRouter(),
+            deviceCenterBridge: DeviceCenterBridge(),
             deviceCenterUseCase: MockDeviceCenterUseCase(devices: devices, currentDeviceId: currentDeviceId),
             deviceListAssets:
                 DeviceListAssets(
