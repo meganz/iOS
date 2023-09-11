@@ -34,12 +34,12 @@ extension PhotosViewController {
     }
     
     @objc func handleDeleteAction(for nodes: [MEGANode]) {
-        guard let rubbish = MEGASdkManager.sharedMEGASdk().rubbishNode else { return }
+        guard let rubbish = MEGASdk.sharedSdk.rubbishNode else { return }
         let delegate = MEGAMoveRequestDelegate(toMoveToTheRubbishBinWithFiles: nodes.contentCounts().fileCount,
                                                folders: nodes.contentCounts().folderCount) { [weak self] in
             self?.toggleEditing()
         }
-        nodes.forEach { MEGASdkManager.sharedMEGASdk().move($0, newParent: rubbish, delegate: delegate) }
+        nodes.forEach { MEGASdk.sharedSdk.move($0, newParent: rubbish, delegate: delegate) }
     }
     
     func handleRemoveLinks(for nodes: [MEGANode]) {
@@ -75,7 +75,8 @@ extension PhotosViewController {
     }
     
     private func handleSaveToPhotos(for nodes: [MEGANode]) {
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.sharedSdk),
+                                                        fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         Task { @MainActor in
             do {
                 try await saveMediaUseCase.saveToPhotos(nodes: nodes.toNodeEntities())
@@ -115,7 +116,7 @@ extension PhotosViewController: NodeActionViewControllerDelegate {
             showBrowserNavigation(for: nodes, action: .copy)
         case .move:
             showBrowserNavigation(for: nodes, action: .move)
-        case .shareLink:
+        case .shareLink, .manageLink:
             handleShareLink(for: nodes)
         case .moveToRubbishBin:
             handleDeleteAction(for: nodes)
