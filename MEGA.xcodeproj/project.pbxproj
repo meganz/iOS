@@ -156,6 +156,8 @@
 		24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */; };
 		24A6ADE82A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */; };
 		24AB98302A78B84A006E101C /* MEGAAVViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */; };
+		24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */; };
+		24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */; };
 		24B6276F2A8F687E00AD588C /* NodeInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */; };
 		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
 		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
@@ -2632,6 +2634,8 @@
 		24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaylistShiftStrategyProtocol.swift; sourceTree = "<group>"; };
 		24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerLoadingDecoratorTests.swift; sourceTree = "<group>"; };
 		24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerDelegate.swift; sourceTree = "<group>"; };
+		24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManager.swift; sourceTree = "<group>"; };
+		24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManagerTests.swift; sourceTree = "<group>"; };
 		24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
 		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
@@ -5635,6 +5639,7 @@
 			children = (
 				24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */,
 				248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */,
+				24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */,
 			);
 			path = "Shared Controls";
 			sourceTree = "<group>";
@@ -10258,6 +10263,7 @@
 				243A1ADF2A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift */,
 				5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */,
 				5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */,
+				24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */,
 				C45390D62565BB840026F215 /* MEGASelectedButton.swift */,
 				C45390CC256587BF0026F215 /* MEGASlider.swift */,
 				C45F97FC264A9FA60004DCA5 /* MyAvatarManager.swift */,
@@ -14341,6 +14347,7 @@
 				5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */,
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,
 				5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */,
+				24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */,
 				5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */,
 				5D64660424890A34006030A5 /* ThemeColor.swift in Sources */,
 				B6B9D91329492CC100ABC161 /* ThumbnailEntity+Mapping.swift in Sources */,
@@ -14833,6 +14840,7 @@
 				32EC282129BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift in Sources */,
 				32EC280129B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
+				24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */,
 				0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */,
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
