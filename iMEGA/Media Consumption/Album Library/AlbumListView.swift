@@ -78,6 +78,7 @@ struct AlbumListView: View {
             },
             isNewAlbum: true,
             configuration: PhotoLibraryContentConfiguration(
+                selectLimit: 150,
                 scaleFactor: UIDevice().iPadDevice ? .five : .three)
         ), invokeDismiss: {
             viewModel.newlyAddedAlbum = nil
