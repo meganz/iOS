@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */; };
 		0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */; };
 		0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */; };
 		0D213E8E263A613500B43723 /* NodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E8D263A613500B43723 /* NodeRepository.swift */; };
@@ -1078,7 +1077,6 @@
 		83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */; };
 		83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */; };
 		83CBA3E627A81B2F005F0FD5 /* CancellableTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BA00692798703600498493 /* CancellableTransfer.swift */; };
-		83CCBC47279595D300B90EF2 /* UploadFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */; };
 		83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D0E56727C78D53003BEC2E /* ExportFileUseCaseHelper.swift */; };
 		83D374E82A431ED400F7B07C /* CancelMeetingAlertDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D374E72A431ED400F7B07C /* CancelMeetingAlertDataModel.swift */; };
 		83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */; };
@@ -2493,7 +2491,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileRepository.swift; sourceTree = "<group>"; };
 		0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUploadFileUseCase.swift; sourceTree = "<group>"; };
 		0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CHTCollectionViewWaterfallLayout+Additions.swift"; sourceTree = "<group>"; };
 		0D213E8D263A613500B43723 /* NodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepository.swift; sourceTree = "<group>"; };
@@ -5211,6 +5208,7 @@
 			children = (
 				0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */,
 				0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */,
+				83A49E7C270476A300FD0D85 /* TransferInventoryRepository.swift */,
 				5D2AF57E24F4A711000B2F29 /* UploadPhotoAssetsRepository.swift */,
 			);
 			path = Transfer;
@@ -14557,7 +14555,6 @@
 				B59580B22A1478E800E5FC1C /* UpgradeSectionSubscriptionView.swift in Sources */,
 				C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
-				0D0B538C262558BB00E9BB16 /* UploadFileRepository.swift in Sources */,
 				A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */,
 				B658D3CF218FBC47004C0D64 /* UploadOperationFactory.m in Sources */,
 				5D2AF57F24F4A711000B2F29 /* UploadPhotoAssetsRepository.swift in Sources */,
@@ -14915,7 +14912,6 @@
 				947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */,
 				BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */,
 				B6990181262F92A800176FFC /* UncaughtExceptionHandler.swift in Sources */,
-				83CCBC47279595D300B90EF2 /* UploadFileRepository.swift in Sources */,
 				94A1A26F2A83B11F00669C41 /* UserImageUseCase.swift in Sources */,
 				94A1A2782A83B29000669C41 /* UserStoreRepository.swift in Sources */,
 				940CEE352A83D8C2007DD202 /* WarningView.swift in Sources */,
