@@ -5,15 +5,18 @@ struct SearchResultRowView: View {
     @StateObject var viewModel: SearchResultRowViewModel
     
     var body: some View {
+        Button(
+            action: viewModel.selectionAction,
+            label: { content }
+        )
+    }
+
+    private var content: some View {
         HStack {
             HStack {
                 thumbnail
                 titleAndDescription
                 Spacer()
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                viewModel.selectionAction()
             }
             moreButton
         }

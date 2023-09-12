@@ -13,10 +13,6 @@ public struct SearchResultsView: View {
             chipsView
             content
         }
-        .padding(.bottom, viewModel.bottomInset)
-        .taskForiOS14 {
-            await viewModel.task()
-        }
     }
     
     private var chipsView: some View {
@@ -42,17 +38,31 @@ public struct SearchResultsView: View {
     }
     
     private var content: some View {
-        VStack(spacing: .zero) {
-            ScrollView {
-                LazyVStack {
-                    ForEach(viewModel.listItems) { item in
-                        SearchResultRowView(viewModel: item)
-                    }
-                }
-                .overlay(
-                    emptyView
-                )
+        List {
+            ForEach(Array(viewModel.listItems.enumerated()), id: \.element.id) { index, item in
+                SearchResultRowView(viewModel: item)
+                    .listRowInsets(
+                        EdgeInsets(
+                            top: index != 0 ? 8 : 0,
+                            leading: 0,
+                            bottom: 0,
+                            trailing: 0
+                        )
+                    )
             }
+        }
+        .listStyle(.plain)
+        .overlay(
+            emptyView
+        )
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .topLeading
+        )
+        .padding(.bottom, viewModel.bottomInset)
+        .taskForiOS14 {
+            await viewModel.task()
         }
     }
 }
