@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="您之前已通过Google Play或华为应用商店订阅了Pro会员方案。请在您设备上的Google Play或华为应用商店中手动取消您的订阅后进行重试。";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="您想要取消当前订阅并继续购买吗？";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="不适用于您当前的会员方案";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="当前的订阅";
 /* Dialog message shown before deleting an account with active iTunes subscription */

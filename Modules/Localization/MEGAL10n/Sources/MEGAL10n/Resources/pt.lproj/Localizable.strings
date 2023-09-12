@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="Você já tem uma assinatura de um plano Pro por meio da Google Play Store ou da AppGallery. Por favor, cancele a sua assinatura diretamente na Google Play Store ou na Huawei AppGallery no seu dispositivo, e então tente novamente fazer a nova compra.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Você quer cancelar a sua assinatura atual e continuar com a nova compra?";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="Não compatível com o seu plano atual";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Assinatura Ativa";
 /* Dialog message shown before deleting an account with active iTunes subscription */

@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="U heeft zich eerder geabonneerd op een Pro-abonnement met Google Play of Applicatie Gallerij. Annuleer uw abonnement handmatig bij hen in Google Play of de Huawei Applicatie Gallerij op uw apparaat en probeer het opnieuw.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Wilt u uw huidige abonnement opzeggen en doorgaan met de aankoop?";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="Not available with your current plan";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Actief Abonnement";
 /* Dialog message shown before deleting an account with active iTunes subscription */
