@@ -109,6 +109,14 @@ import UIKit
             .sink { [weak emailLabel] in emailLabel?.text = $0 }
             .store(in: &subscriptions)
         
+        NotificationCenter.default
+            .publisher(for: .refreshAccountDetails)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &subscriptions)
+        
         viewModel
             .invokeCommand = { [weak self] in self?.executeCommand($0) }
         

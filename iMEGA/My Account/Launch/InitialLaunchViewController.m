@@ -72,6 +72,7 @@
     setupVC.completion = ^{
         [self.delegate setupFinished];
         [self.delegate readyToShowRecommendations];
+        [[MEGAPurchase sharedInstance] processAnyPendingPromotedPlanPayment];
     };
     setupVC.modalPresentationStyle = UIModalPresentationFullScreen;
     
@@ -86,6 +87,7 @@
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"yes", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.delegate setupFinished];
         [self.delegate readyToShowRecommendations];
+        [[MEGAPurchase sharedInstance] processAnyPendingPromotedPlanPayment];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"no", @"") style:UIAlertActionStyleCancel handler:nil]];
 
