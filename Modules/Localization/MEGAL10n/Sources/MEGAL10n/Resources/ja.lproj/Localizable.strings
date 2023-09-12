@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="以前にGoogle PlayまたはAppGalleryでProプランにご加入されたことがございます。お使いの端末のGoogle PlayまたはHuawei AppGallery内で、手動でサブスクリプションをキャンセルしてから再試行してください。";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="現在のサブスクリプションをキャンセルして、ご購入を継続されますか？";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="お客様の現在のプランではご利用いただけません";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="アクティブサブスクリプション";
 /* Dialog message shown before deleting an account with active iTunes subscription */

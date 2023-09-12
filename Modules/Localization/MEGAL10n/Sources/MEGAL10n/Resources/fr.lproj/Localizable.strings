@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="Vous avez souscrit auparavant un abonnement Pro grâce aux magasins Play Store de Google ou AppGalery de Huawei. Veuillez annuler vos abonnements manuellement sur votre appareil dans les magasins Play Store de Google ou AppGalery de Huawei, puis réessayez.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Voulez-vous annuler l’abonnement actuel et poursuivre l’achat ?";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="N’est pas proposé avec votre abonnement actuel";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Un abonnement est actif";
 /* Dialog message shown before deleting an account with active iTunes subscription */

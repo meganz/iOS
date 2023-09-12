@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="Anda sebelumnya telah berlangganan paket Pro dengan Google Play atau AppGallery. Harap batalkan langganan anda secara manual dengan mereka di dalam Google Play atau Huawei AppGallery di perangkat anda, lalu coba lagi.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Apakah anda ingin membatalkan langganan anda saat ini dan melanjutkan pembelian?";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="Tidak tersedia dengan paket anda saat ini";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Berlangganan Aktif";
 /* Dialog message shown before deleting an account with active iTunes subscription */

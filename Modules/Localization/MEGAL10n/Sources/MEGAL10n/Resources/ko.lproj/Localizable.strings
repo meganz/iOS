@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="이전에 Google Play 또는 AppGallery를 통하여 구독을 하였습니다. 기기에서 Google Play 또는 Huawei AppGallery 안에서 구독을 수동으로 취소한 후 다시 시도하세요.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="현재 구독을 취소하고 결제를 진행하시겠습니까?";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="현재 요금제에서는 이용이 불가합니다";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="활성 구독";
 /* Dialog message shown before deleting an account with active iTunes subscription */
