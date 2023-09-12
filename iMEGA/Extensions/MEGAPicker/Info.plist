@@ -8,17 +8,6 @@
 		<string>MainInterface</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.fileprovider-actionsui</string>
-		<key>NSExtensionFileProviderActions</key>
-		<array>
-			<dict>
-				<key>NSExtensionFileProviderActionIdentifier</key>
-				<string>mega.ios.openInMEGA</string>
-				<key>NSExtensionFileProviderActionName</key>
-				<string>fileProviderExtension.action.open</string>
-				<key>NSExtensionFileProviderActionActivationRule</key>
-				<string>TRUEPREDICATE</string>
-			</dict>
-		</array>
 	</dict>
 </dict>
 </plist>

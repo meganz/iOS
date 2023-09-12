@@ -21,23 +21,6 @@ final class DocumentActionViewController: FPUIActionExtensionViewController {
             messageLabel.text = Strings.Localizable.Picker.Disable.Passcode.description
         }
     }
-
-    override func prepare(forAction actionIdentifier: String, itemIdentifiers: [NSFileProviderItemIdentifier]) {
-        guard
-            actionIdentifier == PickerConstant.openAction,
-            let itemIdentifier = itemIdentifiers.first,
-            let url = URL(string: "mega://presentNode/\(itemIdentifier.rawValue)")
-        else {
-            let error = NSError(domain: FPUIErrorDomain, code: Int(FPUIExtensionErrorCode.failed.rawValue), userInfo: nil)
-            extensionContext.cancelRequest(withError: error)
-            return
-        }
-
-        Task {
-            await extensionContext.open(url)
-            extensionContext.completeRequest()
-        }
-    }
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
         extensionContext.cancelRequest(withError: NSError(domain: FPUIErrorDomain, code: Int(FPUIExtensionErrorCode.userCancelled.rawValue), userInfo: nil))
