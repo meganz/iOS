@@ -22,6 +22,14 @@ class PermissionAlertModelTests: XCTestCase {
         
     }
     
+    func testPhotos_primaryAction_shouldHaveCorrectActionModel() {
+        let sut = PermissionAlertModel.photo(completion: {})
+        
+        XCTAssertEqual(sut.primaryAction.title, Strings.Localizable.notNow)
+        XCTAssertEqual(sut.primaryAction.style, .cancel)
+        XCTAssertNotNil(sut.primaryAction.handler)
+    }
+    
     func testVideos_SecondaryAction_shouldTriggerCompletion() {
         // Arrange
         var secondaryActionCalled = 0

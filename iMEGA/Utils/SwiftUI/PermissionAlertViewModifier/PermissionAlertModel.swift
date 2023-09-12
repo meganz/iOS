@@ -10,6 +10,14 @@ struct PermissionAlertModel {
         let title: String
         let style: ActionStyle
         let handler: (() -> Void)?
+        
+        init(title: String,
+             style: ActionStyle,
+             handler: (() -> Void)? = {}) {
+            self.title = title
+            self.style = style
+            self.handler = handler
+        }
     }
     
     enum ActionStyle {
@@ -38,7 +46,7 @@ extension PermissionAlertModel {
         .init(
             title: title,
             message: message,
-            primaryAction: .init(title: Strings.Localizable.notNow, style: .cancel, handler: nil),
+            primaryAction: .init(title: Strings.Localizable.notNow, style: .cancel),
             secondaryAction: .init(title: Strings.Localizable.settingsTitle, style: .default, handler: completion))
     }
 }
