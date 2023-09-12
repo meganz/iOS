@@ -118,7 +118,7 @@ extension ChatViewController {
     }
 
     func subscribeToNoUserJoinedNotification() {
-        let useCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.newRepo)
+        let useCase = MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
         noUserJoinedSubscription = useCase
             .monitor
             .receive(on: DispatchQueue.main)

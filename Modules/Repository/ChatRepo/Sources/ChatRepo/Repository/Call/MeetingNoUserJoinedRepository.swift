@@ -3,10 +3,8 @@ import MEGAChatSdk
 import MEGADomain
 
 public final class MeetingNoUserJoinedRepository: NSObject, MeetingNoUserJoinedRepositoryProtocol {
-    public static var newRepo: MeetingNoUserJoinedRepository {
-        MeetingNoUserJoinedRepository(chatSDK: .sharedChatSdk)
-    }
-
+    public static var sharedRepo = MeetingNoUserJoinedRepository(chatSDK: .sharedChatSdk)
+    
     private var subscription: AnyCancellable?
         
     private let chatSDK: MEGAChatSdk
