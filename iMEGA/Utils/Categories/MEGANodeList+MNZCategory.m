@@ -40,20 +40,6 @@
     return folderAlreadyExists;
 }
 
-- (BOOL)mnz_existsFileWithName:(NSString *)name {
-    BOOL fileAlreadyExists = NO;
-    for (NSUInteger i = 0; i < self.size.unsignedIntegerValue; i++) {
-        MEGANode *node = [self nodeAtIndex:i];
-        if (node.isFile && [node.name isEqualToString:name]) {
-            fileAlreadyExists = YES;
-            break;
-        }
-    }
-    
-    return fileAlreadyExists;
-    
-}
-
 - (NSArray<MEGANode*> *)mnz_nodesArrayFromNodeList {
     NSUInteger nodeListCount = self.size.unsignedIntegerValue;
     NSMutableArray *nodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
