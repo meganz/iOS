@@ -34,7 +34,7 @@ enum UpgradeAccountPlanAlertType {
             }
         case .purchase(let status):
             switch status {
-            case .failed: return Strings.Localizable.failedRestoreMessage
+            case .failed: return Strings.Localizable.failedPurchaseMessage
             default: return ""
             }
 

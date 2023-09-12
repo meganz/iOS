@@ -243,11 +243,19 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         NotificationCenter
             .default
             .publisher(for: .refreshAccountDetails)
-            .sink { [weak self] _ in
+            .map({ $0.object as? AccountDetailsEntity })
+            .sink { [weak self] account in
                 guard let self else { return }
                 Task { [weak self] in
                     guard let self else { return }
-                    await fetchAccountDetails(showActivityIndicator: true)
+                    
+                    guard let account else {
+                        await fetchAccountDetails(showActivityIndicator: true)
+                        return
+                    }
+                    
+                    setAccountDetails(account)
+                    await configPlanDisplay()
                 }
             }
             .store(in: &subscriptions)
