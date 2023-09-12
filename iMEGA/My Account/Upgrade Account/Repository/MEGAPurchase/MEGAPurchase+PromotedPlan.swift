@@ -1,5 +1,8 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
+import MEGASDKRepo
+import MEGASwift
 
 extension MEGAPurchase {
     private enum InAppPurchaseStoreError: Error {
@@ -37,13 +40,75 @@ extension MEGAPurchase {
     
     @objc func processAnyPendingPromotedPlanPayment() {
         guard let pendingProduct = pendingPromotedProductForPayment() else { return }
-        
         // Check if payment can still resume
         guard shouldAddStorePayment(for: pendingProduct) else { return }
+        setIsPurchasingPromotedPlan(true)
         
         // Continuing a previously deferred payment
         MEGALogInfo("[StoreKit] Deferred promoted plan \(pendingProduct.localizedTitle) will resume purchase.")
         purchaseProduct(pendingProduct)
+    }
+    
+    @objc func handlePromotedPlanPurchaseResult(isSuccess: Bool) {
+
+        guard isSuccess else {
+            // Failed purchase. Show the default purchase error message.
+            handleFailedPurchaseWithAlert()
+            return
+        }
+        
+        // Success purchase. Refresh account details.
+        // VariantA updates the `currentAccountDetails` on AccountUseCase
+        // Baseline updates the `mnz_accountDetails` since it is not using the `currentAccountDetails`
+        SVProgressHUD.show()
+        Task {
+            let abTestProvider = DIContainer.abTestProvider
+            let abValue = await abTestProvider.abTestVariant(for: .upgradePlanRevamp)
+            
+            if abValue == .variantA {
+                await handleRefreshAccountDetailsForVariantA()
+            } else {
+                await handleRefreshAccountDetailsForBaseline()
+            }
+            
+            await MainActor.run { SVProgressHUD.dismiss() }
+        }
+    }
+    
+    // MARK: Purchase result handler
+    private func handleRefreshAccountDetailsForVariantA() async {
+        do {
+            let accountDetails = try await refreshAccountDetails()
+            NotificationCenter.default.post(name: .refreshAccountDetails, object: accountDetails)
+        } catch {
+            MEGALogError("[StoreKit] Error loading account details. Error: \(error)")
+        }
+    }
+    
+    private func handleRefreshAccountDetailsForBaseline() async {
+        await withAsyncValue { completion in
+            MEGASdk.shared.getAccountDetails(with: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    MEGASdk.shared.mnz_accountDetails = request.megaAccountDetails
+                    NotificationCenter.default.post(name: .refreshAccountDetails, object: nil)
+                    completion(.success)
+                case .failure(let error):
+                    MEGALogError("[StoreKit] Error loading account details. Error: \(error)")
+                    completion(.success)
+                }
+            })
+        }
+    }
+    
+    private func handleFailedPurchaseWithAlert() {
+        let alertController = UIAlertController(
+            title: Strings.Localizable.failedPurchaseTitle,
+            message: Strings.Localizable.failedPurchaseMessage,
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel))
+        UIApplication.mnz_visibleViewController().present(alertController, animated: true)
     }
     
     // MARK: Helpers
@@ -79,13 +144,18 @@ extension MEGAPurchase {
         return true
     }
     
+    private func refreshAccountDetails() async throws -> AccountDetailsEntity {
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        return try await accountUseCase.refreshCurrentAccountDetails()
+    }
+    
     private func fetchAccountDetailsToPurchaseProduct(_ product: SKProduct) {
         Task {
             do {
-                let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-                _ = try await accountUseCase.refreshCurrentAccountDetails()
+                _ = try await refreshAccountDetails()
                 
                 guard shouldAddStorePayment(for: product) else { return }
+                setIsPurchasingPromotedPlan(true)
                 
                 MEGALogInfo("[StoreKit] Deferred promoted plan \(product.localizedTitle) will resume purchase.")
                 purchaseProduct(product)

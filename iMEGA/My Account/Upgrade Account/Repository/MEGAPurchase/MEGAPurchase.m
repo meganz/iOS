@@ -12,6 +12,7 @@
 @property (nonatomic, strong) NSArray *iOSProductIdentifiers;
 @property (nonatomic, strong) NSMutableArray *products;
 @property (nonatomic, strong) SKProduct *pendingStoreProduct;
+@property (nonatomic, getter=isPurchasingPromotedPlan) BOOL purchasingPromotedPlan;
 @end
 
 @implementation MEGAPurchase
@@ -128,6 +129,12 @@
     self.pendingStoreProduct = product;
 }
 
+- (void)setIsPurchasingPromotedPlan:(BOOL)isPurchasing {
+    // If isPurchasing is true, the promoted plan is ongoing
+    // If isPurchasing is false, the promoted plan purchase is not active or has finished
+    self.purchasingPromotedPlan = isPurchasing;
+}
+
 #pragma mark - SKProductsRequestDelegate Methods
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
@@ -156,7 +163,6 @@
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     MEGALogError(@"[StoreKit] Request did fail with error %@", error);
 }
-
 
 #pragma mark - SKPaymentTransactionObserver Methods
 
@@ -203,7 +209,12 @@
                 
                 [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-
+                
+                if (self.isPurchasingPromotedPlan) {
+                    [self setIsPurchasingPromotedPlan:NO];
+                    [self handlePromotedPlanPurchaseResultWithIsSuccess:YES];
+                }
+                
                 break;
             }
                 
@@ -237,6 +248,14 @@
                 
                 [SVProgressHUD dismiss];
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                
+                if (self.isPurchasingPromotedPlan) {
+                    [self setIsPurchasingPromotedPlan:NO];
+                    
+                    if (transaction.error.code != SKErrorPaymentCancelled) {
+                        [self handlePromotedPlanPurchaseResultWithIsSuccess:NO];
+                    }
+                }
                 break;
                 
             case SKPaymentTransactionStateDeferred:
@@ -276,7 +295,11 @@
 
 - (BOOL)paymentQueue:(SKPaymentQueue *)queue shouldAddStorePayment:(SKPayment *)payment forProduct:(SKProduct *)product {
     MEGALogDebug(@"[StoreKit] Initiated App store promoted plan purchase");
-    return [self shouldAddStorePaymentFor:product];
+    
+    BOOL shouldAddStorePayment = [self shouldAddStorePaymentFor:product];
+    [self setIsPurchasingPromotedPlan:shouldAddStorePayment];
+    
+    return shouldAddStorePayment;
 }
 
 #pragma mark - MEGARequestDelegate

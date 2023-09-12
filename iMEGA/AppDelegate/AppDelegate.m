@@ -1482,7 +1482,6 @@
             [QuickAccessWidgetManager reloadAllWidgetsContent];
             [[MEGAPurchase sharedInstance] requestPricing];
             [api setAccountAuth:api.accountAuth];
-            [[MEGAPurchase sharedInstance] processAnyPendingPromotedPlanPayment];
             break;
         }
             
