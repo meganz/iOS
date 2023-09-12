@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="คุณเคยสมัครแผน Pro ด้วย Google Play หรือ AppGallery กรุณายกเลิกการสมัครใช้งานด้วยตนเองได้ที่ Google Play หรือ Huawei AppGallery บนอุปกรณ์ของคุณก่อน แล้วลองอีกครั้ง";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการสมัครใช้งานปัจจุบันและดำเนินการซื้อต่อ";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="ใช้ไม่ได้กับแผนปัจจุบันของคุณ";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="มีการสมัครใช้งานอยู่";
 /* Dialog message shown before deleting an account with active iTunes subscription */

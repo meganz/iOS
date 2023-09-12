@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="لقد سبق لك الاشتراك في باقة برو Pro باستخدام غوغل بلاي Google Play أو اب غاليري AppGallery. يرجى إلغاء اشتراكك يدويًا داخل غوغل بلاي Google Play أو هواوي اب غاليري Huawei AppGallery على جهازك ثم إعادة المحاولة.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="هل تريد إلغاء اشتراكك الحالي ومتابعة الشراء؟";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="Not available with your current plan";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="اشتراك مفعل";
 /* Dialog message shown before deleting an account with active iTunes subscription */

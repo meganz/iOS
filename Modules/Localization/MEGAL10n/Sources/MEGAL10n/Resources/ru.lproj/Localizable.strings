@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="Вы ранее подписались на план Pro в Google Play или AppGallery. Пожалуйста, вручную отмените подписку в Google Play или Huawei AppGallery на вашем устройстве, а затем повторите попытку.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Хотите отменить текущую подписку и продолжить покупку?";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="Недоступно в текущем плане";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Активная подписка";
 /* Dialog message shown before deleting an account with active iTunes subscription */

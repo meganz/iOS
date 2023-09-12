@@ -2710,6 +2710,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="Quý khách đã mua hạng Pro thông qua CH Google Play hoặc AppGallery từ trước. Xin vui lòng hủy thủ công dịch vụ với bên Google Play hoặc Huawei AppGallery trên thiết bị của mình rồi quay lại đây để tiếp tục việc mua.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Quý khách có muốn hủy gói đăng ký dịch vụ hiện tại để mua gói mới không?";
+/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+"account.upgrade.notAvailableWithCurrentPlan.message"="Không có sẵn cho gói hiện tại của bạn";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Gói Đăng Ký Dịch Vụ Còn Hoạt Động";
 /* Dialog message shown before deleting an account with active iTunes subscription */
