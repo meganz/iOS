@@ -32,7 +32,7 @@ lane :configure_sdk_and_chat_library do |options|
 
     file_link_url = "https://mega.nz/#!#{file}!#{key}"
     download_file_path = options[:download_file_path].nil? ? "#{ENV['MEGA_LIBRARIES_ZIP_DOWNLOAD_PATH']}#{file}" : options[:download_file_path]
-    unzip_path = options[:unzip_path].nil? ? ENV['MEGA_LIBRARIES_UNZIP_PATH'] : options[:unzip_path]
+    unzip_path = options[:unzip_path].nil? ? ENV['SDK_THIRD_PARTY_PATH'] : options[:unzip_path]
     use_cache = options[:use_cache].nil? ? false : options[:use_cache]
 
     download_libraries(
