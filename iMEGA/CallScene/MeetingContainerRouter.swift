@@ -116,14 +116,17 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             MEGALogDebug("Meeting ended for call \(callId) - dismiss called will animated \(animated)")
         }
         
-        if let hangOrEndCallRouter = hangOrEndCallRouter {
+        dismissWaitingRoomAlertPresentedIfNeeded { [weak self] in
+            guard let self else { return }
+            guard let hangOrEndCallRouter else {
+                dismissCallUI(animated: animated, completion: completion)
+                return
+            }
             hangOrEndCallRouter.dismiss(animated: true) {
                 self.dismissCallUI(animated: animated, completion: completion)
             }
-        } else {
-            dismissCallUI(animated: animated, completion: completion)
+            UIApplication.shared.isIdleTimerDisabled = false
         }
-        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     func showShareMeetingError() {
@@ -311,5 +314,16 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private func dismissCallUI(animated: Bool, completion: (() -> Void)?) {
         floatingPanelRouter?.dismiss(animated: animated)
         baseViewController?.dismiss(animated: animated, completion: completion)
+    }
+    
+    private func dismissWaitingRoomAlertPresentedIfNeeded(completion: @escaping () -> Void) {
+        guard let presentedViewController = presenter?.presenterViewController()?.presentedViewController, presentedViewController.isKind(of: UIAlertController.self) else {
+            completion()
+            return
+        }
+        
+        presentedViewController.dismiss(animated: false) {
+            completion()
+        }
     }
 }
