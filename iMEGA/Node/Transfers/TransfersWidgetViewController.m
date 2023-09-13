@@ -769,10 +769,11 @@ static TransfersWidgetViewController* instance = nil;
     if ((self.transfers.count == 0) && (self.uploadTransfersQueued.count == 0)) {
         return;
     }
-    NSString *transfersTypeString = LocalizedString(@"allInUppercaseTransfers", @"ALL transfers");
     
-    UIAlertController *cancelTransfersAlert = [UIAlertController alertControllerWithTitle:LocalizedString(@"cancelTransfersTitle", @"Cancel transfers") message:[NSString stringWithFormat:LocalizedString(@"cancelTransfersText", @"Do you want to cancel %@?"), transfersTypeString] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *cancelTransfersAlert = [UIAlertController alertControllerWithTitle:LocalizedString(@"cancelTransfersTitle", @"Cancel transfers") message: LocalizedString(@"cancelTransfersText", @"Do you want to cancel?") preferredStyle:UIAlertControllerStyleAlert];
+    
     [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
     [cancelTransfersAlert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self cancelTransfersForDirection:0];
         [self cancelTransfersForDirection:1];
