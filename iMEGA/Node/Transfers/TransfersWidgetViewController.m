@@ -635,6 +635,7 @@ static TransfersWidgetViewController* instance = nil;
             [self.tableView reloadData];
             if (self.transfers.count == 0) {
                 [self.progressView configureData];
+                self.toolbar.hidden = YES;
             }
             
         }
