@@ -3,7 +3,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
 #import "Helper.h"
-#import "MEGAChatChangeGroupNameRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGALinkManager.h"
 #import "MEGANavigationController.h"
