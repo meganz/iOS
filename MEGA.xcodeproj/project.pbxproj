@@ -946,7 +946,6 @@
 		836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 836AEDE42018AD1F00868FC7 /* PasswordView.m */; };
 		836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B956E2063EADE003E279B /* SearchInPdfViewController.m */; };
 		836BCF1A28EDC83D00515E18 /* ChatTypeEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836BCF1928EDC83D00515E18 /* ChatTypeEntity+Mapper.swift */; };
-		836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */; };
 		8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */; };
 		8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */; };
 		83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */; };
@@ -3264,8 +3263,6 @@
 		7747B2D7208623660011814E /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		77485F82207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetPublicNodeRequestDelegate.h; path = API/Requests/MEGAGetPublicNodeRequestDelegate.h; sourceTree = "<group>"; };
 		77485F83207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPublicNodeRequestDelegate.m; path = API/Requests/MEGAGetPublicNodeRequestDelegate.m; sourceTree = "<group>"; };
-		77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGARenameRequestDelegate.h; path = API/Requests/MEGARenameRequestDelegate.h; sourceTree = "<group>"; };
-		77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGARenameRequestDelegate.m; path = API/Requests/MEGARenameRequestDelegate.m; sourceTree = "<group>"; };
 		7754ED9720B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGALoginToFolderLinkRequestDelegate.h; path = API/Requests/MEGALoginToFolderLinkRequestDelegate.h; sourceTree = "<group>"; };
 		7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGALoginToFolderLinkRequestDelegate.m; path = API/Requests/MEGALoginToFolderLinkRequestDelegate.m; sourceTree = "<group>"; };
 		7754ED9A20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAFetchNodesRequestDelegate.h; path = API/Requests/MEGAFetchNodesRequestDelegate.h; sourceTree = "<group>"; };
@@ -3503,8 +3500,6 @@
 		836B956D2063EADE003E279B /* SearchInPdfViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchInPdfViewController.h; sourceTree = "<group>"; };
 		836B956E2063EADE003E279B /* SearchInPdfViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchInPdfViewController.m; sourceTree = "<group>"; };
 		836BCF1928EDC83D00515E18 /* ChatTypeEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatTypeEntity+Mapper.swift"; sourceTree = "<group>"; };
-		836E74C22099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatChangeGroupNameRequestDelegate.h; sourceTree = "<group>"; };
-		836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatChangeGroupNameRequestDelegate.m; sourceTree = "<group>"; };
 		8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkPresentationItemSource.swift; sourceTree = "<group>"; };
 		8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Additions.swift"; sourceTree = "<group>"; };
 		83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
@@ -9258,8 +9253,6 @@
 				777AC33D21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m */,
 				A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */,
 				A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */,
-				836E74C22099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.h */,
-				836E74C32099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m */,
 				A8F6C5F21FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.h */,
 				A8F6C5F11FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m */,
 				A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */,
@@ -9600,8 +9593,6 @@
 				5B0C55AD1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m */,
 				5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */,
 				5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */,
-				77519C34203707F600FDF92B /* MEGARenameRequestDelegate.h */,
-				77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */,
 				77F1DBE32056B767005D5F0E /* MEGASetAttrUserRequestDelegate.h */,
 				77F1DBE42056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m */,
 				5B7B4CA01EE5AC1200DA6A8D /* MEGAShareRequestDelegate.h */,
@@ -13632,7 +13623,6 @@
 				777AC33E21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
 				BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */,
-				836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */,
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,
 				A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */,
