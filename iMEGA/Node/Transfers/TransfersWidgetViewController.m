@@ -991,7 +991,11 @@ static TransfersWidgetViewController* instance = nil;
             break;
         }
         case MegaNodeActionTypeClear:
-            [self clearNode:node];
+            
+            if (node != nil) {
+                [self clearNode:node];
+            }
+            
             break;
             
         default:
