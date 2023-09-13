@@ -1146,6 +1146,7 @@
         return;
     }
     [self showMainTabBar];
+    [[MEGAPurchase sharedInstance] processAnyPendingPromotedPlanPayment];
 }
 
 - (void)readyToShowRecommendations {
