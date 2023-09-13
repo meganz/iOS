@@ -261,6 +261,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
             cloudDriveVC.recentIndex = indexPath.section;
             cloudDriveVC.displayMode = DisplayModeRecents;
             cloudDriveVC.shouldRemovePlayerDelegate = NO;
+            cloudDriveVC.recentActionBucket = recentActionBucket;
             
             UINavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:cloudDriveVC];
             [self.delegate showSelectedNodeInViewController:navigationController];
