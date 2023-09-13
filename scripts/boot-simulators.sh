@@ -25,5 +25,4 @@ boot_simulator() {
     fi
 }
 
-boot_simulator "iPhone 14 Pro Max"
-# boot_simulator "iPhone 14 Pro"
+boot_simulator "iPhone 15 Pro Max"
