@@ -671,7 +671,6 @@
 		5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */; };
 		5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016802499BD60005A121D /* MEGAPlan.swift */; };
 		5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016822499BD7B005A121D /* MEGAPlanService.swift */; };
-		5DF0E3D22563A8540052CC95 /* MEGAResultRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF0E3D02563A8540052CC95 /* MEGAResultRequestDelegate.swift */; };
 		5DF249DD24F37589003FED76 /* FileUploadingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF249DC24F37589003FED76 /* FileUploadingRouter.swift */; };
 		5DF249DF24F381C8003FED76 /* DispatchFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF249DE24F381C8003FED76 /* DispatchFunction.swift */; };
 		5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF44CCB251369E000E9F0BC /* NodeDetailsUseCase.swift */; };
@@ -3224,7 +3223,6 @@
 		5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedStringParser.swift; sourceTree = "<group>"; };
 		5DF016802499BD60005A121D /* MEGAPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlan.swift; sourceTree = "<group>"; };
 		5DF016822499BD7B005A121D /* MEGAPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlanService.swift; sourceTree = "<group>"; };
-		5DF0E3D02563A8540052CC95 /* MEGAResultRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MEGAResultRequestDelegate.swift; sourceTree = "<group>"; };
 		5DF249DC24F37589003FED76 /* FileUploadingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUploadingRouter.swift; sourceTree = "<group>"; };
 		5DF249DE24F381C8003FED76 /* DispatchFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchFunction.swift; sourceTree = "<group>"; };
 		5DF44CCB251369E000E9F0BC /* NodeDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDetailsUseCase.swift; sourceTree = "<group>"; };
@@ -3790,7 +3788,6 @@
 		947C6CC52A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+BackBarButtonItem.swift"; sourceTree = "<group>"; };
 		948176C42A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetManagerTests.swift; sourceTree = "<group>"; };
 		948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Additions.swift"; sourceTree = "<group>"; };
-		9487BF3A29B66F2E00645D32 /* NodeActionRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionRepositoryTests.swift; sourceTree = "<group>"; };
 		948A1E7F2AAB027600897E2F /* MyAccountHallViewController+DeviceCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+DeviceCenter.swift"; sourceTree = "<group>"; };
 		949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MNZCategory.h"; sourceTree = "<group>"; };
 		949086871FD5482E002B12BD /* NSAttributedString+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MNZCategory.m"; sourceTree = "<group>"; };
@@ -7717,14 +7714,6 @@
 			path = SDK;
 			sourceTree = "<group>";
 		};
-		5DD4B350257DFE9300A01306 /* RequestDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				5DF0E3D02563A8540052CC95 /* MEGAResultRequestDelegate.swift */,
-			);
-			path = RequestDelegate;
-			sourceTree = "<group>";
-		};
 		5DD6B16724D67E3A00F14515 /* Pannel */ = {
 			isa = PBXGroup;
 			children = (
@@ -9937,7 +9926,6 @@
 				B616D82C2550C12E00712012 /* Extensions */,
 				B662B86F24F331D50089376A /* Model Mapping */,
 				6D60256228F8945D00FF9767 /* Protocols */,
-				5DD4B350257DFE9300A01306 /* RequestDelegate */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -13730,7 +13718,6 @@
 				2F4291E6257F2CDC00EDF780 /* MEGARecentActionBucket+MNZCategory.m in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
-				5DF0E3D22563A8540052CC95 /* MEGAResultRequestDelegate.swift in Sources */,
 				5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */,
 				942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */,
 				B6880DAC298394390072AF7D /* MEGASdk+Sendable.swift in Sources */,
