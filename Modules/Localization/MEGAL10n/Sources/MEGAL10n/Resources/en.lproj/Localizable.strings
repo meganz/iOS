@@ -3692,6 +3692,10 @@
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="Host didn’t let you in";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
 "meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="Host didn’t respond";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="There is no response to your request to join the meeting. You'll be removed from the waiting room. Try joining again later.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="OK, got it";
 /* Call waiting room alert message text to notify host that someone is waiting to join */

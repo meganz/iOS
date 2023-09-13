@@ -2,7 +2,7 @@ import SwiftUI
 
 struct WaitingRoomControlsView: View {
     @Binding var isVideoEnabled: Bool
-    @Binding var isMicrophoneEnabled: Bool
+    @Binding var isMicrophoneMuted: Bool
     @Binding var isSpeakerEnabled: Bool
     
     var body: some View {
@@ -10,9 +10,9 @@ struct WaitingRoomControlsView: View {
             WaitingRoomControl(iconOff: Asset.Images.Chat.Calls.cameraOff.name,
                                iconOn: Asset.Images.Chat.Calls.cameraOn.name,
                                enabled: $isVideoEnabled)
-            WaitingRoomControl(iconOff: Asset.Images.Chat.Calls.micOff.name,
-                               iconOn: Asset.Images.Chat.Calls.micOn.name,
-                               enabled: $isMicrophoneEnabled)
+            WaitingRoomControl(iconOff: Asset.Images.Chat.Calls.micOn.name,
+                               iconOn: Asset.Images.Chat.Calls.micOff.name,
+                               enabled: $isMicrophoneMuted)
             WaitingRoomControl(iconOff: Asset.Images.Chat.Calls.speakerOff.name,
                                iconOn: Asset.Images.Chat.Calls.speakerOn.name,
                                enabled: $isSpeakerEnabled)
@@ -40,7 +40,7 @@ struct WaitingRoomControl: View {
 struct WaitingRoomControlsView_Previews: PreviewProvider {
     static var previews: some View {
         WaitingRoomControlsView(isVideoEnabled: .constant(false),
-                                isMicrophoneEnabled: .constant(false),
+                                isMicrophoneMuted: .constant(true),
                                 isSpeakerEnabled: .constant(true))
             .background(Color.black)
             .previewLayout(.sizeThatFits)

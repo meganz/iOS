@@ -5628,9 +5628,9 @@
 		248A03192A79025200F183A2 /* Shared Controls */ = {
 			isa = PBXGroup;
 			children = (
+				24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */,
 				24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */,
 				248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */,
-				24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */,
 			);
 			path = "Shared Controls";
 			sourceTree = "<group>";
@@ -10245,6 +10245,7 @@
 		B6730B0B2735F46D00A9CF5F /* Shared Controls */ = {
 			isa = PBXGroup;
 			children = (
+				24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */,
 				25E2717C2A3FE96800DDB678 /* AVPlayerManager.swift */,
 				25E2717E2A40099800DDB678 /* MEGAAVViewController+Combine.swift */,
 				410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */,
@@ -10253,7 +10254,6 @@
 				243A1ADF2A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift */,
 				5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */,
 				5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */,
-				24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */,
 				C45390D62565BB840026F215 /* MEGASelectedButton.swift */,
 				C45390CC256587BF0026F215 /* MEGASlider.swift */,
 				C45F97FC264A9FA60004DCA5 /* MyAvatarManager.swift */,
@@ -12997,6 +12997,7 @@
 				834D865C2913F2F000CECEC0 /* ApplyToAllView.swift in Sources */,
 				245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */,
 				24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */,
+				24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */,
 				BFAB113F23CEA5C300BCE72D /* AssetDownloader.swift in Sources */,
 				B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */,
 				B68BAEC3221DEA7600FF6FCD /* AssetIdentifierInfo.m in Sources */,
@@ -14337,7 +14338,6 @@
 				5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */,
 				5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */,
 				5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */,
-				24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */,
 				5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */,
 				5D64660424890A34006030A5 /* ThemeColor.swift in Sources */,
 				B6B9D91329492CC100ABC161 /* ThumbnailEntity+Mapping.swift in Sources */,
@@ -14829,7 +14829,6 @@
 				32EC282129BAC1D400D1D18D /* AlbumCoverPickerPhotoCellViewModelTests.swift in Sources */,
 				32EC280129B9883700D1D18D /* AlbumCoverPickerViewModelTests.swift in Sources */,
 				328FDCF829121D3700E5990A /* AlbumListViewModelTests.swift in Sources */,
-				24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */,
 				0E10BD602A7231EE00AE2980 /* AlbumNameUseCase+AdditionsTests.swift in Sources */,
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
@@ -14841,6 +14840,7 @@
 				B6D54830283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift in Sources */,
 				B6D0B368283DC2AE0020C64D /* AppGroupContainerTests.swift in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
+				24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */,
 				24A6ADD92A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift in Sources */,
 				24A6ADD62A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift in Sources */,
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,

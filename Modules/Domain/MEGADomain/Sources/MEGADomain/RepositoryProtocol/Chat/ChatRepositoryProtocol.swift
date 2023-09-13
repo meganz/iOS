@@ -23,4 +23,5 @@ public protocol ChatRepositoryProtocol: RepositoryProtocol {
     func monitorChatPrivateModeUpdate(forChatId chatId: HandleEntity) -> AnyPublisher<ChatRoomEntity, Never>
     func chatCall(for chatId: HandleEntity) -> CallEntity?
     func isCallActive(for chatId: HandleEntity) -> Bool
+    func isActiveWaitingRoom(for chatId: HandleEntity) -> Bool
 }

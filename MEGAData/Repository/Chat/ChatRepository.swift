@@ -149,6 +149,10 @@ public final class ChatRepository: ChatRepositoryProtocol {
         return call.isActiveCall
     }
     
+    public func isActiveWaitingRoom(for chatId: HandleEntity) -> Bool {
+        chatSDK.chatCall(forChatId: chatId)?.isActiveWaitingRoom == true
+    }
+    
     public func myFullName() -> String? {
         chatSDK.myFullname
     }

@@ -11,6 +11,7 @@ import MEGADomain
     private var enableRTCAudioExternally = false
     private var startCallRequestDelegate: MEGAChatStartCallRequestDelegate?
     private var answerCallRequestDelegate: MEGAChatAnswerCallRequestDelegate?
+    private var answerCallChatRequestDelegate: ChatRequestDelegate?
     
     private var megaCallManager: MEGACallManager? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
@@ -140,15 +141,64 @@ import MEGADomain
                     self.enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
                 }
             }
-            self.answerCallRequestDelegate = MEGAChatAnswerCallRequestDelegate { error in
+            self.answerCallRequestDelegate = MEGAChatAnswerCallRequestDelegate { [weak self] error in
                 if error.type == .MEGAChatErrorTypeOk {
-                    self.notifyStartCallToCallKit(chatId: chatId)
+                    self?.notifyStartCallToCallKit(chatId: chatId)
                 }
                 delegate.completion(error)
             }
             guard let answerCallRequestDelegate = self.answerCallRequestDelegate else { return }
             self.chatSdk.setChatVideoInDevices("Front Camera")
             self.chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallRequestDelegate)
+        }
+    }
+    
+    func answerCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, completion: @escaping MEGAChatRequestCompletion) {
+        let group = DispatchGroup()
+        
+        group.enter()
+        chatOnlineListener = ChatOnlineListener(
+            chatId: chatId,
+            sdk: chatSdk
+        ) { [weak self] chatId in
+            guard let self else { return }
+            chatOnlineListener = nil
+            MEGALogDebug("2: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
+            group.leave()
+        }
+        
+        group.enter()
+        callAvailabilityListener = CallAvailabilityListener(
+            chatId: chatId,
+            sdk: self.chatSdk
+        ) { [weak self] chatId, call  in
+            guard let self else { return }
+            callAvailabilityListener = nil
+            MEGALogDebug("3: CallActionManager: Call is now available for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") - \(call)")
+            group.leave()
+        }
+        
+        group.notify(queue: .main) { [self] in
+            if let providerDelegate, providerDelegate.isAudioSessionActive {
+                configureAudioSessionForStartCall(chatId: chatId)
+            } else {
+                if disableRTCAudio() {
+                    enableRTCAudioExternally = true
+                    enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
+                }
+            }
+            answerCallChatRequestDelegate = ChatRequestDelegate { [weak self] requestCompletion in
+                switch requestCompletion {
+                case .success(let request):
+                    self?.notifyStartCallToCallKit(chatId: chatId)
+                    completion(.success(request))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+            guard let answerCallChatRequestDelegate else { return }
+            chatSdk.setChatVideoInDevices("Front Camera")
+            chatSdk.answerChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallChatRequestDelegate)
         }
     }
     
