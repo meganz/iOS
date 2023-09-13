@@ -16,4 +16,13 @@ extension MEGAChatCall {
             return false
         }
     }
+    
+    var isActiveWaitingRoom: Bool {
+        switch status {
+        case .connecting, .waitingRoom:
+            return true
+        default:
+            return false
+        }
+    }
 }

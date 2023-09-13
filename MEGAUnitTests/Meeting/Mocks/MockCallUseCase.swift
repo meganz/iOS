@@ -49,11 +49,20 @@ final class MockCallUseCase: CallUseCaseProtocol {
     }
     
     func call(for chatId: HandleEntity) -> CallEntity? {
-        return call
+        call
     }
     
     func answerCall(for chatId: HandleEntity, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(answerCallCompletion)
+    }
+    
+    func answerCall(for chatId: MEGADomain.HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+        switch answerCallCompletion {
+        case .success(let callEntity):
+            return callEntity
+        case .failure(let failure):
+            throw failure
+        }
     }
     
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {

@@ -68,8 +68,8 @@ struct WaitingRoomView: View {
                 isVideoEnabled: $viewModel.isVideoEnabled.onChange { enable in
                     viewModel.enableLocalVideo(enabled: enable)
                 },
-                isMicrophoneEnabled: $viewModel.isMicrophoneEnabled.onChange { enable in
-                    viewModel.enableLocalMicrophone(enabled: enable)
+                isMicrophoneMuted: $viewModel.isMicrophoneMuted.onChange { mute in
+                    viewModel.muteLocalMicrophone(mute: mute)
                 },
                 isSpeakerEnabled: $viewModel.isSpeakerEnabled.onChange { enable in
                     viewModel.enableLoudSpeaker(enabled: enable)

@@ -1,5 +1,7 @@
+import ChatRepo
 import Combine
 import MEGADomain
+import MEGASwift
 
 final class CallRepository: NSObject, CallRepositoryProtocol {
 
@@ -69,6 +71,32 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
         
         callActionManager.answerCall(chatId: chatId, enableVideo: false, enableAudio: true, delegate: delegate)
+    }
+    
+    func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+        return try await withAsyncThrowingValue { completion in
+            callActionManager.answerCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio) { [weak self] result in
+                switch result {
+                case .success:
+                    guard let self,
+                          let megaChatCall = chatSdk.chatCall(forChatId: chatId) else {
+                        completion(.failure(CallErrorEntity.generic))
+                        return
+                    }
+                    let callEntity = megaChatCall.toCallEntity()
+                    call = callEntity
+                    callId = callEntity.callId
+                    completion(.success(callEntity))
+                case .failure(let error):
+                    switch error.type {
+                    case .MEGAChatErrorTooMany:
+                        completion(.failure(CallErrorEntity.tooManyParticipants))
+                    default:
+                        completion(.failure(CallErrorEntity.generic))
+                    }
+                }
+            }
+        }
     }
     
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {

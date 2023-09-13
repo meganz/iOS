@@ -12,13 +12,15 @@ protocol WaitingRoomViewRouting: Routing {
     func showVideoPermissionError()
     func showAudioPermissionError()
     func showHostDenyAlert(leaveAction: @escaping () -> Void)
-    func hostAllowToJoin()
+    func showHostDidNotRespondAlert(leaveAction: @escaping () -> Void)
+    func openCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool)
 }
 
 final class WaitingRoomViewModel: ObservableObject {
     private let scheduledMeeting: ScheduledMeetingEntity
     private let router: any WaitingRoomViewRouting
     private let chatUseCase: any ChatUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
     private let meetingUseCase: any MeetingCreatingUseCaseProtocol
@@ -46,7 +48,7 @@ final class WaitingRoomViewModel: ObservableObject {
     @Published private(set) var userAvatar: UIImage?
     @Published private(set) var videoImage: UIImage?
     @Published var isVideoEnabled = false
-    @Published var isMicrophoneEnabled = false
+    @Published var isMicrophoneMuted = true
     @Published var isSpeakerEnabled = true
     @Published var screenSize: CGSize = .zero {
         didSet {
@@ -71,23 +73,20 @@ final class WaitingRoomViewModel: ObservableObject {
     
     private(set) var isLandscape: Bool = false
     
-    private var call: CallEntity? {
-        callUseCase.call(for: scheduledMeeting.chatId)
-    }
-    private var isMeetingStart: Bool {
-        call != nil
-    }
-    private var isCallActive: Bool {
-        chatUseCase.isCallActive(for: scheduledMeeting.chatId)
-    }
+    private var call: CallEntity? { callUseCase.call(for: scheduledMeeting.chatId) }
+    private var isMeetingStart: Bool { call != nil }
+    private var isActiveWaitingRoom: Bool { chatUseCase.isActiveWaitingRoom(for: scheduledMeeting.chatId) }
+    private var chatId: HandleEntity { scheduledMeeting.chatId }
     
     private var appDidBecomeActiveSubscription: AnyCancellable?
     private var appWillResignActiveSubscription: AnyCancellable?
+    private var onCallUpdateSubscription: AnyCancellable?
     private var subscriptions = Set<AnyCancellable>()
     
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: some WaitingRoomViewRouting,
          chatUseCase: some ChatUseCaseProtocol,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
          callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
          meetingUseCase: some MeetingCreatingUseCaseProtocol,
@@ -104,6 +103,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatUseCase = chatUseCase
+        self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
         self.callCoordinatorUseCase = callCoordinatorUseCase
         self.meetingUseCase = meetingUseCase
@@ -133,7 +133,7 @@ final class WaitingRoomViewModel: ObservableObject {
         let endDate = scheduledMeeting.endDate
         
         let timeFormatter = DateFormatter.timeShort()
-
+        
         let weekDayString = DateFormatter.fromTemplate("E").localisedString(from: startDate)
         let startDateString = DateFormatter.fromTemplate("ddMMM").localisedString(from: startDate)
         let startTimeString = timeFormatter.localisedString(from: startDate)
@@ -143,23 +143,49 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     func enableLocalVideo(enabled: Bool) {
-        checkForVideoPermission {
+        checkForVideoPermission { [weak self] in
+            guard let self else { return }
             if enabled {
-                self.localVideoUseCase.openVideoDevice { [weak self] _ in
+                localVideoUseCase.openVideoDevice { [weak self] _ in
                     guard let self else { return }
                     localVideoUseCase.addLocalVideo(for: MEGAInvalidHandle, callbacksDelegate: self)
                 }
+                if isActiveWaitingRoom {
+                    localVideoUseCase.enableLocalVideo(for: self.chatId) { [weak self] result in
+                        guard let self else { return }
+                        switch result {
+                        case .success:
+                            isVideoEnabled = true
+                        case .failure:
+                            MEGALogDebug("Error enabling local video")
+                        }
+                    }
+                }
             } else {
-                self.localVideoUseCase.releaseVideoDevice { [weak self]  _ in
+                localVideoUseCase.releaseVideoDevice { [weak self]  _ in
                     guard let self else { return }
                     localVideoUseCase.removeLocalVideo(for: MEGAInvalidHandle, callbacksDelegate: self)
+                }
+                if isActiveWaitingRoom {
+                    localVideoUseCase.disableLocalVideo(for: self.chatId) { [weak self] result in
+                        guard let self else { return }
+                        switch result {
+                        case .success:
+                            isVideoEnabled = false
+                        case .failure:
+                            MEGALogDebug("Error disabling local video")
+                        }
+                    }
                 }
             }
         }
     }
     
-    func enableLocalMicrophone(enabled: Bool) {
-        checkForAudioPermission {}
+    func muteLocalMicrophone(mute: Bool) {
+        checkForAudioPermission {
+            guard let call = self.call else { return }
+            self.callCoordinatorUseCase.muteUnmuteCall(call, muted: mute)
+        }
     }
     
     func enableLoudSpeaker(enabled: Bool) {
@@ -193,7 +219,9 @@ final class WaitingRoomViewModel: ObservableObject {
     
     func calculateVideoSize() -> CGSize {
         let videoAspectRatio = isLandscape ? 424.0 / 236.0 : 236.0 / 424.0
-        let videoHeight = screenSize.height - (isLandscape ? 66.0 : 332.0)
+        let verticalPadding = isLandscape ? 66.0 : 332.0
+        let tmpHeight = screenSize.height - verticalPadding
+        let videoHeight = tmpHeight > 0 ? tmpHeight : min(screenSize.height, screenSize.width)
         let videoWidth = videoHeight * videoAspectRatio
         return CGSize(width: videoWidth, height: videoHeight)
     }
@@ -238,15 +266,24 @@ final class WaitingRoomViewModel: ObservableObject {
                 self?.removeRouteChangedListener()
             }
         
-        callUseCase
+        onCallUpdateSubscription = callUseCase
             .onCallUpdate()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] call in
                 guard let self,
-                      call.chatId == scheduledMeeting.chatId,
+                      call.chatId == chatId,
                       viewState != .guestJoin && viewState != .guestJoining else { return }
-                updateCallStatus()
-            }.store(in: &subscriptions)
+                if call.waitingRoomStatus == .allowed {
+                    goToCallUI(for: call)
+                } else if call.waitingRoomStatus == .notAllowed && call.termCodeType == .kicked {
+                    showHostDenyAlert()
+                } else if call.waitingRoomStatus == .notAllowed && call.termCodeType == .waitingRoomTimeout {
+                    showHostDidNotRespondAlert()
+                } else {
+                    updateCallStatus()
+                }
+            }
+        onCallUpdateSubscription?.store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
@@ -343,14 +380,14 @@ final class WaitingRoomViewModel: ObservableObject {
         }
     }
     
-    private func disableLocalVideo() {
+    private func removeLocalVideo() {
         if isVideoEnabled {
             localVideoUseCase.removeLocalVideo(for: MEGAInvalidHandle, callbacksDelegate: self)
         }
     }
     
     private func dismiss() {
-        disableLocalVideo()
+        removeLocalVideo()
         callUseCase.stopListeningForCall()
         router.dismiss { [weak self] in
             guard let self else { return }
@@ -361,15 +398,38 @@ final class WaitingRoomViewModel: ObservableObject {
         }
     }
     
+    private func goToCallUI(for call: CallEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
+        router.openCallUI(for: call, in: chatRoom, isSpeakerEnabled: isSpeakerEnabled)
+    }
+    
+    private func showHostDenyAlert() {
+        showRespondAlert(router.showHostDenyAlert)
+    }
+    
+    private func showHostDidNotRespondAlert() {
+        showRespondAlert(router.showHostDidNotRespondAlert)
+    }
+
+    private func showRespondAlert(_ block: (@escaping () -> Void) -> Void) {
+        onCallUpdateSubscription?.cancel()
+        callUseCase.stopListeningForCall()
+        dismissCall()
+        block { [weak self] in
+            guard let self else { return }
+            dismiss()
+        }
+    }
+
     // MARK: - Chat and call related methods
     
     private func updateCallStatus() {
         if isMeetingStart {
-            if !isCallActive {
+            if !isActiveWaitingRoom {
                 answerCall()
             }
         } else {
-            if isCallActive {
+            if isActiveWaitingRoom {
                 dismissCall()
             }
             viewState = .waitForHostToStart
@@ -377,12 +437,12 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func answerCall() {
-        callUseCase.answerCall(for: scheduledMeeting.chatId) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
+        Task { @MainActor in
+            do {
+                _ = try await callUseCase.answerCall(for: chatId, enableVideo: isVideoEnabled, enableAudio: true)
                 viewState = .waitForHostToLetIn
-            case .failure:
+                muteLocalMicrophone(mute: isMicrophoneMuted)
+            } catch {
                 MEGALogDebug("Cannot answer call")
             }
         }
@@ -412,7 +472,7 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func joinChatCall() {
-        meetingUseCase.joinChat(forChatId: scheduledMeeting.chatId,
+        meetingUseCase.joinChat(forChatId: chatId,
                                 userHandle: chatUseCase.myUserHandle()
         ) { [weak self] result in
             guard let self else { return }

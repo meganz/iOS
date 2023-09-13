@@ -59,7 +59,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     
     func testViewState_onMeetingDidStartTransitsToMeetingNotStart_shouldChangeFromWaitForHostToLetInToWaitForHostToStart() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
-        let chatUseCase = MockChatUseCase(isCallActive: true)
+        let chatUseCase = MockChatUseCase(isActiveWaitingRoom: true)
         let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
         let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
         let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, chatUseCase: chatUseCase, callUseCase: callUseCase)
@@ -81,24 +81,6 @@ final class WaitingRoomViewModelTests: XCTestCase {
         sut.enableLoudSpeaker(enabled: false)
         
         XCTAssertEqual(audioSessionUseCase.disableLoudSpeaker_calledTimes, 1)
-    }
-    
-    func testLeaveButton_didTapLeaveButton_shouldPresentLeaveAlert() {
-        let router = MockWaitingRoomViewRouter()
-        let sut = WaitingRoomViewModel(router: router)
-        
-        sut.leaveButtonTapped()
-        
-        XCTAssertEqual(router.showLeaveAlert_calledTimes, 1)
-    }
-    
-    func testMeetingInfoButton_didTapMeetingInfoButton_shouldPresentMeetingInfo() {
-        let router = MockWaitingRoomViewRouter()
-        let sut = WaitingRoomViewModel(router: router)
-        
-        sut.infoButtonTapped()
-        
-        XCTAssertEqual(router.showMeetingInfo_calledTimes, 1)
     }
     
     func testCalculateVideoSize_portraitMode_shouldMatch() {
@@ -163,14 +145,14 @@ final class WaitingRoomViewModelTests: XCTestCase {
     }
     
     func testShowWaitingRoomMessage_whenWaitForHostToStart_shouldShow() {
-        let chatUseCase = MockChatUseCase(isCallActive: false)
+        let chatUseCase = MockChatUseCase(isActiveWaitingRoom: false)
         let sut = WaitingRoomViewModel(chatUseCase: chatUseCase)
         
         XCTAssertTrue(sut.showWaitingRoomMessage)
     }
     
     func testShowWaitingRoomMessage_whenWaitForHostToLetIn_shouldShow() {
-        let chatUseCase = MockChatUseCase(isCallActive: true)
+        let chatUseCase = MockChatUseCase(isActiveWaitingRoom: true)
         let sut = WaitingRoomViewModel(chatUseCase: chatUseCase)
         
         XCTAssertTrue(sut.showWaitingRoomMessage)
@@ -270,6 +252,78 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    // MARK: - Router related tests
+    
+    func testLeaveButton_didTapLeaveButton_shouldPresentLeaveAlert() {
+        let router = MockWaitingRoomViewRouter()
+        let sut = WaitingRoomViewModel(router: router)
+        
+        sut.leaveButtonTapped()
+        
+        XCTAssertEqual(router.showLeaveAlert_calledTimes, 1)
+    }
+    
+    func testMeetingInfoButton_didTapMeetingInfoButton_shouldPresentMeetingInfo() {
+        let router = MockWaitingRoomViewRouter()
+        let sut = WaitingRoomViewModel(router: router)
+        
+        sut.infoButtonTapped()
+        
+        XCTAssertEqual(router.showMeetingInfo_calledTimes, 1)
+    }
+    
+    func testShowHostDenyAlert_onHostDeny_shouldShowDenyAlert() {
+        let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
+        let router = MockWaitingRoomViewRouter()
+        let callEntity = CallEntity(status: .waitingRoom, chatId: 100, termCodeType: .kicked, waitingRoomStatus: .notAllowed)
+        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
+        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
+        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, callUseCase: callUseCase)
+
+        XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
+
+        callUpdateSubject.send(callEntity)
+        
+        evaluate {
+            router.showHostDenyAlert_calledTimes == 1
+        }
+    }
+    
+    func testShowHostDidNotRespondAlert_onTimeout_shouldHostDidNotRespondAlert() {
+        let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
+        let router = MockWaitingRoomViewRouter()
+        let callEntity = CallEntity(status: .waitingRoom, chatId: 100, termCodeType: .waitingRoomTimeout, waitingRoomStatus: .notAllowed)
+        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
+        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
+        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, callUseCase: callUseCase)
+
+        XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
+        
+        callUpdateSubject.send(callEntity)
+        
+        evaluate {
+            router.showHostDidNotRespondAlert_calledTimes == 1
+        }
+    }
+    
+    func testGoToCallUI_onHostAllowToJoin_shouldOpenCallUI() {
+        let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
+        let router = MockWaitingRoomViewRouter()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
+        let callEntity = CallEntity(status: .waitingRoom, chatId: 100, waitingRoomStatus: .allowed)
+        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
+        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
+        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, chatRoomUseCase: chatRoomUseCase, callUseCase: callUseCase)
+        
+        XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
+        
+        callUpdateSubject.send(callEntity)
+        
+        evaluate {
+            router.openCallUI_calledTimes == 1
+        }
+    }
+    
     // MARK: - Private methods
     
     private func sampleDate(from string: String = "12/06/2023 09:10") -> Date? {
@@ -293,6 +347,8 @@ final class WaitingRoomViewModelTests: XCTestCase {
     }
 }
 
+// MARK: - MockWaitingRoomViewRouter
+
 final class MockWaitingRoomViewRouter: WaitingRoomViewRouting {
     var dismiss_calledTimes = 0
     var showLeaveAlert_calledTimes = 0
@@ -300,7 +356,8 @@ final class MockWaitingRoomViewRouter: WaitingRoomViewRouting {
     var showVideoPermissionError_calledTimes = 0
     var showAudioPermissionError_calledTimes = 0
     var showHostDenyAlert_calledTimes = 0
-    var hostAllowToJoin_calledTimes = 0
+    var showHostDidNotRespondAlert_calledTimes = 0
+    var openCallUI_calledTimes = 0
     
     func dismiss(completion: (() -> Void)?) {
         dismiss_calledTimes += 1
@@ -326,7 +383,11 @@ final class MockWaitingRoomViewRouter: WaitingRoomViewRouting {
         showHostDenyAlert_calledTimes += 1
     }
     
-    func hostAllowToJoin() {
-        hostAllowToJoin_calledTimes += 1
+    func showHostDidNotRespondAlert(leaveAction: @escaping () -> Void) {
+        showHostDidNotRespondAlert_calledTimes += 1
+    }
+    
+    func openCallUI(for call: CallEntity, in chatRoom: ChatRoomEntity, isSpeakerEnabled: Bool) {
+        openCallUI_calledTimes += 1
     }
 }

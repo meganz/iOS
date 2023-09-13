@@ -9,6 +9,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     public var isExistingActiveCall: Bool
     public var isCallActive: Bool
     public var isCallInProgress: Bool
+    public var isActiveWaitingRoom: Bool
     public var activeCallEntity: CallEntity?
     public var statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never>
     public var chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never>
@@ -30,6 +31,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         isExistingActiveCall: Bool = false,
         isCallActive: Bool = false,
         isCallInProgress: Bool = false,
+        isActiveWaitingRoom: Bool = false,
         statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never> = PassthroughSubject<(HandleEntity, ChatStatusEntity), Never>(),
         chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never> =  PassthroughSubject<[ChatListItemEntity], Never>(),
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
@@ -45,6 +47,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.isExistingActiveCall = isExistingActiveCall
         self.isCallActive = isCallActive
         self.isCallInProgress = isCallInProgress
+        self.isActiveWaitingRoom = isActiveWaitingRoom
         self.statusChangePublisher = statusChangePublisher
         self.chatListItemUpdatePublisher = chatListItemUpdatePublisher
         self.chatCallStatusUpdatePublisher = chatCallStatusUpdatePublisher
@@ -152,5 +155,9 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
     
     public func isCallActive(for chatId: MEGADomain.HandleEntity) -> Bool {
         isCallActive
+    }
+    
+    public func isActiveWaitingRoom(for chatId: MEGADomain.HandleEntity) -> Bool {
+        isActiveWaitingRoom
     }
 }

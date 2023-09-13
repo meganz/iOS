@@ -6,7 +6,7 @@ import MEGARepo
 import MEGASDKRepo
 
 final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
-    private(set) var presenter: UIViewController?
+    private let presenter: UIViewController?
     private let scheduledMeeting: ScheduledMeetingEntity
     private weak var baseViewController: UIViewController?
     private let chatLink: String?
@@ -38,6 +38,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
             scheduledMeeting: scheduledMeeting,
             router: self,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             callCoordinatorUseCase: CallCoordinatorUseCase(),
             meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository(chatSdk: .shared, sdk: .shared, callActionManager: .shared)),
@@ -58,7 +59,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     }
     
     func start() {
-        guard let presenter = presenter else { return }
+        guard let presenter else { return }
         let nav = UINavigationController(rootViewController: build())
         nav.overrideUserInterfaceStyle = .dark
         nav.modalPresentationStyle = .fullScreen
@@ -107,7 +108,26 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         baseViewController.present(alertController, animated: true)
     }
     
-    func hostAllowToJoin() {
-        
+    func showHostDidNotRespondAlert(leaveAction: @escaping () -> Void) {
+        guard let baseViewController else { return }
+        let alertController = UIAlertController(title: Strings.Localizable.Meetings.WaitingRoom.Alert.hostDidNotRespond, message: Strings.Localizable.Meetings.WaitingRoom.Alert.thereIsNoResponseToYourResquestToJoinTheMeeting, preferredStyle: .alert)
+        let leaveAction = UIAlertAction(title: Strings.Localizable.Meetings.WaitingRoom.Alert.okGotIt, style: .default) { _ in
+            leaveAction()
+        }
+        alertController.addAction(leaveAction)
+        alertController.preferredAction = leaveAction
+        baseViewController.present(alertController, animated: true)
+    }
+    
+    func openCallUI(for call: CallEntity,
+                    in chatRoom: ChatRoomEntity,
+                    isSpeakerEnabled: Bool) {
+        guard let presenter else { return }
+        baseViewController?.dismiss(animated: true)
+        MeetingContainerRouter(presenter: presenter,
+                               chatRoom: chatRoom,
+                               call: call,
+                               isSpeakerEnabled: isSpeakerEnabled)
+        .start()
     }
 }
