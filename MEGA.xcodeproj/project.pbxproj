@@ -728,7 +728,6 @@
 		774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */; };
 		774941E62416552600FC5CB6 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		774941E724165F3A00FC5CB6 /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
-		7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */; };
 		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
 		7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77597009219EB85300B31671 /* NotificationsTableViewController.m */; };
@@ -3279,8 +3278,6 @@
 		7747B2D7208623660011814E /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		77485F82207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetPublicNodeRequestDelegate.h; path = API/Requests/MEGAGetPublicNodeRequestDelegate.h; sourceTree = "<group>"; };
 		77485F83207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPublicNodeRequestDelegate.m; path = API/Requests/MEGAGetPublicNodeRequestDelegate.m; sourceTree = "<group>"; };
-		7754ED9720B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGALoginToFolderLinkRequestDelegate.h; path = API/Requests/MEGALoginToFolderLinkRequestDelegate.h; sourceTree = "<group>"; };
-		7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGALoginToFolderLinkRequestDelegate.m; path = API/Requests/MEGALoginToFolderLinkRequestDelegate.m; sourceTree = "<group>"; };
 		7754ED9A20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAFetchNodesRequestDelegate.h; path = API/Requests/MEGAFetchNodesRequestDelegate.h; sourceTree = "<group>"; };
 		7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAFetchNodesRequestDelegate.m; path = API/Requests/MEGAFetchNodesRequestDelegate.m; sourceTree = "<group>"; };
 		775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactLinkQRViewController.h; sourceTree = "<group>"; };
@@ -9651,8 +9648,6 @@
 				5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */,
 				A8AA4F771ED42B9E00E7BA23 /* MEGALoginRequestDelegate.h */,
 				A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */,
-				7754ED9720B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.h */,
-				7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */,
 				5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */,
 				5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */,
 				5B14A41420D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.h */,
@@ -10744,7 +10739,6 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				243ABB492AB0420500FF4A56 /* Node */,
 				B6D5482E283E2AF000D7302F /* Account */,
 				B58431A42AA8BC130081BB30 /* Ads */,
 				328FDCF629121D2200E5990A /* Album */,
@@ -10763,6 +10757,7 @@
 				BFF0EE2E2630E34300FAEFF9 /* Meeting */,
 				5D52C744250C4EED00286A43 /* Mocks */,
 				8361D9EE283E7B2B0001FAC1 /* NameCollision */,
+				243ABB492AB0420500FF4A56 /* Node */,
 				837B9C0824781B1600D409B4 /* NodeActions */,
 				12B1E58128751FAA00D23A58 /* PageStayTimeTracker */,
 				9495818C2A43295F0071573B /* Permissions */,
@@ -13791,7 +13786,6 @@
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
 				A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */,
-				7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */,
 				5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
 				947C6CB52A5D40BF00CF929E /* MEGANavigationController+Additions.swift in Sources */,
@@ -14927,7 +14921,6 @@
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
-				24B261C22AB16A06006F23BE /* CancellableTransferFactoryTests.swift in Sources */,
 				B58431A62AA8BC2B0081BB30 /* AdsSlotViewModelTests.swift in Sources */,
 				244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */,
 				246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */,
@@ -14941,7 +14934,6 @@
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
 				94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */,
-				243E92062AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,
 				943649E02A4D83DE006CE8B8 /* AlertModel+Equatable.swift in Sources */,
 				12B1E57A2874FFEF00D23A58 /* AnalyticsRepositoryTests.swift in Sources */,
@@ -14953,6 +14945,7 @@
 				24A6ADD92A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift in Sources */,
 				24A6ADD62A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift in Sources */,
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
+				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
 				24A6ADDC2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift in Sources */,
 				C45A2E1925D2E00400915A83 /* AudioPlayerViewModelTests.swift in Sources */,
@@ -14964,14 +14957,15 @@
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
 				BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
-				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
+				24B261C22AB16A06006F23BE /* CancellableTransferFactoryTests.swift in Sources */,
+				243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */,
+				243E92062AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift in Sources */,
 				83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */,
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6FB5F8429A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift in Sources */,
 				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,
-				243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */,
 				990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */,
 				990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */,
 				BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */,
