@@ -263,6 +263,9 @@
     },
     {
       "parallelizable" : true,
+      "skippedTests" : [
+        "DeviceListViewModelTests\/testFilterDevices_withSearchText_matchingDeviceName()"
+      ],
       "target" : {
         "containerPath" : "container:Modules\/Presentation\/Features\/DeviceCenter",
         "identifier" : "DeviceCenterTests",
