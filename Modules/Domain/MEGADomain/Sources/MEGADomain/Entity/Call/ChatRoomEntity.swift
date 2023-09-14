@@ -50,15 +50,38 @@ public struct ChatRoomEntity: Sendable {
     public let hasCustomTitle: Bool
     public let isPublicChat: Bool
     public let isPreview: Bool
-    public let isactive: Bool
+    public let isActive: Bool
     public let isArchived: Bool
+    public let isMeeting: Bool
     public let chatType: ChatType
     public let peers: [Peer]
     public let userHandle: HandleEntity
     public let isOpenInviteEnabled: Bool
     public let isWaitingRoomEnabled: Bool
     
-    public init(chatId: HandleEntity, ownPrivilege: ChatRoomPrivilegeEntity, changeType: ChangeType?, peerCount: UInt, authorizationToken: String, title: String?, unreadCount: Int, userTypingHandle: HandleEntity, retentionTime: UInt, creationTimeStamp: UInt64, hasCustomTitle: Bool, isPublicChat: Bool, isPreview: Bool, isactive: Bool, isArchived: Bool, chatType: ChatType, peers: [Peer], userHandle: HandleEntity, isOpenInviteEnabled: Bool, isWaitingRoomEnabled: Bool) {
+    public init(
+        chatId: HandleEntity,
+        ownPrivilege: ChatRoomPrivilegeEntity,
+        changeType: ChangeType?,
+        peerCount: UInt,
+        authorizationToken: String,
+        title: String?,
+        unreadCount: Int,
+        userTypingHandle: HandleEntity,
+        retentionTime: UInt,
+        creationTimeStamp: UInt64,
+        hasCustomTitle: Bool,
+        isPublicChat: Bool,
+        isPreview: Bool,
+        isActive: Bool,
+        isArchived: Bool,
+        isMeeting: Bool,
+        chatType: ChatType,
+        peers: [Peer],
+        userHandle: HandleEntity,
+        isOpenInviteEnabled: Bool,
+        isWaitingRoomEnabled: Bool
+    ) {
         self.chatId = chatId
         self.ownPrivilege = ownPrivilege
         self.changeType = changeType
@@ -72,8 +95,9 @@ public struct ChatRoomEntity: Sendable {
         self.hasCustomTitle = hasCustomTitle
         self.isPublicChat = isPublicChat
         self.isPreview = isPreview
-        self.isactive = isactive
+        self.isActive = isActive
         self.isArchived = isArchived
+        self.isMeeting = isMeeting
         self.chatType = chatType
         self.peers = peers
         self.userHandle = userHandle

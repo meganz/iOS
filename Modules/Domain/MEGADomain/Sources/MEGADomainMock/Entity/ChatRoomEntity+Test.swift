@@ -15,14 +15,38 @@ public extension ChatRoomEntity {
          hasCustomTitle: Bool = false,
          isPublicChat: Bool = false,
          isPreview: Bool = false,
-         isactive: Bool = false,
+         isActive: Bool = false,
          isArchived: Bool = false,
+         isMeeting: Bool = false,
          chatType: ChatType = .oneToOne,
          peers: [ChatRoomEntity.Peer] = [],
          userHandle: HandleEntity = .invalid,
          isOpenInviteEnabled: Bool = false,
          isWaitingRoomEnabled: Bool = false,
-         isTesting: Bool = true) {
-        self.init(chatId: chatId, ownPrivilege: ownPrivilege, changeType: changeType, peerCount: peerCount, authorizationToken: "", title: title, unreadCount: unreadCount, userTypingHandle: userTypingHandle, retentionTime: retentionTime, creationTimeStamp: creationTimeStamp, hasCustomTitle: hasCustomTitle, isPublicChat: isPublicChat, isPreview: isPreview, isactive: isactive, isArchived: isArchived, chatType: chatType, peers: peers, userHandle: userHandle, isOpenInviteEnabled: isOpenInviteEnabled, isWaitingRoomEnabled: isWaitingRoomEnabled)
+         isTesting: Bool = true
+    ) {
+        self.init(
+            chatId: chatId,
+            ownPrivilege: ownPrivilege,
+            changeType: changeType,
+            peerCount: peerCount,
+            authorizationToken: "",
+            title: title,
+            unreadCount: unreadCount,
+            userTypingHandle: userTypingHandle,
+            retentionTime: retentionTime,
+            creationTimeStamp: creationTimeStamp,
+            hasCustomTitle: hasCustomTitle,
+            isPublicChat: isPublicChat,
+            isPreview: isPreview,
+            isActive: isActive,
+            isArchived: isArchived,
+            isMeeting: isMeeting,
+            chatType: chatType,
+            peers: peers,
+            userHandle: userHandle,
+            isOpenInviteEnabled: isOpenInviteEnabled,
+            isWaitingRoomEnabled: isWaitingRoomEnabled
+        )
     }
 }
