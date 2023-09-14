@@ -1,4 +1,3 @@
-
 import Foundation
 import MEGADomain
 import MEGARepo
@@ -6,11 +5,38 @@ import MEGASDKRepo
 
 final class CancellableTransferRouter: NSObject, CancellableTransferRouting, TransferWidgetRouting {
     
+    struct Factory {
+        let presenter: UIViewController
+        let node: MEGANode
+        let transfers: [CancellableTransfer]
+        let isNodeFromFolderLink: Bool
+        let messageId: HandleEntity?
+        let chatId: HandleEntity?
+        
+        func make() -> CancellableTransferRouter {
+            let transferType: () -> CancellableTransferType = {
+                if let messageId = messageId, let chatId = chatId, messageId != .invalid || chatId != .invalid {
+                    return .downloadChat
+                } else {
+                    return .download
+                }
+            }
+
+            return .init(
+                presenter: presenter,
+                transfers: transfers,
+                transferType: transferType(),
+                isFolderLink: isNodeFromFolderLink
+            )
+
+        }
+    }
+    
     private weak var presenter: UIViewController?
     
-    private let transfers: [CancellableTransfer]
-    private let transferType: CancellableTransferType
-    private let isFolderLink: Bool
+    private(set) var transfers: [CancellableTransfer]
+    private(set) var transferType: CancellableTransferType
+    private(set) var isFolderLink: Bool
     private var wrapper: CancellableTransferControllerWrapper<CancellableTransferViewModel>?
 
     init(presenter: UIViewController, transfers: [CancellableTransfer], transferType: CancellableTransferType, isFolderLink: Bool = false) {
@@ -21,7 +47,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
+        let sdk = MEGASdk.shared
         let nodeRepository = NodeRepository.newRepo
         let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
         
@@ -29,7 +55,7 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
             router: self,
             uploadFileUseCase: UploadFileUseCase(uploadFileRepository: UploadFileRepository(sdk: sdk), fileSystemRepository: fileSystemRepository, nodeRepository: nodeRepository, fileCacheRepository: FileCacheRepository.newRepo),
             downloadNodeUseCase: DownloadNodeUseCase(
-                downloadFileRepository: DownloadFileRepository(sdk: sdk, sharedFolderSdk: isFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : nil),
+                downloadFileRepository: DownloadFileRepository(sdk: sdk, sharedFolderSdk: isFolderLink ? .sharedFolderLink : nil),
                 offlineFilesRepository: OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: sdk),
                 fileSystemRepository: fileSystemRepository,
                 nodeRepository: nodeRepository,

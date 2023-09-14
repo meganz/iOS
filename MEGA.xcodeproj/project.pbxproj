@@ -136,6 +136,8 @@
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
 		2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */; };
 		243A1AE02A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A1ADF2A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift */; };
+		243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */; };
+		243E92062AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */; };
 		243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */; };
 		244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */; };
 		245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */; };
@@ -159,6 +161,7 @@
 		24AB98302A78B84A006E101C /* MEGAAVViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */; };
 		24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */; };
 		24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */; };
+		24B261C22AB16A06006F23BE /* CancellableTransferFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */; };
 		24B6276F2A8F687E00AD588C /* NodeInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */; };
 		24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */; };
 		24BD7B082A36FD5F0052668B /* DeviceMetaDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */; };
@@ -2618,6 +2621,8 @@
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
 		2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewControllerTests.swift; sourceTree = "<group>"; };
 		243A1ADF2A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerLoadingDecorator.swift; sourceTree = "<group>"; };
+		243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouterFactoryTests.swift; sourceTree = "<group>"; };
+		243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CancellableTransferType+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+Additions.swift"; sourceTree = "<group>"; };
 		244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedTableViewControllerTests.swift; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2641,6 +2646,7 @@
 		24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerDelegate.swift; sourceTree = "<group>"; };
 		24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManager.swift; sourceTree = "<group>"; };
 		24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManagerTests.swift; sourceTree = "<group>"; };
+		24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferFactoryTests.swift; sourceTree = "<group>"; };
 		24B6276E2A8F687E00AD588C /* NodeInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		24BD7B052A36FD430052668B /* AppMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaDataFactory.swift; sourceTree = "<group>"; };
 		24BD7B072A36FD5F0052668B /* DeviceMetaDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaDataFactory.swift; sourceTree = "<group>"; };
@@ -5596,6 +5602,31 @@
 			path = BuildTools;
 			sourceTree = "<group>";
 		};
+		243ABB492AB0420500FF4A56 /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				243ABB4A2AB0421200FF4A56 /* Transfers */,
+			);
+			path = Node;
+			sourceTree = "<group>";
+		};
+		243ABB4A2AB0421200FF4A56 /* Transfers */ = {
+			isa = PBXGroup;
+			children = (
+				243ABB4B2AB0421A00FF4A56 /* CancellableTransfers */,
+			);
+			path = Transfers;
+			sourceTree = "<group>";
+		};
+		243ABB4B2AB0421A00FF4A56 /* CancellableTransfers */ = {
+			isa = PBXGroup;
+			children = (
+				24B261C02AB169F2006F23BE /* ViewEntity */,
+				243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */,
+			);
+			path = CancellableTransfers;
+			sourceTree = "<group>";
+		};
 		240D80F92AB1A1CB00FBD2C4 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -5654,6 +5685,15 @@
 				248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */,
 			);
 			path = "Shared Controls";
+			sourceTree = "<group>";
+		};
+		24B261C02AB169F2006F23BE /* ViewEntity */ = {
+			isa = PBXGroup;
+			children = (
+				24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */,
+				243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */,
+			);
+			path = ViewEntity;
 			sourceTree = "<group>";
 		};
 		24D59EDC2A8CD52900503F43 /* Mocks */ = {
@@ -10709,6 +10749,7 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				243ABB492AB0420500FF4A56 /* Node */,
 				B6D5482E283E2AF000D7302F /* Account */,
 				B58431A42AA8BC130081BB30 /* Ads */,
 				328FDCF629121D2200E5990A /* Album */,
@@ -14892,6 +14933,7 @@
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
+				24B261C22AB16A06006F23BE /* CancellableTransferFactoryTests.swift in Sources */,
 				B58431A62AA8BC2B0081BB30 /* AdsSlotViewModelTests.swift in Sources */,
 				244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */,
 				246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */,
@@ -14905,6 +14947,7 @@
 				328201A229AF071A00C0E841 /* AlbumNameValidatorTests.swift in Sources */,
 				3256C39529A8656C001B0280 /* AlbumSelectionTests.swift in Sources */,
 				94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */,
+				243E92062AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift in Sources */,
 				0E81A9A729B7E69D0004275D /* AlbumToolbarConfiguratorTests.swift in Sources */,
 				943649E02A4D83DE006CE8B8 /* AlertModel+Equatable.swift in Sources */,
 				12B1E57A2874FFEF00D23A58 /* AnalyticsRepositoryTests.swift in Sources */,
@@ -14934,6 +14977,7 @@
 				B6FB5F8429A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift in Sources */,
 				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,
+				243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */,
 				990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */,
 				990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */,
 				BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */,

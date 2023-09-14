@@ -177,18 +177,24 @@ class NodeActionViewControllerGenericDelegate:
             return
         }
         
-        if isNodeFromFolderLink {
-            let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
-            CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download, isFolderLink: isNodeFromFolderLink).start()
-        } else {
-            if let messageId = messageId, let chatId = chatId {
-                let transfer = CancellableTransfer(handle: node.handle, messageId: messageId, chatId: chatId, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat)
-                CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .downloadChat, isFolderLink: isNodeFromFolderLink).start()
-            } else {
-                let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
-                CancellableTransferRouter(presenter: viewController, transfers: [transfer], transferType: .download, isFolderLink: isNodeFromFolderLink).start()
-            }
-        }
+        let transferFactory = CancellableTransfer.Factory(
+            node: node,
+            isNodeFromFolderLink: isNodeFromFolderLink,
+            messageId: messageId,
+            chatId: chatId
+        )
+        let transfer = transferFactory.make()
+        
+        let routerFactory = CancellableTransferRouter.Factory(
+            presenter: viewController,
+            node: node,
+            transfers: [transfer],
+            isNodeFromFolderLink: isNodeFromFolderLink,
+            messageId: messageId,
+            chatId: chatId
+        )
+        let router = routerFactory.make()
+        router.start()
     }
     
     private func openShareFolderDialog(_ node: MEGANode, viewController: UIViewController) {
