@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, nullable) CloudDriveTableViewController *cdTableView;
 @property (nonatomic, strong, nullable) CloudDriveCollectionViewController *cdCollectionView;
+@property (nonatomic, strong, nullable) UIViewController *mdHostedController;
 
 @property (assign, nonatomic) BOOL allNodesSelected;
 @property (assign, nonatomic) BOOL shouldRemovePlayerDelegate;
@@ -54,9 +55,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *restoreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionsBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
+
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
 
 @property (strong, nonatomic) CloudDriveViewModel *viewModel;
+@property (weak, nonatomic) IBOutlet UIStackView *containerStackView;
 
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;

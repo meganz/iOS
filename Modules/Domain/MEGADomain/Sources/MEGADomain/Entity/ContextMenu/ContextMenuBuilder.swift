@@ -394,7 +394,13 @@ public final class ContextMenuBuilder {
                 displayActionsMenuChildren.append(filterMenu())
             }
         } else {
-            let menu = isViewInFolder ? [viewTypeMenu(), sortMenu()] : [selectMenu(), viewTypeMenu(), sortMenu()]
+            let menu: [CMElement]
+            if isViewInFolder || isSelectHidden {
+                menu = [viewTypeMenu(), sortMenu()]
+            } else {
+                menu = [selectMenu(), viewTypeMenu(), sortMenu()]
+            }
+            
             displayActionsMenuChildren.append(contentsOf: menu)
         }
         

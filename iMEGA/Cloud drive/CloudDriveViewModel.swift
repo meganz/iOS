@@ -1,7 +1,28 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 
-@objc final class CloudDriveViewModel: NSObject {
+enum CloudDriveAction: ActionType {
+    case toggleEditMode
+}
+
+@objc final class CloudDriveViewModel: NSObject, ViewModelType {
+    
+    enum Command: CommandType, Equatable {
+        case enterSelectionMode
+        case exitSelectionMode
+        case reloadNavigationBarItems
+    }
+    
+    var invokeCommand: ((Command) -> Void)?
+    
+    @objc private(set) var editModeActive = false
+    var isSelectionHidden = false {
+        didSet {
+            invokeCommand?(.reloadNavigationBarItems)
+        }
+    }
+    
     private let router = SharedItemsViewRouter()
     private let shareUseCase: (any ShareUseCaseProtocol)?
     
@@ -32,5 +53,18 @@ import MEGAL10n
         precondition(fileCount > .zero || folderCount > .zero, "If both file and folder count are zero, no files/folders are to be removed.  There is no need for an alert")
         guard fileCount > 1 else { return nil }
         return Strings.Localizable.removeNodeFromRubbishBinTitle
+    }
+    
+    func dispatch(_ action: CloudDriveAction) {
+        switch action {
+        case .toggleEditMode:
+            toggledEditMode()
+        }
+    }
+    
+    // MARK: Edit Mode
+    private func toggledEditMode() {
+        editModeActive.toggle()
+        invokeCommand?(editModeActive ? .enterSelectionMode : .exitSelectionMode)
     }
 }

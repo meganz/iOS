@@ -6,7 +6,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         switch action {
         case .download:
             download(nodes)
-            setEditMode(false)
+            toggledEditMode()
         case .copy:
             showBrowserNavigation(for: nodes, action: .copy)
         case .move:
@@ -17,20 +17,20 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .exportFile:
             let entityNodes = nodes.toNodeEntities()
             ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)
-            setEditMode(false)
+            toggledEditMode()
         case .shareFolder:
             viewModel.openShareFolderDialog(forNodes: nodes)
         case .shareLink, .manageLink:
             presentGetLink(for: nodes)
-            setEditMode(false)
+            toggledEditMode()
         case .sendToChat:
             showSendToChat(nodes)
-            setEditMode(false)
+            toggledEditMode()
         case .removeLink:
             ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
                 SVProgressHUD.show()
             }, onActionFinish: { [weak self] result in
-                self?.setEditMode(false)
+                self?.toggledEditMode()
                 self?.showRemoveLinkResultMessage(result)
             }).start()
         case .saveToPhotos:
@@ -41,7 +41,6 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
-        resetEditingModeIfNeeded()
         
         switch action {
         case .download:
@@ -110,14 +109,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         default: break
         }
     }
-    
-    private func resetEditingModeIfNeeded() {
-        let isStillInEditingThumbnailState = (!isListViewModeSelected()) && (cdCollectionView?.collectionView?.allowsMultipleSelection == true)
-        if isStillInEditingThumbnailState {
-            setEditMode(false)
-        }
-    }
-    
+        
     func download(_ nodes: [MEGANode]) {
         let transfers = nodes.map { CancellableTransfer(handle: $0.handle, name: nil, appData: nil, priority: false, isFile: $0.isFile(), type: .download) }
         CancellableTransferRouter(presenter: self, transfers: transfers, transferType: .download).start()

@@ -27,6 +27,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                   isRubbishBinFolder: displayMode == .rubbishBin,
                                   isViewInFolder: isFromViewInFolder,
                                   isIncomingShareChild: isIncomingSharedRootChild,
+                                  isSelectHidden: viewModel.isSelectionHidden,
                                   isOutShare: parentNode.isOutShare(),
                                   isExported: parentNode.isExported(),
                                   showMediaDiscovery: shouldShowMediaDiscovery(),
@@ -102,8 +103,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .select:
-            guard let enableEditing = cdTableView?.tableView?.isEditing ?? cdCollectionView?.collectionView?.allowsMultipleSelection else { return }
-            setEditMode(!enableEditing)
+            toggledEditMode()
         case .thumbnailView:
             changeModeToThumbnail()
         case .listView:

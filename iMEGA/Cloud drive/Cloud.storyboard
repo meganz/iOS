@@ -661,9 +661,6 @@
                                                     <constraint firstAttribute="height" constant="80" id="9Xd-mr-pWg"/>
                                                 </constraints>
                                             </view>
-                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAf-QH-eJE">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
-                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -692,7 +689,7 @@
                         <outlet property="actionsBarButtonItem" destination="cH7-iH-c9P" id="nZM-7E-XQf"/>
                         <outlet property="carbonCopyBarButtonItem" destination="vGK-lg-Cye" id="AWV-kg-ow1"/>
                         <outlet property="contactNotVerifiedBannerView" destination="K7S-dn-qcF" id="4mr-VA-zQC"/>
-                        <outlet property="containerView" destination="xAf-QH-eJE" id="5Qa-dm-LTN"/>
+                        <outlet property="containerStackView" destination="nks-eK-WKJ" id="UA4-SC-wQW"/>
                         <outlet property="deleteBarButtonItem" destination="T78-eD-QmZ" id="CFD-Ds-54c"/>
                         <outlet property="downloadBarButtonItem" destination="JAE-WG-FSu" id="Z1m-5a-lse"/>
                         <outlet property="editBarButtonItem" destination="ylv-i6-D9T" id="Jdq-zO-X6j"/>

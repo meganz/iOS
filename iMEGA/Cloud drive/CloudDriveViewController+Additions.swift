@@ -46,6 +46,14 @@ extension CloudDriveViewController {
         present(navigationController, animated: true)
     }
     
+    @objc func toggledEditMode() {
+        viewModel.dispatch(.toggleEditMode)
+    }
+    
+    @IBAction func editTapped(_ sender: UIBarButtonItem) {
+        toggledEditMode()
+    }
+    
     @objc func showShareFolderForNodes(_ nodes: [MEGANode]) {
         guard let navigationController =
                 UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as? MEGANavigationController, let contactsVC = navigationController.viewControllers.first as? ContactsViewController else {
@@ -148,7 +156,7 @@ extension CloudDriveViewController {
         
         if let selectedNodesArray { selectedNodesArrayCount = selectedNodesArray.count }
         
-        if let enableEditing = cdTableView?.tableView?.isEditing ?? cdCollectionView?.collectionView?.allowsMultipleSelection, enableEditing {
+        if viewModel.editModeActive {
             navigationTitle = selectedNodesArrayCount == 0 ? Strings.Localizable.selectTitle : Strings.Localizable.General.Format.itemsSelected(selectedNodesArrayCount)
         } else {
             switch displayMode {
@@ -313,5 +321,21 @@ extension CloudDriveViewController {
 
     @objc func showUpgradePlanView() {
         UpgradeAccountRouter().presentUpgradeTVC()
+    }
+        
+    @objc func setUpInvokeCommands() {
+        viewModel.invokeCommand = { [weak self] command in
+            
+            guard let self else { return }
+            
+            switch command {
+            case .enterSelectionMode:
+                setEditMode(true)
+            case .exitSelectionMode:
+                setEditMode(false)
+            case .reloadNavigationBarItems:
+                setNavigationBarButtons()
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 extension CloudDriveViewController {
     
     @objc func clearViewModeChildren() {
-        [cdCollectionView, cdTableView]
+        [cdCollectionView, cdTableView, mdHostedController]
             .compactMap { $0 }
             .forEach { controller in
                 controller.willMove(toParent: nil)
@@ -13,6 +13,9 @@ extension CloudDriveViewController {
         
         cdCollectionView = nil
         cdTableView = nil
+        mdHostedController = nil
+
+        viewModel.isSelectionHidden = false
     }
     
     var currentViewModePreference: ViewModePreference {
@@ -24,6 +27,15 @@ extension CloudDriveViewController {
             return .mediaDiscovery
         } else {
             return .perFolder
+        }
+    }
+    
+    @objc func updateSearchAppearance(for viewState: ViewModePreference) {
+        switch viewState {
+        case .perFolder, .list, .thumbnail:
+            navigationItem.searchController = searchController
+        case .mediaDiscovery:
+            navigationItem.searchController = nil
         }
     }
 }
