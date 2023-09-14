@@ -110,6 +110,12 @@
     
     if (collectionView.allowsMultipleSelection) {
         
+        for (MEGANode *tempNode in self.cloudDrive.selectedNodesArray) {
+            if (tempNode.handle == node.handle) {
+                return;
+            }
+        }
+        
         [self.cloudDrive.selectedNodesArray addObject:node];
         
         [self.cloudDrive updateNavigationBarTitle];
@@ -186,8 +192,12 @@
                                                      image:[UIImage imageNamed:@"select"]
                                                 identifier:nil
                                                    handler:^(__kindof UIAction * _Nonnull action) {
-            [self setCollectionViewEditing:YES animated:YES];
+            if(!self.isEditing) {
+                [self.cloudDrive toggledEditMode];
+            }
+            
             [self collectionView:collectionView didSelectItemAtIndexPath:indexPath];
+            [self.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
         }];
         return [UIMenu menuWithTitle:@"" children:@[selectAction]];
     }];
@@ -223,11 +233,12 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
 #pragma mark - Public
 
 - (void)setCollectionViewEditing:(BOOL)editing animated:(BOOL)animated {
+    
+    [self setEditing:editing animated:animated];
+    
     self.collectionView.allowsMultipleSelection = editing;
     
     self.collectionView.allowsMultipleSelectionDuringEditing = editing;
-    
-    [self.cloudDrive setViewEditing:editing];
     
     [self.collectionView reloadData];
 }

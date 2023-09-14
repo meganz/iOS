@@ -95,9 +95,8 @@
 #pragma mark - Public
 
 - (void)setTableViewEditing:(BOOL)editing animated:(BOOL)animated {
+    [self setEditing:editing animated:animated];
     [self.tableView setEditing:editing animated:animated];
-    
-    [self.cloudDrive setViewEditing:editing];
     
     if (editing) {
         for (NodeTableViewCell *cell in self.tableView.visibleCells) {
@@ -292,7 +291,10 @@ contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
                                                      image:[UIImage imageNamed:@"select"]
                                                 identifier:nil
                                                    handler:^(__kindof UIAction * _Nonnull action) {
-            [self setTableViewEditing:YES animated:YES];
+            
+            if(!self.isEditing) {
+                [self.cloudDrive toggledEditMode];
+            }
             [self tableView:tableView didSelectRowAtIndexPath:indexPath];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
         }];

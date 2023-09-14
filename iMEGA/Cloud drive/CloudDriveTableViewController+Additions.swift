@@ -31,7 +31,6 @@ extension CloudDriveTableViewController {
                                           transfers: [nodeDownloadTransfer],
                                           transferType: .download,
                                           isFolderLink: false).start()
-                self.cloudDrive?.setEditMode(false)
             }
             
             if cloudDrive?.displayMode != .backup {

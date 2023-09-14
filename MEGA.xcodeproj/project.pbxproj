@@ -174,9 +174,14 @@
 		2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */; };
 		2562E8C52A37E73E0031D286 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */; };
 		2562E8C72A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */; };
+		257BEB862AA82E9700B49666 /* MediaDiscoveryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257BEB852AA82E9700B49666 /* MediaDiscoveryContentView.swift */; };
+		257BEB8A2AA926EC00B49666 /* MediaDiscoveryContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257BEB892AA926EC00B49666 /* MediaDiscoveryContentViewModel.swift */; };
 		2592C2A22AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */; };
+		259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */; };
 		259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */; };
 		259FA4082A3A9CEB00C038B2 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */; };
+		25C2F8D82AAEB3BA00F8930A /* MediaDiscoveryContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentController.swift */; };
+		25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */; };
 		25D840692A9EE0E50026D288 /* PermissionAlertViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D840682A9EE0E50026D288 /* PermissionAlertViewModifier.swift */; };
 		25D8406C2A9EE2860026D288 /* PermissionAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D8406B2A9EE2860026D288 /* PermissionAlertModel.swift */; };
 		25D840712A9EE9330026D288 /* PermissionAlertModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D840702A9EE9330026D288 /* PermissionAlertModelTests.swift */; };
@@ -2656,9 +2661,14 @@
 		2546EE042A4149B300CBB82E /* AVPlayerManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerManagerTests.swift; sourceTree = "<group>"; };
 		2562E8C42A37E73E0031D286 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		2562E8C62A3921CE0031D286 /* ProfileTableViewDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewDiffableDataSource.swift; sourceTree = "<group>"; };
+		257BEB852AA82E9700B49666 /* MediaDiscoveryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentView.swift; sourceTree = "<group>"; };
+		257BEB892AA926EC00B49666 /* MediaDiscoveryContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewModel.swift; sourceTree = "<group>"; };
 		2592C2A12AA00D3100F902C8 /* MEGAPhotoBrowserViewController+SnackBarPresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+SnackBarPresenting.swift"; sourceTree = "<group>"; };
+		259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+AudioPlayerPresenterProtocol.swift"; sourceTree = "<group>"; };
 		259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
+		25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentController.swift; sourceTree = "<group>"; };
+		25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewModelTests.swift; sourceTree = "<group>"; };
 		25D840682A9EE0E50026D288 /* PermissionAlertViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertViewModifier.swift; sourceTree = "<group>"; };
 		25D8406B2A9EE2860026D288 /* PermissionAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertModel.swift; sourceTree = "<group>"; };
 		25D840702A9EE9330026D288 /* PermissionAlertModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertModelTests.swift; sourceTree = "<group>"; };
@@ -5358,6 +5368,7 @@
 		1240A4A127DD545F00627262 /* MediaDiscovery */ = {
 			isa = PBXGroup;
 			children = (
+				25C2F8ED2AB126B900F8930A /* MediaDiscoverContent */,
 				1240A4A227DD548600627262 /* MediaDiscoveryViewModelTests.swift */,
 			);
 			path = MediaDiscovery;
@@ -5411,6 +5422,7 @@
 		12647CD027D7F7AA002033AF /* MediaDiscovery */ = {
 			isa = PBXGroup;
 			children = (
+				257BEB842AA82E8900B49666 /* SwiftUI */,
 				12647CD527D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift */,
 				0EC5A64E2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift */,
 				124306D627E16048003286C8 /* MediaDiscoveryRouter.swift */,
@@ -5726,6 +5738,16 @@
 			path = AVPlayerManager;
 			sourceTree = "<group>";
 		};
+		257BEB842AA82E8900B49666 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentController.swift */,
+				257BEB852AA82E9700B49666 /* MediaDiscoveryContentView.swift */,
+				257BEB892AA926EC00B49666 /* MediaDiscoveryContentViewModel.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		259FA4002A3A946500C038B2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -5758,6 +5780,14 @@
 				259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */,
 			);
 			path = DataSource;
+			sourceTree = "<group>";
+		};
+		25C2F8ED2AB126B900F8930A /* MediaDiscoverContent */ = {
+			isa = PBXGroup;
+			children = (
+				25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */,
+			);
+			path = MediaDiscoverContent;
 			sourceTree = "<group>";
 		};
 		25D840672A9EE0C30026D288 /* PermissionAlertViewModifier */ = {
@@ -6133,6 +6163,7 @@
 				830B54882178845300BE1E1F /* CloudDriveTableViewController.h */,
 				830B54892178845300BE1E1F /* CloudDriveTableViewController.m */,
 				83BFA3A527CFBCA000BDF997 /* CloudDriveViewController+Additions.swift */,
+				259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */,
 				94614C68290FEA6C00503174 /* CloudDriveViewController+Backup.swift */,
 				B6790DF7256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift */,
 				729FD75627FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift */,
@@ -13325,6 +13356,7 @@
 				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
 				83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */,
+				259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */,
 				94614C69290FEA6C00503174 /* CloudDriveViewController+Backup.swift in Sources */,
 				B6790DF8256B80DA00154F6D /* CloudDriveViewController+CameraUpload.swift in Sources */,
 				729FD75727FC55C4002D8AC2 /* CloudDriveViewController+ContextMenu.swift in Sources */,
@@ -13678,6 +13710,9 @@
 				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
 				E8BD127F1DB76E03003DC53F /* MasterKeyViewController.m in Sources */,
 				12647CD627D7FAAD002033AF /* MediaDiscovery+PhotoLibrary.swift in Sources */,
+				25C2F8D82AAEB3BA00F8930A /* MediaDiscoveryContentController.swift in Sources */,
+				257BEB862AA82E9700B49666 /* MediaDiscoveryContentView.swift in Sources */,
+				257BEB8A2AA926EC00B49666 /* MediaDiscoveryContentViewModel.swift in Sources */,
 				0EC5A64F2A3FF775003BE9BE /* MediaDiscoveryFolderLinkToolbarConfigurator.swift in Sources */,
 				124306D727E16048003286C8 /* MediaDiscoveryRouter.swift in Sources */,
 				12647CD427D7F7C3002033AF /* MediaDiscoveryViewController.swift in Sources */,
@@ -15002,6 +15037,7 @@
 				94712EF42A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
 				835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */,
+				25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */,
 				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */,

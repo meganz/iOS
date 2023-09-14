@@ -55,13 +55,11 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <MEGANavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, AudioPlayerPresenterProtocol, TextFileEditable> {
+@interface CloudDriveViewController () <MEGANavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, TextFileEditable> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
-@property (weak, nonatomic) IBOutlet UIView *containerView;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
@@ -88,11 +86,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = self.containerView.backgroundColor = UIColor.mnz_background;
-    
+    self.view.backgroundColor = UIColor.mnz_background;
+
     self.definesPresentationContext = YES;
     
     [self configureContextMenuManagerIfNeeded];
+    [self setUpInvokeCommands];
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -203,7 +202,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
         self.selectedNodesArray = nil;
-        [self setEditMode:NO];
+        
+        if(self.isEditing) {
+            [self toggledEditMode];
+        }
     }
     
     if (self.shouldRemovePlayerDelegate) {
@@ -301,13 +303,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)initTable {
     [self clearViewModeChildren];
-    
     self.viewModePreference = ViewModePreferenceList;
+    [self updateSearchAppearanceFor:self.viewModePreference];
     
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
     [self addChildViewController:self.cdTableView];
-    self.cdTableView.view.frame = self.containerView.bounds;
-    [self.containerView addSubview:self.cdTableView.view];
+    [self.containerStackView addArrangedSubview:self.cdTableView.view];
     [self.cdTableView didMoveToParentViewController:self];
     
     self.cdTableView.cloudDrive = self;
@@ -318,14 +319,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)initCollection {
     [self clearViewModeChildren];
-    
     self.viewModePreference = ViewModePreferenceThumbnail;
+    [self updateSearchAppearanceFor:self.viewModePreference];
     
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
     self.cdCollectionView.cloudDrive = self;
     [self addChildViewController:self.cdCollectionView];
-    self.cdCollectionView.view.frame = self.containerView.bounds;
-    [self.containerView addSubview:self.cdCollectionView.view];
+    [self.containerStackView addArrangedSubview:self.cdCollectionView.view];
     [self.cdCollectionView didMoveToParentViewController:self];
     
     self.cdCollectionView.collectionView.emptyDataSetDelegate = self;
@@ -461,6 +461,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self prepareNodesAndNavigationBarForDisplayMode:self.displayMode];
     self.nodesArray = [self mapNodeListToArray:self.nodes];
     
+    if(self.nodes.size.unsignedIntegerValue > 0
+       && self.viewModePreference == ViewModePreferenceMediaDiscovery
+       && !self.hasMediaFiles) {
+        self.shouldDetermineViewMode = YES;
+    }
+    
     if (self.shouldDetermineViewMode) {
         [self determineViewMode];
     }
@@ -475,6 +481,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.hasMediaFiles = [[self.nodes mnz_mediaNodesMutableArrayFromNodeList] count] > 0;
+            [self updateSearchAppearanceFor:self.viewModePreference];
             break;
         }
             
@@ -482,18 +489,21 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
+            self.navigationItem.searchController = self.searchController;
             break;
         }
             
         case DisplayModeRecents: {
             self.nodes = self.recentActionBucket.nodesList;
             [self updateNavigationBarTitle];
+            self.navigationItem.searchController = self.searchController;
             break;
         }
             
         case DisplayModeBackup: {
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+            self.navigationItem.searchController = self.searchController;
             break;
         }
             
@@ -502,7 +512,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
-    self.navigationItem.searchController = self.searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
 }
 
@@ -742,11 +751,22 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)setEditMode:(BOOL)editMode {
-    if (self.viewModePreference == ViewModePreferenceList) {
-        [self.cdTableView setTableViewEditing:editMode animated:YES];
-    } else {
-        [self.cdCollectionView setCollectionViewEditing:editMode animated:YES];
+    
+    switch (self.viewModePreference) {
+        case ViewModePreferenceList:
+            [self.cdTableView setTableViewEditing:editMode animated:YES];
+            break;
+        case ViewModePreferenceThumbnail:
+            [self.cdCollectionView setCollectionViewEditing:editMode animated:YES];
+            break;
+        case ViewModePreferenceMediaDiscovery:
+            [self.mdHostedController setEditing:editMode animated:YES];
+            break;
+        case ViewModePreferencePerFolder:
+            return;
     }
+    
+    [self setViewEditing:editMode];
 }
 
 - (void)dismissHUD {
@@ -810,7 +830,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [removeAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:^{
-            [self setEditMode:NO];
+            [self toggledEditMode];
         }];
         for (MEGANode *node in self.selectedNodesArray) {
             [MEGASdkManager.sharedMEGASdk removeNode:node delegate:removeRequestDelegate];
@@ -824,6 +844,16 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [self.selectedNodesArray removeAllObjects];
+    
+    switch (self.viewModePreference) {
+        case ViewModePreferenceMediaDiscovery:
+            [self mediaDiscoveryToggleAllSelected];
+            return;
+        case ViewModePreferencePerFolder:
+        case ViewModePreferenceList:
+        case ViewModePreferenceThumbnail:
+            break;
+    }
     
     if (!self.allNodesSelected) {
         NSArray *nodesArray = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList];
@@ -886,13 +916,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
 }
 
-- (IBAction)editTapped:(UIBarButtonItem *)sender {
-    BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-    [self setEditMode:enableEditing];
-}
-
 - (void)setViewEditing:(BOOL)editing {
     [self updateNavigationBarTitle];
+    
+    [self setEditing:editing];
     
     if (editing) {
         self.editBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
@@ -952,13 +979,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.selectedNodesArray != nil) {
         [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:NO];
     }
-    [self setEditMode:NO];
+    [self toggledEditMode];
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
     [self presentGetLinkFor:self.selectedNodesArray];
     
-    [self setEditMode:NO];
+    [self toggledEditMode];
 }
 
 - (IBAction)moveAction:(UIBarButtonItem *)sender {
@@ -973,7 +1000,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     for (MEGANode *node in self.selectedNodesArray) {
         [node mnz_restore];
     }
-    [self setEditMode:NO];
+    
+    [self toggledEditMode];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -1099,16 +1127,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self.navigationController presentViewController:viewController animated:YES completion:nil];
 }
 
-#pragma mark - AudioPlayerPresenterProtocol
-
-- (void)updateContentView:(CGFloat)height {
-    if (self.viewModePreference == ViewModePreferenceList) {
-        self.cdTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
-    } else {
-        self.cdCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
-    }
-}
-
 #pragma mark - MEGANavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if([AudioPlayerManager.shared isPlayerAlive] && navigationController.viewControllers.count > 1) {
@@ -1125,7 +1143,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 #pragma mark - BrowserViewControllerDelegate & ContatctsViewControllerDelegate
 
 - (void)nodeEditCompleted:(BOOL)complete {
-    [self setEditMode:!complete];
+    
+    if(complete) {
+        [self toggledEditMode];
+    }
 }
 
 @end
