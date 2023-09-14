@@ -10,7 +10,7 @@ public class DeviceCenterBridge {
     
     public var cameraUploadActionTapped: () -> Void = { }
     public var infoActionTapped: (NodeEntity) -> Void = { _ in }
-    public var renameActionTapped: (NodeEntity) -> Void = { _ in }
+    public var renameActionTapped: (RenameActionEntity) -> Void = { _ in }
     public var showInCDActionTapped: (NodeEntity) -> Void = { _ in }
     public var showInBackupsActionTapped: (NodeEntity) -> Void = { _ in }
     public var sortActionTapped: (NodeEntity, SortOrderEntity) -> Void = { _, _  in }
