@@ -134,6 +134,15 @@ class ShareAlbumRepositoryTests: XCTestCase {
         XCTAssertEqual(provider.clearCacheCalled, 1)
     }
     
+    func testStopAlbumLinkPreview_called_shouldCallSDKToStopPublicSetPreview() {
+        let sdk = MockSdk()
+        let sut = makeShareAlbumRepository(sdk: sdk)
+        
+        sut.stopAlbumLinkPreview()
+        
+        XCTAssertEqual(sdk.stopPublicSetPreviewCalled, 1)
+    }
+    
     func testPublicPhoto_onProviderReturnsPhotos_shouldConvertAndReturn() async throws {
         let handle = HandleEntity(7)
         let expectedNode = MockNode(handle: handle)

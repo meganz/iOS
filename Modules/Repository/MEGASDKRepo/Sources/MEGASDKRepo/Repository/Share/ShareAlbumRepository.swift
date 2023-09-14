@@ -86,6 +86,10 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
         }
     }
     
+    public func stopAlbumLinkPreview() {
+        sdk.stopPublicSetPreview()
+    }
+    
     public func publicPhoto(_ photo: SetElementEntity) async throws -> NodeEntity? {
         try await publicAlbumNodeProvider.publicPhotoNode(for: photo)?.toNodeEntity()
     }

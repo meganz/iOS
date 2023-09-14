@@ -1,12 +1,14 @@
 import MEGADomain
 
-public struct MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
+public final class MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
     public static let newRepo = MockShareAlbumRepository()
     private let shareAlbumResults: [HandleEntity: Result<String?, Error>]
     private let disableAlbumShareResult: Result<Void, Error>
     private let publicAlbumContentsResult: Result<SharedAlbumEntity, Error>
     private let publicPhotoResults: [HandleEntity: Result<NodeEntity, Error>]
     private let copyPublicPhotosResult: Result<[NodeEntity], Error>
+    
+    public private(set) var stopAlbumLinkPreviewCalled = 0
     
     public init(
         shareAlbumResults: [HandleEntity: Result<String?, Error>] = [:],
@@ -41,6 +43,10 @@ public struct MockShareAlbumRepository: ShareAlbumRepositoryProtocol {
         try await withCheckedThrowingContinuation {
             $0.resume(with: publicAlbumContentsResult)
         }
+    }
+    
+    public func stopAlbumLinkPreview() {
+        stopAlbumLinkPreviewCalled  += 1
     }
     
     public func publicPhoto(_ element: SetElementEntity) async throws -> NodeEntity? {
