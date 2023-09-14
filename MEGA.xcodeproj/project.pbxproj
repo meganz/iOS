@@ -728,7 +728,6 @@
 		774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */; };
 		774941E62416552600FC5CB6 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		774941E724165F3A00FC5CB6 /* UIDevice+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = E879DFD91D12A31D009B74FD /* UIDevice+MNZCategory.m */; };
-		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
 		7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77597009219EB85300B31671 /* NotificationsTableViewController.m */; };
 		7759700C219EBCE700B31671 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7759700B219EBCE700B31671 /* Notifications.storyboard */; };
@@ -3278,8 +3277,6 @@
 		7747B2D7208623660011814E /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		77485F82207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetPublicNodeRequestDelegate.h; path = API/Requests/MEGAGetPublicNodeRequestDelegate.h; sourceTree = "<group>"; };
 		77485F83207CB6D3007402B1 /* MEGAGetPublicNodeRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPublicNodeRequestDelegate.m; path = API/Requests/MEGAGetPublicNodeRequestDelegate.m; sourceTree = "<group>"; };
-		7754ED9A20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAFetchNodesRequestDelegate.h; path = API/Requests/MEGAFetchNodesRequestDelegate.h; sourceTree = "<group>"; };
-		7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAFetchNodesRequestDelegate.m; path = API/Requests/MEGAFetchNodesRequestDelegate.m; sourceTree = "<group>"; };
 		775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactLinkQRViewController.h; sourceTree = "<group>"; };
 		775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactLinkQRViewController.m; sourceTree = "<group>"; };
 		77597008219EB85300B31671 /* NotificationsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationsTableViewController.h; sourceTree = "<group>"; };
@@ -5596,6 +5593,14 @@
 			path = BuildTools;
 			sourceTree = "<group>";
 		};
+		240D80F92AB1A1CB00FBD2C4 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		243ABB492AB0420500FF4A56 /* Node */ = {
 			isa = PBXGroup;
 			children = (
@@ -5619,14 +5624,6 @@
 				243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */,
 			);
 			path = CancellableTransfers;
-			sourceTree = "<group>";
-		};
-		240D80F92AB1A1CB00FBD2C4 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */,
-			);
-			path = Domain;
 			sourceTree = "<group>";
 		};
 		244F0A6C2A457EBA007DC61B /* Advanced */ = {
@@ -9632,8 +9629,6 @@
 				5BB50E081F20E840000CA24D /* MEGACreateFolderRequestDelegate.m */,
 				94624CF91F50484200D52504 /* MEGAExportRequestDelegate.h */,
 				94624CFA1F50484200D52504 /* MEGAExportRequestDelegate.m */,
-				7754ED9A20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.h */,
-				7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */,
 				5B20B00F20E6300300511C0F /* MEGAGenericRequestDelegate.h */,
 				5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */,
 				77F1DBE02056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.h */,
@@ -13769,7 +13764,6 @@
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
 				B644B6C121AE19BC00A3B8E7 /* MEGAExpirableOperation.m in Sources */,
 				94624CFB1F50484200D52504 /* MEGAExportRequestDelegate.m in Sources */,
-				7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */,
 				B6B1A27928A1DE630057E75B /* MEGAFileTypes.swift in Sources */,
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
