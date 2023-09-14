@@ -79,3 +79,9 @@ extension AudioPlayerItem {
         return lhsNode == rhsNode
     }
 }
+
+extension AudioPlayerItem {
+    var preferredName: String {
+        node?.name ?? name
+    }
+}

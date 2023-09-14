@@ -58,7 +58,7 @@ final class AudioPlayer: NSObject {
     }
     
     var currentName: String? {
-        currentItem()?.name
+        currentItem()?.preferredName
     }
     
     var currentArtist: String? {
