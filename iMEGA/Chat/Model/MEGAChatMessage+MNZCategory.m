@@ -5,7 +5,6 @@
 #import "Helper.h"
 
 #import "MEGAChatGenericRequestDelegate.h"
-#import "MEGAFetchNodesRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSAttributedString+MNZCategory.h"
