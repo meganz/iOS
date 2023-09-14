@@ -73,6 +73,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     func showLeaveAlert(leaveAction: @escaping () -> Void) {
         guard let baseViewController else { return }
         let alertController = UIAlertController(title: Strings.Localizable.Meetings.WaitingRoom.Alert.leaveMeeting, message: nil, preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle = .dark
         let leaveAction = UIAlertAction(title: Strings.Localizable.Meetings.WaitingRoom.leave, style: .default) { _ in
             leaveAction()
         }
@@ -100,6 +101,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     func showHostDenyAlert(leaveAction: @escaping () -> Void ) {
         guard let baseViewController else { return }
         let alertController = UIAlertController(title: Strings.Localizable.Meetings.WaitingRoom.Alert.hostDidNotLetYouIn, message: Strings.Localizable.Meetings.WaitingRoom.Alert.youWillBeRemovedFromTheWaitingRoom, preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle = .dark
         let leaveAction = UIAlertAction(title: Strings.Localizable.Meetings.WaitingRoom.Alert.okGotIt, style: .default) { _ in
             leaveAction()
         }
@@ -111,6 +113,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     func showHostDidNotRespondAlert(leaveAction: @escaping () -> Void) {
         guard let baseViewController else { return }
         let alertController = UIAlertController(title: Strings.Localizable.Meetings.WaitingRoom.Alert.hostDidNotRespond, message: Strings.Localizable.Meetings.WaitingRoom.Alert.thereIsNoResponseToYourResquestToJoinTheMeeting, preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle = .dark
         let leaveAction = UIAlertAction(title: Strings.Localizable.Meetings.WaitingRoom.Alert.okGotIt, style: .default) { _ in
             leaveAction()
         }
