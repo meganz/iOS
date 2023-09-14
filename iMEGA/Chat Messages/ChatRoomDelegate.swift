@@ -36,9 +36,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
         self.chatRoom = chatRoom
         super.init()
-        MEGASdk.shared.add(self)
-        MEGAChatSdk.shared.add(self)
-        reloadTransferData()
+        configTransferDataAsync()
     }
     
     // MARK: - MEGAChatRequestDelegate
@@ -590,6 +588,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         }
     }
     
+    @MainActor
     private func reloadTransferData() {
         let allTransfers = MEGASdk.shared.transfers.toTransfers()
         guard allTransfers.isNotEmpty else {
@@ -720,6 +719,18 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             return lastMessageId == message.messageId
         }
         return false
+    }
+    
+    private func configTransferDataAsync() {
+        Task {
+            await registerDelegates()
+            await reloadTransferData()
+        }
+    }
+
+    private func registerDelegates() async {
+        MEGASdk.shared.add(self)
+        MEGAChatSdk.shared.add(self)
     }
 }
 
