@@ -211,6 +211,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                         break;
                         
                     default:
+                        wasChangedToBy = @"";
                         break;
                 }
                 NSString *privilegeString = [wasChangedToBy mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
@@ -308,6 +309,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 
             case MEGAChatMessageTypeScheduledMeeting: {
                 [self attributedTextStringForScheduledMeetingChangeWithUserNameDidAction:fullNameDidAction];
+                text = self.attributedText.string;
                 break;
             }
                 
