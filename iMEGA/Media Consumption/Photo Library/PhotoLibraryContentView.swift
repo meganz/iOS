@@ -66,19 +66,16 @@ struct PhotoLibraryContentView: View {
                     viewModel: PhotoLibraryYearViewModel(libraryViewModel: viewModel),
                     router: router
                 )
-                .equatable()
             case .month:
                 PhotoLibraryMonthView(
                     viewModel: PhotoLibraryMonthViewModel(libraryViewModel: viewModel),
                     router: router
                 )
-                .equatable()
             case .day:
                 PhotoLibraryDayView(
                     viewModel: PhotoLibraryDayViewModel(libraryViewModel: viewModel),
                     router: router
                 )
-                .equatable()
             case .all:
                 EmptyView()
             }

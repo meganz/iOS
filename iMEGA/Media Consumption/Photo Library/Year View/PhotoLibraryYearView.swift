@@ -10,9 +10,3 @@ struct PhotoLibraryYearView: View {
         }
     }
 }
-
-extension PhotoLibraryYearView: Equatable {
-    static func == (lhs: PhotoLibraryYearView, rhs: PhotoLibraryYearView) -> Bool {
-        true // we are taking over the update of the view
-    }
-}
