@@ -131,6 +131,7 @@
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
+		240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */; };
 		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
 		2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */; };
@@ -2612,6 +2613,7 @@
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
+		240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemTests.swift; sourceTree = "<group>"; };
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
 		2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5592,6 +5594,14 @@
 				167F6A242A41507D00D0A6F9 /* MEGAPlugins */,
 			);
 			path = BuildTools;
+			sourceTree = "<group>";
+		};
+		240D80F92AB1A1CB00FBD2C4 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 		244F0A6C2A457EBA007DC61B /* Advanced */ = {
@@ -11768,6 +11778,7 @@
 		C45A2E3625D2F7F100915A83 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				240D80F92AB1A1CB00FBD2C4 /* Domain */,
 				C45A2E3725D2F80900915A83 /* NodeInfoUseCaseTests.swift */,
 				C45A2E4925D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift */,
 				C45A2E5325D2F82600915A83 /* StreamingInfoUseCaseTests.swift */,
@@ -14916,6 +14927,7 @@
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
 				BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
+				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
 				83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */,
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
