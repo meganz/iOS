@@ -1,9 +1,11 @@
 import MEGADomain
 
-public struct MockPublicAlbumUseCase: PublicAlbumUseCaseProtocol {
+public final class MockPublicAlbumUseCase: PublicAlbumUseCaseProtocol {
 
     private let publicAlbumResult: Result<SharedAlbumEntity, Error>
     private let nodes: [NodeEntity]
+    
+    public private(set) var stopAlbumLinkPreviewCalled = 0
     
     public init(publicAlbumResult: Result<SharedAlbumEntity, Error> = .failure(GenericErrorEntity()),
                 nodes: [NodeEntity] = []) {
@@ -19,5 +21,9 @@ public struct MockPublicAlbumUseCase: PublicAlbumUseCaseProtocol {
     
     public func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity] {
         nodes
+    }
+    
+    public func stopAlbumLinkPreview() {
+        stopAlbumLinkPreviewCalled += 1
     }
 }

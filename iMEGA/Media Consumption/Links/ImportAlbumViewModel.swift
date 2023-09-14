@@ -117,6 +117,10 @@ final class ImportAlbumViewModel: ObservableObject {
         subscribeToHandleAnalytics()
     }
     
+    deinit {
+        publicAlbumUseCase.stopAlbumLinkPreview()
+    }
+    
     func onViewAppear() {
         tracker.trackAnalyticsEvent(with: AlbumImportScreenEvent())
     }

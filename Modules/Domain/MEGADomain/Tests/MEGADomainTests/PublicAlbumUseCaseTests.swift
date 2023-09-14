@@ -51,6 +51,15 @@ final class PublicAlbumUseCaseTests: XCTestCase {
         XCTAssertEqual(photos, [photoNode])
     }
     
+    func testStopAlbumLinkPreview_called_shouldStopAlbumLinkPreview() {
+        let shareAlbumRepository = MockShareAlbumRepository()
+        let sut = makePublicAlbumUseCase(shareAlbumRepository: shareAlbumRepository)
+        
+        sut.stopAlbumLinkPreview()
+        
+        XCTAssertEqual(shareAlbumRepository.stopAlbumLinkPreviewCalled, 1)
+    }
+    
     // MARK: - Helpers
     
     private func makePublicAlbumUseCase(shareAlbumRepository: some ShareAlbumRepositoryProtocol = MockShareAlbumRepository()

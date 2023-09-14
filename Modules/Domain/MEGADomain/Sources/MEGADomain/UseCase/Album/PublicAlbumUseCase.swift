@@ -3,6 +3,7 @@ import Foundation
 public protocol PublicAlbumUseCaseProtocol {
     func publicAlbum(forLink link: String) async throws -> SharedAlbumEntity
     func publicPhotos(_ photos: [SetElementEntity]) async -> [NodeEntity]
+    func stopAlbumLinkPreview()
 }
 
 public struct PublicAlbumUseCase<S: ShareAlbumRepositoryProtocol>: PublicAlbumUseCaseProtocol {
@@ -27,5 +28,9 @@ public struct PublicAlbumUseCase<S: ShareAlbumRepositoryProtocol>: PublicAlbumUs
                 if let photo = $1 { $0.append(photo) }
             }
         }
+    }
+    
+    public func stopAlbumLinkPreview() {
+        shareAlbumRepository.stopAlbumLinkPreview()
     }
 }

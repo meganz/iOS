@@ -659,6 +659,17 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showNoInternetConnection)
     }
     
+    func testStopAlbumLinkPreview_deinit_shouldBeCalled() async throws {
+        let publicAlbumUseCase = MockPublicAlbumUseCase()
+        var sut: ImportAlbumViewModel? = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                                                  publicAlbumUseCase: publicAlbumUseCase)
+        await sut?.loadPublicAlbum()
+        
+        sut = nil
+        
+        XCTAssertEqual(publicAlbumUseCase.stopAlbumLinkPreviewCalled, 1)
+    }
+    
     // MARK: - Private
     
     private func makeImportAlbumViewModel(publicLink: URL,
@@ -671,7 +682,9 @@ final class ImportAlbumViewModelTests: XCTestCase {
                                           transferWidgetResponder: some TransferWidgetResponderProtocol = MockTransferWidgetResponder(),
                                           permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
                                           tracker: some AnalyticsTracking = MockTracker(),
-                                          monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase()
+                                          monitorUseCase: some NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
+                                          file: StaticString = #file,
+                                          line: UInt = #line
     ) -> ImportAlbumViewModel {
         let sut = ImportAlbumViewModel(
             publicLink: publicLink,
@@ -685,7 +698,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
             permissionHandler: permissionHandler,
             tracker: tracker,
             monitorUseCase: monitorUseCase)
-        trackForMemoryLeaks(on: sut)
+        trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
     
