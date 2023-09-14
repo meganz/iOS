@@ -64,7 +64,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: true, description: Strings.Localizable.inviteContactNow)
     }
     
-    func testSelectChatsMode_inputAsChats_viewModelesShouldMatch() {
+    func testSelectChatsMode_inputAsChats_viewModelsShouldMatch() {
         let mockList = chatsListMock
         let viewModel = ChatRoomsListViewModel(
             chatUseCase: MockChatUseCase(items: mockList),

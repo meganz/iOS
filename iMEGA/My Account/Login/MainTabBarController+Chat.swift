@@ -26,26 +26,24 @@ extension MainTabBarController {
         }
         
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
-        let chatUseCase = ChatUseCase(
-            chatRepo: ChatRepository(
-                sdk: MEGASdk.shared,
-                chatSDK: MEGAChatSdk.shared
-            )
-        )
+        let chatUseCase = ChatUseCase(chatRepo: ChatRepository.newRepo)
         
         var totalUnreadChats = chatUseCase.unreadChatMessagesCount()
         if let totalChatRoomUnreadChats = chatRoomUseCase.chatRoom(forChatId: chatID)?.unreadCount, totalChatRoomUnreadChats > 0 {
             totalUnreadChats -= 1
         }
 
-        if let chatRoomsListViewController = navigationController.viewControllers.first as? ChatRoomsListViewController {
-            if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
-                rootViewController.dismiss(animated: true) {
-                    chatRoomsListViewController.viewModel.router.openChatRoom(withChatId: chatID, publicLink: publicLink, unreadMessageCount: totalUnreadChats)
-                }
-            } else {
+        guard let chatRoomsListViewController = navigationController.viewControllers.first as? ChatRoomsListViewController,
+              let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatID)  else { return }
+
+        chatRoomsListViewController.viewModel.selectChatMode(chatRoom.isMeeting ? .meetings : .chats)
+        
+        if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
+            rootViewController.dismiss(animated: true) {
                 chatRoomsListViewController.viewModel.router.openChatRoom(withChatId: chatID, publicLink: publicLink, unreadMessageCount: totalUnreadChats)
             }
+        } else {
+            chatRoomsListViewController.viewModel.router.openChatRoom(withChatId: chatID, publicLink: publicLink, unreadMessageCount: totalUnreadChats)
         }
     }
     
