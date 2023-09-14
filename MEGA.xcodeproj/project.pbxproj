@@ -1258,6 +1258,9 @@
 		9495DBB32A4086DD00FA22EE /* UIAlertController+AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB22A4086DD00FA22EE /* UIAlertController+AlertModel.swift */; };
 		9495DBB72A40870C00FA22EE /* PermissionAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB62A40870C00FA22EE /* PermissionAlertRouter.swift */; };
 		9495DBBD2A40C08300FA22EE /* UIApplication+PermissionModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */; };
+		949B0C792AAFA8E90090CA84 /* RenameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C782AAFA8E90090CA84 /* RenameRouter.swift */; };
+		949B0C7C2AAFA8F40090CA84 /* RenameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */; };
+		949B0C7E2AAFA9070090CA84 /* RenameAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */; };
 		949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */; };
 		94A1A26F2A83B11F00669C41 /* UserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C794260406FC006061F8 /* UserImageUseCase.swift */; };
 		94A1A2782A83B29000669C41 /* UserStoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C7A626040930006061F8 /* UserStoreRepository.swift */; };
@@ -3791,6 +3794,9 @@
 		9495DBB62A40870C00FA22EE /* PermissionAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouter.swift; sourceTree = "<group>"; };
 		9495DBB82A40872E00FA22EE /* DevicePermissionsHandlerObjC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePermissionsHandlerObjC.swift; sourceTree = "<group>"; };
 		9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+PermissionModal.swift"; sourceTree = "<group>"; };
+		949B0C782AAFA8E90090CA84 /* RenameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameRouter.swift; sourceTree = "<group>"; };
+		949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewModel.swift; sourceTree = "<group>"; };
+		949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameAlertController.swift; sourceTree = "<group>"; };
 		949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenAppRequiredViewController.h; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.h; sourceTree = SOURCE_ROOT; };
 		949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenAppRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTests.swift; sourceTree = "<group>"; };
@@ -9149,6 +9155,16 @@
 			path = Permissions;
 			sourceTree = "<group>";
 		};
+		949B0C772AAFA8C40090CA84 /* Rename */ = {
+			isa = PBXGroup;
+			children = (
+				949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */,
+				949B0C782AAFA8E90090CA84 /* RenameRouter.swift */,
+				949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */,
+			);
+			path = Rename;
+			sourceTree = "<group>";
+		};
 		94D97AA62AA20B0600FE40F4 /* SearchDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -10508,6 +10524,7 @@
 				83293C582806CB6000369A86 /* NameCollisionScene */,
 				77D9A5692023538600B48470 /* Photo browser */,
 				BFAB110C23CEA5C300BCE72D /* PhotosAppBrowser */,
+				949B0C772AAFA8C40090CA84 /* Rename */,
 				E8D5BF631BF359A000955550 /* Shared Items */,
 				E8B5191F1AC9C43B00BB7324 /* Transfers */,
 			);
@@ -14110,6 +14127,9 @@
 				B662B88324F8D8F60089376A /* RegionListViewModel.swift in Sources */,
 				B662B88524F8DA600089376A /* RegionListViewRouter.swift in Sources */,
 				A8F1D10B2A5ECBB2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */,
+				949B0C7E2AAFA9070090CA84 /* RenameAlertController.swift in Sources */,
+				949B0C792AAFA8E90090CA84 /* RenameRouter.swift in Sources */,
+				949B0C7C2AAFA8F40090CA84 /* RenameViewModel.swift in Sources */,
 				9441533428E460E0005EF5F9 /* ReportIssueAlertDataModel.swift in Sources */,
 				9441533328E460E0005EF5F9 /* ReportIssueAlertTypeModel.swift in Sources */,
 				240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */,
