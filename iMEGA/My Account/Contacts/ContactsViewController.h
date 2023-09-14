@@ -57,5 +57,6 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 - (void)shareNodesWithLevel:(MEGAShareType)shareType;
 - (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton;
 - (void)addItemsToList:(NSArray<ItemListModel *> *)items;
+- (void)reloadUI;
 
 @end

@@ -1,10 +1,13 @@
 import Contacts
 import MEGADomain
+import MEGAFoundation
 import MEGAL10n
 import MEGAPresentation
 import SwiftUI
 
 extension ContactsViewController {
+    private static let throttler = Throttler(timeInterval: 0.5, dispatchQueue: .main)
+    
     func selectUsers(_ users: [MEGAUser]) {
         guard users.count > 0 else { return }
         selectedUsersArray.addObjects(from: users)
@@ -91,5 +94,26 @@ extension ContactsViewController {
     func extractEmails(_ contacts: [CNContact]) -> [NSString] {
         let emails = contacts.extractEmails()
         return emails.map { NSString(string: $0) }
+    }
+}
+
+// MARK: - MEGARequestDelegate
+
+extension ContactsViewController: MEGARequestDelegate {
+    public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        guard error.type == .apiOk else { return }
+        switch request.type {
+        case .MEGARequestTypeGetAttrUser:
+            let userAttribute = UserAttributeEntity(rawValue: request.paramType)
+            guard userAttribute == .firstName || userAttribute == .lastName else { return }
+            Self.throttler.start { [weak self] in
+                DispatchQueue.main.async {
+                    guard let self else { return }
+                    self.reloadUI()
+                }
+            }
+        default:
+            return
+        }
     }
 }
