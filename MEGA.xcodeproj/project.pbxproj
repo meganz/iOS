@@ -1518,7 +1518,6 @@
 		A8F515B127F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F515B027F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift */; };
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */; };
-		A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F11FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m */; };
 		B5000FA52A1DB01500E06478 /* AccountPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000F9E2A1DB00B00E06478 /* AccountPlanView.swift */; };
 		B5000FA62A1DB01500E06478 /* AccountPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000F9F2A1DB00D00E06478 /* AccountPlanViewModel.swift */; };
 		B5000FA72A1DB01600E06478 /* PlanHeaderTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000FA02A1DB00F00E06478 /* PlanHeaderTagView.swift */; };
@@ -4079,8 +4078,6 @@
 		A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckEmailAndFollowTheLinkViewController.m; sourceTree = "<group>"; };
 		A8F6A88A2716D3A900AF7D92 /* LinkPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkPresentation.framework; path = System/Library/Frameworks/LinkPresentation.framework; sourceTree = SDKROOT; };
 		A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAttributeGeneratorTests.swift; sourceTree = "<group>"; };
-		A8F6C5F11FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAChatEnableDisableAudioRequestDelegate.m; path = iMEGA/API/Chat/MEGAChatEnableDisableAudioRequestDelegate.m; sourceTree = SOURCE_ROOT; };
-		A8F6C5F21FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAChatEnableDisableAudioRequestDelegate.h; path = iMEGA/API/Chat/MEGAChatEnableDisableAudioRequestDelegate.h; sourceTree = SOURCE_ROOT; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B5000F9E2A1DB00B00E06478 /* AccountPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPlanView.swift; sourceTree = "<group>"; };
@@ -9332,8 +9329,6 @@
 				777AC33D21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m */,
 				A802B1F81FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.h */,
 				A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */,
-				A8F6C5F21FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.h */,
-				A8F6C5F11FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m */,
 				A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */,
 				A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */,
 				A8B354D221354680002018A9 /* MEGAChatNotificationDelegate.h */,
@@ -13755,7 +13750,6 @@
 				777AC33E21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
 				BF53B78C2745F92F00B47CA0 /* MEGAChatCall+Additions.swift in Sources */,
-				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,
 				A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */,
 				BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */,
