@@ -642,9 +642,11 @@
 - (void)showMainTabBar {
     if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         
-        if (![self.window.rootViewController isKindOfClass:[MainTabBarController class]]) {
+        if (![self isAdsMainTabBarRootView]) {
             _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-            [self.window setRootViewController:_mainTBC];
+            
+            UIViewController *mainController = [self adsMainTabBarViewController: _mainTBC];
+            [self.window setRootViewController:mainController];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
                 [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
