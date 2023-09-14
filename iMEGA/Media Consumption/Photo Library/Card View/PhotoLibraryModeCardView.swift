@@ -2,7 +2,7 @@ import Foundation
 import MEGASwiftUI
 import SwiftUI
 
-struct PhotoLibraryModeCardView<Category, VM, Content>: View where Category: PhotoChronologicalCategory, VM: PhotoLibraryModeCardViewModel<Category>, Content: View, Content: Equatable {
+struct PhotoLibraryModeCardView<Category, VM, Content>: View where Category: PhotoChronologicalCategory, VM: PhotoLibraryModeCardViewModel<Category>, Content: View {
     private let cellBuilder: (Category) -> Content
     
     @ObservedObject var viewModel: VM
@@ -39,7 +39,6 @@ struct PhotoLibraryModeCardView<Category, VM, Content>: View where Category: Pho
             }
         }, label: {
             cellBuilder(category)
-                .equatable()
                 .frame(height: PhotoLibraryConstants.cardHeight)
         })
             .id(category.position)

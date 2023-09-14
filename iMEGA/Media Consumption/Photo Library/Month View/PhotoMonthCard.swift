@@ -14,9 +14,3 @@ struct PhotoMonthCard: View {
         }
     }
 }
-
-extension PhotoMonthCard: Equatable {
-    static func == (lhs: PhotoMonthCard, rhs: PhotoMonthCard) -> Bool {
-        true // we are taking over the update of the view
-    }
-}

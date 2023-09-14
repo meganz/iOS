@@ -10,9 +10,3 @@ struct PhotoLibraryDayView: View {
         }
     }
 }
-
-extension PhotoLibraryDayView: Equatable {
-    static func == (lhs: PhotoLibraryDayView, rhs: PhotoLibraryDayView) -> Bool {
-        true // we are taking over the update of the view
-    }
-}
