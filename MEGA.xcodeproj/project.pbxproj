@@ -1371,7 +1371,6 @@
 		A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB382A4B0FAD00F99382 /* MEGAChatSdk */; };
 		A812CB3B2A4B0FB400F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB3A2A4B0FB400F99382 /* MEGAChatSdk */; };
 		A812CB3D2A4B0FBE00F99382 /* MEGAChatSdk in Frameworks */ = {isa = PBXBuildFile; productRef = A812CB3C2A4B0FBE00F99382 /* MEGAChatSdk */; };
-		A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */; };
 		A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
 		A81971D126FB81C6007DC7B1 /* FileVersioning.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A81971D026FB81C6007DC7B1 /* FileVersioning.storyboard */; };
@@ -3919,8 +3918,6 @@
 		A811CE2B22EAFB1700B24E76 /* SearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchOperation.m; sourceTree = "<group>"; };
 		A811DCB72476C460002FCD98 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		A811DCBC2476C4CE002FCD98 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		A813A79B22B38D7F00418737 /* AVAudioSession+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+MNZCategory.h"; sourceTree = "<group>"; };
-		A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAudioSession+MNZCategory.m"; sourceTree = "<group>"; };
 		A815FCE81FE2AD080075AC29 /* UIApplication+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIApplication+MNZCategory.h"; sourceTree = "<group>"; };
 		A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+MNZCategory.m"; sourceTree = "<group>"; };
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
@@ -6561,8 +6558,6 @@
 				5D79B519249846E70070FECD /* Foundation */,
 				5D03C99D2488972400BE5EEB /* UIKit */,
 				C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */,
-				A813A79B22B38D7F00418737 /* AVAudioSession+MNZCategory.h */,
-				A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */,
 				C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */,
 				BF7EBD27244E8B5A0015255F /* CGPoint+Additions.swift */,
 				0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */,
@@ -13207,7 +13202,6 @@
 				BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */,
 				C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
-				A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */,
 				25E2717D2A3FE96800DDB678 /* AVPlayerManager.swift in Sources */,
 				B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */,
 				5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */,
