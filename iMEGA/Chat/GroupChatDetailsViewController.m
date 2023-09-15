@@ -62,9 +62,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    [MEGASdkManager.sharedMEGAChatSdk addChatRequestDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
+    [MEGAChatSdk.shared addChatRequestDelegate:self];
     [self addChatCallDelegate];
     [self addChatRoomDelegate];
     
@@ -75,9 +75,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    [MEGASdkManager.sharedMEGAChatSdk removeChatRequestDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
+    [MEGAChatSdk.shared removeChatDelegate:self];
+    [MEGAChatSdk.shared removeChatRequestDelegate:self];
     [self removeChatCallDelegate];
     [self removeChatRoomDelegate];
 }
