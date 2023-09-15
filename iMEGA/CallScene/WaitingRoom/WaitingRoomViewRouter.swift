@@ -107,7 +107,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         }
         alertController.addAction(leaveAction)
         alertController.preferredAction = leaveAction
-        baseViewController.present(alertController, animated: true)
+        dismissAlertControllerThenPresent(alertController, from: baseViewController)
     }
     
     func showHostDidNotRespondAlert(leaveAction: @escaping () -> Void) {
@@ -119,7 +119,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         }
         alertController.addAction(leaveAction)
         alertController.preferredAction = leaveAction
-        baseViewController.present(alertController, animated: true)
+        dismissAlertControllerThenPresent(alertController, from: baseViewController)
     }
     
     func openCallUI(for call: CallEntity,
@@ -132,5 +132,16 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
                                call: call,
                                isSpeakerEnabled: isSpeakerEnabled)
         .start()
+    }
+    
+    private func dismissAlertControllerThenPresent(_ alertController: UIAlertController, from baseViewController: UIViewController) {
+        if let presentedViewController = presenter?.presenterViewController()?.presentedViewController,
+           presentedViewController.isKind(of: UIAlertController.self) {
+            presentedViewController.dismiss(animated: true) {
+                baseViewController.present(alertController, animated: true)
+            }
+        } else {
+            baseViewController.present(alertController, animated: true)
+        }
     }
 }
