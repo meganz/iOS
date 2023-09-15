@@ -173,7 +173,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     
     func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingDidStart_shoudBecomeWaitForHostToLetIn() {
         let callUseCase = MockCallUseCase(call: CallEntity(), answerCallCompletion: .success(CallEntity()))
-        let meetingUseCase = MockMeetingCreatingUseCase(createEpehemeralAccountCompletion: .success, joinChatCompletion: .success(ChatRoomEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(callUseCase: callUseCase,
                                        meetingUseCase: meetingUseCase,
@@ -191,7 +191,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     
     func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatSuccessAndMeetingNotStart_shoudBecomeWaitForHostToStart() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
-        let meetingUseCase = MockMeetingCreatingUseCase(createEpehemeralAccountCompletion: .success, joinChatCompletion: .success(ChatRoomEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(callUseCase: callUseCase,
                                        meetingUseCase: meetingUseCase,
@@ -204,6 +204,28 @@ final class WaitingRoomViewModelTests: XCTestCase {
         
         evaluate {
             sut.viewState == .waitForHostToStart
+        }
+    }
+    
+    func testTapJoinAction_onCreateEphemeralAccountSuccessAndJoinChatFail_shoudDismiss() {
+        let router = MockWaitingRoomViewRouter()
+        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
+        let waitingRoomUseCase = MockWaitingRoomUseCase(joinChatResult: .failure(.generic))
+        let accountUseCase = MockAccountUseCase(isGuest: true)
+        let sut = WaitingRoomViewModel(router: router,
+                                       callUseCase: callUseCase,
+                                       meetingUseCase: meetingUseCase,
+                                       waitingRoomUseCase: waitingRoomUseCase,
+                                       accountUseCase: accountUseCase,
+                                       chatLink: "Test chatLink")
+        
+        XCTAssertEqual(sut.viewState, .guestJoin)
+        
+        sut.tapJoinAction(firstName: "First", lastName: "Last")
+        
+        evaluate {
+            router.dismiss_calledTimes == 1
         }
     }
     
@@ -232,7 +254,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     
     func testUserAvatar_onLoadWaitingRoomAndIsGuestAndJoinsTheChat_shouldShowAvatar() {
         let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
-        let meetingUseCase = MockMeetingCreatingUseCase(createEpehemeralAccountCompletion: .success, joinChatCompletion: .success(ChatRoomEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))

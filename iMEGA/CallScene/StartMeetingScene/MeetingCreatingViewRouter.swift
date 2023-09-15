@@ -40,7 +40,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
         let vm = MeetingCreatingViewModel(
             router: self,
             type: type,
-            meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository(chatSdk: .shared, sdk: .shared, callActionManager: .shared)),
+            meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository.newRepo),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
