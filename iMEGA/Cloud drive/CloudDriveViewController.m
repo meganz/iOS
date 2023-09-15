@@ -1055,9 +1055,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self updateControllersStackIfNeeded:nodeList];
 
     if (shouldProcessOnNodesUpdate) {
-        if (self.nodes.size.unsignedIntegerValue == 0) {
-            self.shouldDetermineViewMode = YES;
-        }
         [self.nodesIndexPathMutableDictionary removeAllObjects];
         [self reloadUI: nodeList];
         

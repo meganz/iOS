@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
@@ -31,6 +32,8 @@ struct MediaDiscoveryContentView: View {
     
     @ViewBuilder
     private var emptyStateView: some View {
-        EmptyAlbumView()
+        EmptyMediaDiscoveryContentView(
+            image: Asset.Images.EmptyStates.folderEmptyState.image,
+            title: Strings.Localizable.emptyFolder) { viewModel.tapped(menuAction: $0) }
     }
 }
