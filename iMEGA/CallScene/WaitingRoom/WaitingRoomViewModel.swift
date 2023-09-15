@@ -459,8 +459,11 @@ final class WaitingRoomViewModel: ObservableObject {
         guard let chatLink else { return }
         meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: chatLink) { [weak self] result in
             guard let self else { return }
-            if case .success = result {
+            switch result {
+            case .success:
                 joinChatCall()
+            case .failure:
+                viewState = .guestJoin
             }
         } karereInitCompletion: { [weak self] in
             guard let self else { return }
@@ -472,21 +475,17 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func joinChatCall() {
-        meetingUseCase.joinChat(forChatId: chatId,
-                                userHandle: chatUseCase.myUserHandle()
-        ) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
+        Task { @MainActor in
+            do {
+                _ = try await waitingRoomUseCase.joinChat(forChatId: chatId, userHandle: chatUseCase.myUserHandle())
                 fetchUserAvatar()
                 // There is a delay for a call to update its status after joining a meeting
                 // We can't check whether the meeting is started or not immediately after joining a meeting
                 // So the wait is used here to wait for the call's update
                 // Note that if the call is updated faster than the wait, it will do the logic without the wait
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.updateCallStatus()
-                }
-            case .failure:
+                try await Task.sleep(nanoseconds: 500_000_000)
+                updateCallStatus()
+            } catch {
                 dismiss()
             }
         }

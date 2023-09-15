@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol CallLocalVideoRepositoryProtocol {
+public protocol CallLocalVideoRepositoryProtocol: RepositoryProtocol {
     func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func disableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func addLocalVideo(for chatId: HandleEntity, localVideoListener: some CallLocalVideoListenerRepositoryProtocol)

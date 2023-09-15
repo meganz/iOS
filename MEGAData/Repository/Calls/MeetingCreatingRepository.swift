@@ -5,6 +5,10 @@ import MEGASDKRepo
 
 final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreatingRepositoryProtocol {
     
+    static var newRepo: MeetingCreatingRepository {
+        MeetingCreatingRepository(chatSdk: .sharedChatSdk, sdk: .sharedSdk, callActionManager: .shared)
+    }
+    
     private let chatSdk: MEGAChatSdk
     private let sdk: MEGASdk
     private let callActionManager: CallActionManager
@@ -97,32 +101,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
             chatSdk.autorejoinPublicChat(chatId, publicHandle: userHandle, delegate: delegate)
         } else {
             MEGALogDebug("Create meeting: Autojoin public chat with chatId - \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1")")
-            chatSdk.autojoinPublicChat(chatId, delegate: delegate)
-        }
-    }
-    
-    func joinChatWithoutAnswerCall(forChatId chatId: UInt64, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        let delegate = ChatRequestDelegate { [weak self] result in
-            switch result {
-            case .success(let request):
-                guard let self, let megaChatRoom = chatSdk.chatRoom(forChatId: request.chatHandle) else {
-                    MEGALogDebug("ChatRoom not found with chat handle \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
-                    completion(.failure(.generic))
-                    return
-                }
-                
-                let chatRoom = megaChatRoom.toChatRoomEntity()
-                completion(.success(chatRoom))
-            case .failure:
-                completion(.failure(.generic))
-            }
-        }
-        
-        if let megaChatRoom = chatSdk.chatRoom(forChatId: chatId),
-           !megaChatRoom.isPreview,
-           !megaChatRoom.isActive {
-            chatSdk.autorejoinPublicChat(chatId, publicHandle: userHandle, delegate: delegate)
-        } else {
             chatSdk.autojoinPublicChat(chatId, delegate: delegate)
         }
     }

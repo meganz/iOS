@@ -1,15 +1,18 @@
 import MEGADomain
 
-public final class MockWaitingRoomUseCase: WaitingRoomUseCaseProtocol {
+public final class MockWaitingRoomRepository: WaitingRoomRepositoryProtocol {
+    public static var newRepo: MockWaitingRoomRepository {
+        MockWaitingRoomRepository()
+    }
     
     private let myUserName: String
     private let joinChatResult: Result<ChatRoomEntity, CallErrorEntity>
     
     public init(
-        myUserName: String = "",
+        userName: String = "Test User",
         joinChatResult: Result<ChatRoomEntity, CallErrorEntity> = .success(.init())
     ) {
-        self.myUserName = myUserName
+        self.myUserName = userName
         self.joinChatResult = joinChatResult
     }
     

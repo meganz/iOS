@@ -2,6 +2,9 @@ import MEGAChatSdk
 import MEGADomain
 
 public final class CallLocalVideoRepository: NSObject, CallLocalVideoRepositoryProtocol {
+    public static var newRepo: CallLocalVideoRepository {
+        CallLocalVideoRepository(chatSdk: .sharedChatSdk)
+    }
     
     private let chatSdk: MEGAChatSdk
     private var localVideoCallbacksDelegate: (any CallLocalVideoListenerRepositoryProtocol)?
