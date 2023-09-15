@@ -57,6 +57,12 @@ struct DeviceListContentView: View {
                 .throwingTaskForiOS14 {
                     try await viewModel.startAutoRefreshUserDevices()
                 }
+                .onReceive(viewModel.refreshDevicesPublisher) { _ in
+                    Task {
+                        let userDevices = await self.viewModel.fetchUserDevices()
+                        self.viewModel.arrangeDevices(userDevices)
+                    }
+                }
             }
     }
 }

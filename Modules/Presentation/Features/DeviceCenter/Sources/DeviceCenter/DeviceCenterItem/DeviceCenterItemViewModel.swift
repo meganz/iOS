@@ -1,8 +1,11 @@
+import Combine
 import MEGADomain
 import SwiftUI
 
 public class DeviceCenterItemViewModel: ObservableObject, Identifiable {    
     private let router: (any DeviceListRouting)?
+    private let refreshDevicesPublisher: PassthroughSubject<Void, Never>?
+    private let deviceCenterUseCase: DeviceCenterUseCaseProtocol
     private let deviceCenterBridge: DeviceCenterBridge
     private var itemType: DeviceCenterItemType
     var assets: ItemAssets
@@ -17,11 +20,15 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     @Published var backupPercentage: String = ""
     
     init(router: (any DeviceListRouting)? = nil,
+         refreshDevicesPublisher: PassthroughSubject<Void, Never>? = nil,
+         deviceCenterUseCase: DeviceCenterUseCaseProtocol,
          deviceCenterBridge: DeviceCenterBridge,
          itemType: DeviceCenterItemType,
          assets: ItemAssets,
          availableActions: [DeviceCenterAction]) {
         self.router = router
+        self.refreshDevicesPublisher = refreshDevicesPublisher
+        self.deviceCenterUseCase = deviceCenterUseCase
         self.deviceCenterBridge = deviceCenterBridge
         self.itemType = itemType
         self.assets = assets
@@ -75,7 +82,8 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         }
     }
     
-    func executeAction(_ type: DeviceCenterActionType) {
+    @MainActor
+    func executeAction(_ type: DeviceCenterActionType) async {
         switch itemType {
         case .backup:
             switch type {
@@ -83,10 +91,21 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 deviceCenterBridge.cameraUploadActionTapped()
             default: break
             }
-        case .device:
+        case .device(let device):
             switch type {
             case .cameraUploads:
                 deviceCenterBridge.cameraUploadActionTapped()
+            case .rename:
+                let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
+                let renameEntity = RenameActionEntity(
+                    deviceId: device.id,
+                    deviceOldName: device.name,
+                    otherDeviceNames: deviceNames) {
+                        DispatchQueue.main.async {
+                            self.refreshDevicesPublisher?.send()
+                        }
+                }
+                deviceCenterBridge.renameActionTapped(renameEntity)
             default: break
             }
         }

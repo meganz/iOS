@@ -201,8 +201,18 @@ extension MyAccountHallViewController {
             // Will be added in future tickets
         }
         
-        bridge.renameActionTapped = { _ in
-            // Will be added in future tickets
+        bridge.renameActionTapped = { [weak self] renameEntity in
+            guard let self else { return }
+            RenameRouter(
+                presenter: self,
+                type: .device(
+                    renameEntity: renameEntity
+                ),
+                renameUseCase:
+                    RenameUseCase(
+                        renameRepository: RenameRepository.newRepo
+                    )
+            ).start()
         }
         
         bridge.showInCDActionTapped = { _ in

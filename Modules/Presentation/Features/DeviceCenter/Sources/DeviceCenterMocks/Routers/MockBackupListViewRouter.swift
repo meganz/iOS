@@ -10,4 +10,6 @@ public final class MockBackupListViewRouter: BackupListRouting {
     }
     
     public func start() {}
+    
+    public func updateTitle(_ title: String) {}
 }

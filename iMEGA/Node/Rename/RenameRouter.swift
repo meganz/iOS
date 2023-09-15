@@ -10,23 +10,23 @@ final class RenameRouter: Routing, RenameViewRouting {
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
     private let type: RenameType
-    private let nodeActionUseCase: any NodeActionUseCaseProtocol
+    private let renameUseCase: any RenameUseCaseProtocol
 
     init(
         presenter: UIViewController,
         type: RenameType,
-        nodeActionUseCase: any NodeActionUseCaseProtocol
+        renameUseCase: any RenameUseCaseProtocol
     ) {
         self.presenter = presenter
         self.type = type
-        self.nodeActionUseCase = nodeActionUseCase
+        self.renameUseCase = renameUseCase
     }
     
     func build() -> UIViewController {
         let vm = RenameViewModel(
             router: self,
             type: type,
-            nodeActionUseCase: nodeActionUseCase
+            renameUseCase: renameUseCase
         )
         
         let renameAlertController = RenameAlertController(

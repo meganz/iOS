@@ -64,7 +64,9 @@ struct DeviceCenterMenu: View {
                     DeviceCenterMenu(viewModel: viewModel, title: option.title, menuIconName: option.icon, menuOptions: subActions)
                 } else {
                     Button {
-                        viewModel.executeDeviceAction(type: option.type)
+                        Task {
+                            await viewModel.executeDeviceAction(type: option.type)
+                        }
                     } label: {
                         Label(option.title, image: option.icon)
                     }

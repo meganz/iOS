@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGASDKRepo
 import SwiftUI
 
 public final class BackupListViewModel: ObservableObject {
@@ -12,6 +13,7 @@ public final class BackupListViewModel: ObservableObject {
     private let deviceCenterActions: [DeviceCenterAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
+    private var selectedDeviceName: String
     private(set) var backups: [BackupEntity]
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
@@ -42,6 +44,7 @@ public final class BackupListViewModel: ObservableObject {
     
     init(
         selectedDeviceId: String,
+        selectedDeviceName: String,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
@@ -55,6 +58,7 @@ public final class BackupListViewModel: ObservableObject {
         deviceCenterActions: [DeviceCenterAction]
     ) {
         self.selectedDeviceId = selectedDeviceId
+        self.selectedDeviceName = selectedDeviceName
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.updateInterval = updateInterval
         self.deviceCenterUseCase = deviceCenterUseCase
@@ -114,6 +118,7 @@ public final class BackupListViewModel: ObservableObject {
     func syncDevicesAndLoadBackups() async {
         let devices = await deviceCenterUseCase.fetchUserDevices()
         await filterAndLoadCurrentDeviceBackups(devices)
+        await updateCurrentDevice(devices)
         devicesUpdatePublisher.send(devices)
     }
     
@@ -123,12 +128,20 @@ public final class BackupListViewModel: ObservableObject {
         loadBackupsModels()
     }
     
+    @MainActor
+    func updateCurrentDevice(_ devices: [DeviceEntity]) {
+        guard let currentDevice = devices.first(where: {$0.id == selectedDeviceId}) else { return }
+        selectedDeviceName = currentDevice.name
+        router.updateTitle(currentDevice.name)
+    }
+    
     func loadBackupsModels() {
         backupModels = backups
             .compactMap { backup in
                 if let assets = loadAssets(for: backup),
                    let availableActions = actionsForBackup(backup) {
                     return DeviceCenterItemViewModel(
+                        deviceCenterUseCase: deviceCenterUseCase,
                         deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
                         assets: assets,
@@ -188,10 +201,22 @@ public final class BackupListViewModel: ObservableObject {
         }
     }
     
-    func executeDeviceAction(type: DeviceCenterActionType) {
+    @MainActor
+    func executeDeviceAction(type: DeviceCenterActionType) async {
         switch type {
         case .cameraUploads:
             deviceCenterBridge.cameraUploadActionTapped()
+        case .rename:
+            let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
+            let renameEntity = RenameActionEntity(
+                deviceId: selectedDeviceId,
+                deviceOldName: selectedDeviceName,
+                otherDeviceNames: deviceNames) {
+                    Task {
+                        await self.syncDevicesAndLoadBackups()
+                    }
+            }
+            deviceCenterBridge.renameActionTapped(renameEntity)
         default: break
         }
     }

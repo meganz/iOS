@@ -1265,6 +1265,8 @@
 		9495DBB32A4086DD00FA22EE /* UIAlertController+AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB22A4086DD00FA22EE /* UIAlertController+AlertModel.swift */; };
 		9495DBB72A40870C00FA22EE /* PermissionAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBB62A40870C00FA22EE /* PermissionAlertRouter.swift */; };
 		9495DBBD2A40C08300FA22EE /* UIApplication+PermissionModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */; };
+		949704B32AB425C500B2CA3A /* RenameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949704B22AB425C500B2CA3A /* RenameViewModelTests.swift */; };
+		949704B72AB427BE00B2CA3A /* MockRenameViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949704B62AB427BE00B2CA3A /* MockRenameViewRouter.swift */; };
 		949B0C792AAFA8E90090CA84 /* RenameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C782AAFA8E90090CA84 /* RenameRouter.swift */; };
 		949B0C7C2AAFA8F40090CA84 /* RenameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */; };
 		949B0C7E2AAFA9070090CA84 /* RenameAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */; };
@@ -3812,6 +3814,8 @@
 		9495DBB62A40870C00FA22EE /* PermissionAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouter.swift; sourceTree = "<group>"; };
 		9495DBB82A40872E00FA22EE /* DevicePermissionsHandlerObjC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePermissionsHandlerObjC.swift; sourceTree = "<group>"; };
 		9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+PermissionModal.swift"; sourceTree = "<group>"; };
+		949704B22AB425C500B2CA3A /* RenameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewModelTests.swift; sourceTree = "<group>"; };
+		949704B62AB427BE00B2CA3A /* MockRenameViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRenameViewRouter.swift; sourceTree = "<group>"; };
 		949B0C782AAFA8E90090CA84 /* RenameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameRouter.swift; sourceTree = "<group>"; };
 		949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewModel.swift; sourceTree = "<group>"; };
 		949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameAlertController.swift; sourceTree = "<group>"; };
@@ -5207,8 +5211,8 @@
 			isa = PBXGroup;
 			children = (
 				0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */,
-				0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */,
 				83A49E7C270476A300FD0D85 /* TransferInventoryRepository.swift */,
+				0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */,
 				5D2AF57E24F4A711000B2F29 /* UploadPhotoAssetsRepository.swift */,
 			);
 			path = Transfer;
@@ -7449,6 +7453,7 @@
 				B6A6E19B287BCE5900179806 /* ChatSdk */,
 				5D33D66A250D9BC900D74666 /* Client */,
 				5D52C748250C4F2800286A43 /* Functions */,
+				949704B52AB427A700B2CA3A /* Router */,
 				B6FD6510268D7EA500988A17 /* UseCase */,
 				32A9DECC28D198E300ABC3F6 /* ViewModel */,
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
@@ -9252,6 +9257,22 @@
 			path = Permissions;
 			sourceTree = "<group>";
 		};
+		949704B12AB425AC00B2CA3A /* Rename */ = {
+			isa = PBXGroup;
+			children = (
+				949704B22AB425C500B2CA3A /* RenameViewModelTests.swift */,
+			);
+			path = Rename;
+			sourceTree = "<group>";
+		};
+		949704B52AB427A700B2CA3A /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				949704B62AB427BE00B2CA3A /* MockRenameViewRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		949B0C772AAFA8C40090CA84 /* Rename */ = {
 			isa = PBXGroup;
 			children = (
@@ -10803,6 +10824,7 @@
 				B5000FC32A1E219400E06478 /* Plan */,
 				259FA4002A3A946500C038B2 /* Profile */,
 				BF6E8D1725B53F3C003A125A /* PSA */,
+				949704B12AB425AC00B2CA3A /* Rename */,
 				A8EE47AB27DFAEF600D37685 /* Report Issue */,
 				5B9FBDE9264925900014B7FD /* Settings */,
 				32B0723128A4E3CA002BAE34 /* Slideshow */,
@@ -15103,6 +15125,7 @@
 				9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */,
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
+				949704B72AB427BE00B2CA3A /* MockRenameViewRouter.swift in Sources */,
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
 				BFCA570F2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift in Sources */,
 				94712EFD2A9C9FAD00B5F2C9 /* MockSearchFileUseCase.swift in Sources */,
@@ -15163,6 +15186,7 @@
 				24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */,
 				948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
+				949704B32AB425C500B2CA3A /* RenameViewModelTests.swift in Sources */,
 				240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */,
 				A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
