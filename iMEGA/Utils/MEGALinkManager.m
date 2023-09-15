@@ -827,7 +827,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)openMeetingWithRequest:(MEGAChatRequest * _Nonnull)request  chatLinkURL:(NSURL * _Nonnull)chatLinkUrl {
-    if ([self shouldOpenWaitingRoomForChatOptions:request.privilege]) {
+    if ([self shouldOpenWaitingRoomWithRequest:request]) {
         [SVProgressHUD dismiss];
         [self openWaitingRoomFor:request.chatHandle chatLink:chatLinkUrl.absoluteString];
     } else if ([self hasActiveMeetingFor:request]) {

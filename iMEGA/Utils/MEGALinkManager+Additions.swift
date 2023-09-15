@@ -178,8 +178,12 @@ extension MEGALinkManager {
         return list.size > 0 && list.megaHandle(at: 0) != 0
     }
     
-    @objc class func shouldOpenWaitingRoom(forChatOptions bitMask: Int) -> Bool {
-        MEGAChatSdk.shared.hasChatOptionEnabled(for: .waitingRoom, chatOptionsBitMask: bitMask)
+    @objc class func shouldOpenWaitingRoom(request: MEGAChatRequest) -> Bool {
+        let megaChatRoom = MEGAChatSdk.shared.chatRoom(forChatId: request.chatHandle)
+        let chatRoom = megaChatRoom?.toChatRoomEntity()
+        let isModerator = chatRoom?.ownPrivilege == .moderator
+        let isWaitingRoomEnabled = MEGAChatSdk.shared.hasChatOptionEnabled(for: .waitingRoom, chatOptionsBitMask: request.privilege)
+        return !isModerator && isWaitingRoomEnabled
     }
     
     @objc class func openWaitingRoom(for chatId: ChatIdEntity, chatLink: String) {
