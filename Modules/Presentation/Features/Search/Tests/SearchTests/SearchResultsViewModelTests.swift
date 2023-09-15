@@ -4,13 +4,14 @@ import SwiftUI
 import XCTest
 
 fileprivate extension Color {
-    static let deselectedColor = Color.white
-    static let selectedColor = Color.black
+    static let deselectedColor = SearchConfig.testConfig.chipAssets.normalBackground
+    static let selectedColor = SearchConfig.testConfig.chipAssets.selectedBackground
 }
 
 @MainActor
 final class SearchResultsViewModelTests: XCTestCase {
     class Harness {
+        static let emptyImageToReturn = Image("sun.min")
         let sut: SearchResultsViewModel
         let resultsProvider: MockSearchResultsProviding
         let bridge: SearchBridge
@@ -30,14 +31,7 @@ final class SearchResultsViewModelTests: XCTestCase {
             sut = SearchResultsViewModel(
                 resultsProvider: resultsProvider,
                 bridge: bridge,
-                config: .init(
-                    chipAssets: .init(
-                        selectedForeground: .selectedColor,
-                        selectedBackground: .selectedColor,
-                        normalForeground: .deselectedColor,
-                        normalBackground: .deselectedColor
-                    )
-                )
+                config: .testConfig
             )
             selection = {
                 self.selectedResults.append($0)
@@ -138,7 +132,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query")
         let expectedListItems: [SearchResultRowViewModel] = [
-            .init(with: .sampleResult("title"), contextAction: {_ in}, selectionAction: {})
+            .init(with: .sampleResult("title"), contextButtonImage: UIImage(systemName: "ellipsis")!, contextAction: {_ in}, selectionAction: {})
         ]
         XCTAssertEqual(harness.sut.listItems, expectedListItems)
     }
@@ -206,25 +200,29 @@ final class SearchResultsViewModelTests: XCTestCase {
     
     func testChipItems_appliedChips_isSelected() async {
         let harness = Harness(self)
-        harness.resultsProvider.resultFactory = { _ in
-            SearchResultsEntity(
-                results: [],
-                availableChips: [
-                    .chipWith(id: 1),
-                    .chipWith(id: 2),
-                    .chipWith(id: 3)
-                ],
-                appliedChips: [
-                    .chipWith(id: 1)
-                ]
-            )
-        }
+        harness.resultsProvider.resultFactory = { _ in .resultsWithSingleChipApplied }
         
         await harness.sut.task()
         let selectedChipItems = harness.sut.chipsItems.filter {
             $0.pill.background == .selectedColor
         }
-        XCTAssertEqual(selectedChipItems.map(\.chipId), [1])
+        let expectedIds = [SearchResultsEntity.resultsWithSingleChipApplied.appliedChips.first!.id]
+        XCTAssertEqual(selectedChipItems.map(\.chipId), expectedIds)
+    }
+    
+    func testEmptyView_isNil_whenItemsNotEmpty() async {
+        let harness = Harness(self).withSingleResultPrepared()
+        await harness.sut.queryChanged(to: "query")
+        XCTAssertNil(harness.sut.emptyViewModel)
+    }
+    
+    func testEmptyView_notNil_whenItemsEmpty() async throws {
+        let harness = Harness(self)
+        await harness.sut.queryChanged(to: "query")
+        let contentUnavailableVM = try XCTUnwrap(harness.sut.emptyViewModel)
+        let expectedContent = SearchConfig.EmptyViewAssets.testAssets
+        XCTAssertEqual(contentUnavailableVM.image, expectedContent.image)
+        XCTAssertEqual(contentUnavailableVM.title, expectedContent.title)
     }
 }
 
@@ -239,4 +237,18 @@ fileprivate extension SearchResult {
             type: .node
         )
     }
+}
+
+fileprivate extension SearchResultsEntity {
+    static let resultsWithSingleChipApplied = SearchResultsEntity(
+        results: [],
+        availableChips: [
+            .chipWith(id: 1),
+            .chipWith(id: 2),
+            .chipWith(id: 3)
+        ],
+        appliedChips: [
+            .chipWith(id: 1)
+        ]
+    )
 }

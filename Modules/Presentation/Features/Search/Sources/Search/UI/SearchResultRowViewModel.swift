@@ -21,17 +21,20 @@ final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable 
     }
 
     private let result: SearchResult
+    let contextButtonImage: UIImage
     let contextAction: (UIButton) -> Void
     let selectionAction: () -> Void
 
     init(
         with result: SearchResult,
+        contextButtonImage: UIImage,
         contextAction: @escaping (UIButton) -> Void,
         selectionAction: @escaping () -> Void
     ) {
         self.result = result
         self.contextAction = contextAction
         self.selectionAction = selectionAction
+        self.contextButtonImage = contextButtonImage
     }
     
     @MainActor
@@ -41,4 +44,5 @@ final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable 
             thumbnailImage = image
         }
     }
+    
 }
