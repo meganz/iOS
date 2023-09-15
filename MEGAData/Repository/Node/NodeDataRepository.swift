@@ -110,4 +110,14 @@ struct NodeDataRepository: NodeDataRepositoryProtocol {
         
         return node.creationTime
     }
+    
+    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        sdk.node(forHandle: handle)?.toNodeEntity()
+    }
+    
+    func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        guard let nodeEntity = nodeForHandle(handle),
+              let node = nodeEntity.toMEGANode(in: sdk) else { return nil }
+        return sdk.parentNode(for: node)?.toNodeEntity()
+    }
 }

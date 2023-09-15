@@ -8,24 +8,22 @@ public final class DeviceListViewModel: ObservableObject {
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let backupStatuses: [BackupStatus]
     private let deviceCenterActions: [DeviceCenterAction]
+    private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
+    private let updateInterval: UInt64
+    private let currentDeviceUUID: String
+    private var cancellable: Set<AnyCancellable> = []
+    private var searchTextPublisher = PassthroughSubject<String, Never>()
+    private var searchCancellable: AnyCancellable?
+    private var currentDeviceId: String?
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
     }
     private var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]] {
         Dictionary(grouping: deviceCenterActions, by: \.type)
     }
-    private var cancellable: Set<AnyCancellable> = []
-    private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
-    private var searchTextPublisher = PassthroughSubject<String, Never>()
-    private var searchCancellable: AnyCancellable?
-    private let updateInterval: UInt64
-    private var currentDeviceId: String?
-    private let currentDeviceUUID: String
-    
     var isFilteredDevicesEmpty: Bool {
         filteredDevices.isEmpty
     }
-    
     var isFiltered: Bool {
         isSearchActive && searchText.isNotEmpty
     }
@@ -36,11 +34,13 @@ public final class DeviceListViewModel: ObservableObject {
     @Published private(set) var deviceListAssets: DeviceListAssets
     @Published private(set) var emptyStateAssets: EmptyStateAssets
     @Published private(set) var searchAssets: SearchAssets
+    @Published private(set) var refreshDevicesPublisher: PassthroughSubject<Void, Never>
     @Published var isSearchActive: Bool
     @Published var searchText: String = ""
     
     init(
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
+        refreshDevicesPublisher: PassthroughSubject<Void, Never>,
         updateInterval: UInt64,
         router: any DeviceListRouting,
         deviceCenterBridge: DeviceCenterBridge,
@@ -52,6 +52,7 @@ public final class DeviceListViewModel: ObservableObject {
         deviceCenterActions: [DeviceCenterAction]
     ) {
         self.devicesUpdatePublisher = devicesUpdatePublisher
+        self.refreshDevicesPublisher = refreshDevicesPublisher
         self.updateInterval = updateInterval
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
@@ -113,6 +114,8 @@ public final class DeviceListViewModel: ObservableObject {
         
         return DeviceCenterItemViewModel(
             router: router,
+            refreshDevicesPublisher: refreshDevicesPublisher,
+            deviceCenterUseCase: deviceCenterUseCase,
             deviceCenterBridge: deviceCenterBridge,
             itemType: .device(device),
             assets: deviceAssets,
@@ -191,7 +194,9 @@ public final class DeviceListViewModel: ObservableObject {
             actionTypes.append(.cameraUploads)
         }
         
-        actionTypes.append(contentsOf: [.info, .rename])
+        if device.id != currentDeviceUUID {
+            actionTypes.append(contentsOf: [.info, .rename])
+        }
         
         return actionTypes.compactMap { type in
             sortedAvailableActions[type]?.first

@@ -14,4 +14,6 @@ public protocol NodeDataRepositoryProtocol: RepositoryProtocol {
     func fingerprintForFile(at path: String) -> String?
     func setNodeCoordinates(nodeHandle: HandleEntity, latitude: Double, longitude: Double)
     func creationDateForNode(handle: HandleEntity) -> Date?
+    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
+    func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
 }

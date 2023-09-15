@@ -7,6 +7,8 @@ public protocol NodeUseCaseProtocol {
     func hasVersions(nodeHandle: HandleEntity) -> Bool
     func isDownloaded(nodeHandle: HandleEntity) -> Bool
     func isInRubbishBin(nodeHandle: HandleEntity) -> Bool
+    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
+    func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
 }
 
 // MARK: - Use case implementation -
@@ -46,5 +48,12 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     
     public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         nodeValidationRepository.isInRubbishBin(nodeHandle: nodeHandle)
+    }
+    
+    public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        nodeDataRepository.nodeForHandle(handle)
+    }
+    public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        nodeDataRepository.parentForHandle(handle)
     }
 }

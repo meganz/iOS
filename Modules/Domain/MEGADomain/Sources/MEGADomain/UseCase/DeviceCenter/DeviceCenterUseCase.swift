@@ -2,6 +2,7 @@ import Foundation
 
 public protocol DeviceCenterUseCaseProtocol {
     func fetchUserDevices() async -> [DeviceEntity]
+    func fetchDeviceNames() async -> [String]
     func loadCurrentDeviceId() -> String?
 }
 
@@ -14,6 +15,10 @@ public struct DeviceCenterUseCase<Repository: DeviceCenterRepositoryProtocol>: D
     
     public func fetchUserDevices() async -> [DeviceEntity] {
         await repository.fetchUserDevices()
+    }
+    
+    public func fetchDeviceNames() async -> [String] {
+        await repository.fetchDeviceNames()
     }
     
     public func loadCurrentDeviceId() -> String? {

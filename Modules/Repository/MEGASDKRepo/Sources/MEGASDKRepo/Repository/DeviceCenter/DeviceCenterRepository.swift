@@ -33,6 +33,10 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
         }
     }
     
+    public func fetchDeviceNames() async -> [String] {
+        await fetchUserDevices().compactMap { $0.name }
+    }
+    
     public func loadCurrentDeviceId() -> String? {
         sdk.deviceId()
     }

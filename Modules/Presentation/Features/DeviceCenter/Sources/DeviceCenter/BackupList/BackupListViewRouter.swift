@@ -4,6 +4,7 @@ import MEGAPresentation
 import SwiftUI
 
 public protocol BackupListRouting: Routing {
+    func updateTitle(_ title: String)
 }
 
 public final class BackupListViewRouter: NSObject, BackupListRouting {
@@ -55,6 +56,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     public func build() -> UIViewController {
         let backupListViewModel = BackupListViewModel(
             selectedDeviceId: selectedDeviceId,
+            selectedDeviceName: selectedDeviceName,
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
@@ -70,12 +72,16 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         let backupListView = BackupListView(viewModel: backupListViewModel)
         let hostingController = UIHostingController(rootView: backupListView)
         baseViewController = hostingController
-        baseViewController?.title = selectedDeviceName
+        updateTitle(selectedDeviceName)
 
         return hostingController
     }
     
     public func start() {
         navigationController?.pushViewController(build(), animated: true)
+    }
+    
+    public func updateTitle(_ title: String) {
+        baseViewController?.title = title
     }
 }

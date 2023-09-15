@@ -10,25 +10,35 @@ protocol RenameViewRouting: Routing {
 struct RenameViewModel {
     private let router: any RenameViewRouting
     private let type: RenameType
-    private let nodeActionUseCase: any NodeActionUseCaseProtocol
+    private let renameUseCase: any RenameUseCaseProtocol
     
     init(
         router: any RenameViewRouting,
         type: RenameType,
-        nodeActionUseCase: any NodeActionUseCaseProtocol
+        renameUseCase: any RenameUseCaseProtocol
     ) {
         self.router = router
         self.type = type
-        self.nodeActionUseCase = nodeActionUseCase
+        self.renameUseCase = renameUseCase
     }
     
     func rename(_ newName: String) async {
-        // Depending on the RenameType, one or the other function of the NodeActionUseCase must be executed.
+        switch type {
+        case .device(let renameEntity):
+            do {
+                try await renameUseCase.renameDevice(renameEntity.deviceId, newName: newName)
+                router.renamingFinishedSuccessfully()
+            } catch {
+                router.renamingFinishedWithError()
+            }
+        }
     }
     
     func isDuplicated(_ text: String) -> Bool {
-        // Will check if the name entered by the user is duplicated, we take into account the RenameType to set the duplicity criterion
-        return false
+        switch type {
+        case .device(let renameEntity):
+            return renameEntity.otherDeviceNames.contains(text)
+        }
     }
     
     func containsInvalidChars(_ text: String) -> Bool {
@@ -37,13 +47,17 @@ struct RenameViewModel {
     }
     
     func textfieldText() -> String {
-        // Initial text to be displayed in the alert's textfield
-        return ""
+        switch type {
+        case .device(let renameEntity):
+            return renameEntity.deviceOldName
+        }
     }
     
     func textfieldPlaceHolder() -> String {
-        // Text to be displayed as placeholder of the alert's textfield
-        return ""
+        switch type {
+        case .device:
+            return Strings.Localizable.Device.Center.Rename.Device.title
+        }
     }
     
     func alertTitle(text: String) -> String {
@@ -63,10 +77,7 @@ struct RenameViewModel {
     }
     
     func alertTextsColor(text: String) -> UIColor {
-        if containsInvalidChars(text) || isDuplicated(text) {
-            return Colors.General.Red.ff3B30.color
-        }
-        return UIColor.label
+        containsInvalidChars(text) || isDuplicated(text) ? Colors.General.Red.ff3B30.color : UIColor.label
     }
     
     func isActionButtonEnabled(text: String) -> Bool {

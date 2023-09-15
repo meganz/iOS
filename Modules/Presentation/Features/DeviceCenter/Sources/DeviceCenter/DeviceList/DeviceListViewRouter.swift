@@ -13,6 +13,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private weak var navigationController: UINavigationController?
     private let deviceCenterBridge: DeviceCenterBridge
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
+    private let refreshDevicesPublisher: PassthroughSubject<Void, Never>
     private let updateInterval: UInt64
     private let deviceCenterAssets: DeviceCenterAssets
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
@@ -29,6 +30,8 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         self.deviceCenterUseCase = deviceCenterUseCase
         
         devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
+        refreshDevicesPublisher = PassthroughSubject<Void, Never>()
+        
         updateInterval = 30
         
         super.init()
@@ -37,6 +40,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     public func build() -> UIViewController {
         let deviceListViewModel = DeviceListViewModel(
             devicesUpdatePublisher: devicesUpdatePublisher,
+            refreshDevicesPublisher: refreshDevicesPublisher,
             updateInterval: updateInterval,
             router: self,
             deviceCenterBridge: deviceCenterBridge,

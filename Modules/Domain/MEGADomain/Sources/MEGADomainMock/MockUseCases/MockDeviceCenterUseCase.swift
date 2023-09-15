@@ -16,4 +16,8 @@ public struct MockDeviceCenterUseCase: DeviceCenterUseCaseProtocol {
     public func loadCurrentDeviceId() -> String? {
         currentDeviceId
     }
+    
+    public func fetchDeviceNames() async -> [String] {
+        devices.compactMap {$0.name}
+    }
 }

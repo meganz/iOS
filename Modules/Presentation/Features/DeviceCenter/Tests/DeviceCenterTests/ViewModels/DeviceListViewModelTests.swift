@@ -239,6 +239,7 @@ final class DeviceListViewModelTests: XCTestCase {
         
         let sut = DeviceListViewModel(
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
+            refreshDevicesPublisher: PassthroughSubject<Void, Never>(),
             updateInterval: updateInterval,
             router: MockDeviceListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),

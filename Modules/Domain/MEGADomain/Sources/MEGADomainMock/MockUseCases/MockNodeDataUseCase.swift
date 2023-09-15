@@ -56,4 +56,13 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         inRubbishBin
     }
+    
+    public func nodeForHandle(_ handle: MEGADomain.HandleEntity) -> MEGADomain.NodeEntity? {
+        nil
+    }
+    
+    public func parentForHandle(_ handle: MEGADomain.HandleEntity) -> MEGADomain.NodeEntity? {
+        nil
+    }
+    
 }

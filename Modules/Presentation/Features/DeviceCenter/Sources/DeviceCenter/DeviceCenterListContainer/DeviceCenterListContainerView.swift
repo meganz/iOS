@@ -45,7 +45,9 @@ struct ListViewContainer<Content>: View where Content: View {
                         title: action.title,
                         subtitle: action.subtitle,
                         action: {
-                            selectedItem.executeAction(action.type)
+                            Task {
+                                await selectedItem.executeAction(action.type)
+                            }
                         }
                     )
                 }

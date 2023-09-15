@@ -7,7 +7,9 @@ import XCTest
 
 final class BackupListViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
+    let mockCurrentDeviceName = "device1"
     let mockAuxDeviceId = "2"
+    let mockAuxDeviceName = "device2"
     
     func test_loadAssets_matchesBackupStatuses() {
         var backup = BackupEntity(
@@ -17,6 +19,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: [backup]
         )
         
@@ -30,6 +33,7 @@ final class BackupListViewModelTests: XCTestCase {
         let backups = backups()
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: backups
         )
         
@@ -82,6 +86,7 @@ final class BackupListViewModelTests: XCTestCase {
         let backups = backups()
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: backups
         )
         
@@ -98,6 +103,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: userGroupedBackups[mockCurrentDeviceId] ?? []
         )
         
@@ -109,6 +115,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel2 = makeSUT(
             currentDeviceId: mockAuxDeviceId,
+            currentDeviceName: mockAuxDeviceName,
             backups: userGroupedBackups[mockAuxDeviceId] ?? []
         )
         
@@ -127,6 +134,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
             deviceCenterUseCase: mockUseCase
         )
@@ -145,6 +153,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
             deviceCenterUseCase: mockUseCase,
             updateInterval: 5
@@ -173,6 +182,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
             deviceCenterUseCase: mockUseCase
         )
@@ -198,6 +208,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
             deviceCenterUseCase: mockUseCase
         )
@@ -224,6 +235,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
             deviceCenterUseCase: mockUseCase
         )
@@ -250,6 +262,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
             deviceCenterUseCase: mockUseCase
         )
@@ -333,6 +346,7 @@ final class BackupListViewModelTests: XCTestCase {
         let backups = backups()
         let viewModel = makeSUT(
             currentDeviceId: mockCurrentDeviceId,
+            currentDeviceName: mockCurrentDeviceName,
             backups: backups
         )
         
@@ -359,6 +373,7 @@ final class BackupListViewModelTests: XCTestCase {
     
     private func makeSUT(
         currentDeviceId: String,
+        currentDeviceName: String,
         backups: [BackupEntity],
         deviceCenterUseCase: MockDeviceCenterUseCase = MockDeviceCenterUseCase(),
         updateInterval: UInt64 = 1,
@@ -370,6 +385,7 @@ final class BackupListViewModelTests: XCTestCase {
         let backupTypeEntities = backupTypeEntities()
         let sut = BackupListViewModel(
             selectedDeviceId: currentDeviceId,
+            selectedDeviceName: currentDeviceName,
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,

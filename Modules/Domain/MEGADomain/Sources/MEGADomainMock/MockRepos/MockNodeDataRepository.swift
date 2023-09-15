@@ -73,4 +73,12 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
     public func creationDateForNode(handle: HandleEntity) -> Date? {
         modificationDate
     }
+    
+    public func nodeForHandle(_ handle: MEGADomain.HandleEntity) -> NodeEntity? {
+        nil
+    }
+    
+    public func parentForHandle(_ handle: MEGADomain.HandleEntity) -> NodeEntity? {
+        nil
+    }
 }
