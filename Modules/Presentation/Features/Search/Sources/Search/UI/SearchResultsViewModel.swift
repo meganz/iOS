@@ -6,6 +6,7 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var listItems: [SearchResultRowViewModel]  = []
     @Published var chipsItems: [ChipViewModel] = []
     @Published var bottomInset: CGFloat = 0.0
+    @Published var emptyViewModel: ContentUnavailableView_iOS16ViewModel?
     
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
@@ -145,6 +146,7 @@ public class SearchResultsViewModel: ObservableObject {
         listItems = results.results.map { result in
             SearchResultRowViewModel(
                 with: result,
+                contextButtonImage: config.rowAssets.contextImage,
                 contextAction: { [weak self] button in
                     // we pass in button to show popover attached to the correct view
                     self?.bridge.context(result, button)
@@ -155,6 +157,30 @@ public class SearchResultsViewModel: ObservableObject {
                 }
             )
         }
+        
+        emptyViewModel = Self.makeEmptyView(
+            whenListItems: listItems.isEmpty,
+            appliedChips: results.appliedChips,
+            config: config
+        )
+    }
+    
+    private static func makeEmptyView(
+        whenListItems empty: Bool,
+        appliedChips: [SearchChipEntity],
+        config: SearchConfig
+    ) -> ContentUnavailableView_iOS16ViewModel? {
+        guard empty else { return nil }
+        
+        // this assumes only one chip at most can be applied at any given time
+        let content = config.emptyViewAssetFactory(appliedChips.first)
+        
+        return .init(
+            image: content.image,
+            title: content.title,
+            font: Font.callout.bold(),
+            color: content.foregroundColor
+        )
     }
     
     @MainActor

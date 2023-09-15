@@ -3723,10 +3723,20 @@
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="Open in MEGA";
 /* Filter name for searching on the home screen*/
-"home.search.filter.docs" = "Docs";
+"home.search.filter.docs" = "Documents";
 /* Filter name for searching on the home screen*/
 "home.search.filter.images" = "Images";
 /* Filter name for searching on the home screen*/
 "home.search.filter.audio" = "Audio";
 /* Filter name for searching on the home screen*/
 "home.search.filter.video" = "Video";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected" = "No results";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images" = "No images";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents" = "No documents";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio" = "No audio files";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos" = "No video files";

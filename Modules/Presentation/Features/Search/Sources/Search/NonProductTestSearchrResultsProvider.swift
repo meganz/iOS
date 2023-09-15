@@ -8,7 +8,6 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
     public init() {}
     public func search(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
         
-        
         if
             queryRequest == .initial ||
                 queryRequest == .empty
@@ -107,35 +106,38 @@ fileprivate extension SearchQuery {
 }
 
 fileprivate extension SearchResult {
+    private static func image(_ name: String) -> Data {
+        UIImage(systemName: name)!.withRenderingMode(.alwaysTemplate).pngData()!
+    }
     static var imageResults: [Self] {
         [
-            .init(id: 1, title: "Image 1", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "photo")!.pngData()! }, type: .node),
-            .init(id: 3, title: "Image 2", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "photo")!.pngData()! }, type: .node),
-            .init(id: 10, title: "Image 3", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "photo")!.pngData()! }, type: .node)
+            .init(id: 1, title: "Image 1", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node),
+            .init(id: 3, title: "Image 2", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node),
+            .init(id: 10, title: "Image 3", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node)
         ]
     }
     
     static var docsResults: [Self] {
         [
-            .init(id: 23, title: "Doc 1", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "doc.richtext")!.pngData()! }, type: .node),
-            .init(id: 44, title: "Doc 2", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "doc.richtext")!.pngData()! }, type: .node),
-            .init(id: 11, title: "Doc 3", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "doc.richtext")!.pngData()! }, type: .node)
+            .init(id: 23, title: "Doc 1", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node),
+            .init(id: 44, title: "Doc 2", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node),
+            .init(id: 11, title: "Doc 3", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node)
         ]
     }
     
     static var audioResults: [Self] {
         [
-            .init(id: 2, title: "Audio 1", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "music.note")!.pngData()! }, type: .node),
-            .init(id: 5, title: "Audio 2", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "music.note")!.pngData()! }, type: .node),
-            .init(id: 12, title: "Audio 3", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "music.note")!.pngData()! }, type: .node)
+            .init(id: 2, title: "Audio 1", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node),
+            .init(id: 5, title: "Audio 2", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node),
+            .init(id: 12, title: "Audio 3", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node)
         ]
     }
     
     static var videoResults: [Self] {
         [
-            .init(id: 7, title: "Video 1", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "video")!.pngData()! }, type: .node),
-            .init(id: 17, title: "Video 2", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "video")!.pngData()! }, type: .node),
-            .init(id: 77, title: "Video 3", description: "", properties: [], thumbnailImageData: { UIImage(systemName: "video")!.pngData()! }, type: .node)
+            .init(id: 7, title: "Video 1", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node),
+            .init(id: 17, title: "Video 2", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node),
+            .init(id: 77, title: "Video 3", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node)
         ]
     }
 }

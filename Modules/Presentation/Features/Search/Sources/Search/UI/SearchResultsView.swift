@@ -7,7 +7,7 @@ public struct SearchResultsView: View {
     }
     
     @StateObject var viewModel: SearchResultsViewModel
-
+    
     public var body: some View {
         VStack(spacing: .zero) {
             chipsView
@@ -29,38 +29,19 @@ public struct SearchResultsView: View {
                 Spacer()
             }
         }
-        .padding([.leading, .trailing, .top, .bottom])
+        .padding([.leading, .trailing, .bottom])
+        .padding(.top, 6)
     }
-    
-    private var emptyView: some View {
-        // placeholder for [FM-800]
-        EmptyView()
-    }
-    
+
     private var content: some View {
         List {
-            ForEach(Array(viewModel.listItems.enumerated()), id: \.element.id) { index, item in
-                SearchResultRowView(viewModel: item)
-                    .listRowInsets(
-                        EdgeInsets(
-                            top: index != 0 ? 8 : 0,
-                            leading: 0,
-                            bottom: 0,
-                            trailing: 0
-                        )
-                    )
+            ForEach(viewModel.listItems) {
+                SearchResultRowView(viewModel: $0)
             }
         }
         .listStyle(.plain)
-        .overlay(
-            emptyView
-        )
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity,
-            alignment: .topLeading
-        )
         .padding(.bottom, viewModel.bottomInset)
+        .emptyState(viewModel.emptyViewModel)
         .taskForiOS14 {
             await viewModel.task()
         }
@@ -81,6 +62,16 @@ struct SearchResultsViewPreviews: PreviewProvider {
                     selectedBackground: .green,
                     normalForeground: .black,
                     normalBackground: .gray
+                ),
+                emptyViewAssetFactory: { _ in
+                        .init(
+                            image: Image(systemName: "magnifyingglass.circle.fill"),
+                            title: "No results",
+                            foregroundColor: Color(red: 209.0/255.0, green: 209.0/255.0, blue: 209.0/255.0)
+                        )
+                },
+                rowAssets: .init(
+                    contextImage: .init(systemName: "ellipsis")!
                 )
             )
             

@@ -1,5 +1,6 @@
 import Foundation  
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGASDKRepo
 import Search
@@ -10,14 +11,14 @@ final class HomeScreenFactory: NSObject {
     private var sdk: MEGASdk {
         MEGASdk.sharedSdk
     }
-
+    
     func createHomeScreen(
         from tabBarController: MainTabBarController,
         newHomeSearchResultsEnabled: Bool
     ) -> UIViewController {
         let homeViewController = HomeViewController()
         let navigationController = MEGANavigationController(rootViewController: homeViewController)
-
+        
         let myAvatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
                 userAlertsClient: .live
@@ -37,7 +38,7 @@ final class HomeScreenFactory: NSObject {
         )
         
         let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
-
+        
         let uploadViewModel = HomeUploadingViewModel(
             uploadFilesUseCase: UploadPhotoAssetsUseCase(
                 uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
@@ -47,7 +48,7 @@ final class HomeScreenFactory: NSObject {
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
             router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController)
         )
-
+        
         homeViewController.myAvatarViewModel = myAvatarViewModel
         homeViewController.uploadViewModel = uploadViewModel
         homeViewController.startConversationViewModel = StartConversationViewModel(
@@ -74,15 +75,15 @@ final class HomeScreenFactory: NSObject {
             ),
             router: HomeBannerRouter(navigationController: navigationController)
         )
-
+        
         homeViewController.quickAccessWidgetViewModel = QuickAccessWidgetViewModel(
             offlineFilesUseCase: OfflineFilesUseCase(
                 repo: OfflineFileFetcherRepository.newRepo
             )
         )
-                
+        
         navigationController.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.home.image, selectedImage: nil)
-
+        
         let bridge = SearchResultsBridge()
         homeViewController.searchResultsBridge = bridge
         
@@ -93,7 +94,7 @@ final class HomeScreenFactory: NSObject {
         )
         
         homeViewController.searchResultViewController = searchResultViewController
-
+        
         let router = HomeRouter(
             navigationController: navigationController,
             tabBarController: tabBarController
@@ -102,20 +103,20 @@ final class HomeScreenFactory: NSObject {
         homeViewController.homeViewModel = HomeViewModel(
             shareUseCase: ShareUseCase(repo: ShareRepository.newRepo)
         )
-
+        
         return navigationController
     }
     
     private func makeNodeRepo() -> some NodeRepositoryProtocol {
         NodeRepository.newRepo
     }
-
+    
     private func makeSearchResultViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
         newHomeSearchResultsEnabled: Bool
     ) -> UIViewController {
-
+        
         if newHomeSearchResultsEnabled {
             return makeNewSearchResultsViewController(
                 with: navigationController,
@@ -250,7 +251,7 @@ final class HomeScreenFactory: NSObject {
             homeSearchResultViewController?.didClearText()
         }
         
-        bridge.didInputTextTrampoline = { [weak homeSearchResultViewController] text in 
+        bridge.didInputTextTrampoline = { [weak homeSearchResultViewController] text in
             homeSearchResultViewController?.didInputText(text)
         }
         
@@ -259,18 +260,5 @@ final class HomeScreenFactory: NSObject {
         }
         
         return homeSearchResultViewController
-    }
-}
-
-extension SearchConfig {
-    static var searchConfig: Self {
-        .init(
-            chipAssets: .init(
-                selectedForeground: .white,
-                selectedBackground: Colors.Photos.filterTypeSelectionBackground.swiftUIColor,
-                normalForeground: Colors.Photos.filterNormalTextForeground.swiftUIColor,
-                normalBackground: Colors.Photos.filterTypeNormalBackground.swiftUIColor
-            )
-        )
     }
 }

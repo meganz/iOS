@@ -1,4 +1,5 @@
 import Search
+import SearchMock
 import SwiftUI
 
 @main
@@ -21,14 +22,7 @@ struct ContentView: View {
         @StateObject var viewModel = SearchResultsViewModel(
             resultsProvider: NonProductionTestResultsProvider(),
             bridge: .init(selection: { _ in }, context: { _, _ in }),
-            config: .init(
-                chipAssets: .init(
-                    selectedForeground: .white,
-                    selectedBackground: .green,
-                    normalForeground: .black,
-                    normalBackground: .gray
-                )
-            )
+            config: .testConfig
         )
         var body: some View {
             SearchResultsView(
