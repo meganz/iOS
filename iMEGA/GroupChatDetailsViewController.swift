@@ -15,15 +15,17 @@ extension GroupChatDetailsViewController {
     }
     
     @objc func addChatRoomDelegate() {
+        guard let chatRoom else { return }
         MEGAChatSdk.shared.addChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
     @objc func removeChatRoomDelegate() {
+        guard let chatRoom else { return }
         MEGAChatSdk.shared.removeChatRoomDelegate(chatRoom.chatId, delegate: self)
     }
     
     @objc func shouldShowAddParticipants() -> Bool {
-        guard let chatRoom = chatRoom else { return false }
+        guard let chatRoom else { return false }
         let chatRoomPrivilege = chatRoom.ownPrivilege.toOwnPrivilegeEntity()
         return (chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled) && !MEGASdk.isGuest && chatRoomPrivilege.isUserInChat
     }
