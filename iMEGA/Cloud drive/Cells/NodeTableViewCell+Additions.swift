@@ -11,7 +11,7 @@ extension NodeTableViewCell {
             return
         }
         
-        let isNodeUndecrypted = firstNode.isUndecrypted(ownerEmail: recentActionBucket.userEmail,
+        let isNodeUndecrypted = firstNode.isUndecrypted(ownerEmail: recentActionBucket.userEmail ?? "",
                                                         in: .shared)
         guard !isNodeUndecrypted else {
             infoLabel.text = Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
