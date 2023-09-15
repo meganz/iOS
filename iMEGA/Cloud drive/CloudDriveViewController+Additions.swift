@@ -83,6 +83,11 @@ extension CloudDriveViewController {
         showBrowserNavigation(for: nodes, action: .move)
     }
     
+    func createTextFileAlert() {
+        guard let parentNode = parentNode else { return }
+        CreateTextFileAlertViewRouter(presenter: navigationController, parentHandle: parentNode.handle).start()
+    }
+    
     private func shareType(for nodes: [MEGANode]) -> MEGAShareType {
         var currentNodeShareType: MEGAShareType = .accessUnknown
     
@@ -223,6 +228,31 @@ extension CloudDriveViewController {
                 }
             }
         }
+    }
+    
+    func showMediaCapture() {
+        permissionHandler.requestVideoPermission { [weak self] videoPermissionGranted in
+            guard let self else { return }
+            if videoPermissionGranted {
+                permissionHandler.photosPermissionWithCompletionHandler {[weak self] photosPermissionGranted in
+                    guard let self else { return }
+                    if !photosPermissionGranted {
+                        UserDefaults.standard.set(false, forKey: "isSaveMediaCapturedToGalleryEnabled")
+                    }
+                    showImagePickerFor(sourceType: .camera)
+                }
+            } else {
+                permissionRouter.alertVideoPermission()
+            }
+        }
+    }
+    
+    func showDocumentImporter() {
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.data, UTType.package], asCopy: true)
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = true
+        documentPicker.popoverPresentationController?.barButtonItem = contextBarButtonItem
+        present(documentPicker, animated: true)
     }
     
     @objc func findIndexPath(for node: MEGANode, source: [MEGANode]) -> IndexPath {

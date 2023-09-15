@@ -16,8 +16,14 @@ protocol MediaDiscoveryContentDelegate: AnyObject {
     
     /// This delegate function will get triggered when the ability to enter edit mode/ to be able to select nodes in Media Discovery changes.
     ///  Follow this trigger, to determine the availability to enter multi-select/edit mode.
+    ///  This event should be triggered if either zoomLevelChange affects its ability to select or selectedMode has changed.
     /// - Parameter isHidden: Bool value to determine if selection action should be hidden
     func isMediaDiscoverySelection(isHidden: Bool)
+    
+    /// This delegate function triggered only when in the Empty State of the view. And when a menu action has been triggered.
+    /// This is called immediately on tapping of menu action
+    /// - Parameter menuAction: The tapped menu action
+    func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction)
 }
 
 enum MediaDiscoveryContentViewState {
@@ -89,6 +95,10 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         photoLibraryContentViewModel.toggleSelectAllPhotos()
     }
     
+    func tapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {
+        delegate?.mediaDiscoverEmptyTapped(menuAction: menuAction)
+    }
+    
     private func startTracking() {
         pageStayTimeTracker.start()
     }
@@ -114,9 +124,11 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
             }
             .store(in: &subscriptions)
         
-        photoLibraryContentViewModel
-            .selection
-            .$isHidden
+        photoLibraryContentViewModel.$selectedMode
+            .combineLatest(photoLibraryContentViewModel.selection.$isHidden)
+            .map { selectedMode, selectionIsHidden -> Bool in
+                selectedMode != .all || selectionIsHidden
+            }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak delegate] in delegate?.isMediaDiscoverySelection(isHidden: $0) }

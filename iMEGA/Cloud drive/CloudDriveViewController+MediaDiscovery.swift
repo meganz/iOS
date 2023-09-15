@@ -70,4 +70,21 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
     func isMediaDiscoverySelection(isHidden: Bool) {
         viewModel.isSelectionHidden = isHidden
     }
+    
+    func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {
+        switch menuAction {
+        case .choosePhotoVideo:
+            showImagePickerFor(sourceType: .photoLibrary)
+        case .capturePhotoVideo:
+            showMediaCapture()
+        case .importFromFiles:
+            showDocumentImporter()
+        case .scanDocument:
+            presentScanDocument()
+        case .newFolder:
+            createNewFolderAction()
+        case .newTextFile:
+            createTextFileAlert()
+        }
+    }
 }

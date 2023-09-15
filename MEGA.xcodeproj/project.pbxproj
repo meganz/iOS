@@ -180,6 +180,8 @@
 		259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */; };
 		259FA4032A3A949F00C038B2 /* ProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */; };
 		259FA4082A3A9CEB00C038B2 /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */; };
+		25AF215E2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */; };
+		25AF21632AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */; };
 		25C2F8D82AAEB3BA00F8930A /* MediaDiscoveryContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentController.swift */; };
 		25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */; };
 		25D840692A9EE0E50026D288 /* PermissionAlertViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D840682A9EE0E50026D288 /* PermissionAlertViewModifier.swift */; };
@@ -2667,6 +2669,8 @@
 		259603D02AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+AudioPlayerPresenterProtocol.swift"; sourceTree = "<group>"; };
 		259FA4022A3A949F00C038B2 /* ProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModelTests.swift; sourceTree = "<group>"; };
 		259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
+		25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentView.swift; sourceTree = "<group>"; };
+		25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentMenuAction.swift; sourceTree = "<group>"; };
 		25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentController.swift; sourceTree = "<group>"; };
 		25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewModelTests.swift; sourceTree = "<group>"; };
 		25D840682A9EE0E50026D288 /* PermissionAlertViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertViewModifier.swift; sourceTree = "<group>"; };
@@ -5741,6 +5745,7 @@
 		257BEB842AA82E8900B49666 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				25AF215C2AB263AF00DC41AF /* Empty */,
 				25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentController.swift */,
 				257BEB852AA82E9700B49666 /* MediaDiscoveryContentView.swift */,
 				257BEB892AA926EC00B49666 /* MediaDiscoveryContentViewModel.swift */,
@@ -5780,6 +5785,15 @@
 				259FA4052A3A9C9F00C038B2 /* ProfileSection.swift */,
 			);
 			path = DataSource;
+			sourceTree = "<group>";
+		};
+		25AF215C2AB263AF00DC41AF /* Empty */ = {
+			isa = PBXGroup;
+			children = (
+				25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */,
+				25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */,
+			);
+			path = Empty;
 			sourceTree = "<group>";
 		};
 		25C2F8ED2AB126B900F8930A /* MediaDiscoverContent */ = {
@@ -13474,6 +13488,8 @@
 				BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */,
 				BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */,
 				0E1904642A92FF410048354A /* EmptyAlbumView.swift in Sources */,
+				25AF21632AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift in Sources */,
+				25AF215E2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift in Sources */,
 				8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */,
 				5B79E88D26E6973A0070D782 /* EmptyStateType.swift in Sources */,
 				5B98624D26B1B2E600BB9945 /* EmptyStateView+Config.swift in Sources */,

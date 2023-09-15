@@ -211,31 +211,13 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .newFolder:
             createNewFolderAction()
         case .newTextFile:
-            guard let parentNode = parentNode else { return }
-            CreateTextFileAlertViewRouter(presenter: navigationController, parentHandle: parentNode.handle).start()
+            createTextFileAlert()
         case .chooseFromPhotos:
             showImagePickerFor(sourceType: .photoLibrary)
         case .capture:
-            permissionHandler.requestVideoPermission { [weak self] videoPermissionGranted in
-                guard let self else { return }
-                if videoPermissionGranted {
-                    permissionHandler.photosPermissionWithCompletionHandler {[weak self] photosPermissionGranted in
-                        guard let self else { return }
-                        if !photosPermissionGranted {
-                            UserDefaults.standard.set(false, forKey: "isSaveMediaCapturedToGalleryEnabled")
-                        }
-                        showImagePickerFor(sourceType: .camera)
-                    }
-                } else {
-                    permissionRouter.alertVideoPermission()
-                }
-            }
+            showMediaCapture()
         case .importFrom:
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.data, UTType.package], asCopy: true)
-            documentPicker.delegate = self
-            documentPicker.allowsMultipleSelection = true
-            documentPicker.popoverPresentationController?.barButtonItem = contextBarButtonItem
-            present(documentPicker, animated: true)
+            showDocumentImporter()
         default:
             break
         }

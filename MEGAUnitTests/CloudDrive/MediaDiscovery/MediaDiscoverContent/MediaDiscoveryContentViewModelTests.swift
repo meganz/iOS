@@ -205,6 +205,44 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         // Assert
         XCTAssertEqual(delegate.isMediaDiscoverySelectionDelegateIsHidden, false)
     }
+    
+    func testSubscribeToSelectionHidden_whenSelectionRequestHiddenEqualsFalseAndSelectedModeIsNotAll_shouldNotifyDelegateIsHiddenEqualsTrue() async {
+        // Arrange
+        let expectedNodes = [NodeEntity(name: "test1.png", handle: 1)]
+        let delegate = MockMediaDiscoveryContentDelegate()
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expectedNodes)
+        let sut = makeSUT(delegate: delegate, mediaDiscoveryUseCase: mediaDiscoveryUseCase)
+    
+        // Act
+        for mode in [PhotoLibraryViewMode.day, .month, .year] {
+            sut.photoLibraryContentViewModel.selection.isHidden = false
+            sut.photoLibraryContentViewModel.selectedMode = mode
+            
+            _ = await sut.photoLibraryContentViewModel.selection.$isHidden
+                .timeout(.milliseconds(300), scheduler: DispatchQueue.main)
+                .values
+                .first(where: { $0 })
+            
+            // Assert
+            XCTAssertEqual(delegate.isMediaDiscoverySelectionDelegateIsHidden, true, "Expect to return true, got \(String(describing: delegate.isMediaDiscoverySelectionDelegateIsHidden)) for mode: \(mode)")
+        }
+    }
+    
+    func testTappedMenuAction_whenViewStateIsInEmpty_shouldPassEventToDelegate() async {
+        let delegate = MockMediaDiscoveryContentDelegate()
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: [])
+        let sut = makeSUT(delegate: delegate, mediaDiscoveryUseCase: mediaDiscoveryUseCase)
+        
+        await sut.loadPhotos()
+        
+        XCTAssertEqual(sut.viewState, .empty)
+        
+        EmptyMediaDiscoveryContentMenuAction.allCases
+            .forEach { action in
+                sut.tapped(menuAction: action)
+                XCTAssertEqual(delegate.mediaDiscoveryEmptyTappedTapped, action)
+            }
+    }
 }
 
 extension MediaDiscoveryContentViewModelTests {
@@ -233,11 +271,17 @@ final class MockMediaDiscoveryContentDelegate: MediaDiscoveryContentDelegate {
     
     var selectedPhotosDelegateCalledWithCount = 0
     var isMediaDiscoverySelectionDelegateIsHidden: Bool?
+    var mediaDiscoveryEmptyTappedTapped: EmptyMediaDiscoveryContentMenuAction?
+    
     func selectedPhotos(selected: [MEGADomain.NodeEntity], allPhotos: [MEGADomain.NodeEntity]) {
         selectedPhotosDelegateCalledWithCount = selected.count
     }
     
     func isMediaDiscoverySelection(isHidden: Bool) {
         isMediaDiscoverySelectionDelegateIsHidden = isHidden
+    }
+    
+    func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {
+        mediaDiscoveryEmptyTappedTapped = menuAction
     }
 }
