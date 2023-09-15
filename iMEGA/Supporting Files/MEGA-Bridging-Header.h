@@ -32,7 +32,6 @@
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
-#import "AVAudioSession+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
 
 #import "UINavigationController+FDFullscreenPopGesture.h"
