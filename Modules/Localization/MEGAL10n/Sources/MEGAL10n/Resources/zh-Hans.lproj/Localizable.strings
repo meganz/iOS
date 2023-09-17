@@ -1418,12 +1418,12 @@
 "resend"="重新发送";
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s已经是您的联系人。";
-/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="已发送联系人：%s";
+/* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="已发送联系人：%@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="已发送%s位联系人。";
-/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="附上文件：%s";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="附上文件：%@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="已附上%s个文件。";
 /* Label in a button that allows to jump to the latest item */
