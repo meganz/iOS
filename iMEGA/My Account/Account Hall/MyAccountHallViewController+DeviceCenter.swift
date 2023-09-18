@@ -2,6 +2,7 @@ import DeviceCenter
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import SwiftUI
 
 extension MyAccountHallViewController {
     func navigateToDeviceCenter() {
@@ -147,7 +148,10 @@ extension MyAccountHallViewController {
             DeviceCenterAction(
                 type: .cameraUploads,
                 title: Strings.Localizable.cameraUploadsLabel,
-                subtitle: "",
+                dynamicSubtitle: {
+                    CameraUploadManager.isCameraUploadEnabled ? Strings.Localizable.Device.Center.Camera.Uploads.Action.Status.enabled :
+                        Strings.Localizable.Device.Center.Camera.Uploads.Action.Status.disabled
+                },
                 icon: Asset.Images.Settings.cameraUploadsSettings.name
             ),
             DeviceCenterAction(
@@ -193,10 +197,16 @@ extension MyAccountHallViewController {
     private func makeDeviceCenterBridge() -> DeviceCenterBridge {
         let bridge = DeviceCenterBridge()
         
-        bridge.cameraUploadActionTapped = {
-            // Will be added in future tickets
-        }
+        bridge.cameraUploadActionTapped = { [weak self] cameraUploadStatusChanged in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                guard let navigationController = self?.findTopNavigationController() else { return }
         
+                CameraUploadsSettingsViewRouter(presenter: navigationController, closure: {
+                    cameraUploadStatusChanged()
+                }).start()
+            }
+        }
+
         bridge.infoActionTapped = { _ in
             // Will be added in future tickets
         }
@@ -228,5 +238,34 @@ extension MyAccountHallViewController {
         }
         
         return bridge
+    }
+    
+    private func findPresentedViewController() -> UIViewController? {
+        guard var topController = UIApplication.shared.keyWindow?.rootViewController else { return nil }
+        
+        while let presentedViewController = topController.presentedViewController {
+            topController = presentedViewController
+        }
+        
+        return topController
+    }
+    
+    private func findTopNavigationController() -> UINavigationController? {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
+            return nil
+        }
+
+        if let hostingController = rootViewController as? UIHostingController<AdsSlotView<MainTabBarWrapper>> {
+            for child in hostingController.children {
+                if let tabBarController = child as? MainTabBarController,
+                   let selectedNavController = tabBarController.selectedViewController as? UINavigationController {
+                    return selectedNavController
+                }
+            }
+        } else if let tabBarController = rootViewController as? MainTabBarController,
+                  let selectedNavController = tabBarController.selectedViewController as? UINavigationController {
+            return selectedNavController
+        }
+        return nil
     }
 }

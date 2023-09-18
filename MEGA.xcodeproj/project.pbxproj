@@ -5132,8 +5132,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				941AAEA72AB33D67005A6EA7 /* SearchMock in Frameworks */,
 				94004A7E2AA242ED004C873B /* Search in Frameworks */,
+				941AAEA72AB33D67005A6EA7 /* SearchMock in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13546,7 +13546,6 @@
 				5B98BE1327AA9FF800426B97 /* ExportChatMessagesRepository.swift in Sources */,
 				839A1C9F27CCF694004A387B /* ExportFileRouter.swift in Sources */,
 				83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */,
-				940DE0272AB46245008C9DB5 /* SearchConfig+Home.swift in Sources */,
 				839A1CA127CCF694004A387B /* ExportFileViewModel.swift in Sources */,
 				B5FE693B286B090900A1725C /* FavouriteExplorerToolbarConfigurator.swift in Sources */,
 				83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */,
@@ -14374,6 +14373,7 @@
 				BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */,
 				BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */,
 				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
+				940DE0272AB46245008C9DB5 /* SearchConfig+Home.swift in Sources */,
 				5D11B73E2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift in Sources */,
 				5D5DE4F82511F88900F2B4FD /* SearchFileUseCase.swift in Sources */,
 				5D79EDD4251C71B500C0307A /* SearchHintTableViewCell.swift in Sources */,
