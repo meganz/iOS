@@ -64,44 +64,54 @@ final class UserAttributeUseCaseTest: XCTestCase {
         let json = ""
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":true}}}
-        """.trim
+        """
+        
         let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))
-        
-        XCTAssertNotNil(repo.userAttributesContainer[.contentConsumptionPreferences])
-        XCTAssertEqual(try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences])[ContentConsumptionKeysEntity.key], targetJson)
+
+        let decoder = JSONDecoder()
+        let savedJSON = try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences]?[ContentConsumptionKeysEntity.key])
+        let savedAttribute = try decoder.decode(ContentConsumptionEntity.self, from: Data(savedJSON.utf8))
+        let targetAttribute = try decoder.decode(ContentConsumptionEntity.self, from: Data(targetJson.utf8))
+        XCTAssertEqual(savedAttribute, targetAttribute)
     }
     
     func testSaveTimelineFilter_onFirstTime_shouldUsePreferenceBeEmpty() async throws {
         let json = ""
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive"}}}
-        """.trim
+        """
         let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: nil))
         
-        XCTAssertNotNil(repo.userAttributesContainer[.contentConsumptionPreferences])
-        XCTAssertEqual(try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences])[ContentConsumptionKeysEntity.key], targetJson)
+        let decoder = JSONDecoder()
+        let savedJSON = try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences]?[ContentConsumptionKeysEntity.key])
+        let savedAttribute = try decoder.decode(ContentConsumptionEntity.self, from: Data(savedJSON.utf8))
+        let targetAttribute = try decoder.decode(ContentConsumptionEntity.self, from: Data(targetJson.utf8))
+        XCTAssertEqual(savedAttribute, targetAttribute)
     }
     
     func testSaveTimelineFilter_onSecondTime_shouldSaveCorrectly() async throws {
         let json = """
             {"ios":{"timeline":{"mediaType":"videos","location":"cloudDrive","usePreference":true}}}
-        """.trim
+        """
         let targetJson = """
             {"ios":{"timeline":{"mediaType":"images","location":"cameraUploads","usePreference":false}}}
-        """.trim
-        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json?.base64Encoded)]])
+        """
+        let repo = MockUserAttributeRepository(userAttributesContainer: [.contentConsumptionPreferences: [ContentConsumptionKeysEntity.key: try XCTUnwrap(json.base64Encoded)]])
         let sut = UserAttributeUseCase(repo: repo)
         
         try await sut.saveTimelineFilter(key: ContentConsumptionKeysEntity.key, timeline: ContentConsumptionTimeline(mediaType: .images, location: .cameraUploads, usePreference: false))
         
-        XCTAssertNotNil(repo.userAttributesContainer[.contentConsumptionPreferences])
-        XCTAssertEqual(try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences])[ContentConsumptionKeysEntity.key], targetJson)
+        let decoder = JSONDecoder()
+        let savedJSON = try XCTUnwrap(repo.userAttributesContainer[.contentConsumptionPreferences]?[ContentConsumptionKeysEntity.key])
+        let savedAttribute = try decoder.decode(ContentConsumptionEntity.self, from: Data(savedJSON.utf8))
+        let targetAttribute = try decoder.decode(ContentConsumptionEntity.self, from: Data(targetJson.utf8))
+        XCTAssertEqual(savedAttribute, targetAttribute)
     }
     
     func testSaveTimelineFilter_withCrossPlatformData_shouldChangeOnlyiOSBlock() async throws {

@@ -23,9 +23,10 @@ struct ScheduledMeetingDateBuilder {
         startDate: Date? = nil,
         endDate: Date? = nil,
         startTime: Date? = nil,
-        endTime: Date? = nil
+        endTime: Date? = nil,
+        locale: Locale = .autoupdatingCurrent
     ) -> String {
-        let description = descriptionString(startDate: startDate, endDate: endDate, startTime: startTime, endTime: endTime)
+        let description = descriptionString(locale: locale, startDate: startDate, endDate: endDate, startTime: startTime, endTime: endTime)
         
         switch formatter {
         case .first:
@@ -40,19 +41,20 @@ struct ScheduledMeetingDateBuilder {
     // MARK: - Private methods
     
     private func descriptionString(
+        locale: Locale,
         startDate: Date? = nil,
         endDate: Date? = nil,
         startTime: Date? = nil,
         endTime: Date? = nil
     ) -> String {
-        let timeFormatter = DateFormatter.timeShort()
-        let dateFormatter = DateFormatter.dateMedium()
+        let timeFormatter = DateFormatter.timeShort(locale: locale)
+        let dateFormatter = DateFormatter.dateMedium(locale: locale)
         
         let startDate = startDate ?? scheduledMeeting.startDate
         let endDate = (endDate ?? scheduledMeeting.rules.until) ?? scheduledMeeting.endDate
         let startTime = startTime ?? scheduledMeeting.startDate
         let endTime = endTime ?? scheduledMeeting.endDate
-
+        
         let startDateString = dateFormatter.localisedString(from: startDate)
         let endDateString = dateFormatter.localisedString(from: endDate)
         let startTimeString = timeFormatter.localisedString(from: startTime)

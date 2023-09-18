@@ -11,7 +11,7 @@ final class ScheduledMeetingDateBuilderTests: XCTestCase {
         let rules = ScheduledMeetingRulesEntity(frequency: .weekly, interval: 1, weekDayList: Array(1...7))
         let scheduleMeeting = ScheduledMeetingEntity(startDate: startDate, endDate: endDate, rules: rules)
         let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting, chatRoom: ChatRoomEntity())
-        let description = builder.buildDateDescriptionString(removingFormatter: .all)
+        let description = builder.buildDateDescriptionString(removingFormatter: .all, locale: Locale(identifier: "en_GB"))
         
         XCTAssert(
              description == "Every day effective 22 Jun 2023 from 10:30 AM to 10:45 AM" ||
@@ -25,7 +25,7 @@ final class ScheduledMeetingDateBuilderTests: XCTestCase {
         let rules = ScheduledMeetingRulesEntity(frequency: .weekly, interval: 2, weekDayList: Array(1...7))
         let scheduleMeeting = ScheduledMeetingEntity(startDate: startDate, endDate: endDate, rules: rules)
         let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting, chatRoom: ChatRoomEntity())
-        let description = builder.buildDateDescriptionString(removingFormatter: .all)
+        let description = builder.buildDateDescriptionString(removingFormatter: .all, locale: Locale(identifier: "en_GB"))
         
         XCTAssert(
              description == "Mon, Tue, Wed, Thu, Fri, Sat and Sun every 2 weeks effective 22 Jun 2023 from 10:30 AM to 10:45 AM" ||
@@ -39,7 +39,7 @@ final class ScheduledMeetingDateBuilderTests: XCTestCase {
         let rules = ScheduledMeetingRulesEntity(frequency: .weekly, interval: 1, weekDayList: [4])
         let scheduleMeeting = ScheduledMeetingEntity(startDate: startDate, endDate: endDate, rules: rules)
         let builder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduleMeeting, chatRoom: ChatRoomEntity())
-        let description = builder.buildDateDescriptionString(removingFormatter: .all)
+        let description = builder.buildDateDescriptionString(removingFormatter: .all, locale: Locale(identifier: "en_GB"))
         
         XCTAssert(
              description == "Thu every week effective 22 Jun 2023 from 10:30 AM to 10:45 AM" ||

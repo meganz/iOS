@@ -128,14 +128,14 @@ final class WaitingRoomViewModel: ObservableObject {
     
     // MARK: - Public
     
-    func createMeetingDate() -> String {
+    func createMeetingDate(locale: Locale = .autoupdatingCurrent) -> String {
         let startDate = scheduledMeeting.startDate
         let endDate = scheduledMeeting.endDate
         
-        let timeFormatter = DateFormatter.timeShort()
+        let timeFormatter = DateFormatter.timeShort(locale: locale)
         
-        let weekDayString = DateFormatter.fromTemplate("E").localisedString(from: startDate)
-        let startDateString = DateFormatter.fromTemplate("ddMMM").localisedString(from: startDate)
+        let weekDayString = DateFormatter.fromTemplate("E", locale: locale).localisedString(from: startDate)
+        let startDateString = DateFormatter.fromTemplate("ddMMM", locale: locale).localisedString(from: startDate)
         let startTimeString = timeFormatter.localisedString(from: startDate)
         let endTimeString = timeFormatter.localisedString(from: endDate)
         
