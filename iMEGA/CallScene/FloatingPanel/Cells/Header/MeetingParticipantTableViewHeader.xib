@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="CGc-cN-RAy" customClass="MeetingParticipantTableViewHeader" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="acY-ue-LhX">
+                    <rect key="frame" x="16" y="0.0" width="398" height="48"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M65-jV-Vfk">
+                            <rect key="frame" x="0.0" y="0.0" width="42.333333333333336" height="48"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAp-1k-Ld7">
+                            <rect key="frame" x="326.66666666666669" y="0.0" width="71.333333333333314" height="48"/>
+                            <color key="tintColor" name="00C29A"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Button">
+                                <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
+                            </buttonConfiguration>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="W9p-sS-H6u"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="acY-ue-LhX" secondAttribute="trailing" id="6tE-7H-dXR"/>
+                <constraint firstItem="acY-ue-LhX" firstAttribute="top" secondItem="CGc-cN-RAy" secondAttribute="top" id="7qU-LC-pXf"/>
+                <constraint firstItem="acY-ue-LhX" firstAttribute="leading" secondItem="CGc-cN-RAy" secondAttribute="leading" constant="16" id="7wY-9G-MnK"/>
+                <constraint firstItem="W9p-sS-H6u" firstAttribute="bottom" secondItem="acY-ue-LhX" secondAttribute="bottom" id="zjQ-fB-swd"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="actionButton" destination="xAp-1k-Ld7" id="dRf-5I-mmn"/>
+                <outlet property="titleLabel" destination="M65-jV-Vfk" id="GtP-9W-db6"/>
+            </connections>
+            <point key="canvasLocation" x="-297.70992366412213" y="-235.21126760563382"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="00C29A">
+            <color red="0.0" green="0.76099997758865356" blue="0.60399997234344482" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

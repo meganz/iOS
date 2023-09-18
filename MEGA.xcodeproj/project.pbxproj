@@ -824,6 +824,8 @@
 		83293C5A2806CB7800369A86 /* NameCollisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83293C592806CB7800369A86 /* NameCollisionView.swift */; };
 		832CAEEF2864857D0069409D /* HangOrEndCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832CAEEE2864857D0069409D /* HangOrEndCallViewModel.swift */; };
 		832CAEF3286485A40069409D /* HangOrEndCallRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832CAEF2286485A40069409D /* HangOrEndCallRouter.swift */; };
+		832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832DEFE82AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift */; };
+		832DEFEB2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832DEFE92AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib */; };
 		832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */; };
 		832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */; };
 		832F19EB2091BA970067679E /* MOMediaDestination+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19E72091BA970067679E /* MOMediaDestination+CoreDataProperties.m */; };
@@ -1026,6 +1028,10 @@
 		839A1C9F27CCF694004A387B /* ExportFileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839A1C9C27CCF694004A387B /* ExportFileRouter.swift */; };
 		839A1CA127CCF694004A387B /* ExportFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839A1C9E27CCF694004A387B /* ExportFileViewModel.swift */; };
 		839B9FCF283D2DCA001A49DF /* reconnecting.wav in Resources */ = {isa = PBXBuildFile; fileRef = 839B9FCE283D2DCA001A49DF /* reconnecting.wav */; };
+		839BA9DF2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839BA9DE2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift */; };
+		839BA9E12AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 839BA9E02AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib */; };
+		839BA9E72AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839BA9E52AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift */; };
+		839BA9E82AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 839BA9E62AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib */; };
 		83A2894F27F5BC070063CA8C /* CancellableTransfer+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */; };
 		83A2895027F5C04B0063CA8C /* CancellableTransferControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */; };
 		83A3D5232594993D002AC6EB /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
@@ -3392,6 +3398,8 @@
 		83293C592806CB7800369A86 /* NameCollisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCollisionView.swift; sourceTree = "<group>"; };
 		832CAEEE2864857D0069409D /* HangOrEndCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallViewModel.swift; sourceTree = "<group>"; };
 		832CAEF2286485A40069409D /* HangOrEndCallRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangOrEndCallRouter.swift; sourceTree = "<group>"; };
+		832DEFE82AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowNonHostToInviteTableViewCell.swift; sourceTree = "<group>"; };
+		832DEFE92AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllowNonHostToInviteTableViewCell.xib; sourceTree = "<group>"; };
 		832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodePropertyTableViewCell.h; sourceTree = "<group>"; };
 		832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodePropertyTableViewCell.m; sourceTree = "<group>"; };
 		832E1033202DE10500BDD30F /* NodeTappablePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeTappablePropertyTableViewCell.h; sourceTree = "<group>"; };
@@ -3596,6 +3604,10 @@
 		839A1C9C27CCF694004A387B /* ExportFileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileRouter.swift; sourceTree = "<group>"; };
 		839A1C9E27CCF694004A387B /* ExportFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileViewModel.swift; sourceTree = "<group>"; };
 		839B9FCE283D2DCA001A49DF /* reconnecting.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reconnecting.wav; sourceTree = "<group>"; };
+		839BA9DE2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantTableViewHeader.swift; sourceTree = "<group>"; };
+		839BA9E02AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingParticipantTableViewHeader.xib; sourceTree = "<group>"; };
+		839BA9E52AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInviteParticipantTableViewCell.swift; sourceTree = "<group>"; };
+		839BA9E62AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingInviteParticipantTableViewCell.xib; sourceTree = "<group>"; };
 		83A4E46D27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferViewModel.swift; sourceTree = "<group>"; };
 		83A4E47227F49AE000A429F4 /* TransferStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferStage.swift; sourceTree = "<group>"; };
 		83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferRouter.swift; sourceTree = "<group>"; };
@@ -8137,6 +8149,15 @@
 			path = NameCollisionScene;
 			sourceTree = "<group>";
 		};
+		832DEFE72AB46175004573D5 /* AllowNonHostToInvite */ = {
+			isa = PBXGroup;
+			children = (
+				832DEFE82AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift */,
+				832DEFE92AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib */,
+			);
+			path = AllowNonHostToInvite;
+			sourceTree = "<group>";
+		};
 		832E1020202B097900BDD30F /* CustomActionViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -8719,6 +8740,35 @@
 				839A1C9E27CCF694004A387B /* ExportFileViewModel.swift */,
 			);
 			path = ExportFileScene;
+			sourceTree = "<group>";
+		};
+		839BA9D92AB32B0B001F852C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				832DEFE72AB46175004573D5 /* AllowNonHostToInvite */,
+				839BA9DA2AB32B18001F852C /* Header */,
+				839BA9E42AB355B0001F852C /* IInviteParticipant */,
+				BF66DFDD2613E7BE00066F35 /* ParticpantCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		839BA9DA2AB32B18001F852C /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				839BA9DE2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift */,
+				839BA9E02AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		839BA9E42AB355B0001F852C /* IInviteParticipant */ = {
+			isa = PBXGroup;
+			children = (
+				839BA9E52AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift */,
+				839BA9E62AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib */,
+			);
+			path = IInviteParticipant;
 			sourceTree = "<group>";
 		};
 		83A2894C27F5B7B60063CA8C /* CancellableTransfers */ = {
@@ -11257,7 +11307,7 @@
 		BF66DFDB2613E73E00066F35 /* FloatingPanel */ = {
 			isa = PBXGroup;
 			children = (
-				BF66DFDD2613E7BE00066F35 /* ParticpantCell */,
+				839BA9D92AB32B0B001F852C /* Cells */,
 				BFAD5148260C0BE700DFBD1B /* ParticpiantInfo */,
 				BF66DFED2613E7EE00066F35 /* QuickAction */,
 				BFC060F128A0C09900BA2AD7 /* Utils */,
@@ -12665,6 +12715,7 @@
 				BF7EBD2F244E916F0015255F /* AddToChatViewController.xib in Resources */,
 				BFAB114F23CEA5C300BCE72D /* AlbumsTableViewController.xib in Resources */,
 				BFAB115223CEA5C300BCE72D /* AlbumTableViewCell.xib in Resources */,
+				832DEFEB2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.xib in Resources */,
 				5B727395240D32F9005816AB /* altIconDay@2x.png in Resources */,
 				5B3B0D202684B8F200479A68 /* altIconDay@2x~ipad.png in Resources */,
 				5B72739B240D3465005816AB /* altIconDay@3x.png in Resources */,
@@ -12753,8 +12804,10 @@
 				BFD6535525EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib in Resources */,
 				83E27AEA27ABD8640086E11E /* MeetingCreatingViewController.xib in Resources */,
 				BF68244825E84D9F00A7740C /* MeetingFloatingPanelViewController.xib in Resources */,
+				839BA9E82AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib in Resources */,
 				83C49BA3265261B900A7764B /* MeetingParticipantsLayoutViewController.xib in Resources */,
 				BF66DFE32613E7BE00066F35 /* MeetingParticipantTableViewCell.xib in Resources */,
+				839BA9E12AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib in Resources */,
 				7764AAB1246EE0B200134C88 /* MegaAvatarView.xib in Resources */,
 				5DAC09DF24CFE832001B6476 /* MEGABannerView.xib in Resources */,
 				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
@@ -13142,6 +13195,7 @@
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
+				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
 				9442009D2982EA92005521C2 /* APIEnvironmentRepository.swift in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
@@ -13776,6 +13830,7 @@
 				83BFDBD5291BE6A300FFFEA0 /* MeetingInfoViewController.swift in Sources */,
 				83BFDBD3291BE67900FFFEA0 /* MeetingInfoViewModel.swift in Sources */,
 				996F742C2A794B9D007209F0 /* MeetingInfoWaitingRoomSettingView.swift in Sources */,
+				839BA9E72AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift in Sources */,
 				99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */,
 				839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */,
 				839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */,
@@ -13786,6 +13841,7 @@
 				836651512649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift in Sources */,
 				BF49DFBF282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift in Sources */,
 				BF66DFE22613E7BE00066F35 /* MeetingParticipantTableViewCell.swift in Sources */,
+				839BA9DF2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift in Sources */,
 				BF66DFE12613E7BE00066F35 /* MeetingParticipantViewModel.swift in Sources */,
 				BFAD513E260BE26C00DFBD1B /* MeetingParticpiantInfoViewModel.swift in Sources */,
 				BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */,
