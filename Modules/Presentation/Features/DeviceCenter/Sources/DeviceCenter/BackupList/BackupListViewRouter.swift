@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAPresentation
+import MEGAUIKit
 import SwiftUI
 
 public protocol BackupListRouting: Routing {
@@ -83,5 +84,6 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     
     public func updateTitle(_ title: String) {
         baseViewController?.title = title
+        baseViewController?.navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: title)
     }
 }

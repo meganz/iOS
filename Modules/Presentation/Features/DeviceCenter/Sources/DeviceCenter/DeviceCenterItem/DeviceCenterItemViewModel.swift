@@ -88,13 +88,17 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         case .backup:
             switch type {
             case .cameraUploads:
-                deviceCenterBridge.cameraUploadActionTapped()
+                deviceCenterBridge.cameraUploadActionTapped({ [weak self] in
+                    self?.refreshDevicesPublisher?.send()
+                })
             default: break
             }
         case .device(let device):
             switch type {
             case .cameraUploads:
-                deviceCenterBridge.cameraUploadActionTapped()
+                deviceCenterBridge.cameraUploadActionTapped({ [weak self] in
+                    self?.refreshDevicesPublisher?.send()
+                })
             case .rename:
                 let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
                 let renameEntity = RenameActionEntity(

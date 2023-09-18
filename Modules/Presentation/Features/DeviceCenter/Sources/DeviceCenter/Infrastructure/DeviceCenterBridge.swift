@@ -8,8 +8,8 @@ import MEGADomain
 public class DeviceCenterBridge {
     public init() {}
     
-    public typealias RenamingFinished = () -> Void
-    public var cameraUploadActionTapped: () -> Void = { }
+    public typealias CameraUploadStatusChanged = () -> Void
+    public var cameraUploadActionTapped: (@escaping CameraUploadStatusChanged) -> Void = { _ in }
     public var infoActionTapped: (NodeEntity) -> Void = { _ in }
     public var renameActionTapped: (RenameActionEntity) -> Void = { _ in }
     public var showInCDActionTapped: (NodeEntity) -> Void = { _ in }

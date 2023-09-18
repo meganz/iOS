@@ -31,7 +31,6 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         
         devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
         refreshDevicesPublisher = PassthroughSubject<Void, Never>()
-        
         updateInterval = 30
         
         super.init()

@@ -205,7 +205,11 @@ public final class BackupListViewModel: ObservableObject {
     func executeDeviceAction(type: DeviceCenterActionType) async {
         switch type {
         case .cameraUploads:
-            deviceCenterBridge.cameraUploadActionTapped()
+            deviceCenterBridge.cameraUploadActionTapped {
+                Task {
+                    await self.syncDevicesAndLoadBackups()
+                }
+            }
         case .rename:
             let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
             let renameEntity = RenameActionEntity(

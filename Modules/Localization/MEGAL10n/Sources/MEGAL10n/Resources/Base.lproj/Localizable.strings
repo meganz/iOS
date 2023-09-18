@@ -3450,6 +3450,10 @@
 "device.center.rename.device.duplicated.name"="A device with this name already appears";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Enter a different name";
+/* Device Center camera upload status enabled*/
+"device.center.camera.uploads.action.status.enabled"="Enabled";
+/* Device Center camera upload status disabled*/
+"device.center.camera.uploads.action.status.disabled"="Disabled";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */

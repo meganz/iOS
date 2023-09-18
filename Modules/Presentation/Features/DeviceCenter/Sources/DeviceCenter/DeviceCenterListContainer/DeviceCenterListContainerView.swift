@@ -43,7 +43,7 @@ struct ListViewContainer<Content>: View where Content: View {
                     ActionSheetButton(
                         icon: action.icon,
                         title: action.title,
-                        subtitle: action.subtitle,
+                        subtitle: action.dynamicSubtitle?() ?? action.subtitle,
                         action: {
                             Task {
                                 await selectedItem.executeAction(action.type)

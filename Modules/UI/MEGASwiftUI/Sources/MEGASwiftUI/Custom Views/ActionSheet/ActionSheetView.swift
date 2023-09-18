@@ -73,7 +73,8 @@ public struct ActionSheetButton: View, Hashable {
                 Spacer()
                 if let subtitle = subtitle {
                     Text(subtitle)
-                        .font(.body)
+                        .font(.callout)
+                        .foregroundColor(Color("848484"))
                     
                     Image("standardDisclosureIndicator")
                         .padding([.trailing], 16)
