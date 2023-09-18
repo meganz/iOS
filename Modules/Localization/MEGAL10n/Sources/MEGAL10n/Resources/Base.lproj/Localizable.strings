@@ -3173,7 +3173,7 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Past meetings";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Approve %@";
+"general.menuAction.verifyContact.title"="Verify %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3181,9 +3181,9 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should approve you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Your credentials";
 /* Title of the header label in contact verification screen. */
@@ -3315,7 +3315,7 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="monthly";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot approve contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
@@ -3653,7 +3653,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Rename album";
 /* Rename public album alert message */

@@ -3175,21 +3175,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Meeting passati";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Approve %@";
+"general.menuAction.verifyContact.title"="Verify %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you share information with before they can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="To approve your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
+"sharedItems.contactVerification.section.myCredentials.message"="To verify your contact, ensure the credentials you see above match their account credentials. You can ask them to share their credentials with you.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to approve the contacts you receive information from before you can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t approved. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Le tue credenziali";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="We protect your data with zero-knowledge encryption so all the information you store, share, and receive on MEGA is secure. To ensure extra security, we ask you to approve the contacts you share information with or receive data from.";
+"verifyCredentials.headerMessage"="We protect your data with zero-knowledge encryption so all the information you store, share, and receive on MEGA is secure. To ensure extra security, we ask you to verify the contacts you share information with or receive data from.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Cartella non decriptata]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3317,9 +3317,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="mese";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot approve contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t approve %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Disabilita il passcode di MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3645,7 +3645,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been approved by you. To ensure extra security, we recommend that you approve their credentials in Contacts by tapping on ⓘ next to the contact you want to approve.";
+"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Rinomina album";
 /* Rename public album alert message */
