@@ -15,7 +15,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
 
     @IBOutlet private weak var dragIndicatorView: UIView!
     @IBOutlet private weak var backgroundView: UIView!
-    @IBOutlet private weak var participantsCountLabel: UILabel!
     @IBOutlet private weak var participantsTableView: UITableView!
 
     @IBOutlet private weak var cameraQuickActionView: MeetingQuickActionView!
@@ -25,21 +24,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
     @IBOutlet private weak var flipQuickActionView: MeetingQuickActionView!
 
     @IBOutlet private weak var optionsStackView: UIStackView!
-    @IBOutlet private var inviteParticpicantsView: UIView!
     @IBOutlet private weak var shareLinkLabel: UILabel!
-    @IBOutlet private weak var inviteParticipantsLabel: UILabel!
     
     @IBOutlet private weak var optionsStackViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet private var floatingViewSuperViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet private var floatingViewConstantViewWidthConstraint: NSLayoutConstraint!
-    
-    @IBOutlet private var allowNonHostToAddParticipantsSwitch: UISwitch!
-    @IBOutlet private var allowNonHostToAddParticipantsLabel: UILabel!
-    @IBOutlet private var allowNonHostToAddParticipantsView: UIView!
-
-    @IBOutlet private var allowNonHostToAddParticipantsHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private var allowNonHostToAddParticipantsTopConstraint: NSLayoutConstraint!
 
     private var callParticipants: [CallParticipantEntity] = []
     private let viewModel: MeetingFloatingPanelViewModel
@@ -48,7 +38,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
-    
+    private var isAllowNonHostToAddParticipantsEnabled = false
+    private var shouldHideHostControls = false
+
     init(viewModel: MeetingFloatingPanelViewModel,
          userImageUseCase: some UserImageUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol,
@@ -70,15 +62,17 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundView.backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.09803921569, blue: 0.1019607843, alpha: 1)
+        backgroundView.backgroundColor = Colors.General.Black._2c2c2e.color
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = Asset.Images.Meetings.hangCallMeetingAction.image
         endQuickActionView.name = Strings.Localizable.leave
         shareLinkLabel.text = Strings.Localizable.Meetings.Panel.shareLink
-        inviteParticipantsLabel.text = Strings.Localizable.Meetings.Panel.inviteParticipants
-        updateInTheMeetingLabel()
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
+        participantsTableView.register(MeetingInviteParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingInviteParticipantTableViewCell.reuseIdentifier)
+        participantsTableView.register(AllowNonHostToInviteTableViewCell.nib, forCellReuseIdentifier: AllowNonHostToInviteTableViewCell.reuseIdentifier)
+        participantsTableView.register(MeetingParticipantTableViewHeader.nib, forHeaderFooterViewReuseIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier)
+
         flipQuickActionView.disabled = true
         
         let quickActionProperties = MeetingQuickActionView.Properties(
@@ -162,14 +156,14 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .reloadParticpantsList(let participants):
             callParticipants = participants
             participantsTableView?.reloadData()
-            updateInTheMeetingLabel()
         case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
             selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
         case .transitionToShortForm:
             panModalSetNeedsLayoutUpdate()
             panModalTransition(to: .shortForm)
         case .updateAllowNonHostToAddParticipants(let enabled):
-            allowNonHostToAddParticipantsSwitch.setOn(enabled, animated: true)
+            isAllowNonHostToAddParticipantsEnabled = enabled
+            participantsTableView.reloadSections([0], with: .automatic)
         }
     }
     
@@ -182,12 +176,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
     @IBAction func shareLink(_ sender: UIButton) {
         viewModel.dispatch(.shareLink(presenter: self, sender: sender))
     }
-    
-    @IBAction func inviteParticipants(_ sender: UIButton) {
-        viewModel.dispatch(.inviteParticipants)
-    }
-    
-    // MARK: - Actions buttons
     
     @IBAction func toggleCameraOnTapped(_ sender: UIButton) {
         viewModel.dispatch(.turnCamera(on: !cameraQuickActionView.isSelected))
@@ -205,10 +193,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
     @IBAction func switchCameraTapped(_ sender: UIButton) {
         guard !flipQuickActionView.disabled else { return }
         viewModel.dispatch(.switchCamera(backCameraOn: !flipQuickActionView.isSelected))
-    }
-    
-    @IBAction func allowNonHostToAddParticipantsValueChanged(_ sender: UISwitch) {
-        viewModel.dispatch(.allowNonHostToAddParticipants(enabled: allowNonHostToAddParticipantsSwitch.isOn))
     }
     
     // MARK: - Private methods
@@ -241,50 +225,92 @@ final class MeetingFloatingPanelViewController: UIViewController {
         if isOneToOneMeeting {
             optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
             optionsStackViewHeightConstraint.constant = 0.0
-        } else if !canInviteParticipants && inviteParticpicantsView.superview != nil {
-            inviteParticpicantsView.removeFromSuperview()
-        } else if canInviteParticipants && inviteParticpicantsView.superview == nil {
-            optionsStackView.addArrangedSubview(inviteParticpicantsView)
         }
         
-        if isOneToOneMeeting || !isMyselfAModerator {
-            hideAllowNonHostToAddParticipantsView()
-        } else {
-            allowNonHostToAddParticipantsLabel.text = Strings.Localizable.Meetings.AddContacts.AllowNonHost.message
-            allowNonHostToAddParticipantsSwitch.setOn(allowNonHostToAddParticipantsEnabled, animated: true)
-        }
-    }
-    
-    private func hideAllowNonHostToAddParticipantsView() {
-        allowNonHostToAddParticipantsTopConstraint.constant = 0.0
-        allowNonHostToAddParticipantsHeightConstraint.constant = 0.0
-        allowNonHostToAddParticipantsView.isHidden = true
-    }
-    
-    private func updateInTheMeetingLabel() {
-        participantsCountLabel.text = Strings.Localizable.Meetings.Panel.participantsCount(callParticipants.count)
+        isAllowNonHostToAddParticipantsEnabled = allowNonHostToAddParticipantsEnabled
+        shouldHideHostControls = isOneToOneMeeting || !isMyselfAModerator
     }
 }
 
 extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        callParticipants.count
+        switch section {
+        case 0:
+            return shouldHideHostControls ? 0 : 1
+        case 1:
+            return callParticipants.count + 1
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return UITableViewCell() }
-        cell.viewModel = MeetingParticipantViewModel(
-            participant: callParticipants[indexPath.row],
-            userImageUseCase: userImageUseCase,
-            accountUseCase: accountUseCase,
-            chatRoomUseCase: chatRoomUseCase,
-            chatRoomUserUseCase: chatRoomUserUseCase,
-            megaHandleUseCase: megaHandleUseCase
-        ) { [weak self] participant, button in
-            guard let self = self else { return }
-            self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
+        switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: AllowNonHostToInviteTableViewCell.reuseIdentifier, for: indexPath) as? AllowNonHostToInviteTableViewCell else { return UITableViewCell() }
+                cell.allowNonHostSwitchEnabled(isAllowNonHostToAddParticipantsEnabled)
+                cell.switchToggleHandler = { [weak self] allowNonHostToAddParticipantsSwitch in
+                    self?.viewModel.dispatch(.allowNonHostToAddParticipants(enabled: allowNonHostToAddParticipantsSwitch.isOn))
+                }
+                return cell
+            default:
+                return UITableViewCell()
+            }
+        case 1:
+            switch indexPath.row {
+            case 0:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingInviteParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingInviteParticipantTableViewCell else { return UITableViewCell() }
+                cell.cellTappedHandler = { [weak self] in
+                    self?.viewModel.dispatch(.inviteParticipants)
+                }
+                return cell
+            default:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return UITableViewCell() }
+                cell.viewModel = MeetingParticipantViewModel(
+                    participant: callParticipants[indexPath.row - 1],
+                    userImageUseCase: userImageUseCase,
+                    accountUseCase: accountUseCase,
+                    chatRoomUseCase: chatRoomUseCase,
+                    chatRoomUserUseCase: chatRoomUserUseCase,
+                    megaHandleUseCase: megaHandleUseCase
+                ) { [weak self] participant, button in
+                    guard let self = self else { return }
+                    self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
+                }
+                return cell
+            }
+            
+        default:
+            return UITableViewCell()
         }
-        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch section {
+        case 1:
+            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier) as? MeetingParticipantTableViewHeader else { return UIView(frame: .zero) }
+            header.titleLabel.text = Strings.Localizable.Meetings.Panel.participantsCount(callParticipants.count)
+            header.actionButton.isHidden = true
+            return header
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case 1:
+            return 24
+        default:
+            return 0
+        }
     }
 }
 
