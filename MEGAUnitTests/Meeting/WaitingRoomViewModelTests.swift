@@ -20,7 +20,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let scheduledMeeting = ScheduledMeetingEntity(startDate: startDate, endDate: endDate)
         let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting)
         
-        XCTAssertEqual(sut.createMeetingDate(), "Thu, 21 Sep ·10:30-10:45")
+        XCTAssertEqual(sut.createMeetingDate(locale: Locale(identifier: "en_GB")), "Thu, 21 Sep ·10:30-10:45")
     }
     
     func testViewState_onLoadWaitingRoomAndIsGuest_shouldBeGuestJoinState() {

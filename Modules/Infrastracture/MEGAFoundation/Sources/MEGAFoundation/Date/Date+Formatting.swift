@@ -105,11 +105,10 @@ public extension DateStyle {
 extension DateStyle.StringTemplateStyle: DateFormatterProvidable {
     func buildDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.setLocalizedDateFormatFromTemplate(dateFormat)
-
         if let calendar = calendar { formatter.calendar = calendar }
         if let locale = locale { formatter.locale = locale }
         if let timeZone = timeZone { formatter.timeZone = timeZone }
+        formatter.setLocalizedDateFormatFromTemplate(dateFormat)
         return formatter
     }
 }
@@ -135,7 +134,6 @@ extension DateStyle.DateFormatStyle: DateFormatterProvidable {
 
     func buildDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
-        formatter.calendar = calendar
         formatter.dateStyle = dateStyle
         formatter.timeStyle = timeStyle
         if let calendar = calendar { formatter.calendar = calendar }

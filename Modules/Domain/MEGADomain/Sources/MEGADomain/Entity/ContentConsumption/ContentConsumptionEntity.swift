@@ -12,7 +12,7 @@ public enum ContentConsumptionMediaLocation: String, Codable, Sendable {
     case cameraUploads
 }
 
-public struct ContentConsumptionTimeline: Codable, Sendable {
+public struct ContentConsumptionTimeline: Codable, Sendable, Equatable {
     public let mediaType: ContentConsumptionMediaType
     public let location: ContentConsumptionMediaLocation
     public let usePreference: Bool?
@@ -28,7 +28,7 @@ public struct ContentConsumptionTimeline: Codable, Sendable {
     }
 }
 
-public struct ContentConsumptionIos: Codable, Sendable {
+public struct ContentConsumptionIos: Codable, Sendable, Equatable {
     public let timeline: ContentConsumptionTimeline
     
     public init(timeline: ContentConsumptionTimeline) {
@@ -36,7 +36,7 @@ public struct ContentConsumptionIos: Codable, Sendable {
     }
 }
 
-public struct ContentConsumptionEntity: Codable, Sendable {
+public struct ContentConsumptionEntity: Codable, Sendable, Equatable {
     public let ios: ContentConsumptionIos
     
     public init(ios: ContentConsumptionIos) {
